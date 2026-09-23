@@ -1,0 +1,3566 @@
+{
+  "schema_version": 1,
+  "comment": "Plan 50 / C2[22] - Canonical Asset Manifest and Truth Mapping",
+  "generated_at": "2026-09-20T17:43:11.683610+00:00",
+  "total_assets": 355,
+  "categories": [
+    "item",
+    "portrait",
+    "location",
+    "faction",
+    "weather",
+    "ui"
+  ],
+  "assets": [
+    {
+      "id": "fallback_survivor",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Characters/placeholder_survivor.png",
+      "source": "canonical_scratch_fallback",
+      "is_ai_generated": false,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": true
+    },
+    {
+      "id": "fallback_icon",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/ui/Icons/icon_placeholder.png",
+      "source": "canonical_scratch_fallback",
+      "is_ai_generated": false,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": true
+    },
+    {
+      "id": "fallback_location",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/ui/Icons/icon_placeholder.png",
+      "source": "canonical_scratch_fallback",
+      "is_ai_generated": false,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": true
+    },
+    {
+      "id": "fallback_weather",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/ui/Icons/icon_placeholder.png",
+      "source": "canonical_scratch_fallback",
+      "is_ai_generated": false,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": true
+    },
+    {
+      "id": "fallback_faction",
+      "family": "faction",
+      "kind": "faction_badge",
+      "path": "assets/ui/Icons/icon_placeholder.png",
+      "source": "canonical_scratch_fallback",
+      "is_ai_generated": false,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": true
+    },
+    {
+      "id": "ammo_deprecated_cal_9x19",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_cal_9x19.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_380acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_380acp.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_762x25",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_762x25.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_45acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_45acp.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_9x21",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_9x21.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_765x21",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_765x21.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_12ga",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_12ga.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_16ga",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_16ga.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_556x45",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_556x45.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_762x39",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_762x39.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_545x39",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_545x39.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_762x51",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_762x51.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_300blk",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_300blk.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_57x28",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_57x28.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_46x30",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_46x30.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_762x54r",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_762x54r.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_338lapua",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_338lapua.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_408cheytac",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_408cheytac.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_deprecated_50bmg",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/sprites/Items/ammo_deprecated_50bmg.png",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_545x39_jhp_ap",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_545x39_jhp_ap.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_545x39_exi",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_545x39_exi.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_545x39_api",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_545x39_api.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_300blk_jhp_ap",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_300blk_jhp_ap.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_57x28_jhp_ap",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_57x28_jhp_ap.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_57x28_exi",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_57x28_exi.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_57x28_api",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_57x28_api.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_762x54r_jhp_ap",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_762x54r_jhp_ap.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_762x54r_exi",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_762x54r_exi.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_762x54r_api",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_762x54r_api.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_338lapua_jhp_ap",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_338lapua_jhp_ap.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_408cheytac_jhp_ap",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_408cheytac_jhp_ap.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_762x51_jhp_ap",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_762x51_jhp_ap.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_762x51_exi",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_762x51_exi.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_50bmg_jhp_ap",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_50bmg_jhp_ap.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ammo_50bmg_exi",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ammo_50bmg_exi.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_cz75_9x19",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_cz75_9x19.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_beretta_92_9x19",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_beretta_92_9x19.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_steyr_m9_9x19",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_steyr_m9_9x19.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_walther_ppk_380acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_walther_ppk_380acp.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_grand_power_p380_380acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_grand_power_p380_380acp.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_cz52_762x25",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_cz52_762x25.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_norinco_type54_762x25",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_norinco_type54_762x25.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_zastava_m57_762x25",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_zastava_m57_762x25.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_m1928a1_thompson_45acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_m1928a1_thompson_45acp.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_hk_ump45_45acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_hk_ump45_45acp.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_kriss_vector_45acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_kriss_vector_45acp.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pistol_bt_apc45_mini_45acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pistol_bt_apc45_mini_45acp.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_bt_apc45_45acp",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_bt_apc45_45acp.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_sites_spectre_m4_9x21",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_sites_spectre_m4_9x21.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_imi_micro_uzi_9x21",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_imi_micro_uzi_9x21.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_cz_scorpion_evo3_9x21",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_cz_scorpion_evo3_9x21.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_steyr_solo_s1_100_765x21",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_steyr_solo_s1_100_765x21.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "smg_mp34_765x21",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/smg_mp34_765x21.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "shotgun_benelli_m4_super90_12ga",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/shotgun_benelli_m4_super90_12ga.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "shotgun_remington_model1100_12ga",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/shotgun_remington_model1100_12ga.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "shotgun_browning_auto5_16ga",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/shotgun_browning_auto5_16ga.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "shotgun_franchi_al48_16ga",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/shotgun_franchi_al48_16ga.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_m4a1_carbine_556x45",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_m4a1_carbine_556x45.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_hk416_556x45",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_hk416_556x45.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_fn_scar_l_556x45",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_fn_scar_l_556x45.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_steyr_aug_a3_556x45",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_steyr_aug_a3_556x45.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_ak47_762x39",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_ak47_762x39.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_cmmg_mk47_mutant_762x39",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_cmmg_mk47_mutant_762x39.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "lmg_rpk74_545x39",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/lmg_rpk74_545x39.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_ak74u_545x39",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_ak74u_545x39.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_fn_fal_762x51",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_fn_fal_762x51.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_hk_g3_762x51",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_hk_g3_762x51.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_q_honey_badger_300blk",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_q_honey_badger_300blk.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_sig_mcx_rattler_300blk",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_sig_mcx_rattler_300blk.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rifle_ddm4_pdw_300blk",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rifle_ddm4_pdw_300blk.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pdw_fn_p90_57x28",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pdw_fn_p90_57x28.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "carbine_ruger_lc_57x28",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/carbine_ruger_lc_57x28.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pdw_hk_mp7a2_46x30",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pdw_hk_mp7a2_46x30.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pdw_cmmg_four6_46x30",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pdw_cmmg_four6_46x30.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "pdw_tb_tactical_t7_46x30",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/pdw_tb_tactical_t7_46x30.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_mosin_nagant_m9031_762x54r",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_mosin_nagant_m9031_762x54r.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_svd_dragunov_762x54r",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_svd_dragunov_762x54r.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_romak3_psl_762x54r",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_romak3_psl_762x54r.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_steyr_ssg08_338lapua",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_steyr_ssg08_338lapua.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_sako_trg42_338lapua",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_sako_trg42_338lapua.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_dsr1_338lapua",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_dsr1_338lapua.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_cheytac_m200_intervention_408cheytac",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_cheytac_m200_intervention_408cheytac.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_voere_mk_x3_408cheytac",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_voere_mk_x3_408cheytac.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_voere_mk_x4_408cheytac",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_voere_mk_x4_408cheytac.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sniper_barrett_m82a1_50bmg",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sniper_barrett_m82a1_50bmg.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_emp_grenade",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_emp_grenade.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "water_bottle_1l_of_2l",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/water_bottle_1l_of_2l.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "water_bottle_0_5l_of_1l",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/water_bottle_0_5l_of_1l.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "water_bottle_0_5l_of_2l",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/water_bottle_0_5l_of_2l.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "water_bottle_1_5l_of_2l",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/water_bottle_1_5l_of_2l.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "fuel_0_5l_of_1l",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/fuel_0_5l_of_1l.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "accelerant_half",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/accelerant_half.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ejuice_10ml_10mg",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ejuice_10ml_10mg.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ejuice_10ml_20mg",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ejuice_10ml_20mg.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ejuice_20ml_35mg",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ejuice_20ml_35mg.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "water_purification_tablets_40_of_40",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/water_purification_tablets_40_of_40.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "water_purification_tablets_20_of_40",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/water_purification_tablets_20_of_40.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "water_purification_tablets_0_of_40",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/water_purification_tablets_0_of_40.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "iodine_pills_bottle_10_of_10",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/iodine_pills_bottle_10_of_10.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "jetfuel_jerrycan_10l_of_10l",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/jetfuel_jerrycan_10l_of_10l.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "instant_coffee_10x_container",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/instant_coffee_10x_container.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ice_tea_0_5l_package",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ice_tea_0_5l_package.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "package_rolled_oats_1kg_of_1kg",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/package_rolled_oats_1kg_of_1kg.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "dry_rice_1kg_of_1kg",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/dry_rice_1kg_of_1kg.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "dried_pasta_2kg_of_2kg",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/dried_pasta_2kg_of_2kg.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "soy_and_rice_milk_1l_of_1l",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/soy_and_rice_milk_1l_of_1l.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "anti_rad",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/anti_rad.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "prewar_letter",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/prewar_letter.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_bioluminescent_moss",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_bioluminescent_moss.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "hand_crank_radio",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/hand_crank_radio.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_uv_lamp_ballast",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_uv_lamp_ballast.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_geothermal_valve",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_geothermal_valve.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_ro_membrane",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_ro_membrane.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_acoustic_decoy",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_acoustic_decoy.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_logic_board",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_logic_board.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_co2_scrubber_cartridge",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_co2_scrubber_cartridge.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_rebreather_scrubber",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_rebreather_scrubber.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "antiseptic_1l_of_1l",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/antiseptic_1l_of_1l.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "alcohol_wipes_box_10_of_10",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/alcohol_wipes_box_10_of_10.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "epi_pen",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/epi_pen.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "decontamination_soap_5_of_5",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/decontamination_soap_5_of_5.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_frostbite_salve",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_frostbite_salve.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_scopolamine_root",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_scopolamine_root.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_lithium_salts",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_lithium_salts.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_amnestic_syrup",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_amnestic_syrup.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_snow_goggles_improvised",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_snow_goggles_improvised.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_lead_visor",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_lead_visor.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_ash_ghillie",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_ash_ghillie.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_black_ice_sample",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_black_ice_sample.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_cobalt_salt_canister",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_cobalt_salt_canister.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_black_water_vial",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_black_water_vial.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_submerged_server",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_submerged_server.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_master_override",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_master_override.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_hard_drive_platter",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_hard_drive_platter.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_pre_war_photo_album",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_pre_war_photo_album.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_vinyl_collection",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_vinyl_collection.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "att_mil_double_scope_5x_10x",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/att_mil_double_scope_5x_10x.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "sewing_kit_10_of_10",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/sewing_kit_10_of_10.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_hand_crank_sled",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_hand_crank_sled.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_geiger_tether",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_geiger_tether.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_pneumatic_jack",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_pneumatic_jack.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_fungicide_fogger",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_fungicide_fogger.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_mine_prod",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_mine_prod.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_headphones_mil",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_headphones_mil.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_epoxy_injector",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_epoxy_injector.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_tether_harness",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_tether_harness.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "explosive_powder_nitroglycerin",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/explosive_powder_nitroglycerin.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "salvaged_tech_trash",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/salvaged_tech_trash.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rope_2m_of_2m",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rope_2m_of_2m.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "copper_wire_10m_of_10m",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/copper_wire_10m_of_10m.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "oat_flour",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/oat_flour.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "plastic_contamination_bag_box_5",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/plastic_contamination_bag_box_5.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_cryo_coolant",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_cryo_coolant.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_thermal_paste",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_thermal_paste.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_shoring_timber",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_shoring_timber.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_mycelium_bricks",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_mycelium_bricks.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_faraday_mesh",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_faraday_mesh.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_sound_baffling",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_sound_baffling.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_tungsten_core",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_tungsten_core.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_pneumatic_hose",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_pneumatic_hose.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_galvanized_rebar",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_galvanized_rebar.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_welders_glass",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_welders_glass.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_mirror_shard",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_mirror_shard.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "item_bio_plastic",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/item_bio_plastic.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "rubber_gasket",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/rubber_gasket.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "concrete_patch_mix",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/concrete_patch_mix.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "insulation_tape",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/insulation_tape.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "engine_block_intact",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/engine_block_intact.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "bearing_set_industrial",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/bearing_set_industrial.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "copper_tubing_1m",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/copper_tubing_1m.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "structural_report",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/structural_report.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "radio_transcript_142_5",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/radio_transcript_142_5.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "signal_source_report",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/signal_source_report.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "refugee_screening_report",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/refugee_screening_report.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "supply_inventory_report",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/supply_inventory_report.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "ars_diagnosis_report",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/ars_diagnosis_report.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "medical_inventory_report",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/medical_inventory_report.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "treatment_protocol",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/treatment_protocol.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "intake_valve_report",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/intake_valve_report.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "water_sample_contaminated",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/water_sample_contaminated.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "concrete_mix",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/concrete_mix.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "steel_rebar",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/steel_rebar.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "antenna_coil",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/antenna_coil.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "copper_wiring",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/copper_wiring.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "blueprint_roll",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/blueprint_roll.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "radio_headset",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/radio_headset.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "service_pistol",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/service_pistol.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "surgical_mask",
+      "family": "item",
+      "kind": "item_icon",
+      "path": "assets/art/surgical_mask.jpg",
+      "source": "Flux 2 Pro via Adobe Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "location_geo_thermal_plant_ruins",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_geo_thermal_plant_ruins.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_arcology_sector_4",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_arcology_sector_4.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_frozen_river_barge",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_frozen_river_barge.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_crashed_icebreaker_convoy",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_crashed_icebreaker_convoy.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_silent_observatory",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_silent_observatory.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_subterranean_seed_vault",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_subterranean_seed_vault.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_ministry_of_truth_bunker",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_ministry_of_truth_bunker.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_ash_dune_cemetery",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_ash_dune_cemetery.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_abandoned_ski_resort",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_abandoned_ski_resort.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_geothermal_borehole_site",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_geothermal_borehole_site.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_flooded_subway_depot",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_flooded_subway_depot.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_sub_level_4_transit",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_sub_level_4_transit.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_municipal_sewage",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_municipal_sewage.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_collapsed_salt_mine",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_collapsed_salt_mine.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_bio_remediation_lab",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_bio_remediation_lab.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_submerged_data_center",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_submerged_data_center.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_geothermal_vent_shaft",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_geothermal_vent_shaft.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_the_sump_cathedral",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_the_sump_cathedral.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_abandoned_desalination",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_abandoned_desalination.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_deep_core_borehole",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_deep_core_borehole.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_uxo_highway_choke",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_uxo_highway_choke.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_radar_array_spire",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_radar_array_spire.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_drone_hive_silo",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_drone_hive_silo.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_automated_mortar_pit",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_automated_mortar_pit.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_scrap_neuromancer_camp",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_scrap_neuromancer_camp.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_magnetic_anomaly_crater",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_magnetic_anomaly_crater.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_abandoned_convoy_yard",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_abandoned_convoy_yard.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_acoustic_testing_facility",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_acoustic_testing_facility.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_substation_omega",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_substation_omega.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_the_dead_hand_core",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_the_dead_hand_core.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_lethe_water_treatment",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_lethe_water_treatment.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_observatory_dome",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_observatory_dome.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_submerged_arcology",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_submerged_arcology.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_concrete_batching_plant",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_concrete_batching_plant.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_seed_vault_antechamber",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_seed_vault_antechamber.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_hospital_psych_wing",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_hospital_psych_wing.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_mirror_factory",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_mirror_factory.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_radio_telescope_array",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_radio_telescope_array.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_ash_whale_carcass",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_ash_whale_carcass.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "location_the_memory_vault",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/location_the_memory_vault.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "highway_pileup",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/highway_pileup.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "prewar_medical_cache",
+      "family": "location",
+      "kind": "location_backdrop",
+      "path": "assets/sprites/Locations/prewar_medical_cache.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "elena_vasquez",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/elena_vasquez.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "marcus_olejnik",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/marcus_olejnik.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "suki_tanaka",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/suki_tanaka.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_surgeon",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_surgeon.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_pharmacist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_pharmacist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_vet",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_vet.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_therapist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_therapist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_undertaker",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_undertaker.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_veteran",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_veteran.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_cop",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_cop.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_bouncer",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_bouncer.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_hunter",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_hunter.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_prisoner",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_prisoner.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_plumber",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_plumber.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_electrician",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_electrician.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_architect",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_architect.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_mechanic",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_mechanic.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_chemist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_chemist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_botanist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_botanist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_courier",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_courier.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_burglar",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_burglar.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_meteorologist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_meteorologist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_hazmat_tech",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_hazmat_tech.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_teacher",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_teacher.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_politician",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_politician.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_priest",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_priest.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_reporter",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_reporter.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_radio_host",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_radio_host.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_chef",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_chef.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_athlete",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_athlete.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_firefighter",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_firefighter.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_tailor",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_tailor.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_watchmaker",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_watchmaker.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_historian",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_historian.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_defector",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_defector.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_addict",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_addict.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_parent",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_parent.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_fierce_mother",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_fierce_mother.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_exhausted_father",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_exhausted_father.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_naive_son",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_naive_son.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_hardened_daughter",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_hardened_daughter.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_psychopath",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_psychopath.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_serial_killer",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_serial_killer.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_liar",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_liar.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_hoarder",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_hoarder.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_general",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_general.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_saboteur",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_saboteur.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_deserter",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_deserter.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_quartermaster",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_quartermaster.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_child_soldier",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_child_soldier.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_empath",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_empath.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_misanthrope",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_misanthrope.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_pollyanna",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_pollyanna.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_martyr",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_martyr.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_arrogant_surgeon",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_arrogant_surgeon.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_relapsing_addict",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_relapsing_addict.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_insomniac",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_insomniac.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_hypochondriac",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_hypochondriac.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_pyromaniac",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_pyromaniac.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_blind_preacher",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_blind_preacher.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_prepper",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_prepper.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_outcast",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_outcast.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_feral_orphan",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_feral_orphan.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_pacifist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_pacifist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_widow",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_widow.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_ex_con",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_ex_con.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_sheriff",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_sheriff.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_former_politician",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_former_politician.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_tech_bro",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_tech_bro.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_news_anchor",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_news_anchor.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_nomad",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_nomad.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "the_exec",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/the_exec.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_cryo_tech",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_cryo_tech.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_bunker_archivist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_bunker_archivist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_ice_walker",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_ice_walker.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_defrosted_aristocrat",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_defrosted_aristocrat.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_thawed_medic",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_thawed_medic.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_ash_diver",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_ash_diver.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_speleologist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_speleologist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_sump_diver",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_sump_diver.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_mycologist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_mycologist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_hydro_engineer",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_hydro_engineer.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_mole",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_mole.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_rot_farmer",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_rot_farmer.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_sapper",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_sapper.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_lineman",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_lineman.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_drone_op",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_drone_op.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_acoustic_tech",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_acoustic_tech.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_machinist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_machinist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_logistician",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_logistician.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_bunker_born",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_bunker_born.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_the_waking",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_the_waking.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_osteophage",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_osteophage.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_archivist",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_archivist.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_concrete_boss",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_concrete_boss.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "survivor_uv_penitent",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/survivor_uv_penitent.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "aris_thorne",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/aris_thorne.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "maya_lin",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/maya_lin.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "victor_vance",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/victor_vance.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "elena_rostov",
+      "family": "portrait",
+      "kind": "character_portrait",
+      "path": "assets/sprites/Portraits/elena_rostov.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "2d_pixel_art",
+      "is_fallback": false
+    },
+    {
+      "id": "faction_central_garrison_remnants",
+      "family": "faction",
+      "kind": "faction_badge",
+      "path": "assets/sprites/Factions/faction_central_garrison_remnants.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "faction_upland_militia",
+      "family": "faction",
+      "kind": "faction_badge",
+      "path": "assets/sprites/Factions/faction_upland_militia.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "faction_cultists_of_the_glow",
+      "family": "faction",
+      "kind": "faction_badge",
+      "path": "assets/sprites/Factions/faction_cultists_of_the_glow.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "faction_scavenger_warlords",
+      "family": "faction",
+      "kind": "faction_badge",
+      "path": "assets/sprites/Factions/faction_scavenger_warlords.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "faction_safe_haven_communities",
+      "family": "faction",
+      "kind": "faction_badge",
+      "path": "assets/sprites/Factions/faction_safe_haven_communities.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_acid_snow",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_acid_snow.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_bio_fog",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_bio_fog.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_black_snow",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_black_snow.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_blood_rain",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_blood_rain.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_emp_storm",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_emp_storm.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_glass_storm",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_glass_storm.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_rad_hail",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_rad_hail.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_algae_bloom",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_algae_bloom.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_ash_lightning",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_ash_lightning.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_particulate_fog",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_particulate_fog.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_thermal_inversion",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_thermal_inversion.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_ice_storm",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_ice_storm.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_silence",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_silence.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_false_spring",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_false_spring.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    },
+    {
+      "id": "weather_silent_spring",
+      "family": "weather",
+      "kind": "weather_backdrop",
+      "path": "assets/sprites/Weather/weather_silent_spring.png",
+      "source": "Flux 2 Pro via Firefly",
+      "is_ai_generated": true,
+      "import_preset": "texture_2d",
+      "is_fallback": false
+    }
+  ]
+}

@@ -169,8 +169,8 @@ namespace Ashfall.Core
             var def = _catalog?.GetItem(canonical);
             float unitWeight = def?.Weight ?? 1f;
             if (MaxWeight > 0f && currentWeight + unitWeight * count > MaxWeight) return false;
-            int stackMax = def != null && def.StackMax > 0 ? def.StackMax : 99;
             _items.TryGetValue(canonical, out int currentCount);
+            if ((long)currentCount + count > int.MaxValue) return false;
             if (currentCount == 0 && OccupiedCount >= Capacity) return false;
             return true;
         }
@@ -293,10 +293,16 @@ namespace Ashfall.Core
         public string WhyLine { get; set; } = string.Empty;
         public HoldfastTradeFailure Failure { get; set; } = HoldfastTradeFailure.None;
 
-        public static HoldfastTradeResult Ok(string itemId, int quantity, string factionId, int totalValue, string whyLine = "")
-            => new HoldfastTradeResult { Success = true, ItemId = itemId, Quantity = quantity, FactionId = factionId, TotalValue = totalValue, Message = "Trade completed.", WhyLine = whyLine };
-        public static HoldfastTradeResult Fail(string message, HoldfastTradeFailure failure = HoldfastTradeFailure.None)
-            => new HoldfastTradeResult { Success = false, Message = message, Failure = failure };
+        /// <summary>
+        /// UNBLOCK-02 F13-D: Additive funds delta and failure for funds-denominated legs.
+        /// </summary>
+        public int FundsDelta { get; set; }
+        public Economy.FundsFailure FundsFailure { get; set; } = Economy.FundsFailure.None;
+
+        public static HoldfastTradeResult Ok(string itemId, int quantity, string factionId, int totalValue, string whyLine = "", int fundsDelta = 0)
+            => new HoldfastTradeResult { Success = true, ItemId = itemId, Quantity = quantity, FactionId = factionId, TotalValue = totalValue, Message = "Trade completed.", WhyLine = whyLine, FundsDelta = fundsDelta };
+        public static HoldfastTradeResult Fail(string message, HoldfastTradeFailure failure = HoldfastTradeFailure.None, Economy.FundsFailure fundsFailure = Economy.FundsFailure.None)
+            => new HoldfastTradeResult { Success = false, Message = message, Failure = failure, FundsFailure = fundsFailure };
     }
 
     /// <summary>Engine-agnostic mutable trade state (inventory depth / faction stock).
@@ -373,8 +379,10 @@ namespace Ashfall.Core
         {
             if (string.IsNullOrEmpty(itemId) || count <= 0) return;
             string canonical = ItemAliases.ToCanonical(itemId);
-            _held[canonical] = GetHeld(canonical) + count;
-            Inventory.AddItem(canonical, count);
+            int held = GetHeld(canonical);
+            if ((long)held + count > int.MaxValue || !Inventory.AddItem(canonical, count)) return;
+            if (_playerInventory == null)
+                _held[canonical] = held + count;
             StateChanged?.Invoke();
         }
 
@@ -612,7 +620,8 @@ namespace Ashfall.Core
                 return HoldfastTradeResult.Fail("Insufficient merchant stock.", HoldfastTradeFailure.InsufficientStock);
 
             long costLong = GetBuyPrice(canonical, factionId, quantity);
-            int cost = (int)Math.Min(int.MaxValue, costLong);
+            if (!TryGetTradeTotal(costLong, out int cost))
+                return HoldfastTradeResult.Fail("Trade price is outside the supported range.", HoldfastTradeFailure.InvalidPrice);
             if (cost > _value)
                 return HoldfastTradeResult.Fail("Insufficient funds.", HoldfastTradeFailure.InsufficientFunds);
 
@@ -684,7 +693,10 @@ namespace Ashfall.Core
                 return HoldfastTradeResult.Fail("Insufficient player inventory.", HoldfastTradeFailure.InsufficientInventory);
 
             long gainLong = GetSellPrice(canonical, factionId, quantity);
-            int gain = (int)Math.Min(int.MaxValue, gainLong);
+            if (!TryGetTradeTotal(gainLong, out int gain) || !CanCreditValue(gain))
+                return HoldfastTradeResult.Fail("Trade proceeds exceed the supported balance.", HoldfastTradeFailure.InvalidPrice);
+            if ((long)GetStock(canonical) + quantity > int.MaxValue)
+                return HoldfastTradeResult.Fail("Merchant stock capacity reached.", HoldfastTradeFailure.InventoryCapacity);
             _value += gain;
             _held[canonical] = currentlyHeld - quantity;
             _stock[canonical] = GetStock(canonical) + quantity;
@@ -692,6 +704,149 @@ namespace Ashfall.Core
             StateChanged?.Invoke();
             string whyLine = GetWhyLine(canonical, factionId, false);
             return HoldfastTradeResult.Ok(canonical, quantity, factionId, gain, whyLine);
+        }
+
+        /// <summary>
+        /// UNBLOCK-02 F13-D: Conversion from settlement units to integer chits (floor rounding, no hidden gains).
+        /// </summary>
+        public static int ChitsFromSettlementUnits(float units)
+        {
+            if (float.IsNaN(units) || float.IsInfinity(units) || (double)units > int.MaxValue)
+                throw new ArgumentOutOfRangeException(nameof(units), "Settlement units must be finite and fit in integer chits.");
+            if (units <= 0f) return 0;
+            return (int)Math.Floor(units);
+        }
+
+        // Trade results and funds deltas are signed ints. Reject larger quotes
+        // before mutation rather than silently discounting or rounding them.
+        private static bool TryGetTradeTotal(long quote, out int total)
+        {
+            total = 0;
+            if (quote <= 0 || quote > int.MaxValue) return false;
+            total = (int)quote;
+            return true;
+        }
+
+        /// <summary>
+        /// UNBLOCK-02 F13-D: Wave-1 funds-denominated buy leg using canonical FundsLedger.
+        /// </summary>
+        public HoldfastTradeResult BuyWithFunds(string itemId, int quantity, string factionId, Economy.FundsLedger ledger, int day, string counterpartyId = "holdfast")
+        {
+            if (ledger == null)
+                return HoldfastTradeResult.Fail("No funds ledger provided.", HoldfastTradeFailure.InsufficientFunds, Economy.FundsFailure.UnknownReasonKey);
+
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
+            if (string.IsNullOrEmpty(canonical) || def == null)
+                return HoldfastTradeResult.Fail("Unknown item: " + itemId, HoldfastTradeFailure.UnknownItem);
+
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none")
+            {
+                if (factionId == "faction_nonexistent" || (_catalog?.GetFaction(factionId) == null && factionId != "faction_the_office" && factionId != "faction_the_tempest"))
+                    return HoldfastTradeResult.Fail("Unknown faction: " + factionId, HoldfastTradeFailure.UnknownFaction);
+
+                if (factionId == "faction_the_fleet")
+                    return HoldfastTradeResult.Fail("Unavailable or restricted counterparty: " + factionId, HoldfastTradeFailure.UnavailableOrRestricted);
+            }
+
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none" && EmbargoQuery != null && EmbargoQuery(factionId))
+                return HoldfastTradeResult.Fail("Trade with this faction is suspended (embargo).", HoldfastTradeFailure.Embargoed);
+
+            if (quantity <= 0)
+                return HoldfastTradeResult.Fail("Quantity must be at least 1.", HoldfastTradeFailure.InvalidQuantity);
+
+            int currentStock = GetStock(canonical);
+            if (currentStock < quantity)
+                return HoldfastTradeResult.Fail("Insufficient merchant stock.", HoldfastTradeFailure.InsufficientStock);
+
+            long costLong = GetBuyPrice(canonical, factionId, quantity);
+            if (!TryGetTradeTotal(costLong, out int chitCost))
+                return HoldfastTradeResult.Fail("Trade price is outside the supported range.", HoldfastTradeFailure.InvalidPrice, Economy.FundsFailure.InvalidAmount);
+
+            if (ledger.Balance < chitCost)
+                return HoldfastTradeResult.Fail("Insufficient funds.", HoldfastTradeFailure.InsufficientFunds, Economy.FundsFailure.InsufficientFunds);
+
+            if (!Inventory.CanAdd(canonical, quantity))
+            {
+                float unitWeight = def.Weight;
+                if (Inventory.MaxWeight > 0f && Inventory.GetCurrentWeight() + unitWeight * quantity > Inventory.MaxWeight)
+                    return HoldfastTradeResult.Fail("Inventory weight limit exceeded.", HoldfastTradeFailure.InventoryCapacity);
+                return HoldfastTradeResult.Fail("Inventory capacity reached.", HoldfastTradeFailure.InventoryCapacity);
+            }
+
+            var debitResult = ledger.TryDebit(chitCost, "holdfast_buy", counterpartyId, day);
+            if (!debitResult.Success)
+            {
+                return HoldfastTradeResult.Fail("Failed to debit funds: " + debitResult.FailureReason, HoldfastTradeFailure.InsufficientFunds, Economy.FundsFailure.InsufficientFunds);
+            }
+
+            bool added = Inventory.AddItem(canonical, quantity);
+            if (!added)
+            {
+                ledger.TryCredit(chitCost, "holdfast_buy", counterpartyId, day);
+                return HoldfastTradeResult.Fail("Inventory capacity reached.", HoldfastTradeFailure.InventoryCapacity);
+            }
+
+            _stock[canonical] = currentStock - quantity;
+            if (_playerInventory == null)
+            {
+                _held[canonical] = GetHeld(canonical) + quantity;
+            }
+            StateChanged?.Invoke();
+            string whyLine = GetWhyLine(canonical, factionId, true);
+            return HoldfastTradeResult.Ok(canonical, quantity, factionId, chitCost, whyLine, -chitCost);
+        }
+
+        /// <summary>
+        /// UNBLOCK-02 F13-D: Wave-1 funds-denominated sell leg using canonical FundsLedger.
+        /// </summary>
+        public HoldfastTradeResult SellWithFunds(string itemId, int quantity, string factionId, Economy.FundsLedger ledger, int day, string counterpartyId = "holdfast")
+        {
+            if (ledger == null)
+                return HoldfastTradeResult.Fail("No funds ledger provided.", HoldfastTradeFailure.InsufficientFunds, Economy.FundsFailure.UnknownReasonKey);
+
+            string canonical = ItemAliases.ToCanonical(itemId);
+            var def = _catalog?.GetItem(canonical) ?? _catalog?.GetItem(itemId);
+            if (string.IsNullOrEmpty(canonical) || def == null)
+                return HoldfastTradeResult.Fail("Unknown item: " + itemId, HoldfastTradeFailure.UnknownItem);
+
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none")
+            {
+                if (factionId == "faction_nonexistent" || (_catalog?.GetFaction(factionId) == null && factionId != "faction_the_office" && factionId != "faction_the_tempest"))
+                    return HoldfastTradeResult.Fail("Unknown faction: " + factionId, HoldfastTradeFailure.UnknownFaction);
+
+                if (factionId == "faction_the_fleet")
+                    return HoldfastTradeResult.Fail("Unavailable or restricted counterparty: " + factionId, HoldfastTradeFailure.UnavailableOrRestricted);
+            }
+
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none" && EmbargoQuery != null && EmbargoQuery(factionId))
+                return HoldfastTradeResult.Fail("Trade with this faction is suspended (embargo).", HoldfastTradeFailure.Embargoed);
+
+            if (quantity <= 0)
+                return HoldfastTradeResult.Fail("Quantity must be at least 1.", HoldfastTradeFailure.InvalidQuantity);
+
+            int currentlyHeld = GetHeld(canonical);
+            if (currentlyHeld < quantity)
+                return HoldfastTradeResult.Fail("Insufficient player inventory.", HoldfastTradeFailure.InsufficientInventory);
+
+            long gainLong = GetSellPrice(canonical, factionId, quantity);
+            if (!TryGetTradeTotal(gainLong, out int chitGain))
+                return HoldfastTradeResult.Fail("Trade price is outside the supported range.", HoldfastTradeFailure.InvalidPrice, Economy.FundsFailure.InvalidAmount);
+            if ((long)GetStock(canonical) + quantity > int.MaxValue)
+                return HoldfastTradeResult.Fail("Merchant stock capacity reached.", HoldfastTradeFailure.InventoryCapacity);
+
+            var creditResult = ledger.TryCredit(chitGain, "holdfast_sell", counterpartyId, day);
+            if (!creditResult.Success)
+            {
+                return HoldfastTradeResult.Fail("Failed to credit funds: " + creditResult.FailureReason, HoldfastTradeFailure.InvalidPrice, Economy.FundsFailure.InvalidAmount);
+            }
+
+            _held[canonical] = currentlyHeld - quantity;
+            _stock[canonical] = GetStock(canonical) + quantity;
+            Inventory.RemoveItem(canonical, quantity);
+            StateChanged?.Invoke();
+            string whyLine = GetWhyLine(canonical, factionId, false);
+            return HoldfastTradeResult.Ok(canonical, quantity, factionId, chitGain, whyLine, chitGain);
         }
 
         public bool TryRestoreState(HoldfastTradeSaveState state, out string error)
@@ -814,7 +969,8 @@ namespace Ashfall.Core
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_stock", "trade.insufficient_stock", stateVersion);
 
             long costLong = GetBuyPrice(canonical, factionId, quantity);
-            int cost = (int)Math.Min(int.MaxValue, costLong);
+            if (!TryGetTradeTotal(costLong, out int cost))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "invalid_price", "trade.invalid_price", stateVersion);
             if (cost > _value)
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_funds", "trade.insufficient_funds", stateVersion);
 
@@ -886,13 +1042,19 @@ namespace Ashfall.Core
             if (!ValidateFaction(factionId, out var factionFailure, out var factionMessage))
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, factionFailure, factionMessage, stateVersion);
 
+            if (!string.IsNullOrEmpty(factionId) && factionId != "none" && EmbargoQuery != null && EmbargoQuery(factionId))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "embargoed", "trade.embargoed", stateVersion);
+
             string canonical = ItemAliases.ToCanonical(itemId);
             int currentlyHeld = GetHeld(canonical);
             if (currentlyHeld < quantity)
                 return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "insufficient_inventory", "trade.insufficient_inventory", stateVersion);
 
             long gainLong = GetSellPrice(canonical, factionId, quantity);
-            int gain = (int)Math.Min(int.MaxValue, gainLong);
+            if (!TryGetTradeTotal(gainLong, out int gain) || !CanCreditValue(gain))
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "invalid_price", "trade.invalid_price", stateVersion);
+            if ((long)GetStock(canonical) + quantity > int.MaxValue)
+                return CommandPreview.Unavailable(PlayerCommandCode.TradeConfirm, "inventory_capacity", "trade.inventory_capacity", stateVersion);
             var deltas = new Dictionary<string, double>
             {
                 { "value", gain },

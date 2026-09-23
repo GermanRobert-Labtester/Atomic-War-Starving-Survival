@@ -102,6 +102,58 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.AgricultureSelfTest:
                     GetTree().Quit(HostCli.RunAgricultureSelfTest(_dataDir));
                     return;
+                case HostCliAction.OrphanSealWave1SelfTest:
+                    GetTree().Quit(HostCli.RunOrphanSealWave1SelfTest(_dataDir));
+                    return;
+                case HostCliAction.CommitmentsSelfTest:
+                    GetTree().Quit(HostCli.RunCommitmentsSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SessionDurabilitySelfTest:
+                    GetTree().Quit(HostCli.RunSessionDurabilitySelfTest(_dataDir));
+                    return;
+                case HostCliAction.PlayMetricsSelfTest:
+                    GetTree().Quit(HostCli.RunPlayMetricsSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SurvivorVoiceSelfTest:
+                    GetTree().Quit(HostCli.RunSurvivorVoiceSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ContentCertificationSelfTest:
+                    GetTree().Quit(HostCli.RunContentCertificationSelfTest(_dataDir));
+                    return;
+                case HostCliAction.HoldfastPresentationSelfTest:
+                    GetTree().Quit(HostCli.RunHoldfastPresentationSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ScarcityAudioSelfTest:
+                    GetTree().Quit(HostCli.RunScarcityAudioSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SliceScenarioSelfTest:
+                    GetTree().Quit(HostCli.RunSliceScenarioSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RetentionSelfTest:
+                    GetTree().Quit(HostCli.RunRetentionSelfTest(_dataDir));
+                    return;
+                case HostCliAction.OutpostSettlementSelfTest:
+                    GetTree().Quit(HostCli.RunOutpostSettlementSelfTest(_dataDir));
+                    return;
+                case HostCliAction.WeatherCascadeSelfTest:
+                    GetTree().Quit(HostCli.RunWeatherCascadeSelfTest(_dataDir));
+                    return;
+                case HostCliAction.StandingGatesSelfTest:
+                    GetTree().Quit(HostCli.RunStandingGatesSelfTest(
+                        _dataDir, ProjectSettings.GlobalizePath("res://")));
+                    return;
+                case HostCliAction.TerritoryControlSelfTest:
+                    GetTree().Quit(HostCli.RunTerritoryControlSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CookingSelfTest:
+                    GetTree().Quit(HostCli.RunCookingSelfTest(_dataDir));
+                    return;
+                case HostCliAction.NeedsPerformanceSelfTest:
+                    GetTree().Quit(HostCli.RunNeedsPerformanceSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CampaignLegacySelfTest:
+                    GetTree().Quit(HostCli.RunCampaignLegacySelfTest(_dataDir));
+                    return;
                 case HostCliAction.DefenseSelfTest:
                     GetTree().Quit(HostCli.RunDefenseSelfTest(_dataDir));
                     return;
@@ -728,6 +780,11 @@ namespace AtomicWar.GodotApp
             FlushChemicalSynthesisIfDirty();
             FlushCollectiblesIfDirty();
             FlushCampaignDayIfDirty();
+            FlushOutpostSettlementIfDirty();
+            FlushTerritoryControlIfDirty();
+            FlushCookingIfDirty();
+            FlushRetentionIfDirty();
+            FlushCampaignLegacyIfDirty();
 
             // ── Sleep / End Day countdown timer (Phase 2 continuation)
             if (_advanceTimerRemaining > 0 && !_advanceCancelled)

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "origins": [
+    {
+      "origin_id": "origin_government_bunker",
+      "display_name": "Government Continuity Bunker",
+      "description": "A deep, reinforced civil defense installation designed for continuity of government.",
+      "starting_bonuses": ["radiation_shielding_bonus", "air_filtration_bonus"],
+      "starting_drawbacks": ["cramped_quarters", "restricted_surface_access"],
+      "radiation_shielding_bp": 2500,
+      "ventilation_bonus_bp": 1500,
+      "space_modifier_bp": -1000,
+      "flavor_text": "Heavy blast doors and thick lead-lined concrete offer superior protection against fallout, though tight quarters test survivor patience."
+    },
+    {
+      "origin_id": "origin_mining_facility",
+      "display_name": "Subterranean Mining Facility",
+      "description": "An expansive industrial extraction complex cut deep into bedrock.",
+      "starting_bonuses": ["mining_yield_bonus", "subterranean_space_bonus"],
+      "starting_drawbacks": ["poor_ventilation", "scarce_groundwater"],
+      "radiation_shielding_bp": 1000,
+      "ventilation_bonus_bp": -1500,
+      "space_modifier_bp": 2500,
+      "flavor_text": "Vast hollows and drill tracks provide boundless space for expansion, but stagnant air requires constant mechanical scrubbers."
+    },
+    {
+      "origin_id": "origin_school_basement",
+      "display_name": "Community School Shelter",
+      "description": "A repurposed reinforced public school basement where communal solidarity and youth care run high.",
+      "starting_bonuses": ["education_speed_bonus", "communal_morale_bonus"],
+      "starting_drawbacks": ["light_shielding", "limited_defenses"],
+      "radiation_shielding_bp": -1500,
+      "ventilation_bonus_bp": 0,
+      "space_modifier_bp": 1000,
+      "flavor_text": "Chalkboards, cots, and book crates foster an ethos of collective duty and mutual care, though exterior brickwork is fragile."
+    },
+    {
+      "origin_id": "origin_private_vault",
+      "display_name": "Executive Private Vault",
+      "description": "A luxury pre-war redoubt engineered with high-grade components and pristine automated comforts.",
+      "starting_bonuses": ["luxury_stock_bonus", "advanced_components_bonus"],
+      "starting_drawbacks": ["minimal_footprint", "suspicious_nomads"],
+      "radiation_shielding_bp": 1500,
+      "ventilation_bonus_bp": 1000,
+      "space_modifier_bp": -2000,
+      "flavor_text": "Finely engineered filtration and brass fittings ensure luxury, though limited square meters forbid large cohorts."
+    },
+    {
+      "origin_id": "origin_improvised_cellar",
+      "display_name": "Improvised Storm Cellar",
+      "description": "A hastily fortified underground root cellar bolstered by salvaged corrugated sheeting and earth embankments.",
+      "starting_bonuses": ["rapid_surface_access", "scavenger_ingenuity_bonus"],
+      "starting_drawbacks": ["fragile_insulation", "minimal_rations"],
+      "radiation_shielding_bp": -2000,
+      "ventilation_bonus_bp": 500,
+      "space_modifier_bp": -500,
+      "flavor_text": "Built on grit and scavenged scrap, rapid access lets scavengers deploy swiftly, but storms leak moisture and bitter frost."
+    },
+    {
+      "origin_id": "origin_military_outpost",
+      "display_name": "Hardened Military Outpost",
+      "description": "A decommissioned perimeter outpost built for defensive containment and munitions storage.",
+      "starting_bonuses": ["perimeter_defense_bonus", "ordnance_cache_bonus"],
+      "starting_drawbacks": ["austere_quarters", "scarce_medical_supplies"],
+      "radiation_shielding_bp": 1500,
+      "ventilation_bonus_bp": 500,
+      "space_modifier_bp": 500,
+      "flavor_text": "Stout firing slits and reinforced perimeter emplacements repel raiders, but clinical supplies are nonexistent."
+    }
+  ]
+}

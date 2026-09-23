@@ -338,6 +338,8 @@ namespace AtomicWar.GodotApp.UI
             var dispatch = Action("DISPATCH NORMAL", () => OnActionRequested?.Invoke(
                 "dispatch", $"{_source.Text}|{_destination.Text}|{_item.Text}|{_amount.Text}"));
             root.AddChild(dispatch);
+            AddRow(root, "CAPSULE", _capsule);
+            AddRow(root, "LINK", _link);
             var maintenance = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
             maintenance.AddChild(Action("CLEAR JAM", () => OnActionRequested?.Invoke("clear_jam", _capsule.Text)));
             maintenance.AddChild(Action("MAINTAIN LINK", () => OnActionRequested?.Invoke("maintain", _link.Text)));

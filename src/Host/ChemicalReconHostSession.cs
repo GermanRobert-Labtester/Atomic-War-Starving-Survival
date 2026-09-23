@@ -18,6 +18,12 @@ namespace AtomicWar.GodotApp
         public ChemicalReconEngine System { get; }
         public string LastEvent { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// Host-supplied remaining respirator capacity (equipped gear condition).
+        /// Null leaves the filter projection unbound — no fabricated capacity.
+        /// </summary>
+        public Func<float>? FilterRemainingCapacityProvider { get; set; }
+
         public ChemicalReconHostSession(ChemicalReconEngine system)
         {
             System = system ?? throw new ArgumentNullException(nameof(system));
@@ -47,6 +53,14 @@ namespace AtomicWar.GodotApp
         public ChemicalDetectionResult Scan(string locationNodeId, string detectorBand, float surveyorSkill = 0.5f)
         {
             var result = System.ScanLocation(locationNodeId, detectorBand, surveyorSkill);
+
+            // Filter breakthrough is only meaningful when the respirator is
+            // actually being loaded by a detected hazard.
+            if (result.Detected && FilterRemainingCapacityProvider != null)
+            {
+                System.EvaluateFilterCondition(locationNodeId, FilterRemainingCapacityProvider());
+            }
+
             LastEvent = result.Detected
                 ? $"Detector: {result.HazardClass} ({result.SafeExposureBand}) — filter {result.RecommendedFilterCategory}."
                 : "Detector: no hazard above threshold.";

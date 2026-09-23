@@ -60,7 +60,7 @@ namespace Ashfall.Core.Tests.Integration
             Assert.True(expeditions.Count >= 50, $"Expected >= 50 expedition destinations, got {expeditions.Count}");
             var expIds = new HashSet<string>(expeditions.Select(e => e.id), StringComparer.Ordinal);
 
-            // 2. Plan 33: Skills (148 authored skills)
+            // 2. Plan 33: Skills (160 authored skills)
             var skills = SkillCatalogLoader.Load(dataDir, fileIO, serializer);
             Assert.True(skills.Count >= 50, $"Expected >= 50 skills, got {skills.Count}");
             var skillIds = new HashSet<string>(skills.Select(s => s.id), StringComparer.Ordinal);
@@ -360,7 +360,7 @@ namespace Ashfall.Core.Tests.Integration
             var expeditions = ExpeditionCatalogLoader.Load(dataDir, fileIO, serializer);
             Assert.True(expeditions.Count >= 50, $"Plan 32 target >= 50, got {expeditions.Count}");
 
-            // Plan 33: Skills (L2 mechanical loader, 148 skills)
+            // Plan 33: Skills (L2 mechanical loader, 160 skills)
             var skills = SkillCatalogLoader.Load(dataDir, fileIO, serializer);
             Assert.True(skills.Count >= 50, $"Plan 33 target >= 50, got {skills.Count}");
 

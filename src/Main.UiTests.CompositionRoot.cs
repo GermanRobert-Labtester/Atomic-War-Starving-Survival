@@ -155,9 +155,17 @@ namespace AtomicWar.GodotApp
 
             // Verify that subsequent OpenPlayerPanel calls on the fresh game state
             // perform zero service re-allocations (SetupXxx in fallback switch are no-ops).
+            //
+            // Only a RE-ALLOCATION OF AN ALREADY-LIVE SERVICE is a violation. A field
+            // that is still null when the sweep starts is lazily composed on first
+            // route (CompletionHistoryStore, for instance, is built by
+            // `??= CompletionHistoryStore.Load()` the first time a chronicle route
+            // is opened), and materialising it is legitimate - flagging it made the
+            // chronicle route a red gate even though no live service was replaced.
             bool fallbackNoOpsPass = true;
             string? fallbackFailure = null;
             int fallbackPanelsTested = 0;
+            var liveServicesAtSweepStart = postNewGameServices;
 
             foreach (var panelId in panelIds)
             {
@@ -168,13 +176,15 @@ namespace AtomicWar.GodotApp
 
                 fallbackPanelsTested++;
 
-                foreach (var kv in before)
+                foreach (var kv in liveServicesAtSweepStart)
                 {
-                    if (kv.Value == null && after[kv.Key] == null) continue;
-                    if (kv.Value != null && !kv.Value.Equals(after[kv.Key]))
+                    // A field the sweep starts with null is lazily composed; its
+                    // first materialisation is expected, not a re-allocation.
+                    if (kv.Value == null) continue;
+                    if (!kv.Value.Equals(after[kv.Key]))
                     {
                         fallbackNoOpsPass = false;
-                        fallbackFailure = $"{panelId} altered service {kv.Key} after StartNewGame()";
+                        fallbackFailure = $"{panelId} re-allocated live service {kv.Key} after StartNewGame()";
                         break;
                     }
                 }

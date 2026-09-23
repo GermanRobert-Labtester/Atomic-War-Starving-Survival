@@ -147,6 +147,10 @@ namespace AtomicWar.GodotApp
             {
                 _prisoners.RestoreState(saved);
             }
+            else
+            {
+                MigrateLegacyShelterPrisoners();
+            }
 
             _prisoners.OnIntelExtracted += (captiveId, intelId, isTrue) =>
             {
@@ -165,6 +169,40 @@ namespace AtomicWar.GodotApp
             };
 
             return _prisoners;
+        }
+
+        /// <summary>
+        /// ORPHAN-SEAL-W1 (2026-09-23): one-time import of Plan 63's retired
+        /// shelter_prisoners section into the single captive ledger. Runs only
+        /// when no canonical save exists yet; terminal records (recruited /
+        /// paroled) are not resurrected. The old section is left on disk
+        /// untouched and is no longer written.
+        /// </summary>
+        private void MigrateLegacyShelterPrisoners()
+        {
+            if (_prisoners == null) return;
+            var legacy = ShelterPrisonerSaveStore.TryLoad();
+            if (legacy?.Prisoners == null || legacy.Prisoners.Count == 0) return;
+            int imported = 0;
+            for (int i = 0; i < legacy.Prisoners.Count; i++)
+            {
+                var record = legacy.Prisoners[i];
+                if (record == null || string.IsNullOrEmpty(record.PrisonerId)) continue;
+                if (record.Status == Ashfall.Core.Shelter.PrisonerStatus.Paroled
+                    || record.Status == Ashfall.Core.Shelter.PrisonerStatus.Escaped
+                    || record.Status == Ashfall.Core.Shelter.PrisonerStatus.Deceased) continue;
+                string sourceFaction = string.IsNullOrEmpty(record.FactionOrigin)
+                    ? "faction_unknown"
+                    : record.FactionOrigin;
+                if (_prisoners.TakePrisoner(record.PrisonerId, sourceFaction, Math.Max(1, _simDay)))
+                    imported++;
+            }
+            if (imported > 0)
+            {
+                _journal?.TryAddRawEntry("prisoner_legacy_migration",
+                    $"{imported} captive record(s) from the retired Plan 63 cells were moved into the single prisoner ledger.",
+                    null!, Math.Max(1, _simDay));
+            }
         }
 
         private void SetupPrisoners()

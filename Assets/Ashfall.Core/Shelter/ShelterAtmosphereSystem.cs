@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Shelter
 {
@@ -33,6 +35,45 @@ namespace Ashfall.Core.Shelter
         public float StressReliefModifier { get; set; }
     }
 
+    public sealed class AtmosphereProfileDefinition
+    {
+        [JsonPropertyName("profile_type")]
+        public string ProfileType { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+
+        [JsonPropertyName("morale_modifier")]
+        public float MoraleModifier { get; set; }
+
+        [JsonPropertyName("productivity_modifier")]
+        public float ProductivityModifier { get; set; }
+
+        [JsonPropertyName("stress_relief_modifier")]
+        public float StressReliefModifier { get; set; }
+
+        [JsonPropertyName("target_lighting_min")]
+        public float TargetLightingMin { get; set; }
+
+        [JsonPropertyName("target_cleanliness_min")]
+        public float TargetCleanlinessMin { get; set; }
+
+        [JsonPropertyName("target_air_purity_min")]
+        public float TargetAirPurityMin { get; set; }
+    }
+
+    public sealed class AtmosphereCatalogData
+    {
+        [JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; } = 1;
+
+        [JsonPropertyName("profiles")]
+        public List<AtmosphereProfileDefinition> Profiles { get; set; } = new List<AtmosphereProfileDefinition>();
+    }
+
     [Serializable]
     public sealed class AtmosphereState
     {
@@ -60,9 +101,22 @@ namespace Ashfall.Core.Shelter
     public sealed class ShelterAtmosphereSystem
     {
         private readonly AtmosphereState _state;
+        private readonly Dictionary<AtmosphereProfileType, AtmosphereProfileDefinition> _profileCatalog = new();
 
         public event Action<AtmosphereMoodCategory, float>? OnMoodShifted;
         public event Action<AtmosphereProfileType>? OnProfileChanged;
+
+        /// <summary>
+        /// Delegate seam for broadcasting shelter mood category and composite score transitions to presentation/listeners.
+        /// </summary>
+        public Action<AtmosphereMoodCategory, float>? MoodBroadcastSeam { get; set; }
+
+        /// <summary>
+        /// Delegate seam for applying active atmospheric profile modifiers to shelter morale/production/stress consumers.
+        /// </summary>
+        public Action<AtmosphereProfileType, AtmosphereModifiers>? ProfileModifierApplier { get; set; }
+
+        public IReadOnlyDictionary<AtmosphereProfileType, AtmosphereProfileDefinition> ProfileCatalog => _profileCatalog;
 
         public float OverallMoodScore => _state.OverallMoodScore;
         public AtmosphereMoodCategory CurrentMoodCategory => _state.CurrentMoodCategory;
@@ -134,6 +188,7 @@ namespace Ashfall.Core.Shelter
             {
                 _state.CurrentMoodCategory = newCategory;
                 OnMoodShifted?.Invoke(newCategory, _state.OverallMoodScore);
+                MoodBroadcastSeam?.Invoke(newCategory, _state.OverallMoodScore);
             }
 
             // Determine Profile
@@ -171,7 +226,57 @@ namespace Ashfall.Core.Shelter
             {
                 _state.ActiveProfile = newProfile;
                 OnProfileChanged?.Invoke(newProfile);
+                ProfileModifierApplier?.Invoke(newProfile, GetActiveModifiers());
             }
+        }
+
+        public void BroadcastActiveAmbiance()
+        {
+            MoodBroadcastSeam?.Invoke(_state.CurrentMoodCategory, _state.OverallMoodScore);
+            ProfileModifierApplier?.Invoke(_state.ActiveProfile, GetActiveModifiers());
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var catalog = JsonSerializer.Deserialize<AtmosphereCatalogData>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+            if (catalog != null)
+            {
+                LoadCatalog(catalog);
+            }
+        }
+
+        public void LoadCatalog(AtmosphereCatalogData catalog)
+        {
+            if (catalog?.Profiles == null) return;
+            _profileCatalog.Clear();
+            foreach (var profile in catalog.Profiles)
+            {
+                if (Enum.TryParse<AtmosphereProfileType>(profile.ProfileType, ignoreCase: true, out var type) ||
+                    TryParseCustomProfileType(profile.ProfileType, out type))
+                {
+                    _profileCatalog[type] = profile;
+                }
+            }
+        }
+
+        private static bool TryParseCustomProfileType(string raw, out AtmosphereProfileType type)
+        {
+            if (string.IsNullOrWhiteSpace(raw))
+            {
+                type = default;
+                return false;
+            }
+            string normalized = raw.Replace("_", "").Replace("-", "").Trim();
+            return Enum.TryParse(normalized, ignoreCase: true, out type);
+        }
+
+        public bool TryGetProfileDefinition(AtmosphereProfileType type, out AtmosphereProfileDefinition definition)
+        {
+            return _profileCatalog.TryGetValue(type, out definition!);
         }
 
         public AtmosphereModifiers GetActiveModifiers()
@@ -180,36 +285,45 @@ namespace Ashfall.Core.Shelter
             float baseProd = 0f;
             float baseStress = 0f;
 
-            switch (_state.ActiveProfile)
+            if (_profileCatalog.TryGetValue(_state.ActiveProfile, out var def))
             {
-                case AtmosphereProfileType.Industrial:
-                    baseProd += 0.10f;
-                    baseMorale -= 1.0f;
-                    break;
-                case AtmosphereProfileType.Sterile:
-                    baseStress -= 0.05f;
-                    baseProd += 0.05f;
-                    break;
-                case AtmosphereProfileType.Warm:
-                    baseMorale += 2.5f;
-                    baseStress += 0.10f;
-                    break;
-                case AtmosphereProfileType.Cold:
-                    baseMorale -= 3.0f;
-                    baseProd -= 0.05f;
-                    break;
-                case AtmosphereProfileType.Chaotic:
-                    baseStress -= 0.15f;
-                    baseProd -= 0.10f;
-                    break;
-                case AtmosphereProfileType.Serene:
-                    baseStress += 0.20f;
-                    baseMorale += 1.5f;
-                    break;
-                case AtmosphereProfileType.LivedIn:
-                default:
-                    baseMorale += 0.5f;
-                    break;
+                baseMorale += def.MoraleModifier;
+                baseProd += def.ProductivityModifier;
+                baseStress += def.StressReliefModifier;
+            }
+            else
+            {
+                switch (_state.ActiveProfile)
+                {
+                    case AtmosphereProfileType.Industrial:
+                        baseProd += 0.10f;
+                        baseMorale -= 1.0f;
+                        break;
+                    case AtmosphereProfileType.Sterile:
+                        baseStress -= 0.05f;
+                        baseProd += 0.05f;
+                        break;
+                    case AtmosphereProfileType.Warm:
+                        baseMorale += 2.5f;
+                        baseStress += 0.10f;
+                        break;
+                    case AtmosphereProfileType.Cold:
+                        baseMorale -= 3.0f;
+                        baseProd -= 0.05f;
+                        break;
+                    case AtmosphereProfileType.Chaotic:
+                        baseStress -= 0.15f;
+                        baseProd -= 0.10f;
+                        break;
+                    case AtmosphereProfileType.Serene:
+                        baseStress += 0.20f;
+                        baseMorale += 1.5f;
+                        break;
+                    case AtmosphereProfileType.LivedIn:
+                    default:
+                        baseMorale += 0.5f;
+                        break;
+                }
             }
 
             return new AtmosphereModifiers

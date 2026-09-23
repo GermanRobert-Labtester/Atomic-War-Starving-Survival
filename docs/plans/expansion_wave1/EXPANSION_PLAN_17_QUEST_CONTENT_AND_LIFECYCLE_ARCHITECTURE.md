@@ -1,0 +1,1894 @@
+# Expansion-series Plan 17 — Quest Content and Lifecycle Architecture
+
+**Status:** Design proposal; documentation only. No implementation ownership is claimed.
+**Relationship to global plan numbering:** This is Expansion Planning Wave 1, Plan 17. The repository also has a separate global Plan 17 for environmental storytelling. Keep the namespaced filename and do not replace or renumber that plan.
+**Purpose:** Define a small, maintainable contract for authored quests and generated quest instances, with enough content structure to add distinctive storylines and side quests without creating a second quest engine.
+
+## 1. Design outcome
+
+Use the existing quest runtime as the player-facing lifecycle and read model. Keep permanent definitions in the current canonical data authority. Keep generated instances as bounded, seeded snapshots made from validated authored templates. Let the quest owner own objective progress and status; let faction, relationship, inventory, location, campaign, and journal owners apply their own consequences.
+
+The architecture is a flow through existing owners:
+
+1. Authored definitions and templates are loaded and validated.
+2. Eligibility reads a snapshot of current campaign, character, faction, and location facts.
+3. A deterministic selector chooses a definition or template and binds permitted parameters.
+4. The current quest runtime registers one instance with a stable definition ID and a distinct instance ID.
+5. Existing game events advance objectives or expose a choice.
+6. A typed result requests consequences from the systems that own those consequences.
+7. The quest log and map display read models of the same authoritative state.
+
+The selector must not write relationship values, faction reputation, map discovery, inventory, or ending facts. UI panels must not own eligibility, progression, or rewards. This plan adds no quest registry, parallel journal, world-state store, or generic narrative scripting language.
+
+## 2. Evidence and boundaries
+
+Current source includes QuestRuntimeCoordinator with a player-facing QuestLog read model and lifecycle states Offered, Active, Completed, Failed, Expired, and Abandoned. QuestType currently classifies Crisis, Expedition, Exploration, Faction, Shelter, and Story. DynamicQuestGenerator has authored templates and generated instances, while its source documentation identifies ProceduralNarrativeSystem as the canonical template authority for production candidate generation. PersonalQuestSystem and NarrativeQuestlineSystem serve more specific survivor-story scopes.
+
+This evidence shows that quest concepts and runtime paths already exist. It does not prove every data catalog is consumed, every quest state is represented, or every effect has an active host route. Plans 59, 171, and 200, global Plan 17, and the current quest-runtime integration work are mandatory collision checks before promotion. Reuse the narrowest current owner and update the live integration ledger only through its authorized integrator.
+
+## 3. Permanent definitions and generated instances
+
+Permanent authored content is reviewed, versioned, and stable across runs. It contains narrative intent, allowed objectives, location and actor requirements, gating rules, text keys, reward request identifiers, failure routes, and authoring metadata. Definitions do not store mutable per-run progress.
+
+Generated content is an instance bound from an authored template. Its saved facts are limited to what is required to continue the player's accepted instance: stable instance ID, definition/template ID, generation seed or stable binding, bound actor/location/resource IDs, objective progress, lifecycle status, accepted/created day, explicit deadline if any, and already-applied outcome identifiers if supported by the current owner. Generated prose must use authored fragments and checked substitutions. A generated quest may choose among approved values; it may not invent a location ID, reward, faction, character, or consequence.
+
+The generation seed does not authorize wall-clock seeding, unstable hash enumeration, or a second RNG. Use the existing seeded RNG contract and stable sort order. If the current save owner cannot capture a proposed field, keep it derived or defer it pending an architecture decision.
+
+## 4. Requested quest lifecycle
+
+The requested vocabulary has more stages than the current shared QuestLifecycleState. Treat it as a design target requiring a compatibility audit, not as an instruction to add a competing enum. Keep definition visibility and instance lifecycle conceptually distinct:
+
+| Requested state | Meaning and intended transition |
+|---|---|
+| Inactive | Authored definition is not eligible or its campaign gate is closed. |
+| Available | Eligible and offered through an existing board, character, faction, or discovery route. |
+| Discovered | A clue or environmental interaction revealed the opportunity; acceptance is still optional. |
+| Accepted | The player committed to the instance; objective and destination become visible at the appropriate knowledge level. |
+| In Progress | At least one objective or travel step is active. |
+| Blocked | A named prerequisite is temporarily unavailable; keep the quest visible and give a recovery action. |
+| Partially Completed | One or more objectives are complete while required objectives remain. |
+| Failed | The primary approach failed. Where authored, transition to an alternate route instead of deleting the story. |
+| Completed | Required objectives are complete and the quest's primary outcome is recorded. |
+| Resolved | A branch, settlement, or epilogue has closed the narrative question. It may follow completion or a recoverable failure route. |
+| Expired | A supported deadline passed. Show the changed world result and any continuation. |
+| Abandoned | The player explicitly leaves the commitment; use current abandon semantics and preserve relevant history. |
+| Reopened | A deliberately authored sequel or supported current API reactivates a resolved thread with a new instance or stage. Do not silently reset old state. |
+
+The MVP uses current lifecycle values wherever they accurately express the behavior. Add any new persisted status only after verifying all consumers, save migration, terminal-state reporting, and compatibility with existing quest-specific systems. Blocked and Partially Completed may be derived read-model labels if the objective model already carries sufficient facts. Reopened should normally create a sequel instance, preserving the prior completed/resolved record.
+
+Every transition needs an actor, triggering event, allowed source status, resulting status, visible feedback, and recovery path. Invalid transitions are rejected without partial rewards. Failed, Expired, and Abandoned are distinct because the player action and world consequence differ.
+
+## 5. Quest type production cards
+
+All cards use these review fields: purpose, typical structure, required locations, possible failure states, rewards, branching potential, reusability, production cost, and core-game or expansion fit. A location may be a known map node, a clue-led destination, a shelter context, or no physical destination. Reuse refers to structure and authored templates, not repeating unique story text.
+
+### Main quest
+
+- **Purpose and structure:** Carry the central survival mystery or campaign obligation through a chain of milestones, choices, and a clear resolution.
+- **Locations:** A small authored set of reachable mandatory nodes; expose each objective and route through the map owner.
+- **Failure and rewards:** Prefer costs, delay, or a changed route over a hard fail. Reward new access, information, or a campaign fact owned elsewhere.
+- **Branching and reuse:** Branch at meaningful decisions and reconverge where the story permits. Reuse objective types and validation, never the unique central revelations.
+- **Cost and placement:** High writing, continuity, and QA cost. Core game if needed for campaign completion; optional deeper chapters belong in expansions.
+
+### Character quest
+
+- **Purpose and structure:** Reveal a survivor through a concrete task, a pressure point, and a choice or changed relationship.
+- **Locations:** Character's shelter duty, a familiar shared room, or one reachable expedition site; offer a delegate/delay route if absent.
+- **Failure and rewards:** Missed timing may change trust or opportunity only through current owners; no silent arc deletion. Rewards may be knowledge, a trait request, access, or authored closure.
+- **Branching and reuse:** Two or three voice/outcome variants can share the same objective rail. Reuse stage patterns, not personality.
+- **Cost and placement:** Medium to high continuity cost. One representative arc fits the core; a roster of arcs is expansion content.
+
+### Faction quest
+
+- **Purpose and structure:** Make an agreement, dispute, or resource obligation playable at local and regional scale.
+- **Locations:** A faction contact plus a reachable delivery, meeting, or investigation site.
+- **Failure and rewards:** Refusal, broken supply, or unavailable contact routes to negotiation, public disclosure, or a smaller agreement. Rewards route through the faction and item/location owners.
+- **Branching and reuse:** Reusable negotiation framework with faction-specific goals and distinct voices.
+- **Cost and placement:** Medium cost for one core faction; high for a wide cast. Major faction arcs may be expansion content.
+
+### Discovery quest
+
+- **Purpose and structure:** Turn a found object, unusual marker, or field report into a question and a return choice.
+- **Locations:** Starts at an environmental clue and may point to a second known or hinted location.
+- **Failure and rewards:** A depleted or inaccessible clue grants a substitute lead or explicitly closes the opportunity. Reward knowledge, map discovery, or a journal record through its owner.
+- **Branching and reuse:** High reuse of clue-to-investigation structure; keep evidence and interpretation specific.
+- **Cost and placement:** Low to medium. Core content should teach the discovery loop; additional discoveries fit expansions.
+
+### Investigation quest
+
+- **Purpose and structure:** Gather at least two independent clues, compare explanations, and record a supported conclusion.
+- **Locations:** Evidence nodes must be reachable by different routes where possible; make a clue available if a location pool is exhausted.
+- **Failure and rewards:** Incomplete evidence produces uncertainty, not a fabricated answer. Wrong interpretation can be corrected or recorded with its consequence.
+- **Branching and reuse:** Reuse evidence accounting and conclusion surfaces, not mystery solutions.
+- **Cost and placement:** Medium continuity cost. One core investigation is useful; regional cases can expand the catalog later.
+
+### Escort or protection quest
+
+- **Purpose and structure:** Move a person or valuable item through a defined danger window with player-set preparation and a return condition.
+- **Locations:** Start, route, and destination must be stated before acceptance; use existing expedition/travel routes.
+- **Failure and rewards:** Injury, separation, retreat, or partial delivery must be represented honestly by current health/quest owners. Protect the story with a rescue or contact-again route.
+- **Branching and reuse:** Reuse encounter and route scaffolding; cast and stakes stay authored.
+- **Cost and placement:** Medium gameplay and balance cost. A short core example can teach preparation; longer escorts fit an expansion.
+
+### Survival quest
+
+- **Purpose and structure:** Respond to weather, health, shelter integrity, or scarcity using a sequence of diagnosis, action, and reassessment.
+- **Locations:** Usually shelter or one expedition site; display required supplies before dispatch where possible.
+- **Failure and rewards:** Scarcity can force triage or delay; never mint resources. Rewards should be a real resolved condition, knowledge, or trust through owners.
+- **Branching and reuse:** High reuse of objective rails but require varied human stakes and multiple viable tactics.
+- **Cost and placement:** Low to medium. Core game because it reinforces survival systems.
+
+### Resource and crafting quest
+
+- **Purpose and structure:** Source named materials, decide what to consume, and deliver or craft through canonical inventory and recipe systems.
+- **Locations:** A reachable source or shelter workbench; list alternatives when item provenance permits.
+- **Failure and rewards:** Shortage, contamination, or recipe lock can block the task visibly and open a substitute recipe or delayed route. Never create a quest-local inventory.
+- **Branching and reuse:** Very reusable objective patterns; author distinct motivations and fair quantities.
+- **Cost and placement:** Low content cost but requires economy/balance review. Core tutorial examples; specialized chains fit expansions.
+
+### Location-based quest
+
+- **Purpose and structure:** Make a place matter through an objective that changes with discovery, access, or prior use.
+- **Locations:** The site is the mechanic and must have a stable canonical ID, route, visibility rule, and fallback clue.
+- **Failure and rewards:** Closure, hazard, or exhausted content must update availability visibly. Reward map knowledge or access through current owners.
+- **Branching and reuse:** Reusable site state and event triggers; unique location lore remains authored.
+- **Cost and placement:** Medium due to map art, data, travel, and QA. Core locations support critical progression; optional sites may expand the world.
+
+### Timed quest
+
+- **Purpose and structure:** Communicate a real deadline and show what changes when it passes.
+- **Locations:** Any required site must remain reachable before the deadline, and the map must display route time from the current expedition authority.
+- **Failure and rewards:** Expiry is explicit and may switch to a repair, apology, or aftermath route. Never use a hidden timer.
+- **Branching and reuse:** Reuse deadline checks only where a canonical campaign clock exists.
+- **Cost and placement:** Medium balance and save/load cost. Use sparingly in core; seasonal/rotating examples suit expansions only after time ownership is proven.
+
+### Repeatable or rotating quest
+
+- **Purpose and structure:** Offer a bounded recurring task with changing authored parameters, cooldown, and clear rewards.
+- **Locations:** Draw from a validated set of reachable sites and avoid consecutive identical dispatches where current state can support it.
+- **Failure and rewards:** Expiry or abandonment applies its documented result. Rewards are capped and issued by existing owners.
+- **Branching and reuse:** High template reuse; use deterministic seeded selection and stable IDs.
+- **Cost and placement:** Low to medium. A small core rotation supports replay; larger catalogs are expansion material.
+
+### Hidden quest
+
+- **Purpose and structure:** Reward attention to a specific authored signal, document, or place without depending on arbitrary pixel hunting.
+- **Locations:** Starts at a legible clue; undiscovered location remains hidden while its clue has a reachable route.
+- **Failure and rewards:** Missing content resolves to a clue or unavailable state. Rewards are information or access with explicit feedback.
+- **Branching and reuse:** Reusable clue mechanics; keep secrets distinct and avoid checklist repetition.
+- **Cost and placement:** Medium discovery QA. Optional in core, well suited to expansion.
+
+### Environmental-discovery quest
+
+- **Purpose and structure:** Begin from a diegetic sign, recovered note, altered site, or encounter outcome.
+- **Locations:** The initiating object must be part of an active location or encounter consumer, with a stable discovery event.
+- **Failure and rewards:** If the source cannot spawn, provide another discoverable lead or do not offer the quest. No invisible acceptance.
+- **Branching and reuse:** Reuse event routing and text slots; vary the evidence and interpretation.
+- **Cost and placement:** Medium authoring and content-validation cost. A few core examples teach the loop; broad sets expand later.
+
+### Choice-reactive quest
+
+- **Purpose and structure:** Change later dialogue or objectives based on a prior, explicitly recorded player decision.
+- **Locations:** Later locations remain optional unless part of critical progression; provide a no-prior-choice variant.
+- **Failure and rewards:** Missing or old-save facts resolve to an authored neutral variant. Consequence ownership must be named.
+- **Branching and reuse:** Prefer short branches that reconverge. Reuse condition evaluation, not consequence semantics.
+- **Cost and placement:** Medium continuity cost; use in core for high-impact decisions and in expansions for callbacks.
+
+### Fail-forward quest
+
+- **Purpose and structure:** Preserve a story after failure by exposing a costly but coherent next route.
+- **Locations:** Original and alternate destinations need independent reachability or an explicit clue bridge.
+- **Failure and rewards:** Failure changes the objective, cost, or speaker; it never marks success. Reward may be smaller, delayed, or replaced by knowledge.
+- **Branching and reuse:** High value for reuse across equipment, route, and social failure cases.
+- **Cost and placement:** Medium design/QA cost. Core-critical stories should fail forward; optional challenge quests may have honest terminal failure.
+
+### Playable side-quest seed: The Unentered Shelf
+
+This provisional quest begins when a shelter clerk finds an unlisted crate behind the dry-goods shelves. Its label has been cut away; the crate contains ordinary blankets, each patched with a different maker's thread. A mechanic says the crate came from a sealed depot. A night nurse says some of the blankets were promised to a neighboring shelter. Neither claim is enough to establish ownership.
+
+- **Purpose:** Let the player decide what a shared resource record should mean when the object is safe but its promise is unclear.
+- **Typical structure:** Inspect the crate at the shelter, ask two people what they remember, then choose to keep it for local triage, carry part of it to the neighbor, or record the uncertainty and wait for proof.
+- **Required locations:** The shelter store is mandatory. A depot or neighbor visit is optional and can be substituted by an authored clue if that location is unavailable.
+- **Possible failures:** The expedition can return late or with no additional evidence. The quest then remains unresolved with an explicit “no proof yet” journal line; the crate is not silently awarded or consumed.
+- **Rewards:** A recorded decision, possible access or standing request through the current owner, and a visible change to the shelter's stock only if the inventory owner accepts the transfer.
+- **Branching potential:** Three short responses reconverge at a later count. A later quest can quote the recorded choice if an existing campaign or quest owner persists it.
+- **Reusability:** The evidence-and-stewardship structure can support other shared goods; the blanket story, voices, and promise remain unique.
+- **Production cost and placement:** Medium because it needs two credible witnesses, item references, and fallback text. A shorter version fits the core; a regional delivery sequel belongs in an expansion.
+
+Sample offer text: “The crate is dry. The label isn't. I can count the blankets, but I can't count a promise from an empty line.”
+
+Provisional character notes: the clerk speaks in counts and careful questions, never calls uncertainty theft; the nurse speaks in practical exceptions and remembers who was cold; the mechanic distinguishes a sealed door from a locked one. These are writing anchors, not runtime traits.
+
+## 6. Minimum viable version and optional layers
+
+### Minimum viable version
+
+1. Audit the current definition loaders and choose one existing canonical catalog.
+2. Validate stable IDs, allowed quest type, objective references, location references, and reward command identifiers.
+3. Add one authored quest that registers with the existing runtime, appears in the existing quest read model, and can be completed or abandoned.
+4. Add one generated template only if the current canonical generation authority and seeded RNG path can bind it without a second lifecycle store.
+5. Make one accepted quest target visible in the current map/expedition flow with a fallback if its required location is unavailable.
+
+### Optional expansion layers
+
+- More quest types after each has a real objective-event producer and owner-routed consequence.
+- Additional authored branches, character and faction arcs, and campaign callbacks after continuity and save evidence.
+- Rotating templates after cooldown, persistence, deterministic selection, and de-duplication behavior are proven.
+- Quest graph visualization and authoring lint after current content authority and CI ownership are agreed.
+- Localization, voice, and cinematic layers are independent presentation expansions and must not enter Core.
+
+## 7. Dependencies, risks, and acceptance
+
+Dependencies are current quest lifecycle/API, existing canonical data loaders, objective-event producers, seeded RNG, quest save ownership, location/map reachability, and effect-owner host seams. Plan 18 consumes quest location requirements; Plan 19 defines authored/generated separation; Plans 20–22 define dialogue conditions and consequence routing.
+
+Acceptance for any future package: one unique instance is registered; all objectives have live producers; the quest appears through a truthful read model; every target is reachable or has a visible failover; each reward routes to its existing owner; save and deterministic replay cover all persistent generated facts; catalog integrity passes; and focused tests cover completion, failure, expiry, and a fallback. The current task changes documentation only and runs no tests.
+
+## 8. Integration course
+
+**Course 0 — Intake:** Verify the premise against current source, data consumers, live batch, exact claims, and known debt. List competing quest owners and choose one.
+
+**Course 1 — Contract:** Freeze the smallest authored definition and instance fields. Mark which lifecycle values are current, derived, or require schema/migration changes. Agree on invalid-data behavior and unknown-ID handling.
+
+**Course 2 — Content:** Add the authored row to the selected canonical data source. Validate references, gates, route reachability, refusal, and a no-content fallback before connecting the host.
+
+**Course 3 — Runtime:** Register and advance through the established quest runtime and existing event producers. Return typed effects; do not mutate other authorities from the quest module.
+
+**Course 4 — Persistence and UI:** Use existing save ownership. Show accepted status, progress, blocker, deadline if real, destination knowledge, and outcome in current surfaces. Preserve accessibility and lifecycle.
+
+**Course 5 — Verification:** Run only the claimed package's focused tests and validators. Prove a fresh run, load continuation, repeated resolution protection, deterministic generated binding, and all failure routes. Use a targeted Godot check only if host integration changed.
+
+**Course 6 — Handoff:** Record evidence, changed files, owner contract, command results, untested boundaries, rollback behavior, and next dependency. The integrator updates the live ledger; this plan does not self-assign paths.
+
+## Continuation pass 2 — runtime and authoring contract
+
+### Definition contract
+
+The authored definition should be small enough to review as one quest. A candidate contract is:
+
+~~~text
+QuestDefinition
+    quest_id
+    revision
+    quest_type
+    title_key
+    offer_text_key
+    availability_conditions[]
+    accepted_location_policy
+    objectives[]
+    failure_routes[]
+    reward_requests[]
+    completion_text_key
+    authoring_tags[]
+~~~
+
+Each objective has a stable objective ID, event kind, canonical target IDs, required amount, prerequisite objective IDs, progress visibility, and an optional alternate route. “Talk to the engineer” must name the actor or use an explicit role selector supported by the roster owner. “Find any medical supply” must bind a validated set of item IDs. Text fields remain localization keys. Authoring tags support audits and filtering only; they must not secretly become gameplay rules.
+
+The generated instance snapshots only bindings that could change after the template is selected: instance ID, definition revision, generated seed/binding, actor/location/item bindings, objective progress, lifecycle, accepted day, explicit deadline, and resolved outcome. Store the definition revision or equivalent content identity so a later catalog edit cannot reinterpret a half-completed save without a migration decision. Avoid copying long descriptions, reward logic, or entire source templates into every save.
+
+### Objective event contract
+
+An objective advances only from a named, observable domain event or a validated player command. For each objective, author and integration review must be able to answer:
+
+1. Which system emits the completion fact?
+2. What stable identifiers are included in that fact?
+3. Does the quest owner reject events before acceptance or after terminal resolution?
+4. Can one event advance more than one objective, and is that intended?
+5. Can a load or replay deliver the same event again?
+6. What player-visible feedback follows partial and final progress?
+
+An objective with no live producer is content-only and must not be advertised as playable. A delivery objective reads a receipt from the inventory/economy owner. A discovery objective reads a discovery fact from the map owner. A conversation objective reads a supported conversation result. An escort objective reads actual party/location/health outcomes from their owners. The UI may request an action but cannot synthesize its completion fact.
+
+### State invariants and transition checks
+
+The requested state vocabulary needs invariants that survive save/load:
+
+- Inactive and Available describe definition eligibility until an instance is offered.
+- Discovered identifies a real clue event; it does not imply acceptance.
+- Accepted and In Progress have an instance identity and an owner-supported progress state.
+- Blocked always includes a reason code and at least one next action or an explicit wait condition.
+- Partially Completed is a read-model description of unfinished objectives unless the current lifecycle API proves a persisted state is required.
+- Failed, Expired, Abandoned, Completed, and Resolved are not interchangeable terminal labels.
+- Reopened points to a new stage or linked instance and retains the earlier resolution record.
+
+Before a transition is applied, verify the expected current state and instance ID. A duplicate completion command returns the previous result or a harmless rejection. A stale event cannot reopen a terminal quest. If the transition fails, no reward request is applied.
+
+### Content validation additions
+
+The current catalog validator remains the validation entry point if it owns the relevant data. Quest-specific rules should report the exact definition, objective, reference, and reason. Check objective graph acyclicity unless a bounded repeat loop is explicit; ensure each non-optional objective has a producer; ensure every mandatory location has a route or failover; ensure a deadline is backed by a canonical time source; and verify that reward targets and parameters are accepted by their owners.
+
+For a branch, inspect both mechanical and narrative coverage. Every offered response should have an authored consequence label, a valid target, and a neutral/unknown fallback where prior state may be absent. A branch that only changes one adjective remains cosmetic and should not acquire a durable world flag.
+
+### Side-quest slice extension
+
+The Unentered Shelf can be the first vertical slice only if the inventory owner can distinguish the crate from ordinary stock and the quest owner can bind an optional delivery. If those facts are not available, reduce it to a record-and-dialogue quest: inspect the existing crate as a clue, hear two witnesses, choose a written interpretation, and store the outcome through an already-supported quest fact. The neighboring shelter is optional. Its absence produces an explicit “no route confirmed” outcome, not a false delivery.
+
+Three short response variants should keep each speaker distinct:
+
+- Clerk: “I can enter what arrived. I cannot enter who it was promised to.”
+- Nurse: “The smallest blanket went to the child who woke cold. That is what I remember.”
+- Mechanic: “The seal was cut before the door opened. I checked the hinge. I did not check the label.”
+
+These lines establish different standards of evidence. None proves who owns the crate. That question remains the player's to resolve.
+
+## Continuation pass 2 acceptance
+
+This pass is ready for future premise audit when the implementation packet can map each field, event, and effect to one current owner; when lifecycle transitions preserve the current public API or include migration evidence; and when the story slice has reachable required objectives plus explicit missing-content behavior. No runtime or data changes are made by this pass.
+
+## Continuation pass 3 — authoring package and questline production rules
+
+### Content card required for every quest
+
+Before prose is expanded, the author creates one review card. The card is the human-readable contract for the authored definition and helps prevent a quest from becoming a pile of unrelated flags.
+
+| Field | Authoring question | Integration evidence |
+|---|---|---|
+| Purpose | What player decision, knowledge, or survival behavior does this quest make meaningful? | A short statement that can be tested in play. |
+| Typical structure | What starts it, what are its beats, and where does it end? | Entry event, objective graph, and terminal route. |
+| Required locations | Which sites are mandatory, hinted, or optional? | Stable catalog IDs, route, map visibility, and fallback. |
+| Failure states | What can go wrong, and what remains playable afterward? | Supported lifecycle, reason, event producer, and alternate objective if any. |
+| Rewards | What changes for the player, character, faction, or place? | One canonical owner per effect and a visible result. |
+| Branching potential | Which choices alter state, and which only alter tone? | Explicit branch edges and owner-routed effect requests. |
+| Reusability | Which pattern or template can be reused without flattening the story? | Reusable objective form separated from unique text and canon. |
+| Production cost | What art, audio, UI, location, localization, and QA does it require? | Named content dependencies and a bounded release slice. |
+| Core or expansion | Is it required to understand or finish the base campaign? | Critical-path and missing-content analysis. |
+| Owner and consumer | Who owns the state and which running surface displays it? | Current source/API, loader, host seam, save owner, and acceptance case. |
+
+Cards are reviewed before high-volume prose. If purpose or required consumer is unclear, the item stays a story seed. If a failure route has no owner, simplify the design rather than creating another state store.
+
+### Objective pattern library
+
+Patterns reduce mechanical authoring cost while keeping the player's reason for acting specific:
+
+- **Observe:** one stable discovery event completes an objective. It needs a real visible or environmental trigger and cannot count a map hover.
+- **Acquire and deliver:** a canonical item receipt advances the objective; the inventory owner decides whether the item remains, is consumed, or is transferred.
+- **Compare evidence:** each clue has a distinct ID and source; a conclusion becomes available only when required evidence is present. Missing evidence has a lead, not a guessed answer.
+- **Reach and return:** arrival proves location contact; the quest may also require a return event. The map and expedition systems provide travel facts.
+- **Protect through a window:** party safety, destination, and time period must be explicit. Use current health, roster, and travel owners.
+- **Choose and reconcile:** a player command records one branch; the next beat can react to it using the saved quest outcome. No branch may be recorded by merely opening a panel.
+- **Wait for a condition:** the blocker names a canonical owner fact or day threshold. The quest log says what will unblock it, and the event source is verified.
+
+Every pattern has a default failure response: preserve completed objective facts, mark the actual failure source, and route to an alternate authored beat only if that route has its own completion criteria. Reusable patterns describe event handling; they do not authorize generic, consequence-free quest text.
+
+### Branch budget and continuity control
+
+A small quest should usually present one meaningful branch and reconverge at its next shared action. A main story may split into different routes when the required destinations, character availability, and saved outcomes can be maintained. Record branch fan-out, reconvergence point, terminal states, and callback count in the content card.
+
+For each branch, answer whether it changes:
+
+1. Cosmetic delivery only.
+2. The current scene or encounter.
+3. An objective or quest status.
+4. A relationship fact.
+5. Faction access or standing.
+6. A location, resource, enemy, or other world fact.
+7. The campaign ending input.
+
+Multiple levels may be composed only when their owner and observable result are documented. If a branch affects later content, list every authored reader and the neutral behavior for missing/old-save data. This keeps Plan 17's quest graph compatible with dialogue gates in Plan 21 and effect routing in Plan 22.
+
+### Release slice by content family
+
+| Family | First shippable slice | Follow-on work that stays optional |
+|---|---|---|
+| Main | One four-beat chapter with a clear entry, one decision, a fail-forward route, and a closing journal summary. | Additional endings, multiple required factions, or a second region. |
+| Character | One three-stage arc with absent-character fallback and one saved choice fact. | Roster-wide bespoke arcs and voice performance. |
+| Faction | One request, one negotiation, one owner-routed standing/access result. | Multi-faction coalition simulation and rotating mandates. |
+| Investigation | Two distinct clues plus one supported conclusion and an unresolved fallback. | Large evidence webs and multiple culprit simulations. |
+| Repeatable | One template with a bounded eligible pool, deterministic binding, cooldown supported by current state, and capped reward. | Seasonal catalog rotations and cross-run metaprogression. |
+| Hidden | One legible environmental clue, a clue-led map marker, and an optional resolution. | Multi-layer secret chains and rare-only progression. |
+
+This table is a production budget guide. It does not set runtime concurrency limits. Before choosing any numeric cap, inspect existing limits and measure the player-facing log and host cost.
+
+### Completion receipt for a quest package
+
+An implementation handoff should include the content card, current APIs used, data IDs and consumers, source event for each objective, state transitions exercised, required map locations, save owner and migration note, deterministic selection evidence if generated, UI route and accessibility check, focused test command/results, and known content gaps. The integrator can then mark the package accepted, stale, or blocked without inferring intent from prose.
+
+## Continuation pass 3 acceptance
+
+Quest production is ready to scale only when each added quest has a completed content card, bounded branch budget, real objective producer, canonical location route, owner-routed outcome, and truthful terminal/failure behavior. Content volume follows validated patterns; it does not replace those gates.
+
+## Continuation pass 4 — lifecycle translation, fail-forward packets, and release gates
+
+### Keep the expanded vocabulary compatible with runtime lifecycle
+
+The requested planning vocabulary is more expressive than the currently verified quest runtime lifecycle. The live coordinator has been observed using Offered, Active, Completed, Failed, Expired, and Abandoned. Do not persist every planning label as a new runtime state merely because it appears in a design document. Define the semantics first, then map them to the owner already responsible for the quest:
+
+| Planning label | Proposed interpretation | Persistence decision |
+|---|---|---|
+| Inactive | Definition exists but its offer conditions are false. | Derived from definition and campaign facts unless current owner already records suppression. |
+| Available | Offer conditions are true and the quest can be presented. | Prefer derived eligibility; avoid storing a second availability flag. |
+| Discovered | Player found a clue or trigger but has not accepted the formal task. | Persist only when discovery itself is a durable campaign fact with a save owner. |
+| Accepted / In Progress | Player committed to the task and at least one objective is actionable. | Map to the current accepted/active authority; do not add a parallel instance store. |
+| Blocked | An objective cannot currently advance because a named prerequisite is missing. | Derive from current facts and expose a reason; never strand an active quest without recovery. |
+| Partially Completed | Some objectives are fulfilled while required objectives remain. | Derive from objective facts where possible; aggregate in the journal for display. |
+| Failed / Expired / Abandoned | Different causes for a route ending. | Retain distinct reason codes even if the runtime owner has a shared terminal bucket. |
+| Completed / Resolved | Completion describes the objective result; resolution describes that follow-up handling is settled. | Keep the distinction in content semantics unless an existing owner needs a durable resolution fact. |
+| Reopened | A later owner event makes a previously settled thread actionable again. | Require explicit reopen authority and idempotent transition rules; never infer it from revisiting a location. |
+
+Every transition must state its source fact, owner, player-visible wording, and recovery path. An unavailable objective is not a new lifecycle state unless the runtime can explain how it becomes available again. Terminal labels should not be rewritten in place: record the cause and present the relevant alternate continuation.
+
+### Author a fail-forward packet as a complete route
+
+Use the already introduced provisional “The Unentered Shelf” as the fail-forward fixture. The clerk asks for a second witness to settle the crate's intended destination. If a depot or neighbor route cannot be selected for this expedition, the quest stays actionable with a visible evidence-pending objective; the map-selection owner may supply an authored clue route or defer that optional leg. If the player returns without evidence, the count remains unresolved and the crate is neither transferred nor treated as stolen. If the player chooses local use, neighbor delivery, or a written hold, the choice is recorded only after the quest owner accepts it and any physical transfer is accepted by the inventory owner.
+
+This packet has four authored resolution records: evidence supports a local reservation; evidence supports delivery and the inventory owner confirms the transfer; evidence remains inconclusive and the player records a temporary hold; and the player declines or abandons the task. The records share the same character wants and objective identity, while owner-backed evidence, reward eligibility, and follow-up dialogue differ. Acceptance requires an observable route for every branch, a journal entry that describes the actual state, and no reward or inventory result that claims an unperformed transfer.
+
+### Expand the content family without inventing a bespoke mechanic per quest
+
+The first production slice should include one example each for a main quest, personal character task, faction request, discovery, investigation, escort/protection, survival, resource/crafting, location-based, timed, repeatable, and hidden task. Add two cross-cutting cases: an environmental clue that starts as Discovered, and a choice-sensitive quest whose failed objective opens a distinct route. These are content coverage fixtures, not a demand for twelve new runtime subsystems.
+
+For each fixture, writers provide: entry trigger; canonical location or safe substitute; prerequisite facts; objective evidence producer; deadline owner if timed; repeat eligibility if rotating; cancellation and failure language; reward owner; dialogue follow-up; save/replay expectation; localization notes; and the expansion/core classification. Reuse an objective pattern only when its event source and failure meaning are genuinely the same. “Find,” “inspect,” and “deliver” must not collapse into one generic completion event if the owners report different facts.
+
+### Validation and production gates
+
+The content validator should report each quest ID with missing requirements, invalid transitions, unresolved location references, unowned effects, duplicate objective keys, reward commands without consumers, and branches with no reachable ending. A graph walk should distinguish unreachable nodes from intentionally hidden nodes and should identify what fact reveals a hidden route. A producer map should show the existing subsystem event or approved new owner required for each objective; presence in a JSON catalog alone is not a pass.
+
+Release in slices: first one quest with no branch; next a short reconvergent branch; then one fail-forward case; then a timed or rotating case only after a current deadline/cooldown owner is confirmed. Save migration is required only for data the canonical quest owner persists. Replaying a deterministic campaign must preserve selection and generated bindings while respecting the player's explicit choices.
+
+The implementation handoff includes the accepted state mapping, content cards, reachable graph report, per-objective producer, location and fallback receipt, reward/effect owner, focused state-transition and save checks, and an end-to-end journal/UI observation. If any owner is missing, retain the plan proposal and cut that mechanic from the first release slice.
+
+## Continuation pass 4 acceptance
+
+This lifecycle tranche is ready for a premise audit when planning labels map cleanly to current runtime semantics, blocked and failed quests have visible recovery, authored variants cannot award false outcomes, and validation reports graph reachability and owner evidence per quest. No new quest store, deadline clock, reward ledger, or save section is implied.
+
+## Continuation pass 5 — owner map, quest portfolio, and the shared vertical-slice contract
+
+### Source-verified owner map
+
+The current implementation already separates quest responsibilities. The shared runtime coordinator records instances and exposes its read model; the procedural narrative authority owns authored template eligibility and seeded binding; the specialized Year of Ash questline owns its stage-and-choice records; survivor narrative questlines and personal quests retain their dedicated scopes. The content package must identify which owner consumes its definition. It must not route every authored arc through the shared coordinator merely to make the quest log uniform.
+
+| Concern | Verified current seam | Design instruction |
+|---|---|---|
+| Shared quest instance lifecycle | QuestRuntimeCoordinator; current states Offered, Active, Completed, Failed, Expired, Abandoned. | Keep expanded labels as derived meanings unless a verified runtime consumer requires a durable new state. |
+| Structured generated candidates | ProceduralNarrativeSystem and QuestTemplateCatalog; NarrativeWorldSnapshot carries day, world tags, eligible actors, known locations, obtainable items, protected IDs, and active quests. | Extend validated template slots and existing seeded selection. Generated bindings stay within canonical actor, item, and location IDs. |
+| Shared quest instance persistence | ProceduralNarrativeRunState carries procedural narrative state alongside QuestRuntimeState. | Inspect the current registered save path before changing fields; do not create a second quest section. |
+| Long stage-and-choice arcs | YearOfAsh QuestlineSystem and its QuestlineDefinition, Stage, and Choice records. | Keep its condition tags and host evaluation contract intact until audited. A graph proposal must name unsupported condition behavior. |
+| Survivor-specific arcs | NarrativeQuestlineSystem and PersonalQuestSystem. | Use these for their supported personal scope; do not collapse them into generic dialogue nodes. |
+| Map destination truth | WastelandMapSystem and ExpeditionSystem. | Quest content supplies a canonical requirement; those owners determine map status, discovery, route, and dispatch validity. |
+
+The source also includes more than one loader and several content families. The presence of a class or JSON file does not establish that a new content family is live. A promotion packet names the loader, the host constructor that binds it, the runtime method that consumes it, and the persisted owner, if any. QuestTemplateCatalogLoader.Validate and actual host use need an explicit check in the package; a catalog row is not production-ready merely because it deserializes.
+
+### Portfolio design: many quest types, one tested runtime path
+
+Build the content portfolio as a matrix of authored intent against existing producers. A survival task may observe a canonical day or needs transition; a location investigation consumes a real discovery/visit fact; a personal arc uses an existing survivor event; a faction request routes its outcome through the faction owner; a resource request checks and consumes through inventory; a timed task uses the campaign day owner. If a cell lacks a producer, classify the row as a proposed owner extension and leave it outside the minimum viable release.
+
+The first portfolio should contain a small number of complete exemplars rather than one thin row for every quest type. A complete simple quest proves definition load, offer, accept, objective update, journal/read-model refresh, completion or explicit refusal, and restore. A reconvergent quest proves two ways to gather evidence. The Unentered Shelf fixture proves inventory transfer and a no-evidence resolution. A timed quest proves expiry only after its clock owner and route semantics are confirmed. Repeatable generation remains a later layer because cooldown, eligibility, stable instance IDs, and objective-module reachability all need proof together.
+
+### Unentered Shelf vertical slice across owners
+
+The story question is stewardship under incomplete evidence: a clerk finds unlisted blankets; the nurse believes a neighboring shelter was promised a share; the mechanic can identify the sealed depot but cannot testify to the promise. None of these accounts alone establishes title. The task is intentionally modest and should create a practical state change, not a generic morality score.
+
+1. **Discovery:** The crate or its existing authored clue is encountered. The discovery owner emits the fact; the quest becomes Discovered only if the current quest path can represent that distinction, otherwise the journal projects a pending offer.
+2. **Offer:** The clerk asks for an evidence route. Acceptance creates one stable quest instance; deferring creates no phantom accepted instance.
+3. **Evidence:** The player can ask either witness, inspect a selected canonical location, or return without further evidence. Location requirements are passed to Plan 18; clues and record fragments are authored under Plan 19.
+4. **Decision:** The player may choose local reservation, confirmed delivery, or unresolved hold. Dialogue gates read evidence from Plan 21, while choices send typed requests through Plan 22.
+5. **Resolution:** The quest owner settles its objective. Inventory performs any real blanket transfer. A journal line reports the result. Relationship or faction standing changes only if an approved owner-backed consequence has been authored; this story does not require one.
+6. **Callback:** A later revisit can show the count or delivery state only from the relevant owner. Reopening the cabinet, starting a second instance, or loading an old save cannot duplicate the transfer.
+
+This single vertical slice exercises quest, expedition, location, authored/generated boundaries, dialogue, memory gates, and consequence routing. It adds no faction, NPC profile, item definition, independent location state, relationship meter, or reward currency. A later expansion may add a separate neighbor perspective only after the content atlas confirms that such a delivery arc is not already represented.
+
+### Quest-type content backlog with distinct production purposes
+
+Assign each candidate to one of three content roles. A core teachable task demonstrates an existing mechanic and remains short. A character arc changes how a known survivor approaches a practical problem, using the personal quest owner and sourced memory. An expansion investigation reveals information whose ambiguity is deliberate and whose destinations are optional. These roles prevent quest-type labels from generating the same fetch-and-return story under different headings.
+
+For every proposed quest, record its dramatic question, player verbs, consequences, source facts, counterfactual route, failure meaning, revisit behavior, campaign stage, and collision keywords. Collision keywords include objects, institution, location function, moral dilemma, and ending callback, not only the title. Search these against implemented content, active integration plans, completed expansion waves, and partial-plan placeholders before promoting prose. If only the structural pattern is reusable, retain the pattern and rewrite its content after continuity review.
+
+## Continuation pass 5 acceptance
+
+This tranche is ready for a premise audit when each content family is assigned to a verified current owner, the Unentered Shelf fixture has a complete player-visible path through all six plans, repeated actions cannot duplicate physical outcomes, and the collision search covers story function as well as exact names.
+
+## Continuation pass 6 — production dossier, lifecycle projection, and route proof
+
+### Quest dossier: minimum authored fields for a complete playable task
+
+Treat a quest dossier as a design-time completeness checklist. It is not a proposal for a second quest runtime schema. During implementation, map each field to the current quest definition and its existing consumers; leave unsupported fields in documentation until an owner and loader are verified.
+
+| Dossier field | Authoring question | Required evidence before integration |
+|---|---|---|
+| Stable identity | What durable authored quest is this, and is this ID already used? | Current catalog and duplicate-ID search. |
+| Story purpose | What does the player understand or change by engaging? | One-sentence dramatic question tied to a gameplay verb. |
+| Quest family | Is it main, character, faction, discovery, investigation, escort, survival, crafting, location, timed, repeatable, hidden, or choice-dependent? | Existing category vocabulary or an approved content extension. |
+| Core/expansion placement | Is this required for the base route or optional expansion content? | Expansion-disabled reachability review. |
+| Discovery trigger | What authored clue, encounter, conversation, or owner event makes it available? | Existing source that can produce the trigger. |
+| Offer and acceptance | Who presents the task, and how does the player defer or refuse? | Current quest and dialogue command seam. |
+| Objective verbs | What can the player actually do: inspect, carry, protect, negotiate, repair, survive, report? | Existing or separately approved interaction consumer. |
+| Evidence model | What observable owner fact proves each objective? | Canonical event/fact owner and persistence path. |
+| Required locations | Which exact locations are essential, substitutable, clue-led, optional, or return-only? | Stable location definitions and Plan 18 fallback contract. |
+| Character requirements | Must an actor be present, or can a record/alternate witness preserve the route? | Current roster and authored fallback. |
+| Condition gates | What knowledge, skill, relationship, reputation, or phase changes presentation? | Plan 21 predicate and unknown policy. |
+| Consequence requests | Which response requests a state change? | Plan 22 typed owner command and result copy. |
+| Failure semantics | What action or deadline constitutes failure, and which owner records it? | Clock/quest owner and explicit failure evidence. |
+| Recovery route | Can the story continue in another way? What new evidence or action proves recovery? | Distinct objective and successor route, never rewritten success. |
+| Resolution | What terminal outcomes exist, including refusal or unresolved hold? | Current quest terminal status or approved projection. |
+| Reward | Which existing owner grants the reward and how does it prevent duplicates? | Valid catalog item/resource and accepted command. |
+| Repeat policy | Can the task recur? How do cooldown, identity, and outcome carry over? | Existing deterministic eligibility and save rules. |
+| Revisit policy | What line/objective changes on later visits? | Persisted owner fact; no visit-count inference. |
+| Map and journal copy | What do map and journal report at each phase? | Current read-model consumers and localization keys. |
+| Generated variation | Which wording or objective parameters may vary? | Approved template, bounded fields, seeded inputs. |
+| Save/migration | What stable reference is saved, and what if this definition changes? | Current owner capture/restore and replacement path. |
+| Accessibility | Can every required action be understood without audio, color, or transient animation? | Text, focus, input, and feedback review. |
+| Production estimate | What authored rows, scenes, assets, voice, and QA cases are required? | Bounded deliverable list; no speculative runtime scope. |
+| Collision record | Which existing quest or plan is closest in function, setting, and choice? | Corpus search plus explicit distinct-purpose note. |
+
+A dossier is incomplete if quest acceptance has no objective consumer, an objective has no evidence owner, a location has no availability/fallback rule, or a reward has no idempotent grant path. A complete design does not require every possible feature field. Optional gates and generated variants must earn their production cost.
+
+### Player-facing lifecycle is a projection over current quest authority
+
+The requested presentation vocabulary includes Inactive, Available, Discovered, Accepted, In Progress, Blocked, Partially Completed, Failed, Completed, Resolved, Expired, Abandoned, and Reopened. Current implementation evidence includes a more compact runtime set in QuestRuntimeCoordinator. Do not add permanent enum values just to match design labels. Define how each label is projected from the actual owner state and objective evidence:
+
+| Presentation label | Design meaning | Safe source or projection rule |
+|---|---|---|
+| Inactive | No current offer is available. | No eligible offer from the current quest owner. |
+| Available | The player could accept the task. | Owner reports an offer and its entry conditions pass. |
+| Discovered | A clue has brought the task to the player's attention. | Use a real discovery fact; if the owner cannot persist this separately, present it as journal/offer copy without claiming a durable phase. |
+| Accepted | The player has agreed to the task. | Confirmed transition from the owning quest authority. |
+| In Progress | At least one objective remains actionable. | Active quest plus current objective evidence. |
+| Blocked | Required progress cannot presently be made. | Active quest and a known missing prerequisite; include retry or alternative route. |
+| Partially Completed | Some objective evidence has been accepted. | Objective projection from owner-backed progress, not a parallel counter. |
+| Failed | The primary condition failed. | Explicit failed/expired outcome from the owner, including cause where available. |
+| Completed | The authored primary completion condition succeeded. | Current owner terminal result. |
+| Resolved | An alternate, negotiated, or deliberately unresolved route has a settled outcome. | Only if the current model distinguishes it; otherwise present an authored completion detail, not a new global state. |
+| Expired | A real deadline elapsed. | Current clock/quest owner has recorded expiry. |
+| Abandoned | The player intentionally left an accepted task. | Owner-confirmed abandon command; do not infer from inactivity. |
+| Reopened | A prior terminal task has a supported new continuation. | Explicit owner transition or a separate follow-up quest; never reopen silently on scene revisit. |
+
+This mapping lets UI copy remain expressive while state authority stays compact. It also prevents Blocked or Partially Completed from becoming new save values when they can be derived from existing active-state objectives. Any state that cannot be reconstructed after restore requires a current owner proposal before it can be presented as durable.
+
+### Fully worked Unentered Shelf quest card
+
+**Pitch:** A shelter clerk discovers that a count of blankets does not match the old distribution note. A nurse remembers that a neighboring shelter was promised help, while a mechanic can identify a possible route but cannot verify delivery. The player investigates the discrepancy and chooses a truthful disposition.
+
+**Purpose and family:** Small investigation/character task; core-game placement only if the existing onboarding and location catalog can support it. Otherwise an optional expansion vignette. Its purpose is to model how players can act responsibly with incomplete records, not to create a new trade ledger or morality meter.
+
+**Offer:** The clerk exposes the discrepancy after the existing shelter discovery trigger. The offer explains that the records disagree. Accepting requests an investigation; declining leaves the supplies and quest owner untouched. Discovering the note may reveal an offer, but the task becomes accepted only after the quest owner confirms the player's choice.
+
+**Objectives and evidence:** First, inspect the record through its canonical interaction. Second, ask the nurse or consult an approved alternate record for the promise claim. Third, optionally investigate the route through Plan 18. Fourth, return with a supported disposition: confirmed delivery, local allocation, or unresolved hold. Every verb maps to a concrete event or interaction result. Talking to a character is not automatically evidence that the character's claim is true.
+
+**Branch policy:** The critical resolution is available even if one optional witness is absent. A skill gate can clarify what the record's handwriting does and does not establish. Faction reputation may add a contact or alternate record only if a current faction owner supplies that opportunity. No optional gate is the only way to understand the shortage.
+
+**Failure and continuation:** If an expedition deadline or route becomes unavailable, the quest owner can keep the proof objective pending, substitute an equivalent authored source where explicitly allowed, or move to an unresolved-hold resolution. If a deadline truly expires, record the failed delivery attempt as failed and offer a separate recovery route only if a valid owner-backed task exists. Do not claim the blankets arrived because the player selected a dialogue response.
+
+**Outcomes:** Confirmed delivery requires an actual inventory/resource operation and accepted destination evidence. Local allocation requires a confirmed stock operation and keeps the neighbor claim unresolved. Unresolved hold records no transfer and closes the investigation only if the quest definition explicitly supports that resolution. Reward is recognition or a currently supported item/resource, never a newly invented reward counter. A no-reward outcome remains valid.
+
+**Revisits:** After delivery, the clerk reports the owner-confirmed transfer. After local allocation, the clerk reports the room assignment and separately states that the destination claim remains open. After unresolved hold, the clerk reports no movement. If the relevant result is missing in an older save, use neutral copy and query the canonical owner; never reconstruct from the fact that the scene was visited.
+
+This card is deliberately small but end-to-end. It exercises offers, objectives, clue discovery, location selection, optional knowledge, owner-routed effects, a fail-forward option, a journal projection, and a later callback. It does not require a new faction, dialogue history system, location registry, or save section.
+
+### Route-proof table for a quest before content approval
+
+For every accepted quest, trace at least one playable sequence through each row:
+
+| Proof point | Review question | Expected artifact |
+|---|---|---|
+| Entry | How can a fresh save discover or receive the offer? | Trigger reference and visible cue. |
+| Acceptance | What command makes the task active? | Owner and accepted/rejected copy. |
+| First objective | Which interaction/event advances it? | Evidence ID and consumer. |
+| Optional absence | What happens if a supporting NPC, faction, or expansion bundle is missing? | Alternate source or still-playable baseline. |
+| Location unavailability | Can Plan 18 provide an equivalent, clue, delay, or explicit route change? | Named fallback semantics. |
+| Stale state | What if the facts change after a conversation opens? | Revalidation and refresh behavior. |
+| Failure | Which owner records the condition and cause? | Failed/expired evidence and retained history. |
+| Recovery | Is recovery a real objective with its own proof? | Separate follow-up route or explicit no-recovery close. |
+| Reward | Can replay, retry, or restore grant it twice? | Owner command and duplicate result. |
+| Restore | Does the task reconstruct after save/load? | Current capture/restore evidence. |
+| Ending/callback | Does later prose reflect only confirmed facts? | Source-linked text variants and neutral fallback. |
+
+Promotion should stop at the first missing proof point. Mark the proposal as a gap with an owner question; do not fill the gap by inventing local state in the quest definition or dialogue callback.
+
+## Continuation pass 6 acceptance
+
+The quest package is ready for a vertical-slice claim when a fully populated dossier can be mapped to current owner APIs, presentation labels do not require speculative durable states, the Unentered Shelf card remains completable across missing optional evidence and unavailable routes, and every accepted/failed/recovered/reward outcome has an observable proof source.
+
+## Continuation pass 7 — quest family coverage, production sizing, and route recipes
+
+### Portfolio coverage without a checklist-shaped game
+
+The game should support different quest families because each offers a different player verb and consequence pattern, not because the catalog needs one of every label. Use this matrix to decide what belongs in a release and what needs a distinct owner path:
+
+| Quest family | Typical structure | Required locations | Possible failure state | Rewards and branching | Reuse, cost, placement |
+|---|---|---|---|---|---|
+| Main story | Reveal a pressure, make a choice, observe a consequence, then revisit the changed situation. | At least one critical route plus a base-game fallback. | Route missed or evidence unavailable; preserve a valid continuation. | Unlocks authored progress; meaningful branch count kept low and reviewed across acts. | Low reuse; high production cost; core campaign. |
+| Character | A survivor's practical problem exposes a personal belief, then a later callback tests it. | Character's current shelter context and at most one optional external site. | Character absent or trust fact unavailable; alternate record/contact route. | Relationship result only through its current owner; usually reconverges. | Reusable scene structure; medium/high cost; core if tutorial/arc critical, otherwise expansion. |
+| Faction | A group negotiates access, duties, or terms with visible tradeoffs. | Faction contact point, plus any required project site. | Negotiation fails, access deferred, or faction leader absent. | Standing/access from faction owner; branches need explicit future costs. | Medium template reuse; high continuity cost; optional expansion unless core factions are required. |
+| Discovery | An environmental clue reveals a fact and an opportunity. | Initial clue site; destination may remain hidden. | Clue destroyed, unreadable, or contradictory. | Knowledge, map lead, or quest offer; can branch by what the clue proves. | High reuse as pattern, medium content cost; use in core exploration and expansions. |
+| Investigation | Gather independent evidence, compare accounts, choose an interpretation or unresolved hold. | Multiple evidence sources; no single optional witness can be mandatory. | One source unavailable or evidence disproves the initial theory. | Information/reputation/outcome; branching can change judgment without changing facts. | Reusable evidence template; medium/high cost; core for a complete detective loop, optional for extra mysteries. |
+| Escort/protection | Prepare, escort or defend, then account for the protected party's outcome. | Departure, route segment, destination or safe fallback. | Party lost, delayed, split, or protected by another route. | Owner-backed materials or access; failure route preserves identity and history. | Reusable objective modules; high encounter QA; core only if protection teaches a main mechanic. |
+| Survival | Meet a concrete environmental/needs challenge and return or stabilize a situation. | Hazard site or shelter interaction that uses existing survival owners. | Need/hazard threshold breached or route becomes unsafe. | Survival supplies only through current resource authority; choices change method, not invented score. | High systemic reuse; medium balancing cost; core when it teaches required survival verbs. |
+| Resource/crafting | Identify a shortage, source inputs, perform an existing recipe/action, report the result. | Source and work site defined by current item/crafting catalogs. | Inputs missing, recipe locked, or station unavailable. | Existing item/resource result; alternatives use supported recipes. | High mechanics reuse, data QA cost; core when recipe is baseline, expansion when optional. |
+| Location-based | Arrive at a named site, notice a local state, complete an interaction or choose to leave. | One stable canonical location with discovery and route rules. | Location unavailable, locked, or changed before arrival. | Site-specific information or result; avoid duplicating the location's permanent story state. | High scene-template reuse, moderate location authoring; core or expansion by route necessity. |
+| Timed | Owner-backed deadline, visible urgency, clear result on time or expiry. | Required dispatch target and a valid no-target/delay policy. | Expiry recorded by the clock/quest owner; follow-up stays distinct. | On-time result and late recovery have distinct outcomes and rewards. | Low story reuse, high QA; core only when deadline play is an established mechanic. |
+| Repeatable/rotating | Owner supplies an eligible task from a bounded, deterministic set; resolve and wait for eligibility. | Candidate sites from current map/expedition definitions. | Candidate exhausted or temporary content expired; no phantom offer. | Bounded, duplicate-safe outcome; no unbounded currency loop. | High system reuse, high balance cost; optional live/expansion layer unless base game already relies on it. |
+| Hidden | Environmental or knowledge condition reveals an optional objective. | Clue site and optional hidden destination. | Missed clue does not block base progression. | Discovery, lore, or supported item; no critical unique power hidden behind an unmarked gate. | Low template cost, high continuity review; usually optional/expansion. |
+| Environmental start | Object, sound, map annotation, or damage starts or advances a task. | The authored context in which that cue can be perceived. | Cue destroyed or unreadable; alternate journal/interaction route. | Evidence or offer from current quest owner after the event. | Reusable pattern; requires accessibility/visual/audio QA; core when it explains a required mechanic. |
+| Choice-dependent | Prior owner-backed outcome changes later offer, line, or objective. | Any location required by the earlier choice plus a recovery route. | Prior outcome incompatible with the assumed route; alternate branch must remain complete. | Consequences may be local, quest, relationship, faction, or world; label each. | Low prose reuse, highest continuity cost; use sparingly in core and expansions. |
+| Fail-forward | Primary action can fail, with a different action and proof route still possible. | Primary and recovery destinations, each with explicit selection policy. | Preserve original failure while continuing through a separate route. | Recovery result has its own reward/closure; never rewrite failure as success. | Reusable routing pattern; medium/high QA; appropriate in both core and expansion when authored. |
+
+“Core” means the player can understand and complete the base campaign's promised route without optional bundles. “Expansion” means an optional bundle can add another instance of the pattern without owning the only base-game evidence, system, or exit. Production cost is not simply prose volume: objective consumers, condition branches, unique location assets, voice work, save migration, and route QA dominate many estimates.
+
+### Quest family acceptance cards
+
+Before approving a family for a milestone, choose one exemplar and complete a family card:
+
+- **Main story card:** name the act transition, canonical source facts, minimum critical route, at least one understandable player choice, and the old-save/replay state that proves the transition. Estimate all downstream callbacks before adding branch endings.
+- **Character card:** identify one supported memory fact, one interaction that tests the character's stated approach, one neutral route when the character is absent, and the owner that records any relationship change. Do not let a single optional relationship threshold hide critical progress.
+- **Faction card:** state the terms offered, the current faction access/reputation authority, the consequence of acceptance/refusal, and a route for players who have not joined or do not qualify. Separate player comprehension from faction arithmetic.
+- **Discovery/investigation card:** identify what each source can actually prove, what remains uncertain, and whether a clue reveals a precise location or only a region. A contradictory source should change interpretation, not silently overwrite the other source.
+- **Escort/survival card:** define departure, progress checkpoints, interruptions, arrival, and rescue/fail-forward outcomes. Use the existing needs, health, hazard, route, and roster owners rather than task-local survival counters.
+- **Resource/crafting card:** name input IDs and recipe/action consumer, record why each input is needed, and ensure missing materials create an alternate or deferred route when the quest promises one.
+- **Timed/repeatable card:** name the deadline/cooldown owner, state the exact eligibility fact, define deterministic candidate selection, and prove no reward duplication after restore or repeated acceptance.
+- **Hidden/environmental card:** state how the clue is detected through accessible modalities, what it reveals, and why missing it cannot make the main route impossible.
+
+The card ends with a decision record: accept for the current release, hold pending a source seam, move to expansion, or reject as duplicate. “Write more later” is not an acceptance decision.
+
+### Compact side-quest route recipes
+
+The following recipes describe route shapes, not new canonical quests. Use them to populate a portfolio only after collision review finds a clear story purpose.
+
+**Evidence-and-interpretation route:** a clue begins the task; two evidence channels can be visited in either order; each has separate provenance; one optional skill question clarifies a detail; a final response chooses an interpretation or explicitly leaves it open. The canonical facts survive every branch. This recipe suits investigation and environmental discovery.
+
+**Protection-and-recovery route:** the player accepts a protection task; the expedition contains a small number of owner-backed checkpoints; a delay or hazard changes arrival condition; failure remains recorded; a different recovery task helps the party after the original deadline. This recipe suits escort and survival content. Avoid multiplying escort targets until the current roster and combat/route systems can represent them.
+
+**Shortage-and-work route:** an NPC reports a shortage; the player checks an existing resource/recipe owner; one path uses a supported craft action and another seeks an existing alternate item; inability to source either leaves the task deferred or produces a truthful substitute result. This recipe supports crafting and community work without inventing a new economy.
+
+**Choice-and-callback route:** the player makes one local decision; the quest owner records it; a later scene reacts to the canonical result; an absent speaker has a record/alternate contact; a later branch may acknowledge the result but does not retroactively change it. This recipe creates continuity without requiring a global choice-history registry.
+
+For each recipe, test the blocked, failed, deferred, abandoned, and completed paths. If a route has no purposeful failure condition, do not add an arbitrary timer or random lock simply to make the quest appear systemic.
+
+### Rewards and player-facing closure
+
+A reward can be material, access, information, or closure, but it must be observable and owner-backed. Before authors request a material reward, confirm a current catalog item/resource and duplicate grant behavior. Before promising access, confirm the faction/location authority can grant it. Before promising a relationship result, confirm the relationship owner accepts the event. Information can be a reward without changing mutable state if it has a supported journal or map presentation.
+
+Completion copy should identify what was accomplished; resolution copy should identify how an alternate outcome settled the question; failure copy should name the lost opportunity without blaming the player for a system gap. A no-reward ending may still provide closure. Do not use vague “reputation increased” copy unless the faction owner supplies that exact result and the UI already supports showing it.
+
+### Release gates by content volume
+
+Small quest tranche: one definition, one complete route, one failure or refusal behavior, one focused owner path, and a save/restore observation if stateful.
+
+Medium tranche: multiple quest definitions with shared objective modules, repeated-character continuity, one optional condition family, dependency graph, and expansion-disabled checks.
+
+Large tranche: a campaign arc with cross-quest dependencies, multiple endings, generated candidates, and late callbacks. It needs a dedicated continuity map and staged integration wave; it must not land as one giant content-only batch that cannot be attributed to current owners.
+
+## Continuation pass 7 acceptance
+
+The quest portfolio is ready for production sizing when each proposed family demonstrates a distinct player verb and evidence source, core and expansion placement are justified by dependency rather than word count, failure/recovery and reward policies are explicit, and the selected exemplar can pass the route-proof table from pass 6.
+
+### Minimum field budget by quest scope
+
+Keep required fields proportional to the quest's effect scope. A discovery vignette can begin with stable ID, trigger, evidence, text, location policy, and a no-mutation exit. A resource/crafting task additionally needs item/recipe references, current inventory feasibility, missing-input behavior, and a duplicate-safe result. A timed escort adds its clock owner, deadline evidence, checkpoints, participant availability, route fallback, and distinct recovery outcome. An ending quest adds every source fact, campaign authority, old-save treatment, expansion-disabled behavior, and a reviewable outcome map.
+
+Do not require a faction matrix for a personal task that never touches faction state. Do not add a reward field that says “none” when the quest is informational. Explicitly mark dimensions as not applicable in the design card when their absence could otherwise be mistaken for an omission. This lets reviewers distinguish a lean design from an incomplete one and keeps validation proportional to actual dependencies.
+
+Every quest still needs a player-facing entry, a comprehensible next action, a truthful terminal/continuation result, and a way to leave safely. Those are quality requirements, not reasons to add new save fields.
+
+## Continuation pass 8 — objective evidence, dependency graph, and quest review gates
+
+### Objective kinds and proof contracts
+
+Quest objectives should describe player-understandable verbs while depending on explicit proof. Use a small family of objective patterns and route each through the current system that can observe it:
+
+| Objective pattern | Player-facing verb | Proof event | Common false positive |
+|---|---|---|---|
+| Inspect | Examine a record, site, machine, or clue. | The current interaction/discovery owner confirms the inspection. | Being near the location or opening a dialogue. |
+| Gather | Obtain one or more canonical item IDs. | Inventory/resource owner confirms current possession or acquisition event. | A quest-local counter that ignores transfer/drop. |
+| Deliver | Transfer an identified amount to a canonical recipient/container. | Resource owner accepts the transfer and quest owner records the dependency. | Carrying the item near the destination. |
+| Report | Return to a speaker or terminal with accepted evidence. | Dialogue/quest owner accepts the report command. | Reopening a conversation without a new command. |
+| Protect | Keep a participant or site within a supported safe condition during a route. | Existing health/roster/expedition authority supplies the result. | A narrative line claiming survival without an encounter result. |
+| Craft/repair | Perform a supported recipe, repair, or interaction. | Crafting/item/equipment owner emits the result. | Owning ingredients or selecting a response. |
+| Discover | Find or learn a stable location/clue. | Map/discovery authority changes its knowledge state. | A hidden location being selected internally. |
+| Wait/survive | Reach a time or environmental condition. | Clock and relevant needs/hazard owner report the condition. | A dialogue scene merely advancing a deadline. |
+| Negotiate | Choose a supported term with another actor/faction. | Quest/faction owner accepts the selected outcome. | Showing a choice or reputation-flavored line. |
+| Resolve | Settle an authored question through a valid terminal path. | Quest owner confirms one defined result. | Treating missing evidence as success. |
+
+An objective record should bind intent, evidence kind, evidence owner, expected target ID, optionality, repetition policy, and completion copy. Multi-part objectives should state whether evidence is ordered, independent, or mutually exclusive. If an existing owner exposes only an aggregate status, content should use that supported granularity rather than manufacture sub-objective saves.
+
+### Quest dependency graph
+
+Represent authored dependencies as a directed graph for review:
+
+- **Prerequisite edge:** one confirmed quest outcome enables another offer.
+- **Evidence edge:** a clue or interaction is consumed by an active objective.
+- **Alternative edge:** either of two proof sources can satisfy the same authored requirement.
+- **Follow-up edge:** a failed/complete task offers a distinct next task.
+- **Callback edge:** a later scene reads a prior owner-backed fact but does not require it.
+- **Exclusion edge:** two mutually exclusive outcomes prevent incompatible content.
+
+Each edge names the producer, consumer, stable IDs, and absence behavior. Prerequisite cycles are rejected unless the current quest owner explicitly supports a deliberate repeatable loop. Callback edges should usually be optional; otherwise a side quest becomes an undocumented critical dependency. An alternative edge is valid only when both sources prove the same statement.
+
+For the Unentered Shelf, the record inspection and witness account can be independent evidence nodes; route inspection is an optional lead; the transfer outcome depends on both a valid quest phase and the resource owner; later dialogue is a callback. There is no dependency from “heard the nurse” to “neighbor received supplies.” This graph makes the story's epistemic boundaries testable.
+
+### Quest chain shapes and pacing
+
+Use one of four chain shapes as a planning lens:
+
+1. **Single beat:** one offer, one action, one result. Suitable for a tutorial or local discovery.
+2. **Evidence loop:** offer, gather/inspect, compare, resolve. Suitable for investigations and character tasks.
+3. **Expedition loop:** preparation, dispatch, encounter/action, return/report. Suitable for location and survival content.
+4. **Campaign chain:** prerequisite, multiple chapter tasks, branch, consequence, later callback. Suitable for main/faction arcs and high-cost expansions.
+
+The chosen shape drives production cost and QA. A single-beat task still needs refusal and restore behavior if stateful. An evidence loop needs at least one route when an optional source is missing. An expedition loop must account for stale preview/start state. A campaign chain needs a dependency graph and stable terminal outcome mapping. Do not stretch a short task to several expeditions just to increase word count or apparent scale.
+
+### Failure taxonomy
+
+Separate failure causes because recovery behavior depends on who owns them:
+
+- **Player-decision failure:** the player declines or chooses a mutually exclusive outcome. Record only through the quest owner and show a clear consequence preview.
+- **Deadline failure:** the clock/quest owner records expiry. Keep the original goal in history and offer recovery only if authored.
+- **Evidence failure:** a source is contradicted, destroyed, or insufficient. Preserve the evidence result and expose another proof path or unresolved close.
+- **Availability failure:** actor, location, route, or expansion content is absent. Do not charge the player with failure; delay or substitute under authored rules.
+- **Resource failure:** an input is missing or transfer is rejected. Keep the objective open or offer an existing alternative recipe.
+- **Operational failure:** an owner cannot process a valid command. Preserve the scene and retry/exit safely; never turn it into an in-world failure.
+- **Intentional abandonment:** only an explicit owner-confirmed player action counts; inactivity is not abandonment.
+
+The journal can use concise language while the quest record retains the exact owner evidence. This reduces ambiguous “failed” states and prevents a route defect from being reported as a player's mistake.
+
+### Acceptance gates for a quest family
+
+Before a category joins a release, the reviewer should answer:
+
+1. Does it use a player verb supported by a current interaction or an approved implementation claim?
+2. Does it have a source of truth for progress, failure, and rewards?
+3. Does every mandatory location resolve through Plan 18?
+4. Do condition branches preserve a baseline route through Plan 21?
+5. Do response effects use owner commands from Plan 22?
+6. Does Plan 19 identify authored versus generated facts and stable IDs?
+7. Does Plan 20 have a reachable graph, localization keys, and transcript-safe prose?
+8. Can a fresh save enter the route and a restored save observe its accepted result?
+9. Is there a clear outcome if optional content is absent?
+10. Has the narrative collision check identified a distinct purpose?
+
+Mark each answer proven, not applicable with explanation, or unresolved. Any unresolved critical route, effect owner, or save path blocks implementation. A proposal may remain useful while blocked, but its integration status must say exactly which seam is missing.
+
+## Continuation pass 8 acceptance
+
+The objective package is ready when player verbs map to observable evidence, dependency edges distinguish prerequisites from callbacks and alternatives, failure cause is attributed to the proper owner, and each chosen quest-chain shape has matching save, fallback, dialogue, map, and result-copy coverage.
+
+### Rotating and repeatable quest eligibility
+
+Repeatable tasks should enter through an existing candidate-generation owner, not a new daily-board authority. An authored template defines valid objective modules, allowed locations, requirements, failure behavior, reward bounds, and whether the same player can hold more than one instance. The current generator determines whether a candidate can be offered from canonical world facts and the game's seeded random stream.
+
+The candidate must have a stable instance identity for its accepted lifetime. Its template ID, generation inputs, and owner-managed outcome must be sufficient to restore it. Do not recreate a completed instance under the same ID, or use a fresh random draw after load to replace its active objective. If the current quest owner cannot safely persist the candidate, keep generation to offer-time and create a normal canonical quest instance only after acceptance.
+
+Eligibility should be deterministic and explainable: active instance cap; prior completion/cooldown if the owner tracks it; location/actor availability; campaign phase; resource feasibility; and optional-content presence. If no template qualifies, show no offer or an authored empty state. Do not generate a fallback that violates objective or reward bounds merely to keep the board populated.
+
+Treat “rotating” as content availability changing at a defined owner event, not as a wall-clock reroll. The game clock or event owner decides when a window starts and ends. A quest accepted before the window closes follows its declared completion/expiry rule; it is not silently deleted by the next rotation.
+
+### Hidden-quest entry and anti-stranding rules
+
+A hidden quest needs a discoverable signal that can be perceived through supported modalities, a stable clue/discovery fact, and an optional-task classification. If the player misses the clue, the base campaign remains complete. If the clue's presentation asset is missing, text or an alternate interaction should preserve essential discovery where the content is intended to be accessible. Skill or faction gates may add interpretation or shortcut, but the secret cannot be the sole path to a required system tutorial or ending prerequisite.
+
+Review hidden-task copy at two knowledge levels. Before discovery, ambient text must not reveal a precise objective or promise a reward. After discovery, the journal can state what the player actually learned and what remains unverified. If an old save contains a quest reference but not the newer discovery fact, use the save owner's migration/fallback rule rather than guessing that the player found the clue.
+
+### Journal language by lifecycle projection
+
+Journal text should distinguish an offer from an accepted task, an objective from an outcome, and a failure from a delay. For an offer, say what prompted it and what the player can choose. For an active task, name the next supported verb and any known prerequisite. For a blocked task, identify the real owner-backed condition and whether waiting, a clue, or an alternate route can change it. For partial progress, list confirmed evidence separately from unresolved claims. For failure, preserve cause and any recovery link. For resolution, state the accepted disposition and any remaining uncertainty.
+
+Do not manufacture a new journal status store to achieve this language. Derive the read model from the quest owner's state and objective facts. If the current journal only supports a smaller set of labels, use concise explanatory copy inside that model; do not make the UI's wording appear more certain than the owner's underlying state.
+
+## Continuation pass 9 — candidate-to-instance flow, objective contracts, and quest portfolio gates
+
+### Candidate, offer, instance, and history are different records
+
+Keep four moments distinct in quest content and implementation:
+
+1. **Template eligibility:** a current owner/generator says an authored definition may be presented in this campaign. This is a temporary candidate, not an active quest.
+2. **Offer presentation:** the player has enough knowledge to understand the offer. Showing the offer does not create an accepted instance.
+3. **Acceptance:** a confirmed request creates or activates one canonical quest instance through the current quest authority.
+4. **Outcome history:** the owner records completion, failure, expiry, abandonment, or supported resolution. Revisiting a conversation cannot create a new instance or repeat its reward.
+
+When the player declines, determine whether the offer can be repeated, is permanently refused, or remains available later; that policy belongs to the quest definition and current quest owner. When the player defers, do not create a half-active task unless the owner has a distinct supported state for it. When the generator presents several candidates, accept only one stable definition/instance reference at a time through the current API.
+
+Existing source evidence identifies QuestRuntimeCoordinator with a compact persistent state set and separate template/candidate generation concepts. Promotion should map these moments to those exact APIs. Do not add a competing global state enum for every editorial label. If an owner cannot represent the intended behavior, simplify the offer semantics or submit the smallest architecture decision.
+
+### Instance and objective identity
+
+An accepted quest instance needs a stable owner-defined identity; each objective needs a stable definition reference and a current evidence source. If an authored task can be accepted repeatedly, distinguish separate instances without deriving identity from localized title, list position, system time, or random GUIDs. Use the project's current deterministic ID/session contract and confirm restore behavior before release.
+
+When an objective is repeated, decide whether the evidence is one-shot, cumulative, latest-result, or a set of unique targets. For example, inspecting the same record twice should usually remain one inspection; delivering three items should use the inventory/resource owner's current amount semantics; visiting three sites should use stable site IDs and not count a revisited site twice unless the quest explicitly asks for repeated trips. Do not add local integer counters that become inconsistent after restore or item transfer.
+
+Objective text can be authored in stages: instruction, progress, blocked reason, completion acknowledgement, and failure/recovery explanation. The current quest/journal authority should choose which text key is relevant from canonical progress. A dialogue line may add context but cannot replace the objective record.
+
+### Deterministic generated offer contract
+
+When a template candidate comes from an existing narrative/quest generator, record the eligible template set and the owner facts that filtered it. A repeated call during the same offer window should not produce a different visible candidate merely because the panel was redrawn. If a new dispatch or world event is intended to change candidates, use the established seeded stream at that owner transition.
+
+Template constraints should include:
+
+- allowed quest family and objective module;
+- compatible location/exploration types;
+- required actor/faction presence or approved absence route;
+- minimum and maximum objective count;
+- supported failure/recovery semantics;
+- bounded reward request and duplicate policy;
+- campaign phase and active-instance cap;
+- whether the player may decline and see another candidate;
+- whether an accepted task survives template retirement.
+
+Generation selects within these constraints; it does not author arbitrary new consequences. If every candidate fails its preconditions, report that no offer is available. Never return an invalid fallback that quietly violates objective type, location requirement, or reward bounds.
+
+### Quest portfolio progression and pacing
+
+Plan a release portfolio across campaign pacing, not only category counts:
+
+| Campaign interval | Content role | Example system proof | Branch budget |
+|---|---|---|---|
+| Early shelter | Teach an existing interaction and readable journal state. | Offer → accept → inspect → report. | One short branch, mostly reconvergent. |
+| Early exploration | Show map knowledge versus travel readiness. | Discover clue → candidate opportunity → preview/start. | Optional discovery path with baseline. |
+| Mid-campaign | Make resource/character decisions matter. | Existing inventory/recipe or relationship owner accepts result. | One meaningful local outcome plus callback. |
+| Mid/late faction arc | Present terms, access, refusal, and separate follow-up. | Faction owner controls standing/access; quest owner tracks task. | Distinct terms but no arithmetic in dialogue. |
+| Late campaign | Resolve cross-quest commitments and prepare an ending. | Campaign owner reads canonical quest/world facts. | Carefully audited, bounded irreversible choices. |
+| Post-resolution | Let the player revisit settled locations and people. | Owner result drives world/map/journal callbacks. | No replay of one-shot operations. |
+
+This distribution teaches systems before asking players to combine them. A late-game major faction or ending can be proposed only after the current canon and expansion plans are audited; this plan's category table does not authorize a new faction or campaign layer.
+
+### Quest acceptance and refusal copy contract
+
+An offer scene needs three distinguishable responses where the quest owner supports them: accept now, ask for information, and decline/defer. Acceptance explains the task and known commitment before sending its command. Information questions do not mutate quest state unless an owner-backed clue interaction is actually completed. Decline copy avoids implying that supplies moved, reputation changed, or future content was permanently removed unless the owner confirms that policy.
+
+The journal and dialogue should agree on offer state after closing and reopening. A duplicate accept request returns the existing instance or an owner-defined AlreadyApplied result. If an offer expires while open, the owner rejects the stale acceptance and the scene refreshes to a current option or neutral exit. Acceptance is complete only when a fresh save can restore the owner-confirmed instance.
+
+### Portfolio review and production stop rules
+
+For a wave of quests, report unique templates, accepted instance modes, objective evidence types, required map IDs, new scene graphs, owner command families, failure/recovery paths, localization strings, and save fixtures. Halt the wave if several quests depend on one unverified shared owner seam, if mandatory locations exceed the authored budget, or if all quest families repeat the same dramatic question and player verb.
+
+This review can reject or defer content without deleting useful prose. Keep unsupported scenes in the planning bundle with their unverified fields marked. A content batch becomes integration-ready only when each accepted instance can be traced from candidate through terminal result under current quest/save authority.
+
+### Validation fixture: transition replay and owner receipts
+
+The transition fixture should be a sequence of owner observations, not a hand-authored list of expected labels. Begin from a clean campaign snapshot, query eligible definitions, create one offer, accept it, advance one objective, save, restore, and query again. The journal projection after restore must match the accepted quest facts and objective evidence. Reopening the dialogue must not create a second instance or repeat a completed request. This sequence covers offer eligibility, stable identity, objective evidence, save ownership, and read-model refresh without adding another quest-state store.
+
+Add targeted branches to the fixture rather than cloning a full campaign for every variation:
+
+| Variant | Fact changed | Expected owner result | Player-visible proof |
+|---|---|---|---|
+| Evidence unavailable | Required witness or location fact is absent. | Instance remains actionable or has an explicit blocked reason. | Journal names what is missing and a supported retry or alternative. |
+| Evidence arrives late | A valid clue arrives after a temporary route closes. | Task follows the authored recovery route; the expired route stays expired. | New route is distinct from the missed opportunity. |
+| Partial transfer | Resource owner accepts less than requested. | Progress reflects only the accepted amount or a typed rejection. | Dialogue and journal show the remainder without claiming full delivery. |
+| Competing evidence | Two valid events arrive in one update interval. | Each stable evidence identity is processed once in defined order. | Both accepted facts appear, or a deterministic reason explains rejection. |
+| Stale acceptance | Eligibility changes while its panel stays open. | Owner rejects or refreshes the stale command. | Current option appears and no hidden commitment is recorded. |
+| Duplicate completion | Same response or event is submitted again. | Prior result returns or duplicate is harmlessly rejected. | No extra reward, relationship change, or world mutation appears. |
+| Follow-up after resolution | A supported sequel becomes eligible. | New stage or linked instance appears; original remains terminal. | Journal retains the resolution and names the new commitment. |
+
+Keep a receipt for each owner operation: source instance, evidence ID, command, target, request identity, acceptance or rejection, and resulting canonical state. The receipt is a review artifact unless a current production owner already exposes a durable history contract. Do not turn it into an unofficial save record or a second audit ledger. It lets reviewers distinguish an objective bug from a presentation refresh bug: if the owner accepted evidence but the journal is stale, the repair belongs to the existing projection/event seam; if the owner rejected it, dialogue cannot invent success.
+
+The fixture should also demonstrate that a blocked objective is recoverable in a way the player can understand. A blocker needs an owner fact, a reason code, an expected refresh trigger, and either a next action or an honest wait condition. “Come back later” is only useful when the content tells the player what may change or where they can continue meanwhile. If no change can clear the blocker, the route is not a temporary block; it needs a failure, deferral, or alternate resolution authored before release.
+
+### Content proof package for a release candidate
+
+Before a quest enters an integration wave, provide a compact package linked by stable content IDs: the definition and references, objective-to-evidence mapping, state/branch diagram, normal transcript, recovery transcript, localization inventory, and the owner receipt fixture. Include the source revision or catalog version used for review so that a later prose-only correction can be distinguished from a semantic change. Do not paste runtime state dumps or player save data into this package.
+
+The reviewer should answer five questions without reading every node: what does the player believe at entry; what fact makes each objective true; who accepts the result; what remains possible after failure or uncertainty; and how does the player see the final result after restore? If an answer depends on an unverified API, keep the quest at proposal status and identify the missing contract. One line or location already present in content does not make the entire quest integrated.
+
+For larger quest sets, group fixtures by shared objective contract and include at least one boundary case per group. Several inspection objectives can share a fixture only when they use the same evidence producer, duplicate policy, and rejection semantics. Delivery, discovery, escort, timed survival, and relationship tasks remain distinct when their proof and failure routes differ. This reduces review repetition without hiding a risky behavior behind a broad happy path. The package should name both what was exercised and what was explicitly deferred, especially when a quest's branch graph contains unsupported faction, ending, or optional-package results.
+
+### Quest tranche closeout criteria
+
+Close a content tranche when every accepted quest has an owner-backed entry path, stable instance reference, objective evidence definitions, explicit outcome or recovery path, and restore/revisit description. Mark each unsupported branch as deferred at the response or objective level; do not describe the whole quest as playable when only its opening scene works. The review note records unresolved owner contracts, required location references, duplicate story-function checks, and the next smallest integration slice. If one blocker affects several quests, raise one shared dependency for the foreman instead of scattering guessed workarounds across definitions.
+
+## Continuation pass 10 — questline topology, episode pacing, and multi-thread delivery
+
+### Separate prerequisite edges from story references
+
+A campaign quest graph contains several relationships that look like “links” but have different gameplay meaning. A prerequisite edge controls whether an offer may appear. An objective edge says which evidence advances an accepted instance. A callback edge selects later dialogue after an outcome. A thematic reference connects stories that share a setting or character but does not gate either task. These edge kinds must remain distinguishable in authored review and validation output. A quest should not become unavailable merely because an optional callback target was removed.
+
+Use an explicit edge contract in the content packet:
+
+| Edge kind | May block offer/progress? | Required evidence | Removal behavior |
+|---|---|---|---|
+| Critical prerequisite | Yes, only when the campaign explicitly requires it. | A canonical fact accepted by its owner. | Provide a core route or stop the dependent quest from release. |
+| Objective evidence | Yes, for the stated objective only. | A typed event or accepted owner result. | Keep the objective blocked with an authored alternate or delay. |
+| Optional invitation | No critical progression block. | Current offer eligibility. | Omit the offer or show a neutral fallback. |
+| Callback reference | No; it changes a later response or journal detail. | Prior accepted result or memory fact. | Use the baseline line when the optional source is absent. |
+| Thematic relationship | No runtime gate by itself. | Editorial approval and collision review. | Remove the cross-reference without changing playability. |
+
+This separation supports a main storyline with character, faction, investigation, and discovery threads without requiring the player to finish every side story. It also makes critical-path review possible: follow only blocking edges from campaign start to resolution, then prove that each node on that path can be offered, reached, and completed using core content and current owners.
+
+### Thread map across campaign phases
+
+Plan a multi-thread release as a set of short arcs with different player verbs and different reasons to revisit the world. The table below describes production roles rather than new canon or content IDs:
+
+| Thread | Early appearance | Mid-campaign development | Late callback or resolution | Optionality rule |
+|---|---|---|---|---|
+| Main campaign | A concrete shelter or expedition problem. | Evidence changes which solution is credible. | One authored campaign resolution reads accepted outcomes. | Required steps have a known accessible route. |
+| Character | A person's practical request or hesitation. | Their interpretation shifts after player-backed events. | A callback recognizes the player's accepted or refused commitment. | No character ending blocks core survival progression. |
+| Faction | Terms, access, or an unresolved claim. | The player can negotiate, delay, or decline with clear limits. | Current faction owner supplies standing/access facts to campaign closure. | A non-faction route exists for essential information. |
+| Discovery | An environmental clue with observable detail. | Separate clue from the player's interpretation. | A later scene explains what the clue did and did not establish. | Secret evidence is not the only critical objective proof. |
+| Investigation | Conflicting sources and an evidence question. | Player can compare sources or pursue a corroborating site. | Owner-confirmed conclusion selects a result or a known-uncertain closure. | Missing one optional witness does not dead-end the case. |
+| Rotating world task | A short, repeatable contribution. | Current world/resource facts change eligibility. | Journal history records the accepted result without replaying it. | Rotations cannot crowd out required campaign tasks. |
+
+Each thread needs one introduction, one distinct development beat, and one closure or honest open-state callback before it contributes to the campaign slate. A theme alone is not a second story arc: if two tasks share the same character, destination, evidence, choice, and result, combine their production or make their gameplay distinction explicit.
+
+### Episode pacing and branch convergence
+
+Shape a long quest chain as episodes that can each return control to ordinary play. A useful episode contains an arrival or contact, a player-readable question, one or more evidence paths, an explicit decision or confirmation, and a close that names what is still unresolved. The player should not need to keep a dialogue graph open while waiting for an unrelated world event. A blocked task can remain active in the journal while the player pursues another task; its resumption rule comes from its owner facts.
+
+| Episode position | Player question | Evidence or action | Convergence decision |
+|---|---|---|---|
+| Hook | Why should I care now? | Witness, alert, discovered object, or accepted request. | Create an offer only after its owner says it is eligible. |
+| Inquiry | What can be verified? | Inspect, travel, ask, craft, protect, or compare records. | Rejoin after different ways produce equivalent evidence. |
+| Interpretation | What does the evidence mean? | Contrast source quality and uncertainty. | Keep separate only if the owner records a different conclusion. |
+| Commitment | What am I choosing to do? | Confirm a target, cost, or relationship/faction term. | Branch for a real owner-backed consequence. |
+| Return | What changed? | Query the owner result and any current world projection. | Retain the settled result; offer a new task only through new eligibility. |
+
+Branch convergence is a production decision, not a promise that every path has identical flavor. Reconvergent routes can preserve a knowledge marker or an approved response variant while sharing the next objective. A non-reconvergent route must list its unique downstream scenes, journal copy, reward treatment, map/location consequence, and ending input. Before adding a new branch, estimate the number of future callbacks that must acknowledge it; if the team cannot support those callbacks, choose a narrower local result or defer the route.
+
+### Shared dependencies and multi-quest handoffs
+
+Two active quests may ask the player to visit one site or speak with one character. They may share the physical expedition opportunity only if each objective still accepts its own evidence contract. The location arrival event can be common; inspection, conversation, delivery, and interpretation can remain separate actions. Do not make the second quest complete because the first quest's dialogue happened in the same room.
+
+When one quest produces evidence another can use, name the stable evidence kind, source owner, visibility level, and whether re-use is allowed. A later quest may reference an already learned public fact if the current knowledge owner can prove it. It must not copy the old objective's progress counter. A private character memory may qualify a conversation variant without satisfying a public investigation objective. This protects both narrative continuity and fair quest expectations.
+
+If a shared dependency becomes unavailable, evaluate each consumer separately. One quest can delay while another takes its substitute. A faction branch can close while a personal task remains available. A common location can be visible but unreachable, with distinct objective fallbacks. The content review lists all consumers of a shared node and verifies that disabling one optional bundle does not collapse the critical quest graph.
+
+### Portfolio capacity and production investment
+
+Choose a release portfolio by complete playable arcs rather than by raw quest count. For each proposed quest, estimate authored locations, speakers, unique scene graphs, new objective proof kinds, command owners, generated variants, localization load, outcome callbacks, and focused fixture families. Count reuse only when the same contract genuinely applies. A common objective module can lower implementation cost while a new character voice and multi-ending callback still carry writing and continuity cost.
+
+Use three practical investment bands. A **small task** reuses a current offer route, one objective contract, one primary location, and one result. A **medium arc** adds a reconvergent evidence path, a character/faction response, and one later callback. A **large storyline** crosses several existing authorities, changes multiple later scenes, or contributes to campaign resolution. Large storylines require a graph review, critical-path analysis, package-disabled fallback, old-save scenario, and explicit continuation budget before they enter implementation planning.
+
+If a slate contains too many unique mechanics, reduce the number of simultaneous story threads instead of spreading a thin partial implementation across all of them. If the writing volume exceeds review capacity, freeze new branches and finish the baseline/recovery transcripts. The useful measure is the number of complete and verifiable player routes, not how many quest titles have been drafted.
+
+### Critical-path worksheet for an expansion slate
+
+For each campaign milestone, write one row describing the minimal route, then annotate optional additions separately. The worksheet should show the start condition, required owner fact, evidence producer, accessible location path, fallback, and terminal/continuation result. A milestone that depends on a rare site, hidden character, optional dialogue package, or unreleased faction has failed the core-route check unless the current campaign explicitly accepts that dependency.
+
+| Milestone | Critical route | Optional enrichment | Required review |
+|---|---|---|---|
+| Introduce the campaign question | One available quest/contact or authored discovery. | Additional rumor source or companion reaction. | Ensure optional source absence leaves a coherent hook. |
+| Establish evidence | At least one legal evidence-producing route. | Alternate witness, skill analysis, or hidden context. | Prove the objective consumes owner-confirmed evidence. |
+| Ask for commitment | One clear player choice with cost and uncertainty. | Tone variant or optional negotiation question. | Revalidate exact command preconditions at confirmation. |
+| Record the result | One accepted, failed, expired, or explicitly unresolved result. | Map/character callback and optional reward. | Preserve result after save/restore and scene revisit. |
+| Continue or close | Authored next task or supported terminal resolution. | Follow-up thread if eligible. | Prevent automatic re-open or duplicated reward. |
+
+This worksheet catches a campaign graph that looks connected but has no complete player route. It also helps writers distinguish optional detail from required proof and gives integration a small acceptance target before the full slate is authored.
+
+## Continuation pass 11 — quest definition contract, objective composition, and portfolio production kit
+
+### Semantic groups for an authored quest definition
+
+The exact JSON schema belongs to the live data authority. This proposal separates the questions a definition must answer so future schema work can reuse current catalogs and avoid one unstructured blob of prose, logic, and duplicated state. A definition should be reviewed in semantic groups; not every group becomes a new runtime field.
+
+| Definition group | Authoring questions | Runtime consumer or owner to verify |
+|---|---|---|
+| Identity and revision | What stable content ID and compatibility revision identify this quest? Is it permanent content, a template, or a linked sequel? | Current quest/catalog loader and save reference owner. |
+| Presentation | What title, summary, giver, opening text, journal key, and closure text appear in each locale? | Existing quest log/dialogue/localization path. |
+| Offer eligibility | Which campaign phase, actor, faction, discovery, or prerequisite fact can make the offer available? | Current quest generator and each referenced fact owner. |
+| Acceptance contract | What commitment does acceptance create, and what can the player still decline or ask before committing? | Existing accepted-quest command/state path. |
+| Objective graph | Which typed proof is required, optional, alternative, or ordered? | Existing objective representation and evidence producer. |
+| Location requirements | Is the task tied to a specific canonical site, a class of evidence, or a clue-only lead? | Map and expedition owners; Plan 18 review. |
+| Outcome semantics | What is completed, resolved, failed, expired, abandoned, or continued? | Current compact lifecycle API and campaign/quest owner. |
+| Reward request | What owner-confirmed item, access, relationship, or information result may be requested? | Existing inventory/faction/relationship/campaign owner. |
+| Recovery and compatibility | How can this route continue after blocked progress, retired content, or an old-save reference? | Current owner migration/restore contract. |
+| Editorial provenance | Who authored it, which bundle owns it, what is provisional, and which callbacks consume the result? | Content review package; not a campaign save field. |
+
+The group list is useful even if a current definition combines several fields. Before proposing a schema change, find the existing representation and show exactly which question it cannot express. A missing design detail is not a reason to add a mutable flag; it may be a content note or a derived read-model label. Conversely, if a durable fact cannot be reconstructed after load, name its canonical owner and migration requirement before authors depend on it.
+
+### Objective composition rules
+
+Complex quests need clear logic for how evidence combines. Specify the relationship between objectives in plain authoring language and confirm that the current quest authority can represent it. Do not infer ordering from list position unless the existing data contract defines ordering. Do not interpret all objectives as mandatory when an authored alternative is intended.
+
+| Composition | Meaning | Example use | Review rule |
+|---|---|---|---|
+| Ordered sequence | Objective B becomes actionable after accepted proof for A. | Find a route clue, then travel to the revealed region. | Explain why B was previously unavailable; preserve A after restore. |
+| All required | Each listed proof is needed for the primary outcome. | Confirm two independent resource stores. | One blocked proof keeps the whole result open but does not erase completed proofs. |
+| Any-of alternatives | Any one approved evidence source can satisfy the requirement. | Corroborate a claim with either a record or witness. | Each branch yields equivalent objective meaning; unknown is not success. |
+| Parallel work | Several tasks can progress in any order. | Prepare food and repair a shelter boundary. | Each owner event is idempotent; aggregate result recomputes from canonical evidence. |
+| Optional objective | Adds a bonus or detail but is not required for the core resolution. | Find a second record that changes a callback. | Player-facing labels distinguish optional completion from required progress. |
+| Fail-forward substitution | A failed approach activates a different proof route. | A missed interview is replaced by a physical record. | Original failure remains in history; the substitute has its own owner proof. |
+
+For any-of groups, document why the evidence sources are interchangeable at the quest level. A witness may establish presence but not delivery; a signed record may establish a recorded transfer but not who physically carried it. If the narrative conclusion differs, the paths are meaningful branches, not simple alternatives, and the owner must preserve that distinction. For parallel work, never use a local sum of boolean callbacks when the individual owners can report accepted objective facts.
+
+Avoid cyclic prerequisite/objective graphs. A quest cannot require its own unresolved result, directly or through another task, unless a bounded loop is an intentional repeatable activity. A repeatable loop is usually better represented as fresh accepted instances from a stable template than by resetting a terminal instance. Validation should identify strongly connected prerequisite chains, unreachable objectives, optional goals that accidentally gate completion, and branches with no terminal or supported continuation.
+
+### Evidence and objective contract extension
+
+For every objective, record the event producer, accepted evidence identity, duplicate policy, target scope, accumulation mode, source quality, and player-facing acknowledgement. Use event IDs that are stable under save/load and independent of localized prose. Define whether repeated evidence is unique-target, cumulative, latest-value, or one-time. If the current owner cannot provide a stable event or target, simplify the objective to a supported observable interaction rather than counting dialogue visits.
+
+Progress must be recoverable from its owner facts. An objective such as “visit three distinct shelters” should use the canonical shelter identities and accepted visit evidence. “Deliver five units” should read accepted resource-transfer results, not an inventory snapshot after the player may have used some items elsewhere. “Convince the contact” must identify the relationship/faction/quest result that demonstrates acceptance; displaying a persuasive response is not proof.
+
+If one event could satisfy multiple objectives, define whether evidence is reusable and whether each objective requires a different target. A single inspection can legitimately serve two tasks when both are about the same public fact and each owner accepts the source. It must not satisfy “inspect the east room” and “inspect another room” merely because both listen to a generic inspection callback. A shared source fact may provide context, while separate objective requirements maintain the task's distinct scope.
+
+### Outcome packet and reward boundaries
+
+An outcome packet describes the task's result before any reward is implemented. Separate: objective outcome; explicit player choice; reward request; owner acceptance; later callback; and campaign-resolution contribution. A primary task may complete with no item reward. An optional discovery may provide information but no inventory change. A negotiation may grant access only if the faction authority accepts its command. The quest definition asks for effects; it does not write directly to those owners.
+
+| Outcome case | Quest-facing result | Reward/effect handling | Journal language |
+|---|---|---|---|
+| Full primary route | Completed when all required proofs and result are accepted. | Submit each allowed reward request once to its owner. | State verified outcome and any remaining uncertainty. |
+| Optional evidence missing | Primary route may still complete if authored that way. | Omit bonus; do not invent a penalty. | Show optional evidence as missed/unknown only if useful. |
+| Partial proof accepted | Keep active/blocked or resolve through an authored partial route. | Grant only effects whose preconditions succeeded. | Separate confirmed facts from outstanding work. |
+| Alternate fail-forward route | Record primary failure and alternate progress. | Use the alternate route's reward/effect contract. | Explain why the path changed without calling failure success. |
+| Explicit unresolved resolution | Owner records a supported terminal/settled outcome. | No reward is implied unless separately accepted. | Tell the player the investigation is settled as unknown, not solved. |
+| Abandoned task | Owner accepts abandonment or existing semantics apply. | Apply only the documented cancellation behavior. | Preserve history without claiming deadline failure. |
+
+Avoid a generic reward field that mixes quantities, faction access, relationship, and ending observations as arbitrary strings. Each reward has a typed owner and a scope-specific result message. If the same owner handles quest completion and reward, the command/result contract still needs duplicate behavior. A repeated completion dialog should not grant rewards twice.
+
+### Expanded production cards by quest family
+
+Use this matrix to check that content families differ by proof and player activity, not just their category label:
+
+| Family | Primary player verb | Evidence owner boundary | Main failure/recovery question | Cost band tendency |
+|---|---|---|---|---|
+| Main quest | Investigate/decide/advance. | Campaign and quest owners accept milestone proof. | Does the core route remain accessible? | Large when multiple outcomes feed resolution. |
+| Character quest | Ask/help/return. | Quest and relationship owners distinguish promise from result. | Can the player decline without losing core instruction? | Medium with recurring callbacks. |
+| Faction quest | Negotiate/serve/withdraw. | Faction authority controls standing/access; quest tracks task. | What if contact is absent or terms are refused? | Medium/high across package and campaign edges. |
+| Discovery quest | Notice/inspect/reveal. | Map/discovery owner records knowledge; quest accepts evidence. | Can a clue be missed yet the task remain possible? | Low/medium, high if it opens critical content. |
+| Investigation | Compare/corroborate/conclude. | Evidence source and quest outcome owner remain distinct. | Can an honest unknown resolve the task? | Medium/high due to branching transcripts. |
+| Escort/protection | Prepare/travel/defend. | Expedition/encounter owner proves arrival/survival. | What alternate exists after interruption or loss? | High when simulation state is involved. |
+| Survival | Endure/prepare/recover. | Needs/health/time owners provide thresholds and events. | Is failure fair, legible, and recoverable? | High; do not invent pressure counters. |
+| Crafting/resource | Gather/produce/transfer. | Inventory/recipe/resource owners report accepted operations. | What if the player spends or transfers items elsewhere? | Medium; high if economy balance changes. |
+| Timed | Prioritize/act before owner deadline. | Existing clock/deadline authority records expiry. | Can the player see time pressure and the after-state? | High because clock/save behavior matters. |
+| Rotating | Choose/complete/repeat. | Generator eligibility plus quest instance owner. | What prevents duplicate and runaway offer volume? | Medium/high at scale. |
+| Hidden/environmental | Discover/interpret. | Discovery evidence is recorded before offer/acceptance. | Is there a clue-led fallback or is it truly optional? | High if hidden route affects critical progression. |
+
+Every card also states whether it belongs in the core game or an expansion. Core content teaches the minimum path and all required verbs. Expansion content may deepen the same owner contracts, add optional places or story branches, and contribute supported campaign facts. Expansion-only authorship cannot become a silent dependency for the core objective unless the game explicitly supports that package as required.
+
+### Repeatable and rotating content production safeguards
+
+Repeatable content has two identities: the immutable template and each accepted instance. A new instance uses a deterministic stable reference from the current generator/quest contract; it does not mutate a prior completed instance. Eligibility reads current world facts, campaign phase, active-instance limits, recent content if an existing owner records that history, and reward limits. If any required fact is unavailable, the template is omitted or the offer system reports no eligible task.
+
+Rotating content should be finite and explainable. A rotation can choose from authored templates, but each candidate still declares location needs, objective proof, failure behavior, reward request, core/expansion status, and duplicate policy. Avoid combining high-volume rotations with unique named-character arcs or irreversible faction choices unless the generator has an explicit authored instance model. Generated repetition is appropriate for small contributions; major character and campaign story beats remain permanently authored.
+
+Offer volume should be bounded by current owner policy, not a dialogue-local cap. Test an empty candidate set, one eligible candidate, several equivalent candidates, all candidates with unavailable locations, an already active instance, a repeated completion, and a save restored after template retirement. The correct result can be “no offer today.” Never backfill with an invalid quest just to keep a board visually full.
+
+### Quest acceptance dossier for the next integration wave
+
+For one representative quest family, the handoff should include its current owner map, conceptual definition card, objective-composition diagram, evidence receipts, player-facing status copy, outcome/reward table, location availability request, dialogue responses, and compatibility cases. Report which existing APIs/data rows were directly verified, which are inferred from earlier source review, and which still need a fresh premise audit. This is a review checklist, not an authorization to implement a new schema or claim code ownership.
+
+The first integration slice should keep the feature narrow: one accepted quest instance, a small objective graph, one evidence producer, a truthful blocked/recovery case, one terminal/continuation outcome, one post-restore query, and a visible journal/dialogue update. Add generated offers, multiple quest families, broad faction outcomes, or high-volume content only after that vertical slice proves the existing owner and save seams end to end.
+
+### Quest journal and active-task workload
+
+The journal is a projection of quest authority and objective evidence. A row should help the player answer: what did I agree to; what is actionable now; what is waiting; what did I finish; and what should I do next? The journal can group Active, Blocked, Partially Completed, terminal, and discovered/offered tasks for presentation, but those labels must map to current owner facts. Do not persist a parallel set of UI statuses to remember which tab the player last used.
+
+| Journal row element | Source | UX rule |
+|---|---|---|
+| Title and short premise | Authored definition/localization. | Preserve a stable text reference; truncate visually without losing full detail. |
+| Current objective | Quest owner plus canonical objective text. | Distinguish actionable work from an optional/complete objective. |
+| Blocked reason | Current missing prerequisite or owner result. | Include next action or honest wait condition. |
+| Location hint | Quest request and map/discovery owner. | Never expose a secret coordinate before the player earns it. |
+| Last result | Accepted/failed/expired/abandoned outcome. | Preserve cause and history; do not collapse unlike terminal states. |
+| Follow-up | New eligible offer or sequel reference. | Display only when owner confirms the next task is available. |
+
+Tracking a task is a presentation preference. If the existing UI lets the player pin one or more tasks, the pin can influence emphasis but cannot alter selection priority, quest eligibility, or world state. If a location is hidden, tracking shows the earned clue or region rather than revealing the target. When a task becomes terminal, the pin clears or transitions through the existing UI behavior and the player receives readable feedback.
+
+Active-task volume should be tested with several simultaneous but distinct responsibilities: one main task, a character request, an optional exploration lead, a blocked task awaiting an event, and one completed task with a follow-up. The journal must not lose the main objective under optional content, repeat a reward prompt, or make blocked tasks appear failed. Do not solve an overloaded journal by silently canceling older accepted quests. A visible filter/grouping change is presentation; an actual active-instance cap belongs to the current quest owner and must be explained before acceptance.
+
+### Journal acceptance states
+
+Review the following transitions as player-visible before/after records: no offer to available offer; discovered clue to optional task; accepted instance to first actionable objective; active objective to blocked reason; partial evidence to a remaining objective; owner-confirmed completion to reward/result acknowledgement; failure to alternate route; and terminal result to sequel. Every state must have a clear way to leave the journal and return to the current game loop. Keyboard/controller focus returns to the correct row after refresh, while a removed row causes a spoken/visible notice rather than a silent jump to another task.
+
+The journal should preserve enough copy to explain past decisions without becoming a second transcript database. Use concise owner-backed result summaries for normal play. If the current game has no persistent narrative history store, do not promise a browsable full dialogue archive as part of this plan. Link to the existing quest history path or keep the full transcript ephemeral.
+## Continuation pass 12 — integrated Tidemark quest portfolio and fail-forward lifecycle
+
+This pass adds a new, provisional quest portfolio to exercise the lifecycle contracts established earlier. The portfolio is called **Tidemark Compact** as an editorial label only. It introduces no canon IDs, runtime quest manager, faction standing store, water ledger, or campaign flag. Its central question is social and practical: during a dangerous water-cycle change, how can several shelters coordinate access without claiming that one group owns the truth? The playable content should make uncertainty, labor, and consent visible while leaving water quantities, inventory, faction standing, and expedition availability to their current owners.
+
+The portfolio is deliberately broader than one main quest. It contains a mainline, a character thread, a faction negotiation, a discovery thread, a survival request, and a resource/crafting task. Each thread can be played as its own authored package, but their graph includes clear prerequisites, optional branches, and a critical-path audit. The names below are draft labels for planning prose; the eventual data identifiers and canon review remain future work.
+
+### Portfolio intent and player contract
+
+The player hears that the Switchback Sluice has been opened and closed on conflicting reports. One shelter says the upstream gauge predicts a safe release; another says the downstream intake has already turned bitter. The Lowwater Stewards maintain the local mechanism and distrust remote schedules. The High Meridian Assembly is a late-game coalition that offers coordination and record standards, but has no assumed authority to operate local infrastructure. These are provisional faction concepts: the Stewards are patient, practical, and protective of local consent; the Assembly's delegates value comparability across settlements and can mistake procedure for trust.
+
+The portfolio does not ask the player to choose which group is morally correct. It asks them to help establish what is known, decide what can be communicated, and support a safe next step. The game should offer routes for verification, repair, delay, or refusal. No choice claims that every shelter receives equal water, that a faction is permanently trusted, or that a late-game coalition has taken control unless a verified owner records the corresponding fact.
+
+**Player-facing promise:** accepted tasks remain understandable; a missed window changes the route rather than erasing the player's effort; optional proof deepens the negotiation but is not the only route to core progression; and every result that affects play appears in an existing journal, inventory, map, character, quest, or faction read model.
+
+### Quest portfolio cards
+
+| Draft quest label and family | Purpose and typical entry | Required locations | Failure state and continuation | Reward shape and placement |
+|---|---|---|---|---|
+| **The Gate That Must Not Guess** — main quest, investigation plus location-based | Learn why two public readings disagree and decide whether to verify, repair, or delay the next test. It becomes available from a current core route or a supported discovery clue. | Switchback Sluice is mandatory; one of Rillstep Intake or the marked gauge lookout can provide corroboration. | A missed safe test window records the missed opportunity through the quest owner, then routes to a later inspection or a public “unverified” conclusion. It must not strand the critical path. | Core. Reward is recognized objective progress and an intelligible map/journal update, not a free water grant. |
+| **Sena's Handful of Teeth** — character quest, resource/crafting | Help Sena recover or make a safe mechanism part after she explains why the gate cannot be tuned from a guessed reading. The character's precise name and line remain draft. | The sluice workshop or an owner-approved substitute bench; a material source can be optional. | A failed craft attempt may leave the task active with a repair alternative; loss of a required component routes to an existing salvage or trade path if one is available. | Core candidate if the character is in the base narrative; otherwise expansion. Reward is a character callback, practical access clue, or owner-confirmed repair evidence. |
+| **A Measure Both Crews Can Read** — faction, timed negotiation | Carry a proposed measurement method to the Stewards and Assembly delegate before the next public planning meeting. The deadline affects the meeting, not the existence of the factions. | A local shelter meeting point and a supported Assembly contact location; either can be substituted by a clue if unavailable. | Expiration changes the meeting to a report-only follow-up. It does not invent betrayal, remove faction access, or close the main task. | Expansion candidate due to cross-faction and campaign callback cost. Any standing/access result requires its current owner. |
+| **The Second Marker** — discovery and hidden lead | Find an older marker that explains where the gauge reading was taken. It begins through a physical clue or earned map knowledge, not a mandatory dialogue click. | A discoverable route edge or survey point selected by the existing expedition location owner. | If the site does not spawn, a witnessed mark, report, or equivalent clue can make the discovery available later. The clue gives context without automatically completing the proof. | Optional. Reward is knowledge, new safe wording, and a possible evidence alternative; no direct numerical skill increase is assumed. |
+| **One Night Before the Turn** — survival or protection | Keep the night inspection safe while the mechanism is unstable and the local crew decides who can participate. | A supported shelter/safe staging location plus the sluice arrival scene. | If the inspection cannot run, participants withdraw and the objective moves to daylight or a remote report. No companion or shelter resident is silently consumed as a failure cost. | Core or expansion according to cast capacity. Reward is a verified inspection fact and a relationship conversation if the current owner supports it. |
+| **A Dry Crate of Useful Things** — resource/crafting, repeatable only if owner permits | Prepare a small tool and seal kit requested for the inspection. The task teaches that readiness reduces risk, not that every expedition can be made safe. | Existing crafting/workbench and a current source for the accepted materials. | If the kit cannot be made, a trade, borrow, or postpone route remains. The player is not charged before the owner confirms the task's requirements. | Optional. Rewards can be a returned reusable tool or better briefing detail only when inventory and equipment owners support them. |
+
+Each card must carry the plan's full authoring fields: purpose, expected duration, acquisition source, required and optional locations, prerequisite facts, accepted proof, visible status changes, branch consequences, failure and recovery routes, rewards, reusability, production cost, and core/expansion classification. The table is a portfolio overview, not a substitute for complete definitions. A task is not ready for runtime merely because a title and hook exist.
+
+### Mainline graph and critical-path invariants
+
+The mainline route is a small graph with one required arrival, two possible forms of corroboration, and multiple honest conclusions:
+
+1. **Offer or discovery:** the player receives a report that readings disagree. The source and confidence of the report are identified in content; the player is not told that the water itself is unsafe before current evidence supports that claim.
+2. **Reach the site:** the quest requests Switchback Sluice. Plan 18 determines whether the authored anchor, an equivalent compatible site, or a clue route satisfies expedition selection. The quest owner remains responsible for objective phase.
+3. **Inspect the mechanism:** the player may ask Sena, inspect the gauge housing, or first collect The Second Marker. These approaches provide different evidence and dialogue but do not duplicate or bypass current quest proof.
+4. **Choose a supported conclusion:** corroborated readings permit a verified report; incomplete readings permit an explicitly unverified report; an unsafe test can be delayed; a repair route can be requested if the existing crafting/inventory owners accept its inputs.
+5. **Close or continue:** a current quest result closes the relevant objective. The faction meeting, character callback, and optional resource task can continue only if their own eligibility facts remain valid.
+
+No unique location is required for the player to reach a core conclusion unless the location-selection owner can guarantee it. If a required site is not valid for the expedition, choose one of three authored policies before release: a compatible substitute with equivalent proof semantics, a delayed quest with a visible reason and earned clue, or a safe report-only conclusion. The runtime must never silently leave an accepted quest without a possible route.
+
+Critical-path audit asks whether the player can complete the mainline by:
+- finding the marker before the sluice;
+- arriving without the marker and asking the local crew;
+- arriving when the safe test window has passed;
+- failing a craft attempt;
+- choosing not to support either faction's proposal;
+- having the optional Assembly package disabled;
+- accepting, then abandoning, a supporting character task;
+- restoring after one evidence source is accepted and another remains incomplete.
+
+A route passes when the player can still learn why the result is uncertain and reach an owner-supported resolution. The main task may conclude with less information; it may not claim the same verified conclusion as the full evidence path.
+
+### Lifecycle mapping and state interpretation
+
+The status vocabulary from the shared quest design remains a projection of canonical quest facts. Map each label to a meaningful player action and an owner-backed event. Do not add one copy of these statuses to the portfolio itself.
+
+| Status family | Portfolio interpretation | Required player-facing detail |
+|---|---|---|
+| Inactive / Available | The related chapter or offer is not yet eligible / the owner permits an offer. | State the prerequisite or how the lead can be found if that information is safe. |
+| Discovered / Accepted | The clue is recognized / the player has explicitly taken responsibility. | Distinguish “heard about it” from “agreed to do it.” |
+| In Progress / Blocked | Proof is being gathered / an owner-confirmed prerequisite is missing. | Name the actionable objective or safe wait condition. |
+| Partially Completed | Some readings or materials are accepted; at least one declared objective remains. | Preserve accepted evidence and identify what remains. |
+| Failed / Expired / Abandoned | The original route failed, the opportunity window passed, or the player withdrew. | Use distinct copy; show a fail-forward or closure route where designed. |
+| Reopened / Resolved | An owner permits renewed work / the accepted question has a supported conclusion. | Explain the reason for reopening or the actual conclusion; never replay a closed reward. |
+
+Expiration belongs to a specific opportunity, such as the meeting date or safe inspection window, rather than the entire arc. If timed content is used, record what changes at the deadline and what remains available. The player should be able to tell whether a missed deadline loses only a bonus conversation, a temporary meeting, an optional reward, or the chance for a verified reading. A deadline must not be hidden behind an atmospheric line when it changes an accepted obligation.
+
+Abandonment is a player choice and should not be authored as character betrayal by default. Reopening requires an owner fact or a new explicit offer. Reopened content should keep evidence already recorded when the quest owner supports it, then present only the remaining work. Failed or expired nodes cannot be marked “resolved” by a prose callback that lacks a corresponding owner result.
+
+### Objective and proof contracts for the portfolio
+
+Every objective is phrased as an observable action with a supported proof source. “Understand the sluice” is a dramatic intention but not a sufficient runtime objective. An author can express it as “inspect the named gauge housing,” “receive an accepted report from Sena,” “compare two discovered readings,” or “submit a safe unverified report.” These still require current owner APIs and catalog references to be checked during implementation.
+
+Proof records should answer four separate questions: what action occurred, what evidence supports it, who currently owns that evidence, and which objective may consume it. One action can produce evidence relevant to several threads, but duplicate consumers must be intentional and individually eligible. The Second Marker can inform the main investigation and unlock a character topic without directly completing A Measure Both Crews Can Read. The same clue can be discussed in both scenes while the quest owner still decides its progress meaning.
+
+Before marking an objective complete, content review should check:
+- the source is reachable under core-only and enabled-package configurations;
+- the evidence reference is stable and does not depend on translated text or row order;
+- the proof can be accepted once without granting repeated progress or reward;
+- the result remains truthful after save/restore;
+- the failure or unknown case does not become false success;
+- the player has a visible route from partial proof to the next allowed action;
+- the evidence is not simultaneously interpreted as a verified water-quality result and a simple mechanical observation.
+
+If current owners cannot express the distinction between “the gauge was inspected” and “the water is safe,” the proposal must not collapse those states. The quest can still close an inspection objective while leaving the risk claim unverified. The narrative should use the limited fact honestly.
+
+### Cross-thread schedule and interruption policy
+
+The portfolio can create urgency without placing six simultaneous deadlines on the player. Only the faction meeting and safe inspection window are candidates for time-bounded opportunities. The character repair, discovery clue, and optional kit remain available through the arc unless existing world rules say otherwise. Content review should define a schedule card that names:
+- what starts the timer;
+- which current owner owns elapsed time;
+- whether the deadline advances while in a dialogue panel or menu;
+- the first player-visible warning;
+- whether pausing, save/restore, or fast-forward changes eligibility;
+- which partial work survives expiration;
+- the next safe route after expiration.
+
+Do not invent a quest-local clock when a current world clock or calendar already owns elapsed time. The quest can ask that owner whether the deadline is open. The selection system decides how an expedition can present a site. The quest should not advance a second timer based on expedition starts unless the game has that explicit semantics.
+
+Interruption examples should appear in the production brief. If the player leaves before the test, the crew secures the mechanism and records no inspection result. If they leave after inspection but before reporting, the evidence remains available to submit through a supported return conversation. If a faction delegate leaves before the meeting, a later appointment can be offered if the content package defines it. If the Assembly package is disabled, its missing meeting does not expire the core inspection. These are content decisions that require current owner paths before production.
+
+### Consequence boundaries and reward policy
+
+A quest reward is a design promise, not a direct effect. Content lists the intended acknowledgement and the domain owner that can fulfill it. The expected reward can be:
+- an owner-recorded quest result that unlocks the next eligible node;
+- a character callback when a supported relationship or character fact changes;
+- an optional expedition clue appearing through current map/discovery behavior;
+- a specific item or material transfer only through inventory/crafting ownership;
+- an access or standing result only through an existing faction owner;
+- a presentation-only acknowledgement that persists nowhere if no durable gameplay claim is intended.
+
+Do not use a resource shortage as a narrative reward to be fabricated in dialogue. If the player contributes a crafted kit, the inventory owner controls whether it is consumed or returned. If a report unlocks a location, the map/discovery owner exposes it. If the Assembly recognizes the player, the faction authority records only the standing/access it currently supports. A character saying “we owe you” is not a mechanical debt unless an existing owner represents it.
+
+Prefer a small reliable outcome over a multi-owner reward bundle that cannot fail safely. If a compound reward is approved, list it as a dependency graph: accepted quest proof; then inventory result if requested; then faction or character read-model refresh; then dialogue callback. Specify the valid partial results. The player should not lose a confirmed task result because a secondary presentation animation or optional expansion line fails.
+
+### Portfolio regression scenarios
+
+The following cases are to be used when an implementation package is later authorized. They are design coverage, not an instruction to add tests during this documentation pass.
+
+| Scenario | Expected quest behavior |
+|---|---|
+| Main task offered with optional threads unavailable | The core objective remains clear and completable. |
+| Clue discovered before quest offer | The owner may surface a valid offer or preserve the clue until eligible; no hidden completion occurs. |
+| Required location selected normally | The location entry and quest objective agree on identity and purpose. |
+| Required location lacks a valid candidate | Substitute, delay with clue, or report-only conclusion follows the authored fallback. |
+| Two proof sources arrive in different orders | The same supported conclusion is reached; no duplicate reward or conflicting status. |
+| Player declines the faction proposal | The mainline retains a non-faction route to an honest conclusion. |
+| Meeting expires | The meeting opportunity changes, while unrelated quest work remains legible. |
+| Resource/crafting task cannot be fulfilled | No unapproved cost is charged; a borrow, trade, or postpone route is offered if designed. |
+| Partial inspection followed by save/restore | Canonical accepted evidence remains, and the next objective accurately reflects it. |
+| Optional expansion is disabled | Base quest references resolve or use approved neutral presentation; no missing expansion node is required. |
+| Quest is reopened after a changed world fact | Only supported remaining work returns; completed proof and rewards do not replay. |
+| Panel is closed during a pending owner request | Re-entry queries the owner and never submits a duplicate command automatically. |
+
+### Production-size and placement guidance
+
+The core slice should include the main task, one location, one optional proof source, and one player-readable fail-forward ending. It should not require a new faction system, new campaign authority, newly persistent NPC emotion, or bespoke timed-quest engine. Add the character quest when a verified character/relationship route exists. Add the faction negotiation when the current faction owner can provide access and result facts. Add repeatable tasks only if their current owner supports reset semantics that are clear to players.
+
+The full portfolio is likely an expansion because it needs several locations, a late-game coalition, multiple quest families, additional localization, and cross-owner callback review. A reduced mainline variant can fit core if it uses the base cast and available locations. The content team should estimate authoring, integration, map, dialogue, localization, accessibility, balance, and restore coverage separately. A large transcript is not the only cost driver; every durable outcome adds owner and verification work.
+
+The next implementation review must select a single end-to-end slice, likely The Gate That Must Not Guess with one current quest owner and one existing location. Source inspection verifies the actual objective/evidence API and save route; live governance claims exact files; one focused acceptance target is selected under current test policy. If the required interaction cannot be expressed with current public seams, the integrator records the precise decision gap and keeps the rest of the portfolio provisional.
+
+### Post-resolution closure and open-thread reconciliation
+
+When The Gate That Must Not Guess reaches a supported conclusion, the portfolio must explain what happens to each accepted or optional thread. A main quest closing does not imply that the character task, discovery lead, or faction meeting is complete. Conversely, an open optional thread should not keep the main objective displayed as active after its owner resolved it.
+
+| Thread at mainline resolution | Closure rule | Journal/callback result |
+|---|---|---|
+| Accepted character repair task remains active | Keep its actual owner status and remaining work. Do not auto-abandon it because the main investigation concluded. | Show it under active tasks with a short explanation that the repair is still optional. |
+| Discovered but unaccepted clue | Retain discovery only under its current owner; withdraw the offer if the content contract says it is no longer actionable. | Keep a clue note, not an active commitment. |
+| Faction meeting is still available | Preserve it only while the current owner says the offer remains valid. | State whether it can still affect a future procedure or is now report-only. |
+| Timed inspection window expired | Close that opportunity while retaining its distinct expired result. | Explain the later daylight or unverified route without reusing completion language. |
+| Repeatable preparation task was completed | Offer another cycle only if an existing quest owner explicitly supports repeat semantics and its reset behavior is legible. | Avoid presenting a second cycle as a sequel or new story consequence. |
+| Main quest is failed or abandoned | Do not fabricate reconciliation. A supported reoffer can reopen it; otherwise provide a truthful closure if available. | Show why it changed and whether player action can resume it. |
+
+Quest closure should be evidence-backed and proportionate. If an optional thread is no longer useful, a character may say that the meeting already passed; the task owner still determines whether it is expired, resolved, or unavailable. A new conversation line cannot silently erase the accepted task. If a sequel becomes available, its offer must be a fresh eligible transition, not a repeated reward prompt.
+
+The portfolio review should include one full player history in which the main quest finishes early, the player returns to finish Sena's task, and the player later finds the marker. It should also include the reverse order: clue first, side task second, main conclusion last. The visible journal and map should tell a coherent history without requiring every optional branch. Future implementation should prove those cases through current owners and focused verification; this documentation does not assign integration paths.
+## Continuation pass 13 — the Farline circuit quest portfolio and rotating operations
+
+This pass opens a second provisional storyline, separate from Tidemark. The editorial label is **The Farline Circuit**. Its central question is how communities communicate route safety after an old signal continues to describe a road that no longer exists. It provides a new major late-game faction candidate, a set of character/faction/discovery/survival/resource quests, and a carefully bounded rotating-operation proposal. All names and beats remain provisional. No faction state, radio authority, quest scheduler, time source, or generated-campaign system is created by this plan.
+
+The late-game faction candidate, **the Farline Compact**, coordinates distant relief routes and argues for a shared signal vocabulary. Local **Lantern Wardens** maintain the short paths between shelters and resist signals whose meaning is unclear on the ground. The Compact is not automatically right because it is larger; the Wardens are not automatically right because they are local. Their positions should emerge from the work and evidence available to each. An existing radio/audio feature can present authored reports if a current data consumer exists, but this content packet does not add a second radio or cue system.
+
+### Dramatic and playable objective
+
+At Siltglass Relay, an old route tone is still being repeated. The tone once indicated that a covered crossing was inspected; the crossing has since collapsed or shifted. The surviving signal infrastructure cannot be treated as a live authority merely because its sound is familiar. A courier named Yara stopped carrying the warning after receiving two conflicting route slips. The Compact wants a reproducible procedure for identifying obsolete signals. The Wardens want a local confirmation step before any public schedule changes.
+
+The player can help determine what is known, identify which route report is stale, and decide whether to support a shared process. The player does not set a new global communications standard by selecting one dialogue line. A quest owner records accepted investigation results; any supported faction owner resolves access or standing; any signal/audio system remains the source for playback; and any campaign owner consumes only facts it currently understands.
+
+### Interlocking quest cards
+
+| Draft title and family | Entry and required play | Location requirement | Failure and continuation | Reward and production placement |
+|---|---|---|---|---|
+| **The Signal That Outlived the Road** — main investigation, location-based | A route report or environmental cue leads the player to ask why a known tone points toward a blocked crossing. Compare the relay plate with one independently sourced route slip. | Siltglass Relay is the authored anchor; an eligible approach or substitute can satisfy travel, but only the relay plate proves the signal's age. | If the relay is unavailable, the quest becomes visibly deferred with a report/clue route. If one source is missing, conclude “obsolete, source incomplete” only if the quest owner supports that resolution. | Core candidate if the location/cast fit the base campaign; otherwise expansion. Reward: accepted proof and a clear journal/map explanation. |
+| **Yara's Last Delivery** — character quest, investigation and personal arc | Yara needs help reconstructing whether she abandoned a delivery or correctly refused to carry an unsafe notice. She is not hiding a villainous act. | Half-Span Shelter for the conversation; either the old path or its public report can provide optional corroboration. | Player can help, decline, or accept partial evidence. A missed meeting changes the available witness route, not Yara's personality or the main quest state. | Expansion candidate due to cast and callback costs. Reward: an owner-supported character result or new dialogue eligibility, never an invented friendship score. |
+| **A Signal You Can Trust** — faction quest | The Compact requests a field example and the Wardens request a local safety review. The player can present evidence, ask for a trial, or refuse to speak for either group. | Siltglass Relay plus a Warden notice point or supported Compact contact. | Either group can refuse the recommendation. The main investigation remains completable; refusal changes the faction route or meeting offer only when a current owner records it. | Late-game expansion. Reward: access, recognized report, or callback only through current faction/quest consumers. |
+| **Three Knocks, No Answer** — discovery/hidden quest | An environmental clue reveals that a second signal was once used when the main tone could not be trusted. | A discoverable mark near the route edge; may be a temporary visit referencing an authored definition. | If absent from the current expedition, the clue remains a clue and can point toward a later opportunity. No exact target is revealed early. | Optional discovery content. Reward: alternate evidence or a safer reading, not automatic main-quest completion. |
+| **Carry the Unlit Cell** — escort/protection | Move a protected signal component with a crew member who is unwilling to power it near the route. The meaningful action is care and safe transport. | Staging shelter and a valid arrival point; never require an unspawnable secret location. | If the expedition must end early, the owner-approved route can return the component, leave it secure, or offer a later transfer. The character is not killed as a punishment for a missed dispatch. | Expansion due to expedition and companion/cast review. Reward: supported item custody or follow-up only through current owners. |
+| **Storm Window** — survival/timed opportunity | Inspect an exposed marker during a supported safe window. Timing creates pressure but not a mandatory chapter gate. | A valid exposed route or compatible sheltered observation point. | Window closes into a daylight or report route. The quest owner distinguishes expired opportunity from failed investigation. | Optional. The deadline uses the existing time authority if one supports it. |
+| **Hush Kit** — resource/crafting | Prepare a component cover or insulating case using accepted recipe/material contracts. It reduces exposure to a route risk only if an existing owner supports the effect. | Current workbench/crafting location and real material sources. | If crafting is unavailable, the player can ask a Warden for safe handling or postpone. No hidden materials are consumed. | Optional system tutorial/expansion task. Reward is a supported crafted item or description, not a free bonus added in dialogue. |
+
+Quest titles are writer labels only. Before implementation each row needs the full quest definition contract from Plan 17 pass 11: objective semantics, proof owner, terminal/failure path, rewards, locations, availability, volume class, and core/expansion placement.
+
+### Questline topology and valid conclusions
+
+The main quest's critical path is deliberately short: receive a clue/report, reach a valid route to the relay, inspect the plate or acquire an owner-approved equivalent source, then report what the evidence supports. Optional quests add characters and interpretation but cannot own the only mainline proof.
+
+The graph accepts several investigation sequences:
+- The player visits Siltglass Relay first, then learns that the road has changed.
+- Yara explains the delivery refusal before the player inspects the plate.
+- The player discovers Three Knocks, No Answer and returns to the relay with a new question.
+- The player reaches the relay after a storm window and accepts a less certain report.
+- The player refuses all faction requests but still concludes the main quest with the accepted observation.
+- The player never finds the discovery clue and receives no punitive or contradictory ending.
+
+A conclusion needs an epistemic label consistent with accepted proof. “Signal plate is obsolete” can be supported by the plate's date/physical condition. “The road is no longer safe” needs current world/location evidence. “The Compact adopted a standard” requires a faction result. “All Wardens agree” requires broader evidence the plan does not assume. The quest should allow the narrowest truthful conclusion and reserve larger claims for owner-backed later results.
+
+### Lifecycle and dependency edges
+
+A dependency graph may connect the main investigation to the faction quest, but the edge should request evidence or eligibility, not set the destination quest's status by copying a Boolean. Example: a quest owner accepts the plate inspection; the faction offer becomes available if its current prerequisite is satisfied; the faction owner later decides whether a particular report changes standing/access. Failure or expiration in the faction quest does not rewrite accepted plate evidence.
+
+**Required path:** report or environmental clue → available main quest → accepted offer → valid relay approach → accepted observation → truthful conclusion → terminal or resolved owner result.
+
+**Optional threads:** Yara can add a personal account; Three Knocks can reveal a second source; the Hush Kit can support safe handling; the storm opportunity can improve route timing. None is a hidden prerequisite to the required path.
+
+**Late-game edge:** accepted local evidence may be offered to the Farline Compact. This is a new faction quest, not a new objective phase in the main investigation unless the current quest system explicitly models that relationship. If the faction package is absent, no main quest reference points to an unavailable Compact scene.
+
+Define the outcome of each edge:
+- **mandatory:** the next main objective cannot start without accepted prior evidence;
+- **optional enhancement:** an extra response or side objective is eligible;
+- **soft dependency:** the later content can use a neutral or incomplete route;
+- **terminal closure:** a current owner confirms no further work is possible;
+- **editorial-only:** a callback idea has no runtime eligibility contract yet.
+
+A condition in prose is not an edge. The production graph names source owner, consumer, and failure behavior.
+
+### Repeating route work without a second quest scheduler
+
+A future rotating-operation board may reuse authored templates such as “check the covered marker,” “deliver a route correction,” or “retrieve an insulated component.” These are proposals for repeatable tasks only if the current quest owner already supports repeat/reset semantics. Do not add a parallel board ledger, content rotation service, per-quest cooldown store, or wall-clock timer.
+
+Each repeat candidate should identify:
+- a stable authored template and compatible location roles;
+- which current owner offers/accepts a new instance;
+- the authoritative time/event source, if rotation depends on time;
+- a seed or ordering contract for deterministic candidate choice, if candidates are randomized;
+- whether an active instance blocks another offer of the same template;
+- how a previous result affects the next offer;
+- reward source and quantity bounds;
+- explicit abandon, expire, and reopen semantics;
+- package-off and older-save behavior;
+- the player's visible explanation for why the task returned.
+
+A rotation is an offer-selection decision, not a reset of a completed quest. If the current owner cannot distinguish completed instances or define a safe reset, the repeatable item remains a one-time side quest. If an existing world clock cannot provide stable expiry, use “available until accepted or explicitly withdrawn by an owner event” rather than inventing time.
+
+### Rotation fairness and portfolio limits
+
+Repeated work should not replace authored campaign content, appear endlessly after every expedition, or make one missing location block the entire notice board. Candidate selection should use the current deterministic RNG contract when variety is needed. Avoid modulo/iteration behavior tied to hash order. The selector should evaluate only currently valid offers, preserve active accepted commitments, and produce a bounded visible set.
+
+Design review should assess:
+- maximum simultaneously accepted route-operation instances;
+- number of consecutive runs before a template repeats;
+- whether a required active main quest is shown above rotating optional jobs;
+- whether one location or reward source dominates the pool;
+- how player level/skills change difficulty without making a different outcome authority;
+- whether failure creates a cooldown or an alternate job only when the owner supports it;
+- how a player who ignores the board can continue the campaign;
+- how content rotation changes under expansion profiles;
+- performance as template and location candidate counts increase.
+
+No fixed numeric threshold is imposed here. The first integration slice should use a very small hand-authored pool and record its observed readability and performance. Add more templates only if the current panel and owner contracts can show why a task is available and preserve stable behavior through save/restore.
+
+### Coverage of quest types and player entry routes
+
+The Farline arc can test the quest families enumerated across the plan without forcing every family into the critical path:
+- **Main:** The Signal That Outlived the Road.
+- **Character:** Yara's Last Delivery.
+- **Faction:** A Signal You Can Trust.
+- **Discovery/environmental:** Three Knocks, No Answer.
+- **Investigation:** compare plate and route report.
+- **Escort/protection:** Carry the Unlit Cell.
+- **Survival/timed:** Storm Window.
+- **Resource/crafting:** Hush Kit.
+- **Location-based:** an objective only at Siltglass Relay with fallback travel if selection fails.
+- **Repeatable/rotating:** a bulletin template, deferred until reset ownership is verified.
+- **Hidden:** discovery of the second signal clue, hidden only until earned.
+- **Choice-reactive:** accept a local statement, request a trial, or decline faction endorsement.
+- **Fail-forward:** report-only, alternate witness, or later inspection when the preferred route is gone.
+
+Quest type is an authoring and balance label, not an effect or state category. A single task can be both investigation and location-based, but it still has one canonical lifecycle owner and a clear objective model. Classifying tasks helps production estimate cast, location, UI, and test cost. It must not create separate quest state machines for each family.
+
+### Production card: the disabled signal route
+
+The main quest's failure continuation should be authored as an explicit packet. When the relay is not reachable:
+- The journal says the site cannot be reached under the current route state and names any earned clue.
+- The player can return to the dispatcher or wait for a supported future opportunity.
+- If a report is available, the quest can conclude at a lower confidence level only if that result is defined.
+- The map does not show a substitute as though it were the same physical relay.
+- The faction quest remains unaccepted or blocked until its actual prerequisites are met.
+- A prior accepted clue remains accepted after restore if its owner persists it.
+- No reward is issued twice when the player tries again.
+
+When Yara's conversation is unavailable, use a current character/quest availability fact. Do not create a ghost Yara node that opens at a nonexistent location. If she has left the region, a letter/report route can replace her only if the content package provides that artifact and the quest owner accepts its evidence.
+
+### Repeatable-quest status and UI contract
+
+A rotating task should be visibly different from a one-time personal story. Its card identifies whether it is a campaign commitment, optional request, limited opportunity, or repeatable job. The UI can group by kind, but grouping must derive from authored definition/current owner facts, not a parallel status cache.
+
+The notice-board row should show:
+- task title and issuing source;
+- whether it is new, returning, time-limited, or continuing from a prior run;
+- the reason it is offered now, in player language;
+- location certainty and whether it is mandatory, optional, or a clue;
+- any known cost or accepted material requirement;
+- what happens if ignored, declined, abandoned, or expired;
+- the current objective and last supported result;
+- a concise reward description sourced from the relevant owner.
+
+Returning tasks should avoid false familiarity. “The relay needs another visit” is valid if the owner says it does. “You know how this ends” is not justified by a resettable work order unless the character actually has memory of prior completions under current narrative facts.
+
+### Rewards and balance safeguards
+
+The Farline scenario should reward information, safer choice, narrative recognition, and access only as supported by current systems. No quest automatically grants a signal skill, permanent travel speed, route accuracy buff, unique resource stockpile, or coalition membership. If a reward is a practical item, inventory/crafting owners define its ID, quantity, stack/weight behavior, and persistence. If it is a journal result, quest ownership defines the proof. If it is a location hint, the current map/discovery owner controls visibility.
+
+Optional content should not become an efficiency tax. A player who declines Carry the Unlit Cell should not face a worse core ending unless that consequence was explicitly designed, disclosed, and accepted by a current owner. A crafted Hush Kit may permit a different approach; it should not be the sole proof path. A high-skill line may reveal that the signal is obsolete sooner; it cannot make low-skill players accept a false signal.
+
+Balance review should compare time and resource costs across alternate solutions:
+- inspection at the relay versus a report-only conclusion;
+- later local review versus the storm-window route;
+- carrying or crafting versus borrowing from a supported owner;
+- local conclusion versus faction submission;
+- optional discovery versus ordinary witness dialogue.
+
+The content team records which route is shorter, safer, more resource-intensive, or less certain. It should not assign fictional costs until the source owner and balance data are verified.
+
+### Branch and restore acceptance plan
+
+| Player history | Required result |
+|---|---|
+| Main quest accepted; relay missing from one expedition | Quest remains possible through the authored delay or evidence fallback. |
+| Player finds the second clue before Yara | The later conversation recognizes the supported discovery without duplicating proof. |
+| Yara's personal quest fails or is abandoned | Main investigation still reaches an honest conclusion. |
+| Player chooses a report-only result | Journal and follow-up copy preserve uncertainty; no adoption claim is made. |
+| Faction package disabled | No mandatory reference to the Farline Compact remains. |
+| Repeating job completed once | A second offer appears only under verified repeat/reset semantics and does not replay prior rewards. |
+| Repeating job expires while accepted | Existing owner contract decides whether it remains active, fails, or routes forward; the board does not overwrite it. |
+| Save occurs after a clue but before submission | Restore preserves only the clue state its canonical owner actually stores. |
+| Same deterministic seed/profile is replayed | Selection and eligibility remain consistent under the game's established RNG contract. |
+| Player declines all optional branches | Main quest remains understandable and reaches its supported terminal state. |
+
+The eventual implementation should use focused tests permitted by the live test policy and may need a bounded deterministic selection check if dispatch choice changes. This pass does not ask to create speculative tests or to run any suite. It provides the content and verification questions for the later package owner.
+
+### Integration boundary and next slice
+
+The first proposed slice is the main quest's location request and accepted inspection result. Verify the current quest and location/dispatch APIs, current route ownership, the save owner, and the player-facing journal/map path. Only after that route is integrated should Yara's character thread or the Farline Compact branch be promoted. Repeatable operations come last because reset and persistence semantics have the highest risk of becoming a parallel scheduler.
+
+If the audit finds an existing radio, audio, dispatch-board, or rotating-event owner, the plan extends that owner only if its contract supports this content. Otherwise the appropriate foreman decision is recorded. The proposed major faction and its late-game content remain authored narrative candidates; they are not proof that the current game has faction diplomacy or radio-driven quest activation.
+
+### Expanded quest cards and objective-proof recipes
+
+The overview cards above are not enough for production. This subsection expands the first set into individual authoring packets with explicit entry, objective, proof, outcome, failure, continuation, reuse, cost, and placement. Labels remain editorial. The recipes intentionally avoid inventing new IDs or state fields.
+
+#### The Signal That Outlived the Road — main investigation packet
+
+**Purpose and entry.** The player receives a report that a route tone directs people toward a crossing whose current status is unknown. Entry can come from an existing main-story offer, a discovered public notice, or a supported environmental trigger. The trigger must be one already represented by the current discovery/quest owners. Receiving the report is not acceptance.
+
+**Required locations.** Siltglass Relay is required to inspect the plate itself. Half-Span Shelter can host a supported report. A substitute location can only satisfy travel or partial context, never the relay-specific inspection.
+
+**Objective recipes.**
+1. Find a route to the relay or learn why its approach is unavailable.
+2. Inspect the signal plate through the appropriate interaction.
+3. Collect one corroborating source, or select a supported lower-confidence report route.
+4. Submit a conclusion that names the evidence boundary.
+5. Receive the canonical quest result and review it in the journal.
+
+**Evidence.** A plate inspection proves something about the authored plate. A route report proves that a source communicated a claim. A physically inspected crossing proves only the current condition represented by the route owner. Do not count any one of these as proof of the others.
+
+**Possible failures.** The relay is unavailable; the interaction fails; the optional witness cannot be reached; the storm window expires; the player declines to report. Each case retains already accepted evidence. The quest can remain blocked, partially complete, or conclude with uncertainty according to the current owner contract.
+
+**Rewards and reuse.** Completion gives a clear journal result and can unlock an optional faction offer if its owner supports it. Reuse is low because the plate identity and story question are unique. The location-arrival grammar may be reused; the clue text may not be copied to another site.
+
+**Placement and cost.** Core candidate only if the base game supports the required location and quest owner route. Otherwise expansion. Medium integration cost for one location, evidence source, and journal result; high cost if it also requests faction and campaign effects.
+
+#### Yara's Last Delivery — character quest packet
+
+**Purpose and entry.** Yara asks the player to help establish why she did not carry an old route slip. She is concerned that refusing delivery will be interpreted as abandoning a community. The task asks the player to help her make a truthful account, not prove her innocence in a trial.
+
+**Objectives.** Ask what was requested; inspect or receive the route slip if an existing item/document interaction allows it; identify the relevant conflicting route fact; return with a bounded account. The player may stop after hearing her account and decline to gather extra proof.
+
+**Required location.** Half-Span Shelter is the normal conversation anchor. If Yara is not currently there, use an existing character availability or quest fallback. Do not spawn a duplicate Yara merely to satisfy the authored node.
+
+**Branching and failure.** A discovery clue can make the player ask a sharper question but cannot force Yara to trust them. If a report is missing, the player can accept a partial account. If the character is unavailable, the task is deferred only when the owner supports such a state; otherwise it stays undiscovered or receives a neutral closure. A failed optional proof route does not make Yara's personal concern disappear.
+
+**Reward, reuse, and cost.** The reward is a supported follow-up conversation or evidence result. No numeric relationship adjustment is presumed. Voice cost is high because the arc depends on restraint, silence, and whether Yara feels pressured. Expansion placement is likely unless the existing cast can absorb it.
+
+#### A Signal You Can Trust — faction quest packet
+
+**Purpose and entry.** The Farline Compact proposes that the player help compare a report format with the Lantern Wardens' local inspection method. The offer is available only after the main quest records an accepted observation or another supported prerequisite.
+
+**Objective alternatives.**
+- Present the plate inspection and ask whether the Compact will record its source.
+- Ask the Wardens to explain what a field check can and cannot verify.
+- Request a limited trial without endorsing a permanent standard.
+- Decline to speak for either group and close the offer.
+
+**Location requirement.** A real eligible faction contact plus a supported meeting location. If the meeting location is absent, the offer may wait or use a remote current communication owner. This proposal does not invent one.
+
+**Failure and rewards.** A refusal by either group should be a faction result only if the current faction owner supplies it. An unavailable meeting is not a refusal. Rewards are access or recognition only where current owners support them; otherwise this remains a narrative/journal closure. Because two groups, at least one location, and a cross-faction callback are required, it is a late expansion candidate.
+
+#### Three Knocks, No Answer — hidden discovery packet
+
+**Purpose and trigger.** A carved sequence implies that a second signal existed when the main relay was silent. The clue is discovered by observation, an earned knowledge context, or a sourced report. It does not start as a task in the journal until the current quest/discovery owner recognizes the lead.
+
+**Discovery route.** A player can encounter the clue near Old Echo Cut, hear it from Yara after meeting the relevant condition, or find a notice at Lantern Yard. These are alternate lead sources, not three copied clue states. Each source attributes its own information and does not reveal an exact destination unless that source is allowed to.
+
+**Failure/recovery.** If Old Echo Cut is not selected, retain the lead as a hint and offer a future expedition possibility. If the player sees the mark but cannot interpret it, provide an optional follow-up through a current owner or leave it as environmental lore. The discovery cannot be required for main quest closure.
+
+**Reward and placement.** The reward is a second report source and a line of optional dialogue. It may support a better-supported conclusion but not a guaranteed faction adoption. Production cost is moderate because secrecy, localization, map disclosure, and location availability must agree.
+
+#### Carry the Unlit Cell — escort/protection packet
+
+The escort's central verb is “carry with,” not “protect at all costs.” Before accepting, the player is told the item is unpowered and that its route is conditional. The quest asks the player to accompany an existing actor only if the current expedition system supports actor assignment and persistence. If not, use an abstract supported delivery/interaction route; do not add a companion controller solely to satisfy the prose.
+
+Valid outcomes include successful handoff, secured return, delayed transfer, and player refusal. Loss or destruction is not a default failure state. If a current owner supports an item custody transition, it reports accepted/rejected/unknown results. Dialogue does not remove the cell on selection. When the expedition aborts, the item's current owner decides its custody; the quest owner reads that result.
+
+The quest can be replayed as a different authored job only if the owner supports repeat semantics. A personal named escort should otherwise be one-time. Production cost is high if it requires an actor to move across an expedition, medium if it is represented as a single source/target handoff.
+
+#### Storm Window and Hush Kit — linked optional packet
+
+These two tasks can share a preparation relationship without coupling their state. Storm Window offers a time-bounded observation. Hush Kit offers a crafted handling item or preparation plan. The kit may reduce one supported risk or unlock a safer observation approach, but its absence does not make the main quest impossible.
+
+If the player completes the kit first, it should remain useful for another supported activity when the inspection window expires. If the player misses the window, the kit is not consumed unless its owner confirms consumption. If crafting is unavailable, the player can use a public route or wait for a new opportunity. If the timed activity begins, its duration and end condition come from the existing time authority; no menu-local countdown can decide expiry.
+
+### Objective graph edge audit
+
+Every objective edge in the Farline portfolio is labeled with a semantic type:
+
+| Edge type | Meaning | Example | Review question |
+|---|---|---|---|
+| Required evidence | A later objective depends on accepted proof. | Inspect plate before submitting plate-specific conclusion. | Can the proof be reached and accepted once? |
+| Offer eligibility | A new quest becomes available after a fact. | Faction request after main observation accepted. | Which owner publishes eligibility? |
+| Optional context | A clue changes available exposition, not objective progress. | Yara recognizes the double-knock clue. | Does the main route remain clear without it? |
+| Location requirement | An objective names a place or compatible role. | Visit Siltglass Relay. | What happens if the site cannot be selected? |
+| Timed opportunity | One optional interaction is available within a window. | Storm Window. | What does expiration close, and what remains? |
+| Owner consequence | A command asks a domain system to record a fact. | Submit recommendation. | What exact owner result drives the next node? |
+| Presentation callback | A line or marker reflects a current fact. | Yara comments on an accepted report. | Is the callback still true after restore and revisit? |
+
+A dependency edge must be one of these declared meanings or another explicit owner-backed type. It cannot mean “some other quest probably happened.” Any cycles are reviewed for a valid exit: two quests should not wait on each other's acceptance. If a reciprocal relationship is intended, break the cycle with one reachable initial offer or an explicitly optional step.
+
+### Objective count and active-log communication
+
+A large portfolio can overwhelm a player even if every quest is valid. Keep each accepted quest focused on one next action with optional context collapsed into details. The main investigation should show one current objective and at most a concise next-step hint. The faction request should remain separate from the player's core inspection responsibility. The rotating board should not push personal arcs out of view.
+
+If the current journal supports grouping, classify by authored family and owner facts. If it does not, the interface change is a separate UI proposal; do not create a hidden quest-priority number in content. A tracked task is a view preference only. The main quest does not become more eligible because it is pinned. The player can hide optional tasks without canceling them.
+
+For simultaneous tasks, show when two opportunities share a location but require different actions. Visiting Lantern Yard to read a notice is not the same as accepting the faction meeting. The journal can list both as separate actions so that one interaction cannot silently advance multiple quests unless each owner independently accepts the same evidence.
+
+### Content design and verification budget
+
+A future release should split work by risk:
+- low: descriptive report, no command, no hidden prerequisite;
+- medium: single-owner objective or discovery transition, save/read-model review;
+- high: required location plus proof fallback, timed opportunity, or item transfer;
+- critical: faction/campaign result, ending input, cross-owner sequence, or state migration.
+
+The first release does not need all seven quests. The recommended order is main observation slice; Yara conversation; discovery clue; faction request; optional escort/crafting; repeatable board only after reset semantics are verified. This order gives story coverage while placing high-risk mechanics behind proven owner paths.
+
+The focused acceptance plan should include main path, alternate clue order, rejected proof, missing required location, core-only package, expired opportunity, interrupted escort, duplicate item transfer, and save/restore. The existing test-policy owner determines what to run and which fixtures are permissible. This document makes no test additions or claims that the proposed story already functions.
+
+
+## Continuation pass 13 — quest lifecycle rehearsal, recovery routes, and authoring acceptance
+
+### Purpose of this module
+
+This module turns the Farline Circuit portfolio into a reviewable lifecycle rehearsal. It makes the proposed quests legible to content authors, implementers, and reviewers before anyone creates catalog records. It does not claim an existing quest schema, a new quest runtime, or an additional save authority. Each record remains a design packet that must be mapped to the currently owned quest data format and current host route after a premise audit. The architectural objective is modest: every authored objective must have a trustworthy proof, every interruption must have a defined player-facing response, and every branch must preserve a route to meaningful resolution.
+
+A content packet should answer four different questions that are often collapsed into one. What is the fiction asking the player to do? What observable state proves it happened? What other authored content becomes eligible afterward? What does the player see if the expected state cannot be reached? A prose answer alone is insufficient. A flag name without a player-facing explanation is also insufficient. A reviewable packet needs both a human-readable intention and a machine-mappable condition, while leaving actual identifiers and ownership to the content validation pass.
+
+The circuit story offers a useful stress case because its premise concerns unreliable information. The player hears a relay tone, visits places where its source may have moved, and decides what is safe to repeat. The quest design must not require an invisible “correct interpretation.” It should reward evidence collection and deliberate communication, while allowing the player to preserve uncertainty. A player who declines to endorse a claim must still receive a coherent continuation: they can label the report unverified, ask for a second source, or leave the record sealed. No path should silently require that a character accept a rumor as fact.
+
+### Lifecycle rehearsal: A Reply Should Have a Source
+
+The following rehearsal is an authored example, not a proposed new universal quest framework. It tests how a compact chain behaves through acceptance, active work, blockage, partial completion, failure-forward continuation, resolution, and delayed callback.
+
+**Opening condition.** The player has encountered the old relay pulse at a location in the active expedition, or has received a report whose provenance is explicitly uncertain. Yara’s personal conversation can expose the job, but the player may also receive it through the Lantern Wardens’ board. These two entry points must converge on the same quest identity if the existing quest architecture supports shared starts. If it does not, one entry point is selected as the canonical start and the other provides a pointer to it. The design must avoid two parallel jobs that compete for the same evidence.
+
+**Acceptance.** The description states the practical task: record where the pulse was heard, identify what kind of equipment could have produced it, and return with enough evidence for the group to decide whether to repeat it. Acceptance does not mean that Yara believes a rescue call exists. The journal should make the distinction plain: “Find the source of the repeated tone; do not treat the message as confirmed.” The player can decline without a penalty that affects unrelated faction standing. If the job expires due to a campaign deadline, the expiration should close this opportunity and expose a later reconstruction path rather than erase the evidence from the world.
+
+**First objective.** Record one direct clue at Siltglass Relay or the location that currently fulfills its equivalent role. A clue may be a damaged service ledger, a timed interval between pulses, a manually cut wire, or a repair mark. The objective should accept evidence classes rather than a specific prop instance. That gives level dressing room to vary without changing the story contract. A clue is only valid when a gameplay interaction or established discovery event records it. Merely rendering the prop must not complete the objective if the player did not inspect it.
+
+**Second objective.** Compare the first clue with one independent source. The preferred source is a visit to Half-Span Shelter or an equivalent route shelter where a different person remembers the tone. If that site cannot be selected for the expedition, a recorded note or a known character conversation can serve as the fallback only when its provenance is distinct. The same person repeating the same story in a different room is not independent corroboration. The quest packet should identify source provenance for each candidate clue and state which pairs count as independent.
+
+**Blockage.** The player can be unable to travel because an injury, weather, expedition roster, or route condition makes the shelter visit unreasonable. A blocked quest is a temporary state with a visible reason and a way to reassess it. The journal might say that the route is closed by a washout, and that a survey mark or a report from a returning scout could substitute. A blocked marker must not be represented as a dead-end failure. Nor should the system repeatedly announce the same obstruction after every expedition. Refresh the explanation only when its underlying condition changes or the player opens the related quest entry.
+
+**Partial completion.** The player returns with one credible source but no independent comparison. Credit the evidence already acquired. Do not force a rescan or make the player revisit a location solely because an expedition boundary occurred. The next step should explain the remaining uncertainty and show the useful source category, not reveal the exact hidden object if discovery is intended. If a related quest has already supplied the second source, a shared proof may satisfy this step only when both quest packets explicitly permit evidence sharing and the evidence object records its source.
+
+**Failure-forward route.** The player may dismantle or destroy the relay before recording its maintenance state, or a danger event may make the location inaccessible. This is a loss of one evidence path, not a loss of the whole storyline. The player can interview a person who handled its battery, compare a wear pattern at another site, or state that the source cannot be established. The consequences differ: direct attribution is stronger than a reconstruction, and reconstruction is stronger than an unsupported conclusion. The quest should not punish the player with a false objective that remains impossible forever. If all acceptable proof options are gone, the system changes the objective to document the missing evidence and resolve the report with an explicit uncertainty label.
+
+**Interpretation.** With evidence available, Yara and Pell disagree over how to communicate it. Yara favors preserving the original wording with a warning. Pell wants an immediate route notice because people may be walking toward the sound. Neither response is a pure good/evil test. Preserving exact wording may reduce alteration but can also spread a frightening fragment. A practical warning may prevent a dangerous journey but may be misunderstood as confirmation. The choice is framed as audience, confidence, and timing. The player may request a short delay for one more check, but that consumes a meaningful opportunity rather than pausing a fictional clock indefinitely.
+
+**Resolution.** The player chooses one of a small number of message treatments: confirmed mechanical source, plausible but incomplete reconstruction, unverified alert, or sealed record. These are design outcomes, not mandatory new world-state labels. They should map to existing narrative effects if those can represent them. An outcome changes who trusts the player’s reports and which notice is available; it does not create four separate versions of every later conversation. Most later content reads a compact evidence-quality value or one mutually exclusive outcome, then varies one or two lines.
+
+**Delayed callback.** Several days or an authored later milestone later, a courier arrives with an account that may reinforce or complicate the player’s conclusion. The callback must have an expiry and replay policy. If the relevant character has left, a note or board notice conveys the material information. If the campaign ends before the callback is eligible, no dangling quest remains active. The closure record preserves the selected treatment and lets a future authored scene reference it.
+
+This rehearsal gives the team concrete transitions without suggesting a bespoke state machine for every quest. Quest lifecycle remains the current owner’s responsibility. A content author supplies start conditions, objective proof, failure transitions, and closure facts in the existing accepted shape.
+
+### Objective proof recipes
+
+Every objective should define a proof recipe. The recipe describes events and conditions in plain language so an integrator can map them to current data fields. It should not prescribe a host callback or invent a domain API. The following recipes illustrate the needed precision.
+
+- **Inspect a record:** required interaction is the established inspect action on a clue tagged for this story; minimum result is “record opened”; optional result is a quality grade based on legibility. Opening a container that happens to hold the paper is not the same proof.
+- **Compare two accounts:** require two sources with different provenance groups, each logged as understood by the player. If one source is revised later, preserve the initial discovery and record the correction separately.
+- **Deliver a warning:** require that an authorized receiver has encountered the warning through a recognized conversation, notice, or message handoff. Putting an item into inventory is not delivery.
+- **Protect a traveler:** success is the end of the travel operation with the protected character or load still available; avoid assuming the character is unharmed if the game’s current injury model distinguishes injury from loss.
+- **Restore a route marker:** success is the established world interaction changing the route’s usability or recorded condition. A crafting recipe by itself is not proof if the marker was never installed.
+- **Choose a message treatment:** require a player choice persisted through the current quest completion path. The text option selected should match the outcome used in later dialogue.
+- **Resolve without evidence:** require an explicit “close as unresolved” or equivalent authorable choice. The player should not obtain the same confidence reward as direct corroboration, though the story can value honest uncertainty.
+
+A recipe is good when two different implementations could be authored against it without changing its meaning. It is too loose when any vaguely related action counts. It is too brittle when only a single prop identifier can satisfy a concept that should survive location substitution.
+
+### Resume and recovery rules
+
+Quest work commonly crosses expedition boundaries. A player may leave a location after an incomplete interaction, return after weather changes, or load a save in the middle of a dialogue choice. The plan should require each multi-step quest to identify its recovery checkpoint. The checkpoint is not a new save section; it is a statement of which current owner retains the accepted quest and completed objective facts.
+
+On resume, show the next useful action, preserve already proven objectives, and explain changed eligibility only when it matters. If the player has already discovered a substitute clue, do not demand the unavailable original. If a character's new state invalidates a conversation, surface a new route or an explicit closure. If a one-time dialogue node was already consumed, reopening the quest log should not replay the scene as if it never happened. Save restoration should reconstruct the same active objective and branch outcome from existing persisted state, not from a newly initialized narrative cache.
+
+The resume checklist for every major chain is:
+
+1. Record all irreversible player choices in a durable owner.
+2. Recompute only derived eligibility after load; do not fabricate discovery history.
+3. Preserve evidence provenance and prevent duplicate proof from the same source.
+4. Rebuild map markers from quest facts and the active expedition roster.
+5. Reconcile expired or unavailable locations into a visible alternate route.
+6. Ensure dialogue offers do not restart a completed quest.
+7. Make journal language consistent with the restored branch.
+8. Allow abandoned content to return only through an authored reopen condition.
+
+### Content graph review as a human task
+
+A graph validator can report missing references, unreachable nodes, impossible terminal states, and contradictory IDs. It cannot decide whether a branch is emotionally credible or whether two characters have independent knowledge. The authoring review therefore needs a compact walk through each branch. For each outcome, answer: what fact did the player learn, what did the player communicate, who heard it, what remains uncertain, what is the next viable action, and which later scene can acknowledge the choice?
+
+Reviewers should trace at least four paths: the intended evidence-rich path; a path where the player refuses the job; a path where a location is absent; and a path where the player loses access to a clue after making a risky choice. If all paths collapse to identical state and nearly identical lines, the branches may be cosmetic and should be labeled as such. If two paths promise distinct faction or relationship outcomes but no current owner can persist those facts, either scope the promise down or request an explicit architecture decision before implementation.
+
+The Farline Circuit also serves as a check against quest proliferation. Its central question is evidence handling, and all candidate jobs should test a different pressure: preserving testimony, physically repairing a marker, keeping a traveler safe, or deciding what to announce. A quest that only repeats “find the next relay” is removed or folded into a distinct route event. The circuit can still feel expansive through varied contexts, but each activity must justify its own player decision and production cost.
+
+### Content package acceptance card
+
+Before any record is authored, complete a one-page review card:
+
+- **Player verb:** the action the player will actually take.
+- **Fictional purpose:** why the character asks for it.
+- **Entry paths:** every eligible start and how duplicate starts converge.
+- **Objective proof:** the observable event or condition that earns credit.
+- **Evidence provenance:** source identity and whether evidence may be shared.
+- **Availability contract:** minimum locations, characters, and campaign conditions.
+- **Fallback:** what happens when each required dependency disappears.
+- **Failure result:** whether the quest fails, changes route, or resolves with uncertainty.
+- **Effects:** cosmetic, local, quest, relationship, faction, world, or ending scope.
+- **Persistence owner:** current authority to verify before implementation.
+- **Map behavior:** when a place is visible, discovered, quest-only, or omitted.
+- **Replay policy:** one-time, repeatable, rotating, or reopened.
+- **Return scene:** the delayed acknowledgement that proves the world remembers.
+- **Review cost:** expected dialogue, location, art, QA, localization, and test work.
+- **Removal condition:** what evidence would justify cutting the content.
+
+The card is deliberately brief. It exposes missing design decisions before prose volume grows. The full plan may contain hundreds of examples, but each future addition should still be legible through this common review surface.
+
+### Pass-level acceptance and bounded implementation path
+
+The pass is ready for conversion into implementation tasks only after these conditions are met: every proposed quest is assigned an existing or explicitly approved category; required locations have a fallback chain; story-critical proof has independent provenance where needed; no ending depends on an unavailable optional job; outcomes have a named owner for each persisted effect; and all recurring jobs state how they avoid repeating completed rewards. The Farline material remains provisional until the expansion context, live catalogs, and current runtime consumers have been audited for collisions and actual field support.
+
+The recommended first playable slice is “A Reply Should Have a Source” with one start, two independent evidence opportunities, one alternate route, one ending choice, and one delayed callback. Ship no rotating board generator as a prerequisite. Use authored static task options and existing expedition selection behavior where they can support the slice. Only after this slice proves useful should the team consider larger variation. This keeps risk close to the story premise: the player learns to evaluate a message because the game demonstrates why provenance matters, rather than because a new journal subsystem was added.
+
+If current APIs cannot represent provenance, branch restoration, or an unavailable-site transition, record the exact gap and stop at the approved planning boundary. The absence is useful evidence for a future architecture decision; it is not permission to create a parallel quest ledger. Likewise, if existing data already supports the behavior, the implementation should reuse that path and avoid renaming concepts just to match this plan’s vocabulary.
+
+
+### Quest board operations and cadence review
+
+The Lantern Yard board should present authored work as a small set of practical commitments, not an endlessly refreshing quest dispenser. A board entry states who needs help, the expected risk, whether the player is expected to return with proof, and whether another person can act while the player is away. This allows the player to compare the job against shelter needs and expedition readiness. If the current interface has no board model, the first slice can use a character conversation; do not create a second acceptance surface merely to match the fiction.
+
+Rotating work should be finite in a given campaign window. Each entry needs an availability cause, an expiry cause, a completion definition, and a repeat policy. A route-check job might return after an authored interval only if the world still has a reason to need another check. It cannot generate the same reward indefinitely by cycling the same completion fact. If the game has no current campaign scheduler, author several static variants and expose them through existing event timing rather than inventing a generic daily contract manager.
+
+Acceptance should disclose the job’s basic cost. If a courier expects the player to carry a fragile record, say so before departure. If the task might consume a scarce repair material, make the requirement visible. Uncertainty about the result is an intentional story feature; uncertainty about what the player is being asked to risk is avoidable frustration.
+
+Cadence review asks how often the player encounters a Farline task, how many active objectives it can create, and whether it competes with urgent survival decisions. Space major conversations across meaningful returns rather than triggering several immediately after one location visit. Repeatable tasks should use short debriefs and fresh practical circumstances, not re-stage the whole investigation. If a rotating task lacks a new decision, remove it.
+
+Reward review follows the same principle. Information access, route safety, a repaired marker, a character’s confidence, and modest materials are different reward types. Each must connect to an existing player-facing system. Do not assign generic currency to every quest by default. A reward can be a safer approach or an option to decline a dangerous route, but the journal should record what changed.
+
+Finally, validate the player’s exit paths: refuse the board, accept and later abandon the job, resolve it through an equivalent clue, and return after its window has passed. The board should show the resulting state and never make a completed job appear available again unless an explicit repeat rule says why.
+
+### Lifecycle table and player-facing vocabulary
+
+A quest packet should map its conceptual lifecycle to the states the current runtime actually supports. The design vocabulary in this series includes inactive, available, discovered, accepted, in progress, blocked, partially completed, failed, completed, resolved, expired, abandoned, and reopened. These labels are not instructions to implement fourteen enum values. Several may be presentation descriptions over fewer existing states. Before authoring conditions, the integrator must identify the current representation and define how each needed distinction is expressed.
+
+For the Farline chain, “discovered” means the player has encountered an eligible lead but has not accepted the work; it must not display as accepted. “Blocked” means work remains possible after a named condition changes. “Partially completed” means one or more proof facts remain valid while the overall objective is open. “Failed” means a chosen route can no longer satisfy its original objective. “Resolved” describes closure that may preserve an uncertain outcome. “Reopened” requires an explicit later event and must never happen merely because the player revisits a location.
+
+The journal should use stable, plain language even if several conceptual states map to one runtime value. For example, a blocked investigation says what is unavailable and which alternative can help. An expired rotating task says that the opportunity has passed and whether any later route remains. An abandoned personal conversation does not remain in the active list indefinitely. These descriptions should be reviewed with status transitions so text cannot claim that the player has accepted a job they only discovered.
+
+A transition table accompanies each content graph: current conceptual state, triggering action or condition, next state, objective facts preserved, player-facing copy, map change, and whether the transition persists. Invalid transitions include a failed quest returning to in-progress without an authored reopen, an expired job awarding its normal completion reward, and a resolved story continuing to display an urgent marker. This table is a review artifact; the current owner and save model remain authoritative.
+
+### Concurrency limits
+
+Set a deliberate cap on simultaneous Farline commitments through the existing quest presentation policy. The cap is a pacing guideline unless the current runtime already enforces one. If several entries are active, prioritize the main evidence chain and let optional work remain discovered or available. Do not auto-abandon accepted content to make room. Explain when a new request can be accepted later, and preserve progress on any existing task.
+
+Shared proofs require explicit compatibility. One visit to a relay may satisfy two objectives if both ask the player to inspect the same physical condition; it cannot automatically satisfy a personal promise to deliver the result to two different people. When two quests share a proof, record the completion once through its owner and let each objective consume the fact according to its contract. The player-facing journal should avoid listing the same action as two unrelated errands.
+
+If the existing owner has no concurrency control, the first slice should simply author few simultaneous offers. Do not build a new queue to manage a content volume problem before proving that the game’s current quest flow needs it.
+
+### Authoring review dry run
+
+Before inviting a player to accept a Farline task, read its card from the player’s perspective with no knowledge of this design packet. Can they tell what action is expected, what risk is being taken, what kind of proof matters, and whether the job is urgent? If the answer depends on hidden architecture terms such as provenance class or branch state, rewrite the visible copy in ordinary language while keeping the underlying contract precise.
+
+Then simulate a refusal. The character should acknowledge the decision without falsely marking the quest failed or imposing a relationship penalty that was never communicated. Simulate acceptance followed by a long absence. The journal should remain accurate, any deadline should have a reason, and the task should not repeatedly trigger the same opening conversation. Finally simulate success through the least direct valid route: an equivalent location, a second witness, or an uncertainty-preserving resolution. The player should receive a complete ending for the chosen route, even if it is not the most evidence-rich result.
+
+This dry run catches mismatches between quest classification and actual play. A discovery quest should reward observation; an escort should make protection the central action; an investigation should let evidence change interpretation. If the dominant activity does not match the label, reclassify the content or redesign its objective before it enters the canonical catalog.
+
+## Continuation pass 14 — The Empty Shift questline, roster evidence, and shelter-work continuity
+
+### Expansion premise
+
+The Empty Shift is a second provisional story thread, independent of the Farline Circuit. It begins when a shelter roster continues to list a night crew for a heat-service annex that no longer appears to be staffed. The names belong to people who still receive a work allocation, but residents disagree about whether the work is being done, whether the schedule is copied from an older sheet, or whether the crew is maintaining a different part of the shelter. No supernatural explanation is implied. The mystery concerns a record that may preserve useful work, misdirect scarce labor, or shield people from a dangerous shift.
+
+This content should connect to the game’s actual shelter, work, resource, health, and relationship owners only after their current responsibilities are verified. The quest is playable as an investigation even if no new work-assignment mechanic is approved. Its first slice can be data and dialogue around existing interactions: inspect a roster, compare it with a location condition, speak with two people, and choose whether to correct, annotate, or preserve the record. If the player-facing game has a current way to assign workers, a later integration may let the outcome alter that system through its existing owner. If it does not, the story must not invent a shadow roster manager.
+
+### Core question and player promise
+
+The core question is not “who is lying?” It is “what should a community do when a useful work record no longer matches what can be observed?” The player promises to investigate a discrepancy, not to expose a villain. The roster may contain a harmless copying error, a deliberately maintained placeholder, a concealed reassignment, or a blend of these. Evidence should let the player distinguish what is known from what remains uncertain.
+
+At acceptance, communicate the practical stakes. A shelter coordinator says that the annex roster has three names on every night but the room is locked and the service log has not been signed. The current work board uses the roster to plan relief and food portions. If the record is wrong, someone may be counted twice or sent toward unsafe work. If it is merely incomplete, removing the shift may leave an actual task unsupported. The player can accept, decline, or ask who will be affected by a correction. Declining does not mark the player as disloyal. It leaves the question open until a later start condition or expiry is explicitly authored.
+
+The story’s player-facing promise is modest: find a reliable account of the shift, report evidence rather than accusation, and leave the shelter with a usable next step. It does not promise a perfect census, a universal scheduling system, or a final answer to every person’s motives.
+
+### Main questline: The Empty Shift
+
+**Stage 1 — The sheet that never changes.** The player is shown two roster copies from different periods. Their shift names and task line match exactly, including the same faded correction mark. The objective is to compare the copies and record whether they are identical, altered, or incomplete. If a copy cannot be inspected, a character can summarize it but the evidence grade is lower. The player should be able to accept the investigation without a rare skill.
+
+**Stage 2 — The room that is locked.** Visit the heat-service annex or an authored equivalent. The door may be secured, the room may be repurposed, or the work may be performed from a nearby service niche. The quest cannot assume that a room described as locked contains proof of abandonment. A location interaction should reveal a practical observation: dust pattern around a hinge, fresh tool marks, a replaced cable, or a handwritten note behind the outside panel. At least two observations must remain compatible with more than one explanation.
+
+**Stage 3 — The person who knows the key.** Speak with Mara Venn, a provisional shelter shift clerk. She keeps the roster in a cloth sleeve and remembers which names were copied by which hand. She will not identify a culprit from handwriting alone. She can explain that the correction mark was once used for “covered shift,” a status distinct from “worked shift.” Her useful information is gated by the player’s willingness to ask about the mark rather than accuse someone. A non-gated route can find the same definition in a maintenance margin note.
+
+**Stage 4 — The account from the night crew.** Meet one or more people whose names appear on the sheet. Candidate characters include Oren Vale, who has a stiff shoulder and used to repair valves, and Nessa Pike, who now handles a different shelter duty. Their stories need not agree. Oren may say he worked the first month and then traded shifts; Nessa may remember carrying parts to the annex but not entering it. Their statements are evidence with source identities, not global truth. If a character is absent, an authored log or an alternate witness supplies basic information without equal emotional detail.
+
+**Stage 5 — The missing sign-off.** Compare a material trace with the record. A service mark may show that work occurred, but not who did it. A parts allocation may show that supplies left the store, but not that they were used at the annex. The player can acquire a direct signed note, observe a repair, or find an alternate route record. This stage teaches evidence categories through play. It must not let a high skill silently solve the whole case.
+
+**Stage 6 — The correction meeting.** Present the evidence to the current work-board owner or relevant shelter character. The player chooses how to update the record: correct the named crew and task; preserve the roster but annotate that coverage was reassigned; keep the entry while seeking another source; or close the inquiry as unresolved because the evidence does not support a safe edit. The choice is about how to keep the work actionable. Any resulting resource or worker-state change requires a verified existing owner. Without one, the immediate result can be a revised authored board and dialogue outcome, with no claimed simulation change.
+
+**Stage 7 — The next shift.** A delayed callback checks the practical result. A shift can be visibly covered, a task can be carried by a different named group, or the board can retain an uncertainty note. The callback should not claim that shelter heat improved unless the real heat authority changed. It can instead report who accepted the work and whether the record was clear enough to plan around. If no callback trigger is supported, place the closure in the next relevant conversation rather than creating a background scheduler.
+
+### Evidence outcomes
+
+The quest distinguishes four report outcomes:
+
+1. **Verified reassignment:** independent evidence shows the listed people no longer perform the task and identifies the current assignment or the absence of one.
+2. **Work observed, worker unknown:** a physical trace confirms activity, but it cannot be assigned to a named person.
+3. **Record mismatch established:** the copies or signatures conflict, but the current operation remains uncertain.
+4. **No safe correction:** the player lacks sufficient information and preserves the discrepancy with an explicit note.
+
+These outcome bands can map to existing quest results or closure flags only if the current schema supports them. They do not require a new evidence engine. The journal should use language that corresponds to the chosen band. “The annex is unstaffed” is not an acceptable summary if the player only found a locked door. “The roster was not independently confirmed” is safer.
+
+### Supporting quest portfolio
+
+**Mara’s Margin Note — character quest.** Mara asks the player to find a box of old shift annotations before the paper is moved to a drier shelf. The task is to preserve the work history, not to validate every claim. The player can catalog, return, or leave the notes in their current order. A relationship outcome may reflect whether the player retained the original distinction between “covered” and “worked,” but the basic quest must not depend on a hidden affinity value.
+
+**The Tool That Came Back Clean — investigation.** A valve tool is logged out for the night shift and returned with no damage. One person says it was used at the annex; another says the same tool never left the repair bench. The player can inspect wear, compare inventory records if current systems support them, or ask for a direct demonstration. If the game has no tool history owner, the quest uses an authored paper record and does not imply that inventory knows the tool’s past.
+
+**Relief Before Dark — escort/protection.** A temporary worker wants to leave before weather worsens, but their replacement is late. The player can guide them to the safe shelter, help hand off the task, wait for the replacement, or advise that the task be suspended. Success is a safe, explicit handoff, not necessarily completion of the repair. Failure can leave the task unresolved and expose a later route to resume it.
+
+**The Duplicated Portion — resource and crafting.** The kitchen has two meal allocations tied to a shift that may be a duplicate. The player may check the roster, ask the cook about actual attendance, or keep a reserve until the crew is identified. If an existing food or ration system can represent the allocation, use it. If not, make the consequence a narrative choice about the board and do not add a parallel ration counter.
+
+**A Quiet Place to Work — location discovery.** Environmental evidence suggests some work was performed from a service niche rather than inside the locked annex. The player must locate the niche from scratches, pipe vibration, or a route sketch. This is a discovery quest with a defined search area and an alternate report route. It must not depend on hidden map knowledge that was never signaled.
+
+**Covered Is Not Absent — dialogue investigation.** A resident insists that the night crew “did not show up,” while a clerk remembers a covered shift. The player can ask what “covered” means, who provided coverage, or whether the record was copied. The resolution teaches how procedure changed under pressure without revealing a single mastermind.
+
+**The Board After the Move — repeatable/rotating task.** After the first resolution, the player can periodically help transfer the current work board to a dry location. The repeatable version uses fresh authored conditions and a finite practical reward; it does not reopen the original mystery or generate infinite food, trust, or currency.
+
+**The Names We Keep — hidden environmental quest.** A player who revisits the old board may discover a personal mark beneath the current roster. It reveals that a former worker kept their shift listed after leaving so the replacement could collect the ration intended for a dependent. This is one possible story route, not a universal reveal. It should be present only if canon review confirms it does not contradict existing character history. The discovery is optional and does not convert the whole roster into a lie.
+
+### Failure and recovery
+
+If the annex never appears, use an equivalent evidence source: an exterior service panel, a maintenance log, or a witness who saw the job performed. If the player destroys a paper copy, the quest may continue with the second copy but record lower confidence. If Mara leaves, the margin note becomes the route for the definition. If a listed worker is unavailable, the player can document the missing account and still reach an honest result. If the player publicly accuses a worker without evidence, the quest can continue through a repair conversation or a retraction, but any lasting social consequence requires a real owner and explicit player-facing setup.
+
+A failed evidence route should not invalidate all prior observations. The player may lose one source while preserving another. If no reliable path remains, the quest can resolve as “mismatch observed, assignment unknown.” That is a real conclusion and must not be treated as a hidden failure. A player who abandons the investigation can return only through an explicit reopen trigger, such as a new roster discrepancy, not merely by entering the shelter.
+
+### Integration and acceptance
+
+The first playable slice comprises one roster interaction, one location clue, Mara’s explanation, two outcome choices, and one return line. It adds no scheduling simulation. A second slice may connect the result to a verified work assignment, shelter task, food allocation, or heat authority if the relevant owner exists and the integration package approves it. Acceptance requires that objective proof is observable, the player can distinguish testimony from confirmed fact, unavailable characters and locations have fallbacks, all stateful effects use current owners, and save restoration preserves the chosen report outcome.
+
+
+### Pass 14 quest anthology: work, testimony, and the cost of a clean record
+
+The main investigation is only one route through the Empty Shift. The supporting quests give the player several kinds of action and let the shelter’s record problem connect to ordinary survival decisions. Each card has a distinct verb, source of uncertainty, failure route, and closure. They should not all be required. The portfolio is reviewed against current systems before any record or reward is authored.
+
+#### The Glove With the Blue Stitch — character and discovery
+
+A patched glove is found on the Repair Bench. The roster says Oren was assigned that night, but the glove is too small for his hand. The player can return it to the communal bin, ask who repaired the cuff, or leave a note for whoever owns it. The clue does not prove who worked the shift. It opens a character scene in which Nessa explains that the gloves are passed between workers when the storage locker freezes.
+
+The quest stages are: notice the glove; inspect the blue stitch; ask one worker; decide whether to tag it; and optionally return it to the person who claims it. A discovery skill may reveal that two threads are different, but a plain interaction still notes the patch. If the player gives it to the wrong person, the quest remains recoverable through an apology or a return to the communal bin. The reward is not a stat boost; it is a better source for a later work handoff, if the current relationship owner supports such a reaction. Otherwise the line is local and the quest closes as a small story.
+
+#### The Quiet Count — survival and resource choice
+
+Sella asks the player to compare the expected night count with the people present before food is portioned. This is not an invitation to police who eats. The player can ask for a reserve, use the current list, or leave the count to the cook. The task explores the cost of treating a projected roster as attendance data. The player should see the practical uncertainty before choosing.
+
+If the existing food owner exposes portion decisions, route the choice through it and use the current balancing rules. If there is no such owner, keep the task entirely conversational. Do not add a second ration ledger. Failure occurs if the player leaves before the count is settled or if the roster source is invalid; the alternative is a documented estimate, not a punishment that silently removes food from the shelter. Any resource outcome must show its exact result and survive save/load through the existing owner.
+
+#### The Dry Copy — timed but non-punitive
+
+Rain is expected during the next expedition cycle, and Mara asks that a paper copy be moved before the shelf leaks. The time pressure concerns document condition, not an invisible countdown. The player can move the copy now, ask someone else to protect it, or decide that preserving the original matters more than convenience. If no campaign calendar exists, the task expires at a supported expedition boundary rather than a hard-coded day count.
+
+If the player does not act, the copy becomes harder to read or an alternate copy is used, but the main quest remains possible. The task can resolve as “source copy damaged; duplicate retained.” The weather effect itself is only included if current location and environmental systems can express it. Otherwise, use a pre-authored event and state the limitation.
+
+#### The Walk Before Dark — escort/protection
+
+A temporary worker needs to cross the West Intake Walk before the shelter’s shift changes. The player can escort them, find a covered passage, arrange for another person to accompany them, or recommend that the trip wait. The protected person’s goal is to reach the board with a tool and sign their own name, not to be escorted passively as cargo.
+
+The sequence includes a departure conversation, a route hazard or practical obstacle, one decision about pace or shelter, and a handoff at the destination. If the player cannot travel, a support route remains through a second witness or note. If the escort fails, the task continues with an account of what was delayed. It does not presume injury or death. The quest should use existing movement, expedition, injury, and character availability owners; no custom escort simulation is implied by this card.
+
+#### The Line Reversed — investigation branch
+
+A correction mark appears on the second copy with its hook facing the opposite direction. The player can ask whether the mark was copied incorrectly, compare another roster page, or inspect the tool used to make the mark. Each route supplies different evidence. The mark may indicate revision order, not a worker identity. The player can publish that limited conclusion, keep investigating, or close the question.
+
+The quest has a deliberate contradiction: a character remembers the mark meaning “covered,” while a ledger note says it was used for “coverage requested.” Both can be true if the term changed over time. The player can establish that the notation is ambiguous without deciding who wrote it. This is a mystery conclusion, not a failed investigation.
+
+#### The Bench Ticket — crafting and repair
+
+A repair ticket asks for a replacement fastener that can be used on the outside panel. The player can craft or salvage the part if those actions exist. The task is primarily a repair activity; it does not require the player to infer who worked the night shift. Completing it enables a safer inspection only if the current location/maintenance owner supports that effect. If not, it is a resource quest that provides a small, explicit material exchange or closes as an authored repair report.
+
+Production cost is high if the part requires a bespoke recipe, new item, and new location state. Keep it as an optional task until a current resource owner proves the content can be expressed using existing materials. Do not add a new repair tree just to make the story feel systemic.
+
+#### The Name Under the Fold — hidden environmental discovery
+
+The player finds a pencil impression on the back of an old roster. The visible paper shows only a half-erased name. The impression leads to an optional conversation about a person who kept taking an extra shift after leaving the room because someone at home depended on the allocation. The player can record the clue, ask a careful question, or leave the page alone.
+
+This branch requires sensitivity review and canon validation. It cannot reveal a secret that retroactively changes an established survivor’s biography without an approved narrative decision. If the existing cast already has a comparable history, the branch should attach to that character or be removed. The main quest does not require it, and no faction standing depends on finding it.
+
+#### A Board Is Not a Witness — repeatable practice
+
+After the investigation, the player may occasionally help review new roster entries with a character. Each appearance uses a finite authored variant: new task, new source, and one practical ambiguity. The player chooses whether to seek confirmation, annotate a planned assignment, or leave the line unchanged. The task only repeats when the world has a new reason to need review. It should not trigger every expedition or reward the same proof repeatedly.
+
+If no rotating-content owner exists, ship one or two static board reviews. If the current quest system has no repeatable completion policy, do not simulate one with duplicated quests. Reuse a single authored conversation only if the current runtime can reset or reopen it safely and deterministically.
+
+### Portfolio balance map
+
+| Quest | Dominant player verb | Criticality | State owner candidate | Distinct failure |
+|---|---|---|---|---|
+| The Empty Shift | Compare and report | Main | Quest lifecycle | Resolve with uncertainty |
+| The Glove With the Blue Stitch | Trace and return | Optional | Item/quest | Leave in communal bin |
+| The Quiet Count | Choose and explain | Optional | Food owner if verified | Use documented estimate |
+| The Dry Copy | Preserve | Timed optional | Location/environment if supported | Use duplicate source |
+| The Walk Before Dark | Protect and hand off | Optional | Expedition/character | Delay travel safely |
+| The Line Reversed | Interpret evidence | Optional branch | Quest facts | Mark notation ambiguous |
+| The Bench Ticket | Repair or salvage | Optional | Crafting/location | Close as deferred repair |
+| The Name Under the Fold | Discover and ask | Hidden | Journal/quest | Leave the page untouched |
+| A Board Is Not a Witness | Review and annotate | Repeatable concept | Existing quest/event | Skip without campaign loss |
+
+This table is a portfolio review tool, not a proposed enum or data schema. If a candidate owner is missing, its system connection is deferred. Production review should remove cards whose dominant verb duplicates a core quest without adding a new choice.
+
+### Player-state profiles
+
+**A player who accepts the main quest early** should see the next useful objective and retain the opportunity to do optional work later.
+
+**A player who discovers the board before acceptance** should not need to inspect it twice. The quest start recognizes the previously observed fact only if the existing discovery owner persists it.
+
+**A player with severe survival pressure** should be able to defer optional character scenes and still close the main investigation.
+
+**A player who refuses the task** should not receive repeated pressure. The board remains available if a later explicit event reopens it.
+
+**A player who uses only indirect evidence** can reach a lower-confidence result and receive a complete closure.
+
+**A player who loses one copy** keeps progress from the second source and receives a fallback, rather than an impossible fetch step.
+
+**A player who chooses to preserve the uncertain roster** may later see a new report if the current world state supplies one. The original outcome is not automatically overwritten.
+
+### Quest lifecycle and UI contract
+
+The quest log distinguishes: available request; accepted investigation; active evidence-gathering; blocked by a specific unavailable source; partially complete with known evidence; resolved with verified, partial, or uncertain result; and abandoned/expired where applicable. These labels map to current lifecycle values after inspection. The journal summary contains one short next action, one sentence on evidence already gathered, and the current limit. Map pins appear only for known, selected, actionable places. A blocked quest should not show a pin to a site that cannot be visited unless it is explicitly an approximate lead.
+
+On acceptance, show any material risk: possible exposure, the fact that a source may be unavailable, or the need to carry a fragile copy. On completion, show the selected outcome and any actual reward through the current UI. Do not use celebratory language for an unresolved record. A quiet “You recorded the mismatch; attendance remains unconfirmed” is more truthful.
+
+### Integration readiness gates
+
+Before content entry: verify canon fit and existing character opportunities; locate the current quest schema; map supported lifecycle, objective, branch, and result fields; identify exact owner for every proposed state effect; inspect the save restore route; confirm location catalog and map consumer; review available skills, inventory, food, work, and maintenance authorities; and identify the content integrity command.
+
+Before runtime implementation: claim exact paths; complete a bounded host/core/data package; add only the focused tests required by the task and policy; verify save and determinism behavior for stateful facts; and trace from player entry to result after reload. These plans remain conceptual until that work is authorized and owned.
+
+
+### Quest state transitions and authored transition contract
+
+The Empty Shift uses many familiar lifecycle names, but a large vocabulary can become an implementation liability if every word turns into a new runtime state. The plan therefore distinguishes the player’s conceptual status from the current quest owner’s actual state. Before data entry, map the following transition table to the existing API and save representation.
+
+| Player-facing situation | Trigger | Information retained | Next useful action |
+|---|---|---|---|
+| Request can be accepted | Board or character reveals job | Entry source if later response uses it | Accept, decline, or ask scope |
+| Lead discovered | Player sees roster or clue before accepting | Discovery fact if existing owner persists it | Start later without re-inspection |
+| Accepted | Player chooses to take the task | Contract and basic scope | Inspect copies or visit Annex |
+| In progress | A supported evidence interaction succeeds | Each distinct source and objective proof | Seek another source or report |
+| Partially resolved | Some evidence exists but result not chosen | All proven observations | Compare, ask, or stop |
+| Blocked | A required route is unavailable | Prior proof plus reason for block | Use alternate evidence or wait |
+| Failure-forward | One source was lost or one interpretation disproved | Remaining proof and the loss | Reframe the question |
+| Resolved verified | Evidence supports the chosen correction | Result and evidence basis | Receive acknowledgment |
+| Resolved uncertain | Evidence does not support a safe correction | Explicit uncertainty | Close with no false assignment |
+| Abandoned | Player explicitly leaves the work | Any irreversible action already applied | Reopen only on an authored event |
+| Expired optional | A temporary task window ends | History of the offer only if needed | Optional later report or closure |
+| Reopened | New source creates a genuinely new task | Prior result plus new evidence | Reassess, do not replay original start |
+
+The integration owner may map several rows to one current state and use objective/result facts to distinguish them. That is acceptable if the player-facing journal remains accurate and restore behavior is deterministic. The table is a content requirement, not a demand for a new enum.
+
+**Transition invariants.** Evidence already gathered survives blockage. Failure-forward routes preserve unaffected evidence. Resolved quests do not continue showing urgent objective markers. Abandonment does not reverse an already applied board edit. Expiration affects access to a time-bounded optional action, not the truth of what happened earlier. Reopening has a new cause and a visible reason. No random expedition roll may move a quest from active to failed.
+
+### Branch contract for the correction meeting
+
+Each report option is represented as a compact branch contract.
+
+**Correct the roster.** Preconditions: enough independent evidence to identify the current assignment and the current board owner can apply the change. Confirmation copy: “Replace the planned names with the verified coverage.” Result: updated record; only a verified downstream assignment effect may follow. Fallback: annotate that the names are unconfirmed.
+
+**Annotate the roster.** Preconditions: at least one source shows that planned work and attendance are distinct, or the player explicitly chooses caution. Confirmation copy: “Keep the current names and label them as planned coverage.” Result: uncertainty is visible. Fallback: if the board owner cannot persist annotations, resolve as a narrative report and do not imply a public edit.
+
+**Request a second account.** Preconditions: a plausible source exists or can appear later. Confirmation copy: “Leave the entry unchanged while you seek another account.” Result: quest remains active/blocked if supported. Fallback: unresolved closure if the source becomes permanently unavailable.
+
+**Close unresolved.** Preconditions: player may close the investigation at any point after seeing the mismatch, or after losing access to all routes. Confirmation copy: “Record that the copies match but attendance is still unknown.” Result: quest resolves with explicit limits. Fallback: none; new evidence can reopen only by authored cause.
+
+No branch should be a hidden punishment option. If the player cannot know that correction is permanent, the UI needs a confirmation according to existing UX conventions. If a branch can be revised later, describe the revision limits.
+
+### Objective lifecycle and journal composition
+
+A quest objective should be written as a player action plus proof. “Learn the truth about the night shift” is too broad. “Compare the roster copies” is actionable. A journal entry can then show: action, proven detail, remaining question. Example: “Both copies list the same names. The correction mark is still unexplained; the Annex panel or a second record may help.” When the player later learns the mark’s possible meaning, update the summary without erasing the fact that attendance remains unknown.
+
+The log should not show all internal branch keys. Use a short objective title and one next action. Supporting evidence can be grouped beneath it if the current journal supports that presentation. If not, keep the summary concise and use dialogue to remind the player of a relevant clue. Do not create a custom evidence board UI just for this chain.
+
+A quest with several optional paths should distinguish required progress from bonus context. If the hidden name impression is found, the journal may add an optional note. It does not replace the main next action or imply that a personal confession is needed. Completion is determined by the authored contract, not by the number of nodes visited.
+
+### Reusability and objective templates
+
+Reuse should happen through stable content patterns, not a new generic quest framework. The first few Empty Shift tasks can demonstrate:
+
+- Compare two authored records.
+- Inspect an environmental condition.
+- Ask a named witness with an absent-speaker fallback.
+- Deliver a report to a supported receiver.
+- Protect a traveler through an existing expedition route.
+- Repair or recover a supported item.
+- Resolve an investigation with uncertainty.
+- Revisit after a meaningful milestone.
+
+For each pattern, document what remains invariant and what changes per quest. A record comparison always needs a source pair and a supported conclusion; the actual note and stakes vary. A witness quest always labels direct versus reported knowledge; the witness and setting vary. A route escort always needs a safe failure-forward outcome; destination and material risk vary.
+
+Do not instantiate these patterns as hard-coded templates until repeated use proves that the current data format cannot express them cleanly. Template abstraction can make content less legible if every quest’s real differences are hidden behind generic properties. Start with clear authored records, identify repeated fields from actual examples, then propose a schema-level improvement through the normal owner process.
+
+### Playtest observations to capture
+
+When this slice is eventually playtested, record whether players know what proof is needed; whether they mistake the roster entry for attendance; whether they infer fraud too quickly; whether the blocked state gives a useful alternative; whether they understand that the unresolved result is complete; whether the optional resource/crafting tasks compete with survival; whether the map includes too many shelter locations; whether the journal repeats dialogue; and whether the final choice feels informed.
+
+Do not interpret all player disagreement as confusion. If some players keep the roster unchanged while others annotate it, that may indicate a real value tradeoff. If most players believe the game secretly has a correct answer, the evidence framing or reward structure needs revision. If the player tests only one clue and concludes beyond what it supports, dialogue should better communicate the confidence boundary.
+
+### Change-scope boundaries
+
+The first integration package should not include new scheduling simulation, a new resource ledger, a general-purpose rumor engine, a procedural witness system, or a new campaign event manager. It may extend an existing quest or journal owner to persist a small result only after exact API evidence and a path claim. If a broader owner is required, split that work into a separate plan with a clear player benefit and migration/test obligations.
+

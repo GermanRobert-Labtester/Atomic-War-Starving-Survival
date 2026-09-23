@@ -23,6 +23,15 @@ namespace AtomicWar.GodotApp
             var state = HiddenAgendaSaveStore.TryLoad() ?? new HiddenAgendaState();
             var system = new HiddenAgendaSystem(state);
 
+            // Plan 132 — bind the authored archetype catalog so agendas resolve
+            // from canonical templates instead of an empty definition set.
+            string agendaCatalogPath = CatalogPath.ResolveCatalog("hidden_agendas.json");
+            var agendaCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (agendaCatalogIo.FileExists(agendaCatalogPath))
+            {
+                system.LoadCatalog(agendaCatalogIo.ReadAllText(agendaCatalogPath));
+            }
+
             // Seed initial narrative intrigue if brand new game and survivors exist
             if (state.Agendas.Count == 0 && _survivors?.RosterState != null && _survivors.RosterState.Count > 0)
             {

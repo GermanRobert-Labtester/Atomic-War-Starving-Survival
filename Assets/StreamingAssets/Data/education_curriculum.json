@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "collection_id": "education_curriculum",
+  "stages": [
+    {
+      "stage_id": "childhood",
+      "stage_name": "Childhood Education",
+      "min_age": 0,
+      "max_age": 12,
+      "learning_capacity": 80,
+      "available_subjects": [
+        "literacy",
+        "numeracy",
+        "social_cooperation",
+        "basic_survival"
+      ]
+    },
+    {
+      "stage_id": "adolescence",
+      "stage_name": "Adolescent Specialization",
+      "min_age": 12,
+      "max_age": 16,
+      "learning_capacity": 100,
+      "available_subjects": [
+        "crafting_fundamentals",
+        "first_aid_biology",
+        "scavenging_navigation",
+        "combat_defense"
+      ]
+    },
+    {
+      "stage_id": "young_adult",
+      "stage_name": "Young Adult Apprenticeship",
+      "min_age": 16,
+      "max_age": 18,
+      "learning_capacity": 120,
+      "available_subjects": [
+        "advanced_engineering",
+        "clinical_medicine",
+        "tactical_command",
+        "scientific_research"
+      ]
+    }
+  ],
+  "subjects": [
+    {
+      "subject_id": "literacy",
+      "subject_name": "Basic Literacy & Writing",
+      "stage_id": "childhood",
+      "prerequisites": [],
+      "unlocked_skill_id": "skill_reading_comprehension",
+      "proficiency_required": 75,
+      "teaching_speed_modifier": 1.0,
+      "description": "Foundational reading and written communication enabling library study and technical transcription."
+    },
+    {
+      "subject_id": "numeracy",
+      "subject_name": "Basic Numeracy & Logic",
+      "stage_id": "childhood",
+      "prerequisites": [],
+      "unlocked_skill_id": "skill_mathematical_logic",
+      "proficiency_required": 75,
+      "teaching_speed_modifier": 1.0,
+      "description": "Arithmetic, measurement calculations, and basic problem solving."
+    },
+    {
+      "subject_id": "social_cooperation",
+      "subject_name": "Social Cooperation & Ethics",
+      "stage_id": "childhood",
+      "prerequisites": [],
+      "unlocked_skill_id": "skill_communal_diplomacy",
+      "proficiency_required": 70,
+      "teaching_speed_modifier": 1.1,
+      "description": "Conflict resolution, empathy, and collective shelter duty adherence."
+    },
+    {
+      "subject_id": "basic_survival",
+      "subject_name": "Bunker & Wasteland Survival",
+      "stage_id": "childhood",
+      "prerequisites": [],
+      "unlocked_skill_id": "skill_radiation_awareness",
+      "proficiency_required": 70,
+      "teaching_speed_modifier": 1.0,
+      "description": "Hazard recognition, airlock decontamination drills, and water rationing habits."
+    },
+    {
+      "subject_id": "crafting_fundamentals",
+      "subject_name": "Mechanical Crafting & Repair",
+      "stage_id": "adolescence",
+      "prerequisites": [
+        "numeracy"
+      ],
+      "unlocked_skill_id": "skill_machining_basics",
+      "proficiency_required": 80,
+      "teaching_speed_modifier": 0.95,
+      "description": "Workshop tool handling, weld repair, and scrap reclamation."
+    },
+    {
+      "subject_id": "first_aid_biology",
+      "subject_name": "First Aid & Human Physiology",
+      "stage_id": "adolescence",
+      "prerequisites": [
+        "literacy"
+      ],
+      "unlocked_skill_id": "skill_field_triage",
+      "proficiency_required": 80,
+      "teaching_speed_modifier": 0.95,
+      "description": "Bandaging, antiseptics, trauma stabilization, and symptom identification."
+    },
+    {
+      "subject_id": "scavenging_navigation",
+      "subject_name": "Scouting & Surface Navigation",
+      "stage_id": "adolescence",
+      "prerequisites": [
+        "basic_survival"
+      ],
+      "unlocked_skill_id": "skill_cartography",
+      "proficiency_required": 80,
+      "teaching_speed_modifier": 1.0,
+      "description": "Map reading, route plotting through ruins, and terrain hazard evasion."
+    },
+    {
+      "subject_id": "combat_defense",
+      "subject_name": "Shelter Defense & Weapon Safety",
+      "stage_id": "adolescence",
+      "prerequisites": [
+        "basic_survival"
+      ],
+      "unlocked_skill_id": "skill_firearm_handling",
+      "proficiency_required": 80,
+      "teaching_speed_modifier": 0.9,
+      "description": "Firearm discipline, defensive positioning, and emergency lockdown breach containment."
+    },
+    {
+      "subject_id": "advanced_engineering",
+      "subject_name": "Power & Life Support Engineering",
+      "stage_id": "young_adult",
+      "prerequisites": [
+        "crafting_fundamentals"
+      ],
+      "unlocked_skill_id": "skill_reactor_maintenance",
+      "proficiency_required": 85,
+      "teaching_speed_modifier": 0.85,
+      "description": "Generator maintenance, air filtration overhaul, and electrical bus troubleshooting."
+    },
+    {
+      "subject_id": "clinical_medicine",
+      "subject_name": "Pharmacology & Advanced Care",
+      "stage_id": "young_adult",
+      "prerequisites": [
+        "first_aid_biology"
+      ],
+      "unlocked_skill_id": "skill_surgery_assistance",
+      "proficiency_required": 85,
+      "teaching_speed_modifier": 0.85,
+      "description": "Medication synthesis, sterile surgical procedures, and radiation sickness counter-therapy."
+    },
+    {
+      "subject_id": "tactical_command",
+      "subject_name": "Expedition Leadership & Tactics",
+      "stage_id": "young_adult",
+      "prerequisites": [
+        "combat_defense",
+        "social_cooperation"
+      ],
+      "unlocked_skill_id": "skill_patrol_command",
+      "proficiency_required": 85,
+      "teaching_speed_modifier": 0.85,
+      "description": "Squad maneuvering, risk calculation under fire, and retreat protocols."
+    },
+    {
+      "subject_id": "scientific_research",
+      "subject_name": "Applied Physics & Chemistry",
+      "stage_id": "young_adult",
+      "prerequisites": [
+        "numeracy",
+        "literacy"
+      ],
+      "unlocked_skill_id": "skill_laboratory_analysis",
+      "proficiency_required": 85,
+      "teaching_speed_modifier": 0.85,
+      "description": "Soil analysis, isotope decay monitoring, and water filtration formulation."
+    }
+  ]
+}

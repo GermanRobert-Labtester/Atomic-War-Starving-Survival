@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "campaign_templates": [
+    {
+      "campaign_type_id": "active_recruitment",
+      "display_name": "Wasteland Search Party",
+      "category": "exploration",
+      "base_duration_days": 5,
+      "base_success_chance": 55,
+      "cost_food": 15,
+      "cost_water": 15,
+      "cost_currency": 0,
+      "description": "Active search sweeps through surrounding ruins looking for unattached scavengers and lone survivors."
+    },
+    {
+      "campaign_type_id": "defection_inducement",
+      "display_name": "Faction Emissary Infiltration",
+      "category": "covert",
+      "base_duration_days": 7,
+      "base_success_chance": 45,
+      "cost_food": 10,
+      "cost_water": 10,
+      "cost_currency": 50,
+      "description": "Covert envoy approach extending promises of safety, rations, and autonomy to discontented faction laborers."
+    },
+    {
+      "campaign_type_id": "asylum_offer",
+      "display_name": "Open Asylum Broadcast",
+      "category": "humanitarian",
+      "base_duration_days": 3,
+      "base_success_chance": 70,
+      "cost_food": 25,
+      "cost_water": 25,
+      "cost_currency": 0,
+      "description": "Radio transmission offering sanctuary and medical aid to refugees and deserters escaping conflict zones."
+    },
+    {
+      "campaign_type_id": "forced_recruitment",
+      "display_name": "Captive Labor Rehabilitation",
+      "category": "compulsion",
+      "base_duration_days": 10,
+      "base_success_chance": 40,
+      "cost_food": 20,
+      "cost_water": 20,
+      "cost_currency": 0,
+      "description": "Structured re-education and monitored duties to integrate captured raiders or trespassers into the shelter workforce."
+    },
+    {
+      "campaign_type_id": "trade_for_survivor",
+      "display_name": "Contracted Indenture Buyout",
+      "category": "diplomacy",
+      "base_duration_days": 2,
+      "base_success_chance": 85,
+      "cost_food": 30,
+      "cost_water": 30,
+      "cost_currency": 120,
+      "description": "Direct commercial negotiation with regional factions to buy out labor contracts or bonded specialists."
+    }
+  ],
+  "candidate_templates": [
+    {
+      "candidate_template_id": "candidate_scavenger",
+      "candidate_type": "wilderness_survivor",
+      "display_name": "Wasteland Scavenger",
+      "base_willingness": 60,
+      "primary_skill": "scavenging",
+      "personality_trait": "resilient",
+      "description": "Hardened wanderer skilled in salvaging pre-war components from urban rubble."
+    },
+    {
+      "candidate_template_id": "candidate_faction_deserter",
+      "candidate_type": "defector",
+      "display_name": "Discontented Technician",
+      "base_willingness": 75,
+      "primary_skill": "mechanics",
+      "personality_trait": "cautious",
+      "description": "Former military branch mechanic disillusioned with faction hierarchy and seeking quiet shelter life."
+    },
+    {
+      "candidate_template_id": "candidate_displaced_farmer",
+      "candidate_type": "refugee",
+      "display_name": "Displaced Agronomist",
+      "base_willingness": 85,
+      "primary_skill": "agriculture",
+      "personality_trait": "hardworking",
+      "description": "Soil specialist whose surface homestead was overrun, seeking safety in exchange for hydroponics expertise."
+    },
+    {
+      "candidate_template_id": "candidate_mercenary",
+      "candidate_type": "faction_member",
+      "display_name": "Hired Gun",
+      "base_willingness": 40,
+      "primary_skill": "combat",
+      "personality_trait": "mercenary",
+      "description": "Caravan security contractor open to better living conditions and ammunition allocations."
+    },
+    {
+      "candidate_template_id": "candidate_itinerant_trader",
+      "candidate_type": "trader",
+      "display_name": "Peddler of Antiquities",
+      "base_willingness": 50,
+      "primary_skill": "barter",
+      "personality_trait": "shrewd",
+      "description": "Wandering merchant with extensive barter connections weary of dangerous radioactive road travel."
+    },
+    {
+      "candidate_template_id": "candidate_reformed_raider",
+      "candidate_type": "prisoner",
+      "display_name": "Captured Infiltrator",
+      "base_willingness": 30,
+      "primary_skill": "construction",
+      "personality_trait": "rebellious",
+      "description": "Captured raider possessing robust physical endurance who can earn shelter citizenship through steady labor."
+    }
+  ]
+}

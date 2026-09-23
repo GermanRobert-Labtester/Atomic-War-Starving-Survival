@@ -77,6 +77,27 @@ namespace Ashfall.Core.World
 
         /// <summary>Toxic water contamination level (0.0 to 1.0).</summary>
         public float toxicContamination { get; set; } = 0f;
+
+        /// <summary>Optional route condition and terrain tags (e.g. "flooded", "amphibious", "hazard_high") (D16).</summary>
+        public List<string> tags { get; set; } = new List<string>();
+
+        /// <summary>Returns true if the route definition has the specified tag (case-insensitive).</summary>
+        public bool HasTag(string tag)
+        {
+            if (tags == null || string.IsNullOrWhiteSpace(tag)) return false;
+            for (int i = 0; i < tags.Count; i++)
+            {
+                if (string.Equals(tags[i], tag, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>Whether this route is marked with the "flooded" tag (D16).</summary>
+        public bool IsFlooded => HasTag("flooded");
+
+        /// <summary>Whether this route is marked with the "amphibious" tag (D16).</summary>
+        public bool IsAmphibious => HasTag("amphibious");
     }
 
     [Serializable]
@@ -285,7 +306,8 @@ namespace Ashfall.Core.World
                         WeatherHazard = r.weatherHazard,
                         TravelDomain = r.travelDomain ?? "land",
                         CurrentStrength = r.currentStrength,
-                        ToxicContamination = r.toxicContamination
+                        ToxicContamination = r.toxicContamination,
+                        Tags = r.tags != null ? new List<string>(r.tags) : new List<string>()
                     });
                 }
             }

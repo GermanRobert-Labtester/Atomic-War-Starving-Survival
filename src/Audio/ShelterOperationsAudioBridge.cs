@@ -7,6 +7,19 @@ using Ashfall.Core.Shelter;
 namespace AtomicWar.GodotApp.Audio
 {
     /// <summary>
+    /// Presentation-only exposure of the live Plans 46–49 shelter-operation
+    /// systems. <see cref="AudioManager"/> discovers this through the parent
+    /// node and rebinds safely when campaign sessions are created or cleared.
+    /// </summary>
+    public interface IShelterOperationsAudioProvider
+    {
+        ShelterWorkshopSystem? AudioWorkshop { get; }
+        ShelterRadioStationSystem? AudioRadioStation { get; }
+        ShelterSocialDynamicsSystem? AudioSocialDynamics { get; }
+        ExcavationHazardSystem? AudioExcavationHazards { get; }
+    }
+
+    /// <summary>
     /// Connects Plans 46–49 shelter operations (Workshop, Radio Station,
     /// Social Dynamics, Subterranean Excavation Hazards) to the diegetic
     /// soundscape without placing gameplay logic into presentation nodes.
@@ -61,6 +74,26 @@ namespace AtomicWar.GodotApp.Audio
             BindRadio(radio);
             BindSocial(social);
             BindExcavation(excavation);
+        }
+
+        /// <summary>
+        /// Provider-shaped bind for the per-frame domain refresh. Null provider
+        /// detaches every subscription.
+        /// </summary>
+        public void SubscribeAll(IShelterOperationsAudioProvider? provider)
+        {
+            if (_disposed) return;
+            if (provider == null)
+            {
+                UnbindAll();
+                return;
+            }
+
+            BindAll(
+                provider.AudioWorkshop,
+                provider.AudioRadioStation,
+                provider.AudioSocialDynamics,
+                provider.AudioExcavationHazards);
         }
 
         public void BindWorkshop(ShelterWorkshopSystem? workshop)
@@ -292,12 +325,44 @@ namespace AtomicWar.GodotApp.Audio
         public void Dispose()
         {
             if (_disposed) return;
+            // Detach before marking disposed: the Bind* methods are guarded by
+            // ThrowIfDisposed(), so calling them after the flag is set would throw.
+            UnbindAll();
             _disposed = true;
+        }
 
-            BindWorkshop(null);
-            BindRadio(null);
-            BindSocial(null);
-            BindExcavation(null);
+        private void UnbindAll()
+        {
+            if (_workshop != null)
+            {
+                _workshop.OnJobStarted -= OnWorkshopJobStarted;
+                _workshop.OnJobCompleted -= OnWorkshopJobCompleted;
+                _workshop.OnJobCancelled -= OnWorkshopJobCancelled;
+                _workshop.OnMachineStateChanged -= OnMachineStateChanged;
+                _workshop = null;
+            }
+
+            if (_radio != null)
+            {
+                _radio.OnInterceptDecrypted -= OnRadioInterceptDecrypted;
+                _radio.OnLocationTriangulated -= OnRadioLocationTriangulated;
+                _radio = null;
+            }
+
+            if (_social != null)
+            {
+                _social.OnIncidentTriggered -= OnSocialIncidentTriggered;
+                _social.OnIncidentMediated -= OnSocialIncidentMediated;
+                _social = null;
+            }
+
+            if (_excavation != null)
+            {
+                _excavation.OnRescueStarted -= OnExcavationRescueStarted;
+                _excavation.OnMethaneIgnition -= OnExcavationMethaneIgnition;
+                _excavation.OnSectorFlooded -= OnExcavationSectorFlooded;
+                _excavation = null;
+            }
         }
     }
 }

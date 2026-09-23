@@ -1849,7 +1849,7 @@ namespace AtomicWar.GodotApp
             {
                 var session = DoseLedgerHostSession.Create(dataDirectory);
                 Check(session.Registers.npcs.Count == 4, "dose_registers catalog loads the four antagonists");
-                Check(session.Registers.bands.Count == 4 && session.Registers.plans.Count == 3,
+                Check(session.Registers.bands.Count == 12 && session.Registers.plans.Count == 8,
                     "band and plan vocabulary loaded");
                 session.SealDemoSurvivors();
                 session.ScribeReading(180f, highEnergy: true);

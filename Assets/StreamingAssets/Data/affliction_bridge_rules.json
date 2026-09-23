@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "affliction_work_modifiers": [
+    {
+      "affliction_id": "affliction_broken_leg",
+      "work_speed_multiplier": 0.5,
+      "work_quality_multiplier": 0.9,
+      "excluded_duty_types": ["heavy_labour", "expedition", "patrol", "construction"],
+      "description": "Broken leg severely limits movement. Heavy and mobile duties are impossible."
+    },
+    {
+      "affliction_id": "affliction_radiation_sickness",
+      "work_speed_multiplier": 0.7,
+      "work_quality_multiplier": 0.5,
+      "excluded_duty_types": ["food_handling", "water_treatment", "childcare"],
+      "description": "Radiation sickness impairs cognition and causes nausea. Food safety duties prohibited."
+    },
+    {
+      "affliction_id": "affliction_combat_trauma",
+      "work_speed_multiplier": 0.8,
+      "work_quality_multiplier": 0.75,
+      "excluded_duty_types": ["combat_duty", "guard_duty", "weapons_training"],
+      "description": "Combat trauma prevents effective performance in violent or threatening roles."
+    },
+    {
+      "affliction_id": "affliction_respiratory_degeneration",
+      "work_speed_multiplier": 0.6,
+      "work_quality_multiplier": 0.8,
+      "excluded_duty_types": ["outdoor_duty", "heavy_labour", "expedition"],
+      "description": "Respiratory failure makes outdoor and physical exertion dangerous."
+    },
+    {
+      "affliction_id": "affliction_chemical_dependency",
+      "work_speed_multiplier": 0.75,
+      "work_quality_multiplier": 0.7,
+      "excluded_duty_types": ["medical_duty", "childcare", "leadership"],
+      "description": "Chemical dependency causes unpredictable behaviour in high-trust roles."
+    },
+    {
+      "affliction_id": "affliction_broken_arm",
+      "work_speed_multiplier": 0.6,
+      "work_quality_multiplier": 0.65,
+      "excluded_duty_types": ["heavy_labour", "weapons_training", "construction", "crafting"],
+      "description": "Broken arm prohibits lifting, crafting, and weapons handling."
+    }
+  ],
+  "affliction_quest_gates": [
+    {
+      "affliction_id": "affliction_broken_leg",
+      "gate_type": "blocks",
+      "quest_tag": "expedition_quest",
+      "severity": "moderate",
+      "description": "Cannot undertake expeditions with a broken leg."
+    },
+    {
+      "affliction_id": "affliction_radiation_sickness",
+      "gate_type": "unlocks",
+      "quest_tag": "find_anti_rad",
+      "severity": "mild",
+      "description": "Radiation sickness opens the 'Find Anti-Rad Supplies' quest."
+    },
+    {
+      "affliction_id": "affliction_combat_trauma",
+      "gate_type": "unlocks",
+      "quest_tag": "ptsd_support",
+      "severity": "mild",
+      "description": "Combat trauma opens the 'PTSD Support Group' shelter event."
+    },
+    {
+      "affliction_id": "affliction_chemical_dependency",
+      "gate_type": "unlocks",
+      "quest_tag": "detox_program",
+      "severity": "moderate",
+      "description": "Chemical dependency opens the 'Detox Programme' quest."
+    },
+    {
+      "affliction_id": "affliction_respiratory_degeneration",
+      "gate_type": "unlocks",
+      "quest_tag": "air_filtration_upgrade",
+      "severity": "moderate",
+      "description": "Respiratory degeneration unlocks the 'Air Filtration Upgrade' project."
+    },
+    {
+      "affliction_id": "affliction_broken_arm",
+      "gate_type": "blocks",
+      "quest_tag": "combat_quest",
+      "severity": "moderate",
+      "description": "Cannot participate in combat quests with a broken arm."
+    }
+  ]
+}

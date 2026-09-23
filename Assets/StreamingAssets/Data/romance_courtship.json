@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "romance_stages": [
+    {
+      "stage_id": "attraction",
+      "min_score": 0,
+      "max_score": 24,
+      "label": "Attraction",
+      "description": "Survivors notice each other, gentle interest and tentative flirtation begins."
+    },
+    {
+      "stage_id": "courtship",
+      "min_score": 25,
+      "max_score": 49,
+      "label": "Courtship",
+      "description": "Deliberate courtship, spending quiet hours together and testing mutual values."
+    },
+    {
+      "stage_id": "partnership",
+      "min_score": 50,
+      "max_score": 74,
+      "label": "Partnership",
+      "description": "Committed mutual partnership, shared living quarters, and joint task dedication."
+    },
+    {
+      "stage_id": "bonded",
+      "min_score": 75,
+      "max_score": 100,
+      "label": "Bonded",
+      "description": "Deep enduring devotion, soulmate bond, and formal family unit foundation."
+    }
+  ],
+  "courtship_events": [
+    {
+      "event_id": "shared_meal",
+      "name": "Shared Rations",
+      "min_affinity": 20,
+      "base_success_rate": 0.75,
+      "score_gain": 5,
+      "stress_reduction": 4.0,
+      "description": "Sharing a quiet evening ration together away from the bustling common room."
+    },
+    {
+      "event_id": "quiet_walk",
+      "name": "Perimeter Walk",
+      "min_affinity": 30,
+      "base_success_rate": 0.70,
+      "score_gain": 8,
+      "stress_reduction": 6.0,
+      "description": "Walking the upper observation catwalks during safe atmospheric lulls."
+    },
+    {
+      "event_id": "deep_conversation",
+      "name": "Midnight Solace",
+      "min_affinity": 40,
+      "base_success_rate": 0.65,
+      "score_gain": 10,
+      "stress_reduction": 8.0,
+      "description": "Sharing memories of the old world and fears of what tomorrow brings."
+    },
+    {
+      "event_id": "crafted_gift",
+      "name": "Mended Keepsake",
+      "min_affinity": 45,
+      "base_success_rate": 0.80,
+      "score_gain": 12,
+      "stress_reduction": 5.0,
+      "description": "Offering a hand-carved charm or carefully mended piece of gear as a token of affection."
+    },
+    {
+      "event_id": "mutual_vigil",
+      "name": "Shared Sentry Watch",
+      "min_affinity": 35,
+      "base_success_rate": 0.70,
+      "score_gain": 9,
+      "stress_reduction": 3.0,
+      "description": "Standing shoulder-to-shoulder through the coldest hours of the night shift."
+    }
+  ],
+  "compatibility_factors": {
+    "age_difference_soft_limit": 12,
+    "age_penalty_per_excess_year": 2.0,
+    "belief_alignment_bonus": 15.0,
+    "opposing_belief_penalty": 20.0,
+    "shared_trauma_bond_bonus": 10.0,
+    "base_compatibility_floor": 20.0
+  },
+  "family_benefits": {
+    "shared_quarters_morale_bonus": 8.0,
+    "task_cooperation_efficiency_bonus": 0.15,
+    "family_safety_comfort_bonus": 5.0,
+    "bereavement_grief_multiplier": 1.75
+  }
+}

@@ -1,7 +1,8 @@
-// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Survivors
 {
@@ -51,6 +52,54 @@ namespace Ashfall.Core.Survivors
     }
 
     [Serializable]
+    public sealed class AgendaTemplateDefinition
+    {
+        [JsonPropertyName("template_id")]
+        public string TemplateId { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("type")]
+        public string Type { get; set; } = "resource_theft";
+
+        [JsonPropertyName("target_faction_id")]
+        public string TargetFactionId { get; set; } = string.Empty;
+
+        [JsonPropertyName("target_survivor_id")]
+        public string TargetSurvivorId { get; set; } = string.Empty;
+
+        [JsonPropertyName("base_evidence_threshold")]
+        public float BaseEvidenceThreshold { get; set; } = 50f;
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+
+        [JsonPropertyName("clue_descriptions")]
+        public List<string> ClueDescriptions { get; set; } = new List<string>();
+
+        public AgendaType GetAgendaType() => Type.ToLowerInvariant() switch
+        {
+            "faction_loyalty" or "factionloyalty" => AgendaType.FactionLoyalty,
+            "resource_theft" or "resourcetheft" => AgendaType.ResourceTheft,
+            "sabotage" => AgendaType.Sabotage,
+            "escape_plan" or "escapeplan" => AgendaType.EscapePlan,
+            "secret_protection" or "secretprotection" => AgendaType.SecretProtection,
+            _ => AgendaType.ResourceTheft
+        };
+    }
+
+    [Serializable]
+    public sealed class HiddenAgendaCatalogData
+    {
+        [JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; } = 1;
+
+        [JsonPropertyName("templates")]
+        public List<AgendaTemplateDefinition> Templates { get; set; } = new List<AgendaTemplateDefinition>();
+    }
+
+    [Serializable]
     public sealed class HiddenAgendaState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -67,18 +116,81 @@ namespace Ashfall.Core.Survivors
     public sealed class HiddenAgendaSystem
     {
         private readonly HiddenAgendaState _state;
+        private readonly Dictionary<string, AgendaTemplateDefinition> _templates = new Dictionary<string, AgendaTemplateDefinition>(StringComparer.OrdinalIgnoreCase);
 
         public event Action<SurvivorHiddenAgenda>? OnAgendaAssigned;
         public event Action<AgendaClue>? OnClueDiscovered;
         public event Action<SurvivorHiddenAgenda>? OnAgendaExposed;
         public event Action<SurvivorHiddenAgenda, AgendaResolution>? OnAgendaResolved;
 
+        public Action<string /*survivorId*/, float /*moraleDelta*/>? MoraleDeltaApplier { get; set; }
+        public Action<string /*factionId*/, float /*standingDelta*/>? FactionStandingApplier { get; set; }
+        public Action<string /*survivorId*/, string /*confiscatedItem*/, int /*count*/>? ConfiscationApplier { get; set; }
+
         public int ActiveAgendaCount => _state.Agendas.Count(a => !a.IsResolved);
         public int TotalCluesCount => _state.Clues.Count;
+        public IReadOnlyCollection<AgendaTemplateDefinition> Templates => _templates.Values;
 
         public HiddenAgendaSystem(HiddenAgendaState? state = null)
         {
             _state = state ?? new HiddenAgendaState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var data = JsonSerializer.Deserialize<HiddenAgendaCatalogData>(json, options);
+            if (data != null)
+            {
+                LoadCatalog(data);
+            }
+        }
+
+        public void LoadCatalog(HiddenAgendaCatalogData catalog)
+        {
+            if (catalog?.Templates == null) return;
+            foreach (var t in catalog.Templates)
+            {
+                if (!string.IsNullOrWhiteSpace(t.TemplateId))
+                {
+                    _templates[t.TemplateId] = t;
+                }
+            }
+        }
+
+        public AgendaTemplateDefinition? GetTemplate(string templateId)
+        {
+            if (string.IsNullOrWhiteSpace(templateId)) return null;
+            return _templates.TryGetValue(templateId, out var t) ? t : null;
+        }
+
+        public SurvivorHiddenAgenda AssignAgendaFromTemplate(
+            string survivorId,
+            string templateId,
+            int startDay = 1,
+            string? customNotes = null)
+        {
+            if (string.IsNullOrWhiteSpace(survivorId)) throw new ArgumentNullException(nameof(survivorId));
+            if (string.IsNullOrWhiteSpace(templateId)) throw new ArgumentNullException(nameof(templateId));
+
+            if (!_templates.TryGetValue(templateId, out var template))
+            {
+                throw new ArgumentException($"Template '{templateId}' not found in loaded catalog.", nameof(templateId));
+            }
+
+            var agenda = AssignAgenda(
+                survivorId: survivorId,
+                type: template.GetAgendaType(),
+                targetFaction: template.TargetFactionId,
+                targetSurvivor: template.TargetSurvivorId,
+                startDay: startDay,
+                notes: customNotes ?? template.Description
+            );
+            return agenda;
         }
 
         public SurvivorHiddenAgenda AssignAgenda(
@@ -120,12 +232,21 @@ namespace Ashfall.Core.Survivors
             float progressGain = Math.Clamp(investigatorSkill, 5f, 40f);
             agenda.DiscoveryProgress = Math.Clamp(agenda.DiscoveryProgress + progressGain, 0f, 100f);
 
+            string description = $"Suspicious behavior noted regarding {agenda.Type} by {survivorId}.";
+            var matchingTemplate = _templates.Values.FirstOrDefault(t => t.GetAgendaType() == agenda.Type);
+            if (matchingTemplate != null && matchingTemplate.ClueDescriptions.Count > 0)
+            {
+                int existingCluesCount = _state.Clues.Count(c => c.AgendaId == agenda.AgendaId);
+                int index = existingCluesCount % matchingTemplate.ClueDescriptions.Count;
+                description = matchingTemplate.ClueDescriptions[index];
+            }
+
             var clue = new AgendaClue
             {
                 ClueId = $"clue_{_state.NextSequence++}",
                 AgendaId = agenda.AgendaId,
                 Day = currentDay,
-                Description = $"Suspicious behavior noted regarding {agenda.Type} by {survivorId}.",
+                Description = description,
                 ClueStrength = progressGain
             };
             _state.Clues.Add(clue);
@@ -151,6 +272,36 @@ namespace Ashfall.Core.Survivors
             agenda.IsConfronted = true;
             agenda.IsResolved = true;
             agenda.Resolution = resolution;
+
+            // Trigger delegate bridges
+            switch (resolution)
+            {
+                case AgendaResolution.Reconciled:
+                    MoraleDeltaApplier?.Invoke(agenda.SurvivorId, 10f);
+                    break;
+                case AgendaResolution.Expelled:
+                    MoraleDeltaApplier?.Invoke(agenda.SurvivorId, -15f);
+                    if (agenda.Type == AgendaType.FactionLoyalty && !string.IsNullOrWhiteSpace(agenda.TargetFactionId))
+                    {
+                        FactionStandingApplier?.Invoke(agenda.TargetFactionId, -10f);
+                    }
+                    break;
+                case AgendaResolution.Exploited:
+                    MoraleDeltaApplier?.Invoke(agenda.SurvivorId, -20f);
+                    break;
+                case AgendaResolution.Betrayed:
+                    MoraleDeltaApplier?.Invoke(agenda.SurvivorId, -25f);
+                    if (agenda.Type == AgendaType.FactionLoyalty && !string.IsNullOrWhiteSpace(agenda.TargetFactionId))
+                    {
+                        FactionStandingApplier?.Invoke(agenda.TargetFactionId, 15f);
+                    }
+                    break;
+            }
+
+            if (agenda.Type == AgendaType.ResourceTheft && (resolution == AgendaResolution.Reconciled || resolution == AgendaResolution.Expelled || resolution == AgendaResolution.Exploited))
+            {
+                ConfiscationApplier?.Invoke(agenda.SurvivorId, "scrap_supplies", 5);
+            }
 
             OnAgendaResolved?.Invoke(agenda, resolution);
             return true;

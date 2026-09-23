@@ -149,6 +149,10 @@ namespace AtomicWar.GodotApp
             if (_onboardingJourney == null) SetupOnboarding();
             if (_onboardingJourney == null || string.IsNullOrWhiteSpace(sigil)) return;
             _onboardingJourney.RecordSigil(sigil);
+            // Plan 46 — the canonical onboarding/UI sigil seam also feeds the
+            // local play-session recorder; the JSONL stream stays an audit read
+            // model and never feeds gameplay.
+            RecordPlayMetricSigil(sigil);
             _onboardingLastInteractionSeconds = 0;
         }
 
@@ -219,6 +223,8 @@ namespace AtomicWar.GodotApp
         {
             _doseLedgerPanel?.RefreshView();
             _radiationHistoryPanel?.RefreshView();
+            // Plan 51 — the presentation motion profile is preference-sensitive.
+            RefreshHoldfastPresentation();
         }
 
         public void DismissOnboardingHint()

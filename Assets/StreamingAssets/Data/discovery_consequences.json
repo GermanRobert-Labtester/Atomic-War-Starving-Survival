@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "consequence_types": [
+    {
+      "type_id": "csq_resource_deposit",
+      "discovery_type": "ResourceDeposit",
+      "label": "Resource Deposit",
+      "caravan_safety_bonus": 0.0,
+      "faction_standing_delta": 0.0,
+      "description_template": "A cache of {resource_yield} has been located at {location_id}. Exploitation potential is high.",
+      "auto_escalate_days": 14
+    },
+    {
+      "type_id": "csq_threat_cleared",
+      "discovery_type": "ThreatCleared",
+      "label": "Threat Cleared",
+      "caravan_safety_bonus": 0.15,
+      "faction_standing_delta": 3.0,
+      "description_template": "Hostile presence neutralised at {location_id}. Caravan lanes through this corridor are now safer.",
+      "auto_escalate_days": 30
+    },
+    {
+      "type_id": "csq_ruins_uncovered",
+      "discovery_type": "RuinsUncovered",
+      "label": "Ruins Uncovered",
+      "caravan_safety_bonus": 0.05,
+      "faction_standing_delta": 0.0,
+      "description_template": "Pre-war structure exposed at {location_id}. Scavengers and archaeologists are taking notice.",
+      "auto_escalate_days": 10
+    },
+    {
+      "type_id": "csq_faction_contact",
+      "discovery_type": "FactionContact",
+      "label": "Faction Contact",
+      "caravan_safety_bonus": 0.0,
+      "faction_standing_delta": 8.0,
+      "description_template": "First contact established with a faction operating out of {location_id}. Diplomatic opportunity open.",
+      "auto_escalate_days": 21
+    },
+    {
+      "type_id": "csq_strategic_location",
+      "discovery_type": "StrategicLocation",
+      "label": "Strategic Location",
+      "caravan_safety_bonus": 0.10,
+      "faction_standing_delta": 0.0,
+      "description_template": "A strategically significant position has been mapped at {location_id}.",
+      "auto_escalate_days": 60
+    }
+  ]
+}

@@ -351,6 +351,26 @@ namespace Ashfall.Core.Expeditions
             _staminaDrainMultiplier = multiplier;
         }
 
+        private Func<string, float>? _survivorSpeedMultiplierQuery;
+
+        /// <summary>
+        /// Plan 137 — Bind an optional per-survivor speed multiplier query (e.g. NeedsPerformanceBridge).
+        /// </summary>
+        public void SetSurvivorSpeedMultiplierQuery(Func<string, float> query)
+        {
+            _survivorSpeedMultiplierQuery = query;
+        }
+
+        private Func<string, float>? _packCapacityBonusQuery;
+
+        /// <summary>
+        /// Plan 151 / Plan 174 — Bind an optional per-survivor pack animal capacity query (e.g. CompanionAnimalSystem).
+        /// </summary>
+        public void SetPackCapacityBonusQuery(Func<string, float>? query)
+        {
+            _packCapacityBonusQuery = query;
+        }
+
         /// <summary>
         /// Optional per-location encounter-chance multiplier (1.0 = authored
         /// rate). Hosts wire faction/territory danger here (e.g. the warlord's
@@ -423,6 +443,11 @@ namespace Ashfall.Core.Expeditions
                 if (vehicle.cargoCapacityKg > 0f)
                     exp.maxLootCapacityKg = vehicle.cargoCapacityKg;
             }
+            if (_packCapacityBonusQuery != null && !string.IsNullOrEmpty(survivorId))
+            {
+                float packBonus = Math.Max(0f, _packCapacityBonusQuery(survivorId));
+                exp.maxLootCapacityKg += packBonus;
+            }
             if (weather != null)
                 exp.weatherSpeedMultiplier = Math.Clamp(weather.SpeedMultiplier, 0f, 5f);
             exp.survivorSpeedMultiplier = SurvivorSpeedFactor(survivorSpeedMultiplier);
@@ -460,6 +485,12 @@ namespace Ashfall.Core.Expeditions
             projected["stamina_cost"] = estimate.totalTicks * (def != null ? def.baseStaminaDrainPerHour : 2.0);
             if (vehicle != null && !string.IsNullOrEmpty(vehicle.vehicleId))
                 projected["fuel_cost"] = estimate.fuelRequired;
+            if (_packCapacityBonusQuery != null && !string.IsNullOrEmpty(survivorId))
+            {
+                float packBonus = Math.Max(0f, _packCapacityBonusQuery(survivorId));
+                projected["pack_capacity_bonus_kg"] = packBonus;
+                projected["cargo_capacity_kg"] = estimate.cargoCapacityKg + packBonus;
+            }
 
             return CommandPreview.Available(
                 PlayerCommandCode.ExpeditionDispatch,
@@ -1281,8 +1312,16 @@ namespace Ashfall.Core.Expeditions
         internal static float SurvivorSpeedFactor(float raw)
             => Math.Clamp(raw > 0f ? raw : 1f, MinSurvivorSpeedMultiplier, MaxSurvivorSpeedMultiplier);
 
-        private static float SurvivorTravelMultiplier(ExpeditionState exp)
-            => SurvivorSpeedFactor(exp.survivorSpeedMultiplier);
+        private float SurvivorTravelMultiplier(ExpeditionState exp)
+        {
+            float raw = exp.survivorSpeedMultiplier;
+            if (_survivorSpeedMultiplierQuery != null && !string.IsNullOrEmpty(exp.survivorId))
+            {
+                float q = _survivorSpeedMultiplierQuery(exp.survivorId);
+                if (q > 0f) raw *= q;
+            }
+            return SurvivorSpeedFactor(raw);
+        }
 
         /// <summary>
         /// Travel multiplier of the dispatched vehicle. A broken-down vehicle

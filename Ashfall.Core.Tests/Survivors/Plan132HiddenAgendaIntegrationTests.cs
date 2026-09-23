@@ -127,5 +127,97 @@ namespace Ashfall.Core.Tests.Survivors
             Assert.Null(restored.GetAgendaForSurvivor("surv_alpha"));
             Assert.Equal(3, restored.GetAllClues().Count);
         }
+
+        private static string GetDataPath(string filename)
+        {
+            var current = new System.IO.DirectoryInfo(AppContext.BaseDirectory);
+            while (current != null)
+            {
+                string candidate = System.IO.Path.Combine(current.FullName, "Assets", "StreamingAssets", "Data", filename);
+                if (System.IO.File.Exists(candidate)) return candidate;
+                current = current.Parent;
+            }
+            return System.IO.Path.Combine("Assets", "StreamingAssets", "Data", filename);
+        }
+
+        [Fact]
+        public void LoadCatalog_FromCanonicalJson_LoadsAllTemplates()
+        {
+            var system = new HiddenAgendaSystem();
+            string jsonPath = GetDataPath("hidden_agendas.json");
+
+            Assert.True(System.IO.File.Exists(jsonPath), $"Canonical file must exist at {jsonPath}");
+            string json = System.IO.File.ReadAllText(jsonPath);
+
+            system.LoadCatalog(json);
+            Assert.True(system.Templates.Count >= 6);
+
+            var informant = system.GetTemplate("agenda_tmpl_prpf_informant");
+            Assert.NotNull(informant);
+            Assert.Equal(AgendaType.FactionLoyalty, informant.GetAgendaType());
+            Assert.Equal("faction_supply_corps", informant.TargetFactionId);
+            Assert.Equal(60f, informant.BaseEvidenceThreshold);
+            Assert.NotEmpty(informant.ClueDescriptions);
+        }
+
+        [Fact]
+        public void AssignAgendaFromTemplate_AppliesTemplateArchetypeAndProducesThemedClues()
+        {
+            var system = new HiddenAgendaSystem();
+            string jsonPath = GetDataPath("hidden_agendas.json");
+            system.LoadCatalog(System.IO.File.ReadAllText(jsonPath));
+
+            var agenda = system.AssignAgendaFromTemplate("surv_infiltrator_07", "agenda_tmpl_prpf_informant", startDay: 2);
+            Assert.NotNull(agenda);
+            Assert.Equal(AgendaType.FactionLoyalty, agenda.Type);
+            Assert.Equal("faction_supply_corps", agenda.TargetFactionId);
+            Assert.Equal(2, agenda.StartDay);
+
+            var clue = system.InvestigateAgenda("surv_infiltrator_07", investigatorSkill: 35f, currentDay: 2);
+            Assert.NotNull(clue);
+            Assert.Contains("radio", clue.Description, StringComparison.OrdinalIgnoreCase);
+        }
+
+        [Fact]
+        public void Confrontation_InvokesRegisteredDelegateSeams_ForMoraleFactionAndConfiscation()
+        {
+            var system = new HiddenAgendaSystem();
+            string lastMoraleSurvivor = "";
+            float lastMoraleDelta = 0f;
+            string lastFaction = "";
+            float lastFactionDelta = 0f;
+            string lastConfiscatedSurvivor = "";
+            string lastConfiscatedItem = "";
+            int lastConfiscatedCount = 0;
+
+            system.MoraleDeltaApplier = (s, delta) => { lastMoraleSurvivor = s; lastMoraleDelta = delta; };
+            system.FactionStandingApplier = (f, delta) => { lastFaction = f; lastFactionDelta = delta; };
+            system.ConfiscationApplier = (s, item, count) => { lastConfiscatedSurvivor = s; lastConfiscatedItem = item; lastConfiscatedCount = count; };
+
+            // 1. Theft agenda resolved as Reconciled -> morale +10, confiscation triggered
+            var theft = system.AssignAgenda("surv_thief", AgendaType.ResourceTheft);
+            system.InvestigateAgenda("surv_thief", 40f, 1);
+            system.InvestigateAgenda("surv_thief", 30f, 1);
+            bool confronted = system.ConfrontSurvivor(theft.AgendaId, AgendaResolution.Reconciled, 1);
+            Assert.True(confronted);
+
+            Assert.Equal("surv_thief", lastMoraleSurvivor);
+            Assert.Equal(10f, lastMoraleDelta);
+            Assert.Equal("surv_thief", lastConfiscatedSurvivor);
+            Assert.Equal("scrap_supplies", lastConfiscatedItem);
+            Assert.Equal(5, lastConfiscatedCount);
+
+            // 2. Faction loyalty agenda resolved as Betrayed -> morale -25, faction standing +15
+            var loyalty = system.AssignAgenda("surv_mole", AgendaType.FactionLoyalty, "faction_supply_corps");
+            system.InvestigateAgenda("surv_mole", 40f, 2);
+            system.InvestigateAgenda("surv_mole", 30f, 2);
+            confronted = system.ConfrontSurvivor(loyalty.AgendaId, AgendaResolution.Betrayed, 2);
+            Assert.True(confronted);
+
+            Assert.Equal("surv_mole", lastMoraleSurvivor);
+            Assert.Equal(-25f, lastMoraleDelta);
+            Assert.Equal("faction_supply_corps", lastFaction);
+            Assert.Equal(15f, lastFactionDelta);
+        }
     }
 }

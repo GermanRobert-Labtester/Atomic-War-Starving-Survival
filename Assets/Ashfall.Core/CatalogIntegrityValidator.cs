@@ -238,7 +238,11 @@ namespace Ashfall.Core
             // Plan 73 — Rail Logistics
             "rail_edge_id",
             // Plan 135 — Narrative Codex Discovery
-            "discovery_id"
+            "discovery_id",
+            // UNBLOCK Waves 31–33 / 38–41 — new catalog primary keys and
+            // self-defined vocabularies that were never registered when the
+            // catalogs landed (audit 2026-09-22).
+            "phase_id", "season_id", "starting_traits", "trait_modifier"
         };
 
         /// <summary>
@@ -332,6 +336,13 @@ namespace Ashfall.Core
             "station_nickname", "modulation_mode", "station_id", "alert_tier", "detector_id",
             "pulse_classification", "intercept_channel", "target_faction", "speaker_identities",
             "case_number", "anatomical_region", "compound_name", "active_agent", "preparation_method",
+            // UNBLOCK Waves 31–33 / 38–41 — type/discriminator columns in the new
+            // catalogs. These carry closed vocabularies (asset kinds, bonus types,
+            // treaty conditions, event triggers), not catalog references.
+            "kind", "icon_glyph", "supported_policy_scopes", "action_key",
+            "candidate_type", "campaign_type_id", "primary_bonus_type", "secondary_bonus_type",
+            "developed_from_traumas", "side_effects", "term_type", "condition",
+            "treaty_type_id", "allowed_catalogs", "trigger",
             "efficacy_rating", "operation_code", "lead_surgeon", "anesthetic_used", "survival_outcome",
             "case_file", "sensory_modality", "pathological_cause",
             "gate_designation", "mechanical_subsystem", "failure_mode", "structural_severity",
@@ -454,7 +465,16 @@ namespace Ashfall.Core
             "channel", "source_record_id", "source_catalog", "producer_type",
             // C2[6] 23C — cascade rule vocabulary (validated by CascadeRuleCatalogLoader:
             // known condition/off-ramp keys, never catalog id references).
-            "requires_all", "off_ramps", "effect_tags"
+            "requires_all", "off_ramps", "effect_tags",
+            // Plan 55 — a retention policy row names a Core collection
+            // (kitchen_serving_log, machine_log, dose_ledger, …), never a catalog
+            // entity, so its key is never cross-referenced as an id.
+            "collection_key",
+            // Plan 59 — a standing gate's enforcement_ref names a CI gate in
+            // docs/ci/CI_GATE_MANIFEST.json (port_contract_gate, data_integrity,
+            // agent_rulebooks_sync, …), which is a repository verification gate,
+            // not a catalog entity, so it is never an id lookup.
+            "enforcement_ref"
         };
 
         /// <summary>
@@ -1659,6 +1679,19 @@ namespace Ashfall.Core
                             // cross-referenced: skip them wholesale.
                             if (IsVocabularyKey(property.Name)) continue;
 
+                            if (IsCatalogLocalDefinitionKey(ctx.File, property.Name))
+                            {
+                                // Catalog-local arrays define their own ids
+                                // (e.g. cartography region POIs); register each
+                                // element as authored and never emit a Tier-1 ref.
+                                foreach (JsonElement item in value.EnumerateArray())
+                                {
+                                    if (item.ValueKind == JsonValueKind.String && !string.IsNullOrEmpty(item.GetString()))
+                                        Register(property.Name, item.GetString()!, childPath + "[]", ctx);
+                                }
+                                continue;
+                            }
+
                             if (IsDefinitionKey(property.Name))
                             {
                                 // Array-valued definition keys (traits, baseTraits):
@@ -1756,8 +1789,38 @@ namespace Ashfall.Core
             }
         }
 
+        /// <summary>
+        /// Per-catalog fields whose string values are identifiers DEFINED by that
+        /// catalog and consumed opaquely by their owning Core system — not
+        /// cross-references to another catalog. The global ReferenceKeys list
+        /// cannot express this, and forcing a global target would invent content.
+        /// Key format: "file.json/field".
+        /// </summary>
+        private static readonly Dictionary<string, string> CatalogLocalDefinitionKeys =
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["map_regions.json/points_of_interest"] =
+                    "Cartography regions define their own discovery POI ids (CartographySystem stores them as KnownPoiIds labels).",
+                ["rumor_hubs.json/location_id"] =
+                    "Rumor hubs carry a self-defined location label matched by RumorSystem.CreateBriefingReport.",
+                ["water_sources.json/location_id"] =
+                    "WaterSourceSystem stores the source location label without resolving it against the map.",
+                ["shelter_construction.json/room_type_id"] =
+                    "Expansion blueprints define the room types they construct in ShelterExpansionSystem state.",
+                ["art_forms.json/required_materials"] =
+                    "Art forms define their own material tokens; CultureCreationSystem consumes them opaquely pending item binding.",
+            };
+
+        private static bool IsCatalogLocalDefinitionKey(string file, string key)
+            => CatalogLocalDefinitionKeys.ContainsKey(file + "/" + key);
+
         private static void RegisterOrReference(string key, string value, string path, string? entityContext, Ctx ctx)
         {
+            if (IsCatalogLocalDefinitionKey(ctx.File, key))
+            {
+                Register(key, value, path, ctx);
+                return;
+            }
             // Plan 144 (Workstream 144B): prefix-grammar tokens are patterns,
             // not ids and not references. They must never be registered (a
             // pattern must not bless itself) and never enter the Tier-1

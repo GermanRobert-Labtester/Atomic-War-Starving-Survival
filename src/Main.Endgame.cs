@@ -38,6 +38,27 @@ namespace AtomicWar.GodotApp
                 _endgameDirty = false;
         }
 
+        /// <summary>
+        /// Read-only campaign chronicle route (Plan 84 B25). Binds the live
+        /// endgame authority; the panel renders the sealed/active record and
+        /// never mutates it.
+        /// </summary>
+        public void OpenChroniclePanel()
+        {
+            SetupEndgame();
+            if (_chroniclePanel != null)
+            {
+                _chroniclePanel.Bind(_endgame);
+                _chroniclePanel.Open();
+            }
+        }
+
+        private void CloseChroniclePanel()
+        {
+            if (_chroniclePanel != null)
+                _chroniclePanel.Visible = false;
+        }
+
         private void FlushEndgameIfDirty()
         {
             if (_endgameDirty) SaveEndgame();
@@ -62,6 +83,36 @@ namespace AtomicWar.GodotApp
             {
                 GD.PrintErr("[Main.Endgame] Completion history was not recorded: terminal campaign save failed.");
                 return;
+            }
+
+            // Plan 140 — Archive generational legacy for cross-campaign inheritance
+            try
+            {
+                var legacy = new Ashfall.Core.Legacy.CampaignLegacy
+                {
+                    campaignId = runIdentity,
+                    endingId = epilogue.endingId,
+                    daysSurvived = _simDay,
+                    survivorCount = _survivors?.Roster?.LivingCount ?? (_survivors?.RosterState?.Count ?? 0),
+                    deathsRecorded = _survivorFate?.DeathCount ?? 0,
+                    completionDay = _simDay
+                };
+                if (_yearOfAsh?.FactionWar?.State?.factions != null)
+                {
+                    foreach (var factionRecord in _yearOfAsh.FactionWar.State.factions)
+                    {
+                        if (factionRecord != null && !string.IsNullOrEmpty(factionRecord.factionId))
+                        {
+                            legacy.factionStandings[factionRecord.factionId] = factionRecord.standing;
+                        }
+                    }
+                }
+                ArchiveCurrentCampaign(legacy);
+                SaveCampaignLegacy();
+            }
+            catch (System.Exception ex)
+            {
+                GD.PrintErr($"[Main.Endgame] Generational legacy archiving failed: {ex.Message}");
             }
 
             _completionHistory ??= CompletionHistoryStore.Load();
@@ -119,6 +170,10 @@ namespace AtomicWar.GodotApp
             // Check trigger conditions: Extinction OR Day >= 360
             if (living == 0 || day >= 360)
             {
+                // Plan 46 — the campaign's terminal snapshot is the aggregation
+                // point: report before the ending is published so the journal
+                // line precedes the epilogue.
+                PublishPlayMetricsReport(day, "Campaign concluded");
                 var ctx = new CampaignEvaluationContext
                 {
                     CurrentDay = day,

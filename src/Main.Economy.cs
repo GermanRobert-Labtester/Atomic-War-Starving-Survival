@@ -49,6 +49,14 @@ namespace AtomicWar.GodotApp
             if (_economy != null) return;
             _economy = EconomyHostSession.Create(_dataDir);
             _economy.BindRationingResourceValidator(IsCanonicalRationingResource);
+            // Plan 42 / Plan 46 — the rationing owner's tier change reaches the
+            // journal voice trigger and the session telemetry through this one
+            // forwarder; no second ration model is created in the host.
+            _economy.RationTierChangedSeam += target =>
+            {
+                RecordPlayMetricRationPolicyChanged(target);
+                TriggerSurvivorVoiceRationCut(target);
+            };
             BindRationingToInventory();
             _economy.StateChanged += () => _economyDirty = true;
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Ashfall.Core.Survivors
 {
@@ -31,6 +32,7 @@ namespace Ashfall.Core.Survivors
         public HobbyCategory Category { get; set; } = HobbyCategory.Creative;
         public string RequiredFacility { get; set; } = string.Empty;
         public float BaseMoraleBonus { get; set; } = 5f;
+        public string Description { get; set; } = string.Empty;
     }
 
     [Serializable]
@@ -77,7 +79,11 @@ namespace Ashfall.Core.Survivors
         public event Action<HobbySessionResult>? OnSessionCompleted;
         public event Action<SurvivorHobbyProgress, HobbyMastery>? OnMasteryAchieved;
 
+        public Action<HobbySessionResult>? OnSessionCompletedSeam { get; set; }
+        public Action<SurvivorHobbyProgress, HobbyMastery>? OnMasteryAchievedSeam { get; set; }
+
         public int ProgressCount => _state.ProgressRecords.Count;
+        public IReadOnlyList<HobbyDefinition> AuthoredHobbies => _state.AuthoredHobbies;
 
         public HobbySystem(HobbySystemState? state = null)
         {
@@ -89,13 +95,74 @@ namespace Ashfall.Core.Survivors
         {
             if (_state.AuthoredHobbies.Count == 0)
             {
-                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_woodcarving", Name = "Woodcarving", Category = HobbyCategory.Crafting, BaseMoraleBonus = 6f });
-                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_painting", Name = "Painting", Category = HobbyCategory.Creative, BaseMoraleBonus = 8f });
-                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_reading", Name = "Reading", Category = HobbyCategory.Intellectual, BaseMoraleBonus = 5f });
-                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_instrument", Name = "Music & Strings", Category = HobbyCategory.Creative, BaseMoraleBonus = 8f });
-                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_chess", Name = "Chess & Tactics", Category = HobbyCategory.Social, BaseMoraleBonus = 6f });
-                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_botany", Name = "Herbarium Collecting", Category = HobbyCategory.Collecting, BaseMoraleBonus = 5f });
+                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_woodcarving", Name = "Woodcarving", Category = HobbyCategory.Crafting, RequiredFacility = "workshop", BaseMoraleBonus = 6f });
+                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_painting", Name = "Painting", Category = HobbyCategory.Creative, RequiredFacility = "studio", BaseMoraleBonus = 8f });
+                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_reading", Name = "Reading", Category = HobbyCategory.Intellectual, RequiredFacility = "library", BaseMoraleBonus = 5f });
+                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_instrument", Name = "Music & Strings", Category = HobbyCategory.Creative, RequiredFacility = "common_room", BaseMoraleBonus = 8f });
+                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_chess", Name = "Chess & Tactics", Category = HobbyCategory.Social, RequiredFacility = "common_room", BaseMoraleBonus = 6f });
+                _state.AuthoredHobbies.Add(new HobbyDefinition { HobbyId = "hobby_botany", Name = "Herbarium Collecting", Category = HobbyCategory.Collecting, RequiredFacility = "garden", BaseMoraleBonus = 5f });
             }
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                if (root.TryGetProperty("hobbies", out var hobbiesEl) && hobbiesEl.ValueKind == JsonValueKind.Array)
+                {
+                    _state.AuthoredHobbies.Clear();
+                    foreach (var item in hobbiesEl.EnumerateArray())
+                    {
+                        string id = item.TryGetProperty("hobby_id", out var idProp) ? idProp.GetString() ?? "" : "";
+                        string name = item.TryGetProperty("name", out var nameProp) ? nameProp.GetString() ?? "" : "";
+                        string catStr = item.TryGetProperty("category", out var catProp) ? catProp.GetString() ?? "" : "";
+                        string fac = item.TryGetProperty("required_facility", out var facProp) ? facProp.GetString() ?? "" : "";
+                        float morale = item.TryGetProperty("base_morale_bonus", out var morProp) ? (float)morProp.GetDouble() : 5f;
+                        string desc = item.TryGetProperty("description", out var descProp) ? descProp.GetString() ?? "" : "";
+
+                        HobbyCategory category = catStr.ToLowerInvariant() switch
+                        {
+                            "intellectual" => HobbyCategory.Intellectual,
+                            "physical" => HobbyCategory.Physical,
+                            "social" => HobbyCategory.Social,
+                            "crafting" => HobbyCategory.Crafting,
+                            "collecting" => HobbyCategory.Collecting,
+                            _ => HobbyCategory.Creative
+                        };
+
+                        if (!string.IsNullOrEmpty(id))
+                        {
+                            _state.AuthoredHobbies.Add(new HobbyDefinition
+                            {
+                                HobbyId = id,
+                                Name = name,
+                                Category = category,
+                                RequiredFacility = fac,
+                                BaseMoraleBonus = morale,
+                                Description = desc
+                            });
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                EnsureDefaultHobbies();
+            }
+        }
+
+        public bool CanConductSession(string hobbyId, IEnumerable<string>? availableFacilities)
+        {
+            var hobby = _state.AuthoredHobbies.FirstOrDefault(h => string.Equals(h.HobbyId, hobbyId, StringComparison.OrdinalIgnoreCase));
+            if (hobby == null) return false;
+            if (string.IsNullOrWhiteSpace(hobby.RequiredFacility) || hobby.RequiredFacility.Equals("none", StringComparison.OrdinalIgnoreCase)) return true;
+            if (availableFacilities == null) return false;
+            return availableFacilities.Any(f => string.Equals(f, hobby.RequiredFacility, StringComparison.OrdinalIgnoreCase));
         }
 
         public static HobbyMastery ResolveMastery(float proficiency)
@@ -183,10 +250,12 @@ namespace Ashfall.Core.Survivors
             };
 
             OnSessionCompleted?.Invoke(result);
+            OnSessionCompletedSeam?.Invoke(result);
 
             if (progress.Mastery > oldMastery)
             {
                 OnMasteryAchieved?.Invoke(progress, progress.Mastery);
+                OnMasteryAchievedSeam?.Invoke(progress, progress.Mastery);
             }
 
             return result;

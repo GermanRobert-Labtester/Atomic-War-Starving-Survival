@@ -140,6 +140,7 @@
     "item_honey_preserved_pulp": "vegetable",
     "item_honey_pot": "dried_rations",
     "item_fat_confit": "raw_meat",
-    "cooking_oil": "dried_rations"
+    "cooking_oil": "dried_rations",
+    "crop_oilseed": "vegetable"
   }
 }

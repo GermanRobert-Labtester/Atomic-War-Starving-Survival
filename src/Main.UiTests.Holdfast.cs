@@ -40,6 +40,15 @@ namespace AtomicWar.GodotApp
             BuildUserInterface();
             SetupIceRoad();
 
+            bool slurryOwned = _slurryDewateringSumpPanel != null
+                && _slurryDewateringSumpPanel.IsBound
+                && _slurryDewateringSumpPanel.GetParent() == this;
+            foreach (var id in (Godot.Collections.Array)Node.GetOrphanNodeIds())
+            {
+                if (GodotObject.InstanceFromId(id.AsUInt64()) is SlurryDewateringSumpPanel)
+                    slurryOwned = false;
+            }
+
             var runtime = new HoldfastRuntimeSession(_core, HoldfastRuntimeSession.DefaultStartingValue);
             runtime.SeedDevelopmentState();
             _holdfastRuntime = runtime;
@@ -218,7 +227,11 @@ namespace AtomicWar.GodotApp
             // ── Save / reload ──
             _holdfastTerminal.BindSession(runtime);
 
-            string root = ProjectSettings.GlobalizePath("user://");
+            // Isolate each probe so a previous run's backup or quarantine cannot
+            // make recovery appear to pass without creating either this time.
+            string root = Path.Combine(ProjectSettings.GlobalizePath("user://"),
+                "holdfast_ui_probe_" + Guid.NewGuid().ToString("N")); // DETERMINISM_ALLOWLIST: test-only filesystem isolation
+            Directory.CreateDirectory(root);
             string basePath = Path.Combine(root, "holdfast_runtime_ui_test_base.json");
             string tradePath = Path.Combine(root, "holdfast_runtime_ui_test_trade.json");
             bool saved = _holdfastTerminal.PressSave(basePath, tradePath);
@@ -279,33 +292,41 @@ namespace AtomicWar.GodotApp
             // ── Save resilience: quarantine + backup + archive ──
             string resilienceBase = Path.Combine(root, "holdfast_resilience_base.json");
             string resilienceTrade = Path.Combine(root, "holdfast_resilience_trade.json");
-            // Save twice so the first save becomes the .bak.
-            bool resilienceSaved = _holdfastTerminal.PressSave(resilienceBase, resilienceTrade);
-            resilienceSaved = resilienceSaved && _holdfastTerminal.PressSave(resilienceBase, resilienceTrade);
+            // Trade persistence owns backup rotation and quarantine. The base
+            // codec store has neither contract. Give backup and primary distinct
+            // balances so a successful reload proves the backup was consumed.
+            bool resilienceSaved = freshRuntime.Trade.TryCreditValue(25)
+                && _holdfastTerminal.PressSave(resilienceBase, resilienceTrade);
+            resilienceSaved = resilienceSaved && freshRuntime.Trade.TryDebitValue(5)
+                && _holdfastTerminal.PressSave(resilienceBase, resilienceTrade);
 
-            // Corrupt the primary save; load should quarantine and fall back to backup.
-            if (File.Exists(resilienceBase))
+            // Corrupt the primary trade checksum, preserving valid JSON.
+            bool corrupted = false;
+            if (resilienceSaved && File.Exists(resilienceTrade))
             {
-                var raw = File.ReadAllText(resilienceBase);
-                File.WriteAllText(resilienceBase, raw.Replace("\"Checksum\":\"", "\"Checksum\":\"xx"));
+                var raw = File.ReadAllText(resilienceTrade);
+                var damaged = raw.Replace("\"Checksum\":\"", "\"Checksum\":\"xx");
+                corrupted = !string.Equals(raw, damaged, StringComparison.Ordinal);
+                if (corrupted) File.WriteAllText(resilienceTrade, damaged);
             }
             bool quarantinePass = false;
-            if (File.Exists(resilienceBase + ".bak"))
+            if (corrupted && File.Exists(HoldfastTradeSaveStore.BackupPathFor(resilienceTrade)))
             {
                 bool quarantineReloaded = _holdfastTerminal.PressReload(resilienceBase, resilienceTrade);
-                var corruptFiles = Directory.GetFiles(root, "holdfast_resilience_base.json.corrupt-*");
-                quarantinePass = quarantineReloaded && corruptFiles.Length > 0;
+                var corruptFiles = Directory.GetFiles(root, "holdfast_resilience_trade.json.corrupt-*");
+                quarantinePass = quarantineReloaded && corruptFiles.Length == 1
+                    && freshRuntime.Trade.PlayerValue == 25;
             }
 
             bool archivePass = newLedgerOk;
 
             bool pass = panel && catalogs && renderSweep && bought && rejectedWithoutMutation
                 && sold && failureMatrix && saved && reloaded && restored && postReloadRender
-                && newLedgerOk && continued && quarantinePass && archivePass;
+                && newLedgerOk && continued && quarantinePass && archivePass && slurryOwned;
             GD.Print($"[HoldfastRuntimeUiTest] panel={panel} catalogs={catalogs} renderSweep={renderSweep} " +
                      $"buy={bought} invalidAtomic={rejectedWithoutMutation} sell={sold} " +
                      $"failureMatrix={failureMatrix} save={saved} reload={reloaded} restored={restored} " +
-                     $"postReloadRender={postReloadRender} newLedger={newLedgerOk} continued={continued} quarantine={quarantinePass} archive={archivePass}");
+                     $"postReloadRender={postReloadRender} newLedger={newLedgerOk} continued={continued} quarantine={quarantinePass} archive={archivePass} slurryOwned={slurryOwned}");
             HostCli.EmitSummary("holdfast_runtime_uitest", pass, pass ? 0 : 1);
 
             if (File.Exists(basePath)) File.Delete(basePath);

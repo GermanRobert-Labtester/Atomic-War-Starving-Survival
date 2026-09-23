@@ -3,8 +3,8 @@
   "metadata_schema_version": 1,
   "generated_by": "scripts/ci/generate-plan-register.py",
   "repository": {
-    "head": "b8363cb7deb8e8f8e9410f5fa400c8b9bf171327",
-    "branch": "feat/partial-wave6-plans-167-219"
+    "head": "5be1a30a63cd86cf23e4034473b739ac514f0f2a",
+    "branch": "feat/unblock-cf-p28-and-plan-implementation"
   },
   "config_path": "scripts/ci/plan_governance_config.json",
   "counts": {
@@ -251,9 +251,9 @@
         },
         {
           "reference": "docs/roadmap/RAILS.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/roadmap/README.md",
@@ -317,9 +317,9 @@
         },
         {
           "reference": "scripts/ci/plan-intake-check.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/sync-agent-rulebooks.py",
@@ -1046,9 +1046,9 @@
         },
         {
           "reference": "scripts/ci/plan-intake-check.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/triad-drift-gate.sh",
@@ -3481,9 +3481,9 @@
         },
         {
           "reference": "achievements.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/achievements.json"
         },
         {
           "reference": "difficulty_presets.json",
@@ -3645,7 +3645,7 @@
           "reference": "Assets/Ashfall.Core/**/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 1030 path(s)"
+          "detail": "glob matched 1174 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Configuration/TuningConfig.cs",
@@ -4111,9 +4111,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/propaganda_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -4231,9 +4231,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/conflict_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -4800,9 +4800,9 @@
         },
         {
           "reference": "asset_registry.json",
-          "status": "RENAMED_CANDIDATE",
+          "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "unique basename candidate: artifacts/asset_registry.json"
+          "detail": "2 basename candidates"
         },
         {
           "reference": "assets/ui/HtmlBundles/",
@@ -4916,7 +4916,7 @@
           "reference": "store/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "store/capture_recipes.json",
@@ -5196,15 +5196,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Communications/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Communications/CommunicationsSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radio/FactionRadioEngine.cs",
@@ -5232,9 +5232,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/communications_networks.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/radio_frequencies.json",
@@ -5250,9 +5250,9 @@
         },
         {
           "reference": "CommunicationsSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Communications/CommunicationsSystem.cs"
         },
         {
           "reference": "FactionRadioEngine.cs",
@@ -5430,15 +5430,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/RecruitmentSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/recruitment_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -5448,9 +5448,9 @@
         },
         {
           "reference": "RecruitmentSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/RecruitmentSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -6126,9 +6126,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Legacy/CampaignLegacySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Legacy/GenerationalSuccessionEngine.cs",
@@ -6156,15 +6156,15 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/legacy_traits.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CampaignLegacySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Legacy/CampaignLegacySystem.cs"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -6318,9 +6318,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Campaign/SliceScenario.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "DECISIONS.md",
@@ -6360,9 +6360,9 @@
         },
         {
           "reference": "data/slice_seven_days.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/slice_seven_days.json"
         },
         {
           "reference": "docs/CURRENT_AUTHORITY.md",
@@ -6438,9 +6438,9 @@
         },
         {
           "reference": "docs/roadmap/RAILS.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/telemetry/PRIVACY.md",
@@ -6474,9 +6474,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/verify-fast.sh",
@@ -6486,9 +6486,9 @@
         },
         {
           "reference": "slice_seven_days.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/slice_seven_days.json"
         },
         {
           "reference": "src/",
@@ -7746,9 +7746,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Diplomacy/FactionDiplomacySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Factions/FactionBranchCoordinator.cs",
@@ -7776,9 +7776,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/treaty_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -7794,9 +7794,9 @@
         },
         {
           "reference": "FactionDiplomacySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Diplomacy/FactionDiplomacySystem.cs"
         },
         {
           "reference": "FactionStanceEngine.cs",
@@ -8082,9 +8082,9 @@
         },
         {
           "reference": "asset_registry.json",
-          "status": "RENAMED_CANDIDATE",
+          "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "unique basename candidate: artifacts/asset_registry.json"
+          "detail": "2 basename candidates"
         },
         {
           "reference": "assets/",
@@ -8802,9 +8802,9 @@
         },
         {
           "reference": "Ashfall.Core.Tests/InputMapContractTests.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Ashfall.Core.Tests/Tooling/InputMapContractTests.cs"
         },
         {
           "reference": "AshfallInputActions.cs",
@@ -8858,7 +8858,7 @@
           "reference": "docs/ui/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 56 path(s)"
+          "detail": "glob matched 57 path(s)"
         },
         {
           "reference": "docs/ui/DESIGN_SYSTEM_RULES.md",
@@ -8868,9 +8868,9 @@
         },
         {
           "reference": "docs/ui/KEYBOARD.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/ui/SURFACE_GAP_REPORT.md",
@@ -8904,9 +8904,9 @@
         },
         {
           "reference": "scripts/ci/input-map-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/verify-fast.sh",
@@ -8972,7 +8972,7 @@
           "reference": "src/UI/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 491 path(s)"
+          "detail": "glob matched 517 path(s)"
         },
         {
           "reference": "src/UI/AshfallUiHelpers.cs",
@@ -9006,9 +9006,9 @@
         },
         {
           "reference": "src/UI/ModalManager.cs:195",
-          "status": "OK",
-          "severity": "none",
-          "detail": "repository path exists"
+          "status": "MISSING_LINE_RANGE",
+          "severity": "warning",
+          "detail": "line 195 exceeds file length"
         },
         {
           "reference": "src/UI/ModalManager.cs:195,204,213",
@@ -9660,9 +9660,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/ClothingWarmthSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[29].md",
@@ -9780,9 +9780,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/education_curriculum.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -9882,21 +9882,21 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Visitors/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Visitors/VisitorIntegrationSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/visitor_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -9906,9 +9906,9 @@
         },
         {
           "reference": "VisitorIntegrationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Visitors/VisitorIntegrationSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -10470,9 +10470,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/NeedsPerformanceBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/NeedsSystem.cs",
@@ -10494,9 +10494,9 @@
         },
         {
           "reference": "NeedsPerformanceBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/NeedsPerformanceBridge.cs"
         },
         {
           "reference": "NeedsSystem.cs",
@@ -10646,7 +10646,7 @@
           "reference": "Packages/manifest.json",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "2 basename candidates"
+          "detail": "3 basename candidates"
         },
         {
           "reference": "Packages/packages-lock.json",
@@ -11072,7 +11072,7 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 137 path(s)"
+          "detail": "glob matched 158 path(s)"
         },
         {
           "reference": "src/UI/",
@@ -12102,9 +12102,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/atmosphere_profiles.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -12270,9 +12270,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Telemetry/PlaySessionRecorder.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[20].md",
@@ -12290,7 +12290,7 @@
           "reference": "docs/balance/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "docs/balance/REVIEW_RITUAL.md",
@@ -12996,15 +12996,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/RecruitmentSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/recruitment_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -13014,9 +13014,9 @@
         },
         {
           "reference": "RecruitmentSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/RecruitmentSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -14426,7 +14426,7 @@
           "reference": "Assets/Ashfall.Core/**/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 1030 path(s)"
+          "detail": "glob matched 1174 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Ashfall.Core.csproj",
@@ -14528,7 +14528,7 @@
           "reference": "docs/adr/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "docs/architecture/dual_engine_plan.md",
@@ -14658,9 +14658,9 @@
         },
         {
           "reference": "EmergencyAlertSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Emergency/EmergencyAlertSystem.cs"
         },
         {
           "reference": "docs/architecture/ADR_ALERTS_VS_DISASTER_RESPONSE.md",
@@ -14766,9 +14766,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/map_regions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -15816,9 +15816,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/barter_rules.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "D1_planintegration[21].md",
@@ -15918,9 +15918,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/NeedsPerformanceBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C1_planintegration[21].md",
@@ -16848,9 +16848,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Endgame/UnifiedEndingResolver.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Endgame/UnifiedEndingResult.cs",
@@ -16980,9 +16980,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/education_curriculum.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[32].md",
@@ -17832,9 +17832,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterMaintenanceSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterThermalSystem.cs",
@@ -17862,9 +17862,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_components.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -17874,9 +17874,9 @@
         },
         {
           "reference": "ShelterMaintenanceSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Shelter/ShelterMaintenanceSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -18185,15 +18185,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Weather/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Weather/WeatherCascadeSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/WeatherKind.cs",
@@ -18227,9 +18227,9 @@
         },
         {
           "reference": "WeatherCascadeSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Weather/WeatherCascadeSystem.cs"
         },
         {
           "reference": "WeatherKind.cs",
@@ -18317,15 +18317,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterExpansionSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_construction.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_rooms.json",
@@ -18341,9 +18341,9 @@
         },
         {
           "reference": "ShelterExpansionSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Shelter/ShelterExpansionSystem.cs"
         },
         {
           "reference": "ShelterScheduleSystem.cs",
@@ -18437,9 +18437,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/atmosphere_profiles.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -18491,9 +18491,9 @@
       "references": [
         {
           "reference": "Assets/StreamingAssets/Data/hobby_definitions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/hobbies/HOBBY_AUTHORING_GUIDE.md",
@@ -18721,7 +18721,7 @@
           "reference": "src/Host/HostCli*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 28 path(s)"
+          "detail": "glob matched 41 path(s)"
         },
         {
           "reference": "src/Main.cs",
@@ -19051,7 +19051,7 @@
           "reference": "Assets/Ashfall.Core/Memorial/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 3 path(s)"
+          "detail": "glob matched 4 path(s)"
         },
         {
           "reference": "CohortSystem.cs",
@@ -19367,15 +19367,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Kitchen/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Kitchen/FoodTypeSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/KitchenNutritionSystem.cs",
@@ -19397,9 +19397,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/food_types.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -19409,9 +19409,9 @@
         },
         {
           "reference": "FoodTypeSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Kitchen/FoodTypeSystem.cs"
         },
         {
           "reference": "KitchenNutritionSystem.cs",
@@ -19481,9 +19481,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/IdeologicalFrictionEvents.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/IdeologicalFrictionSystem.cs",
@@ -19499,9 +19499,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/ideological_events.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivors.json",
@@ -19517,9 +19517,9 @@
         },
         {
           "reference": "IdeologicalFrictionEvents.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/IdeologicalFrictionEvents.cs"
         },
         {
           "reference": "IdeologicalFrictionSystem.cs",
@@ -20165,9 +20165,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/discovery_consequences.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/expeditions.json",
@@ -20213,9 +20213,9 @@
         },
         {
           "reference": "discovery_consequences.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/discovery_consequences.json"
         },
         {
           "reference": "expeditions.json",
@@ -20369,9 +20369,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Difficulty/DifficultySettingsSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Economy/MarketSystem.cs",
@@ -20411,9 +20411,9 @@
         },
         {
           "reference": "DifficultySettingsSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Difficulty/DifficultySettingsSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -20603,9 +20603,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/GenealogyBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorFateSystem.cs",
@@ -20621,9 +20621,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/family_name_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -20657,9 +20657,9 @@
         },
         {
           "reference": "GenealogyBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/GenealogyBridge.cs"
         },
         {
           "reference": "GenerationalLineageExtension.cs",
@@ -20777,15 +20777,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Water/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Water/WaterSourceSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/WaterTreatmentSystem.cs",
@@ -20795,9 +20795,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/water_sources.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -20807,9 +20807,9 @@
         },
         {
           "reference": "WaterSourceSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Water/WaterSourceSystem.cs"
         },
         {
           "reference": "WaterTreatmentSystem.cs",
@@ -21155,9 +21155,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/map_regions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[35].md",
@@ -21239,9 +21239,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Telemetry/PlaySessionRecorder.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CombatHistoryPanel.cs:46",
@@ -21319,7 +21319,7 @@
           "reference": "docs/balance/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "docs/balance/REVIEW_RITUAL.md",
@@ -21497,9 +21497,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/hidden_agendas.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[26].md",
@@ -21713,9 +21713,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterIdentitySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs",
@@ -21725,9 +21725,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_origins.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -21737,9 +21737,9 @@
         },
         {
           "reference": "ShelterIdentitySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Shelter/ShelterIdentitySystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -21791,9 +21791,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Culture/ShelterMuseumSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/Inventory.cs",
@@ -21815,9 +21815,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/museum_collection_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -21827,9 +21827,9 @@
         },
         {
           "reference": "ShelterMuseumSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Culture/ShelterMuseumSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -22997,9 +22997,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/nuclear_winter_phases.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/weather_seasons.json",
@@ -23131,7 +23131,7 @@
           "reference": "Assets/Ashfall.Core/World/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 52 path(s)"
+          "detail": "glob matched 60 path(s)"
         },
         {
           "reference": "DecontaminationSystem.cs",
@@ -23560,9 +23560,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Records/RetentionPolicy.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "BallisticsSystem.RicochetRetention",
@@ -23784,7 +23784,7 @@
           "reference": "src/UI/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 491 path(s)"
+          "detail": "glob matched 517 path(s)"
         },
         {
           "reference": "~/.local/share/godot/app_userdata/ASHFALL…/holdfast_archive_*",
@@ -23848,9 +23848,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterMaintenanceSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterThermalSystem.cs",
@@ -23878,9 +23878,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_components.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -23890,9 +23890,9 @@
         },
         {
           "reference": "ShelterMaintenanceSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Shelter/ShelterMaintenanceSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -23986,9 +23986,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/hidden_agendas.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivors.json",
@@ -24034,9 +24034,9 @@
         },
         {
           "reference": "hidden_agendas.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/hidden_agendas.json"
         }
       ],
       "overlap_cluster": null,
@@ -24102,7 +24102,7 @@
           "reference": "Assets/Ashfall.Core/Expeditions/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 44 path(s)"
+          "detail": "glob matched 45 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Expeditions/ExpeditionSystem.cs",
@@ -24574,9 +24574,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/hobby_definitions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -24820,9 +24820,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/ChronicConditionSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/MedicalPipeline/",
@@ -24850,9 +24850,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/chronic_conditions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -24862,9 +24862,9 @@
         },
         {
           "reference": "ChronicConditionSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Medical/ChronicConditionSystem.cs"
         },
         {
           "reference": "MedicalPathologyCatalog.cs",
@@ -24970,9 +24970,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/nuclear_winter_phases.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/weather_seasons.json",
@@ -25192,9 +25192,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Education/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/NeedsSystem.cs",
@@ -25600,9 +25600,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Factions/TerritoryControlSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/RegionalTreatySystem.cs",
@@ -25642,9 +25642,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/supply_lines.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -25684,9 +25684,9 @@
         },
         {
           "reference": "TerritoryControlSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Factions/TerritoryControlSystem.cs"
         },
         {
           "reference": "TravelingCaravanSystem.cs",
@@ -25752,7 +25752,7 @@
           "reference": "Assets/StreamingAssets/Data/*.json",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 338 path(s)"
+          "detail": "glob matched 420 path(s)"
         },
         {
           "reference": "docs/HoldfastManualPlaytest.md",
@@ -26116,9 +26116,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/exercise_routines.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C1_planintegration[41].md",
@@ -26304,7 +26304,7 @@
           "reference": "Architecture/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "Ashfall.Core.Tests/",
@@ -26382,7 +26382,7 @@
           "reference": "Assets/Ashfall.Core/Architecture/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "Assets/Ashfall.Core/Crafting/CraftingSystem.cs:13",
@@ -26698,15 +26698,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorRoutineSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/routine_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -26722,9 +26722,9 @@
         },
         {
           "reference": "SurvivorRoutineSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/SurvivorRoutineSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -26956,9 +26956,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/colony_blueprints.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/expeditions.json",
@@ -27897,9 +27897,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Education/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/NeedsSystem.cs",
@@ -29577,9 +29577,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/propaganda_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -30095,7 +30095,7 @@
           "reference": "src/UI/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 245 path(s)"
+          "detail": "glob matched 258 path(s)"
         },
         {
           "reference": "src/UI/AshfallDashboardShell.cs",
@@ -31173,9 +31173,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Kitchen/FoodTypeSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Kitchen/PreservationMethodDefinition.cs",
@@ -31209,9 +31209,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/food_types.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "KitchenNutritionSystem.cs",
@@ -32397,9 +32397,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/BackstorySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
@@ -32421,9 +32421,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/backstory_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivors.json",
@@ -32433,9 +32433,9 @@
         },
         {
           "reference": "BackstorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/BackstorySystem.cs"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -32637,9 +32637,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/NPC/NpcMemorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Narrative/NpcMemorySystem.cs"
         },
         {
           "reference": "Assets/Ashfall.Core/Narrative/HoldfastNpcCatalog.cs",
@@ -32685,9 +32685,9 @@
         },
         {
           "reference": "NpcMemorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Narrative/NpcMemorySystem.cs"
         },
         {
           "reference": "VerdictNpcSystem.cs",
@@ -32733,9 +32733,9 @@
       "references": [
         {
           "reference": "AgingSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/AgingSystem.cs"
         },
         {
           "reference": "Ashfall.Core.Tests/Ashfall.Core.Tests.csproj",
@@ -32763,9 +32763,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/AgingSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
@@ -32865,9 +32865,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Diplomacy/FactionDiplomacySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Factions/FactionBranchCoordinator.cs",
@@ -32895,9 +32895,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/treaty_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -32913,9 +32913,9 @@
         },
         {
           "reference": "FactionDiplomacySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Diplomacy/FactionDiplomacySystem.cs"
         },
         {
           "reference": "FactionStanceEngine.cs",
@@ -32991,15 +32991,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Psychology/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Psychology/PsychologicalProfileSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/CombatTraumaSystem.cs",
@@ -33063,9 +33063,9 @@
         },
         {
           "reference": "PsychologicalProfileSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Psychology/PsychologicalProfileSystem.cs"
         },
         {
           "reference": "SomaticFlashbackSystem.cs",
@@ -33117,15 +33117,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationEconomyBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationSocialBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[30].md",
@@ -33195,9 +33195,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/rationing_protocols.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[44].md",
@@ -33381,9 +33381,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/ClothingWarmthSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/Inventory.cs",
@@ -33411,9 +33411,9 @@
         },
         {
           "reference": "ClothingWarmthSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Inventory/ClothingWarmthSystem.cs"
         },
         {
           "reference": "EquipmentConditionSystem.cs",
@@ -33717,9 +33717,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/ChronicConditionSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/FunctionalCapabilityRegistry.cs",
@@ -33753,9 +33753,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/chronic_conditions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "MedicalPathologyCatalog.cs",
@@ -33885,9 +33885,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/colony_blueprints.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/expeditions.json",
@@ -33993,9 +33993,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/DreamSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/GuiltInsomniaSystem.cs",
@@ -34011,9 +34011,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/dream_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -34023,9 +34023,9 @@
         },
         {
           "reference": "DreamSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/DreamSystem.cs"
         },
         {
           "reference": "GuiltInsomniaSystem.cs",
@@ -34377,9 +34377,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/documentation_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[45].md",
@@ -34443,15 +34443,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Bestiary/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Bestiary/BestiarySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Combat/",
@@ -34479,9 +34479,9 @@
         },
         {
           "reference": "BestiarySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Bestiary/BestiarySystem.cs"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -34673,7 +34673,7 @@
           "reference": "src/Host/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 361 path(s)"
+          "detail": "glob matched 414 path(s)"
         },
         {
           "reference": "src/Host/CombatHostSession.cs",
@@ -34773,21 +34773,21 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Vehicles/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Vehicles/VehicleCustomizationSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/vehicle_modules.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/vehicles.json",
@@ -34809,9 +34809,9 @@
         },
         {
           "reference": "VehicleCustomizationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Vehicles/VehicleCustomizationSystem.cs"
         },
         {
           "reference": "caravan.*home",
@@ -35421,9 +35421,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/espionage_operations.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/faction_lore.json",
@@ -35511,9 +35511,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Communication/InternalCommunicationSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs",
@@ -35535,9 +35535,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/communication_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -35547,9 +35547,9 @@
         },
         {
           "reference": "InternalCommunicationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Communication/InternalCommunicationSystem.cs"
         },
         {
           "reference": "ShelterEncounterSystem.cs:61",
@@ -35619,9 +35619,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/GenealogyBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorFateSystem.cs",
@@ -35637,9 +35637,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/family_name_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -35757,15 +35757,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorRoutineSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/routine_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C1_planintegration[34].md",
@@ -35781,9 +35781,9 @@
         },
         {
           "reference": "SurvivorRoutineSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/SurvivorRoutineSystem.cs"
         },
         {
           "reference": "docs/architecture/ADR_PERSONAL_ROUTINES_VS_SHELTER_SCHEDULE.md",
@@ -36081,9 +36081,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/archive_categories.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -36537,9 +36537,9 @@
         },
         {
           "reference": "docs/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/gaps/ASHFALL_IMPLEMENTATION_GAP_AUDIT.md"
         },
         {
           "reference": "docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md",
@@ -36671,7 +36671,7 @@
           "reference": "docs/ui/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 56 path(s)"
+          "detail": "glob matched 57 path(s)"
         },
         {
           "reference": "echoes.json",
@@ -36767,7 +36767,7 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 137 path(s)"
+          "detail": "glob matched 158 path(s)"
         },
         {
           "reference": "src/Main.<Domain>.cs",
@@ -36869,7 +36869,7 @@
           "reference": "Assets/StreamingAssets/Data/*.json",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 338 path(s)"
+          "detail": "glob matched 420 path(s)"
         },
         {
           "reference": "docs/GODOT_MIGRATION_STATUS.md",
@@ -37371,9 +37371,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/exercise_routines.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -37545,15 +37545,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Assets/AssetManifest.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/asset_registry.json",
-          "status": "RENAMED_CANDIDATE",
-          "severity": "warning",
-          "detail": "unique basename candidate: artifacts/asset_registry.json"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/art",
@@ -37629,9 +37629,9 @@
         },
         {
           "reference": "asset_registry.json",
-          "status": "RENAMED_CANDIDATE",
+          "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "unique basename candidate: artifacts/asset_registry.json"
+          "detail": "2 basename candidates"
         },
         {
           "reference": "assets/",
@@ -38315,7 +38315,7 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 137 path(s)"
+          "detail": "glob matched 158 path(s)"
         },
         {
           "reference": "src/UI/",
@@ -38423,13 +38423,13 @@
           "reference": "Assets/Ashfall.Core/**/*System.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 276 path(s)"
+          "detail": "glob matched 319 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Content/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 12 path(s)"
+          "detail": "glob matched 13 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Save/**",
@@ -38675,13 +38675,13 @@
           "reference": "src/**/*SaveStore*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 176 path(s)"
+          "detail": "glob matched 186 path(s)"
         },
         {
           "reference": "src/Host/*SelfTest*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 23 path(s)"
+          "detail": "glob matched 34 path(s)"
         },
         {
           "reference": "src/Host/ContentUtilizationRuntimeCollector.cs",
@@ -39021,9 +39021,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Culture/ShelterMuseumSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/Inventory.cs",
@@ -39045,9 +39045,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/museum_collection_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -39057,9 +39057,9 @@
         },
         {
           "reference": "ShelterMuseumSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Culture/ShelterMuseumSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -39297,9 +39297,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/documentation_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -40149,27 +40149,27 @@
         },
         {
           "reference": "docs/release/HOTFIX.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/HOTFIX.md"
         },
         {
           "reference": "docs/release/PROCESS.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/PROCESS.md"
         },
         {
           "reference": "docs/release/TEMPLATE.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/TEMPLATE.md"
         },
         {
           "reference": "docs/release/VERSIONING.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/VERSIONING.md"
         },
         {
           "reference": "export-smoke-boot.sh",
@@ -40185,9 +40185,9 @@
         },
         {
           "reference": "prepare-release.sh",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: scripts/release/prepare-release.sh"
         },
         {
           "reference": "project.godot",
@@ -40221,9 +40221,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/verify-fast.sh",
@@ -40239,15 +40239,15 @@
         },
         {
           "reference": "scripts/release/hotfix.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/release/prepare-release.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "src/Host/CatalogPath.cs",
@@ -40425,9 +40425,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Research/ResearchUnlockBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/",
@@ -40455,9 +40455,9 @@
         },
         {
           "reference": "ResearchUnlockBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Research/ResearchUnlockBridge.cs"
         },
         {
           "reference": "def.breakthroughItem",
@@ -40515,15 +40515,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Achievements/AchievementSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/achievements.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "System.Random",
@@ -41427,9 +41427,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Campaign/SliceScenario.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "D1_planintegration.md",
@@ -41451,9 +41451,9 @@
         },
         {
           "reference": "data/slice_seven_days.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/slice_seven_days.json"
         },
         {
           "reference": "docs/CURRENT_AUTHORITY.md",
@@ -41529,9 +41529,9 @@
         },
         {
           "reference": "docs/roadmap/RAILS.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/telemetry/PRIVACY.md",
@@ -41559,9 +41559,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/verify-fast.sh",
@@ -41667,9 +41667,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/archive_categories.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -42326,9 +42326,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Legacy/CampaignLegacySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Legacy/GenerationalSuccessionEngine.cs",
@@ -42356,15 +42356,15 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/legacy_traits.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CampaignLegacySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Legacy/CampaignLegacySystem.cs"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -42590,9 +42590,9 @@
         },
         {
           "reference": "docs/release/PROCESS.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/PROCESS.md"
         },
         {
           "reference": "docs/roadmap/INTAKE.md",
@@ -42626,15 +42626,15 @@
         },
         {
           "reference": "release-gate.sh",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: scripts/ci/release-gate.sh"
         },
         {
           "reference": "scripts/ci/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 64 path(s)"
+          "detail": "glob matched 72 path(s)"
         },
         {
           "reference": "scripts/ci/doctor.sh",
@@ -42656,9 +42656,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/sync-agent-rulebooks.py",
@@ -42764,9 +42764,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/conflict_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -42848,9 +42848,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/HealthHistorySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs",
@@ -42872,9 +42872,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/medical_record_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -42890,9 +42890,9 @@
         },
         {
           "reference": "HealthHistorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Medical/HealthHistorySystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -43046,9 +43046,9 @@
       "references": [
         {
           "reference": "AgingSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/AgingSystem.cs"
         },
         {
           "reference": "Ashfall.Core.Tests/Ashfall.Core.Tests.csproj",
@@ -43076,9 +43076,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/AgingSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
@@ -43202,15 +43202,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorRoleSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivor_roles.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -43220,9 +43220,9 @@
         },
         {
           "reference": "SurvivorRoleSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/SurvivorRoleSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -43376,9 +43376,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Research/ResearchUnlockBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/",
@@ -43406,9 +43406,9 @@
         },
         {
           "reference": "ResearchUnlockBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Research/ResearchUnlockBridge.cs"
         },
         {
           "reference": "def.breakthroughItem",
@@ -43484,9 +43484,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterIdentitySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs",
@@ -43496,9 +43496,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_origins.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -43508,9 +43508,9 @@
         },
         {
           "reference": "ShelterIdentitySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Shelter/ShelterIdentitySystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -43574,15 +43574,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Psychology/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Psychology/PsychologicalProfileSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/CombatTraumaSystem.cs",
@@ -43646,9 +43646,9 @@
         },
         {
           "reference": "PsychologicalProfileSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Psychology/PsychologicalProfileSystem.cs"
         },
         {
           "reference": "SomaticFlashbackSystem.cs",
@@ -43988,9 +43988,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/NeedsPerformanceBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/NeedsSystem.cs",
@@ -44012,9 +44012,9 @@
         },
         {
           "reference": "NeedsPerformanceBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/NeedsPerformanceBridge.cs"
         },
         {
           "reference": "NeedsSystem.cs",
@@ -44565,7 +44565,7 @@
           "reference": "src/Audio/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 12 path(s)"
+          "detail": "glob matched 14 path(s)"
         },
         {
           "reference": "src/Audio/AudioEventBridge.cs",
@@ -45067,9 +45067,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/map_regions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -45339,7 +45339,7 @@
           "reference": "Assets/.gdignore",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "19 basename candidates"
+          "detail": "20 basename candidates"
         },
         {
           "reference": "Assets/Ashfall.Core",
@@ -45351,7 +45351,7 @@
           "reference": "Assets/StreamingAssets/.gdignore",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "19 basename candidates"
+          "detail": "20 basename candidates"
         },
         {
           "reference": "Assets/StreamingAssets/Data",
@@ -45549,7 +45549,7 @@
           "reference": "docs/perf/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "docs/ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md",
@@ -45829,21 +45829,21 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Visitors/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Visitors/VisitorIntegrationSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/visitor_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -45853,9 +45853,9 @@
         },
         {
           "reference": "VisitorIntegrationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Visitors/VisitorIntegrationSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -46531,9 +46531,9 @@
         },
         {
           "reference": "Achievements/AchievementSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Achievements/AchievementSystem.cs"
         },
         {
           "reference": "Achievements/GameStatProvider.cs",
@@ -46591,9 +46591,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Achievements/AchievementSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Achievements/AchievementSystemState.cs",
@@ -46651,9 +46651,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/achievements.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -46669,9 +46669,9 @@
         },
         {
           "reference": "StreamingAssets/Data/achievements.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/achievements.json"
         },
         {
           "reference": "src/Host/ExpeditionHostSession.cs:84-85",
@@ -46771,15 +46771,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Weather/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Weather/WeatherCascadeSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/WeatherKind.cs",
@@ -46813,9 +46813,9 @@
         },
         {
           "reference": "WeatherCascadeSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Weather/WeatherCascadeSystem.cs"
         },
         {
           "reference": "WeatherKind.cs",
@@ -46945,9 +46945,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/NPC/NpcMemorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Narrative/NpcMemorySystem.cs"
         },
         {
           "reference": "C1_planintegration[24].md",
@@ -47425,9 +47425,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/HealthHistorySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs",
@@ -47449,9 +47449,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/medical_record_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/medical_history/HEALTH_HISTORY_INTEGRATION_AUDIT.md",
@@ -47821,9 +47821,9 @@
         },
         {
           "reference": "docs/roadmap/RAILS.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/roadmap/README.md",
@@ -47857,9 +47857,9 @@
         },
         {
           "reference": "plan-intake-check.sh",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: scripts/ci/plan-intake-check.sh"
         },
         {
           "reference": "scripts/ci/doc-link-gate.sh",
@@ -47881,9 +47881,9 @@
         },
         {
           "reference": "scripts/ci/plan-intake-check.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/sync-agent-rulebooks.py",
@@ -48085,9 +48085,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/rationing_protocols.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -48777,7 +48777,7 @@
           "reference": "Assets/Ashfall.Core/**/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 1030 path(s)"
+          "detail": "glob matched 1174 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/ActionResult.cs",
@@ -48873,7 +48873,7 @@
           "reference": "src/**/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 792 path(s)"
+          "detail": "glob matched 882 path(s)"
         }
       ],
       "overlap_cluster": null,
@@ -48943,15 +48943,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationEconomyBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationSocialBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationSystem.cs",
@@ -48997,15 +48997,15 @@
         },
         {
           "reference": "RadiationEconomyBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Radiation/RadiationEconomyBridge.cs"
         },
         {
           "reference": "RadiationSocialBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Radiation/RadiationSocialBridge.cs"
         },
         {
           "reference": "RadiationSystem.cs",
@@ -49167,7 +49167,7 @@
           "reference": "docs/perf/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md",
@@ -49213,9 +49213,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/soak-gate.sh",
@@ -49323,7 +49323,7 @@
           "reference": "src/UI/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 491 path(s)"
+          "detail": "glob matched 517 path(s)"
         },
         {
           "reference": "src/UI/MainMenuPanel.cs",
@@ -49687,9 +49687,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Research/ResearchUnlockBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Research/ResearchUnlockCatalogLoader.cs",
@@ -49717,9 +49717,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/research_unlocks.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/research/RESEARCH_UNLOCK_MAPPING.md",
@@ -49945,9 +49945,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/ChronicConditionSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/MedicalPipeline/",
@@ -49975,9 +49975,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/chronic_conditions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -49987,9 +49987,9 @@
         },
         {
           "reference": "ChronicConditionSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Medical/ChronicConditionSystem.cs"
         },
         {
           "reference": "MedicalPathologyCatalog.cs",
@@ -50509,15 +50509,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Emergency/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Emergency/EmergencyAlertSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationSystem.cs",
@@ -50551,9 +50551,9 @@
         },
         {
           "reference": "EmergencyAlertSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Emergency/EmergencyAlertSystem.cs"
         },
         {
           "reference": "src/UI/EmergencyAlertPanel.cs",
@@ -50605,15 +50605,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/DisasterResponseSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/disaster_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[33].md",
@@ -50977,9 +50977,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorAutonomySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorRelationsSystem.cs",
@@ -50995,9 +50995,9 @@
         },
         {
           "reference": "SurvivorAutonomySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/SurvivorAutonomySystem.cs"
         },
         {
           "reference": "SurvivorRelationsSystem.TryTriggerConflict()",
@@ -51745,9 +51745,9 @@
         },
         {
           "reference": "assets/.../outposts.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/outposts.json"
         },
         {
           "reference": "docs/",
@@ -51793,9 +51793,9 @@
         },
         {
           "reference": "docs/roadmap/RAILS.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/saves/SAVE_MODEL.md",
@@ -51811,9 +51811,9 @@
         },
         {
           "reference": "scripts/ci/plan-intake-check.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/triad-drift-gate.sh",
@@ -51991,9 +51991,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Endgame/UnifiedEndingResolver.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Factions/FactionBranchCoordinator.cs",
@@ -52057,9 +52057,9 @@
         },
         {
           "reference": "UnifiedEndingResolver.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Endgame/UnifiedEndingResolver.cs"
         },
         {
           "reference": "muster_epilogues.json",
@@ -52261,15 +52261,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Kitchen/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Kitchen/FoodTypeSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/KitchenNutritionSystem.cs",
@@ -52291,9 +52291,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/food_types.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -52303,9 +52303,9 @@
         },
         {
           "reference": "FoodTypeSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Kitchen/FoodTypeSystem.cs"
         },
         {
           "reference": "KitchenNutritionSystem.cs",
@@ -52399,9 +52399,9 @@
         },
         {
           "reference": "ShelterReputationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Reputation/ShelterReputationSystem.cs"
         },
         {
           "reference": "docs/architecture/ADR_PUBLIC_REPUTATION_VS_FACTION_TRUST.md",
@@ -53517,7 +53517,7 @@
           "reference": "src/UI/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 245 path(s)"
+          "detail": "glob matched 258 path(s)"
         },
         {
           "reference": "src/UI/AnaerobicBiogasDigesterPanel.cs:88",
@@ -53953,9 +53953,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorAutonomySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorRelationsSystem.cs",
@@ -53971,9 +53971,9 @@
         },
         {
           "reference": "SurvivorAutonomySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/SurvivorAutonomySystem.cs"
         },
         {
           "reference": "SurvivorRelationsSystem.TryTriggerConflict()",
@@ -54517,9 +54517,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Endgame/UnifiedEndingResolver.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Factions/FactionBranchCoordinator.cs",
@@ -54583,9 +54583,9 @@
         },
         {
           "reference": "UnifiedEndingResolver.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Endgame/UnifiedEndingResolver.cs"
         },
         {
           "reference": "muster_epilogues.json",
@@ -54631,9 +54631,9 @@
       "references": [
         {
           "reference": "AccessibilitySettingsSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Accessibility/AccessibilitySettingsSystem.cs"
         },
         {
           "reference": "Ashfall.Core.Tests/Ashfall.Core.Tests.csproj",
@@ -54643,15 +54643,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Accessibility/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Accessibility/AccessibilitySettingsSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/UI/Theme.cs",
@@ -54775,9 +54775,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/discovery_consequences.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/expeditions.json",
@@ -54823,9 +54823,9 @@
         },
         {
           "reference": "discovery_consequences.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/discovery_consequences.json"
         },
         {
           "reference": "expeditions.json",
@@ -55435,9 +55435,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/exercise_routines.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -55789,15 +55789,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Achievements/AchievementSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/achievements.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "System.Random",
@@ -55981,9 +55981,9 @@
         },
         {
           "reference": "achievements.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/achievements.json"
         }
       ],
       "overlap_cluster": null,
@@ -56053,9 +56053,9 @@
         },
         {
           "reference": "asset_registry.json",
-          "status": "RENAMED_CANDIDATE",
+          "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "unique basename candidate: artifacts/asset_registry.json"
+          "detail": "2 basename candidates"
         },
         {
           "reference": "assets/ui/HtmlBundles/*.html",
@@ -56131,33 +56131,33 @@
         },
         {
           "reference": "docs/release/HOTFIX.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/HOTFIX.md"
         },
         {
           "reference": "docs/release/PROCESS.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/PROCESS.md"
         },
         {
           "reference": "docs/release/SUPPORT.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/SUPPORT.md"
         },
         {
           "reference": "docs/release/VERSIONING.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/VERSIONING.md"
         },
         {
           "reference": "docs/roadmap/RAILS.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/telemetry/PRIVACY.md",
@@ -56167,9 +56167,9 @@
         },
         {
           "reference": "docs/ui/KEYBOARD.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/ui/SNAPSHOT_COVERAGE.md",
@@ -56197,9 +56197,9 @@
         },
         {
           "reference": "release-gate.sh",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: scripts/ci/release-gate.sh"
         },
         {
           "reference": "scripts/ci/export-smoke-boot.sh",
@@ -56227,9 +56227,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/verify-fast.sh",
@@ -56271,7 +56271,7 @@
           "reference": "store/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "store/capsule/",
@@ -56383,9 +56383,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/education_curriculum.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -56491,9 +56491,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/GenealogyBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorFateSystem.cs",
@@ -56509,9 +56509,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/family_name_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -56545,9 +56545,9 @@
         },
         {
           "reference": "GenealogyBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/GenealogyBridge.cs"
         },
         {
           "reference": "GenerationalLineageExtension.cs",
@@ -57181,9 +57181,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/asset_registry.json",
-          "status": "RENAMED_CANDIDATE",
-          "severity": "warning",
-          "detail": "unique basename candidate: artifacts/asset_registry.json"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[22].md",
@@ -58273,9 +58273,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/NPC/NpcMemorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Narrative/NpcMemorySystem.cs"
         },
         {
           "reference": "Assets/Ashfall.Core/Narrative/HoldfastNpcCatalog.cs",
@@ -58321,9 +58321,9 @@
         },
         {
           "reference": "NpcMemorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Narrative/NpcMemorySystem.cs"
         },
         {
           "reference": "VerdictNpcSystem.cs",
@@ -58545,7 +58545,7 @@
           "reference": "src/**/*SaveStore*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 176 path(s)"
+          "detail": "glob matched 186 path(s)"
         },
         {
           "reference": "src/Host/DutyRosterHostSession.cs:151",
@@ -59017,9 +59017,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Economy/SurvivorBarterSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/Inventory.cs",
@@ -59035,9 +59035,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/barter_rules.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -59053,9 +59053,9 @@
         },
         {
           "reference": "SurvivorBarterSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Economy/SurvivorBarterSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -59461,9 +59461,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/DisasterResponseSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
@@ -59485,9 +59485,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/disaster_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -59497,9 +59497,9 @@
         },
         {
           "reference": "DisasterResponseSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Shelter/DisasterResponseSystem.cs"
         },
         {
           "reference": "ShelterThermalSystem.cs",
@@ -59713,15 +59713,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Water/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Water/WaterSourceSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/WaterTreatmentSystem.cs",
@@ -59731,9 +59731,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/water_sources.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -59743,9 +59743,9 @@
         },
         {
           "reference": "WaterSourceSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Water/WaterSourceSystem.cs"
         },
         {
           "reference": "WaterTreatmentSystem.cs",
@@ -60115,15 +60115,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Voice/SurvivorVoiceSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivor_voice_lines.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "SILENCE_AUDIT.md",
@@ -60457,9 +60457,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/hobby_definitions.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -60523,9 +60523,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Communication/InternalCommunicationSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs",
@@ -60547,9 +60547,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/communication_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -60559,9 +60559,9 @@
         },
         {
           "reference": "InternalCommunicationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Communication/InternalCommunicationSystem.cs"
         },
         {
           "reference": "ShelterEncounterSystem.cs:61",
@@ -60613,9 +60613,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Weather/WeatherCascadeSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/weather_effects.json",
@@ -60685,15 +60685,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Cooking/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Cooking/CookingSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/",
@@ -60727,9 +60727,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/recipes_cooking.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -60739,9 +60739,9 @@
         },
         {
           "reference": "CookingSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Cooking/CookingSystem.cs"
         },
         {
           "reference": "KitchenNutritionSystem.cs",
@@ -60769,9 +60769,9 @@
         },
         {
           "reference": "recipes_cooking.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/recipes_cooking.json"
         }
       ],
       "overlap_cluster": null,
@@ -60841,15 +60841,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationEconomyBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationSocialBridge.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationSystem.cs",
@@ -60895,15 +60895,15 @@
         },
         {
           "reference": "RadiationEconomyBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Radiation/RadiationEconomyBridge.cs"
         },
         {
           "reference": "RadiationSocialBridge.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Radiation/RadiationSocialBridge.cs"
         },
         {
           "reference": "RadiationSystem.cs",
@@ -61465,15 +61465,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterIdentitySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_origins.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C1_planintegration[28].md",
@@ -61849,15 +61849,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Emergency/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Emergency/EmergencyAlertSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radiation/RadiationSystem.cs",
@@ -61891,9 +61891,9 @@
         },
         {
           "reference": "EmergencyAlertSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Emergency/EmergencyAlertSystem.cs"
         },
         {
           "reference": "src/UI/EmergencyAlertPanel.cs",
@@ -62113,9 +62113,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/espionage_operations.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/faction_lore.json",
@@ -62407,9 +62407,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Bestiary/BestiarySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Bestiary/CreatureBehaviorNoteDefinition.cs",
@@ -62683,9 +62683,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/espionage_operations.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/faction_lore.json",
@@ -62899,9 +62899,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/ShelterReputationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Reputation/ShelterReputationSystem.cs"
         },
         {
           "reference": "Assets/StreamingAssets/Data/reputation_events.json",
@@ -62923,9 +62923,9 @@
         },
         {
           "reference": "ShelterReputationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Reputation/ShelterReputationSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -62977,9 +62977,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/archive_categories.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[34].md",
@@ -63205,15 +63205,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Accessibility/AccessibilitySettingsSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/accessibility_profiles.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[39].md",
@@ -63433,15 +63433,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/ShelterExpansionSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_construction.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/shelter_rooms.json",
@@ -63457,9 +63457,9 @@
         },
         {
           "reference": "ShelterExpansionSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Shelter/ShelterExpansionSystem.cs"
         },
         {
           "reference": "ShelterScheduleSystem.cs",
@@ -63547,9 +63547,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/ShelterReputationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Reputation/ShelterReputationSystem.cs"
         },
         {
           "reference": "Assets/StreamingAssets/Data/reputation_events.json",
@@ -63571,9 +63571,9 @@
         },
         {
           "reference": "ShelterReputationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Reputation/ShelterReputationSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -63955,9 +63955,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/IdeologicalFrictionEvents.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/IdeologicalFrictionSystem.cs",
@@ -63973,9 +63973,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/ideological_events.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivors.json",
@@ -63991,9 +63991,9 @@
         },
         {
           "reference": "IdeologicalFrictionEvents.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/IdeologicalFrictionEvents.cs"
         },
         {
           "reference": "IdeologicalFrictionSystem.cs",
@@ -64047,7 +64047,7 @@
           "reference": "Ashfall.Core.Tests/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 638 path(s)"
+          "detail": "glob matched 672 path(s)"
         },
         {
           "reference": "Ashfall.Core.Tests/Ashfall.Core.Tests.csproj",
@@ -64185,7 +64185,7 @@
           "reference": "src/Host/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 361 path(s)"
+          "detail": "glob matched 414 path(s)"
         },
         {
           "reference": "src/Host/CombatHostSession.cs:145",
@@ -65736,9 +65736,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Factions/TerritoryControlSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/RegionalTreatySystem.cs",
@@ -65778,9 +65778,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/supply_lines.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -65820,9 +65820,9 @@
         },
         {
           "reference": "TerritoryControlSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Factions/TerritoryControlSystem.cs"
         },
         {
           "reference": "TravelingCaravanSystem.cs",
@@ -66050,7 +66050,7 @@
           "reference": "docs/perf/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "docs/saves/PLAYER_SAVE_MODEL.md",
@@ -66066,9 +66066,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/soak-gate.sh",
@@ -69036,9 +69036,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/HealthHistorySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs",
@@ -69060,9 +69060,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/medical_record_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -69078,9 +69078,9 @@
         },
         {
           "reference": "HealthHistorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Medical/HealthHistorySystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -69174,9 +69174,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/hidden_agendas.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivors.json",
@@ -69222,9 +69222,9 @@
         },
         {
           "reference": "hidden_agendas.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/hidden_agendas.json"
         }
       ],
       "overlap_cluster": null,
@@ -69317,9 +69317,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Difficulty/DifficultySettingsSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Economy/MarketSystem.cs",
@@ -69359,9 +69359,9 @@
         },
         {
           "reference": "DifficultySettingsSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Difficulty/DifficultySettingsSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -69439,7 +69439,7 @@
           "reference": "docs/perf/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "scripts/ci/export-smoke-boot.sh",
@@ -70141,13 +70141,13 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 137 path(s)"
+          "detail": "glob matched 158 path(s)"
         },
         {
           "reference": "src/Main.*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 136 path(s)"
+          "detail": "glob matched 157 path(s)"
         },
         {
           "reference": "src/Main.Application.cs",
@@ -70195,7 +70195,7 @@
           "reference": "src/UI/*Panel.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 201 path(s)"
+          "detail": "glob matched 213 path(s)"
         },
         {
           "reference": "verify-fast.sh",
@@ -70253,9 +70253,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/BackstorySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
@@ -70277,9 +70277,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/backstory_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivors.json",
@@ -70289,9 +70289,9 @@
         },
         {
           "reference": "BackstorySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/BackstorySystem.cs"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -70733,9 +70733,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/conflict_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C1_planintegration[38].md",
@@ -71341,7 +71341,7 @@
           "reference": "src/Host/*",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 722 path(s)"
+          "detail": "glob matched 806 path(s)"
         },
         {
           "reference": "src/Host/**",
@@ -71353,7 +71353,7 @@
           "reference": "src/Host/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 361 path(s)"
+          "detail": "glob matched 414 path(s)"
         },
         {
           "reference": "src/Host/HoldfastTerminalPanel.cs",
@@ -71377,7 +71377,7 @@
           "reference": "src/Main*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 137 path(s)"
+          "detail": "glob matched 158 path(s)"
         },
         {
           "reference": "src/Main.Campaign.cs",
@@ -72557,27 +72557,27 @@
         },
         {
           "reference": "docs/release/HOTFIX.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/HOTFIX.md"
         },
         {
           "reference": "docs/release/POSTMORTEM_TEMPLATE.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/POSTMORTEM_TEMPLATE.md"
         },
         {
           "reference": "docs/release/TEMPLATE.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/TEMPLATE.md"
         },
         {
           "reference": "docs/release/VERSIONING.md",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: docs/releases/VERSIONING.md"
         },
         {
           "reference": "scripts/ci/export-smoke-boot.sh",
@@ -72587,9 +72587,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/verify-fast.sh",
@@ -72605,15 +72605,15 @@
         },
         {
           "reference": "scripts/release/hotfix.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/release/prepare-release.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         }
       ],
       "overlap_cluster": null,
@@ -72835,7 +72835,7 @@
           "reference": "Assets/StreamingAssets/Data/scenarios/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "Assets/StreamingAssets/Data/scenarios/scenario_day001_tutorial.json",
@@ -73129,7 +73129,7 @@
           "reference": "Ashfall.Core.Tests/GoldenFiles/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "Ashfall.Core.Tests/GoldenFiles/Systems/WeatherSystem_seed42_10days.golden.json",
@@ -73165,7 +73165,7 @@
           "reference": "Assets/Ashfall.Core/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 134 path(s)"
+          "detail": "glob matched 135 path(s)"
         },
         {
           "reference": "Assets/Ashfall.Core/Economy/MarketSystem.cs:294",
@@ -73261,7 +73261,7 @@
           "reference": "GoldenFiles/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "Guid.NewGuid",
@@ -73321,7 +73321,7 @@
           "reference": "src/Host/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 361 path(s)"
+          "detail": "glob matched 414 path(s)"
         },
         {
           "reference": "src/Host/DoseLedgerHostSession.cs:192-198",
@@ -73433,9 +73433,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/noise_sources.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -74051,9 +74051,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/documentation_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -74327,15 +74327,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Achievements/AchievementSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/achievements.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "docs/achievements/ACHIEVEMENT_COVERAGE.md",
@@ -74423,21 +74423,21 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Vehicles/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Vehicles/VehicleCustomizationSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/vehicle_modules.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/vehicles.json",
@@ -74459,9 +74459,9 @@
         },
         {
           "reference": "VehicleCustomizationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Vehicles/VehicleCustomizationSystem.cs"
         },
         {
           "reference": "caravan.*home",
@@ -74651,9 +74651,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Shelter/DisasterResponseSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/ShelterThermalSystem.cs",
@@ -74675,9 +74675,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/disaster_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -74687,9 +74687,9 @@
         },
         {
           "reference": "DisasterResponseSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Shelter/DisasterResponseSystem.cs"
         },
         {
           "reference": "ShelterThermalSystem.cs",
@@ -75305,9 +75305,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/atmosphere_profiles.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C1_planintegration[42].md",
@@ -75485,9 +75485,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Maritime/SafeCrackingSystem.cs",
@@ -75503,9 +75503,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/maritime_zones.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -75521,9 +75521,9 @@
         },
         {
           "reference": "MaritimeExplorationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs"
         },
         {
           "reference": "SafeCrackingSystem.cs",
@@ -75593,9 +75593,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Economy/SurvivorBarterSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/Inventory.cs",
@@ -75611,9 +75611,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/barter_rules.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -75629,9 +75629,9 @@
         },
         {
           "reference": "SurvivorBarterSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Economy/SurvivorBarterSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -75887,15 +75887,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Cooking/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Cooking/CookingSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/",
@@ -75929,9 +75929,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/recipes_cooking.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -75941,9 +75941,9 @@
         },
         {
           "reference": "CookingSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Cooking/CookingSystem.cs"
         },
         {
           "reference": "KitchenNutritionSystem.cs",
@@ -75971,9 +75971,9 @@
         },
         {
           "reference": "recipes_cooking.json",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/StreamingAssets/Data/recipes_cooking.json"
         }
       ],
       "overlap_cluster": null,
@@ -76091,9 +76091,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/backstory_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "YearOfAshCatalogLoader.cs",
@@ -76169,9 +76169,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/DreamSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/DreamTemplateCatalogLoader.cs",
@@ -76181,9 +76181,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/dream_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C2_planintegration[38].md",
@@ -76241,9 +76241,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/life_stages.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "C1_planintegration[31].md",
@@ -76355,9 +76355,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/DreamSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/GuiltInsomniaSystem.cs",
@@ -76373,9 +76373,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/dream_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -76385,9 +76385,9 @@
         },
         {
           "reference": "DreamSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/DreamSystem.cs"
         },
         {
           "reference": "GuiltInsomniaSystem.cs",
@@ -76559,15 +76559,15 @@
         },
         {
           "reference": "docs/ui/KEYBOARD.md",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/input-map-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/verify-fast.sh",
@@ -76843,7 +76843,7 @@
           "reference": "src/UI/*.cs",
           "status": "OK",
           "severity": "none",
-          "detail": "glob matched 245 path(s)"
+          "detail": "glob matched 258 path(s)"
         },
         {
           "reference": "src/UI/Accessibility/AccessibleTooltip.cs",
@@ -77273,9 +77273,9 @@
         },
         {
           "reference": "scripts/ci/release-gate.sh",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "scripts/ci/sync-agent-rulebooks.py",
@@ -78347,15 +78347,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorRoutineSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/routine_templates.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -78371,9 +78371,9 @@
         },
         {
           "reference": "SurvivorRoutineSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/SurvivorRoutineSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -78449,15 +78449,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Survivors/SurvivorRoleSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/survivor_roles.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -78467,9 +78467,9 @@
         },
         {
           "reference": "SurvivorRoleSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Survivors/SurvivorRoleSystem.cs"
         }
       ],
       "overlap_cluster": null,
@@ -78527,9 +78527,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/ClothingWarmthSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Inventory/Inventory.cs",
@@ -78557,9 +78557,9 @@
         },
         {
           "reference": "ClothingWarmthSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Inventory/ClothingWarmthSystem.cs"
         },
         {
           "reference": "EquipmentConditionSystem.cs",
@@ -78629,15 +78629,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Communications/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Communications/CommunicationsSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Radio/FactionRadioEngine.cs",
@@ -78665,9 +78665,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/communications_networks.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/StreamingAssets/Data/radio_frequencies.json",
@@ -78683,9 +78683,9 @@
         },
         {
           "reference": "CommunicationsSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Communications/CommunicationsSystem.cs"
         },
         {
           "reference": "FactionRadioEngine.cs",
@@ -78977,9 +78977,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/rationing_protocols.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -79121,9 +79121,9 @@
         },
         {
           "reference": "asset_registry.json",
-          "status": "RENAMED_CANDIDATE",
+          "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "unique basename candidate: artifacts/asset_registry.json"
+          "detail": "2 basename candidates"
         },
         {
           "reference": "assets/art/bg_bunker_corridor.jpg",
@@ -79715,9 +79715,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Telemetry/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Telemetry/TelemetryCollector.cs",
@@ -80047,7 +80047,7 @@
           "reference": "Contracts/README.md",
           "status": "AMBIGUOUS",
           "severity": "warning",
-          "detail": "9 basename candidates"
+          "detail": "30 basename candidates"
         },
         {
           "reference": "Contracts/Require.cs",
@@ -80195,9 +80195,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/noise_sources.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -80555,9 +80555,9 @@
       "references": [
         {
           "reference": "AccessibilitySettingsSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Accessibility/AccessibilitySettingsSystem.cs"
         },
         {
           "reference": "Ashfall.Core.Tests/Ashfall.Core.Tests.csproj",
@@ -80567,15 +80567,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Accessibility/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Accessibility/AccessibilitySettingsSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/UI/Theme.cs",
@@ -80849,15 +80849,15 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Bestiary/",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Bestiary/BestiarySystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Combat/",
@@ -80885,9 +80885,9 @@
         },
         {
           "reference": "BestiarySystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Bestiary/BestiarySystem.cs"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -80969,9 +80969,9 @@
         },
         {
           "reference": "Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "Assets/Ashfall.Core/Maritime/SafeCrackingSystem.cs",
@@ -80987,9 +80987,9 @@
         },
         {
           "reference": "Assets/StreamingAssets/Data/maritime_zones.json",
-          "status": "MISSING_PATH",
-          "severity": "warning",
-          "detail": "repository path does not exist"
+          "status": "OK",
+          "severity": "none",
+          "detail": "repository path exists"
         },
         {
           "reference": "CaptureState/RestoreState",
@@ -81005,9 +81005,9 @@
         },
         {
           "reference": "MaritimeExplorationSystem.cs",
-          "status": "MISSING_PATH",
+          "status": "RENAMED_CANDIDATE",
           "severity": "warning",
-          "detail": "repository path does not exist"
+          "detail": "unique basename candidate: Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs"
         },
         {
           "reference": "SafeCrackingSystem.cs",

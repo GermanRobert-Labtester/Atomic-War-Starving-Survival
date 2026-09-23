@@ -80,6 +80,27 @@ namespace Ashfall.Core.Propaganda
     }
 
     [Serializable]
+    public sealed class PropagandaTemplateDef
+    {
+        public string id { get; set; } = string.Empty;
+        public string display_name { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
+        public string target_faction_id { get; set; } = string.Empty;
+        public string objective { get; set; } = "UndermineFaction";
+        public string preferred_medium { get; set; } = "RadioBroadcast";
+        public int duration_days { get; set; } = 4;
+        public float base_effectiveness { get; set; } = 20f;
+        public string suggested_theme { get; set; } = "Hope";
+    }
+
+    [Serializable]
+    public sealed class PropagandaTemplateCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<PropagandaTemplateDef> templates { get; set; } = new List<PropagandaTemplateDef>();
+    }
+
+    [Serializable]
     public sealed class PropagandaState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -98,6 +119,7 @@ namespace Ashfall.Core.Propaganda
     public sealed class PropagandaSystem
     {
         private readonly PropagandaState _state;
+        private readonly Dictionary<string, PropagandaTemplateDef> _templates = new(StringComparer.OrdinalIgnoreCase);
 
         public event Action<PropagandaMessage>? OnMessageCreated;
         public event Action<PropagandaCampaign>? OnCampaignStarted;
@@ -111,11 +133,70 @@ namespace Ashfall.Core.Propaganda
         public int ActiveCampaignCount => _state.Campaigns.Count(c => c.Status == CampaignStatus.Active);
         public IReadOnlyList<PropagandaMessage> Messages => _state.Messages;
         public IReadOnlyList<PropagandaCampaign> Campaigns => _state.Campaigns;
+        public IReadOnlyCollection<PropagandaTemplateDef> Templates => _templates.Values;
         public PropagandaState State => _state;
 
         public PropagandaSystem(PropagandaState? state = null)
         {
             _state = state ?? new PropagandaState();
+        }
+
+        public void RegisterTemplate(PropagandaTemplateDef template)
+        {
+            if (template != null && !string.IsNullOrEmpty(template.id))
+                _templates[template.id] = template;
+        }
+
+        public void LoadTemplates(IEnumerable<PropagandaTemplateDef> templates)
+        {
+            if (templates == null) return;
+            foreach (var t in templates)
+                RegisterTemplate(t);
+        }
+
+        public PropagandaTemplateDef? GetTemplate(string templateId)
+        {
+            if (string.IsNullOrEmpty(templateId)) return null;
+            _templates.TryGetValue(templateId, out var template);
+            return template;
+        }
+
+        public bool StartCampaignFromTemplate(string templateId, int day)
+        {
+            if (string.IsNullOrEmpty(templateId)) return false;
+            var template = GetTemplate(templateId);
+            if (template == null) return false;
+
+            if (!Enum.TryParse<PropagandaObjective>(template.objective, true, out var objective))
+                objective = PropagandaObjective.BoostMorale;
+
+            if (!Enum.TryParse<PropagandaMedium>(template.preferred_medium, true, out var medium))
+                medium = PropagandaMedium.RadioBroadcast;
+
+            if (!Enum.TryParse<PropagandaTheme>(template.suggested_theme, true, out var theme))
+                theme = PropagandaTheme.Hope;
+
+            var msg = CreateMessage(
+                authorId: "shelter_announcer",
+                medium: medium,
+                truthfulness: MessageTruthfulness.Truth,
+                theme: theme,
+                targetFactionId: template.target_faction_id,
+                content: template.description,
+                authorSkill: 75f,
+                targetAudience: "Wastelanders",
+                currentDay: day);
+
+            var campaign = LaunchCampaign(
+                campaignName: template.display_name,
+                targetFactionId: template.target_faction_id,
+                objective: objective,
+                messageIds: new[] { msg.MessageId },
+                durationDays: template.duration_days,
+                currentDay: day);
+
+            campaign.AccumulatedEffectiveness = template.base_effectiveness;
+            return true;
         }
 
         public PropagandaMessage CreateMessage(

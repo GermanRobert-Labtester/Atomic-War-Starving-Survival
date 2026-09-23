@@ -98,6 +98,12 @@ namespace Ashfall.Core.Excavation
         public ExcavationHazardSave State => _state;
         public IReadOnlyDictionary<string, ExcavationMitigationDefinition> Catalog => _catalog;
 
+        /// <summary>Methane concentration (PPM) above which ignition risk begins; shared by the risk evaluator and the exactly-once ignition event.</summary>
+        public const int MethaneIgnitionThresholdPpm = 4000;
+
+        /// <summary>Flood level (permille) above which a sector counts as flooded; shared by the risk evaluator and the exactly-once flood event.</summary>
+        public const int FloodCriticalThresholdPermille = 500;
+
         public event Action<string, string>? OnMitigationInstalled; // sectorId, mitigationId
         public event Action<string>? OnMethaneIgnition; // sectorId
         public event Action<string>? OnSectorFlooded;
@@ -216,16 +222,17 @@ namespace Ashfall.Core.Excavation
 
             var sector = GetOrCreateSector(sectorId);
 
-            // Apply mitigation effects
+            // Apply mitigation effects (mutation flows through the canonical
+            // AddMethane/AddFloodWater seams so hazard notifications cannot drift).
             if (def.Effect.TryGetValue("methane_vent_rate_permille", out int methaneVent))
             {
                 int reduction = (int)(sector.MethanePpm * (methaneVent / 1000f));
-                sector.MethanePpm = Math.Max(0, sector.MethanePpm - reduction);
+                ApplyMethaneDelta(sector, -reduction, int.MaxValue);
             }
 
             if (def.Effect.TryGetValue("flood_drain_rate_permille", out int floodDrain))
             {
-                sector.FloodLevelPermille = Math.Max(0, sector.FloodLevelPermille - floodDrain);
+                ApplyFloodDelta(sector, -floodDrain);
             }
 
             if (def.Effect.TryGetValue("spore_reduction_permille", out int sporeRed))
@@ -308,18 +315,114 @@ namespace Ashfall.Core.Excavation
             var sector = GetOrCreateSector(sectorId);
             float baseCollapse = (1000 - sector.ShoringHealthPermille) / 1000f * 0.40f;
 
-            if (sector.FloodLevelPermille > 500) baseCollapse += 0.20f;
+            if (sector.FloodLevelPermille > FloodCriticalThresholdPermille) baseCollapse += 0.20f;
             if (sector.InstalledMitigationIds.Contains("mitigation_sky_armor_blast_matting"))
                 baseCollapse *= 0.55f;
 
             float ignitionRisk = 0f;
-            if (sector.MethanePpm > 4000)
+            if (sector.MethanePpm > MethaneIgnitionThresholdPpm)
             {
-                ignitionRisk = Math.Clamp((sector.MethanePpm - 4000) / 6000f, 0f, 0.90f);
+                ignitionRisk = Math.Clamp((sector.MethanePpm - MethaneIgnitionThresholdPpm) / 6000f, 0f, 0.90f);
             }
 
             bool respHazard = sector.SporeConcentrationPermille > 200 || sector.MethanePpm > 5000;
             return (Math.Clamp(baseCollapse, 0f, 1f), ignitionRisk, respHazard);
+        }
+
+        /// <summary>
+        /// Canonical methane mutation. Every producer (daily accumulation,
+        /// ventilation, seismic outgassing) routes through here so crossing
+        /// <see cref="MethaneIgnitionThresholdPpm"/> raises
+        /// <see cref="OnMethaneIgnition"/> exactly once per crossing.
+        /// </summary>
+        public void AddMethane(string sectorId, int deltaPpm, int cap = int.MaxValue)
+        {
+            var sector = GetOrCreateSector(sectorId);
+            if (ApplyMethaneDelta(sector, deltaPpm, cap))
+                OnHazardStateChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Canonical flood-level mutation. Crossing
+        /// <see cref="FloodCriticalThresholdPermille"/> raises
+        /// <see cref="OnSectorFlooded"/> exactly once per crossing. Returns true
+        /// when the level actually changed.
+        /// </summary>
+        public bool AddFloodWater(string sectorId, int deltaPermille)
+        {
+            var sector = GetOrCreateSector(sectorId);
+            bool changed = ApplyFloodDelta(sector, deltaPermille);
+            if (changed)
+                OnHazardStateChanged?.Invoke();
+            return changed;
+        }
+
+        private bool ApplyMethaneDelta(ExcavationSectorHazardState sector, int deltaPpm, int cap)
+        {
+            if (sector == null || deltaPpm == 0) return false;
+
+            long next = (long)sector.MethanePpm + deltaPpm;
+            if (next < 0) next = 0;
+            if (next > cap) next = cap;
+            int after = (int)next;
+            if (after == sector.MethanePpm) return false;
+
+            int before = sector.MethanePpm;
+            sector.MethanePpm = after;
+
+            if (before <= MethaneIgnitionThresholdPpm && after > MethaneIgnitionThresholdPpm)
+            {
+                _log.Warn($"[ExcavationHazard] methane ignition threshold crossed in {sector.SectorId} ({after}ppm)");
+                OnMethaneIgnition?.Invoke(sector.SectorId);
+            }
+
+            return true;
+        }
+
+        private bool ApplyFloodDelta(ExcavationSectorHazardState sector, int deltaPermille)
+        {
+            if (sector == null || deltaPermille == 0) return false;
+
+            int before = sector.FloodLevelPermille;
+            int after = Math.Clamp(before + deltaPermille, 0, 1000);
+            if (after == before) return false;
+
+            sector.FloodLevelPermille = after;
+
+            if (before <= FloodCriticalThresholdPermille && after > FloodCriticalThresholdPermille)
+            {
+                _log.Warn($"[ExcavationHazard] sector flooding in {sector.SectorId} ({after} permille)");
+                OnSectorFlooded?.Invoke(sector.SectorId);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Authored daily mitigation upkeep: an installed mitigation keeps
+        /// working between applications. The JSON
+        /// <c>passive_decay_bonus_permille</c> value applies to the same hazard
+        /// its primary effect targets (methane / flood / spores / shoring).
+        /// </summary>
+        private void ApplyPassiveMitigationDecay(ExcavationSectorHazardState sector)
+        {
+            if (sector?.InstalledMitigationIds == null) return;
+            for (int i = 0; i < sector.InstalledMitigationIds.Count; i++)
+            {
+                string mitigationId = sector.InstalledMitigationIds[i];
+                if (string.IsNullOrEmpty(mitigationId)) continue;
+                if (!_catalog.TryGetValue(mitigationId, out var def) || def?.Effect == null) continue;
+                if (!def.Effect.TryGetValue("passive_decay_bonus_permille", out int bonus) || bonus <= 0) continue;
+
+                if (def.Effect.ContainsKey("methane_vent_rate_permille"))
+                    ApplyMethaneDelta(sector, -bonus, int.MaxValue);
+                if (def.Effect.ContainsKey("flood_drain_rate_permille"))
+                    ApplyFloodDelta(sector, -bonus);
+                if (def.Effect.ContainsKey("spore_reduction_permille"))
+                    sector.SporeConcentrationPermille = Math.Max(0, sector.SporeConcentrationPermille - bonus);
+                if (def.Effect.ContainsKey("shoring_health_restore_permille"))
+                    sector.ShoringHealthPermille = Math.Min(1000, sector.ShoringHealthPermille + bonus);
+            }
         }
 
         public void TickDay(int day)
@@ -330,12 +433,13 @@ namespace Ashfall.Core.Excavation
             {
                 if (sector.IsBulkheadSealed) continue;
 
-                // Passive hazard accumulation
-                sector.MethanePpm += _rng.Next(50, 150);
-                if (sector.InstalledMitigationIds.Contains("mitigation_ventilation_blower_install"))
-                {
-                    sector.MethanePpm = Math.Max(0, sector.MethanePpm - 200);
-                }
+                // Passive hazard accumulation (RNG draw order is part of the
+                // deterministic replay contract and must not change).
+                ApplyMethaneDelta(sector, _rng.Next(50, 150), int.MaxValue);
+
+                // Authored passive mitigation upkeep (replaces the former
+                // hardcoded blower-only drain; JSON is the authority).
+                ApplyPassiveMitigationDecay(sector);
 
                 // Passive shoring decay
                 sector.ShoringHealthPermille = Math.Max(0, sector.ShoringHealthPermille - _rng.Next(20, 50));

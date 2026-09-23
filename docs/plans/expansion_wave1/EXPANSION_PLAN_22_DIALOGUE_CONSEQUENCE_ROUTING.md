@@ -1,0 +1,1933 @@
+# Expansion-series Plan 22 — Dialogue Consequence Routing
+
+**Status:** Integration design proposal; documentation only.
+**Numbering note:** This is Expansion Planning Wave 1, Plan 22.
+**Purpose:** Define the safe path from player response to local scene change, quest/relationship/faction/world consequences, and ending callbacks, routing every mutation through its existing owner.
+
+## 1. Consequence model
+
+A dialogue response is authored content plus a command request. The dialogue resolver validates the selected response and returns a typed result. The host sends each allowed request to the system that owns that fact. The owner validates and applies the change, then publishes the resulting fact or event. Quest and dialogue read models refresh from those authorities.
+
+The dialogue layer can own node traversal and presentation selection if the current architecture assigns it those duties. It cannot own inventory quantities, map discovery, health, relationship values, faction standing, campaign completion, or quest lifecycle.
+
+## 2. Scope of effects
+
+| Scope | Meaning | Valid owner route |
+|---|---|---|
+| Cosmetic | Changes wording, pose, or immediate tone only. | Dialogue presentation; no durable gameplay mutation. |
+| Local | Changes the current scene or encounter outcome. | Existing encounter/location owner, if one exists. |
+| Quest | Starts, advances, blocks, fails, completes, resolves, abandons, or reopens a quest through a supported command. | Current quest runtime or quest-specific owner. |
+| Relationship | Changes a supported relationship fact. | Current relationship owner. |
+| Faction | Changes standing, access, or a faction quest fact. | Current faction/reputation/access owner. |
+| World | Changes a canonical location, resource, hazard, shelter, or event fact. | The domain owner of that state. |
+| Ending | Adds a supported campaign observation used by existing ending resolution. | Existing campaign/ending input owner. The dialogue UI never selects an ending directly. |
+
+Every response should declare its intended scope and one or more validated effect IDs. Cosmetic is the default. Higher scopes require a traceable owner and a real player-facing consequence. Avoid stacking several unrelated effects onto a single short line.
+
+## 3. Typed response result
+
+An implementation may need a result concept with these fields, adapted to existing types rather than copied as a new duplicate system:
+
+~~~text
+DialogueResolution:
+    conversation_id
+    node_id
+    response_id
+    source_event_id
+    validated_effect_requests[]
+    quest_commands[]
+    presentation_result
+    resolution_status
+~~~
+
+Each effect request identifies its target owner, command kind, canonical target ID, bounded parameters, and stable source event/request ID. Data must not include executable callbacks, arbitrary type names, reflection paths, or unbounded key/value mutation. The receiving owner rejects unknown command kinds, invalid targets, and out-of-range values.
+
+Repeated submission of the same response must not grant an item or standing twice. Prefer the current owner's idempotence mechanism. If none exists, determine whether the current encounter or quest owner already marks the choice resolved. A new global effect ledger is not the default solution. If multiple owner effects can partially apply and the current event contract provides no recovery, reduce the slice to one durable effect or stop for an architecture decision; do not promise transactionality the code does not have.
+
+## 4. Quest control and outcome boundaries
+
+Dialogue may begin, advance, or complete a quest only by issuing a validated command to the quest owner. The quest owner verifies allowed transition, objective status, deadline, and instance identity. Dialogue text may report a blocked reason or a new route; it cannot set arbitrary lifecycle values.
+
+Quest failure can lead to a different authored scene or a new recovery objective. The original failure remains a failure unless the quest owner has an explicit reopened/sequel operation. A choice that resolves an investigation may record the selected conclusion and route knowledge/reputation effects to their respective owners. A late-game choice may contribute an ending observation but does not itself determine the ending.
+
+## 5. Ordering and user feedback
+
+Recommended sequence:
+
+1. Confirm conversation and response are still available in the current snapshot.
+2. Resolve the response once using a stable event/request identifier.
+3. Ask the canonical quest owner to validate any quest transition.
+4. Submit each other effect request to its named owner.
+5. Collect accepted, rejected, and deferred results.
+6. Display immediate feedback accurately and refresh dialogue, quest, journal, and map read models from the owners.
+
+This sequence is a design candidate, not a claim about current host event order. Premise review must check current seams and lifecycle. If a required effect is rejected, the UI must not display the promised successful outcome. If a cosmetic choice succeeds but an optional side effect is unavailable, present the actual result and record the limitation.
+
+Use feedback proportionate to the consequence: line tone changes may need no banner; quest acceptance shows the new quest; location unlock changes the map; a reputation change uses the current faction feedback surface; ending observations may be reflected at campaign closure. Preserve keyboard/controller focus and allow safe conversation exit.
+
+## 6. Cost, reuse, and core/expansion placement
+
+Cosmetic variants are low cost and easy to reuse. Local encounter choices are medium cost due to branch and fallback testing. Quest/relationship/faction effects have medium or high cost because they cross state owners and persistence. World effects have high cost when they touch map availability or resources. Ending effects have the highest continuity cost and belong only after the ending owner and its input facts are proven.
+
+The core game should demonstrate one quest-start choice and one visible local or relationship consequence through existing owners. A small campaign choice may affect an existing faction or quest fact. Broad faction diplomacy, multi-owner negotiation, and late-game ending variations fit expansions after a stable owner map and regression path exist.
+
+## 7. Failure handling and rollback
+
+- Invalid response ID: keep conversation open or return to a safe node with visible feedback.
+- Quest instance missing: use an authored fallback line; do not create a replacement instance implicitly.
+- Owner rejects a request: show the actual accepted effects and a clear reason if the player can act.
+- Location or actor missing: resolve to a supported clue, delegate, delay, or neutral exit.
+- Old save lacks a choice fact: select the explicit default/unknown branch.
+- Duplicate command: owner returns prior outcome or rejects the duplicate without reapplying the reward.
+- Partial multi-owner result: report each applied result accurately; recovery is owner-specific and must be documented before adding such a branch.
+
+Rollback removes or disables the new response reference, not a saved fact already used by current saves. If an effect schema or save field has shipped, preserve its decoder and add an explicit migration plan before retirement.
+
+## 8. Integration course
+
+**Phase 0 — Trace one response:** Select one current conversation trigger and trace input, Core resolution, host effect application, saves, quest and UI refresh. Check active claims and the live batch.
+
+**Phase 1 — Owner table:** For every requested effect, list the target owner, command/event API, validation, persistence, deterministic behavior, read-model refresh, and failure response. Drop effects without a live route.
+
+**Phase 2 — Minimal authored branch:** Use one response with one durable consequence and one reconvergent continuation. Store effect identifiers in canonical authored data and run schema/reference validation.
+
+**Phase 3 — Host wiring:** Bind the response to an existing host seam. Keep UI free of state decisions. Verify exactly-once behavior and truthful feedback.
+
+**Phase 4 — Persistence and regression:** If state changes durably, add owner-specific capture/restore and migration coverage. Run focused tests for accepted/rejected/duplicate response, quest state, relationship or faction effect, and branch refresh; add targeted Godot verification only for a changed host route.
+
+**Phase 5 — Expand scope:** Add further effect classes only after the first branch is accepted. Run narrative continuity review, accessibility checks, and focused performance checks for large catalogs.
+
+**Phase 6 — Handoff:** Submit evidence, exact files, effect ownership, focused commands and results, save compatibility, partial-failure limits, and unclaimed shared paths. The integrator updates the ledgers.
+
+## 9. Acceptance
+
+Every response effect has one canonical owner; the dialogue layer stores no duplicate mutable domain fact; quest changes obey quest lifecycle; effects are idempotent or guarded by an existing resolved state; displayed outcomes reflect owner results; legacy/missing context has a safe route; ending selection remains with the existing ending authority; and focused verification proves the chosen slice. This plan is not an implementation authorization or test report.
+
+## Continuation pass 2 — effect contract and owner receipts
+
+### Effect routing table
+
+| Effect request | Validation before dispatch | Canonical result owner | Feedback after owner result |
+|---|---|---|---|
+| Cosmetic text/tone | Response and target node are valid. | Dialogue presentation. | Continue scene or show selected variant. |
+| Local encounter result | Encounter is active and choice remains unresolved. | Existing encounter/location authority. | Show its outcome and any changed encounter state. |
+| Quest start/advance/complete | Instance or definition exists and transition is allowed from current state. | Current quest runtime or quest-specific owner. | Refresh quest log and show accepted/progress/resolved status. |
+| Relationship change | Actor exists and requested change is within owner limits. | Current relationship authority. | Refresh relationship-facing read model only if visible in UI. |
+| Faction standing/access | Faction and amount/permission are valid. | Faction standing/access authority. | Show changed access or current reputation feedback. |
+| World/location/resource | Target domain object exists and can accept the command. | Map, shelter, inventory, hazard, or other owning system. | Refresh the affected panel or map marker. |
+| Ending observation | Campaign is in a phase where this observation is accepted. | Existing campaign completion/ending input owner. | Reflect the fact in the later ending presentation. |
+
+The router may sequence commands, but it does not reinterpret their meaning. It should not know how a faction value is stored, how a map node is discovered, or how an ending is selected. Each owner returns accepted, rejected, or already-applied with a reason safe for the host.
+
+### Exactly-once response behavior
+
+Use a stable source event ID built from the current conversation/quest instance and response identity where the current architecture permits it. If an existing encounter choice already tracks resolved response IDs, reuse it. On retry after a save or signal duplication:
+
+1. Validate the same response against current authoritative state.
+2. Ask the owning system whether the source event has already been applied.
+3. Return the prior result or reject as already resolved.
+4. Do not issue duplicate item, standing, quest, or ending requests.
+
+If no owner has an idempotence key, first reduce the MVP to an effect guarded by the owner's existing resolved state. If no such guard exists, stop and propose the smallest new owner-specific contract. A global dialogue receipt ledger would duplicate state and is not an automatic fallback.
+
+### Partial result example
+
+Suppose a conversation both accepts a delivery quest and offers a faction-standing reward. The quest owner may accept while the faction owner rejects because the faction binding no longer exists. The host must show the quest acceptance and omit the standing claim; it cannot display the authored “they trust you now” line. If the faction reward is essential to the quest's narrative promise, the content should instead gate acceptance on the live faction binding or use a single owner-supported transaction/command. Do not pretend two independent systems committed atomically.
+
+Likewise, if a choice records a local line but the quest command is invalid, keep the conversation truthful: “I can ask again once the ledger is found.” Do not create a quest instance in the panel or preserve an untracked success flag.
+
+### Effect scope policy
+
+Default new dialogue content to cosmetic scope. Add local consequences when an existing encounter already owns them. Quest effects may be core content when they expose a validated quest command. Relationship and faction changes require explicit owner limits and player-readable feedback. World effects require a demonstrable gameplay or map consumer. Ending observations require the highest continuity review and must remain optional unless the campaign already guarantees their producer.
+
+An authored response should not stack an ending flag, faction reward, relationship change, item grant, map unlock, and quest completion merely to feel important. Choose one primary consequence and, at most, a small set of dependent effects supported by a single coherent owner flow. Higher volume expands authored response variety, not the number of coupled systems per choice.
+
+### Rollback and content withdrawal
+
+When a dialogue row is found invalid before release, remove its route from the catalog and retain a valid neighboring response. After release, hide or redirect the response without deleting durable owner facts. If a response has already created a quest instance, preserve its definition decoder until that instance resolves or a migration maps it to a safe state. If a later ending callback reads the consequence, keep the old fact available to the ending owner even when the original dialogue scene is retired.
+
+## Continuation pass 2 acceptance
+
+The effect contract is ready for a future integration package when every scope maps to a current owner, duplicate response handling is defined, rejected and partial results produce truthful copy, rollback preserves already-saved facts, and no dialogue-specific save ledger is required. Each effect class needs owner-specific focused coverage before it ships.
+
+## Continuation pass 3 — effect requests, result states, and cross-system examples
+
+### Request envelope
+
+An effect request should carry only enough data for its owner to decide:
+
+~~~text
+EffectRequest
+    source_conversation_id
+    source_node_id
+    source_response_id
+    source_instance_id
+    target_owner_kind
+    command_kind
+    target_id
+    bounded_parameters
+    source_event_id
+~~~
+
+The actual project types may already offer a result or command envelope. Reuse them. The source IDs support diagnostics and duplicate protection; the target and command IDs are validated against the receiving owner; bounded parameters prevent authored content from smuggling arbitrary state changes. Never accept raw C# type names, method names, serialized closures, or a dictionary of unrestricted world keys from content.
+
+The request's source event ID must be stable for retries and unique for a meaningful response invocation. If existing quest or encounter instances already provide a stable transaction/event key, use that. If not, keep the effect behind the current owner's choice-resolved state or defer adding durable side effects until an owner-approved idempotence contract exists.
+
+### Result states and user-visible behavior
+
+An owner response can be modeled as Applied, AlreadyApplied, Rejected, or Deferred, provided the existing command seam can communicate those distinctions:
+
+- **Applied:** show the authored confirmation and refresh current read models.
+- **AlreadyApplied:** do not replay the reward; show the current state or continue if the response is already resolved.
+- **Rejected:** show no promised effect; preserve the conversation or offer a safe exit.
+- **Deferred:** show what is waiting and how the player can continue. Defer only when the receiving owner supports a real pending state.
+
+A generic “success” toast is incorrect when a multi-owner response partially fails. The host should collect owner results, refresh authoritative read models, and choose copy from what actually changed. If the current UI cannot explain partial outcomes, constrain the authored response to a single durable effect in the MVP.
+
+### Cross-system example: accepting a field investigation
+
+The route clerk offers an investigation. On the confirm response:
+
+1. The conversation verifies the speaker and the currently available quest definition.
+2. The quest owner creates or accepts the instance and returns its actual status.
+3. The quest owner exposes a required location binding.
+4. The expedition selector reads that binding at the next dispatch and pins the exact site or clue marker at every expedition start while the quest remains active.
+5. The map owner controls whether the player knows the site and whether the route is traversable.
+6. A discovery event advances the objective through the quest's event producer.
+7. The journal shows the new fact from the current journal/quest read model.
+
+If the exact site cannot be selected, Plan 18's equivalent, delay, clue, or fail-forward path applies. Dialogue cannot set a map marker directly. If the quest command rejects, the conversation does not claim acceptance.
+
+### Cross-system example: local promise with a later callback
+
+A survivor asks the player to keep a tool for a repair crew until morning. The immediate response can be cosmetic, or it can start a quest. To support a later callback, the quest owner records the accepted commitment or a canonical memory owner receives the supported event. At the later scene, Plan 21 reads that fact and selects an authored line. If the saved fact is absent, the line asks neutrally whether the tool was kept; it does not assert a promise that the game cannot prove.
+
+The tool itself remains in inventory ownership. A delivery or transfer uses the inventory command and reports whether it was applied. The dialogue graph never holds a shadow copy of the item.
+
+### Cross-system example: ending observation
+
+A final conversation may ask whether a public archive should remain open to every shelter or be placed under a caretaker group. The response can contribute an authored campaign fact only through the existing completion/ending input owner. Earlier faction and quest states may change which choices are available, but the dialogue panel must not derive or select the campaign ending itself. Old saves with no archive choice use an explicit neutral ending variant.
+
+This is high continuity cost and should be postponed until the ending owner, save, and snapshot contracts are audited. A well-written ending choice cannot compensate for an untracked campaign fact.
+
+### Idempotency and consequence sizing
+
+One response should have one primary durable consequence. Secondary effects are acceptable when they are necessary to that result and can be applied through a coherent existing owner route. Example: accepting a quest and pinning its destination are one logical effect only if the quest owner exposes the location binding and map/expedition owners derive the marker. Do not separately save a dialogue marker, a quest destination cache, and an expedition requirement.
+
+Repeatedly opening a conversation is safe. Repeating a response after it applied must not duplicate rewards. Loading a save before or after owner application must preserve the actual owner state. Replaying the same seeded campaign should produce the same eligible response set and generated binding, while player choice remains an explicit input.
+
+### Effect authoring cost and review
+
+Every non-cosmetic response adds production tasks: validate the command, define refusal and stale-state copy, confirm owner feedback, test save/load if durable, test duplicate invocation, verify refresh of affected panels, and review interaction accessibility. Cross-system effects add a seam review for each owner. Ending effects add narrative continuity review across old and new saves.
+
+The writer can continue drafting a scene while a seam is under audit, but any response without a confirmed command is marked as prose-only and cannot be presented as operational. During implementation, promote one effect scope at a time and update the content validator to reject unrecognized commands.
+
+## Continuation pass 3 acceptance
+
+The request/result contract is ready when command types are allowlisted, outcomes are truthful, duplicate invocation is safe, one primary consequence owns each response, cross-system markers derive from the quest and map owners, and ending observations route through the current ending input authority.
+
+## Continuation pass 4 — effect execution policy, retries, and fail-forward outcomes
+
+### Separate dialogue choice from consequence execution
+
+A selected response can produce a presentation result, request one or more approved owner commands, and then render a result line after the owner reports what actually happened. The graph should not optimistically set quest, faction, relationship, inventory, location, or ending facts before the owner accepts the request. Treat a response as pending while its command is in flight if the current host is asynchronous; if it is synchronous, still retain the same accepted/rejected/deferred contract.
+
+Proposed command envelope fields: stable command ID; dialogue scene/node/response IDs; campaign or session correlation ID supplied by the current owner; command kind; canonical target ID; validated arguments; preconditions; and idempotency key. Do not send rendered prose, private context dumps, or arbitrary serialized UI state as command authority. A command handler validates its own current state and returns a typed result with the owner fact or reason ID needed by presentation.
+
+### Order effects by dependency, not by copy order
+
+For a response that starts a quest and requests a location, the quest owner first confirms the quest transition. The location-selection owner then receives the canonical requirement through its existing seam at the next eligible dispatch. The dialogue response can say the quest is accepted only after the quest owner confirms; the map can show a marker only after expedition selection and visibility rules succeed. If map availability is deferred, the quest remains accepted with a journal message explaining the next opportunity.
+
+If multiple commands are required, declare the dependency order and define compensation or safe partial completion. Do not pretend that unrelated owners share a transaction. For example, a relationship acknowledgement can succeed while a later optional map hint is deferred. The response result should identify each outcome, and a retry should submit only the still-pending command with the same idempotency key. A failure in cosmetic refresh must never roll back a completed quest.
+
+### Explicit retry, stale-state, and recovery behavior
+
+Use stable result states: Applied; AlreadyApplied; Rejected with a reason; Deferred with a retry condition; and Failed when the owner reports an unexpected operational error. The dialogue layer may safely re-render after Applied or AlreadyApplied. Rejected and Deferred require authored copy or a clear generic fallback that does not misrepresent the outcome. Unexpected failures are logged by command ID and owner reason; player-facing copy should preserve the conversation and offer a safe exit.
+
+An idempotency key identifies the response commitment within the canonical campaign/session scope. Re-opening a scene creates no new key for an already-applied one-shot choice. Repeatable choices need an explicit owner-approved repeat policy, cooldown/eligibility source, and bounded reward rule. Do not rely on UI button disabling as duplicate protection.
+
+If save/load happens while a request is deferred, the current owner decides whether the request is durable. Persist only through that owner's existing save contract. On restore, query the owner for the actual result before presenting a success line. A stale response whose preconditions no longer hold returns Rejected or Deferred; it must not partially invent an outcome.
+
+### Fail-forward case: the missed signal
+
+In a provisional quest, a player agrees to warn a remote crew before a storm. The primary route dispatches a signal from a relay. If the relay location is unavailable, the dialogue request may establish the accepted task but cannot claim the warning was sent. The expedition plan can offer a permitted substitute or delay the route. If the player misses the deadline, the quest owner records the failed warning and opens a recovery task: locate the crew's last known shelter and deliver a face-to-face message. The failed primary objective remains visible in the history; the recovery route has its own actionable objective, location requirement, and reward rule.
+
+The consequence chain is: accept request; confirm quest active; select an available expedition route; report signal sent only after its owner confirms; otherwise keep the warning pending; on expiry, record failure cause; offer the recovery route; on successful delivery, resolve the relationship or faction response through its owner. This path is a concrete example of “failed but continues through a different route” without rewriting failure into success or letting dialogue control the clock.
+
+### Consequence-scope review
+
+Before content approval, label each effect cosmetic, local, quest, relationship, faction, world, or ending. For every non-cosmetic effect, record the command owner, preconditions, result states, persistence rule, duplicate behavior, UI refresh, accessibility feedback, save/load case, and rollback or compensation. Ending consequences additionally need cross-quest continuity review and a decision about what old saves observe.
+
+Keep the first implementation slice to local scene feedback and one quest-owner command. Add relationship/faction/world/ending commands only after each seam has a current API and an agreed ordering. A response with unresolved command ownership remains prose-only and cannot imply an applied consequence.
+
+## Continuation pass 4 acceptance
+
+Effect execution is ready when owner commands validate their own preconditions, retries are idempotent, partial outcomes are shown truthfully, save/restore asks the owner for the actual result, and a failed objective can open a distinct recovery route without being rewritten as success.
+
+## Continuation pass 5 — command inventory, response lifecycle, and outcome evidence
+
+### Response commitment lifecycle
+
+Represent a consequential response as a small request lifecycle, not a direct mutation from a dialogue callback:
+
+1. **Presented:** Plan 20 supplies an authored response and Plan 21 evaluates whether it can be selected.
+2. **Selected:** the UI records the response ID for this scene interaction and preserves a clear back/exit route.
+3. **Revalidated:** each required fact is read again through its owning authority.
+4. **Submitted:** the response creates an allowlisted command with stable target IDs and an idempotency key.
+5. **Accepted or declined:** the owner returns Applied, AlreadyApplied, Rejected, Deferred, or Failed with a typed reason/result reference.
+6. **Rendered:** the scene chooses result copy from the returned outcome, refreshes relevant facts, and routes to the authored continuation.
+7. **Closed or revisited:** the owner remains responsible for durable state; the dialogue graph is recomputed from that state.
+
+Purely cosmetic choices may skip command submission, but should still have a stable response ID for transcript and replay review. If a runtime operation can be retried after scene refresh, crash, or save/load, the idempotency key must identify the same logical commitment. If the current command owner cannot provide duplicate-safe behavior, keep the choice non-consequential or hold the feature for an explicit architecture decision.
+
+### Effect ownership inventory
+
+| Requested consequence | Responsible authority to confirm | Dialogue responsibility |
+|---|---|---|
+| Start, advance, fail, expire, resolve, or abandon quest | Existing quest runtime/questline owner selected for that quest. | Request transition; display accepted state and owner-supplied reason. |
+| Reveal a location or clue | Current map/discovery owner, with expedition selection contract where dispatch is involved. | Offer clue copy only after confirmation; do not force a map pin. |
+| Select a destination for an expedition | Current expedition/location-selection path. | Communicate eligibility or delay; never substitute a local target silently. |
+| Change relationship or remember an action | Existing relationship or NPC memory authority. | Supply the authored event/reference; display only the accepted outcome. |
+| Change faction access/reputation | Current faction owner. | Request a typed change; do not calculate rank or access in the graph. |
+| Transfer item/resource | Existing inventory/resource owner. | Confirm what is requested and render transfer only after accepted result. |
+| Advance time or deadline | Current clock and quest deadline owner. | Do not advance time from ordinary dialogue unless the game already defines a time-cost command. |
+| Change location state/world event | Current map/location/world-state owner. | Request one named operation with preconditions and fallback copy. |
+| Resolve major ending | Current ending/campaign resolution authority. | Request a terminal choice after continuity and prerequisite validation. |
+
+The inventory is intentionally owner-focused. Content fields can describe intent, but no general “dialogue effect manager” should become a second authority. If one effect has two current owners, define command ordering and partial-result behavior before implementation.
+
+### Partial outcomes and truthful copy
+
+One response may request multiple independent consequences only when the player understands that they are separate. Order commands by dependency and record each result separately. A quest can become active while a map clue is deferred; a relationship can acknowledge the conversation while an optional resource transfer is rejected. Do not roll back an accepted quest merely because an optional marker could not be shown.
+
+The result copy must distinguish:
+
+- what the player asked for;
+- what the owner accepted;
+- what remains pending or unavailable;
+- the next valid route.
+
+Avoid single success copy for mixed results. Prefer compact factual copy such as “The request is on the board. The route is still unconfirmed.” If the operation failed unexpectedly, preserve the conversation and give an exit or retry path; do not display a technical exception to the player or silently claim success.
+
+### Unentered Shelf outcome map
+
+The fixture's decision is whether to assign a counted blanket stock to the current shelter room while keeping an unverified destination unresolved. A possible command chain is:
+
+1. Dialogue presents the count and the player's proposed allocation.
+2. Quest owner confirms the current task phase and permits the local-hold choice.
+3. Resource/inventory owner validates stock and performs the transfer or reservation according to its existing model.
+4. Quest owner records the confirmed objective/outcome only after the resource result it depends on is available.
+5. Map/expedition owners continue to represent the uncertain destination separately.
+6. Relationship or NPC-memory owner records the clerk's supported acknowledgement only if the current system supports this event.
+
+Define result branches explicitly:
+
+| Owner result | Quest/history treatment | Scene response |
+|---|---|---|
+| All required commands Applied | Record the local-hold resolution with the destination question still open if that is the authored outcome. | Clerk acknowledges the allocation and names the remaining uncertainty. |
+| AlreadyApplied | Do not repeat transfer or reward; query the owner's actual state. | Show the same confirmed result line without duplicate credit. |
+| Resource rejected | Keep the objective unresolved or route to a truthful alternative, according to the quest owner. | Explain that the counted stock could not be moved; preserve retry/exit. |
+| Quest phase rejected | Submit no dependent transfer. Refresh active choices. | Explain that the record changed and offer the current valid route. |
+| Destination clue deferred | Preserve accepted local choice if independent; keep map clue pending. | State that local stock is accounted for while the route remains unknown. |
+| Optional memory unavailable | Do not block the practical result. | Use a neutral acknowledgement rather than claiming the clerk remembers. |
+| Unexpected failure | Do not infer any effect; let owners answer on retry/restore. | Keep scene safe and offer a non-committing exit. |
+
+The sequence may change after the concrete APIs are audited. In particular, do not assume inventory can reserve stock or that quest completion can consume a resource event; confirm the available command contracts first. If the current owner cannot express the intended distinction, revise the content rather than creating parallel mutable counters.
+
+### Fail-forward outcome ledger
+
+Every quest-affecting response should have a small authored outcome ledger:
+
+| Field | Question answered |
+|---|---|
+| Primary objective | What was the player trying to accomplish? |
+| Failure evidence | Which owner reports the failure and its cause? |
+| Preserved facts | What remains true after failure? |
+| Recovery offer | Which alternative action becomes available, and through which owner? |
+| Recovery requirements | Which location, character, item, or clue is required? |
+| Success evidence | Which owner confirms recovery completion? |
+| Reward/closure | What is granted or resolved, with what duplicate policy? |
+| Copy variants | What is said for success, failure, delay, rejection, and unknown? |
+
+For the missed-signal example, the failed warning stays failed in history; the recovery task is a separate route to the crew's last known shelter. If that shelter cannot appear, Plan 18 chooses a permitted equivalent, delay, or clue. The conversation reports whether the task was accepted, never whether the warning reached its intended audience until the signal/message owner confirms it. The later relationship/faction response depends on the recovered contact and its canonical owner.
+
+This ledger also applies to escort, protection, timed, resource, investigation, and faction quests. Failure can change available content without erasing the original event. A recovery route needs a concrete objective and proof condition; “try again later” is not enough unless a real retry window and owner-backed eligibility exist.
+
+### Replay, telemetry, and diagnostics
+
+Log stable scene, node, response, command, owner, and result IDs plus compact reason codes needed to diagnose routing. Keep logs deterministic and privacy-conscious: do not record rendered dialogue text, hidden emotional state, full inventory, or private memory payloads. Replay tooling should be able to show the ordered command/result sequence from owner facts and stable IDs without depending on localized prose.
+
+Content review should track response reachability, command acceptance/rejection/defer rates in controlled tests, duplicate prevention, and fallback frequency. Runtime telemetry, if introduced, requires the project's current privacy and telemetry authority; this plan does not authorize a new telemetry pipeline. For local diagnostics, aggregate counts by stable IDs and test fixture only.
+
+On restore, query the command owner for a pending or previously applied result. If the owner has no durable pending command concept, do not invent one in dialogue save data; re-evaluate the scene and show the actual current state. For migration, preserve stable response IDs where the logical decision remains equivalent. If meaning changes, use a new ID and an explicit old-save resolution instead of interpreting an old selection as a different action.
+
+### Integration order and bounded slice
+
+The first implementation slice should contain one scene, one quest transition, one map/clue handoff, and no more than one additional state-changing owner. It should prove the full sequence from presented response through current owner result to save/restore observation before adding faction, relationship, resource, or ending effects.
+
+Suggested promotion order:
+
+1. Audit current command APIs and save owners for the selected quest/location.
+2. Claim only the exact implementation paths under the live ownership process.
+3. Add or adapt the smallest typed request/result seam; reject unsupported command kinds.
+4. Wire one dialogue response through the existing host/event path.
+5. Add focused tests for Applied, AlreadyApplied, Rejected, Deferred, duplicate retry, stale fact, and restore.
+6. Validate the authored result copy, focus behavior, transcript, and fallback scene.
+7. Record the integration evidence and remaining unsupported effect families.
+
+The proposal does not authorize creating shared runtime architecture on its own. If source inspection reveals that the only available seam would require a new cross-system transaction, save section, or registry, stop and submit the narrow design decision for the current foreman.
+
+## Continuation pass 5 acceptance
+
+The routing package is ready for integration when each consequential response has a named owner, typed request/result behavior, duplicate and stale-state policy, and truthful copy for every result; the Unentered Shelf chain does not double-transfer or conflate destination discovery with allocation; and the first vertical slice can be verified end to end under the existing save and ownership contracts.
+
+## Continuation pass 6 — command contract, dependency trace, and recovery closure
+
+### Command definition sheet
+
+Before a dialogue response requests a durable change, complete one command definition sheet:
+
+| Field | Required meaning |
+|---|---|
+| Command kind | Narrow allowlisted operation understood by one current owner. |
+| Target | Stable quest, location, character, faction, item, or campaign ID. |
+| Initiating response | Stable scene/node/response IDs for traceability. |
+| Preconditions | Current facts the owner must revalidate before mutation. |
+| Idempotency scope | Campaign/session or owner scope in which a retry maps to the same operation. |
+| Arguments | Typed, validated values; no arbitrary UI object or rendered text. |
+| Result states | Applied, AlreadyApplied, Rejected, Deferred, or Failed with typed reason. |
+| Durable owner | Existing save-section authority if the operation changes campaign state. |
+| Dependent commands | Ordered follow-up operations and how partial success is presented. |
+| Result copy | Localized lines keyed by actual result, plus neutral fallback. |
+| Retry rule | Whether retry is safe, when eligibility can return, and how duplicates are prevented. |
+
+This sheet is authoring/integration evidence. It does not justify a central dialogue command registry. The implementation should dispatch through existing owner/event seams and validate command kinds at the narrow boundary that already owns them.
+
+### Idempotency and one-shot response semantics
+
+The command owner, not the UI, is the final duplicate guard. The UI can disable a button while a command is pending, but duplicate protection must survive double input, focus activation, redraw, quick reopen, and save/restore. A stable idempotency key should derive from a durable request identity already available to the owner, such as campaign scope plus quest instance and authored response ID. Do not base it on localized text, wall-clock time, panel instance ID, or a fresh random value.
+
+The owner should return AlreadyApplied when it can prove the same logical operation has already been accepted. The dialogue layer then reads the actual current outcome and selects the same factual success copy without replaying the transfer/reward. If the owner cannot distinguish a repeated request from a new request, the content must not offer that operation as safely repeatable.
+
+Repeatable conversation options need an explicit policy from their owner: repeatable observation with no mutation, repeatable command with bounded consequences, or one-shot command with a completed marker. A scene loop is never itself a cooldown. A response disappearing from a menu is not a persistent completion fact.
+
+### Ordered effects without a distributed transaction
+
+When a response affects more than one owner, describe the dependency graph and all partial outcomes. Do not imply that independent game systems commit atomically. A safe chain may be:
+
+1. Quest owner validates the active phase and records an accepted decision.
+2. Resource owner applies a physical transfer if stock is still available.
+3. Quest owner records the dependent objective only after the resource result is confirmed.
+4. Map/expedition owner independently reveals or schedules a location opportunity when its rules permit.
+5. Relationship/memory owner records a supported acknowledgement if that effect is optional and its API accepts the event.
+
+If step 2 rejects, step 3 must not record the transfer objective. Step 4 can still be deferred or remain pending if it is not a dependency. Step 5 cannot claim that the clerk remembers a completed transfer. The scene reports each committed fact accurately and offers a valid retry or alternate route.
+
+Do not create a generalized saga service, cross-system transaction, outbox, or compensation ledger for this plan. Use only mechanisms already present in current owners. If reliable partial completion cannot be represented by existing APIs, narrow the first slice to one durable command or stop for an explicit architecture decision.
+
+### Failure classes and player-facing treatment
+
+| Failure class | Owner/runtime interpretation | Player-facing behavior |
+|---|---|---|
+| Stale precondition | World changed since the option appeared. | Refresh choices and explain the practical change. |
+| Ordinary rejection | Valid request, but current owner rule disallows it. | State what was not done and offer an alternate or exit. |
+| Deferred availability | The action may become valid after a named event/prerequisite. | Keep the quest alive and explain when/where to try again. |
+| Missing optional target | Expansion/character/location content is absent. | Use neutral or alternate content; preserve core progression. |
+| Duplicate request | Same logical commitment was already processed. | Query owner state and show the confirmed result once. |
+| Operational failure | Owner could not determine or complete the operation. | Preserve the scene and offer safe exit/retry; avoid false success. |
+| Invalid authored command | Content references unsupported command or target. | Block at validation/release; runtime falls back safely if encountered. |
+
+Avoid generic red error banners for ordinary story consequences. A refused transfer can be a meaningful story event; an unexpected internal failure is an operational problem and should not be disguised as character intent.
+
+### Unentered Shelf command trace
+
+The fixture offers three dispositions but only one changes physical stock. Their result contracts differ:
+
+- **Reserve locally:** quest owner checks that the active objective permits a local hold; resource owner validates stock and commits the reservation/transfer supported by its current model; quest owner records the accepted result. If stock is unavailable, no completion is reported.
+- **Wait for verification:** quest owner records the decision to keep investigating if that distinction exists in its current API. This can be a no-op on inventory. The player receives a clear next evidence route or a truthful delay.
+- **Request a route:** Plan 18 receives the canonical location requirement and returns an exact target, permitted equivalent, clue, or deferral. The dialogue does not mark the destination discovered until the map/discovery owner confirms that event.
+
+The response preview says what the player is asking to do: “Set these bundles aside here while we keep the other claim open.” It does not promise that stock can be moved. After Applied, the clerk says, “The room's count is updated. The other shelter's receipt is still missing.” After Rejected, the clerk says, “The count does not match what we can move. Nothing has been reassigned.” After Deferred, the clerk says, “I can keep the question open until the route is checked.” If the response was AlreadyApplied after a reload, the scene queries the owners and uses the Applied line only if the saved canonical facts still support it.
+
+This trace separates a quest decision, a resource operation, and a location lead. If the current resource owner does not support reservations, rewrite the local-hold choice as a non-mutating “keep investigating” option rather than creating a parallel stock ledger.
+
+### Fail-forward completion contract
+
+A failed objective and its recovery route need separate IDs and separate evidence. The outcome ledger for a timed warning should therefore include:
+
+1. The primary intent: warn the crew before the storm.
+2. The deadline owner and exact expiry fact.
+3. The recorded result: warning not delivered on time.
+4. The preserved information: crew's last known shelter, if already discovered.
+5. The recovery offer: deliver a face-to-face message, only if the quest owner can start that follow-up.
+6. The recovery location requirement: exact/equivalent/clue/delay semantics from Plan 18.
+7. The delivery proof: interaction/event confirmed by its current owner.
+8. The social response: relationship/faction result from its own owner, if any.
+9. The final journal copy: both failure history and recovery result remain visible.
+
+The fail-forward action does not rewrite the original timeout as success. It can produce a different resolution with its own reward, relationship outcome, or no reward. If the follow-up cannot be started because no supported quest path exists, display the failure truthfully and leave the player with a meaningful non-mutating next step; do not fabricate a new quest instance.
+
+### Integration trace and observability
+
+For the first committed response, record a bounded trace:
+
+| Trace point | Expected evidence |
+|---|---|
+| Presentation | Scene/node/response IDs and result of Plan 21 conditions. |
+| Selection | Stable response ID, input method, and request intent. |
+| Revalidation | Owner facts checked and whether the snapshot became stale. |
+| Submission | Allowlisted command kind, stable target ID, idempotency identity. |
+| Owner result | Typed state and compact reason/reference. |
+| Follow-up | Ordered dependent command results, if any. |
+| UI update | Correct result line, focus, transcript, and journal/map refresh. |
+| Persistence | Existing owner capture/restore path and post-load query. |
+
+This is test/development evidence, not authorization for a new analytics or telemetry system. Logs should not store the entire conversation, hidden condition values, private memory text, or inventory dump. A stable trace identifier helps diagnose the chain while canonical state remains in its current owners.
+
+### Promotion checkpoints
+
+Promote consequence types one at a time. First demonstrate an informational result that reads an owner fact. Next route one quest transition and restore it. Then add a map clue/selection handoff. Only after those seams are stable should a package add resource transfer or relationship/faction effects. Major world or ending consequences require a dedicated audit of all paths that can reach them, including old saves and absent expansions.
+
+At each checkpoint, freeze the authored text against the actual typed outcomes. If the owner changes its result contract, update the graph's fallback and the focused fixtures in the same integration package. A compile or catalog load alone cannot prove that the dialogue reports the accepted result; review the full interaction from player choice through owner state and later revisit.
+
+## Continuation pass 6 acceptance
+
+The command package is ready when each state-changing response has an owner-validated command sheet, retries are safe without UI-only protection, dependent effects have explicit partial-result rules, failure and recovery preserve truthful history, and a complete trace proves presentation, owner result, UI update, and restore behavior.
+
+## Continuation pass 7 — consequence-scope matrix, command families, and integration traces
+
+### Consequence scope is a design contract
+
+Classify the result before selecting an owner command. The same line can sound consequential while changing no state, or look small while changing a major campaign route:
+
+| Scope | What changes | Source of truth | Minimum result handling | Production placement |
+|---|---|---|---|---|
+| Cosmetic | Wording, tone, or a nonpersistent scene detail. | Authored graph and current read facts. | Re-render safely; no durable command. | Core dialogue framework. |
+| Local | Current scene interaction or a local noncampaign presentation detail. | Existing scene/location owner if stateful. | Clear scene feedback and safe exit. | Core only when a current local owner exists. |
+| Quest | Offer, acceptance, objective, failure, completion, or resolution. | Current quest runtime/questline owner. | Typed result, journal refresh, duplicate protection. | Core architecture; content by route. |
+| Relationship | A supported interpersonal event or band change. | Current relationship/memory owner. | Accepted fact drives later callback; neutral if absent. | Optional character content unless base progression requires it. |
+| Faction | Reputation, access, pact, or faction response. | Current faction authority. | Typed outcome and access refresh; no graph-side arithmetic. | Core if needed for campaign; otherwise expansion. |
+| World | Canonical location, resource, hazard, encounter, or world event. | Existing owner for that concern. | Owner validation, partial result, map/UI refresh, save proof. | Requires a specific integration claim. |
+| Ending | Major resolution or campaign endpoint. | Current ending/campaign authority. | Cross-quest validation, migration, terminal result, and history. | Dedicated milestone/integration package. |
+
+For each scope, separate “response selected,” “request accepted,” and “outcome observed.” A cosmetic response can be applied immediately. A quest or world consequence cannot. Relationship and faction scopes may require a result line only after the owner accepts the event. Ending consequences need a review of every reachable prior choice, not just the scene that presents the final button.
+
+### Allowlisted command families
+
+Start with explicit command families that match current owners:
+
+- QuestOffer, QuestAccept, QuestAdvance, QuestFail, QuestResolve, QuestAbandon, or other exact transitions the current quest API supports.
+- RevealClue or request discovery only if the existing map/discovery owner has a corresponding command.
+- RequestExpeditionOpportunity as a requirement handoff, distinct from starting the expedition.
+- StartExpedition only through the existing preview/start command and its current validation.
+- TransferResource only when an existing inventory/resource command confirms amount and target.
+- RecordRelationshipEvent only when the existing memory/relationship owner supports the event.
+- RequestFactionOutcome only through the current faction owner.
+- ResolveCampaign only through the approved ending authority.
+
+These names describe semantic command groups for plan review; they are not commitments to add these enum values. During integration, map each supported action to its real API and reject unsupported kinds. Content cannot submit arbitrary side effects such as “set any field to this value.”
+
+### Consequence sequencing patterns
+
+**One-owner operation:** revalidate, submit once, render the accepted result, refresh. This should be the default for early integrations.
+
+**Dependent two-owner operation:** owner A confirms a prerequisite, then owner B performs the dependent effect. If A rejects, B is never called. If B rejects, the quest owner does not report the dependent objective complete. State the partial outcome and offer the route the owners support.
+
+**Independent optional effects:** a required quest transition can succeed while an optional memory callback or map clue is deferred. Report both outcomes separately; failure of the optional effect does not roll back the required result.
+
+**Terminal campaign operation:** validate prerequisites, present explicit confirmation, submit through campaign authority, then render the terminal state from the returned result. Do not allow scene exit/reopen to replay a terminal operation.
+
+Do not generalize these into a transaction engine. Use current owner order and persistence. If the code has no safe way to represent the intermediate result, reduce the content to one owner or ask for a signed architecture decision.
+
+### Result copy design
+
+For each command, author copy for all results that can occur:
+
+- **Applied:** say exactly what is now true.
+- **AlreadyApplied:** use current owner state and avoid a second reward/transfer.
+- **Rejected:** say what did not happen and why in player terms.
+- **Deferred:** say what event/prerequisite can make it available later.
+- **Failed:** preserve the interaction and offer a safe exit or retry if owner-confirmed.
+- **Unknown after restore:** query current state; if still unresolved, use neutral copy that makes no success claim.
+
+Prefer a small number of truthful reusable result patterns to six near-identical success paragraphs. However, do not reuse a generic line if it obscures different outcomes. “The route is ready” and “The route request is logged” are not interchangeable.
+
+### End-to-end trace across Plans 17–22
+
+The Unentered Shelf route is a compact integration exercise:
+
+1. **Plan 19:** content bundle defines a permanent shelter context, authored evidence interactions, and a provisional dialogue graph. It identifies which text is generated flavor and which facts are owner-sourced.
+2. **Plan 17:** the quest owner accepts the investigation, tracks evidence, and decides whether local hold, confirmed delivery, or unresolved closure is a valid outcome.
+3. **Plan 18:** if the player requests destination evidence, the opportunity layer offers the exact site, a permitted evidence equivalent, a clue, or a delay.
+4. **Plan 20:** the graph presents only valid questions and choices; stable IDs carry no mutable campaign authority.
+5. **Plan 21:** conditions distinguish report, discovery, skill interpretation, location availability, and current stock; unknown facts take neutral routes.
+6. **Plan 22:** the selected response is revalidated and sent to the quest/resource/map owners; the graph waits for typed results.
+7. **Later revisit:** the graph recomputes from confirmed quest/resource/map/memory facts and shows the accurate outcome.
+
+Failure at any step has a visible boundary. If a referenced content row is missing, Plan 19's validation catches it. If the quest is not active, Plan 17 rejects the transition. If no legal location exists, Plan 18 defers or offers the authored fallback. If the response condition is unknown, Plan 21 chooses its safe presentation. If a command is rejected, Plan 22 displays no false success. If a saved state lacks an optional fact, the neutral revisit remains valid.
+
+### Endings and cross-quest consequence review
+
+An ending choice is a separate production class because it combines several facts and may permanently settle unresolved content. Its dossier must list:
+
+- every quest/faction/relationship/world fact the ending reads;
+- the owner supplying each fact and how stale values are refreshed;
+- all responses and their consequence previews;
+- whether the player can defer or return before committing;
+- accepted, rejected, duplicate, and old-save outcomes;
+- changes to locations, faction access, surviving characters, resources, and follow-up scenes;
+- expansion-disabled behavior and stable ending ID;
+- final journal/chronicle entry and localized transcript;
+- migration behavior when a prior quest definition has been retired.
+
+Do not calculate a campaign “ending score” inside dialogue unless the current campaign authority already owns that model. If prerequisites span several owners, define the read/commit sequence and how a changed fact is handled. A major choice should not disappear silently when one optional expansion is absent.
+
+### Testable command matrix
+
+Each implemented command family should have a focused behavior matrix:
+
+| Case | Expected state mutation | Expected graph behavior |
+|---|---|---|
+| Valid first request | Owner applies once. | Show result copy and refresh. |
+| Duplicate request | No duplicate state/reward. | Query state and show accepted result once. |
+| Stale precondition | No mutation. | Keep scene open; announce refresh. |
+| Rejected business rule | No mutation. | Show authored reason and alternate route. |
+| Deferred prerequisite | No premature mutation. | Keep task possible and identify next condition. |
+| Missing optional owner | No inferred effect. | Neutral route; preserve critical flow. |
+| Save before request | No pending command required. | Re-evaluate ordinary scene on restore. |
+| Save after applied request | Existing owner stores result. | Query owner and suppress repeat action. |
+| Save after deferred result | Persist only if current owner does so. | Re-query; do not invent a dialogue pending record. |
+| Partial multi-owner completion | Only accepted owner mutations remain. | Render each result distinctly and continue safely. |
+
+Tests should assert both owner state and player-observable feedback. A passing command unit test cannot prove correct dialogue, map, transcript, or focus behavior.
+
+### Production sizing by consequence scope
+
+Cosmetic and information-only scenes can be authored and reviewed in small batches. Quest commands need the current quest owner and save path. Relationship/faction outcomes require independent source and callback review. World changes need the owning system, persistence, UI refresh, and deterministic replay. Endings require full cross-quest continuity and old-save handling. Estimate the schedule from the highest consequence scope in the graph, not the median line.
+
+Keep the first content wave to one low-scope informational scene and one quest-owner transition. Expand to map, resource, relationship, faction, and ending effects only when the previous owner seam has been proven. This sequence gives narrative authors a usable graph and result-copy pattern without leaving half-connected effects in content.
+
+## Continuation pass 7 acceptance
+
+The scope and command package is ready when every response effect is classified and bound to a verified owner, multi-owner steps have explicit dependency and partial-result handling, the shared six-plan trace can be walked from authored definition to later revisit, and any ending work has a dedicated campaign-level contract.
+
+### Recovery after an accepted partial effect
+
+An accepted first step remains true even when a dependent second step fails. If the quest owner accepts a decision and a later resource transfer is rejected, record the quest decision only if its semantics are independent of the transfer. If the decision promised a completed transfer, keep the objective incomplete and expose the accepted intent as pending only through the current quest owner. Do not erase a confirmed owner event to make the graph look atomic.
+
+If a compensating action is needed, it must be a new owner-approved operation with its own preconditions and result. For example, if a location clue has already been revealed but the expedition becomes unavailable, the compensation is not to “undiscover” the location; it may be to defer travel and explain the current route restriction. A story does not require every partial result to roll back.
+
+If there is no safe compensation or continuation, keep the partial state truthful, stop subsequent dependent commands, and route the remaining work to the integrator for an architecture decision. Never use dialogue copy to conceal a partial commit.
+
+### Response confirmation and player trust
+
+For an irreversible choice, state the practical action before execution, then acknowledge the owner's result. Confirmation copy is not a legal waiver; it is a comprehension tool. It should identify the target and consequence in the terms the player knows: destination, resource, faction, or ending. After an owner rejection, do not blame the player for accepting a previously visible option; explain the changed condition and restore a valid path.
+
+When an accepted result is delayed, distinguish waiting for an owner result from waiting for an in-world prerequisite. The former is an operational pending state and should be rare/handled by the host; the latter is a quest state owned by the game. Do not present an indefinite spinner or unresolved request as a story deadline.
+
+## Continuation pass 8 — command lifecycle, owner-specific outcomes, and recovery copy
+
+### Commands grouped by effect scope
+
+Use the consequence matrix from pass 7 to select the narrowest command that matches the player's intent:
+
+| Scope | Command shape | Validation questions | Reversal policy |
+|---|---|---|---|
+| Cosmetic | Choose an authored line/variant. | Is the fact still current for the scene? | Recompute on next presentation. |
+| Local | Request one local interaction change. | Does a current location/scene owner support it? | Owner-defined; no dialogue rollback. |
+| Quest | Request one quest transition/objective result. | Is the instance active and is this transition legal? | New transition or supported recovery, never rewrite history. |
+| Relationship | Record a supported event. | Does the memory/relationship owner accept this event ID? | Later owner event, not subtraction from an arbitrary score. |
+| Faction | Request standing/access outcome. | Does the faction owner define this effect and current precondition? | Explicit owner command, if available. |
+| World | Change route, resource, hazard, or location state. | Which canonical owner validates the state and save path? | Compensating action only through that owner. |
+| Ending | Resolve campaign outcome. | Are all prerequisites current and has the player confirmed? | Usually terminal; any correction requires campaign migration policy. |
+
+A response may emit no command at all. Treat “the player heard a rumor,” “the player considered an option,” and “the player accepted a task” as distinct facts. Listening can reveal authored information; accepting a task calls the quest owner; acting on the task calls whichever owner controls the action.
+
+### Owner response schema and safe host behavior
+
+The host adapter should receive a typed response containing accepted status, stable result/reason ID, canonical affected target, and any owner-supported revision marker. Avoid returning an arbitrary object bag with fields the dialogue layer interprets opportunistically. The host maps the result ID to authored copy, refreshes affected views, and routes to a known node or exit.
+
+On a malformed response, missing owner, unknown reason ID, or thrown operational error, do not infer success. Keep the graph in a safe state, release pending input, restore focus, and offer a neutral error/retry/close path according to the current UI contract. Development diagnostics record stable IDs and failure kind; player-facing copy does not expose internal exceptions.
+
+If the owner reports Applied but the UI refresh fails, durable state remains applied. On next open, query the owner and render the actual state. A presentation fault cannot undo a canonical mutation. Conversely, rendering success before an owner response is a false claim even if the operation is likely to succeed.
+
+### Detailed Unentered Shelf outcome script
+
+The evidence-review scene ends with a player request. The host and owners process one of three routes:
+
+**Request to keep investigating:** Quest owner confirms the active quest can remain open. No inventory command is sent. If the quest owner reports the task already resolved, the graph refreshes to the outcome view. Copy after Applied: “All right. Keep the bundles where they are until we can say more.”
+
+**Request a dispatch lead:** Quest owner confirms the location objective is still relevant; location-selection seam receives its exact/equivalent/clue/delay policy; map owner confirms the resulting discovery presentation. Copy after a clue result: “There is a lead, not a marked destination. We will need to follow it.” Copy after Deferred: “Nothing on the board can take us there today. The question remains open.” If the quest ended during the call, discard the stale location request and show the current quest result.
+
+**Request local reservation:** Quest owner validates the outcome; resource owner applies a supported transfer/reservation; quest owner records the dependent objective after confirmation. Copy after full success: “These are accounted for here. The other shelter's receipt is still missing.” After resource Rejected: “The store count does not support that move. Nothing has been reassigned.” If no reserve command exists, this response must be removed or rewritten as the non-mutating investigation route before release.
+
+Each path produces an independent transcript result and journal/map refresh. None treats the command request itself as proof that a character remembers or a faction approves.
+
+### Recovery and compensation rules by scope
+
+Cosmetic variation can be recomputed. A local presentation change can use its owner's inverse only if that inverse is supported. A quest failure can create a follow-up, but does not delete the original failure. A relationship event can be answered by a later relationship event, not by subtracting trust. A faction action can be renegotiated only under the faction owner's rules. A world resource transfer may need another explicit transfer to compensate; it cannot be silently reversed because later prose changed. An ending correction is not ordinary compensation and requires a campaign migration decision.
+
+For each multi-owner action, specify which earlier effects remain if a later effect fails. If a resource moved but the quest owner cannot record its objective, preserve the resource fact, expose a truthful recovery path to reconcile through the current quest owner, and stop duplicate transfer attempts. Do not rely on journal copy as the only record of a discrepancy.
+
+### Idempotency key and replay cases
+
+Test duplicate protection for:
+
+- rapid double confirm from keyboard;
+- repeated controller submit before UI redraw;
+- panel close/reopen while request resolves;
+- owner result arriving after scene exit;
+- quick save/load after Applied;
+- restore after Deferred;
+- retry after Rejected because a legitimate prerequisite changed;
+- old save with response ID but no optional expansion content;
+- repeated conversation where the option remains visible by design.
+
+The idempotency identity must distinguish separate quest instances when the same authored response appears in two campaigns or rotations. It must also collapse retries of the same commitment. Let the owning authority define the correct key scope; do not guess from scene ID alone.
+
+### Player comprehension for high-impact choices
+
+Before quest, faction, world, or ending commitment, show a short consequence preview that names the known affected target and uncertainty. Example: “Reserve these counted bundles here; the neighboring shelter's receipt will remain unconfirmed.” This preview states intent and known tradeoff, not success. After execution, copy is chosen by owner result.
+
+For a major ending, list irreversible changes and let the player review the current journal/map before confirming where the game supports that behavior. Do not put hidden consequences in the preview simply to surprise the player, and do not promise details whose owner state may have changed since the prior scene.
+
+If the option is unavailable, the reason should match the source: “Need the route clue,” “The expedition preview is no longer valid,” or “The task has already been resolved.” This keeps the narrative voice while respecting actual system state.
+
+### Concurrent input and in-flight request policy
+
+While a consequential request is pending, suppress only duplicate activation of that same response; keep safe close/back behavior available. A second unrelated response must not start against a stale snapshot while the first command is unresolved. If a result is returned after the player exits, route it to the owning quest/journal/map view and do not reopen dialogue automatically.
+
+If the UI receives two identical results, owner idempotency and stable command identity collapse them to one logical effect. If it receives conflicting results for the same request, treat that as an operational fault, query the authoritative owner, and render the current state after reconciliation. Do not choose the last callback or whichever line arrived first.
+
+The host should make command dispatch single-flight per logical response unless the current command owner explicitly supports safe concurrency. This is a presentation/input guard, not the durable duplicate guarantee. Save/restore and owner-level idempotency remain necessary.
+
+### Event facts versus command requests
+
+Keep requests and accepted facts distinct:
+
+- A command request asks an owner to do something.
+- An accepted result states what the owner did.
+- A domain event reports a fact that happened.
+- A dialogue node presents authored text about a fact.
+
+Dialogue must not emit a domain event just because the player selected a response. For instance, selecting “I will take the route” does not mean an expedition started. The current expedition owner reports start success; only then may a quest objective listen for dispatch. A scene can request the operation and show the returned result, but it cannot manufacture the event that satisfies itself.
+
+Where an existing host/event bridge already publishes accepted facts, use that bridge and its owner. Do not subscribe both the panel and quest runtime to a UI callback that can be invoked twice. One accepted operation should have one event path and one observable consequence.
+
+### Re-entrancy and callback ordering
+
+An owner callback may refresh a scene, update a quest journal, alter map opportunities, and dispose the dialogue panel. Define which host component owns the response completion and UI lifecycle. The panel should ignore callbacks after disposal while durable owner state remains intact. A reopened scene queries current state instead of relying on a callback retained by the old panel.
+
+If a quest update triggers a location-selection refresh, let the host process the quest result first, then rebuild Plan 18's derived opportunity set at the next planning entry or stable UI boundary. Do not recursively start a new expedition from the quest callback. If the current architecture cannot order those events predictably, keep the first integration slice synchronous through its existing seam or request a bounded lifecycle decision.
+
+### Journal, map, and transcript reconciliation
+
+After a successful command, refresh only the read models affected by its accepted result: quest transitions update the quest journal; confirmed discovery updates map knowledge; a resource transfer refreshes the relevant stock view; a faction command refreshes access/standing where the current UI exposes it. Do not broadcast every response to every panel or write copied dialogue-outcome state into a new journal.
+
+The transcript says what the character and player said. The journal says what the quest owner accepted. The map says what the discovery/location owner knows. These records can differ without contradiction: the player may hear a rumor that is not yet a map discovery, or accept an investigation without confirming the rumored event. A reconciliation review checks that each surface reports its own authority and does not overstate the command result.
+
+## Continuation pass 8 acceptance
+
+The lifecycle package is ready when command result data is typed and owner-sourced, host failure never invents success, each shared side-quest disposition has a separate proven route, duplicate/retry cases cover scene and save boundaries, and compensation follows the owner of the affected consequence.
+
+## Continuation pass 9 — request/result event cycle, read-model refresh, and promotion map
+
+### Request/result event cycle
+
+Route a consequential conversation through a clear sequence:
+
+1. **Authored graph** exposes a response after its conditions pass.
+2. **UI input** selects one stable response ID and disables only duplicate activation for that pending request.
+3. **Context layer** supplies the minimum validated facts needed for the command request.
+4. **Host adapter** maps the authored command reference to the current domain API.
+5. **Domain owner** checks current preconditions, applies or rejects the operation, and returns a typed result.
+6. **Existing event/refresh path** notifies dependent read models of an accepted fact.
+7. **Dialogue graph** selects a result node from the typed result and fresh context.
+8. **Later revisit/restore** queries canonical owners and renders the current state again.
+
+The request is not the event; the event is not the dialogue line; the dialogue line is not the save. This separation makes it possible to prove which authority accepted a change and to show the same truth after a panel is disposed or the game reloads.
+
+### Read-model refresh ownership
+
+After owner acceptance, refresh only surfaces that display affected facts. A quest state refresh can update journal availability and a dialogue condition. A discovery result can update map fog and expedition opportunities. A resource transfer can update stock/readiness. A faction result can update access options. A relationship event can change an NPC callback when that owner publishes the new fact.
+
+The dialogue panel should not send a broad “refresh all game state” command for every line. It should route through the current host/event seam, and each presentation surface should query its existing owner. If the event bridge lacks a relevant notification, a bounded adapter change may be needed; do not create a second manually synchronized cache.
+
+### Result-node inventory
+
+Each command-backed response should have a result destination for:
+
+- confirmed application;
+- duplicate/already-applied response;
+- expected rejection;
+- in-world deferral;
+- unavailable optional owner;
+- unexpected operational failure;
+- restored current state after scene closure.
+
+Several result types may reconverge when they truthfully communicate the same situation, but never merge “rejected” and “deferred” if the player needs a different next action. A neutral result node can offer a safe exit when the owner cannot answer; it cannot claim the action failed in-world.
+
+### Promotion map by consequence scope
+
+| Promotion wave | Scope introduced | Entry criteria | Exit evidence |
+|---|---|---|---|
+| A | Cosmetic and informational. | Stable graph/data loader; no mutation. | Transcript, localization, and branch reachability. |
+| B | One quest-owner operation. | Current quest command and restore path verified. | Applied, rejected, duplicate, and post-load behavior. |
+| C | Map/discovery and expedition handoff. | Map and expedition contracts independently verified. | Clue visibility, opportunity resolution, preview/start result. |
+| D | Resource or relationship result. | Existing owner supports command and duplicate handling. | Partial result, journal/UI refresh, revisit truth. |
+| E | Faction/world changes. | Current owner plus access/effect semantics and expansion fallback. | Owner result, save compatibility, cross-scene callback. |
+| F | Ending/campaign resolution. | Campaign authority and all relevant quest facts audited. | Terminal result, history, old-save behavior, disabled bundles. |
+
+Do not promote a content package to a later wave because its prose is already written. The scope requires the source API, ownership claim, save/event seam, and focused acceptance evidence for that stage.
+
+### Operational fault containment
+
+If the domain owner throws, returns an unknown result code, or times out, stop dependent commands. Preserve any earlier owner-confirmed facts. The host returns control to a safe scene node, logs stable command/scene/owner IDs, and presents an authored generic recovery line. On the next open, query the owner rather than replaying the request unless its idempotency contract says the retry is safe.
+
+Never convert operational failure into a character's refusal, a faction's betrayal, or an expired quest. That would punish the player for a technical fault and corrupt narrative history. Keep operational diagnostics separate from authored failure states.
+
+### Acceptance trace for the shared vertical slice
+
+The integration handoff should include a trace for one accepted and one rejected outcome:
+
+- response and condition IDs;
+- pre-commit fact snapshot and owner markers;
+- command kind, canonical target, and idempotency scope;
+- owner result/reason;
+- dependent commands sent or suppressed;
+- quest/map/resource read-model refreshes;
+- result node and transcript output;
+- save/restore query and duplicate retry result.
+
+The accepted trace proves the requested action became canonical state. The rejected trace proves no false success was displayed and a recovery/exit remained available. Together they are stronger evidence than a happy-path screenshot or a passing isolated command test.
+
+### Sequencing a response that touches multiple owners
+
+Most dialogue actions should submit one domain command. When one player choice legitimately affects several owners, describe a short ordered choreography rather than inventing a universal transaction authority. Identify the primary command whose acceptance defines whether the choice occurred. Then list dependent commands, prerequisites, and the result shown if a later owner rejects. For example, a choice to deliver supplies can request a transfer from the inventory/resource owner, then notify the quest owner using the accepted transfer receipt. The quest objective cannot complete before the transfer is confirmed.
+
+| Operation shape | Order | If a later step fails | Recovery action |
+|---|---|---|---|
+| One owner, one fact | Submit once to the owner. | Display its typed rejection. | Refresh the option or leave. |
+| Physical transfer plus quest proof | Resource owner accepts transfer; quest owner accepts its receipt. | Transfer remains canonical; quest is pending reconciliation. | Explain partial state and offer a supported follow-up. |
+| Quest plus faction result | Submit the choice to its owner; send dependent faction command only if permitted. | Do not infer standing/access from dialogue. | Refresh faction options and show a truthful pending result. |
+| Discovery plus map disclosure | Discovery owner records the interaction; map reads that fact. | No reveal occurs until discovery is accepted. | Offer another clue route or neutral summary. |
+| Multi-target broadcast | Submit once to canonical owner; event consumers refresh their views. | Do not fan out duplicate writes from the host. | Present owner result and affected read-only surfaces. |
+
+This ordering does not authorize a new coordinator or cross-system save section. Use existing commands and events. If the operation has no owner-defined sequence, idempotency key, or partial-failure semantics, stop promotion and identify the smallest missing contract. Do not automatically compensate with refund, deletion, or reputation reversal unless each affected owner supports that reverse operation and restore behavior.
+
+### Concurrency, duplicate input, and cancellation windows
+
+Treat one visible confirmation as a request with a stable identity scoped by the existing command contract. Rapid double input, controller repeat, delayed callbacks after panel disposal, and retries after load must not duplicate rewards or mutations. Disable or mark the response pending while the request resolves, but retain a safe close/back path where the host lifecycle allows it. Pending presentation is not proof of success.
+
+Cancellation has a boundary. Before submission, leaving the scene cancels the unsubmitted choice. After an owner accepts an irreversible operation, closing the panel closes presentation; it does not roll back the result. If the owner returns a pending result, the player can leave and later query current state. Reopening must not submit again. If a command is stale, refresh relevant facts and invite a new deliberate confirmation.
+
+For compound operations, record each accepted result as it arrives and stop dependent work at the first rejection. Do not collapse partial success into a generic failure. The read model shows which facts were accepted, which remain unresolved, and which next actions are legal. If an operational error occurs after an owner accepted, preserve that fact and let the normal owner/event path recover; never ask the player to repeat a physical transfer to repair a notification gap.
+
+### Command-to-result acceptance matrix
+
+Map every command-bearing response through the complete route:
+
+| Stage | Required evidence |
+|---|---|
+| Availability | Current owner facts and gate result at scene open. |
+| Confirmation | Player-visible target, cost, and uncertainty before submission. |
+| Request | Stable response/command identity and canonical target. |
+| Acceptance | Typed owner result, including duplicate or rejection reason. |
+| Dependent work | Ordered follow-up commands, or proof that none are needed. |
+| Read-model update | Existing event/host route refreshes affected journal, map, actor, faction, or resource views. |
+| Transcript | Exact result line for accepted, rejected, deferred, duplicate, and operational fallback. |
+| Restore | Reopen queries current owners and cannot replay a committed mutation. |
+
+No row may say “dialogue sets flag” unless the current canonical owner is explicitly that flag authority and route, persistence, and consumer contracts are verified. A UI-local boolean can remember that an animation played; it cannot substitute for quest completion, discovery, delivery, reputation, or world state.
+
+The strongest closeout fixture confirms an action, closes the panel before its presentation refresh, restores the scene, and queries all affected owners. The panel must show the canonical result even if the original callback was lost. Repeat the request with the command's supported duplicate identity and confirm there is no second mutation. Pair it with a stale/rejected request to prove the interface explains that no action occurred and still offers a safe exit.
+
+### Partial-result policy for narrative actions
+
+Some choices can produce a truthful partial result: a smaller amount transferred than requested, one destination confirmed while another remains unknown, a route clue found without safe passage, or an agreement accepted by one faction representative but not ratified by its authority. The response model must name the scope of acceptance and preserve unresolved questions. Do not create a synthetic “half complete” campaign state in dialogue; let existing owners retain their individual facts and let quest progress project the combination.
+
+Before writing a partial-result line, identify which operations have already been accepted, which were rejected or deferred, and which were never attempted. A dependent operation that was suppressed is not a rejection. A missing optional owner is not an in-world refusal. An operational failure is not a character's choice. These distinctions determine the next available response and whether the player needs to wait, retry, negotiate, or pursue a different route.
+
+If partial completion creates a follow-up task, that task must have an owner-supported eligibility trigger and a stable link to the original result. Its offer cannot erase the original transcript or repeat already accepted costs. If no follow-up is supported, close with a clear unresolved note and leave the world facts intact. This keeps narrative ambiguity deliberate while making the system outcome auditable.
+
+### Consequence-route closeout
+
+The route inventory is complete when every command-bearing response names its canonical owner, request identity, dependent effects, duplicate behavior, result node, and restore behavior. Mark informational responses so reviewers can confirm that reading dialogue has no hidden mutation. For compound choices, list the accepted sequence and each partial-result branch. A missing command owner or undefined partial-failure rule blocks integration of that action while leaving unrelated prose available for revision. Closeout evidence should show accepted and rejected routes after panel teardown and restore, with current owner state matching the dialogue shown to the player.
+
+## Continuation pass 10 — consequence timing, campaign callbacks, and effect budgets
+
+### Consequence scope and consequence timing are separate axes
+
+The existing scope labels describe which part of the game a result affects. A second review axis describes when the player can observe it. Keep these axes separate: a faction consequence can appear as a current access change or as a later negotiation; a relationship consequence can alter the next line or wait until a supported callback; a quest result can complete now while the world presentation updates at the next normal refresh.
+
+| Timing class | Example observation point | Required source | Player expectation |
+|---|---|---|---|
+| Immediate | Result node directly after accepted command. | Typed owner result. | The line reports exactly what was accepted or rejected. |
+| Same scene | Another node becomes available after the result. | Refreshed read model from the affected owner. | New option appears only if current facts qualify it. |
+| Next visit | An NPC, map, or journal callback reflects the accepted fact. | Durable existing owner fact or supported event. | The player can revisit to see it; no hidden extra command occurs. |
+| Next expedition | Location pool or route information changes for a later dispatch. | Current map/quest/faction/event owner. | The result may change opportunity, not guarantee arrival. |
+| Owner event/window | A later clock, campaign, or faction event reads the result. | Existing event/campaign owner. | Timing is explained as pending; dialogue creates no timer. |
+| Campaign resolution | Ending/campaign authority reads accumulated facts. | Existing ending input owner. | Earlier choices contribute; no single response selects the ending directly. |
+
+The timing class does not authorize a new queue or scheduler. If a result must wait, name the current owner event that will make it visible or make the effect immediate and narrower. “Something may happen later” is too vague to validate. If no owner can produce the callback, keep the consequence local or hold the branch for an architecture decision.
+
+### Callback ledger by player-visible promise
+
+For each consequential response, record the promised effect and the earliest supported moment when the player can verify it. This is an editorial/integration ledger, not a mutable gameplay ledger. Its purpose is to catch promises with no delivery surface and consequences that appear before the player can understand their cause.
+
+| Promise class | Example line before confirmation | Proof after acceptance | Invalid result wording |
+|---|---|---|---|
+| Local help | “I can keep the room clear while you check.” | Current scene changes through its owner, if supported. | “The shelter is safer now” without a world fact. |
+| Quest commitment | “Bring back a verified route and I'll reopen the request.” | Quest owner records accepted instance/objective contract. | “The search is complete” at offer acceptance. |
+| Relationship | “I'll remember that you came back.” | Relationship/memory owner exposes the supported event. | “You have earned my trust” from a purely cosmetic line. |
+| Faction term | “The watch can escort one group through.” | Faction/access owner accepts that limit. | “Everyone can travel freely” from one representative's dialogue. |
+| Resource transfer | “These supplies are yours if the stores count holds.” | Inventory/resource owner confirms exact accepted amount. | “Delivered” before transfer acceptance. |
+| Campaign contribution | “This record will be read at the council.” | Campaign/ending owner accepts the observation input. | An immediate ending verdict before resolution. |
+
+If the owner rejects a requested effect, use result copy that explains what did happen and leaves a valid next action. If the effect is deferred, say what will trigger reevaluation when known. If a dependency is unavailable, do not frame it as an in-world refusal. The callback ledger should map the response ID to all later text and UI surfaces that may mention its consequence, so content can be revised without an untraceable branch.
+
+### Consequence budget and branch-depth control
+
+Give every player choice one primary durable consequence. Add a secondary durable effect only when it follows from the same decision and each owner route is independently justified. A single response that changes quest state, inventory, faction access, a companion relationship, map availability, and an ending observation creates a large verification surface and makes player feedback hard to parse.
+
+Estimate the branch cost with more than the initial node count:
+
+| Cost dimension | What to count |
+|---|---|
+| Owner breadth | Distinct authorities receiving a command or publishing a new fact. |
+| Persistence | Existing save sections that capture/restore affected state. |
+| Follow-up scenes | Later lines and conditions that must acknowledge the result. |
+| Map/expedition impact | Required markers, candidate pools, route states, and fallbacks changed. |
+| Failure surface | Rejection, deferral, duplicate, partial, stale, and operational outcomes. |
+| Localization surface | New text keys, short-choice ambiguity, and variant expansion. |
+| Campaign reach | Old-save, optional-package, and ending-resolution compatibility. |
+
+If one response exceeds the reviewed budget, separate the decisions into understandable commitments or reduce the number of lasting effects. A player should know whether they are accepting the quest, transferring the item, endorsing the faction term, or making all of these choices. Avoid hiding durable effects in a “continue” or “say nothing” response.
+
+### Late-game and major-faction consequence boundaries
+
+Large faction arcs need a written map of which authority owns contact, standing, access, resource exchange, hostilities, and eventual campaign resolution. A dialogue graph can expose negotiation and present terms; it does not calculate the faction's total state from branch visits. If a late-game coalition or rival group is proposed, define what the current faction/campaign owners can represent before writing many endings around it. A missing alliance contract is an architecture gap, not a reason to set several faction values from one node.
+
+An ending-facing choice should usually record an owner-approved observation or commitment. The campaign resolver later reads that fact with other quest, faction, character, and world outcomes. Preserve the distinction between “the player promised,” “the faction accepted,” “the route was used,” and “the campaign resolution incorporated the result.” Each may be true at a different time. The final dialogue should explain what is settled and what remains outside the speaker's authority.
+
+If an expansion is disabled, the baseline campaign must still be able to reach its supported resolution. Optional faction results can enrich the ending only when their absence maps to a neutral/unknown input that the current campaign owner understands. Do not make the player look hostile merely because an optional faction definition or save fact is missing. Any new ending consequence needs a continuity review across all supported quest outcomes, not only its initiating conversation.
+
+### Cancellation, reversal, and revisability
+
+Classify an effect as reversible, compensatable, or irreversible only from the owning system's contract. A reversible map filter is not the same as a delivered item; an abandoned conversation can be reopened, while an accepted faction treaty may need a separate owner-defined termination. Do not offer an undo button for a result whose owner has no reversal operation.
+
+Before command submission, the player can usually back out without consequence. After acceptance, later content may allow a new decision that changes the world again, but it does not erase the fact that the original choice happened. Journal/history copy should use time-appropriate language: a past agreement can remain part of history even after its current access condition ends. When a player can revisit or renegotiate, show the current state and the new cost before confirmation.
+
+For a failed or expired action, separate retry from reversal. A retry attempts an unaccepted operation under fresh conditions. A recovery quest offers another route after a recorded failure. A reversal is a new command that compensates for an accepted result. These are not interchangeable. Route each through the current owner and make the line reflect which operation the player is choosing.
+
+### Temporal callback acceptance trace
+
+Prove one immediate consequence and one delayed callback using the same owner fact. Capture the accepted command and typed result; close the scene; advance only the existing event/dispatch boundary that is supposed to expose the callback; then reopen the affected view and query the owner. The callback should appear once, refer to the correct scope, and avoid resubmitting the initial operation. Repeat after restore and with the optional callback package disabled.
+
+The negative trace changes one precondition so the owner rejects the original request. No delayed success line should appear later. The neutral or recovery transcript remains available; if the callback surface is unavailable, the accepted owner fact is still correct and can be shown through another current read model. This pair demonstrates both player-visible follow-through and the rule that a future line cannot claim an event that never occurred.
+
+### Consequence evidence and player history
+
+The player should be able to understand important accepted choices after the original conversation has closed. Use the current journal, quest history, faction access surface, or relationship presentation as its owner allows. Dialogue transcripts can preserve what was said, but a transcript alone is not proof that an effect succeeded. Keep the spoken promise, submitted request, accepted owner result, and later observed consequence distinguishable in both review documentation and player-facing copy.
+
+| Record/view | What it can establish | What it cannot establish |
+|---|---|---|
+| Conversation transcript | Which line and response the player saw/selected, if the current system retains it. | That a domain owner accepted its command. |
+| Quest journal | Current accepted quest/objective result from quest authority. | Inventory moved unless the resource owner confirms it. |
+| Resource display | Current stock or possession from its owner. | Which dialogue choice caused it without an event/history source. |
+| Faction presentation | Current access/standing from faction authority. | That every individual faction member agrees. |
+| Map marker | Current visible/discovered opportunity from map/expedition owners. | Arrival, objective completion, or a future safe route. |
+| Campaign closure | Resolved result from campaign/ending authority. | A single dialogue line's full meaning outside its input contract. |
+
+When the game has no historical consequence view, do not create a new ledger merely to make a narrative callback possible. Present the current authoritative state where the player already expects it and use dialogue to explain it. A missing causal history may limit how specific the callback can be; choose a truthful generic line rather than backfilling a source that was never saved.
+
+### Out-of-order updates and result reconciliation
+
+Owner events can arrive after the panel closes or after another read model has refreshed. Each event consumer should be idempotent and refresh from canonical state, not assume that it observed every dialogue callback. If two independent accepted events contribute to one quest, the quest owner decides whether both count and in what order. The conversation should render the currently accepted combination after querying that owner.
+
+| Event order | Safe behavior |
+|---|---|
+| Quest result arrives before dialogue callback | Reopen/query shows the accepted result; callback does not replay the command. |
+| Resource transfer succeeds but quest notification is delayed | Preserve transfer; quest remains pending until its owner reconciles accepted evidence. |
+| Duplicate event arrives | Owner's current duplicate contract prevents a second effect; view refresh is harmless. |
+| One owner accepts and another rejects | Preserve accepted fact, suppress dependent effects, and show partial result. |
+| Result is unknown after an operational fault | Keep safe exit and query again through the owner; do not write a narrative failure. |
+| Optional callback package is absent | Show baseline current-state text; canonical outcome remains unchanged. |
+
+If a required synchronization contract is absent, reduce the authored action to one owner or defer it. Do not solve event ordering by coupling the dialogue panel directly to multiple private fields or by writing a manual repair flag. Integration should identify whether the missing piece is the command result, event notification, read-model refresh, or restore query.
+
+### Re-entry contract for consequential scenes
+
+When the player returns to a scene after acting, the graph should determine whether it is a new conversation, a result review, a follow-up offer, or no longer available. Each route has a distinct eligibility source. An accepted quest may keep the scene open to report progress. A terminal result can replace the acceptance node with an aftermath conversation. A follow-up appears only when an owner says it is eligible. The original choice remains part of history and cannot be submitted again by reopening the panel.
+
+Do not use visit count as a substitute for those states. A player who reopens the panel because they misread the text has not made a new commitment. A player who leaves during a pending request has not canceled an accepted operation. A player who revisits after an owner rejection may try again if the current preconditions allow it. The graph's “return” route should query current facts and offer a reliable close/back action in every case.
+
+For command-bearing responses, specify the behavior when an actor moves, a location becomes unavailable, an expansion is disabled, or the underlying quest becomes terminal between visits. An old accepted result should remain readable even if new offers are withdrawn. If no appropriate return scene exists, a current journal/read model can carry the result; do not keep an unusable dialogue node alive just to preserve story history.
+
+### Late-game effect audit by escalation
+
+Large consequences should move through explicit escalation gates: local scene response; current quest/faction/relationship owner accepts its fact; the player can later observe the change; campaign/ending owner consumes supported facts; and only then does the game present a resolution. Each step is independently reviewable and can be optional where the current campaign permits it. A branch does not become ending-critical merely because its dialogue is dramatic.
+
+For a proposed major faction outcome, list who can offer terms, who can accept them, which current owner records access/standing, what world event makes that choice visible, and which campaign input consumes it. Include refusal, no-contact, unavailable-package, and old-save cases. Avoid simultaneously inventing a new faction state machine, a dialogue effect registry, and an ending ledger. If current source owners cannot express the required consequence, the plan records a decision gap and leaves the prose provisional.
+
+### Consequence route severity bands
+
+Use severity bands to choose review depth rather than to give narrative actions a numeric danger score:
+
+| Band | Example | Minimum review surface |
+|---|---|---|
+| Presentation | Tone or animation only. | Transcript and UI focus review. |
+| Local reversible | Temporary scene arrangement or opened conversation topic. | Owner route and scene reopen behavior. |
+| Quest durable | Accepted objective/result or new task. | Quest proof, restore, duplicate, failure, and journal. |
+| Cross-owner | Resource plus quest, or quest plus access. | Ordered result trace, partial failure, event refresh, save owners. |
+| Campaign-facing | Major faction/world fact contributing to resolution. | Full dependency/callback graph, optional package, old-save and ending review. |
+
+If the effect belongs in a higher band, its evidence cannot be reduced because the initial implementation uses a short line. High-stakes consequences cost more because more owners and future content must agree on what happened. The review closes only when the observable result is truthful at the scope and time the player expects.
+
+## Continuation pass 11 — consequence request contracts, result taxonomy, and owner acceptance
+
+This continuation turns the consequence route into an authorable and reviewable contract. It focuses on the information that must travel from a player response to the current owner and back to the scene. The dialogue graph describes what the player can attempt and what they are told; it does not become the place where resources, quest progress, relationships, faction standing, world availability, or endings are stored. Every field below is a planning requirement. Its eventual representation must fit the existing data schema and the existing Core command/event/save seams. If a proposed effect cannot be expressed by a current owner, the plan names the decision gap and holds that effect instead of inventing a shadow authority.
+
+### Route request: minimum semantic envelope
+
+A command-bearing response needs enough meaning to be validated and traced after its originating panel has closed. The exact serialized field names are implementation choices, but authors and engineers should agree on the semantic envelope before expanding content volume. A request can be represented conceptually as follows:
+
+```text
+DialogueActionRequest
+  request_identity
+  source_scene
+  source_node
+  selected_response
+  actor_context
+  target_context
+  requested_operation
+  consequence_scope
+  bounded_parameters
+  preconditions
+  dependency_policy
+  expected_owner
+  expected_result_kinds
+  presentation_key
+```
+
+`request_identity` associates one submitted player action with its response. It must be stable for a retry of the same logical action where the owner contract requires idempotency; it must not make two intentionally distinct choices collapse into one. A request identity is a correlation aid, not a second ledger of already-applied outcomes. The owner remains the place that can answer whether the action is accepted, already applied, rejected, or still unresolved.
+
+`source_scene`, `source_node`, and `selected_response` support authoring validation, diagnostics, and the return route. They should be stable content references when the current catalog permits them. They do not need to be copied into every persistent subsystem. If a result record owned by an existing system carries a source reference, it should be included only through that system's established contract. The dialogue layer must not create a parallel history table merely to preserve attribution.
+
+`actor_context` and `target_context` identify the domain entities involved, such as the speaking character, the quest, or the location. A context value should resolve through its canonical owner. It should not contain a copied resource balance, copied relationship score, serialized location availability snapshot, or another value that may become stale between the panel rendering and submission. The response can display a current read model, then the owner validates current facts on the request.
+
+`requested_operation` names the supported action in owner language: accept a quest, submit evidence, offer an item, request access, record a supported relationship interaction, or invoke another operation that already exists. It should never be a free-form script expression. `consequence_scope` tells reviewers which blast-radius class applies; it does not grant authorization to mutate every system in that class. The owner route and its current validation rules are the authority.
+
+`bounded_parameters` contains only the parameters the operation contract accepts. A resource transfer might name a defined item and quantity range; a proof submission might name a known evidence reference; a relationship response might select a defined interaction kind. Arbitrary dialogue text, an unbounded numeric delta, an authored callback name that can call private fields, or a general-purpose effect list is not a safe parameter. Content validation should reject malformed and out-of-range values before they reach runtime.
+
+`preconditions` describe the facts under which the option is presented and, where appropriate, the facts the owner must recheck at submission. Presentation conditions improve relevance. Owner validation protects state when facts changed after display. These are related but not interchangeable. For instance, a response may appear because the character is at the location and the player has enough medicine in the last observed view; the inventory owner still checks current quantity when the action is submitted.
+
+`dependency_policy` records which effects rely on another accepted result and what the route does when that dependency is unavailable. A compound donation-and-quest response should identify whether quest progress is contingent on accepted transfer evidence. It should not treat the two operations as an unordered list. If the prerequisite is not accepted, dependent operations must be suppressed, returned as deferred when retry can be safe, or routed to a defined alternate result. The author should never have to infer this from the order of entries in a JSON array.
+
+`expected_owner` names the current command owner or an integration seam that can identify it. `expected_result_kinds` helps validate that the authored response has copy for every possible non-operational result. `presentation_key` selects wording or a result node; it is not the canonical fact. A stale response key may be logged and fall back to safe generic wording, but must not alter gameplay outcome.
+
+The semantic envelope deliberately omits a dialogue-owned mutable “applied” flag. After a reload or duplicate event, the owner resolves the result. The dialogue scene may query that result for presentation, but it must not make its own answer authoritative. If the existing owner cannot distinguish accepted from unknown, that is a seam gap to document and schedule; adding a local Boolean only hides it.
+
+### Request lifecycle and submission boundaries
+
+Treat option display, player selection, request submission, owner decision, observable result, and scene re-entry as distinct moments. This prevents authoring copy from promising an effect merely because a button was visible. The lifecycle also creates a stable review trace without requiring a new persistent lifecycle manager.
+
+| Moment | Authoring responsibility | Runtime responsibility | Expected player-facing behavior |
+|---|---|---|---|
+| Candidate construction | Name the operation and scene conditions. | Read current owner views and build eligible options. | Only relevant actions appear; inaccessible choices may be explained if that explanation is safe and helpful. |
+| Option display | State cost, risk, commitment, and intended scope clearly. | Render the validated text and command affordance. | The player can distinguish information, proposal, and commitment. |
+| Selection | Supply a stable response reference and bounded parameters. | Verify the response still belongs to the active scene. | The selected action is visibly acknowledged, and the UI prevents accidental duplicate taps where appropriate. |
+| Submission | Supply owner, dependency, and expected-result metadata. | Dispatch through the established command seam. | Loading/pending feedback does not claim that the world has changed. |
+| Owner resolution | Provide result copy for the supported outcomes. | Validate current state and return a typed result or an explicitly unknown operational outcome. | The scene reflects the result rather than the intent. |
+| Consequence observation | Identify the journal, character, map, or world read model that exposes the accepted fact. | Refresh through the normal event/read-model path. | The player can see changes at the promised scope and appropriate time. |
+| Re-entry | Author an aftermath, retry, or close route. | Query canonical current facts and result history where supported. | Reopening does not repeat an accepted operation or erase a rejection. |
+
+The owner may resolve synchronously or asynchronously. Content should not assume a synchronous response unless the command contract guarantees one. While pending, the scene needs a usable close/back route and should avoid both a false success line and an in-world failure line. If the player navigates away, the request remains under its owner’s lifecycle. The panel does not cancel the operation by disposal. On return, the graph asks for current result state, then offers an appropriate follow-up.
+
+There are three times at which a route can be checked. At authoring or catalog-load time, validate structural facts such as referenced response, owner operation, parameter type, declared result coverage, and localization keys. At option-construction time, evaluate current presentation conditions using current read models. At command time, the owner checks gameplay preconditions and authoritative state. Do not push ownership-specific validation into the content loader, and do not ask the owner to resolve prose, speaker, or translation concerns.
+
+The route should also define a boundary for a response selected from an obsolete view. The player may have left the scene, accepted another option, changed the active actor, or loaded a new campaign context. The host should verify that the selection still belongs to the current interaction. An obsolete UI event should be discarded or reported as stale without submitting a materially different action. If the player deliberately reopens the conversation, the graph reconstructs its current options from owners; it does not replay a stale selection payload.
+
+### Typed result taxonomy and copy obligations
+
+A response should map owner results into a small typed set that is expressive enough for content and narrow enough to validate. Existing public result types take precedence. This table defines planning vocabulary only; it does not mandate that every subsystem adopt one global enum.
+
+| Semantic result | Meaning | Gameplay handling | Dialogue handling |
+|---|---|---|---|
+| Accepted | The owner accepted and recorded the requested fact. | Continue dependent effects only under their declared dependency rule. | Show success language and, if needed, transition to the accepted aftermath node. |
+| Accepted with partial outcome | A supported portion succeeded, with a defined remaining portion unavailable. | Preserve the owner's accepted fact and suppress unsafe dependent work. | Explain precisely what happened and expose the supported follow-up. |
+| Already applied | The same logical request is already represented by canonical owner state. | Return the existing state without reapplying the effect. | Show current aftermath, not a second reward or duplicated commitment. |
+| Rejected by gameplay rule | Current owner state fails an in-world requirement. | Preserve state; return a reason category the owner is allowed to expose. | Use a grounded refusal, blocked route, or changed-opportunity response. |
+| Stale selection | The selected option no longer matches active context. | Do not reinterpret it as a new command. | Refresh choices or ask the player to reopen the conversation. |
+| Deferred | The owner or a declared prerequisite says a safe retry can occur later. | Keep canonical state unchanged unless the owner expressly records a pending fact. | Explain the wait or prerequisite; give a discoverable return path. |
+| Unsupported feature/package | This optional action is not available in the current configuration. | Keep baseline campaign state valid; do not create partial shadow state. | Hide the option when that is the content contract, or show an honest unavailable route when the player has already encountered it. |
+| Invalid authored request | Content violates a schema, reference, or bounds rule. | Reject before gameplay mutation and report through diagnostics. | Use a safe fallback for runtime resilience; treat the content defect as a release-blocking validation failure. |
+| Operationally unknown | The owner cannot establish whether the request committed, often after interruption. | Query or reconcile through the existing owner; never guess and never submit a fresh materially different action as a retry. | Keep wording neutral, preserve safe exit, and offer a current-state check. |
+| Expired opportunity | The canonical owner says the opportunity is no longer available. | Do not fabricate an accepted or failed quest state. | Explain the changed route and offer any authored alternate or closure. |
+
+The taxonomy separates a gameplay refusal from a service or integration failure. “The quartermaster will not take the offer” is an in-world fact only when the relevant owner returned that refusal. “The current request result could not be checked” is operational uncertainty and must not be voiced as the character rejecting the player. Content should not turn timeouts, malformed data, missing optional packages, or owner exceptions into dramatic failure beats.
+
+Every consequential response requires copy coverage for accepted, already-applied, rejected, and operationally-unknown results, even when some branches are generic. A route with a genuine partial outcome or deferred condition must cover those too. A response that cannot reasonably explain every low-probability result may use approved shared text, but the selected text has to remain truthful for that result. Ensure the shared string conveys whether the operation happened, whether the player must act, and whether a follow-up is available. Avoid vague “Something went wrong” text where the player needs to know whether to check inventory or wait.
+
+Result reasons should be classified into player-actionable and non-actionable groups. Actionable reasons may safely communicate a missing item, absent evidence, insufficient standing, unmet public prerequisite, unavailable character, or closed location, provided the owner exposes that fact and revealing it does not undermine discovery. Non-actionable reasons include internal identifiers, serialization problems, network/process faults, content paths, stack traces, and hidden conditions whose premature disclosure would harm the quest. Authors should write the player-facing copy against reason categories, not engine exception text.
+
+### Consequence scope to owner-route matrix
+
+This matrix makes the boundary between scope and ownership explicit. The owner column is intentionally phrased as the existing domain owner rather than a proposed new dialogue service. During integration, replace each conceptual owner name with a verified current API. If more than one owner participates, name the source fact, ordering rule, and failure behavior for each.
+
+| Scope | Example player action | Canonical owner route | Evidence shown to player | Failure boundary |
+|---|---|---|---|---|
+| Cosmetic | Speak gently, ask a question, or show hesitation. | Dialogue presentation/graph state only if the graph already supports ephemeral scene selection. | Tone, gesture, or a short follow-up line. | No durable gameplay fact; a reload may reconstruct the neutral scene unless the current dialogue contract persists that choice. |
+| Local scene | Open a door, place an agreed marker, or reveal a clue in the present encounter. | Existing location/interaction owner for the local change. | Door, map clue, object, or current scene response. | If the local owner rejects, do not show the object as changed; retain a readable fallback route. |
+| Quest | Accept, update, prove, partially complete, or resolve a task. | Existing quest/progress owner. | Quest journal, objective, failure route, or completion feedback from its current read model. | No dialogue-local objective or duplicate completion flag. |
+| Relationship | Apologize, make a defined promise, or deliver a supported personal action. | Existing relationship/character owner when it owns that concept. | Character response or relationship read model, within the current visibility model. | Do not infer a numeric delta from prose or create one relationship tracker per conversation. |
+| Faction | Negotiate access, testify, pledge aid, or deliver faction evidence. | Existing faction standing, access, or quest owner, as source code establishes. | Access, service, dialogue availability, or a journal fact the owning systems support. | Cross-owner dependent effects are gated on accepted evidence; prose alone cannot confer rank or access. |
+| World/location | Signal a route opening, alter a hazard, place a resource cache, or make an area unavailable. | Existing world/location/event owner. | Current map and expedition read models, plus scene descriptions. | No second map registry or dialogue-owned availability field; required quest reachability needs a declared fallback. |
+| Campaign/ending | Ratify a settlement, expose a late-game truth, or supply a campaign resolution input. | Existing campaign/ending authority, if present and verified. | Explicit journal or later scene evidence matching the accepted fact. | A dramatic line is not an ending outcome; absent authority means provisional content and an unresolved decision. |
+
+A response can have multiple scopes only if its contract says which scope is primary and which results depend on it. For example, presenting a signed record might first transfer an inventory item, then submit quest evidence, then make a character's follow-up line eligible. If the transfer succeeds but evidence submission does not, the content needs an honest partial state and a supported recovery route. It cannot imply that the quest owner accepted proof merely because the inventory operation worked.
+
+Each cross-owner operation should specify an ordering graph rather than a prose phrase such as “also update the faction.” The graph contains only supported commands and event/read-model dependencies. It must be acyclic, finite, and auditable. A result event that causes the dialogue graph to offer a line is a read dependency; it is not a second command. If an owner publishes an accepted fact but a downstream refresh is delayed, the player may see a pending presentation state while the canonical fact remains accepted. The UI must not tell the player to repeat the action to repair a refresh delay.
+
+### Worked vertical slice: the sealed transit ledger
+
+This example demonstrates one evidence handoff with distinct command, result, and presentation steps. The record itself is fictional sample content, and its names are placeholders for authoring discussion. It does not add a canon location, character, faction, quest ID, or gameplay owner. The goal is to show how to write a maintainable slice that can be replaced by a verified real content package.
+
+**Player-facing situation.** The player has found a sealed transit ledger during an expedition. A returning clerk recognizes its route marks but cannot tell whether the pages are complete. The available dialogue includes: ask what the marks mean; offer to submit the ledger for comparison; keep the ledger; or ask for the clerk's account of the last dispatch. The first and last responses are informational. Keeping the ledger is an informational/exit action. Submission is the only command-bearing response.
+
+**Authored operation contract.** The submission response points at a quest or evidence owner that already accepts proof for the target objective. Its bounded parameter is the ledger evidence reference. The visible precondition requires the ledger to be available and the clerk to be present. The command owner rechecks evidence ownership and objective eligibility. The route does not set completion directly. If no current quest owner accepts this evidence type, the submission line remains disabled draft content and the plan raises a decision gap instead of adding a dialogue-only quest.
+
+**Accepted result.** The owner records the evidence. The dialogue presents a restrained confirmation: “She turns the seal until its edge catches the light. ‘That is the copy I was afraid had gone missing.’” The current journal or objective read model reports what changed. A later exchange becomes available only when the owner publishes an eligible fact. The clerk's line and the quest state are independent surfaces that should be checked against the same accepted owner result.
+
+**Already applied result.** If the owner says that this evidence was already submitted, the player sees the current state: “The comparison is already entered in the dispatch book. She leaves the ledger open to the mark you brought her.” No reward is repeated, and no new submission is sent. This wording is not a generic success fallback if the owner cannot verify prior application.
+
+**Rejected result.** If the evidence does not match the objective, the owner returns a safe reason. The clerk can say, “The route is right, but this page ends before the seal.” If the player can find a missing leaf, the journal or dialogue supplies a supported clue. If the mismatch should remain hidden, the player receives a less revealing but still truthful response, and a more explicit clue becomes eligible after the associated discovery fact.
+
+**Partial result.** If the owner accepts one proof fact but cannot accept a second dependent one, the accepted fact stays recorded. The clerk might say, “This confirms the south crossing. It does not tell us who signed the return.” The accepted portion appears in current objective state; the player is directed to the missing proof only if the objective supports that path. Do not withdraw the first proof because the second operation failed.
+
+**Operational uncertainty.** If the result cannot be queried after submission, do not give either the success confirmation or the character's rejection. The safe panel says that the comparison cannot be confirmed and that the ledger should not be submitted again until its current status is checked. Re-entry queries the canonical owner. If that owner cannot reconcile the request, integration is blocked for this command-bearing route.
+
+**No package or feature route.** If this narrative package is not installed in a supported configuration, the baseline content does not refer to a missing clerk or a ghost objective. If the player can acquire the ledger in the base game, it must retain a valid ordinary use, sale, storage, or descriptive route through existing owners. Optional expansion content cannot silently consume the only solution to a core quest.
+
+This slice includes the minimum evidence for a route review: authored option; owner command; bounded input; current-state checks; result set; dependency order; success/partial/rejection/unknown copy; observable read model; idempotent revisit; panel-close behavior; and optional-package behavior. It can be implemented through an existing evidence submission path without a dialogue consequence engine. If any of those current seams are absent, the integration checklist should identify the precise gap and its smallest owner rather than generalizing the entire dialogue architecture.
+
+### Bounded parameters and content validation rules
+
+A typed request boundary makes content safer to extend and easier to validate. It also limits the ways that two similar-looking responses can produce inconsistent outcomes. The following validation categories should be present in a future validator or existing catalog integrity checks, using whatever error model the project already owns:
+
+- The action reference resolves to a supported command or known informational response. Unknown operations are invalid content, not a no-op that appears successful.
+- Each command identifies one canonical primary owner. A second owner is listed as an explicit dependent route, with an ordering and partial-result policy.
+- Each parameter matches the operation's declared type, range, identifier grammar, and maximum collection size. Empty, oversized, duplicate, or unknown values have a deterministic rejection at validation or command time.
+- Each condition references a supported fact provider and uses a supported comparison. Authors cannot read arbitrary object members, call game APIs, inspect files, or evaluate executable expressions from content.
+- Each command-bearing response names accepted and rejected presentation routes, plus any possible partial, deferred, duplicate, stale, or unknown route that its owner contract can produce.
+- Every presentation key exists for every supported locale or has a validated fallback. Missing translation cannot change the selected operation.
+- Every referenced quest, actor, item, location, faction, or campaign fact resolves in the applicable content package. Optional-package dependencies are declared and cannot turn a missing reference into a valid empty result.
+- A response is either informational or command-bearing. The validator flags ambiguous entries where prose says “I hand over” but no transfer command is defined, or where a supposedly informational line has a non-empty mutation payload.
+- A response cannot apply the same effect twice through two aliases or both a direct command and a generic callback. Owner-level duplicate behavior remains an additional safeguard, not a substitute for clear content.
+- A command with an ending-level scope declares its verified campaign consumer. If no consumer exists, a provisional narrative label is permitted for planning but not production acceptance.
+
+These checks should report a stable content path and actionable error, not dump all game state. For example, a validator can say that a specific response uses a parameter outside the accepted range or lacks an unknown-result presentation key. It should not print player inventories, credentials, or full serialized saves to explain the defect. Diagnostics belong to the content/validation workflow and do not become player-facing dialogue.
+
+### Safe composition for responses with multiple effects
+
+Compound player actions are tempting because a single line can appear to advance a quest, change a relationship, grant access, and open a location. The production plan should split that dramatic sentence into explicit accepted facts and let current owners determine what each fact enables. This does not require separate player clicks for every operation, but it does require an authored dependency contract that explains the transactional expectation.
+
+Before approving a compound response, answer these questions in order:
+
+1. What is the player's intended commitment? If two independent commitments are hidden in one response, split the choice or make the combined offer clear.
+2. What is the first canonical fact? Identify its owner and accepted result. Costs, item removal, and proof acceptance have different failure consequences and should not be represented as one vague success.
+3. Which downstream facts depend on it? State whether each is mandatory, optional, or merely a presentation refresh. An optional follow-up should not roll back the first fact.
+4. Which owner can reject each step, and what partial state is valid? If partial success would leave the player with an unrecoverable cost or contradictory quest state, redesign the route or use an existing atomic owner command.
+5. How does a retry identify the same logical action? The owner’s idempotency contract must prevent accidental duplication. The UI's disabled button is useful feedback but not durable protection.
+6. What should the player see after a partial or unknown result? The copy must not overstate acceptance or ask the player to repeat an operation whose result is uncertain.
+7. What can be inspected later? The journal, inventory, relationship read model, faction access, or map should report its own current fact. If the only evidence is that a past dialogue line played, the consequence may not be observable enough for the promise made.
+
+When several owners need simultaneous atomicity and none currently provides it, record the architecture decision and keep the content route out of production. Do not mimic a transaction by issuing sequential calls in a dialogue panel and attempting compensating writes on failure. Compensation can be domain-specific, can itself fail, and can mislead save/restore logic. A proper owner seam may accept one command and publish a result after its own supported transaction, but that solution must be grounded in source evidence and approved through current integration governance.
+
+For optional consequences, use a degraded but truthful result. An optional portrait animation may fail while a quest fact remains accepted; the scene should continue with standard presentation. An optional expansion conversation may be unavailable while the base quest result remains valid. Conversely, a required cost or required access change cannot be treated as optional just because its presentation callback is unavailable. The authored dependency graph distinguishes gameplay acceptance from presentation polish.
+
+### Localization, accessibility, and player comprehension
+
+Result copy is part of the command contract because misunderstanding a request can cause the player to make a false commitment. Each consequential option should tell the player whether it asks a question, offers an item, spends a resource, starts a timed obligation, submits evidence, promises an outcome, or closes another opportunity. The player should not need to infer a hidden mechanical cost from a character's ambiguous line.
+
+The UI should label pending and result states in concise language and maintain focus when the response arrives. A result should not rely only on color, sound, animation, or portrait motion. The actionable choice should support keyboard/controller activation and a safe cancel/back action before submission. After selection, feedback should make clear whether input was accepted, still pending, or rejected as stale. These are presentation requirements for the current UI owner; they do not justify a separate dialogue-specific input system.
+
+Localization review should inspect semantic equivalence, not just placeholder substitution. Translators need to know whether a line is an offer, a promise, a conditional result, or a failure message, and whether it is used for accepted versus already-applied outcomes. A short context note can explain the speaker's knowledge and emotional register. Do not combine an operational uncertainty string with an in-world character line if translation could make it sound like a refusal. Do not rely on English punctuation or word order to encode state transitions.
+
+Long prose can remain in the journal or an inspectable transcript while immediate result feedback stays brief. This permits players to confirm consequences without blocking the scene. Accessible text should preserve the key information: what was accepted, what remains, and what the player can do next. The log should identify the current source in player terms; internal request identities and schema errors stay out of the ordinary interface.
+
+### Save, restore, and replay acceptance for a routed consequence
+
+Persistence evidence must follow the current owner of each fact. A dialogue request does not itself require a new save section. For each accepted state, identify the owner’s existing capture/restore responsibility, then verify that the dialogue read path reconstructs a truthful scene from that restored state. If a new owner field or save section appears necessary, this proposal is insufficient authority to add it; the plan should point to the owner-level design decision needed first.
+
+The following scenarios form a focused acceptance trace for one consequential option. They are future integration checks, not a request to add speculative test fixtures in this documentation pass:
+
+| Scenario | Setup and action | Required state after reload/re-entry |
+|---|---|---|
+| First accepted submission | Submit valid evidence once; capture and restore through the current save route. | Evidence remains accepted once, objective state matches, and the accepted dialogue route is available. |
+| Duplicate selection | Dispatch the same logical request twice under the owner contract. | There is one canonical effect; dialogue reports current state without a second cost or reward. |
+| Panel closes while pending | Submit, close the panel, then query after owner resolution. | Closing did not cancel or duplicate the owner command; return state is reconstructed from the owner. |
+| Owner rejection | Submit a validly formed request that fails a current gameplay precondition. | No unsupported mutation is present; safe reason copy and retry/alternate route match current conditions. |
+| Dependent owner rejection | First supported fact succeeds, a declared dependent fact cannot proceed. | First fact remains, dependent effect is absent, and partial-state copy explains the current route. |
+| Unknown operational result | Simulate an interruption at the existing owner boundary, then use its supported reconciliation path. | Dialogue does not invent acceptance or rejection and does not issue a new materially different action. |
+| Old content or package absent | Load a campaign where the optional action is unavailable. | Baseline state and core progression remain valid; no missing node is needed to continue. |
+| Locale fallback | Load a supported locale with a missing optional presentation variant. | Safe fallback text appears; canonical result and selected response remain unchanged. |
+| Stale scene selection | Trigger a response after the active interaction or target has changed. | No action is redirected to a different target; refreshed options use current context. |
+| Visit after quest terminality | Complete, fail, expire, or resolve the relevant task before returning. | The graph presents the matching aftermath or alternate route and cannot resubmit terminal proof. |
+
+Determinism review applies when an owner makes seeded choices or emits ordered effects. Dialogue routing itself should not introduce nondeterministic gameplay by depending on hash iteration order, wall-clock time, or unseeded randomness. A cosmetic variant may use an existing deterministic selection contract if one exists; it must not change eligibility or the canonical outcome. If narrative variety is desired and no supported deterministic selector exists, author a stable sequence or defer the random variation rather than inventing a second RNG.
+
+### Review worksheet for authors and integrators
+
+A reviewer should be able to follow the selected response from authored text through canonical state and back without guessing. The following worksheet is intentionally short enough to attach to an individual route but detailed enough to reveal hidden coupling:
+
+| Review prompt | Acceptable evidence |
+|---|---|
+| What does the player believe they are choosing? | Option wording states commitment, cost, and key condition in clear player language. |
+| Is this information or a command? | One unambiguous response classification; informational text has no mutation payload. |
+| Which system owns the requested fact? | Current public command/result path and its source location are cited during implementation review. |
+| Which values are parameters and who bounds them? | Explicit identifiers and ranges validated by the existing contract. |
+| What can change between display and submission? | Each relevant current precondition is rechecked by its owner. |
+| What results can that owner return? | Result coverage matches accepted, duplicate, rejected, partial, deferred, stale, and uncertain outcomes that apply. |
+| Are effects ordered or dependent? | A finite dependency graph and defined behavior for every rejected prerequisite. |
+| Where does the player observe the result? | Existing journal, map, inventory, character, faction, or campaign read model is named. |
+| What happens when the player returns? | The current graph queries the owner and routes to accepted aftermath, retry, alternate, or closure. |
+| What does restore prove? | A focused current save path reconstructs the same canonical fact and truthful presentation. |
+| What is the package-off route? | Core play remains coherent and required progression has a valid path. |
+| Which review is proportional to the scope? | Presentation, owner, cross-owner, or campaign review matches the effect's severity band. |
+
+The integrator records unresolved answers as explicit blockers, each assigned to the actual architecture or content owner. “Needs better dialogue” is not precise enough if the real problem is that the faction owner exposes no supported access command. “Needs a new save flag” is not precise enough if the existing quest owner already persists accepted proof but the dialogue graph fails to query it. Accurate ownership lets the smallest seam be fixed without enlarging the dialogue plan into a competing game architecture.
+
+### Production slicing and throughput boundaries
+
+Do not author large sets of consequential options before the route contract has one passing vertical slice. Start with an informational conversation that proves graph traversal and a single command-bearing response with a single canonical owner. Add one bounded compound action only after its owner dependency is proven. Then extend to a cross-owner route and a late-game/campaign route when their real owners and integrations exist. This sequence controls production risk while still allowing writers to draft future prose as provisional material.
+
+For each slice, count more than transcript rows. Production cost includes the authored nodes and variants; content references; localization; character voice review; map or journal observation; command wiring; result presentation; save/restore evidence; accessibility checks; balance; optional-package review; and branch regression. A ten-word command choice can have higher integration cost than a page of descriptive prose if it spends resources and changes faction access. Conversely, a long environmental transcript may be low risk if it is informational, stable, localized, and has no gameplay side effect.
+
+Estimate a route using the current project's real workflow rather than an invented universal person-day. Track the following in a content ticket: authoring effort, engineering owner seam, data validation, narrative continuity review, UX/localization review, focused verification, and follow-up ownership. Record actual estimates after the first integrated slices. Use that evidence to decide whether a package belongs in core or an expansion. A feature should not be labeled “cheap” solely because its data file is small.
+
+When content volume grows, group review by owner route and consequence scope. This allows one reviewer to verify that all evidence submissions use the same owner semantics, another to examine the character voice, and a third to confirm map/journal aftermath. Preserve an independent review for rare campaign-critical responses; merging all cases into a single table-driven test can hide the exact ordering and persistence contract that matters. Existing project test policy governs any future test selection.
+
+### Decision log and change control
+
+Before implementation, the plan owner should append a compact decision record to the relevant integration package. The record should state: verified owner and API; exact command/result shape; data schema locations; response to each current result kind; save owner; optional-package behavior; accepted partial states; visible read model; focused verification target; and paths claimed under the live worktree authority. This expansion plan itself does not claim those paths and does not supersede the current integration queue.
+
+If code inspection reveals that a named owner or result does not exist, revise the proposal around the current system or stop at that boundary. Do not infer an API from a class name in an older plan, an index entry, or a test that was quarantined. If the new route overlaps a live owner claim or requires an architecture decision, present the seam and evidence to the foreman/user under current governance. If the proposal is merely too large, reduce it to one traceable slice while retaining the future catalog model in this document.
+
+A content change that alters the meaning of an accepted player commitment requires both narrative and contract review. Copy can be revised freely when the consequence remains the same and the current localization process permits it. Changing cost, eligibility, retry, persistence, or owner ordering is a gameplay contract change, even if only one line changes. Update affected acceptance traces and indexes after any future implementation rather than treating the prose file as proof that runtime behavior exists.
+
+### Pass 11 closeout criteria
+
+This pass's design contribution is complete when the six plans' shared boundaries can be reviewed together: quests describe proof and result ownership; locations distinguish authored anchors from expedition appearances; content packaging resolves references without duplicate authority; the witness-story packet remains provisional and follows owner results; dialogue gates read current facts; and this plan maps dialogue choices to typed owner outcomes and observable state. The current pass supplies a request envelope, result vocabulary, scope-to-owner matrix, worked evidence slice, validation checklist, compound-action review, player comprehension rules, restore trace, and author/integrator worksheet.
+
+It does not establish a final serialized schema, new runtime service, new save store, new faction or ending authority, or production canon. Those decisions require current source and queue evidence. The concrete next implementation step is to choose one existing quest/evidence owner, verify its actual public command and result contract, author a single response against it, claim only the necessary files under the active ownership record, then evaluate the focused acceptance trace. Further prose and content packages can be added once that slice demonstrates the route end to end.
+## Continuation pass 12 — Tidemark settlement decision and late-game consequence rehearsal
+
+This pass supplies a second, distinct case study for consequence routing: a late-game decision about whether a regional coalition should publish a shared measurement procedure for water infrastructure. It builds on the Switchback Sluice scenes from Plan 20, but the decision is not “who gets the water,” and no dialogue response directly opens a gate, transfers a resource, or changes shelter supply. The question is whether the player will endorse, qualify, delay, or decline a proposed public standard when the evidence is incomplete and local people have not agreed to the same terms.
+
+The High Meridian Assembly is a provisional late-game major faction: a network that connects distant shelters through route schedules, shared maintenance methods, and public reports. The Lowwater Stewards remain a local operator group with their own obligations and knowledge. The Assembly can invite a regional discussion; it cannot be assumed to command local infrastructure. The characters from the prior prose packet keep their perspective and limits: Sena is responsible for a mechanism she can touch, Edda for a standard that must be understood elsewhere, and the player decides what they are willing to publicly support.
+
+All names and outcome labels remain draft. This case does not add a new faction state machine, diplomacy ledger, world-consequence registry, campaign-ending store, or save authority. Every candidate effect below must be expressed through a verified existing owner or held as provisional narrative content.
+
+### Decision brief and player commitments
+
+The scene appears only after the player has a supported accepted inspection/result and an eligible late-game offer. The player is told that a regional meeting will publish a statement. The statement may affect how other characters interpret the player's position, but only actual owner-backed outputs can change access, reputation, relationship, map availability, quest progression, or campaign resolution.
+
+The player must understand four possible commitments:
+- **Support a shared procedure:** endorse a common reporting method while explicitly saying that it does not certify the current sluice reading.
+- **Support a local pause:** recommend that the Stewards finish the inspection before the Assembly asks for a comparison.
+- **Request a limited trial:** permit a nonbinding comparison at one eligible site and review the result before making a regional statement.
+- **Decline to endorse:** allow the Assembly to publish its own report while recording that the player has not agreed on behalf of local crews.
+
+These responses are not four cosmetic tones of one predetermined outcome. Each can produce a distinct local conversation and quest result. Standing, access, long-term faction state, physical infrastructure, and ending effects remain conditional on what current owners can represent. A player should never be told that they spoke for the Stewards unless an authorized faction/quest owner says their role permits that representation.
+
+Before the choice, the dialogue summarizes what is known: a clean upper instrument was read; the local casing moved; no water-quality result has been verified; and a shared procedure could make future reports easier to compare. The scene also states what remains unknown: whether the procedure will be adopted elsewhere, whether the next inspection will occur before the meeting deadline, and whether any local group will accept the Assembly's terms. This disclosure prevents a later faction callback from feeling like a consequence the player could not anticipate.
+
+### Consequence sequence and owner boundaries
+
+Treat the meeting as a small sequence of decisions with separate owner results. The authored graph may present a single clear choice, but it must not call several owners and imply an atomic all-or-nothing settlement. The sequence below is the review contract; exact commands are chosen only after current API inspection.
+
+1. The dialogue submits the player's stated recommendation to the current quest/story owner, if it has a supported accepted-result command.
+2. The quest/story owner returns accepted, duplicate, rejected, deferred, or unknown. The scene does not continue as though the recommendation has been recorded until that result is known.
+3. If the accepted route requests a faction response, the current faction owner decides whether the player had standing to make the request and what access/standing result is supported.
+4. Any change to a public notice, site availability, or map hint is requested through the current map/location/world owner. The response is not inferred from the faction line.
+5. A campaign or ending consumer may later read only the accepted facts its current contract understands. If no such owner exists, the ending-level implication stays an authoring note rather than a saved outcome.
+6. Dialogue, journal, map, and faction views refresh from their existing read models. A delayed presentation callback cannot undo a canonical accepted result.
+
+If step 1 accepts a recommendation but step 3 rejects faction standing, the accepted quest/story record can remain while the faction effect is absent. The player-facing copy must distinguish “your recommendation was recorded” from “the Assembly adopted it.” If step 4 cannot publish a map notice, the group may still have discussed the proposal; the map remains unchanged and the line must not say that a route is open. Unknown results follow Plan 22's existing reconciliation contract and do not become narrative refusals.
+
+The smallest viable route is one owner: the quest/story owner accepts a local recommendation and the journal shows it. The faction/region/campaign layers are optional expansion layers added only when their current owners are verified. If the current quest owner cannot store or expose a supported recommendation, even the smallest command-bearing route is blocked; a dialogue panel must not persist an alternate version.
+
+### Branch result matrix
+
+| Player commitment | Immediate accepted fact candidate | Scene/journal acknowledgement | Dependent effect candidate | Safe fallback |
+|---|---|---|---|---|
+| Support shared procedure | Player endorses the method, with a clear caveat about this site's unresolved reading. | The journal says the player supported comparison, not that water was certified. | Faction owner may record a supported request for future standards; campaign owner may consume it only if it recognizes the fact. | Record only the quest/story conclusion or keep the statement local if faction support is unavailable. |
+| Support local pause | Player asks for a new local inspection before regional adoption. | Sena acknowledges the request; Edda records that the proposal is delayed. | Quest owner may create a follow-up objective if supported; temporary inspection location can be requested from the selector. | A report-only or later appointment route remains; the core quest need not wait for the Assembly. |
+| Request limited trial | Player supports one comparison at an eligible site, with no claim of regional adoption. | The journal names the trial as pending or accepted, depending on owner result. | Location owner may make a compatible visit eligible; evidence owner may accept its result later. | If no trial site is available, provide a clue/delay response or replace the request with a nonbinding report. |
+| Decline to endorse | Player does not authorize their own name or role to be used as support. | The scene says the Assembly may continue its own process and that the player did not endorse it. | Faction owner may retain ordinary access; it must not invent punishment. | No mutation beyond a local/quest record if the current owner supports it; otherwise the scene simply closes. |
+| Leave before choosing | No recommendation is accepted. | The player may return while the offer remains eligible. | Opportunity deadline may close only under an existing owner/time contract and prior disclosure. | The main quest retains its valid local conclusion; the player can later receive a closure line. |
+
+An accepted recommendation is not the same as implementation. A faction member can hear a proposal without agreeing. The player can support a trial without choosing its outcome. A trial can be scheduled without a location visit appearing in the next expedition. The trial can happen without the result supporting either side's expectation. Each of those distinctions matters to the quest log and to later dialogue.
+
+### Late-game campaign callbacks without a new ending ledger
+
+The proposal can support late-game writing while avoiding a new store for faction/campaign state. Callback candidates are conditional prose examples, not promises:
+
+- If a current faction owner confirms that the Assembly adopted a shared procedure, Edda can later say that another crew used the same labels to challenge an outdated report. The line names a practical change but does not claim every settlement agreed.
+- If the local pause was accepted and a verified local inspection occurred, Sena can mention what the repair crew measured. Use only the owner-backed inspection result; do not invent a safe water reading.
+- If the player requested a trial but no candidate site appeared, the journal can say “trial not scheduled” and Edda can offer a later route if the owner confirms one.
+- If the player declined endorsement, a later scene can acknowledge the boundary without portraying the player as hostile: “You left your name off the statement. We published the measurements and marked the decision open.”
+- If the Assembly package is disabled, the base game concludes through the local result. It does not mention a missing coalition as a failed dependency.
+- If an old save has an accepted local quest result but no late-game package, the load path preserves the local result and leaves optional campaign copy unavailable. No dialogue loader invents a neutral faction flag.
+
+An ending may consume a supported campaign fact if the existing campaign authority accepts it. That consumer must document whether it distinguishes endorsement, adoption, trial, or mere discussion. If the owner supports only one coarse fact, write an ending line that matches that limited meaning; do not pretend the game stores four distinct outcomes. If no relevant campaign consumer exists, the late-game outcome is a quest/faction callback and not an ending variable.
+
+### Conflict cases and interpretation policy
+
+Cross-owner disagreement should be represented as a known conflict, not settled by whichever panel refreshed last.
+
+| Current owner information | Dialogue situation | Correct response |
+|---|---|---|
+| Quest owner says recommendation accepted; faction owner says player lacks authority to bind the group. | Player endorsed a method but cannot speak for the Stewards. | Preserve the accepted personal recommendation, explain it was not group adoption, and do not apply faction access or standing. |
+| Faction owner says meeting is open; location owner reports the meeting site unreachable. | The Assembly still offers a discussion, but no visit can happen now. | Keep the opportunity visible as delayed or remote only if a supported route exists; do not spawn a false location marker. |
+| Location owner says a trial site was selected; quest owner says trial precondition is not satisfied. | Candidate exists, but the quest cannot accept it as proof. | Treat it as optional exploration or remove it from the trial route; never mark the objective complete from presence alone. |
+| Campaign owner has no field for the recommendation. | Dialogue requests an ending callback. | Keep the branch local or defer the campaign prose; do not add a shadow ending field. |
+| Optional package is absent but old read model contains an unknown faction reference. | Returning player loads a partial profile. | Preserve core facts; hide or neutralize optional text according to the package contract and record diagnostics outside player copy. |
+| One owner returns unknown after a previous request may have committed. | Player returns to the meeting scene. | Query the canonical owner through its existing reconciliation path; show no success or refusal until the fact is known. |
+
+The graph must not resolve contradictions by escalating to a more dramatic answer. A player-friendly interface can say that the local recommendation is recorded while the regional response remains pending. It can offer the journal or a safe exit. Do not write “the Assembly refuses you” when only the meeting location was unavailable, or “Sena agreed” when only a quest record accepted the player's text.
+
+### Branch continuity through expedition and location systems
+
+The limited trial branch connects to Plan 18 only as a request to make an eligible site available. The dialogue does not add a map location, choose a visit, or override active required destinations. The location selector applies its normal priority and fallback policy. If the trial competes with a mandatory quest site, the mandatory site retains its guarantee; the trial waits or uses a compatible alternative only when its proof meaning remains correct.
+
+Before the player accepts a trial, the option should describe that it may require another expedition and that the site is not guaranteed to appear immediately unless the dispatch owner offers such a guarantee. If the selected site is only a reported opportunity, the map communicates that uncertainty. If the visit expires or cannot be selected, the quest owner receives no fabricated trial evidence. A location callback can still report that no trial was scheduled only if that result is backed by the current quest/story owner.
+
+The map may show a public meeting location and a private site clue under different disclosure rules. A hidden location should not leak through a faction marker, quest title, accessible label, or selection order. When the package is off, its site IDs are not referenced by core quests. When enabled, the trial receives its own completion and failure route instead of piggybacking on the main inspection result.
+
+### Player interface and result feedback
+
+The choice screen should present commitment language in one sentence, with a short details view for uncertainty and follow-up. Put the commitment verb first: “Support a shared reporting method,” “Ask for another local inspection,” “Request a limited trial,” or “Decline to endorse.” Avoid “continue” and “agree” when they obscure whether the player is authorizing public use of their name.
+
+Before dispatching a command, show any known cost, time window, location requirement, or nonbinding nature. If the action is command-bearing, the confirmation action uses the existing command path and offers a clear cancel route. Once submitted, disable only the duplicate input while pending; the scene can be safely closed. On accepted result, display what changed and what did not. On rejected result, provide the current owner-approved reason and next route. On unknown result, state that the outcome cannot yet be confirmed and make the journal/revisit path clear.
+
+If an action has no gameplay effect, it should not be presented like a binding world decision. A roleplay line can still matter emotionally, but copy and UI must not imply a faction or campaign state. Conversely, consequential outcomes should not be hidden behind a color pulse or an unexplained variation in music. Provide readable text, transcript access, keyboard/controller focus restoration, and screen-reader labels that match the actual result.
+
+The journal entry should distinguish:
+- **Recommendation made:** player's statement recorded, no adoption claim.
+- **Meeting outcome accepted:** current faction/story owner confirms a response.
+- **Trial requested:** eligible follow-up requested, not yet scheduled.
+- **Trial scheduled:** current location/quest owners expose a valid visit.
+- **Trial completed:** accepted evidence is recorded by its owner.
+- **Regional procedure adopted:** only if a current faction/campaign owner supports this precise outcome.
+- **Unresolved:** no supported result or valid player choice exists yet.
+
+These are labels for presentation when current owner facts permit them; they are not proposed new saved states. If the owner cannot distinguish a status, collapse the copy to the level it actually supports.
+
+### Acceptance trace across packages and saves
+
+Future integration should prove each authored branch against the current owners and their restore path. At minimum, review:
+
+| Trace | Starting condition | Action or interruption | Required result |
+|---|---|---|---|
+| Shared method accepted locally | Valid quest/story offer and supported context. | Submit the recommendation. | Owner records exactly the available fact; dialogue says personal support, not universal adoption. |
+| Faction adopts or rejects | Accepted recommendation; faction owner returns a typed decision. | Reopen meeting. | Callback and access match faction owner state; no inferred group consensus. |
+| Limited trial waits | Trial accepted but no valid location candidate. | Start an expedition. | Mandatory quest locations remain possible; trial status is delayed with a clear reason. |
+| Trial candidate appears | Trial is eligible and selector returns a compatible site. | Visit and submit evidence. | Location presence alone does not complete the quest; accepted proof does. |
+| Player declines | Offer available. | Decline and close dialogue. | No unapproved penalty, cost, or hidden ending effect occurs. |
+| Save after one owner accepts | Quest recommendation accepted; faction result remains pending. | Save, restore, then query. | Accepted fact remains; no duplicate submission; pending faction result remains honest. |
+| Result unknown | A request may have committed. | Close panel and return. | Current owner reconciliation resolves it; dialogue does not send a fresh command. |
+| Core-only load | Optional coalition disabled. | Reach the local conclusion and reopen the quest. | Core route is complete and readable, with no missing faction reference. |
+| Late-game package removed | Optional prior save facts exist. | Load under current supported package behavior. | Existing canonical facts restore under current policy; absent content does not create a new outcome. |
+| Locale changes | A response result is pending or already accepted. | Switch locale and revisit. | Current result remains; copy and accessibility labels preserve commitment meaning. |
+| Conflicting map/quest result | Quest requests trial, map owner has no reachable site. | Open journal and map. | Both show the same delay/uncertainty boundary. |
+| Ending consumer present | Existing campaign owner declares supported inputs. | Reach resolution. | Ending text consumes only those inputs and does not infer missing detail. |
+
+Deterministic behavior applies if location selection or any owner route uses seeded variation. The authored choice outcome itself must not depend on wall clock, hash ordering, or unseeded randomness. A cosmetic line variant can use an existing deterministic selector only if its result never changes eligibility or consequence. An optional random location appearance must not decide whether a required campaign outcome is possible.
+
+### Production sequencing and risk budget
+
+The first integration slice should stop at the local recommendation stored by one verified quest/story owner. It needs one dialogue response, one typed result, one current journal read, and save/restore evidence through that owner. This proves whether the game can support a durable player-authored conclusion without creating a new state authority.
+
+The second slice can add a faction result only after the faction owner and its read model are verified. The third can add the optional trial through current expedition and location owners. A campaign callback or ending interpretation is last, because it has the broadest dependency and content review surface. These are ordering recommendations for future implementation, not live path claims or authorization.
+
+Estimate each layer separately:
+- writing and translation of the four choice families and result variants;
+- quest/story command and read-model mapping;
+- faction availability, access, and result semantics;
+- compatible location selection and required-location interactions;
+- journal/map changes and accessibility;
+- save/restore, duplicate/retry, partial failure, and unknown-result behavior;
+- campaign/ending dependency review;
+- old-save and package-off behavior;
+- focused verification permitted by current test policy.
+
+If the desired ending consequence cannot be represented by the current campaign authority, defer that layer. Do not compensate by writing multiple small faction flags into dialogue, quest content, or the generated visit. Keep a documented open decision with the exact consumer and evidence needed.
+
+### Pass 12 closeout criteria
+
+This decision packet is complete as a design proposal when the player can tell what they are endorsing, the local and regional outcomes remain distinct, each possible fact has one verified owner candidate, the limited-trial branch cannot bypass expedition guarantees, missing optional content preserves the core route, and save/re-entry behavior is explicit. It supplies a late-game faction scenario, branch outcomes, cross-owner conflict cases, interface language, an acceptance trace, and production sequencing while leaving the final schema and runtime architecture to the current project authority.
+
+The next step is not to implement every branch at once. Verify the current quest/story owner and create one accepted local recommendation slice under the live integration queue. If the current owner cannot represent the result, record the seam and keep campaign-facing content provisional. The plan does not claim completion of the game feature, faction, expedition system, dialogue runtime, or ending pipeline.
+
+### Short aftermath exchanges by owner result
+
+These additional exchanges give the late-game decision a restrained human aftermath while keeping each line subordinate to current results.
+
+**Quest/story owner accepts the player's limited recommendation; faction response pending.**<br>
+Edda: “I can record that you asked for a comparison. I cannot call that an agreement.”<br>
+Sena: “Then write both sentences.”<br>
+Journal: “Comparison requested. No regional method adopted.”
+
+**Faction owner confirms adoption after review.**<br>
+Edda: “They accepted the headings and rejected the schedule. That is still more agreement than we had yesterday.”<br>
+The line is eligible only if the faction owner exposes that exact partial result. If the owner supports only “adopted” or “not adopted,” the transcript must use the supported level of detail.
+
+**The requested site never becomes a valid expedition candidate.**<br>
+Sena: “No trial today. The gate does not owe us an answer because we asked for one.”<br>
+Journal: “Trial not scheduled. Local inspection remains available through the accepted route.”<br>
+These lines require a current quest/story result that confirms the delay and cannot be used for an operationally unknown request.
+
+**Player declined endorsement.**<br>
+Player: “I won't put the crews' names under a method they haven't accepted.”<br>
+Edda: “Then I will publish the measurements as mine to carry. Your name stays off the page.”<br>
+That response does not imply the Assembly accepts the player's argument, grants access, or records hostility. Only the relevant owner can support those outcomes.
+
+**Re-entry with no new fact.**<br>
+Sena: “The wheel is still here.”<br>
+This neutral line keeps the scene human without manufacturing memory, progress, or disappointment. If a current owner later supplies a new result, the graph may replace the neutral route with a truthful callback.
+## Continuation pass 13 — Farline correction routing, effect sequence, and player trust
+
+The Farline storyline gives consequence routing a different stress case from Tidemark. Tidemark asks whether a regional group accepts a procedure; Farline asks how a stale route message can be qualified or corrected without claiming that a sound, a courier, a map, and a faction all mean the same thing. The proposal needs to express a chain of narrowly scoped outcomes. It does not authorize a new broadcast engine, world-state flag registry, or direct edits from dialogue into route/map data.
+
+### Correction request stages
+
+A player who reaches the late-game choice can support one of several actions: preserve the old message with a visible qualification, submit a local correction, ask the Compact for a network correction, request a limited trial, or decline to endorse a message. Each action is distinct from its delivery and acceptance.
+
+**Stage A — record the player's scope.** The quest/story owner, if it supports this command, records that the player made a recommendation. The result means only “recommendation recorded.” It does not say that the Compact or Wardens accepted it.
+
+**Stage B — ask the responsible group.** A verified faction/quest owner determines whether the player can request a local or network response. The owner may accept a review request, reject it, or defer it. A missing relationship or standing adapter is unknown, not automatically hostile.
+
+**Stage C — route the correction.** If an existing message/radio/dispatch owner supports correction, it accepts a bounded source, target, and message meaning. It may return received, delayed, rejected, duplicate, or unknown according to its public contract. This plan does not invent a delivery confirmation.
+
+**Stage D — update the visible source.** An existing location, map, journal, or notice owner publishes its own supported result. A journal can say that the player requested correction even if the network never received it. A map should show a changed route only after the travel/map owner says the route status changed.
+
+**Stage E — later interpretation.** A current faction/campaign consumer may use the accepted facts to select an ending callback. It must not infer adoption from the player's initial recommendation or from a message being received.
+
+Each stage's effect is bounded. A later stage can be optional only when the previous accepted result remains truthful and usable. If the package requires all-or-nothing publication but no current owner offers that transaction, reduce the action to one supported owner or defer it.
+
+### Effect-by-effect routing matrix
+
+| Intended player action | Primary owner candidate | Dependent owner, if any | What acceptance means | Partial/unknown behavior |
+|---|---|---|---|---|
+| Tell Yara the signal was heard | Quest/dialogue interaction owner, if a persistent result is required. | None for a purely informational line. | The conversation occurred; no signal origin is asserted. | If nothing durable is supported, keep the response local and do not store a new memory flag. |
+| Submit relay plate inspection | Current quest/evidence owner. | Map/journal read models refresh from accepted fact. | The specific plate was inspected or its condition recorded. | Rejected proof leaves objective unchanged; unknown requires owner reconciliation. |
+| Ask the Wardens to qualify a notice | Current faction/quest owner. | Notice/location owner if it supports the public wording. | The group accepted a local review request or note. | If note publication fails, the request may remain accepted locally while display is pending, if that state is supported. |
+| Request Compact correction | Current faction/communication owner verified in source. | Current world/map/route owner for any route-state change. | The Compact received or adopted a defined correction, depending on exact owner result. | Receipt cannot be voiced as adoption; delayed/unknown results do not close the route. |
+| Request limited trial | Quest/story owner. | Existing location/expedition selector and evidence owner. | A trial is eligible or requested, not necessarily scheduled or completed. | No candidate site means delayed request; no proof is accepted from selection alone. |
+| Withdraw personal endorsement | Quest/story owner only if the choice itself is a durable action. | Faction/campaign owner only if it accepts a supported consequence. | The player no longer personally endorses the proposed wording. | Does not retract a group notice or message without that owner's accepted command. |
+| Publish ending callback | Current campaign/ending authority, only if it exists. | None from dialogue directly. | A supported campaign input influences resolution. | If the authority cannot represent the outcome, omit the campaign claim. |
+
+Names in the owner column are concepts to verify, not API assertions. The project may route a report through a quest owner and never have a separate communications owner. If so, the content should use that current architecture and not introduce a new owner because “message” sounds like its own subsystem.
+
+### Outcome matrix for the principal choices
+
+**Preserve and qualify.** The player asks to retain the old tone record while marking its route confirmation as outdated or absent. The immediate local outcome can be a supported notice entry. A communication owner may propagate it only if current systems support that. Fallback: the local journal carries the qualified result and the player is told the network outcome is unknown.
+
+**Submit a local correction.** The player asks the Wardens to publish “heard here; route not confirmed.” The immediate result can be a local recommendation accepted by the quest/faction owner. The route itself remains unchanged. If the location owner cannot publish a notice, the scene states that the recommendation was recorded but the marker has not changed.
+
+**Request a network correction.** The player asks the Farline Compact to send a scoped correction to the report's known recipients. The option is available only if the owner can identify eligible recipients or supports a broader bounded target. The player sees that submission does not guarantee receipt. If the Compact has no supported recipient model, this remains an editorial proposal and cannot ship as a fake global effect.
+
+**Request a trial.** The player asks for a new inspection at a compatible route/site. The expedition selector considers it after mandatory destinations. A successful selection creates an opportunity to inspect, not an accepted result. If no compatible site can appear, the owner can defer the request, replace it with a clue, or allow a report-only closure.
+
+**Decline endorsement.** The player refuses to let their name be attributed to the correction. This should not block someone else's report unless a current owner says the player's role is actually required. The player receives a clear copy that they did not endorse; the game does not infer hostility or loss of faction standing.
+
+**Withdraw after acceptance.** If the player later asks to withdraw a recommendation, verify whether the request is reversible and whether it has already been distributed. A local recommendation may be amendable. A message already received by other characters may require a correction rather than erasure. If no owner supports recall, dialogue cannot claim that the information disappeared from every recipient.
+
+### Exact player promise and effect budget
+
+A branch contract should use a phrase whose scope matches the result:
+- **“I heard it”** records a personal observation only.
+- **“We inspected the plate”** is valid only for an accepted inspection with the relevant actor/source.
+- **“The Wardens posted a local qualification”** requires the appropriate local result and visible notice.
+- **“The Compact received the correction”** requires a receipt result.
+- **“The Compact adopted the correction”** requires an adoption result distinct from receipt.
+- **“The route is open”** requires current route-owner status.
+- **“Everyone was warned”** requires a supported coverage/recipient result; absent that, never use it.
+- **“The old tone was false”** is too broad unless the accepted owner fact defines that exact conclusion.
+
+The effect budget grows with reach:
+- A local dialogue acknowledgement touches one scene and has low cost.
+- A quest result touches journal/lifecycle and requires persistence and duplicate review.
+- A local notice may change the map/read model and requires refresh and accessibility review.
+- A network correction may affect several sites or characters and requires recipient/partial delivery semantics.
+- A faction adoption may affect access, standing, and later content and requires the faction owner.
+- An ending callback has campaign-wide implications and requires an explicit ending consumer.
+
+If the present game supports only a local quest result, author the smallest true wording at that level. Do not widen scope because later scenes would be more dramatic.
+
+### Branch dependency graph and failure cut points
+
+The main correction route can be represented as:
+
+report encounter → accepted observation → player recommendation → owner acceptance → optional faction/communication response → optional map/notice update → later callback.
+
+At each edge, reviewers identify its type:
+- a content reference links one authored record to another;
+- a read evaluates current owner facts;
+- a command requests a durable/domain action;
+- an event announces an accepted fact;
+- a projection refresh changes presentation only.
+
+No edge is implied by adjacency in a dialogue file. If a message is accepted but a downstream map refresh fails, the message remains accepted if its owner says so; the map stays truthful or temporarily stale under current refresh policy. If the map changes but a later callback is unavailable, the player still sees the current route state. A cosmetic cue failure does not roll back canonical data.
+
+A failure cut point is a place where the route can safely stop without leaving a false claim:
+- before recommendation: no durable decision;
+- recommendation accepted but group request rejected: personal report stands, group result absent;
+- group request accepted but route unavailable: request is pending/delayed, map unchanged;
+- message receipt unknown: do not resend a materially different request until reconciled;
+- map update delayed: journal says route status pending only if the owner supplies that state;
+- optional callback absent: current canonical result remains available elsewhere.
+
+If no safe cut point exists, the proposal needs a single current owner operation with its own transaction/atomicity semantics or a smaller player choice. Dialogue-level multi-call compensation is not acceptable.
+
+### Stale and repeated action scenarios
+
+When the same player returns, the graph reconstructs its options from current results. A previously accepted correction command is not selectable as new work unless an owner supports amendment. A duplicate tap or repeated command returns the owner's existing fact. An expired trial cannot be restarted by selecting an old response; a fresh offer must be created by the current quest owner. An operationally unknown submission keeps the response neutral until the owner reconciles.
+
+A message may have become outdated since the player last saw it. The scene should tell the player that it is now superseded only when a source confirms that update. If the signal event happened before a save and the story owner retains the result, the dialogue can use that fact after restore. If it is merely a past ephemeral sound with no persistent owner fact, do not promise a remembered playback after loading.
+
+A stale selection payload also needs protection. Between rendering and command submission, the player may change location, switch active quest context, or receive a new route status. The owner revalidates. The host can refresh the panel and ask the player to choose again; it cannot redirect the action to another route target.
+
+### Player-facing result copy
+
+| Result | Compact response | Required implication |
+|---|---|---|
+| Local inspection accepted | “The plate is inspected. Its date is unreadable.” | Inspection happened; emission time remains unknown. |
+| Local note accepted, publication pending | “The Wardens recorded the qualification. It is not posted yet.” | Do not claim that others received it. |
+| Compact receipt confirmed | “The Compact received the correction request.” | Receipt only; adoption remains open. |
+| Adoption confirmed | “The Compact accepted the new wording for its notices.” | Scope only to Compact notices; no route status implied. |
+| Trial delayed | “No compatible site is available this expedition. The request remains open.” | Valid only if the owner supports an open request. |
+| Trial unavailable/expired | “The inspection window closed. A report-only conclusion remains.” | This is an in-world timing result, not an operational failure. |
+| Owner rejected request | “The current route owner cannot publish that change.” | State a safe actionable reason if allowed; no blame assigned to character. |
+| Result unknown | “The request cannot be confirmed yet. Check its status before sending another.” | No success, refusal, cost, or narrative failure claim. |
+| Duplicate request | “That correction is already recorded.” | No repeated effects/rewards. |
+| Optional feature absent | Hide the option or show a truthful unavailable route per profile contract. | Core quest remains valid. |
+
+The copy remains concise in the immediate scene. A transcript or journal can carry fuller context. Accessibility labels use the same result meaning and do not announce hidden recipient or adoption facts before their disclosure gate.
+
+### Integration sequencing and closeout gate
+
+Implementation order should reduce the number of owners in the first slice:
+1. Verify one existing quest/evidence owner can record the signal plate observation.
+2. Prove the accepted result appears accurately in the journal and survives its current save path.
+3. Add a local recommendation through the same or another verified current owner.
+4. Add a faction response only when current faction API/result semantics are established.
+5. Add message propagation only if the current game exposes a communications/dispatch owner that supports the required scope.
+6. Add location/map changes only through the current location/travel/map owners.
+7. Add any campaign callback last, after the consumer and its old-save behavior are verified.
+
+Each phase needs exact file ownership from the live ledger, focused verification under the current test policy, and an observable route. No phase is authorized by this plan alone. A missing owner ends the dependency chain at that boundary and triggers the current architecture decision process.
+
+The proposal closes when every player-visible statement has an owner-backed meaning or is explicitly a character belief; every consequential command distinguishes request, receipt, adoption, and route status; optional features preserve a core route; no retry can duplicate a durable effect; and accepted facts remain truthful after restore and scene re-entry. The Farline story then provides a high-value use case for the existing command/result architecture without requiring a second messaging or consequence authority.
+
+
+## Continuation pass 13 — consequence routing rehearsal, branch closure, and long-term callbacks
+
+### Consequence routing contract
+
+A player choice matters only if the game can apply its result, preserve what must persist, and later show an outcome consistent with that result. The Farline message decision is an end-to-end rehearsal for that contract. It begins as a choice of wording and audience, passes through the current quest or dialogue owner, reaches the appropriate existing faction, location, or campaign owner, survives a save when needed, and returns to the player through a visible notice or conversation.
+
+This plan does not authorize a generic effect bus, new world-state store, or additional campaign flag registry. Each effect must be routed through the existing owner for the concern. If an effect has no owner, reduce the promise to a local scene consequence or request an explicit architecture decision. One scene should not write directly into several mutable stores. The owning quest or host route should emit the supported fact or command, and current adapters should perform the established persistence and presentation work.
+
+### Effect envelope
+
+For every meaningful player response, write a conceptual effect envelope containing:
+
+- the originating dialogue choice or quest action;
+- the exact fact the player established;
+- the current owner responsible for the fact;
+- the scope of the outcome;
+- whether it is immediate or delayed;
+- whether it persists through save/load;
+- the visible acknowledgement;
+- any deduplication or replay rule;
+- the fallback when the receiver is unavailable;
+- the point where the effect can be considered resolved.
+
+This envelope makes effect scope explicit. “Warn the route” is a player intention. The concrete result might be that the current notice changes, a courier receives the information, or a later expedition gets a safer route hint. These are different effects and should not be collapsed into an unowned boolean.
+
+### Consequence scopes in practice
+
+**Cosmetic scope.** The wording changes but no state changes. If the player chooses “I cannot confirm the source,” the immediate line can acknowledge that caution. Do not label it as a lasting consequence.
+
+**Local scene scope.** The notice rail displays the chosen wording for the current scene. If local scene state is not persisted, its duration must end with the scene and must not be referenced later as history.
+
+**Quest scope.** The investigation resolves as confirmed mechanical source, plausible reconstruction, unverified report, or unresolved record. The existing quest owner records the terminal outcome if its contract supports that distinction.
+
+**Relationship scope.** Yara or Pell reacts to the player’s method. Use the existing relationship authority only if it captures this kind of change. If not, write an authored response without implying a numerical or permanent relationship shift.
+
+**Faction scope.** A courier network adopts, delays, or refuses the notice. This is a faction consequence only when a current faction owner represents the change. A single courier’s local decision may be described as character or local-scene scope instead.
+
+**World scope.** A route, site, resource availability, or later event changes. This requires the current world/location/campaign owner to expose a supported transition. Dialogue text is not proof of a world change.
+
+**Ending scope.** A major resolution references the player’s communication policy, but only if the campaign’s existing ending logic can consume the fact. Otherwise, the choice remains a quest consequence with a later character callback. Do not promote a local branch into an ending dependency merely to make it sound important.
+
+### Routing table for Farline choices
+
+| Player action | Immediate result | Candidate owner | Persistent proof | Callback |
+|---|---|---|---|---|
+| Post a sourced mechanical explanation | Notice includes source and uncertainty boundary | Existing quest/notice route | Resolved objective outcome, if supported | Courier asks for the maintenance reference |
+| Post a safety warning without attribution | Travelers receive a caution with no asserted cause | Existing notice or faction message route | Notice treatment or equivalent fact | A traveler reports choosing a longer road |
+| Post a comparison request | The route network seeks another record | Existing quest progression | Follow-up task becomes eligible | New card arrives with contradictory interval |
+| Keep the report private | No public message is sent | Quest outcome and local scene | Private/withheld outcome if supported | Yara checks whether the record remains available |
+| Destroy or lose the copy | One proof route closes | Current objective/failure route | Failure-forward state or explicit closure | Another source can reconstruct part of the evidence |
+| Decline to decide | Quest remains blocked or closes as unresolved | Existing quest owner | Clear terminal or blocked state | No false callback assumes a public notice |
+
+The named owners are candidates, not verified APIs. An implementation plan must replace each candidate with the exact current owner and its route. If no supported notice authority exists, the effect can remain within the quest and be reflected by dialogue. A new public-message system is not justified by this table alone.
+
+### Order of operations
+
+A consistent sequence prevents partial side effects:
+
+1. Validate that the response was available in the current dialogue context.
+2. Apply the choice through the established quest/dialogue interaction path.
+3. Update the primary owning state once.
+4. Emit or derive any dependent presentation facts through existing adapters.
+5. Persist through the current save owner if the fact must survive.
+6. Recompute eligibility for follow-up content from the authoritative state.
+7. Refresh the visible journal, map, or notice after the authoritative result exists.
+8. Record enough diagnostic context to explain a failed route without exposing secrets.
+9. Confirm that repeated interaction does not apply the same consequence twice.
+
+The exact technical order depends on the current architecture. This conceptual order exists to identify boundaries. If the current host applies dialogue effects before the quest accepts the interaction, write a narrowly scoped integration proposal; do not rearrange shared seams from this content plan. If a host callback can fail after the quest state changes, the existing pattern must define whether the event retries, is safely idempotent, or surfaces a recoverable error.
+
+### Idempotency and duplicate delivery
+
+A consequence should not duplicate when a player repeats an interaction, reloads after a save point, revisits a hub, or receives the same notice through two eligible routes. This is especially important for rewards and faction communications. The current objective completion should be the authoritative source for whether a reward was granted. A dialogue line that says “the note has been sent” cannot be used as a second independent send trigger.
+
+For each effect, classify replay behavior:
+
+- **Once-only:** the story event occurs once; further interactions show its settled state.
+- **Replace-current:** a notice can be edited, and the current version replaces the previous one if the owner supports that history.
+- **Append-once:** a report is added once using an existing collection owner and stable identity.
+- **Repeatable without state growth:** ambient dialogue can recur without accumulating duplicate consequences.
+- **Retryable delivery:** if delivery failed, the effect can be retried without granting duplicate rewards or changing the chosen wording.
+- **Expired:** the effect is no longer actionable, and the player receives an explicit closure.
+
+Avoid solving idempotency with a new set of shadow flags. Use the current domain identity and completion facts. If the existing state cannot tell whether the effect was applied, that is a specific architecture gap for the owner to assess.
+
+### Failure cuts and recovery behavior
+
+A routing rehearsal should cut the path at each boundary and define a safe response.
+
+**Choice accepted, receiver unavailable.** The quest records the chosen treatment; the notice or courier delivery can wait if its owner supports deferred delivery. The player should see “prepared” or another truthful status. Do not report successful delivery.
+
+**Receiver disappears before callback.** Use an authored alternate carrier, a board notice, or a closure line that reports the missed opportunity. The alternate route must preserve the same essential information. If no route was authored, close the optional callback instead of inventing a voice for the absent character.
+
+**Save occurs after choice but before presentation refresh.** On restore, recompute the visible result from the authoritative choice outcome. Do not replay the choice or apply its effect again.
+
+**Location is unavailable during the effect.** Queue only through an existing event/persistence mechanism. If no such mechanism exists, keep the consequence local or delay quest completion until an available route exists. A dialogue graph should not be an event queue.
+
+**Quest is abandoned.** Clarify whether the choice remains effective. If the player posted the warning and then abandoned the follow-up, the warning should not vanish. If the choice existed only as a proposal and had not been delivered, abandonment may cancel it.
+
+**The player chooses no action.** Keep the conversation available or permit an explicit unresolved closure. Do not auto-select the default branch when leaving the scene unless current interaction semantics clearly require and signal that behavior.
+
+**Conflicting effects are requested.** If another quest has posted an incompatible notice, define whether the player edits, appends, or withdraws it. A last-writer-wins rule may be simple but should not accidentally erase another character’s authored message. If the current notice owner cannot represent conflict, delay the second choice or keep both as separate scene outcomes without claiming a single shared rail.
+
+### Delayed callback schedule
+
+Callbacks should be tied to meaningful story milestones rather than arbitrary real time. Candidate triggers include the next completed expedition, a later visit to Half-Span Shelter, a faction meeting, or a specific campaign chapter. Use whichever conditions the current quest/world owners support. Avoid a hard-coded number of days if the player may remain in the shelter or enter a long expedition loop; that can make the callback appear before its causal event.
+
+A callback record states: earliest eligibility, latest useful eligibility, delivery surface, character-availability fallback, whether it can be missed, and whether it is required for closure. Main-story proof should not depend on an optional callback. A delayed line should be suppressed if its fact has been superseded. For example, if a later expedition established the signal’s source conclusively, an earlier “we still do not know” callback should become a correction or be skipped.
+
+The callback should add one new perspective, not restate the entire outcome. The courier may say, “We sent the warning without the source line.” That establishes the practical choice. A traveler might mention that they waited for daylight instead of crossing at dusk. This is an observed result, not proof that everyone followed the notice. Avoid claiming global behavior from one report.
+
+### Reconciliation of branch outcomes
+
+Four outcome bands make the story’s resolution readable without requiring a separate content universe for each:
+
+- **Established source:** direct evidence supports a mechanical source, but does not prove who altered a copy.
+- **Supported reconstruction:** multiple sources support a likely route or process, with a named unresolved point.
+- **Unverified warning:** the player chose precautionary communication without stating an origin.
+- **Unresolved record:** the player preserved the material or chose not to communicate while acknowledging missing evidence.
+
+These are editorial bands. Actual implementation may encode them through existing quest stages or result IDs. A branch should not derive one band from another by line text alone. The later game can summarize these outcomes through one or two lines and preserve the distinction in any authored content that genuinely depends on it.
+
+When two outcomes lead to the same future event, they can reconverge with a line that acknowledges the different reasoning. When they cause materially different access or trust, they must remain distinguishable in current state. Do not merge outcomes simply to reduce implementation work if the player was promised a meaningful result. Conversely, avoid carrying a distinction into every later scene if it no longer affects the player’s experience.
+
+### Player trust and consequence clarity
+
+The player should understand what kind of consequence they are choosing. Before posting, the UI or dialogue should communicate the immediate audience and confidence: public warning, comparison request, sourced report, or private record. It need not disclose every downstream reaction. The choice remains uncertain, but its scope is legible.
+
+Trust can be damaged by three specific failures: the game promises a route change that does not occur; an NPC attributes a position to the player that they did not select; or a save/load changes which response was chosen. It can also be damaged if the player is punished for an uncertainty they were never shown. Review the wording immediately before and after the choice for this reason. “Warn the travelers that the road may be unsafe” is clearer than “send the message.”
+
+A character may disagree with the player without treating their choice as a moral failure. If Yara preferred an exact record and the player chooses a short warning, she can say that the source detail was lost in the summary. Pell can say the warning reached people sooner. Both observations can be true. The story should not reward the author’s preferred answer through every voice.
+
+### Multi-owner integration map
+
+Before implementation, identify a single route for each seam:
+
+- dialogue selection and response delivery;
+- quest objective/result ownership;
+- location discovery and map visibility;
+- faction access or reputation, if the current system supports it;
+- notice or world presentation, if such an owner exists;
+- save capture and restore for outcome facts;
+- localization and UI rendering;
+- deterministic event ordering where selection is seeded.
+
+The named integrator confirms each seam against current evidence. Builders claim exact paths through the active ownership process. The content package does not edit shared owners or create an alternate route. If no current owner is suitable, the proposal is returned for a decision with: player benefit, required fact, least invasive candidate seam, save implications, deterministic implications, alternatives, and a clear no-go condition.
+
+### Acceptance rehearsal
+
+A future integration should demonstrate the same result from: first-time play; a player who already visited a required site; a fallback site; an interrupted conversation; a save immediately after choosing; a reload before map refresh; an unavailable courier; an expired temporary location; and a repeated interaction. The verification is focused on current affected regions and owners once the integration package is approved. This plan does not run tests or claim coverage.
+
+The content is ready for implementation planning when each choice has an observable immediate result, a verified owner or explicit decision dependency, an idempotency rule, a persistence statement, and a delayed-response policy. A consequence with no player-visible acknowledgement should be questioned. A callback with no persisted cause should be removed. A large ending consequence without a current consumer should remain an expansion hook, not be smuggled into a dialogue node.
+
+
+### Late-game resolution hook: archive, relay, or open record
+
+A late-game scene may return to the Farline decision when a larger route network is being organized. This is an expansion hook, not a requirement for the initial playable slice and not an assumed ending flag. The player can recommend that the community preserve the original record, reinstall a corrected relay notice, or leave both versions available with a clear correction attached. These approaches express different institutional habits: preserve provenance, prioritize a usable current instruction, or keep a public record of disagreement.
+
+The hook is earned only if the earlier quest outcome is available through a current owner. The conversation can acknowledge that the player once chose a message treatment, but it should not overstate the choice as the sole cause of the community’s later policy. Other characters, new evidence, and material shortages may also matter. If the earlier outcome is unavailable in a fresh save or legacy profile, the late-game scene should present the current facts and allow a present-day choice without fabricating a past decision.
+
+The three recommendations should lead to distinct, bounded outcomes if the architecture supports them. An archive route preserves the source copy and adds a correction. A relay route places the concise current guidance where travelers can use it, while a record remains available somewhere suitable. A disagreement route keeps both accounts visible and explains which part is known. The practical result should be observable through an existing location, faction, notice, or campaign owner. If no such owner exists, the scene stays a character discussion and the plan marks a future system dependency.
+
+Failure-forward closure remains valid. If the original record was destroyed, the archive route can preserve a reconstruction with its uncertainty stated. If the relay is beyond repair, the current instruction can be posted at the shelter instead. If faction leadership is absent, the player can document the recommendation without claiming adoption. The goal is to let the story reach an honest resolution under degraded conditions.
+
+This hook is valuable only if it extends the question from “what should this message say?” to “how should a community preserve corrections?” If it merely repeats the initial notice choice at a larger scale, cut it or change its decision. Late-game content should expose a new constraint, such as limited archival space, route safety, or who is allowed to edit public records. No new major faction is required: existing groups and local stewards can disagree through their practical responsibilities.
+
+### Consequence consistency audit across surfaces
+
+The same outcome may appear in a dialogue line, journal entry, map label, inventory item, and later quest offer. These surfaces should agree about the scope and status of the action. A journal can say that the player drafted a warning while the courier has not yet carried it. The map can show a route as uncertain while the character says it is safe to inspect. An inventory item can remain a paper copy even after a notice is posted. Review these cases together rather than validating each surface in isolation.
+
+For every consequence, make a surface matrix with rows for conversation, journal, map, quest availability, location interaction, and save restoration. Mark each surface as required, optional, or not applicable. A required surface gets exact expected wording or state. An optional surface must not contradict the result. “Not applicable” is preferable to inventing a marker merely because another consequence has one.
+
+The audit should include transitions in both directions where allowed: a notice can be revised, a location can be repaired and later damaged if current systems support that, or an active lead can become unavailable. If a transition is one-way, make that explicit and ensure the player understands the commitment before acting. When a result is irreversible, the consequence owner—not a dialogue string—must enforce it.
+
+Finally, compare the consequence outcome after a save and reload. The visible journal, map, and next dialogue offer should be reconstructed from the same authority. If one surface depends on an ephemeral scene variable, it may disagree after restore. Such a defect should be fixed at the existing owner seam before adding more branch content.
+
+### Stop conditions
+
+Do not expand consequence scope until the existing owner is identified and the immediate effect is observable. Stop a proposed branch if its result depends on a new persistence authority, a second campaign flag store, or an unowned notification queue. Keep the scene local, rewrite the promise, or raise the exact architecture question through the established process.
+
+A branch is ready to expand when its state, save path, visible acknowledgement, and repeat behavior are all known. This stop condition protects the story from making promises the game cannot yet keep and gives future integration work a bounded starting point.
+
+### Review the consequence from the receiving side
+
+A consequence should be reviewed not only where the player makes it, but where another character or system receives it. If a courier carries a warning, what do they need to know to act? If a notice is posted, who can read it and when? If a faction refuses it, does the player learn whether the refusal was about the message, the source, or capacity? These receiving conditions make an effect concrete.
+
+The receiver should not be a passive trigger. A character can accept the message but shorten it, delay it, or ask for a source. Such changes require explicit authored options and supported effects. If the scene cannot represent a receiver’s response, keep the outcome local and describe it honestly.
+
+This pass completes the routing review: the player’s intent is recorded, the current owner applies it, the receiver can act within their role, and a later surface reports only what the game can verify.
+
+## Continuation pass 14 — Empty Shift report outcomes, work handoffs, and owner-specific consequences
+
+### Design goal
+
+The Empty Shift story ends when the player chooses what the shelter should do with an unreliable record. It is not enough to display different dialogue. The selected report must have a defined effect boundary, an authoritative owner, a persistence rule if needed, and a later acknowledgement that does not claim more than the game can verify.
+
+This plan does not establish a new workforce simulator, roster authority, food ledger, or heat meter. If current systems expose work assignment, resource allocation, or shelter condition, the integration package should route the outcome through those owners. If those systems are absent or cannot safely represent the proposal, the first release remains a narrative record correction. A fictional change in staffing cannot be represented as a gameplay change merely because the dialogue says it occurred.
+
+### Four report treatments
+
+**Correct the names.** The player recommends replacing a stale assignment with a verified worker list. This option is available only if direct evidence identifies who currently covers the task. The immediate board can be updated through its owner. If the current work system has no assignment consumer, the result is a corrected authored notice without a claim that shifts or shelter conditions changed.
+
+**Annotate the distinction.** The player leaves the names in place but adds that the roster denotes planned coverage rather than confirmed attendance. This preserves existing operations while making uncertainty visible. It is the lowest-risk outcome when the task continues but the named workers cannot be confirmed. A later dialogue can show how another person reads the note, but should not claim the whole shelter adopted a new policy.
+
+**Request another account.** The player delays a correction until the next relevant person can confirm the handoff. This creates a blocked or in-progress outcome only if the current quest owner supports that lifecycle. The journal identifies the missing evidence and a fallback. The task cannot wait forever without an authored expiry or a safe unresolved close.
+
+**Close unresolved.** The player records that the copies match but attendance remains unknown. The investigation completes as an uncertainty-preserving result. This is not a failed quest. Its reward can be informational closure, a visible correction label, or a character response. It cannot grant a “verified assignment” reward.
+
+Each treatment is mutually exclusive for the current record version. A later authorized edit can create a new version if the existing board owner supports revision. The dialogue graph must not write into a record that the quest owner already controls.
+
+### Owner map
+
+| Outcome fact | Candidate authority to verify | Safe narrative result if unsupported |
+|---|---|---|
+| Investigation stage and report treatment | Current quest result/lifecycle owner | Close with a concise authored summary only if quest state is not promised |
+| Roster display or annotation | Existing location interaction or board content owner | Show the choice in dialogue/journal, avoid claiming a persistent board edit |
+| Worker assignment | Existing survivor work/assignment owner, if one exists | State that coverage remains unknown |
+| Meal quantity or reserve | Current food/inventory/resource owner, if applicable | Keep the resource choice as a discussion; do not change a parallel count |
+| Annex access or repair | Current location/maintenance owner | Leave the door or system unchanged and report access limits |
+| Character reaction | Existing relationship owner where persistent; otherwise current conversation | Present a local response without a lasting trust claim |
+| Map marker and route availability | Existing expedition/location owner | Keep the known site visible with its known access state |
+| Later callback | Existing quest/campaign trigger owner | Use the next relevant authored conversation, or omit the callback |
+| Save/restore | Current save-section owner for each persisted fact | Do not persist unsupported derived state in dialogue nodes |
+
+The candidate list is not confirmation that each authority exists. A source audit must replace each candidate with an exact current owner and supported command/event. The plan’s first playable slice can avoid all unsupported owners by limiting effects to quest closure and authored conversation, if that route is available.
+
+### Handoff protocol
+
+The player’s choice should be treated as a recommendation or authorized edit according to the fiction. If Mara controls the board, the player may propose an annotation and Mara may accept it. If the player has explicit authority to update the record, the choice can perform the edit directly. This distinction affects whether the result is immediate or pending. Do not present a player choice as enacted if a character still needs to approve it.
+
+A safe sequence is:
+
+1. Offer the player a clear report treatment with its immediate scope.
+2. Record the chosen treatment through the existing quest/dialogue interaction.
+3. Ask the current board owner to validate whether the action can be applied.
+4. Apply the supported edit once.
+5. If the effect is deferred, expose a pending status and retain the chosen treatment.
+6. Refresh the board/journal/map through their normal presentation routes.
+7. Save through existing ownership.
+8. On restore, rebuild the same board/result state without replaying the choice.
+9. Trigger a callback only after the receiver has actually acted or an explicit expiry occurs.
+
+If the board owner rejects the edit due to new evidence, the game needs a clear re-open or alternate result. The player’s earlier decision remains part of history. A correction is not proof that the player’s earlier choice was foolish; it reflects new information.
+
+### Causal effects and non-effects
+
+The package should separate intended consequence from collateral consequence. A corrected roster might make it easier to coordinate work. It does not automatically increase heat, reduce illness, improve morale, or grant food. Such broader effects require system support and balancing. A physical repair may improve a service if its owner measures that condition, but an authored line cannot substitute for a simulated repair.
+
+Likewise, a character may appreciate that the player asked before assigning their name. That local reaction can be written without claiming a permanent relationship gain. A faction-wide trust effect is inappropriate unless a faction owner represents it and the player was told the report would be shared. A map marker may appear if the player discovered the Annex; the report outcome should not reveal the location to every survivor by implication.
+
+List each proposed downstream consequence as confirmed, candidate, or deferred. The first release should have a small number of confirmed outcomes. Deferred ideas remain expansion hooks and should not appear in the player-facing choice descriptions.
+
+### Failure cuts
+
+**Board was moved.** The player can still report the outcome through the current character or location route. The old map marker may lead to an empty wall only if the scene acknowledges the board’s relocation. Do not keep both board instances alive as independent authorities.
+
+**Named worker leaves.** The record can be annotated as unconfirmed. If the task requires a current worker, present another authored route or close the task without assigning an absent survivor. No automatic replacement should be invented by dialogue.
+
+**Player has no independent source.** Offer the unresolved outcome or a request for another account. Do not select “correct the names” as a default.
+
+**Player chooses correction but no work owner exists.** Apply only the supported narrative/quest result. Tell the player that the record was marked for follow-up rather than claiming work reassignment.
+
+**Save/load interrupts the scene.** Restore the current dialogue or result using the established interaction contract. The player can continue the conversation or see the completed result; the edit must not run twice.
+
+**Character who accepts edit disappears.** The pending edit either remains queued through an existing owner or closes with a notice that no confirmation was received. If neither is supported, do not offer a deferred edit.
+
+**Conflicting quests edit the same board.** Merge through the current board owner with explicit version or overwrite behavior. If no owner exists to resolve conflicts, serialize the edits by requiring the first task to close or remain local.
+
+**Player abandons the quest.** Preserve an edit already applied. Cancel an unapplied recommendation only if the current quest owner can represent that transition and the player was not told delivery already occurred.
+
+### Delayed acknowledgement
+
+The next relevant scene can show the outcome at a practical scale. If annotated, a new sheet carries a small phrase: “planned coverage; attendance not checked.” If corrected, a worker’s name appears only when validated by evidence. If awaiting another account, the board still shows the prior entry with a question mark or other current UI convention. If unresolved, the entry remains but the journal closes the investigation with the stated limit.
+
+Characters should report only what they know. Mara can say she has copied the annotation. Nessa can say who agreed to cover the next shift. Sella can say the meal count is now based on the people expected in the room. None should claim that the whole shelter’s operational performance changed unless the current system measured it.
+
+A callback can be skipped if its character is unavailable. The required closure should remain visible in the journal or current board. No ending depends on a particular callback line. If the outcome later matters to a larger campaign, use the same persisted fact or quest result; do not create a duplicate campaign flag solely for an ending sentence.
+
+### Consequence validation plan
+
+A future implementation package should verify: each response is eligible only after the right context; effect is applied once; the board text matches the outcome; a worker is not assigned without evidence or owner support; resource values change only through their current owner; a pending outcome cannot masquerade as applied; save/restore reproduces the selected result; repeated interaction does not duplicate rewards; and delayed dialogue accurately reports only observed results.
+
+The minimal slice should test one immediate annotation and one unresolved outcome. A separate authorized task can later connect assignments, food, or maintenance if the live code supports them. Focused verification should follow TEST_POLICY.md and the owner’s acceptance gate. This document creates no test file and claims no runtime coverage.
+
+
+### Consequence contract for the Empty Shift
+
+The player’s choice about a roster should create a concrete result without pretending the conversation itself runs shelter operations. A well-scoped outcome says what changed in the record, what remains uncertain, who can act next, and which owner is responsible. It separates record correction from work assignment, resource allocation, relationship response, location repair, and campaign reputation.
+
+The minimal consequence is a quest result plus a truthful acknowledgement. Larger cross-system effects are optional layers and require current evidence that a suitable owner exists. A future plan can extend them, but the current narrative should remain playable if no such extension is approved.
+
+### Effect envelope by outcome
+
+**Correct names after verification.** Primary fact: current assignment is supported by independent evidence. Candidate owner: current work assignment or board content owner. Immediate feedback: corrected entry and journal result. Persistent scope: only the record and any actual assignment the owner accepts. Callback: next shift can acknowledge the new line. If no assignment owner exists, report that the names were corrected on the board but do not state that labor moved.
+
+**Annotate planned coverage.** Primary fact: the roster is a plan, not attendance proof. Candidate owner: current board/location or quest result owner. Immediate feedback: annotation is visible or the journal describes the choice. Persistent scope: the interpretive note. Callback: a later reader asks who will confirm attendance. No automatic resource outcome.
+
+**Request another account.** Primary fact: player deferred correction pending a source. Candidate owner: quest lifecycle. Immediate feedback: the missing source is named and the current record remains. Persistent scope: quest remains active or blocked according to current state model. Callback: new account is offered when an authored milestone occurs. If no such milestone is possible, the player can close as unresolved.
+
+**Close unresolved.** Primary fact: mismatch was observed; attendance was not established. Candidate owner: quest result. Immediate feedback: quest closes and the journal states the limit. Persistent scope: outcome if future dialogue reads it. Callback: a later line does not claim the problem was solved.
+
+**Decline the investigation.** Primary fact: player has not authorized further work. Candidate owner: current quest offering route. Immediate feedback: request remains available or closes as declined according to current policy. Persistent scope: only if future offers need to avoid repetition. No reputation penalty by default.
+
+### How state changes should cross owners
+
+The player’s dialogue choice originates in the current dialogue route. It should not directly mutate a location, character, food count, or work assignment. The dialogue route asks the appropriate quest or domain owner to apply a supported action. That owner validates whether the action is legal and returns its actual result. Host adapters then refresh UI or location presentation from the resulting authoritative state.
+
+This separation matters because a choice can be valid as an idea but invalid operationally. The player may request that Oren’s name be removed, but current evidence may not identify a replacement. The board owner can accept an annotation while rejecting a reassignment. A food owner might accept a count review without changing any inventory amount. The story should describe the action that succeeded, not the one the player hoped would happen.
+
+The owner response should be explicit enough for the host to distinguish applied, pending, rejected, and unavailable outcomes if current contracts support that distinction. If not, simplify the interaction into options whose effects are immediately supported. Do not build an effect queue just to represent pending paperwork.
+
+### Ordering and transactional behavior
+
+A multi-owner branch can fail halfway if the quest is marked complete before a required board change succeeds. The integration design should choose a primary owner and make other effects conditional follow-ups. For example, the quest result can record “annotation chosen”; the board owner then applies the annotation if it can. If the board update fails, the player sees “ready to post” or the quest stays open, according to the current owner’s existing transaction pattern.
+
+Avoid two authorities writing the same result. A dialogue node should not both set the board’s state and emit a command that causes the location host to set it again. The current event/command seam decides which part is authoritative. Idempotency prevents a repeated click or restore from applying the same change twice.
+
+If one consequence must update two independent domains, the owner’s contract should define failure recovery. For example, a verified reassignment might update the work schedule and then refresh meal planning. The game must know whether both are atomic, whether the second is derived, or whether a failed refresh can be retried. This plan does not prescribe infrastructure. It requires the implementation owner to demonstrate the existing pattern before the branch is approved.
+
+### Consequence matrix by surface
+
+| Surface | Correct names | Annotate | Request account | Unresolved |
+|---|---|---|---|---|
+| Dialogue | States what was applied | Explains limited claim | Names missing source | Confirms deliberate closure |
+| Quest log | Complete with verified result | Complete with distinction | Active/blocked if supported | Complete with uncertainty |
+| Map | No pin if no next action | Optional board marker if known | Source route marker | No active quest marker |
+| Board | New names only if supported | Visible note if supported | Existing copy remains | Existing copy with unresolved status |
+| Food/work UI | Changes only through verified owner | No change unless separately chosen | No change yet | No change |
+| Character callback | Confirms assigned action | Reports who understood note | Supplies new account | Acknowledges limits |
+| Save restore | Outcome reconstructed | Annotation preserved if owner persists | Active route restored | Terminal result remains |
+
+If a surface is unsupported, its row becomes not applicable. Do not invent a map marker or work-panel update because the table includes a column.
+
+### Delayed effect and callback contract
+
+A delayed callback must have a trigger that is already expressible: a later quest stage, a return visit, a completed expedition, a scheduled world event, or another current milestone. The callback should not depend on the user spending exactly two days in a particular place unless a reliable current time system supports that. An arbitrary delay can become immediate for a player who waits or never occur for a player who travels differently.
+
+Before firing, check that the underlying outcome is still current. If the player revises the roster or new evidence supersedes an earlier report, the callback should use the latest accepted state or explicitly mention the correction. A callback that says “the board stayed as you wrote it” is invalid if another authorized actor changed it. When the owner cannot persist revisions, keep the callback local and avoid referring to history beyond the current quest outcome.
+
+If the intended speaker is absent, an alternate medium can convey basic closure: a board annotation, a short note, or another character’s firsthand observation. The alternate source must not claim access to private dialogue. Optional personal reaction can be lost; operational closure should remain available when the main quest depends on it.
+
+### Recovery and consequence reversibility
+
+Some outcomes can be revised; others should be final. An annotation can be updated after another account arrives if the current board owner supports revisions. A meal already served cannot be unserved. A character’s earlier statement cannot be erased. A public accusation may require an explicit retraction rather than a silent flag flip. The plan should label each effect as reversible, compensatable, or final.
+
+**Reversible:** a board annotation can be replaced with a newer note. Preserve provenance only if the current owner supports it.
+
+**Compensatable:** a route was delayed; the player can arrange a later handoff, but time has passed.
+
+**Final:** the player disposed of the only copy or openly accused someone. Offer a repair route without pretending the prior action never happened.
+
+A player should know when a choice is final. The game can use a confirmation step if it matches current UX conventions and consequence magnitude. Do not add confirmation dialogs for ordinary dialogue flavor.
+
+### Possible failure states
+
+**Effect rejected.** The relevant owner rejects the requested change. Report the reason and offer a narrower alternative, such as annotation instead of reassignment.
+
+**Receiver absent.** Keep a pending action only if current architecture can own it. Otherwise offer a note or a later conversation.
+
+**Evidence contradicted.** New information disproves an earlier interpretation. Preserve the original choice’s context and allow correction.
+
+**Duplicate event.** The same dialogue action is submitted twice. The owner returns the existing result and no duplicate reward or assignment occurs.
+
+**Save restore mismatch.** The journal and dialogue disagree after reload. Resolve through the authoritative owner and focused verification; do not add a second copy of the state.
+
+**Location removed from the build.** The record references an unshipped location. The content validator blocks release or the quest maps to a tested equivalent.
+
+**Optional system deferred.** Work or food simulation cannot be affected. The narrative outcome remains local and clearly describes the board/report only.
+
+### Player expectation and ethics of failure-forward outcomes
+
+A failure-forward route should not feel like the game is laundering a bad outcome. If the player accuses Oren and later evidence contradicts them, a correction scene can let the player retract the claim, offer an apology, or acknowledge uncertainty. The response is about repairing a relationship, not awarding a clean-slate score. If the player corrects a roster prematurely, the board may need an amended note. This consequence should be understandable from prior dialogue.
+
+If the player preserves a questionable assignment and a later task goes uncovered, do not imply that a single player choice caused all subsequent hardship. Show the causal facts: what the player knew, what the record said, and what changed later. The world can respond to the decision without moralizing. Conversely, a cautious choice should not guarantee that no one is harmed. The game preserves uncertainty both in evidence and in outcome.
+
+### Late-game bridge
+
+At a later chapter, the player may be asked to help establish a shared shift-record practice across several shelters. This is not a new faction and does not require a universal roster platform. It can be a policy choice among record labels: planned, covered, worked, and confirmed. The player might choose to preserve multiple stages or keep the sheet brief. Each option affects how later characters interpret work history only if existing campaign and dialogue owners can read the chosen result.
+
+This late-game bridge should be considered only after the local story works. It creates a new design question—how to keep records useful during crisis—rather than simply raising the same roster issue to a larger map. It may unlock a character conversation or a location board variant. A broad mechanical effect on survivor assignment is a later architecture proposal, not implied content.
+
+### Integration sequence
+
+1. Verify current dialogue command/effect route.
+2. Verify current quest lifecycle and result representation.
+3. Identify actual board/location owner, if any.
+4. Confirm whether work, food, or maintenance systems expose a supported command.
+5. Choose a narrative-only first slice if domain owners cannot safely receive effects.
+6. Claim exact files under live worktree ownership.
+7. Implement one immediate result and one unresolved result.
+8. Prove save/reload and duplicate-interaction behavior in the focused target.
+9. Add a delayed callback only after the outcome is observable.
+10. Expand cross-system consequences under separate acceptance once evidence supports them.
+
+### Acceptance criteria
+
+The story consequence is ready when: the player can predict the immediate scope; each effect has one current owner; no panel or dialogue callback becomes a parallel authority; unsupported work/food changes are omitted; repeated selection is safe; save restoration is truthful; callbacks use verified outcomes; and every non-success route still closes or remains explicitly active. The plan remains documentation-only until the required owners and integration authorization are confirmed.
+

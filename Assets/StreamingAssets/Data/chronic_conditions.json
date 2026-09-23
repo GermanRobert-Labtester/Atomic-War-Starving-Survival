@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "conditions": [
+    {
+      "condition_id": "cond_chronic_limp",
+      "display_name": "Chronic Musculoskeletal Limp",
+      "condition_type": "mobility",
+      "severity": "mild",
+      "cause": "injury",
+      "is_permanent": true,
+      "capability_penalties": {
+        "movement_speed": 0.20,
+        "combat_effectiveness": 0.10
+      },
+      "recommended_accommodation_id": "accom_cane_crutch",
+      "description": "Poorly knit femur fracture resulting in reduced stride length and chronic joint stiffness."
+    },
+    {
+      "condition_id": "cond_partial_blindness",
+      "display_name": "Radiation Cataract Amblyopia",
+      "condition_type": "vision",
+      "severity": "moderate",
+      "cause": "radiation",
+      "is_permanent": true,
+      "capability_penalties": {
+        "combat_effectiveness": 0.30,
+        "learning_rate": 0.15,
+        "crafting_quality": 0.20
+      },
+      "recommended_accommodation_id": "accom_magnifying_lens",
+      "description": "Dense corneal clouding induced by high acute ionizing doses in one eye."
+    },
+    {
+      "condition_id": "cond_respiratory_damage",
+      "display_name": "Pulmonary Ash Fibrosis",
+      "condition_type": "respiratory",
+      "severity": "moderate",
+      "cause": "environmental",
+      "is_permanent": true,
+      "capability_penalties": {
+        "work_speed": 0.25,
+        "movement_speed": 0.15
+      },
+      "recommended_accommodation_id": "accom_inhaler_respirator",
+      "description": "Reduced tidal volume and chronic shortness of breath caused by silica fallout inhalation."
+    },
+    {
+      "condition_id": "cond_tremors_neurological",
+      "display_name": "Heavy Metal Neurotoxic Tremors",
+      "condition_type": "neurological",
+      "severity": "moderate",
+      "cause": "chemical",
+      "is_permanent": true,
+      "capability_penalties": {
+        "crafting_quality": 0.30,
+        "combat_effectiveness": 0.25
+      },
+      "recommended_accommodation_id": "accom_stabilizing_brace",
+      "description": "Involuntary motor tremors of the hands resulting from industrial lead and mercury ingestion."
+    },
+    {
+      "condition_id": "cond_hearing_loss_moderate",
+      "display_name": "Acoustic Blast Trauma",
+      "condition_type": "hearing",
+      "severity": "moderate",
+      "cause": "injury",
+      "is_permanent": true,
+      "capability_penalties": {
+        "social_interaction": 0.20,
+        "combat_effectiveness": 0.10
+      },
+      "recommended_accommodation_id": "accom_hearing_trumpet",
+      "description": "Tympanic membrane rupture following close-range ordnance detonation."
+    },
+    {
+      "condition_id": "cond_chronic_joint_pain",
+      "display_name": "Degenerative Post-Traumatic Arthritis",
+      "condition_type": "physical",
+      "severity": "mild",
+      "cause": "age",
+      "is_permanent": true,
+      "capability_penalties": {
+        "work_speed": 0.15,
+        "movement_speed": 0.10
+      },
+      "recommended_accommodation_id": "accom_analgesic_tincture",
+      "description": "Chronic inflammation and morning stiffness in weight-bearing joints."
+    }
+  ],
+  "accommodations": [
+    {
+      "accommodation_id": "accom_cane_crutch",
+      "display_name": "Carved Ash Walking Cane",
+      "accommodation_type": "physical",
+      "effective_bonus": 0.15,
+      "maintenance_cost_items": ["scrap_wood"],
+      "description": "Ergonomic walking stick offloading joint pressure and restoring walking stability."
+    },
+    {
+      "accommodation_id": "accom_magnifying_lens",
+      "display_name": "Monocular Jeweler Loupe",
+      "accommodation_type": "sensory",
+      "effective_bonus": 0.20,
+      "maintenance_cost_items": ["glass_lens"],
+      "description": "Precision magnifying optical lens assisting close-up crafting and reading."
+    },
+    {
+      "accommodation_id": "accom_inhaler_respirator",
+      "display_name": "Nebulizing Herbal Inhaler",
+      "accommodation_type": "medical",
+      "effective_bonus": 0.18,
+      "maintenance_cost_items": ["medicinal_herbs"],
+      "description": "Portable aerosol inhaler delivering bronchodilator extract for respiratory relief."
+    },
+    {
+      "accommodation_id": "accom_stabilizing_brace",
+      "display_name": "Tendon-Tension Forearm Brace",
+      "accommodation_type": "physical",
+      "effective_bonus": 0.20,
+      "maintenance_cost_items": ["leather_straps", "scrap_metal"],
+      "description": "Rigid aluminum-and-leather arm harness damping peripheral involuntary tremors."
+    },
+    {
+      "accommodation_id": "accom_hearing_trumpet",
+      "display_name": "Resonant Copper Ear Horn",
+      "accommodation_type": "communication",
+      "effective_bonus": 0.15,
+      "maintenance_cost_items": ["scrap_metal"],
+      "description": "Acoustic passive amplifier focusing directional speech frequencies."
+    },
+    {
+      "accommodation_id": "accom_analgesic_tincture",
+      "display_name": "Willow-Bark Analgesic Salve",
+      "accommodation_type": "medical",
+      "effective_bonus": 0.12,
+      "maintenance_cost_items": ["medicinal_herbs", "clean_water"],
+      "description": "Topical salicylic compound dulling chronic joint pain during work shifts."
+    }
+  ]
+}

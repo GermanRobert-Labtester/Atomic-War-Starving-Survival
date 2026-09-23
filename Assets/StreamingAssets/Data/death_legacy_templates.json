@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "template_id": "template_standard_survivor",
+      "name": "Standard Survivor Testament",
+      "default_category": "all",
+      "dispute_probability": 0.15,
+      "bereavement_comfort_scale": 1.0,
+      "sentimental_value_bonus": 50.0,
+      "description": "Default last will allocating personal belongings to designated companions with moderate dispute risk."
+    },
+    {
+      "template_id": "template_veteran_scavenger",
+      "name": "Veteran Scavenger Bequest",
+      "default_category": "tools",
+      "dispute_probability": 0.25,
+      "bereavement_comfort_scale": 1.25,
+      "sentimental_value_bonus": 75.0,
+      "description": "Hard-earned wasteland tools and weapons bequeathed to apprentices or expedition partners."
+    },
+    {
+      "template_id": "template_elder_guardian",
+      "name": "Elder Guardian Legacy",
+      "default_category": "valuables",
+      "dispute_probability": 0.05,
+      "bereavement_comfort_scale": 1.80,
+      "sentimental_value_bonus": 100.0,
+      "description": "Respected elder survivor whose legacy and keepsakes provide profound emotional solace to the community."
+    },
+    {
+      "template_id": "template_fallen_soldier",
+      "name": "Fallen Sentinel Honors",
+      "default_category": "weapons",
+      "dispute_probability": 0.20,
+      "bereavement_comfort_scale": 1.50,
+      "sentimental_value_bonus": 80.0,
+      "description": "Combat defender will leaving protective gear and munitions to fellow squad members."
+    },
+    {
+      "template_id": "template_medic_healer",
+      "name": "Physician's Dispensation",
+      "default_category": "medical",
+      "dispute_probability": 0.10,
+      "bereavement_comfort_scale": 1.60,
+      "sentimental_value_bonus": 70.0,
+      "description": "Medical supplies and anatomical journals passed down to ward apprentices."
+    },
+    {
+      "template_id": "template_solitary_drifter",
+      "name": "Drifter Common Trust",
+      "default_category": "all",
+      "dispute_probability": 0.35,
+      "bereavement_comfort_scale": 0.75,
+      "sentimental_value_bonus": 30.0,
+      "description": "Unattached survivor without clear heirs; items default to shelter commons with higher contention."
+    }
+  ]
+}

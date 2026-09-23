@@ -178,7 +178,6 @@ public partial class MusterAtlasPanel : Control, IBindablePanel
 
         body.AddChild(actionRow);
         _shell.SetContent(body);
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("MUSTER DETAIL");
         RefreshView();
     }
 

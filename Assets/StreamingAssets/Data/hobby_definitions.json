@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "hobbies": [
+    {
+      "hobby_id": "hobby_woodcarving",
+      "name": "Woodcarving",
+      "category": "Crafting",
+      "required_facility": "workshop",
+      "base_morale_bonus": 6.0,
+      "description": "Whittling scraps of timber into small figurines and practical utensils."
+    },
+    {
+      "hobby_id": "hobby_painting",
+      "name": "Oil & Charcoal Painting",
+      "category": "Creative",
+      "required_facility": "studio",
+      "base_morale_bonus": 8.0,
+      "description": "Depicting remembered landscapes and shelter life on scavenged canvas and sheet metal."
+    },
+    {
+      "hobby_id": "hobby_reading",
+      "name": "Literature & Philosophy",
+      "category": "Intellectual",
+      "required_facility": "library",
+      "base_morale_bonus": 5.0,
+      "description": "Quiet study of surviving pre-war texts, treatises, and technical journals."
+    },
+    {
+      "hobby_id": "hobby_instrument",
+      "name": "Acoustic Music & Strings",
+      "category": "Creative",
+      "required_facility": "common_room",
+      "base_morale_bonus": 8.0,
+      "description": "Playing improvised string instruments to raise communal spirits."
+    },
+    {
+      "hobby_id": "hobby_chess",
+      "name": "Chess & Tactical Games",
+      "category": "Social",
+      "required_facility": "common_room",
+      "base_morale_bonus": 6.0,
+      "description": "Engaging fellow survivors in deep turn-based matches of intellect and wits."
+    },
+    {
+      "hobby_id": "hobby_botany",
+      "name": "Botanical Pressing",
+      "category": "Collecting",
+      "required_facility": "garden",
+      "base_morale_bonus": 5.0,
+      "description": "Preserving and classifying mutated wasteland plant specimens in field albums."
+    },
+    {
+      "hobby_id": "hobby_calisthenics",
+      "name": "Calisthenics & Conditioning",
+      "category": "Physical",
+      "required_facility": "gym",
+      "base_morale_bonus": 7.0,
+      "description": "Rigorous bodyweight exercise routines maintaining muscle tone and mental focus."
+    },
+    {
+      "hobby_id": "hobby_tailoring",
+      "name": "Embroidery & Tailoring",
+      "category": "Crafting",
+      "required_facility": "workshop",
+      "base_morale_bonus": 6.0,
+      "description": "Embellishing and repairing durable work clothing with intricate personal patterns."
+    },
+    {
+      "hobby_id": "hobby_coin_collecting",
+      "name": "Pre-War Coin Collecting",
+      "category": "Collecting",
+      "required_facility": "none",
+      "base_morale_bonus": 4.5,
+      "description": "Cataloging preserved historical coinage, mint marks, and commemorative medallions."
+    },
+    {
+      "hobby_id": "hobby_storytelling",
+      "name": "Campfire Storytelling",
+      "category": "Social",
+      "required_facility": "common_room",
+      "base_morale_bonus": 7.5,
+      "description": "Recounting folk tales, survivor survival legends, and oral histories around evening lamps."
+    }
+  ]
+}

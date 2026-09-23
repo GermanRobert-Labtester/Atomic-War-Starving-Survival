@@ -60,6 +60,7 @@ namespace AtomicWar.GodotApp.World
         private ShelterAssignmentHostSession? _shelterAssignments;
         private Func<string, string>? _customAssignmentResolver;
         private Ashfall.Core.Shelter.ShelterRoomIdentityCatalog? _roomIdentities;
+        private Ashfall.Core.Presentation.HoldfastPresentationSlate? _presentationSlate;
         private Ashfall.Core.Shelter.ShelterMachineTellCatalog? _machineTellCatalog;
 
         private readonly Dictionary<string, InteriorRoomDefinition> _roomDefinitions = new(StringComparer.Ordinal);
@@ -475,7 +476,53 @@ namespace AtomicWar.GodotApp.World
             {
                 status = "Shelter Area";
             }
-            return AppendRoomIdentity(status, roomId);
+            return AppendRoomIdentity(AppendRoomPresentation(status, roomId), roomId);
+        }
+
+        /// <summary>
+        /// Plan 51 — append the presentation slate's live hazard line for this
+        /// room. Nominal rooms are unchanged, so a healthy shelter's tooltip text
+        /// stays exactly as before.
+        /// </summary>
+        private string AppendRoomPresentation(string status, string roomId)
+        {
+            var slate = _presentationSlate;
+            if (slate == null || string.IsNullOrEmpty(roomId)) return status;
+
+            foreach (var room in slate.Rooms)
+            {
+                if (room == null || !string.Equals(room.RoomId, roomId, System.StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                var sb = new System.Text.StringBuilder(status);
+                if (room.PrimaryHazard != Ashfall.Core.Presentation.RoomHazardVisualBand.Nominal)
+                {
+                    sb.Append("\n").Append(DescribeRoomHazard(room));
+                }
+                if (!string.IsNullOrEmpty(room.ActiveJobTitle))
+                {
+                    sb.Append("\nOn shift: ").Append(room.ActiveJobTitle);
+                }
+                return sb.ToString();
+            }
+            return status;
+        }
+
+        private static string DescribeRoomHazard(Ashfall.Core.Presentation.RoomPresentationSnapshot room)
+            => room.PrimaryHazard switch
+            {
+                Ashfall.Core.Presentation.RoomHazardVisualBand.UnpoweredDark => "Unpowered — dark and cold.",
+                Ashfall.Core.Presentation.RoomHazardVisualBand.FloodingSubmerged => "Flooding — rising water.",
+                Ashfall.Core.Presentation.RoomHazardVisualBand.FreezingCold => $"Freezing ({room.TemperatureCelsius:0}°C).",
+                Ashfall.Core.Presentation.RoomHazardVisualBand.ThermalHazard => $"Overheated ({room.TemperatureCelsius:0}°C).",
+                _ => string.Empty
+            };
+
+        /// <summary>Plan 51 — bind the shelter presentation slate (read model).</summary>
+        public void SetPresentationSlate(Ashfall.Core.Presentation.HoldfastPresentationSlate? slate)
+        {
+            _presentationSlate = slate;
+            UpdateSurvivorPositions();
         }
 
         /// <summary>Append the identity overlay (former use, one-line history, ambient fixtures) to a room's tooltip status.</summary>

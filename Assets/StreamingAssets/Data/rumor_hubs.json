@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "hubs": [
+    {
+      "hub_id": "hub_crossroads_trading_post",
+      "hub_name": "Crossroads Caravanserai",
+      "location_id": "loc_crossroads",
+      "credibility": 0.85,
+      "bias": "trader",
+      "daily_rumor_capacity": 6
+    },
+    {
+      "hub_id": "hub_scavenger_canteen",
+      "hub_name": "Rustwater Scavenger Canteen",
+      "location_id": "loc_rustwater",
+      "credibility": 0.70,
+      "bias": "scavenger",
+      "daily_rumor_capacity": 4
+    },
+    {
+      "hub_id": "hub_relay_station_7",
+      "hub_name": "High Ridge Relay Station 7",
+      "location_id": "loc_relay_station",
+      "credibility": 0.95,
+      "bias": "neutral",
+      "daily_rumor_capacity": 8
+    },
+    {
+      "hub_id": "hub_iron_coalition_outpost",
+      "hub_name": "Iron Coalition Checkpoint Bravo",
+      "location_id": "loc_checkpoint_bravo",
+      "credibility": 0.80,
+      "bias": "militant",
+      "daily_rumor_capacity": 5
+    },
+    {
+      "hub_id": "hub_black_market_vault",
+      "hub_name": "Subterranean Blind Exchange",
+      "location_id": "loc_blind_exchange",
+      "credibility": 0.65,
+      "bias": "underground",
+      "daily_rumor_capacity": 5
+    },
+    {
+      "hub_id": "hub_hermit_cave",
+      "hub_name": "Ashen Plateau Hermitage",
+      "location_id": "loc_ashen_plateau",
+      "credibility": 0.60,
+      "bias": "neutral",
+      "daily_rumor_capacity": 3
+    }
+  ]
+}

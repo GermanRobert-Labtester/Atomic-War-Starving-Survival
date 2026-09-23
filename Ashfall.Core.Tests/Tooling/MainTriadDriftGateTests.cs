@@ -50,14 +50,18 @@ namespace Ashfall.Core.Tests
                 "Phantom",
                 "Plans166To169", // Composite setup; save twins are SaveEspionage, SaveFluidLogistics, SaveProceduralNarrative
                 "Plans50To53", // Composite setup; save twins are SaveVehicleGarage, SaveShelterEspionage, SaveSurvivorMentalHealth
-                "Plans62To65", // Composite setup; save twins are SaveFoodPreservation, SavePrewarArchives, SaveShelterPrisoners
+                "Plans62To65", // Composite setup; save twins are SaveFoodPreservation, SavePrewarArchives (Plan 63 ShelterPrisonerSystem retired by ORPHAN-SEAL-W1; legacy section migrated into prisoner_management)
                 "Plans78To81", // Composite setup; child systems own registered save sections.
                 "Plans110To113", // Composite setup; child systems own registered save sections.
                 "Plans130To133", // Composite setup; child systems own registered save sections.
                 "Plans146To149", // Composite setup; child systems own registered save sections.
                 "FlagshipInstitutions", // Composite setup; each institution owns a registered save section.
                 "Plans130To133Panel",
+                "OrphanSealWave1", // ORPHAN-SEAL-W1 composite; child SaveXxx methods own the twelve registered sections (declarative triad gate owns Save registration)
                 "Plans94To97Panel",
+                "PersonalQuestPanel", // Plan 200 — panel binder only; the quest system persists via SavePersonalQuests
+                "RumorBoardPanel", // Plan 203 — read-only rumor board; the network persists via SaveRumorNetwork
+                "TimeCapsulePanel", // Plan 212 — panel binder only; the capsule system persists via SaveTimeCapsules
                 "ShelterAcoustics", // Audio presentation / acoustic direction; transient simulation facts
                 "ShelterFireHazard", // Save twin is SaveShelterFire
                 "UtilityAi",
@@ -66,9 +70,12 @@ namespace Ashfall.Core.Tests
                 "Enrichment", // Read-only static catalog projection + journal knowledge persistence; no standalone save store
                 "Codex", // Read-only projection (CodexProjectionBuilder); zero persistent state — unlocks derive from journal/field-guide/research/faction-standing, which persist themselves
                 "Cascade", // D1 2026-09-17: derived cascade-rule projection over the day's served/shed power outcome; the coordinator is built from static cascade_rules.json and holds no persisted state (journal already records its transitions)
+                "ContentCertification", // Plans 46/42 Wave 2026-09-23: Plan 49 cargo certification is a recomputed audit verdict over the live composition (catalogs loaded + owners constructed); it holds no persisted campaign state and its journal line is the published evidence
                 "FitnessForDuty", // D1 2026-09-17: Plan 24A derived fitness verdicts over existing persisted survivor authorities; the model is intentionally not a save section or a second survivor ledger
                 "Difficulty", // XP-01 difficulty selection and persistence is stored in the campaign envelope manifest, not a standalone save section
+                "NeedsPerformance", // Plan 137: NeedsPerformanceBridge is a pure domain projection over the live survivor needs state; modifiers are calculated dynamically with zero persistent state, avoiding parallel needs stores per Rule 5
             };
+
 
         [Fact]
         public void SetupWithoutSave_IsAllowlistedOrHasSaveTwin()

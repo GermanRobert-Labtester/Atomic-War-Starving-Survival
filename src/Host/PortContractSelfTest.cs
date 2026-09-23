@@ -146,18 +146,33 @@ namespace AtomicWar.GodotApp
             GD.Print($"PORTS_MISSING={failures}");
 
             // Execute runtime host subsystem wiring validation (Plan 36B.5)
-            // Ensure demo combat session is registered if none registered
+            // In headless mode no production reporter exists, so register a
+            // demo combat session whose required ports are bound to benign
+            // in-memory consumers. Production binds the same ports for real in
+            // Main.Expeditions (Inventory/Survivors + WireRealState); leaving
+            // them unbound here made the report a false negative (0/9) that the
+            // old pass criterion ignored. The criterion below now requires the
+            // wiring summary to be valid, so an unbound required port fails.
             if (HostWiringValidator.GetRegisteredReporters().Count == 0)
             {
                 var combatSession = new CombatHostSession();
+                combatSession.Inventory = new InventoryHostSession();
+                combatSession.Survivors = new SurvivorsHostSession();
+                combatSession.WireRealState(
+                    markCombatSurvived: _ => { },
+                    onSurvivorDeath: (_, _) => { });
                 HostWiringValidator.RegisterReporter(combatSession);
             }
             var wiringSummary = HostWiringValidator.ValidateAll();
 
-            bool passed = failures == 0;
+            GD.Print($"HOST_WIRING_REQUIRED={wiringSummary.TotalWiringRequired}");
+            GD.Print($"HOST_WIRING_BOUND={wiringSummary.TotalWiringBound}");
+            GD.Print($"HOST_WIRING_MISSING={wiringSummary.TotalWiringMissing}");
+
+            bool passed = failures == 0 && wiringSummary.IsValid;
             string details = passed
-                ? $"PASS: {doc.ports.Count} seams conform to policy ({hostReqCount} host-required, {liveCoreCount} live-in-core, {deferredCount} deferred, {testOnlyCount} test, {pureLibCount} lib); host wiring: {wiringSummary.TotalSessions} session(s) audited"
-                : $"FAIL: {failures} port policy error(s)";
+                ? $"PASS: {doc.ports.Count} seams conform to policy ({hostReqCount} host-required, {liveCoreCount} live-in-core, {deferredCount} deferred, {testOnlyCount} test, {pureLibCount} lib); host wiring: {wiringSummary.TotalWiringBound}/{wiringSummary.TotalWiringRequired} bound across {wiringSummary.TotalSessions} session(s)"
+                : $"FAIL: {failures} port policy error(s), {wiringSummary.TotalWiringMissing} unbound host wiring effect(s)";
 
             if (passed)
             {
@@ -165,7 +180,7 @@ namespace AtomicWar.GodotApp
             }
             else
             {
-                GD.PrintErr($"[FAIL] Port contract self-test failed with {failures} error(s)");
+                GD.PrintErr($"[FAIL] Port contract self-test failed with {failures} port policy error(s) and {wiringSummary.TotalWiringMissing} unbound host wiring effect(s)");
             }
 
             return HostCli.EmitSummary(

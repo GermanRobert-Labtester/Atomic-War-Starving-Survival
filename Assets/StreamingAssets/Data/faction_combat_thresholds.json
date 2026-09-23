@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "thresholds": [
+    {
+      "threshold_id": "thresh_minor_skirmish",
+      "label": "Minor Skirmish",
+      "min_casualties": 1,
+      "max_casualties": 2,
+      "standing_penalty_multiplier": 0.5,
+      "self_defense_multiplier": 0.25,
+      "description": "A brief exchange with few casualties. Factions take note but do not mobilise."
+    },
+    {
+      "threshold_id": "thresh_standard_engagement",
+      "label": "Standard Engagement",
+      "min_casualties": 3,
+      "max_casualties": 6,
+      "standing_penalty_multiplier": 1.0,
+      "self_defense_multiplier": 0.5,
+      "description": "A full combat encounter. Significant diplomatic consequences expected."
+    },
+    {
+      "threshold_id": "thresh_major_battle",
+      "label": "Major Battle",
+      "min_casualties": 7,
+      "max_casualties": 999,
+      "standing_penalty_multiplier": 1.5,
+      "self_defense_multiplier": 0.75,
+      "description": "A large-scale engagement. Faction leadership will respond formally."
+    }
+  ],
+  "faction_rules": [
+    {
+      "faction_id": "faction_wardens",
+      "standing_cap_loss_per_encounter": 20,
+      "forgiveness_rate_per_day": 0.5,
+      "hostile_threshold": -50
+    },
+    {
+      "faction_id": "faction_traders_guild",
+      "standing_cap_loss_per_encounter": 15,
+      "forgiveness_rate_per_day": 1.0,
+      "hostile_threshold": -40
+    },
+    {
+      "faction_id": "faction_scavengers",
+      "standing_cap_loss_per_encounter": 10,
+      "forgiveness_rate_per_day": 2.0,
+      "hostile_threshold": -30
+    }
+  ]
+}

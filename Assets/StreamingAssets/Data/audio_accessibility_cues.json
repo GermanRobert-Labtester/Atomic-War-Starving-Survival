@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "cues": [
+    {
+      "cue_id": "cue_alarm_general",
+      "category": "Alert",
+      "bus_name": "Alert",
+      "visual_label": "[Alarm] General shelter alarm sounding",
+      "severity": "Critical",
+      "duck_level_db": -12.0,
+      "coalesce_window_seconds": 3.0,
+      "icon_glyph": "alarm_bell"
+    },
+    {
+      "cue_id": "cue_low_power_warning",
+      "category": "Alert",
+      "bus_name": "Alert",
+      "visual_label": "[Power] Battery grid reserves below 15%",
+      "severity": "Warning",
+      "duck_level_db": -8.0,
+      "coalesce_window_seconds": 5.0,
+      "icon_glyph": "battery_low"
+    },
+    {
+      "cue_id": "cue_geiger_escalation",
+      "category": "Environment",
+      "bus_name": "Sfx",
+      "visual_label": "[Radiation] Geiger count rising sharply",
+      "severity": "Warning",
+      "duck_level_db": -6.0,
+      "coalesce_window_seconds": 2.5,
+      "icon_glyph": "radiation_trefoil"
+    },
+    {
+      "cue_id": "cue_raid_incoming",
+      "category": "Combat",
+      "bus_name": "Alert",
+      "visual_label": "[Hostile] Armed raiders approaching perimeter",
+      "severity": "Critical",
+      "duck_level_db": -14.0,
+      "coalesce_window_seconds": 4.0,
+      "icon_glyph": "shield_broken"
+    },
+    {
+      "cue_id": "cue_medical_emergency",
+      "category": "Medical",
+      "bus_name": "Alert",
+      "visual_label": "[Medical] Survivor vital signs crashing",
+      "severity": "Critical",
+      "duck_level_db": -10.0,
+      "coalesce_window_seconds": 3.0,
+      "icon_glyph": "caduceus"
+    },
+    {
+      "cue_id": "cue_expedition_returned",
+      "category": "Expedition",
+      "bus_name": "Sfx",
+      "visual_label": "[Airlock] Field expedition team safely returned",
+      "severity": "Info",
+      "duck_level_db": -6.0,
+      "coalesce_window_seconds": 4.0,
+      "icon_glyph": "backpack"
+    },
+    {
+      "cue_id": "cue_radio_incoming_signal",
+      "category": "Radio",
+      "bus_name": "Radio",
+      "visual_label": "[Transmission] Incoming radio signal on frequency band",
+      "severity": "Info",
+      "duck_level_db": -9.0,
+      "coalesce_window_seconds": 3.0,
+      "icon_glyph": "radio_tower"
+    }
+  ],
+  "mix_presets": [
+    {
+      "preset_id": "preset_full_dynamic",
+      "display_name": "Full Dynamic Range",
+      "master_limiter_threshold_db": 0.0,
+      "dialogue_ducking_attenuation_db": -8.0,
+      "high_frequency_attenuation_db": 0.0
+    },
+    {
+      "preset_id": "preset_compressed",
+      "display_name": "Compressed / Loudness Balanced",
+      "master_limiter_threshold_db": -3.0,
+      "dialogue_ducking_attenuation_db": -11.0,
+      "high_frequency_attenuation_db": -1.5
+    },
+    {
+      "preset_id": "preset_reduced_stimulation",
+      "display_name": "Reduced Stimulation / Quiet",
+      "master_limiter_threshold_db": -6.0,
+      "dialogue_ducking_attenuation_db": -14.0,
+      "high_frequency_attenuation_db": -4.0
+    }
+  ]
+}

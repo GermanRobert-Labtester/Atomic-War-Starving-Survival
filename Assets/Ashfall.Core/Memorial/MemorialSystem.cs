@@ -155,6 +155,15 @@ namespace Ashfall.Core.Memorial
         /// </summary>
         public ProceduralEulogyEngine? EulogyEngine { get; set; }
 
+        /// <summary>
+        /// Plan 69: Optional grave epitaph catalog for selecting grounded diegetic
+        /// inscriptions per cause of death when none is explicitly provided.
+        /// </summary>
+        public GraveEpitaphCatalog? EpitaphCatalog { get; set; }
+
+        /// <summary>Optional seeded RNG for deterministic epitaph selection.</summary>
+        public ISeededRng? EpitaphRng { get; set; }
+
         public MemorialSystem(MemorialState state)
         {
             _state = state ?? throw new ArgumentNullException(nameof(state));
@@ -230,6 +239,14 @@ namespace Ashfall.Core.Memorial
                 eulogy = EulogyEngine.ComposeEulogy(life);
             }
 
+            string epitaph = input.Epitaph ?? string.Empty;
+            if (string.IsNullOrEmpty(epitaph) && EpitaphCatalog != null)
+            {
+                string cause = string.IsNullOrEmpty(input.Cause) ? "unspecified" : input.Cause;
+                int seed = Math.Abs(input.Day * 7919) + (input.SurvivorId?.GetHashCode() ?? 0);
+                epitaph = EpitaphCatalog.SelectEpitaph(cause, EpitaphRng ?? new SeededRng(seed));
+            }
+
             var entry = new MemorialEntry
             {
                 SurvivorId = input.SurvivorId,
@@ -237,7 +254,7 @@ namespace Ashfall.Core.Memorial
                 Day = input.Day,
                 SurvivedDays = input.Day - input.BirthDay,
                 FinalWishResolved = input.FinalWishResolved,
-                Epitaph = input.Epitaph ?? string.Empty,
+                Epitaph = epitaph,
                 EulogyText = eulogy,
                 HeirloomItemId = input.HeirloomItemId ?? string.Empty,
                 HeirloomRecipientId = input.HeirloomRecipientId ?? string.Empty,

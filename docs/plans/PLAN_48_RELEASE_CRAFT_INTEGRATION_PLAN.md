@@ -7,6 +7,12 @@
 > **Author:** senior systems architect / integration planner (ashfall-plan role)
 > **Date of evidence:** 2026-09-19, HEAD `65357b8a` (branch `Zcode_Branch`), all citations re-verified against current source
 > **⚠ Numbering collision:** this is **NOT** the weather/route-gates Plan 48. See §4.0 before citing "Plan 48" anywhere.
+> **⚠ Status update (2026-09-21 batch review):** this package was executed and
+> sealed the same day it was authored, under
+> `claim-c2-21-release-craft-2026-09-19` — **all 6 phases complete, DONE
+> 2026-09-19** per `WORKTREE_OWNERSHIP.md`. §1–§25 below are preserved exactly
+> as originally authored (forward-looking, pre-execution); **read §26 first**
+> for the reconciled evidence before treating anything below as open work.
 
 ---
 
@@ -1209,7 +1215,9 @@ no step strands anything:
 # 24. Definition of Done
 
 Binding per `docs/roadmap/README.md` §3 (this package's deliverable classes are **Build** and
-**Plan**):
+**Plan**). **This list is preserved exactly as authored, pre-execution; §26
+records the actual post-execution evidence confirming every item below was
+met on 2026-09-19.**
 
 1. `bash scripts/ci/release-gate.sh` is the entire pre-release verification: it composes
    fast + full + release tiers + `export-build.sh`, emits
@@ -1328,3 +1336,56 @@ Directory.Build.props`; the `CI_GATE_MANIFEST.json` counts; the census row), rec
 found, and hand the foreman the claim row for
 `claim-c2-21-release-craft-<date>` covering exactly the §7 builder paths — then stop for the
 claim before writing anything else.
+
+---
+
+# 26. Execution closeout — added 2026-09-21 during batch review
+
+This section was appended during a review pass of this plan batch, after
+direct evidence showed this package was already fully executed. §1–§25 above
+are preserved unedited as the original forward-looking plan; this section
+reconciles them against current reality.
+
+## Evidence of completion
+
+`WORKTREE_OWNERSHIP.md`, claim row `claim-c2-21-release-craft-2026-09-19`:
+
+> **DONE 2026-09-19:** All 6 phases complete. `ReleaseVersion.cs` 32/32 PASS;
+> `version-gate.py` PASS; `SaveSupportWindowTests` 15/15 PASS;
+> `prepare-release.sh` + `release-gate.sh` + `hotfix.sh` + `release.yml` +
+> `hotfix.yml` delivered; `CHANGELOG.md` `[1.1.0]` backfilled; hotfix iron rule
+> proven; 28/28 claims verified; verify-fast 53/53.
+
+Direct filesystem re-verification during this review pass (2026-09-21)
+confirms every §25 `MUST ADD` deliverable exists on disk exactly where the
+plan specified it:
+
+| §25 `MUST ADD` item | On disk? |
+|---|---|
+| `docs/releases/VERSIONING.md`, `PROCESS.md`, `HOTFIX.md`, `TEMPLATE.md`, `SUPPORT.md`, `POSTMORTEM_TEMPLATE.md` | Yes — all six present, plus `HOTFIX_REHEARSAL_v1.1.1.md` and `RELEASE_1.1.0.md` |
+| `scripts/release/{generate_changelog.py, prepare-release.sh, hotfix.sh}` | Yes |
+| `scripts/ci/release-gate.sh` | Yes |
+| `Assets/Ashfall.Core/ReleaseVersion.cs` | Yes (engine-free; `WORKTREE_OWNERSHIP.md` cites 32/32) |
+| `CHANGELOG.md` `[1.1.0]` section | Yes — `## [1.1.0] — 2026-09-19` present, above it an active `## [Unreleased]` section for post-1.1.0 work |
+| `docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md` | Yes |
+| Current tag | `v1.1.0` (`git tag` confirms) |
+
+## What this means for a future reader
+
+- **Do not** open a new claim for `C2[21]/PLAN-48-RELEASE-CRAFT`. It is done.
+- **Do not** re-author `VERSIONING.md`, `PROCESS.md`, `prepare-release.sh`,
+  `hotfix.sh`, or `release-gate.sh` — all exist and are the sealed
+  deliverables, not open work.
+- §25's `MUST PRESERVE` and `MUST NOT DO` lists remain the correct constraint
+  set for anyone touching release tooling *later* (for example, cutting the
+  next release after `v1.1.0`); they are preserved as a boundary reference for
+  that future work, not as a pending build list for this package.
+- Separately, note the numbering collision this plan's own header already
+  flags (§ header, "NOT the weather/route-gates Plan 48") is real and ongoing:
+  `WORKTREE_OWNERSHIP.md` also records a *different*, later, unrelated
+  `claim-unblock-program-wave42-batch4-plans-2026-09-21` row whose scope
+  includes "`Plan 48` / DEC-294: Weather Route Gates" — a second, distinct
+  feature that happens to share the bare number "48". Anyone searching the
+  ledgers by number alone must disambiguate by package id
+  (`C2[21]/PLAN-48-RELEASE-CRAFT` vs. the weather-gate package), exactly as
+  this plan's original header warned.

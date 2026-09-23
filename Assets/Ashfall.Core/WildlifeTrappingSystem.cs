@@ -1174,6 +1174,49 @@ namespace Ashfall.Core
             return ActionResult.Success("trapping.hide_preserved");
         }
 
+        /// <summary>
+        /// Plan 136: Connects butchered trap catch directly to player inventory,
+        /// depositing raw meat and preserved hides without creating shadow stores.
+        /// </summary>
+        public ActionResult TransferCatchToInventory(string siteId, Inventory.Inventory inventory, string fallbackRawMeatId = "raw_meat")
+        {
+            if (inventory == null)
+                return ActionResult.Blocked("null_inventory", "trapping.null_inventory");
+
+            var site = _state.trapSites.Find(s => s.siteId == siteId);
+            if (site == null || !site.hasCatch)
+                return ActionResult.Blocked("no_catch", "trapping.no_catch");
+
+            if (!site.isMeatProcessed)
+            {
+                var butcherRes = Butcher(siteId);
+                if (!butcherRes.IsSuccess)
+                    return butcherRes;
+            }
+
+            int meatCount = (int)Math.Max(1, Math.Round(site.carcassYield + site.bycatchYield));
+            inventory.AddById(fallbackRawMeatId, meatCount);
+
+            if (!site.hidePreserved)
+            {
+                PreserveHide(siteId, out string hideItemId, out float hideQuantity);
+                if (!string.IsNullOrEmpty(hideItemId) && hideQuantity > 0f)
+                {
+                    int hideCount = (int)Math.Max(1, Math.Round(hideQuantity));
+                    inventory.AddById(hideItemId, hideCount);
+                }
+            }
+
+            return ActionResult.Success("trapping.catch_transferred",
+                new Dictionary<string, double>
+                {
+                    { "meatTransferred", meatCount },
+                    { "isToxic", site.isToxic ? 1 : 0 },
+                    { "contaminationDose", site.contaminationDose }
+                });
+        }
+
+
         private static readonly Dictionary<string, string> s_trophyRecipes = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             { "wolf", "recipe_trophy_wolf_head" },

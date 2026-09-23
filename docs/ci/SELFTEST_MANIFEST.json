@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 136,
-  "headless_test_count": 134,
+  "total_tests": 153,
+  "headless_test_count": 151,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -632,6 +632,201 @@
       "description": "StandingRecordHeadlessDemo (Exp 03)",
       "headless_compatible": true,
       "expected_summary_id": "standing_record_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "commitments_selftest",
+      "action": "CommitmentsSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--commitments-selftest",
+      "aliases": [],
+      "description": "Plan 38 commitments & deadlines: authored catalog, warning ladder, exactly-once miss + consequence routing, save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "commitments_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "session_durability_selftest",
+      "action": "SessionDurabilitySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--session-durability-selftest",
+      "aliases": [],
+      "description": "Plan 39 session durability: slot capacity/isolation, interrupted-write + backup recovery audit, soak stability verdicts, capture round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "session_durability_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "playable_metrics_selftest",
+      "action": "PlayMetricsSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--playable-metrics-selftest",
+      "aliases": [],
+      "description": "Plan 46 playable metrics: bounded session stream, first-hour funnel, aggregation grades, capture round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "playable_metrics_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "survivor_voice_selftest",
+      "action": "SurvivorVoiceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--survivor-voice-selftest",
+      "aliases": [],
+      "description": "Plan 42 survivor voice: authored catalog selection, day cooldowns, dispatch arbitration, capture round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "survivor_voice_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "content_certification_selftest",
+      "action": "ContentCertificationSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--content-certification-selftest",
+      "aliases": [],
+      "description": "Plan 49 content orphan certification: family manifest, live-evidence rows, clean/dormant/orphan verdicts",
+      "headless_compatible": true,
+      "expected_summary_id": "content_certification_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "holdfast_presentation_selftest",
+      "action": "HoldfastPresentationSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--holdfast-presentation-selftest",
+      "aliases": [],
+      "description": "Plan 51 holdfast presentation slate: room/actor/map projections, hazard and crisis bands, motion profile",
+      "headless_compatible": true,
+      "expected_summary_id": "holdfast_presentation_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "scarcity_audio_selftest",
+      "action": "ScarcityAudioSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--scarcity-audio-selftest",
+      "aliases": [],
+      "description": "Plan 52 scarcity audio: weather-to-bed/cue authority mapping, absolute silence, alert ducking, geiger rate bands",
+      "headless_compatible": true,
+      "expected_summary_id": "scarcity_audio_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "seven_day_slice_selftest",
+      "action": "SliceScenarioSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--seven-day-slice-selftest",
+      "aliases": [],
+      "description": "Plan 54 seven-day slice playtest: authored beats, frozen scenario hash, beat verification and scorecard",
+      "headless_compatible": true,
+      "expected_summary_id": "seven_day_slice_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "retention_selftest",
+      "action": "RetentionSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--retention-selftest",
+      "aliases": [],
+      "description": "Plan 55 retention & save budgeting: authored policy overlay, bounded canonical collections, protected obligations, capture round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "retention_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "outpost_settlement_selftest",
+      "action": "OutpostSettlementSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--outpost-settlement-selftest",
+      "aliases": [],
+      "description": "Plan 58 outposts & second holdfast: authored catalog, establish/garrison/supply lifecycle, daily consume, capture round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "outpost_settlement_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "weather_cascade_selftest",
+      "action": "WeatherCascadeSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--weather-cascade-selftest",
+      "aliases": [],
+      "description": "Plan 135 weather\u2192gameplay cascade: authored template table, canonical severity, owner routing, expiry withdrawal, capture round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "weather_cascade_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "standing_gates_selftest",
+      "action": "StandingGatesSelfTest",
+      "category": "Governance",
+      "primary_flag": "--standing-gates-selftest",
+      "aliases": [],
+      "description": "Plan 59 retrospective standing gates: 22-row register, enforcement-bound verdicts, unbound/non-critical exposure",
+      "headless_compatible": true,
+      "expected_summary_id": "standing_gates_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "territory_control_selftest",
+      "action": "TerritoryControlSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--territory-control-selftest",
+      "aliases": [
+        "--territory-selftest"
+      ],
+      "description": "Plan 134 faction territory & supply line control: contested nodes, fortification, garrison, supply line status, capture round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "territory_control_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "cooking_selftest",
+      "action": "CookingSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--cooking-selftest",
+      "aliases": [
+        "--cooking-test"
+      ],
+      "description": "Plan 136 wildlife trapping food pipeline & cooking system: recipe loading, ingredient consumption, decontamination, skill progression, capture/restore",
+      "headless_compatible": true,
+      "expected_summary_id": "cooking_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "needs_performance_selftest",
+      "action": "NeedsPerformanceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--needs-performance-selftest",
+      "aliases": [
+        "--needs-perf-selftest"
+      ],
+      "description": "Plan 137 needs to performance cascade: hunger, thirst, fatigue, cold, and morale modifiers on combat, work speed, and expeditions",
+      "headless_compatible": true,
+      "expected_summary_id": "needs_performance_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "campaign_legacy_selftest",
+      "action": "CampaignLegacySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--campaign-legacy-selftest",
+      "aliases": [
+        "--legacy-selftest"
+      ],
+      "description": "Plan 140 generational legacy & campaign inheritance: catalog load, campaign archiving, shelter persistence, trait inheritance, and New Game+ context",
+      "headless_compatible": true,
+      "expected_summary_id": "campaign_legacy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "orphan_seal_wave1_selftest",
+      "action": "OrphanSealWave1SelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--orphan-seal-wave1-selftest",
+      "aliases": [],
+      "description": "ORPHAN-SEAL-PRIORITY-W1: ten priority orphan authorities \u2014 catalog bind, command, and state round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "orphan_seal_wave1_selftest",
       "timeout_seconds": 30
     },
     {

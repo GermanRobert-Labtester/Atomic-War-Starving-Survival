@@ -45,6 +45,21 @@ namespace AtomicWar.GodotApp.Audio
             Sync();
         }
 
+        private ScarcityAudioController? _scarcityAudio;
+
+        /// <summary>
+        /// Plan 52 — bind the scarcity audio authority. Weather cue selection
+        /// then comes from the authority's bed profile instead of this
+        /// controller's private table, so one authority decides the shelter's
+        /// ambience state.
+        /// </summary>
+        public void SubscribeAuthority(ScarcityAudioController? scarcityAudio)
+        {
+            if (ReferenceEquals(_scarcityAudio, scarcityAudio)) return;
+            _scarcityAudio = scarcityAudio;
+            Sync();
+        }
+
         private string? _currentLocationId;
 
         public void SetLocation(string? locationId)
@@ -84,12 +99,21 @@ namespace AtomicWar.GodotApp.Audio
             if (weather is WeatherKind.Silence or WeatherKind.SilentSpring)
             {
                 StopAllAmbiences();
+                _scarcityAudio?.ApplyAmbience();
                 return;
             }
 
-            string desired = ResolveWeatherAmbience(weather) ?? ResolveLocationAmbience(_currentLocationId);
+            // Plan 52 — the authority owns the weather->cue decision; the
+            // location fallback stays local because it is a presentation detail
+            // the authority does not model.
+            string? authoritative = _scarcityAudio == null
+                ? null
+                : ScarcityAudioController.AmbienceCueForWeather(
+                    ScarcityAudioController.WeatherKindKey(weather));
+            string desired = authoritative ?? ResolveWeatherAmbience(weather) ?? ResolveLocationAmbience(_currentLocationId);
             StopOtherAmbiences(desired);
             _playCue(desired);
+            _scarcityAudio?.ApplyAmbience();
         }
 
         internal static string? ResolveWeatherAmbience(WeatherKind kind) => kind switch

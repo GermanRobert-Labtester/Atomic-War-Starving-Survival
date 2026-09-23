@@ -122,6 +122,7 @@ namespace AtomicWar.GodotApp
             if (!loaded || !result.IsSuccess)
             {
                 GD.PrintErr($"[Ashfall Godot] Restore aborted for slot '{slotId}': {message}");
+                RecordSessionLoadFailure(slotId.Value, message);
                 FeedbackMessages.Emit(new FeedbackEvent(
                     key: "load_failed",
                     category: "system",
@@ -295,6 +296,13 @@ namespace AtomicWar.GodotApp
             SetupChemicalSynthesis();
             SetupCollectibles();
             SetupShelterFireHazard();
+            // ── Plans 55 + 58 + 135 — retention audit, authored outpost
+            //    network, weather→gameplay cascade ──
+            SetupRetention();
+            SetupOutpostSettlement();
+            SetupWeatherCascade();
+            SetupTerritoryControl();
+            SetupCooking();
             // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
             // before any early SaveAll so Continue cannot drop resolved choices.
             SetupMoralChoice();
@@ -442,7 +450,6 @@ namespace AtomicWar.GodotApp
                 SaveProceduralNarrative();
                 SaveFoodPreservation();
                 SavePrewarArchives();
-                SaveShelterPrisoners();
                 SaveSurvivorSocial();
                 SaveSurvivorFate();
                 SaveCampaignDay();
@@ -506,6 +513,18 @@ namespace AtomicWar.GodotApp
                 SaveChemicalSynthesis();
                 SaveCollectibles();
                 SaveShelterFire();
+                // ── Audit 2026-09-22 triad repair: registered sections that were
+                //    only flushed from _Process and never captured by SaveAll ──
+                SaveDeathLegacy();
+                SaveRelationshipDecay();
+                SaveTimeCapsules();
+                // ── Plans 55 + 58 + 135 — retention audit, authored outpost
+                //    network, weather→gameplay cascade ──
+                SaveRetention();
+                SaveOutpostSettlement();
+                SaveWeatherCascade();
+                SaveTerritoryControl();
+                SaveCooking();
 
                 if (_sectionCaptureFailed)
                 {
@@ -541,6 +560,19 @@ namespace AtomicWar.GodotApp
                         category: "system",
                         dedupeKey: "save_success"
                     ));
+                }
+
+                // Plan 39 — mirror the committed save into the durability audit
+                // read model (slot summary + digest). The canonical slot service
+                // remains the only slot authority.
+                var committedSlot = _saveLoadHost?.ActiveSlotId;
+                if (committedSlot != null)
+                {
+                    string campaignName = _saveLoadHost!.BuildSlotCard(committedSlot.Value).CampaignName;
+                    RecordSessionSaveResult(
+                        committedSlot.Value.Value,
+                        campaignName,
+                        ComputeSessionChecksum(_sectionPayloads));
                 }
                 return true;
             }

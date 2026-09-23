@@ -1333,6 +1333,114 @@
       "xp_threshold": 999999.0,
       "skill_bonus": 0.1,
       "is_expert_skill": false
+    },
+    {
+      "id": "skill_reading_comprehension",
+      "display_name": "Basic Literacy & Writing",
+      "description": "Foundational reading and written communication enabling library study and technical transcription.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_mathematical_logic",
+      "display_name": "Basic Numeracy & Logic",
+      "description": "Arithmetic, measurement calculations, and basic problem solving.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_communal_diplomacy",
+      "display_name": "Social Cooperation & Ethics",
+      "description": "Conflict resolution, empathy, and collective shelter duty adherence.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_radiation_awareness",
+      "display_name": "Bunker & Wasteland Survival",
+      "description": "Hazard recognition, airlock decontamination drills, and water rationing habits.",
+      "discipline_id": "survival",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_machining_basics",
+      "display_name": "Mechanical Crafting & Repair",
+      "description": "Workshop tool handling, weld repair, and scrap reclamation.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_field_triage",
+      "display_name": "First Aid & Human Physiology",
+      "description": "Bandaging, antiseptics, trauma stabilization, and symptom identification.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_cartography",
+      "display_name": "Scouting & Surface Navigation",
+      "description": "Map reading, route plotting through ruins, and terrain hazard evasion.",
+      "discipline_id": "scavenging",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_firearm_handling",
+      "display_name": "Shelter Defense & Weapon Safety",
+      "description": "Firearm discipline, defensive positioning, and emergency lockdown breach containment.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_reactor_maintenance",
+      "display_name": "Power & Life Support Engineering",
+      "description": "Generator maintenance, air filtration overhaul, and electrical bus troubleshooting.",
+      "discipline_id": "crafting",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_surgery_assistance",
+      "display_name": "Pharmacology & Advanced Care",
+      "description": "Medication synthesis, sterile surgical procedures, and radiation sickness counter-therapy.",
+      "discipline_id": "medical",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_patrol_command",
+      "display_name": "Expedition Leadership & Tactics",
+      "description": "Squad maneuvering, risk calculation under fire, and retreat protocols.",
+      "discipline_id": "combat",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
+    },
+    {
+      "id": "skill_laboratory_analysis",
+      "display_name": "Applied Physics & Chemistry",
+      "description": "Soil analysis, isotope decay monitoring, and water filtration formulation.",
+      "discipline_id": "science",
+      "xp_threshold": 999999.0,
+      "skill_bonus": 0.2,
+      "is_expert_skill": false
     }
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "rules": [
+    {
+      "id": "standard_community_barter",
+      "name": "Standard Community Barter",
+      "base_trust_gain_per_trade": 5.0,
+      "dispute_trust_penalty": 20.0,
+      "max_active_offers_per_survivor": 5,
+      "offer_expiration_days": 5,
+      "favor_deadline_days": 14,
+      "description": "Standard informal exchange rules governing personal keepsake, tool, and favor trades between bunker residents."
+    },
+    {
+      "id": "strict_rationing_barter",
+      "name": "Strict Rationing Exchange Code",
+      "base_trust_gain_per_trade": 3.0,
+      "dispute_trust_penalty": 35.0,
+      "max_active_offers_per_survivor": 3,
+      "offer_expiration_days": 3,
+      "favor_deadline_days": 7,
+      "description": "Restricted informal trade policy enforced during resource crises to prevent hoarding and black-market gouging."
+    },
+    {
+      "id": "free_mutual_aid_barter",
+      "name": "Mutual Aid & Fellowship Covenant",
+      "base_trust_gain_per_trade": 8.0,
+      "dispute_trust_penalty": 10.0,
+      "max_active_offers_per_survivor": 8,
+      "offer_expiration_days": 10,
+      "favor_deadline_days": 21,
+      "description": "High-solidarity communitarian network where favors and personal belongings are exchanged with generous terms and communal grace."
+    }
+  ]
+}

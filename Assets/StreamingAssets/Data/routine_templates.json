@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "template_id": "routine_early_riser",
+      "display_name": "Early Riser Routine",
+      "wake_hour": 5,
+      "sleep_hour": 21,
+      "meal_hours": [6, 12, 18],
+      "work_start_hour": 6,
+      "work_end_hour": 14,
+      "preferred_chronotype": "early_riser",
+      "description": "Pre-dawn waking routine ideal for hunters, scouts, and dawn agriculture tasks.",
+      "default_blocks": [
+        { "block_id": "blk_er_sleep", "start_hour": 21, "end_hour": 5, "activity_type": "Sleep", "flexibility": "rigid" },
+        { "block_id": "blk_er_wake_meal", "start_hour": 5, "end_hour": 6, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_er_work", "start_hour": 6, "end_hour": 14, "activity_type": "Work", "flexibility": "rigid" },
+        { "block_id": "blk_er_lunch", "start_hour": 12, "end_hour": 13, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_er_social", "start_hour": 14, "end_hour": 17, "activity_type": "Social", "flexibility": "flexible" },
+        { "block_id": "blk_er_dinner", "start_hour": 18, "end_hour": 19, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_er_leisure", "start_hour": 19, "end_hour": 21, "activity_type": "Leisure", "flexibility": "flexible" }
+      ]
+    },
+    {
+      "template_id": "routine_night_owl",
+      "display_name": "Night Owl Routine",
+      "wake_hour": 10,
+      "sleep_hour": 2,
+      "meal_hours": [11, 16, 22],
+      "work_start_hour": 14,
+      "work_end_hour": 22,
+      "preferred_chronotype": "night_owl",
+      "description": "Late awakening routine suited for evening watch, indoor synthesis, and late lab shifts.",
+      "default_blocks": [
+        { "block_id": "blk_no_sleep", "start_hour": 2, "end_hour": 10, "activity_type": "Sleep", "flexibility": "rigid" },
+        { "block_id": "blk_no_brunch", "start_hour": 10, "end_hour": 11, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_no_personal", "start_hour": 11, "end_hour": 14, "activity_type": "Personal", "flexibility": "flexible" },
+        { "block_id": "blk_no_work", "start_hour": 14, "end_hour": 22, "activity_type": "Work", "flexibility": "rigid" },
+        { "block_id": "blk_no_dinner", "start_hour": 16, "end_hour": 17, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_no_supper", "start_hour": 22, "end_hour": 23, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_no_leisure", "start_hour": 23, "end_hour": 2, "activity_type": "Leisure", "flexibility": "flexible" }
+      ]
+    },
+    {
+      "template_id": "routine_standard",
+      "display_name": "Standard Day Routine",
+      "wake_hour": 7,
+      "sleep_hour": 23,
+      "meal_hours": [8, 13, 19],
+      "work_start_hour": 9,
+      "work_end_hour": 17,
+      "preferred_chronotype": "intermediate",
+      "description": "Balanced day schedule providing standard work shifts and communal dinner timing.",
+      "default_blocks": [
+        { "block_id": "blk_std_sleep", "start_hour": 23, "end_hour": 7, "activity_type": "Sleep", "flexibility": "rigid" },
+        { "block_id": "blk_std_breakfast", "start_hour": 7, "end_hour": 8, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_std_prep", "start_hour": 8, "end_hour": 9, "activity_type": "Personal", "flexibility": "flexible" },
+        { "block_id": "blk_std_work", "start_hour": 9, "end_hour": 17, "activity_type": "Work", "flexibility": "rigid" },
+        { "block_id": "blk_std_lunch", "start_hour": 13, "end_hour": 14, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_std_social", "start_hour": 17, "end_hour": 19, "activity_type": "Social", "flexibility": "flexible" },
+        { "block_id": "blk_std_dinner", "start_hour": 19, "end_hour": 20, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_std_leisure", "start_hour": 20, "end_hour": 23, "activity_type": "Leisure", "flexibility": "flexible" }
+      ]
+    },
+    {
+      "template_id": "routine_night_shift",
+      "display_name": "Graveyard Shift Routine",
+      "wake_hour": 18,
+      "sleep_hour": 10,
+      "meal_hours": [19, 0, 7],
+      "work_start_hour": 22,
+      "work_end_hour": 6,
+      "preferred_chronotype": "night_owl",
+      "description": "Dedicated nocturnal shift for perimeter security, generator maintenance, and radar duty.",
+      "default_blocks": [
+        { "block_id": "blk_ns_sleep", "start_hour": 10, "end_hour": 18, "activity_type": "Sleep", "flexibility": "rigid" },
+        { "block_id": "blk_ns_wake_meal", "start_hour": 18, "end_hour": 19, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_ns_prep", "start_hour": 19, "end_hour": 22, "activity_type": "Personal", "flexibility": "flexible" },
+        { "block_id": "blk_ns_work", "start_hour": 22, "end_hour": 6, "activity_type": "Work", "flexibility": "rigid" },
+        { "block_id": "blk_ns_mid_meal", "start_hour": 0, "end_hour": 1, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_ns_morning_meal", "start_hour": 7, "end_hour": 8, "activity_type": "Meal", "flexibility": "flexible" },
+        { "block_id": "blk_ns_wind_down", "start_hour": 8, "end_hour": 10, "activity_type": "Leisure", "flexibility": "flexible" }
+      ]
+    }
+  ]
+}

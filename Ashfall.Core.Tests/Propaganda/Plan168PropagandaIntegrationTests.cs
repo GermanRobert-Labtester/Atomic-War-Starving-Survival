@@ -147,5 +147,60 @@ namespace Ashfall.Core.Tests.Propaganda
 
             Assert.True(cmpRadio.AccumulatedEffectiveness > cmpPrint.AccumulatedEffectiveness);
         }
+
+        [Fact]
+        public void StartCampaignFromTemplate_CreatesCampaign_WithTemplateParameters()
+        {
+            var system = new PropagandaSystem();
+            system.RegisterTemplate(new PropagandaTemplateDef
+            {
+                id = "psyops_campaign_scavenger_lantern_hour",
+                display_name = "Scavenger Lantern Hour",
+                description = "Evening broadcasts for wasteland scavengers.",
+                target_faction_id = "faction_drifters",
+                objective = "BoostMorale",
+                preferred_medium = "RadioBroadcast",
+                duration_days = 4,
+                base_effectiveness = 25f,
+                suggested_theme = "Hope"
+            });
+
+            bool started = system.StartCampaignFromTemplate("psyops_campaign_scavenger_lantern_hour", 1);
+            Assert.True(started);
+            Assert.Equal(1, system.ActiveCampaignCount);
+
+            var campaign = system.Campaigns[0];
+            Assert.Equal("Scavenger Lantern Hour", campaign.CampaignName);
+            Assert.Equal("faction_drifters", campaign.TargetFactionId);
+            Assert.Equal(PropagandaObjective.BoostMorale, campaign.Objective);
+            Assert.Equal(4, campaign.DurationDays);
+            Assert.Equal(25f, campaign.AccumulatedEffectiveness);
+        }
+
+        [Fact]
+        public void AuthoredData_PropagandaTemplatesJson_LoadsSuccessfully()
+        {
+            var dataDir = System.IO.Path.GetFullPath(
+                System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,
+                    "..", "..", "..", "..", "Assets", "StreamingAssets", "Data"));
+            if (!System.IO.File.Exists(System.IO.Path.Combine(dataDir, "propaganda_templates.json")))
+                dataDir = System.IO.Path.GetFullPath("Assets/StreamingAssets/Data");
+
+            string filePath = System.IO.Path.Combine(dataDir, "propaganda_templates.json");
+            Assert.True(System.IO.File.Exists(filePath), $"File not found: {filePath}");
+
+            string json = System.IO.File.ReadAllText(filePath);
+            var catalog = JsonSerializer.Deserialize<PropagandaTemplateCatalogData>(json);
+            Assert.NotNull(catalog);
+            Assert.True(catalog!.templates.Count >= 4);
+
+            var system = new PropagandaSystem();
+            system.LoadTemplates(catalog.templates);
+            Assert.True(system.Templates.Count >= 4);
+
+            var lantern = system.GetTemplate("psyops_campaign_scavenger_lantern_hour");
+            Assert.NotNull(lantern);
+            Assert.Equal("Scavenger Lantern Hour", lantern!.display_name);
+        }
     }
 }

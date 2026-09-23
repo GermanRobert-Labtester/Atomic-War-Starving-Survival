@@ -29,6 +29,9 @@ namespace Ashfall.Core.Radio
         public string LastDeliveryBroadcastId { get; set; } = string.Empty;
         public bool PropagandaStarted { get; set; }
         public string FailureCode { get; set; } = string.Empty;
+        public float AudienceMoraleDelta { get; set; }
+        public string AudienceReachGrade { get; set; } = string.Empty;
+        public bool OpportunitySpawned { get; set; }
     }
 
     [Serializable]
@@ -39,6 +42,21 @@ namespace Ashfall.Core.Radio
         public string TemplateId { get; set; } = string.Empty;
         public int CreatedDay { get; set; }
         public bool Resolved { get; set; }
+        public string ResolutionAction { get; set; } = string.Empty;
+        public int ResolvedDay { get; set; }
+    }
+
+    [Serializable]
+    public sealed class AudienceResponseResult
+    {
+        public string JobId { get; set; } = string.Empty;
+        public string TemplateId { get; set; } = string.Empty;
+        public float MoraleDelta { get; set; }
+        public string ReachGrade { get; set; } = "Local";
+        public bool OpportunityCreated { get; set; }
+        public string TargetFactionId { get; set; } = string.Empty;
+        public int FactionReputationDelta { get; set; }
+        public string ResponseSummary { get; set; } = string.Empty;
     }
 
     [Serializable]
@@ -84,9 +102,25 @@ namespace Ashfall.Core.Radio
         /// </summary>
         public Func<string, int, bool>? TryConsumePrepCost { get; set; }
 
+        /// <summary>
+        /// Host wires presenter capability [0.2f..3.0f], default 1.0f. Multiplies audience morale impact.
+        /// </summary>
+        public Func<string, float>? PresenterCapabilityProvider { get; set; }
+
+        /// <summary>
+        /// Optional callback to apply shelter-wide morale deltas resulting from program broadcast.
+        /// </summary>
+        public Action<float>? ApplyShelterMoraleDelta { get; set; }
+
+        /// <summary>
+        /// Optional callback to apply faction reputation deltas resulting from program broadcast.
+        /// </summary>
+        public Action<string, int>? ApplyFactionReputationDelta { get; set; }
+
         public event Action<RadioProgramJob>? OnJobReady;
         public event Action<RadioProgramJob>? OnJobDelivered;
         public event Action<RadioProgramJob>? OnJobCancelled;
+        public event Action<RadioProgramJob, AudienceResponseResult>? OnAudienceResponseCalculated;
 
         public RadioProgramProductionState State => _state;
         public RadioProgramCatalog Catalog => _catalog;
@@ -221,6 +255,17 @@ namespace Ashfall.Core.Radio
             job.LastDeliveryBroadcastId = delivery.BroadcastId ?? string.Empty;
             _state.TotalDelivered++;
 
+            var response = CalculateAudienceResponse(job, delivery);
+            job.AudienceMoraleDelta = response.MoraleDelta;
+            job.AudienceReachGrade = response.ReachGrade;
+            job.OpportunitySpawned = response.OpportunityCreated;
+
+            if (response.MoraleDelta != 0f)
+                ApplyShelterMoraleDelta?.Invoke(response.MoraleDelta);
+
+            if (!string.IsNullOrEmpty(response.TargetFactionId) && response.FactionReputationDelta != 0)
+                ApplyFactionReputationDelta?.Invoke(response.TargetFactionId, response.FactionReputationDelta);
+
             if (!string.IsNullOrEmpty(job.PsyopsCampaignId) && StartPropagandaCampaign != null)
             {
                 job.PropagandaStarted = StartPropagandaCampaign(job.PsyopsCampaignId, day);
@@ -238,9 +283,83 @@ namespace Ashfall.Core.Radio
             });
 
             OnJobDelivered?.Invoke(job);
-            _log.Info($"[RadioProgram] Delivered {job.JobId} broadcast={job.LastDeliveryBroadcastId}");
+            OnAudienceResponseCalculated?.Invoke(job, response);
+            _log.Info($"[RadioProgram] Delivered {job.JobId} broadcast={job.LastDeliveryBroadcastId} reach={response.ReachGrade} morale={response.MoraleDelta}");
             return ActionResult.Success("radio_program.delivered");
         }
+
+        public AudienceResponseResult CalculateAudienceResponse(RadioProgramJob job, ScheduledBroadcastResult delivery)
+        {
+            var template = _catalog.Get(job.TemplateId);
+            string genre = template?.genre ?? "civilian_news";
+
+            float baseMorale = genre switch
+            {
+                "storytelling" => 3.5f,
+                "entertainment" => 4.0f,
+                "civilian_news" => 2.0f,
+                "education" => 2.5f,
+                "emergency" => 1.0f,
+                _ => 1.5f
+            };
+
+            float capability = PresenterCapabilityProvider != null
+                ? Math.Clamp(PresenterCapabilityProvider(job.PresenterId), 0.1f, 3.0f)
+                : 1.0f;
+
+            float netMorale = (float)Math.Round(baseMorale * capability, 2);
+
+            string reachGrade = delivery.SignalStrength switch
+            {
+                >= 8 => "Regional",
+                >= 5 => "District",
+                _ => "Local"
+            };
+
+            bool opportunityCreated = delivery.SignalStrength >= 6 && capability >= 0.8f;
+
+            string targetFaction = string.Empty;
+            int factionRep = 0;
+            if (genre == "civilian_news" || genre == "emergency")
+            {
+                factionRep = (int)Math.Round(capability * 5f);
+            }
+
+            return new AudienceResponseResult
+            {
+                JobId = job.JobId,
+                TemplateId = job.TemplateId,
+                MoraleDelta = netMorale,
+                ReachGrade = reachGrade,
+                OpportunityCreated = opportunityCreated,
+                TargetFactionId = targetFaction,
+                FactionReputationDelta = factionRep,
+                ResponseSummary = $"Audience responded to {genre} broadcast with {reachGrade} reach."
+            };
+        }
+
+        public ActionResult ResolveFollowUpHook(string hookId, string resolutionAction, int day)
+        {
+            if (string.IsNullOrEmpty(hookId))
+                return ActionResult.Blocked("invalid_hook_id", "radio_program.invalid_hook_id");
+
+            var hook = _state.FollowUps.Find(f => string.Equals(f.HookId, hookId, StringComparison.Ordinal));
+            if (hook == null)
+                return ActionResult.Blocked("hook_not_found", "radio_program.hook_not_found");
+
+            if (hook.Resolved)
+                return ActionResult.Blocked("already_resolved", "radio_program.already_resolved");
+
+            hook.Resolved = true;
+            hook.ResolutionAction = resolutionAction ?? string.Empty;
+            hook.ResolvedDay = day;
+
+            _log.Info($"[RadioProgram] Resolved follow-up {hookId} with action '{resolutionAction}' on day {day}");
+            return ActionResult.Success("radio_program.followup_resolved");
+        }
+
+        public List<RadioProgramFollowUpHook> GetUnresolvedFollowUps() =>
+            _state.FollowUps.FindAll(f => !f.Resolved);
 
         public bool SlotExists(string stationId, string slotId)
         {

@@ -79,6 +79,18 @@ namespace Ashfall.Core.Verdict
             return true;
         }
 
+        /// <summary>
+        /// Plan 55 / Task 55A — apply the retention catalog to the machine log.
+        /// The log stays owned here; the policy bounds how many historical
+        /// entries a 400-year campaign keeps.
+        /// </summary>
+        public int ApplyRetention(Records.RetentionPolicyCatalog? catalog)
+        {
+            if (catalog == null) return 0;
+            catalog.ApplyRetention("machine_log", _state.entries, out int pruned);
+            return pruned;
+        }
+
         /// <summary>Insert a deterministic, seed-dependent garbling marker (corruption).
         /// Corpus is data-driven (verdict_data.json). Falls back to built-ins if none supplied.</summary>
         public bool InsertCorruptionMarker(int day, ISeededRng rng, IReadOnlyList<string>? corpus = null)

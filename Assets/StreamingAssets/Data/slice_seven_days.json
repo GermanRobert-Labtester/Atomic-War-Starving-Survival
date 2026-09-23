@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "scenario_id": "slice_seven_days_v1",
+  "title": "The Seven-Day Slice: First Week in Holdfast",
+  "description": "The canonical seven-day playtest scenario exercising baseline survival loops: orientation, crafting, weather, injury, bereavement, governance, and deadline resolution.",
+  "target_days": 7,
+  "default_seed": 1337,
+  "difficulty_preset": "normal",
+  "starting_resources": {
+    "food": 14,
+    "water": 21,
+    "chits": 50,
+    "energy_cells": 6,
+    "medicine": 4
+  },
+  "initial_survivor_count": 4,
+  "beats": [
+    {
+      "day": 1,
+      "beat_id": "beat_day1_orient_and_ration",
+      "title": "Day 1: Orientation & First Rations",
+      "required_system": "NeedsSystem",
+      "action_key": "ration_distribution",
+      "expected_outcome": "NeedsEvaluated",
+      "description": "Assess starting provisions, assign initial shelter bunks, and distribute day 1 rations."
+    },
+    {
+      "day": 2,
+      "beat_id": "beat_day2_craft_and_dispatch",
+      "title": "Day 2: Maintenance & First Dispatch",
+      "required_system": "ExpeditionSystem",
+      "action_key": "scouting_dispatch",
+      "expected_outcome": "PartyDispatched",
+      "description": "Service vital air scrubbers at the workshop bench and dispatch the first scout into the wasteland."
+    },
+    {
+      "day": 3,
+      "beat_id": "beat_day3_weather_hazard_choice",
+      "title": "Day 3: Weather Threat & Route Selection",
+      "required_system": "WeatherSystem",
+      "action_key": "route_divergence",
+      "expected_outcome": "HazardMitigated",
+      "description": "A fallout squall approaches; player chooses between a sheltered valley detour or exposed ridge advance."
+    },
+    {
+      "day": 4,
+      "beat_id": "beat_day4_crisis_and_injury",
+      "title": "Day 4: Hazard Encounter & Field Triage",
+      "required_system": "RadiationSystem",
+      "action_key": "radiation_treatment",
+      "expected_outcome": "TriageApplied",
+      "description": "A scout returns with acute radiation exposure; administer rad-away and assign infirmary bed rest."
+    },
+    {
+      "day": 5,
+      "beat_id": "beat_day5_memorial_and_grief",
+      "title": "Day 5: Bereavement & Memorial Rites",
+      "required_system": "MemorialSystem",
+      "action_key": "memorial_ceremony",
+      "expected_outcome": "EulogyDelivered",
+      "description": "Hold memorial ceremony for fallen survivor; allocate keepsake to survivor legacy archive."
+    },
+    {
+      "day": 6,
+      "beat_id": "beat_day6_shelter_policy_decision",
+      "title": "Day 6: Policy Decree & Ideological Friction",
+      "required_system": "PolicySystem",
+      "action_key": "policy_ratification",
+      "expected_outcome": "PolicyEnacted",
+      "description": "Shelter assembly votes on emergency water rationing decree; handle faction dissent."
+    },
+    {
+      "day": 7,
+      "beat_id": "beat_day7_deadline_resolution",
+      "title": "Day 7: Commitment Settlement & First Week Milestone",
+      "required_system": "CommitmentSystem",
+      "action_key": "campaign_settlement",
+      "expected_outcome": "Week1Certified",
+      "description": "Settlement of initial community commitment deadline; review weekly scorecard and survivor retention."
+    }
+  ]
+}

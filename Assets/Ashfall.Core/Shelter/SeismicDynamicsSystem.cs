@@ -421,8 +421,10 @@ namespace Ashfall.Core.Shelter
                 quake.outgassedMethanePpm = gasPpm;
                 foreach (var sec in def.affected_sectors)
                 {
+                    // Route outgassing through the canonical hazard mutation seam so
+                    // an ignition-threshold crossing raises OnMethaneIgnition exactly once.
+                    _hazardSystem.AddMethane(sec, gasPpm, cap: 5000);
                     var sectorState = _hazardSystem.GetOrCreateSector(sec);
-                    sectorState.MethanePpm = Math.Min(5000, sectorState.MethanePpm + gasPpm);
                     sectorState.ShoringHealthPermille = Math.Max(0, sectorState.ShoringHealthPermille - (int)(effectiveSeverity * 250));
                 }
             }

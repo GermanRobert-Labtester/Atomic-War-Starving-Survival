@@ -516,6 +516,12 @@ namespace AtomicWar.GodotApp
             {
                 if (kind == WeatherKind.EMPStorm)
                     _powerGrid?.System.ApplySurgeDay(_simDay, _powerGrid.System.EmpStormSeverity);
+
+                // Plan 135 — every weather front is a cascade candidate. The
+                // cascade session re-derives severity from the canonical
+                // weather-effects table and skips mechanically neutral fronts,
+                // so this notification never fabricates pressure.
+                OnWeatherFrontArrived(kind, _simDay);
             };
 
             var orbital = _world.WeatherIntelligence?.Orbital;

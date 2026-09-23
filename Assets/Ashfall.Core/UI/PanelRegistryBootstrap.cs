@@ -44,6 +44,7 @@ namespace Ashfall.Core.UI
             R("shelter",             "Shelter Panel",                 PanelGroup.Dashboard,  new[] { "survivors", "world", "inventory" });
             R("factions",            "Factions Panel",                PanelGroup.Dashboard,  new[] { "core", "muster", "expansions" });
             R("faction_detail",      "Faction Detail",                PanelGroup.Secondary,  new[] { "factions" });
+            R("faction_culture_codex", "Faction Culture Codex",       PanelGroup.Secondary,  new[] { "factions", "muster" });
             R("quests",              "Quests Panel",                  PanelGroup.Dashboard,  new[] { "core", "expansions", "duty_roster" });
             R("quest_detail",        "Quest Detail",                  PanelGroup.Secondary,  new[] { "quests" });
             R("moral_choice",         "Moral Choice / Ethical Dilemma", PanelGroup.Dashboard,  new[] { "moral_choice" });
@@ -60,6 +61,7 @@ namespace Ashfall.Core.UI
             R("deep_coast",          "Deep Coast Panel",              PanelGroup.Dashboard,  new[] { "deep_coast", "core" });
             R("century_seed",        "Century Seed Panel",            PanelGroup.Dashboard,  new[] { "expansions", "survivors" });
             R("epilogue",            "Epilogue Panel",                PanelGroup.Dashboard,  new[] { "expansions", "survivors", "verdict", "regional_treaty", "muster" });
+            R("chronicle",           "Campaign Chronicle",            PanelGroup.Dashboard,  new[] { "journal", "verdict", "expansions" });
             R("verdict",             "Verdict Panel",                 PanelGroup.Dashboard,  new[] { "verdict" });
             R("holdfast",            "Holdfast Terminal",             PanelGroup.Dashboard,  new[] { "core" });
             R("duty_roster",         "Duty Roster Panel",             PanelGroup.Dashboard,  new[] { "duty_roster", "survivors" });

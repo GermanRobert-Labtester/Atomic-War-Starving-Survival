@@ -1,0 +1,129 @@
+# PLAN-LOCALIZATION-READINESS-52 — Appendix A: L10n Inventory Dump
+
+**Generated:** 2026-09-21 from `artifacts/l10n-inventory.json`
+(535 records · 472 hardcoded
+literals · 63 localized lookups across
+214 UI files; pilot panels: ResearchPanel, OnboardingHintPanel).
+**Use:** LZ-52A — the extraction-completion queue. Panels below with high
+literal counts are the conversion backlog; the inventory must reach zero
+hardcoded literals in player-facing surfaces before the freeze (U3).
+
+## Hardcoded literals by panel (descending)
+
+| Panel | Literals |
+|---|---:|
+| `ElectrostaticScrubberPanel` | 18 |
+| `RailwayTerminalPanel` | 15 |
+| `SlurryDewateringSumpPanel` | 11 |
+| `GeigerCalibrationPanel` | 10 |
+| `AquiferTreatyConcessionPanel` | 9 |
+| `BasalRadonMigrationPanel` | 9 |
+| `ClandestineInsurgencyPanel` | 9 |
+| `CrossingSafeConductVouchPanel` | 9 |
+| `CryogenicPermafrostCorePanel` | 9 |
+| `FungalProteinFermenterPanel` | 9 |
+| `HeavyMarineDieselGeneratorPanel` | 9 |
+| `InductionCupolaFurnacePanel` | 9 |
+| `IronCenotaphMemorialPanel` | 9 |
+| `LongWalkExpeditionPanel` | 9 |
+| `MagneticDrumArchivePanel` | 9 |
+| `MechanicalProstheticsLathePanel` | 9 |
+| `SonicRuptureDrillPanel` | 9 |
+| `SubterraneanDebtLedgerPanel` | 9 |
+| `SurfaceShrapnelAegisPanel` | 9 |
+| `TraumaBondingCohortPanel` | 9 |
+| `TroposphericRadioRelayPanel` | 9 |
+| `UltrasonicDecontaminationAirlockPanel` | 9 |
+| `VaultDoorBreachingPanel` | 9 |
+| `MaritimePanel` | 8 |
+| `PharmaLabPanel` | 8 |
+| `SubterraneanOperationsPanel` | 7 |
+| `DailyBriefingModal` | 6 |
+| `SurvivalWorkstationPanel` | 6 |
+| `WorkshopPanel` | 6 |
+| `AnaerobicBiogasDigesterPanel` | 5 |
+| `BoreholeSeismographPanel` | 5 |
+| `GeothermalSteamTurbinePanel` | 5 |
+| `HeavyLogisticsAirlockPanel` | 5 |
+| `IsotopeSeparatorPanel` | 5 |
+| `PlasmaArcSmeltingPanel` | 5 |
+| `SiliconIngotSlicingPanel` | 5 |
+| `SubterraneanCartographyPanel` | 5 |
+| `UndergroundPrintingPressPanel` | 5 |
+| `WarDogKennelPanel` | 5 |
+| `WaystationNetworkPanel` | 5 |
+| `WeatherSondePanel` | 5 |
+| `BrineExtractionPanel` | 4 |
+| `DesperationCrisisPanel` | 4 |
+| `ExpeditionCampPanel` | 4 |
+| `ExpeditionPanel` | 4 |
+| `FactionsNarrativePanel` | 4 |
+| `FireIncidentPanel` | 4 |
+| `RadioIntelligencePanel` | 4 |
+| `SilentFoundryPanel` | 4 |
+| `TriangulationPanel` | 4 |
+| `ChroniclePanel` | 3 |
+| `DutyRosterPanel` | 3 |
+| `FalloutPlumePanel` | 3 |
+| `MainMenuPanel` | 3 |
+| `MutationTreePanel` | 3 |
+| `NurseryPanel` | 3 |
+| `PrisonerPanel` | 3 |
+| `SafeCrackModal` | 3 |
+| `ShelterDecorPanel` | 3 |
+| `ShelterHudPanel` | 3 |
+| `SkillMatrixPanel` | 3 |
+| `StealthReadoutPanel` | 3 |
+| `VinylMoralePanel` | 3 |
+| `WildlifeTrappingPanel` | 3 |
+| `AutopsyReportPanel` | 2 |
+| `AviationUI` | 2 |
+| `ChemUI` | 2 |
+| `ChemicalLabPanel` | 2 |
+| `CombatPanel` | 2 |
+| `CraftingPanel` | 2 |
+| `CrossingQuestPanel` | 2 |
+| `DoseLedgerPanel` | 2 |
+| `ExpeditionRadarPanel` | 2 |
+| `FactionMatrixPanel` | 2 |
+| `GameOverPanel` | 2 |
+| `GeodeticSurveyPanel` | 2 |
+| `LaborUI` | 2 |
+| `MercenaryBountyBoardPanel` | 2 |
+| `Plans74To77Panels` | 2 |
+| `PoliticsUI` | 2 |
+| `ShelterSocialPanel` | 2 |
+| `AirlockSecurityPanel` | 1 |
+| `AmputationTriagePanel` | 1 |
+| `ApprenticeshipPanel` | 1 |
+| `ArchaeologyExcavationPanel` | 1 |
+| `AshfallDataGrid` | 1 |
+| `CaregivingPanel` | 1 |
+| `CenturySeedPanel` | 1 |
+| `CeremonyFestivalPanel` | 1 |
+| `ChemWarfareDefensePanel` | 1 |
+| `CommsArrayTransceiverPanel` | 1 |
+| `DeconAirlockPanel` | 1 |
+| `DeepCoastPanel` | 1 |
+| `DutyRosterDetailPanel` | 1 |
+| `EbPvdCoatingPanel` | 1 |
+| `EpiloguePanel` | 1 |
+| `ExcavationPanel` | 1 |
+| `FungiCultivationBedPanel` | 1 |
+| `GeothermalAquiferPanel` | 1 |
+| `GreenhousePanel` | 1 |
+| `InventoryPanel` | 1 |
+| `JusticeTribunalPanel` | 1 |
+| `MicrofluidicDiagnosticPanel` | 1 |
+| `MineFlailPanel` | 1 |
+| `MusterPanel` | 1 |
+| `RailGrindingPanel` | 1 |
+| `ReconTelemetryPanel` | 1 |
+| `RegionalTreatyPanel` | 1 |
+| `ResearchAtlasPanel` | 1 |
+| `RoboticsWorkshopPanel` | 1 |
+| `SaveLoadPanel` | 1 |
+| `SettingsPanel` | 1 |
+| `StandingRecordPanel` | 1 |
+| `SurvivorDowntimePanel` | 1 |
+| `WinterFreezePanel` | 1 |

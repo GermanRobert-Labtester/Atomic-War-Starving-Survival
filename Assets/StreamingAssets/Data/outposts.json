@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "outposts": [
+    {
+      "id": "outpost_north_watch",
+      "name": "North Watch Outpost",
+      "graph_node_id": "node_north_ridge",
+      "max_garrison_bunks": 4,
+      "daily_supply_demand": 4,
+      "defense_rating": 80,
+      "radio_relay_range": 15,
+      "build_cost": {
+        "scrap": 50,
+        "timber": 30,
+        "rations": 20
+      }
+    },
+    {
+      "id": "outpost_rail_depot",
+      "name": "Rail Depot Waystation",
+      "graph_node_id": "node_rail_junction",
+      "max_garrison_bunks": 6,
+      "daily_supply_demand": 6,
+      "defense_rating": 60,
+      "radio_relay_range": 10,
+      "build_cost": {
+        "scrap": 70,
+        "timber": 40,
+        "rations": 25
+      }
+    },
+    {
+      "id": "outpost_relay_tower",
+      "name": "High Peak Relay Tower",
+      "graph_node_id": "node_radio_tower",
+      "max_garrison_bunks": 3,
+      "daily_supply_demand": 3,
+      "defense_rating": 40,
+      "radio_relay_range": 30,
+      "build_cost": {
+        "scrap": 40,
+        "electronics": 15,
+        "rations": 15
+      }
+    },
+    {
+      "id": "outpost_quarry_camp",
+      "name": "Deep Quarry Camp",
+      "graph_node_id": "node_deep_quarry",
+      "max_garrison_bunks": 8,
+      "daily_supply_demand": 8,
+      "defense_rating": 50,
+      "radio_relay_range": 5,
+      "build_cost": {
+        "scrap": 80,
+        "timber": 50,
+        "rations": 30
+      }
+    }
+  ]
+}

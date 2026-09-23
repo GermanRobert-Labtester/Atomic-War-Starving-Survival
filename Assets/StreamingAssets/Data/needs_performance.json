@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "floors": {
+    "min_combat_accuracy_multiplier": 0.25,
+    "min_combat_damage_multiplier": 0.30,
+    "min_work_speed_multiplier": 0.20,
+    "min_expedition_speed_multiplier": 0.30,
+    "max_expedition_stamina_drain_multiplier": 2.50
+  },
+  "morale_interaction": {
+    "demoralized_threshold": 30.0,
+    "demoralized_penalty_amplification": 0.10,
+    "high_morale_threshold": 70.0,
+    "high_morale_penalty_mitigation": 0.10
+  },
+  "needs": {
+    "hunger": [
+      {
+        "tier": "Impaired",
+        "min_severity": 30.0,
+        "max_severity": 60.0,
+        "combat_accuracy_mod": -0.10,
+        "combat_damage_mod": -0.10,
+        "work_speed_mod": -0.15,
+        "expedition_speed_mod": -0.10,
+        "stamina_drain_mod": 0.15
+      },
+      {
+        "tier": "Severe",
+        "min_severity": 60.0,
+        "max_severity": 90.0,
+        "combat_accuracy_mod": -0.25,
+        "combat_damage_mod": -0.25,
+        "work_speed_mod": -0.30,
+        "expedition_speed_mod": -0.25,
+        "stamina_drain_mod": 0.35
+      },
+      {
+        "tier": "Critical",
+        "min_severity": 90.0,
+        "max_severity": 100.0,
+        "combat_accuracy_mod": -0.50,
+        "combat_damage_mod": -0.50,
+        "work_speed_mod": -0.70,
+        "expedition_speed_mod": -0.50,
+        "stamina_drain_mod": 0.75
+      }
+    ],
+    "thirst": [
+      {
+        "tier": "Impaired",
+        "min_severity": 20.0,
+        "max_severity": 50.0,
+        "combat_accuracy_mod": -0.15,
+        "combat_damage_mod": -0.15,
+        "work_speed_mod": -0.20,
+        "expedition_speed_mod": -0.15,
+        "stamina_drain_mod": 0.20
+      },
+      {
+        "tier": "Severe",
+        "min_severity": 50.0,
+        "max_severity": 80.0,
+        "combat_accuracy_mod": -0.30,
+        "combat_damage_mod": -0.30,
+        "work_speed_mod": -0.40,
+        "expedition_speed_mod": -0.30,
+        "stamina_drain_mod": 0.45
+      },
+      {
+        "tier": "Critical",
+        "min_severity": 80.0,
+        "max_severity": 100.0,
+        "combat_accuracy_mod": -0.50,
+        "combat_damage_mod": -0.50,
+        "work_speed_mod": -0.60,
+        "expedition_speed_mod": -0.50,
+        "stamina_drain_mod": 0.80
+      }
+    ],
+    "fatigue": [
+      {
+        "tier": "Impaired",
+        "min_severity": 40.0,
+        "max_severity": 70.0,
+        "combat_accuracy_mod": -0.10,
+        "combat_damage_mod": -0.10,
+        "work_speed_mod": -0.20,
+        "expedition_speed_mod": -0.15,
+        "stamina_drain_mod": 0.25
+      },
+      {
+        "tier": "Severe",
+        "min_severity": 70.0,
+        "max_severity": 90.0,
+        "combat_accuracy_mod": -0.25,
+        "combat_damage_mod": -0.25,
+        "work_speed_mod": -0.40,
+        "expedition_speed_mod": -0.30,
+        "stamina_drain_mod": 0.50
+      },
+      {
+        "tier": "Critical",
+        "min_severity": 90.0,
+        "max_severity": 100.0,
+        "combat_accuracy_mod": -0.50,
+        "combat_damage_mod": -0.50,
+        "work_speed_mod": -0.60,
+        "expedition_speed_mod": -0.50,
+        "stamina_drain_mod": 1.00
+      }
+    ],
+    "cold": [
+      {
+        "tier": "Impaired",
+        "min_severity": 20.0,
+        "max_severity": 50.0,
+        "combat_accuracy_mod": -0.10,
+        "combat_damage_mod": -0.10,
+        "work_speed_mod": -0.15,
+        "expedition_speed_mod": -0.10,
+        "stamina_drain_mod": 0.15
+      },
+      {
+        "tier": "Severe",
+        "min_severity": 50.0,
+        "max_severity": 80.0,
+        "combat_accuracy_mod": -0.20,
+        "combat_damage_mod": -0.20,
+        "work_speed_mod": -0.30,
+        "expedition_speed_mod": -0.25,
+        "stamina_drain_mod": 0.30
+      },
+      {
+        "tier": "Critical",
+        "min_severity": 80.0,
+        "max_severity": 100.0,
+        "combat_accuracy_mod": -0.40,
+        "combat_damage_mod": -0.40,
+        "work_speed_mod": -0.50,
+        "expedition_speed_mod": -0.40,
+        "stamina_drain_mod": 0.60
+      }
+    ]
+  }
+}

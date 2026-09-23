@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "art_forms": [
+    {
+      "form_id": "form_painting",
+      "form_name": "Painting",
+      "description": "Visual works applied to canvas, wood, or scavenged materials. Survivors smear pigment with salvaged brushes or their bare hands. The end result may be crude or masterful, but it is always deliberate.",
+      "medium": "Painting",
+      "required_skill": 20,
+      "required_materials": ["canvas_scrap", "pigment_set"],
+      "creation_time_days": 2,
+      "morale_boost": 8.0,
+      "cultural_value": 55,
+      "display_location_type": "wall"
+    },
+    {
+      "form_id": "form_sculpture",
+      "form_name": "Sculpture",
+      "description": "Three-dimensional works carved from clay, salvage metal, or compressed ash. Heavy to move and impossible to ignore. Placed in common areas they anchor communal memory.",
+      "medium": "Sculpture",
+      "required_skill": 30,
+      "required_materials": ["clay_block", "metal_scrap"],
+      "creation_time_days": 4,
+      "morale_boost": 10.0,
+      "cultural_value": 70,
+      "display_location_type": "room"
+    },
+    {
+      "form_id": "form_music_composition",
+      "form_name": "Music Composition",
+      "description": "An original piece scored on paper or learned by rote and passed between survivors. Heard in the corridors, hummed at meals, remembered long after the composer is gone.",
+      "medium": "MusicComposition",
+      "required_skill": 35,
+      "required_materials": ["paper_sheets", "pencil"],
+      "creation_time_days": 3,
+      "morale_boost": 12.0,
+      "cultural_value": 65,
+      "display_location_type": "common_room"
+    },
+    {
+      "form_id": "form_poetry",
+      "form_name": "Poetry & Verse",
+      "description": "Words compressed until they hurt. Poems are posted on bulletin boards, pressed into notebooks, read aloud at meals by whoever needs to speak.",
+      "medium": "Poetry",
+      "required_skill": 15,
+      "required_materials": ["paper_sheets", "pencil"],
+      "creation_time_days": 1,
+      "morale_boost": 6.0,
+      "cultural_value": 40,
+      "display_location_type": "bulletin_board"
+    },
+    {
+      "form_id": "form_storytelling",
+      "form_name": "Storytelling",
+      "description": "Oral histories, invented parables, or harrowing personal accounts delivered to gathered survivors. No materials required. The body is the instrument; the voice is the archive.",
+      "medium": "Storytelling",
+      "required_skill": 10,
+      "required_materials": [],
+      "creation_time_days": 1,
+      "morale_boost": 7.0,
+      "cultural_value": 35,
+      "display_location_type": "gathering"
+    },
+    {
+      "form_id": "form_craftwork",
+      "form_name": "Decorative Craftwork",
+      "description": "Functional objects elevated to art: carved spoons, embroidered patches, decorated lanterns. Craftwork blurs the line between making and meaning.",
+      "medium": "Craftwork",
+      "required_skill": 20,
+      "required_materials": ["cloth_scraps", "carving_tool"],
+      "creation_time_days": 2,
+      "morale_boost": 5.0,
+      "cultural_value": 30,
+      "display_location_type": "room"
+    }
+  ]
+}

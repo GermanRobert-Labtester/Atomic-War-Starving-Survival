@@ -29,14 +29,16 @@ namespace AtomicWar.GodotApp.UI
 
         private SurvivorsHostSession? _survivors;
         private int _simDay = 1;
+        private Ashfall.Core.Achievements.AchievementSystem? _achievementSystem;
 
         public bool IsBound => _survivors != null;
         public int RenderedRowCount { get; private set; }
 
-        public void Bind(SurvivorsHostSession? survivors, int simDay = 1)
+        public void Bind(SurvivorsHostSession? survivors, int simDay = 1, Ashfall.Core.Achievements.AchievementSystem? achievementSystem = null)
         {
             _survivors = survivors;
             _simDay = simDay;
+            _achievementSystem = achievementSystem;
             RefreshView();
         }
 
@@ -68,21 +70,40 @@ namespace AtomicWar.GodotApp.UI
             AddRow(_statsList, $"Average Dose: {avgDose:0.0} mSv", avgDose >= 50 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Lethe);
             RenderedRowCount += 4;
 
-            // ── Achievements (derived from live state — honest, not fabricated) ──
-            if (_simDay >= 7)
-            { AddRow(_achievementsList, "First Week Survivor — reached Day 7", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
-            if (_simDay >= 14)
-            { AddRow(_achievementsList, "Two-Week Endurance — reached Day 14", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
-            if (_simDay >= 30)
-            { AddRow(_achievementsList, "Month of Ash — reached Day 30", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
-            if (alive == roster.Count && roster.Count > 0)
-            { AddRow(_achievementsList, "No Casualties — full roster alive", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
-            if (avgDose < 20 && roster.Count > 0)
-            { AddRow(_achievementsList, "Low Exposure — average dose below 20 mSv", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
-            if (avgHealth > 80 && roster.Count > 0)
-            { AddRow(_achievementsList, "Healthy Cohort — average health above 80", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
-            if (RenderedRowCount == 4)
-                _achievementsList.AddChild(MakeDimLine("No milestones reached yet."));
+            // ── Achievements ──
+            if (_achievementSystem != null)
+            {
+                _achievementSystem.EvaluateRosterSnapshot(_simDay, roster.Count, alive, avgHealth, avgDose, 50.0f);
+                var unlocked = _achievementSystem.GetCompletedAchievementIds();
+                foreach (var def in _achievementSystem.Catalog.All)
+                {
+                    if (unlocked.Contains(def.Id))
+                    {
+                        AddRow(_achievementsList, $"{def.Name} — {def.Description}", Ashfall.Core.UI.Theme.Warm);
+                        RenderedRowCount++;
+                    }
+                }
+                if (RenderedRowCount == 4)
+                    _achievementsList.AddChild(MakeDimLine("No milestones reached yet."));
+            }
+            else
+            {
+                // Derived fallback when AchievementSystem is not bound
+                if (_simDay >= 7)
+                { AddRow(_achievementsList, "First Week Survivor — reached Day 7", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
+                if (_simDay >= 14)
+                { AddRow(_achievementsList, "Two-Week Endurance — reached Day 14", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
+                if (_simDay >= 30)
+                { AddRow(_achievementsList, "Month of Ash — reached Day 30", Ashfall.Core.UI.Theme.Warm); RenderedRowCount++; }
+                if (alive == roster.Count && roster.Count > 0)
+                { AddRow(_achievementsList, "No Casualties — full roster alive", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
+                if (avgDose < 20 && roster.Count > 0)
+                { AddRow(_achievementsList, "Low Exposure — average dose below 20 mSv", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
+                if (avgHealth > 80 && roster.Count > 0)
+                { AddRow(_achievementsList, "Healthy Cohort — average health above 80", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; }
+                if (RenderedRowCount == 4)
+                    _achievementsList.AddChild(MakeDimLine("No milestones reached yet."));
+            }
 
             // ── Milestones (next targets) ──
             AddRow(_milestonesList, _simDay < 7 ? "Next: survive to Day 7" : "Day 7 milestone reached", _simDay < 7 ? Ashfall.Core.UI.Theme.Dim : Ashfall.Core.UI.Theme.Lethe);

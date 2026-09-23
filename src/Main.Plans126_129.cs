@@ -2,8 +2,8 @@
 // ============================================================================
 // Main Partial : Plans 126-129 Host Wire & Orchestration
 // Subsystems   : Plan 126 — Subterranean Biological Fermentation (this wave)
-//                Plans 127-129 land in follow-up waves of this flagship
-//                (tethered recon drone, continuous steel casting, lidar).
+//                Plans 127-129 are not tracked in this file; see the census
+//                (no drone/caster/lidar implementation exists at this HEAD).
 // ============================================================================
 using System;
 using Godot;

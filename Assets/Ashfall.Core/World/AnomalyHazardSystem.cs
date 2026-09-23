@@ -446,6 +446,20 @@ namespace Ashfall.Core.World
                 if (h.movement_profile == "static") continue;
 
                 float dist = Distance(h.position_x, h.position_y, targetX, targetY);
+
+                // Contact transition: the hazard's radius now covers the target.
+                // Fired once per (hazard, target) episode, persisted through the
+                // same dedup list as warnings (distinct key prefix — no schema change).
+                if (dist <= h.radius_km)
+                {
+                    string contactKey = $"contact|{h.hazard_id}|{targetId}";
+                    if (!h.fired_warning_keys.Contains(contactKey))
+                    {
+                        h.fired_warning_keys.Add(contactKey);
+                        OnHazardContact?.Invoke(h);
+                    }
+                }
+
                 float triggerFraction = h.warning_profile switch
                 {
                     "early" => 1.0f,

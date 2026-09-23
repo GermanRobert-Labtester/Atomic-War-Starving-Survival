@@ -44,7 +44,7 @@ namespace Ashfall.Core.Tests.Integration
             Assert.Equal(0, snap.turrets_ready); // built but magazine empty
             Assert.Equal(0, snap.emplacements_disabled);
             // Auto-sectoring: first emplacement → PerimeterSector.All[1] (east).
-            Assert.False(snap.unguarded_sectors.Contains("east"));
+            Assert.DoesNotContain("east", snap.unguarded_sectors);
 
             // Destroy the sandbag: it leaves the ready count, joins disabled,
             // and its sector honestly reads unguarded.
@@ -55,7 +55,7 @@ namespace Ashfall.Core.Tests.Integration
             var degraded = p.GetEncounterSnapshot();
             Assert.Equal(1, degraded.emplacements_disabled);
             Assert.Equal(1, degraded.emplacements_ready);
-            Assert.True(degraded.unguarded_sectors.Contains("east")); // its sector honestly reads unguarded
+            Assert.Contains("east", degraded.unguarded_sectors); // its sector honestly reads unguarded
         }
 
         [Fact]

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Survivors
 {
@@ -48,6 +50,55 @@ namespace Ashfall.Core.Survivors
     }
 
     [Serializable]
+    public sealed class RelationshipDecayProfileDefinition
+    {
+        [JsonPropertyName("profile_id")]
+        public string ProfileId { get; set; } = string.Empty;
+
+        [JsonPropertyName("bond_type")]
+        public string BondType { get; set; } = string.Empty;
+
+        [JsonPropertyName("decay_rate_per_day")]
+        public float DecayRatePerDay { get; set; } = 0.80f;
+
+        [JsonPropertyName("neglect_threshold_days")]
+        public int NeglectThresholdDays { get; set; } = 3;
+
+        [JsonPropertyName("drift_threshold_affinity")]
+        public float DriftThresholdAffinity { get; set; } = 0f;
+
+        [JsonPropertyName("reconnection_bonus_multiplier")]
+        public float ReconnectionBonusMultiplier { get; set; } = 1.0f;
+
+        [JsonPropertyName("shared_duty_mitigation")]
+        public float SharedDutyMitigation { get; set; } = 0.50f;
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+
+        public SurvivorBondType GetBondType() => BondType.ToLowerInvariant() switch
+        {
+            "acquaintance" => SurvivorBondType.Acquaintance,
+            "friend" => SurvivorBondType.Friend,
+            "closefriend" or "close_friend" => SurvivorBondType.CloseFriend,
+            "family" => SurvivorBondType.Family,
+            "mentor" => SurvivorBondType.Mentor,
+            "rival" => SurvivorBondType.Rival,
+            _ => SurvivorBondType.Acquaintance
+        };
+    }
+
+    [Serializable]
+    public sealed class RelationshipDecayCatalogData
+    {
+        [JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; } = 1;
+
+        [JsonPropertyName("profiles")]
+        public List<RelationshipDecayProfileDefinition> Profiles { get; set; } = new List<RelationshipDecayProfileDefinition>();
+    }
+
+    [Serializable]
     public sealed class RelationshipDecayState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -64,17 +115,62 @@ namespace Ashfall.Core.Survivors
     public sealed class RelationshipDecaySystem
     {
         private readonly RelationshipDecayState _state;
+        private readonly Dictionary<SurvivorBondType, RelationshipDecayProfileDefinition> _profilesByBond = new Dictionary<SurvivorBondType, RelationshipDecayProfileDefinition>();
+        private readonly Dictionary<string, RelationshipDecayProfileDefinition> _profilesById = new Dictionary<string, RelationshipDecayProfileDefinition>(StringComparer.OrdinalIgnoreCase);
 
         public event Action<SocialDriftEvent>? OnBondDrifted;
         public event Action<PairBondState>? OnBondBroken;
 
+        public Func<string /*survivorA*/, string /*survivorB*/, float /*mitigationFactor*/>? BondingMitigationProvider { get; set; }
+        public Action<PairBondState, SocialDriftType>? BondDriftBridge { get; set; }
+
         public int TrackedPairCount => _state.Pairs.Count;
         public IReadOnlyList<PairBondState> Pairs => _state.Pairs;
         public IReadOnlyList<SocialDriftEvent> DriftHistory => _state.DriftHistory;
+        public IReadOnlyCollection<RelationshipDecayProfileDefinition> Profiles => _profilesById.Values;
 
         public RelationshipDecaySystem(RelationshipDecayState? state = null)
         {
             _state = state ?? new RelationshipDecayState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var data = JsonSerializer.Deserialize<RelationshipDecayCatalogData>(json, options);
+            if (data != null)
+            {
+                LoadCatalog(data);
+            }
+        }
+
+        public void LoadCatalog(RelationshipDecayCatalogData catalog)
+        {
+            if (catalog?.Profiles == null) return;
+            foreach (var p in catalog.Profiles)
+            {
+                if (!string.IsNullOrWhiteSpace(p.ProfileId))
+                {
+                    _profilesById[p.ProfileId] = p;
+                }
+                var bond = p.GetBondType();
+                _profilesByBond[bond] = p;
+            }
+        }
+
+        public RelationshipDecayProfileDefinition? GetProfile(SurvivorBondType bond)
+        {
+            return _profilesByBond.TryGetValue(bond, out var p) ? p : null;
+        }
+
+        public RelationshipDecayProfileDefinition? GetProfile(string profileId)
+        {
+            if (string.IsNullOrWhiteSpace(profileId)) return null;
+            return _profilesById.TryGetValue(profileId, out var p) ? p : null;
         }
 
         private static string OrderKey(string a, string b) =>
@@ -137,13 +233,20 @@ namespace Ashfall.Core.Survivors
         {
             var pair = GetPair(survivorA, survivorB) ?? RegisterOrUpdatePair(survivorA, survivorB, SurvivorBondType.Acquaintance, currentDay: currentDay);
 
+            float effectiveBonus = affinityBonus;
+            var profile = GetProfile(pair.Bond);
+            if (profile != null && pair.DaysWithoutInteraction > profile.NeglectThresholdDays && affinityBonus > 0f)
+            {
+                effectiveBonus *= profile.ReconnectionBonusMultiplier;
+            }
+
             pair.LastInteractionDay = currentDay;
             pair.DaysWithoutInteraction = 0;
-            pair.Affinity = Math.Clamp(pair.Affinity + affinityBonus, -100f, 100f);
+            pair.Affinity = Math.Clamp(pair.Affinity + effectiveBonus, -100f, 100f);
 
-            if (affinityBonus > 0f)
+            if (effectiveBonus > 0f)
             {
-                pair.Trust = Math.Clamp(pair.Trust + (affinityBonus * 0.4f), 0f, 100f);
+                pair.Trust = Math.Clamp(pair.Trust + (effectiveBonus * 0.4f), 0f, 100f);
             }
 
             // Upgrade bond if affinity crosses threshold
@@ -166,17 +269,31 @@ namespace Ashfall.Core.Survivors
                 var pair = _state.Pairs[i];
                 pair.DaysWithoutInteraction++;
 
-                if (pair.DaysWithoutInteraction > 3)
+                int neglectThreshold = 3;
+                float decayRate = pair.Bond switch
                 {
-                    float decayRate = pair.Bond switch
+                    SurvivorBondType.Family => 0.15f,
+                    SurvivorBondType.CloseFriend => 0.35f,
+                    SurvivorBondType.Friend => 0.60f,
+                    SurvivorBondType.Mentor => 0.25f,
+                    SurvivorBondType.Rival => 0.10f,
+                    _ => 0.80f // Acquaintance
+                };
+
+                var profile = GetProfile(pair.Bond);
+                if (profile != null)
+                {
+                    neglectThreshold = profile.NeglectThresholdDays;
+                    decayRate = profile.DecayRatePerDay;
+                }
+
+                if (pair.DaysWithoutInteraction > neglectThreshold)
+                {
+                    if (BondingMitigationProvider != null)
                     {
-                        SurvivorBondType.Family => 0.15f,
-                        SurvivorBondType.CloseFriend => 0.35f,
-                        SurvivorBondType.Friend => 0.60f,
-                        SurvivorBondType.Mentor => 0.25f,
-                        SurvivorBondType.Rival => 0.10f,
-                        _ => 0.80f // Acquaintance
-                    };
+                        float mitigation = Math.Clamp(BondingMitigationProvider(pair.SurvivorA, pair.SurvivorB), 0f, 1f);
+                        decayRate *= (1f - mitigation);
+                    }
 
                     float oldAffinity = pair.Affinity;
                     pair.Affinity = Math.Clamp(pair.Affinity - decayRate, -100f, 100f);
@@ -198,6 +315,7 @@ namespace Ashfall.Core.Survivors
                         };
                         _state.DriftHistory.Add(ev);
                         OnBondDrifted?.Invoke(ev);
+                        BondDriftBridge?.Invoke(pair, SocialDriftType.FriendshipFaded);
                     }
                     else if (pair.Bond == SurvivorBondType.Friend && pair.Affinity <= 0f)
                     {
@@ -215,6 +333,7 @@ namespace Ashfall.Core.Survivors
                         _state.DriftHistory.Add(ev);
                         OnBondDrifted?.Invoke(ev);
                         OnBondBroken?.Invoke(pair);
+                        BondDriftBridge?.Invoke(pair, SocialDriftType.GrewApart);
                     }
                 }
             }

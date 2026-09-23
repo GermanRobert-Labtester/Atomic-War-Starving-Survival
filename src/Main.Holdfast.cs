@@ -131,9 +131,20 @@ namespace AtomicWar.GodotApp
         {
             SetupIceRoad();
             SetupCampaignDay();
+            // Plan 39 — one measured soak sample per day advance (release-gate
+            // evidence). The canonical coordinator remains the only day owner.
+            var soakWatch = System.Diagnostics.Stopwatch.StartNew();
             var args = _campaignDay.Advance(day, new CampaignDayPersistenceAdapter(this));
+            soakWatch.Stop();
             if (args != null && args.Succeeded)
             {
+                RecordSessionDaySample(day, (float)soakWatch.Elapsed.TotalMilliseconds, System.GC.GetTotalMemory(false));
+                // Plan 46 — canonical day advance becomes one JSONL day_join row
+                // in the local play-session stream.
+                RecordPlayMetricsDayJoined(day);
+                // Plan 51 — the presentation slate is a derived read model:
+                // recompose it from the owners after each successful advance.
+                RefreshHoldfastPresentation();
                 _campaignDayDirty = true;
                 UpdateHud();
             }

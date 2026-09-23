@@ -2,9 +2,34 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Ashfall.Core.Shelter
 {
+    // ── Catalog DTOs ────────────────────────────────────────────────────────
+
+    [Serializable]
+    public sealed class NoiseSourceDef
+    {
+        public string source_def_id { get; set; } = string.Empty;
+        public string display_name { get; set; } = string.Empty;
+        public string type { get; set; } = "machinery";
+        public float default_output { get; set; } = 50.0f;
+        public string frequency { get; set; } = "medium";
+        public float duration_hours { get; set; } = 24.0f;
+        public bool can_be_soundproofed { get; set; } = true;
+        public string description { get; set; } = string.Empty;
+    }
+
+    [Serializable]
+    public sealed class NoiseSourcesCatalog
+    {
+        public int schema_version { get; set; } = 1;
+        public List<NoiseSourceDef> sources { get; set; } = new List<NoiseSourceDef>();
+    }
+
+    // ── Enums & State DTOs ──────────────────────────────────────────────────
+
     public enum NoiseSourceType
     {
         Machinery = 0,
@@ -100,6 +125,72 @@ namespace Ashfall.Core.Shelter
         public IReadOnlyList<RoomAcousticProfile> RoomProfiles => _state.RoomProfiles;
         public IReadOnlyList<NoiseEvent> Events => _state.Events;
         public ShelterNoiseState State => _state;
+
+        private readonly Dictionary<string, NoiseSourceDef> _sourceDefs =
+            new Dictionary<string, NoiseSourceDef>(StringComparer.OrdinalIgnoreCase);
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+                throw new ArgumentException("Catalog JSON cannot be null or empty", nameof(json));
+
+            var catalog = JsonSerializer.Deserialize<NoiseSourcesCatalog>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (catalog?.sources == null) return;
+
+            _sourceDefs.Clear();
+            foreach (var src in catalog.sources)
+            {
+                if (!string.IsNullOrEmpty(src.source_def_id))
+                {
+                    _sourceDefs[src.source_def_id] = src;
+                }
+            }
+        }
+
+        public IReadOnlyList<NoiseSourceDef> GetAllSourceDefs() => _sourceDefs.Values.ToList();
+
+        public NoiseSourceDef? GetSourceDef(string id)
+        {
+            _sourceDefs.TryGetValue(id, out var def);
+            return def;
+        }
+
+        public NoiseSource? AddNoiseSourceFromDef(string sourceDefId, string roomId)
+        {
+            if (!_sourceDefs.TryGetValue(sourceDefId, out var def)) return null;
+
+            var type = ParseSourceType(def.type);
+            var freq = ParseFrequency(def.frequency);
+
+            var src = AddNoiseSource(type, roomId, def.default_output, freq);
+            src.DurationHours = def.duration_hours;
+            src.CanBeSoundproofed = def.can_be_soundproofed;
+            return src;
+        }
+
+        private static NoiseSourceType ParseSourceType(string type) => type.ToLowerInvariant() switch
+        {
+            "human_activity" => NoiseSourceType.HumanActivity,
+            "industrial_process" => NoiseSourceType.IndustrialProcess,
+            "alarm" => NoiseSourceType.Alarm,
+            "ventilation" => NoiseSourceType.Ventilation,
+            "generator" => NoiseSourceType.Generator,
+            "construction" => NoiseSourceType.Construction,
+            "music_recreation" => NoiseSourceType.MusicRecreation,
+            "argument" => NoiseSourceType.Argument,
+            _ => NoiseSourceType.Machinery
+        };
+
+        private static NoiseFrequency ParseFrequency(string freq) => freq.ToLowerInvariant() switch
+        {
+            "low" => NoiseFrequency.Low,
+            "high" => NoiseFrequency.High,
+            _ => NoiseFrequency.Medium
+        };
 
         public ShelterNoiseSystem(ShelterNoiseState? state = null)
         {

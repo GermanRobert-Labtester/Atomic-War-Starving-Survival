@@ -90,6 +90,12 @@ namespace Ashfall.Core.Survivors
         public Func<float>? HungerRateMultiplier { get; set; }
         public Func<float>? ThirstRateMultiplier { get; set; }
 
+        /// <summary>
+        /// Plan 142 — Optional provider returning a fraction [0..0.9] of cold loss reduction from clothing gear.
+        /// (survivorId -> reductionFraction).
+        /// </summary>
+        public Func<string, float>? ClothingWarmthReductionProvider { get; set; }
+
         public event Action<SurvivorNeedsState, NeedKind, float>? OnNeedChanged;
         public event Action<SurvivorNeedsState, NeedsModifierContribution>? OnAttributedContribution;
         public event Action<SurvivorNeedsState, NeedKind>? OnNeedCritical;
@@ -292,7 +298,14 @@ namespace Ashfall.Core.Survivors
         private void ApplyWarmth(SurvivorNeedsState survivor, float gameHours)
         {
             bool warmed = _isNearHeatSource != null && _isNearHeatSource(survivor);
-            float rate = warmed ? _profile.warmthRestorePerHourNearHeat : -_profile.warmthLossPerHourInCold;
+            float coldLoss = _profile.warmthLossPerHourInCold;
+            if (!warmed && ClothingWarmthReductionProvider != null && !string.IsNullOrEmpty(survivor.Id))
+            {
+                float reduction = ClothingWarmthReductionProvider(survivor.Id);
+                reduction = MathfCompat.Clamp(reduction, 0f, 0.9f);
+                coldLoss *= (1f - reduction);
+            }
+            float rate = warmed ? _profile.warmthRestorePerHourNearHeat : -coldLoss;
             Modify(survivor, NeedKind.Warmth, rate * gameHours);
         }
 

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "food_types": [
+    {
+      "type_id": "food_meat",
+      "display_name": "Butchered Game & Livestock Meat",
+      "category": "Perishable",
+      "base_spoilage_days": 2.0,
+      "temperature_sensitivity": 1.5,
+      "optimal_preservations": ["smoking", "canning", "freezing"],
+      "description": "High-protein raw animal flesh prone to rapid bacterial putrefaction at ambient warmth."
+    },
+    {
+      "type_id": "food_dairy",
+      "display_name": "Fresh Milk & Soft Cheeses",
+      "category": "Perishable",
+      "base_spoilage_days": 1.5,
+      "temperature_sensitivity": 2.0,
+      "optimal_preservations": ["refrigeration", "fermentation"],
+      "description": "Unpasteurized dairy liquids and fats that sour rapidly if uncooled."
+    },
+    {
+      "type_id": "food_vegetables",
+      "display_name": "Greenhouse Greens & Root Crops",
+      "category": "SemiPerishable",
+      "base_spoilage_days": 5.0,
+      "temperature_sensitivity": 1.0,
+      "optimal_preservations": ["root_cellar", "fermentation", "canning"],
+      "description": "Hardy tubers and leafy crops susceptible to dehydration, mold, and wilting."
+    },
+    {
+      "type_id": "food_fruits",
+      "display_name": "Wild Berries & Cultivated Orchards",
+      "category": "SemiPerishable",
+      "base_spoilage_days": 4.0,
+      "temperature_sensitivity": 1.2,
+      "optimal_preservations": ["drying", "canning", "fermentation"],
+      "description": "Fructose-rich forage and orchard crops prone to fungal rots and yeast blooms."
+    },
+    {
+      "type_id": "food_grains",
+      "display_name": "Milled Grain Flour & Dried Cereals",
+      "category": "ShelfStable",
+      "base_spoilage_days": 35.0,
+      "temperature_sensitivity": 0.4,
+      "optimal_preservations": ["drying", "sealing"],
+      "description": "Dehydrated carbohydrates with long shelf stability when kept dry and pest-free."
+    },
+    {
+      "type_id": "food_prepared_meal",
+      "display_name": "Cooked Rations & Mess-Hall Stews",
+      "category": "Perishable",
+      "base_spoilage_days": 1.0,
+      "temperature_sensitivity": 2.0,
+      "optimal_preservations": ["refrigeration"],
+      "description": "Cooked mixed meals requiring immediate consumption or cold storage."
+    },
+    {
+      "type_id": "food_preserved",
+      "display_name": "Pre-War Canned Goods & MREs",
+      "category": "ShelfStable",
+      "base_spoilage_days": 60.0,
+      "temperature_sensitivity": 0.2,
+      "optimal_preservations": ["canning", "drying"],
+      "description": "Hermetically sealed military rations and retorted tin cans impervious to ambient decay."
+    }
+  ]
+}

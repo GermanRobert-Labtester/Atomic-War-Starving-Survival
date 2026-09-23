@@ -150,6 +150,7 @@ namespace Ashfall.Core.Expeditions
         private readonly ISeededRng _rng;
         private readonly ILog _log;
         private int _currentDay;
+        private readonly HashSet<string> _breakthroughAlerted = new HashSet<string>(StringComparer.Ordinal);
 
         public ChemicalReconState State => _state;
         public IReadOnlyList<HazardObservation> Observations => _state.hazardObservations;
@@ -308,6 +309,30 @@ namespace Ashfall.Core.Expeditions
         {
             float threshold = _catalog.filter_model.breakthrough_warning_threshold * filterCapacityBase;
             return remainingCapacity <= threshold;
+        }
+
+        /// <summary>
+        /// Evaluates the recon party's respirator capacity against the authored
+        /// breakthrough threshold and raises <see cref="OnFilterBreakthrough"/> once
+        /// per crossing per location. A recovery above the threshold re-arms the
+        /// notification. In-memory only: no save state is created.
+        /// </summary>
+        public bool EvaluateFilterCondition(string locationNodeId, float remainingCapacity)
+        {
+            bool atRisk = IsFilterBreakthrough(remainingCapacity, _catalog.filter_model.filter_capacity_base);
+            if (atRisk)
+            {
+                if (_breakthroughAlerted.Add(locationNodeId ?? string.Empty))
+                {
+                    _log.Warn($"[ChemRecon] filter breakthrough risk at {locationNodeId} (remaining {remainingCapacity:F1})");
+                    OnFilterBreakthrough?.Invoke(locationNodeId ?? string.Empty);
+                }
+            }
+            else
+            {
+                _breakthroughAlerted.Remove(locationNodeId ?? string.Empty);
+            }
+            return atRisk;
         }
 
         /// <summary>

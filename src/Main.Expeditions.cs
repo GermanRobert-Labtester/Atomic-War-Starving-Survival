@@ -142,6 +142,9 @@ namespace AtomicWar.GodotApp
                 _disease?.Engine?.Infect(survivorId, diseaseId, day);
             };
             BindExpeditionJournalIfReady();
+            // Plan 137 — Bind needs-derived expedition travel speed query
+            _expeditions.Engine.SetSurvivorSpeedMultiplierQuery(survivorId =>
+                GetNeedsPerformanceModifiers(survivorId).ExpeditionSpeedMultiplier);
             if (_inventory != null)
             {
                 _expeditions.ShelterInventory = _inventory.Inventory;
@@ -206,6 +209,9 @@ namespace AtomicWar.GodotApp
             {
                 if (state == null) return;
                 BridgeDistressRescueOnArrive(state);
+                // Plan 46 — completed sortie + delivered loot units are recorded
+                // in the local play-session stream (audit read model only).
+                RecordPlayMetricExpeditionReturned(state.loot?.Count ?? 0);
                 if (_inventory != null && state.loot != null)
                 {
                     for (int i = 0; i < state.loot.Count; i++)
@@ -367,6 +373,12 @@ namespace AtomicWar.GodotApp
                     GD.Print($"[Combat] {consequence.FactionId} standing {consequence.StandingDelta:+0.##;-0.##;0} ({consequence.Reason}, {consequence.IncidentId}).");
                 };
                 _combat.ConfigureFactionStanding(_yearOfAsh.FactionWar.ModifyStanding);
+                // Plan 137 — Bind needs-derived combat accuracy and damage modifiers
+                _combat.Engine.PerformanceLookup = survivorId =>
+                {
+                    var m = GetNeedsPerformanceModifiers(survivorId);
+                    return (m.CombatAccuracyMultiplier, m.CombatDamageMultiplier);
+                };
                 // Expedition encounters auto-populate a real combat encounter.
                 SetupExpeditionCombatHandoff(_combat);
             }

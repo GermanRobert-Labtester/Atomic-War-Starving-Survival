@@ -144,9 +144,11 @@ namespace Ashfall.Core.Combat
                 AmmoRangeMod = ammo?.rangeMod ?? 1f,
                 StanceAccuracyMod = mods.Accuracy,
                 StanceDamageMod = mods.Damage,
-                ExternalAccuracyMod = (1f - (weapon.IsJammed ? 1f : 0f)) *
+                ExternalAccuracyMod = (PerformanceLookup != null && !string.IsNullOrEmpty(shooter.SurvivorId) ? Math.Max(0.1f, PerformanceLookup(shooter.SurvivorId).accuracy) : 1f) *
+                    (1f - (weapon.IsJammed ? 1f : 0f)) *
                     (weapon.BallisticsAccuracyMultiplier <= 0f ? 1f : weapon.BallisticsAccuracyMultiplier),
-                ExternalDamageMod = FlankMultiplier(shooter) * GetCloseQuartersBonus(shooter) *
+                ExternalDamageMod = (PerformanceLookup != null && !string.IsNullOrEmpty(shooter.SurvivorId) ? Math.Max(0.1f, PerformanceLookup(shooter.SurvivorId).damage) : 1f) *
+                    FlankMultiplier(shooter) * GetCloseQuartersBonus(shooter) *
                     (weapon.BallisticsPenetrationMultiplier <= 0f ? 1f : weapon.BallisticsPenetrationMultiplier),
                 IsFirstShotCritBonus = false,
                 ExtraCritChance = Math.Clamp(

@@ -858,6 +858,16 @@ namespace Ashfall.Core.Inventory
             return true;
         }
 
+        public bool Equip(
+            ItemDefinition item,
+            IEnumerable<Medical.LimbState>? limbs,
+            Func<string, ItemDefinition?>? catalog = null,
+            Func<string, float>? conditionProvider = null)
+        {
+            if (!EquipLimbGate.CanEquip(item, limbs, catalog, conditionProvider)) return false;
+            return Equip(item);
+        }
+
         public ItemDefinition? Unequip(EquipSlot slot)
         {
             for (int i = 0; i < _equipped.Count; i++)

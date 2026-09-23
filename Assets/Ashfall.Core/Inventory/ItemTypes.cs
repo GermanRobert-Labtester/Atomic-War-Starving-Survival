@@ -40,7 +40,9 @@ namespace Ashfall.Core.Inventory
         Face,
         Hands,
         Tool,
-        Weapon
+        Weapon,
+        ProstheticHand,
+        ProstheticLeg
     }
 
     /// <summary>Expiration state for medical supplies and food items.</summary>

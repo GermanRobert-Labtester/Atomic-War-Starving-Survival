@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Memorial;
 
@@ -39,12 +40,23 @@ namespace Ashfall.Core.Shelter
     }
 
     [Serializable]
+    public sealed class ArchiveCategoryDef
+    {
+        public string CategoryId { get; set; } = string.Empty;
+        public string CategoryName { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public List<string> EntryTypes { get; set; } = new List<string>();
+        public int DisplayOrder { get; set; } = 1;
+    }
+
+    [Serializable]
     public class ShelterArchiveState
     {
         public int SchemaVersion { get; set; } = 1;
         public int FoundingDay { get; set; } = 1;
         public int NextSequence { get; set; } = 1;
         public List<ArchiveEntry> Entries { get; set; } = new List<ArchiveEntry>();
+        public List<ArchiveCategoryDef> AuthoredCategories { get; set; } = new List<ArchiveCategoryDef>();
     }
 
     /// <summary>
@@ -58,12 +70,62 @@ namespace Ashfall.Core.Shelter
 
         public event Action<ArchiveEntry>? OnEntryRecorded;
 
+        public Action<ArchiveEntry>? OnEntryRecordedSeam { get; set; }
+        public Action<ArchiveEntry>? OnMemorialRecordedSeam { get; set; }
+
         public int FoundingDay => _state.FoundingDay;
         public int EntryCount => _state.Entries.Count;
+        public IReadOnlyList<ArchiveCategoryDef> AuthoredCategories => _state.AuthoredCategories;
 
         public ShelterArchiveSystem(ShelterArchiveState? state = null, int foundingDay = 1)
         {
             _state = state ?? new ShelterArchiveState { FoundingDay = foundingDay };
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                if (root.TryGetProperty("categories", out var catEl) && catEl.ValueKind == JsonValueKind.Array)
+                {
+                    _state.AuthoredCategories.Clear();
+                    foreach (var item in catEl.EnumerateArray())
+                    {
+                        var types = new List<string>();
+                        if (item.TryGetProperty("entry_types", out var typesEl) && typesEl.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var t in typesEl.EnumerateArray())
+                            {
+                                string? str = t.GetString();
+                                if (!string.IsNullOrEmpty(str)) types.Add(str);
+                            }
+                        }
+
+                        var def = new ArchiveCategoryDef
+                        {
+                            CategoryId = item.TryGetProperty("category_id", out var idProp) ? idProp.GetString() ?? "" : "",
+                            CategoryName = item.TryGetProperty("category_name", out var nameProp) ? nameProp.GetString() ?? "" : "",
+                            Description = item.TryGetProperty("description", out var descProp) ? descProp.GetString() ?? "" : "",
+                            EntryTypes = types,
+                            DisplayOrder = item.TryGetProperty("display_order", out var orderProp) ? orderProp.GetInt32() : 1
+                        };
+
+                        if (!string.IsNullOrEmpty(def.CategoryId))
+                        {
+                            _state.AuthoredCategories.Add(def);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Catalog parse fallback
+            }
         }
 
         /// <summary>
@@ -154,6 +216,13 @@ namespace Ashfall.Core.Shelter
 
             _state.Entries.Add(entry);
             OnEntryRecorded?.Invoke(entry);
+            OnEntryRecordedSeam?.Invoke(entry);
+
+            if (entry.Type == ArchiveEntryType.Memorial)
+            {
+                OnMemorialRecordedSeam?.Invoke(entry);
+            }
+
             return entry;
         }
 
@@ -303,7 +372,8 @@ namespace Ashfall.Core.Shelter
                 SchemaVersion = _state.SchemaVersion,
                 FoundingDay = _state.FoundingDay,
                 NextSequence = _state.NextSequence,
-                Entries = new List<ArchiveEntry>(_state.Entries.Count)
+                Entries = new List<ArchiveEntry>(_state.Entries.Count),
+                AuthoredCategories = new List<ArchiveCategoryDef>(_state.AuthoredCategories)
             };
 
             for (int i = 0; i < _state.Entries.Count; i++)
@@ -333,6 +403,12 @@ namespace Ashfall.Core.Shelter
             _state.FoundingDay = state.FoundingDay;
             _state.NextSequence = state.NextSequence;
             _state.Entries.Clear();
+            _state.AuthoredCategories.Clear();
+
+            if (state.AuthoredCategories != null)
+            {
+                _state.AuthoredCategories.AddRange(state.AuthoredCategories);
+            }
 
             if (state.Entries != null)
             {

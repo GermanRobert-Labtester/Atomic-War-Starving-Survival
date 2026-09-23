@@ -161,8 +161,6 @@ public partial class CombatHudOverlay : Control, IBindablePanel
         body.AddChild(actionRow);
         _shell.SetContent(body);
 
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("EVENT LOG");
-        // title re-anchor for refresh-detail
         RefreshView();
     }
 

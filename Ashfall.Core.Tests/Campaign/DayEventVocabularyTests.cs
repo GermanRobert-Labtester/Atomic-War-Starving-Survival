@@ -36,7 +36,7 @@ namespace Ashfall.Core.Tests.Campaign
             "journal_ticked", "maritime_ticked", "market_shocks_active", "market_ticked",
             "medical_disease_ticked", "memorial_checked", "morale_contagion_ticked",
             "narrative_arc_selected", "narrative_ticked", "needs_ticked",
-            "nuclear_generation_published", "personal_quest_progressed",
+            "nuclear_generation_published", "obligation_met", "personal_quest_progressed",
             "pneumatic_dispatch_ticked", "power_ticked", "precision_metrology_ticked",
             "procedural_narrative_ticked", "psychology_arcs_ticked", "psyops_ticked",
             "radio_program_production_active_delta", "radio_program_production_ticked",
@@ -50,15 +50,24 @@ namespace Ashfall.Core.Tests.Campaign
         [Fact]
         public void UnknownKind_RendersGenericEntry_NeverSilentlyDropped()
         {
+            // Mapped kind routes to its semantic section
             var report = DailyBriefingReportBuilder.BuildFromDayEvents(7, 7,
                 new[] { Evt("sanitation_spill", "sanitation", "room_cistern", "spill depth 300", 300f) });
 
-            var section = report.Sections.FirstOrDefault(s => s.Title == DayEventVocabulary.GenericSectionTitle);
+            var section = report.Sections.FirstOrDefault(s => s.Title == "Warnings");
             Assert.NotNull(section);
             var entry = Assert.Single(section!.Entries);
             Assert.Contains("sanitation spill", entry.Text);
             Assert.Contains("sanitation", entry.Text); // source owner
             Assert.Contains("room_cistern", entry.Text);
+
+            // Truly unknown synthetic kind falls back to GenericSectionTitle
+            var unmappedReport = DailyBriefingReportBuilder.BuildFromDayEvents(7, 7,
+                new[] { Evt("synthetic_unmapped_event", "custom_mod", "entity_1") });
+            var genericSection = unmappedReport.Sections.FirstOrDefault(s => s.Title == DayEventVocabulary.GenericSectionTitle);
+            Assert.NotNull(genericSection);
+            var genericEntry = Assert.Single(genericSection!.Entries);
+            Assert.Contains("synthetic unmapped event", genericEntry.Text);
         }
 
         [Fact]
@@ -83,8 +92,10 @@ namespace Ashfall.Core.Tests.Campaign
             foreach (string kind in playerFacing)
             {
                 var report = DailyBriefingReportBuilder.BuildFromDayEvents(5, 5, new[] { Evt(kind) });
-                Assert.True(report.Sections.Any(s => s.Title == DayEventVocabulary.GenericSectionTitle),
-                    $"emitted non-heartbeat kind '{kind}' must render visibly, never silently drop");
+                var semantic = DayEventVocabulary.GetSemanticKind(kind);
+                var expectedSection = DayEventVocabulary.SectionTitleFor(semantic);
+                Assert.True(report.Sections.Any(s => s.Title == expectedSection),
+                    $"emitted non-heartbeat kind '{kind}' must render visibly in section '{expectedSection}', never silently drop");
             }
         }
 
@@ -96,8 +107,10 @@ namespace Ashfall.Core.Tests.Campaign
                 bool classified = DayEventVocabulary.IsInternalHeartbeat(kind);
                 if (classified) continue;
                 var report = DailyBriefingReportBuilder.BuildFromDayEvents(1, 1, new[] { Evt(kind) });
-                Assert.True(report.Sections.Any(s => s.Title == DayEventVocabulary.GenericSectionTitle),
-                    $"kind '{kind}' must be visible or classified — silent drop forbidden (C2 §6.3)");
+                var semantic = DayEventVocabulary.GetSemanticKind(kind);
+                var expectedSection = DayEventVocabulary.SectionTitleFor(semantic);
+                Assert.True(report.Sections.Any(s => s.Title == expectedSection),
+                    $"kind '{kind}' must be visible in '{expectedSection}' or classified — silent drop forbidden (C2 §6.3 / D11)");
             }
         }
 

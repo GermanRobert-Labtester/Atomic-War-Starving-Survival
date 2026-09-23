@@ -103,6 +103,43 @@ namespace Ashfall.Core.Culture
     }
 
     [Serializable]
+    public sealed class DocumentationTemplateDefinition
+    {
+        public string id { get; set; } = string.Empty;
+        public string type { get; set; } = "photograph";
+        public string subject_type { get; set; } = "daily_life";
+        public string title { get; set; } = string.Empty;
+        public string default_description { get; set; } = string.Empty;
+        public List<string> suggested_tags { get; set; } = new List<string>();
+
+        public DocumentationType ParseType() => type?.ToLowerInvariant() switch
+        {
+            "sketch" => DocumentationType.Sketch,
+            "written_record" or "record" => DocumentationType.WrittenRecord,
+            "audio_recording" or "audio" => DocumentationType.AudioRecording,
+            "video_recording" or "video" => DocumentationType.VideoRecording,
+            _ => DocumentationType.Photograph
+        };
+
+        public DocumentationSubjectType ParseSubjectType() => subject_type?.ToLowerInvariant() switch
+        {
+            "person" => DocumentationSubjectType.Person,
+            "place" => DocumentationSubjectType.Place,
+            "event" => DocumentationSubjectType.Event,
+            "object" => DocumentationSubjectType.Object,
+            "significant_moment" or "moment" => DocumentationSubjectType.SignificantMoment,
+            _ => DocumentationSubjectType.DailyLife
+        };
+    }
+
+    [Serializable]
+    public sealed class DocumentationCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<DocumentationTemplateDefinition> templates { get; set; } = new List<DocumentationTemplateDefinition>();
+    }
+
+    [Serializable]
     public sealed class DocumentationState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -120,6 +157,8 @@ namespace Ashfall.Core.Culture
     public sealed class DocumentationSystem
     {
         private readonly DocumentationState _state;
+        private readonly Dictionary<string, DocumentationTemplateDefinition> _templates =
+            new Dictionary<string, DocumentationTemplateDefinition>(StringComparer.OrdinalIgnoreCase);
 
         public event Action<DocumentationItem>? OnDocumentationCreated;
         public event Action<PhotoAlbum>? OnPhotoAlbumCreated;
@@ -128,10 +167,45 @@ namespace Ashfall.Core.Culture
 
         public int TotalItemsCount => _state.Items.Count;
         public int TotalAlbumsCount => _state.Albums.Count;
+        public int AvailableTemplateCount => _templates.Count;
 
         public DocumentationSystem(DocumentationState? state = null)
         {
             _state = state ?? new DocumentationState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var catalog = System.Text.Json.JsonSerializer.Deserialize<DocumentationCatalogData>(json);
+                if (catalog?.templates != null)
+                {
+                    foreach (var t in catalog.templates)
+                    {
+                        if (!string.IsNullOrWhiteSpace(t.id))
+                        {
+                            _templates[t.id] = t;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Fallback
+            }
+        }
+
+        public DocumentationTemplateDefinition? GetTemplate(string templateId)
+        {
+            if (string.IsNullOrWhiteSpace(templateId)) return null;
+            return _templates.TryGetValue(templateId, out var t) ? t : null;
+        }
+
+        public IReadOnlyList<DocumentationTemplateDefinition> GetAvailableTemplates()
+        {
+            return _templates.Values.ToList();
         }
 
         public DocumentationItem CreatePhotograph(

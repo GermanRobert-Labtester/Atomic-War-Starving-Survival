@@ -43,6 +43,9 @@ namespace AtomicWar.GodotApp
             _expansions?.BindDutyRoster(_dutyRoster.Roster);
             SetupFitnessForDuty();
             _dutyRoster.Roster.EvaluateRoleFitness = EvaluateDutyRoleFitness;
+            // Plan 137 — Bind needs-derived work speed multiplier
+            _dutyRoster.Roster.WorkSpeedMultiplierLookup = survivorId =>
+                GetNeedsPerformanceModifiers(survivorId).WorkSpeedMultiplier;
 
             // Cross-host roundtrip: a save written here (or by the Unity host) restores
             // the chart, marks, and encounter counters instead of starting blank.

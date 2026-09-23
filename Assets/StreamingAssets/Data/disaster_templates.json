@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "collection_id": "disaster_templates",
+  "disaster_templates": [
+    {
+      "disaster_id": "disaster_earthquake",
+      "name": "Subterranean Seismic Fracture",
+      "type": "earthquake",
+      "base_damage_per_day": 25.0,
+      "typical_duration_days": 2,
+      "trapped_survivor_chance": 0.35,
+      "description": "Tectonic fault rupture cracking bedrock arches and showering corridors with rockfall."
+    },
+    {
+      "disaster_id": "disaster_sump_flooding",
+      "name": "Aquifer Breach & Sump Inundation",
+      "type": "flooding",
+      "base_damage_per_day": 18.0,
+      "typical_duration_days": 3,
+      "trapped_survivor_chance": 0.15,
+      "description": "High-pressure subterranean water burst overflowing drainage sumps into living sectors."
+    },
+    {
+      "disaster_id": "disaster_electrical_fire",
+      "name": "High-Voltage Transformer Flashover",
+      "type": "electrical_fire",
+      "base_damage_per_day": 30.0,
+      "typical_duration_days": 1,
+      "trapped_survivor_chance": 0.25,
+      "description": "Short-circuit sparking an oil-fed fire in conduit ducts, filling rooms with choking smoke."
+    },
+    {
+      "disaster_id": "disaster_radiation_breach",
+      "name": "Reactor Shielding Vent Rupture",
+      "type": "radiation_breach",
+      "base_damage_per_day": 15.0,
+      "typical_duration_days": 4,
+      "trapped_survivor_chance": 0.10,
+      "description": "Radioactive particulate leak venting into central circulation passages."
+    },
+    {
+      "disaster_id": "disaster_air_toxin_leak",
+      "name": "Scrubber Filter Acid Puncture",
+      "type": "air_toxin_leak",
+      "base_damage_per_day": 20.0,
+      "typical_duration_days": 2,
+      "trapped_survivor_chance": 0.20,
+      "description": "Chemical scrubbing solvent fumes flooding ventilation ducts without scrubbed dilution."
+    },
+    {
+      "disaster_id": "disaster_structural_subsidence",
+      "name": "Excavation Ceiling Subsidence",
+      "type": "structural_subsidence",
+      "base_damage_per_day": 28.0,
+      "typical_duration_days": 2,
+      "trapped_survivor_chance": 0.40,
+      "description": "Unreinforced ceiling collapse in newly excavated wings trapping personnel beneath debris."
+    }
+  ],
+  "emergency_protocols": [
+    {
+      "protocol_id": "proto_lockdown",
+      "name": "Hermetic Sector Lockdown",
+      "protocol_type": "lockdown",
+      "effectiveness_permille": 450,
+      "description": "Slams bulkheads shut to isolate spreading fires, toxic plumes, and floodwaters.",
+      "resource_costs": {
+        "scrap_metal": 2
+      }
+    },
+    {
+      "protocol_id": "proto_fire_suppression",
+      "name": "Halon Gas & Foam Suppression",
+      "protocol_type": "fire_suppression",
+      "effectiveness_permille": 750,
+      "description": "Deploys chemical fire suppressants directly combating active electrical flashovers.",
+      "resource_costs": {
+        "chemicals": 3
+      }
+    },
+    {
+      "protocol_id": "proto_pumps_overdrive",
+      "name": "Auxiliary Sump Pumps Overdrive",
+      "protocol_type": "pumps_overdrive",
+      "effectiveness_permille": 700,
+      "description": "Reroutes reserve electrical power to evacuate inundation water from deep sumps.",
+      "resource_costs": {
+        "spare_parts": 2
+      }
+    },
+    {
+      "protocol_id": "proto_hazmat_purge",
+      "name": "Hazmat Scrubber Air Purge",
+      "protocol_type": "hazmat_purge",
+      "effectiveness_permille": 650,
+      "description": "Powers secondary catalytic HEPA scrubbers to neutralize airborne radionuclides and toxins.",
+      "resource_costs": {
+        "filter_cartridges": 2
+      }
+    },
+    {
+      "protocol_id": "proto_structural_shoring",
+      "name": "Rapid Hydraulic Shoring",
+      "protocol_type": "structural_shoring",
+      "effectiveness_permille": 600,
+      "description": "Erects emergency steel jacks preventing secondary ceiling cave-ins during earthquakes.",
+      "resource_costs": {
+        "scrap_metal": 6,
+        "structural_beams": 2
+      }
+    }
+  ]
+}

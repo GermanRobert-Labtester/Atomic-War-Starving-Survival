@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "events": [
+    {
+      "id": "event_theological_dispute",
+      "event_type": "confrontation",
+      "belief_pair": ["religious_faith", "atheist_rationalist"],
+      "title": "Theological Clash in the Bunks",
+      "description": "{actor} and {target} erupted into a bitter dispute over whether the nuclear deluge was divine wrath or atomic incompetence.",
+      "base_probability": 0.25,
+      "affinity_threshold": -50.0,
+      "consequences_description": "Mediation required: choose a side, stay neutral, or enforce secular neutrality."
+    },
+    {
+      "id": "event_martial_orders_clash",
+      "event_type": "confrontation",
+      "belief_pair": ["military_discipline", "pacifist"],
+      "title": "Refusal of Sentry Arms",
+      "description": "{actor} demanded strict armed muster drills, but pacifist {target} refused to touch firearms, halting preparation.",
+      "base_probability": 0.20,
+      "affinity_threshold": -50.0,
+      "consequences_description": "Command dilemma: uphold martial order or accommodate conscientious objection."
+    },
+    {
+      "id": "event_ration_hoarding_quarrel",
+      "event_type": "confrontation",
+      "belief_pair": ["collectivist_solidarity", "pragmatic_individualism"],
+      "title": "Private Stash Accusation",
+      "description": "{actor} publicly accused {target} of hoarding personal dried fruit while common rations are curtailed.",
+      "base_probability": 0.22,
+      "affinity_threshold": -50.0,
+      "consequences_description": "Community trust damaged: confiscate the stash or protect private property rights."
+    },
+    {
+      "id": "event_superstition_science_schism",
+      "event_type": "confrontation",
+      "belief_pair": ["superstitious_traditional", "atheist_rationalist"],
+      "title": "Blower Filter Omen Dispute",
+      "description": "{actor} hung bone talismans on the air scrubber, prompting {target} to rip them down as dangerous ventilation hazards.",
+      "base_probability": 0.18,
+      "affinity_threshold": -50.0,
+      "consequences_description": "Tension over old-world superstition vs empirical maintenance protocol."
+    },
+    {
+      "id": "event_quiet_evangelism",
+      "event_type": "conversion",
+      "belief_pair": ["religious_faith", "atheist_rationalist"],
+      "title": "Late-Night Faith Outreach",
+      "description": "Bound by growing mutual respect, {actor} gently shared morning prayers and scriptures with receptive {target}.",
+      "base_probability": 0.15,
+      "affinity_threshold": 30.0,
+      "consequences_description": "Potential worldview conversion if affinity and empathy hold firm."
+    },
+    {
+      "id": "event_pacifist_persuasion",
+      "event_type": "conversion",
+      "belief_pair": ["military_discipline", "pacifist"],
+      "title": "Appeal to Compassion",
+      "description": "Witnessing the toll of battle, {actor} quietly convinced veteran {target} that peace requires laying down the rifle first.",
+      "base_probability": 0.12,
+      "affinity_threshold": 30.0,
+      "consequences_description": "Discipline tempered by pacifist philosophy."
+    },
+    {
+      "id": "event_bunker_faction_schism",
+      "event_type": "split",
+      "belief_pair": ["collectivist_solidarity", "pragmatic_individualism"],
+      "title": "Bunker Ideological Split",
+      "description": "The shelter has polarized into two distinct factions: communal collectivists on one corridor, individualist pragmatists on the other.",
+      "base_probability": 0.30,
+      "affinity_threshold": -60.0,
+      "consequences_description": "Shelter harmony fractured; requires governance intervention."
+    },
+    {
+      "id": "event_formal_mediation_quest",
+      "event_type": "quest",
+      "belief_pair": ["military_discipline", "pragmatic_individualism"],
+      "title": "Mediation of the Broken Pact",
+      "description": "Hostility between {actor} and {target} has reached boiling point (-80 affinity), threatening duty operations.",
+      "base_probability": 0.40,
+      "affinity_threshold": -80.0,
+      "consequences_description": "Urgent mediation quest unlocked to prevent physical violence in the barracks."
+    }
+  ]
+}

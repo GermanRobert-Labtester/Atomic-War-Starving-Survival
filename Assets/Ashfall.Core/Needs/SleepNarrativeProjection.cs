@@ -9,7 +9,8 @@ namespace Ashfall.Core.Needs
         None = 0,
         Restful = 1,
         Troubled = 2,
-        Nightmare = 3
+        Nightmare = 3,
+        PhantomPain = 4
     }
 
     /// <summary>One projected sleep/nightmare presentation beat.</summary>
@@ -29,7 +30,7 @@ namespace Ashfall.Core.Needs
         }
 
         /// <summary>Presentation should be written when a non-restful beat was projected.</summary>
-        public bool Emitted => Kind == SleepBeatKind.Troubled || Kind == SleepBeatKind.Nightmare;
+        public bool Emitted => Kind == SleepBeatKind.Troubled || Kind == SleepBeatKind.Nightmare || Kind == SleepBeatKind.PhantomPain;
     }
 
     /// <summary>
@@ -52,6 +53,7 @@ namespace Ashfall.Core.Needs
         public const string NightmareJournalKey = "sleep_nightmare";
         public const string TroubledJournalKey = "sleep_troubled";
         public const string RestfulJournalKey = "sleep_restful";
+        public const string PhantomPainJournalKey = "sleep_phantom_pain";
 
         private readonly SurvivorMentalHealthSystem _mentalHealth;
         private readonly ISeededRng? _rng;
@@ -82,26 +84,40 @@ namespace Ashfall.Core.Needs
             "A quiet night, for once. Slept deep and woke slow."
         };
 
+        private static readonly string[] PhantomPainLines =
+        {
+            "Woke reaching for fingers that were not there. Took half an hour for the phantom cramp to ease.",
+            "A sharp ache where the limb used to be kept sleep away until dawn.",
+            "Dreamt of walking on two whole legs; woke to the cold reminder of the missing limb."
+        };
+
         /// <summary>
         /// Projects the sleep beat for one survivor from existing state. Deterministic:
         /// the same record + same rng position yields the same line. Never mutates.
         /// </summary>
-        public SleepBeat Project(string survivorId, int day)
+        public SleepBeat Project(string survivorId, int day) => Project(survivorId, day, hasPhantomPain: false);
+
+        /// <summary>
+        /// UNBLOCK-01 / F14-F: Projects the sleep beat with optional phantom-pain awareness.
+        /// </summary>
+        public SleepBeat Project(string survivorId, int day, bool hasPhantomPain)
         {
             if (string.IsNullOrEmpty(survivorId))
                 return new SleepBeat(SleepBeatKind.None, string.Empty, string.Empty, string.Empty);
 
             var record = _mentalHealth.GetOrCreateRecord(survivorId);
-            SleepBeatKind kind = Classify(record);
+            SleepBeatKind kind = Classify(record, hasPhantomPain);
             string[] lines = kind switch
             {
                 SleepBeatKind.Nightmare => NightmareLines,
+                SleepBeatKind.PhantomPain => PhantomPainLines,
                 SleepBeatKind.Troubled => TroubledLines,
                 _ => RestfulLines
             };
             string key = kind switch
             {
                 SleepBeatKind.Nightmare => NightmareJournalKey,
+                SleepBeatKind.PhantomPain => PhantomPainJournalKey,
                 SleepBeatKind.Troubled => TroubledJournalKey,
                 _ => RestfulJournalKey
             };
@@ -119,7 +135,12 @@ namespace Ashfall.Core.Needs
         /// Derives the sleep class from the record. Insomnia and an active crisis
         /// dominate trauma; trauma dominates stress.
         /// </summary>
-        public static SleepBeatKind Classify(SurvivorMentalHealthRecord? record)
+        public static SleepBeatKind Classify(SurvivorMentalHealthRecord? record) => Classify(record, hasPhantomPain: false);
+
+        /// <summary>
+        /// UNBLOCK-01 / F14-F: Derives sleep class with optional phantom-pain awareness.
+        /// </summary>
+        public static SleepBeatKind Classify(SurvivorMentalHealthRecord? record, bool hasPhantomPain)
         {
             if (record == null) return SleepBeatKind.None;
 
@@ -131,6 +152,8 @@ namespace Ashfall.Core.Needs
             // an active crisis, trauma plus insomnia together, or extreme stress.
             if (crisis || (trauma && insomnia) || record.stressPermille >= NightmareStressPermille)
                 return SleepBeatKind.Nightmare;
+            if (hasPhantomPain)
+                return SleepBeatKind.PhantomPain;
             if (insomnia || trauma || record.stressPermille >= TroubledStressPermille)
                 return SleepBeatKind.Troubled;
             return SleepBeatKind.Restful;

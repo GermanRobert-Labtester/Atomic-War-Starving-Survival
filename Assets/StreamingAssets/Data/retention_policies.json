@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "policies": [
+    {
+      "collection_key": "kitchen_serving_log",
+      "max_capacity": 200,
+      "action": "keep_newest_k",
+      "protected_obligation": false
+    },
+    {
+      "collection_key": "machine_log",
+      "max_capacity": 300,
+      "action": "keep_newest_k",
+      "protected_obligation": false
+    },
+    {
+      "collection_key": "faction_war_decrees",
+      "max_capacity": 100,
+      "action": "drop_prose_keep_ids",
+      "protected_obligation": false
+    },
+    {
+      "collection_key": "dose_ledger",
+      "max_capacity": 500,
+      "action": "rollup_summary",
+      "protected_obligation": false
+    },
+    {
+      "collection_key": "survivor_wills_and_legacies",
+      "max_capacity": 2147483647,
+      "action": "keep_newest_k",
+      "protected_obligation": true
+    },
+    {
+      "collection_key": "memorial_monuments",
+      "max_capacity": 2147483647,
+      "action": "keep_newest_k",
+      "protected_obligation": true
+    },
+    {
+      "collection_key": "campaign_deadlines",
+      "max_capacity": 2147483647,
+      "action": "keep_newest_k",
+      "protected_obligation": true
+    },
+    {
+      "collection_key": "survivor_grief_markers",
+      "max_capacity": 2147483647,
+      "action": "keep_newest_k",
+      "protected_obligation": true
+    }
+  ]
+}

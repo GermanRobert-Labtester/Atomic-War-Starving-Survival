@@ -148,6 +148,23 @@ namespace AtomicWar.GodotApp
         DeepCoastHostSelfTest,
         WarlordSelfTest,
         WarlordHostSelfTest,
+        OrphanSealWave1SelfTest,
+        CommitmentsSelfTest,
+        SessionDurabilitySelfTest,
+        PlayMetricsSelfTest,
+        SurvivorVoiceSelfTest,
+        ContentCertificationSelfTest,
+        HoldfastPresentationSelfTest,
+        ScarcityAudioSelfTest,
+        SliceScenarioSelfTest,
+        RetentionSelfTest,
+        OutpostSettlementSelfTest,
+        WeatherCascadeSelfTest,
+        StandingGatesSelfTest,
+        TerritoryControlSelfTest,
+        CookingSelfTest,
+        NeedsPerformanceSelfTest,
+        CampaignLegacySelfTest,
         WarlordUiSelfTest,
         FactionCommuniqueBoardSelfTest,
         BlackFlotillaSelfTest,
@@ -305,6 +322,40 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.GreenhouseSelfTest;
             if (Has(args, "--agriculture-selftest"))
                 return HostCliAction.AgricultureSelfTest;
+            if (Has(args, "--orphan-seal-wave1-selftest"))
+                return HostCliAction.OrphanSealWave1SelfTest;
+            if (Has(args, "--commitments-selftest"))
+                return HostCliAction.CommitmentsSelfTest;
+            if (Has(args, "--session-durability-selftest"))
+                return HostCliAction.SessionDurabilitySelfTest;
+            if (Has(args, "--playable-metrics-selftest"))
+                return HostCliAction.PlayMetricsSelfTest;
+            if (Has(args, "--survivor-voice-selftest"))
+                return HostCliAction.SurvivorVoiceSelfTest;
+            if (Has(args, "--content-certification-selftest"))
+                return HostCliAction.ContentCertificationSelfTest;
+            if (Has(args, "--holdfast-presentation-selftest"))
+                return HostCliAction.HoldfastPresentationSelfTest;
+            if (Has(args, "--scarcity-audio-selftest"))
+                return HostCliAction.ScarcityAudioSelfTest;
+            if (Has(args, "--seven-day-slice-selftest"))
+                return HostCliAction.SliceScenarioSelfTest;
+            if (Has(args, "--retention-selftest"))
+                return HostCliAction.RetentionSelfTest;
+            if (Has(args, "--outpost-settlement-selftest") || Has(args, "--outposts-selftest"))
+                return HostCliAction.OutpostSettlementSelfTest;
+            if (Has(args, "--weather-cascade-selftest"))
+                return HostCliAction.WeatherCascadeSelfTest;
+            if (Has(args, "--standing-gates-selftest"))
+                return HostCliAction.StandingGatesSelfTest;
+            if (Has(args, "--territory-control-selftest") || Has(args, "--territory-selftest"))
+                return HostCliAction.TerritoryControlSelfTest;
+            if (Has(args, "--cooking-selftest") || Has(args, "--cooking-test"))
+                return HostCliAction.CookingSelfTest;
+            if (Has(args, "--needs-performance-selftest") || Has(args, "--needs-perf-selftest"))
+                return HostCliAction.NeedsPerformanceSelfTest;
+            if (Has(args, "--campaign-legacy-selftest") || Has(args, "--legacy-selftest"))
+                return HostCliAction.CampaignLegacySelfTest;
             if (Has(args, "--defense-selftest"))
                 return HostCliAction.DefenseSelfTest;
             if (Has(args, "--psychology-selftest"))
@@ -633,6 +684,19 @@ namespace AtomicWar.GodotApp
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
             GD.Print("  --agriculture-selftest   Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition");
+            GD.Print("  --orphan-seal-wave1-selftest  ORPHAN-SEAL-PRIORITY-W1: ten priority orphan authorities — catalog, command, state round-trip");
+            GD.Print("  --commitments-selftest   Plan 38 commitments & deadlines: catalog, warning ladder, exactly-once miss + consequence routing, met settlement, save round-trip");
+            GD.Print("  --session-durability-selftest  Plan 39 session durability: slot capacity/isolation, interrupted-write + backup recovery audit, soak stability verdicts, capture round-trip");
+            GD.Print("  --playable-metrics-selftest   Plan 46 playable metrics: bounded recorder stream, first-hour funnel, aggregation grades, capture round-trip");
+            GD.Print("  --survivor-voice-selftest     Plan 42 survivor voice: catalog selection, cooldowns, dispatch arbitration, barrel history, capture round-trip");
+            GD.Print("  --content-certification-selftest  Plan 49 content orphan certification: family manifest, live-evidence rows, clean/dormant/orphan verdicts");
+            GD.Print("  --holdfast-presentation-selftest Plan 51 holdfast presentation slate: room/actor/map projections, hazard + crisis bands, motion profile");
+            GD.Print("  --scarcity-audio-selftest     Plan 52 scarcity audio: weather->bed/cue authority mapping, silence states, ducking, geiger bands");
+            GD.Print("  --seven-day-slice-selftest    Plan 54 seven-day slice: authored beats, frozen scenario hash, beat verification + scorecard");
+            GD.Print("  --retention-selftest           Plan 55 retention & save budgeting: authored policy overlay, bounded canonical collections, protected obligations, capture round-trip");
+            GD.Print("  --outpost-settlement-selftest / --outposts-selftest  Plan 58 outposts & second holdfast: authored catalog, establish/garrison/supply lifecycle, daily consume, capture round-trip");
+            GD.Print("  --territory-control-selftest / --territory-selftest  Plan 134 faction territory & supply line control: contested nodes, fortification, garrison, supply line status, capture round-trip");
+            GD.Print("  --cooking-selftest / --cooking-test  Plan 136 wildlife trapping food pipeline & cooking system: recipe loading, ingredient consumption, decontamination, skill progression, capture/restore");
             GD.Print("  --aquaponics-selftest    Plan B87 closed-loop aquaponics: catalog, growth, power/DO crash, harvest, nutrient export, save round-trip");
             GD.Print("  --arbitration-selftest   CrossingArbitrationHeadlessDemo");
             GD.Print("  --black-flotilla-selftest / --maritime-selftest / --expansion-09-selftest The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip");

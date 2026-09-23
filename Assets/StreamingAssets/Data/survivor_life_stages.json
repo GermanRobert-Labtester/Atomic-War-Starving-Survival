@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "aging_rate": {
+    "days_per_year": 30,
+    "default_recruitment_age_years": 28
+  },
+  "life_stages": [
+    {
+      "stage": "YoungAdult",
+      "min_age": 18,
+      "max_age": 30,
+      "physical_labor_multiplier": 1.05,
+      "fatigue_accumulation_multiplier": 0.95,
+      "mentorship_xp_multiplier_bonus": 0.0,
+      "retirement_eligible": false,
+      "description": "Peak physical vigor and rapid reaction, eager to learn vocational crafts."
+    },
+    {
+      "stage": "Prime",
+      "min_age": 31,
+      "max_age": 50,
+      "physical_labor_multiplier": 1.00,
+      "fatigue_accumulation_multiplier": 1.00,
+      "mentorship_xp_multiplier_bonus": 0.10,
+      "retirement_eligible": false,
+      "description": "Mature vocational competence, balanced stamina and dependable labor throughput."
+    },
+    {
+      "stage": "MiddleAge",
+      "min_age": 51,
+      "max_age": 65,
+      "physical_labor_multiplier": 0.95,
+      "fatigue_accumulation_multiplier": 1.05,
+      "mentorship_xp_multiplier_bonus": 0.20,
+      "retirement_eligible": false,
+      "description": "Deep craft experience and practical wisdom, with gradual physical endurance taper."
+    },
+    {
+      "stage": "Elderly",
+      "min_age": 66,
+      "max_age": 120,
+      "physical_labor_multiplier": 0.85,
+      "fatigue_accumulation_multiplier": 1.15,
+      "mentorship_xp_multiplier_bonus": 0.35,
+      "retirement_eligible": true,
+      "description": "Venerable survivor with invaluable trade wisdom and mentoring capacity; eligible for dignified retirement."
+    }
+  ],
+  "retirement_policy": {
+    "min_retirement_age": 65,
+    "light_duty_speed_multiplier": 0.75,
+    "retired_fatigue_reduction": 0.30,
+    "shelter_mentorship_presence_bonus": 0.15
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_def_id": "noise_generator_diesel",
+      "display_name": "Diesel Generator Combustion",
+      "type": "generator",
+      "default_output": 80.0,
+      "frequency": "low",
+      "duration_hours": 24.0,
+      "can_be_soundproofed": true,
+      "description": "Heavy internal combustion generator rumbling continuously through structural bedrock."
+    },
+    {
+      "source_def_id": "noise_water_pump",
+      "display_name": "Sump Submersible Pump",
+      "type": "machinery",
+      "default_output": 65.0,
+      "frequency": "low",
+      "duration_hours": 18.0,
+      "can_be_soundproofed": true,
+      "description": "Centrifugal water extraction pump cycling groundwater away from shelter foundations."
+    },
+    {
+      "source_def_id": "noise_air_compressor",
+      "display_name": "Pneumatic Air Compressor",
+      "type": "machinery",
+      "default_output": 70.0,
+      "frequency": "medium",
+      "duration_hours": 12.0,
+      "can_be_soundproofed": true,
+      "description": "High-pressure charging compressor cycling pneumatics for airlocks and workshop tools."
+    },
+    {
+      "source_def_id": "noise_canteen_dining",
+      "display_name": "Mess Hall Foot Traffic",
+      "type": "human_activity",
+      "default_output": 45.0,
+      "frequency": "medium",
+      "duration_hours": 6.0,
+      "can_be_soundproofed": false,
+      "description": "Communal meal chatter, tin tray clatter, and bench movements during meal hours."
+    },
+    {
+      "source_def_id": "noise_dormitory_rustle",
+      "display_name": "Residential Shift Transition",
+      "type": "human_activity",
+      "default_output": 25.0,
+      "frequency": "high",
+      "duration_hours": 8.0,
+      "can_be_soundproofed": false,
+      "description": "Bunkroom rustle, whispered conversation, and footlocker clatter as shifts rotate."
+    },
+    {
+      "source_def_id": "noise_metal_lathe",
+      "display_name": "Precision Milling Lathe",
+      "type": "industrial_process",
+      "default_output": 75.0,
+      "frequency": "high",
+      "duration_hours": 8.0,
+      "can_be_soundproofed": true,
+      "description": "High-speed metal cutting and grinding bit whine shaping replacement parts."
+    },
+    {
+      "source_def_id": "noise_forge_hammer",
+      "display_name": "Power Drop Hammer",
+      "type": "industrial_process",
+      "default_output": 85.0,
+      "frequency": "low",
+      "duration_hours": 6.0,
+      "can_be_soundproofed": true,
+      "description": "Repetitive mechanical drop hammer blows echoing through ventilation shafts."
+    },
+    {
+      "source_def_id": "noise_siren_klaxon",
+      "display_name": "Perimeter Threat Klaxon",
+      "type": "alarm",
+      "default_output": 95.0,
+      "frequency": "high",
+      "duration_hours": 1.0,
+      "can_be_soundproofed": false,
+      "description": "Piercing electronic siren broadcasting shelter-wide emergency muster orders."
+    },
+    {
+      "source_def_id": "noise_fire_alarm",
+      "display_name": "Thermal Combustion Sensor Alarm",
+      "type": "alarm",
+      "default_output": 90.0,
+      "frequency": "high",
+      "duration_hours": 1.0,
+      "can_be_soundproofed": false,
+      "description": "High-frequency strobe and bell indicating electrical or kitchen flame flare-up."
+    },
+    {
+      "source_def_id": "noise_main_hepa_blower",
+      "display_name": "Central Intake HEPA Fan",
+      "type": "ventilation",
+      "default_output": 50.0,
+      "frequency": "medium",
+      "duration_hours": 24.0,
+      "can_be_soundproofed": true,
+      "description": "Constant drone of multi-stage squirrel-cage fans forcing air through sand filters."
+    },
+    {
+      "source_def_id": "noise_duct_draft",
+      "display_name": "Secondary Duct Rattle",
+      "type": "ventilation",
+      "default_output": 30.0,
+      "frequency": "medium",
+      "duration_hours": 24.0,
+      "can_be_soundproofed": true,
+      "description": "Loose damper vibration and airflow whistling through branch ducts."
+    },
+    {
+      "source_def_id": "noise_backup_gas_gen",
+      "display_name": "Portable Petrol Generator",
+      "type": "generator",
+      "default_output": 85.0,
+      "frequency": "low",
+      "duration_hours": 12.0,
+      "can_be_soundproofed": true,
+      "description": "Un-muffled two-stroke emergency generator providing stopgap lighting power."
+    },
+    {
+      "source_def_id": "noise_pneumatic_drill",
+      "display_name": "Bedrock Pneumatic Jackhammer",
+      "type": "construction",
+      "default_output": 90.0,
+      "frequency": "low",
+      "duration_hours": 8.0,
+      "can_be_soundproofed": false,
+      "description": "Vibratory percussive drilling expanding storage caverns deeper into rock."
+    },
+    {
+      "source_def_id": "noise_gramophone_music",
+      "display_name": "Recreational Radio Broadcast",
+      "type": "music_recreation",
+      "default_output": 40.0,
+      "frequency": "medium",
+      "duration_hours": 4.0,
+      "can_be_soundproofed": true,
+      "description": "Faint recorded music playing in lounge during off-duty recreation hours."
+    },
+    {
+      "source_def_id": "noise_heated_dispute",
+      "display_name": "Shouting Argument",
+      "type": "argument",
+      "default_output": 60.0,
+      "frequency": "high",
+      "duration_hours": 1.0,
+      "can_be_soundproofed": false,
+      "description": "Loud verbal altercation and slammed bulkhead door carrying into adjoining sectors."
+    }
+  ]
+}

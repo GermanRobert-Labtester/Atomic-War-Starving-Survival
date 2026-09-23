@@ -832,7 +832,6 @@ namespace AtomicWar.GodotApp.UI
             scrollMargin.AddThemeConstantOverride("margin_right", DesignTheme.SpacingMd);
             scrollMargin.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
             scrollRoot.AddChild(scrollMargin);
-            _shell.SetContent(new MarginContainer()); // placeholder; replaced below
             _shell.SetContent(scrollRoot);
 
             var contentBox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingMd);

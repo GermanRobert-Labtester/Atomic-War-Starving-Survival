@@ -96,6 +96,9 @@ namespace Ashfall.Core.Quests
         public event Action<PersonalQuestInstance>? OnQuestCompleted;
         public event Action<PersonalQuestInstance, string>? OnQuestFailed;
 
+        public Action<string, float>? MoraleDeltaApplier { get; set; }
+        public Action<string, int>? ItemRewardApplier { get; set; }
+
         public PersonalQuestSaveState State => _state;
         public IReadOnlyDictionary<string, PersonalQuestDef> Catalog => _catalog;
 
@@ -105,10 +108,8 @@ namespace Ashfall.Core.Quests
             _log = log ?? NullLog.Instance;
         }
 
-        public void LoadCatalog(string json, IJsonSerializer serializer)
+        public void LoadCatalog(PersonalQuestCatalogData? data)
         {
-            if (string.IsNullOrEmpty(json)) return;
-            var data = serializer.Deserialize<PersonalQuestCatalogData>(json);
             if (data?.quests == null) return;
             _catalog.Clear();
             foreach (var q in data.quests)
@@ -116,6 +117,27 @@ namespace Ashfall.Core.Quests
                 if (!string.IsNullOrEmpty(q.id))
                     _catalog[q.id] = q;
             }
+        }
+
+        public void LoadCatalog(string json, IJsonSerializer serializer)
+        {
+            if (string.IsNullOrEmpty(json)) return;
+            var data = serializer.Deserialize<PersonalQuestCatalogData>(json);
+            LoadCatalog(data);
+        }
+
+        public IReadOnlyList<PersonalQuestDef> GetQuestsForTrait(string trait)
+        {
+            if (string.IsNullOrWhiteSpace(trait)) return Array.Empty<PersonalQuestDef>();
+            var results = new List<PersonalQuestDef>();
+            foreach (var q in _catalog.Values)
+            {
+                if (string.Equals(q.required_trait, trait, StringComparison.OrdinalIgnoreCase))
+                {
+                    results.Add(q);
+                }
+            }
+            return results;
         }
 
         public PersonalQuestInstance? GetActiveQuest(string survivorId)
@@ -219,6 +241,15 @@ namespace Ashfall.Core.Quests
             chosenDef = match;
             instance.selectedChoices.Add(choiceId);
             OnChoiceMade?.Invoke(instance, match);
+
+            if (MoraleDeltaApplier != null && Math.Abs(match.morale_delta) > 0.001f)
+            {
+                MoraleDeltaApplier.Invoke(survivorId, match.morale_delta);
+            }
+            if (ItemRewardApplier != null && !string.IsNullOrEmpty(match.reward_item_id) && match.reward_amount > 0)
+            {
+                ItemRewardApplier.Invoke(match.reward_item_id, match.reward_amount);
+            }
 
             if (match.next_stage < 0 || match.next_stage >= def.stages.Count)
             {

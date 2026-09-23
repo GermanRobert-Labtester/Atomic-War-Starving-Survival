@@ -158,5 +158,51 @@ namespace Ashfall.Core.Tests.Underground
             var restoredSeg = map2.Tunnels.GetDiscoveredSegments().First(s => s.SegmentId == "tun_holdfast_depot");
             Assert.Equal(85f, restoredSeg.StructuralIntegrity);
         }
+
+        [Fact]
+        public void AuthoredData_UndergroundTunnelsJson_LoadsAndCanBeReinforced()
+        {
+            var dataDir = System.IO.Path.GetFullPath(
+                System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,
+                    "..", "..", "..", "..", "Assets", "StreamingAssets", "Data"));
+            if (!System.IO.File.Exists(System.IO.Path.Combine(dataDir, "underground_tunnels.json")))
+                dataDir = System.IO.Path.GetFullPath("Assets/StreamingAssets/Data");
+
+            string filePath = System.IO.Path.Combine(dataDir, "underground_tunnels.json");
+            Assert.True(System.IO.File.Exists(filePath), $"File not found: {filePath}");
+
+            string json = System.IO.File.ReadAllText(filePath);
+            var catalog = System.Text.Json.JsonSerializer.Deserialize<TunnelNetworkCatalogData>(json);
+            Assert.NotNull(catalog);
+            Assert.True(catalog!.junctions.Count >= 3);
+            Assert.True(catalog.segments.Count >= 3);
+
+            var system = new TunnelNetworkSystem();
+            system.LoadCatalog(catalog);
+            Assert.Equal(3, system.TotalSegmentCount);
+            Assert.Equal(3, system.JunctionCount);
+
+            // Reinforce conduit A
+            var conduit = system.FindSegment("seg_shelter_to_depot");
+            Assert.NotNull(conduit);
+            float intBefore = conduit!.StructuralIntegrity;
+            bool reinforced = system.ReinforceSegment("seg_shelter_to_depot", 10f);
+            Assert.True(reinforced);
+            Assert.Equal(Math.Min(100f, intBefore + 10f), conduit.StructuralIntegrity);
+
+            // Clear hazard on Mine Rail B
+            var rail = system.FindSegment("seg_depot_to_radzone");
+            Assert.NotNull(rail);
+            Assert.Contains(TunnelHazardType.ToxicGas, rail!.Hazards);
+            bool cleared = system.ClearHazard("seg_depot_to_radzone", TunnelHazardType.ToxicGas);
+            Assert.True(cleared);
+            Assert.DoesNotContain(TunnelHazardType.ToxicGas, rail.Hazards);
+
+            // Discover and evaluate surface bypass
+            system.DiscoverSegment("seg_shelter_to_depot");
+            var bypass = system.EvaluateSurfaceBypass("loc_holdfast", "loc_cut_abandoned_depot");
+            Assert.True(bypass.Found);
+            Assert.True(bypass.SavedHours > 0f);
+        }
     }
 }

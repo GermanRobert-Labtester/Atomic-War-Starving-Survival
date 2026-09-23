@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "holidays": [
+    {
+      "holiday_id": "hol_new_year",
+      "name": "New Year Dawn",
+      "trigger_day": 1,
+      "base_morale_boost": 8.0,
+      "food_cost": 4,
+      "fuel_cost": 2,
+      "description": "A quiet solemn gathering marking another year surviving against the odds in the underground refuge.",
+      "allowed_activities": ["feast", "stories", "games"]
+    },
+    {
+      "holiday_id": "hol_spring_thaw",
+      "name": "Spring Thaw Gathering",
+      "trigger_day": 90,
+      "base_morale_boost": 10.0,
+      "food_cost": 5,
+      "fuel_cost": 3,
+      "description": "Observing the first meltwater dripping down the ventilation intakes, symbolizing renewed hope.",
+      "allowed_activities": ["feast", "music", "dance"]
+    },
+    {
+      "holiday_id": "hol_midsummer_day",
+      "name": "Midsummer Long Day",
+      "trigger_day": 180,
+      "base_morale_boost": 12.0,
+      "food_cost": 6,
+      "fuel_cost": 2,
+      "description": "Celebrating the longest solar cycle with ration delicacies and shared music in the common room.",
+      "allowed_activities": ["feast", "music", "games", "stories"]
+    },
+    {
+      "holiday_id": "hol_harvest_observance",
+      "name": "Wasteland Harvest Observance",
+      "trigger_day": 270,
+      "base_morale_boost": 14.0,
+      "food_cost": 8,
+      "fuel_cost": 3,
+      "description": "Honoring the hydroponic yields and preserved stocks before the bitter permafrost locks the earth.",
+      "allowed_activities": ["feast", "gifts", "stories"]
+    },
+    {
+      "holiday_id": "hol_winter_solstice",
+      "name": "Winter Solstice Vigil",
+      "trigger_day": 360,
+      "base_morale_boost": 15.0,
+      "food_cost": 7,
+      "fuel_cost": 4,
+      "description": "Keeping torches and lamps lit through the darkest 24 hours of the year to affirm shelter solidarity.",
+      "allowed_activities": ["memorial", "stories", "music"]
+    }
+  ],
+  "anniversary_types": [
+    {
+      "type_id": "anniv_founding",
+      "name": "Shelter Founding Day",
+      "base_morale_boost": 10.0,
+      "description": "Commemorating the initial sealing of the blast doors and preservation of the community."
+    },
+    {
+      "type_id": "anniv_fallen",
+      "name": "Remembrance of the Fallen",
+      "base_morale_boost": 3.0,
+      "description": "Lighting memorial candles for companions lost to the wasteland, providing closure and shared sorrow."
+    },
+    {
+      "type_id": "anniv_milestone",
+      "name": "Survival Milestone",
+      "base_morale_boost": 12.0,
+      "description": "Honoring hundred-day survival thresholds achieved by the bunker."
+    }
+  ],
+  "scales": [
+    {
+      "scale_id": "small",
+      "cost_multiplier": 1.0,
+      "morale_multiplier": 1.0,
+      "is_memorable": false
+    },
+    {
+      "scale_id": "medium",
+      "cost_multiplier": 1.8,
+      "morale_multiplier": 1.8,
+      "is_memorable": false
+    },
+    {
+      "scale_id": "large",
+      "cost_multiplier": 3.0,
+      "morale_multiplier": 3.0,
+      "is_memorable": true
+    }
+  ]
+}

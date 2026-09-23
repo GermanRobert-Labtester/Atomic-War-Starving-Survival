@@ -83,6 +83,9 @@ namespace Ashfall.Core.Random
         public const string BlackMarketStock = "black_market_stock";
         public const string BlackMarketBounty = "black_market_bounty";
         public const string BlackMarketDebtEvent = "black_market_debt_event";
+        // Plan 55 / 58 — retention is deterministic (no stream); outpost hostile
+        // pressure is the one seeded consumer, forked per day and per outpost.
+        public const string OutpostRisk = "outpost_risk";
     }
 
     /// <summary>Domain-isolated deterministic RNG stream derived from a campaign master seed.</summary>

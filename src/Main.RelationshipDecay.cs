@@ -21,6 +21,15 @@ namespace AtomicWar.GodotApp
             var state = RelationshipDecaySaveStore.TryLoad() ?? new RelationshipDecayState();
             var system = new RelationshipDecaySystem(state);
 
+            // Plan 182 — bind the authored bond decay profiles so drift/reconnection
+            // tuning comes from the canonical catalog, not hardcoded defaults.
+            string decayCatalogPath = CatalogPath.ResolveCatalog("relationship_decay_profiles.json");
+            var decayCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (decayCatalogIo.FileExists(decayCatalogPath))
+            {
+                system.LoadCatalog(decayCatalogIo.ReadAllText(decayCatalogPath));
+            }
+
             _relationshipDecay = new RelationshipDecayHostSession(system);
             _relationshipDecay.StateChanged += OnRelationshipDecayStateChanged;
             return _relationshipDecay;

@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "occupations": [
+    {
+      "occupation_id": "occ_doctor",
+      "label": "Doctor",
+      "skill_bonuses": [{"skill_id": "medical", "bonus": 15}, {"skill_id": "empathy", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "combat", "penalty": 5}],
+      "starting_traits": ["trait_empathetic", "trait_methodical"],
+      "starting_item_ids": ["medical_kit"],
+      "flavor": "Years in a practice or field clinic left them with a steady hand and an instinct to heal."
+    },
+    {
+      "occupation_id": "occ_soldier",
+      "label": "Soldier",
+      "skill_bonuses": [{"skill_id": "combat", "bonus": 15}, {"skill_id": "discipline", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "social", "penalty": 5}],
+      "starting_traits": ["trait_disciplined", "trait_vigilant"],
+      "starting_item_ids": ["field_knife"],
+      "flavor": "Service — voluntary or otherwise — drilled them for violence. They carry that order into chaos."
+    },
+    {
+      "occupation_id": "occ_farmer",
+      "label": "Farmer",
+      "skill_bonuses": [{"skill_id": "agriculture", "bonus": 15}, {"skill_id": "patience", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "technical", "penalty": 5}],
+      "starting_traits": ["trait_patient", "trait_hardy"],
+      "starting_item_ids": ["seed_packet"],
+      "flavor": "The land was teacher, employer, and home. They still feel the seasons in their bones."
+    },
+    {
+      "occupation_id": "occ_engineer",
+      "label": "Engineer",
+      "skill_bonuses": [{"skill_id": "technical", "bonus": 15}, {"skill_id": "problem_solving", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "social", "penalty": 5}],
+      "starting_traits": ["trait_analytical", "trait_practical"],
+      "starting_item_ids": ["hand_tools"],
+      "flavor": "Systems made sense to them when people didn't. Now systems are all that's left."
+    },
+    {
+      "occupation_id": "occ_teacher",
+      "label": "Teacher",
+      "skill_bonuses": [{"skill_id": "education", "bonus": 15}, {"skill_id": "patience", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "combat", "penalty": 5}],
+      "starting_traits": ["trait_patient", "trait_empathetic"],
+      "starting_item_ids": ["notebook"],
+      "flavor": "They shaped minds for a world that no longer exists. They haven't stopped trying."
+    },
+    {
+      "occupation_id": "occ_merchant",
+      "label": "Merchant",
+      "skill_bonuses": [{"skill_id": "trade", "bonus": 15}, {"skill_id": "charisma", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "combat", "penalty": 5}],
+      "starting_traits": ["trait_persuasive", "trait_resourceful"],
+      "starting_item_ids": ["barter_goods"],
+      "flavor": "They measured every situation in terms of exchange. Old habit. Still useful."
+    },
+    {
+      "occupation_id": "occ_pilot",
+      "label": "Pilot",
+      "skill_bonuses": [{"skill_id": "navigation", "bonus": 15}, {"skill_id": "courage", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "medical", "penalty": 5}],
+      "starting_traits": ["trait_courageous", "trait_calm_under_pressure"],
+      "starting_item_ids": ["topographic_map"],
+      "flavor": "Altitude gives perspective. They see distance others can't — and plan accordingly."
+    },
+    {
+      "occupation_id": "occ_artist",
+      "label": "Artist",
+      "skill_bonuses": [{"skill_id": "creativity", "bonus": 15}, {"skill_id": "perception", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "combat", "penalty": 5}],
+      "starting_traits": ["trait_creative", "trait_sensitive"],
+      "starting_item_ids": ["art_supplies"],
+      "flavor": "They made beauty in a world that rarely noticed. They still believe it matters."
+    },
+    {
+      "occupation_id": "occ_cleric",
+      "label": "Cleric",
+      "skill_bonuses": [{"skill_id": "spiritual", "bonus": 15}, {"skill_id": "empathy", "bonus": 10}],
+      "skill_penalties": [{"skill_id": "combat", "penalty": 5}],
+      "starting_traits": ["trait_empathetic", "trait_steadfast"],
+      "starting_item_ids": ["worn_religious_text"],
+      "flavor": "Faith is not certainty. They learned that long before the end came."
+    },
+    {
+      "occupation_id": "occ_mechanic",
+      "label": "Mechanic",
+      "skill_bonuses": [{"skill_id": "technical", "bonus": 12}, {"skill_id": "improvisation", "bonus": 12}],
+      "skill_penalties": [{"skill_id": "social", "penalty": 5}],
+      "starting_traits": ["trait_practical", "trait_stubborn"],
+      "starting_item_ids": ["wrench"],
+      "flavor": "If it's broken, they'll fix it. If it can't be fixed, they'll make something new from the parts."
+    }
+  ],
+  "life_experiences": [
+    {
+      "experience_id": "exp_combat_veteran",
+      "label": "Combat Veteran",
+      "category": "combat",
+      "rarity": "uncommon",
+      "skill_bonus": {"skill_id": "combat", "bonus": 8},
+      "trait_modifier": "trait_vigilant",
+      "flavor": "Saw real fighting. Some of it stayed with them."
+    },
+    {
+      "experience_id": "exp_first_aid_trained",
+      "label": "First Aid Trained",
+      "category": "medical",
+      "rarity": "common",
+      "skill_bonus": {"skill_id": "medical", "bonus": 5},
+      "trait_modifier": "trait_calm_under_pressure",
+      "flavor": "A workplace certification. Now worth more than a degree."
+    },
+    {
+      "experience_id": "exp_wilderness_survivor",
+      "label": "Wilderness Survivor",
+      "category": "survival",
+      "rarity": "uncommon",
+      "skill_bonus": {"skill_id": "survival", "bonus": 8},
+      "trait_modifier": "trait_hardy",
+      "flavor": "Lost in the backcountry once. Found their way back alone."
+    },
+    {
+      "experience_id": "exp_community_organiser",
+      "label": "Community Organiser",
+      "category": "leadership",
+      "rarity": "common",
+      "skill_bonus": {"skill_id": "leadership", "bonus": 6},
+      "trait_modifier": "trait_persuasive",
+      "flavor": "Called meetings. Got people to show up. Got things done."
+    },
+    {
+      "experience_id": "exp_plague_survivor",
+      "label": "Plague Survivor",
+      "category": "medical",
+      "rarity": "rare",
+      "skill_bonus": {"skill_id": "medical", "bonus": 6},
+      "trait_modifier": "trait_resilient",
+      "flavor": "Watched the sickness take others. Came through the other side changed."
+    },
+    {
+      "experience_id": "exp_disaster_refugee",
+      "label": "Disaster Refugee",
+      "category": "survival",
+      "rarity": "common",
+      "skill_bonus": {"skill_id": "survival", "bonus": 5},
+      "trait_modifier": "trait_adaptable",
+      "flavor": "Left everything behind once before. They know how to start over."
+    }
+  ],
+  "backstory_templates": [
+    {
+      "template_id": "bst_military_medic",
+      "label": "Military Medic",
+      "occupation_id": "occ_doctor",
+      "life_experience_ids": ["exp_combat_veteran", "exp_first_aid_trained"],
+      "defining_moment": "Kept a squad alive under fire with nothing but gauze and nerve.",
+      "pre_war_life": "Served a tour as a combat medic. Returned home with a useful trade and unwanted memories.",
+      "reason_for_survival": "Too many people still need what I know.",
+      "secrets": ["carries_guilt_over_one_loss"]
+    },
+    {
+      "template_id": "bst_rural_engineer",
+      "label": "Rural Engineer",
+      "occupation_id": "occ_engineer",
+      "life_experience_ids": ["exp_wilderness_survivor", "exp_disaster_refugee"],
+      "defining_moment": "Rigged a water pump from scrap after the floods. Entire village drank because of it.",
+      "pre_war_life": "Infrastructure consultant for remote communities. Always travelling, never settled.",
+      "reason_for_survival": "Someone has to keep the lights on.",
+      "secrets": []
+    },
+    {
+      "template_id": "bst_schoolteacher",
+      "label": "Schoolteacher",
+      "occupation_id": "occ_teacher",
+      "life_experience_ids": ["exp_community_organiser"],
+      "defining_moment": "Kept thirty children calm in a gymnasium for six days during the first evacuation.",
+      "pre_war_life": "Primary school teacher. Known for patience and homemade biscuits on Fridays.",
+      "reason_for_survival": "The children need someone who still believes in tomorrow.",
+      "secrets": ["knows_something_about_a_missing_child"]
+    },
+    {
+      "template_id": "bst_plague_merchant",
+      "label": "Plague Merchant",
+      "occupation_id": "occ_merchant",
+      "life_experience_ids": ["exp_plague_survivor", "exp_disaster_refugee"],
+      "defining_moment": "Survived a quarantine zone by trading medical supplies for passage.",
+      "pre_war_life": "Supply chain manager for a pharmaceutical distributor. Knows where things go and how to move them.",
+      "reason_for_survival": "Information and inventory. Both of which I still have.",
+      "secrets": ["has_pre_war_contacts_still_alive"]
+    }
+  ]
+}

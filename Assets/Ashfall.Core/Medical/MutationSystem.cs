@@ -101,6 +101,11 @@ namespace Ashfall.Core.Medical
             _mutations[node.mutation_id] = node;
         }
 
+        public IReadOnlyCollection<MutationNode> GetAllMutations() => _mutations.Values;
+
+        public MutationNode? GetMutation(string mutationId) =>
+            _mutations.TryGetValue(mutationId, out var m) ? m : null;
+
         public SurvivorMutationProfile EnsureProfile(string survivorId)
         {
             var existing = _state.profiles.FirstOrDefault(p => p.survivorId == survivorId);
@@ -224,6 +229,70 @@ namespace Ashfall.Core.Medical
             };
         }
 
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var catalog = System.Text.Json.JsonSerializer.Deserialize<MutationCatalog>(json, options);
+                if (catalog?.mutations != null)
+                {
+                    foreach (var m in catalog.mutations)
+                        RegisterMutation(m);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"Failed to deserialize MutationCatalog: {ex.Message}");
+            }
+        }
+
+        public List<string> InheritMutations(string parentId, string childId, float inheritProbability = 0.50f)
+        {
+            var inherited = new List<string>();
+            var parentProf = GetProfile(parentId);
+            if (parentProf == null || parentProf.activeMutationIds.Count == 0)
+                return inherited;
+
+            var childProf = EnsureProfile(childId);
+            foreach (var mutId in parentProf.activeMutationIds)
+            {
+                if (childProf.activeMutationIds.Contains(mutId)) continue;
+                if (_rng.NextDouble() < inheritProbability)
+                {
+                    childProf.activeMutationIds.Add(mutId);
+                    childProf.geneticInstability = Math.Min(100.0f, childProf.geneticInstability + 10.0f);
+                    inherited.Add(mutId);
+                    if (_mutations.TryGetValue(mutId, out var node))
+                    {
+                        OnMutationAcquired?.Invoke(childId, mutId, node.capability_tags);
+                    }
+                }
+            }
+            return inherited;
+        }
+
+        public Dictionary<string, float> GetStatModifiers(string survivorId)
+        {
+            var aggregated = new Dictionary<string, float>(StringComparer.Ordinal);
+            var prof = GetProfile(survivorId);
+            if (prof == null) return aggregated;
+
+            foreach (var mutId in prof.activeMutationIds)
+            {
+                if (_mutations.TryGetValue(mutId, out var node) && node.stat_modifiers != null)
+                {
+                    foreach (var kvp in node.stat_modifiers)
+                    {
+                        if (!aggregated.ContainsKey(kvp.Key)) aggregated[kvp.Key] = 0f;
+                        aggregated[kvp.Key] += kvp.Value;
+                    }
+                }
+            }
+            return aggregated;
+        }
+
         public List<string> GetCapabilityTags(string survivorId)
         {
             var prof = GetProfile(survivorId);
@@ -232,13 +301,36 @@ namespace Ashfall.Core.Medical
             var tags = new HashSet<string>(StringComparer.Ordinal);
             foreach (var mutId in prof.activeMutationIds)
             {
-                if (_mutations.TryGetValue(mutId, out var node))
+                if (_mutations.TryGetValue(mutId, out var node) && node.capability_tags != null)
                 {
                     foreach (var tag in node.capability_tags)
                         tags.Add(tag);
                 }
             }
             return tags.OrderBy(t => t, StringComparer.Ordinal).ToList();
+        }
+
+        public List<string> GetVisibleTags(string survivorId)
+        {
+            var prof = GetProfile(survivorId);
+            if (prof == null) return new List<string>();
+
+            var tags = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var mutId in prof.activeMutationIds)
+            {
+                if (_mutations.TryGetValue(mutId, out var node) && node.visual_tags != null)
+                {
+                    foreach (var tag in node.visual_tags)
+                        tags.Add(tag);
+                }
+            }
+            return tags.OrderBy(t => t, StringComparer.Ordinal).ToList();
+        }
+
+        public float CalculateSocialStigmaPenalty(string survivorId)
+        {
+            var visible = GetVisibleTags(survivorId);
+            return Math.Min(0.35f, visible.Count * 0.05f);
         }
 
         public MutationState CaptureState()

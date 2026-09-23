@@ -126,7 +126,32 @@ namespace AtomicWar.GodotApp.UI
 
             if (view != null && !string.IsNullOrEmpty(view.PersonalKeepsakeItemId))
             {
-                AddRow(_survivorInfo, $"Associated Keepsake: {view.KeepsakeItemLabel}", Ashfall.Core.UI.Theme.Dim);
+                string tagInfo = view.KeepsakeItemTags.Count > 0
+                    ? $" [{string.Join(", ", view.KeepsakeItemTags)}]"
+                    : string.Empty;
+                AddRow(_survivorInfo, $"Associated Keepsake: {view.KeepsakeItemLabel}{tagInfo}", Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount++;
+            }
+
+            if (view != null && !string.IsNullOrEmpty(view.PrimaryDutyAffinity))
+            {
+                string bonusText = view.DutyComfortBonusPermille > 0
+                    ? $" (+{view.DutyComfortBonusPermille / 10}% comfort)"
+                    : string.Empty;
+                AddRow(_survivorInfo, $"Duty Affinity: {view.PrimaryDutyAffinity}{bonusText}", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+
+            if (view != null && view.CorePersonalityTraits.Count > 0)
+            {
+                AddRow(_survivorInfo, $"Traits: {string.Join(" · ", view.CorePersonalityTraits)}", Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount++;
+            }
+
+            if (view != null && !string.IsNullOrEmpty(view.IdeologicalTensionBeliefId))
+            {
+                var (_, frictionLabel) = Ashfall.Core.Survivors.SurvivorEnrichmentService.ResolveFrictionBelief(view.BeliefProfileId);
+                AddRow(_survivorInfo, $"Ideological Tension: Opposes {frictionLabel}", Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 
@@ -188,6 +213,22 @@ namespace AtomicWar.GodotApp.UI
             AddRow(_needsList, $"Morale: {s.Morale:0}", s.Morale < 20 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
             AddRow(_needsList, $"Hygiene: {s.Hygiene:0}", Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount += 7;
+
+            // Plan 137 — Needs -> Performance Cascade
+            var perf = Ashfall.Core.Survivors.NeedsPerformanceBridge.Project(s);
+            if (perf != null && perf.OverallBand != Ashfall.Core.Survivors.PerformanceBand.Optimal)
+            {
+                (float r, float g, float b, float a) bandColor = perf.OverallBand switch
+                {
+                    Ashfall.Core.Survivors.PerformanceBand.Critical => Ashfall.Core.UI.Theme.Critical,
+                    Ashfall.Core.Survivors.PerformanceBand.Severe => Ashfall.Core.UI.Theme.Critical,
+                    Ashfall.Core.Survivors.PerformanceBand.Impaired => Ashfall.Core.UI.Theme.Warm,
+                    _ => Ashfall.Core.UI.Theme.Lethe
+                };
+                string warningIcon = perf.OverallBand >= Ashfall.Core.Survivors.PerformanceBand.Severe ? "⚠ " : string.Empty;
+                AddRow(_needsList, $"{warningIcon}Performance: {perf.OverallBand.ToString().ToUpperInvariant()} (Work {perf.WorkSpeedMultiplier * 100:0}%, Combat {perf.CombatAccuracyMultiplier * 100:0}%)", bandColor);
+                RenderedRowCount++;
+            }
 
             // ── Traits (from rad state) ──
             if (rad != null)

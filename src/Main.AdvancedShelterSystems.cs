@@ -263,6 +263,9 @@ namespace AtomicWar.GodotApp
             _perimeterDefense.OnAssaultRepelled += res =>
             {
                 _journal?.TryAddRawEntry("defense_assault_repelled", $"Surface assault repelled: {res.AttackersKilled} attackers eliminated.", null!, _simDay);
+                // Plan 212: event-bound time capsules (e.g. the Fallen Watchman's
+                // Footlocker) open exactly once when the wall holds.
+                NotifyTimeCapsuleEvent("defense_assault_repelled", _simDay);
                 _perimeterDefenseDirty = true;
             };
             _perimeterDefense.OnPerimeterBreached += res =>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Ashfall.Core.Survivors
 {
@@ -56,6 +57,7 @@ namespace Ashfall.Core.Survivors
     public sealed class ChildDevelopmentSystem
     {
         private readonly ChildDevelopmentState _state;
+        private readonly List<DevelopmentTraitDef> _traits = new List<DevelopmentTraitDef>();
 
         public event Action<ChildProfile, DevelopmentStage>? OnStageChanged;
         public event Action<DevelopmentMilestoneEvent>? OnMilestoneAchieved;
@@ -65,6 +67,32 @@ namespace Ashfall.Core.Survivors
         public ChildDevelopmentSystem(ChildDevelopmentState? state = null)
         {
             _state = state ?? new ChildDevelopmentState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var catalog = JsonSerializer.Deserialize<DevelopmentTraitsCatalog>(json, options);
+                if (catalog?.traits == null) return;
+
+                _traits.Clear();
+                foreach (var t in catalog.traits)
+                {
+                    if (!string.IsNullOrWhiteSpace(t.trait_id))
+                        _traits.Add(t);
+                }
+            }
+            catch (Exception) { /* malformed catalog falls back to built-in defaults; authoring errors are enforced by the data-integrity gate */ }
+        }
+
+        public IReadOnlyList<DevelopmentTraitDef> GetAllTraits() => _traits;
+
+        public DevelopmentTraitDef? GetTrait(string traitId)
+        {
+            return _traits.FirstOrDefault(t => string.Equals(t.trait_id, traitId, StringComparison.OrdinalIgnoreCase));
         }
 
         public static DevelopmentStage ResolveStage(int ageDays)

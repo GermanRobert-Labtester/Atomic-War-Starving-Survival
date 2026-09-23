@@ -289,8 +289,68 @@ namespace AtomicWar.Journal
 
             AppendNarrativeDiscoveryRows(rows);
             AppendBureaucraticDocumentRows(rows);
+            AppendDailySurvivalRows(rows);
 
             return rows;
+        }
+
+        /// <summary>
+        /// Plan 17 daily-survival archive: quiet-hour journals, botanical logs,
+        /// children's folklore, and ration-fraud records. Rendered verbatim from
+        /// the authored catalogs as read-only archive rows.
+        /// </summary>
+        private void AppendDailySurvivalRows(List<JournalCodexRow> rows)
+        {
+            var catalog = _catalogs?.DailySurvival;
+            if (catalog == null || catalog.TotalCount == 0) return;
+
+            foreach (var entry in catalog.JournalEntries)
+            {
+                if (entry == null || string.IsNullOrEmpty(entry.Id)) continue;
+                rows.Add(new JournalCodexRow
+                {
+                    DisplayName = $"Quiet-Hour Journal — {entry.AuthorDesignation}",
+                    Meta = $"Psychology · {entry.QuietHourTime} · {entry.PsychologicalMarker}",
+                    Body = entry.Prose,
+                    IsLocked = false
+                });
+            }
+
+            foreach (var entry in catalog.BotanicalEntries)
+            {
+                if (entry == null || string.IsNullOrEmpty(entry.Id)) continue;
+                rows.Add(new JournalCodexRow
+                {
+                    DisplayName = $"Botanical Log — {entry.BotanicalName}",
+                    Meta = $"Greenhouse · tray {entry.CultivationTray} · {entry.EdibilityStatus}",
+                    Body = entry.Prose,
+                    IsLocked = false
+                });
+            }
+
+            foreach (var entry in catalog.FolkloreEntries)
+            {
+                if (entry == null || string.IsNullOrEmpty(entry.Id)) continue;
+                rows.Add(new JournalCodexRow
+                {
+                    DisplayName = $"Children's Folklore — {entry.FolkTheme}",
+                    Meta = $"Culture · {entry.TraditionType} · {entry.OriginSector}",
+                    Body = entry.Prose,
+                    IsLocked = false
+                });
+            }
+
+            foreach (var entry in catalog.FraudEntries)
+            {
+                if (entry == null || string.IsNullOrEmpty(entry.Id)) continue;
+                rows.Add(new JournalCodexRow
+                {
+                    DisplayName = $"Ration Fraud Record — {entry.CaseId}",
+                    Meta = $"Discipline · {entry.InfractionType} · penalty {entry.VerdictPenalty}",
+                    Body = entry.Prose,
+                    IsLocked = false
+                });
+            }
         }
 
         private void AppendNarrativeDiscoveryRows(List<JournalCodexRow> rows)

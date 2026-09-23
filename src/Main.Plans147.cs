@@ -237,6 +237,9 @@ namespace AtomicWar.GodotApp
             // Barter trades through the campaign inventory authority; compose it
             // instead of binding a fabricated empty inventory (INV-16.3).
             SetupInventory();
+            // D19a determinism contract: When _campaignDay is active, fork deterministically
+            // from the campaign RNG; in pre-campaign/offline setup, use a fixed seed (147)
+            // so stock generation remains deterministic and never uses unseeded System.Random.
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("shelter_barter") : new SeededRng(147);
             var inv = _inventory!.Inventory;
             var itemCatalog = _inventory!.Catalog;

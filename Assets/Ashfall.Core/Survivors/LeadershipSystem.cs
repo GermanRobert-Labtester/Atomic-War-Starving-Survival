@@ -4,9 +4,47 @@ using System.Collections.Generic;
 using System.Globalization;
 #pragma warning disable CS8618
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Survivors
 {
+    // ── Policy definitions (Plan 208) ─────────────────────────────
+    [Serializable]
+    public sealed class LeadershipPolicyDefinition
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("succession_mode")]
+        public string SuccessionMode { get; set; } = string.Empty;
+
+        [JsonPropertyName("challenge_threshold")]
+        public float ChallengeThreshold { get; set; } = 30f;
+
+        [JsonPropertyName("crisis_morale_modifier")]
+        public float CrisisMoraleModifier { get; set; } = 10f;
+
+        [JsonPropertyName("deputy_powers_delegated")]
+        public bool DeputyPowersDelegated { get; set; } = true;
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+    }
+
+    [Serializable]
+    public sealed class LeadershipPolicyCatalogData
+    {
+        [JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; } = 1;
+
+        [JsonPropertyName("policies")]
+        public List<LeadershipPolicyDefinition> Policies { get; set; } = new List<LeadershipPolicyDefinition>();
+    }
+
     // ── Save-state DTOs ───────────────────────────────────────────
     [Serializable]
     public class LeadershipSurvivorStateDTO
@@ -35,6 +73,7 @@ namespace Ashfall.Core.Survivors
         public float step_down_cooldown;
         public string designated_successor_id;
         public string deputy_leader_id;
+        public string active_policy_id = "policy_meritocratic_appointment";
         public List<LeadershipSurvivorStateDTO> survivor_states = new List<LeadershipSurvivorStateDTO>();
         public List<LeadershipChallengeDTO> challenges = new List<LeadershipChallengeDTO>();
     }
@@ -65,6 +104,7 @@ namespace Ashfall.Core.Survivors
         public event Action<string, string> OnSuccessionTriggered;
         public event Action<LeadershipChallengeDTO> OnChallengeInitiated;
         public event Action<LeadershipChallengeDTO> OnChallengeResolved;
+        public event Action<string> OnPolicyChanged;
         public event Action OnStateChanged;
 
         // ── Host hooks ────────────────────────────────────────────
@@ -80,6 +120,9 @@ namespace Ashfall.Core.Survivors
         private float _stepDownCooldown;
         private string _designatedSuccessorId;
         private string _deputyLeaderId;
+        private string _activePolicyId = "policy_meritocratic_appointment";
+        private readonly Dictionary<string, LeadershipPolicyDefinition> _policies =
+            new Dictionary<string, LeadershipPolicyDefinition>(StringComparer.OrdinalIgnoreCase);
         private readonly List<LeadershipChallengeDTO> _challenges = new List<LeadershipChallengeDTO>();
         private int _nextChallengeSeq = 1;
 
@@ -87,7 +130,72 @@ namespace Ashfall.Core.Survivors
         public float StepDownCooldown => _stepDownCooldown;
         public string DesignatedSuccessorId => _designatedSuccessorId;
         public string DeputyLeaderId => _deputyLeaderId;
+        public string ActivePolicyId => _activePolicyId;
+        public LeadershipPolicyDefinition? ActivePolicy =>
+            _policies.TryGetValue(_activePolicyId ?? "", out var p) ? p : null;
+        public IReadOnlyCollection<LeadershipPolicyDefinition> Policies => _policies.Values;
         public IReadOnlyList<LeadershipChallengeDTO> Challenges => _challenges;
+
+        // ── Policy Management (Plan 208) ──────────────────────────
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var data = JsonSerializer.Deserialize<LeadershipPolicyCatalogData>(json, options);
+            if (data != null)
+            {
+                LoadPolicies(data);
+            }
+        }
+
+        public void LoadPolicies(LeadershipPolicyCatalogData catalog)
+        {
+            if (catalog?.Policies == null) return;
+            foreach (var p in catalog.Policies)
+            {
+                if (!string.IsNullOrWhiteSpace(p.Id))
+                {
+                    _policies[p.Id] = p;
+                }
+            }
+        }
+
+        public LeadershipPolicyDefinition? GetPolicy(string policyId)
+        {
+            if (string.IsNullOrWhiteSpace(policyId)) return null;
+            return _policies.TryGetValue(policyId, out var p) ? p : null;
+        }
+
+        public bool SetPolicy(string policyId)
+        {
+            if (string.IsNullOrWhiteSpace(policyId)) return false;
+            if (_policies.Count > 0 && !_policies.ContainsKey(policyId))
+                return false;
+
+            _activePolicyId = policyId;
+            OnPolicyChanged?.Invoke(policyId);
+            OnStateChanged?.Invoke();
+            return true;
+        }
+
+        public bool ElectLeader(string survivorId, string reason = "Democratic Election")
+        {
+            if (string.IsNullOrEmpty(survivorId) || !IsAlive(survivorId)) return false;
+            string prevLeader = _currentLeaderId;
+            if (!string.IsNullOrEmpty(prevLeader) && _states.TryGetValue(prevLeader, out var prev))
+            {
+                prev.IsDesignatedLeader = false;
+            }
+            _currentLeaderId = survivorId;
+            var newLeader = GetOrAdd(survivorId);
+            newLeader.IsDesignatedLeader = true;
+            if (string.Equals(_designatedSuccessorId, survivorId, StringComparison.Ordinal)) _designatedSuccessorId = null!;
+            if (string.Equals(_deputyLeaderId, survivorId, StringComparison.Ordinal)) _deputyLeaderId = null!;
+            OnLeaderDesignated?.Invoke(survivorId);
+            OnSuccessionTriggered?.Invoke(prevLeader ?? string.Empty, survivorId);
+            OnStateChanged?.Invoke();
+            return true;
+        }
 
         // ── Per-survivor state ────────────────────────────────────
         private class SurvivorState
@@ -411,7 +519,11 @@ namespace Ashfall.Core.Survivors
             var alive = GetAliveSurvivorIds?.Invoke();
             if (alive == null || !ContainsId(alive, _currentLeaderId)) return;
 
-            ApplyShelterMoraleDelta?.Invoke(LeaderCrisisMoraleAura);
+            float moraleBonus = ActivePolicy != null && ActivePolicy.CrisisMoraleModifier > 0f
+                ? ActivePolicy.CrisisMoraleModifier
+                : LeaderCrisisMoraleAura;
+
+            ApplyShelterMoraleDelta?.Invoke(moraleBonus);
         }
 
         public void Tick(float gameHours)
@@ -444,6 +556,7 @@ namespace Ashfall.Core.Survivors
                 step_down_cooldown = _stepDownCooldown,
                 designated_successor_id = _designatedSuccessorId,
                 deputy_leader_id = _deputyLeaderId,
+                active_policy_id = _activePolicyId,
             };
             foreach (var kv in _states.OrderBy(pair => pair.Key, StringComparer.Ordinal))
             {
@@ -477,6 +590,7 @@ namespace Ashfall.Core.Survivors
             _stepDownCooldown = 0f;
             _designatedSuccessorId = null!;
             _deputyLeaderId = null!;
+            _activePolicyId = "policy_meritocratic_appointment";
             _challenges.Clear();
             _nextChallengeSeq = 1;
 
@@ -486,6 +600,8 @@ namespace Ashfall.Core.Survivors
                 _stepDownCooldown = save.step_down_cooldown;
                 _designatedSuccessorId = save.designated_successor_id;
                 _deputyLeaderId = save.deputy_leader_id;
+                if (!string.IsNullOrEmpty(save.active_policy_id))
+                    _activePolicyId = save.active_policy_id;
                 if (save.survivor_states != null)
                 {
                     foreach (var dto in save.survivor_states)

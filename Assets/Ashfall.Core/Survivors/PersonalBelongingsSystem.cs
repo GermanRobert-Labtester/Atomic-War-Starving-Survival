@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Survivors
 {
@@ -24,6 +26,52 @@ namespace Ashfall.Core.Survivors
         Theft = 3,
         Confiscation = 4,
         Assignment = 5
+    }
+
+    [Serializable]
+    public sealed class PersonalBelongingTemplate
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("category")]
+        public string Category { get; set; } = "keepsake";
+
+        [JsonPropertyName("base_sentimental_value")]
+        public float BaseSentimentalValue { get; set; } = 50f;
+
+        [JsonPropertyName("base_condition")]
+        public float BaseCondition { get; set; } = 100f;
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+
+        [JsonPropertyName("rarity")]
+        public string Rarity { get; set; } = "common";
+
+        public BelongingCategory ParseCategory() => Category?.ToLowerInvariant() switch
+        {
+            "clothing" => BelongingCategory.Clothing,
+            "tool" => BelongingCategory.Tool,
+            "weapon" => BelongingCategory.Weapon,
+            "memento" => BelongingCategory.Memento,
+            "document" => BelongingCategory.Document,
+            "jewelry" => BelongingCategory.Jewelry,
+            _ => BelongingCategory.Keepsake
+        };
+    }
+
+    [Serializable]
+    public sealed class PersonalBelongingsCatalogData
+    {
+        [JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; } = 1;
+
+        [JsonPropertyName("templates")]
+        public List<PersonalBelongingTemplate> Templates { get; set; } = new List<PersonalBelongingTemplate>();
     }
 
     [Serializable]
@@ -87,6 +135,8 @@ namespace Ashfall.Core.Survivors
     public sealed class PersonalBelongingsSystem
     {
         private readonly PersonalBelongingsState _state;
+        private readonly Dictionary<string, PersonalBelongingTemplate> _templates =
+            new Dictionary<string, PersonalBelongingTemplate>(StringComparer.OrdinalIgnoreCase);
 
         public event Action<PersonalBelonging>? OnBelongingAcquired;
         public event Action<BelongingTransfer>? OnBelongingGifted;
@@ -95,6 +145,7 @@ namespace Ashfall.Core.Survivors
         public event Action<PersonalBelonging, bool>? OnFavoriteToggled;
 
         public int TotalBelongingsCount => _state.Belongings.Count;
+        public IReadOnlyCollection<PersonalBelongingTemplate> Templates => _templates.Values;
 
         /// <summary>Canonical claim metadata; physical item stacks remain owned by Inventory.</summary>
         public IReadOnlyList<PersonalBelonging> Belongings => _state.Belongings;
@@ -115,6 +166,56 @@ namespace Ashfall.Core.Survivors
         public PersonalBelongingsSystem(PersonalBelongingsState? state = null)
         {
             _state = state ?? new PersonalBelongingsState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var data = JsonSerializer.Deserialize<PersonalBelongingsCatalogData>(json, options);
+            if (data != null)
+            {
+                LoadCatalog(data);
+            }
+        }
+
+        public void LoadCatalog(PersonalBelongingsCatalogData catalog)
+        {
+            if (catalog?.Templates == null) return;
+            foreach (var t in catalog.Templates)
+            {
+                if (!string.IsNullOrWhiteSpace(t.Id))
+                {
+                    _templates[t.Id] = t;
+                }
+            }
+        }
+
+        public PersonalBelongingTemplate? GetTemplate(string templateId)
+        {
+            if (string.IsNullOrWhiteSpace(templateId)) return null;
+            return _templates.TryGetValue(templateId, out var t) ? t : null;
+        }
+
+        public PersonalBelonging? RegisterFromTemplate(
+            string ownerSurvivorId,
+            string templateId,
+            int acquiredDay = 1,
+            string acquiredFrom = "")
+        {
+            if (string.IsNullOrWhiteSpace(templateId)) return null;
+            if (!_templates.TryGetValue(templateId, out var template)) return null;
+
+            return RegisterBelonging(
+                ownerSurvivorId,
+                template.Id,
+                template.Name,
+                template.ParseCategory(),
+                template.BaseSentimentalValue,
+                template.BaseCondition,
+                acquiredDay,
+                acquiredFrom,
+                template.Description);
         }
 
         public PersonalBelonging? RegisterBelonging(

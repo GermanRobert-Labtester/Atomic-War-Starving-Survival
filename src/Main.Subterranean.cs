@@ -75,6 +75,33 @@ namespace AtomicWar.GodotApp
             return def?.traitIds?.Contains(SubterraneanSystem.ClaustrophobiaTraitId) ?? false;
         }
 
+        /// <summary>
+        /// Plan 49 / Plan 156 flood bridge: the subterranean network owns water
+        /// levels, so a rising node is the canonical flood source for the
+        /// excavation hazard sector of the same node id. The projection is
+        /// increases-only, so an installed drainage mitigation's work is never
+        /// overwritten; each system keeps ownership of its own state.
+        /// </summary>
+        private void ProjectSubterraneanFloodIntoExcavationHazards()
+        {
+            if (_subterranean == null || _excavationHazards == null) return;
+
+            var nodes = _subterranean.System.State.nodes;
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                var node = nodes[i];
+                if (node == null || string.IsNullOrEmpty(node.nodeId)) continue;
+
+                // 0–100 cm of standing water maps linearly onto the sector's
+                // 0–1000 permille flood capacity.
+                int target = (int)Math.Round(Math.Clamp(node.waterLevel, 0f, 100f) * 10f);
+                var sector = _excavationHazards.GetOrCreateSector(node.nodeId);
+                int delta = target - sector.FloodLevelPermille;
+                if (delta > 0)
+                    _excavationHazards.AddFloodWater(node.nodeId, delta);
+            }
+        }
+
         // ------------------------------------------------------------- commands
 
         public string ShoreSubterraneanNode(string nodeId)

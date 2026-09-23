@@ -468,6 +468,17 @@ namespace Ashfall.Core
             return Math.Clamp(total, 0f, 0.5f);
         }
 
+        /// <summary>
+        /// Optional Plan 137 hook: query work speed / throughput multiplier for an assigned worker.
+        /// </summary>
+        public Func<string, float>? WorkSpeedMultiplierLookup { get; set; }
+
+        public float GetEffectiveWorkSpeed(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return 1.0f;
+            return WorkSpeedMultiplierLookup != null ? Math.Max(0.1f, WorkSpeedMultiplierLookup(survivorId)) : 1.0f;
+        }
+
         public ActionResult AssignWithResult(
             string role,
             string survivorId,

@@ -272,7 +272,7 @@ namespace Ashfall.Core.Tests.Plan176World
             system.TrySpawn("anomaly_test_static", 200f, 200f, 1);
             system.TrySpawn("anomaly_test_static", 200f, 200f, 1);
             Assert.Equal(80f, system.GetRadiationRate(200f, 200f), 3);
-            Assert.True(system.GetEnvironmentalEffectTags(200f, 200f).Contains("mutagenic"));
+            Assert.Contains("mutagenic", system.GetEnvironmentalEffectTags(200f, 200f));
 
             // Outside both radii: zero.
             Assert.Equal(0f, system.GetRadiationRate(260f, 200f), 3);
@@ -402,6 +402,42 @@ namespace Ashfall.Core.Tests.Plan176World
             system.TrySpawn("anomaly_test_static", 100f, 110f, 1);
             system.EvaluateApproach("loc_holdfast", 100f, 100f);
             Assert.Empty(fired);
+        }
+
+        [Fact]
+        public void HazardContact_FiresOncePerEpisode_WhenRadiusCoversTarget()
+        {
+            var system = CreateSystem();
+            var contacts = new List<AnomalyHazardInstance>();
+            system.OnHazardContact += h => contacts.Add(h);
+
+            system.TrySpawn("anomaly_test_front", 100f, 100f, 1, 90f);
+            var hazard = system.State.hazards[0];
+            hazard.position_x = 100f;
+            hazard.position_y = 110f; // 10 km from target; radius_km = 18
+
+            system.EvaluateApproach("loc_holdfast", 100f, 100f);
+            Assert.Single(contacts);
+            Assert.Equal("anomaly_test_front", contacts[0].anomaly_id);
+
+            // Still overlapping: no repeat contact.
+            system.EvaluateApproach("loc_holdfast", 100f, 100f);
+            Assert.Single(contacts);
+        }
+
+        [Fact]
+        public void HazardContact_DoesNotFireOutsideRadius()
+        {
+            var system = CreateSystem();
+            int contacts = 0;
+            system.OnHazardContact += _ => contacts++;
+
+            system.TrySpawn("anomaly_test_front", 100f, 100f, 1, 90f);
+            system.State.hazards[0].position_x = 100f;
+            system.State.hazards[0].position_y = 200f; // 100 km away
+
+            system.EvaluateApproach("loc_holdfast", 100f, 100f);
+            Assert.Equal(0, contacts);
         }
 
         // ── persistence ────────────────────────────────────────────────

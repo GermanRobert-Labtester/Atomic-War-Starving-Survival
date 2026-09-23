@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "categories": [
+    {
+      "category_id": "cat_decisions",
+      "category_name": "Governance Decisions",
+      "description": "Critical council resolutions, policy enactments, refugee admissions, and diplomatic treaties.",
+      "entry_types": ["Decision"],
+      "display_order": 1
+    },
+    {
+      "category_id": "cat_events",
+      "category_name": "Historical Events",
+      "description": "Chronicle of catastrophic hazards, perimeter defenses, seasonal festivals, and acute emergencies.",
+      "entry_types": ["Event"],
+      "display_order": 2
+    },
+    {
+      "category_id": "cat_memorials",
+      "category_name": "Roll of Honor & Memorials",
+      "description": "Enduring remembrances, epitaphs, sacrifice records, and bereavement legacy tributes for fallen survivors.",
+      "entry_types": ["Memorial"],
+      "display_order": 3
+    },
+    {
+      "category_id": "cat_milestones",
+      "category_name": "Shelter Milestones",
+      "description": "Major facility completions, bunker renovations, population expansions, and era transitions.",
+      "entry_types": ["Milestone"],
+      "display_order": 4
+    },
+    {
+      "category_id": "cat_discoveries",
+      "category_name": "Wasteland Discoveries",
+      "description": "Scientific breakthroughs, pre-war archive decryptions, ancient vaults, and charted anomaly regions.",
+      "entry_types": ["Discovery"],
+      "display_order": 5
+    },
+    {
+      "category_id": "cat_achievements",
+      "category_name": "Distinguished Achievements",
+      "description": "Heroic survival deeds, master craftsmanship honors, agricultural bounties, and leadership legacy citations.",
+      "entry_types": ["Achievement"],
+      "display_order": 6
+    }
+  ]
+}

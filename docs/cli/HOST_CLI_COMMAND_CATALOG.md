@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-20<br>
-**Total Registered Actions:** 187 entries / 263 flag tokens (aliases included)
+**Last Verified:** 2026-09-23<br>
+**Total Registered Actions:** 188 entries / 264 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -38,6 +38,7 @@
 | `--composition-root-selftest` | — | Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131) |
 | `--real-campaign-journey-selftest` | `--campaign-journey-selftest`, `--real-main-journey-selftest` | Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5) |
 | `--agriculture-selftest` | — | Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition |
+| `--orphan-seal-wave1-selftest` | — | ORPHAN-SEAL-PRIORITY-W1: ten priority orphan authorities — catalog, command, state round-trip |
 | `--aquaponics-selftest` | — | Plan B87 closed-loop aquaponics: catalog, growth, power/DO crash, harvest, nutrient export, save round-trip |
 | `--arbitration-selftest` | — | CrossingArbitrationHeadlessDemo |
 | `--black-flotilla-selftest` | `--maritime-selftest`, `--expansion-09-selftest` | The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip |

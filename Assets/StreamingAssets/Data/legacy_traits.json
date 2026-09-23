@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "legacy_traits": [
+    {
+      "id": "trait_leaders_blood",
+      "name": "Leader's Blood",
+      "description": "Descendant of an authoritative commander; baseline shelter morale and resolve increased.",
+      "source": "survivor",
+      "effect_type": "morale_bonus",
+      "magnitude": 10.0,
+      "evolution_target_id": "trait_dynasty_call"
+    },
+    {
+      "id": "trait_survivors_instinct",
+      "name": "Survivor's Instinct",
+      "description": "Hardened wilderness awareness boosts overland foraging and scavenging yields.",
+      "source": "survivor",
+      "effect_type": "scavenging_bonus",
+      "magnitude": 15.0,
+      "evolution_target_id": "trait_wasteland_legend"
+    },
+    {
+      "id": "trait_medics_knowledge",
+      "name": "Medic's Knowledge",
+      "description": "Oral clinical traditions passed down from field doctors reduce treatment complication risk.",
+      "source": "survivor",
+      "effect_type": "treatment_bonus",
+      "magnitude": 12.0
+    },
+    {
+      "id": "trait_warriors_training",
+      "name": "Warrior's Training",
+      "description": "Ancestral combat drilling increases melee and ballistic combat accuracy.",
+      "source": "survivor",
+      "effect_type": "combat_bonus",
+      "magnitude": 10.0
+    },
+    {
+      "id": "trait_botanists_green_thumb",
+      "name": "Botanist's Heritage",
+      "description": "Seed-saving wisdom increases greenhouse germination speed and crop yield.",
+      "source": "survivor",
+      "effect_type": "farming_bonus",
+      "magnitude": 15.0
+    },
+    {
+      "id": "trait_engineers_eye",
+      "name": "Engineer's Eye",
+      "description": "Intuition for mechanical stresses reduces facility breakdown rates.",
+      "source": "survivor",
+      "effect_type": "maintenance_bonus",
+      "magnitude": 10.0
+    },
+    {
+      "id": "trait_dynasty_call",
+      "name": "Dynasty's Call",
+      "description": "Evolved legacy of three generations of leaders; commands unconditional follower loyalty.",
+      "source": "survivor",
+      "effect_type": "morale_bonus",
+      "magnitude": 25.0
+    },
+    {
+      "id": "trait_wasteland_legend",
+      "name": "Wasteland Legend",
+      "description": "Five campaigns of survival lore; immune to initial wasteland disorientation.",
+      "source": "survivor",
+      "effect_type": "scavenging_bonus",
+      "magnitude": 30.0
+    },
+    {
+      "id": "trait_fortified_walls",
+      "name": "Fortified Walls",
+      "description": "Reinforced exterior bulkheads from past holdfast structural renovations persist.",
+      "source": "shelter",
+      "effect_type": "shelter_defense",
+      "magnitude": 20.0
+    },
+    {
+      "id": "trait_efficient_systems",
+      "name": "Efficient Systems",
+      "description": "Calibrated power and ventilation circuitry cuts daily baseline power draw.",
+      "source": "shelter",
+      "effect_type": "power_saving",
+      "magnitude": 10.0
+    },
+    {
+      "id": "trait_expanded_quarters",
+      "name": "Expanded Quarters",
+      "description": "Excavated bunk extensions provide additional initial survivor accommodation capacity.",
+      "source": "shelter",
+      "effect_type": "capacity_bonus",
+      "magnitude": 4.0
+    },
+    {
+      "id": "trait_hidden_cache",
+      "name": "Ancestral Supply Cache",
+      "description": "Buried provisions left behind in the lower maintenance tunnels yield bonus starting resources.",
+      "source": "shelter",
+      "effect_type": "starting_supplies",
+      "magnitude": 25.0
+    },
+    {
+      "id": "trait_geothermal_tap",
+      "name": "Deep Geothermal Tap",
+      "description": "Past borehole heating plumbing provides thermal stability during early freezes.",
+      "source": "shelter",
+      "effect_type": "thermal_insulation",
+      "magnitude": 5.0
+    },
+    {
+      "id": "trait_reinforced_sump",
+      "name": "Reinforced Sump Drain",
+      "description": "Heavy-duty discharge conduits prevent subterranean water backup on day one.",
+      "source": "shelter",
+      "effect_type": "sump_capacity",
+      "magnitude": 30.0
+    },
+    {
+      "id": "trait_old_alliance_vanguard",
+      "name": "Old Alliance Vanguard",
+      "description": "Longstanding diplomatic solidarity grants favorable initial trade terms with allied factions.",
+      "source": "faction",
+      "effect_type": "faction_standing",
+      "magnitude": 20.0
+    },
+    {
+      "id": "trait_ancient_grudge",
+      "name": "Ancient Grudge",
+      "description": "Historical atrocities remember past raids, hardening hostile faction vigilance.",
+      "source": "faction",
+      "effect_type": "faction_standing",
+      "magnitude": -20.0
+    },
+    {
+      "id": "trait_caravan_covenant",
+      "name": "Free Caravan Covenant",
+      "description": "Recognized sanctuary status attracts traveling trade caravans earlier in the year.",
+      "source": "faction",
+      "effect_type": "trade_frequency",
+      "magnitude": 25.0
+    },
+    {
+      "id": "trait_schedule_holds_discipline",
+      "name": "The Schedule Holds Discipline",
+      "description": "Rigid operational routines carry forward, raising work throughput but penalizing leisure flexibility.",
+      "source": "ending",
+      "effect_type": "work_efficiency",
+      "magnitude": 15.0
+    },
+    {
+      "id": "trait_the_reserve_hoard",
+      "name": "The Reserve Inheritance",
+      "description": "Deep stockpile discipline guarantees bonus starting fuel, medicine, and clean water.",
+      "source": "ending",
+      "effect_type": "starting_supplies",
+      "magnitude": 35.0
+    },
+    {
+      "id": "trait_stand_up_unity",
+      "name": "Stand-Up Communal Memory",
+      "description": "The proud memory of egalitarian unity inspires new survivors with elevated baseline hope.",
+      "source": "ending",
+      "effect_type": "morale_bonus",
+      "magnitude": 15.0
+    }
+  ]
+}

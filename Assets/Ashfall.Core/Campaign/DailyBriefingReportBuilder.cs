@@ -49,6 +49,7 @@ namespace Ashfall.Core.Campaign
             var expeditionMilestones = new List<DailyBriefingEntry>();
             var systemActivity = new List<DailyBriefingEntry>();
             var shelterConditions = new List<DailyBriefingEntry>();
+            var chronicle = new List<DailyBriefingEntry>();
 
             int order = 0;
             foreach (var evt in events)
@@ -335,21 +336,35 @@ namespace Ashfall.Core.Campaign
                         break;
 
                     default:
-                        // C2 / Plan 17A-S — no silent drops. A valid emitted event
-                        // must never disappear because the switch has no case for
-                        // it. Heartbeat kinds are intentionally non-player-facing
-                        // (briefing noise budget); every other unhandled kind is
-                        // rendered through the documented generic representation.
+                        // C2 / Plan 17A-S / D11 — no silent drops with semantic-kind section routing.
+                        // Heartbeat kinds are intentionally non-player-facing (briefing noise budget);
+                        // every other unhandled kind is routed to its semantic section (or generic fallback).
                         if (!DayEventVocabulary.IsInternalHeartbeat(evt.Kind))
                         {
-                            systemActivity.Add(new DailyBriefingEntry(
-                                DayEventVocabulary.GenericSectionTitle,
+                            var semantic = DayEventVocabulary.GetSemanticKind(evt.Kind);
+                            var sectionTitle = DayEventVocabulary.SectionTitleFor(semantic);
+                            var entry = new DailyBriefingEntry(
+                                sectionTitle,
                                 string.IsNullOrEmpty(evt.PrimaryId) ? evt.Kind : evt.PrimaryId,
                                 DayEventVocabulary.RenderGeneric(evt),
                                 order: order,
                                 secondaryId: evt.SecondaryId,
                                 numeric: evt.Numeric,
-                                kind: evt.Kind));
+                                kind: evt.Kind);
+
+                            switch (sectionTitle)
+                            {
+                                case "Deaths": deaths.Add(entry); break;
+                                case "Warnings": warnings.Add(entry); break;
+                                case "Survivor Changes": survivorChanges.Add(entry); break;
+                                case "Shelter": shelterConditions.Add(entry); break;
+                                case "Radio Intercepts": radioIntercepts.Add(entry); break;
+                                case "Weather Forecast": weatherForecast.Add(entry); break;
+                                case "Production & Maintenance": production.Add(entry); break;
+                                case "Expedition Milestones": expeditionMilestones.Add(entry); break;
+                                case "Chronicle": chronicle.Add(entry); break;
+                                default: systemActivity.Add(entry); break;
+                            }
                         }
                         break;
                 }
@@ -365,6 +380,7 @@ namespace Ashfall.Core.Campaign
             AddSectionIfNotEmpty(r, "Weather Forecast", weatherForecast, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Radio Intercepts", radioIntercepts, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Expedition Milestones", expeditionMilestones, maxEntriesPerSection);
+            AddSectionIfNotEmpty(r, "Chronicle", chronicle, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, "Shelter", shelterConditions, maxEntriesPerSection);
             AddSectionIfNotEmpty(r, DayEventVocabulary.GenericSectionTitle, systemActivity, maxEntriesPerSection);
 

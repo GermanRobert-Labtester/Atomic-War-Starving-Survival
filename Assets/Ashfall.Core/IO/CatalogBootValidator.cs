@@ -223,6 +223,9 @@ namespace Ashfall.Core.IO
             RegisterCatalog("verdict_items.json", "Verdict Items", CatalogClassification.Optional);
             RegisterCatalog("verdict_locations.json", "Verdict Locations", CatalogClassification.Optional);
             RegisterCatalog("verdict_radio.json", "Verdict Radio", CatalogClassification.Optional);
+            RegisterCatalog("cassette_sets.json", "Cassette Sets", CatalogClassification.Optional);
+            RegisterCatalog("muster_witnesses.json", "Muster Witnesses", CatalogClassification.Optional);
+            RegisterCatalog("wasteland_grave_epitaphs.json", "Wasteland Grave Epitaphs", CatalogClassification.Optional);
             RegisterCatalog("black_flotilla_items.json", "Black Flotilla Items", CatalogClassification.Optional);
             RegisterCatalog("deep_lore_locations.json", "Deep Lore Locations", CatalogClassification.Optional);
             RegisterCatalog("dose_items.json", "Dose Items", CatalogClassification.Optional);

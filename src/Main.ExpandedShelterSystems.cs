@@ -150,6 +150,21 @@ namespace AtomicWar.GodotApp
             SetupTimeCapsules();
             SetupDeathLegacy();
             SetupRelationshipDecay();
+            SetupCommitments();
+            SetupSessionDurability();
+            SetupPlayMetrics();
+            SetupSurvivorVoice();
+            SetupContentCertification();
+            SetupSevenDaySlice();
+            SetupRetention();
+            SetupOutpostSettlement();
+            SetupWeatherCascade();
+            SetupTerritoryControl();
+            SetupCooking();
+            SetupPresentation();
+            SetupOrphanSealWave1();
+            SetupNeedsPerformance();
+            SetupCampaignLegacy();
         }
 
         /// <summary>Binds the Plan 72 electrostatic scrubber console to the ventilation session.</summary>
@@ -332,6 +347,16 @@ namespace AtomicWar.GodotApp
             SaveShelterAssignment();
             SaveShelterDecor();
             SaveFactionBranch();
+            SaveCommitments();
+            SaveSessionDurability();
+            SavePlayMetrics();
+            SaveSurvivorVoice();
+            SaveSevenDaySlice();
+            SaveRetention();
+            SaveOutpostSettlement();
+            SavePresentation();
+            PersistOrphanSealWave1();
+            SaveCampaignLegacy();
         }
 
         /// <summary>Capture research progress into the campaign envelope (Plan 34: research state must round-trip).</summary>
@@ -470,6 +495,7 @@ namespace AtomicWar.GodotApp
             TickTimeCapsule(day);
             TickSurvivorDeathLegacy(day);
             TickRelationshipDecay(day);
+            TickOrphanSealWave1(day);
         }
 
         public void OpenExpandedPanel(string panelKey)
@@ -768,6 +794,16 @@ namespace AtomicWar.GodotApp
             _counterIntelligence?.Dispose(); _counterIntelligence = null!;
             _factionBranchDirty = false;
             _counterIntelligenceDirty = false;
+            ResetOrphanSealWave1();
+            ResetCommitments();
+            ResetSessionDurability();
+            ResetPlayMetrics();
+            ResetSurvivorVoice();
+            ResetRetention();
+            ResetOutpostSettlement();
+            ResetPresentation();
+            ResetNeedsPerformance();
+            ResetCampaignLegacy();
             _expandedShelterRoster = new DutyRosterSystem();
 
             _airlockSecurityDirty = false;

@@ -3,6 +3,7 @@ using System;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 
@@ -78,6 +79,10 @@ namespace AtomicWar.GodotApp
                 new GodotLog());
             crSys.RestoreState(crState);
             _chemicalRecon = new ChemicalReconHostSession(crSys);
+            // Plan 81: filter breakthrough reads the canonical equipped-respirator
+            // condition (gas mask in the Face slot). No parallel filter state.
+            _chemicalRecon.FilterRemainingCapacityProvider = () =>
+                _inventory?.Inventory?.GetEquipped(EquipSlot.Face)?.CurrentDurability ?? 0f;
         }
 
         private void SetupPlans78To81()

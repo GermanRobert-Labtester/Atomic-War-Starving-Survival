@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "economy_rules": [
+    {
+      "category": "food_water",
+      "min_contamination": 1,
+      "max_contamination": 30,
+      "price_multiplier": 0.70,
+      "trade_blocked": false,
+      "restriction_label": "Tainted provisions: 30% discount due to trace rads."
+    },
+    {
+      "category": "food_water",
+      "min_contamination": 31,
+      "max_contamination": 60,
+      "price_multiplier": 0.40,
+      "trade_blocked": false,
+      "restriction_label": "Hot provisions: 60% discount; rejected by civic enclaves."
+    },
+    {
+      "category": "food_water",
+      "min_contamination": 61,
+      "max_contamination": 100,
+      "price_multiplier": 0.10,
+      "trade_blocked": true,
+      "restriction_label": "Lethal dose goods: strictly quarantined by all reputable merchants."
+    },
+    {
+      "category": "equipment",
+      "min_contamination": 1,
+      "max_contamination": 40,
+      "price_multiplier": 0.80,
+      "trade_blocked": false,
+      "restriction_label": "Irradiated salvage: 20% discount."
+    },
+    {
+      "category": "equipment",
+      "min_contamination": 41,
+      "max_contamination": 80,
+      "price_multiplier": 0.50,
+      "trade_blocked": false,
+      "restriction_label": "Heavy alpha/beta contamination: 50% discount; requires acid wash."
+    },
+    {
+      "category": "equipment",
+      "min_contamination": 81,
+      "max_contamination": 100,
+      "price_multiplier": 0.20,
+      "trade_blocked": true,
+      "restriction_label": "Gamma-emitting gear: refused by station guards."
+    },
+    {
+      "category": "medical_supplies",
+      "min_contamination": 1,
+      "max_contamination": 100,
+      "price_multiplier": 0.05,
+      "trade_blocked": true,
+      "restriction_label": "Contaminated medical supplies: total bio-hazard block."
+    },
+    {
+      "category": "hot_zone_scarcity",
+      "min_contamination": 0,
+      "max_contamination": 0,
+      "price_multiplier": 1.50,
+      "trade_blocked": false,
+      "restriction_label": "Certified pristine hot-zone relic: +50% scarcity premium."
+    }
+  ],
+  "faction_contamination_policies": [
+    {
+      "faction_id": "faction_garrison",
+      "max_acceptable_contamination": 25,
+      "reject_irradiated_personnel": true,
+      "standing_penalty_per_violation": 5,
+      "policy_notes": "Military protocol requires clean supply lines and uncompromised personnel."
+    },
+    {
+      "faction_id": "faction_hydro_barons",
+      "max_acceptable_contamination": 10,
+      "reject_irradiated_personnel": true,
+      "standing_penalty_per_violation": 10,
+      "policy_notes": "Water purifiers strictly enforce zero-tolerance for irradiated contaminants."
+    },
+    {
+      "faction_id": "faction_rebels",
+      "max_acceptable_contamination": 65,
+      "reject_irradiated_personnel": false,
+      "standing_penalty_per_violation": 2,
+      "policy_notes": "Desperate guerillas trade for contaminated goods at heavy discount."
+    },
+    {
+      "faction_id": "faction_scavengers",
+      "max_acceptable_contamination": 85,
+      "reject_irradiated_personnel": false,
+      "standing_penalty_per_violation": 0,
+      "policy_notes": "Waste scavengers trade anything that holds metal or calorie value."
+    },
+    {
+      "faction_id": "faction_cult_of_ash",
+      "max_acceptable_contamination": 100,
+      "reject_irradiated_personnel": false,
+      "standing_penalty_per_violation": 0,
+      "policy_notes": "The ash zealots venerate irradiated relics and view glowing survivors as anointed."
+    }
+  ],
+  "social_brackets": [
+    {
+      "bracket_id": "safe",
+      "min_dose_msv": 0.0,
+      "max_dose_msv": 20.0,
+      "social_penalty": 0,
+      "discrimination_chance": 0.0,
+      "status_title": "Clean",
+      "description": "No visible signs or detectable radiological hazard."
+    },
+    {
+      "bracket_id": "moderate",
+      "min_dose_msv": 20.1,
+      "max_dose_msv": 50.0,
+      "social_penalty": 10,
+      "discrimination_chance": 0.05,
+      "status_title": "Exposed",
+      "description": "Mild radiological fatigue; minor unease among fastidious settlers."
+    },
+    {
+      "bracket_id": "high",
+      "min_dose_msv": 50.1,
+      "max_dose_msv": 100.0,
+      "social_penalty": 25,
+      "discrimination_chance": 0.15,
+      "status_title": "Hot",
+      "description": "Hair loss and skin erythema; traders step back and keep distance."
+    },
+    {
+      "bracket_id": "severe",
+      "min_dose_msv": 100.1,
+      "max_dose_msv": 1000.0,
+      "social_penalty": 50,
+      "discrimination_chance": 0.35,
+      "status_title": "Anointed Outcast",
+      "description": "Active sickness and alarming dosimeter clicks; settlements bar entry."
+    }
+  ]
+}

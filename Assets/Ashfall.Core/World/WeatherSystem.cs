@@ -100,6 +100,9 @@ namespace Ashfall.Core.World
         public float WindSpeedKph => _state.wind_speed_kph;
         public int Seed => _seed;
 
+        /// <summary>Bound seasonal profile (read-only; null until a profile is bound).</summary>
+        public SeasonProfileDef? Profile => _profile;
+
         // ── Profile ────────────────────────────────────────────────────
 
         public void BindProfile(SeasonProfileDef profile, int seed)

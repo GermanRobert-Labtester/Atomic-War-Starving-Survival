@@ -170,7 +170,7 @@ namespace Ashfall.Core.Tests.Collectibles
             // never morale and never a duplicate of the same record).
             var snapshot = new List<string>(vinyl.State.ownedRecordIds);
             var report2 = dispatcher.ReconcileDiscoveredSubsystemState(vinylProvider: () => vinyl, vinylRng: new SeededRng(9));
-            Assert.Empty(vinyl.State.ownedRecordIds.Where(id => vinyl.State.ownedRecordIds.Count(x => x == id) > 1));
+            Assert.DoesNotContain(vinyl.State.ownedRecordIds, id => vinyl.State.ownedRecordIds.Count(x => x == id) > 1);
         }
 
         // ── §13/§18: fully reconciled state → capture → reload → stable ─

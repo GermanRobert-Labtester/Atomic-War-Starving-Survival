@@ -51,6 +51,34 @@ namespace Ashfall.Core.Reputation
     }
 
     [Serializable]
+    public sealed class ReputationDimensionDef
+    {
+        public string id { get; set; } = string.Empty;
+        public string display_name { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
+        public string positive_title { get; set; } = string.Empty;
+        public string negative_title { get; set; } = string.Empty;
+        public float daily_decay { get; set; } = 0.25f;
+    }
+
+    [Serializable]
+    public sealed class ReputationTagDef
+    {
+        public string id { get; set; } = string.Empty;
+        public string display_name { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
+        public int trade_discount_permille { get; set; }
+    }
+
+    [Serializable]
+    public sealed class ReputationCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<ReputationDimensionDef> dimensions { get; set; } = new List<ReputationDimensionDef>();
+        public List<ReputationTagDef> tags { get; set; } = new List<ReputationTagDef>();
+    }
+
+    [Serializable]
     public sealed class ShelterReputationState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -69,6 +97,13 @@ namespace Ashfall.Core.Reputation
     public sealed class ShelterReputationSystem
     {
         private readonly ShelterReputationState _state;
+        private readonly Dictionary<string, ReputationTagDef> _tagDefs = new(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>Plan 207 — authored perception-dimension definitions keyed by
+        /// canonical id (normalized) and enum name. Daily decay reads from here so
+        /// the JSON catalog stays authoritative instead of a hardcoded constant.</summary>
+        private readonly Dictionary<string, ReputationDimensionDef> _dimensionDefs = new(StringComparer.OrdinalIgnoreCase);
+        private const float DefaultDimensionDailyDecay = 0.25f;
 
         public event Action<ReputationEvidence>? OnEvidenceRecorded;
         public event Action<float>? OnNotorietyChanged;
@@ -239,8 +274,9 @@ namespace Ashfall.Core.Reputation
                 {
                     if (Math.Abs(score) > 0.01f)
                     {
-                        float decay = score > 0 ? -0.25f : 0.25f;
-                        if (Math.Abs(score) < 0.25f)
+                        float magnitude = GetAuthoredDailyDecay(dim);
+                        float decay = score > 0 ? -magnitude : magnitude;
+                        if (Math.Abs(score) < magnitude)
                         {
                             _state.DimensionScores[key] = 0f;
                         }
@@ -296,6 +332,92 @@ namespace Ashfall.Core.Reputation
                 _state.ActiveTags.Remove(tagStr);
                 OnTagRevoked?.Invoke(tag);
             }
+        }
+
+        public void LoadCatalog(ReputationCatalogData catalog)
+        {
+            if (catalog?.tags == null) return;
+            foreach (var t in catalog.tags)
+            {
+                if (!string.IsNullOrEmpty(t.id))
+                {
+                    _tagDefs[t.id] = t;
+                    _tagDefs[t.id.Replace("_", "")] = t;
+                }
+            }
+
+            if (catalog.dimensions != null)
+            {
+                foreach (var d in catalog.dimensions)
+                {
+                    if (string.IsNullOrWhiteSpace(d.id)) continue;
+                    _dimensionDefs[d.id] = d;
+                    _dimensionDefs[d.id.Replace("_", "")] = d;
+                }
+            }
+        }
+
+        /// <summary>Plan 207 — authored dimension definitions (display names, titles, decay).</summary>
+        public IReadOnlyCollection<ReputationDimensionDef> DimensionDefinitions => _dimensionDefs.Values;
+
+        public ReputationDimensionDef? GetDimensionDefinition(ReputationDimension dimension)
+        {
+            _dimensionDefs.TryGetValue(dimension.ToString(), out var def);
+            return def;
+        }
+
+        private float GetAuthoredDailyDecay(ReputationDimension dimension)
+        {
+            var def = GetDimensionDefinition(dimension);
+            return def != null && def.daily_decay > 0f ? def.daily_decay : DefaultDimensionDailyDecay;
+        }
+
+        public float GetTradePriceMultiplier()
+        {
+            int netDiscountPermille = 0;
+            foreach (var tagStr in _state.ActiveTags)
+            {
+                string normalizedKey = tagStr.ToLowerInvariant();
+                if (_tagDefs.TryGetValue(normalizedKey, out var def))
+                {
+                    netDiscountPermille += def.trade_discount_permille;
+                }
+                else
+                {
+                    if (Enum.TryParse<ReputationTag>(tagStr, out var tag))
+                    {
+                        netDiscountPermille += tag switch
+                        {
+                            ReputationTag.TradingPost => 100,
+                            ReputationTag.Honorable => 80,
+                            ReputationTag.Sanctuary => 50,
+                            ReputationTag.Dangerous => -150,
+                            ReputationTag.Treacherous => -250,
+                            ReputationTag.Desperate => -100,
+                            ReputationTag.RaiderBane => 20,
+                            _ => 0
+                        };
+                    }
+                }
+            }
+
+            float multiplier = 1.0f - (netDiscountPermille / 1000f);
+            return Math.Clamp(multiplier, 0.70f, 1.50f);
+        }
+
+        public string GetDominantPerceptionTitle()
+        {
+            if (HasTag(ReputationTag.Treacherous)) return "Treacherous Holdfast";
+            if (HasTag(ReputationTag.Sanctuary)) return "Sanctuary for the Stricken";
+            if (HasTag(ReputationTag.TradingPost)) return "Wasteland Trading Post";
+            if (HasTag(ReputationTag.Fortress)) return "Impenetrable Fortress";
+            if (HasTag(ReputationTag.Dangerous)) return "Dangerous Territory";
+            if (HasTag(ReputationTag.RaiderBane)) return "Raider Bane";
+            if (HasTag(ReputationTag.Honorable)) return "Honorable Bastion";
+            if (HasTag(ReputationTag.Desperate)) return "Desperate Outpost";
+
+            if (_state.Notoriety < 10f) return "Unknown Holdfast";
+            return "Known Wasteland Settlement";
         }
 
         public ShelterReputationState CaptureState()

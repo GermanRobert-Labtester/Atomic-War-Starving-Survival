@@ -185,7 +185,6 @@ namespace Ashfall.Core.Economy
         public event Action<UnderworldDebtRecord>? OnDebtOverdue;
         public event Action<UnderworldDebtRecord>? OnBountyPlaced;
         public event Action<BlackMarketState>? OnStateChanged;
-        public event Action<string>? OnEventRaised;
 
         public BlackMarketSystem(BlackMarketState? state = null)
         {

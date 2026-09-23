@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action<string>? OnFactionDetailRequested;
         public event Action? OnMusterPanelRequested;
         public event Action? OnFoundryPanelRequested;
+        public event Action? OnCultureCodexRequested;
         /// <summary>Player chose to pay the warlord tribute in full (amount = current ask).</summary>
         public event Action<int>? OnWarlordTributePay;
         /// <summary>Player refused the warlord tribute this week.</summary>
@@ -117,6 +118,12 @@ namespace AtomicWar.GodotApp.UI
                 });
                 ovBox.AddChild(btnMuster);
             }
+
+            var btnCulture = AshfallUiHelpers.MakeButton("OPEN FACTION CULTURE CODEX // EVERYDAY CUSTOMS", () =>
+            {
+                OnCultureCodexRequested?.Invoke();
+            });
+            ovBox.AddChild(btnCulture);
 
             _overviewContainer.AddChild(ovCard);
 

@@ -146,6 +146,7 @@ public partial class AshfallDataGrid : PanelContainer
         _emptyLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
         _emptyLabel.AddThemeColorOverride("font_color",
             AshfallUiHelpers.ToColor(DesignTheme.Muted));
+        _body.AddChild(_emptyLabel);
 
         if (columns != null)
         {
@@ -221,19 +222,20 @@ public partial class AshfallDataGrid : PanelContainer
         }
 
         // Body
-        while (_body.GetChildCount() > 0)
+        // Keep the reusable placeholder owned by the grid in both states.
+        // Detaching it when populated would leak its native node on grid.Free().
+        for (int i = _body.GetChildCount() - 1; i >= 0; i--)
         {
-            var child = _body.GetChild(0);
+            var child = _body.GetChild(i);
+            if (child == _emptyLabel)
+                continue;
             _body.RemoveChild(child);
-            if (child != _emptyLabel)
-                child.Free();
+            child.Free();
         }
 
+        _emptyLabel.Visible = _rows.Count == 0;
         if (_rows.Count == 0)
-        {
-            _body.AddChild(_emptyLabel);
             return;
-        }
 
         for (int i = 0; i < _rows.Count; i++)
             _body.AddChild(BuildRowContainer(_rows[i], i));

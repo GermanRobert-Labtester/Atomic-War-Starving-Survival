@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "research_unlocks": [
+    {
+      "id": "unlock_water_advanced_filter",
+      "research_node_id": "knowledge_water_advanced",
+      "unlock_type": "item",
+      "unlock_target_id": "item_water_filter_advanced",
+      "description": "Awards high-efficiency multi-stage ceramic water filter breakthrough item."
+    },
+    {
+      "id": "unlock_water_purify_recipe",
+      "research_node_id": "knowledge_water_advanced",
+      "unlock_type": "recipe",
+      "unlock_target_id": "purify_water",
+      "description": "Unlocks multi-stage filtration purification recipe in workshop."
+    },
+    {
+      "id": "unlock_rad_shielding_panel",
+      "research_node_id": "knowledge_radiation_shielding",
+      "unlock_type": "item",
+      "unlock_target_id": "item_radiation_shielding_panel",
+      "description": "Awards heavy lead-cloth and borated polymer shielding panel."
+    },
+    {
+      "id": "unlock_shelter_lead_lining",
+      "research_node_id": "knowledge_radiation_shielding",
+      "unlock_type": "shelter",
+      "unlock_target_id": "shelter_upgrade_lead_lining",
+      "description": "Enables shelter bulkhead lead-lining renovation to cut indoor radiation dose."
+    },
+    {
+      "id": "unlock_gas_mask_improved",
+      "research_node_id": "knowledge_gas_mask_improved",
+      "unlock_type": "item",
+      "unlock_target_id": "item_gas_mask_improved",
+      "description": "Awards improved double-canister charcoal respirator."
+    },
+    {
+      "id": "unlock_respirator_crafting",
+      "research_node_id": "knowledge_gas_mask_improved",
+      "unlock_type": "recipe",
+      "unlock_target_id": "craft_gas_mask_filter",
+      "description": "Unlocks charcoal scrubber replacement cartridge assembly."
+    },
+    {
+      "id": "unlock_solar_inverter",
+      "research_node_id": "knowledge_solar_advanced",
+      "unlock_type": "item",
+      "unlock_target_id": "item_solar_inverter",
+      "description": "Awards synchronous power inverter module for renewable energy conversion."
+    },
+    {
+      "id": "unlock_solar_roof_array",
+      "research_node_id": "knowledge_solar_advanced",
+      "unlock_type": "shelter",
+      "unlock_target_id": "shelter_upgrade_solar_roof",
+      "description": "Enables rooftop photovoltaic generation bank installation."
+    },
+    {
+      "id": "unlock_air_filter_hepa",
+      "research_node_id": "knowledge_air_filtration",
+      "unlock_type": "item",
+      "unlock_target_id": "item_air_filter_hepa",
+      "description": "Awards HEPA-grade particulate intake filter cassette."
+    },
+    {
+      "id": "unlock_ventilation_scrubber",
+      "research_node_id": "knowledge_air_filtration",
+      "unlock_type": "shelter",
+      "unlock_target_id": "shelter_upgrade_vent_scrubber",
+      "description": "Enables active electrostatic air scrubbing installation."
+    },
+    {
+      "id": "unlock_radio_cipher_rotor",
+      "research_node_id": "knowledge_radio_advanced",
+      "unlock_type": "item",
+      "unlock_target_id": "item_radio_cipher_rotor",
+      "description": "Awards cryptographic mechanical rotor for intercepting encrypted transmissions."
+    },
+    {
+      "id": "unlock_encrypted_intercepts",
+      "research_node_id": "knowledge_radio_advanced",
+      "unlock_type": "expedition",
+      "unlock_target_id": "expedition_encrypted_caches",
+      "description": "Unlocks long-range reconnaissance to encrypted military bunker coordinates."
+    },
+    {
+      "id": "unlock_hydroponic_greens",
+      "research_node_id": "knowledge_hydroponics",
+      "unlock_type": "shelter",
+      "unlock_target_id": "shelter_upgrade_hydro_bays",
+      "description": "Enables closed-loop vertical nutrient cultivation racks in shelter bays."
+    },
+    {
+      "id": "unlock_greenhouse_microclimate",
+      "research_node_id": "knowledge_greenhouse_microclimate",
+      "unlock_type": "recipe",
+      "unlock_target_id": "recipe_vegetable_potage",
+      "description": "Unlocks multi-crop greenhouse culinary recipes."
+    },
+    {
+      "id": "unlock_canning_preservation",
+      "research_node_id": "knowledge_cold_canning_preservation",
+      "unlock_type": "recipe",
+      "unlock_target_id": "recipe_canned_grain_stew",
+      "description": "Unlocks pressure-sealed potage canning for deep-freeze storage."
+    },
+    {
+      "id": "unlock_apiculture_honey",
+      "research_node_id": "knowledge_apiculture_ecology",
+      "unlock_type": "item",
+      "unlock_target_id": "item_honey_pot",
+      "description": "Awards starter hive honey comb yield for nutritional morale boost."
+    },
+    {
+      "id": "unlock_field_trauma_surgery",
+      "research_node_id": "knowledge_field_trauma_surgery",
+      "unlock_type": "medical",
+      "unlock_target_id": "medical_procedure_field_trauma",
+      "description": "Enables advanced surgical wound debridement in clinical ward."
+    },
+    {
+      "id": "unlock_pathogen_isolation",
+      "research_node_id": "knowledge_pathogen_containment",
+      "unlock_type": "medical",
+      "unlock_target_id": "medical_procedure_quarantine_isolation",
+      "description": "Enables negative-pressure vector containment protocols."
+    },
+    {
+      "id": "unlock_chelation_infusion",
+      "research_node_id": "knowledge_chelation_therapy",
+      "unlock_type": "medical",
+      "unlock_target_id": "medical_procedure_chelation_infusion",
+      "description": "Enables aggressive intravenous heavy-metal chelation purging."
+    },
+    {
+      "id": "unlock_precision_rifling",
+      "research_node_id": "knowledge_precision_ballistics",
+      "unlock_type": "combat",
+      "unlock_target_id": "combat_doctrine_precision_rifling",
+      "description": "Unlocks precision designated marksman doctrine for tactical defense."
+    },
+    {
+      "id": "unlock_automated_sentry",
+      "research_node_id": "knowledge_automated_sentry_doctrine",
+      "unlock_type": "combat",
+      "unlock_target_id": "combat_doctrine_automated_sentry",
+      "description": "Enables autonomous perimeter turret fire coordination."
+    },
+    {
+      "id": "unlock_guerrilla_ambush",
+      "research_node_id": "knowledge_guerrilla_ambush_tactics",
+      "unlock_type": "combat",
+      "unlock_target_id": "combat_doctrine_guerrilla_ambush",
+      "description": "Unlocks tactical retreat and ambush stance for surface teams."
+    },
+    {
+      "id": "unlock_defensive_tripwires",
+      "research_node_id": "knowledge_defensive_tripwire_arrays",
+      "unlock_type": "shelter",
+      "unlock_target_id": "shelter_upgrade_perimeter_tripwires",
+      "description": "Enables perimeter alarm tripwire early warning installation."
+    },
+    {
+      "id": "unlock_deep_well_hydraulics",
+      "research_node_id": "knowledge_deep_well_hydraulics",
+      "unlock_type": "shelter",
+      "unlock_target_id": "shelter_upgrade_deep_bore_well",
+      "description": "Enables deep aquifer hydraulic pump installation for limitless groundwater."
+    },
+    {
+      "id": "unlock_geothermal_power",
+      "research_node_id": "knowledge_geothermal_tap",
+      "unlock_type": "shelter",
+      "unlock_target_id": "shelter_upgrade_geothermal_generator",
+      "description": "Enables subterranean thermal power generation."
+    },
+    {
+      "id": "unlock_submersible_salvage",
+      "research_node_id": "knowledge_submersible_salvage_rig",
+      "unlock_type": "expedition",
+      "unlock_target_id": "expedition_flooded_metro_salvage",
+      "description": "Unlocks diving and underwater salvage expeditions to flooded transit tunnels."
+    },
+    {
+      "id": "unlock_seismic_fault_routes",
+      "research_node_id": "knowledge_seismic_fault_mapping",
+      "unlock_type": "expedition",
+      "unlock_target_id": "expedition_fault_line_passages",
+      "description": "Unlocks stable subterranean detour routes bypassing surface fallout storms."
+    },
+    {
+      "id": "unlock_ruin_structural_survey",
+      "research_node_id": "knowledge_ruin_structural_survey",
+      "unlock_type": "expedition",
+      "unlock_target_id": "expedition_high_rise_ruin_raids",
+      "description": "Unlocks structurally sound high-rise urban scavenging sectors."
+    },
+    {
+      "id": "unlock_cbrn_filter_blueprint",
+      "research_node_id": "knowledge_cbrn_filter_blueprint",
+      "unlock_type": "item",
+      "unlock_target_id": "item_co2_scrubber_cartridge",
+      "description": "Awards industrial CBRN closed-circuit scrubber core blueprint."
+    },
+    {
+      "id": "unlock_power_armor_servos",
+      "research_node_id": "knowledge_power_armor_servo_blueprint",
+      "unlock_type": "combat",
+      "unlock_target_id": "combat_doctrine_exoskeleton_breaching",
+      "description": "Unlocks powered exoskeleton breach support tactics."
+    }
+  ]
+}

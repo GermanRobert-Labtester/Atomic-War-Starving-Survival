@@ -28,6 +28,23 @@ namespace AtomicWar.GodotApp
             var atmoSys = new ShelterAtmosphereSystem(atmoState);
             var noiseSys = new ShelterNoiseSystem(noiseState);
 
+            // Plan 220 — bind the authored atmosphere profiles so ambiance modifiers
+            // come from the canonical catalog rather than hardcoded defaults.
+            string atmoCatalogPath = CatalogPath.ResolveCatalog("atmosphere_profiles.json");
+            var atmoCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (atmoCatalogIo.FileExists(atmoCatalogPath))
+            {
+                atmoSys.LoadCatalog(atmoCatalogIo.ReadAllText(atmoCatalogPath));
+            }
+
+            // Plan 205 — bind the authored noise source definitions so acoustic
+            // sourcing is catalog-driven (the baseline seeding below stays a fallback).
+            string noiseCatalogPath = CatalogPath.ResolveCatalog("noise_sources.json");
+            if (atmoCatalogIo.FileExists(noiseCatalogPath))
+            {
+                noiseSys.LoadCatalog(atmoCatalogIo.ReadAllText(noiseCatalogPath));
+            }
+
             // If new game / pristine state, register standard baseline shelter acoustic profile
             if (noiseState.Sources.Count == 0)
             {

@@ -318,6 +318,26 @@ namespace Ashfall.Core
         }
 
         private void RaiseChanged() => OnStateChanged?.Invoke(_state);
+
+        /// <summary>
+        /// Plan 55 / Task 55A — apply the retention catalog to the dose ledger's
+        /// per-survivor reading histories. Cumulative dose, band and ledger
+        /// classification are owned here and are never touched by retention: only
+        /// the historical reading rows are bounded, which is what lets a survivor
+        /// who has been in the field for years still produce a small save.
+        /// </summary>
+        public int ApplyRetention(Records.RetentionPolicyCatalog? catalog)
+        {
+            if (catalog == null) return 0;
+            int total = 0;
+            foreach (var entry in _state.entries)
+            {
+                if (entry?.readingsHistory == null) continue;
+                catalog.ApplyRetention("dose_ledger", entry.readingsHistory, out int pruned);
+                total += pruned;
+            }
+            return total;
+        }
     }
 
     /// <summary>Mirror of the band enum for BookReading return values.</summary>

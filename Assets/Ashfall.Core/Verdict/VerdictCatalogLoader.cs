@@ -165,9 +165,19 @@ namespace Ashfall.Core.Verdict
             return result;
         }
 
+        public class VerdictWorldHistoryLadderEntry
+        {
+            public int layer { get; set; }
+            public string knowledge_key { get; set; } = string.Empty;
+            public string title { get; set; } = string.Empty;
+            public string discovery_location_id { get; set; } = string.Empty;
+            public string body_summary { get; set; } = string.Empty;
+        }
+
         private class VerdictDataContainer
         {
             public List<string> corruption_corpus = new List<string>();
+            public List<VerdictWorldHistoryLadderEntry> world_history_ladder = new List<VerdictWorldHistoryLadderEntry>();
         }
 
         /// <summary>Load the corruption corpus from verdict_data.json (empty if missing).</summary>
@@ -189,6 +199,29 @@ namespace Ashfall.Core.Verdict
             catch (Exception ex_CATDIAG)
             {
                 CatalogDiagnostics.Warn(path, "VerdictDataContainer", ex_CATDIAG);
+            }
+            return result;
+        }
+
+        /// <summary>Load the world history ladder from verdict_data.json (empty if missing).</summary>
+        public static List<VerdictWorldHistoryLadderEntry> LoadWorldHistoryLadder(
+            string dataDir, IFileIO fileIO, IJsonSerializer json)
+        {
+            var result = new List<VerdictWorldHistoryLadderEntry>();
+            if (fileIO == null || json == null || string.IsNullOrEmpty(dataDir)) return result;
+            string path = fileIO.Combine(dataDir, DataFile);
+            if (!fileIO.FileExists(path)) return result;
+            string raw = fileIO.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(raw)) return result;
+            try
+            {
+                var parsed = json.Deserialize<VerdictDataContainer>(raw);
+                if (parsed?.world_history_ladder != null)
+                    result.AddRange(parsed.world_history_ladder);
+            }
+            catch (Exception ex_CATDIAG)
+            {
+                CatalogDiagnostics.Warn(path, "VerdictDataContainer.world_history_ladder", ex_CATDIAG);
             }
             return result;
         }

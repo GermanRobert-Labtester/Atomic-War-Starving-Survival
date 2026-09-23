@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Ashfall.Core.Expeditions
 {
@@ -22,6 +23,43 @@ namespace Ashfall.Core.Expeditions
     }
 
     [Serializable]
+    public sealed class ColonyBuilding
+    {
+        public string BuildingId { get; set; } = string.Empty;
+        public string DefinitionId { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Category { get; set; } = "infrastructure";
+        public float Condition { get; set; } = 100f;
+        public int Capacity { get; set; } = 2;
+        public float DefenseBonus { get; set; } = 0f;
+        public float MoraleBonus { get; set; } = 0f;
+        public int ConstructionDay { get; set; } = 1;
+    }
+
+    [Serializable]
+    public sealed class ColonyTypeBlueprintDef
+    {
+        public string TypeId { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public float BaseDefense { get; set; } = 50f;
+        public int BaseCapacity { get; set; } = 4;
+        public float RequiredSupplies { get; set; } = 20f;
+    }
+
+    [Serializable]
+    public sealed class ColonyBuildingDef
+    {
+        public string BuildingId { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Category { get; set; } = "infrastructure";
+        public int Capacity { get; set; } = 2;
+        public float DefenseBonus { get; set; } = 0f;
+        public float MoraleBonus { get; set; } = 0f;
+        public float MaterialCost { get; set; } = 25f;
+    }
+
+    [Serializable]
     public sealed class ColonyOutpost
     {
         public string ColonyId { get; set; } = string.Empty;
@@ -34,6 +72,10 @@ namespace Ashfall.Core.Expeditions
         public List<string> PopulationIds { get; set; } = new List<string>();
         public float StoredSupplies { get; set; } = 50f;
         public bool IsActive { get; set; } = true;
+        public List<ColonyBuilding> Buildings { get; set; } = new List<ColonyBuilding>();
+
+        public float TotalDefense => DefenseRating + Buildings.Sum(b => b.DefenseBonus * (b.Condition / 100f));
+        public int TotalCapacity => 4 + Buildings.Sum(b => b.Capacity);
     }
 
     [Serializable]
@@ -55,12 +97,14 @@ namespace Ashfall.Core.Expeditions
         public int NextSequence { get; set; } = 1;
         public List<ColonyOutpost> Colonies { get; set; } = new List<ColonyOutpost>();
         public List<SupplyLine> SupplyLines { get; set; } = new List<SupplyLine>();
+        public List<ColonyBuildingDef> AuthoredBuildings { get; set; } = new List<ColonyBuildingDef>();
+        public List<ColonyTypeBlueprintDef> AuthoredTypes { get; set; } = new List<ColonyTypeBlueprintDef>();
     }
 
     /// <summary>
     /// Plan 160 — Expedition Colony & Outpost System.
     /// Manages forward operating bases and permanent settlements at expedition destinations,
-    /// garrison assignments, resource supply lines, defense ratings, and local colony morale.
+    /// garrison assignments, resource supply lines, defense ratings, building construction, and local colony morale.
     /// </summary>
     public sealed class ColonySystem
     {
@@ -69,13 +113,79 @@ namespace Ashfall.Core.Expeditions
         public event Action<ColonyOutpost>? OnColonyEstablished;
         public event Action<SupplyLine, SupplyLineStatus>? OnSupplyLineStatusChanged;
         public event Action<ColonyOutpost, float>? OnColonySuppliesUpdated;
+        public event Action<ColonyOutpost, ColonyBuilding>? OnBuildingConstructed;
+
+        public Action<ColonyOutpost>? OnColonyEstablishedSeam { get; set; }
+        public Action<SupplyLine, SupplyLineStatus>? OnSupplyLineStatusChangedSeam { get; set; }
+        public Action<ColonyOutpost, float>? OnColonySuppliesUpdatedSeam { get; set; }
+        public Action<ColonyOutpost, ColonyBuilding>? OnBuildingConstructedSeam { get; set; }
 
         public int TotalColonyCount => _state.Colonies.Count;
         public int ActiveSupplyLineCount => _state.SupplyLines.Count(s => s.Status == SupplyLineStatus.Active);
+        public IReadOnlyList<ColonyBuildingDef> AuthoredBuildings => _state.AuthoredBuildings;
+        public IReadOnlyList<ColonyTypeBlueprintDef> AuthoredTypes => _state.AuthoredTypes;
 
         public ColonySystem(ColonyState? state = null)
         {
             _state = state ?? new ColonyState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                if (root.TryGetProperty("colony_types", out var typesEl) && typesEl.ValueKind == JsonValueKind.Array)
+                {
+                    _state.AuthoredTypes.Clear();
+                    foreach (var item in typesEl.EnumerateArray())
+                    {
+                        var def = new ColonyTypeBlueprintDef
+                        {
+                            TypeId = item.TryGetProperty("type_id", out var idProp) ? idProp.GetString() ?? "" : "",
+                            DisplayName = item.TryGetProperty("display_name", out var nameProp) ? nameProp.GetString() ?? "" : "",
+                            Description = item.TryGetProperty("description", out var descProp) ? descProp.GetString() ?? "" : "",
+                            BaseDefense = item.TryGetProperty("base_defense", out var defProp) ? (float)defProp.GetDouble() : 50f,
+                            BaseCapacity = item.TryGetProperty("base_capacity", out var capProp) ? capProp.GetInt32() : 4,
+                            RequiredSupplies = item.TryGetProperty("required_supplies", out var reqProp) ? (float)reqProp.GetDouble() : 20f
+                        };
+                        if (!string.IsNullOrEmpty(def.TypeId))
+                        {
+                            _state.AuthoredTypes.Add(def);
+                        }
+                    }
+                }
+
+                if (root.TryGetProperty("buildings", out var bldEl) && bldEl.ValueKind == JsonValueKind.Array)
+                {
+                    _state.AuthoredBuildings.Clear();
+                    foreach (var item in bldEl.EnumerateArray())
+                    {
+                        var def = new ColonyBuildingDef
+                        {
+                            BuildingId = item.TryGetProperty("building_id", out var idProp) ? idProp.GetString() ?? "" : "",
+                            Name = item.TryGetProperty("name", out var nameProp) ? nameProp.GetString() ?? "" : "",
+                            Category = item.TryGetProperty("category", out var catProp) ? catProp.GetString() ?? "infrastructure" : "infrastructure",
+                            Capacity = item.TryGetProperty("capacity", out var capProp) ? capProp.GetInt32() : 2,
+                            DefenseBonus = item.TryGetProperty("defense_bonus", out var defProp) ? (float)defProp.GetDouble() : 0f,
+                            MoraleBonus = item.TryGetProperty("morale_bonus", out var morProp) ? (float)morProp.GetDouble() : 0f,
+                            MaterialCost = item.TryGetProperty("material_cost", out var costProp) ? (float)costProp.GetDouble() : 25f
+                        };
+                        if (!string.IsNullOrEmpty(def.BuildingId))
+                        {
+                            _state.AuthoredBuildings.Add(def);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Catalog parsing fallback
+            }
         }
 
         public ColonyOutpost EstablishColony(
@@ -88,14 +198,24 @@ namespace Ashfall.Core.Expeditions
         {
             if (string.IsNullOrWhiteSpace(locationId)) throw new ArgumentNullException(nameof(locationId));
 
-            float baseDefense = type switch
+            string typeKey = type switch
+            {
+                ColonyType.Fortress => "fortress",
+                ColonyType.Settlement => "settlement",
+                ColonyType.TradingPost => "trading_post",
+                ColonyType.FarmingCommune => "farming_commune",
+                _ => "outpost"
+            };
+
+            var bp = _state.AuthoredTypes.FirstOrDefault(t => string.Equals(t.TypeId, typeKey, StringComparison.OrdinalIgnoreCase));
+            float baseDefense = bp != null ? bp.BaseDefense : (type switch
             {
                 ColonyType.Fortress => 80f,
                 ColonyType.Outpost => 50f,
                 ColonyType.TradingPost => 40f,
                 ColonyType.FarmingCommune => 30f,
                 _ => 45f
-            };
+            });
 
             var colony = new ColonyOutpost
             {
@@ -113,7 +233,37 @@ namespace Ashfall.Core.Expeditions
 
             _state.Colonies.Add(colony);
             OnColonyEstablished?.Invoke(colony);
+            OnColonyEstablishedSeam?.Invoke(colony);
             return colony;
+        }
+
+        public ColonyBuilding? ConstructBuilding(string colonyId, string definitionId, int currentDay = 1)
+        {
+            var colony = GetColony(colonyId);
+            if (colony == null || string.IsNullOrWhiteSpace(definitionId)) return null;
+
+            var def = _state.AuthoredBuildings.FirstOrDefault(b => string.Equals(b.BuildingId, definitionId, StringComparison.OrdinalIgnoreCase))
+                ?? new ColonyBuildingDef { BuildingId = definitionId, Name = definitionId, Category = "infrastructure", Capacity = 2, DefenseBonus = 10f };
+
+            var building = new ColonyBuilding
+            {
+                BuildingId = $"bld_{_state.NextSequence++}",
+                DefinitionId = def.BuildingId,
+                Name = def.Name,
+                Category = def.Category,
+                Condition = 100f,
+                Capacity = def.Capacity,
+                DefenseBonus = def.DefenseBonus,
+                MoraleBonus = def.MoraleBonus,
+                ConstructionDay = currentDay
+            };
+
+            colony.Buildings.Add(building);
+            colony.MoraleRating = Math.Clamp(colony.MoraleRating + def.MoraleBonus, 0f, 100f);
+
+            OnBuildingConstructed?.Invoke(colony, building);
+            OnBuildingConstructedSeam?.Invoke(colony, building);
+            return building;
         }
 
         public SupplyLine EstablishSupplyLine(
@@ -145,6 +295,7 @@ namespace Ashfall.Core.Expeditions
 
             line.Status = status;
             OnSupplyLineStatusChanged?.Invoke(line, status);
+            OnSupplyLineStatusChangedSeam?.Invoke(line, status);
             return true;
         }
 
@@ -167,6 +318,7 @@ namespace Ashfall.Core.Expeditions
 
             colony.StoredSupplies = Math.Max(0f, colony.StoredSupplies + amount);
             OnColonySuppliesUpdated?.Invoke(colony, colony.StoredSupplies);
+            OnColonySuppliesUpdatedSeam?.Invoke(colony, colony.StoredSupplies);
             return colony.StoredSupplies;
         }
 
@@ -183,6 +335,7 @@ namespace Ashfall.Core.Expeditions
                         destColony.StoredSupplies += line.DailyFlow;
                         line.LastSupplyDay = currentDay;
                         OnColonySuppliesUpdated?.Invoke(destColony, destColony.StoredSupplies);
+                        OnColonySuppliesUpdatedSeam?.Invoke(destColony, destColony.StoredSupplies);
                     }
                 }
             }
@@ -221,12 +374,14 @@ namespace Ashfall.Core.Expeditions
                 SchemaVersion = _state.SchemaVersion,
                 NextSequence = _state.NextSequence,
                 Colonies = new List<ColonyOutpost>(_state.Colonies.Count),
-                SupplyLines = new List<SupplyLine>(_state.SupplyLines.Count)
+                SupplyLines = new List<SupplyLine>(_state.SupplyLines.Count),
+                AuthoredBuildings = new List<ColonyBuildingDef>(_state.AuthoredBuildings),
+                AuthoredTypes = new List<ColonyTypeBlueprintDef>(_state.AuthoredTypes)
             };
 
             foreach (var c in _state.Colonies)
             {
-                state.Colonies.Add(new ColonyOutpost
+                var copyCol = new ColonyOutpost
                 {
                     ColonyId = c.ColonyId,
                     LocationId = c.LocationId,
@@ -237,8 +392,27 @@ namespace Ashfall.Core.Expeditions
                     MoraleRating = c.MoraleRating,
                     PopulationIds = new List<string>(c.PopulationIds),
                     StoredSupplies = c.StoredSupplies,
-                    IsActive = c.IsActive
-                });
+                    IsActive = c.IsActive,
+                    Buildings = new List<ColonyBuilding>(c.Buildings.Count)
+                };
+
+                foreach (var b in c.Buildings)
+                {
+                    copyCol.Buildings.Add(new ColonyBuilding
+                    {
+                        BuildingId = b.BuildingId,
+                        DefinitionId = b.DefinitionId,
+                        Name = b.Name,
+                        Category = b.Category,
+                        Condition = b.Condition,
+                        Capacity = b.Capacity,
+                        DefenseBonus = b.DefenseBonus,
+                        MoraleBonus = b.MoraleBonus,
+                        ConstructionDay = b.ConstructionDay
+                    });
+                }
+
+                state.Colonies.Add(copyCol);
             }
 
             foreach (var s in _state.SupplyLines)
@@ -266,12 +440,24 @@ namespace Ashfall.Core.Expeditions
             _state.NextSequence = state.NextSequence;
             _state.Colonies.Clear();
             _state.SupplyLines.Clear();
+            _state.AuthoredBuildings.Clear();
+            _state.AuthoredTypes.Clear();
+
+            if (state.AuthoredBuildings != null)
+            {
+                _state.AuthoredBuildings.AddRange(state.AuthoredBuildings);
+            }
+
+            if (state.AuthoredTypes != null)
+            {
+                _state.AuthoredTypes.AddRange(state.AuthoredTypes);
+            }
 
             if (state.Colonies != null)
             {
                 foreach (var c in state.Colonies)
                 {
-                    _state.Colonies.Add(new ColonyOutpost
+                    var restCol = new ColonyOutpost
                     {
                         ColonyId = c.ColonyId,
                         LocationId = c.LocationId,
@@ -282,8 +468,30 @@ namespace Ashfall.Core.Expeditions
                         MoraleRating = c.MoraleRating,
                         PopulationIds = new List<string>(c.PopulationIds ?? Enumerable.Empty<string>()),
                         StoredSupplies = c.StoredSupplies,
-                        IsActive = c.IsActive
-                    });
+                        IsActive = c.IsActive,
+                        Buildings = new List<ColonyBuilding>()
+                    };
+
+                    if (c.Buildings != null)
+                    {
+                        foreach (var b in c.Buildings)
+                        {
+                            restCol.Buildings.Add(new ColonyBuilding
+                            {
+                                BuildingId = b.BuildingId,
+                                DefinitionId = b.DefinitionId,
+                                Name = b.Name,
+                                Category = b.Category,
+                                Condition = b.Condition,
+                                Capacity = b.Capacity,
+                                DefenseBonus = b.DefenseBonus,
+                                MoraleBonus = b.MoraleBonus,
+                                ConstructionDay = b.ConstructionDay
+                            });
+                        }
+                    }
+
+                    _state.Colonies.Add(restCol);
                 }
             }
 

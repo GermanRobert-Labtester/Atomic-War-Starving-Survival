@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "days_per_year": 30,
+  "min_retirement_age_years": 65,
+  "life_stages": [
+    {
+      "stage_id": "stage_child",
+      "stage_enum": "Child",
+      "display_name": "Child",
+      "min_age": 0,
+      "max_age": 17,
+      "physical_labor_multiplier": 0.5,
+      "fatigue_accumulation_multiplier": 1.1,
+      "mentorship_xp_bonus": 0.0,
+      "can_retire": false,
+      "description": "Child dependent growing up under shelter protection."
+    },
+    {
+      "stage_id": "stage_young_adult",
+      "stage_enum": "YoungAdult",
+      "display_name": "Young Adult",
+      "min_age": 18,
+      "max_age": 30,
+      "physical_labor_multiplier": 1.05,
+      "fatigue_accumulation_multiplier": 0.95,
+      "mentorship_xp_bonus": 0.0,
+      "can_retire": false,
+      "description": "Peak physical vigor and rapid reaction, eager to learn vocational crafts."
+    },
+    {
+      "stage_id": "stage_prime",
+      "stage_enum": "Prime",
+      "display_name": "Prime",
+      "min_age": 31,
+      "max_age": 50,
+      "physical_labor_multiplier": 1.0,
+      "fatigue_accumulation_multiplier": 1.0,
+      "mentorship_xp_bonus": 0.1,
+      "can_retire": false,
+      "description": "Mature vocational competence, balanced stamina and dependable labor throughput."
+    },
+    {
+      "stage_id": "stage_middle_age",
+      "stage_enum": "MiddleAge",
+      "display_name": "Middle Age",
+      "min_age": 51,
+      "max_age": 65,
+      "physical_labor_multiplier": 0.95,
+      "fatigue_accumulation_multiplier": 1.05,
+      "mentorship_xp_bonus": 0.2,
+      "can_retire": false,
+      "description": "Deep craft experience and practical wisdom, with gradual physical endurance taper."
+    },
+    {
+      "stage_id": "stage_elderly",
+      "stage_enum": "Elderly",
+      "display_name": "Elderly",
+      "min_age": 66,
+      "max_age": 120,
+      "physical_labor_multiplier": 0.85,
+      "fatigue_accumulation_multiplier": 1.15,
+      "mentorship_xp_bonus": 0.25,
+      "can_retire": true,
+      "description": "Venerable survivor with invaluable trade wisdom and mentoring capacity; eligible for dignified retirement."
+    }
+  ],
+  "milestones": [
+    { "age": 30, "label": "Thirtieth Year", "morale_bonus": 5 },
+    { "age": 40, "label": "Fortieth Year", "morale_bonus": 5 },
+    { "age": 50, "label": "Half-Century Milestone", "morale_bonus": 10 },
+    { "age": 60, "label": "Sixtieth Year", "morale_bonus": 10 },
+    { "age": 65, "label": "Retirement Age Reached", "morale_bonus": 15 },
+    { "age": 70, "label": "Venerable Elder Milestone", "morale_bonus": 20 }
+  ]
+}

@@ -8,10 +8,34 @@
       "disposition": "No measurable burden. Walk the corridor."
     },
     {
+      "id": "band_white",
+      "label": "White",
+      "threshold_msv": 25,
+      "disposition": "Trace exposure only. The ledger notes it without alarm."
+    },
+    {
+      "id": "band_yellow",
+      "label": "Yellow",
+      "threshold_msv": 50,
+      "disposition": "Minor accumulation. Duty continues; the dial is watched."
+    },
+    {
       "id": "band_amber",
       "label": "Amber",
       "threshold_msv": 100,
       "disposition": "The ledger shows a number worth watching."
+    },
+    {
+      "id": "band_orange",
+      "label": "Orange",
+      "threshold_msv": 150,
+      "disposition": "Moderate exposure. Restricted duty begins here; heavy work is reassigned."
+    },
+    {
+      "id": "band_rose",
+      "label": "Rose",
+      "threshold_msv": 200,
+      "disposition": "Significant accumulation. Light duty only. The register is marked in ink, not pencil."
     },
     {
       "id": "band_red",
@@ -20,10 +44,34 @@
       "disposition": "Named on the sick list. Care is a choice, not a cure."
     },
     {
+      "id": "band_crimson",
+      "label": "Crimson",
+      "threshold_msv": 400,
+      "disposition": "Severe exposure. Sick-room priority. The nurse is notified before the registrar."
+    },
+    {
+      "id": "band_violet",
+      "label": "Violet",
+      "threshold_msv": 500,
+      "disposition": "Critical accumulation. Comfort care is the first option on the ledger."
+    },
+    {
       "id": "band_black",
       "label": "Black",
       "threshold_msv": 600,
       "disposition": "The band the registrar will not soften. Still on the roster."
+    },
+    {
+      "id": "band_indigo",
+      "label": "Indigo",
+      "threshold_msv": 800,
+      "disposition": "Terminal exposure. Palliative only. The clockmaker does not correct the reading."
+    },
+    {
+      "id": "band_void",
+      "label": "Void",
+      "threshold_msv": 1000,
+      "disposition": "Lethal accumulation. The registrar stops reading aloud. The column is filled in silence."
     }
   ],
   "plans": [
@@ -44,8 +92,39 @@
       "label": "Nothing",
       "cost": "none",
       "note": "A refusal is a choice the ledger records as silence."
+    },
+    {
+      "id": "plan_chelation",
+      "label": "Chelation therapy",
+      "cost": "chelation_agent",
+      "note": "A chemical course that binds heavy isotopes and moves them out. Expensive, limited, and worth counting."
+    },
+    {
+      "id": "plan_iodine_prophylaxis",
+      "label": "Iodine prophylaxis",
+      "cost": "potassium_iodide",
+      "note": "Thyroid saturation before the dose climbs further. The window is narrow; timing is the skill."
+    },
+    {
+      "id": "plan_isolation",
+      "label": "Isolation",
+      "cost": "time",
+      "note": "The patient is removed from shared air and touch. Secondary exposure stops here."
+    },
+    {
+      "id": "plan_rest",
+      "label": "Supervised rest",
+      "cost": "time",
+      "note": "Bed rest with hourly observation. Nothing curative; everything supportive."
+    },
+    {
+      "id": "plan_transfer",
+      "label": "Transfer",
+      "cost": "fuel",
+      "note": "If a better facility exists and fuel permits, the patient goes. The ledger follows."
     }
   ],
+
   "guesses": [
     {
       "id": "guess_low",

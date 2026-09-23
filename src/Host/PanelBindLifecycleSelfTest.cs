@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using Godot;
 using Ashfall.Core;
@@ -30,7 +32,7 @@ namespace AtomicWar.GodotApp
         {
             GD.Print("── GODOT-NODE CALLBACK PANEL BIND/UNBIND/REBIND SELF-TEST ──");
             int passedGates = 0;
-            int totalGates = 17;
+            int totalGates = 21;
 
             try
             {
@@ -741,6 +743,20 @@ namespace AtomicWar.GodotApp
                     return 1;
                 }
 
+                // D19b Station identity seam verification
+                radHost1.SetActiveStation("station_ridge_outrigger");
+                if (radHost1.ActiveStationId != "station_ridge_outrigger")
+                {
+                    GD.PrintErr($"[FAIL] Gate 15: Expected ActiveStationId station_ridge_outrigger, got {radHost1.ActiveStationId}.");
+                    return 1;
+                }
+                string obsResult = radHost1.RecordObservation("sig_test", 45f, 0.8f, 0.1f);
+                if (!obsResult.Contains("Observation recorded") || radHost1.Triangulation.Observations[radHost1.Triangulation.Observations.Count - 1].stationId != "station_ridge_outrigger")
+                {
+                    GD.PrintErr($"[FAIL] Gate 15: Expected observation recorded from station_ridge_outrigger.");
+                    return 1;
+                }
+
                 triPanel.QueueFree();
                 GD.Print("[PASS] Gate 15: Repeated Bind subscription symmetry verified across WeatherHistory, GeigerCalibration, FireIncident, and Triangulation.");
                 passedGates++;
@@ -1187,6 +1203,160 @@ namespace AtomicWar.GodotApp
 
                 GD.Print("[PASS] Gate 17: ×100 bind/fire/unbind reopen stability verified — exactly one refresh per event, zero refreshes while unbound, across WeatherHistory, GeigerCalibration, FireIncident, Triangulation, and WeatherPanel.");
                 passedGates++;
+
+                // GATE 18: Rebuilding a populated grid must not detach and leak
+                // its persistent empty-state label, even before entering a tree.
+                GD.Print("\n[Gate 18] Testing data-grid empty-state ownership...");
+                var grid = new AshfallDataGrid(Array.Empty<AshfallDataGrid.Column>(), showHeader: false);
+                Label? placeholder = null;
+                foreach (var node in grid.FindChildren("*", "Label", recursive: true, owned: false))
+                {
+                    if (node is Label label && label.Text == "— no entries —")
+                        placeholder = label;
+                }
+                if (placeholder == null || !placeholder.Visible)
+                {
+                    grid.Free();
+                    GD.PrintErr("[FAIL] Gate 18: Empty grid has no visible placeholder.");
+                    return 1;
+                }
+                grid.SetRows(new[] { new AshfallDataGrid.Row() });
+                bool populatedHidden = !placeholder.Visible && grid.IsAncestorOf(placeholder);
+                grid.Clear();
+                bool emptyRestored = placeholder.Visible && grid.IsAncestorOf(placeholder);
+                grid.SetRows(new[] { new AshfallDataGrid.Row() });
+                grid.Free();
+                bool leakedPlaceholder = GodotObject.IsInstanceValid(placeholder);
+                if (leakedPlaceholder)
+                    placeholder.Free(); // Clean the failed probe, not production orphans.
+                if (!populatedHidden || !emptyRestored || leakedPlaceholder)
+                {
+                    GD.PrintErr($"[FAIL] Gate 18: populatedHidden={populatedHidden}, emptyRestored={emptyRestored}, leakedPlaceholder={leakedPlaceholder}.");
+                    return 1;
+                }
+                GD.Print("[PASS] Gate 18: Data-grid empty state survives rebuild and is freed with its owner.");
+                passedGates++;
+
+                GD.Print("\n[Gate 19] Testing panel heading/container ownership...");
+                var panelFactories = new (string Name, Func<Control> Create)[]
+                {
+                    (nameof(MaritimeAtlasPanel), () => new MaritimeAtlasPanel()),
+                    (nameof(MusterAtlasPanel), () => new MusterAtlasPanel()),
+                    (nameof(QuestsAtlasPanel), () => new QuestsAtlasPanel()),
+                    (nameof(StandingRecordAtlasPanel), () => new StandingRecordAtlasPanel()),
+                    (nameof(CombatHudOverlay), () => new CombatHudOverlay()),
+                    (nameof(MedicalPanel), () => new MedicalPanel()),
+                    (nameof(EconomyDetailPanel), () => PanelSceneLoader.Load<EconomyDetailPanel>("res://assets/ui/panels/EconomyDetailPanel.tscn")),
+                };
+                bool panelOwnershipPassed = true;
+                foreach (var (name, create) in panelFactories)
+                {
+                    var baselineIds = new HashSet<ulong>();
+                    // Preserve native 64-bit IDs; the SDK's typed int accessor truncates them.
+                    foreach (var id in (Godot.Collections.Array)Node.GetOrphanNodeIds())
+                        baselineIds.Add(id.AsUInt64());
+                    var panel = create();
+                    panel._Ready();
+                    panel.Free();
+                    int newOrphans = 0;
+                    foreach (var id in (Godot.Collections.Array)Node.GetOrphanNodeIds())
+                    {
+                        if (!baselineIds.Contains(id.AsUInt64()))
+                            newOrphans++;
+                    }
+                    if (newOrphans > 0)
+                    {
+                        GD.PrintErr($"[FAIL] Gate 19: {name} leaked {newOrphans} node(s) after Ready/Free.");
+                        panelOwnershipPassed = false;
+                    }
+                }
+                if (!panelOwnershipPassed)
+                    return 1;
+                if (OS.IsDebugBuild())
+                {
+                    GD.Print("[PASS] Gate 19: All seven panels release their headings and containers.");
+                    passedGates++;
+                }
+                else
+                {
+                    GD.Print("[SKIP] Gate 19: Native orphan enumeration requires a debug engine build.");
+                    totalGates--;
+                }
+
+                GD.Print("\n[Gate 20] Testing pneumatic maintenance input routing...");
+                var pneumaticPanel = new PneumaticDispatchPanel();
+                pneumaticPanel._Ready();
+                var maintenanceInputs = pneumaticPanel.FindChildren("*", "LineEdit", true, false).OfType<LineEdit>().ToArray();
+                var capsuleInput = maintenanceInputs.FirstOrDefault(edit => edit.PlaceholderText == "capsule id for jam clear");
+                var linkInput = maintenanceInputs.FirstOrDefault(edit => edit.PlaceholderText == "link id for maintenance");
+                var maintenanceActions = new List<(string Action, string Id)>();
+                pneumaticPanel.OnActionRequested += (action, id) => maintenanceActions.Add((action, id));
+                bool pneumaticInputsPassed = capsuleInput != null && linkInput != null;
+                if (pneumaticInputsPassed)
+                {
+                    capsuleInput!.Text = "capsule_probe";
+                    linkInput!.Text = "link_probe";
+                    foreach (var button in pneumaticPanel.FindChildren("*", "Button", true, false).OfType<Button>())
+                    {
+                        if (button.Text is "CLEAR JAM" or "MAINTAIN LINK")
+                            button.EmitSignal(BaseButton.SignalName.Pressed);
+                    }
+                    pneumaticInputsPassed = maintenanceActions.Contains(("clear_jam", "capsule_probe"))
+                        && maintenanceActions.Contains(("maintain", "link_probe"));
+                }
+                pneumaticPanel.Free();
+                if (pneumaticInputsPassed)
+                {
+                    GD.Print("[PASS] Gate 20: Parented maintenance inputs route player-selected capsule/link IDs.");
+                    passedGates++;
+                }
+                else
+                    GD.PrintErr("[FAIL] Gate 20: Pneumatic maintenance inputs missing or commands received wrong IDs.");
+
+                GD.Print("\n[Gate 21] Testing inventory sidebar filtering...");
+                var filterInventory = new Inventory();
+                var catalogItems = itemCat.Ids.OrderBy(id => id, StringComparer.Ordinal).Select(id => itemCat.Get(id)!).ToArray();
+                var food = catalogItems.First(item => item.type == ItemType.Food);
+                var material = catalogItems.First(item => item.type == ItemType.Material);
+                if (!filterInventory.Add(food, 1) || !filterInventory.Add(material, 1))
+                    throw new InvalidOperationException("Gate 21: Failed to seed authored inventory items.");
+                var filterHost = new InventoryHostSession(filterInventory, itemCat);
+                var inventoryPanel = new InventoryPanel();
+                inventoryPanel._Ready();
+                inventoryPanel.Bind(filterHost);
+                var inventoryShell = inventoryPanel.GetChildren().OfType<MarginContainer>()
+                    .SelectMany(margin => margin.GetChildren()).OfType<AshfallDashboardShell>().Single();
+                string[] SelectedItems()
+                {
+                    var selected = new List<string>();
+                    void OnSelected(string id) => selected.Add(id);
+                    inventoryPanel.OnItemSelected += OnSelected;
+                    foreach (var button in inventoryPanel.FindChildren("*", "Button", true, false).OfType<Button>())
+                    {
+                        if (button.Text == "SELECT")
+                            button.EmitSignal(BaseButton.SignalName.Pressed);
+                    }
+                    inventoryPanel.OnItemSelected -= OnSelected;
+                    return selected.ToArray();
+                }
+                bool allShown = SelectedItems().Length == 2;
+                inventoryShell.Sidebar!.Select("filter_material");
+                bool materialOnly = SelectedItems().SequenceEqual(new[] { material.id });
+                inventoryShell.Sidebar.Select("filter_consumable");
+                bool foodOnly = SelectedItems().SequenceEqual(new[] { food.id });
+                inventoryShell.Sidebar.Select("filter_all");
+                bool allRestored = SelectedItems().Length == 2;
+                inventoryPanel.Unbind();
+                inventoryPanel.Free();
+                if (!allShown || !materialOnly || !foodOnly || !allRestored)
+                {
+                    GD.PrintErr($"[FAIL] Gate 21: all={allShown}, material={materialOnly}, food={foodOnly}, restored={allRestored}.");
+                    return 1;
+                }
+                GD.Print("[PASS] Gate 21: Inventory sidebar routes material/consumable/all filters to actual item rows.");
+                passedGates++;
+                if (!pneumaticInputsPassed)
+                    return 1;
 
                 GD.Print($"\n=== PANEL BIND LIFECYCLE SELF-TEST PASS ({passedGates}/{totalGates} gates verified) ===");
                 return 0;

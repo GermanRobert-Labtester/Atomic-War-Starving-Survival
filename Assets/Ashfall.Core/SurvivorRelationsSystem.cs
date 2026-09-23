@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Relations;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -37,6 +38,10 @@ namespace Ashfall.Core
         /// time passing alone never moves it.
         /// </summary>
         public int lastInteractionDay = -1;
+        /// <summary>
+        /// Plan 44 / C2[19] — Bounded traceable history entries for this pair.
+        /// </summary>
+        public List<PairRelationHistoryEntry> history = new List<PairRelationHistoryEntry>();
     }
 
     [Serializable]
@@ -68,16 +73,119 @@ namespace Ashfall.Core
         private readonly ISeededRng _rng;
         private readonly ILog _log;
         private int _currentDay;
+        private readonly List<RelationshipBandDefinition> _bands = new List<RelationshipBandDefinition>();
 
         public SurvivorRelationsState State => _state;
+        public IReadOnlyList<RelationshipBandDefinition> Bands => _bands;
+
         public event Action<ConflictEntry> OnConflictStarted;
         public event Action<MediationEntry> OnConflictResolved;
         public event Action OnRelationsChanged;
+
+        /// <summary>
+        /// Plan 44 / C2[19] — Delegate seam invoked whenever a pair relation effect is evaluated.
+        /// </summary>
+        public Action<string, string, RelationEffect>? RelationEffectAppliedSeam { get; set; }
+
+        /// <summary>
+        /// Plan 44 / C2[19] — Delegate seam invoked whenever a pair relation history entry is recorded.
+        /// </summary>
+        public Action<PairRelationHistoryEntry>? HistoryEntryRecordedSeam { get; set; }
+
+        public const int MaxHistoryPerPair = 10;
 
         public SurvivorRelationsSystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
+            InitializeDefaultBands();
+        }
+
+        private void InitializeDefaultBands()
+        {
+            _bands.Clear();
+            _bands.Add(new RelationshipBandDefinition
+            {
+                BandId = "hostile",
+                DisplayName = "Hostile",
+                MinAffinity = -100f,
+                MaxAffinity = -40f,
+                WorkingModifier = -0.25f,
+                MoraleModifier = -0.15f,
+                ErrorRiskModifier = 0.25f,
+                ExpeditionRiskModifier = 0.20f,
+                SeparationModifier = 0.0f,
+                CaregivingModifier = -0.20f,
+                TrainingModifier = -0.25f,
+                NoteKey = "relations.band.hostile"
+            });
+            _bands.Add(new RelationshipBandDefinition
+            {
+                BandId = "strained",
+                DisplayName = "Strained",
+                MinAffinity = -40f,
+                MaxAffinity = -10f,
+                WorkingModifier = -0.10f,
+                MoraleModifier = -0.05f,
+                ErrorRiskModifier = 0.10f,
+                ExpeditionRiskModifier = 0.08f,
+                SeparationModifier = 0.0f,
+                CaregivingModifier = -0.10f,
+                TrainingModifier = -0.10f,
+                NoteKey = "relations.band.strained"
+            });
+            _bands.Add(new RelationshipBandDefinition
+            {
+                BandId = "cordial",
+                DisplayName = "Cordial",
+                MinAffinity = -10f,
+                MaxAffinity = 25f,
+                WorkingModifier = 0.0f,
+                MoraleModifier = 0.0f,
+                ErrorRiskModifier = 0.0f,
+                ExpeditionRiskModifier = 0.0f,
+                SeparationModifier = 0.0f,
+                CaregivingModifier = 0.0f,
+                TrainingModifier = 0.0f,
+                NoteKey = "relations.band.cordial"
+            });
+            _bands.Add(new RelationshipBandDefinition
+            {
+                BandId = "close",
+                DisplayName = "Close",
+                MinAffinity = 25f,
+                MaxAffinity = 60f,
+                WorkingModifier = 0.10f,
+                MoraleModifier = 0.08f,
+                ErrorRiskModifier = -0.08f,
+                ExpeditionRiskModifier = -0.06f,
+                SeparationModifier = -0.05f,
+                CaregivingModifier = 0.15f,
+                TrainingModifier = 0.15f,
+                NoteKey = "relations.band.close"
+            });
+            _bands.Add(new RelationshipBandDefinition
+            {
+                BandId = "bonded",
+                DisplayName = "Bonded",
+                MinAffinity = 60f,
+                MaxAffinity = 100f,
+                WorkingModifier = 0.20f,
+                MoraleModifier = 0.15f,
+                ErrorRiskModifier = -0.15f,
+                ExpeditionRiskModifier = -0.12f,
+                SeparationModifier = -0.10f,
+                CaregivingModifier = 0.25f,
+                TrainingModifier = 0.25f,
+                NoteKey = "relations.band.bonded"
+            });
+        }
+
+        public void LoadBandsCatalog(RelationshipBandsCatalog catalog)
+        {
+            if (catalog?.Bands == null || catalog.Bands.Count == 0) return;
+            _bands.Clear();
+            _bands.AddRange(catalog.Bands);
         }
 
         public RelationshipEntry GetOrCreateRelationship(string a, string b)
@@ -103,7 +211,138 @@ namespace Ashfall.Core
             // place pair affinity is produced, so every existing producer stamps
             // without touching its own call site.
             rel.lastInteractionDay = _currentDay;
+
+            // Plan 44 / C2[19]: Record explainable pair history
+            RecordPairHistory(a, b, $"affinity_delta_{delta:F0}", "affinity_change", delta, "system", "");
             OnRelationsChanged?.Invoke();
+        }
+
+        public RelationEffect GetRelationEffect(string a, string b)
+        {
+            if (!TryGetRelationship(a, b, out var rel) || rel == null)
+            {
+                return ResolveBandForAffinity(0f);
+            }
+
+            var effect = ResolveBandForAffinity(rel.affinity);
+            RelationEffectAppliedSeam?.Invoke(a, b, effect);
+            return effect;
+        }
+
+        public RelationEffect EffectOf(string a, string b) => GetRelationEffect(a, b);
+
+        public RelationEffect ResolveBandForAffinity(float affinity)
+        {
+            for (int i = 0; i < _bands.Count; i++)
+            {
+                var b = _bands[i];
+                if (affinity >= b.MinAffinity && (affinity <= b.MaxAffinity || (i == _bands.Count - 1 && affinity >= b.MaxAffinity)))
+                {
+                    return new RelationEffect(
+                        b.BandId,
+                        b.DisplayName,
+                        b.WorkingModifier,
+                        b.MoraleModifier,
+                        b.ErrorRiskModifier,
+                        b.ExpeditionRiskModifier,
+                        b.SeparationModifier,
+                        b.CaregivingModifier,
+                        b.TrainingModifier,
+                        b.NoteKey
+                    );
+                }
+            }
+
+            return RelationEffect.NeutralFallback;
+        }
+
+        public PairRelationHistoryEntry RecordPairHistory(
+            string a,
+            string b,
+            string causeId,
+            string kind,
+            float delta,
+            string sourceOwner = "system",
+            string noteKey = "")
+        {
+            var rel = GetOrCreateRelationship(a, b);
+            var effect = ResolveBandForAffinity(rel.affinity);
+
+            var entry = new PairRelationHistoryEntry
+            {
+                EventId = $"rel_hist_{_currentDay}_{a}_{b}_{rel.history.Count}",
+                Day = _currentDay,
+                CauseId = causeId ?? "general",
+                Kind = kind ?? "interaction",
+                Delta = delta,
+                ResultingBand = effect.BandId,
+                SourceOwner = sourceOwner ?? "system",
+                NoteKey = string.IsNullOrEmpty(noteKey) ? effect.NoteKey : noteKey
+            };
+
+            rel.history.Add(entry);
+            if (rel.history.Count > MaxHistoryPerPair)
+            {
+                rel.history.RemoveAt(0); // prune oldest
+            }
+
+            rel.lastInteractionDay = _currentDay;
+            HistoryEntryRecordedSeam?.Invoke(entry);
+            return entry;
+        }
+
+        public TeamRelationAggregate AggregateTeamEffect(IEnumerable<string> memberIds)
+        {
+            if (memberIds == null) return TeamRelationAggregate.Neutral;
+            var list = new List<string>(memberIds);
+            if (list.Count < 2) return TeamRelationAggregate.Neutral;
+
+            int totalPairs = 0;
+            int hostileCount = 0;
+            int bondedCount = 0;
+            float totalWorkMod = 0f;
+            float totalMoraleMod = 0f;
+            float maxRiskMod = 0f;
+            string dominantNoteKey = "relations.team.neutral";
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                for (int j = i + 1; j < list.Count; j++)
+                {
+                    totalPairs++;
+                    var effect = GetRelationEffect(list[i], list[j]);
+                    totalWorkMod += effect.WorkingModifier;
+                    totalMoraleMod += effect.MoraleModifier;
+                    if (effect.ErrorRiskModifier > maxRiskMod)
+                    {
+                        maxRiskMod = effect.ErrorRiskModifier;
+                        dominantNoteKey = effect.NoteKey;
+                    }
+                    if (effect.BandId == "hostile" || effect.BandId == "strained")
+                    {
+                        hostileCount++;
+                    }
+                    else if (effect.BandId == "bonded")
+                    {
+                        bondedCount++;
+                    }
+                }
+            }
+
+            if (totalPairs == 0) return TeamRelationAggregate.Neutral;
+
+            float avgWorkMod = totalWorkMod / totalPairs;
+            float avgMoraleMod = totalMoraleMod / totalPairs;
+
+            return new TeamRelationAggregate(
+                totalPairs,
+                hostileCount,
+                bondedCount,
+                avgWorkMod,
+                maxRiskMod,
+                avgMoraleMod,
+                dominantNoteKey
+            );
         }
 
         public void ModifyTrust(string a, string b, float delta)

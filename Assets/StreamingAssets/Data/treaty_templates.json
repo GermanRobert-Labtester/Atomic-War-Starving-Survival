@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "treaty_type_id": "non_aggression",
+      "display_name": "Non-Aggression Pact",
+      "category": "peace",
+      "base_duration_days": 60,
+      "reputation_requirement": 20,
+      "relation_requirement": "neutral",
+      "terms": [
+        {
+          "term_id": "term_no_hostilities",
+          "term_type": "non_hostility",
+          "description": "Neither faction shall initiate raids, ambushes, or combat actions against each other's personnel or territory.",
+          "value": 1.0,
+          "condition": "mutual"
+        }
+      ],
+      "description": "Formal commitment between shelter and faction to cease all hostile incursions and honor borders for the agreed duration."
+    },
+    {
+      "treaty_type_id": "trade_alliance",
+      "display_name": "Trade Alliance Accord",
+      "category": "economic",
+      "base_duration_days": 90,
+      "reputation_requirement": 35,
+      "relation_requirement": "friendly",
+      "terms": [
+        {
+          "term_id": "term_tariff_reduction",
+          "term_type": "trade_discount",
+          "description": "Grants 15% discount on merchant trading prices and priority access to rare surplus goods.",
+          "value": 0.15,
+          "condition": "trade_active"
+        }
+      ],
+      "description": "Bilateral trade partnership providing reciprocal discount rates, exclusive inventory access, and safe merchant passage."
+    },
+    {
+      "treaty_type_id": "mutual_defense",
+      "display_name": "Mutual Defense Pact",
+      "category": "military",
+      "base_duration_days": 120,
+      "reputation_requirement": 60,
+      "relation_requirement": "allied",
+      "terms": [
+        {
+          "term_id": "term_military_assistance",
+          "term_type": "defense_commitment",
+          "description": "Signatories pledge defensive reinforcements, perimeter patrol support, and ammunition aid when under attack.",
+          "value": 1.0,
+          "condition": "under_attack"
+        }
+      ],
+      "description": "High-level military alliance committing signatories to mobilize defensive support if either base is assaulted."
+    },
+    {
+      "treaty_type_id": "intelligence_sharing",
+      "display_name": "Intelligence Sharing Protocol",
+      "category": "espionage",
+      "base_duration_days": 75,
+      "reputation_requirement": 30,
+      "relation_requirement": "neutral",
+      "terms": [
+        {
+          "term_id": "term_wasteland_intel",
+          "term_type": "intel_exchange",
+          "description": "Real-time exchange of scout telemetry, patrol vectors, hostile movement alerts, and scavenging cache locations.",
+          "value": 0.25,
+          "condition": "scout_active"
+        }
+      ],
+      "description": "Information-sharing accord decrypting foreign radio bands and warning of hostile horde movements."
+    },
+    {
+      "treaty_type_id": "tribute",
+      "display_name": "Tribute & Protection Agreement",
+      "category": "tribute",
+      "base_duration_days": 45,
+      "reputation_requirement": 10,
+      "relation_requirement": "unfriendly",
+      "terms": [
+        {
+          "term_id": "term_protection_tithe",
+          "term_type": "tribute_payment",
+          "description": "Periodic transfer of food or munitions in exchange for territorial protection and incursion immunity.",
+          "value": 50.0,
+          "condition": "weekly"
+        }
+      ],
+      "description": "Compulsory tribute arrangement providing guaranteed defense from faction raiders in return for resource quotas."
+    },
+    {
+      "treaty_type_id": "vassalage",
+      "display_name": "Sovereignty & Vassalage Compact",
+      "category": "dominance",
+      "base_duration_days": 365,
+      "reputation_requirement": 70,
+      "relation_requirement": "allied",
+      "terms": [
+        {
+          "term_id": "term_sovereignty_alignment",
+          "term_type": "sovereignty_cession",
+          "description": "Full strategic integration under faction aegis, granting regular industrial supply crates and automated garrison defense.",
+          "value": 100.0,
+          "condition": "permanent"
+        }
+      ],
+      "description": "Comprehensive protectorate pact subordinating external foreign policy in exchange for military supremacy and stockpile guarantees."
+    }
+  ]
+}

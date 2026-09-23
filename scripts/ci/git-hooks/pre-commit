@@ -14,6 +14,9 @@
 #     commit; the hook prints the exact fix command.
 #   * The sweep script itself is committed alongside this hook
 #     (scripts/ci/asset-orphan-sweep.sh) and must be executable.
+#   * Docs-index guard: any staged markdown regenerates docs/INDEX.md and
+#     re-stages it, so parallel doc authors cannot land a stale index
+#     (the 2026-09-'23 prose-wave drift hazard).
 #
 # To intentionally commit despite orphans (e.g. a one-off snapshot before a
 # reimport):  git commit --no-verify
@@ -36,6 +39,19 @@ fi
 json_schema_gate="scripts/ci/json-schema-policy-gate.sh"
 if [ -x "$json_schema_gate" ]; then
     "$json_schema_gate" --staged
+fi
+
+# --- Docs index guard (staged markdown must not land a stale index) ---
+staged_md=$(git diff --cached --name-only --diff-filter=ACMR -- '*.md' || true)
+if [ -n "$staged_md" ] && [ -f scripts/ci/generate-docs-index.py ]; then
+    if ! python3 scripts/ci/generate-docs-index.py --check >/dev/null 2>&1; then
+        if python3 scripts/ci/generate-docs-index.py >/dev/null 2>&1; then
+            git add docs/INDEX.md 2>/dev/null || true
+            echo "[pre-commit] docs/INDEX.md regenerated and staged (staged markdown changed the document corpus)." >&2
+        else
+            echo "[pre-commit] WARN: docs index regeneration failed; run python3 scripts/ci/generate-docs-index.py manually." >&2
+        fi
+    fi
 fi
 
 # Only act when the commit touches Godot asset paths.

@@ -52,7 +52,6 @@ namespace Ashfall.Core
         public event Action<string, string> OnBaselineCorrected; // childId, trueBand
         public event Action<string, int> OnMaturation;           // childId, day  -- Plan 12A
         public event Action<string, int, string>? OnChildLost;   // childId, day, cause -- Plan 19B
-        public event Action<string, int>? OnChildAged;           // childId, ageDays -- Plan 19B
         public event Action<CohortSystemState> OnStateChanged;
 
         public CohortTuning Tuning { get; set; } = CohortTuning.Default;

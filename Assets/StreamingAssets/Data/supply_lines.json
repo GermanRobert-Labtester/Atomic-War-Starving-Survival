@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "supply_lines": [
+    {
+      "id": "supply_office_rail_trunk",
+      "owning_faction_id": "faction_the_office",
+      "origin_location_id": "loc_settlement_nine_rails",
+      "destination_location_id": "loc_cut_arsenal_ruin",
+      "route_waypoints": [
+        "loc_weighbridge"
+      ],
+      "cargo_type": "rail_freight_and_hardware",
+      "throughput_capacity": 50,
+      "travel_days": 2
+    },
+    {
+      "id": "supply_cutters_brine_route",
+      "owning_faction_id": "faction_the_cutters",
+      "origin_location_id": "loc_settlement_brine_pans",
+      "destination_location_id": "loc_cut_radiation_zone_alpha",
+      "route_waypoints": [
+        "loc_the_shallows_market"
+      ],
+      "cargo_type": "salt_and_brine_minerals",
+      "throughput_capacity": 35,
+      "travel_days": 3
+    },
+    {
+      "id": "supply_flotilla_salvage_run",
+      "owning_faction_id": "faction_black_flotilla",
+      "origin_location_id": "loc_settlement_cape_beacon",
+      "destination_location_id": "loc_black_flotilla_outpost",
+      "route_waypoints": [
+        "loc_black_flotilla_outpost"
+      ],
+      "cargo_type": "marine_salvage_and_optics",
+      "throughput_capacity": 40,
+      "travel_days": 2
+    },
+    {
+      "id": "supply_coalition_redoubt_link",
+      "owning_faction_id": "faction_deserter_coalition",
+      "origin_location_id": "loc_settlement_iron_siding",
+      "destination_location_id": "loc_cut_abandoned_depot",
+      "route_waypoints": [
+        "loc_settlement_fort_karkov"
+      ],
+      "cargo_type": "armaments_and_fortified_shelter",
+      "throughput_capacity": 45,
+      "travel_days": 1
+    },
+    {
+      "id": "supply_cold_count_slate_transit",
+      "owning_faction_id": "faction_cold_count",
+      "origin_location_id": "loc_settlement_slate_hollow",
+      "destination_location_id": "loc_cut_arsenal_ruin",
+      "route_waypoints": [
+        "loc_low_background_lab"
+      ],
+      "cargo_type": "physics_instrumentation_and_shielding",
+      "throughput_capacity": 30,
+      "travel_days": 4
+    }
+  ]
+}

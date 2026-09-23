@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "profile_id": "profile_acquaintance",
+      "bond_type": "Acquaintance",
+      "decay_rate_per_day": 0.80,
+      "neglect_threshold_days": 3,
+      "drift_threshold_affinity": -20.0,
+      "reconnection_bonus_multiplier": 1.0,
+      "shared_duty_mitigation": 0.50,
+      "description": "Casual acquaintances without regular interaction drift quickly into indifference."
+    },
+    {
+      "profile_id": "profile_friend",
+      "bond_type": "Friend",
+      "decay_rate_per_day": 0.60,
+      "neglect_threshold_days": 4,
+      "drift_threshold_affinity": 0.0,
+      "reconnection_bonus_multiplier": 1.25,
+      "shared_duty_mitigation": 0.60,
+      "description": "Formed friendships withstand brief separations but fade if unmaintained."
+    },
+    {
+      "profile_id": "profile_close_friend",
+      "bond_type": "CloseFriend",
+      "decay_rate_per_day": 0.35,
+      "neglect_threshold_days": 5,
+      "drift_threshold_affinity": 50.0,
+      "reconnection_bonus_multiplier": 1.50,
+      "shared_duty_mitigation": 0.75,
+      "description": "Deep interpersonal bonds with shared survival history resist decay strongly."
+    },
+    {
+      "profile_id": "profile_family",
+      "bond_type": "Family",
+      "decay_rate_per_day": 0.15,
+      "neglect_threshold_days": 7,
+      "drift_threshold_affinity": -50.0,
+      "reconnection_bonus_multiplier": 2.0,
+      "shared_duty_mitigation": 0.85,
+      "description": "Familial blood and adoptive ties endure through extended separation."
+    },
+    {
+      "profile_id": "profile_mentor",
+      "bond_type": "Mentor",
+      "decay_rate_per_day": 0.25,
+      "neglect_threshold_days": 6,
+      "drift_threshold_affinity": 30.0,
+      "reconnection_bonus_multiplier": 1.40,
+      "shared_duty_mitigation": 0.70,
+      "description": "Mentorship respect persists but requires periodic guidance or shared crafts."
+    },
+    {
+      "profile_id": "profile_rival",
+      "bond_type": "Rival",
+      "decay_rate_per_day": 0.10,
+      "neglect_threshold_days": 10,
+      "drift_threshold_affinity": -80.0,
+      "reconnection_bonus_multiplier": 0.80,
+      "shared_duty_mitigation": 0.20,
+      "description": "Rivalries and animosities simmer slowly over long periods of avoidance."
+    }
+  ]
+}

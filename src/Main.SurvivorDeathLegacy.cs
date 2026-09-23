@@ -21,6 +21,15 @@ namespace AtomicWar.GodotApp
             var state = SurvivorDeathLegacySaveStore.TryLoad() ?? new SurvivorDeathLegacyState();
             var system = new SurvivorDeathLegacySystem(state);
 
+            // Plan 206 — bind the authored legacy templates so wills and bereavement
+            // solace resolve from canonical data rather than an empty template set.
+            string legacyCatalogPath = CatalogPath.ResolveCatalog("death_legacy_templates.json");
+            var legacyCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (legacyCatalogIo.FileExists(legacyCatalogPath))
+            {
+                system.LoadCatalog(legacyCatalogIo.ReadAllText(legacyCatalogPath));
+            }
+
             _deathLegacy = new SurvivorDeathLegacyHostSession(system);
             _deathLegacy.StateChanged += OnDeathLegacyStateChanged;
             return _deathLegacy;

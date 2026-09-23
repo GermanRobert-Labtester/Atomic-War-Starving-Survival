@@ -388,6 +388,19 @@ ILog? log = null)
 
         public List<PrepJob> GetActiveJobs() => _state.activeJobs.FindAll(j => !j.isComplete && !j.isCancelled);
 
+        /// <summary>
+        /// Plan 55 / Task 55A — apply the retention catalog to the kitchen serving
+        /// log. The log stays owned here; the policy only decides how many
+        /// historical rows survive, so a 400-year campaign cannot grow an
+        /// unbounded save. Returns the number of pruned rows.
+        /// </summary>
+        public int ApplyRetention(Records.RetentionPolicyCatalog? catalog)
+        {
+            if (catalog == null) return 0;
+            catalog.ApplyRetention("kitchen_serving_log", _state.servingLog, out int pruned);
+            return pruned;
+        }
+
         public KitchenNutritionState CaptureState() => CloneState(_state);
 
         public void RestoreState(KitchenNutritionState saved)

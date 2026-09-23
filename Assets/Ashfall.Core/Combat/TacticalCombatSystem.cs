@@ -51,6 +51,11 @@ namespace Ashfall.Core.Combat
         public CombatHostPorts Ports { get => _ports; set => _ports = value; }
         public CombatDoctrineCapability DoctrineCapability { get; set; } = CombatDoctrineCapability.None;
 
+        /// <summary>
+        /// Optional Plan 137 performance lookup hook: maps survivorId to (accuracyMultiplier, damageMultiplier).
+        /// </summary>
+        public Func<string, (float accuracy, float damage)>? PerformanceLookup { get; set; }
+
         public TacticalCombatSystem(CombatState? state = null, CombatHostPorts? ports = null)
         {
             if (state != null) _state = state;

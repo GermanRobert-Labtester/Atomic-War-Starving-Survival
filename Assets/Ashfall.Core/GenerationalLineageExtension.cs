@@ -45,6 +45,23 @@ namespace Ashfall.Core
     }
 
     [Serializable]
+    public sealed class CulturalArchetypeDef
+    {
+        public string archetype { get; set; } = string.Empty;
+        public List<string> prefixes { get; set; } = new List<string>();
+        public List<string> roots { get; set; } = new List<string>();
+        public List<string> suffixes { get; set; } = new List<string>();
+    }
+
+    [Serializable]
+    public sealed class FamilyNameCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<CulturalArchetypeDef> cultural_archetypes { get; set; } = new List<CulturalArchetypeDef>();
+        public List<string> templates { get; set; } = new List<string>();
+    }
+
+    [Serializable]
     public sealed class LineageState
     {
         public string systemId = GenerationalLineageExtension.SystemId;
@@ -66,6 +83,7 @@ namespace Ashfall.Core
         private readonly ILog _log;
         private int _currentDay;
         private int _nextEventSeq = 1;
+        private FamilyNameCatalogData? _familyNameCatalog;
 
         public LineageState State => _state;
         public event Action<string, string>? OnLineageEstablished;
@@ -74,6 +92,67 @@ namespace Ashfall.Core
         public event Action<FamilyUnit>? OnFamilyUnitCreated;
         public event Action<FamilyEvent>? OnFamilyEvent;
         public event Action<string, string>? OnSpouseSet;
+        public event Action<string, string>? OnFamilyNameAssigned;
+
+        public void LoadFamilyNameCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                _familyNameCatalog = System.Text.Json.JsonSerializer.Deserialize<FamilyNameCatalogData>(json);
+            }
+            catch
+            {
+                // Fallback
+            }
+        }
+
+        public string GetFamilyName(string dwellerId)
+        {
+            if (string.IsNullOrWhiteSpace(dwellerId)) return string.Empty;
+            var rec = _state.lineages.FirstOrDefault(l => string.Equals(l.childId, dwellerId, StringComparison.OrdinalIgnoreCase));
+            if (rec != null && !string.IsNullOrWhiteSpace(rec.familyName))
+                return rec.familyName;
+
+            var unit = GetFamilyUnit(dwellerId);
+            return unit?.familyName ?? string.Empty;
+        }
+
+        public void AssignFamilyName(string dwellerId, string familyName)
+        {
+            if (string.IsNullOrWhiteSpace(dwellerId) || string.IsNullOrWhiteSpace(familyName)) return;
+            var rec = _state.lineages.FirstOrDefault(l => string.Equals(l.childId, dwellerId, StringComparison.OrdinalIgnoreCase));
+            if (rec == null)
+            {
+                rec = new LineageRecord { childId = dwellerId, establishedDay = _currentDay };
+                _state.lineages.Add(rec);
+            }
+            rec.familyName = familyName;
+            OnFamilyNameAssigned?.Invoke(dwellerId, familyName);
+            OnLineageChanged?.Invoke();
+        }
+
+        public string InheritFamilyName(string childId, string parentId)
+        {
+            string parentName = GetFamilyName(parentId);
+            if (!string.IsNullOrWhiteSpace(parentName))
+            {
+                AssignFamilyName(childId, parentName);
+                return parentName;
+            }
+            return string.Empty;
+        }
+
+        public string GenerateFamilyName(ISeededRng? rng = null, string? archetype = null)
+        {
+            if (_familyNameCatalog?.templates != null && _familyNameCatalog.templates.Count > 0)
+            {
+                int idx = rng != null ? rng.Next(0, _familyNameCatalog.templates.Count) : 0;
+                return _familyNameCatalog.templates[idx % _familyNameCatalog.templates.Count];
+            }
+
+            return "Wanderer";
+        }
 
         public GenerationalLineageExtension(GenerationalSuccessionEngine engine, ILog? log = null)
         {

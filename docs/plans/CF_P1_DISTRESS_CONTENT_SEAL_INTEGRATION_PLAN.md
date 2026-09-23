@@ -1,6 +1,12 @@
 # CF-P1-DISTRESS-CONTENT-SEAL — Integration Plan (Plan 02 / "Plan 01" of the 2026-09-19 execution program)
 
-> **Status:** PLAN — ready for claim. Verify-and-seal package; no new foreman signature required (entry gate: none, per the program roster).
+> **Status:** SEALED — executed and verified 2026-09-19 under
+> `claim-cf-p1-distress-content-seal-2026-09-19` (`WORKTREE_OWNERSHIP.md`).
+> **This plan document was not updated after execution; the sections below
+> retain their original forward-looking wording exactly as authored, and
+> §26 (appended 2026-09-21, during this batch's review pass) records the
+> actual closeout evidence.** Read §26 first if you are deciding whether
+> this package still needs a claim — it does not.
 > **Program source:** `Seal-steps/ashfall-eight-unblocked-plans-completion-first-execution-program-2026-09-19.md` §B.2 row 01, §C.1 (Plan 01).
 > **Origin rule phrasing:** `Seal-steps/ashfall-six-unblocked-partial-integration-plans-full-implementation-plan.md` (P1); `Seal-steps/ashfall-p1-follow-up-content-authored-market-board-panel-design-census-route-19-review-and-further-expansions.md` lines 19–20.
 > **Evidence date:** 2026-09-19, branch `Zcode_Branch` @ `65357b8a` (plus listed untracked files, none touching this package's paths).
@@ -1343,7 +1349,10 @@ interaction).
 # 24. Definition of Done
 
 Mapped to the program's §C.1.2 delta and §C.1.12 closeout outline; every box
-names its evidence.
+names its evidence. **Checkboxes below are left exactly as authored
+(unchecked, forward-looking) because this section predates execution; see §26
+for the actual post-execution evidence, which confirms every item below was
+met.**
 
 - [ ] **D1–D3 live in the permanent gate** — `ValidateDistressSignalStages`
   emits the three rule ids; V-01…V-19 green; pre-remediation evidence shows
@@ -1449,3 +1458,56 @@ first step.)
 *Plan authored 2026-09-19 against branch `Zcode_Branch` @ `65357b8a`. All
 counts, line citations, and reachability findings were produced by direct
 reads/parses of the files listed in §4.1; re-verify at P0 before editing.*
+
+---
+
+# 26. Execution closeout — added 2026-09-21 during batch review
+
+This section was appended during a review pass of this plan batch, after
+direct evidence showed the package above was already executed the same day it
+was authored. §1–§25 are preserved unedited above as the original
+forward-looking plan; this section reconciles them against current reality so
+a future reader does not re-claim or re-implement sealed work.
+
+## Evidence of completion
+
+- `WORKTREE_OWNERSHIP.md`, claim row `claim-cf-p1-distress-content-seal-2026-09-19`:
+  *"**DONE 2026-09-19:** validator 39/39; population replay 46/46; build 0/0;
+  data-integrity 0 errors + 5 pinned warnings; audio selftest 645/645;
+  content-utilization CI/deep-chain PASS."* This exact evidence set matches
+  §24's checkbox list item-for-item (validator rules live, population replay
+  green, registry verified, utilization sealed, quality gates green).
+- `docs/radio/DISTRESS_SIGNAL_PR3_CLOSEOUT.md` exists on disk and opens with
+  *"Status: **SEALED — CF-P1-DISTRESS-CONTENT-SEAL (2026-09-19).**"* Its §1
+  documents the three validator rules with the exact rule ids this plan's §25
+  `MUST ADD` specified
+  (`distress_followup_expired_requires_consequence`,
+  `distress_followup_trap_only_on_lures`, `distress_followup_max_two`), each
+  with fixture coverage, and records the extended validator file passing
+  **39/39** — matching §24's D1–D3 checkbox exactly.
+- The sealing work landed in commit `d04f964ecb37f96af3f236520293840af400ad9a`
+  ("feat: implement distress content seal, vehicle armor grades, bootstrap
+  path parity, and integration plans") — the same commit that authored this
+  plan file — which added
+  `Ashfall.Core.Tests/Radio/DistressFollowUpPopulationReplayTests.cs` (532
+  lines, new), extended `Assets/Ashfall.Core/CatalogIntegrityValidator.cs`
+  (+371 lines), trimmed `Assets/StreamingAssets/Data/radio_distress_signals.json`
+  (the three remediation removals §11/§24 called for), and added
+  `docs/radio/DISTRESS_SIGNAL_PR3_CLOSEOUT.md` (195 lines, new). `git
+  merge-base --is-ancestor d04f964e HEAD` confirms this commit is in the
+  current branch's history.
+
+## What this means for a future reader
+
+- **Do not** open a new claim for `CF-P1-DISTRESS-CONTENT-SEAL`. It is sealed.
+- **Do not** re-add the three validator rules, the population replay tests, or
+  the PR3 closeout document — all three already exist and are green.
+- The §25 `MUST NOT DO` list (no rule relaxation, no save-version bump, no
+  scheduler/trust/resolver/manager edits, no second registry) remains the
+  correct constraint set for anyone touching this area *later*, e.g. if a new
+  follow-up entry is authored and needs to pass the now-permanent validator
+  rules — it is preserved as a boundary reference, not as pending work.
+- If a future audit finds the validator counts have drifted from 39/39 (new
+  content added without corresponding fixture coverage, for example), that is
+  new work with its own evidence and its own plan — not a reason to reopen
+  this package.

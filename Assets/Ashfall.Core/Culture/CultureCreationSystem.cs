@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Ashfall.Core.Culture
 {
@@ -23,6 +24,28 @@ namespace Ashfall.Core.Culture
         Nature = 3,
         Community = 4,
         Memorial = 5
+    }
+
+    [Serializable]
+    public sealed class ArtFormDef
+    {
+        public string form_id { get; set; } = string.Empty;
+        public string form_name { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
+        public string medium { get; set; } = string.Empty;
+        public int required_skill { get; set; }
+        public List<string> required_materials { get; set; } = new List<string>();
+        public int creation_time_days { get; set; } = 1;
+        public float morale_boost { get; set; }
+        public int cultural_value { get; set; }
+        public string display_location_type { get; set; } = string.Empty;
+    }
+
+    [Serializable]
+    public sealed class ArtFormCatalog
+    {
+        public int schema_version { get; set; } = 1;
+        public List<ArtFormDef> art_forms { get; set; } = new List<ArtFormDef>();
     }
 
     [Serializable]
@@ -58,6 +81,7 @@ namespace Ashfall.Core.Culture
     public sealed class CultureCreationSystem
     {
         private readonly CultureCreationState _state;
+        private readonly List<ArtFormDef> _artForms = new List<ArtFormDef>();
 
         public event Action<ArtworkRecord>? OnArtworkCreated;
         public event Action<ArtworkRecord>? OnMasterworkCreated;
@@ -70,6 +94,34 @@ namespace Ashfall.Core.Culture
         {
             _state = state ?? new CultureCreationState();
         }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var catalog = JsonSerializer.Deserialize<ArtFormCatalog>(json, options);
+                if (catalog?.art_forms != null)
+                {
+                    foreach (var form in catalog.art_forms)
+                    {
+                        if (!string.IsNullOrWhiteSpace(form.form_id))
+                        {
+                            int idx = _artForms.FindIndex(f => string.Equals(f.form_id, form.form_id, StringComparison.Ordinal));
+                            if (idx >= 0) _artForms[idx] = form;
+                            else _artForms.Add(form);
+                        }
+                    }
+                }
+            }
+            catch (Exception) { /* malformed catalog falls back to built-in defaults; authoring errors are enforced by the data-integrity gate */ }
+        }
+
+        public IReadOnlyList<ArtFormDef> GetAllForms() => _artForms;
+
+        public ArtFormDef? GetForm(string formId) =>
+            _artForms.FirstOrDefault(f => string.Equals(f.form_id, formId, StringComparison.Ordinal));
 
         public ArtworkRecord CreateArtwork(
             string creatorSurvivorId,

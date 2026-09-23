@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "capsules": [
+    {
+      "capsule_id": "capsule_founders_cache_1984",
+      "capsule_name": "Founders' Archival Vault",
+      "creator_id": "founder_elena_vance",
+      "created_day": 1,
+      "condition_type": "DateBased",
+      "open_day": 50,
+      "target_survivor_id": "",
+      "location": "Sub-basement Vault 4",
+      "message": "To whoever unseals this vault: remember why we built these walls. Preserve the seed cultivars.",
+      "contents": [
+        {
+          "content_id": "cnt_letter_elena",
+          "content_type": "Letter",
+          "item_id": "",
+          "text": "The original shelter covenants and handwritten signatures.",
+          "author_id": "founder_elena_vance",
+          "sentimental_value": 75.0
+        },
+        {
+          "content_id": "cnt_artifact_survey_theodolite",
+          "content_type": "Artifact",
+          "item_id": "item_antique_theodolite",
+          "text": "Brass surveying instrument used to lay out shelter bedrock foundations.",
+          "author_id": "founder_elena_vance",
+          "sentimental_value": 60.0
+        }
+      ]
+    },
+    {
+      "capsule_id": "capsule_prewar_geologists",
+      "capsule_name": "Mineral Surveyors' Core Box",
+      "creator_id": "geologist_kane",
+      "created_day": 1,
+      "condition_type": "Manual",
+      "open_day": -1,
+      "target_survivor_id": "",
+      "location": "Geological Survey Station",
+      "message": "Lithological core drill samples from aquifer strata layer 3. Handle with clean gloves.",
+      "contents": [
+        {
+          "content_id": "cnt_drawing_aquifer_map",
+          "content_type": "Drawing",
+          "item_id": "",
+          "text": "Hand-inked subterranean hydrologic cross-section.",
+          "author_id": "geologist_kane",
+          "sentimental_value": 45.0
+        },
+        {
+          "content_id": "cnt_sample_quartz_crystal",
+          "content_type": "Item",
+          "item_id": "quartz_lens_blank",
+          "text": "High-purity crystalline silica core sample.",
+          "author_id": "geologist_kane",
+          "sentimental_value": 40.0
+        }
+      ]
+    },
+    {
+      "capsule_id": "capsule_bunker_echo_memorial",
+      "capsule_name": "Fallen Watchman's Footlocker",
+      "creator_id": "sergeant_morris",
+      "created_day": 5,
+      "condition_type": "EventBased",
+      "open_day": -1,
+      "target_event_id": "defense_assault_repelled",
+      "location": "Perimeter Guardhouse",
+      "message": "If the outer wall holds, pass these rations and spare boots to the recruit on night watch.",
+      "contents": [
+        {
+          "content_id": "cnt_letter_morris",
+          "content_type": "Letter",
+          "item_id": "",
+          "text": "Tactical notes on blind spots along the northwest drainage canal.",
+          "author_id": "sergeant_morris",
+          "sentimental_value": 65.0
+        },
+        {
+          "content_id": "cnt_photo_watch_corps",
+          "content_type": "Photo",
+          "item_id": "",
+          "text": "Faded silver-gelatin photograph of the first watch detail standing at the blast door.",
+          "author_id": "sergeant_morris",
+          "sentimental_value": 70.0
+        }
+      ]
+    },
+    {
+      "capsule_id": "capsule_childhood_memories",
+      "capsule_name": "Nursery Time Box",
+      "creator_id": "caretaker_anna",
+      "created_day": 10,
+      "condition_type": "SurvivorBased",
+      "open_day": -1,
+      "target_survivor_id": "surv_firstborn_adult",
+      "location": "Shelter Nursery Cubicle",
+      "message": "When you turn eighteen in the bunker, open this so you know the sun was real.",
+      "contents": [
+        {
+          "content_id": "cnt_drawing_crayon_sun",
+          "content_type": "Drawing",
+          "item_id": "",
+          "text": "Crayon drawing on yellowed cardstock of an apple orchard in bloom.",
+          "author_id": "caretaker_anna",
+          "sentimental_value": 85.0
+        },
+        {
+          "content_id": "cnt_recording_nursery_rhyme",
+          "content_type": "Recording",
+          "item_id": "magnetic_audio_tape",
+          "text": "Magnetic tape recording of a pre-war evening lullaby.",
+          "author_id": "caretaker_anna",
+          "sentimental_value": 90.0
+        }
+      ]
+    }
+  ]
+}

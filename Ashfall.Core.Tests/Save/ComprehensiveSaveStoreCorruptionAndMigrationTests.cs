@@ -287,9 +287,18 @@ namespace Ashfall.Core.Tests.Save
             // Plan 210 added sanitation; Plan 211 added black_market.
             // B5–B8 expansion added deep_well + water_condenser (Plans 64–67 flagship, §9.8).
             // Plan 18A added the dedicated echoes section.
-            Assert.Equal(194, SaveSectionRegistry.All.Count);
+            // ORPHAN-SEAL-PRIORITY-W1 sealed twelve authorities (survivor_autonomy …
+            // faction_covert_ops); Plans 38/39 added commitment + session_durability;
+            // Plans 46/42 added playable_metrics + survivor_voice; Plan 54 added
+            // seven_day_slice (slice playtest scorecard evidence); Plans 55/58 added
+            // retention (retention audit) + outpost_settlement (authored outposts);
+            // Plan 134 added territory_control (dynamic territory & supply lines);
+            // Plan 136 added cooking (wildlife trapping food pipeline & cooking system);
+            // Plan 140 added campaign_legacy (generational legacy & campaign inheritance).
+            Assert.Equal(226, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(194, keys.Count);
+            Assert.Equal(226, keys.Count);
         }
+
     }
 }

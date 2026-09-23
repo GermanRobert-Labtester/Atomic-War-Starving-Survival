@@ -89,6 +89,43 @@ namespace Ashfall.Core.Tests.Expeditions
         }
 
         [Fact]
+        public void LaunchMission_WindAbovePlatformLimit_IsBlocked()
+        {
+            var weather = new Ashfall.Core.World.WeatherSystem(new Ashfall.Core.World.WorldWeatherState { wind_speed_kph = 55f });
+            var system = new ReconTelemetrySystem(null, new SeededRng(2005), new TestLog(), weather: weather);
+            system.LoadCatalog(new ReconTelemetryCatalog
+            {
+                Platforms = new System.Collections.Generic.List<ReconProbeDef>
+                {
+                    new ReconProbeDef { PlatformId = "probe_wind_limited", EnduranceHours = 24, WindLimitKph = 40, LaunchCosts = new System.Collections.Generic.List<MaterialCost>() }
+                }
+            });
+
+            var result = system.LaunchMission("probe_wind_limited", "loc_holdfast");
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal("wind_too_high", result.FailureCode);
+        }
+
+        [Fact]
+        public void LaunchMission_WindBelowPlatformLimit_Launches()
+        {
+            var weather = new Ashfall.Core.World.WeatherSystem(new Ashfall.Core.World.WorldWeatherState { wind_speed_kph = 10f });
+            var system = new ReconTelemetrySystem(null, new SeededRng(2005), new TestLog(), weather: weather);
+            system.LoadCatalog(new ReconTelemetryCatalog
+            {
+                Platforms = new System.Collections.Generic.List<ReconProbeDef>
+                {
+                    new ReconProbeDef { PlatformId = "probe_calm_air", EnduranceHours = 24, WindLimitKph = 40, LaunchCosts = new System.Collections.Generic.List<MaterialCost>() }
+                }
+            });
+
+            var result = system.LaunchMission("probe_calm_air", "loc_holdfast");
+
+            Assert.True(result.IsSuccess);
+        }
+
+        [Fact]
         public void LaunchMission_Success_CreatesMission()
         {
             var system = CreateSystem();

@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "roles": [
+    {
+      "role_id": "role_medic",
+      "display_name": "Chief Medical Officer",
+      "category": "medical",
+      "required_skills": {
+        "medicine": 40,
+        "first_aid": 30
+      },
+      "primary_bonus_type": "healing_effectiveness",
+      "primary_bonus_value": 0.25,
+      "secondary_bonus_type": "disease_treatment_speed",
+      "secondary_bonus_value": 0.20,
+      "auto_action_type": "auto_heal",
+      "description": "Specialized healthcare provider triage-treating wounds, illnesses, and chronic trauma."
+    },
+    {
+      "role_id": "role_engineer",
+      "display_name": "Chief Shelter Engineer",
+      "category": "technical",
+      "required_skills": {
+        "crafting": 40,
+        "mechanics": 35
+      },
+      "primary_bonus_type": "repair_speed",
+      "primary_bonus_value": 0.25,
+      "secondary_bonus_type": "structure_durability",
+      "secondary_bonus_value": 0.15,
+      "auto_action_type": "auto_repair",
+      "description": "Structural specialist maintaining life support equipment, bulkheads, and machinery."
+    },
+    {
+      "role_id": "role_scout",
+      "display_name": "Lead Wasteland Scout",
+      "category": "exploration",
+      "required_skills": {
+        "stealth": 35,
+        "navigation": 40
+      },
+      "primary_bonus_type": "expedition_speed",
+      "primary_bonus_value": 0.25,
+      "secondary_bonus_type": "threat_detection",
+      "secondary_bonus_value": 0.20,
+      "auto_action_type": "auto_scout",
+      "description": "Pathfinder charting surface transit lanes and identifying hostile ambushes early."
+    },
+    {
+      "role_id": "role_leader",
+      "display_name": "Shelter Quartermaster Leader",
+      "category": "leadership",
+      "required_skills": {
+        "social": 45,
+        "negotiation": 35
+      },
+      "primary_bonus_type": "morale_aura",
+      "primary_bonus_value": 0.15,
+      "secondary_bonus_type": "crisis_resolve",
+      "secondary_bonus_value": 0.20,
+      "auto_action_type": "auto_lead",
+      "description": "Inspirational commander steadying survivor panic and boosting overall productivity."
+    },
+    {
+      "role_id": "role_technician",
+      "display_name": "Electrical Systems Technician",
+      "category": "technical",
+      "required_skills": {
+        "electronics": 40,
+        "computing": 30
+      },
+      "primary_bonus_type": "power_efficiency",
+      "primary_bonus_value": 0.25,
+      "secondary_bonus_type": "radio_range",
+      "secondary_bonus_value": 0.20,
+      "auto_action_type": "auto_maintain_tech",
+      "description": "Hardware technician calibrating power grids, antenna relays, and battery banks."
+    },
+    {
+      "role_id": "role_scientist",
+      "display_name": "Laboratory Research Scientist",
+      "category": "research",
+      "required_skills": {
+        "chemistry": 40,
+        "biology": 35
+      },
+      "primary_bonus_type": "research_speed",
+      "primary_bonus_value": 0.30,
+      "secondary_bonus_type": "reagent_synthesis",
+      "secondary_bonus_value": 0.15,
+      "auto_action_type": "auto_research",
+      "description": "Pure scientist synthesizing chemical decontaminants and analyzing tech blueprints."
+    },
+    {
+      "role_id": "role_diplomat",
+      "display_name": "Inter-Faction Envoy Diplomat",
+      "category": "social",
+      "required_skills": {
+        "negotiation": 45,
+        "barter": 40
+      },
+      "primary_bonus_type": "trade_profit",
+      "primary_bonus_value": 0.20,
+      "secondary_bonus_type": "standing_gain",
+      "secondary_bonus_value": 0.25,
+      "auto_action_type": "auto_trade",
+      "description": "Skilled negotiator securing favorable barter ratios and mitigating border tensions."
+    },
+    {
+      "role_id": "role_enforcer",
+      "display_name": "Perimeter Security Enforcer",
+      "category": "combat",
+      "required_skills": {
+        "firearms": 40,
+        "melee": 35
+      },
+      "primary_bonus_type": "combat_damage",
+      "primary_bonus_value": 0.25,
+      "secondary_bonus_type": "defense_response",
+      "secondary_bonus_value": 0.20,
+      "auto_action_type": "auto_guard",
+      "description": "Tactical guard defending entrance bulkheads and training cohort combat readiness."
+    }
+  ]
+}

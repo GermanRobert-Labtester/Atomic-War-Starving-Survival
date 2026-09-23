@@ -110,6 +110,20 @@ namespace Ashfall.Core.Inventory
         public float tradeValue;
         public int tradeTier;
 
+        /// <summary>
+        /// Optional limb/grip requirements for an equipable item.
+        /// Absent (null) means "no requirement" and preserves legacy behavior.
+        /// Introduced by UNBLOCK-01 F14-A.
+        /// </summary>
+        public LimbRequirement? limbRequirements;
+
+        /// <summary>
+        /// Optional limb provision for a prosthetic item.
+        /// Absent (null) for non-prosthetics.
+        /// Introduced by UNBLOCK-01 F14-A.
+        /// </summary>
+        public LimbProvision? providesLimb;
+
         public List<ScrapYield> scrapValue = new List<ScrapYield>();
         public RepairRecipe repairRecipe = new RepairRecipe();
         public float disassembleYieldFraction = 0.5f;
@@ -230,6 +244,8 @@ namespace Ashfall.Core.Inventory
                 tradeValue = tradeValue,
                 tradeTier = tradeTier,
                 disassembleYieldFraction = disassembleYieldFraction,
+                limbRequirements = limbRequirements != null ? new LimbRequirement { hands = limbRequirements.hands, gripClass = limbRequirements.gripClass } : null,
+                providesLimb = providesLimb != null ? new LimbProvision { hands = providesLimb.hands, legs = providesLimb.legs, qualityPermille = providesLimb.qualityPermille, gripClass = providesLimb.gripClass } : null,
                 scrapValue = new List<ScrapYield>(),
                 repairRecipe = repairRecipe != null ? repairRecipe.Clone() : new RepairRecipe()
             };
@@ -240,6 +256,30 @@ namespace Ashfall.Core.Inventory
             }
             return copy;
         }
+    }
+
+    /// <summary>
+    /// Optional limb/grip requirements for an equipable item.
+    /// Absent (null) means "no requirement" and preserves legacy behavior.
+    /// Introduced by UNBLOCK-01 F14-A.
+    /// </summary>
+    public sealed class LimbRequirement
+    {
+        public int hands = 1;
+        public string gripClass = "simple";
+    }
+
+    /// <summary>
+    /// Optional limb provision for a prosthetic item.
+    /// Absent (null) for non-prosthetics.
+    /// Introduced by UNBLOCK-01 F14-A.
+    /// </summary>
+    public sealed class LimbProvision
+    {
+        public int hands;
+        public int legs;
+        public int qualityPermille = 500;
+        public string gripClass = "simple";
     }
 
     /// <summary>Single source of truth for equipSlot string parsing (port of Unity EquipSlots).</summary>

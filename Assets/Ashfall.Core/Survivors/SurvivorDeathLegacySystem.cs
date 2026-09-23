@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Survivors
 {
@@ -102,6 +104,53 @@ namespace Ashfall.Core.Survivors
     }
 
     [Serializable]
+    public sealed class DeathLegacyTemplateDefinition
+    {
+        [JsonPropertyName("template_id")]
+        public string TemplateId { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("default_category")]
+        public string DefaultCategory { get; set; } = "all";
+
+        [JsonPropertyName("dispute_probability")]
+        public float DisputeProbability { get; set; } = 0.15f;
+
+        [JsonPropertyName("bereavement_comfort_scale")]
+        public float BereavementComfortScale { get; set; } = 1.0f;
+
+        [JsonPropertyName("sentimental_value_bonus")]
+        public float SentimentalValueBonus { get; set; } = 50.0f;
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+
+        public InheritanceCategory GetInheritanceCategory() => DefaultCategory.ToLowerInvariant() switch
+        {
+            "all" => InheritanceCategory.All,
+            "weapons" => InheritanceCategory.Weapons,
+            "clothing" => InheritanceCategory.Clothing,
+            "medical" => InheritanceCategory.Medical,
+            "food" => InheritanceCategory.Food,
+            "tools" => InheritanceCategory.Tools,
+            "valuables" => InheritanceCategory.Valuables,
+            _ => InheritanceCategory.All
+        };
+    }
+
+    [Serializable]
+    public sealed class DeathLegacyCatalogData
+    {
+        [JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; } = 1;
+
+        [JsonPropertyName("templates")]
+        public List<DeathLegacyTemplateDefinition> Templates { get; set; } = new List<DeathLegacyTemplateDefinition>();
+    }
+
+    [Serializable]
     public sealed class SurvivorDeathLegacyState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -120,12 +169,16 @@ namespace Ashfall.Core.Survivors
     public sealed class SurvivorDeathLegacySystem
     {
         private readonly SurvivorDeathLegacyState _state;
+        private readonly Dictionary<string, DeathLegacyTemplateDefinition> _templates = new Dictionary<string, DeathLegacyTemplateDefinition>(StringComparer.OrdinalIgnoreCase);
 
         public event Action<DeathRecord>? OnDeathRecorded;
         public event Action<LastWill>? OnWillCreated;
         public event Action<DeathRecord, IReadOnlyList<InheritedItem>>? OnInheritanceDistributed;
         public event Action<InheritanceDispute>? OnDisputeRaised;
         public event Action<InheritanceDispute>? OnDisputeResolved;
+
+        public Action<string /*recipientId*/, string /*itemId*/>? InventoryBequestDeliverer { get; set; }
+        public Action<string /*survivorId*/, float /*moraleComfort*/>? BereavementComfortApplier { get; set; }
 
         public int DeathCount => _state.DeathRecords.Count;
         public int WillCount => _state.Wills.Count;
@@ -134,10 +187,102 @@ namespace Ashfall.Core.Survivors
         public IReadOnlyList<LastWill> Wills => _state.Wills;
         public IReadOnlyList<InheritedItem> InheritedItems => _state.InheritedItems;
         public IReadOnlyList<InheritanceDispute> Disputes => _state.Disputes;
+        public IReadOnlyCollection<DeathLegacyTemplateDefinition> Templates => _templates.Values;
 
         public SurvivorDeathLegacySystem(SurvivorDeathLegacyState? state = null)
         {
             _state = state ?? new SurvivorDeathLegacyState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var data = JsonSerializer.Deserialize<DeathLegacyCatalogData>(json, options);
+            if (data != null)
+            {
+                LoadCatalog(data);
+            }
+        }
+
+        public void LoadCatalog(DeathLegacyCatalogData catalog)
+        {
+            if (catalog?.Templates == null) return;
+            foreach (var t in catalog.Templates)
+            {
+                if (!string.IsNullOrWhiteSpace(t.TemplateId))
+                {
+                    _templates[t.TemplateId] = t;
+                }
+            }
+        }
+
+        public DeathLegacyTemplateDefinition? GetTemplate(string templateId)
+        {
+            if (string.IsNullOrWhiteSpace(templateId)) return null;
+            return _templates.TryGetValue(templateId, out var t) ? t : null;
+        }
+
+        public LastWill CreateWillFromTemplate(
+            string survivorId,
+            string templateId,
+            string primaryBeneficiaryId,
+            string residuaryBeneficiary = "commons",
+            int currentDay = 1)
+        {
+            var template = GetTemplate(templateId);
+            var category = template?.GetInheritanceCategory() ?? InheritanceCategory.All;
+
+            var beneficiaries = new List<BeneficiaryEntry>
+            {
+                new BeneficiaryEntry
+                {
+                    BeneficiaryId = primaryBeneficiaryId,
+                    Category = category,
+                    Percentage = 100f
+                }
+            };
+
+            return CreateWill(
+                survivorId: survivorId,
+                beneficiaries: beneficiaries,
+                specialBequests: null,
+                residuaryBeneficiary: residuaryBeneficiary,
+                currentDay: currentDay);
+        }
+
+        public float CalculateBereavementComfort(string survivorId, string deceasedSurvivorId, float baseComfort = 10f)
+        {
+            float comfort = baseComfort;
+            var will = GetActiveWill(deceasedSurvivorId);
+            if (will != null)
+            {
+                bool isBeneficiary = will.Beneficiaries.Any(b => string.Equals(b.BeneficiaryId, survivorId, StringComparison.OrdinalIgnoreCase))
+                    || will.SpecialBequests.Any(b => string.Equals(b.RecipientId, survivorId, StringComparison.OrdinalIgnoreCase))
+                    || string.Equals(will.ResiduaryBeneficiary, survivorId, StringComparison.OrdinalIgnoreCase);
+
+                if (isBeneficiary)
+                {
+                    comfort *= 1.5f;
+                }
+            }
+
+            if (_templates.Count > 0)
+            {
+                float maxScale = _templates.Values.Max(t => t.BereavementComfortScale);
+                comfort *= (maxScale > 0f ? (maxScale * 0.8f) : 1f);
+            }
+
+            return (float)Math.Round(comfort, 1);
+        }
+
+        public void ApplyBereavementComfort(string survivorId, string deceasedSurvivorId, float baseComfort = 10f)
+        {
+            float comfort = CalculateBereavementComfort(survivorId, deceasedSurvivorId, baseComfort);
+            BereavementComfortApplier?.Invoke(survivorId, comfort);
         }
 
         public LastWill CreateWill(
@@ -244,6 +389,8 @@ namespace Ashfall.Core.Survivors
 
                 _state.InheritedItems.Add(item);
                 distributed.Add(item);
+
+                InventoryBequestDeliverer?.Invoke(recipient, itemId);
             }
 
             OnInheritanceDistributed?.Invoke(record, distributed);

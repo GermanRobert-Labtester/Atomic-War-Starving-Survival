@@ -219,7 +219,6 @@ public partial class MaritimeAtlasPanel : Control
 
         body.AddChild(actionRow);
         _shell.SetContent(body);
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("DIVE DETAIL");
         RefreshView();
     }
 

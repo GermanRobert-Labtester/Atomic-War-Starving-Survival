@@ -46,6 +46,8 @@ namespace AtomicWar.GodotApp
             _muster.StateChanged += () => SaveMuster();
             _muster.OnQuestlineResolved += OnMusterQuestlineResolved;
             _muster.OnActionResolved += OnMusterActionResolved;
+            _muster.SubjectLivingResolver = id => _survivors?.RosterState?.Find(r => r != null && r.Id == id)?.IsAlive ?? true;
+            _muster.ItemSink = new ShelterFactionActionItemSink(() => _inventory?.Inventory);
 
             // Plan 45 phase 2 — an Iron Raiders raid is "a combat/loss event
             // with no dialogue" (IronRaidersSystem): defend the shelter with
@@ -462,5 +464,28 @@ namespace AtomicWar.GodotApp
                 _musterPanel.Visible = false;
         }
 
+        private sealed class ShelterFactionActionItemSink : IFactionActionItemSink
+        {
+            private readonly Func<Ashfall.Core.Inventory.Inventory?> _inventoryProvider;
+            public ShelterFactionActionItemSink(Func<Ashfall.Core.Inventory.Inventory?> inventoryProvider)
+            {
+                _inventoryProvider = inventoryProvider;
+            }
+
+            public bool Deliver(string itemId, int amount)
+            {
+                if (string.IsNullOrEmpty(itemId) || amount == 0) return true;
+                var inv = _inventoryProvider();
+                if (inv == null) return false;
+                if (amount > 0)
+                {
+                    return inv.AddById(itemId, amount);
+                }
+                else
+                {
+                    return inv.TryConsume(itemId, -amount);
+                }
+            }
+        }
     }
 }

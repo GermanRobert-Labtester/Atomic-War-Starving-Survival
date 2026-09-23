@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "cultural_archetypes": [
+    {
+      "archetype": "old_world",
+      "prefixes": ["Saint", "Von", "Mac", "O'", "De"],
+      "roots": ["Sterling", "Blackwood", "Vance", "Mercer", "Sinclair", "Holloway", "Cross", "Montgomery"],
+      "suffixes": ["ton", "field", "wood", "ford", "ham"]
+    },
+    {
+      "archetype": "wasteland_forged",
+      "prefixes": ["Ash", "Rust", "Dust", "Iron", "Scrap", "Grit", "Cinder"],
+      "roots": ["walker", "born", "rider", "hand", "smith", "bound", "lock", "fall"],
+      "suffixes": ["son", "kin", "man", "er"]
+    },
+    {
+      "archetype": "shelter_dynastic",
+      "prefixes": ["Bunker", "Vault", "Silo", "Core", "Haven"],
+      "roots": ["Warden", "Keeper", "Mason", "Wright", "Fletcher", "Miller"],
+      "suffixes": ["stead", "well", "guard", "hall"]
+    }
+  ],
+  "templates": [
+    "Vance",
+    "Ironwood",
+    "Sterling",
+    "Ashwalker",
+    "Mercer",
+    "Rustborn",
+    "Blackwood",
+    "Cinderguard",
+    "Holloway",
+    "Dustkin",
+    "Sinclair",
+    "Vaultman"
+  ]
+}

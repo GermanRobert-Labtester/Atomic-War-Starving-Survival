@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "zones": [
+    {
+      "zone_id": "zone_common_bunks",
+      "room_id": "bunks",
+      "zone_name": "Common Quarters",
+      "level": "open",
+      "default_lock_state": "unlocked",
+      "required_clearance": "none",
+      "description": "General resident sleeping quarters and personal locker alcoves open to all inhabitants."
+    },
+    {
+      "zone_id": "zone_mess_hall",
+      "room_id": "mess_hall",
+      "zone_name": "Mess Hall & Canteen",
+      "level": "open",
+      "default_lock_state": "unlocked",
+      "required_clearance": "none",
+      "description": "Communal dining hall and recreation area with unrestricted resident access."
+    },
+    {
+      "zone_id": "zone_workshop",
+      "room_id": "workshop",
+      "zone_name": "Workshop & Fabrication",
+      "level": "restricted",
+      "default_lock_state": "unlocked",
+      "required_clearance": "basic",
+      "description": "Lathes, drills, and welding equipment requiring basic mechanical safety clearance."
+    },
+    {
+      "zone_id": "zone_greenhouse",
+      "room_id": "greenhouse",
+      "zone_name": "Hydroponics Bay",
+      "level": "restricted",
+      "default_lock_state": "unlocked",
+      "required_clearance": "basic",
+      "description": "Sensitive crops, nutrient reservoirs, and seed banks requiring agricultural clearance."
+    },
+    {
+      "zone_id": "zone_medical_bay",
+      "room_id": "medical_bay",
+      "zone_name": "Infirmary & Pharmacy",
+      "level": "locked",
+      "default_lock_state": "locked",
+      "required_clearance": "restricted",
+      "description": "Triage ward, sterile instruments, and controlled narcotics safe requiring medical clearance."
+    },
+    {
+      "zone_id": "zone_armory",
+      "room_id": "armory",
+      "zone_name": "Central Armory",
+      "level": "locked",
+      "default_lock_state": "locked",
+      "required_clearance": "restricted",
+      "description": "Firearms lockers, ballistic plate carriers, and munitions cache requiring defense clearance."
+    },
+    {
+      "zone_id": "zone_command_vault",
+      "room_id": "command_vault",
+      "zone_name": "Command Vault & Communications",
+      "level": "high_security",
+      "default_lock_state": "locked",
+      "required_clearance": "high_security",
+      "description": "Long-range transmitter array, security monitors, and shelter log archives."
+    },
+    {
+      "zone_id": "zone_reactor_core",
+      "room_id": "reactor_core",
+      "zone_name": "Subterranean Reactor Core",
+      "level": "critical",
+      "default_lock_state": "sealed",
+      "required_clearance": "all_access",
+      "description": "Primary power generation reactor and critical shutdown controls."
+    }
+  ]
+}

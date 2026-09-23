@@ -265,6 +265,7 @@ namespace AtomicWar.GodotApp
         public void OnExitGameClicked()
         {
             SaveAll();
+            RecordPlayMetricsSessionEnded();
             ShutdownDebtConsequenceIntegration();
             GetTree().Quit();
         }

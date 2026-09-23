@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "standing_gates": [
+    {
+      "gate_id": "gate_epilogue_derived_state",
+      "wave_origin": 1,
+      "finding_clause": "The epilogue was bound to literal constants (0, true, true, true, true, true) rather than derived campaign state.",
+      "enforcement_rule": "Ending path states must be calculated dynamically from active campaign state and chronicle milestones.",
+      "tier": "per_release",
+      "owner_role": "NarrativeArchitect",
+      "is_enforced": true,
+      "enforcement_ref": "real_campaign_journey",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_port_contract_uncalled",
+      "wave_origin": 1,
+      "finding_clause": "TryResolveMoralChoice had zero call sites across production runtime code.",
+      "enforcement_rule": "Every public Core domain decision method must have a valid host caller or documented consumer.",
+      "tier": "per_push",
+      "owner_role": "CoreIntegrator",
+      "is_enforced": true,
+      "enforcement_ref": "port_contract_gate",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_panel_liveness",
+      "wave_origin": 1,
+      "finding_clause": "Thirty routed consoles reported IsBound = true with no backing gameplay authority.",
+      "enforcement_rule": "UI panels may only report IsBound = true when connected to a live domain system or host session.",
+      "tier": "per_push",
+      "owner_role": "UiLead",
+      "is_enforced": true,
+      "enforcement_ref": "player_panels_uitest",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_content_acceptance_ladder",
+      "wave_origin": 1,
+      "finding_clause": "272 data catalogs were codex-only with EFFECT_PRODUCED = 4.",
+      "enforcement_rule": "Data catalogs must declare behavioral consumers or be classified as passive codex records.",
+      "tier": "nightly",
+      "owner_role": "ContentLead",
+      "is_enforced": true,
+      "enforcement_ref": "content_acceptance_pipeline",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_single_writer_rad",
+      "wave_origin": 2,
+      "finding_clause": "ZoneRadLevel was set by an ad-hoc survivor-id ternary instead of a single authority.",
+      "enforcement_rule": "Environmental radiation levels must be set exclusively by the canonical WeatherSystem and RadiationLedger.",
+      "tier": "per_push",
+      "owner_role": "CoreIntegrator",
+      "is_enforced": true,
+      "enforcement_ref": "triad_drift",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_mass_balance_soak",
+      "wave_origin": 2,
+      "finding_clause": "DegradeRate = 0f and degradation operated on a throwaway copy.",
+      "enforcement_rule": "Item and structure degradation must mutate canonical state with non-zero rates and soak test verification.",
+      "tier": "nightly",
+      "owner_role": "SystemsDesigner",
+      "is_enforced": true,
+      "enforcement_ref": "none",
+      "non_gate_rule": "2026-09-23 decision: not gated. No reproducible degradation soak generator exists (Plan 46A step 1 remains the only partial). Human instrument: the per-release slice scorecard review (docs/qa/SLICE_SCORECARD.md) and a manual 60-day soak run recorded in the wave ledger. Owner: SystemsDesigner. Revisit when the balance-sweep generator lands."
+    },
+    {
+      "gate_id": "gate_inventory_callback_integrity",
+      "wave_origin": 2,
+      "finding_clause": "Inventory.Consume was called with every callback argument null.",
+      "enforcement_rule": "Inventory operations must provide valid callbacks or route through canonical mutation event sinks.",
+      "tier": "per_push",
+      "owner_role": "CoreIntegrator",
+      "is_enforced": true,
+      "enforcement_ref": "port_contract_gate",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_roster_health_needs_binding",
+      "wave_origin": 2,
+      "finding_clause": "Duty roster assignment read no survivor health or needs anywhere.",
+      "enforcement_rule": "Duty assignments must gate on survivor fitness, health status, and acute needs.",
+      "tier": "per_push",
+      "owner_role": "SystemsDesigner",
+      "is_enforced": true,
+      "enforcement_ref": "port_contract_gate",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_claims_rulebook_sync",
+      "wave_origin": 3,
+      "finding_clause": "Three CI gates were red while AGENTS.md cited a class that did not exist.",
+      "enforcement_rule": "Instruction rulebooks must remain synchronized and all referenced types must exist in codebase.",
+      "tier": "per_push",
+      "owner_role": "ToolingEngineer",
+      "is_enforced": true,
+      "enforcement_ref": "agent_rulebooks_sync",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_port_friction_simulation",
+      "wave_origin": 4,
+      "finding_clause": "SimulateDailyFriction was never called in the daily lifecycle tick.",
+      "enforcement_rule": "Daily simulation methods defined in Core must be invoked by the host daily lifecycle pump.",
+      "tier": "per_push",
+      "owner_role": "CoreIntegrator",
+      "is_enforced": true,
+      "enforcement_ref": "port_contract_gate",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_vocabulary_contract_events",
+      "wave_origin": 4,
+      "finding_clause": "20 of 27 emitted event kinds were dropped by a switch statement without a default branch.",
+      "enforcement_rule": "Event kind handlers must handle all declared enum variants or provide an explicit exhaustive fallback.",
+      "tier": "nightly",
+      "owner_role": "CoreIntegrator",
+      "is_enforced": true,
+      "enforcement_ref": "test_core_suite",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_claims_graph_node_truth",
+      "wave_origin": 4,
+      "finding_clause": "A 6-node wasteland graph was described as 261 nodes in documentation.",
+      "enforcement_rule": "Documentation and registry claims must accurately reflect verified graph node counts.",
+      "tier": "per_release",
+      "owner_role": "DocumentationLead",
+      "is_enforced": true,
+      "enforcement_ref": "docs_index_drift",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_port_contract_host_wiring",
+      "wave_origin": 5,
+      "finding_clause": "74 of 147 Core integration seams lacked host callers.",
+      "enforcement_rule": "Declared integration seams must have verified host callers or documented headless test consumers.",
+      "tier": "nightly",
+      "owner_role": "CoreIntegrator",
+      "is_enforced": true,
+      "enforcement_ref": "port_contract_gate",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_input_map_controller_wiring",
+      "wave_origin": 5,
+      "finding_clause": "Zero of 16 navigation, focus, and controller affordances were wired in panels.",
+      "enforcement_rule": "UI panels must support keyboard focus and controller navigation mappings.",
+      "tier": "per_release",
+      "owner_role": "UiLead",
+      "is_enforced": true,
+      "enforcement_ref": "input_map_contract",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_one_authority_belief_profile",
+      "wave_origin": 6,
+      "finding_clause": "InferBeliefProfile guessed data that 72 authored records already contained.",
+      "enforcement_rule": "Survivor beliefs and traits must load from authored data catalogs rather than speculative synthesis.",
+      "tier": "per_push",
+      "owner_role": "SystemsDesigner",
+      "is_enforced": true,
+      "enforcement_ref": "data_integrity",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_survivor_affinity_consumers",
+      "wave_origin": 6,
+      "finding_clause": "Affinity was computed by three separate systems but read by zero consumers.",
+      "enforcement_rule": "Relational affinity calculations must directly impact task outcomes, morale, or cooperation.",
+      "tier": "per_push",
+      "owner_role": "SystemsDesigner",
+      "is_enforced": true,
+      "enforcement_ref": "port_contract_gate",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_reproducible_balance_sweeps",
+      "wave_origin": 7,
+      "finding_clause": "27 balance CSVs existed in repository with no reproducible generator scripts.",
+      "enforcement_rule": "Balance data files must be accompanied by reproducible simulation scripts or generators.",
+      "tier": "per_release",
+      "owner_role": "BalanceSpecialist",
+      "is_enforced": true,
+      "enforcement_ref": "none",
+      "non_gate_rule": "2026-09-23 decision: not gated. No generator currently owns the balance CSV set, so a gate would fail on infrastructure that does not exist. Human instrument: the monthly balance review ritual (docs/balance/REVIEW_RITUAL.md) records which CSVs are reproducible. Owner: BalanceSpecialist. Gate lands with the reproducible-sweep generator."
+    },
+    {
+      "gate_id": "gate_release_prep_versioning",
+      "wave_origin": 7,
+      "finding_clause": "Zero git tags, no changelog entries, and version fell back to unknown.",
+      "enforcement_rule": "Release preparation must enforce semver tags, populated changelog, and verified build metadata.",
+      "tier": "per_release",
+      "owner_role": "ReleaseCaptain",
+      "is_enforced": true,
+      "enforcement_ref": "version_gate",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_asset_manifest_strict_tier",
+      "wave_origin": 8,
+      "finding_clause": "Asset gate checked only 50 of 5,563 IDs and passed unconditionally on fallbacks.",
+      "enforcement_rule": "Strict asset tier verification must validate all declared asset IDs and report unmapped fallbacks.",
+      "tier": "nightly",
+      "owner_role": "ArtLead",
+      "is_enforced": true,
+      "enforcement_ref": "asset_registry",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_hygiene_asset_orphans",
+      "wave_origin": 8,
+      "finding_clause": "122 design mockups inside assets/ with 0 references and 1,189 art orphans.",
+      "enforcement_rule": "Mockups and unreferenced art assets must not reside within export-ready asset directories.",
+      "tier": "nightly",
+      "owner_role": "RepoHygieneOfficer",
+      "is_enforced": true,
+      "enforcement_ref": "legacy_asset_path",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_hygiene_repo_size_artifacts",
+      "wave_origin": 9,
+      "finding_clause": "1.34 GB working copy with Unity playmode test results XML committed at repo root.",
+      "enforcement_rule": "Working directory must remain clean of test result XMLs, cache dumps, and temporary artifacts.",
+      "tier": "per_push",
+      "owner_role": "RepoHygieneOfficer",
+      "is_enforced": true,
+      "enforcement_ref": "whitespace_hygiene",
+      "non_gate_rule": ""
+    },
+    {
+      "gate_id": "gate_provenance_ai_disclosure",
+      "wave_origin": 9,
+      "finding_clause": "AI_DISCLOSURE.md remained a placeholder draft without documented provenance.",
+      "enforcement_rule": "Compliance and disclosure documentation must maintain verified provenance and non-placeholder status.",
+      "tier": "per_release",
+      "owner_role": "DocumentationLead",
+      "is_enforced": true,
+      "enforcement_ref": "none",
+      "non_gate_rule": "2026-09-23 decision: not gated. Provenance is a legal/disclosure judgement, not a mechanical predicate. Human instrument: the per-release provenance review (Plan 57A step 4) signed by DocumentationLead. Owner: DocumentationLead."
+    }
+  ]
+}

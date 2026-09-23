@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "template_id": "agenda_tmpl_theft_hoarder",
+      "name": "Resource Hoarder",
+      "type": "resource_theft",
+      "target_faction_id": "",
+      "target_survivor_id": "",
+      "base_evidence_threshold": 50.0,
+      "description": "Survivor quietly skims dry rations, copper wire, and battery cells into a concealed stash inside an abandoned maintenance shaft.",
+      "clue_descriptions": [
+        "Unaccounted inventory discrepancies detected during weekly supply audit.",
+        "Grease smudges and boot prints found leading behind decommissioned generator casing.",
+        "Survivor noticed lingering nervously near the secondary supply depot after shift change."
+      ]
+    },
+    {
+      "template_id": "agenda_tmpl_prpf_informant",
+      "name": "PRPF Radio Informant",
+      "type": "faction_loyalty",
+      "target_faction_id": "faction_supply_corps",
+      "target_survivor_id": "",
+      "base_evidence_threshold": 60.0,
+      "description": "Survivor maintains a covert shortwave transmitter, transmitting patrol routines and food reserves to PRPF forward scouts.",
+      "clue_descriptions": [
+        "Unregistered radio frequency transmission burst logged on emergency monitoring coil.",
+        "Coded coordinate cipher discovered tucked inside a torn ventilation manual.",
+        "Survivor observed mapping external sentry rotation intervals during dusk watch."
+      ]
+    },
+    {
+      "template_id": "agenda_tmpl_rebel_agitator",
+      "name": "Rebel Sympathizer",
+      "type": "faction_loyalty",
+      "target_faction_id": "faction_rebel",
+      "target_survivor_id": "",
+      "base_evidence_threshold": 60.0,
+      "description": "Survivor distributes underground rebel manifestos, attempting to ferment discontent against shelter authority.",
+      "clue_descriptions": [
+        "Hand-inked rebel slogans found stamped on washroom ductwork.",
+        "Survivor overheard arguing passionately against ration quotas during meal gathering.",
+        "Chalk markings found highlighting blind spots in internal security sweeps."
+      ]
+    },
+    {
+      "template_id": "agenda_tmpl_saboteur_vent",
+      "name": "Ventilation Saboteur",
+      "type": "sabotage",
+      "target_faction_id": "",
+      "target_survivor_id": "",
+      "base_evidence_threshold": 70.0,
+      "description": "Survivor systematically loosens scrubber coupling brackets, accelerating filter degradation to create panic.",
+      "clue_descriptions": [
+        "Fresh tool abrasions discovered on secondary air intake housing bolts.",
+        "Chemical residue consistent with corrosive degreaser detected in water trap.",
+        "Survivor clocked leaving mechanical service corridor without scheduled maintenance slip."
+      ]
+    },
+    {
+      "template_id": "agenda_tmpl_escape_conspiracy",
+      "name": "Wasteland Deserter",
+      "type": "escape_plan",
+      "target_faction_id": "",
+      "target_survivor_id": "",
+      "base_evidence_threshold": 40.0,
+      "description": "Survivor plans to breach the outer airlock under cover of an upcoming dust storm, taking survival gear.",
+      "clue_descriptions": [
+        "Emergency water purification tablets missing from infirmary back room.",
+        "Crude trail map sketch found concealed inside a hollowed book spine.",
+        "Survivor inquiring intensely about vehicle battery charge levels and exterior rad levels."
+      ]
+    },
+    {
+      "template_id": "agenda_tmpl_relic_protector",
+      "name": "Secret Relic Custodian",
+      "type": "secret_protection",
+      "target_faction_id": "",
+      "target_survivor_id": "",
+      "base_evidence_threshold": 55.0,
+      "description": "Survivor guards an uncatalogued pre-war archival drive, terrified that shelter council will destroy or misuse it.",
+      "clue_descriptions": [
+        "Survivor guards personal footlocker with irrational hostility during routine checks.",
+        "Anomalous optical drive hum heard late at night in sleeping quarters.",
+        "Furtive hushed conversations noted whenever pre-war history or technology is discussed."
+      ]
+    }
+  ]
+}

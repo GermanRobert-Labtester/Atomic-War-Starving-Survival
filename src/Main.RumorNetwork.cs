@@ -21,6 +21,15 @@ namespace AtomicWar.GodotApp
             var state = RumorNetworkSaveStore.TryLoad() ?? new RumorNetworkState();
             var system = new RumorSystem(state);
 
+            // Plan 203 — bind the canonical information hubs before the host session
+            // is created, so the hardcoded fallback hubs are never the runtime truth.
+            string hubCatalogPath = CatalogPath.ResolveCatalog("rumor_hubs.json");
+            var hubCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (hubCatalogIo.FileExists(hubCatalogPath))
+            {
+                system.LoadCatalog(hubCatalogIo.ReadAllText(hubCatalogPath));
+            }
+
             _rumorNetwork = new RumorNetworkHostSession(system);
             _rumorNetwork.StateChanged += OnRumorNetworkStateChanged;
             return _rumorNetwork;

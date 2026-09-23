@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "collection_id": "communications_networks",
+  "antenna_types": [
+    {
+      "type_id": "basic_whip",
+      "name": "Omnidirectional Whip Antenna",
+      "range_km": 8.0,
+      "sensitivity": 40,
+      "max_channels": 2,
+      "power_draw_watts": 25,
+      "description": "Flexible steel whip mounted on external shelter intake. Basic local line-of-sight reception."
+    },
+    {
+      "type_id": "directional_yagi",
+      "name": "Directional Yagi Array",
+      "range_km": 25.0,
+      "sensitivity": 65,
+      "max_channels": 4,
+      "power_draw_watts": 60,
+      "description": "Multi-element high-gain beam antenna orientable toward known outposts and faction hubs."
+    },
+    {
+      "type_id": "parabolic_dish",
+      "name": "Reinforced Parabolic Dish",
+      "range_km": 60.0,
+      "sensitivity": 85,
+      "max_channels": 6,
+      "power_draw_watts": 120,
+      "description": "Solid dish reflector capable of pulling faint tropospheric scatter and encrypted military repeaters."
+    },
+    {
+      "type_id": "phased_array",
+      "name": "Subterranean Phased Array",
+      "range_km": 120.0,
+      "sensitivity": 95,
+      "max_channels": 10,
+      "power_draw_watts": 250,
+      "description": "State-of-the-art electronically steered array immune to surface weather buffeting."
+    }
+  ],
+  "default_networks": [
+    {
+      "network_id": "net_shelter_internal",
+      "name": "Shelter Primary Comm Loop",
+      "frequency_mhz": 144.2,
+      "encryption_level": 25,
+      "faction_id": "player_shelter",
+      "is_player_owned": true,
+      "status": "active"
+    },
+    {
+      "network_id": "net_wasteland_emergency",
+      "name": "Wasteland Civil Defense Guard",
+      "frequency_mhz": 121.5,
+      "encryption_level": 0,
+      "faction_id": "neutral",
+      "is_player_owned": false,
+      "status": "active"
+    },
+    {
+      "network_id": "net_garrison_tactical",
+      "name": "Iron Garrison Secure Uplink",
+      "frequency_mhz": 462.55,
+      "encryption_level": 70,
+      "faction_id": "faction_garrison",
+      "is_player_owned": false,
+      "status": "active"
+    },
+    {
+      "network_id": "net_hydro_trade_band",
+      "name": "Hydro Barons Aqueduct Logistics",
+      "frequency_mhz": 27.185,
+      "encryption_level": 35,
+      "faction_id": "faction_hydro_barons",
+      "is_player_owned": false,
+      "status": "active"
+    },
+    {
+      "network_id": "net_children_dawn",
+      "name": "Children of Dawn Ritual Liturgy",
+      "frequency_mhz": 162.4,
+      "encryption_level": 85,
+      "faction_id": "faction_children_of_dawn",
+      "is_player_owned": false,
+      "status": "active"
+    }
+  ],
+  "intercept_templates": [
+    {
+      "template_id": "tmpl_convoy_movement",
+      "faction_id": "faction_garrison",
+      "frequency_mhz": 462.55,
+      "encryption_level": 60,
+      "raw_text": "CONVOY ECHO-4 ROUTING AMMUNITION THROUGH QUARRY JUNCTION AT DUSK. MAINTAIN DISTANCE.",
+      "intelligence_value": 75
+    },
+    {
+      "template_id": "tmpl_water_ration_shipment",
+      "faction_id": "faction_hydro_barons",
+      "frequency_mhz": 27.185,
+      "encryption_level": 35,
+      "raw_text": "BARGE SHIPMENT DELAYED AT NORTH DAM LOCK. WEAKENED PERIMETER UNTIL MIDNIGHT.",
+      "intelligence_value": 55
+    },
+    {
+      "template_id": "tmpl_cult_relic_ritual",
+      "faction_id": "faction_children_of_dawn",
+      "frequency_mhz": 162.4,
+      "encryption_level": 80,
+      "raw_text": "THE CRADLE AWAKENS AT APEX. SISTER TALIA BRINGS THE CORE VIAL BEFORE FIRST DAWN.",
+      "intelligence_value": 85
+    }
+  ]
+}

@@ -89,6 +89,25 @@ namespace Ashfall.Core.Radio
             return catalog;
         }
 
+        /// <summary>
+        /// Load directly from a JSON string — used by integration tests and
+        /// any host that already has the JSON content in memory.
+        /// </summary>
+        public static RadioProgramCatalog LoadFromJson(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return Empty();
+            try
+            {
+                var catalog = JsonSerializer.Deserialize<RadioProgramCatalog>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                }) ?? Empty();
+                catalog.Index();
+                return catalog;
+            }
+            catch (Exception) { /* malformed program catalog: documented fallback to the empty catalog */ return Empty(); }
+        }
+
         private static RadioProgramCatalog Empty()
         {
             var catalog = new RadioProgramCatalog();

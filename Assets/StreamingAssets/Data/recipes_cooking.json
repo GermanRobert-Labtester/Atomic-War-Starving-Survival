@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "recipes": [
+    {
+      "id": "recipe_roasted_meat",
+      "displayName": "Pan-Roasted Surface Game",
+      "description": "Quick sear of raw meat over open flame. Removes superficial fallout and renders fat.",
+      "requiredEquipment": "improvised_stove",
+      "cookTimeMinutes": 20.0,
+      "nutritionValue": 35.0,
+      "radiationRemoval": 0.50,
+      "shelfLifeDays": 3.0,
+      "moraleBonus": 3.0,
+      "inputItems": [
+        { "itemId": "raw_meat", "quantity": 1 }
+      ],
+      "outputItemId": "cooked_meat",
+      "outputQuantity": 1
+    },
+    {
+      "id": "recipe_boiled_meat_broth",
+      "displayName": "Boiled Broth & Game Slices",
+      "description": "Simmered meat in clean water. Leaches out radioactive isotopes into discardable broth.",
+      "requiredEquipment": "basic_boiler",
+      "cookTimeMinutes": 35.0,
+      "nutritionValue": 45.0,
+      "radiationRemoval": 0.85,
+      "shelfLifeDays": 4.0,
+      "moraleBonus": 4.0,
+      "inputItems": [
+        { "itemId": "raw_meat", "quantity": 1 },
+        { "itemId": "clean_water", "quantity": 1 }
+      ],
+      "outputItemId": "cooked_meat",
+      "outputQuantity": 1
+    },
+    {
+      "id": "recipe_hardwood_smoked_strips",
+      "displayName": "Hardwood Smoked Meat Strips",
+      "description": "Slow wood smoke dehydrates meat, yielding long-lasting durable field rations.",
+      "requiredEquipment": "proper_oven",
+      "cookTimeMinutes": 90.0,
+      "nutritionValue": 40.0,
+      "radiationRemoval": 0.70,
+      "shelfLifeDays": 21.0,
+      "moraleBonus": 5.0,
+      "inputItems": [
+        { "itemId": "raw_meat", "quantity": 2 }
+      ],
+      "outputItemId": "item_smoked_meat",
+      "outputQuantity": 2
+    },
+    {
+      "id": "recipe_boiled_frost_tubers",
+      "displayName": "Boiled Frost Tubers",
+      "description": "Steamed starchy tubers softened for easy digestion and carbohydrate replenishment.",
+      "requiredEquipment": "basic_boiler",
+      "cookTimeMinutes": 25.0,
+      "nutritionValue": 25.0,
+      "radiationRemoval": 0.90,
+      "shelfLifeDays": 5.0,
+      "moraleBonus": 2.0,
+      "inputItems": [
+        { "itemId": "crop_hardy_tuber", "quantity": 2 },
+        { "itemId": "clean_water", "quantity": 1 }
+      ],
+      "outputItemId": "item_boiled_roots",
+      "outputQuantity": 2
+    },
+    {
+      "id": "recipe_vegetable_potage",
+      "displayName": "Greenhouse Vegetable Soup",
+      "description": "Nutritious stew of simmered cress, tubers, and iron peas bringing comfort to the shelter.",
+      "requiredEquipment": "basic_boiler",
+      "cookTimeMinutes": 45.0,
+      "nutritionValue": 55.0,
+      "radiationRemoval": 0.80,
+      "shelfLifeDays": 4.0,
+      "moraleBonus": 7.0,
+      "inputItems": [
+        { "itemId": "crop_leafy_green", "quantity": 1 },
+        { "itemId": "crop_hardy_tuber", "quantity": 1 },
+        { "itemId": "clean_water", "quantity": 1 }
+      ],
+      "outputItemId": "item_vegetable_soup",
+      "outputQuantity": 1
+    },
+    {
+      "id": "recipe_ash_grain_flatbread",
+      "displayName": "Baked Ash-Grain Flatbread",
+      "description": "Oven-baked dense hearth bread providing steady sustenance across shifts.",
+      "requiredEquipment": "proper_oven",
+      "cookTimeMinutes": 30.0,
+      "nutritionValue": 30.0,
+      "radiationRemoval": 0.60,
+      "shelfLifeDays": 10.0,
+      "moraleBonus": 3.0,
+      "inputItems": [
+        { "itemId": "item_grain_flour", "quantity": 2 },
+        { "itemId": "clean_water", "quantity": 1 }
+      ],
+      "outputItemId": "item_flatbread",
+      "outputQuantity": 2
+    },
+    {
+      "id": "recipe_canned_grain_stew",
+      "displayName": "Sealed Ash-Grain Potage",
+      "description": "Sterilized pressure-cooked barley and root stew sealed in sanitary tin for deep winter storage.",
+      "requiredEquipment": "industrial_cooker",
+      "cookTimeMinutes": 60.0,
+      "nutritionValue": 60.0,
+      "radiationRemoval": 0.95,
+      "shelfLifeDays": 60.0,
+      "moraleBonus": 6.0,
+      "inputItems": [
+        { "itemId": "crop_ash_grain", "quantity": 2 },
+        { "itemId": "crop_hardy_tuber", "quantity": 1 },
+        { "itemId": "clean_water", "quantity": 1 }
+      ],
+      "outputItemId": "item_canned_grain_stew",
+      "outputQuantity": 2
+    },
+    {
+      "id": "recipe_pemmican_travel_block",
+      "displayName": "Pemmican Expedition Block",
+      "description": "High-density ration combining dried protein and rendered lipids into durable overland blocks.",
+      "requiredEquipment": "proper_oven",
+      "cookTimeMinutes": 75.0,
+      "nutritionValue": 70.0,
+      "radiationRemoval": 0.75,
+      "shelfLifeDays": 45.0,
+      "moraleBonus": 5.0,
+      "inputItems": [
+        { "itemId": "item_smoked_meat", "quantity": 1 },
+        { "itemId": "item_fat_confit", "quantity": 1 }
+      ],
+      "outputItemId": "item_pemmican",
+      "outputQuantity": 2
+    },
+    {
+      "id": "recipe_travel_field_ration",
+      "displayName": "Wasteland Travel Ration",
+      "description": "Nutritionally balanced travel parcel containing meat, flatbread, and pickled vegetables.",
+      "requiredEquipment": "improvised_stove",
+      "cookTimeMinutes": 15.0,
+      "nutritionValue": 65.0,
+      "radiationRemoval": 0.80,
+      "shelfLifeDays": 20.0,
+      "moraleBonus": 6.0,
+      "inputItems": [
+        { "itemId": "item_smoked_meat", "quantity": 1 },
+        { "itemId": "item_flatbread", "quantity": 1 },
+        { "itemId": "item_pickled_tubers", "quantity": 1 }
+      ],
+      "outputItemId": "item_travel_ration",
+      "outputQuantity": 1
+    },
+    {
+      "id": "recipe_dry_salted_meat",
+      "displayName": "Halite-Salted Cured Meat",
+      "description": "Dense flesh strips cured with granular rock salt to resist mold and insect corruption.",
+      "requiredEquipment": "improvised_stove",
+      "cookTimeMinutes": 40.0,
+      "nutritionValue": 40.0,
+      "radiationRemoval": 0.65,
+      "shelfLifeDays": 30.0,
+      "moraleBonus": 3.0,
+      "inputItems": [
+        { "itemId": "raw_meat", "quantity": 2 }
+      ],
+      "outputItemId": "item_salted_meat",
+      "outputQuantity": 2
+    },
+    {
+      "id": "recipe_brined_iron_pea_paste",
+      "displayName": "Brined Iron-Pea Puree",
+      "description": "Salt-brined legume paste rich in vegetal protein and resistant to spoilage.",
+      "requiredEquipment": "basic_boiler",
+      "cookTimeMinutes": 30.0,
+      "nutritionValue": 35.0,
+      "radiationRemoval": 0.80,
+      "shelfLifeDays": 25.0,
+      "moraleBonus": 3.0,
+      "inputItems": [
+        { "itemId": "crop_cold_legume", "quantity": 2 },
+        { "itemId": "clean_water", "quantity": 1 }
+      ],
+      "outputItemId": "item_brined_legume_mash",
+      "outputQuantity": 1
+    },
+    {
+      "id": "recipe_fermented_winter_cress",
+      "displayName": "Crock-Fermented Winter Cress",
+      "description": "Brined and fermented greens creating potent antiscorbutic preservation.",
+      "requiredEquipment": "basic_boiler",
+      "cookTimeMinutes": 20.0,
+      "nutritionValue": 30.0,
+      "radiationRemoval": 0.85,
+      "shelfLifeDays": 30.0,
+      "moraleBonus": 4.0,
+      "inputItems": [
+        { "itemId": "crop_leafy_green", "quantity": 2 }
+      ],
+      "outputItemId": "item_fermented_sauerkraut",
+      "outputQuantity": 1
+    },
+    {
+      "id": "recipe_fat_sealed_confit",
+      "displayName": "Fat-Sealed Root Confit",
+      "description": "Slow simmered roots packed in protective lipid layers to isolate from atmosphere.",
+      "requiredEquipment": "proper_oven",
+      "cookTimeMinutes": 60.0,
+      "nutritionValue": 55.0,
+      "radiationRemoval": 0.70,
+      "shelfLifeDays": 28.0,
+      "moraleBonus": 6.0,
+      "inputItems": [
+        { "itemId": "crop_hardy_tuber", "quantity": 2 },
+        { "itemId": "raw_meat", "quantity": 1 }
+      ],
+      "outputItemId": "item_fat_confit",
+      "outputQuantity": 1
+    },
+    {
+      "id": "recipe_industrial_bulk_stew",
+      "displayName": "Industrial Communal Potage",
+      "description": "High-volume steam-jacket cooker batch producing hot nutritional rations for the entire shelter population.",
+      "requiredEquipment": "industrial_cooker",
+      "cookTimeMinutes": 50.0,
+      "nutritionValue": 50.0,
+      "radiationRemoval": 0.90,
+      "shelfLifeDays": 7.0,
+      "moraleBonus": 5.0,
+      "inputItems": [
+        { "itemId": "raw_meat", "quantity": 2 },
+        { "itemId": "crop_hardy_tuber", "quantity": 2 },
+        { "itemId": "clean_water", "quantity": 2 }
+      ],
+      "outputItemId": "cooked_meat",
+      "outputQuantity": 4
+    },
+    {
+      "id": "recipe_phosphor_mushroom_infusion",
+      "displayName": "Sedative Fungal Broth",
+      "description": "Gentle boiling of subterranean phosphor caps yielding a calming, pain-relieving tea.",
+      "requiredEquipment": "basic_boiler",
+      "cookTimeMinutes": 15.0,
+      "nutritionValue": 20.0,
+      "radiationRemoval": 0.90,
+      "shelfLifeDays": 3.0,
+      "moraleBonus": 10.0,
+      "inputItems": [
+        { "itemId": "crop_biolum_mushroom", "quantity": 2 },
+        { "itemId": "clean_water", "quantity": 1 }
+      ],
+      "outputItemId": "item_vegetable_soup",
+      "outputQuantity": 1
+    }
+  ]
+}

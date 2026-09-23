@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "blocs": [
+    {
+      "bloc_id": "bloc_security_first",
+      "display_name": "Security & Order Vanguard",
+      "description": "Hardened survivors prioritizing fortification, strict curfews, and physical survival over individual liberties.",
+      "core_ideology": "Authoritarian",
+      "supported_policy_scopes": ["curfew", "defense", "ration_triage"],
+      "opposed_policy_scopes": ["open_admission", "luxury_distribution"],
+      "baseline_weight": 25,
+      "grievance_decay_rate": 5
+    },
+    {
+      "bloc_id": "bloc_egalitarian_commons",
+      "display_name": "Communal Equality Union",
+      "description": "Advocates of shared burdens, equal ration portions, and consensual community council governance.",
+      "core_ideology": "Collectivist",
+      "supported_policy_scopes": ["equal_rations", "open_council", "shared_work"],
+      "opposed_policy_scopes": ["ration_triage", "leader_only", "privilege_allotment"],
+      "baseline_weight": 30,
+      "grievance_decay_rate": 8
+    },
+    {
+      "bloc_id": "bloc_free_pioneers",
+      "display_name": "Frontier Freeholders",
+      "description": "Scavengers and tradesfolk demanding autonomy, minimal internal regulation, and personal possession rights.",
+      "core_ideology": "Libertarian",
+      "supported_policy_scopes": ["trade_freedom", "curfew_disabled", "private_keepsakes"],
+      "opposed_policy_scopes": ["curfew", "work_conscription", "resource_confiscation"],
+      "baseline_weight": 20,
+      "grievance_decay_rate": 6
+    },
+    {
+      "bloc_id": "bloc_heritage_archive",
+      "display_name": "Old World Preservationists",
+      "description": "Scholars, elders, and archivists committed to historical knowledge, medical ethics, and civil education.",
+      "core_ideology": "Traditionalist",
+      "supported_policy_scopes": ["education", "medical_priority", "cultural_preservation"],
+      "opposed_policy_scopes": ["scrap_books", "forced_labor", "irradiated_supplement"],
+      "baseline_weight": 25,
+      "grievance_decay_rate": 7
+    }
+  ]
+}

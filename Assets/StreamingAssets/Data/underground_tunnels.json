@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "junctions": [
+    {
+      "id": "jct_shelter_subbasement",
+      "name": "Shelter Sub-Basement Sump",
+      "connected_segments": ["seg_shelter_to_depot", "seg_shelter_to_bunker"],
+      "has_resource": false,
+      "resource_type": ""
+    },
+    {
+      "id": "jct_mining_shaft_central",
+      "name": "Central Mine Hub",
+      "connected_segments": ["seg_shelter_to_depot", "seg_depot_to_radzone"],
+      "has_resource": true,
+      "resource_type": "scrap_metal"
+    },
+    {
+      "id": "jct_military_vault_access",
+      "name": "Military Vault Airshaft",
+      "connected_segments": ["seg_shelter_to_bunker"],
+      "has_resource": true,
+      "resource_type": "lead_ore"
+    }
+  ],
+  "segments": [
+    {
+      "id": "seg_shelter_to_depot",
+      "name": "Old Utility Conduit A",
+      "from": "loc_holdfast",
+      "to": "loc_cut_abandoned_depot",
+      "length_hours": 1.5,
+      "difficulty": 1,
+      "integrity": 85.0,
+      "hazards": ["Darkness"]
+    },
+    {
+      "id": "seg_depot_to_radzone",
+      "name": "Subterranean Mine Rail B",
+      "from": "loc_cut_abandoned_depot",
+      "to": "loc_cut_radiation_zone_alpha",
+      "length_hours": 3.0,
+      "difficulty": 2,
+      "integrity": 70.0,
+      "hazards": ["ToxicGas", "CollapseRisk"]
+    },
+    {
+      "id": "seg_shelter_to_bunker",
+      "name": "Hardened Emergency Escape Duct",
+      "from": "loc_holdfast",
+      "to": "jct_military_vault_access",
+      "length_hours": 2.0,
+      "difficulty": 2,
+      "integrity": 95.0,
+      "hazards": ["Flooding"]
+    }
+  ]
+}

@@ -156,7 +156,7 @@ namespace AtomicWar.GodotApp.UI
             hostContainer.AddChild(_shell);
             AddChild(hostContainer);
 
-            _shell.SetSidebar(new[]
+            _sidebar = _shell.SetSidebar(new[]
             {
                 new AshfallSidebar.Item { Id = "filter_all",       Label = "Filter: All",          Hint = "everything" },
                 new AshfallSidebar.Item { Id = "filter_consumable",Label = "Filter: Consumable",   Hint = "food · water" },

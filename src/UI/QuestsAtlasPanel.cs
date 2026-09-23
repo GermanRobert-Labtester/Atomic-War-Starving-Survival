@@ -127,7 +127,6 @@ public partial class QuestsAtlasPanel : Control, IBindablePanel
 
         body.AddChild(actionRow);
         _shell.SetContent(body);
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("QUEST DETAIL");
         RefreshView();
     }
 

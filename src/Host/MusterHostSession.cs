@@ -127,6 +127,12 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
+        /// <summary>Optional living-survivor resolver port (Plan 25 · 25G census binding).</summary>
+        public Func<string, bool>? SubjectLivingResolver { get; set; }
+
+        /// <summary>Optional item sink for faction action resolution rewards/penalties.</summary>
+        public IFactionActionItemSink? ItemSink { get; set; }
+
         // ── Faction actions (Plan 25 · 25A) ────────────────────────────
 
         /// <summary>Resolve a player choice on an available faction action.
@@ -134,7 +140,7 @@ namespace AtomicWar.GodotApp
         /// record persists so a reload cannot re-apply it.</summary>
         public bool ResolveFactionAction(string actionId, string choiceId, int day)
         {
-            bool ok = Board.Resolve(actionId, choiceId, day);
+            bool ok = Board.Resolve(actionId, choiceId, day, ItemSink);
             LastEvent = ok
                 ? $"Faction action resolved: {actionId} / {choiceId} (day {day})."
                 : $"Faction action rejected: {actionId} is not available on day {day}.";
@@ -168,7 +174,7 @@ namespace AtomicWar.GodotApp
         /// delivery once into the muster state's epilogue-facing ledger.</summary>
         public List<WitnessDelivery> DeliverWitnesses(int day, int maxCount = 0)
         {
-            var gate = new BoardFlagEligibility(Board);
+            var gate = new BoardFlagEligibility(Board, SubjectLivingResolver);
             var deliveries = WitnessSelector.Select(Witnesses, day, gate, maxCount);
             for (int i = 0; i < deliveries.Count; i++)
                 Engine.RecordWitnessResult(
@@ -184,9 +190,14 @@ namespace AtomicWar.GodotApp
         private sealed class BoardFlagEligibility : IWitnessEligibility
         {
             private readonly FactionActionBoard _board;
-            public BoardFlagEligibility(FactionActionBoard board) => _board = board;
+            private readonly Func<string, bool>? _isSubjectAlive;
+            public BoardFlagEligibility(FactionActionBoard board, Func<string, bool>? isSubjectAlive = null)
+            {
+                _board = board;
+                _isSubjectAlive = isSubjectAlive;
+            }
             public bool IsFlagSet(string flagId) => _board.IsFlagSet(flagId);
-            public bool IsSubjectAlive(string subjectId) => true; // census binding deferred (25G)
+            public bool IsSubjectAlive(string subjectId) => _isSubjectAlive != null ? _isSubjectAlive(subjectId) : true;
             public bool IsFactionPresent(string factionId) =>
                 factionId switch
                 {

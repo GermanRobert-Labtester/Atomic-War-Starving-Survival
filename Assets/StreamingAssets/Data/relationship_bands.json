@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "comment": "Plan 44 / C2[19] - Canonical relationship bands and mechanical outcome modifiers",
+  "bands": [
+    {
+      "band_id": "hostile",
+      "display_name": "Hostile",
+      "min_affinity": -100.0,
+      "max_affinity": -40.0,
+      "working_modifier": -0.25,
+      "morale_modifier": -0.15,
+      "error_risk_modifier": 0.25,
+      "expedition_risk_modifier": 0.20,
+      "separation_modifier": 0.0,
+      "caregiving_modifier": -0.20,
+      "training_modifier": -0.25,
+      "note_key": "relations.band.hostile"
+    },
+    {
+      "band_id": "strained",
+      "display_name": "Strained",
+      "min_affinity": -40.0,
+      "max_affinity": -10.0,
+      "working_modifier": -0.10,
+      "morale_modifier": -0.05,
+      "error_risk_modifier": 0.10,
+      "expedition_risk_modifier": 0.08,
+      "separation_modifier": 0.0,
+      "caregiving_modifier": -0.10,
+      "training_modifier": -0.10,
+      "note_key": "relations.band.strained"
+    },
+    {
+      "band_id": "cordial",
+      "display_name": "Cordial",
+      "min_affinity": -10.0,
+      "max_affinity": 25.0,
+      "working_modifier": 0.0,
+      "morale_modifier": 0.0,
+      "error_risk_modifier": 0.0,
+      "expedition_risk_modifier": 0.0,
+      "separation_modifier": 0.0,
+      "caregiving_modifier": 0.0,
+      "training_modifier": 0.0,
+      "note_key": "relations.band.cordial"
+    },
+    {
+      "band_id": "close",
+      "display_name": "Close",
+      "min_affinity": 25.0,
+      "max_affinity": 60.0,
+      "working_modifier": 0.10,
+      "morale_modifier": 0.08,
+      "error_risk_modifier": -0.08,
+      "expedition_risk_modifier": -0.06,
+      "separation_modifier": -0.05,
+      "caregiving_modifier": 0.15,
+      "training_modifier": 0.15,
+      "note_key": "relations.band.close"
+    },
+    {
+      "band_id": "bonded",
+      "display_name": "Bonded",
+      "min_affinity": 60.0,
+      "max_affinity": 100.0,
+      "working_modifier": 0.20,
+      "morale_modifier": 0.15,
+      "error_risk_modifier": -0.15,
+      "expedition_risk_modifier": -0.12,
+      "separation_modifier": -0.10,
+      "caregiving_modifier": 0.25,
+      "training_modifier": 0.25,
+      "note_key": "relations.band.bonded"
+    }
+  ]
+}

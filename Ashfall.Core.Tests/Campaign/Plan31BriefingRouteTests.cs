@@ -74,7 +74,10 @@ namespace Ashfall.Core.Tests.Campaign
             var report = DailyBriefingReportBuilder.BuildFromDayEvents(3, 3,
                 new[] { new DayStateChangeEvent("sanitation_spill", "sanitation", "room_cistern") });
 
-            var entry = Assert.Single(report.Sections, s => s.Title == DayEventVocabulary.GenericSectionTitle).Entries[0];
+            // Plan 31 / D11-B closed-section routing: sanitation_spill is a Hazard event,
+            // routed to its semantic section ("Warnings").
+            var expectedSection = DayEventVocabulary.SectionTitleFor(DayEventVocabulary.GetSemanticKind("sanitation_spill"));
+            var entry = Assert.Single(report.Sections, s => s.Title == expectedSection).Entries[0];
             Assert.Equal("sanitation_spill", entry.Kind);
             Assert.True(entry.IsActionable);
             Assert.Equal("panel:sanitation", entry.DeepLinkRoute);

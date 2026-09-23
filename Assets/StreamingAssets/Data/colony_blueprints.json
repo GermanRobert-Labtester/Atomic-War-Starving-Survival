@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "colony_types": [
+    {
+      "type_id": "outpost",
+      "display_name": "Scout Outpost",
+      "description": "Small military presence for forward scouting and early warning.",
+      "base_defense": 50.0,
+      "base_capacity": 4,
+      "required_supplies": 20.0
+    },
+    {
+      "type_id": "settlement",
+      "display_name": "Civilian Settlement",
+      "description": "General purpose civilian population hub with balanced resource production.",
+      "base_defense": 45.0,
+      "base_capacity": 10,
+      "required_supplies": 50.0
+    },
+    {
+      "type_id": "fortress",
+      "display_name": "Military Fortress",
+      "description": "Heavily defended stronghold projecting power and regional control.",
+      "base_defense": 80.0,
+      "base_capacity": 8,
+      "required_supplies": 60.0
+    },
+    {
+      "type_id": "trading_post",
+      "display_name": "Commercial Trading Post",
+      "description": "Commerce hub facilitating trade with regional factions and travelers.",
+      "base_defense": 40.0,
+      "base_capacity": 6,
+      "required_supplies": 35.0
+    },
+    {
+      "type_id": "farming_commune",
+      "display_name": "Farming Commune",
+      "description": "Agricultural colony focusing on sustainable food generation and soil regeneration.",
+      "base_defense": 30.0,
+      "base_capacity": 8,
+      "required_supplies": 40.0
+    }
+  ],
+  "buildings": [
+    {
+      "building_id": "col_bldg_bunkhouse",
+      "name": "Expedition Bunkhouse",
+      "category": "housing",
+      "capacity": 4,
+      "defense_bonus": 0.0,
+      "morale_bonus": 5.0,
+      "material_cost": 25.0
+    },
+    {
+      "building_id": "col_bldg_watchtower",
+      "name": "Perimeter Watchtower",
+      "category": "defense",
+      "capacity": 2,
+      "defense_bonus": 25.0,
+      "morale_bonus": 2.0,
+      "material_cost": 30.0
+    },
+    {
+      "building_id": "col_bldg_supply_depot",
+      "name": "Reinforced Supply Depot",
+      "category": "storage",
+      "capacity": 150,
+      "defense_bonus": 5.0,
+      "morale_bonus": 0.0,
+      "material_cost": 35.0
+    },
+    {
+      "building_id": "col_bldg_hydroponics",
+      "name": "Compact Hydroponics Basin",
+      "category": "farming",
+      "capacity": 2,
+      "defense_bonus": 0.0,
+      "morale_bonus": 4.0,
+      "material_cost": 40.0
+    },
+    {
+      "building_id": "col_bldg_comm_relay",
+      "name": "Signal Relay Station",
+      "category": "infrastructure",
+      "capacity": 1,
+      "defense_bonus": 0.0,
+      "morale_bonus": 6.0,
+      "material_cost": 20.0
+    },
+    {
+      "building_id": "col_bldg_field_clinic",
+      "name": "Field Clinic Post",
+      "category": "medical",
+      "capacity": 2,
+      "defense_bonus": 0.0,
+      "morale_bonus": 8.0,
+      "material_cost": 45.0
+    }
+  ]
+}

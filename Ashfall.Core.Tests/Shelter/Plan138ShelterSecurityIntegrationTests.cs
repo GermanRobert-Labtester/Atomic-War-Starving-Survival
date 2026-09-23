@@ -91,5 +91,106 @@ namespace Ashfall.Core.Tests.Shelter
             Assert.Equal(original.ActiveBreachCount, restored.ActiveBreachCount);
             Assert.Equal(original.GetClearance("surv_1"), restored.GetClearance("surv_1"));
         }
+
+        private static string GetDataPath(string filename)
+        {
+            var current = new System.IO.DirectoryInfo(AppContext.BaseDirectory);
+            while (current != null)
+            {
+                string candidate = System.IO.Path.Combine(current.FullName, "Assets", "StreamingAssets", "Data", filename);
+                if (System.IO.File.Exists(candidate)) return candidate;
+                current = current.Parent;
+            }
+            return System.IO.Path.Combine("Assets", "StreamingAssets", "Data", filename);
+        }
+
+        [Fact]
+        public void LoadCatalog_FromCanonicalJson_ConfiguresAllShelterZones()
+        {
+            var system = new ShelterSecuritySystem();
+            string jsonPath = GetDataPath("shelter_security_zones.json");
+
+            Assert.True(System.IO.File.Exists(jsonPath), $"Canonical file must exist at {jsonPath}");
+            string json = System.IO.File.ReadAllText(jsonPath);
+
+            system.LoadCatalog(json);
+            Assert.True(system.ZoneDefinitions.Count >= 8);
+            Assert.True(system.ZoneCount >= 8);
+
+            var armory = system.GetZone("zone_armory");
+            Assert.NotNull(armory);
+            Assert.Equal(SecurityLevel.Locked, armory.Level);
+            Assert.Equal(DoorLockState.Locked, armory.LockState);
+
+            var reactor = system.GetZone("zone_reactor_core");
+            Assert.NotNull(reactor);
+            Assert.Equal(SecurityLevel.Critical, reactor.Level);
+            Assert.Equal(DoorLockState.Sealed, reactor.LockState);
+
+            var quarters = system.GetZone("zone_common_bunks");
+            Assert.NotNull(quarters);
+            Assert.Equal(SecurityLevel.Open, quarters.Level);
+            Assert.Equal(DoorLockState.Unlocked, quarters.LockState);
+        }
+
+        [Fact]
+        public void AlarmRelayBridge_FiresOnBreachAttempt()
+        {
+            var system = new ShelterSecuritySystem();
+            SecurityZone? breachedZone = null;
+            SecurityBreach? breachDetails = null;
+            system.AlarmRelayBridge = (zone, breach) =>
+            {
+                breachedZone = zone;
+                breachDetails = breach;
+            };
+
+            system.ConfigureZone("zone_armory", "room_armory", "Main Armory", SecurityLevel.Locked, DoorLockState.Locked);
+            system.GrantClearance("surv_recruit", ClearanceLevel.Basic);
+
+            // Attempt unauthorized access
+            var result = system.RequestAccess("surv_recruit", "zone_armory", 1);
+            Assert.False(result.IsGranted);
+            Assert.True(result.TriggeredAlarm);
+
+            Assert.NotNull(breachedZone);
+            Assert.Equal("zone_armory", breachedZone.ZoneId);
+            Assert.NotNull(breachDetails);
+            Assert.Equal("surv_recruit", breachDetails.IntruderId);
+            Assert.False(breachDetails.IsResolved);
+        }
+
+        [Fact]
+        public void LockdownStateBridge_FiresOnLockdownToggle()
+        {
+            var system = new ShelterSecuritySystem();
+            bool? lastLockdownReported = null;
+            system.LockdownStateBridge = (active) => lastLockdownReported = active;
+
+            system.SetShelterLockdown(true, 1);
+            Assert.True(lastLockdownReported);
+
+            system.SetShelterLockdown(false, 1);
+            Assert.False(lastLockdownReported);
+        }
+
+        [Fact]
+        public void SecurityDenialLogger_LogsAllUnauthorizedAttempts()
+        {
+            var system = new ShelterSecuritySystem();
+            var denialLogs = new List<(string survivor, string zone, string reason)>();
+            system.SecurityDenialLogger = (survivor, zone, reason) =>
+            {
+                denialLogs.Add((survivor, zone, reason));
+            };
+
+            system.ConfigureZone("zone_vault", "room_vault", "Vault", SecurityLevel.HighSecurity);
+            system.RequestAccess("surv_guest", "zone_vault", 1);
+
+            Assert.Single(denialLogs);
+            Assert.Equal("surv_guest", denialLogs[0].survivor);
+            Assert.Equal("zone_vault", denialLogs[0].zone);
+            Assert.Contains("Insufficient clearance", denialLogs[0].reason);
+        }
     }
 }

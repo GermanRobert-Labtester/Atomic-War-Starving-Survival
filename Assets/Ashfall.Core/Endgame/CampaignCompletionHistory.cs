@@ -60,6 +60,55 @@ namespace Ashfall.Core.Endgame
     }
 
     /// <summary>
+    /// EN-07 / Chronicle & Aspiration read model:
+    /// Pure aggregated summary of completed campaign runs, statistics, and milestones.
+    /// Does not perform IO, mutate history, or award gameplay progression.
+    /// </summary>
+    public sealed class CompletionHistorySummary
+    {
+        public int TotalCompletions { get; }
+        public int TotalDaysSurvived { get; }
+        public double AverageDaysSurvived { get; }
+        public int TotalDeathsRecorded { get; }
+        public int TotalLivingDwellers { get; }
+        public IReadOnlyCollection<string> DistinctEndingIds { get; }
+        public int GrandTreatiesSigned { get; }
+        public int TempestsDecommissioned { get; }
+        public int DebtLedgersBurned { get; }
+        public int ChildrenSurvivedCount { get; }
+        public int VelSecretsExposed { get; }
+        public IReadOnlyDictionary<string, int> DifficultyCompletions { get; }
+
+        public CompletionHistorySummary(
+            int totalCompletions,
+            int totalDaysSurvived,
+            double averageDaysSurvived,
+            int totalDeathsRecorded,
+            int totalLivingDwellers,
+            IEnumerable<string> distinctEndingIds,
+            int grandTreatiesSigned,
+            int tempestsDecommissioned,
+            int debtLedgersBurned,
+            int childrenSurvivedCount,
+            int velSecretsExposed,
+            IDictionary<string, int> difficultyCompletions)
+        {
+            TotalCompletions = totalCompletions;
+            TotalDaysSurvived = totalDaysSurvived;
+            AverageDaysSurvived = averageDaysSurvived;
+            TotalDeathsRecorded = totalDeathsRecorded;
+            TotalLivingDwellers = totalLivingDwellers;
+            DistinctEndingIds = new List<string>(distinctEndingIds ?? Array.Empty<string>()).AsReadOnly();
+            GrandTreatiesSigned = grandTreatiesSigned;
+            TempestsDecommissioned = tempestsDecommissioned;
+            DebtLedgersBurned = debtLedgersBurned;
+            ChildrenSurvivedCount = childrenSurvivedCount;
+            VelSecretsExposed = velSecretsExposed;
+            DifficultyCompletions = new Dictionary<string, int>(difficultyCompletions ?? new Dictionary<string, int>());
+        }
+    }
+
+    /// <summary>
     /// Read-only input supplied by the existing host composition when an ending is sealed.
     /// The caller owns run identity and ending selection; this type cannot select an ending.
     /// </summary>
@@ -236,6 +285,73 @@ namespace Ashfall.Core.Endgame
                 }
             }
             return clone;
+        }
+
+        /// <summary>
+        /// Pure aggregation read model generator for chronicle and ledger strips.
+        /// </summary>
+        public static CompletionHistorySummary Summarize(CampaignCompletionHistory? history)
+        {
+            if (history == null || history.records == null || history.records.Count == 0)
+            {
+                return new CompletionHistorySummary(
+                    0, 0, 0.0, 0, 0,
+                    Array.Empty<string>(),
+                    0, 0, 0, 0, 0,
+                    new Dictionary<string, int>());
+            }
+
+            int totalCompletions = history.records.Count;
+            int totalDays = 0;
+            int totalDeaths = 0;
+            int totalLiving = 0;
+            int grandTreaties = 0;
+            int tempests = 0;
+            int debtBurned = 0;
+            int children = 0;
+            int velSecrets = 0;
+            var endings = new HashSet<string>(StringComparer.Ordinal);
+            var diffs = new Dictionary<string, int>(StringComparer.Ordinal);
+
+            for (int i = 0; i < history.records.Count; i++)
+            {
+                var r = history.records[i];
+                if (r == null) continue;
+
+                totalDays += r.daysSurvived;
+                totalDeaths += r.deathsRecorded;
+                totalLiving += r.livingDwellers;
+                if (r.grandTreatySigned) grandTreaties++;
+                if (r.tempestDecommissioned) tempests++;
+                if (r.debtLedgersBurned) debtBurned++;
+                if (r.childrenSurvived) children++;
+                if (r.velSecretExposed) velSecrets++;
+
+                if (!string.IsNullOrEmpty(r.endingId))
+                    endings.Add(r.endingId);
+
+                string diff = string.IsNullOrEmpty(r.difficultyPresetId) ? "unspecified" : r.difficultyPresetId;
+                if (!diffs.TryGetValue(diff, out int count))
+                    diffs[diff] = 1;
+                else
+                    diffs[diff] = count + 1;
+            }
+
+            double avgDays = totalCompletions > 0 ? (double)totalDays / totalCompletions : 0.0;
+
+            return new CompletionHistorySummary(
+                totalCompletions,
+                totalDays,
+                avgDays,
+                totalDeaths,
+                totalLiving,
+                endings,
+                grandTreaties,
+                tempests,
+                debtBurned,
+                children,
+                velSecrets,
+                diffs);
         }
 
         public static string Serialize(CampaignCompletionHistory history)

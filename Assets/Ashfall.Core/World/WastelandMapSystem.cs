@@ -582,6 +582,31 @@ namespace Ashfall.Core.World
             return list;
         }
 
+        public MapRoute? GetRoute(string fromId, string toId)
+        {
+            if (string.IsNullOrEmpty(fromId) || string.IsNullOrEmpty(toId)) return null;
+            for (int i = 0; i < _routes.Count; i++)
+            {
+                if (_routes[i].From == fromId && _routes[i].To == toId)
+                    return _routes[i];
+            }
+            return null;
+        }
+
+        /// <summary>Checks whether the route between two nodes has the "flooded" tag (D16).</summary>
+        public bool IsRouteFlooded(string fromId, string toId)
+        {
+            var route = GetRoute(fromId, toId);
+            return route != null && route.IsFlooded;
+        }
+
+        /// <summary>Checks whether the route between two nodes has the specified tag (D16).</summary>
+        public bool HasRouteTag(string fromId, string toId, string tag)
+        {
+            var route = GetRoute(fromId, toId);
+            return route != null && route.HasTag(tag);
+        }
+
         /// <summary>
         /// Deterministic BFS shortest path (by distance) between two
         /// discovered nodes. Returns an empty list when no path exists.
@@ -629,6 +654,58 @@ namespace Ashfall.Core.World
             }
             rev.Reverse();
             return rev;
+        }
+
+        /// <summary>
+        /// EN-02 / UNBLOCK-05: Projects a living map route with edge conditions,
+        /// distance, hops, and terrain tags without rebuilding GraphTravelPlanner.
+        /// </summary>
+        public LivingMapRouteProjection ProjectLivingMapRoute(string fromId, string toId)
+        {
+            if (string.IsNullOrEmpty(fromId) || string.IsNullOrEmpty(toId))
+                return LivingMapRouteProjection.Empty(fromId, toId);
+
+            var path = PlanRoute(fromId, toId);
+            if (path == null || path.Count == 0)
+                return LivingMapRouteProjection.Empty(fromId, toId);
+
+            if (fromId == toId)
+                return new LivingMapRouteProjection(fromId, toId, path, 0f, 0, false, false, Array.Empty<string>(), true);
+
+            float totalDistKm = 0f;
+            bool hasFlooded = false;
+            bool hasAmphibious = false;
+            var tags = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                string u = path[i];
+                string v = path[i + 1];
+                var edge = GetRoute(u, v);
+                if (edge != null)
+                {
+                    totalDistKm += edge.DistanceKm;
+                    if (edge.IsFlooded) hasFlooded = true;
+                    if (edge.IsAmphibious) hasAmphibious = true;
+                    if (edge.Tags != null)
+                    {
+                        for (int t = 0; t < edge.Tags.Count; t++)
+                            tags.Add(edge.Tags[t]);
+                    }
+                }
+            }
+
+            int hops = path.Count - 1;
+            return new LivingMapRouteProjection(
+                fromId,
+                toId,
+                path,
+                totalDistKm,
+                hops,
+                hasFlooded,
+                hasAmphibious,
+                tags,
+                true);
         }
 
         public ExpeditionEstimate EstimateRoute(
@@ -945,6 +1022,27 @@ namespace Ashfall.Core.World
 
         /// <summary>Toxic chemical/fallout contamination in water (0.0 clean to 1.0 deadly).</summary>
         public float ToxicContamination = 0f;
+
+        /// <summary>Optional route condition and terrain tags (e.g. "flooded", "amphibious", "hazard_high") (D16).</summary>
+        public List<string> Tags = new List<string>();
+
+        /// <summary>Returns true if the route has the specified tag (case-insensitive).</summary>
+        public bool HasTag(string tag)
+        {
+            if (Tags == null || string.IsNullOrWhiteSpace(tag)) return false;
+            for (int i = 0; i < Tags.Count; i++)
+            {
+                if (string.Equals(Tags[i], tag, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>Whether this route is marked with the "flooded" tag (D16).</summary>
+        public bool IsFlooded => HasTag("flooded");
+
+        /// <summary>Whether this route is marked with the "amphibious" tag (D16).</summary>
+        public bool IsAmphibious => HasTag("amphibious");
 
         /// <summary>Initializes a new empty instance of <see cref="MapRoute"/>.</summary>
         public MapRoute() { }

@@ -229,6 +229,28 @@ namespace AtomicWar.GodotApp
             ComposeCampaign();
             GrantDifficultyStartingBonusesOnce();
 
+            // Plan 140 — Apply generational legacy starting context to New Game
+            var legacyContext = PrepareStartingCampaignContext();
+            if (legacyContext != null)
+            {
+                if (legacyContext.factionModifiers != null && _yearOfAsh?.FactionWar != null)
+                {
+                    foreach (var kvp in legacyContext.factionModifiers)
+                    {
+                        _yearOfAsh.FactionWar.ModifyStanding(kvp.Key, (int)kvp.Value);
+                    }
+                }
+                if (legacyContext.inheritedTraits != null && legacyContext.inheritedTraits.Count > 0 && _journal != null)
+                {
+                    var traitNames = legacyContext.inheritedTraits.Select(t => t.name);
+                    _journal.TryAddRawEntry(
+                        $"legacy_traits_{_simDay}",
+                        $"Inherited {legacyContext.inheritedTraits.Count} generational legacy trait(s): {string.Join(", ", traitNames)}.",
+                        null!,
+                        _simDay);
+                }
+            }
+
             _openingProtocolModal.Bind(_startingLevel);
             // Veteran mode (TutorialMode 2): land on the clean game view instead
             // of forcing the protocol modal. It stays openable via its registry
@@ -518,6 +540,11 @@ namespace AtomicWar.GodotApp
                     _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice);
                     _factionsPanel.Open();
                     break;
+                case "faction_culture_codex":
+                    SetupMuster();
+                    _factionCultureCodexPanel.Bind(_muster);
+                    _factionCultureCodexPanel.Open();
+                    break;
                 case "quests":
                     SetupHoldfastRuntime();
                     SetupExpansions();
@@ -609,6 +636,9 @@ namespace AtomicWar.GodotApp
                 case "epilogue":
                     _epiloguePanel.Bind(BuildCurrentEpilogueContext());
                     _epiloguePanel.Open();
+                    break;
+                case "chronicle":
+                    OpenChroniclePanel();
                     break;
                 case "verdict":
                     SetupVerdict();

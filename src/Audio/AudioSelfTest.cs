@@ -7,6 +7,7 @@ using System.Text.Json;
 using Ashfall.Core;
 using Ashfall.Core.Combat;
 using Ashfall.Core.Disease;
+using Ashfall.Core.Excavation;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Radiation;
@@ -759,6 +760,51 @@ namespace AtomicWar.GodotApp.Audio
                 ref pass, ref fail);
             expansionBridge2.Dispose();
 
+            // ── Plans 46–49 Shelter-Operations Audio Bridge ──────────
+            var shelterOpsEmitted = new List<string>();
+            var shelterOpsBridge = new ShelterOperationsAudioBridge(shelterOpsEmitted.Add);
+            var opsInventory = new Ashfall.Core.Inventory.Inventory { Capacity = 50, MaxWeight = 500f };
+            var opsExcavation = new ExcavationHazardSystem(opsInventory, new SeededRng(606));
+            var opsProvider = new TestShelterOperationsAudioProvider(excavation: opsExcavation);
+
+            // Simulate per-frame RefreshDomainBindings: repeated SubscribeAll must not duplicate handlers.
+            for (int i = 0; i < 10; i++)
+            {
+                shelterOpsBridge.SubscribeAll(opsProvider);
+            }
+
+            opsExcavation.AddMethane("sector_ops_probe", ExcavationHazardSystem.MethaneIgnitionThresholdPpm + 100);
+            Check("ShelterOperationsAudioBridge emits exactly one methane ignition klaxon on threshold crossing",
+                shelterOpsEmitted.Count == 1 && shelterOpsEmitted[0] == AudioCueCatalog.DangerAlarmKlaxon,
+                ref pass, ref fail);
+
+            // Rebound provider must detach the previous excavation session.
+            var staleExcavation = opsExcavation;
+            var freshExcavation = new ExcavationHazardSystem(new Ashfall.Core.Inventory.Inventory { Capacity = 50, MaxWeight = 500f }, new SeededRng(607));
+            shelterOpsBridge.SubscribeAll(new TestShelterOperationsAudioProvider(excavation: freshExcavation));
+            staleExcavation.AddMethane("sector_ops_probe", 500);
+            Check("Rebound ShelterOperationsAudioBridge ignores the stale excavation session",
+                shelterOpsEmitted.Count == 1, ref pass, ref fail);
+            freshExcavation.AddMethane("sector_ops_probe", ExcavationHazardSystem.MethaneIgnitionThresholdPpm + 100);
+            Check("Rebound ShelterOperationsAudioBridge triggers on the active excavation session",
+                shelterOpsEmitted.Count == 2, ref pass, ref fail);
+
+            // Dispose must detach without throwing (regression: disposed guard threw before unbinding).
+            bool disposeThrew = false;
+            try
+            {
+                shelterOpsBridge.Dispose();
+            }
+            catch (Exception ex)
+            {
+                disposeThrew = true;
+                GD.PrintErr($"  [WARN] ShelterOperationsAudioBridge.Dispose threw: {ex.Message}");
+            }
+            Check("ShelterOperationsAudioBridge.Dispose detaches without throwing", !disposeThrew, ref pass, ref fail);
+            freshExcavation.AddMethane("sector_ops_probe", 500);
+            Check("Disposed ShelterOperationsAudioBridge produces zero callbacks",
+                shelterOpsEmitted.Count == 2, ref pass, ref fail);
+
             // ── Four Expansion Probes (Phase 5 Completion Gate) ─────
             var probeEmitted = new List<string>();
             var probeBridge = new ExpansionAudioBridge(probeEmitted.Add);
@@ -1373,6 +1419,26 @@ namespace AtomicWar.GodotApp.Audio
                 GD.PrintErr($"  [FAIL] {label}");
                 fail++;
             }
+        }
+    }
+
+    internal sealed class TestShelterOperationsAudioProvider : IShelterOperationsAudioProvider
+    {
+        public ShelterWorkshopSystem? AudioWorkshop { get; set; }
+        public Ashfall.Core.Radio.ShelterRadioStationSystem? AudioRadioStation { get; set; }
+        public ShelterSocialDynamicsSystem? AudioSocialDynamics { get; set; }
+        public ExcavationHazardSystem? AudioExcavationHazards { get; set; }
+
+        public TestShelterOperationsAudioProvider(
+            ShelterWorkshopSystem? workshop = null,
+            Ashfall.Core.Radio.ShelterRadioStationSystem? radio = null,
+            ShelterSocialDynamicsSystem? social = null,
+            ExcavationHazardSystem? excavation = null)
+        {
+            AudioWorkshop = workshop;
+            AudioRadioStation = radio;
+            AudioSocialDynamics = social;
+            AudioExcavationHazards = excavation;
         }
     }
 

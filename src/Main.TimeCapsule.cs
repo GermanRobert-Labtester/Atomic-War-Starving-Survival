@@ -21,6 +21,21 @@ namespace AtomicWar.GodotApp
             var state = TimeCapsuleSaveStore.TryLoad() ?? new TimeCapsuleState();
             var system = new TimeCapsuleSystem(state);
 
+            // Plan 212 — bind the authored pre-placed capsules so a fresh (or legacy)
+            // shelter state contains the canonical sealed vaults, not an empty list.
+            string capsuleCatalogPath = CatalogPath.ResolveCatalog("time_capsules.json");
+            var capsuleCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (capsuleCatalogIo.FileExists(capsuleCatalogPath))
+            {
+                var capsuleCatalog = System.Text.Json.JsonSerializer.Deserialize<TimeCapsuleCatalogData>(
+                    capsuleCatalogIo.ReadAllText(capsuleCatalogPath),
+                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (capsuleCatalog != null)
+                {
+                    system.LoadCatalog(capsuleCatalog);
+                }
+            }
+
             _timeCapsule = new TimeCapsuleHostSession(system);
             _timeCapsule.StateChanged += OnTimeCapsuleStateChanged;
             return _timeCapsule;
@@ -76,6 +91,21 @@ namespace AtomicWar.GodotApp
             SetupTimeCapsulePanel();
             _timeCapsulePanel.Visible = true;
             _timeCapsulePanel.RefreshView();
+        }
+
+        /// <summary>
+        /// Plan 212 — fires an event key at the sealed capsule ledger. EventBased
+        /// capsules bound to the key open exactly once. Returns the number opened.
+        /// </summary>
+        public int NotifyTimeCapsuleEvent(string eventId, int day)
+        {
+            var session = EnsureTimeCapsule();
+            int opened = session.System.TryOpenEventCapsules(eventId, day);
+            if (opened > 0)
+            {
+                _timeCapsuleDirty = true;
+            }
+            return opened;
         }
     }
 }

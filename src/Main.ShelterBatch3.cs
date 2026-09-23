@@ -83,13 +83,15 @@ namespace AtomicWar.GodotApp
             _sumpFloodingPanel.Visible = false;
             AddChild(_sumpFloodingPanel);
             // Plan 70: bind the sludge-plant console to the same session
-            // (replaces the hardcoded stub created in the bulk panel pass).
-            if (_slurryDewateringSumpPanel != null && _slurryDewateringSumpPanel.IsInsideTree())
-                RemoveChild(_slurryDewateringSumpPanel);
-            _slurryDewateringSumpPanel = new SlurryDewateringSumpPanel();
+            // while retaining the bulk panel pass's ownership and close wiring.
+            if (_slurryDewateringSumpPanel == null || !GodotObject.IsInstanceValid(_slurryDewateringSumpPanel))
+            {
+                _slurryDewateringSumpPanel = new SlurryDewateringSumpPanel();
+                _slurryDewateringSumpPanel.OnClose += () => _slurryDewateringSumpPanel.Visible = false;
+                AddChild(_slurryDewateringSumpPanel);
+            }
             _slurryDewateringSumpPanel.Bind(_sumpFlooding);
             _slurryDewateringSumpPanel.Visible = false;
-            AddChild(_slurryDewateringSumpPanel);
         }
 
         private void SetupDecontamination()

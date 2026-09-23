@@ -1,18 +1,18 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-17T13:51:20.566422+00:00",
-  "strict_mode": false,
+  "generated_at": "2026-09-22T19:58:58.099008+00:00",
+  "strict_mode": true,
   "summary": {
-    "total_ids": 1706,
-    "loaded": 508,
-    "fallback": 1198,
+    "total_ids": 1746,
+    "loaded": 509,
+    "fallback": 1237,
     "missing": 0,
-    "coverage_pct": 29.78,
+    "coverage_pct": 29.15,
     "by_category": {
       "item": {
-        "total": 966,
-        "loaded": 343,
-        "fallback": 623,
+        "total": 996,
+        "loaded": 344,
+        "fallback": 652,
         "missing": 0
       },
       "portrait": {
@@ -22,9 +22,9 @@
         "missing": 0
       },
       "location": {
-        "total": 375,
+        "total": 385,
         "loaded": 54,
-        "fallback": 321,
+        "fallback": 331,
         "missing": 0
       },
       "faction": {
@@ -371,6 +371,22 @@
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
       "status": "FALLBACK",
       "is_fallback": true
+    },
+    {
+      "id": "chelation_agent",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "potassium_iodide",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/art/item_potassium_iodide.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "medical_kit",
@@ -1998,6 +2014,94 @@
     },
     {
       "id": "item_decor_memorial_plaque_drawing",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_wolf_head",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_deer_antlers",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_boar_tusks",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_fox_pelt",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_beetle_carapace",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_molerat_skull",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_crow_feathers",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_pheasant_plume",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_ash_hound_pelt",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_gulden_wolf",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_decor_trophy_kestrel_wings",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -4397,6 +4501,30 @@
       "is_fallback": true
     },
     {
+      "id": "item_chem_fungal_antibiotic",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_chem_spore_sedative",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "item_chem_choke_spore_toxin",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
       "id": "item_official_ballot_box",
       "category": "item",
       "source_catalog": "items.json",
@@ -5518,6 +5646,118 @@
     },
     {
       "id": "cassette_quarantine_tapes_4",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_checkpoint_kilo_1",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_checkpoint_kilo_2",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_checkpoint_kilo_3",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_checkpoint_kilo_4",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_saint_maren_1",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_saint_maren_2",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_saint_maren_3",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_family_bunker_1",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_family_bunker_2",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_family_bunker_3",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_free_radio_1",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_free_radio_2",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_free_radio_3",
+      "category": "item",
+      "source_catalog": "items.json",
+      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "cassette_free_radio_4",
       "category": "item",
       "source_catalog": "items.json",
       "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
@@ -11246,6 +11486,86 @@
     },
     {
       "id": "loc_warehouse_district",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_broadcast_bunker_echo",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_underground_fuel_depot",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_municipal_seed_vault",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_blacksite_armory_7",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_sealed_triage_annex",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_evidence_sub_basement",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_quarantine_barn",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_forestry_emergency_store",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_materials_research_sublevel",
+      "category": "location",
+      "source_catalog": "locations.json",
+      "resolved_path": "(none)",
+      "status": "FALLBACK",
+      "is_fallback": true
+    },
+    {
+      "id": "loc_electrical_maintenance_exchange",
       "category": "location",
       "source_catalog": "locations.json",
       "resolved_path": "(none)",

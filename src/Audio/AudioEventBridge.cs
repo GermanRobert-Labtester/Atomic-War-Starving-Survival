@@ -23,6 +23,7 @@ namespace AtomicWar.GodotApp.Audio
     {
         RadiationSystem? AudioRadiation { get; }
         WeatherSystem? AudioWeather { get; }
+        SurvivorsHostSession? AudioSurvivors { get; }
         TacticalCombatSystem? AudioCombat { get; }
         CraftingSystem? AudioCrafting { get; }
         ExpeditionSystem? AudioExpeditions { get; }

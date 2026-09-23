@@ -31,6 +31,11 @@ namespace Ashfall.Core
         public int Count => _all.Count;
 
         /// <summary>
+        /// Plan 49 / C1[16] — Delegate seam invoked whenever atmosphere text is delivered for a location.
+        /// </summary>
+        public Action<string, AtmosphereTextEntry>? AtmosphereTextDeliveredSeam { get; set; }
+
+        /// <summary>
         /// Constructs the system from a pre-loaded list of entries.
         /// Builds internal indexes for efficient querying.
         /// </summary>
@@ -100,11 +105,16 @@ namespace Ashfall.Core
                                        string.Equals(e.condition, "intact", StringComparison.OrdinalIgnoreCase) ||
                                        string.Equals(e.condition, "normal", StringComparison.OrdinalIgnoreCase);
                 if (anyWeather && normalCondition)
+                {
+                    AtmosphereTextDeliveredSeam?.Invoke(locationId, e);
                     return e;
+                }
             }
 
             // Fallback: first entry for this location
-            return list[0];
+            var fallback = list[0];
+            AtmosphereTextDeliveredSeam?.Invoke(locationId, fallback);
+            return fallback;
         }
 
         /// <summary>

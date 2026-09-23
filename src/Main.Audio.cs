@@ -2,7 +2,9 @@
 using Ashfall.Core.Combat;
 using Ashfall.Core.Crafting;
 using Ashfall.Core.Disease;
+using Ashfall.Core.Excavation;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Radio;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.StartingLevel;
@@ -17,11 +19,12 @@ namespace AtomicWar.GodotApp
     /// AudioManager discovers this through its parent and safely rebinds when
     /// campaign host sessions are created, replaced, or cleared.
     /// </summary>
-    public partial class Main : IAudioDomainProvider, IExpansionAudioProvider
+    public partial class Main : IAudioDomainProvider, IExpansionAudioProvider, IShelterOperationsAudioProvider
     {
         private Ashfall.Core.AudioConditionSystem _audioConditions = new Ashfall.Core.AudioConditionSystem();
         RadiationSystem? IAudioDomainProvider.AudioRadiation => _survivors?.Radiation;
         WeatherSystem? IAudioDomainProvider.AudioWeather => _world?.Weather;
+        SurvivorsHostSession? IAudioDomainProvider.AudioSurvivors => _survivors;
         TacticalCombatSystem? IAudioDomainProvider.AudioCombat => _combat?.Engine;
         CraftingSystem? IAudioDomainProvider.AudioCrafting => _crafting?.Engine;
         ExpeditionSystem? IAudioDomainProvider.AudioExpeditions => _expeditions?.Engine;
@@ -37,5 +40,12 @@ namespace AtomicWar.GodotApp
         Ashfall.Core.Medical.MutationSystem? IExpansionAudioProvider.AudioMutation => EnsureMutations();
         Ashfall.Core.Combat.ChemWarfareSystem? IExpansionAudioProvider.AudioChemWarfare => EnsureChemWarfare();
         Ashfall.Core.Expeditions.RailwaySystem? IExpansionAudioProvider.AudioRailway => EnsureRailway();
+
+        // Plans 46–49 shelter-operation audio domain (live sessions only; a null
+        // field simply leaves that subsystem's cues unattached until it is set up).
+        ShelterWorkshopSystem? IShelterOperationsAudioProvider.AudioWorkshop => _shelterWorkshop;
+        ShelterRadioStationSystem? IShelterOperationsAudioProvider.AudioRadioStation => _radioStationSystem;
+        ShelterSocialDynamicsSystem? IShelterOperationsAudioProvider.AudioSocialDynamics => _shelterSocialDynamics;
+        ExcavationHazardSystem? IShelterOperationsAudioProvider.AudioExcavationHazards => _excavationHazards;
     }
 }

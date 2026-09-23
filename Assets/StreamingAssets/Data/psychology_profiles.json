@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "phobia_definitions": [
+    {
+      "phobia_id": "phobia_claustrophobia",
+      "phobia_name": "Claustrophobia",
+      "description": "An overpowering terror of enclosed spaces. The walls breathe inward. The ceiling is always lower than it was a moment ago.",
+      "trigger_condition": "enclosed_space",
+      "developed_from_traumas": ["tunnel_trauma", "bunker_lockdown", "location_contamination"],
+      "severity_threshold": 40,
+      "effects": [
+        { "effect": "work_penalty", "value": -0.20 },
+        { "effect": "avoidance_behavior", "value": 1.0 },
+        { "effect": "morale_penalty", "value": -8.0 }
+      ]
+    },
+    {
+      "phobia_id": "phobia_nyctophobia",
+      "phobia_name": "Nyctophobia",
+      "description": "Absolute dread of darkness. Blackouts are not mere inconveniences — they are anticipations of violence.",
+      "trigger_condition": "darkness_exposure",
+      "developed_from_traumas": ["combat_trauma", "nighttime_attack", "power_outage"],
+      "severity_threshold": 35,
+      "effects": [
+        { "effect": "work_penalty", "value": -0.15 },
+        { "effect": "morale_penalty", "value": -10.0 },
+        { "effect": "sleep_disruption", "value": 0.30 }
+      ]
+    },
+    {
+      "phobia_id": "phobia_blood_phobia",
+      "phobia_name": "Hemophobia",
+      "description": "The sight of blood — their own or another's — triggers a cascade of panic that the rational mind cannot intercept in time.",
+      "trigger_condition": "blood_or_injury",
+      "developed_from_traumas": ["combat_trauma", "medical_emergency", "witness_death"],
+      "severity_threshold": 30,
+      "effects": [
+        { "effect": "work_penalty", "value": -0.25 },
+        { "effect": "avoidance_behavior", "value": 1.0 },
+        { "effect": "morale_penalty", "value": -6.0 }
+      ]
+    },
+    {
+      "phobia_id": "phobia_radiation_phobia",
+      "phobia_name": "Radiophobia",
+      "description": "Every Geiger click is a death toll. Every open wound glows in the imagination. They check their dosimeter constantly and cannot trust the readout.",
+      "trigger_condition": "radiation_detection",
+      "developed_from_traumas": ["contamination_event", "fallout_exposure", "mutation_onset"],
+      "severity_threshold": 45,
+      "effects": [
+        { "effect": "work_penalty", "value": -0.10 },
+        { "effect": "morale_penalty", "value": -12.0 },
+        { "effect": "anxiety_spike", "value": 0.40 }
+      ]
+    },
+    {
+      "phobia_id": "phobia_social_phobia",
+      "phobia_name": "Social Phobia",
+      "description": "Any gathering of two or more people is a tribunal. Every face is a potential betrayal. They speak only when spoken to and eat last.",
+      "trigger_condition": "group_gathering",
+      "developed_from_traumas": ["betrayal_trauma", "social_loss", "exile_threat"],
+      "severity_threshold": 35,
+      "effects": [
+        { "effect": "work_penalty", "value": -0.15 },
+        { "effect": "morale_penalty", "value": -8.0 },
+        { "effect": "isolation_behavior", "value": 0.50 }
+      ]
+    },
+    {
+      "phobia_id": "phobia_thalassophobia",
+      "phobia_name": "Thalassophobia",
+      "description": "Deep water. Not the surface but the column below it, the infinite black drop, the certainty that the bottom is always further than estimated.",
+      "trigger_condition": "deep_water_exposure",
+      "developed_from_traumas": ["flooding_event", "drowning_near_miss", "expedition_water_accident"],
+      "severity_threshold": 40,
+      "effects": [
+        { "effect": "work_penalty", "value": -0.20 },
+        { "effect": "avoidance_behavior", "value": 1.0 },
+        { "effect": "morale_penalty", "value": -7.0 }
+      ]
+    }
+  ],
+  "coping_mechanisms": [
+    {
+      "mechanism_id": "cope_meditation",
+      "mechanism_name": "Meditation",
+      "effectiveness": 65,
+      "side_effects": [],
+      "learned_from": "therapy"
+    },
+    {
+      "mechanism_id": "cope_exercise",
+      "mechanism_name": "Physical Exercise",
+      "effectiveness": 55,
+      "side_effects": ["energy_cost"],
+      "learned_from": "experience"
+    },
+    {
+      "mechanism_id": "cope_socializing",
+      "mechanism_name": "Socializing",
+      "effectiveness": 60,
+      "side_effects": [],
+      "learned_from": "peer"
+    },
+    {
+      "mechanism_id": "cope_creative_work",
+      "mechanism_name": "Creative Work",
+      "effectiveness": 70,
+      "side_effects": [],
+      "learned_from": "experience"
+    },
+    {
+      "mechanism_id": "cope_substance_use",
+      "mechanism_name": "Substance Use",
+      "effectiveness": 40,
+      "side_effects": ["addiction_risk", "morale_crash"],
+      "learned_from": "experience"
+    },
+    {
+      "mechanism_id": "cope_denial",
+      "mechanism_name": "Denial",
+      "effectiveness": 20,
+      "side_effects": ["prevents_healing", "trauma_accumulation"],
+      "learned_from": "experience"
+    }
+  ]
+}

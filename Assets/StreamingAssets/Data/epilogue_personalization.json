@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "duration_variants": {
+    "short": "The brief experiment at the shelter lasted {days} days before the final reckoning arrived.",
+    "medium": "Across a grueling year of survival spanning {days} days, the shelter etched its enduring mark upon the wastes.",
+    "long": "Years stretched into legend over {days} days as the shelter outlasted storms, starvation, and the collapse of empires."
+  },
+  "political_templates": {
+    "military_schedule": "The Garrison's iron discipline became the bunker's law under the unrelenting schedule, establishing an unbending martial order.",
+    "military_default": "The Garrison incorporated the shelter into its forward defense perimeter, enforcing stability through military presence.",
+    "rebel_dark_road": "The resistance's fire spread from the wastes into the shelter along the dark road, tearing down old hierarchies.",
+    "rebel_default": "The free survivors formed a decentralized commonwealth, fiercely defending their autonomy from regional despots.",
+    "independent_tender": "The Fleet's arrival transformed the bunker from an isolated refuge into a thriving crossroads port for trade caravans.",
+    "independent_default": "Standing resolute without external masters, the shelter prospered through pragmatic alliances and fierce self-reliance.",
+    "prpf_reserve": "The hidden power emerged from the shadows to claim what was owed from the reserve, establishing covert governance.",
+    "prpf_default": "The clandestine PRPF network integrated the shelter's stockpiles into their shadow economy.",
+    "none_fractured": "Without outside alliances, the bunker stood alone against the wastes as fractured warlords squabbled in the distance."
+  },
+  "social_templates": {
+    "the_open_muster": "The substation rally point grew into an open commonwealth where demobilized conscripts and wanderers built anew.",
+    "the_amnesty": "The signed amnesty petition held firm, ending fugitive status and closing decades of historical retribution.",
+    "the_corridor": "Quiet corridors and dispersed routes let people slip past conflict and survive peacefully in small clusters.",
+    "the_blood_price": "The heavy blood price was paid, leaving quiet graves and chilling confessions in the bunker's archives.",
+    "the_rate_card_revised": "A publicly audited water rate card brought transparency and ended unilateral extortion across the basin.",
+    "the_administrator": "A new administrator took command of the water plant, shifting power without softening the daily hardship.",
+    "the_measured_truth": "The uncompromised broadcast resonated across the valley, setting an enduring benchmark for scientific truth.",
+    "the_measured_truth_contested": "The contested findings sparked unending debate, keeping the valley's future precariously balanced.",
+    "default_social": "The social fabric of the shelter remained tightly woven through shared hardship and mutual trust."
+  },
+  "moral_templates": {
+    "very_positive": "Your boundless compassion became a beacon in the dark, proving that humanity could outlive the ruins of civilization.",
+    "positive": "Through measured mercy and consistent principle, you preserved human dignity in an undignified age.",
+    "neutral": "Pragmatism guided every choice; decisions were neither celebrated nor cursed, merely recognized as necessary for survival.",
+    "negative": "Harsh calculations left bitter memories among those who bore the weight of survival under your rule.",
+    "very_evil": "Your cold ruthlessness became a terrifying legend whispered around wasteland campfires by those who feared your wrath."
+  },
+  "survivor_fate_templates": {
+    "alive_social": "{name} became the heart of the emerging settlement, fostering community bonds and welcoming weary travelers.",
+    "alive_independent": "{name} took to the perimeter trails, scouting safe passages and mapping uncharted wastes for future generations.",
+    "alive_ambitious": "{name} rose to civic prominence, drafting the community's foundational trade treaties and civil charters.",
+    "alive_stubborn": "{name} guarded the storehouse vaults, ensuring no ration was ever misappropriated or wasted.",
+    "alive_default": "{name} lived to see green shoots break through the ash, enjoying hard-won peace in the shelter.",
+    "deceased_default": "{name}'s sacrifice was etched into the shelter's memorial wall, an eternal reminder of the price of survival.",
+    "retired_default": "{name} passed the working tools to the next generation and settled into an honored role as shelter elder."
+  },
+  "discovery_templates": {
+    "water_aquifer": "The discovery of the deep clean aquifer secured fresh drinking water for generations.",
+    "copper_vein": "The rich copper vein provided the raw conductors needed for continuous electrification.",
+    "medical_cache": "The recovered antibiotics cache saved dozens from the dreaded winter fever.",
+    "default_discovery": "The wasteland expeditions returned with crucial salvaged relics of old-world science."
+  },
+  "shelter_upgrade_templates": {
+    "greenhouse_dome": "The verdant greenhouse dome fed generations long after the old world's preserved tins ran out.",
+    "perimeter_turrets": "The automated defensive perimeter repelled every bandit raid without a single inner breach.",
+    "water_filtration_array": "The high-yield filtration array produced crystal clear water daily, quenching the valley's thirst.",
+    "default_upgrade": "The structural fortifications transformed the fragile redoubt into a permanent home for humanity."
+  }
+}

@@ -94,6 +94,11 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("psychology_arcs_162", new PsychologyArcsDayOwner(this), phase: 4);
             _campaignDay.Register("plan_167_espionage", new Plan167EspionageDayOwner(this), phase: 4);
             _campaignDay.Register("plan_169_procedural_narrative", new Plan169NarrativeDayOwner(this), phase: 4);
+            // Plan 38 — commitments/deadlines evaluate late in phase 4 so the day's
+            // expedition/faction facts are settled before a missed obligation routes
+            // its consequence into faction standing and the consequence ledger.
+            // "shelter_commitments" is the owner id (not the section key `commitment`).
+            _campaignDay.Register("shelter_commitments", new CommitmentDayOwner(this), phase: 4);
 
             // Phase 5: Events, Memorial & Final Evaluation
             _campaignDay.Register("host_events", new HostEventsDayOwner(this), phase: 5);
@@ -101,8 +106,201 @@ namespace AtomicWar.GodotApp
             // Plan 29 29A: room-history day milestones. Reads only the identity
             // catalog and writes journal knowledge keys; no system ticks here.
             _campaignDay.Register("shelter_room_history", new ShelterRoomHistoryDayOwner(this), phase: 5);
+            // Plan 58 — the outpost network runs after the roster, expedition and
+            // economy owners so its garrison, rations and hostile pressure read
+            // the day's already-finalized population and supply state.
+            _campaignDay.Register("outpost_settlement", new OutpostSettlementDayOwner(this), phase: 5);
+            // Plan 135 — the weather→gameplay cascade expires fronts whose
+            // duration ended, so it runs after the owners that consumed the
+            // day's weather and before retention bounds the logs they wrote.
+            _campaignDay.Register("weather_cascade", new WeatherCascadeDayOwner(this), phase: 5);
+            // Plan 134 — dynamic faction territory and supply line control: delivers
+            // active corridors and reinforces held nodes.
+            _campaignDay.Register("territory_control", new TerritoryControlDayOwner(this), phase: 5);
+            // Plan 136 — wildlife trapping food pipeline & cooking system: progresses
+            // active cooking operations and decontaminates fallout-tainted meat.
+            _campaignDay.Register("cooking", new CookingDayOwner(this), phase: 5);
+            // Plan 137 — needs to performance cascade: evaluates hunger/thirst/fatigue/cold on survivor performance.
+            _campaignDay.Register("needs_performance", new NeedsPerformanceDayOwner(this), phase: 5);
+            // Plan 140 — generational legacy and campaign inheritance: evaluates active traits and heritage continuity.
+            _campaignDay.Register("campaign_legacy", new CampaignLegacyDayOwner(this), phase: 5);
+            // Plan 55 — retention runs last of all: it bounds the campaign logs
+            // every other owner just appended to for this day.
+            _campaignDay.Register("retention", new RetentionDayOwner(this), phase: 5);
             // Flagship institutions (Tasks 5-8): culture, diplomacy, sky defense, sanatorium.
             RegisterFlagshipInstitutionsOwner();
+        }
+
+        /// <summary>Plan 134 territory-control day owner (ownerId <c>territory_control</c>, phase 5).</summary>
+        private sealed class TerritoryControlDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Factions.TerritoryControlSaveState? _snapshot;
+            public TerritoryControlDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.EnsureTerritoryControl();
+                _snapshot = _m.TerritoryControl?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.TerritoryControl?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.EnsureTerritoryControl();
+                _m.TickTerritoryControl(day, _m._campaignDay?.Rng?.GetStream(Ashfall.Core.Random.CampaignStreamIds.Shelter)?.Rng);
+                var census = _m.TerritoryControl?.ReadCensus();
+                events.Add(new DayStateChangeEvent(
+                    "territory_control_ticked", "territory_control", null, null, census?.ContestedLocations ?? 0));
+            }
+        }
+
+        /// <summary>Plan 136 cooking day owner (ownerId <c>cooking</c>, phase 5).</summary>
+        private sealed class CookingDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Cooking.CookingState? _snapshot;
+            public CookingDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.EnsureCooking();
+                _snapshot = _m.Cooking?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.Cooking?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.EnsureCooking();
+                _m.TickCooking(day);
+                var census = _m.Cooking?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "cooking_ticked", "cooking", null, null, census?.TotalMealsPrepared ?? 0));
+            }
+        }
+
+        /// <summary>Plan 135 weather-cascade day owner (ownerId <c>weather_cascade</c>, phase 5).</summary>
+        private sealed class WeatherCascadeDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Weather.WeatherCascadeState? _snapshot;
+            public WeatherCascadeDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.EnsureWeatherCascade();
+                _snapshot = _m.WeatherCascade?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.WeatherCascade?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                int activeBefore = _m.WeatherCascade?.System.State.activeEvents.Count ?? 0;
+                _m.TickWeatherCascade(day);
+                int activeAfter = _m.WeatherCascade?.System.State.activeEvents.Count ?? 0;
+                if (activeAfter != activeBefore)
+                    events.Add(new DayStateChangeEvent(
+                        "weather_cascade_ticked", "weather_cascade", null, null, activeAfter));
+            }
+        }
+
+        /// <summary>Plan 58 outpost day owner (ownerId <c>outpost_settlement</c>, phase 5).</summary>
+        private sealed class OutpostSettlementDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Settlements.OutpostSettlementState? _snapshot;
+            public OutpostSettlementDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.EnsureOutpostSettlement();
+                _snapshot = _m.OutpostSettlement?.CaptureState();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.OutpostSettlement?.RestoreState(_snapshot);
+            }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.EnsureOutpostSettlement();
+                if (_m.OutpostSettlement == null) return;
+                _m.TickOutpostSettlement(day);
+                var census = _m.OutpostSettlement.ReadCensus();
+                events.Add(new DayStateChangeEvent("outpost_network_ticked", "outpost_settlement", null, null,
+                    census.Established));
+            }
+        }
+
+        /// <summary>Plan 55 retention day owner (ownerId <c>retention</c>, phase 5).</summary>
+        private sealed class RetentionDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public RetentionDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { /* retention is idempotent; captured via save section */ }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.EnsureRetention();
+                int before = _m.Retention?.Passes ?? 0;
+                _m.TickRetention(day);
+                int after = _m.Retention?.Passes ?? 0;
+                if (after != before)
+                    events.Add(new DayStateChangeEvent("retention_ticked", "retention", null, null, after));
+            }
+        }
+
+        /// <summary>Plan 137 needs-performance day owner (ownerId <c>needs_performance</c>, phase 5).</summary>
+        private sealed class NeedsPerformanceDayOwner : IDayAdvanceOwner
+        {
+            private readonly Main _m;
+            public NeedsPerformanceDayOwner(Main m) => _m = m;
+            public void CapturePreDaySnapshot(int day) { /* derived read projection */ }
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.EnsureNeedsPerformance();
+                _m.TickNeedsPerformance(day);
+                var census = _m.GetNeedsPerformanceCensus();
+                events.Add(new DayStateChangeEvent(
+                    "needs_performance_ticked", "needs_performance", null, null, census.TotalSurvivorsEvaluated));
+            }
+        }
+
+        /// <summary>Plan 140 campaign-legacy day owner (ownerId <c>campaign_legacy</c>, phase 5).</summary>
+        private sealed class CampaignLegacyDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Legacy.CampaignLegacyState? _snapshot;
+            public CampaignLegacyDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.EnsureCampaignLegacy();
+                _snapshot = _m._campaignLegacy?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._campaignLegacy?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.EnsureCampaignLegacy();
+                _m.TickCampaignLegacy(day);
+                var census = _m._campaignLegacy?.GetCensus();
+                events.Add(new DayStateChangeEvent(
+                    "campaign_legacy_ticked", "campaign_legacy", null, null, census?.CompletedCampaignsCount ?? 0));
+            }
         }
 
         // ── Phase 1 Owners ───────────────────────────────────────────────
@@ -517,6 +715,30 @@ namespace AtomicWar.GodotApp
                 "critical" => 0,
                 _ => 2
             };
+        }
+
+        /// <summary>
+        /// Plan 38 — one daily owner for the commitment authority. Forwards the
+        /// pre-day snapshot (fail-closed rollback), the day tick, and the
+        /// buffered semantic events into the briefing report. Null-guarded so the
+        /// owner survives session resets without outliving a disposed system.
+        /// </summary>
+        private sealed class CommitmentDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            public CommitmentDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day) => _m._commitments?.System.CapturePreDaySnapshot(day);
+
+            public void RestorePreDaySnapshot(int day) => _m._commitments?.System.RestorePreDaySnapshot(day);
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                var session = _m.EnsureCommitments();
+                session.TickDay(day);
+                session.DrainDayEvents(events);
+                _m._commitmentsDirty = true;
+            }
         }
 
         private sealed class ShelterFireDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
@@ -1045,6 +1267,10 @@ namespace AtomicWar.GodotApp
                 {
                     _m._expeditions?.Retreat(survivorId);
                 });
+
+                // Plan 49 flood bridge: rising subterranean water is the canonical
+                // ingress for the excavation hazard sector of the same node.
+                _m.ProjectSubterraneanFloodIntoExcavationHazards();
 
                 int discovered = 0;
                 var nodes = _m._subterranean.System.State.nodes;

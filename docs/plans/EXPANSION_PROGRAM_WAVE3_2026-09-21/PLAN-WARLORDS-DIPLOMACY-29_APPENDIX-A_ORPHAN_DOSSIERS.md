@@ -1,0 +1,26 @@
+# PLAN-WARLORDS-DIPLOMACY-29 — Appendix A: Orphan Dossiers (warlords & diplomacy)
+
+**Generated:** 2026-09-21 from the host-reachability audit, filtered to this
+plan's domain: **2 host-unreachable authorities** wired by this plan's
+packages (see the parent plan's seam map; the same systems appear in
+`PLAN-ORPHAN-SEAL-01` Appendix A with wave assignment).
+**Note:** requested-but-unreachable-listed systems not present: `PrpfStandingSystem` (they are either host-reachable already or type-level dead — see the Plan 1 appendices).
+**Use:** each dossier lists the authority, file, known tests, candidate
+catalogs, and the parent-plan mechanic that consumes it. A package claim covers
+one or more systems end-to-end (host path, day owner if stateful, save path,
+one player surface, focused tests).
+
+## Dossiers
+
+### 01. `TerritoryControlSystem`
+- **File:** `Factions/TerritoryControlSystem.cs` · **Types:** `TerritoryControlSystem`
+- **Known tests (2):** `World/Plan43_44SettlementTerritoryIntegrationTests.cs`, `Factions/Plan134TerritoryControlIntegrationTests.cs`
+- **Candidate catalogs:** `faction_territory.json`
+- **Parent-plan mechanic:** Territory
+- **Wiring recipe:** host path → day owner if stateful → save path → one player surface → focused tests + reachability re-run.
+### 02. `FactionDiplomacySystem`
+- **File:** `Diplomacy/FactionDiplomacySystem.cs` · **Types:** `FactionDiplomacySystem`
+- **Known tests (1):** `Diplomacy/Plan197FactionDiplomacyIntegrationTests.cs`
+- **Candidate catalogs:** `faction_territory.json`, `faction_war_events.json`, `faction_war_journal.json`, `faction_war_radio.json`
+- **Parent-plan mechanic:** Host-unreachable
+- **Wiring recipe:** host path → day owner if stateful → save path → one player surface → focused tests + reachability re-run.

@@ -178,7 +178,6 @@ public partial class StandingRecordAtlasPanel : Control, IBindablePanel
 
         body.AddChild(actionRow);
         _shell.SetContent(body);
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("SITE DETAIL");
         RefreshView();
     }
 

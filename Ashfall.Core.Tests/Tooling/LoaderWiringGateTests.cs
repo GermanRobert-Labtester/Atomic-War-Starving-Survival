@@ -112,6 +112,63 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void RecentSystemCatalogs_AreBoundFromMainHostPartials()
+        {
+            // Defect class (2026-09 audit): a Core system exposes LoadCatalog,
+            // an authored catalog ships in StreamingAssets, and the integration
+            // test loads that JSON directly into the Core system — but the Main
+            // host partial constructs the system without binding the catalog,
+            // leaving the authored content dead at runtime. This tripwire pins
+            // the repaired host bindings so removing one fails CI.
+            var expected = new (string Catalog, string System, string Call)[]
+            {
+                ("hidden_agendas.json", "HiddenAgendaSystem", ".LoadCatalog("),
+                ("relationship_decay_profiles.json", "RelationshipDecaySystem", ".LoadCatalog("),
+                ("rumor_hubs.json", "RumorSystem", ".LoadCatalog("),
+                ("atmosphere_profiles.json", "ShelterAtmosphereSystem", ".LoadCatalog("),
+                ("noise_sources.json", "ShelterNoiseSystem", ".LoadCatalog("),
+                ("reputation_dimensions.json", "ShelterReputationSystem", ".LoadCatalog("),
+                ("shelter_security_zones.json", "ShelterSecuritySystem", ".LoadCatalog("),
+                ("death_legacy_templates.json", "SurvivorDeathLegacySystem", ".LoadCatalog("),
+                ("time_capsules.json", "TimeCapsuleSystem", ".LoadCatalog("),
+                ("propaganda_templates.json", "PropagandaSystem", ".LoadTemplates("),
+                ("autonomy_actions.json", "SurvivorAutonomySystem", ".LoadCatalog("),
+                ("nuclear_winter_phases.json", "NuclearWinterProgressionSystem", ".LoadCatalog("),
+                ("shelter_celebrations.json", "SeasonalCelebrationSystem", ".LoadCatalog("),
+                ("disaster_templates.json", "DisasterResponseSystem", ".LoadCatalog("),
+                ("communications_networks.json", "CommunicationsSystem", ".LoadCatalog("),
+                ("colony_blueprints.json", "ColonySystem", ".LoadCatalog("),
+                ("hobby_definitions.json", "HobbySystem", ".LoadCatalog("),
+                ("education_curriculum.json", "SurvivorEducationSystem", ".LoadCatalog("),
+                ("shelter_construction.json", "ShelterExpansionSystem", ".LoadCatalog("),
+                ("confession_secrets.json", "ConfessionSecretCatalog", ".Load("),
+            };
+
+            string root = RepoRoot();
+            var mainPartials = Directory
+                .GetFiles(Path.Combine(root, "src"), "Main*.cs", SearchOption.TopDirectoryOnly)
+                .Select(path => (Path: path, Text: File.ReadAllText(path)))
+                .ToList();
+
+            var failures = new List<string>();
+            foreach (var (catalog, system, call) in expected)
+            {
+                bool bound = mainPartials.Any(p =>
+                    p.Text.Contains(catalog, StringComparison.Ordinal)
+                    && p.Text.Contains(system, StringComparison.Ordinal)
+                    && p.Text.Contains(call, StringComparison.Ordinal));
+                if (!bound)
+                {
+                    failures.Add($"{system} never binds {catalog} from a Main host partial");
+                }
+            }
+
+            Assert.True(failures.Count == 0,
+                "Host catalog binding regressed (authored content dead at runtime):\n  "
+                + string.Join("\n  ", failures));
+        }
+
+        [Fact]
         public void AllowlistEntries_StillExist_AsLoaders()
         {
             // An allowlist entry whose loader was deleted must be pruned — the

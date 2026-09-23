@@ -113,5 +113,78 @@ namespace Ashfall.Core.Tests.Quests
             Assert.NotNull(restoredQ);
             Assert.Equal("quest_arc_engineer", restoredQ.questId);
         }
+
+        [Fact]
+        public void AuthoredData_PersonalQuestsJson_LoadsSuccessfully()
+        {
+            var dataDir = System.IO.Path.GetFullPath(
+                System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,
+                    "..", "..", "..", "..", "Assets", "StreamingAssets", "Data"));
+            if (!System.IO.File.Exists(System.IO.Path.Combine(dataDir, "personal_quests.json")))
+                dataDir = System.IO.Path.GetFullPath("Assets/StreamingAssets/Data");
+
+            string filePath = System.IO.Path.Combine(dataDir, "personal_quests.json");
+            Assert.True(System.IO.File.Exists(filePath), $"File not found: {filePath}");
+
+            string json = System.IO.File.ReadAllText(filePath);
+            var catalog = JsonSerializer.Deserialize<PersonalQuestCatalogData>(json);
+            Assert.NotNull(catalog);
+            Assert.True(catalog!.quests.Count >= 10);
+
+            foreach (var q in catalog.quests)
+            {
+                Assert.False(string.IsNullOrWhiteSpace(q.id));
+                Assert.False(string.IsNullOrWhiteSpace(q.title));
+                Assert.False(string.IsNullOrWhiteSpace(q.required_trait));
+                Assert.NotEmpty(q.stages);
+                foreach (var stage in q.stages)
+                {
+                    Assert.False(string.IsNullOrWhiteSpace(stage.title));
+                    Assert.NotEmpty(stage.choices);
+                }
+            }
+
+            var system = new PersonalQuestSystem();
+            system.LoadCatalog(catalog);
+            Assert.True(system.Catalog.Count >= 10);
+
+            var scoutQuests = system.GetQuestsForTrait("scout");
+            Assert.NotEmpty(scoutQuests);
+            Assert.Contains(scoutQuests, sq => sq.id == "pq_buried_cache");
+        }
+
+        [Fact]
+        public void RewardBridges_TriggerMoraleAndItemDelegates_OnChoice()
+        {
+            var system = new PersonalQuestSystem();
+            system.LoadCatalog(SampleCatalog, new SystemTextJsonSerializer());
+
+            string? rewardedSurvivor = null;
+            float appliedMorale = 0f;
+            string? rewardedItem = null;
+            int rewardedAmount = 0;
+
+            system.MoraleDeltaApplier = (survId, delta) =>
+            {
+                rewardedSurvivor = survId;
+                appliedMorale = delta;
+            };
+
+            system.ItemRewardApplier = (itemId, amount) =>
+            {
+                rewardedItem = itemId;
+                rewardedAmount = amount;
+            };
+
+            system.TryTriggerQuest("surv_tech", "engineer", 1);
+            system.ProgressRequirement("surv_tech", "scavenge", 2, "wire_copper");
+
+            // Make choice with morale delta 4.0
+            bool chosen = system.ChooseOption("surv_tech", "choice_overclock", 1, out _);
+            Assert.True(chosen);
+
+            Assert.Equal("surv_tech", rewardedSurvivor);
+            Assert.Equal(4.0f, appliedMorale);
+        }
     }
 }

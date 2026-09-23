@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -78,6 +79,66 @@ public sealed class PlanGovernanceContractTests
             {
                 Assert.True(plan.TryGetProperty(field, out _), $"Missing register field {field}");
             }
+        }
+    }
+
+    [Fact]
+    public void CanonicalRailsRegistryHasStableSchemaAndEvidenceOnDisk()
+    {
+        var jsonPath = Path.Combine(RepositoryRoot, "docs", "roadmap", "rails.json");
+        var mdPath = Path.Combine(RepositoryRoot, "docs", "roadmap", "RAILS.md");
+        var registryPath = Path.Combine(RepositoryRoot, "docs", "roadmap", "rails.registry.json");
+
+        Assert.True(File.Exists(jsonPath), $"Missing rails.json: {jsonPath}");
+        Assert.True(File.Exists(mdPath), $"Missing RAILS.md: {mdPath}");
+        Assert.True(File.Exists(registryPath), $"Missing rails.registry.json: {registryPath}");
+
+        using var document = JsonDocument.Parse(File.ReadAllText(jsonPath));
+        var root = document.RootElement;
+        Assert.Equal(1, root.GetProperty("schema_version").GetInt32());
+        Assert.Equal(10, root.GetProperty("total_rails").GetInt32());
+
+        var rails = root.GetProperty("rails").EnumerateArray().ToList();
+        Assert.Equal(10, rails.Count);
+
+        var validStates = new HashSet<string> { "NOT_STARTED", "IN_FLIGHT", "CODE_READY", "RUNTIME_VERIFIED", "PRESENTED", "DONE" };
+        foreach (var rail in rails)
+        {
+            var id = rail.GetProperty("id").GetString();
+            Assert.False(string.IsNullOrWhiteSpace(id));
+            var state = rail.GetProperty("state").GetString();
+            Assert.Contains(state, validStates);
+
+            // If state is >= CODE_READY, evidence must exist on disk
+            if (state is "CODE_READY" or "RUNTIME_VERIFIED" or "PRESENTED" or "DONE")
+            {
+                var evidence = rail.GetProperty("evidence").EnumerateArray().Select(e => e.GetString()).ToList();
+                Assert.NotEmpty(evidence);
+                foreach (var ep in evidence)
+                {
+                    Assert.NotNull(ep);
+                    var fullPath = Path.Combine(RepositoryRoot, ep);
+                    Assert.True(File.Exists(fullPath) || Directory.Exists(fullPath), $"Evidence path does not exist for rail '{id}': {ep}");
+                }
+            }
+        }
+    }
+
+    [Fact]
+    public void PlanGovernanceToolingScriptsExistAndAreConfigured()
+    {
+        var scripts = new[]
+        {
+            Path.Combine(RepositoryRoot, "scripts", "ci", "verify-plan-freshness.py"),
+            Path.Combine(RepositoryRoot, "scripts", "ci", "plan-intake-check.py"),
+            Path.Combine(RepositoryRoot, "scripts", "ci", "plan-intake-check.sh"),
+            Path.Combine(RepositoryRoot, "scripts", "ci", "generate-rails-registry.py"),
+        };
+
+        foreach (var script in scripts)
+        {
+            Assert.True(File.Exists(script), $"Missing governance script: {script}");
+            Assert.True(new FileInfo(script).Length > 0, $"Empty governance script: {script}");
         }
     }
 }

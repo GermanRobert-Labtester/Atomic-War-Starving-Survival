@@ -71,6 +71,13 @@ namespace AtomicWar.Journal
                 .Count(r => BoneHornRuntimeContract.IsSourceCatalog(r.SourceCatalog)) ?? 0;
             Check(boneHornProjectionCount == 30, "bone/horn discovery projections load 30 records");
 
+            // Plan 17: the daily-survival archive (quiet-hour journals, botanical
+            // logs, children's folklore + batch 2, ration fraud) loads as read-only
+            // codex text through the same IFileIO catalog path.
+            Check(catalogs != null && catalogs.DailySurvival != null
+                && catalogs.DailySurvival.TotalCount == 52,
+                "daily-survival archive loads 52 records");
+
             // --- KnowledgeBase dedupe ---
             var kb = new KnowledgeBase();
             bool first = kb.Discover(KnowledgeKeys.HighCo2);

@@ -60,6 +60,12 @@ namespace AtomicWar.GodotApp
             _survivorFate.OnSurvivorFate += fate =>
             {
                 _survivorFateDirty = true;
+                // Plan 42 — the fate owner's death signal is the canonical
+                // "survivor_perished" voice trigger.
+                TriggerSurvivorVoicePerished(fate.survivorId);
+                // Plan 46 — the fate owner's death signal is recorded in the local
+                // play-session stream (audit read model only).
+                RecordPlayMetricSurvivorPerished(fate.survivorId);
                 // Memorial/journal/duty/roster save lanes are flagged by their
                 // own OnMemorialized/OnEntryAdded/OnAssignmentChanged handlers;
                 // this handler only marks the fate lane dirty.

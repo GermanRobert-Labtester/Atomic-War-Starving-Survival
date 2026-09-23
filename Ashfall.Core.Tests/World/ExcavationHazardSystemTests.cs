@@ -37,9 +37,22 @@ namespace Ashfall.Core.Tests.World
         { ""item_id"": ""mechanical_parts"", ""amount"": 2 }
       ],
       ""labor_ticks"": 100,
-      ""effect"": { ""methane_vent_rate_permille"": 300 },
+      ""effect"": { ""methane_vent_rate_permille"": 300, ""passive_decay_bonus_permille"": 150 },
       ""requires_respiratory_protection"": false,
       ""tags"": [""ventilation"", ""installed""]
+    },
+    {
+      ""id"": ""mitigation_sump_drainage_pump"",
+      ""display_name"": ""Sump Drainage Pump"",
+      ""hazard_tags"": [""flood""],
+      ""required_items"": [
+        { ""item_id"": ""iron_pipe"", ""amount"": 4 },
+        { ""item_id"": ""mechanical_parts"", ""amount"": 3 }
+      ],
+      ""labor_ticks"": 110,
+      ""effect"": { ""flood_drain_rate_permille"": 350, ""passive_decay_bonus_permille"": 200 },
+      ""requires_respiratory_protection"": false,
+      ""tags"": [""drainage"", ""flood_control"", ""installed""]
     },
     {
       ""id"": ""mitigation_chemical_spore_scrub"",
@@ -50,7 +63,7 @@ namespace Ashfall.Core.Tests.World
         { ""item_id"": ""clean_water"", ""amount"": 1 }
       ],
       ""labor_ticks"": 90,
-      ""effect"": { ""spore_reduction_permille"": 500 },
+      ""effect"": { ""spore_reduction_permille"": 500, ""passive_decay_bonus_permille"": 100 },
       ""requires_respiratory_protection"": true,
       ""tags"": [""biocide""]
     },
@@ -76,7 +89,7 @@ namespace Ashfall.Core.Tests.World
         { ""item_id"": ""scrap_metal"", ""amount"": 3 }
       ],
       ""labor_ticks"": 110,
-      ""effect"": { ""collapse_risk_reduction_permille"": 450 },
+      ""effect"": { ""collapse_risk_reduction_permille"": 450, ""passive_decay_bonus_permille"": 600 },
       ""requires_respiratory_protection"": false,
       ""tags"": [""blast_matting"", ""installed""]
     }
@@ -244,6 +257,109 @@ namespace Ashfall.Core.Tests.World
 
             Assert.Equal(sysA.GetOrCreateSector("sec_A").MethanePpm,
                          sysB.GetOrCreateSector("sec_A").MethanePpm);
+        }
+
+        [Fact]
+        public void AddMethane_CrossingIgnitionThreshold_RaisesExactlyOncePerCrossing()
+        {
+            var system = CreateSystem(out _);
+            var sector = system.GetOrCreateSector("sector_ignition");
+            int ignitions = 0;
+            system.OnMethaneIgnition += _ => ignitions++;
+
+            // Below threshold: no ignition.
+            system.AddMethane("sector_ignition", 3000);
+            Assert.Equal(0, ignitions);
+            Assert.Equal(3300, sector.MethanePpm);
+
+            // Crossing raises once.
+            system.AddMethane("sector_ignition", 1000);
+            Assert.Equal(1, ignitions);
+            Assert.Equal(4300, sector.MethanePpm);
+
+            // Staying above the threshold must not re-fire.
+            system.AddMethane("sector_ignition", 500);
+            Assert.Equal(1, ignitions);
+
+            // Ventilating below and crossing again is a fresh ignition.
+            system.AddMethane("sector_ignition", -1000);
+            Assert.Equal(1, ignitions);
+            system.AddMethane("sector_ignition", 1000);
+            Assert.Equal(2, ignitions);
+        }
+
+        [Fact]
+        public void TickDay_MethaneAccumulation_RaisesIgnitionOnCrossing()
+        {
+            var system = CreateSystem(out _, seed: 4242);
+            var sector = system.GetOrCreateSector("sector_tick");
+            sector.MethanePpm = ExcavationHazardSystem.MethaneIgnitionThresholdPpm - 10;
+            int ignitions = 0;
+            system.OnMethaneIgnition += _ => ignitions++;
+
+            system.TickDay(1);
+
+            Assert.Equal(1, ignitions);
+            Assert.True(sector.MethanePpm > ExcavationHazardSystem.MethaneIgnitionThresholdPpm);
+        }
+
+        [Fact]
+        public void AddFloodWater_CrossingCriticalThreshold_RaisesExactlyOncePerCrossing()
+        {
+            var system = CreateSystem(out _);
+            int floods = 0;
+            system.OnSectorFlooded += _ => floods++;
+
+            Assert.True(system.AddFloodWater("sector_flood", 300));
+            Assert.Equal(0, floods);
+
+            Assert.True(system.AddFloodWater("sector_flood", 300));
+            Assert.Equal(1, floods);
+            Assert.Equal(600, system.GetOrCreateSector("sector_flood").FloodLevelPermille);
+
+            // Already flooded: no repeat notification.
+            system.AddFloodWater("sector_flood", 100);
+            Assert.Equal(1, floods);
+        }
+
+        [Fact]
+        public void InstalledMitigation_PassiveDecay_UsesAuthoredBonus()
+        {
+            var system = CreateSystem(out var inv, seed: 5150);
+            var sector = system.GetOrCreateSector("sector_passive");
+            sector.MethanePpm = 3000;
+
+            inv.Add(new ItemDefinition { id = "iron_pipe" }, 2);
+            inv.Add(new ItemDefinition { id = "mechanical_parts" }, 2);
+            var install = system.TryApplyMitigation("sector_passive", "mitigation_ventilation_blower_install");
+            Assert.Equal(ActionResult.StatusKind.Success, install.Status);
+
+            int before = sector.MethanePpm;
+            system.TickDay(1);
+
+            // Authored passive decay is 150/day; accumulation draws 50–149, so the
+            // net change must be strictly negative (the former hardcoded -200 is retired).
+            Assert.True(sector.MethanePpm < before,
+                $"expected authored passive decay to outpace accumulation (before={before}, after={sector.MethanePpm})");
+        }
+
+        [Fact]
+        public void InstalledDrainagePump_PassiveDecay_LowersFloodLevel()
+        {
+            var system = CreateSystem(out var inv);
+            var sector = system.GetOrCreateSector("sector_pump");
+            sector.FloodLevelPermille = 700;
+
+            inv.Add(new ItemDefinition { id = "iron_pipe" }, 4);
+            inv.Add(new ItemDefinition { id = "mechanical_parts" }, 3);
+            var install = system.TryApplyMitigation("sector_pump", "mitigation_sump_drainage_pump");
+            Assert.Equal(ActionResult.StatusKind.Success, install.Status);
+
+            // Install drains 350 immediately; the authored daily upkeep drains 200 more.
+            int afterInstall = sector.FloodLevelPermille;
+            system.TickDay(1);
+
+            Assert.Equal(Math.Max(0, afterInstall - 200), sector.FloodLevelPermille);
         }
     }
 }

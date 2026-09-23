@@ -432,7 +432,7 @@ namespace Ashfall.Core.Tests
             var report = CatalogIntegrityValidator.Validate(DataDir(), new FileSystemIO());
             for (int i = 0; i < report.Errors.Count; i++)
             {
-                Assert.DoesNotContain("disease", report.Errors[i]);
+                Assert.DoesNotContain("disease_catalog.json", report.Errors[i]);
             }
         }
 

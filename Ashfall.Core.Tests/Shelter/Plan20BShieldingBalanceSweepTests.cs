@@ -186,7 +186,7 @@ namespace Ashfall.Core.Tests.Plan20BShielding
                 m.IndoorRadonProvider = () => 12f;
             });
             Assert.InRange(stormOpen, 4406.3f, 4406.5f); // (3.0 + 0.06) × 1440
-            Assert.Equal(stormIntact, 1526.4f, 1);       // weather cannot enter an intact structure
+            Assert.Equal(1526.4f, stormIntact, 1);       // weather cannot enter an intact structure
         }
 
         [Fact]

@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "dimensions": [
+    {
+      "id": "reliability",
+      "display_name": "Reliability",
+      "description": "Perception of contract honor, trade honesty, and truth in broadcasts.",
+      "positive_title": "Honorable",
+      "negative_title": "Treacherous",
+      "daily_decay": 0.25
+    },
+    {
+      "id": "strength",
+      "display_name": "Strength",
+      "description": "Perception of martial readiness, perimeter fortification, and defensive deterrence.",
+      "positive_title": "Formidable",
+      "negative_title": "Vulnerable",
+      "daily_decay": 0.25
+    },
+    {
+      "id": "generosity",
+      "display_name": "Generosity",
+      "description": "Willingness to shelter strangers, grant medical aid, and share food reserves.",
+      "positive_title": "Sanctuary",
+      "negative_title": "Selfish",
+      "daily_decay": 0.25
+    },
+    {
+      "id": "ruthlessness",
+      "display_name": "Ruthlessness",
+      "description": "Willingness to retaliate with lethal force, execute raiders, and tolerate collateral damage.",
+      "positive_title": "Fearsome",
+      "negative_title": "Lenient",
+      "daily_decay": 0.25
+    },
+    {
+      "id": "wealth",
+      "display_name": "Wealth",
+      "description": "Perception of resource abundance, rare medicine, scrap reserves, and battery power.",
+      "positive_title": "Prosperous",
+      "negative_title": "Impoverished",
+      "daily_decay": 0.25
+    }
+  ],
+  "tags": [
+    {
+      "id": "sanctuary",
+      "display_name": "Open Sanctuary",
+      "description": "Known as a refuge for the wounded and displaced.",
+      "trade_discount_permille": 50
+    },
+    {
+      "id": "trading_post",
+      "display_name": "Wasteland Trading Post",
+      "description": "Regular trading caravans route through the shelter due to reliable trade volume.",
+      "trade_discount_permille": 100
+    },
+    {
+      "id": "fortress",
+      "display_name": "Impenetrable Fortress",
+      "description": "Raiders and skirmishers actively avoid attacking the hardened perimeter.",
+      "trade_discount_permille": 0
+    },
+    {
+      "id": "dangerous",
+      "display_name": "Dangerous Territory",
+      "description": "Fearsome reputation makes merchants cautious and armed escorts standard.",
+      "trade_discount_permille": -150
+    },
+    {
+      "id": "treacherous",
+      "display_name": "Treacherous Holdfast",
+      "description": "History of broken agreements causes merchants to charge severe risk premiums.",
+      "trade_discount_permille": -250
+    },
+    {
+      "id": "honorable",
+      "display_name": "Honorable Bastion",
+      "description": "Steadfast agreements and clear trade terms win goodwill across all factions.",
+      "trade_discount_permille": 80
+    },
+    {
+      "id": "desperate",
+      "display_name": "Desperate Outpost",
+      "description": "Perceived as starving and vulnerable, attracting scavengers and predatory deals.",
+      "trade_discount_permille": -100
+    },
+    {
+      "id": "raider_bane",
+      "display_name": "Raider Bane",
+      "description": "Feared by outlaw bands; roaming scouts give the shelter a wide berth.",
+      "trade_discount_permille": 20
+    }
+  ]
+}

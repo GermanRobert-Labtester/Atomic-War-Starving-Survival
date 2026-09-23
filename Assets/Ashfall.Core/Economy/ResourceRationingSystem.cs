@@ -2,9 +2,54 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Economy
 {
+    [Serializable]
+    public sealed class RationingProtocolDefinition
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("protocol_type")]
+        public string ProtocolType { get; set; } = "standard";
+
+        [JsonPropertyName("default_tier")]
+        public string DefaultTier { get; set; } = "full";
+
+        [JsonPropertyName("morale_penalty_scale")]
+        public float MoralePenaltyScale { get; set; } = 0f;
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+
+        public RationingTier ParseDefaultTier() => DefaultTier?.ToLowerInvariant() switch
+        {
+            "three_quarter" => RationingTier.ThreeQuarter,
+            "half" => RationingTier.Half,
+            "third" => RationingTier.Third,
+            "quarter" => RationingTier.Quarter,
+            "minimal" => RationingTier.Minimal,
+            "none" => RationingTier.None,
+            _ => RationingTier.Full
+        };
+    }
+
+    [Serializable]
+    public sealed class RationingProtocolCatalogData
+    {
+        [JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; } = 1;
+
+        [JsonPropertyName("protocols")]
+        public List<RationingProtocolDefinition> Protocols { get; set; } = new List<RationingProtocolDefinition>();
+    }
+
     public enum RationingTier
     {
         Full = 0,
@@ -106,6 +151,7 @@ namespace Ashfall.Core.Economy
     {
         public int SchemaVersion { get; set; } = 1;
         public int NextSequence { get; set; } = 1;
+        public string ActiveProtocolId { get; set; } = "protocol_standard_distribution";
         public List<RationTarget> Targets { get; set; } = new List<RationTarget>();
         public List<SurvivorRationAssignment> Assignments { get; set; } = new List<SurvivorRationAssignment>();
         public List<ResourceCrisis> Crises { get; set; } = new List<ResourceCrisis>();
@@ -122,14 +168,74 @@ namespace Ashfall.Core.Economy
     {
         private readonly ResourceRationingState _state;
         private Func<string, bool>? _resourceValidator;
+        private readonly Dictionary<string, RationingProtocolDefinition> _protocols =
+            new Dictionary<string, RationingProtocolDefinition>(StringComparer.OrdinalIgnoreCase);
 
         public event Action<RationTarget>? OnRationingTierChanged;
         public event Action<ResourceCrisis>? OnCrisisDeclared;
         public event Action<ResourceCrisis>? OnCrisisResolved;
         public event Action<ResourceAllocationDecision>? OnAllocationAuthorized;
+        public event Action<string>? OnProtocolApplied;
 
         public int ActiveCrisesCount => _state.Crises.Count(c => !c.IsResolved);
         public int TargetCount => _state.Targets.Count;
+        public string ActiveProtocolId => _state.ActiveProtocolId;
+        public RationingProtocolDefinition? ActiveProtocol =>
+            _protocols.TryGetValue(_state.ActiveProtocolId ?? "", out var p) ? p : null;
+        public IReadOnlyCollection<RationingProtocolDefinition> Protocols => _protocols.Values;
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var data = JsonSerializer.Deserialize<RationingProtocolCatalogData>(json, options);
+            if (data != null)
+            {
+                LoadCatalog(data);
+            }
+        }
+
+        public void LoadCatalog(RationingProtocolCatalogData catalog)
+        {
+            if (catalog?.Protocols == null) return;
+            foreach (var p in catalog.Protocols)
+            {
+                if (!string.IsNullOrWhiteSpace(p.Id))
+                {
+                    _protocols[p.Id] = p;
+                }
+            }
+        }
+
+        public RationingProtocolDefinition? GetProtocol(string protocolId)
+        {
+            if (string.IsNullOrWhiteSpace(protocolId)) return null;
+            return _protocols.TryGetValue(protocolId, out var p) ? p : null;
+        }
+
+        public bool ApplyProtocol(string protocolId, IEnumerable<string> resourceIds, int currentDay = 1)
+        {
+            if (string.IsNullOrWhiteSpace(protocolId)) return false;
+            if (_protocols.Count > 0 && !_protocols.ContainsKey(protocolId))
+                return false;
+
+            _state.ActiveProtocolId = protocolId;
+
+            if (_protocols.TryGetValue(protocolId, out var proto) && resourceIds != null)
+            {
+                var tier = proto.ParseDefaultTier();
+                foreach (var res in resourceIds)
+                {
+                    if (!string.IsNullOrWhiteSpace(res))
+                    {
+                        SetRationTier(res, tier, currentDay);
+                    }
+                }
+            }
+
+            OnProtocolApplied?.Invoke(protocolId);
+            return true;
+        }
 
         public ResourceRationingSystem(
             ResourceRationingState? state = null,
@@ -220,6 +326,8 @@ namespace Ashfall.Core.Economy
             var target = _state.Targets.FirstOrDefault(t => string.Equals(t.ResourceId, resourceId, StringComparison.OrdinalIgnoreCase));
             return target?.Tier ?? RationingTier.Full;
         }
+
+        public float GetRationMultiplier(string resourceId) => GetAllocationMultiplier(resourceId);
 
         public void AssignSurvivorPriority(string survivorId, PriorityGroupTier priority)
         {
@@ -386,6 +494,7 @@ namespace Ashfall.Core.Economy
             {
                 SchemaVersion = _state.SchemaVersion,
                 NextSequence = _state.NextSequence,
+                ActiveProtocolId = _state.ActiveProtocolId,
                 Targets = new List<RationTarget>(_state.Targets.Count),
                 Assignments = new List<SurvivorRationAssignment>(_state.Assignments.Count),
                 Crises = new List<ResourceCrisis>(_state.Crises.Count),
@@ -447,6 +556,9 @@ namespace Ashfall.Core.Economy
 
             _state.SchemaVersion = state.SchemaVersion;
             _state.NextSequence = state.NextSequence;
+            _state.ActiveProtocolId = string.IsNullOrEmpty(state.ActiveProtocolId)
+                ? "protocol_standard_distribution"
+                : state.ActiveProtocolId;
             _state.Targets.Clear();
             _state.Assignments.Clear();
             _state.Crises.Clear();

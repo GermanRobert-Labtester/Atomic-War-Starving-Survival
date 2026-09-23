@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "profile_type": "industrial",
+      "name": "Industrial Workshop",
+      "description": "Humming machinery, harsh functional lighting, and utilitarian benches. Maximizes workshop output at the expense of quiet morale.",
+      "morale_modifier": -1.0,
+      "productivity_modifier": 0.10,
+      "stress_relief_modifier": 0.0,
+      "target_lighting_min": 60.0,
+      "target_cleanliness_min": 40.0,
+      "target_air_purity_min": 50.0
+    },
+    {
+      "profile_type": "sterile",
+      "name": "Sterile Infirmary",
+      "description": "Disinfected surfaces, white glare, and austere organization. Improves sanitary task efficiency but creates an clinical, tense ambiance.",
+      "morale_modifier": 0.0,
+      "productivity_modifier": 0.05,
+      "stress_relief_modifier": -0.05,
+      "target_lighting_min": 75.0,
+      "target_cleanliness_min": 85.0,
+      "target_air_purity_min": 80.0
+    },
+    {
+      "profile_type": "lived_in",
+      "name": "Lived-In Quarters",
+      "description": "Worn rugs, shared tables, personal trinkets, and steady shelter rhythm. A balanced baseline offering mild comfort and familiar companionship.",
+      "morale_modifier": 0.5,
+      "productivity_modifier": 0.0,
+      "stress_relief_modifier": 0.0,
+      "target_lighting_min": 50.0,
+      "target_cleanliness_min": 60.0,
+      "target_air_purity_min": 60.0
+    },
+    {
+      "profile_type": "warm",
+      "name": "Warm Sanctuary",
+      "description": "Soft amber lamps, insulated partitions, communal hearth, and high decoration. Greatly lifts spirits and speeds psychological recovery.",
+      "morale_modifier": 2.5,
+      "productivity_modifier": 0.0,
+      "stress_relief_modifier": 0.10,
+      "target_lighting_min": 65.0,
+      "target_cleanliness_min": 65.0,
+      "target_air_purity_min": 70.0
+    },
+    {
+      "profile_type": "cold",
+      "name": "Freezing Draft",
+      "description": "Flickering emergency bulbs, biting drafts, and dim freezing corners. Drains survivor resolve and slows physical labor.",
+      "morale_modifier": -3.0,
+      "productivity_modifier": -0.05,
+      "stress_relief_modifier": 0.0,
+      "target_lighting_min": 30.0,
+      "target_cleanliness_min": 40.0,
+      "target_air_purity_min": 40.0
+    },
+    {
+      "profile_type": "chaotic",
+      "name": "Chaotic Commons",
+      "description": "Echoing clamor, overcrowded corridors, and clattering salvage. Disorganizes routines and causes severe cognitive strain.",
+      "morale_modifier": 0.0,
+      "productivity_modifier": -0.10,
+      "stress_relief_modifier": -0.15,
+      "target_lighting_min": 50.0,
+      "target_cleanliness_min": 35.0,
+      "target_air_purity_min": 50.0
+    },
+    {
+      "profile_type": "serene",
+      "name": "Serene Refuge",
+      "description": "Whisper-quiet acoustic dampening, scrubbed fresh airflow, and restful lighting. Maximizes stress relief and mental solace.",
+      "morale_modifier": 1.5,
+      "productivity_modifier": 0.0,
+      "stress_relief_modifier": 0.20,
+      "target_lighting_min": 70.0,
+      "target_cleanliness_min": 75.0,
+      "target_air_purity_min": 80.0
+    }
+  ]
+}

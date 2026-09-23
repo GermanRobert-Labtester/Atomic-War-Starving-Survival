@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.World;
 
@@ -33,6 +34,7 @@ namespace Ashfall.Core.Exploration
         public float ExplorationProgress { get; set; } = 0f; // 0 to 100
         public List<string> KnownPoiIds { get; set; } = new List<string>();
         public List<string> Hazards { get; set; } = new List<string>();
+        public float ScoutingDifficulty { get; set; } = 1.0f;
     }
 
     [Serializable]
@@ -97,12 +99,92 @@ namespace Ashfall.Core.Exploration
         public event Action<MapDiscovery>? OnPoiMapped;
         public event Action<CartographySkill>? OnCartographySkillAdvanced;
 
+        public Action<MapRegion>? OnRegionDiscoveredSeam { get; set; }
+        public Action<MapDiscovery>? OnPoiMappedSeam { get; set; }
+        public Action<CartographySkill>? OnCartographySkillAdvancedSeam { get; set; }
+
         public int DiscoveredRegionCount => _state.Regions.Count(r => r.IsDiscovered);
         public int TotalRegionCount => _state.Regions.Count;
+        public IReadOnlyList<MapRegion> Regions => _state.Regions;
+        public IReadOnlyList<MapDiscovery> Discoveries => _state.Discoveries;
 
         public CartographySystem(CartographyState? state = null)
         {
             _state = state ?? new CartographyState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                if (root.TryGetProperty("regions", out var regionsEl) && regionsEl.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var item in regionsEl.EnumerateArray())
+                    {
+                        string id = item.TryGetProperty("region_id", out var idProp) ? idProp.GetString() ?? "" : "";
+                        string name = item.TryGetProperty("region_name", out var nameProp) ? nameProp.GetString() ?? "" : "";
+                        string terrainStr = item.TryGetProperty("terrain", out var tProp) ? tProp.GetString() ?? "" : "";
+                        float diff = item.TryGetProperty("scouting_difficulty", out var dProp) ? (float)dProp.GetDouble() : 1.0f;
+
+                        var pois = new List<string>();
+                        if (item.TryGetProperty("points_of_interest", out var poiEl) && poiEl.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var p in poiEl.EnumerateArray())
+                            {
+                                string? str = p.GetString();
+                                if (!string.IsNullOrEmpty(str)) pois.Add(str);
+                            }
+                        }
+
+                        var hazards = new List<string>();
+                        if (item.TryGetProperty("hazards", out var hazEl) && hazEl.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var h in hazEl.EnumerateArray())
+                            {
+                                string? str = h.GetString();
+                                if (!string.IsNullOrEmpty(str)) hazards.Add(str);
+                            }
+                        }
+
+                        TerrainCategory terrain = terrainStr.ToLowerInvariant() switch
+                        {
+                            "urban" => TerrainCategory.Urban,
+                            "rural" => TerrainCategory.Rural,
+                            "industrial" => TerrainCategory.Industrial,
+                            "water" => TerrainCategory.Water,
+                            _ => TerrainCategory.Wasteland
+                        };
+
+                        if (!string.IsNullOrEmpty(id))
+                        {
+                            var reg = RegisterRegion(id, name, terrain, pois, hazards);
+                            reg.ScoutingDifficulty = diff;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Catalog parse fallback
+            }
+        }
+
+        public static float GetEquipmentBonus(string toolName)
+        {
+            if (string.IsNullOrWhiteSpace(toolName)) return 0f;
+            return toolName.ToLowerInvariant() switch
+            {
+                "compass" => 10f,
+                "sextant" => 20f,
+                "survey_tools" => 30f,
+                "cartography_kit" => 50f,
+                _ => 0f
+            };
         }
 
         /// <summary>
@@ -201,6 +283,7 @@ namespace Ashfall.Core.Exploration
                 region.IsDiscovered = true;
                 region.ExplorationProgress = Math.Max(20f, region.ExplorationProgress);
                 OnRegionDiscovered?.Invoke(region);
+                OnRegionDiscoveredSeam?.Invoke(region);
             }
 
             return true;
@@ -241,9 +324,11 @@ namespace Ashfall.Core.Exploration
                 skill.Proficiency = Math.Clamp(skill.Proficiency + 2.5f, 0f, 100f);
                 skill.MapsCreated++;
                 OnCartographySkillAdvanced?.Invoke(skill);
+                OnCartographySkillAdvancedSeam?.Invoke(skill);
             }
 
             OnPoiMapped?.Invoke(discovery);
+            OnPoiMappedSeam?.Invoke(discovery);
             return discovery;
         }
 
@@ -290,7 +375,8 @@ namespace Ashfall.Core.Exploration
                     IsDiscovered = r.IsDiscovered,
                     ExplorationProgress = r.ExplorationProgress,
                     KnownPoiIds = new List<string>(r.KnownPoiIds),
-                    Hazards = new List<string>(r.Hazards)
+                    Hazards = new List<string>(r.Hazards),
+                    ScoutingDifficulty = r.ScoutingDifficulty
                 });
             }
 
@@ -342,7 +428,8 @@ namespace Ashfall.Core.Exploration
                         IsDiscovered = r.IsDiscovered,
                         ExplorationProgress = r.ExplorationProgress,
                         KnownPoiIds = new List<string>(r.KnownPoiIds ?? Enumerable.Empty<string>()),
-                        Hazards = new List<string>(r.Hazards ?? Enumerable.Empty<string>())
+                        Hazards = new List<string>(r.Hazards ?? Enumerable.Empty<string>()),
+                        ScoutingDifficulty = r.ScoutingDifficulty
                     });
                 }
             }

@@ -129,6 +129,18 @@ namespace Ashfall.Core.Economy
         }
 
         /// <summary>
+        /// Plan 155 — Optional contraband predicate. When bound, caravans that are not
+        /// shadow/contraband brokers refuse to accept contraband goods.
+        /// </summary>
+        public Func<string, bool>? ContrabandCheck { get; set; }
+
+        /// <summary>
+        /// Plan 155 — Event fired when a contraband trade is completed with a shadow dealer
+        /// (caravanId, itemId, quantity). Used by BlackMarket / Heat systems to accumulate detection heat.
+        /// </summary>
+        public event Action<string, string, int>? OnContrabandTraded;
+
+        /// <summary>
         /// Wave 9 Part 2 C1 (Option C) — optional priority scorer for stock items
         /// (e.g. category scarcity index, active shocks, or trade pressure).
         /// When unset, items evaluate using their authored price multiplier and ID ordinal.
@@ -435,6 +447,25 @@ namespace Ashfall.Core.Economy
             if (playerRequests == null || playerRequests.Count == 0)
                 return ActionResult.Blocked("no_items_requested", "barter.no_items_requested");
 
+            // Plan 155 — Contraband inspection gate
+            bool isContrabandBroker = string.Equals(caravan.caravan_id, "caravan_contraband_broker", StringComparison.OrdinalIgnoreCase)
+                                   || string.Equals(caravan.caravan_id, "caravan_black_market_munitions", StringComparison.OrdinalIgnoreCase)
+                                   || (caravan.demanded_item_tags != null && caravan.demanded_item_tags.Contains("contraband"));
+
+            if (ContrabandCheck != null && playerOffers != null)
+            {
+                foreach (var off in playerOffers)
+                {
+                    if (off.Value > 0 && ContrabandCheck(off.Key))
+                    {
+                        if (!isContrabandBroker)
+                        {
+                            return ActionResult.Blocked("contraband_refused", "barter.contraband_refused_by_merchant");
+                        }
+                    }
+                }
+            }
+
             // 1. Verify caravan has sufficient stock
             foreach (var req in playerRequests)
             {
@@ -504,6 +535,19 @@ namespace Ashfall.Core.Economy
             }
 
             _state.completedTradesCount++;
+
+            // Plan 155 — Dispatch shadow trade event for contraband goods traded with shadow brokers
+            if (isContrabandBroker && ContrabandCheck != null && playerOffers != null)
+            {
+                foreach (var off in playerOffers)
+                {
+                    if (off.Value > 0 && ContrabandCheck(off.Key))
+                    {
+                        OnContrabandTraded?.Invoke(caravan.caravan_id, off.Key, off.Value);
+                    }
+                }
+            }
+
             OnBarterStateChanged?.Invoke();
 
             return ActionResult.Success("barter.trade_completed",

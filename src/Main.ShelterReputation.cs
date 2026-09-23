@@ -21,6 +21,21 @@ namespace AtomicWar.GodotApp
             var state = ShelterReputationSaveStore.TryLoad() ?? new ShelterReputationState();
             var system = new ShelterReputationSystem(state);
 
+            // Plan 207 — bind the authored perception dimensions and public tags so
+            // trade multipliers and titles resolve from canonical data.
+            string reputationCatalogPath = CatalogPath.ResolveCatalog("reputation_dimensions.json");
+            var reputationCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (reputationCatalogIo.FileExists(reputationCatalogPath))
+            {
+                var reputationCatalog = System.Text.Json.JsonSerializer.Deserialize<ReputationCatalogData>(
+                    reputationCatalogIo.ReadAllText(reputationCatalogPath),
+                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (reputationCatalog != null)
+                {
+                    system.LoadCatalog(reputationCatalog);
+                }
+            }
+
             _shelterReputation = new ShelterReputationHostSession(system);
             _shelterReputation.StateChanged += OnShelterReputationStateChanged;
             return _shelterReputation;

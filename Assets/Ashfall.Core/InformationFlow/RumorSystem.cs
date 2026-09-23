@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Ashfall.Core.InformationFlow
 {
@@ -38,6 +39,49 @@ namespace Ashfall.Core.InformationFlow
         public string LocationId { get; set; } = string.Empty;
         public float Credibility { get; set; } = 0.8f;
         public string Bias { get; set; } = "neutral";
+    }
+
+    [Serializable]
+    public sealed class InformationHubDef
+    {
+        public string hub_id { get; set; } = string.Empty;
+        public string hub_name { get; set; } = string.Empty;
+        public string location_id { get; set; } = string.Empty;
+        public float credibility { get; set; } = 0.8f;
+        public string bias { get; set; } = "neutral";
+        public int daily_rumor_capacity { get; set; } = 5;
+    }
+
+    [Serializable]
+    public sealed class RumorCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<InformationHubDef> hubs { get; set; } = new List<InformationHubDef>();
+    }
+
+    [Serializable]
+    public sealed class BriefingItem
+    {
+        public string RumorId { get; set; } = string.Empty;
+        public string Headline { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public RumorSubjectType SubjectType { get; set; }
+        public float Truthfulness { get; set; }
+        public bool IsVerified { get; set; }
+        public bool IsThreat { get; set; }
+    }
+
+    [Serializable]
+    public sealed class IntelligenceBriefingReport
+    {
+        public string LocationId { get; set; } = string.Empty;
+        public string HubName { get; set; } = string.Empty;
+        public float HubCredibility { get; set; }
+        public int TotalItems { get; set; }
+        public int ThreatCount { get; set; }
+        public int OpportunityCount { get; set; }
+        public float AverageTruthfulness { get; set; }
+        public List<BriefingItem> Items { get; set; } = new List<BriefingItem>();
     }
 
     [Serializable]
@@ -205,6 +249,70 @@ namespace Ashfall.Core.InformationFlow
         public IReadOnlyList<WastelandRumor> GetInterceptedRumors()
         {
             return _state.Rumors.Where(r => r.IsIntercepted).ToList();
+        }
+
+        public void LoadCatalog(RumorCatalogData? catalog)
+        {
+            if (catalog?.hubs == null) return;
+            foreach (var h in catalog.hubs)
+            {
+                if (!string.IsNullOrWhiteSpace(h.hub_id))
+                {
+                    RegisterHub(h.hub_id, h.hub_name, h.location_id, h.credibility, h.bias);
+                }
+            }
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var catalog = JsonSerializer.Deserialize<RumorCatalogData>(json, options);
+                LoadCatalog(catalog);
+            }
+            catch (Exception) { /* malformed catalog falls back to built-in defaults; authoring errors are enforced by the data-integrity gate */ }
+        }
+
+        public IntelligenceBriefingReport CreateBriefingReport(string locationId)
+        {
+            var hub = _state.Hubs.FirstOrDefault(h => string.Equals(h.LocationId, locationId, StringComparison.OrdinalIgnoreCase));
+            var rumors = GetRumorsAtLocation(locationId);
+
+            var report = new IntelligenceBriefingReport
+            {
+                LocationId = locationId ?? string.Empty,
+                HubName = hub?.HubName ?? "Field Listening Post",
+                HubCredibility = hub?.Credibility ?? 0.5f,
+                TotalItems = rumors.Count,
+                Items = new List<BriefingItem>(rumors.Count)
+            };
+
+            if (rumors.Count == 0) return report;
+
+            float truthSum = 0f;
+            foreach (var r in rumors)
+            {
+                truthSum += r.Truthfulness;
+                bool isThreat = r.SubjectType == RumorSubjectType.Faction || r.SubjectType == RumorSubjectType.Event;
+                if (isThreat) report.ThreatCount++;
+                else report.OpportunityCount++;
+
+                report.Items.Add(new BriefingItem
+                {
+                    RumorId = r.RumorId,
+                    Headline = r.Headline,
+                    Description = r.Description,
+                    SubjectType = r.SubjectType,
+                    Truthfulness = r.Truthfulness,
+                    IsVerified = r.Truthfulness >= 0.80f,
+                    IsThreat = isThreat
+                });
+            }
+
+            report.AverageTruthfulness = truthSum / rumors.Count;
+            return report;
         }
 
         public RumorNetworkState CaptureState()

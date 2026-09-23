@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "id": "doc_tpl_perimeter_dawn",
+      "type": "photograph",
+      "subject_type": "place",
+      "title": "Dawn on the Perimeter Watch",
+      "default_description": "First morning light cutting across the reinforced perimeter coils.",
+      "suggested_tags": ["perimeter", "watchtower", "dawn", "shelter_life"]
+    },
+    {
+      "id": "doc_tpl_canteen_meal",
+      "type": "photograph",
+      "subject_type": "daily_life",
+      "title": "Evening Meal in Canteen",
+      "default_description": "Survivors gathered sharing warm stew after work shifts.",
+      "suggested_tags": ["community", "canteen", "dinner", "survivors"]
+    },
+    {
+      "id": "doc_tpl_hydroponic_bloom",
+      "type": "sketch",
+      "subject_type": "object",
+      "title": "First Green Leaf in Sub-Level 3",
+      "default_description": "Pencil study of a thriving tomato shoot under sodium grow lights.",
+      "suggested_tags": ["hydroponics", "sketch", "greenery", "hope"]
+    },
+    {
+      "id": "doc_tpl_overseer_chronicle",
+      "type": "written_record",
+      "subject_type": "significant_moment",
+      "title": "Account of the Dust Incursion",
+      "default_description": "Eyewitness report detailing the breach and cooperative defense.",
+      "suggested_tags": ["chronicle", "defense", "history", "breach"]
+    },
+    {
+      "id": "doc_tpl_memorial_vigil",
+      "type": "sketch",
+      "subject_type": "event",
+      "title": "Candlelight Vigil at the Wall of Names",
+      "default_description": "Charcoal sketch capturing solemn faces reflected in flickering candlelight.",
+      "suggested_tags": ["memorial", "vigil", "remembrance", "sketch"]
+    }
+  ]
+}

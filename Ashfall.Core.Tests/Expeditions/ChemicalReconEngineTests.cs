@@ -177,6 +177,44 @@ namespace Ashfall.Core.Tests
             Assert.True(engine.IsFilterBreakthrough(0f, 100f));   // fully exhausted
         }
 
+        [Fact]
+        public void EvaluateFilterCondition_RaisesExactlyOncePerCrossing()
+        {
+            var engine = Create();
+            int fired = 0;
+            string? lastLocation = null;
+            engine.OnFilterBreakthrough += locationId => { fired++; lastLocation = locationId; };
+
+            Assert.False(engine.EvaluateFilterCondition("loc_test", 100f));
+            Assert.Equal(0, fired);
+
+            Assert.True(engine.EvaluateFilterCondition("loc_test", 15f));
+            Assert.Equal(1, fired);
+            Assert.Equal("loc_test", lastLocation);
+
+            // Still at risk: no repeat notification.
+            engine.EvaluateFilterCondition("loc_test", 10f);
+            Assert.Equal(1, fired);
+
+            // Recovery re-arms; a second crossing fires again.
+            engine.EvaluateFilterCondition("loc_test", 50f);
+            engine.EvaluateFilterCondition("loc_test", 5f);
+            Assert.Equal(2, fired);
+        }
+
+        [Fact]
+        public void EvaluateFilterCondition_TracksEachLocationIndependently()
+        {
+            var engine = Create();
+            int fired = 0;
+            engine.OnFilterBreakthrough += _ => fired++;
+
+            engine.EvaluateFilterCondition("loc_a", 5f);
+            engine.EvaluateFilterCondition("loc_b", 5f);
+
+            Assert.Equal(2, fired);
+        }
+
         // ─── Map overlay transitions ───
 
         [Fact]

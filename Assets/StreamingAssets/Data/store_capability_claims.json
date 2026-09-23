@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "manifest_id": "ashfall_store_capability_manifest_v1",
+  "product_title": "ASHFALL",
+  "project_version": "1.1.0",
+  "generated_date": "2026-09-20",
+  "claims": [
+    {
+      "claim_id": "claim_turn_based_simulation",
+      "category": "GameplayCore",
+      "statement": "Deterministic turn-based survival management with daily cycles and systemic consequences.",
+      "backing_system": "CampaignDayCoordinator",
+      "verification_gate": "CampaignDayOwnerDeterminismGate",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_scarcity_rationing",
+      "category": "GameplayCore",
+      "statement": "Granular resource management covering calories, clean water, power load shedding, and equipment durability.",
+      "backing_system": "NeedsSystem",
+      "verification_gate": "SurvivorNeedsCharacterizationTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_survivor_relations_and_grief",
+      "category": "GameplayCore",
+      "statement": "Survivor social dynamics featuring 5 relationship bands, pair history, bereavement rites, and wills.",
+      "backing_system": "SurvivorRelationsSystem",
+      "verification_gate": "Plan44SurvivorRelationsIntegrationTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_keyboard_only_navigation",
+      "category": "Accessibility",
+      "statement": "Full keyboard-only navigation enabling complete campaign play without a mouse.",
+      "backing_system": "AshfallFocusNavigator",
+      "verification_gate": "InputMapGateTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_reduce_motion",
+      "category": "Accessibility",
+      "statement": "Accessible reduce-motion profile providing instantaneous camera transitions and stationary cues.",
+      "backing_system": "HoldfastPresentationSlate",
+      "verification_gate": "Plan51PresentedGameIntegrationTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_controller_support",
+      "category": "Accessibility",
+      "statement": "22-action input binding with first-class controller and joypad navigation support.",
+      "backing_system": "AshfallInputActions",
+      "verification_gate": "InputMapContractTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_scarcity_soundscape",
+      "category": "AudioVisual",
+      "statement": "Stateful environmental ambience with dynamic weather beds, alert ducking, and intentional silence states.",
+      "backing_system": "ScarcityAudioStateMachine",
+      "verification_gate": "Plan52SoundOfScarcityIntegrationTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_presentation_crisis_bands",
+      "category": "AudioVisual",
+      "statement": "Dynamic visual crisis states reflecting shelter flooding, power brownouts, and atmospheric condition.",
+      "backing_system": "HoldfastPresentationSlate",
+      "verification_gate": "Plan51PresentedGameIntegrationTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_isolated_slot_saves",
+      "category": "DataAndSaves",
+      "statement": "Checksummed multi-slot saves with corruption detection, automatic backup restoration, and soak testing.",
+      "backing_system": "SessionDurabilityManager",
+      "verification_gate": "SessionDurabilityManagerTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_zero_network_telemetry",
+      "category": "DataAndSaves",
+      "statement": "100% private local session telemetry with zero network calls, zero tracking, and no PII collection.",
+      "backing_system": "PlaySessionRecorder",
+      "verification_gate": "PlaySessionRecorderTests",
+      "is_verified": true
+    },
+    {
+      "claim_id": "claim_provenance_and_ai_transparency",
+      "category": "AiAndAuthorship",
+      "statement": "Explicit machine-readable asset registry classifying all 355+ assets with source model provenance and license status.",
+      "backing_system": "AssetManifest",
+      "verification_gate": "Plan50AssetTruthIntegrationTests",
+      "is_verified": true
+    }
+  ]
+}

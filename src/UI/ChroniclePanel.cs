@@ -32,6 +32,31 @@ namespace AtomicWar.GodotApp.UI
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
             BuildUi();
+            Visible = false;
+        }
+
+        public override void _UnhandledInput(InputEvent @event)
+        {
+            if (!Visible) return;
+            if (@event is InputEventKey key && key.Pressed && !key.Echo && key.Keycode == Key.Escape)
+            {
+                Close();
+                GetViewport().SetInputAsHandled();
+            }
+        }
+
+        /// <summary>Shows the read-only chronicle and refreshes it against current endgame state.</summary>
+        public void Open()
+        {
+            Visible = true;
+            Refresh();
+        }
+
+        /// <summary>Hides the chronicle and notifies the host route.</summary>
+        public void Close()
+        {
+            Visible = false;
+            OnClose?.Invoke();
         }
 
         public void Bind(EndgameHostSession? host)
@@ -121,6 +146,7 @@ namespace AtomicWar.GodotApp.UI
 
             scroll.AddChild(contentBox);
             _shell.SetContent(scroll);
+            _shell.AttachHeaderCloseButton("CLOSE CHRONICLE [Esc]", () => Close());
         }
 
         public void Refresh()

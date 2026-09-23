@@ -105,3 +105,14 @@ Both signatures were granted by the user (foreman) on 2026-09-18 under the
 completion-first integration program authorization. Plan 24 is CLOSED; the
 environment-blocked snapshot rebaseline (item 12) is the only recorded
 residual and requires no further decision.
+
+## Addendum: Procedural Unblock of Snapshot Rebaseline Residual (L-P24R, 2026-09-23)
+
+Under integrator package `UNBLOCK-RESIDUALS-PLANS-24-31` (user-authorized 2026-09-23), the residual execution protocol is formally ratified per `UNBLOCK-04` §5.11 / `DEC-304`:
+1. Plan 24 remains **CLOSED**; no further architecture, domain logic, data schema, or save store decisions are required.
+2. The snapshot rebaseline execution protocol is established for the first session equipped with a real display/GPU:
+   - Read the intended render changes inventory above (Survivor detail need contributors, Duty roster hours row & confirmation dialog, Cenotaph status & vigil button).
+   - Render each affected panel at canonical 1920x1080 resolution using the repository's snapshot harness.
+   - Verify any diffs against the intended render changes inventory. Rebaseline golden assets only for intended diffs.
+   - Update this document's item 12 to CLOSED once executed on a renderer-capable host.
+3. Headless sessions are strictly prohibited from fabricating or bypassing golden snapshots.

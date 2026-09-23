@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-20T17:50:00Z",
+  "readiness_levels": [
+    "NOT_STARTED",
+    "IN_FLIGHT",
+    "CODE_READY",
+    "RUNTIME_VERIFIED",
+    "PRESENTED",
+    "DONE"
+  ],
+  "rails": [
+    {
+      "id": "graph",
+      "name": "Graph-Native Travel and Topology",
+      "authority_plan": "Plan 32A",
+      "state": "RUNTIME_VERIFIED",
+      "evidence": [
+        "Assets/Ashfall.Core/World/WastelandMapSystem.cs",
+        "Assets/StreamingAssets/Data/wasteland_map_v1.json"
+      ],
+      "consumers": [
+        "Plan 32",
+        "CF-P3-TRAVEL-HAZARD",
+        "ModalTravelDispatchEngine"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "intel",
+      "name": "Strategic Intel Network and Signal Gathering",
+      "authority_plan": "Plan 33",
+      "state": "DONE",
+      "evidence": [
+        "Assets/Ashfall.Core/Radio/RadioDistressSystem.cs",
+        "docs/plans/wave10_part2/B4_PLAN33_INTEL_VALUE_LOG.md"
+      ],
+      "consumers": [
+        "RadioHostSession",
+        "JournalSystem"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "identity",
+      "name": "Authored Survivor Identity and Personality Observability",
+      "authority_plan": "Plan 40A",
+      "state": "DONE",
+      "evidence": [
+        "Assets/Ashfall.Core/Survivors/SurvivorEnrichmentService.cs",
+        "Ashfall.Core.Tests/Survivors/SurvivorOriginModifierTests.cs",
+        "Ashfall.Core.Tests/Survivors/SurvivorIdentityObservabilityTests.cs"
+      ],
+      "consumers": [
+        "SurvivorRoster",
+        "InterpersonalConflictEngine"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "voice",
+      "name": "Diegetic Radio and Voice Narrative Systems",
+      "authority_plan": "Plan 42",
+      "state": "CODE_READY",
+      "evidence": [
+        "Assets/Ashfall.Core/Radio/RescuedArcProjection.cs",
+        "Ashfall.Core.Tests/Radio/RescuedArcProjectionTests.cs"
+      ],
+      "consumers": [
+        "RadioSystem",
+        "TransmissionLog"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "policy",
+      "name": "Shelter Policy and Governance System",
+      "authority_plan": "Plan 43B",
+      "state": "DONE",
+      "evidence": [
+        "Assets/Ashfall.Core/Governance/PolicySystem.cs",
+        "docs/plans/wave11_part1/A3_PLAN43_IMPLEMENTATION_LOG.md"
+      ],
+      "consumers": [
+        "DutyRosterSystem",
+        "LeadershipSystem"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "relations_outcomes",
+      "name": "Faction Relations Consequence and Reputation Engine",
+      "authority_plan": "Plan 44A",
+      "state": "CODE_READY",
+      "evidence": [
+        "Ashfall.Core.Tests/Factions/Plan25FactionEcologyTests.cs"
+      ],
+      "consumers": [
+        "MusterHostSession",
+        "ShelterBarterSystem"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "seasons",
+      "name": "Seasonal Climate Cycle and Environmental Pressures",
+      "authority_plan": "Plan 38A",
+      "state": "DONE",
+      "evidence": [
+        "Assets/Ashfall.Core/World/SeasonalEventSystem.cs",
+        "Assets/StreamingAssets/Data/weather_seasons.json"
+      ],
+      "consumers": [
+        "WeatherSystem",
+        "FarmingSystem"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "commitments",
+      "name": "Community Commitments and Survivor Pacts",
+      "authority_plan": "Plan 38C",
+      "state": "DONE",
+      "evidence": [
+        "Assets/Ashfall.Core/Survivors/NeedsSystem.cs",
+        "Ashfall.Core.Tests/Survivors/Plan24NeedsModifierStackTests.cs"
+      ],
+      "consumers": [
+        "PactEngine",
+        "MoraleSystem"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "acceptance_ladder",
+      "name": "Survival Milestone Acceptance Ladder",
+      "authority_plan": "Plan 45A",
+      "state": "DONE",
+      "evidence": [
+        "Assets/Ashfall.Core/Content/ContentAcceptancePipeline.cs",
+        "scripts/ci/content-acceptance-gate.sh"
+      ],
+      "consumers": [
+        "CampaignProgression",
+        "VictoryGate"
+      ],
+      "blocks": []
+    },
+    {
+      "id": "port_contract",
+      "name": "Godot Native Porting Contract and Input Mapping",
+      "authority_plan": "Plan 36A",
+      "state": "DONE",
+      "evidence": [
+        "Assets/Ashfall.Core/Ports/PortContract.cs",
+        "docs/architecture/PORT_CONTRACT.md"
+      ],
+      "consumers": [
+        "InputRouter",
+        "PanelRegistryBootstrap"
+      ],
+      "blocks": []
+    }
+  ]
+}

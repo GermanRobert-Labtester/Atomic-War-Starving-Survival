@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "achievements": [
+    {
+      "id": "first_week_survivor",
+      "name": "First Week Survivor",
+      "category": "survival",
+      "description": "Survive until Day 7 in the wasteland.",
+      "condition_type": "survive_days",
+      "target_threshold": 7.0,
+      "epilogue_tag": "tenacious"
+    },
+    {
+      "id": "two_week_endurance",
+      "name": "Two-Week Endurance",
+      "category": "survival",
+      "description": "Survive until Day 14 under persistent fallout pressure.",
+      "condition_type": "survive_days",
+      "target_threshold": 14.0,
+      "epilogue_tag": "hardened"
+    },
+    {
+      "id": "month_of_ash",
+      "name": "Month of Ash",
+      "category": "survival",
+      "description": "Survive 30 days in the holdfast against all odds.",
+      "condition_type": "survive_days",
+      "target_threshold": 30.0,
+      "epilogue_tag": "veteran_shelter"
+    },
+    {
+      "id": "no_casualties",
+      "name": "No Casualties",
+      "category": "survival",
+      "description": "Maintain a full living roster with zero casualties.",
+      "condition_type": "all_survivors_alive",
+      "target_threshold": 1.0,
+      "epilogue_tag": "shepherd"
+    },
+    {
+      "id": "low_exposure",
+      "name": "Low Exposure",
+      "category": "survival",
+      "description": "Keep average radiation dose across survivors below 20 mSv.",
+      "condition_type": "max_avg_dose",
+      "target_threshold": 20.0,
+      "epilogue_tag": "clean_blood"
+    },
+    {
+      "id": "healthy_cohort",
+      "name": "Healthy Cohort",
+      "category": "survival",
+      "description": "Maintain average survivor physical health above 80 points.",
+      "condition_type": "min_avg_health",
+      "target_threshold": 80.0,
+      "epilogue_tag": "robust_community"
+    },
+    {
+      "id": "perimeter_secured",
+      "name": "Perimeter Secured",
+      "category": "combat",
+      "description": "Successfully repel 3 perimeter security threats or wasteland raids.",
+      "condition_type": "raids_repelled",
+      "target_threshold": 3.0,
+      "epilogue_tag": "defenders"
+    },
+    {
+      "id": "iron_defense",
+      "name": "Iron Defense",
+      "category": "combat",
+      "description": "Win a tactical encounter with zero survivor trauma or limb injuries.",
+      "condition_type": "flawless_defense",
+      "target_threshold": 1.0,
+      "epilogue_tag": "impenetrable"
+    },
+    {
+      "id": "harmonious_bunker",
+      "name": "Harmonious Bunker",
+      "category": "social",
+      "description": "Raise and sustain average shelter morale at or above 75 points.",
+      "condition_type": "min_avg_morale",
+      "target_threshold": 75.0,
+      "epilogue_tag": "solidarity"
+    },
+    {
+      "id": "conflict_arbitrator",
+      "name": "Conflict Arbitrator",
+      "category": "social",
+      "description": "Mediate and peacefully resolve 3 interpersonal or ideological disputes.",
+      "condition_type": "disputes_resolved",
+      "target_threshold": 3.0,
+      "epilogue_tag": "peacemaker"
+    },
+    {
+      "id": "wasteland_cartographer",
+      "name": "Wasteland Cartographer",
+      "category": "exploration",
+      "description": "Survey and map 5 distinct route corridors across the irradiated wastes.",
+      "condition_type": "routes_mapped",
+      "target_threshold": 5.0,
+      "epilogue_tag": "trailblazer"
+    },
+    {
+      "id": "deep_recon",
+      "name": "Deep Reconnaissance",
+      "category": "exploration",
+      "description": "Successfully complete a long-range expedition beyond 100 kilometers.",
+      "condition_type": "expedition_distance",
+      "target_threshold": 100.0,
+      "epilogue_tag": "far_voyager"
+    },
+    {
+      "id": "thriving_caravan",
+      "name": "Honest Commerce",
+      "category": "economic",
+      "description": "Conduct 5 successful barter trades with regional merchant caravans.",
+      "condition_type": "trades_completed",
+      "target_threshold": 5.0,
+      "epilogue_tag": "merchant_hub"
+    },
+    {
+      "id": "resource_resilience",
+      "name": "Full Granary",
+      "category": "economic",
+      "description": "Accumulate a reserve of over 100 preserved rations in shelter storage.",
+      "condition_type": "food_reserves",
+      "target_threshold": 100.0,
+      "epilogue_tag": "abundant_pantry"
+    },
+    {
+      "id": "beacon_of_hope",
+      "name": "Beacon of Hope",
+      "category": "moral",
+      "description": "Offer sanctuary, medical aid, or mercy in 3 critical moral dilemmas.",
+      "condition_type": "merciful_choices",
+      "target_threshold": 3.0,
+      "epilogue_tag": "righteous_stand"
+    },
+    {
+      "id": "dignity_preserved",
+      "name": "Dignity Preserved",
+      "category": "moral",
+      "description": "Honor fallen survivors with solemn memorialization and inheritance delivery.",
+      "condition_type": "memorials_erected",
+      "target_threshold": 1.0,
+      "epilogue_tag": "unforgotten"
+    }
+  ]
+}

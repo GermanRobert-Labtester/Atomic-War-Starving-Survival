@@ -333,5 +333,16 @@ namespace Ashfall.Core.YearOfAsh
             }
             EnsureDefaultFactions();
         }
+
+        /// <summary>
+        /// Plan 55 / Task 55A — apply the retention catalog to the enacted-decree
+        /// history. The decree ledger stays owned here.
+        /// </summary>
+        public int ApplyRetention(Records.RetentionPolicyCatalog? catalog)
+        {
+            if (catalog == null) return 0;
+            catalog.ApplyRetention("faction_war_decrees", _state.enactedDecrees, out int pruned);
+            return pruned;
+        }
     }
 }

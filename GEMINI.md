@@ -1,6 +1,6 @@
 # ASHFALL PROJECT — GEMINI Instructions
 # AUTO-GENERATED from AGENTS.md (canonical source). Run sync-agent-rulebooks.py to regenerate.
-# Last generated: 2026-09-19
+# Last generated: 2026-09-23
 
 ---
 
@@ -101,11 +101,12 @@ Available, unexecuted, no new foreman signature needed:
 Completed since 2026-09-18 (do not redo): 10 debt seals, 6 of the 15
 completion-first roster plans (Plan 24 closure, Plan 30 war projection +
 clock, Plan 32 graph travel, Plan 34 chronicle, Plan 36C port sweep,
-Plan 26A tranche-2), and census anchors C2[9]–C2[13]. Still
-**decision-blocked** — never start without the named signature: semantic-kind
-re-grouping (D11), quarantine drain (D21), XP-04 economy legs (F13), XP-06
-body-integrity schema (F14), EN-01…EN-08 proposals, Plan 49 (needs
-Plan 42/46 audits), C3 HOLDs 174/175/192/199, string freeze (D22).
+Plan 26A tranche-2), census anchors C2[9]–C2[13], Plan 24 residual (L-P24R
+snapshot rebaseline protocol), and Plan 31 residual (D11-B closed-section
+routing). Still **decision-blocked** — never start without the named signature:
+quarantine drain (D21), XP-04 economy legs (F13), XP-06 body-integrity schema
+(F14), EN-01…EN-08 proposals, Plan 49 (needs Plan 42/46 audits), C3 HOLDs
+174/175/192/199, string freeze (D22).
 
 ## FOLLOW-UP PARTIAL WAVE — REMAINING PLACEHOLDERS (2026-09-19)
 

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 262,
+  "total_seams": 287,
   "ports": [
     {
       "class_name": "AeroponicsSystem",
@@ -132,6 +132,15 @@
       "owner": "economy",
       "reason": "Integration seam in BlackMarketSystem.",
       "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "BootstrapLifecycleGate",
+      "method_name": "RegisterSubsystem",
+      "file_path": "Assets/Ashfall.Core/Orchestration/BootstrapLifecycleGate.cs",
+      "owner": "orchestration",
+      "reason": "EN-06 one-bootstrap-path lifecycle verification read model; consumed by BootstrapLifecycleGateTests only, no production caller.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
     },
     {
       "class_name": "CampaignCalendar",
@@ -2146,6 +2155,192 @@
       "file_path": "Assets/Ashfall.Core/Survivors/ZealotrySystem.cs",
       "owner": "survivors",
       "reason": "Integration seam in ZealotrySystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "CampaignLegacySystem",
+      "method_name": "RegisterTrait",
+      "file_path": "Assets/Ashfall.Core/Legacy/CampaignLegacySystem.cs",
+      "owner": "legacy",
+      "reason": "Catalog-load self-registration; called by CampaignLegacySystem.LoadCatalog.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "ClothingWarmthSystem",
+      "method_name": "RegisterProfile",
+      "file_path": "Assets/Ashfall.Core/Inventory/ClothingWarmthSystem.cs",
+      "owner": "inventory",
+      "reason": "Catalog-load self-registration; called by ClothingWarmthSystem.LoadCatalog.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "CookingSystem",
+      "method_name": "RegisterRecipe",
+      "file_path": "Assets/Ashfall.Core/Cooking/CookingSystem.cs",
+      "owner": "cooking",
+      "reason": "Catalog-load self-registration; called by CookingSystem.LoadCatalog.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "DreamSystem",
+      "method_name": "RegisterTemplate",
+      "file_path": "Assets/Ashfall.Core/Survivors/DreamSystem.cs",
+      "owner": "survivors",
+      "reason": "Catalog-load self-registration; called by DreamSystem.LoadCatalog.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "PropagandaSystem",
+      "method_name": "RegisterTemplate",
+      "file_path": "Assets/Ashfall.Core/Propaganda/PropagandaSystem.cs",
+      "owner": "propaganda",
+      "reason": "Catalog-load self-registration via LoadTemplates (host-bound 2026-09-22).",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "RepositoryClassificationPolicy",
+      "method_name": "RegisterBudget",
+      "file_path": "Assets/Ashfall.Core/Hygiene/RepositoryClassificationPolicy.cs",
+      "owner": "hygiene",
+      "reason": "Default budget table registered in the policy constructor.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "ResearchUnlockBridge",
+      "method_name": "RegisterUnlock",
+      "file_path": "Assets/Ashfall.Core/Research/ResearchUnlockBridge.cs",
+      "owner": "research",
+      "reason": "Catalog-load self-registration; called by ResearchUnlockBridge.LoadCatalog.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "RetentionPolicyCatalog",
+      "method_name": "RegisterPolicy",
+      "file_path": "Assets/Ashfall.Core/Records/RetentionPolicy.cs",
+      "owner": "records",
+      "reason": "Protected obligation table registered in the catalog constructor.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "ShelterGovernanceEngine",
+      "method_name": "RegisterBlocDefinition",
+      "file_path": "Assets/Ashfall.Core/Governance/ShelterGovernanceEngine.cs",
+      "owner": "governance",
+      "reason": "Catalog-load self-registration; called by ShelterGovernanceEngine.LoadCatalog.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "ShelterIdentitySystem",
+      "method_name": "RegisterOrigin",
+      "file_path": "Assets/Ashfall.Core/Shelter/ShelterIdentitySystem.cs",
+      "owner": "shelter",
+      "reason": "Catalog-load self-registration; called by ShelterIdentitySystem.LoadCatalog.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "AgingSystem",
+      "method_name": "RegisterSurvivor",
+      "file_path": "Assets/Ashfall.Core/Survivors/AgingSystem.cs",
+      "owner": "survivors",
+      "reason": "Plan 176 aging authority is Core-only (no host owner); seam covered by AgingSystem tests.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "AssetManifestCatalog",
+      "method_name": "RegisterEntry",
+      "file_path": "Assets/Ashfall.Core/Assets/AssetManifest.cs",
+      "owner": "assets",
+      "reason": "Plan 50 asset manifest registration exercised by tests; host resolution uses the catalog loader.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "MaritimeExplorationSystem",
+      "method_name": "RegisterDiveSite",
+      "file_path": "Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs",
+      "owner": "maritime",
+      "reason": "Island system (no host/save/panel); catalog registration covered by tests only.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "MaritimeExplorationSystem",
+      "method_name": "RegisterEquipment",
+      "file_path": "Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs",
+      "owner": "maritime",
+      "reason": "Island system (no host/save/panel); catalog registration covered by tests only.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "ModSupportSystem",
+      "method_name": "RegisterMod",
+      "file_path": "Assets/Ashfall.Core/Mods/ModDataContract.cs",
+      "owner": "mods",
+      "reason": "Plan 165 mod registry is Core-only; seam covered by mod contract tests.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "PersonalBelongingsSystem",
+      "method_name": "RegisterFromTemplate",
+      "file_path": "Assets/Ashfall.Core/Survivors/PersonalBelongingsSystem.cs",
+      "owner": "survivors",
+      "reason": "Plan 210 island system; template registration covered by tests only.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "ResearchUnlockBridge",
+      "method_name": "BindResearchSystem",
+      "file_path": "Assets/Ashfall.Core/Research/ResearchUnlockBridge.cs",
+      "owner": "research",
+      "reason": "Host binding seam is not yet wired (bridge is Core-only); covered by tests.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "SessionDurabilityManager",
+      "method_name": "RegisterOrUpdateSlot",
+      "file_path": "Assets/Ashfall.Core/Save/SessionDurabilityManager.cs",
+      "owner": "save",
+      "reason": "Plan 39 durability manager is Core-only; slot registration covered by tests.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "SurvivorEducationSystem",
+      "method_name": "RegisterLearner",
+      "file_path": "Assets/Ashfall.Core/Education/SurvivorEducationSystem.cs",
+      "owner": "education",
+      "reason": "Plan 154 education island; learner registration covered by tests only.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "SurvivorVoiceSystem",
+      "method_name": "RegisterLine",
+      "file_path": "Assets/Ashfall.Core/Voice/SurvivorVoiceSystem.cs",
+      "owner": "voice",
+      "reason": "Plan 42 voice catalog loader feeds RegisterLine; no host consumer yet.",
+      "classification": "TEST_ONLY",
+      "diagnostic": true
+    },
+    {
+      "class_name": "WeatherCascadeSystem",
+      "method_name": "BindWeatherSource",
+      "file_path": "Assets/Ashfall.Core/Weather/WeatherCascadeSystem.cs",
+      "owner": "weather",
+      "reason": "Optional source hook; TriggerCascade works without it and no caller exists yet.",
+      "classification": "OPTIONAL_HOST"
+    },
+    {
+      "class_name": "WeatherGameplayCascadeEngine",
+      "method_name": "BindValidatedTemplates",
+      "file_path": "Assets/Ashfall.Core/Weather/WeatherGameplayCascadeEngine.cs",
+      "owner": "weather",
+      "reason": "Plan 135 / C2[27] validated-template binding: the host loads the authored cascade table through the strict WeatherCascadeCatalogLoader and hands the engine pre-validated rows, so no lenient vocabulary fallback can hide an authored typo inside a live cascade.",
       "classification": "HOST_REQUIRED"
     }
   ]

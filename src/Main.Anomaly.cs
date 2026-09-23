@@ -68,6 +68,14 @@ namespace AtomicWar.GodotApp
                     null!, _simDay);
             };
 
+            _anomalyHazard.OnHazardContact += hazard =>
+            {
+                _journal?.TryAddRawEntry(
+                    "anomaly_contact",
+                    $"The shelter is inside anomaly zone {hazard.anomaly_id} ({hazard.radiation_rate:0} rad/h at the perimeter).",
+                    null!, _simDay);
+            };
+
             _anomalyHazard.OnHazardExpired += hazard =>
             {
                 _journal?.TryAddRawEntry(

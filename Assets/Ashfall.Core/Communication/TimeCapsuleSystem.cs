@@ -76,6 +76,40 @@ namespace Ashfall.Core.Communication
     }
 
     [Serializable]
+    public sealed class CapsuleContentDef
+    {
+        public string content_id { get; set; } = string.Empty;
+        public string content_type { get; set; } = "Letter";
+        public string item_id { get; set; } = string.Empty;
+        public string text { get; set; } = string.Empty;
+        public string author_id { get; set; } = string.Empty;
+        public float sentimental_value { get; set; } = 50f;
+    }
+
+    [Serializable]
+    public sealed class TimeCapsuleDef
+    {
+        public string capsule_id { get; set; } = string.Empty;
+        public string capsule_name { get; set; } = string.Empty;
+        public string creator_id { get; set; } = string.Empty;
+        public int created_day { get; set; } = 1;
+        public string condition_type { get; set; } = "Manual";
+        public int open_day { get; set; } = -1;
+        public string target_survivor_id { get; set; } = string.Empty;
+        public string target_event_id { get; set; } = string.Empty;
+        public string location { get; set; } = string.Empty;
+        public string message { get; set; } = string.Empty;
+        public List<CapsuleContentDef> contents { get; set; } = new List<CapsuleContentDef>();
+    }
+
+    [Serializable]
+    public sealed class TimeCapsuleCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<TimeCapsuleDef> capsules { get; set; } = new List<TimeCapsuleDef>();
+    }
+
+    [Serializable]
     public sealed class TimeCapsuleState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -158,6 +192,36 @@ namespace Ashfall.Core.Communication
             return true;
         }
 
+        /// <summary>
+        /// Plan 212 — opens every sealed EventBased capsule bound to the fired
+        /// event. Returns the number opened (0 when no capsule matches or all
+        /// matches are already open). Exactly-once: a second call for the same
+        /// event is a no-op because opened capsules are skipped. This is the
+        /// missing consumer for <see cref="OpenConditionType.EventBased"/> data
+        /// such as the Fallen Watchman's Footlocker.
+        /// </summary>
+        public int TryOpenEventCapsules(string eventId, int currentDay, string openedBy = "Shelter Community")
+        {
+            if (string.IsNullOrWhiteSpace(eventId)) return 0;
+
+            int opened = 0;
+            foreach (var capsule in _state.Capsules)
+            {
+                if (capsule.IsOpen
+                    || capsule.ConditionType != OpenConditionType.EventBased
+                    || !string.Equals(capsule.TargetEventId, eventId.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                if (OpenCapsule(capsule.CapsuleId, openedBy, currentDay))
+                {
+                    opened++;
+                }
+            }
+            return opened;
+        }
+
         public LegacyMessage WriteMessage(
             string authorId,
             string recipientId,
@@ -230,6 +294,77 @@ namespace Ashfall.Core.Communication
         public TimeCapsule? GetCapsule(string capsuleId)
         {
             return _state.Capsules.FirstOrDefault(c => string.Equals(c.CapsuleId, capsuleId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public void LoadCatalog(TimeCapsuleCatalogData? catalog)
+        {
+            if (catalog?.capsules == null) return;
+            foreach (var def in catalog.capsules)
+            {
+                if (string.IsNullOrWhiteSpace(def.capsule_id)) continue;
+                if (_state.Capsules.Any(c => string.Equals(c.CapsuleId, def.capsule_id, StringComparison.OrdinalIgnoreCase)))
+                    continue;
+
+                if (!Enum.TryParse<OpenConditionType>(def.condition_type, true, out var condition))
+                {
+                    condition = OpenConditionType.Manual;
+                }
+
+                var capsule = new TimeCapsule
+                {
+                    CapsuleId = def.capsule_id,
+                    CapsuleName = string.IsNullOrWhiteSpace(def.capsule_name) ? def.capsule_id : def.capsule_name,
+                    CreatorId = def.creator_id,
+                    CreatedDay = Math.Max(1, def.created_day),
+                    ConditionType = condition,
+                    OpenDay = def.open_day,
+                    TargetSurvivorId = def.target_survivor_id,
+                    TargetEventId = def.target_event_id,
+                    Location = def.location,
+                    Message = def.message,
+                    Contents = def.contents.Select(cnt =>
+                    {
+                        if (!Enum.TryParse<CapsuleContentType>(cnt.content_type, true, out var cType))
+                        {
+                            cType = CapsuleContentType.Letter;
+                        }
+                        return new CapsuleContent
+                        {
+                            ContentId = cnt.content_id,
+                            ContentType = cType,
+                            ItemId = cnt.item_id,
+                            Text = cnt.text,
+                            AuthorId = cnt.author_id,
+                            SentimentalValue = cnt.sentimental_value
+                        };
+                    }).ToList()
+                };
+
+                _state.Capsules.Add(capsule);
+            }
+        }
+
+        public float GetOpenedCapsuleMoraleBonus(string capsuleId)
+        {
+            var capsule = GetCapsule(capsuleId);
+            if (capsule == null || !capsule.IsOpen) return 0f;
+
+            float totalSentimental = capsule.Contents.Sum(c => c.SentimentalValue);
+            return Math.Clamp(totalSentimental * 0.10f, 2.0f, 25.0f);
+        }
+
+        public float CalculateBereavementComfort(string survivorId, string deceasedId)
+        {
+            if (string.IsNullOrWhiteSpace(survivorId) || string.IsNullOrWhiteSpace(deceasedId)) return 0f;
+
+            var messages = _state.Messages.Where(m =>
+                m.IsDelivered &&
+                string.Equals(m.RecipientId, survivorId, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(m.AuthorId, deceasedId, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (messages.Count == 0) return 0f;
+
+            return Math.Min(25.0f, messages.Count * 10.0f);
         }
 
         public TimeCapsuleState CaptureState()

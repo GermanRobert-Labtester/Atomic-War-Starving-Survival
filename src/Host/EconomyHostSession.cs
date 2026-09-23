@@ -38,6 +38,9 @@ namespace AtomicWar.GodotApp
 
         public string LastEvent { get; private set; } = string.Empty;
 
+        /// <summary>Forwarder for the rationing owner's tier-change event.</summary>
+        public Action<RationTarget>? RationTierChangedSeam { get; set; }
+
         public EconomyHostSession(MarketSystem market = null!, ResourceRationingSystem? rationing = null)
         {
             Market = market ?? new MarketSystem();
@@ -65,6 +68,10 @@ namespace AtomicWar.GodotApp
             {
                 LastEvent = $"Rationing {target.ResourceId}: {target.Tier}.";
                 RaiseStateChanged();
+                // Plan 42 / Plan 46 — forward the rationing owner's canonical
+                // tier change to host listeners (voice trigger + session
+                // telemetry) instead of duplicating its ration model here.
+                RationTierChangedSeam?.Invoke(target);
             };
             Rationing.OnCrisisDeclared += crisis =>
             {

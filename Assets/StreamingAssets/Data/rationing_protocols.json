@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "protocols": [
+    {
+      "id": "protocol_standard_distribution",
+      "name": "Standard Sustenance Protocol",
+      "protocol_type": "standard",
+      "default_tier": "full",
+      "morale_penalty_scale": 0.0,
+      "description": "Baseline operational allocations ensuring complete nutrition, hydration, and medical allotments."
+    },
+    {
+      "id": "protocol_tightened_reserves",
+      "name": "Precautionary Conservation Protocol",
+      "protocol_type": "tight",
+      "default_tier": "three_quarter",
+      "morale_penalty_scale": 1.5,
+      "description": "Mild reduction in daily dispensations to extend bunker autonomy during seasonal shortages."
+    },
+    {
+      "id": "protocol_emergency_crisis",
+      "name": "Emergency Austerity Mandate",
+      "protocol_type": "emergency",
+      "default_tier": "half",
+      "morale_penalty_scale": 4.0,
+      "description": "Strict conservation measures halved across non-critical personnel to endure active disasters."
+    },
+    {
+      "id": "protocol_triage_survival",
+      "name": "Triage Survival Directive",
+      "protocol_type": "triage",
+      "default_tier": "minimal",
+      "morale_penalty_scale": 8.5,
+      "description": "Extreme emergency protocol reserving sustenance strictly for essential workers and critical medical cases."
+    }
+  ]
+}

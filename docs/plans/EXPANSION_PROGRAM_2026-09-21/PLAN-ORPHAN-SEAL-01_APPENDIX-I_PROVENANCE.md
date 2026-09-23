@@ -1,0 +1,110 @@
+# PLAN-ORPHAN-SEAL-01 — Appendix I: Provenance & Staleness Ledger
+
+**Generated:** 2026-09-21. Last commit (short hash, date) per orphan file plus
+line count, giving a staleness signal: an orphan untouched since the Unity era
+is a different risk from one touched during the Godot campaign. Re-run this
+ledger before promoting any seal package; a changed hash invalidates that
+package's premise check.
+**Note:** dates are repository history, not gameplay claims.
+
+| Authority | Last commit | Date | Lines |
+|---|---|---|---:|
+| `ConfessionSecretSystem` | `ccd1322c` | 2026-09-01 | 288 |
+| `CupolaFoundryEngine` | `04884519` | 2026-09-05 | 445 |
+| `SurvivorLetterDeliverySystem` | `ef67d600` | 2026-09-06 | 285 |
+| `LetterDeliverySystem` | `2d37f6f0` | 2026-09-12 | 200 |
+| `RadioPropagationEngine` | `660cb595` | 2026-09-15 | 233 |
+| `TrophySystem` | `033df2b7` | 2026-09-17 | 411 |
+| `CommitmentSystem` | `8f72ee62` | 2026-09-18 | 314 |
+| `CultureCreationSystem` | `fa7520ce` | 2026-09-19 | 287 |
+| `ColonySystem` | `fa7520ce` | 2026-09-19 | 517 |
+| `HobbySystem` | `fa7520ce` | 2026-09-19 | 344 |
+| `AccessibilitySettingsSystem` | `?` | ? | 261 |
+| `AudioAccessibilityCoordinator` | `?` | ? | 294 |
+| `CassettePlaybackSystem` | `?` | ? | 237 |
+| `BestiarySystem` | `?` | ? | 285 |
+| `ChemicalPlumeDispersionEngine` | `?` | ? | 286 |
+| `InternalCommunicationSystem` | `?` | ? | 509 |
+| `CommunicationsSystem` | `?` | ? | 561 |
+| `ContentOrphanCertificationEngine` | `?` | ? | 136 |
+| `CookingSystem` | `?` | ? | 395 |
+| `ShelterFestivalEngine` | `?` | ? | 323 |
+| `ShelterMuseumSystem` | `?` | ? | 539 |
+| `PerimeterEarlyWarningEngine` | `?` | ? | 280 |
+| `DifficultySettingsSystem` | `?` | ? | 215 |
+| `FactionDiplomacySystem` | `?` | ? | 451 |
+| `BlackMarketContrabandEngine` | `?` | ? | 267 |
+| `BlackMarketHeatAttentionEngine` | `?` | ? | 289 |
+| `ChitPurityAssayEngine` | `?` | ? | 228 |
+| `LoanSharkEnforcerEngine` | `?` | ? | 442 |
+| `MigrationConsequenceEngine` | `?` | ? | 144 |
+| `RestockAllocationEngine` | `?` | ? | 245 |
+| `SeasonalHumanMigrationEngine` | `?` | ? | 162 |
+| `SurvivorBarterSystem` | `?` | ? | 666 |
+| `TradeRouteMonopolyEngine` | `?` | ? | 206 |
+| `TradeRouteRiskBindingEngine` | `?` | ? | 130 |
+| `ApprenticeshipCurriculumEngine` | `?` | ? | 219 |
+| `SurvivorEducationSystem` | `?` | ? | 579 |
+| `EmergencyAlertSystem` | `?` | ? | 355 |
+| `InformantNetworkTradecraftEngine` | `?` | ? | 222 |
+| `SeasonalCelebrationSystem` | `?` | ? | 365 |
+| `SubterraneanSubsidenceEngine` | `?` | ? | 299 |
+| `AerialReconWindowEngine` | `?` | ? | 200 |
+| `TerritoryControlSystem` | `?` | ? | 451 |
+| `OilseedPressingEngine` | `?` | ? | 246 |
+| `SoilReclamationProfileEngine` | `?` | ? | 216 |
+| `SecondGenerationMilestoneEngine` | `?` | ? | 229 |
+| `ShelterGovernanceEngine` | `?` | ? | 669 |
+| `ClothingWarmthSystem` | `?` | ? | 390 |
+| `FoodTypeSystem` | `?` | ? | 267 |
+| `CampaignLegacySystem` | `?` | ? | 305 |
+| `MaritimeExplorationSystem` | `?` | ? | 743 |
+| `ClinicalWardTriageEngine` | `?` | ? | 307 |
+| `DependencyTaperWithdrawalEngine` | `?` | ? | 268 |
+| `PalliativeCareDignityEngine` | `?` | ? | 254 |
+| `ProstheticConditionWearEngine` | `?` | ? | 157 |
+| `RehabilitationProgressionEngine` | `?` | ? | 112 |
+| `SurgicalGraftRejectionEngine` | `?` | ? | 284 |
+| `ModSupportSystem` | `?` | ? | 506 |
+| `NpcMemorySystem` | `?` | ? | 463 |
+| `SleepAcousticRestEngine` | `?` | ? | 230 |
+| `CommonTableRationingEngine` | `?` | ? | 298 |
+| `PrecisionGlassworksOpticsEngine` | `?` | ? | 302 |
+| `PublicBroadsheetPressEngine` | `?` | ? | 272 |
+| `PsychologicalProfileSystem` | `?` | ? | 355 |
+| `SessionDurabilityManager` | `?` | ? | 365 |
+| `OutpostSettlementSystem` | `?` | ? | 318 |
+| `ChemicalReagentSynthesisEngine` | `?` | ? | 276 |
+| `DisasterResponseSystem` | `?` | ? | 457 |
+| `EmergencyMusterReadinessEngine` | `?` | ? | 192 |
+| `KilnFiringEngine` | `?` | ? | 241 |
+| `MechanicalPowerDrivelineEngine` | `?` | ? | 278 |
+| `PowerLoadSheddingEngine` | `?` | ? | 212 |
+| `ShelterExpansionSystem` | `?` | ? | 665 |
+| `ShelterIdentitySystem` | `?` | ? | 401 |
+| `ShelterMaintenanceSystem` | `?` | ? | 306 |
+| `SpiritualRitualCalendarEngine` | `?` | ? | 182 |
+| `AgingSystem` | `?` | ? | 304 |
+| `AntenatalMaternalHealthEngine` | `?` | ? | 321 |
+| `BackstorySystem` | `?` | ? | 364 |
+| `RecruitmentSystem` | `?` | ? | 367 |
+| `SurvivorAgingProgressionEngine` | `?` | ? | 203 |
+| `SurvivorAutonomySystem` | `?` | ? | 667 |
+| `SurvivorRoleSystem` | `?` | ? | 321 |
+| `SurvivorRoutineSystem` | `?` | ? | 527 |
+| `PlayableMetricsAggregationEngine` | `?` | ? | 186 |
+| `GarmentLayeringThermalEngine` | `?` | ? | 230 |
+| `VisitorIntegrationSystem` | `?` | ? | 611 |
+| `SurvivorVoiceSystem` | `?` | ? | 316 |
+| `VoiceLineDispatchCoordinator` | `?` | ? | 253 |
+| `VoiceLineSelectionEngine` | `?` | ? | 185 |
+| `WaterQualityProfileEngine` | `?` | ? | 203 |
+| `WaterSourceSystem` | `?` | ? | 434 |
+| `NuclearWinterProgressionSystem` | `?` | ? | 472 |
+| `WeatherCascadeSystem` | `?` | ? | 78 |
+| `CascadeTargetSystem` | `?` | ? | 438 |
+| `ModalTravelDispatchEngine` | `?` | ? | 200 |
+| `NightWatchPatrolReadinessEngine` | `?` | ? | 279 |
+| `StormForecastReadinessEngine` | `?` | ? | 276 |
+| `WeatherForecastReliabilityEngine` | `?` | ? | 146 |
+| `WildlifeHarvestQuotaEngine` | `?` | ? | 268 |

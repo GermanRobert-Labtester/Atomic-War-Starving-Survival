@@ -48,6 +48,37 @@ namespace Ashfall.Core.Underground
     }
 
     [Serializable]
+    public sealed class TunnelJunctionDef
+    {
+        public string id { get; set; } = string.Empty;
+        public string name { get; set; } = string.Empty;
+        public List<string> connected_segments { get; set; } = new List<string>();
+        public bool has_resource { get; set; }
+        public string resource_type { get; set; } = string.Empty;
+    }
+
+    [Serializable]
+    public sealed class TunnelSegmentDef
+    {
+        public string id { get; set; } = string.Empty;
+        public string name { get; set; } = string.Empty;
+        public string from { get; set; } = string.Empty;
+        public string to { get; set; } = string.Empty;
+        public float length_hours { get; set; } = 2f;
+        public int difficulty { get; set; } = 1;
+        public float integrity { get; set; } = 100f;
+        public List<string> hazards { get; set; } = new List<string>();
+    }
+
+    [Serializable]
+    public sealed class TunnelNetworkCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<TunnelJunctionDef> junctions { get; set; } = new List<TunnelJunctionDef>();
+        public List<TunnelSegmentDef> segments { get; set; } = new List<TunnelSegmentDef>();
+    }
+
+    [Serializable]
     public sealed class TunnelNetworkState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -204,6 +235,88 @@ namespace Ashfall.Core.Underground
 
             OnSegmentRepaired?.Invoke(segment);
             return true;
+        }
+
+        public void LoadCatalog(TunnelNetworkCatalogData catalog)
+        {
+            if (catalog == null) return;
+
+            if (catalog.junctions != null)
+            {
+                foreach (var j in catalog.junctions)
+                {
+                    RegisterJunction(j.id, j.name, j.has_resource, j.resource_type);
+                }
+            }
+
+            if (catalog.segments != null)
+            {
+                foreach (var s in catalog.segments)
+                {
+                    var seg = RegisterSegment(s.id, s.name, s.from, s.to, s.length_hours, s.difficulty, s.integrity);
+                    if (s.hazards != null)
+                    {
+                        foreach (var hStr in s.hazards)
+                        {
+                            if (Enum.TryParse<TunnelHazardType>(hStr, true, out var hType) && !seg.Hazards.Contains(hType))
+                            {
+                                seg.Hazards.Add(hType);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public TunnelSegment? FindSegment(string segmentId)
+        {
+            if (string.IsNullOrWhiteSpace(segmentId)) return null;
+            return _state.Segments.FirstOrDefault(s => string.Equals(s.SegmentId, segmentId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool ReinforceSegment(string segmentId, float integrityGain = 25f)
+        {
+            var segment = FindSegment(segmentId);
+            if (segment == null) return false;
+
+            segment.StructuralIntegrity = Math.Clamp(segment.StructuralIntegrity + integrityGain, 0f, 100f);
+            if (segment.StructuralIntegrity >= 40f)
+            {
+                segment.Hazards.Remove(TunnelHazardType.CollapseRisk);
+            }
+            if (segment.StructuralIntegrity > 20f && segment.Status == TunnelStatus.Collapsed)
+            {
+                segment.Status = TunnelStatus.Clear;
+            }
+            OnSegmentRepaired?.Invoke(segment);
+            return true;
+        }
+
+        public bool ClearHazard(string segmentId, TunnelHazardType hazard)
+        {
+            var segment = FindSegment(segmentId);
+            if (segment == null) return false;
+
+            bool removed = segment.Hazards.Remove(hazard);
+            if (segment.Hazards.Count == 0 && segment.Status == TunnelStatus.Impassable)
+            {
+                segment.Status = TunnelStatus.Clear;
+            }
+            return removed;
+        }
+
+        public (bool Found, float SavedHours, string Reason) EvaluateSurfaceBypass(string fromLocation, string toLocation)
+        {
+            var traversal = CanTraverse(fromLocation, toLocation);
+            if (!traversal.CanTraverse)
+            {
+                return (false, 0f, traversal.Reason);
+            }
+
+            // Estimate surface travel time baseline as 2.0x tunnel length
+            float surfaceHours = traversal.TravelTimeHours * 2.0f;
+            float saved = Math.Max(0f, surfaceHours - traversal.TravelTimeHours);
+            return (true, saved, $"Underground tunnel bypass available; estimated savings: {saved:0.0}h.");
         }
 
         public void TickDay(int currentDay)

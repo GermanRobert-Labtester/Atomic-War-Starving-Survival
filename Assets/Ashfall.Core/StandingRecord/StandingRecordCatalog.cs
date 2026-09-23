@@ -37,9 +37,26 @@ namespace Ashfall.Core
         public int StageCount => stages != null ? stages.Length : 0;
     }
 
+    /// <summary>Standing Record faction card (standing_record_factions.json).</summary>
+    public class StandingRecordFactionEntry
+    {
+        public string id;
+        public string display_name;
+        public string alignment;
+        public string home_region;
+        public bool is_active;
+        public int trust;
+        public string[] wants;
+        public string[] offers;
+        public string signature_quote;
+        public string access_rule;
+        public string badge_asset_id;
+    }
+
     public sealed class StandingRecordCatalog
     {
         public List<StandingRecordQuestEntry> Quests { get; } = new List<StandingRecordQuestEntry>();
+        public List<StandingRecordFactionEntry> Factions { get; } = new List<StandingRecordFactionEntry>();
 
         public StandingRecordQuestEntry? GetQuest(string id)
         {
@@ -49,15 +66,25 @@ namespace Ashfall.Core
                     return Quests[i];
             return null;
         }
+
+        public StandingRecordFactionEntry? GetFaction(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            for (int i = 0; i < Factions.Count; i++)
+                if (Factions[i] != null && Factions[i].id == id)
+                    return Factions[i];
+            return null;
+        }
     }
 
     /// <summary>
-    /// Loads standing_record_quests.json via host ports. No ScriptableObject.
-    /// No JsonUtility. Engine-agnostic (shared with the Godot host).
+    /// Loads standing_record_quests.json and standing_record_factions.json via host ports.
+    /// Engine-agnostic (shared with the Godot host).
     /// </summary>
     public sealed class StandingRecordCatalogLoader
     {
         public const string QuestsFile = "standing_record_quests.json";
+        public const string FactionsFile = "standing_record_factions.json";
 
         private readonly IFileIO _files;
         private readonly IJsonSerializer _json;
@@ -79,28 +106,54 @@ namespace Ashfall.Core
                 return catalog;
             }
 
-            string path = _files.Combine(dataDirectory, QuestsFile);
-            if (!_files.FileExists(path))
+            string questsPath = _files.Combine(dataDirectory, QuestsFile);
+            if (_files.FileExists(questsPath))
             {
-                _log.Warn("Standing Record quests file missing: " + path);
-                return catalog;
-            }
-
-            try
-            {
-                string json = _files.ReadAllText(path);
-                var items = CatalogLocator.LoadWrappedList<StandingRecordQuestEntry>(json, SystemTextJsonSerializer.Options);
-                if (items == null) return catalog;
-                for (int i = 0; i < items.Count; i++)
+                try
                 {
-                    if (items[i] != null)
-                        catalog.Quests.Add(items[i]);
+                    string json = _files.ReadAllText(questsPath);
+                    var items = CatalogLocator.LoadWrappedList<StandingRecordQuestEntry>(json, SystemTextJsonSerializer.Options);
+                    if (items != null)
+                    {
+                        for (int i = 0; i < items.Count; i++)
+                        {
+                            if (items[i] != null)
+                                catalog.Quests.Add(items[i]);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    _log.Error("Standing Record quests parse failed: " + e.Message);
                 }
             }
-            catch (Exception e)
+            else
             {
-                _log.Error("Standing Record quests parse failed: " + e.Message);
+                _log.Warn("Standing Record quests file missing: " + questsPath);
             }
+
+            string factionsPath = _files.Combine(dataDirectory, FactionsFile);
+            if (_files.FileExists(factionsPath))
+            {
+                try
+                {
+                    string json = _files.ReadAllText(factionsPath);
+                    var factions = CatalogLocator.LoadWrappedList<StandingRecordFactionEntry>(json, SystemTextJsonSerializer.Options);
+                    if (factions != null)
+                    {
+                        for (int i = 0; i < factions.Count; i++)
+                        {
+                            if (factions[i] != null)
+                                catalog.Factions.Add(factions[i]);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    _log.Error("Standing Record factions parse failed: " + e.Message);
+                }
+            }
+
             return catalog;
         }
     }

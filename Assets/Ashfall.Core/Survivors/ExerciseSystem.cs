@@ -45,6 +45,41 @@ namespace Ashfall.Core.Survivors
     }
 
     [Serializable]
+    public sealed class ExerciseRoutineDefinition
+    {
+        public string id { get; set; } = string.Empty;
+        public string name { get; set; } = string.Empty;
+        public string routine_type { get; set; } = "calisthenics";
+        public float duration_hours { get; set; } = 1.0f;
+        public string intensity { get; set; } = "light";
+        public string required_equipment { get; set; } = "none";
+        public float min_fitness_level { get; set; } = 0.0f;
+        public float cardio_gain { get; set; } = 1.0f;
+        public float strength_gain { get; set; } = 1.0f;
+        public float flexibility_gain { get; set; } = 1.0f;
+        public float endurance_gain { get; set; } = 1.0f;
+        public float fatigue_cost { get; set; } = 12.0f;
+        public float injury_chance_base { get; set; } = 0.01f;
+        public string description { get; set; } = string.Empty;
+
+        public WorkoutRoutineType ParseRoutineType() => routine_type?.ToLowerInvariant() switch
+        {
+            "cardio_drill" or "cardio" => WorkoutRoutineType.CardioDrill,
+            "strength_training" or "strength" => WorkoutRoutineType.StrengthTraining,
+            "flexibility_stretching" or "flexibility" => WorkoutRoutineType.FlexibilityStretching,
+            "combat_drill" or "combat" => WorkoutRoutineType.CombatDrill,
+            _ => WorkoutRoutineType.Calisthenics
+        };
+    }
+
+    [Serializable]
+    public sealed class ExerciseRoutineCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<ExerciseRoutineDefinition> routines { get; set; } = new List<ExerciseRoutineDefinition>();
+    }
+
+    [Serializable]
     public sealed class ExerciseSystemState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -61,15 +96,80 @@ namespace Ashfall.Core.Survivors
     public sealed class ExerciseSystem
     {
         private readonly ExerciseSystemState _state;
+        private readonly Dictionary<string, ExerciseRoutineDefinition> _routines =
+            new Dictionary<string, ExerciseRoutineDefinition>(StringComparer.OrdinalIgnoreCase);
 
         public event Action<WorkoutResult>? OnWorkoutCompleted;
         public event Action<FitnessProfile, float>? OnDeconditioned;
 
         public int ProfileCount => _state.Profiles.Count;
+        public int AvailableRoutineCount => _routines.Count;
 
         public ExerciseSystem(ExerciseSystemState? state = null)
         {
             _state = state ?? new ExerciseSystemState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var catalog = System.Text.Json.JsonSerializer.Deserialize<ExerciseRoutineCatalogData>(json);
+            if (catalog?.routines != null)
+            {
+                LoadCatalog(catalog);
+            }
+        }
+
+        public void LoadCatalog(ExerciseRoutineCatalogData catalog)
+        {
+            if (catalog?.routines == null) return;
+            foreach (var r in catalog.routines)
+            {
+                if (!string.IsNullOrWhiteSpace(r.id))
+                {
+                    _routines[r.id] = r;
+                }
+            }
+        }
+
+        public IReadOnlyList<ExerciseRoutineDefinition> GetAvailableRoutines()
+        {
+            return _routines.Values.ToList();
+        }
+
+        public ExerciseRoutineDefinition? GetRoutine(string routineId)
+        {
+            if (string.IsNullOrWhiteSpace(routineId)) return null;
+            return _routines.TryGetValue(routineId, out var r) ? r : null;
+        }
+
+        public WorkoutResult? ExecuteRoutine(
+            string survivorId,
+            string routineId,
+            int currentDay,
+            float intensityMultiplier = 1.0f,
+            ISeededRng? rng = null)
+        {
+            if (string.IsNullOrWhiteSpace(survivorId) || string.IsNullOrWhiteSpace(routineId)) return null;
+            if (!_routines.TryGetValue(routineId, out var routineDef)) return null;
+
+            var profile = GetOrCreateProfile(survivorId);
+            if (profile.OverallConditioning < routineDef.min_fitness_level)
+            {
+                return null; // Does not meet minimum conditioning prerequisite
+            }
+
+            var routineType = routineDef.ParseRoutineType();
+            var result = ExecuteWorkout(survivorId, routineType, currentDay, intensityMultiplier, rng);
+
+            // Apply catalog-specific gains if specified
+            if (routineDef.cardio_gain > 0f) result.CardioGain = routineDef.cardio_gain * intensityMultiplier;
+            if (routineDef.strength_gain > 0f) result.StrengthGain = routineDef.strength_gain * intensityMultiplier;
+            if (routineDef.flexibility_gain > 0f) result.FlexibilityGain = routineDef.flexibility_gain * intensityMultiplier;
+            if (routineDef.endurance_gain > 0f) result.EnduranceGain = routineDef.endurance_gain * intensityMultiplier;
+            if (routineDef.fatigue_cost > 0f) result.FatigueIncurred = routineDef.fatigue_cost * intensityMultiplier;
+
+            return result;
         }
 
         public FitnessProfile GetOrCreateProfile(string survivorId, float initialBase = 30f)

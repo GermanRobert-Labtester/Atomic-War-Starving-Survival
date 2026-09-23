@@ -2,10 +2,35 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Ashfall.Core;
 
 namespace Ashfall.Core.Survivors
 {
+    // ── Catalog DTOs ────────────────────────────────────────────────────────
+
+    [Serializable]
+    public sealed class ConflictTemplateDef
+    {
+        public string template_id { get; set; } = string.Empty;
+        public string conflict_type { get; set; } = "argument";
+        public string display_name { get; set; } = string.Empty;
+        public string trigger_description { get; set; } = string.Empty;
+        public string default_severity { get; set; } = "mild";
+        public float base_escalation { get; set; } = 20.0f;
+        public float grievance_intensity { get; set; } = 25.0f;
+        public string description { get; set; } = string.Empty;
+    }
+
+    [Serializable]
+    public sealed class ConflictTemplatesCatalog
+    {
+        public int schema_version { get; set; } = 1;
+        public List<ConflictTemplateDef> templates { get; set; } = new List<ConflictTemplateDef>();
+    }
+
+    // ── State Enums & DTOs ──────────────────────────────────────────────────
+
     public enum ConflictType
     {
         Argument = 0,
@@ -232,6 +257,78 @@ namespace Ashfall.Core.Survivors
             if (stress >= 25f) return ConflictSeverity.Moderate;
             return ConflictSeverity.Mild;
         }
+
+        private readonly Dictionary<string, ConflictTemplateDef> _templateDefs =
+            new Dictionary<string, ConflictTemplateDef>(StringComparer.OrdinalIgnoreCase);
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+                throw new ArgumentException("Catalog JSON cannot be null or empty", nameof(json));
+
+            var catalog = JsonSerializer.Deserialize<ConflictTemplatesCatalog>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (catalog?.templates == null) return;
+
+            _templateDefs.Clear();
+            foreach (var template in catalog.templates)
+            {
+                if (!string.IsNullOrEmpty(template.template_id))
+                {
+                    _templateDefs[template.template_id] = template;
+                }
+            }
+        }
+
+        public IReadOnlyList<ConflictTemplateDef> GetAllTemplates() => _templateDefs.Values.ToList();
+
+        public ConflictTemplateDef? GetTemplate(string templateId)
+        {
+            _templateDefs.TryGetValue(templateId, out var template);
+            return template;
+        }
+
+        public InterpersonalConflict? InitiateConflictFromTemplate(
+            string templateId, string initiatorId, string targetId, int currentDay = 1)
+        {
+            if (!_templateDefs.TryGetValue(templateId, out var template)) return null;
+
+            ConflictType type = ParseConflictType(template.conflict_type);
+            ConflictSeverity severity = ParseSeverity(template.default_severity);
+
+            var conflict = InitiateConflict(initiatorId, targetId, type, template.trigger_description, severity, currentDay);
+            conflict.EscalationScore = template.base_escalation;
+
+            if (template.grievance_intensity > 0f)
+            {
+                AddGrievance(initiatorId, targetId, template.trigger_description, template.grievance_intensity, currentDay);
+            }
+
+            return conflict;
+        }
+
+        private static ConflictType ParseConflictType(string type) => type.ToLowerInvariant() switch
+        {
+            "grudge" => ConflictType.Grudge,
+            "personality_clash" => ConflictType.PersonalityClash,
+            "resource_dispute" => ConflictType.ResourceDispute,
+            "shift_conflict" => ConflictType.ShiftConflict,
+            "fairness_grievance" => ConflictType.FairnessGrievance,
+            "personal_slight" => ConflictType.PersonalSlight,
+            "betrayal" => ConflictType.Betrayal,
+            _ => ConflictType.Argument
+        };
+
+        private static ConflictSeverity ParseSeverity(string sev) => sev.ToLowerInvariant() switch
+        {
+            "moderate" => ConflictSeverity.Moderate,
+            "severe" => ConflictSeverity.Severe,
+            "crisis" => ConflictSeverity.Crisis,
+            _ => ConflictSeverity.Mild
+        };
 
         public InterpersonalConflictSystem(InterpersonalConflictState? state = null)
         {

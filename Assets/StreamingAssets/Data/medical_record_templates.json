@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "template_id": "template_illness",
+      "record_type": "illness",
+      "display_name": "Acute Pathogen Infection",
+      "severity_default": "moderate",
+      "typical_duration_days": 7,
+      "description": "Bacterial, viral, or spore-borne infectious condition requiring antibiotic treatment and quarantine."
+    },
+    {
+      "template_id": "template_injury",
+      "record_type": "injury",
+      "display_name": "Blunt Trauma & Lacerations",
+      "severity_default": "severe",
+      "typical_duration_days": 14,
+      "description": "Physical tissue trauma, bone fracture, or puncture wound sustained during scavenging or combat."
+    },
+    {
+      "template_id": "template_treatment",
+      "record_type": "treatment",
+      "display_name": "Surgical Debridement & Suture",
+      "severity_default": "mild",
+      "typical_duration_days": 3,
+      "description": "Sterile invasive surgical intervention or pharmaceutical stabilization performed by an authorized medic."
+    },
+    {
+      "template_id": "template_vaccination",
+      "record_type": "vaccination",
+      "display_name": "Prophylactic Inoculation",
+      "severity_default": "mild",
+      "typical_duration_days": 60,
+      "description": "Immunological prophylaxis against regional fallout pathogens, providing heightened disease resistance."
+    },
+    {
+      "template_id": "template_radiation",
+      "record_type": "radiation_exposure",
+      "display_name": "Acute Radiation Syndrome Dose",
+      "severity_default": "critical",
+      "typical_duration_days": 21,
+      "description": "High-dosage ionizing radiation absorption recorded through dosimeter ingestion or atmospheric fallout."
+    },
+    {
+      "template_id": "template_chronic",
+      "record_type": "chronic_condition",
+      "display_name": "Permanent Impairment Onset",
+      "severity_default": "moderate",
+      "typical_duration_days": -1,
+      "description": "Long-term structural, pulmonary, or sensory impairment requiring assistive equipment and ongoing care."
+    },
+    {
+      "template_id": "template_checkup",
+      "record_type": "checkup",
+      "display_name": "Routine Triage Examination",
+      "severity_default": "mild",
+      "typical_duration_days": 1,
+      "description": "Comprehensive physical assessment of vital signs, radiation burden, and nutritional status."
+    }
+  ]
+}

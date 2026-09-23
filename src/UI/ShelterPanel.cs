@@ -58,6 +58,12 @@ namespace AtomicWar.GodotApp.UI
             _interiorView?.SetMachineTellCatalog(catalog);
         }
 
+        /// <summary>Plan 51 — forward the shelter presentation slate to the interior view.</summary>
+        public void SetPresentationSlate(Ashfall.Core.Presentation.HoldfastPresentationSlate? slate)
+        {
+            _interiorView?.SetPresentationSlate(slate);
+        }
+
         /// <summary>Swap the interior cutaway to the dawn/day/dusk/night placeholder variant.</summary>
         public void SetLightingPhase(string phase)
         {

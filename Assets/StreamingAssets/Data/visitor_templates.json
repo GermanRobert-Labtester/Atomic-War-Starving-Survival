@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "id": "visitor_tpl_distressed_refugee",
+      "name": "Displaced Settlement Refugee",
+      "type": "refugee",
+      "base_integration_days": 14,
+      "default_housing": "temporary_bunk",
+      "daily_food_consumption": 1.0,
+      "daily_water_consumption": 1.5,
+      "description": "Fleeing surface fallout or raider incursions, seeking protection in exchange for labor."
+    },
+    {
+      "id": "visitor_tpl_itinerant_trader",
+      "name": "Wasteland Caravan Trader",
+      "type": "trader",
+      "base_integration_days": 3,
+      "default_housing": "guest_suite",
+      "daily_food_consumption": 1.2,
+      "daily_water_consumption": 1.5,
+      "description": "Passing merchant with pack animals and scrap trade inventory, staying for brief negotiations."
+    },
+    {
+      "id": "visitor_tpl_faction_defector",
+      "name": "Warlord Outpost Defector",
+      "type": "defector",
+      "base_integration_days": 21,
+      "default_housing": "shared_quarter",
+      "daily_food_consumption": 1.0,
+      "daily_water_consumption": 1.5,
+      "description": "Former combatant or technician seeking asylum with valuable intelligence."
+    },
+    {
+      "id": "visitor_tpl_diplomatic_envoy",
+      "name": "Enclave Diplomatic Envoy",
+      "type": "envoy",
+      "base_integration_days": 5,
+      "default_housing": "private_room",
+      "daily_food_consumption": 1.5,
+      "daily_water_consumption": 2.0,
+      "description": "Formal delegation dispatched to negotiate non-aggression or mutual trade treaties."
+    },
+    {
+      "id": "visitor_tpl_wandering_exile",
+      "name": "Solitary Wasteland Exile",
+      "type": "exile",
+      "base_integration_days": 28,
+      "default_housing": "temporary_bunk",
+      "daily_food_consumption": 0.8,
+      "daily_water_consumption": 1.0,
+      "description": "Loner outcast cast out of distant vault, wary of authority but possessing rare survival skills."
+    }
+  ]
+}

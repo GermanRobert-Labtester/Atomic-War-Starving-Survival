@@ -35,6 +35,7 @@ namespace AtomicWar.GodotApp
     {
         // ── Survivor / UtilityAI fields (GAP-ARCH-01 Phase 1) ──
         private SurvivorsHostSession _survivors = null!;
+        public SurvivorsHostSession? Survivors => _survivors;
         private UtilityAiHostSession _utilityAi = null!;
         private StartingCohortCatalog _startingCohortCatalog = null!;
         private string _startingCohortProfileId = StartingCohortCatalog.StandardProfileId;

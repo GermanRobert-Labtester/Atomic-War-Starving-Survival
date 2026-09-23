@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "cascade_templates": [
+    {
+      "id": "blizzard_shelter_freeze",
+      "weather_kind": "Blizzard",
+      "target_system": "shelter",
+      "effect_type": "thermal_load",
+      "magnitude": -15.0,
+      "duration_days": 3,
+      "description": "Extreme subzero front severely increases shelter thermal load and heating fuel consumption."
+    },
+    {
+      "id": "blizzard_expedition_blinding",
+      "weather_kind": "Blizzard",
+      "target_system": "expedition",
+      "effect_type": "delay",
+      "magnitude": 0.5,
+      "duration_days": 3,
+      "description": "Zero-visibility whiteout cuts expedition transit speed in half and multiplies frostbite risk."
+    },
+    {
+      "id": "fallout_storm_filtration_stress",
+      "weather_kind": "FalloutStorm",
+      "target_system": "shelter",
+      "effect_type": "filtration_stress",
+      "magnitude": 2.5,
+      "duration_days": 2,
+      "description": "Heavy rad particulate downpour stresses shelter intake filters and increases filter degradation rate."
+    },
+    {
+      "id": "fallout_storm_rad_surge",
+      "weather_kind": "FalloutStorm",
+      "target_system": "location",
+      "effect_type": "hazard_surge",
+      "magnitude": 150.0,
+      "duration_days": 2,
+      "description": "Fallout plume spikes environmental background radiation across surface route sectors."
+    },
+    {
+      "id": "black_rain_structural_corrosion",
+      "weather_kind": "BlackRain",
+      "target_system": "shelter",
+      "effect_type": "damage",
+      "magnitude": 25.0,
+      "duration_days": 2,
+      "description": "Corrosive petrochemical fallout attacks unfortified surface seals and weak exterior bulkheads."
+    },
+    {
+      "id": "black_rain_sump_flood",
+      "weather_kind": "BlackRain",
+      "target_system": "shelter",
+      "effect_type": "accessibility",
+      "magnitude": 40.0,
+      "duration_days": 2,
+      "description": "Torrential black rain floods subterranean sumps, threatening low-tier substations."
+    },
+    {
+      "id": "acid_snow_roof_strain",
+      "weather_kind": "AcidSnow",
+      "target_system": "shelter",
+      "effect_type": "damage",
+      "magnitude": 15.0,
+      "duration_days": 3,
+      "description": "Acidic slush deposits degrade exposed roofing and outdoor moisture traps."
+    },
+    {
+      "id": "emp_storm_power_shedding",
+      "weather_kind": "EMPStorm",
+      "target_system": "shelter",
+      "effect_type": "power_output",
+      "magnitude": 0.4,
+      "duration_days": 1,
+      "description": "Atmospheric electromagnetic pulses cause relay tripping and cut generator electrical output."
+    },
+    {
+      "id": "glass_storm_expedition_hazard",
+      "weather_kind": "GlassStorm",
+      "target_system": "expedition",
+      "effect_type": "damage",
+      "magnitude": 35.0,
+      "duration_days": 1,
+      "description": "High-velocity vitrified silicate shards strip vehicle chassis and shred exposed clothing."
+    },
+    {
+      "id": "ash_lightning_patrol_pause",
+      "weather_kind": "AshLightning",
+      "target_system": "faction",
+      "effect_type": "behavior_change",
+      "magnitude": 0.2,
+      "duration_days": 2,
+      "description": "Ionized pyrocumulus storms disrupt faction military patrols and halt expansion sorties."
+    },
+    {
+      "id": "thermal_inversion_smog_depression",
+      "weather_kind": "ThermalInversion",
+      "target_system": "mental_health",
+      "effect_type": "behavior_change",
+      "magnitude": -10.0,
+      "duration_days": 3,
+      "description": "Trapped surface contaminants and persistent twilight induce cabin fever and survivor morale depression."
+    },
+    {
+      "id": "blizzard_fuel_price_shock",
+      "weather_kind": "Blizzard",
+      "target_system": "economy",
+      "effect_type": "price_change",
+      "magnitude": 1.5,
+      "duration_days": 4,
+      "description": "Deep freeze surges market demand and trading prices for fuel, textiles, and heating reagents."
+    },
+    {
+      "id": "rad_hail_outdoor_lockdown",
+      "weather_kind": "RadHail",
+      "target_system": "location",
+      "effect_type": "accessibility",
+      "magnitude": 0.0,
+      "duration_days": 1,
+      "description": "Hot particle hail renders open wasteland staging zones impassable until the front passes."
+    },
+    {
+      "id": "bio_fog_respirator_wear",
+      "weather_kind": "BioFog",
+      "target_system": "expedition",
+      "effect_type": "hazard_surge",
+      "magnitude": 2.0,
+      "duration_days": 2,
+      "description": "Spore-laden particulate fog accelerates expedition respirator cartridge saturation."
+    },
+    {
+      "id": "false_spring_morale_respite",
+      "weather_kind": "FalseSpring",
+      "target_system": "mental_health",
+      "effect_type": "behavior_change",
+      "magnitude": 15.0,
+      "duration_days": 3,
+      "description": "Brief thermal lift and clear sky provide survivor hope and collective morale elevation."
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "policies": [
+    {
+      "id": "policy_meritocratic_appointment",
+      "name": "Meritocratic Appointment",
+      "succession_mode": "designated_successor",
+      "challenge_threshold": 40.0,
+      "crisis_morale_modifier": 10.0,
+      "deputy_powers_delegated": true,
+      "description": "The leader designates their own successor based on demonstrated capability, with an appointed deputy serving as immediate contingency."
+    },
+    {
+      "id": "policy_democratic_election",
+      "name": "Democratic Shelter Election",
+      "succession_mode": "democratic_election",
+      "challenge_threshold": 25.0,
+      "crisis_morale_modifier": 8.0,
+      "deputy_powers_delegated": true,
+      "description": "Leadership is ratified by shelter consensus. An interim deputy assumes temporary authority until a ballot can be held."
+    },
+    {
+      "id": "policy_hereditary_succession",
+      "name": "Dynastic Lineage & Kinship",
+      "succession_mode": "hereditary_lineage",
+      "challenge_threshold": 50.0,
+      "crisis_morale_modifier": 6.0,
+      "deputy_powers_delegated": false,
+      "description": "Authority flows strictly through designated kin or blood-ties, maintaining lineage stability at the expense of popular dispute risk."
+    },
+    {
+      "id": "policy_elder_council",
+      "name": "Elder Council Guidance",
+      "succession_mode": "seniority_council",
+      "challenge_threshold": 35.0,
+      "crisis_morale_modifier": 12.0,
+      "deputy_powers_delegated": true,
+      "description": "A senior committee appoints successors and resolves disputes through seasoned deliberation."
+    },
+    {
+      "id": "policy_martial_challenge",
+      "name": "Trial by Martial Contest",
+      "succession_mode": "martial_challenge",
+      "challenge_threshold": 15.0,
+      "crisis_morale_modifier": 5.0,
+      "deputy_powers_delegated": false,
+      "description": "Leadership is maintained only by surviving challenges of physical prowess or tactical authority in times of existential threat."
+    }
+  ]
+}

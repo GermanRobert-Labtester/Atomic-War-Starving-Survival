@@ -447,6 +447,13 @@ namespace AtomicWar.GodotApp
             _moralChoiceDirty = false;
 
             _endgame = null;
+            // The completion-history store must be reset WITH its authority.
+            // Nulling only _endgame left the store live, so the next
+            // SetupEndgame() passed its `_endgame != null` guard and executed
+            // `_completionHistory = CompletionHistoryStore.Load()` — replacing
+            // an already-live store and discarding whatever chronicle state it
+            // held. Both are one lifecycle unit; reset both or neither.
+            _completionHistory = null;
             _endgameDirty = false;
 
             _caravanTradeNetwork = null;
@@ -512,6 +519,10 @@ namespace AtomicWar.GodotApp
             _vehicleGaragePanelBoundSystem = null;
             _vehicleGarage = null;
             _vehicleGarageDirty = false;
+
+            _silentFoundry = null!;
+            _sharedSkillProgression = null;
+            _sharedFactionStance = null;
         }
 
         /// <summary>

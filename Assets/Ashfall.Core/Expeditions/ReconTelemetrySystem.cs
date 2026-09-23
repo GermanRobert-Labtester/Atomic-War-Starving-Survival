@@ -107,8 +107,9 @@ namespace Ashfall.Core.Expeditions
             if (IsPlatformLaunched(platformId) && !def.Recoverable)
                 return LaunchResult.Failed("already_launched", "recon.already_launched");
 
-            // Weather check
-            float windKph = 0f; // placeholder: integrate with WeatherSystem wind if available
+            // Weather check — the canonical weather authority owns surface wind
+            // (Plan 205). Unbound weather keeps the legacy no-wind behavior.
+            float windKph = _weather?.WindSpeedKph ?? 0f;
             if (windKph > def.WindLimitKph)
                 return LaunchResult.Blocked("wind_too_high", "recon.wind_too_high");
 

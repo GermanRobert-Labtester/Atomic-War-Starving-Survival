@@ -72,7 +72,9 @@ namespace AtomicWar.GodotApp.Audio
         private AudioConditionHostBridge? _conditionBridge;
         private AudioStateCoordinator? _stateCoordinator;
         private ShelterAudioController? _shelterAudio;
+        private ShelterOperationsAudioBridge? _shelterOperationsBridge;
         private SurfaceAmbienceController? _surfaceAmbience;
+        private ScarcityAudioController? _scarcityAudio;
         private IAudioDomainProvider? _domainProvider;
         private Action? _settingsChangedHandler;
         private int _oneShotDroppedCount;
@@ -96,7 +98,9 @@ namespace AtomicWar.GodotApp.Audio
             _stateCoordinator = new AudioStateCoordinator();
             AddChild(_stateCoordinator);
             _shelterAudio = new ShelterAudioController(this);
+            _shelterOperationsBridge = new ShelterOperationsAudioBridge(this);
             _surfaceAmbience = new SurfaceAmbienceController(this);
+            _scarcityAudio = new ScarcityAudioController(this);
             _domainProvider = GetParent() as IAudioDomainProvider;
             RefreshDomainBindings();
 
@@ -290,6 +294,8 @@ namespace AtomicWar.GodotApp.Audio
             _stateCoordinator = null;
             _shelterAudio?.Dispose();
             _shelterAudio = null;
+            _shelterOperationsBridge?.Dispose();
+            _shelterOperationsBridge = null;
             _surfaceAmbience?.Dispose();
             _surfaceAmbience = null;
             _domainProvider = null;
@@ -333,10 +339,27 @@ namespace AtomicWar.GodotApp.Audio
 
             _conditionBridge?.Bind(_domainProvider.AudioConditions);
 
+            if (_domainProvider is IShelterOperationsAudioProvider shelterOpsProvider)
+            {
+                _shelterOperationsBridge?.SubscribeAll(shelterOpsProvider);
+            }
+            else
+            {
+                _shelterOperationsBridge?.SubscribeAll(null);
+            }
+
             _shelterAudio?.Subscribe(
                 _domainProvider.AudioPowerGrid,
                 _domainProvider.AudioStartingLevel);
             _surfaceAmbience?.Subscribe(_domainProvider.AudioWeather);
+
+            // Plan 52 — the scarcity authority owns the ambience bed, ducking
+            // and geiger verdicts; the surface controller delegates its weather
+            // cue choice to it.
+            _scarcityAudio?.Subscribe(_domainProvider.AudioWeather);
+            _scarcityAudio?.BindPowerGrid(_domainProvider.AudioPowerGrid);
+            _scarcityAudio?.BindRoster(_domainProvider.AudioSurvivors);
+            _surfaceAmbience?.SubscribeAuthority(_scarcityAudio);
         }
 
         // ── Cue-based playback (primary API) ────────────────────

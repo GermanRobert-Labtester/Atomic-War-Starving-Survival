@@ -21,6 +21,21 @@ namespace AtomicWar.GodotApp
             var state = PropagandaSaveStore.TryLoad() ?? new PropagandaState();
             var system = new PropagandaSystem(state);
 
+            // Plan 168 — bind the authored campaign templates so template launches
+            // resolve from the canonical catalog rather than an empty registry.
+            string propagandaCatalogPath = CatalogPath.ResolveCatalog("propaganda_templates.json");
+            var propagandaCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (propagandaCatalogIo.FileExists(propagandaCatalogPath))
+            {
+                var propagandaCatalog = System.Text.Json.JsonSerializer.Deserialize<PropagandaTemplateCatalogData>(
+                    propagandaCatalogIo.ReadAllText(propagandaCatalogPath),
+                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (propagandaCatalog?.templates != null)
+                {
+                    system.LoadTemplates(propagandaCatalog.templates);
+                }
+            }
+
             _propaganda = new PropagandaHostSession(system);
             _propaganda.StateChanged += OnPropagandaStateChanged;
             return _propaganda;

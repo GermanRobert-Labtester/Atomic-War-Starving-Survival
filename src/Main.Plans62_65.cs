@@ -12,16 +12,13 @@ namespace AtomicWar.GodotApp
     public partial class Main
     {
         private PrewarArchiveDecryptionSystem? _archiveDecryption62;
-        private ShelterPrisonerSystem? _shelterPrisoner63;
         private FoodPreservationSystem? _foodPreservation64;
         private CampaignEpilogueEngine? _epilogueEngine65;
 
         private bool _archiveDecryption62Dirty;
-        private bool _shelterPrisoner63Dirty;
         private bool _foodPreservation64Dirty;
 
         public PrewarArchiveDecryptionSystem? ArchiveDecryptionSystem => _archiveDecryption62;
-        public ShelterPrisonerSystem? ShelterPrisonerSystem => _shelterPrisoner63;
         public FoodPreservationSystem? FoodPreservationSystem => _foodPreservation64;
         public CampaignEpilogueEngine? CampaignEpilogueEngine => _epilogueEngine65;
 
@@ -76,23 +73,11 @@ namespace AtomicWar.GodotApp
                 _archiveDecryption62.OnArchiveDiscovered += _ => _archiveDecryption62Dirty = true;
             }
 
-            // 3. Shelter Prisoner System (Plan 63)
-            if (_shelterPrisoner63 == null)
-            {
-                var captiveCatalog = CaptiveInterrogationCatalogLoader.Load(_dataDir, new FileSystemIO());
-                var rng = _campaignDay != null ? _campaignDay.Rng.Fork("shelter_prisoners") : new SeededRng(63);
-                _shelterPrisoner63 = new ShelterPrisonerSystem(rng, _inventory.Inventory, captiveCatalog, new GodotLog());
-
-                var savedPrisoners = ShelterPrisonerSaveStore.TryLoad();
-                if (savedPrisoners != null)
-                {
-                    _shelterPrisoner63.RestoreState(savedPrisoners);
-                }
-
-                _shelterPrisoner63.OnPrisonerCaptured += _ => _shelterPrisoner63Dirty = true;
-                _shelterPrisoner63.OnPrisonerParoled += _ => _shelterPrisoner63Dirty = true;
-                _shelterPrisoner63.OnTopicExtracted += (_, _) => _shelterPrisoner63Dirty = true;
-            }
+            // 3. Shelter Prisoner System (Plan 63) — RETIRED as a live authority
+            // by ORPHAN-SEAL-W1 (2026-09-23): PrisonerSystem (Plan 179) is the
+            // single captive authority (§6.13-6.14); the Plan 63 class and its
+            // save store remain for history, and EnsurePrisoners() imports the
+            // legacy shelter_prisoners section once on upgrade.
 
             // 4. Grand Epilogue Engine (Plan 65)
             if (_epilogueEngine65 == null)
@@ -122,16 +107,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void SaveShelterPrisoners()
-        {
-            if (_shelterPrisoner63 != null)
-            {
-                CaptureSection(ShelterPrisonerSaveStore.SectionName,
-                    ShelterPrisonerSaveStore.TryCapturePersisted(_shelterPrisoner63.CaptureState()));
-                _shelterPrisoner63Dirty = false;
-            }
-        }
-
         private void FlushFoodPreservationIfDirty()
         {
             if (_foodPreservation64Dirty)
@@ -142,12 +117,6 @@ namespace AtomicWar.GodotApp
         {
             if (_archiveDecryption62Dirty)
                 SavePrewarArchives();
-        }
-
-        private void FlushShelterPrisonersIfDirty()
-        {
-            if (_shelterPrisoner63Dirty)
-                SaveShelterPrisoners();
         }
 
         public void TickPlans62To65(int day)
@@ -187,12 +156,6 @@ namespace AtomicWar.GodotApp
                 _archiveDecryption62.SetPowerStatus(isPowerOnline);
                 _archiveDecryption62.TickDay(day);
                 _archiveDecryption62Dirty = true;
-            }
-
-            if (_shelterPrisoner63 != null)
-            {
-                _shelterPrisoner63.TickDay(day);
-                _shelterPrisoner63Dirty = true;
             }
         }
     }

@@ -16,14 +16,14 @@ namespace AtomicWar.GodotApp
                 _radioPanel, _medicalPanel, _dutyRosterPanel,
                 _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
                 _factionsPanel, _musterPanel, _expansionsHubPanel, _standingRecordPanel,
-                _maritimePanel, _centurySeedPanel, _epiloguePanel, _verdictPanel,
+                _maritimePanel, _centurySeedPanel, _epiloguePanel, _chroniclePanel, _verdictPanel,
                 _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
                 _silentFoundryPanel,
                 _tradePanel,
                 _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel, _moralChoiceModal, _narrativeArcModal,
                 _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
                 _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
-                _combatDetailPanel, _factionDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
+                _combatDetailPanel, _factionDetailPanel, _factionCultureCodexPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
                 _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
                 _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
                 _mapDetailPanel, _eventDetailPanel, _openingProtocolModal, _holdfastTerminal,
@@ -125,6 +125,12 @@ namespace AtomicWar.GodotApp
         private void CloseFactionDetailPanel()
         {
             _factionDetailPanel.Visible = false;
+        }
+
+        private void CloseFactionCultureCodexPanel()
+        {
+            if (_factionCultureCodexPanel != null)
+                _factionCultureCodexPanel.Visible = false;
         }
 
         private void CloseCrossingQuestPanel()

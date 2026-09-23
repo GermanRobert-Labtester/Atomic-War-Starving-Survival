@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "id": "psyops_campaign_scavenger_lantern_hour",
+      "display_name": "Scavenger Lantern Hour",
+      "description": "A scheduled evening civil broadcast offering aid coordinates and medical shelter to independent scavengers across the wasteland.",
+      "target_faction_id": "faction_scavengers",
+      "objective": "BoostMorale",
+      "preferred_medium": "RadioBroadcast",
+      "duration_days": 4,
+      "base_effectiveness": 25.0,
+      "suggested_theme": "Hope"
+    },
+    {
+      "id": "propaganda_campaign_unity_call",
+      "display_name": "Call to Free Settlers",
+      "description": "Leaflet drops and notice postings calling for common agricultural defense and shared surplus stores.",
+      "target_faction_id": "faction_salt_freeholders",
+      "objective": "BoostMorale",
+      "preferred_medium": "Leaflet",
+      "duration_days": 5,
+      "base_effectiveness": 20.0,
+      "suggested_theme": "Unity"
+    },
+    {
+      "id": "propaganda_campaign_raider_deterrence",
+      "display_name": "Fortress Bastion Deterrence",
+      "description": "Radio warning cycles and perimeter postings projecting impenetrable defenses, deterrent traps, and disciplined armed guards.",
+      "target_faction_id": "raiders",
+      "objective": "UndermineFaction",
+      "preferred_medium": "RadioBroadcast",
+      "duration_days": 3,
+      "base_effectiveness": 30.0,
+      "suggested_theme": "Fear"
+    },
+    {
+      "id": "propaganda_campaign_cooperative_coalition",
+      "display_name": "Coalition Defector Amnesty",
+      "description": "Targeted notices reassuring deserters and conscientious laborers of fair shelter intake and immediate medical triage.",
+      "target_faction_id": "faction_deserter_coalition",
+      "objective": "RecruitDefectors",
+      "preferred_medium": "WallPosting",
+      "duration_days": 6,
+      "base_effectiveness": 22.0,
+      "suggested_theme": "Sacrifice"
+    }
+  ]
+}

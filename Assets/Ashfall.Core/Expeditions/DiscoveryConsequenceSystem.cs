@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Ashfall.Core.Expeditions
 {
@@ -58,6 +59,25 @@ namespace Ashfall.Core.Expeditions
         public List<ConsequenceOutcome> TriggeredConsequences { get; set; } = new List<ConsequenceOutcome>();
     }
 
+    [Serializable]
+    public sealed class ConsequenceTypeDef
+    {
+        public string type_id { get; set; } = string.Empty;
+        public string discovery_type { get; set; } = string.Empty;
+        public string label { get; set; } = string.Empty;
+        public float caravan_safety_bonus { get; set; }
+        public float faction_standing_delta { get; set; }
+        public string description_template { get; set; } = string.Empty;
+        public int auto_escalate_days { get; set; } = 30;
+    }
+
+    [Serializable]
+    public sealed class DiscoveryConsequenceCatalog
+    {
+        public int schema_version { get; set; } = 1;
+        public List<ConsequenceTypeDef> consequence_types { get; set; } = new List<ConsequenceTypeDef>();
+    }
+
     /// <summary>
     /// Plan 133 / C1[20] — Expedition Discovery Persistent World Consequences.
     /// Tracks persistent map, economic, caravan safety, and faction ramifications
@@ -66,12 +86,43 @@ namespace Ashfall.Core.Expeditions
     public sealed class DiscoveryConsequenceSystem
     {
         private readonly DiscoveryConsequenceState _state;
+        private readonly List<ConsequenceTypeDef> _consequenceTypes = new List<ConsequenceTypeDef>();
 
         public event Action<DiscoveryRecord>? OnDiscoveryRegistered;
         public event Action<ConsequenceOutcome>? OnConsequenceTriggered;
 
         public int DiscoveryCount => _state.Discoveries.Count;
         public int ConsequenceCount => _state.TriggeredConsequences.Count;
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var catalog = JsonSerializer.Deserialize<DiscoveryConsequenceCatalog>(json, options);
+                if (catalog?.consequence_types == null) return;
+                foreach (var ct in catalog.consequence_types)
+                {
+                    if (!string.IsNullOrWhiteSpace(ct.type_id))
+                    {
+                        int idx = _consequenceTypes.FindIndex(c => string.Equals(c.type_id, ct.type_id, StringComparison.Ordinal));
+                        if (idx >= 0) _consequenceTypes[idx] = ct;
+                        else _consequenceTypes.Add(ct);
+                    }
+                }
+            }
+            catch (Exception) { /* malformed catalog falls back to built-in defaults; authoring errors are enforced by the data-integrity gate */ }
+        }
+
+        public IReadOnlyList<ConsequenceTypeDef> GetAllConsequenceTypes() => _consequenceTypes;
+
+        public ConsequenceTypeDef? GetConsequenceType(DiscoveryType type)
+        {
+            string typeName = type.ToString();
+            return _consequenceTypes.FirstOrDefault(ct =>
+                string.Equals(ct.discovery_type, typeName, StringComparison.OrdinalIgnoreCase));
+        }
 
         /// <summary>
         /// Registers the canonical expedition destination-discovery fact.

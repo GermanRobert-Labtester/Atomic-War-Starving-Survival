@@ -77,6 +77,9 @@ namespace AtomicWar.Journal
         public NarrativeDiscoveryCatalog? NarrativeDiscoveries;
         /// <summary>Plan 149 authored shelter paperwork, separate from live state.</summary>
         public BureaucraticDocumentCatalog? BureaucraticDocuments;
+        /// <summary>Plan 17 authored daily-survival archive (journals, botanical logs,
+        /// children's folklore, ration fraud records). Read-only archive text.</summary>
+        public DailySurvivalCatalog? DailySurvival;
         /// <summary>Plan 153 authored cult, ritual and memorial records. The
         /// source catalog is read-only; discovery is owned by NarrativeDiscoveries.</summary>
         public FringeCultsCatalog? FringeCults;
@@ -92,6 +95,7 @@ namespace AtomicWar.Journal
             && VerdictHistory.Count == 0 && RoomHistories.Count == 0
             && (NarrativeDiscoveries == null || NarrativeDiscoveries.Count == 0)
             && (BureaucraticDocuments == null || BureaucraticDocuments.Count == 0)
+            && (DailySurvival == null || DailySurvival.TotalCount == 0)
             && (FringeCults == null || FringeCults.TotalCount == 0)
             && (PaperMaking == null || PaperMaking.TotalCount == 0)
             && (PaperPrinting == null || PaperPrinting.TotalCount == 0)
@@ -119,6 +123,10 @@ namespace AtomicWar.Journal
 
             catalogs.NarrativeDiscoveries = new NarrativeDiscoveryCatalog();
             catalogs.NarrativeDiscoveries.LoadFromFiles(dataDir, fileIO);
+            // Plan 17: the daily-survival archive is read-only codex text; the
+            // catalog loads through IFileIO like the other narrative archives.
+            catalogs.DailySurvival = DailySurvivalCatalog.LoadFromDirectory(
+                fileIO.Combine(dataDir, "narrative"), fileIO);
             catalogs.FringeCults = FringeCultsCatalog.LoadFromDirectory(
                 fileIO.Combine(dataDir, "narrative"));
             catalogs.PaperMaking = PaperMakingCatalog.LoadFromDirectory(

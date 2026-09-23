@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "schema_name": "mod_manifest_specification",
+  "current_mod_contract_version": 1,
+  "supported_game_versions": ">=1.0.0 <3.0.0",
+  "required_manifest_fields": [
+    "schema_version",
+    "mod_id",
+    "display_name",
+    "version",
+    "load_order"
+  ],
+  "optional_manifest_fields": [
+    "allow_overrides",
+    "catalogs",
+    "game_range",
+    "mod_contract_range",
+    "pack_type",
+    "dependencies"
+  ],
+  "allowed_catalogs": [
+    "items.json",
+    "locations.json",
+    "quests.json",
+    "factions.json",
+    "weather_effects.json",
+    "colony_blueprints.json",
+    "hobby_definitions.json",
+    "map_regions.json",
+    "nuclear_winter_phases.json"
+  ],
+  "mod_id_policy": {
+    "prefix_required": false,
+    "pattern": "^[a-z0-9_\\-]+$",
+    "max_length": 64
+  },
+  "conflict_policies": [
+    {
+      "policy_id": "priority_order",
+      "description": "Mods loaded in order of load_order integer. Lower values load first, higher values overwrite or augment."
+    },
+    {
+      "policy_id": "strict_dependency_check",
+      "description": "Mods requiring missing or cyclic dependencies are rejected before catalog merging."
+    }
+  ]
+}

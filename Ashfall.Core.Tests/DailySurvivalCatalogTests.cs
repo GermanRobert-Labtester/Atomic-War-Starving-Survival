@@ -21,7 +21,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void DailySurvivalCatalog_LoadsAll30EntriesAcross4Batches()
+        public void DailySurvivalCatalog_LoadsAllEntriesAcross5Batches()
         {
             Assert.True(Directory.Exists(_narrativeDir), $"Directory not found: {_narrativeDir}");
 
@@ -29,9 +29,9 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(catalog);
             Assert.Equal(8, catalog.JournalEntries.Count);
             Assert.Equal(8, catalog.BotanicalEntries.Count);
-            Assert.Equal(19, catalog.FolkloreEntries.Count);
+            Assert.Equal(29, catalog.FolkloreEntries.Count); // primary 19 + batch 2 expansion 10
             Assert.Equal(7, catalog.FraudEntries.Count);
-            Assert.Equal(42, catalog.TotalCount);
+            Assert.Equal(52, catalog.TotalCount);
         }
 
         [Fact]
@@ -84,7 +84,10 @@ namespace Ashfall.Core.Tests
             foreach (var item in catalog.FolkloreEntries)
             {
                 Assert.False(string.IsNullOrWhiteSpace(item.Id));
-                Assert.StartsWith("folklore_children_", item.Id);
+                // Primary batch uses folklore_children_*; the batch-2 expansion uses folklore_b2_*.
+                Assert.True(item.Id.StartsWith("folklore_children_", StringComparison.Ordinal)
+                    || item.Id.StartsWith("folklore_b2_", StringComparison.Ordinal),
+                    $"unexpected folklore id: {item.Id}");
                 Assert.False(string.IsNullOrWhiteSpace(item.TraditionType));
                 Assert.False(string.IsNullOrWhiteSpace(item.OriginSector));
                 Assert.False(string.IsNullOrWhiteSpace(item.FolkTheme));

@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "collection_id": "shelter_construction",
+  "blueprints": [
+    {
+      "blueprint_id": "bp_hydroponic_bay",
+      "name": "Hydroponic Bay Expansion",
+      "room_type_id": "room_hydroponics",
+      "description": "Subterranean growing beds with UV lamps and recycled nutrient drip systems.",
+      "base_labor_days": 8,
+      "min_depth_level": 1,
+      "max_depth_level": 3,
+      "stability_cost": 5,
+      "resource_costs": {
+        "scrap_metal": 12,
+        "scrap_wood": 8,
+        "electronics": 4
+      }
+    },
+    {
+      "blueprint_id": "bp_deep_bunkhouse",
+      "name": "Reinforced Living Quarters",
+      "room_type_id": "room_deep_dormitory",
+      "description": "Heavy-beam partitioned living space accommodating expanding families and adult graduates.",
+      "base_labor_days": 6,
+      "min_depth_level": 1,
+      "max_depth_level": 4,
+      "stability_cost": 4,
+      "resource_costs": {
+        "scrap_metal": 10,
+        "scrap_wood": 10
+      }
+    },
+    {
+      "blueprint_id": "bp_medical_infirmary",
+      "name": "Shelter Clinic & Quarantine Ward",
+      "room_type_id": "room_infirmary",
+      "description": "Sterile recovery wing equipped with diagnostic benches and trauma recovery beds.",
+      "base_labor_days": 10,
+      "min_depth_level": 1,
+      "max_depth_level": 3,
+      "stability_cost": 6,
+      "resource_costs": {
+        "scrap_metal": 15,
+        "electronics": 6,
+        "medical_supplies": 5
+      }
+    },
+    {
+      "blueprint_id": "bp_classroom_library",
+      "name": "Bunker Classroom & Archive",
+      "room_type_id": "room_classroom",
+      "description": "Dedicated learning and study enclave with desks, chalkboard, and secured archive shelves.",
+      "base_labor_days": 7,
+      "min_depth_level": 1,
+      "max_depth_level": 2,
+      "stability_cost": 3,
+      "resource_costs": {
+        "scrap_metal": 8,
+        "scrap_wood": 12,
+        "paper_reams": 4
+      }
+    },
+    {
+      "blueprint_id": "bp_deep_shaft_expansion",
+      "name": "Sub-Level Shaft Excavation",
+      "room_type_id": "room_shaft_stairwell",
+      "description": "Vertical reinforced excavation opening a new deeper sub-level for bunker growth.",
+      "base_labor_days": 14,
+      "min_depth_level": 0,
+      "max_depth_level": 5,
+      "stability_cost": 12,
+      "resource_costs": {
+        "scrap_metal": 25,
+        "concrete_rubble": 15,
+        "structural_beams": 6
+      }
+    },
+    {
+      "blueprint_id": "bp_sub_workshop",
+      "name": "Heavy Fabrication Machine Shop",
+      "room_type_id": "room_machine_shop",
+      "description": "Lathes, drill presses, and hydraulic jacks for component fabrication and vehicle overhaul.",
+      "base_labor_days": 10,
+      "min_depth_level": 1,
+      "max_depth_level": 3,
+      "stability_cost": 7,
+      "resource_costs": {
+        "scrap_metal": 20,
+        "electronics": 8,
+        "gears": 5
+      }
+    }
+  ],
+  "upgrades": [
+    {
+      "upgrade_id": "upg_structural_pillar",
+      "name": "Reinforced Rock Strut",
+      "description": "Heavy steel I-beam bracing restoring structural stability to the excavated section.",
+      "labor_days": 4,
+      "stability_restored": 10,
+      "morale_bonus": 2,
+      "resource_costs": {
+        "scrap_metal": 8,
+        "concrete_rubble": 5
+      }
+    },
+    {
+      "upgrade_id": "upg_thermal_insulation",
+      "name": "Rockwool Insulation Panels",
+      "description": "Dampens extreme temperature fluctuations and conserves indoor heating.",
+      "labor_days": 3,
+      "stability_restored": 0,
+      "morale_bonus": 4,
+      "resource_costs": {
+        "scrap_wood": 5,
+        "insulation_batts": 4
+      }
+    },
+    {
+      "upgrade_id": "upg_hepa_ventilation",
+      "name": "Sealed HEPA Ventilation Ducts",
+      "description": "Active particulate air exchange mitigating dust, toxic fumes, and mold.",
+      "labor_days": 4,
+      "stability_restored": 0,
+      "morale_bonus": 5,
+      "resource_costs": {
+        "scrap_metal": 6,
+        "filter_cartridges": 2
+      }
+    },
+    {
+      "upgrade_id": "upg_acoustic_baffling",
+      "name": "Acoustic Dampening Baffles",
+      "description": "Reduces machinery noise leakage into sleeping quarters, alleviating stress.",
+      "labor_days": 3,
+      "stability_restored": 0,
+      "morale_bonus": 6,
+      "resource_costs": {
+        "scrap_wood": 6,
+        "fabric_scraps": 4
+      }
+    }
+  ]
+}

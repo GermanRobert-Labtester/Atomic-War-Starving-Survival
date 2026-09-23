@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "domain_rates": [
+    {
+      "domain": "Skill",
+      "base_daily_decay_rate": 1.0,
+      "reinforcement_multiplier": 1.2,
+      "certified_decay_scale": 0.1,
+      "description": "Physical and vocational skills decay gradually when unpracticed."
+    },
+    {
+      "domain": "Knowledge",
+      "base_daily_decay_rate": 2.5,
+      "reinforcement_multiplier": 1.1,
+      "certified_decay_scale": 0.1,
+      "description": "Factual and theoretical knowledge erodes at a moderate pace without regular study."
+    },
+    {
+      "domain": "EventMemory",
+      "base_daily_decay_rate": 4.0,
+      "reinforcement_multiplier": 1.0,
+      "certified_decay_scale": 0.2,
+      "description": "Specific episodic memories and minor past incidents fade rapidly over time."
+    },
+    {
+      "domain": "Relationship",
+      "base_daily_decay_rate": 1.5,
+      "reinforcement_multiplier": 1.3,
+      "certified_decay_scale": 0.1,
+      "description": "Interpersonal emotional memories and shared moments fade when communication lapses."
+    },
+    {
+      "domain": "Procedural",
+      "base_daily_decay_rate": 0.5,
+      "reinforcement_multiplier": 1.5,
+      "certified_decay_scale": 0.05,
+      "description": "Deeply ingrained procedural and muscle memory decays very slowly."
+    }
+  ],
+  "clarity_thresholds": [
+    { "clarity": "Vivid", "min_strength": 75.0 },
+    { "clarity": "Clear", "min_strength": 50.0 },
+    { "clarity": "Vague", "min_strength": 25.0 },
+    { "clarity": "Fragmentary", "min_strength": 0.01 },
+    { "clarity": "Forgotten", "min_strength": 0.0 }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "zones": [
+    {
+      "zone_id": "zone_coastal_shallows_north",
+      "name": "Northern Tidal Shallows",
+      "zone_type": "coastal",
+      "water_temp_celsius": 14.5,
+      "radiation_level": 0.0,
+      "current_strength": 15.0,
+      "visibility": 85.0,
+      "dive_sites": [
+        "site_tidal_kelp_beds",
+        "site_fisherman_wharf_ruins"
+      ],
+      "required_equipment_type": "none",
+      "min_depth_meters": 5.0,
+      "max_depth_meters": 20.0,
+      "description": "Sheltered coastal flats with minimal rip current and clear cold water, suitable for novice salvage divers."
+    },
+    {
+      "zone_id": "zone_brackish_estuary_mouth",
+      "name": "Brackish Estuary Outflow",
+      "zone_type": "estuary",
+      "water_temp_celsius": 11.0,
+      "radiation_level": 8.0,
+      "current_strength": 35.0,
+      "visibility": 45.0,
+      "dive_sites": [
+        "site_collapsed_coal_barge",
+        "site_silt_delta_freighter"
+      ],
+      "required_equipment_type": "basic_dive_suit",
+      "min_depth_meters": 10.0,
+      "max_depth_meters": 35.0,
+      "description": "Turbid river silt deposits and cross-currents obscuring submerged transport barges and industrial machinery."
+    },
+    {
+      "zone_id": "zone_sunken_naval_shelf",
+      "name": "Outer Continental Shelf",
+      "zone_type": "open_ocean",
+      "water_temp_celsius": 8.0,
+      "radiation_level": 12.0,
+      "current_strength": 40.0,
+      "visibility": 60.0,
+      "dive_sites": [
+        "site_exp09_ss_sovereign",
+        "site_coastal_patrol_corvette"
+      ],
+      "required_equipment_type": "basic_dive_suit",
+      "min_depth_meters": 25.0,
+      "max_depth_meters": 65.0,
+      "description": "Submerged continental shelf holding war-era transport wrecks, requiring pressurized neoprene and lead line ballast."
+    },
+    {
+      "zone_id": "zone_abyssal_rift_trench",
+      "name": "Abyssal Fault Trench",
+      "zone_type": "deep_trench",
+      "water_temp_celsius": 2.5,
+      "radiation_level": 18.0,
+      "current_strength": 70.0,
+      "visibility": 20.0,
+      "dive_sites": [
+        "site_deep_research_submersible",
+        "site_sunken_cargo_liner"
+      ],
+      "required_equipment_type": "deep_dive_suit",
+      "min_depth_meters": 75.0,
+      "max_depth_meters": 220.0,
+      "description": "Crushing hydrostatic depths and freezing darkness requiring heavy armored diving suits and external dive torches."
+    },
+    {
+      "zone_id": "zone_reactor_runoff_shoals",
+      "name": "Irradiated Coolant Shoals",
+      "zone_type": "contaminated_zone",
+      "water_temp_celsius": 19.0,
+      "radiation_level": 65.0,
+      "current_strength": 25.0,
+      "visibility": 30.0,
+      "dive_sites": [
+        "site_breached_nuclear_reactor_core",
+        "site_flooded_hot_cell_bunker"
+      ],
+      "required_equipment_type": "hazmat_dive_suit",
+      "min_depth_meters": 15.0,
+      "max_depth_meters": 50.0,
+      "description": "Thermal discharge bay contaminated with spent fuel particulate; poses acute ionizing dose hazards without hazmat protection."
+    },
+    {
+      "zone_id": "zone_subterranean_drowned_ridge",
+      "name": "Subterranean Karst Ridge",
+      "zone_type": "underwater_ridge",
+      "water_temp_celsius": 6.0,
+      "radiation_level": 22.0,
+      "current_strength": 50.0,
+      "visibility": 40.0,
+      "dive_sites": [
+        "site_drowned_cavern_depot",
+        "site_limestone_labyrinth_cache"
+      ],
+      "required_equipment_type": "rebreather",
+      "min_depth_meters": 45.0,
+      "max_depth_meters": 110.0,
+      "description": "Drowned limestone caves and acoustic blind corridors prone to overhead ceiling collapse and diver disorientation."
+    }
+  ]
+}

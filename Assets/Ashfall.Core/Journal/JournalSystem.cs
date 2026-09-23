@@ -155,6 +155,13 @@ namespace Ashfall.Core.Journal
         }
 
         /// <summary>
+        /// True when the authored journal corpus is bound. Lets host audit
+        /// surfaces (Plan 49 content certification) read live evidence instead
+        /// of trusting a loader name.
+        /// </summary>
+        public bool HasAuthoredCorpus => _authoredCorpus != null;
+
+        /// <summary>
         /// Activate one authored record from a real producer. Unknown keys are
         /// ignored so generated producer behavior remains unchanged.
         /// </summary>

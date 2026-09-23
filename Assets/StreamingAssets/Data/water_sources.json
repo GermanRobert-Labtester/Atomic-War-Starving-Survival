@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_id": "source_shelter_well_deep",
+      "display_name": "Shelter Sub-Basement Deep Well",
+      "source_type": "well",
+      "location_id": "loc_shelter_subbasement",
+      "flow_rate_l_day": 450.0,
+      "base_contamination": 0.04,
+      "initial_infrastructure_level": "advanced",
+      "description": "Primary deep-aquifer borehole drilled into underlying bedrock below the shelter perimeter."
+    },
+    {
+      "source_id": "source_limestone_spring",
+      "display_name": "Quarry Ridge Limestone Spring",
+      "source_type": "spring",
+      "location_id": "loc_quarry_ridge",
+      "flow_rate_l_day": 280.0,
+      "base_contamination": 0.02,
+      "initial_infrastructure_level": "basic",
+      "description": "Naturally filtered spring bubbling through limestone strata with low particulate content."
+    },
+    {
+      "source_id": "source_pine_river_upstream",
+      "display_name": "Pine Barrens Upper River Bend",
+      "source_type": "river",
+      "location_id": "loc_pine_barrens",
+      "flow_rate_l_day": 1600.0,
+      "base_contamination": 0.38,
+      "initial_infrastructure_level": "none",
+      "description": "High-volume surface river carrying heavy fallout silt and organic contaminants."
+    },
+    {
+      "source_id": "source_shelter_rain_catchment",
+      "display_name": "Roof Corrugated Rain Catchment",
+      "source_type": "rain_collector",
+      "location_id": "loc_shelter_surface",
+      "flow_rate_l_day": 180.0,
+      "base_contamination": 0.15,
+      "initial_infrastructure_level": "basic",
+      "description": "Surface gutter array collecting rain and melting snow, vulnerable to atmospheric fallout."
+    },
+    {
+      "source_id": "source_underground_artesian",
+      "display_name": "Subterranean Tunnels Artesian Seep",
+      "source_type": "underground_spring",
+      "location_id": "loc_underground_tunnels",
+      "flow_rate_l_day": 320.0,
+      "base_contamination": 0.01,
+      "initial_infrastructure_level": "none",
+      "description": "Pure artesian water seeping from ancient underground caverns sealed from nuclear fallout."
+    },
+    {
+      "source_id": "source_district8_municipal",
+      "display_name": "District Eight Municipal Main",
+      "source_type": "municipal",
+      "location_id": "loc_district_eight",
+      "flow_rate_l_day": 650.0,
+      "base_contamination": 0.45,
+      "initial_infrastructure_level": "basic",
+      "description": "Pre-war pressurized municipal pipe junction suffering from pipe corrosion and chemical runoff."
+    },
+    {
+      "source_id": "source_foundry_sump_drain",
+      "display_name": "Industrial Foundry Sump Drainage",
+      "source_type": "river",
+      "location_id": "loc_industrial_foundry",
+      "flow_rate_l_day": 850.0,
+      "base_contamination": 0.72,
+      "initial_infrastructure_level": "none",
+      "description": "Heavily contaminated chemical runoff pool fed by industrial plant tailings."
+    },
+    {
+      "source_id": "source_suburb_retention_basin",
+      "display_name": "East Suburb Storm Retention Basin",
+      "source_type": "well",
+      "location_id": "loc_east_suburb",
+      "flow_rate_l_day": 380.0,
+      "base_contamination": 0.25,
+      "initial_infrastructure_level": "basic",
+      "description": "Suburban drainage retention basin surrounded by cracked concrete spillways."
+    }
+  ],
+  "connections": [
+    {
+      "connection_id": "conn_foundry_to_river",
+      "source_a": "source_foundry_sump_drain",
+      "source_b": "source_pine_river_upstream",
+      "connection_type": "surface_runoff",
+      "transfer_rate": 0.25
+    },
+    {
+      "connection_id": "conn_spring_to_well",
+      "source_a": "source_limestone_spring",
+      "source_b": "source_shelter_well_deep",
+      "connection_type": "underground_flow",
+      "transfer_rate": 0.08
+    },
+    {
+      "connection_id": "conn_suburb_to_municipal",
+      "source_a": "source_suburb_retention_basin",
+      "source_b": "source_district8_municipal",
+      "connection_type": "pipe_connection",
+      "transfer_rate": 0.18
+    }
+  ]
+}

@@ -50,7 +50,11 @@ namespace Ashfall.Core.Inventory
         public string EquipSlot { get; }
         public bool IsConsumable { get; }
 
-        public ItemInspectionModel(ItemDefinition def, ItemDescriptionEntry? description = null, System.Collections.Generic.List<string>? tags = null)
+        public ItemInspectionModel(
+            ItemDefinition def,
+            ItemDescriptionEntry? description = null,
+            System.Collections.Generic.List<string>? tags = null,
+            ItemProvenanceChain? provenance = null)
         {
             if (def == null) throw new ArgumentNullException(nameof(def));
 
@@ -112,21 +116,37 @@ namespace Ashfall.Core.Inventory
 
             NarrativeTags = tags != null ? tags.AsReadOnly() : (System.Collections.Generic.IReadOnlyList<string>)System.Array.Empty<string>();
             IsKeepsakeCandidate = tags != null && tags.Contains("personal_keepsake_candidate");
+            Provenance = provenance;
         }
 
         public bool IsKeepsakeCandidate { get; }
         public System.Collections.Generic.IReadOnlyList<string> NarrativeTags { get; }
+        public ItemProvenanceChain? Provenance { get; }
+        public bool HasProvenance => Provenance != null;
 
         public static ItemInspectionModel Create(ItemDefinition def, ItemDescriptionCatalog? catalog = null)
         {
-            return Create(def, catalog, null);
+            return Create(def, catalog, null, null, null);
         }
 
         public static ItemInspectionModel Create(ItemDefinition def, ItemDescriptionCatalog? catalog, ExpansionEnrichmentCatalog? enrichment)
         {
+            return Create(def, catalog, enrichment, null, null);
+        }
+
+        public static ItemInspectionModel Create(
+            ItemDefinition def,
+            ItemDescriptionCatalog? catalog,
+            ExpansionEnrichmentCatalog? enrichment,
+            ItemLoreSystem? loreSystem,
+            string? itemInstanceId = null)
+        {
             var entry = catalog?.Get(def.id);
             var tags = enrichment?.GetItemTags(def.id)?.tags;
-            return new ItemInspectionModel(def, entry, tags);
+            var provenance = !string.IsNullOrEmpty(itemInstanceId) && loreSystem != null
+                ? loreSystem.GetProvenance(itemInstanceId!)
+                : null;
+            return new ItemInspectionModel(def, entry, tags, provenance);
         }
     }
 }

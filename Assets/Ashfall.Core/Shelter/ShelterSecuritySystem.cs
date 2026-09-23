@@ -2,9 +2,73 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Shelter
 {
+    [Serializable]
+    public sealed class SecurityZoneDefinition
+    {
+        [JsonPropertyName("zone_id")]
+        public string ZoneId { get; set; } = string.Empty;
+
+        [JsonPropertyName("room_id")]
+        public string RoomId { get; set; } = string.Empty;
+
+        [JsonPropertyName("zone_name")]
+        public string ZoneName { get; set; } = string.Empty;
+
+        [JsonPropertyName("level")]
+        public string Level { get; set; } = "open";
+
+        [JsonPropertyName("default_lock_state")]
+        public string DefaultLockState { get; set; } = "unlocked";
+
+        [JsonPropertyName("required_clearance")]
+        public string RequiredClearance { get; set; } = "none";
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+
+        public SecurityLevel GetSecurityLevel() => Level.ToLowerInvariant() switch
+        {
+            "open" => SecurityLevel.Open,
+            "restricted" => SecurityLevel.Restricted,
+            "locked" => SecurityLevel.Locked,
+            "high_security" or "highsecurity" => SecurityLevel.HighSecurity,
+            "critical" => SecurityLevel.Critical,
+            _ => SecurityLevel.Open
+        };
+
+        public DoorLockState GetLockState() => DefaultLockState.ToLowerInvariant() switch
+        {
+            "unlocked" => DoorLockState.Unlocked,
+            "locked" => DoorLockState.Locked,
+            "sealed" => DoorLockState.Sealed,
+            _ => DoorLockState.Unlocked
+        };
+
+        public ClearanceLevel GetRequiredClearance() => RequiredClearance.ToLowerInvariant() switch
+        {
+            "none" => ClearanceLevel.None,
+            "basic" => ClearanceLevel.Basic,
+            "restricted" => ClearanceLevel.Restricted,
+            "high_security" or "highsecurity" => ClearanceLevel.HighSecurity,
+            "all_access" or "allaccess" => ClearanceLevel.AllAccess,
+            _ => ClearanceLevel.None
+        };
+    }
+
+    [Serializable]
+    public sealed class ShelterSecurityCatalogData
+    {
+        [JsonPropertyName("schema_version")]
+        public int SchemaVersion { get; set; } = 1;
+
+        [JsonPropertyName("zones")]
+        public List<SecurityZoneDefinition> Zones { get; set; } = new List<SecurityZoneDefinition>();
+    }
     public enum SecurityLevel
     {
         Open = 0,
@@ -98,11 +162,16 @@ namespace Ashfall.Core.Shelter
     public sealed class ShelterSecuritySystem
     {
         private readonly ShelterSecurityState _state;
+        private readonly Dictionary<string, SecurityZoneDefinition> _zoneDefinitions = new Dictionary<string, SecurityZoneDefinition>(StringComparer.OrdinalIgnoreCase);
 
         public event Action<string, string, string>? OnAccessDenied;
         public event Action<SecurityBreach>? OnSecurityBreachDetected;
         public event Action<bool>? OnLockdownToggled;
         public event Action? OnStateChanged;
+
+        public Action<SecurityZone, SecurityBreach>? AlarmRelayBridge { get; set; }
+        public Action<bool /*inLockdown*/>? LockdownStateBridge { get; set; }
+        public Action<string /*survivorId*/, string /*zoneId*/, string /*reason*/>? SecurityDenialLogger { get; set; }
 
         public bool IsInLockdown => _state.ShelterInLockdown;
         public int ZoneCount => _state.Zones.Count;
@@ -110,11 +179,92 @@ namespace Ashfall.Core.Shelter
         public IReadOnlyList<SecurityZone> Zones => _state.Zones;
         public IReadOnlyList<SurvivorClearance> Clearances => _state.Clearances;
         public IReadOnlyList<SecurityBreach> Breaches => _state.Breaches;
+        public IReadOnlyCollection<SecurityZoneDefinition> ZoneDefinitions => _zoneDefinitions.Values;
         public ShelterSecurityState State => _state;
 
         public ShelterSecuritySystem(ShelterSecurityState? state = null)
         {
             _state = state ?? new ShelterSecurityState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var data = JsonSerializer.Deserialize<ShelterSecurityCatalogData>(json, options);
+            if (data != null)
+            {
+                LoadCatalog(data);
+            }
+        }
+
+        public void LoadCatalog(ShelterSecurityCatalogData catalog)
+        {
+            if (catalog?.Zones == null) return;
+            foreach (var zd in catalog.Zones)
+            {
+                if (string.IsNullOrWhiteSpace(zd.ZoneId)) continue;
+                _zoneDefinitions[zd.ZoneId] = zd;
+
+                if (!_state.Zones.Any(z => string.Equals(z.ZoneId, zd.ZoneId, StringComparison.OrdinalIgnoreCase)))
+                {
+                    ConfigureZone(
+                        zoneId: zd.ZoneId,
+                        roomId: zd.RoomId,
+                        zoneName: zd.ZoneName,
+                        level: zd.GetSecurityLevel(),
+                        lockState: zd.GetLockState()
+                    );
+                }
+            }
+        }
+
+        public SecurityZoneDefinition? GetZoneDefinition(string zoneId)
+        {
+            if (string.IsNullOrWhiteSpace(zoneId)) return null;
+            return _zoneDefinitions.TryGetValue(zoneId, out var def) ? def : null;
+        }
+
+        public SecurityZone? GetZone(string zoneId)
+        {
+            if (string.IsNullOrWhiteSpace(zoneId)) return null;
+            return _state.Zones.FirstOrDefault(z => string.Equals(z.ZoneId, zoneId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool IsSurvivorAuthorized(string survivorId, string zoneId)
+        {
+            if (string.IsNullOrWhiteSpace(survivorId) || string.IsNullOrWhiteSpace(zoneId)) return false;
+            var zone = GetZone(zoneId);
+            if (zone == null) return false;
+
+            if (_state.ShelterInLockdown)
+            {
+                return GetClearance(survivorId) == ClearanceLevel.AllAccess;
+            }
+
+            if (zone.LockState == DoorLockState.Sealed)
+            {
+                return GetClearance(survivorId) == ClearanceLevel.AllAccess;
+            }
+
+            if (zone.ExplicitAuthorizedSurvivors.Any(s => string.Equals(s, survivorId, StringComparison.OrdinalIgnoreCase)))
+            {
+                return true;
+            }
+
+            var clearance = GetClearance(survivorId);
+            return clearance switch
+            {
+                ClearanceLevel.AllAccess => true,
+                ClearanceLevel.HighSecurity => zone.Level <= SecurityLevel.HighSecurity,
+                ClearanceLevel.Restricted => zone.Level <= SecurityLevel.Locked,
+                ClearanceLevel.Basic => zone.Level <= SecurityLevel.Restricted,
+                ClearanceLevel.None => zone.Level == SecurityLevel.Open,
+                _ => false
+            };
         }
 
         public SecurityZone ConfigureZone(
@@ -223,6 +373,7 @@ namespace Ashfall.Core.Shelter
             }
 
             OnLockdownToggled?.Invoke(active);
+            LockdownStateBridge?.Invoke(active);
             OnStateChanged?.Invoke();
         }
 
@@ -239,14 +390,18 @@ namespace Ashfall.Core.Shelter
             // 1. Shelter Lockdown check
             if (_state.ShelterInLockdown && survivorClearance != ClearanceLevel.AllAccess)
             {
-                OnAccessDenied?.Invoke(survivorId, zoneId, "Shelter is under emergency lockdown.");
+                string reason = "Shelter is under emergency lockdown.";
+                OnAccessDenied?.Invoke(survivorId, zoneId, reason);
+                SecurityDenialLogger?.Invoke(survivorId, zoneId, reason);
                 return new AccessAttemptResult { IsGranted = false, OutcomeMessage = "Shelter lockdown in effect.", TriggeredAlarm = false };
             }
 
             // 2. Door sealed check
             if (zone.LockState == DoorLockState.Sealed && survivorClearance != ClearanceLevel.AllAccess)
             {
-                OnAccessDenied?.Invoke(survivorId, zoneId, "Door is sealed shut.");
+                string reason = "Door is sealed shut.";
+                OnAccessDenied?.Invoke(survivorId, zoneId, reason);
+                SecurityDenialLogger?.Invoke(survivorId, zoneId, reason);
                 return new AccessAttemptResult { IsGranted = false, OutcomeMessage = "Door sealed.", TriggeredAlarm = false };
             }
 
@@ -288,10 +443,13 @@ namespace Ashfall.Core.Shelter
                 };
                 _state.Breaches.Add(breach);
                 OnSecurityBreachDetected?.Invoke(breach);
+                AlarmRelayBridge?.Invoke(zone, breach);
                 OnStateChanged?.Invoke();
             }
 
-            OnAccessDenied?.Invoke(survivorId, zoneId, $"Insufficient clearance ({survivorClearance} vs {zone.Level}).");
+            string denialReason = $"Insufficient clearance ({survivorClearance} vs {zone.Level}).";
+            OnAccessDenied?.Invoke(survivorId, zoneId, denialReason);
+            SecurityDenialLogger?.Invoke(survivorId, zoneId, denialReason);
             return new AccessAttemptResult
             {
                 IsGranted = false,

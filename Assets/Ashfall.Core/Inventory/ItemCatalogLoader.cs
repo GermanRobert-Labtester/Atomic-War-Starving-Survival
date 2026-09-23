@@ -35,6 +35,29 @@ namespace Ashfall.Core.Inventory
         public List<string>? tags { get; set; }
         public List<ScrapYieldDto>? scrapValue { get; set; }
         public RepairRecipeDto? repairRecipe { get; set; }
+        public LimbRequirementDto? limbRequirements { get; set; }
+        public LimbRequirementDto? limb_requirements { get; set; }
+        public LimbProvisionDto? providesLimb { get; set; }
+        public LimbProvisionDto? provides_limb { get; set; }
+    }
+
+    [Serializable]
+    internal sealed class LimbRequirementDto
+    {
+        public int hands { get; set; } = 1;
+        public string? gripClass { get; set; }
+        public string? grip_class { get; set; }
+    }
+
+    [Serializable]
+    internal sealed class LimbProvisionDto
+    {
+        public int hands { get; set; }
+        public int legs { get; set; }
+        public int qualityPermille { get; set; } = 500;
+        public int quality_permille { get; set; } = 500;
+        public string? gripClass { get; set; }
+        public string? grip_class { get; set; }
     }
 
     [Serializable]
@@ -696,6 +719,28 @@ namespace Ashfall.Core.Inventory
                             def.repairRecipe.costs.Add(new ScrapYield(c.materialId, c.amount));
                     }
                 }
+            }
+
+            var reqDto = dto.limbRequirements ?? dto.limb_requirements;
+            if (reqDto != null)
+            {
+                def.limbRequirements = new LimbRequirement
+                {
+                    hands = reqDto.hands > 0 ? reqDto.hands : 1,
+                    gripClass = !string.IsNullOrEmpty(reqDto.gripClass) ? reqDto.gripClass : (!string.IsNullOrEmpty(reqDto.grip_class) ? reqDto.grip_class : "simple")
+                };
+            }
+
+            var provDto = dto.providesLimb ?? dto.provides_limb;
+            if (provDto != null)
+            {
+                def.providesLimb = new LimbProvision
+                {
+                    hands = provDto.hands,
+                    legs = provDto.legs,
+                    qualityPermille = provDto.qualityPermille != 500 ? provDto.qualityPermille : provDto.quality_permille,
+                    gripClass = !string.IsNullOrEmpty(provDto.gripClass) ? provDto.gripClass : (!string.IsNullOrEmpty(provDto.grip_class) ? provDto.grip_class : "simple")
+                };
             }
 
             return def;

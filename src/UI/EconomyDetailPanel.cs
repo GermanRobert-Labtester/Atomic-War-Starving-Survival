@@ -374,7 +374,6 @@ namespace AtomicWar.GodotApp.UI
             // untouched; all content rendered per refresh in code).
             _embargoBanner = BuildInsertedSection("Sep1", "COMMODITY EMBARGOES");
             _heatMapContainer = BuildInsertedSection("DebtHeader", "REGIONAL PRICE HEAT MAP");
-            _heatMapDetail = new VBoxContainer();
 
             binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
 

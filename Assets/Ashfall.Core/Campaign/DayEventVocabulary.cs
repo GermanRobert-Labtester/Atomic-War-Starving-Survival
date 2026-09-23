@@ -37,6 +37,8 @@ namespace Ashfall.Core.Campaign
             // ── Heartbeats (Internal steady-state simulation ticks) ──
             { "aeroponics_ticked", SemanticKind.Heartbeat },
             { "aquaponics_ticked", SemanticKind.Heartbeat },
+            { "campaign_legacy_ticked", SemanticKind.Heartbeat },
+            { "cooking_ticked", SemanticKind.Heartbeat },
             { "cryo_vault_ticked", SemanticKind.Heartbeat },
             { "debt_ledger_ticked", SemanticKind.Heartbeat },
             { "duty_roster_ticked", SemanticKind.Heartbeat },
@@ -56,6 +58,7 @@ namespace Ashfall.Core.Campaign
             { "morale_contagion_ticked", SemanticKind.Heartbeat },
             { "narrative_ticked", SemanticKind.Heartbeat },
             { "needs_ticked", SemanticKind.Heartbeat },
+            { "needs_performance_ticked", SemanticKind.Heartbeat },
             { "pneumatic_dispatch_ticked", SemanticKind.Heartbeat },
             { "power_ticked", SemanticKind.Heartbeat },
             { "precision_metrology_ticked", SemanticKind.Heartbeat },
@@ -71,6 +74,7 @@ namespace Ashfall.Core.Campaign
             { "subterranean_ticked", SemanticKind.Heartbeat },
             { "survivor_social_ticked", SemanticKind.Heartbeat },
             { "survivors_ticked", SemanticKind.Heartbeat },
+            { "territory_control_ticked", SemanticKind.Heartbeat },
             { "trapping_ticked", SemanticKind.Heartbeat },
             { "underworld_ticked", SemanticKind.Heartbeat },
             { "world_evolution_ticked", SemanticKind.Heartbeat },
@@ -164,7 +168,13 @@ namespace Ashfall.Core.Campaign
             { "personal_quest_progressed", SemanticKind.Narrative },
             { "obligation_warning", SemanticKind.Narrative },
             { "obligation_missed", SemanticKind.Narrative },
-            { "social_dispute_mediated", SemanticKind.Narrative }
+            { "obligation_met", SemanticKind.Narrative },
+            { "social_dispute_mediated", SemanticKind.Narrative },
+
+            // ── Settlement Expansion & Records (Plans 55 / 58) ──
+            { "outpost_network_ticked", SemanticKind.Heartbeat },
+            { "retention_ticked", SemanticKind.Heartbeat },
+            { "weather_cascade_ticked", SemanticKind.Heartbeat }
         };
 
         /// <summary>Read-only view of the static semantic kind mappings.</summary>
@@ -253,5 +263,26 @@ namespace Ashfall.Core.Campaign
             if (evt.Numeric != 0f) text += $" [{evt.Numeric:F0}]";
             return text;
         }
+
+        /// <summary>
+        /// Closed section-title routing for semantic kinds (D11-B vocabulary).
+        /// A kind with no entry renders under GenericSectionTitle.
+        /// </summary>
+        private static readonly Dictionary<SemanticKind, string> SectionTitleMap =
+            new()
+            {
+                { SemanticKind.Hazard, "Warnings" },
+                { SemanticKind.Casualty, "Deaths" },
+                { SemanticKind.Survivor, "Survivor Changes" },
+                { SemanticKind.Shelter, "Shelter" },
+                { SemanticKind.Communication, "Radio Intercepts" },
+                { SemanticKind.Weather, "Weather Forecast" },
+                { SemanticKind.Narrative, "Chronicle" },
+                { SemanticKind.Production, "Production & Maintenance" },
+                { SemanticKind.Expedition, "Expedition Milestones" },
+            };
+
+        public static string SectionTitleFor(SemanticKind kind) =>
+            SectionTitleMap.TryGetValue(kind, out var title) ? title : GenericSectionTitle;
     }
 }

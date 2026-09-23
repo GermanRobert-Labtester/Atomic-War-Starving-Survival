@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "id": "keepsake_silver_locket",
+      "name": "Silver Locket",
+      "category": "jewelry",
+      "base_sentimental_value": 85.0,
+      "base_condition": 90.0,
+      "description": "An engraved silver locket containing two faded miniature portraits of family lost to the early bombardment.",
+      "rarity": "rare"
+    },
+    {
+      "id": "keepsake_faded_photograph",
+      "name": "Faded Family Photograph",
+      "category": "keepsake",
+      "base_sentimental_value": 75.0,
+      "base_condition": 65.0,
+      "description": "A creased, salt-stained photograph showing smiling faces in front of a pre-war coastal cabin.",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "keepsake_custom_hunting_knife",
+      "name": "Bone-Handled Hunting Knife",
+      "category": "tool",
+      "base_sentimental_value": 60.0,
+      "base_condition": 95.0,
+      "description": "A sturdy steel hunting knife with a carved antler grip, handed down across three generations of scouts.",
+      "rarity": "rare"
+    },
+    {
+      "id": "keepsake_handwritten_diary",
+      "name": "Cloth-Bound Journal",
+      "category": "document",
+      "base_sentimental_value": 80.0,
+      "base_condition": 70.0,
+      "description": "Daily reflections and charcoal sketches recording the first ninety days following the atomic exchange.",
+      "rarity": "rare"
+    },
+    {
+      "id": "keepsake_embroidery_scarf",
+      "name": "Knitted Wool Scarf",
+      "category": "clothing",
+      "base_sentimental_value": 65.0,
+      "base_condition": 80.0,
+      "description": "A thick ochre scarf knitted by a mother in the last winter before the shelters sealed.",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "keepsake_service_medal",
+      "name": "Civilian Defense Merit Cross",
+      "category": "memento",
+      "base_sentimental_value": 70.0,
+      "base_condition": 85.0,
+      "description": "A tarnished brass medal awarded for emergency evacuation services in the city center.",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "keepsake_trench_lighter",
+      "name": "Brass Trench Lighter",
+      "category": "tool",
+      "base_sentimental_value": 55.0,
+      "base_condition": 85.0,
+      "description": "A reliable flint-wheel brass lighter made from spent shell casings, still striking a bright spark.",
+      "rarity": "common"
+    },
+    {
+      "id": "keepsake_carved_wooden_sparrow",
+      "name": "Carved Pine Sparrow",
+      "category": "keepsake",
+      "base_sentimental_value": 70.0,
+      "base_condition": 75.0,
+      "description": "A small wooden songbird whittled by a sibling while trapped in a quarantine cellar.",
+      "rarity": "uncommon"
+    }
+  ]
+}

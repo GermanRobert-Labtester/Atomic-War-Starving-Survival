@@ -200,6 +200,22 @@ namespace Ashfall.Core.Narrative
                 }
             }
 
+            // 3b. Children Folklore — batch 2 expansion (same schema, distinct ids).
+            string folkloreBatch2Path = Path.Combine(directoryPath, "bunker_children_folklore_batch_2.json");
+            if (fileIO.FileExists(folkloreBatch2Path))
+            {
+                var list = CatalogLocator.LoadWrappedList<ChildrenFolkloreEntry>(fileIO.ReadAllText(folkloreBatch2Path), options);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item == null || string.IsNullOrWhiteSpace(item.Id)) continue;
+                        catalog._folkloreEntries.Add(item);
+                        catalog._entriesById[item.Id] = item;
+                    }
+                }
+            }
+
             // 4. Ration Fraud Records
             string fraudPath = Path.Combine(directoryPath, "ration_fraud_records.json");
             if (fileIO.FileExists(fraudPath))

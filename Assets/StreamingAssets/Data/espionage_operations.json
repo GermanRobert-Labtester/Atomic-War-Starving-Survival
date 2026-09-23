@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "operations": [
+    {
+      "operation_id": "infiltrate_garrison",
+      "name": "Garrison Infiltration",
+      "operation_type": "infiltrate",
+      "target_faction_id": "faction_garrison",
+      "base_success_rate": 0.65,
+      "risk_level": "medium",
+      "base_duration_days": 14,
+      "suspicion_gain": 15,
+      "intel_type": "military",
+      "intel_value": 40,
+      "description": "Place a deep-cover operative into the military stronghold to monitor troop movements and fortification weaknesses."
+    },
+    {
+      "operation_id": "steal_hydro_blueprints",
+      "name": "Steal Reclamation Schematics",
+      "operation_type": "steal",
+      "target_faction_id": "faction_hydro_barons",
+      "base_success_rate": 0.60,
+      "risk_level": "high",
+      "base_duration_days": 7,
+      "suspicion_gain": 25,
+      "intel_type": "technical",
+      "intel_value": 60,
+      "description": "Exfiltrate water aquifer filtration and catalyst schematics from Hydro Baron research archives."
+    },
+    {
+      "operation_id": "sabotage_supply_depot",
+      "name": "Depot Fuel Contamination",
+      "operation_type": "sabotage",
+      "target_faction_id": "caravan_barons",
+      "base_success_rate": 0.55,
+      "risk_level": "high",
+      "base_duration_days": 5,
+      "suspicion_gain": 30,
+      "intel_type": "economic",
+      "intel_value": 30,
+      "description": "Introduce acidic solvent into fuel reserves to disable motorized convoys and disrupt monopoly routes."
+    },
+    {
+      "operation_id": "covert_propaganda_campaign",
+      "name": "Underground Broadsheet Circulation",
+      "operation_type": "propaganda",
+      "target_faction_id": "faction_garrison",
+      "base_success_rate": 0.75,
+      "risk_level": "low",
+      "base_duration_days": 4,
+      "suspicion_gain": 10,
+      "intel_type": "political",
+      "intel_value": 25,
+      "description": "Circulate anti-tyranny manifestos to undermine garrison discipline and induce defection sentiment."
+    },
+    {
+      "operation_id": "covert_assassination_contract",
+      "name": "Eliminate Enforcer Lieutenant",
+      "operation_type": "assassinate",
+      "target_faction_id": "raiders",
+      "base_success_rate": 0.45,
+      "risk_level": "extreme",
+      "base_duration_days": 10,
+      "suspicion_gain": 50,
+      "intel_type": "military",
+      "intel_value": 75,
+      "description": "Target and eliminate a brutal wasteland warlord during an isolated scouting excursion."
+    }
+  ],
+  "suspicion_bands": {
+    "calm_max": 25,
+    "cautious_max": 50,
+    "hostile_max": 75,
+    "lockdown_max": 100,
+    "daily_cooling_rate": 2.0
+  }
+}

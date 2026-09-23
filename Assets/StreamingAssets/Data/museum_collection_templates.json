@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "artifact_templates": [
+    {
+      "id": "artifact_founding_charter",
+      "name": "Shelter Founding Charter",
+      "artifact_type": "document",
+      "default_significance": 95.0,
+      "default_origin": "Signed by the original shelter pioneers during the first ashfall.",
+      "theme": "founding",
+      "description": "Faded parchment setting forth the governance and survival covenant."
+    },
+    {
+      "id": "artifact_pioneer_geiger_counter",
+      "name": "First Geiger Counter",
+      "artifact_type": "technological",
+      "default_significance": 85.0,
+      "default_origin": "Used to verify safe radiation levels before sealing the blast doors.",
+      "theme": "technological",
+      "description": "Analog radiation detector preserved in a sealed glass case."
+    },
+    {
+      "id": "artifact_commanders_sidearm",
+      "name": "Commander's Service Sidearm",
+      "artifact_type": "weapon",
+      "default_significance": 80.0,
+      "default_origin": "Recovered from the final defense of the primary intake gate.",
+      "theme": "military",
+      "description": "Decommissioned pre-war service pistol with ceremonial engravings."
+    },
+    {
+      "id": "artifact_field_medic_journal",
+      "name": "First Winter Medical Journal",
+      "artifact_type": "document",
+      "default_significance": 90.0,
+      "default_origin": "Authored by Chief Medic Vance during the great quarantine.",
+      "theme": "medical",
+      "description": "Handwritten clinical records tracking the first containment victories."
+    },
+    {
+      "id": "artifact_crystallized_geode",
+      "name": "Irradiated Karst Geode",
+      "artifact_type": "natural",
+      "default_significance": 70.0,
+      "default_origin": "Excavated from the deep sub-basement bedrock expansion.",
+      "theme": "cultural",
+      "description": "A mineral formation shimmering with faint luminescent crystals."
+    },
+    {
+      "id": "artifact_overseers_coat",
+      "name": "First Warden Heavy Greatcoat",
+      "artifact_type": "clothing",
+      "default_significance": 88.0,
+      "default_origin": "Worn by the first shelter supervisor during the surface evacuation.",
+      "theme": "founding",
+      "description": "Reinforced wool trench coat bearing the original sector insignia."
+    }
+  ],
+  "exhibition_themes": [
+    "founding",
+    "medical",
+    "military",
+    "cultural",
+    "technological",
+    "personal",
+    "memorial"
+  ]
+}

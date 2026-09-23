@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "dialogue_templates": [
+    {
+      "tone": "high_trust",
+      "template_id": "trust_warm_welcome_01",
+      "text": "It's good to see you again. After what you did for us, my door is always open."
+    },
+    {
+      "tone": "high_trust",
+      "template_id": "trust_warm_welcome_02",
+      "text": "Few people in the ash keep their word. You proved yourself an exception."
+    },
+    {
+      "tone": "high_trust",
+      "template_id": "trust_offer_discount_01",
+      "text": "For you? Take the goods at cost. We survive together or not at all."
+    },
+    {
+      "tone": "high_grudge",
+      "template_id": "grudge_cold_welcome_01",
+      "text": "State your business and be quick. I haven't forgotten how you turned your back on us."
+    },
+    {
+      "tone": "high_grudge",
+      "template_id": "grudge_cold_welcome_02",
+      "text": "You come asking for help now? When we needed you, you gave us silence."
+    },
+    {
+      "tone": "high_grudge",
+      "template_id": "grudge_price_markup_01",
+      "text": "The price is double for you. Consider it an uncollected debt surcharge."
+    },
+    {
+      "tone": "favor_owed",
+      "template_id": "favor_acknowledgement_01",
+      "text": "I owe you one from last week. Tell me what you need, and we'll square the ledger."
+    },
+    {
+      "tone": "favor_owed",
+      "template_id": "favor_acknowledgement_02",
+      "text": "My people remember who pulled us out of the rubble. Ask your favor."
+    },
+    {
+      "tone": "betrayed",
+      "template_id": "betrayal_hostile_refusal_01",
+      "text": "Get out of my sight before I draw iron. You sold us out once; there won't be a second time."
+    },
+    {
+      "tone": "betrayed",
+      "template_id": "betrayal_trade_blacklisted_01",
+      "text": "My counter is closed to traitors. Take your tainted chits elsewhere."
+    },
+    {
+      "tone": "reconciled",
+      "template_id": "reconciliation_second_chance_01",
+      "text": "Your restitution covers the loss. We aren't friends, but the slate is wiped clean."
+    },
+    {
+      "tone": "reconciled",
+      "template_id": "reconciliation_cautious_peace_01",
+      "text": "Words are cheap in the wasteland, but your deeds made amends. Let's start over."
+    }
+  ]
+}

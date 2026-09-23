@@ -671,13 +671,32 @@ namespace AtomicWar.GodotApp
 
         // ── Triangulation demo actions ────────────────────────────────
 
-        /// <summary>Record a directional observation of a signal.</summary>
-        public string RecordObservation(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f, string stationId = "station_alpha")
+        /// <summary>
+        /// Active observation station identifier (defaults to "station_alpha").
+        /// Provides an authored station-selection seam for multi-station setups (D19b).
+        /// </summary>
+        public string ActiveStationId { get; set; } = "station_alpha";
+
+        /// <summary>Sets the active observation station identifier (D19b).</summary>
+        public void SetActiveStation(string stationId)
         {
+            if (!string.IsNullOrWhiteSpace(stationId))
+            {
+                ActiveStationId = stationId.Trim();
+            }
+        }
+
+        /// <summary>Record a directional observation of a signal.</summary>
+        public string RecordObservation(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f, string? stationId = null)
+        {
+            string resolvedStation = !string.IsNullOrWhiteSpace(stationId) && stationId != "station_alpha"
+                ? stationId!
+                : ActiveStationId;
+
             var obs = new RadioObservation
             {
                 signalId = signalId,
-                stationId = stationId,
+                stationId = resolvedStation,
                 day = Day,
                 hour = 12f,
                 bearingDegrees = bearing,

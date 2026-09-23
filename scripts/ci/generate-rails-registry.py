@@ -1,0 +1,310 @@
+#!/usr/bin/env python3
+"""scripts/ci/generate-rails-registry.py
+Plan 53 / E1H: Rails Readiness Registry Generator and Validator for ASHFALL.
+
+Reads authored rail definitions from `docs/roadmap/rails.registry.json`,
+validates readiness states, detects dependency cycles, checks evidence paths,
+and generates:
+- `docs/roadmap/rails.json` (machine-readable resolved substrate)
+- `docs/roadmap/RAILS.md` (canonical markdown presentation table)
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parent.parent
+REGISTRY_PATH = REPO_ROOT / "docs" / "roadmap" / "rails.registry.json"
+RAILS_JSON_PATH = REPO_ROOT / "docs" / "roadmap" / "rails.json"
+RAILS_MD_PATH = REPO_ROOT / "docs" / "roadmap" / "RAILS.md"
+
+VALID_STATES = [
+    "NOT_STARTED",
+    "IN_FLIGHT",
+    "CODE_READY",
+    "RUNTIME_VERIFIED",
+    "PRESENTED",
+    "DONE",
+]
+
+STATE_BADGES = {
+    "DONE": "🟢 `DONE`",
+    "RUNTIME_VERIFIED": "🟢 `RUNTIME_VERIFIED`",
+    "PRESENTED": "🟡 `PRESENTED`",
+    "CODE_READY": "🟡 `CODE_READY`",
+    "IN_FLIGHT": "🔵 `IN_FLIGHT`",
+    "NOT_STARTED": "⚪ `NOT_STARTED`",
+}
+
+
+def load_registry(path: Path) -> dict[str, Any]:
+    if not path.is_file():
+        raise FileNotFoundError(f"Rails registry file not found: {path}")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def validate_registry(data: dict[str, Any], check_evidence: bool = True) -> list[str]:
+    errors: list[str] = []
+    rails = data.get("rails", [])
+    if not isinstance(rails, list) or len(rails) == 0:
+        errors.append("Registry must define a non-empty 'rails' array.")
+        return errors
+
+    seen_ids: set[str] = set()
+    graph: dict[str, list[str]] = {}
+
+    for rail in rails:
+        rail_id = rail.get("id")
+        if not rail_id or not isinstance(rail_id, str):
+            errors.append(f"Rail missing required string 'id': {rail}")
+            continue
+
+        if rail_id in seen_ids:
+            errors.append(f"Duplicate rail id: '{rail_id}'")
+        seen_ids.add(rail_id)
+
+        state = rail.get("state")
+        if state not in VALID_STATES:
+            errors.append(f"Rail '{rail_id}' has invalid state '{state}'. Expected one of: {VALID_STATES}")
+
+        authority_plan = rail.get("authority_plan")
+        if not authority_plan or not isinstance(authority_plan, str):
+            errors.append(f"Rail '{rail_id}' missing required string 'authority_plan'.")
+
+        evidence = rail.get("evidence", [])
+        if not isinstance(evidence, list):
+            errors.append(f"Rail '{rail_id}' evidence must be a list of paths.")
+        elif check_evidence and state in ("CODE_READY", "RUNTIME_VERIFIED", "PRESENTED", "DONE"):
+            if not evidence:
+                errors.append(f"Rail '{rail_id}' has state '{state}' but no evidence paths listed.")
+            for ep in evidence:
+                target = REPO_ROOT / ep
+                if not target.exists():
+                    errors.append(f"Rail '{rail_id}' evidence path does not exist on disk: '{ep}'")
+
+        blocks = rail.get("blocks", [])
+        if isinstance(blocks, list):
+            graph[rail_id] = [b for b in blocks if isinstance(b, str)]
+        else:
+            errors.append(f"Rail '{rail_id}' 'blocks' must be a list.")
+
+    # Cycle detection in blocking graph
+    visited: set[str] = set()
+    rec_stack: set[str] = set()
+
+    def has_cycle(u: str) -> bool:
+        visited.add(u)
+        rec_stack.add(u)
+        for v in graph.get(u, []):
+            if v in seen_ids:
+                if v not in visited:
+                    if has_cycle(v):
+                        return True
+                elif v in rec_stack:
+                    return True
+        rec_stack.remove(u)
+        return False
+
+    for r_id in graph:
+        if r_id not in visited:
+            if has_cycle(r_id):
+                errors.append(f"Dependency cycle detected involving rail '{r_id}'.")
+                break
+
+    return errors
+
+
+def generate_rails_json(registry: dict[str, Any]) -> str:
+    rails = registry.get("rails", [])
+    counts: dict[str, int] = {st: 0 for st in VALID_STATES}
+    for r in rails:
+        st = r.get("state", "NOT_STARTED")
+        counts[st] = counts.get(st, 0) + 1
+
+    payload = {
+        "schema_version": 1,
+        "generated_by": "scripts/ci/generate-rails-registry.py",
+        "updated_at": registry.get("updated_at", ""),
+        "total_rails": len(rails),
+        "counts_by_state": counts,
+        "rails": rails,
+    }
+    return json.dumps(payload, indent=2) + "\n"
+
+
+def generate_rails_md(registry: dict[str, Any]) -> str:
+    rails = registry.get("rails", [])
+    lines: list[str] = [
+        "# Canonical Rails Readiness Registry (Plan 53 / E1H)",
+        "",
+        "> Auto-generated from `docs/roadmap/rails.registry.json` by `scripts/ci/generate-rails-registry.py`.",
+        "> Do not edit this file by hand.",
+        "",
+        "## Summary",
+        "",
+        f"Total Canonical Rails: **{len(rails)}**",
+        "",
+        "| State | Count | Description |",
+        "|---|:---:|---|",
+    ]
+
+    counts: dict[str, int] = {st: 0 for st in VALID_STATES}
+    for r in rails:
+        st = r.get("state", "NOT_STARTED")
+        counts[st] = counts.get(st, 0) + 1
+
+    descriptions = {
+        "DONE": "Fully sealed across Core, Host, Data, and Tests.",
+        "RUNTIME_VERIFIED": "Core and runtime execution verified and passing selftests.",
+        "PRESENTED": "User interface and player observability implemented.",
+        "CODE_READY": "Core contracts and initial logic established.",
+        "IN_FLIGHT": "Under active construction.",
+        "NOT_STARTED": "Queued for future waves.",
+    }
+
+    for st in VALID_STATES:
+        lines.append(f"| {STATE_BADGES.get(st, st)} | {counts.get(st, 0)} | {descriptions.get(st, '')} |")
+
+    lines.extend([
+        "",
+        "## Rails Roster",
+        "",
+        "| ID | Rail Name | Status | Authority Plan | Evidence Anchor | Consumers |",
+        "|---|---|---|---|---|---|",
+    ])
+
+    for r in sorted(rails, key=lambda x: str(x.get("id"))):
+        r_id = r.get("id", "")
+        name = r.get("name", "")
+        st = r.get("state", "NOT_STARTED")
+        badge = STATE_BADGES.get(st, st)
+        plan = r.get("authority_plan", "")
+        evidence = r.get("evidence", [])
+        evidence_str = "<br>".join(f"`{e}`" for e in evidence) if evidence else "*None*"
+        consumers = r.get("consumers", [])
+        consumers_str = ", ".join(consumers) if consumers else "*None*"
+
+        lines.append(f"| `{r_id}` | **{name}** | {badge} | {plan} | {evidence_str} | {consumers_str} |")
+
+    lines.append("")
+    return "\n".join(lines)
+
+
+def run_self_test() -> int:
+    print("Running generate-rails-registry self-test...")
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp_path = Path(tmp_dir)
+        reg_file = tmp_path / "rails.registry.json"
+
+        # 1. Valid registry
+        reg_file.write_text(json.dumps({
+            "schema_version": 1,
+            "rails": [
+                {
+                    "id": "rail_a",
+                    "name": "Rail A",
+                    "authority_plan": "Plan 1",
+                    "state": "DONE",
+                    "evidence": ["test_evidence.txt"],
+                    "consumers": [],
+                    "blocks": ["rail_b"]
+                },
+                {
+                    "id": "rail_b",
+                    "name": "Rail B",
+                    "authority_plan": "Plan 2",
+                    "state": "IN_FLIGHT",
+                    "evidence": [],
+                    "consumers": [],
+                    "blocks": []
+                }
+            ]
+        }), encoding="utf-8")
+
+        # Fake the evidence file
+        (tmp_path / "test_evidence.txt").write_text("ok", encoding="utf-8")
+
+        data = load_registry(reg_file)
+        errs = validate_registry(data, check_evidence=False)
+        assert len(errs) == 0, f"Expected clean validation, got: {errs}"
+
+        # 2. Cycle detection test
+        data["rails"][1]["blocks"] = ["rail_a"]
+        errs_cycle = validate_registry(data, check_evidence=False)
+        assert any("cycle" in e.lower() for e in errs_cycle), f"Expected cycle error, got: {errs_cycle}"
+
+        # 3. Invalid state test
+        data["rails"][1]["blocks"] = []
+        data["rails"][1]["state"] = "SUPER_READY"
+        errs_state = validate_registry(data, check_evidence=False)
+        assert any("invalid state" in e.lower() for e in errs_state), f"Expected state error, got: {errs_state}"
+
+    print("generate-rails-registry self-test: PASS")
+    return 0
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Generate and validate canonical rails readiness registry.")
+    parser.add_argument("--write", action="store_true", help="Write generated rails.json and RAILS.md")
+    parser.add_argument("--check", action="store_true", help="Check that rails.json and RAILS.md are up-to-date")
+    parser.add_argument("--json", action="store_true", help="Output generated rails JSON to stdout")
+    parser.add_argument("--self-test", action="store_true", help="Run self-tests")
+    args = parser.parse_args()
+
+    if args.self_test:
+        return run_self_test()
+
+    try:
+        registry = load_registry(REGISTRY_PATH)
+    except Exception as exc:
+        print(f"Error loading {REGISTRY_PATH}: {exc}", file=sys.stderr)
+        return 1
+
+    errors = validate_registry(registry, check_evidence=True)
+    if errors:
+        print("Validation errors in rails.registry.json:", file=sys.stderr)
+        for err in errors:
+            print(f"  - {err}", file=sys.stderr)
+        return 1
+
+    json_content = generate_rails_json(registry)
+    md_content = generate_rails_md(registry)
+
+    if args.json:
+        sys.stdout.write(json_content)
+        return 0
+
+    if args.check:
+        drift = False
+        if not RAILS_JSON_PATH.is_file() or RAILS_JSON_PATH.read_text(encoding="utf-8") != json_content:
+            print(f"DRIFT: {RAILS_JSON_PATH} is out of date.", file=sys.stderr)
+            drift = True
+        if not RAILS_MD_PATH.is_file() or RAILS_MD_PATH.read_text(encoding="utf-8") != md_content:
+            print(f"DRIFT: {RAILS_MD_PATH} is out of date.", file=sys.stderr)
+            drift = True
+
+        if drift:
+            print("Run 'python3 scripts/ci/generate-rails-registry.py --write' to regenerate.", file=sys.stderr)
+            return 1
+        print("Rails registry is synchronized and verified clean.")
+        return 0
+
+    if args.write:
+        RAILS_JSON_PATH.write_text(json_content, encoding="utf-8")
+        RAILS_MD_PATH.write_text(md_content, encoding="utf-8")
+        print(f"Wrote {RAILS_JSON_PATH} and {RAILS_MD_PATH}")
+        return 0
+
+    parser.print_help()
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

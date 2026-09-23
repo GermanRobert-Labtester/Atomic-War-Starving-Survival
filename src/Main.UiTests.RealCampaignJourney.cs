@@ -43,6 +43,56 @@ namespace AtomicWar.GodotApp
                 else { GD.PrintErr($"  [FAIL] {name}"); pass = false; }
             }
 
+            /// <summary>
+            /// The combatant TacticalCombatSystem's next player action will actually
+            /// act as. PlayerFire, PlayerClearJam and PlayerBandage all resolve
+            /// their subject over LivingPlayers(), which is the living player
+            /// roster SORTED BY ORDINAL COMBATANT ID — not the order the raw
+            /// Combatants list happens to hold. A driving loop that assumes list
+            /// order picks a different survivor than the engine, and then clears
+            /// the wrong jam, bandages via the wrong rescuer, and resupplies the
+            /// wrong caliber. Read-only; never mutates combat state.
+            /// </summary>
+            string? LoadoutFallbackSurvivorId;
+
+            /// <summary>
+            /// Survivor id CombatHostSession.StartCombat's default loadout gives the
+            /// primary tracked weapon to. Mirrors the loadout: at most four living
+            /// roster entries become combatants with id "p_" + survivorId minus a
+            /// leading "survivor_", and the primary weapon goes to the ordinal-first
+            /// of those - the survivor the engine actually shoots with.
+            /// </summary>
+            string OrdinalFirstLoadoutSurvivorId()
+            {
+                var ids = new System.Collections.Generic.List<string>();
+                foreach (var r in _survivors!.RosterState)
+                {
+                    if (r == null || !r.IsAlive) continue;
+                    ids.Add(r.Id);
+                    if (ids.Count >= 4) break;
+                }
+                if (ids.Count == 0) return LoadoutFallbackSurvivorId!;
+
+                string best = ids[0];
+                for (int i = 1; i < ids.Count; i++)
+                    if (string.CompareOrdinal(LoadoutCombatantId(ids[i]), LoadoutCombatantId(best)) < 0)
+                        best = ids[i];
+                return best;
+            }
+
+            static string LoadoutCombatantId(string survivorId) =>
+                "p_" + survivorId.Replace("survivor_", string.Empty);
+
+            Ashfall.Core.Combat.CombatantState? EngineActiveShooter()
+            {
+                var players = _combat.Engine.State.Combatants
+                    .FindAll(c => c.IsPlayer && !c.HasFled);
+                players.Sort((a, b) => string.CompareOrdinal(a.Id, b.Id));
+                foreach (var c in players)
+                    if (!c.IsDowned && !string.IsNullOrEmpty(c.WeaponInstanceId)) return c;
+                return null;
+            }
+
             try
             {
                 Directory.CreateDirectory(tempDir);
@@ -212,7 +262,20 @@ namespace AtomicWar.GodotApp
                 Check(_combat!.Equipment != null, "combat's Equipment authority is wired (not null) after full composition");
                 var firstRosterSurvivor = _survivors!.RosterState.Find(r => r != null && r.IsAlive);
                 Check(firstRosterSurvivor != null, "the composed campaign has at least one living roster survivor");
-                string encounterSurvivor = firstRosterSurvivor!.Id;
+                LoadoutFallbackSurvivorId = firstRosterSurvivor?.Id;
+
+                // The default loadout gives the primary tracked weapon to the
+                // ordinal-first living combatant, because that is whom
+                // TacticalCombatSystem actually shoots with. Register the bound
+                // instance to THAT survivor's equipment so
+                // WeaponEquipmentBridge.ToCombatInstance resolves it; registering
+                // to the roster-first survivor left the token unbound and the
+                // post-combat write-back never ran.
+                //
+                // CombatHostSession.StartCombat builds at most 4 players as
+                // "p_" + survivorId (minus any "survivor_" prefix), so mirror
+                // that transformation exactly when choosing the owner.
+                string encounterSurvivor = OrdinalFirstLoadoutSurvivorId();
                 const string boundWeaponInstanceId = "eq_journey_test_rifle";
                 if (_equipmentCondition!.System.State.items.Find(i => i.instanceId == boundWeaponInstanceId) == null)
                 {
@@ -276,29 +339,85 @@ namespace AtomicWar.GodotApp
                 // (PickActiveShooter always returns the first living armed
                 // player) that never clears jams or stabilizes a downed
                 // combatant — a real player facing that would call
-                // ActionClearJam, but there is no in-combat revive action, so
-                // a downed shooter simply bleeds out. Against the handoff's
-                // fixed 3-enemy/45HP default spawn this single-actor economy
-                // is a genuinely losable fight; run it out for real (real
-                // jam-clearing included) and accept whichever terminal phase
-                // production combat actually reaches — this proves the
-                // auto-trigger wiring, not a guaranteed win.
+                // ActionClearJam and ActionBandage. The production authority
+                // carries both: TacticalCombatSystem.PlayerBandage clears
+                // IsDowned, zeroes the bleed turns and heals 15 HP, and
+                // PlayerRetreat ends the encounter. Without them this loop
+                // stands still while an ally bleeds out over
+                // TacticalCombatSystem.DefaultBleedTurns turns, which kills a
+                // roster survivor, takes the campaign terminal, and seals the
+                // Iron Man slot — turning a routable encounter into a red CI
+                // gate. Model the player instead: stabilize a downed ally with
+                // a carried bandage (same resupply idiom as the ammo draw
+                // below), and withdraw when no armed survivor is left to fight.
+                //
+                // EVERY action below must be taken as the shooter the AUTHORITY
+                // will actually use, not as the first entry in raw Combatants
+                // order. TacticalCombatSystem.PlayerFire, PlayerClearJam and
+                // PlayerBandage all resolve their subject the same way: over
+                // LivingPlayers(), which SORTS by ordinal combatant Id. So
+                // clearing a jam on the raw-first survivor leaves the real
+                // shooter jammed — PlayerFire returns "is jammed; clear it
+                // first" forever — and bandaging via the wrong rescuer id
+                // targets nobody. Resolve the engine's shooter once and use it
+                // for the jam clear, the bandage, and the ammunition draw.
                 var combatRng = new Ashfall.Core.SeededRng(4242);
                 int guardTurns = 0;
+                int retreatAttempts = 0;
                 while (!_combat.Engine.State.Resolved && guardTurns++ < 400)
                 {
                     var livingEnemy = _combat.Engine.State.Combatants.Find(c => !c.IsPlayer && !c.HasFled);
                     if (livingEnemy == null) break;
-                    var shooter = _combat.Engine.State.Combatants.Find(c => c.IsPlayer && !c.IsDowned && !c.HasFled && !string.IsNullOrEmpty(c.WeaponInstanceId));
-                    var shooterWeapon = shooter != null
-                        ? _combat.Engine.State.Weapons.Find(w => w.InstanceId == shooter.WeaponInstanceId)
+
+                    // Who the authority will actually shoot with (ordinal-first
+                    // living armed player), and that combatant's weapon token.
+                    var engineShooter = EngineActiveShooter();
+                    var engineShooterWeapon = engineShooter != null
+                        ? _combat.Engine.State.Weapons.Find(w => w.InstanceId == engineShooter.WeaponInstanceId)
                         : null;
-                    if (shooterWeapon != null && shooterWeapon.IsJammed)
-                        _combat.ActionClearJam(shooter!.Id);
+                    if (engineShooter == null)
+                    {
+                        // No standing, armed survivor left. A real player tries
+                        // to withdraw; the retreat roll may fail (the authority
+                        // applies injury and re-checks resolution), so only
+                        // stop when the encounter actually ended — otherwise
+                        // the loop would report an unresolved fight.
+                        _combat.ActionRetreat();
+                        if (_combat.Engine.State.Resolved) break;
+                        _combat.Engine.EndTurn(combatRng);
+                        if (++retreatAttempts > 8) break;
+                        continue;
+                    }
+
+                    var downedAlly = _combat.Engine.State.Combatants.Find(
+                        c => c.IsPlayer && c.IsDowned && !c.HasFled && c.BleedTurnsRemaining > 0
+                             && !string.Equals(c.Id, engineShooter.Id, StringComparison.Ordinal));
+                    if (downedAlly != null)
+                    {
+                        // Stabilize first — a bandage is carried reserve, drawn
+                        // exactly like the ammo resupply below.
+                        if (_inventory.Inventory.CountById("bandage") < 1)
+                            _inventory.Add("bandage", 3);
+                        _combat.ActionBandage(engineShooter.SurvivorId, downedAlly.SurvivorId);
+                        if (!_combat.Engine.State.Resolved)
+                            _combat.Engine.EndTurn(combatRng);
+                        continue;
+                    }
+
+                    if (engineShooterWeapon != null && engineShooterWeapon.IsJammed)
+                        _combat.ActionClearJam(engineShooter.Id);
                     else
                     {
-                        if (_inventory.Inventory.CountById("ammo_556") < 5)
-                            _inventory.Add("ammo_556", 20); // realistic mid-fight resupply from carried reserves
+                        // Resupply the caliber TacticalCombatSystem.PlayerFire will
+                        // actually consume — the ENGINE's shooter's caliber, which
+                        // is not the raw-list-first survivor's when the roster
+                        // order and the ordinal order disagree. Supplying the
+                        // wrong caliber starved the real shooter: every ActionFire
+                        // returned "No .357 ammunition.", the encounter never
+                        // resolved, and the probe spun to its turn guard.
+                        string shooterAmmoId = engineShooterWeapon?.AmmoId ?? "ammo_357";
+                        if (_inventory.Inventory.CountById(shooterAmmoId) < 5)
+                            _inventory.Add(shooterAmmoId, 20); // realistic mid-fight resupply from carried reserves
                         _combat.ActionFire(livingEnemy.Id);
                     }
                     if (!_combat.Engine.State.Resolved)

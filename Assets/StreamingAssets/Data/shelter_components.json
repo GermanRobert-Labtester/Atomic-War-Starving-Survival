@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "components": [
+    {
+      "component_id": "comp_air_filter_pre",
+      "display_name": "Intake Pre-Filter",
+      "component_type": "Air",
+      "max_condition": 100.0,
+      "base_degradation_rate": 2.0,
+      "warning_threshold": 50.0,
+      "failure_threshold": 20.0,
+      "repair_cost_items": ["cloth_scraps", "scrap_metal"],
+      "repair_time_hours": 2,
+      "description": "Primary coarse particulate screen catching fallout dust before delicate filters."
+    },
+    {
+      "component_id": "comp_air_filter_hepa",
+      "display_name": "HEPA Core Filtration Unit",
+      "component_type": "Air",
+      "max_condition": 100.0,
+      "base_degradation_rate": 1.5,
+      "warning_threshold": 45.0,
+      "failure_threshold": 15.0,
+      "repair_cost_items": ["filter_medium", "chemical_sealant"],
+      "repair_time_hours": 4,
+      "description": "High-efficiency particulate arrestor blocking airborne radionuclides."
+    },
+    {
+      "component_id": "comp_wall_north",
+      "display_name": "North Exterior Retaining Wall",
+      "component_type": "Structural",
+      "max_condition": 100.0,
+      "base_degradation_rate": 0.5,
+      "warning_threshold": 40.0,
+      "failure_threshold": 10.0,
+      "repair_cost_items": ["concrete_mix", "scrap_metal"],
+      "repair_time_hours": 6,
+      "description": "Heavily reinforced subterranean bulkhead bearing hillside pressure."
+    },
+    {
+      "component_id": "comp_wall_south",
+      "display_name": "South Entrance Bulkhead",
+      "component_type": "Structural",
+      "max_condition": 100.0,
+      "base_degradation_rate": 0.5,
+      "warning_threshold": 40.0,
+      "failure_threshold": 10.0,
+      "repair_cost_items": ["concrete_mix", "scrap_metal"],
+      "repair_time_hours": 6,
+      "description": "Structural perimeter wall surrounding outer decontamination foyer."
+    },
+    {
+      "component_id": "comp_power_generator",
+      "display_name": "Backup Diesel Generator",
+      "component_type": "Power",
+      "max_condition": 100.0,
+      "base_degradation_rate": 1.2,
+      "warning_threshold": 50.0,
+      "failure_threshold": 25.0,
+      "repair_cost_items": ["mechanical_parts", "machine_oil"],
+      "repair_time_hours": 4,
+      "description": "Heavy combustion powerplant supplying emergency electrical grid."
+    },
+    {
+      "component_id": "comp_water_recycler",
+      "display_name": "Graywater Reclamation Still",
+      "component_type": "Water",
+      "max_condition": 100.0,
+      "base_degradation_rate": 1.0,
+      "warning_threshold": 45.0,
+      "failure_threshold": 20.0,
+      "repair_cost_items": ["charcoal_filter", "replacement_tubing"],
+      "repair_time_hours": 3,
+      "description": "Distillation and chemical scrubbing circuit recycling shelter wastewater."
+    },
+    {
+      "component_id": "comp_blast_doors",
+      "display_name": "Pneumatic Outer Blast Doors",
+      "component_type": "Structural",
+      "max_condition": 100.0,
+      "base_degradation_rate": 0.8,
+      "warning_threshold": 50.0,
+      "failure_threshold": 20.0,
+      "repair_cost_items": ["hydraulic_fluid", "scrap_metal"],
+      "repair_time_hours": 5,
+      "description": "Hermetic double-hinged blast barrier sealing shelter entrance from shockwaves."
+    },
+    {
+      "component_id": "comp_ventilation_turbine",
+      "display_name": "Air Intake Turbine Fan",
+      "component_type": "Air",
+      "max_condition": 100.0,
+      "base_degradation_rate": 1.2,
+      "warning_threshold": 45.0,
+      "failure_threshold": 20.0,
+      "repair_cost_items": ["copper_wiring", "ball_bearings"],
+      "repair_time_hours": 3,
+      "description": "Induction motor providing positive pressure ventilation throughout all holds."
+    },
+    {
+      "component_id": "comp_radiation_shielding",
+      "display_name": "Lead-Composite Ceiling Shielding",
+      "component_type": "Structural",
+      "max_condition": 100.0,
+      "base_degradation_rate": 0.4,
+      "warning_threshold": 35.0,
+      "failure_threshold": 10.0,
+      "repair_cost_items": ["lead_plates", "epoxy_resin"],
+      "repair_time_hours": 6,
+      "description": "Overhead radiation shielding dampening ground-shine gamma attenuation."
+    },
+    {
+      "component_id": "comp_sump_pump",
+      "display_name": "Sub-Basement Sump Pump",
+      "component_type": "Water",
+      "max_condition": 100.0,
+      "base_degradation_rate": 1.0,
+      "warning_threshold": 40.0,
+      "failure_threshold": 15.0,
+      "repair_cost_items": ["impeller_assembly", "pipe_fittings"],
+      "repair_time_hours": 3,
+      "description": "Electric sub-floor pump evacuating subterranean seepage and drainage."
+    }
+  ]
+}

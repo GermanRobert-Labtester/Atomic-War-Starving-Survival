@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "template_id": "argument_noise",
+      "conflict_type": "argument",
+      "display_name": "Bunkhouse Noise Disturbance",
+      "trigger_description": "Late night movement and radio noise in residential bunks.",
+      "default_severity": "mild",
+      "base_escalation": 20.0,
+      "grievance_intensity": 25.0,
+      "description": "Friction between bunkmates over sleeping hours and excessive noise."
+    },
+    {
+      "template_id": "argument_chores",
+      "conflict_type": "argument",
+      "display_name": "Unfinished Cleaning Detail",
+      "trigger_description": "Leftover refuse and neglected cleaning duties in common area.",
+      "default_severity": "mild",
+      "base_escalation": 22.0,
+      "grievance_intensity": 30.0,
+      "description": "Accusation of neglecting communal cleaning responsibilities."
+    },
+    {
+      "template_id": "grudge_ration_cut",
+      "conflict_type": "grudge",
+      "display_name": "Resentment Over Ration Priority",
+      "trigger_description": "Perceived favoritism during meat distribution.",
+      "default_severity": "moderate",
+      "base_escalation": 40.0,
+      "grievance_intensity": 50.0,
+      "description": "Lingering resentment from perceived unfairness in food portions."
+    },
+    {
+      "template_id": "grudge_credit_theft",
+      "conflict_type": "grudge",
+      "display_name": "Claimed Work Credit",
+      "trigger_description": "Coworker took full credit for shelter air scrubber repair.",
+      "default_severity": "moderate",
+      "base_escalation": 45.0,
+      "grievance_intensity": 55.0,
+      "description": "Bitterness after another survivor accepted praise for joint labor."
+    },
+    {
+      "template_id": "clash_cautious_reckless",
+      "conflict_type": "personality_clash",
+      "display_name": "Scavenging Protocol Clashing",
+      "trigger_description": "Reckless scouting approach clashed with safety protocols.",
+      "default_severity": "moderate",
+      "base_escalation": 35.0,
+      "grievance_intensity": 35.0,
+      "description": "Methodological disagreement between cautious and aggressive survivors."
+    },
+    {
+      "template_id": "clash_pessimist_optimist",
+      "conflict_type": "personality_clash",
+      "display_name": "Temperament Incompatibility",
+      "trigger_description": "Constant fatalism irritating an earnest optimist during long shifts.",
+      "default_severity": "mild",
+      "base_escalation": 18.0,
+      "grievance_intensity": 20.0,
+      "description": "Daily personality friction that grates on nerves over time."
+    },
+    {
+      "template_id": "resource_tool_hoarding",
+      "conflict_type": "resource_dispute",
+      "display_name": "Tool Kit Hoarding",
+      "trigger_description": "Survivor locked away precision repair tools in personal trunk.",
+      "default_severity": "moderate",
+      "base_escalation": 38.0,
+      "grievance_intensity": 40.0,
+      "description": "Dispute over shared workshop equipment kept for private projects."
+    },
+    {
+      "template_id": "resource_water_allocation",
+      "conflict_type": "resource_dispute",
+      "display_name": "Extra Canteen Quota",
+      "trigger_description": "Excessive water drawn for personal laundry during strict rationing.",
+      "default_severity": "severe",
+      "base_escalation": 55.0,
+      "grievance_intensity": 65.0,
+      "description": "Severe confrontation over unapproved water consumption."
+    },
+    {
+      "template_id": "shift_overwork_exhaustion",
+      "conflict_type": "shift_conflict",
+      "display_name": "Double Shift Exhaustion",
+      "trigger_description": "Forced back-to-back generator watches while others rested.",
+      "default_severity": "moderate",
+      "base_escalation": 42.0,
+      "grievance_intensity": 45.0,
+      "description": "Dispute over unfair duty schedule distribution and fatigue."
+    },
+    {
+      "template_id": "shift_abandoned_watch",
+      "conflict_type": "shift_conflict",
+      "display_name": "Deserted Perimeter Post",
+      "trigger_description": "Watchstander stepped away for coffee leaving gate unattended.",
+      "default_severity": "severe",
+      "base_escalation": 60.0,
+      "grievance_intensity": 70.0,
+      "description": "Breach of perimeter duty putting entire settlement at risk."
+    },
+    {
+      "template_id": "fairness_medical_triage",
+      "conflict_type": "fairness_grievance",
+      "display_name": "Antibiotic Allocation Grievance",
+      "trigger_description": "Medication provided to council favorite over injured laborer.",
+      "default_severity": "severe",
+      "base_escalation": 65.0,
+      "grievance_intensity": 75.0,
+      "description": "Grievance alleging favoritism in life-saving medicine distribution."
+    },
+    {
+      "template_id": "fairness_bed_assignment",
+      "conflict_type": "fairness_grievance",
+      "display_name": "Drafty Bunk Assignment",
+      "trigger_description": "Perpetual assignment to damp lower bunk near sewer sump.",
+      "default_severity": "mild",
+      "base_escalation": 25.0,
+      "grievance_intensity": 30.0,
+      "description": "Complaints over unequal comfort in shelter living quarters."
+    },
+    {
+      "template_id": "slight_public_reprimand",
+      "conflict_type": "personal_slight",
+      "display_name": "Public Humiliation in Mess",
+      "trigger_description": "Harsh dressing-down delivered before all assembled survivors.",
+      "default_severity": "moderate",
+      "base_escalation": 48.0,
+      "grievance_intensity": 60.0,
+      "description": "Injured pride and social shame following a public verbal dressing-down."
+    },
+    {
+      "template_id": "slight_mocked_accent",
+      "conflict_type": "personal_slight",
+      "display_name": "Derisive Slur & Mockery",
+      "trigger_description": "Survivor mocked regional dialect and pre-war background.",
+      "default_severity": "mild",
+      "base_escalation": 28.0,
+      "grievance_intensity": 35.0,
+      "description": "Interpersonal friction sparked by petty mockery and insults."
+    },
+    {
+      "template_id": "betrayal_stolen_heirloom",
+      "conflict_type": "betrayal",
+      "display_name": "Pawned Family Keepsake",
+      "trigger_description": "Trinket taken from footlocker and traded to itinerant merchant.",
+      "default_severity": "crisis",
+      "base_escalation": 85.0,
+      "grievance_intensity": 90.0,
+      "description": "Devastating breach of trust involving theft of personal heritage item."
+    },
+    {
+      "template_id": "betrayal_informant_leak",
+      "conflict_type": "betrayal",
+      "display_name": "Secret Scavenge Stash Leaked",
+      "trigger_description": "Disclosed hidden emergency cache to rival faction scouts.",
+      "default_severity": "crisis",
+      "base_escalation": 90.0,
+      "grievance_intensity": 95.0,
+      "description": "Critical betrayal exposing secret reserves to external threats."
+    },
+    {
+      "template_id": "argument_kitchen_spoilage",
+      "conflict_type": "argument",
+      "display_name": "Spoiled Broth Blame",
+      "trigger_description": "Left soup pot uncovered overnight causing broth souring.",
+      "default_severity": "mild",
+      "base_escalation": 24.0,
+      "grievance_intensity": 28.0,
+      "description": "Cooks and food prep workers arguing over ruined ingredients."
+    },
+    {
+      "template_id": "grudge_broken_promise",
+      "conflict_type": "grudge",
+      "display_name": "Defaulted Scavenge Swap",
+      "trigger_description": "Failed to deliver promised shotgun shells after receiving canned peaches.",
+      "default_severity": "moderate",
+      "base_escalation": 44.0,
+      "grievance_intensity": 50.0,
+      "description": "Broken mutual aid promise resulting in persistent resentment."
+    },
+    {
+      "template_id": "clash_work_pace",
+      "conflict_type": "personality_clash",
+      "display_name": "Quarry Drilling Friction",
+      "trigger_description": "Meticulous stonemason frustrated by rushed demolition work.",
+      "default_severity": "mild",
+      "base_escalation": 22.0,
+      "grievance_intensity": 26.0,
+      "description": "Clash between perfectionist craftsperson and pragmatic speed-worker."
+    },
+    {
+      "template_id": "resource_ammunition_count",
+      "conflict_type": "resource_dispute",
+      "display_name": "Wasted Cartridges",
+      "trigger_description": "Hunter expended 12 rounds on a failed target without reporting.",
+      "default_severity": "moderate",
+      "base_escalation": 50.0,
+      "grievance_intensity": 58.0,
+      "description": "Dispute over unmonitored expenditure of scarce munitions."
+    }
+  ]
+}

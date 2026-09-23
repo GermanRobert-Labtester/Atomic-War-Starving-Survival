@@ -21,6 +21,15 @@ namespace AtomicWar.GodotApp
             var state = ShelterSecuritySaveStore.TryLoad() ?? new ShelterSecurityState();
             var system = new ShelterSecuritySystem(state);
 
+            // Plan 138 — bind the authored security zones so access requests resolve
+            // against canonical zone definitions instead of an empty state ledger.
+            string securityCatalogPath = CatalogPath.ResolveCatalog("shelter_security_zones.json");
+            var securityCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (securityCatalogIo.FileExists(securityCatalogPath))
+            {
+                system.LoadCatalog(securityCatalogIo.ReadAllText(securityCatalogPath));
+            }
+
             _shelterSecurity = new ShelterSecurityHostSession(system);
             _shelterSecurity.StateChanged += OnShelterSecurityStateChanged;
             return _shelterSecurity;

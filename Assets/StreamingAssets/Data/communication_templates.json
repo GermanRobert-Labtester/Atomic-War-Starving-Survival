@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "id": "comm_tpl_water_rationing_notice",
+      "title": "Water Consumption Advisory",
+      "category": "warning",
+      "default_priority": "high",
+      "duration_days": 5,
+      "description": "Notice posted regarding temporary filtration reduction and conservation guidelines."
+    },
+    {
+      "id": "comm_tpl_duty_shift_swap_request",
+      "title": "Shift Coverage Request",
+      "category": "request",
+      "default_priority": "normal",
+      "duration_days": 3,
+      "description": "Survivor request seeking alternative coverage on maintenance or watch duties."
+    },
+    {
+      "id": "comm_tpl_fallen_survivor_memorial",
+      "title": "Remembrance of the Fallen",
+      "category": "memorial",
+      "default_priority": "normal",
+      "duration_days": 14,
+      "description": "Solemn notification commemorating a dweller lost to wasteland hazards or shelter hardship."
+    },
+    {
+      "id": "comm_tpl_shelter_harvest_celebration",
+      "title": "Hydroponic Harvest Gathering",
+      "category": "celebration",
+      "default_priority": "low",
+      "duration_days": 4,
+      "description": "Community announcement inviting dwellers to the mess hall for seasonal crop harvest."
+    },
+    {
+      "id": "comm_tpl_leadership_general_announcement",
+      "title": "Shelter Directives Update",
+      "category": "announcement",
+      "default_priority": "urgent",
+      "duration_days": 7,
+      "description": "Official leadership briefing broadcast across all quarters regarding operational rules."
+    },
+    {
+      "id": "comm_tpl_barter_item_wanted",
+      "title": "Items Sought for Barter",
+      "category": "request",
+      "default_priority": "normal",
+      "duration_days": 7,
+      "description": "Informal notice from a survivor seeking specific materials, tools, or sundries."
+    },
+    {
+      "id": "comm_tpl_radiation_filter_maintenance",
+      "title": "Air Scrubber Maintenance Schedule",
+      "category": "notice",
+      "default_priority": "normal",
+      "duration_days": 3,
+      "description": "Engineering board notice detailing planned downtime on secondary ventilation ducts."
+    }
+  ]
+}

@@ -73,6 +73,7 @@ namespace AtomicWar.GodotApp
         private DeepCoastPanel _deepCoastPanel = null!;
         private CenturySeedPanel _centurySeedPanel = null!;
         private EpiloguePanel _epiloguePanel = null!;
+        private ChroniclePanel _chroniclePanel = null!;
         private CrossingQuestPanel _crossingQuestPanel = null!;
         private ResearchPanel _researchPanel = null!;
         private ShelterPanel _shelterPanel = null!;
@@ -124,6 +125,7 @@ namespace AtomicWar.GodotApp
         private EconomyDetailPanel _economyDetailPanel = null!;
         private CombatDetailPanel _combatDetailPanel = null!;
         private FactionDetailPanel _factionDetailPanel = null!;
+        private FactionCultureCodexPanel _factionCultureCodexPanel = null!;
         private SaveLoadPanel _saveLoadPanel = null!;
         private TutorialPanel _tutorialPanel = null!;
         private AfflictionsPanel _afflictionsPanel = null!;
@@ -406,10 +408,17 @@ namespace AtomicWar.GodotApp
             _factionsPanel = new FactionsPanel();
             _factionsPanel.OnClose += CloseFactionsPanel;
             _factionsPanel.OnFactionDetailRequested += OpenFactionDetailPanel;
+            _factionsPanel.OnCultureCodexRequested += () => OpenPlayerPanel("faction_culture_codex");
             _factionsPanel.OnMusterPanelRequested += () => OpenPlayerPanel("muster");
             _factionsPanel.OnFoundryPanelRequested += () => OpenPlayerPanel("silent_foundry");
             _factionsPanel.OnCommitBranchRequested += bId => { CommitFactionBranch(bId); _factionsPanel.RefreshView(); };
             AddChild(_factionsPanel);
+
+            // ── Faction Culture Codex panel (Plan 14 / Plan 25 follow-up) ──
+            _factionCultureCodexPanel = new FactionCultureCodexPanel();
+            _factionCultureCodexPanel.Name = "FactionCultureCodexPanel";
+            _factionCultureCodexPanel.OnClose += CloseFactionCultureCodexPanel;
+            AddChild(_factionCultureCodexPanel);
 
             // ── Muster panel (overlay) ──
             _musterPanel = new MusterPanel();
@@ -447,6 +456,11 @@ namespace AtomicWar.GodotApp
             _epiloguePanel = new EpiloguePanel();
             _epiloguePanel.OnClose += CloseEpiloguePanel;
             AddChild(_epiloguePanel);
+
+            // ── Campaign chronicle panel (read-only archive, Plan 84 B25) ──
+            _chroniclePanel = new ChroniclePanel();
+            _chroniclePanel.OnClose += CloseChroniclePanel;
+            AddChild(_chroniclePanel);
 
             // ── Verdict panel (overlay) ──
             _verdictPanel = new VerdictPanel();

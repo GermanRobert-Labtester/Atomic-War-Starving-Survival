@@ -167,5 +167,125 @@ namespace Ashfall.Core.Tests.Reputation
             Assert.NotEmpty(notorietyChanges);
             Assert.True(notorietyChanges.Last() > 0f);
         }
+
+        [Fact]
+        public void AuthoredData_ReputationDimensionsJson_LoadsSuccessfully()
+        {
+            var dataDir = System.IO.Path.GetFullPath(
+                System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,
+                    "..", "..", "..", "..", "Assets", "StreamingAssets", "Data"));
+            if (!System.IO.File.Exists(System.IO.Path.Combine(dataDir, "reputation_dimensions.json")))
+                dataDir = System.IO.Path.GetFullPath("Assets/StreamingAssets/Data");
+
+            string filePath = System.IO.Path.Combine(dataDir, "reputation_dimensions.json");
+            Assert.True(System.IO.File.Exists(filePath), $"File not found: {filePath}");
+
+            string json = System.IO.File.ReadAllText(filePath);
+            var catalog = JsonSerializer.Deserialize<ReputationCatalogData>(json);
+            Assert.NotNull(catalog);
+            Assert.True(catalog!.dimensions.Count >= 5);
+            Assert.True(catalog.tags.Count >= 8);
+
+            foreach (var dim in catalog.dimensions)
+            {
+                Assert.False(string.IsNullOrWhiteSpace(dim.id));
+                Assert.False(string.IsNullOrWhiteSpace(dim.display_name));
+                Assert.False(string.IsNullOrWhiteSpace(dim.positive_title));
+                Assert.False(string.IsNullOrWhiteSpace(dim.negative_title));
+            }
+
+            foreach (var tag in catalog.tags)
+            {
+                Assert.False(string.IsNullOrWhiteSpace(tag.id));
+                Assert.False(string.IsNullOrWhiteSpace(tag.display_name));
+            }
+
+            var system = new ShelterReputationSystem();
+            system.LoadCatalog(catalog);
+
+            // Every authored dimension must resolve through the runtime authority —
+            // this is the content-binding check the host catalog load depends on.
+            foreach (var dim in catalog.dimensions)
+            {
+                Assert.True(Enum.TryParse<ReputationDimension>(dim.id, ignoreCase: true, out var parsed),
+                    $"authored dimension id '{dim.id}' has no runtime enum counterpart");
+                Assert.NotNull(system.GetDimensionDefinition(parsed));
+            }
+
+            Assert.Equal(catalog.dimensions.Count, system.DimensionDefinitions.Select(d => d.id).Distinct().Count());
+        }
+
+        [Fact]
+        public void DimensionDailyDecay_UsesAuthoredCatalogValue()
+        {
+            // Plan 207 authority: the JSON catalog owns the decay magnitude.
+            // (Shipped values are all 0.25, matching the previous hardcoded constant,
+            // so this pins the seam rather than drifting behavior.)
+            var catalog = new ReputationCatalogData
+            {
+                dimensions = new List<ReputationDimensionDef>
+                {
+                    new ReputationDimensionDef { id = "reliability", display_name = "Reliability", daily_decay = 1.0f },
+                },
+            };
+
+            var system = new ShelterReputationSystem();
+            system.LoadCatalog(catalog);
+            system.RecordEvidence("evt_decay_probe", ReputationDimension.Reliability, 10f, InformationMedium.Witness, 1);
+
+            float before = system.GetScore(ReputationDimension.Reliability);
+            Assert.True(before > 1.0f, $"probe must start above the decay magnitude (was {before})");
+
+            system.TickDay(2);
+            Assert.Equal(before - 1.0f, system.GetScore(ReputationDimension.Reliability), precision: 3);
+
+            // Unknown dimensions fall back to the documented default rather than 0.
+            var bare = new ShelterReputationSystem();
+            bare.RecordEvidence("evt_default_probe", ReputationDimension.Wealth, 10f, InformationMedium.Witness, 1);
+            float wealthBefore = bare.GetScore(ReputationDimension.Wealth);
+            bare.TickDay(2);
+            Assert.Equal(wealthBefore - 0.25f, bare.GetScore(ReputationDimension.Wealth), precision: 3);
+        }
+
+        [Fact]
+        public void TradePriceMultiplier_And_DominantTitle_ReflectActiveTags()
+        {
+            var dataDir = System.IO.Path.GetFullPath(
+                System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,
+                    "..", "..", "..", "..", "Assets", "StreamingAssets", "Data"));
+            if (!System.IO.File.Exists(System.IO.Path.Combine(dataDir, "reputation_dimensions.json")))
+                dataDir = System.IO.Path.GetFullPath("Assets/StreamingAssets/Data");
+
+            string filePath = System.IO.Path.Combine(dataDir, "reputation_dimensions.json");
+            string json = System.IO.File.ReadAllText(filePath);
+            var catalog = JsonSerializer.Deserialize<ReputationCatalogData>(json);
+
+            var system = new ShelterReputationSystem();
+            system.LoadCatalog(catalog!);
+
+            // Initial baseline: no tags, unknown title, 1.0x price
+            Assert.Equal(1.0f, system.GetTradePriceMultiplier());
+            Assert.Equal("Unknown Holdfast", system.GetDominantPerceptionTitle());
+
+            // Build wealth and reliability to unlock TradingPost
+            system.RecordEvidence("market_event_1", ReputationDimension.Wealth, 35f, InformationMedium.TraderWord, 1);
+            system.RecordEvidence("market_event_2", ReputationDimension.Reliability, 25f, InformationMedium.TraderWord, 1);
+
+            Assert.True(system.HasTag(ReputationTag.TradingPost));
+            Assert.Equal("Wasteland Trading Post", system.GetDominantPerceptionTitle());
+            // Trading post grants 100 permille (10%) discount -> 0.90x
+            Assert.Equal(0.90f, system.GetTradePriceMultiplier(), precision: 2);
+
+            // Record severe betrayal: Reliability drops drastically to <= -40 -> Treacherous
+            system.RecordEvidence("betrayal_event", ReputationDimension.Reliability, -70f, InformationMedium.Witness, 2);
+
+            Assert.True(system.HasTag(ReputationTag.Treacherous));
+            // Dominant title should be Treacherous Holdfast
+            Assert.Equal("Treacherous Holdfast", system.GetDominantPerceptionTitle());
+            // Treacherous adds -250 permille (penalty) while TradingPost is revoked (Reliability < 20)
+            Assert.False(system.HasTag(ReputationTag.TradingPost));
+            // Multiplier = 1.0 - (-250/1000) = 1.25x
+            Assert.Equal(1.25f, system.GetTradePriceMultiplier(), precision: 2);
+        }
     }
 }

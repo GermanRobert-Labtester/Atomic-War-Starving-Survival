@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "alert_types": [
+    {
+      "type_id": "alert_radiation_storm",
+      "display_name": "Atmospheric Ionizing Fallout Storm",
+      "severity": "critical",
+      "base_priority": 9,
+      "response_window_hours": 4,
+      "recommended_protocol": "shelter_in_place",
+      "description": "High-altitude radioactive particulate cloud approaching shelter perimeter."
+    },
+    {
+      "type_id": "alert_raider_assault",
+      "display_name": "Hostile Faction Armed Incursion",
+      "severity": "emergency",
+      "base_priority": 10,
+      "response_window_hours": 2,
+      "recommended_protocol": "lockdown",
+      "description": "Armed scouting party sighted advancing toward outer surface bulkheads."
+    },
+    {
+      "type_id": "alert_fire_outbreak",
+      "display_name": "Internal Electrical Conflagration",
+      "severity": "emergency",
+      "base_priority": 10,
+      "response_window_hours": 1,
+      "recommended_protocol": "contain_and_suppress",
+      "description": "Rapidly spreading combustion fire detected in electrical turbine room."
+    },
+    {
+      "type_id": "alert_sump_flooding",
+      "display_name": "Sub-Basement Greywater Sump Breach",
+      "severity": "critical",
+      "base_priority": 8,
+      "response_window_hours": 6,
+      "recommended_protocol": "sump_pump_muster",
+      "description": "Subterranean seepage exceeding drainage capacity, threatening storage hold."
+    },
+    {
+      "type_id": "alert_air_filtration_failure",
+      "display_name": "HEPA Core Differential Pressure Drop",
+      "severity": "emergency",
+      "base_priority": 9,
+      "response_window_hours": 3,
+      "recommended_protocol": "evacuate_to_decon",
+      "description": "Catastrophic filter rupture leaking unscrubbed radionuclides into main holds."
+    },
+    {
+      "type_id": "alert_disease_cluster",
+      "display_name": "Contagious Acute Pathogen Cluster",
+      "severity": "warning",
+      "base_priority": 6,
+      "response_window_hours": 12,
+      "recommended_protocol": "quarantine_triage",
+      "description": "Multiple survivors reporting respiratory distress and fever spikes."
+    },
+    {
+      "type_id": "alert_power_brownout",
+      "display_name": "Primary Grid Electrical Overload",
+      "severity": "warning",
+      "base_priority": 5,
+      "response_window_hours": 8,
+      "recommended_protocol": "load_shedding",
+      "description": "Generator output falling below life-support requirement baseline."
+    },
+    {
+      "type_id": "alert_water_contamination",
+      "display_name": "Primary Intake Heavy Metal Ingress",
+      "severity": "critical",
+      "base_priority": 8,
+      "response_window_hours": 5,
+      "recommended_protocol": "switch_water_source",
+      "description": "Industrial toxins detected in main water intake line exceeding potable safety thresholds."
+    }
+  ]
+}

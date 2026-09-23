@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Ashfall.Core.Cognition
 {
@@ -81,6 +82,23 @@ namespace Ashfall.Core.Cognition
         public List<ReinforcementRecord> RecentReinforcements { get; set; } = new List<ReinforcementRecord>();
     }
 
+    [Serializable]
+    public sealed class DomainDecayRateDef
+    {
+        public string domain { get; set; } = string.Empty;
+        public float base_daily_decay_rate { get; set; } = 1.0f;
+        public float reinforcement_multiplier { get; set; } = 1.0f;
+        public float certified_decay_scale { get; set; } = 0.1f;
+        public string description { get; set; } = string.Empty;
+    }
+
+    [Serializable]
+    public sealed class MemoryDecayCatalog
+    {
+        public int schema_version { get; set; } = 1;
+        public List<DomainDecayRateDef> domain_rates { get; set; } = new List<DomainDecayRateDef>();
+    }
+
     /// <summary>
     /// A detached fact supplied by an existing canonical owner (for example
     /// skill progression or the journal). Memory decay does not persist or
@@ -106,6 +124,7 @@ namespace Ashfall.Core.Cognition
     public sealed class MemoryDecaySystem
     {
         private readonly MemoryDecayState _state;
+        private readonly List<DomainDecayRateDef> _domainRates = new List<DomainDecayRateDef>();
 
         public event Action<MemoryRecord, ReinforcementRecord>? OnMemoryReinforced;
         public event Action<MemoryRecord, ForgettingEvent>? OnMemoryFaded;
@@ -121,6 +140,33 @@ namespace Ashfall.Core.Cognition
         public MemoryDecaySystem(MemoryDecayState? state = null)
         {
             _state = state ?? new MemoryDecayState();
+        }
+
+        public void LoadCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var catalog = JsonSerializer.Deserialize<MemoryDecayCatalog>(json, options);
+                if (catalog?.domain_rates == null) return;
+
+                _domainRates.Clear();
+                foreach (var r in catalog.domain_rates)
+                {
+                    if (!string.IsNullOrWhiteSpace(r.domain))
+                        _domainRates.Add(r);
+                }
+            }
+            catch (Exception) { /* malformed catalog falls back to built-in defaults; authoring errors are enforced by the data-integrity gate */ }
+        }
+
+        public IReadOnlyList<DomainDecayRateDef> GetAllDomainRates() => _domainRates;
+
+        public DomainDecayRateDef? GetDomainRate(MemoryDomain domain)
+        {
+            string name = domain.ToString();
+            return _domainRates.FirstOrDefault(r => string.Equals(r.domain, name, StringComparison.OrdinalIgnoreCase));
         }
 
         public static MemoryClarity ResolveClarity(float strength)

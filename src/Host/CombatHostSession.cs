@@ -383,11 +383,31 @@ namespace AtomicWar.GodotApp
             }
             else
             {
+                // The primary tracked weapon must go to the survivor the
+                // ENGINE will actually shoot with. TacticalCombatSystem resolves
+                // its shooter over LivingPlayers(), which SORTS by ordinal
+                // combatant Id — so it is NOT players[0] (roster order). Assigning
+                // the assault rifle to players[0] left the bound equipment
+                // token on a survivor who never fires, which made
+                // WeaponEquipmentBridge's post-combat write-back unreachable for
+                // the tracked instance (a real weapon could be carried for a
+                // whole encounter and never lose condition).
+                int primaryIndex = 0;
+                string? ordinalFirstId = null;
+                for (int i = 0; i < players.Count; i++)
+                {
+                    if (ordinalFirstId == null || string.CompareOrdinal(players[i].Id, ordinalFirstId) < 0)
+                    {
+                        ordinalFirstId = players[i].Id;
+                        primaryIndex = i;
+                    }
+                }
+
                 for (int i = 0; i < players.Count; i++)
                 {
                     var p = players[i];
-                    string wId = i == 0 ? "weapon_assault_rifle" : "weapon_pipe_rifle";
-                    string aId = i == 0 ? "ammo_556" : "ammo_357";
+                    string wId = i == primaryIndex ? "weapon_assault_rifle" : "weapon_pipe_rifle";
+                    string aId = i == primaryIndex ? "ammo_556" : "ammo_357";
                     // Project the persisted equipment authority when it tracks
                     // this weapon; otherwise fall back to the demo literal.
                     var token = Ashfall.Core.Combat.WeaponEquipmentBridge.ToCombatInstance(

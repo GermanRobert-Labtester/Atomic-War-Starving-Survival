@@ -365,6 +365,11 @@ namespace AtomicWar.GodotApp
                 openAction: () => _factionDetailPanel.Open(),
                 closeAction: () => CloseFactionDetailPanel());
 
+            PanelRegistry.ConfigureActions("faction_culture_codex",
+                bindAction: () => { SetupMuster(); _factionCultureCodexPanel.Bind(_muster); },
+                openAction: () => { SetupMuster(); _factionCultureCodexPanel.Bind(_muster); _factionCultureCodexPanel.Open(); },
+                closeAction: () => CloseFactionCultureCodexPanel());
+
             PanelRegistry.ConfigureActions("quests",
                 bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); SetupDutyRoster(); SetupFactionBranch(); SetupMoralChoice(); BindQuestsPanel(); },
                 openAction: () => _questsPanel.Open(),
@@ -448,6 +453,11 @@ namespace AtomicWar.GodotApp
                 bindAction: () => { _epiloguePanel.Bind(BuildCurrentEpilogueContext()); },
                 openAction: () => _epiloguePanel.Open(),
                 closeAction: () => CloseEpiloguePanel());
+
+            PanelRegistry.ConfigureActions("chronicle",
+                bindAction: () => { SetupEndgame(); _chroniclePanel.Bind(_endgame); },
+                openAction: () => OpenChroniclePanel(),
+                closeAction: () => CloseChroniclePanel());
 
             PanelRegistry.ConfigureActions("verdict",
                 bindAction: () => { SetupVerdict(); _verdictPanel.Bind(_verdict); },
