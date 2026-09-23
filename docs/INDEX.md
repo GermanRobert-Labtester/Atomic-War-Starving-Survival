@@ -1,12 +1,12 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 4244 | **Total Characters:** 657,040,868 | **Last Verified:** 2026-09-23
+**Total Indexed Documents:** 4242 | **Total Characters:** 657,037,926 | **Last Verified:** 2026-09-23
 **Oversized (>= 100,000 characters):** 1002 documents carrying 614,419,612 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4194 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4192 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 48 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -1332,7 +1332,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/VERDICT_SAVE_CONTRACT.md`](verdict/VERDICT_SAVE_CONTRACT.md) | 1,392 | **Verdict Save Contract & Migration Policy** — The Verdict save section persists player investigation progress using the following canonical structure: |
 | 🟢 `CURRENT` | [`docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md`](world/DYNAMIC_WORLD_SAVE_CONTRACT.md) | 2,168 | **Dynamic World Save Contract & Migration Integrity** — "systemId": "world_weather_system", |
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md`](year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md) | 664 | **Year of Ash Save Contract** — No new save schema was introduced. `YearOfAshSave` remains version 5 and persists the existing |
-| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 53,492 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-23<br> |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 53,889 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-23<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | 1,379 | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
 ## 4. Expansions (01–10 Master Plans & Context) (1665 documents)
@@ -3182,7 +3182,7 @@ The following documents share identical or near-identical filenames across root,
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
-| 🟢 `CURRENT` | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | 72,729 | **ASHFALL Data Authority & Master Catalog Registry** — **Authoritative Location:** `Assets/StreamingAssets/Data/` \| **Last Verified:** 2026-09-23 |
+| 🟢 `CURRENT` | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | 72,459 | **ASHFALL Data Authority & Master Catalog Registry** — **Authoritative Location:** `Assets/StreamingAssets/Data/` \| **Last Verified:** 2026-09-23 |
 | 🟢 `CURRENT` | [`docs/data/DATA_AUTHORITY_NAMING_DRIFT.md`](data/DATA_AUTHORITY_NAMING_DRIFT.md) | 2,656 | **ASHFALL — Data Authority Naming Drift Inventory & Migration Notes** — **Date:** 2026-09-06 |
 | 🟢 `CURRENT` | [`docs/data/DATA_GAP_AUDIT.md`](data/DATA_GAP_AUDIT.md) | 11,916 | **ASHFALL Data Gap Audit** — Counted entries in every top-level JSON catalog, identified C# consumers per catalog, |
 | 🟢 `CURRENT` | [`docs/data/SNAKE_CASE_MIGRATION.md`](data/SNAKE_CASE_MIGRATION.md) | 6,317 | **ASHFALL — snake_case Migration Tracker (Plans 47+)** — **Policy:** spelling-only migration. ID values, schema versions and value |
@@ -3209,7 +3209,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2263 documents)
+## 9. General Project Guides & Archive Reference (2261 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -3795,8 +3795,6 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 10,464 | **ASHFALL PROJECT — VIBE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`WAVE9_PART1_CLOSEOUT.md`](../WAVE9_PART1_CLOSEOUT.md) | 10,325 | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
 | 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 281,024 | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
-| 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
-| 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
 | 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | 94,305 | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
 | 🟢 `CURRENT` | [`docs/ACCESSIBILITY.md`](ACCESSIBILITY.md) | 7,385 | **ASHFALL — ACCESSIBILITY ARCHITECTURE & STANDARDS (PLAN 80 / TASK B21)** — **Classification:** Core UX & Accessibility Authority |
 | 🟢 `CURRENT` | [`docs/ACTION_RESULT_SURFACING_MATRIX.md`](ACTION_RESULT_SURFACING_MATRIX.md) | 1,212 | **Typed action-result surfacing matrix** — Core owns stable failure codes; host/UI owns player-facing wording. |
