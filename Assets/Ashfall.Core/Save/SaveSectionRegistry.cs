@@ -281,6 +281,8 @@ namespace Ashfall.Core.Save
             new("territory_control", "SaveTerritoryControl", "SetupTerritoryControl", "factions", "Plan 134 — dynamic faction territory & supply line control: contested locations, fortification, garrison, supply line status", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("cooking", "SaveCooking", "SetupCooking", "cooking", "Plan 136 — wildlife trapping food pipeline & cooking system: recipes, active operations, meals prepared, and food decontamination", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("campaign_legacy", "SaveCampaignLegacy", "SetupCampaignLegacy", "campaign", "Plan 140 — Generational legacy, heirlooms, campaign inheritance, and New Game+ multi-generational continuity", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("research_unlock", "SaveResearchUnlock", "SetupResearchUnlockBridge", "knowledge", "Plan 141 — Research downstream unlocks bridge: items, recipes, shelter, expedition, combat, and medical capabilities", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("unified_ending", "SaveUnifiedEnding", "SetupUnifiedEnding", "endgame", "Plan 145 — Unified ending resolution & epilogue personalization: political, social, moral, personal, and expedition resolution", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -530,6 +532,8 @@ namespace Ashfall.Core.Save
                 { "territory_control", "territory_control_save.json" },
                 { "cooking", "cooking_save.json" },
                 { "campaign_legacy", "campaign_legacy_save.json" },
+                { "research_unlock", "research_unlock_save.json" },
+                { "unified_ending", "unified_ending_save.json" },
             };
 
 

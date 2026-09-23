@@ -624,5 +624,46 @@ namespace Ashfall.Core.Endgame
             }
             return -1;
         }
+
+        public UnifiedEndingCensus GetCensus()
+        {
+            return new UnifiedEndingCensus(
+                _isResolved,
+                _durationTemplates.Count,
+                _politicalTemplates.Count,
+                _socialTemplates.Count,
+                _moralTemplates.Count,
+                _survivorFateTemplates.Count,
+                _discoveryTemplates.Count,
+                _shelterUpgradeTemplates.Count,
+                _lastResult?.survivorEpilogues?.Count ?? 0);
+        }
+    }
+
+    public readonly struct UnifiedEndingCensus
+    {
+        public readonly bool IsResolved;
+        public readonly int DurationTemplatesCount;
+        public readonly int PoliticalTemplatesCount;
+        public readonly int SocialTemplatesCount;
+        public readonly int MoralTemplatesCount;
+        public readonly int SurvivorFateTemplatesCount;
+        public readonly int DiscoveryTemplatesCount;
+        public readonly int ShelterUpgradeTemplatesCount;
+        public readonly int EpiloguesGeneratedCount;
+
+        public UnifiedEndingCensus(bool isResolved, int dur, int pol, int soc, int mor, int surv, int disc, int upg, int epilogues)
+        {
+            IsResolved = isResolved;
+            DurationTemplatesCount = dur;
+            PoliticalTemplatesCount = pol;
+            SocialTemplatesCount = soc;
+            MoralTemplatesCount = mor;
+            SurvivorFateTemplatesCount = surv;
+            DiscoveryTemplatesCount = disc;
+            ShelterUpgradeTemplatesCount = upg;
+            EpiloguesGeneratedCount = epilogues;
+        }
     }
 }
+

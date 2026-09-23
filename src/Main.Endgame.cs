@@ -85,6 +85,21 @@ namespace AtomicWar.GodotApp
                 return;
             }
 
+            // Plan 145 — Unified Ending Resolution & Epilogue Personalization
+            UnifiedEndingResult? unifiedEnding = null;
+            try
+            {
+                unifiedEnding = ResolveUnifiedEnding();
+                if (unifiedEnding != null && !string.IsNullOrEmpty(unifiedEnding.fullPersonalizedChronicle))
+                {
+                    epilogue.mainEpilogueProse = unifiedEnding.fullPersonalizedChronicle;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                GD.PrintErr($"[Main.Endgame] Unified ending resolution failed: {ex.Message}");
+            }
+
             // Plan 140 — Archive generational legacy for cross-campaign inheritance
             try
             {
@@ -97,6 +112,16 @@ namespace AtomicWar.GodotApp
                     deathsRecorded = _survivorFate?.DeathCount ?? 0,
                     completionDay = _simDay
                 };
+                if (unifiedEnding?.legacyTraitsAwarded != null)
+                {
+                    foreach (var traitId in unifiedEnding.legacyTraitsAwarded)
+                    {
+                        if (!legacy.legacyTraits.Contains(traitId))
+                        {
+                            legacy.legacyTraits.Add(traitId);
+                        }
+                    }
+                }
                 if (_yearOfAsh?.FactionWar?.State?.factions != null)
                 {
                     foreach (var factionRecord in _yearOfAsh.FactionWar.State.factions)

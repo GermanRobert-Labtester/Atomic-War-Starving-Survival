@@ -91,6 +91,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `radio_program_production_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `radio_transmission` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
 | `research_ticked` | Main.Plans166_169.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `research_unlock_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 141) |
 | `resource_delta` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
 | `retention_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 55) |
 | `weather_cascade_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 135) |
@@ -125,6 +126,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `trapping_harvest` | HostCli.WorldPlaytest.cs | generic default | via briefing panel | GENERIC (visible) |
 | `trapping_ticked` | HostCli.WorldPlaytest.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `underworld_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `unified_ending_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 145) |
 | `weather_condition` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
 | `weather_ticked` | HostCli.WorldPlaytest.cs, Main.CampaignOwners.cs, PerformanceCampaignHarness.cs | yes | via briefing panel | HANDLED |
 | `workshop_job_completed` | Main.Plans46_49.cs | yes | via briefing panel | HANDLED |

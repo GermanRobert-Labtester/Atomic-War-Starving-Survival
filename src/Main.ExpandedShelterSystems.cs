@@ -51,6 +51,7 @@ namespace AtomicWar.GodotApp
             }
             engine.OnResearchCompleted += OnSharedResearchCompleted;
             _sharedResearch = engine;
+            SetupResearchUnlockBridge();
             return engine;
         }
 
@@ -61,6 +62,7 @@ namespace AtomicWar.GodotApp
             string bt = !string.IsNullOrEmpty(def.breakthroughItem) ? $" Breakthrough: {def.breakthroughItem}." : string.Empty;
             _journal?.TryAddRawEntry($"research_{def.id}", $"Research completed: {def.displayName}.{bt}", null!, _simDay);
             _journalDirty = true;
+            _researchUnlock?.ProcessResearchCompletion(def.id);
         }
 
 
@@ -357,6 +359,8 @@ namespace AtomicWar.GodotApp
             SavePresentation();
             PersistOrphanSealWave1();
             SaveCampaignLegacy();
+            SaveResearchUnlock();
+            SaveUnifiedEnding();
         }
 
         /// <summary>Capture research progress into the campaign envelope (Plan 34: research state must round-trip).</summary>
@@ -804,6 +808,8 @@ namespace AtomicWar.GodotApp
             ResetPresentation();
             ResetNeedsPerformance();
             ResetCampaignLegacy();
+            ResetResearchUnlock();
+            ResetUnifiedEnding();
             _expandedShelterRoster = new DutyRosterSystem();
 
             _airlockSecurityDirty = false;

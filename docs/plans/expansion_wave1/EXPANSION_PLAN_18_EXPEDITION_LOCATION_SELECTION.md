@@ -1857,3 +1857,299 @@ A new map node costs more than a location description. Estimate terrain or backg
 
 The Annex can be conveyed with a single exterior interaction and a service panel. Do not commission an interior room unless gameplay requires entry. The Shelf Room can be a short scene at an existing storage area. The Service Niche should be added only if the visual route clue and alternate interpretation justify its production. The optional Cot Bay can be a dialogue backdrop and need not be a new expedition location.
 
+
+### Location availability by quest type
+
+A location is selected because an authored player action needs it, not merely because the quest uses its name. This matrix gives content authors a shared way to describe availability without forcing every quest into the same expedition pattern.
+
+| Quest type | Location relationship | Map behavior | If unavailable |
+|---|---|---|---|
+| Main quest | Hard required only when no other proof route exists | Confirmed marker if known; otherwise honest lead | Equivalent evidence or visible delay |
+| Character quest | Preferred meeting place, often replaceable by note or hub | Pin only when the character is expected there | Alternate conversation surface or optional miss |
+| Faction quest | Candidate location tied to current faction access | Access note reflects known standing/authorization | Another contact route or delay |
+| Discovery quest | Hidden location is the objective | Approximate clue before discovery; exact marker after | Discovery remains optional or another clue |
+| Investigation quest | One or more evidence sites | Show actionable known sites; do not expose hidden source | Failure-forward evidence path |
+| Escort/protection | Route endpoints and connected path | Show destination and known hazard | Alternate route, safe wait, or closure |
+| Survival quest | Place that materially changes survival decision | Hazard and preparation context | Another survival action or defer |
+| Resource/crafting | Workbench, source, or delivery endpoint | Mark only if travel is needed | Existing recipe/material alternative |
+| Location-based | Site interaction is central | Required/optional status visible | Authored equivalent or quest delay |
+| Timed quest | Location with a real expiry cause | Show urgency and expected window | After-state is explicit |
+| Repeatable/rotating | Locations vary by authored job | Avoid repeating last optional site without cause | Skip one rotation; do not create fake site |
+| Hidden quest | Gated place or clue-bearing subarea | No exact pin until discovered | Never blocks main progress |
+| Environmental start | Object or place is the start event | Clue is discoverable by ordinary play | Alternate entry only if authored |
+| Choice-reactive | Location reflects prior outcome | State/label matches previous choice | Use dialogue/notice if place cannot change |
+| Failure-forward | Substitute evidence location | Explain why it substitutes | Unresolved closure if every route is lost |
+
+The matrix does not require every quest type to create a new map marker. A hub conversation or paper interaction may be enough. A physical location can support multiple quest types if time, character presence, and world state are compatible.
+
+### Location lifecycle independent of quest lifecycle
+
+A location can be unknown, discovered, accessible, visited, changed, blocked, or retired. A quest can be active or resolved. These are related but independent dimensions. The Annex can remain discovered after the main quest resolves. A quest can be blocked even though its location is accessible because the required witness is absent. The map should not derive location identity directly from quest status.
+
+This separation matters for generated expeditions. The selector may choose a discovered location for ordinary exploration after its quest is complete. It may choose an undiscovered optional candidate only if the player has a legitimate discovery clue. Quest resolution should not automatically remove the site from the world or alter its physical state.
+
+If current architecture combines location availability and quest markers, inspect the actual implications before proposing changes. A minimal UI may still work if its rules are clear. The plan should not demand distinct persisted states when existing content can represent the necessary behavior.
+
+### Location-only and quest-only content
+
+Some places exist primarily because a quest needs them. Others are ordinary locations with one quest interaction. Treat these cases differently during production review.
+
+A **quest-only location** is justified when its geography, route, and repeated visit create gameplay that cannot be achieved through a scene at an existing site. It needs enough content to feel physical: arrival reason, interaction, exit, potential return, and a fallback when unavailable. If it has no gameplay after its quest, closure should remove or repurpose it honestly.
+
+A **location with a quest** remains in the ordinary exploration pool and supports its normal resources or hazards. The quest adds an interaction rather than making the location exist solely for narrative convenience. Its quest state must not reset the site’s normal content.
+
+A **quest-only interaction** is a prop or subarea inside an existing location. It should not consume a map slot or create a new location ID unless the current map model requires it. The Board, Bench, and Cook Passage may fit this category.
+
+A **generated encounter location** is a bounded instance assembled from authored pieces. It cannot claim to be the permanent Annex unless it references that canonical identity. If a generic utility room is generated for optional exploration, its content must not satisfy the Annex objective without an explicit equivalence rule.
+
+### Expedition start and world-state snapshot
+
+At expedition start, determine the context snapshot used for candidate eligibility: active quests, known locations, current route/region, relevant character availability, world conditions, selection capacity, and the random seed through the existing deterministic owner. This is a conceptual list. The current code may gather some of these facts differently.
+
+The chosen set should be internally coherent for the duration the current expedition model defines. If world state changes mid-expedition, follow the established policy: either the map is fixed, or selected locations can update. Avoid recomputing the full map on every UI refresh. Repeated recomputation can cause a pin to move after the player opened the panel and makes seeded behavior difficult to explain.
+
+Persist only the state already required by the current expedition save contract. If the selected list is currently reconstructed from a seed and state, adding a new selection rule can alter older saves. The implementation owner must inspect restore behavior and preserve compatibility or provide an explicit migration. This plan does not declare that selected locations need new save fields.
+
+### Compositional examples
+
+**Main investigation plus ordinary survival.** The required Annex is guaranteed, but the map keeps one slot for food, medicine, or rest according to normal rules. The quest does not monopolize every expedition.
+
+**Character story plus location discovery.** A worker’s note points to the Service Niche. The player may discover it through a map clue or postpone it and still use a witness route. Character content and spatial discovery reinforce each other without requiring both.
+
+**Escort plus timed repair.** The player can either escort the worker with the repair bundle or deliver the bundle separately. The route plan communicates that the repair may wait if no safe crossing exists. The selection engine does not spawn a traveler beyond their authored time window.
+
+**Hidden clue after resolution.** The player finishes the main case, then later returns to the Shelf Room and finds an optional impression. The map selects the location only if it is revisitable and the player has a reason to return. The hidden chain adds context but does not reopen the main investigation.
+
+**Faction-specific site.** An existing faction may use the board as a contact surface, but the location does not become faction-locked unless the existing faction access system supports it. A local character can still discuss the record if faction access is unavailable.
+
+### Selection fairness scorecard
+
+A future location owner can be reviewed on:
+- hard quest coverage per valid expedition;
+- how often fallback substitutes are used;
+- whether optional variety remains across repeated dispatches;
+- whether two similar sites repeatedly appear together;
+- whether the player can understand why a place is on the map;
+- whether hidden sites leak;
+- whether player-selected routes are respected;
+- whether blocked sites remain accurately represented;
+- whether a missing catalog row is caught;
+- whether the same seed/profile yields expected reproducibility.
+
+This scorecard is for owner acceptance. It does not require telemetry or a simulation tool. A handful of focused deterministic fixtures may be sufficient.
+
+### Accessibility and map language examples
+
+Map and journal text should differentiate a place’s known identity from its quest role. “Annex — check the outer service panel” is actionable and concise. “Possible service niche — location uncertain” is a lead. “Shelf room closed — Mara’s note may provide another account” identifies a fallback. “Cot Bay — optional record fragment” may disclose too much; instead use an ordinary descriptive label until discovery.
+
+All symbols need a text equivalent. Focus order should match the route plan or a stable map order. A controller user must be able to move between pins without hover-only details. If capacity pressure forces the game to postpone a task, the message must be reachable through the journal and not only as a transient tooltip.
+
+### Acceptance sequence
+
+The first selector integration should prove one mandatory site, one equivalent, one hidden optional site, one expired temporary site, and one ordinary survival location. It should show exclusion reasons in development output and not introduce new canonical pool registries. The next slice can add character and faction candidates after verifying their actual owners. A full location expansion follows only after the candidate set can be audited and the map UX has been reviewed.
+
+
+### Selection decision table for production
+
+At expedition assembly, content design can present the following ordered questions to the current selector owner. This is a decision aid, not pseudocode for a new service.
+
+1. Which active objectives have a hard location requirement?
+2. Does each hard requirement have a valid preferred candidate?
+3. If not, which authored equivalent preserves the objective?
+4. If no equivalent is available, is there a clue, non-location action, or visible delay?
+5. Is any campaign progression site required to avoid a soft lock?
+6. Did the player explicitly choose an optional destination?
+7. Are character or faction meetings eligible and compatible with the same timeline?
+8. Which recently discovered sites add value without repeating the last trip?
+9. Which thematic candidates fit the current expedition conditions?
+10. How many optional slots remain?
+11. Which common and rare candidates can fill those slots without duplication?
+12. What does the player know about each selected place?
+13. What fallback is shown if a selected route becomes blocked?
+
+The order protects mandatory access first, but it does not automatically promote every side quest. Quest authors should mark whether a location is hard-required, preferred, or optional. These are design labels and should map to current content fields only after schema inspection.
+
+### Compatibility and exclusion examples
+
+Two quest objectives can share the Annex visit if both refer to the same interaction and there is no timing conflict. The main investigation may use the panel scratch while the repair ticket uses the loose fastener. A single visit can complete both if the player performs both actions. Selection should not automatically award both if the player only looked at the door.
+
+The Cook Passage and Sleeve Board can both be present if they are hub interactions. The player can have a meal-count task without forcing the expedition picker to add a kitchen map site. Conversely, an optional Shelf Room should not be selected merely because it shares the “paper” theme if its access condition is not satisfied.
+
+A temporary worker cannot be selected at two locations for the same time window. If the selection data includes character presence, the current character owner must supply it. A quest should not solve the conflict by creating a duplicate worker instance.
+
+### Release review of unavailable destinations
+
+When a location cannot appear, determine whether the cause is content eligibility, map capacity, travel constraints, story timing, or a data defect. The player sees only the explanation they need. “The route is not on this dispatch” is appropriate for capacity; “the site is closed” describes access; “no reliable lead yet” describes knowledge; and “the location record is missing” is a development error, never player-facing copy.
+
+For each mandatory destination, review the full exclusion list. The exception should be based on a real world rule. If every condition can exclude the preferred site, the alternate route is not optional paperwork; it is required content.
+
+### Seed and catalog-change compatibility
+
+Before a content expansion adds candidates, inspect whether selected maps are persisted or reconstructed from seed and state. If old saves store only a seed, adding a candidate could alter the reconstructed map. The implementation plan must decide whether that is acceptable, whether a content version gates the candidate set, or whether the existing save owner already freezes the selection.
+
+Do not invent a location-version field in this plan. Record the observed behavior and use the current migration/save process. A deterministic same-seed result must be defined for the current catalog version, not assumed to remain identical after all future content additions.
+
+### Selector acceptance profiles
+
+The first focused verification package should cover: ordinary map with spare slots; full map with a hard quest site; preferred site excluded but an equivalent available; no equivalent available; hidden site undiscovered; hidden site discovered; one temporary site expired; two compatible quests sharing a location; two incompatible tasks requiring the same character; and a player-selected optional stop. The expected candidate set, map visibility, and quest status are written down before the run.
+
+
+### Site-equivalence acceptance worksheet
+
+A substitute site must preserve the player’s question, not merely share a tag. For every mandatory location, list: physical fact sought, preferred site, valid equivalent, information lost by substitution, and text explaining the change. The Annex exterior can substitute for the interior only if the objective concerns the panel or access mark. A meal-room conversation cannot substitute for a repair observation, though it may support a separate testimony objective.
+
+The selector’s acceptance review verifies each equivalence pair under valid and invalid conditions. If the substitute provides weaker evidence, the journal says so and the outcome confidence changes only through the quest owner’s supported result. If equivalence is complete, the player should not receive a lower reward solely because the preferred building was unavailable. This prevents world selection from quietly penalizing players for a random map composition.
+
+Keep equivalence groups small and authored. A large generic “maintenance location” pool can return a site that does not support the clue. An explicit pair with an author-written rationale is easier to review and maintain.
+
+### Candidate deduplication and physical identity
+
+Pool membership never creates a second copy of a site. If the Annex is both quest-required and thematic, it appears once in the candidate set and carries both reasons for eligibility. A second authored entry with the same physical identity can produce duplicate map pins, contradictory access states, and separate discovery facts. The current catalog’s identity rules decide how location variants are represented.
+
+Before selecting, deduplicate by the canonical identity the existing owner recognizes. If a generated encounter takes place at that location, it must reference the same identity or be clearly a separate generic instance. Revisit, hidden, faction, and temporary labels are selection reasons, not new places.
+
+When two candidates share an interaction but not a physical site, they can only be treated as equivalents through a quest-authored evidence contract. Similar tags alone do not establish that one can substitute for the other.
+
+### Rare-site budget
+
+A rare location should be rare because its timing, access, or clue is unusual, not because a random roll withholds essential information. Set a small budget for rare and secret candidates per expedition so they cannot crowd out ordinary survival sites. The exact cap belongs to the current map owner and should be tuned against actual capacity. If the game has no rare-site weighting, use authored eligibility rather than introducing a new probability system.
+
+Review several seeds and player histories. A rare site should feel surprising when it appears, but its absence should not make the expedition feel incomplete. Once discovered, it can remain known even when not selected.
+
+### Map-result confirmation
+
+After selection, compare the final map with the quest journal. Every visible destination has a player-known reason; every required action is reachable or explicitly delayed; optional sites remain optional. This final comparison catches mismatches between selector output and presentation before content is treated as complete.
+
+## Pass 15 — Quest-safe expedition destination selection
+
+**Status: PROPOSAL, premise-gated.** This selection policy elaborates the master bible's data-first narrative and destination-bound micro-location lanes. It is a proposal for an extension around the current WastelandMap, Expedition, expedition catalog, location catalog, encounter catalog, and quest owners. It does not authorize a second map graph, location registry, route ledger, or quest-state authority.
+
+### 15.1 Previous-wave collision note
+
+The Empty Shift route circuit, “roster” destinations, and location names from earlier passes are provisional content only. The repository already has a large location corpus, a map graph owner, micro_locations.json with a dedicated loader, and duty-roster locations. Treat every prior candidate as a possible duplicate until IDs and behaviors are compared. Reuse, rename only through the normal migration policy, or drop it. This plan creates no location ID by writing a name in prose.
+
+### 15.2 Selection responsibilities
+
+Separate four questions that are easy to conflate:
+
+1. **Eligibility:** Can the location be reached and is its content valid for this expedition's time, route, party, equipment, and world state?
+2. **Reservation:** Does an active required objective need this location or a valid equivalent now?
+3. **Selection:** Which eligible optional destinations make this expedition varied and thematically coherent?
+4. **Presentation:** Which selected locations are visible at expedition start, hinted, or held as undiscovered map entries?
+
+The current map owner decides topology and the current expedition owner decides expedition execution. The proposed selector should receive read-only snapshots from those owners, return a bounded selection result, and let each owner apply only facts it already owns. A UI panel must not reroll or mutate availability.
+
+### 15.3 Candidate pools
+
+Build candidate views from canonical location definitions, not copies. The pool label is a derived selection role:
+
+| Pool | Inclusion rule | Default treatment |
+|---|---|---|
+| Permanent authored | Existing location definition and route node are valid. | Baseline candidates; authored identity and history remain stable. |
+| Mandatory active quest | A currently active objective explicitly binds this location or an audited equivalent group. | Reserve before optional selection. |
+| Critical progression | A required campaign transition needs a location in this expedition window. | Reserve if the owning progression system says the transition is ready. |
+| Character or faction | A verified character/faction arc exposes a reachable location. | Prioritize after mandatory and critical candidates; respect access state. |
+| Recently discovered | Existing discovery authority reports the node found, but it has not received a fair opportunity in the chosen route context. | Apply a modest recency boost, never override hard eligibility. |
+| Thematic | Fits the authored expedition brief, region, route, hazard, or season. | Weighted optional candidate. |
+| General optional | Eligible, reachable, non-duplicate content. | Fill the remaining capacity. |
+| Secret | Eligible only after a clue, skill, signal, or prior action owned by a current system. | Keep hidden until the discovery rule is met. |
+| Temporary | Authored event content with a valid time/world-state window. | Enforce an explicit expiry or replacement route. |
+
+A location may satisfy several pool labels, but it must appear once in the candidate set. Pool membership is metadata for scoring and presentation, not persistent truth. No class may bypass location integrity checks.
+
+### 15.4 Priority, quotas, and deterministic ordering
+
+Recommended priority is lexicographic rather than one opaque giant weight: (a) hard validity, (b) unresolved mandatory objective, (c) critical progression, (d) required character/faction continuity, (e) authored expedition rules, (f) recently discovered relevance, and (g) thematic/optional/rare variety. Within an equal priority tier, use authored weights and the existing seeded RNG contract. A “must always spawn” objective does not compete probabilistically with a rare optional site.
+
+Capacity is an explicit expedition parameter. First reserve distinct mandatory targets. Deduplicate aliases that resolve to the same location ID. If mandatory reservations exceed the capacity, increase capacity only if the current expedition UI and travel path safely support it; otherwise partition the objectives across sequential expeditions or ask the owner to defer non-critical objectives. Never silently drop a mandatory target to keep the map visually tidy.
+
+For optional choice, sort candidates by stable location ID before consuming RNG; use a named stream derived from the expedition instance/seed and selector version. Do not depend on dictionary order, wall-clock time, or the order that JSON files happened to load. The selector should record enough provenance in the expedition result to reproduce the choice. It must not write random candidates into the authored catalog.
+
+Rarity means “less often chosen among valid peers,” not “allowed to starve required progress.” Rare candidates are considered only after the base route is satisfiable. Use rarity bands as design constraints, not promised percentages until a deterministic replay and representative seed sweep measures actual exposure.
+
+### 15.5 Exclusion and de-duplication rules
+
+Reject a candidate when its authored definition is invalid; its canonical map node is missing; an edge is inaccessible under the current route owner; the party cannot satisfy a truly mandatory entry rule; its time window is closed; the location is already occupied in this expedition under a single-visit rule; a mutually exclusive location already won the slot; or its content is explicitly retired/disabled by an accepted authority. A soft condition such as “interesting if the party has a mechanic” is a score, not an exclusion.
+
+Do not exclude a location just because it has appeared recently if it is required, critical, or the only truthful continuation. Do not use a hidden location as the only route to a core objective unless its discovery clue has already been made reliably available. Do not surface mutually exclusive faction interiors as neutral optional destinations when faction access is currently denied.
+
+Prior-expedition history is an input only if its owner already persists it. If no current owner can prove recency, omit that factor rather than adding a selector-only visit ledger.
+
+### 15.6 Map visibility and discovery
+
+Visibility has four proposed presentation categories: visible at expedition start, visible with a clue but not yet reachable, physically reachable but undiscovered, and discovered/revisited. These are UI projections from existing map knowledge, objective bindings, and discovery records. The selector must not own a parallel “known location” boolean.
+
+A required quest destination may be revealed as an explicit objective marker, a legible clue, or an already known node. If its discovery is meant to be part of the challenge, the clue must precede the travel decision and the quest must retain a fallback. Secret sites should not be disclosed by a generic all-destinations map panel. Repeated expeditions can alter the clue phrasing only when the relevant narrative owner reports a meaningful new observation.
+
+The map communicates why a site is present: “required by active request,” “possible lead,” “known route,” or “unconfirmed signal.” Avoid presenting weighted optional candidates as guaranteed discoveries. Color is not the sole signal; use text, icon shape, and focus-readable details. Keyboard/controller focus must stay stable as the map list refreshes.
+
+### 15.7 Required-location fallback ladder
+
+If a required location is invalid, missing, unreachable, or unavailable, process the failure explicitly:
+
+1. Confirm the ID against the authoritative catalog and current validator findings.
+2. If the content defines an equivalent route, substitute only an equivalent whose objective semantics, risk, and reward remain truthful.
+3. If a physical target is not essential, issue a clue through an existing verified channel and retarget the objective only after the owning quest system accepts the change.
+4. If neither path exists, delay the objective with a visible reason and a concrete eligibility reevaluation trigger.
+5. If the story becomes impossible, close it with a failure-forward alternative owned by the quest domain.
+6. Emit a diagnostic that identifies the missing reference and owning content record; do not silently remove it from the candidate set.
+
+Fallback equivalence is stricter than “same biome.” Compare what evidence is found, what player action is required, travel cost, hazard, party capability, faction access, reward, and branch consequences. A substituted node that gives a different fact is a new branch and should be authored as such.
+
+### 15.8 Mid-winter encounter set
+
+Use the Days 90–180 pacing gap as the theme constraint, not as a blanket day gate. Candidate content categories include: a route made unreliable by weather; a field report whose measurements disagree; an optional salvage micro-location that offers a repair choice; a faction delivery with two valid destinations; a community request that can be answered through a route, a radio clue, or a safe refusal; and a Chronicle-relevant discovery with no exclusive ending key. Existing locations and hazards must be selected only after a catalog comparison.
+
+Each proposed destination card states required/optional/secret, visible-by rule, first and repeat visit copy, entry condition, valid route, hazard owner, quest objective link, invalid-location fallback, map affordance, expected expedition duration, and the player-facing consequence of skipping it.
+
+### 15.9 Minimum slice and bounded performance
+
+Minimum slice: one required target, one equivalent fallback, two optional candidates from different existing content families, one secret candidate gated by a verified clue, and one temporarily eligible destination. The output must stay stable for a fixed seed/world snapshot; a saved expedition cannot reroll on reopening the map. Measure candidate count, selector time, allocation count, invalid-reference diagnostics, and selection fairness before considering optimization. Pre-indexing catalog metadata is acceptable only as an immutable derived lookup, not as a second location authority.
+
+Acceptance evidence: all required quests remain possible; no duplicate locations appear; every result resolves to a canonical map node; optional variation is reproducible; secret visibility is truthful; invalid content yields explicit fallback diagnostics; party and access restrictions are respected; UI labels explain selection; and repeated open/close cannot change the route. Testing targets should be selected later under TEST_POLICY after ownership and API premises are confirmed. This documentation pass runs no tests and claims no implementation.
+
+### 15.10 Selector walkthroughs
+
+The selector should be reviewable as a deterministic decision trace. These walkthroughs use role labels rather than new catalog IDs.
+
+**Walkthrough A — required investigation target is available.** The active quest owner provides one required target. The map owner confirms a valid route. The location definition passes schema/reference checks. The party and expedition type meet hard access requirements. The selector reserves this candidate before optional scoring. It then fills remaining slots from the authored expedition theme and general optional pools. A secret clue can be shown only if its discovery predicate is already true. The result records selected location IDs and selection reasons; it does not change the quest.
+
+**Walkthrough B — required location is absent from the current catalog.** The selector emits a diagnostic tied to the quest definition and missing reference. It asks the quest owner for an authored equivalent set. If an equivalent is available and valid, it reserves that node and reports the substitution. If there is no equivalent, the quest owner can delay the objective if the objective is non-urgent, or surface an existing clue leading to an eligible place. If neither recovery is supported, the quest remains explicitly blocked for design review; no optional site is relabeled as the target.
+
+**Walkthrough C — route exists but is faction-closed.** Map topology alone does not imply access. The faction owner reports an access denial; the candidate is excluded from immediate travel, but its existence may remain known on the map if the player has already discovered it. If the quest requires the site, the content must have an alternate: negotiate, obtain a permission token through an existing owner, take another route, or defer. Do not expose a clickable marker that fails only after party selection.
+
+**Walkthrough D — three optional sites fit, only two slots remain.** All hard requirements are already reserved. The candidates have stable IDs, each passes validity, and thematic weights are applied from the authored expedition brief. Recently discovered status contributes only the agreed soft tie-breaker. A named seeded stream selects two after stable sorting. Re-running with identical inputs produces the same pair; a new expedition seed may produce a different pair. Reopening the same expedition preserves the original pair.
+
+**Walkthrough E — a secret site becomes eligible mid-expedition.** The discovery owner emits the clue/knowledge fact. The expedition can add the site only if the current travel/map contract permits dynamic additions; otherwise it queues visibility for the next expedition and tells the player why. The selector must not add the location behind the player's back or invalidate the selected route.
+
+**Walkthrough F — all optional candidates fail validation.** The required sites remain intact. The expedition starts with a smaller optional set or a safe empty optional category, with a diagnostic for each invalid record. Do not fabricate a location, repeat a unique site contrary to its contract, or fail expedition startup when only optional content is malformed.
+
+### 15.11 Rarity and anti-starvation controls
+
+A rarity setting must distinguish three concepts: authored narrative rarity, selector weight, and observed run frequency. A rare story can have an ordinary selection weight but a narrow authored condition; a frequent site can have a low weight when few peers exist. Avoid hand-tuning a single percentage without counting eligible candidates.
+
+Before balancing, produce a deterministic simulation report from a representative range of seeds and snapshots. Report eligibility counts, selections per ID, required-location success, duplicate count, secret reveal count, empty optional slots, and rare-location wait distribution. Do not compare raw appearances when candidates were eligible for different numbers of seeds. A location that is eligible only for one weather/region combination should be measured within that eligible subset.
+
+Use explicit anti-starvation only for optional content whose repeat opportunity is a real design goal. A recency adjustment can gently promote content that has not appeared, but it cannot override quest priorities, valid access, authored exclusions, or the player's last result. If no current visit history is available, do not invent it. If a recency ledger is later approved, it needs one owner, deterministic decay/order, capture/restore, bounded size, and migration; it should not be embedded in the UI or quest record.
+
+### 15.12 Pool contract record
+
+For every proposed pool, maintain a review table with: owner catalog, selection tag, hard/soft classification, eligible expedition types, region and route constraints, party capability requirements, faction access rule, weather/season window, quest binding, map visibility, discovery source, expected number of slots, rarity policy, conflict group, repeat rule, fallback group, and validator. Empty cells are unresolved questions, not wildcards.
+
+Pool membership should not be physically duplicated into several catalog files. Prefer the current location/encounter schema if it already supports metadata; otherwise stage an extension proposal for the one catalog that owns the property. The same destination can carry optional-story and faction-story utility, but its canonical identity remains one location ID and its physical adjacency remains in the map owner.
+
+### 15.13 Selector result and replay envelope
+
+A result needs enough explanation for debugging and player-facing feedback, but it should not become a second save authority. The conceptual result includes expedition instance key, seed/content version, selected stable location IDs, required reservations, reason codes, substitutions, excluded candidate diagnostics, visible/hinted/hidden presentation, and a checksum or stable comparison string if the current replay infrastructure supports one. Store it through the existing expedition owner only if a selected route is committed and must survive load. Otherwise recompute from the same inputs and prove that recomputation is byte-stable.
+
+When content changes between releases, old saves need defined behavior. A retired optional location can be removed from the next expedition candidate set. A selected-but-not-visited destination needs a compatibility policy: preserve the committed target if its data remains available, migrate to an explicitly equivalent target, or close with an owner-approved fallback. Do not silently bind an old quest to a new location with different evidence.
+
+### 15.14 Map-facing prose packet
+
+Use three short text fields for a destination card: what is known, why it is relevant now, and what remains uncertain. The site title and region name come from canonical data. A required card can say “Requested by an active field report” only if that request exists. A hint can say “The line points east of the old conduit” only if the clue literally establishes that direction. A secret card must not reveal the site's identity before discovery. An inaccessible destination states whether the issue is route, weather, access, or party capability and points to an available next action.
+
+A map can show optional locations at expedition start without implying that the player has discovered their interiors. Keep the legend readable at high zoom and in screen-reader order. If multiple locations share an icon, a text qualifier distinguishes their route, faction, or quest role.
+
+### 15.15 Handoff and integration gate
+
+The selector is ready for implementation planning only after a source-to-source map identifies the current map graph, expedition start command, active quest inputs, location loader, micro-location encounter loader, discovery owner, visibility read model, deterministic RNG adapter, save owner, and UI map route. Then claim exact paths through WORKTREE_OWNERSHIP and sequence work through INTEGRATION_PLANS. The first implementation should handle one required quest target and one fallback; optional rarity and temporary sites follow only after that path is observable. This proposal changes no source, data, claims, or tests.

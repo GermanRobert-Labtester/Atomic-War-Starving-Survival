@@ -2057,3 +2057,324 @@ The content review asks whether each scene: gives the player an actionable quest
 
 A line that says “the record is not reality” is too broad and on the nose. A person asking whether the count came from the roster or the kitchen line teaches the same distinction through a practical question. This is the tonal standard for the rest of the package.
 
+
+### Extended dialogue packet: the board correction meeting
+
+The meeting scene occurs after the player has gathered at least one source and may have additional evidence. It can be staged at the Sleeve Board or as a conversation in an existing shelter hub. It should not require a new meeting-room location. The scene is short enough to fit between survival tasks but gives each participant a distinct practical concern.
+
+**Opening.** Mara places the old copy to the left and the current copy to the right. Nessa stands near the board rather than the table. Oren stays by the exit until the player asks him to sit. Sella is present only if the player pursued the meal count. The staging should remain readable if the game does not support separate character positions: dialogue labels can carry speaker identity.
+
+Mara: “Start with what you saw.”
+The player can list the matching names, the ambiguous mark, the panel condition, or say that they have no independent account.
+Mara: “And what did you not see?”
+This follow-up lets the player state a limit, not only a conclusion.
+
+If the player has a corroborating record, Mara asks whether its source is separate from the first copy. If not, the player can say they do not know. The graph should not infer independence from two different paper objects if one is a copy of the other.
+
+**Competing practical views.** Nessa asks whether the next assignment needs an immediate name. Oren asks whether the player is proposing to put his name back on a job. Sella asks whether the meal count should continue to use the planned shift size. Each question exposes a different downstream consequence. The player chooses which concern to address first. The scene can present up to three hubs and reconverge before the final report.
+
+Nessa: “If the line stays, somebody still has to go.”
+Oren: “If you write me in, somebody will decide I agreed.”
+Sella: “If you remove the count, somebody waits for food that is already cold.”
+
+The lines are not arguments over morality. They are costs. No character claims that their view is the only correct one.
+
+**Report choice.** The player chooses correction, annotation, further inquiry, or unresolved closure. Before confirming, show a one-sentence consequence preview in ordinary language:
+- “This changes the names only if your evidence identifies current coverage.”
+- “This leaves the names in place and marks the entry as a plan.”
+- “This keeps the current sheet while you seek another account.”
+- “This records the mismatch and closes the inquiry without naming a worker.”
+
+If the existing UI cannot provide previews, place the wording in the response itself. The choice label should not hide the action.
+
+**After choice.** Mara either applies the supported edit or says she can prepare the next copy. Nessa confirms the next task is still uncovered if that is known. Oren confirms or refuses a proposed role. Sella acknowledges whether the count was changed. The scene uses only the subset of lines corresponding to actual effects. If no work, food, or board owner exists, characters can acknowledge the narrative recommendation without claiming a system update.
+
+### Extended dialogue packet: the handoff at the next shift
+
+This callback should be small and causally linked. The player arrives as a new worker is checking the board with one finger on the current line. They look at the player, then at Mara.
+
+Worker: “Does ‘covered’ mean someone is coming?”
+Mara: “It means someone accepted it.”
+Worker: “So someone is coming.”
+Mara: “It means someone accepted it.”
+The worker waits.
+Mara: “I will check who.”
+
+If the player chose to annotate, the scene shows that the difference matters: the next person asks a better question rather than assuming attendance. If the player chose to correct names, the scene uses the updated roster only if verified and applied. If the player left the record unresolved, Mara can say the line remains marked as unconfirmed. The callback should not claim the work is complete.
+
+The player can ask whether anyone signed in. If the current game has no sign-in system, the response remains an authored report from the character. If no one can verify, the scene closes with the uncertainty intact. An unresolved callback is not a narrative failure; it confirms that better wording did not magically create evidence.
+
+### Character voice micro-guides
+
+**Mara:** Uses categories and paper-handling verbs. She asks what a mark means, who copied a sheet, and when it changed. She avoids saying “truth” in broad terms. When stressed, she repeats a practical instruction: “Keep this copy flat.”
+
+**Oren:** Uses task language and boundaries. He asks whether someone expects him to do the work, which tool is needed, and who will carry the handoff. He may leave sentences unfinished when the answer is obvious to him. He is neither a bitter recluse nor a secret hero.
+
+**Nessa:** Uses current staffing and movement. She asks who is in the room now, who can cover the task, and whether the route is safe. She can disagree with a record while valuing the people who made it.
+
+**Sella:** Uses counts, bowls, and preparation. She knows how the kitchen uses an estimate but not who worked elsewhere. She resists being turned into an investigator when her role is to make meals arrive.
+
+**Temporary worker:** Uses immediate practical details—cold tools, distance, time, a safe path—and has agency over their own work. They are not an exposition source for the whole story.
+
+These are voice constraints, not fixed line quotas. Existing characters must retain their own canon. If a reused survivor already has an established verbal style, this guide adapts around it.
+
+### Prose reuse and localization notes
+
+Every scene can be adapted into dialogue, journal, and map surfaces, but the text should not be copied mechanically. The spoken lines are short and situational. A journal entry can say, “Mara explained that the mark may mean coverage, but no available source confirms who worked.” A map label can be “Annex panel.” A notice can say, “Attendance not confirmed.” Each format preserves the fact boundary at the length it needs.
+
+Repeated vocabulary is a risk: “covered,” “worked,” “planned,” and “confirmed” must be stable across speakers and UI. Provide translators with glosses and context. Do not use a pun or repeated metaphor as the only distinction between states. A player using subtitles or screen reader should receive all essential information. If a paper image contains shorthand, an inspect text equivalent is required.
+
+### Optional barks after resolution
+
+After resolution, a few ambient lines can reflect the current board practice:
+- “I checked the copy before I took the shift.”
+- “The old sheet is in the dry sleeve.”
+- “Ask who covered it. The name stayed from last week.”
+- “No sign-off yet. Leave the line open.”
+
+These should be selected only when the current state warrants them. They provide atmosphere and practical world texture. They cannot introduce a new required clue or contradict the specific result. If current ambient dialogue cannot read quest outcomes, omit the barks rather than adding a parallel state cache.
+
+### Scene coverage and production estimate
+
+The full package contains one main opening, three evidence scenes, one report meeting, one callback, three optional quest scenes, and a small number of short ambient lines. A minimal slice can ship with the opening, board inspection, one witness exchange, the report meeting, and one result acknowledgement. The rest can be staged in later content drops. This staged approach preserves narrative completeness while keeping the first implementation tractable.
+
+Production review counts unique text nodes and contextual variants, not only prose words. The total cost includes recording or subtitle synchronization if applicable, localization, speaker presentation, location backgrounds, map/journal copy, and QA across branch conditions. A side scene can be cut without breaking the main graph if its fallback and optional status were designed from the start.
+
+
+### Prose variants for report outcomes
+
+**Verified correction.** Mara reads the final line once. She checks the name against a second copy, then moves the older sheet beneath the board rather than tearing it up. “This one is current,” she says. “The old one still explains why the count drifted.” Oren asks whether the task now belongs to him. The player must confirm only if the assignment was actually made through the work owner.
+
+**Annotation.** Mara writes “planned coverage” in the margin and leaves the names. “It will make the next copy longer,” she says. Nessa answers, “It will make the next person ask.” The scene shows a changed label only if the board owner persists it. The two characters agree on the wording without agreeing that attendance is known.
+
+**Request another account.** The player asks to wait. Mara places a small paper weight on the sleeve so it will not curl. “Then this stays open.” If the quest owner cannot persist a pending result, the line should instead say that the player can return with another account, and the current stage remains the established active state.
+
+**Unresolved closure.** The player states that the evidence is not enough. Oren leaves his name off the new copy. Sella takes the old count back to the kitchen. Nobody says the decision solved the staffing question. The journal closes with what was learned and what remains unknown.
+
+These short outcome treatments can reuse scene staging but must not collapse into the same text with only the option label changed. Each reflects a real difference in what the player authorized. They are not promises of resource changes.
+
+### Side conversation: the worker who changed the task
+
+A new worker can ask why the roster lists valve checks when the maintenance panel is inspected from outside. The player may explain what Oren said, show the margin note, or admit they do not know. This scene provides a natural way to repeat information without a lore dump.
+
+Worker: “Do I go inside?”
+Player response: “The panel may be checked outside.”
+Worker: “May be?”
+Player: “That is what the note supports.”
+Worker: “Then I will ask before I open anything.”
+
+If the player previously found no evidence, the response options do not appear. A general response asks the worker to wait for confirmation. The scene models uncertainty as actionable: the worker can pause a risky assumption. It does not give the player command over the worker unless current assignment mechanics support it.
+
+### Side dialogue: the cook’s closing ritual
+
+At the end of a meal, Sella places the tally spoon across the slate so the line cannot be altered before the next cook sees it. The player can ask why. Sella says that the spoon does not make the count correct; it shows that someone intends to check it. This is a quiet callback to the story’s distinction between plan and confirmation.
+
+If the player pursued the count quest, the line varies by outcome. If they did not, Sella only asks them to move the spoon before taking the slate. The ambient detail cannot act as a quest clue in one branch and unimportant dressing in another without explicit interaction proof.
+
+### Branching dialogue versus prose-only variation
+
+Not every variation needs a graph branch. Weather can change the paper’s appearance in the location description. A speaker’s current workload can shorten a greeting. A major report choice changes who acts and therefore needs a state-bearing branch. Relationship tone may require a supported condition but can reconverge. The author marks each difference as presentation-only, local, quest, relationship, faction, world, or ending scope.
+
+Writers should avoid adding a new node for every adjective or greeting. Use prose variants when the meaning is stable and no state changes. Use a branch when the player’s response or world condition changes what can happen. Keep that distinction visible in the content packet so QA can focus on meaningful combinations.
+
+### Final dialogue readthrough
+
+A final readthrough follows three voices: a player with no optional context, a player who has found all evidence, and a player who made a report that later proves incomplete. All should understand the immediate action. The first should not be locked out; the second should feel rewarded by precision; the third should receive a chance to correct without erasing the past.
+
+Reviewers should underline each sentence that states a fact and identify its source. If no source exists, revise it as opinion, uncertainty, or remove it. This sentence-level test is especially useful for a story built from copied records.
+
+
+### Silence, interruption, and readable staging
+
+Silence can be shown as a short pause or a character continuing the task while the player decides. It should not be encoded as a missing response node. If the current dialogue UI supports only text, use an authored beat: Mara smooths the paper; Oren returns the tool to the bench; Sella turns the slate around. Each beat reinforces what the character attends to.
+
+Interruptions should carry a practical cause. A meal line forms, the worker needs to leave, or a tool slips from the bench. Do not use a random interruption to cut off a required explanation. If the scene is resumed, the player should retain available choices or receive a concise recap from a character who was present.
+
+Readable staging means names and line focus remain clear for keyboard, controller, subtitle, and screen reader users. Essential evidence is spoken or exposed through the inspect interaction; animation and ambient sound add texture but do not carry the only clue.
+
+### Branch re-entry after an interrupted conversation
+
+If the player leaves the correction meeting before selecting an outcome, reopening it should summarize only the facts required to continue. It should not replay every witness account or reset a one-time choice. The graph can return to a compact hub with “review what you know,” “ask about the record,” and “choose how to report.” If new evidence arrived while the scene was closed, place it in the evidence summary and let the player decide whether to revisit earlier interpretations.
+
+If the quest was resolved through another route, the meeting becomes a closure conversation or disappears. Do not present stale report options. If an earlier choice was applied but the dialogue was interrupted before acknowledgement, the next entry shows the result, not the choice again. This protects both narrative continuity and effect idempotency.
+
+### Cuttable prose and required facts
+
+Mark each scene paragraph as essential, optional context, or atmosphere. Essential facts need a supported interaction and fallback. Optional context can be removed if the speaker or location is absent. Atmosphere can vary or be cut without changing the quest. This label helps production trim scenes while preserving comprehension and branch fairness.
+
+Do not bury the only explanation of “covered” in a long optional monologue. The player can learn the term from a short response or the margin note. Character history can deepen the choice, but it cannot be the only way to understand its immediate effect.
+
+### Prose closeout
+
+The strongest lines in this thread name a practical limit: the sheet says who was expected; the bowl says who came to the line; the panel shows a recent mark but not who made it. Keep that specificity through revision. Let characters disagree about action while staying honest about evidence.
+
+## Pass 15 — Mid-winter dialogue scenes with authored evidence boundaries
+
+**Status: DRAFT/PROPOSAL.** This pass uses the master bible's Days 90–180 pacing lane to supply a concrete dialogue authoring slice. The existing encounter, quest, narrative consequence, and character catalogs are the first places to inspect. No general-purpose dialogue graph engine, new character, new faction, or catalog ID is authorized here.
+
+### 15.1 Collision reconciliation
+
+The prior Empty Shift dialogue packet may repeat existing duty-roster characters, scenes, and quest beats. ASHFALL has active DutyRosterSystem and DutyRosterQuestRuntime owners and authored duty-roster catalogs. Keep prior dialogue only after checking cast IDs, stage IDs, choice effects, and roster facts against those live records. If it belongs to that storyline, integrate it as a scene or alternate line under that owner; do not register an independent “shift story.” The line samples below are generic DRAFT demonstrations without canon character names.
+
+### 15.2 Scene purpose and cast discipline
+
+Working sequence title: The Long Thaw. The sequence is not a complete production quest. It demonstrates how dialogue can carry evidence, pressure, and character intent across quest, expedition, and resolution:
+
+- The **intake registrar** wants a record that will survive scrutiny and is afraid of making a promise on incomplete measurements.
+- The **maintenance worker** cares about a repair that can be done today; they are not a shorthand “engineer voice.”
+- The **expedition lead** wants a route that returns the crew with the same number of people who left.
+- The **community representative** wants an answer before the next cold period and does not accept “we will see” as a plan.
+- The **radio operator** treats signal quality as evidence and dislikes being asked to certify a source they could not identify.
+- The **returning witness** can describe one observation and distinguish it from rumor.
+
+These are role placeholders. Bind them to existing characters only after checking their IDs, survival state, schedule, faction knowledge, voice signature, and current arc. Do not add a cast merely to give every dialogue node a face.
+
+### 15.3 Reusable scene sequence
+
+| Scene | Location/context | Dramatic action | Choice form | Reuse |
+|---|---|---|---|---|
+| Intake, first report | Existing shelter entry or briefing context, if the current route supports it. | Two reports conflict about the timing of a service failure. | Ask for a source, accept the operational summary, or defer judgment. | Revisit line reacts to whether evidence was logged. |
+| Workshop, practical read | Existing work area already represented by the game. | A damaged part is shown beside a substitute. | Spend the substitute, preserve it, or ask for an external source. | The line changes after a real crafting outcome, not a guessed result. |
+| Map, route commitment | Existing expedition planning screen/location. | Crew sees the required target and possible alternate clue. | Take the short exposed route, the longer known route, or postpone. | Dialogue reflects actual route selection and travel result. |
+| Return, witness statement | Existing debrief or journal channel. | One observation can narrow the cause but cannot prove intent. | Record exact words, add an interpretation with attribution, or leave uncertainty open. | The selected report style changes later exposition. |
+| Community response | Existing faction/settlement contact context. | The representative asks what can be promised before the deadline. | Offer confirmed help, limited help, or an honest refusal. | Faction and quest outcomes come from their owners. |
+| Quiet follow-up | An optional later scene on return. | A character explains what the player’s wording changed for them. | Listen, correct the record, or move to the next task. | Relationship consequence only if current relationship owner supports it. |
+| Callback | A later valid event window. | The same early choice returns in a changed form. | Acknowledge, dispute, repair, or decline the conversation. | Uses a confirmed deferred-event seam; otherwise stays an optional authored follow-up. |
+| Chronicle close | Endgame readout only if the current Chronicle can consume the fact. | The record is described as precise, incomplete, or disputed. | No new ending choice is required by this scene. | Chronicle line is conditional on a verified outcome key. |
+
+### 15.4 Sample lines for voice and branch testing
+
+All lines are DRAFT and should be checked against existing prose before use.
+
+- Registrar, first report: “I have two times for the same outage. I can enter both. I cannot make them agree.”
+- Maintenance worker: “The spare will hold. The report says how long. It does not say what we stop making to use it.”
+- Expedition lead: “Mark the return route before we argue about the forward one.”
+- Community representative: “I can tell them you came. I need a verb for what happens next.”
+- Radio operator: “The voice says the crossing is open. The carrier says nothing about the bridge.”
+- Returning witness: “I saw the lamp go out. I did not see who touched the switch.”
+- Registrar, if the player attributes blame without evidence: “I can file that as your conclusion. I cannot file it as a measurement.”
+- Registrar, if uncertainty is preserved: “This copy leaves the cause blank. The date and the missing load are still here.”
+- Community representative after a refusal: “You said no while I could still change the route. That is a hard answer. It is an answer.”
+- Maintenance worker after a costly substitute: “It fits the housing. Keep the old part. Someone will ask why the store shelf is empty.”
+- Radio operator after a failed source check: “The signal held long enough to waste our fuel. That is not the same as a lie.”
+- Returning witness after an alternate route: “We did not see the mark. We saw the water line where it used to be.”
+
+The samples deliberately avoid stating that a person caused the failure, that a faction lied, or that a repair succeeded. The runtime owner must establish those facts before copy may report them.
+
+### 15.5 Choice structure
+
+Prefer a short branch that reconverges on the next concrete action. A choice is authored only if it has a different player meaning, accessible wording, and truthful outcome. Cosmetic tone, local scene action, quest progress, relationship change, faction standing, world access, and ending consequence must be distinguishable. Several response options may lead to the same objective while changing the player’s chosen phrasing; that is acceptable if the UI makes the difference clear and the line does not promise a hidden mechanical reward.
+
+Node copy should separate: current fact; speaker interpretation; information the player lacks; immediate request; response labels; and resulting owner command. A witness should never speak knowledge from a future event. A faction representative should not know a private shelter decision unless a current information channel exposed it. Skill-gated text may improve observation, but should not cause an unskilled player to lose a required clue.
+
+### 15.6 Branch and reconvergence map
+
+- **Evidence branch:** source requested, summary accepted, or investigation deferred.
+- **Operational branch:** substitute committed, reserved, or sought through an external route.
+- **Travel branch:** risky route, safer route, or delay.
+- **Interpretation branch:** exact observation, attributed inference, or unresolved record.
+- **Social branch:** confirmed promise, limited promise, or refusal.
+- **Callback branch:** acknowledges, disputes, repairs, or declines.
+
+The evidence, travel, and social choices must have distinct canonical facts only where the current owners can store/apply them. Reconverge at the next available objective without erasing those consequences. If two branches are purely verbal, do not create a new flag solely to preserve flavor unless the authored callback genuinely depends on it.
+
+### 15.7 Reuse and production cost
+
+The same scene structure can support a radio report, a shelter debrief, or a faction meeting by changing the verified context, speaker, and evidence source. Reuse the structure, not identical dialogue. Repeated visits need an authored change caused by a real owner fact: prior decision, objective status, location state, failed quest, relationship band, or new evidence. Do not randomize an NPC's memory.
+
+Classify each scene before production: data-only when existing fields express it; data plus minor wiring only when a current adapter supports the needed interaction; Core extension when a missing command/effect is proven; cross-system only after naming the owners and save implications. A new dialogue graph abstraction is FOUNDATIONAL and requires an explicit architecture decision; prose examples do not justify it.
+
+### 15.8 Prose quality and accessible interaction
+
+Maintain the house voice described in the world bible: concrete records, restrained emotion, bureaucratic pressure, and distinct speaker needs. Give each choice a short verb-led label; use full text for nuance. Tooltips or dialogue details should explain locked responses by broad reason (“you have no confirmed route evidence”) without exposing spoilers. Never make the only readable distinction a color change. Keyboard and controller navigation must reach every visible response and return focus after the scene closes. Screen-reader names should retain the speaker, the response, and any irreversible commitment warning.
+
+### 15.9 Acceptance gate
+
+A scene packet is ready for a data trial only after: the scene is attached to a verified existing source catalog; all cast and location bindings resolve; each line is legal for the speaker's knowledge and voice; each choice has a defined consequence class; mechanical consequences route to existing owners; branches cannot strand mandatory progression; callback delivery is confirmed or clearly marked absent; localization keys and accessible labels are planned; and every DRAFT line has been compared against current narrative content for duplication. This pass adds no production prose record and runs no tests.
+
+### 15.10 Side-conversation packet: “The register stays open”
+
+**Context:** Optional after the player has seen the conflicting reports, before they choose whether to present an interpretation. The scene uses a verified current room and two existing cast members only after the premise audit binds them. Until then, “registrar” and “worker” remain role labels.  
+**Purpose:** Let the player choose between preserving an imperfect record and polishing it into a confident story.
+
+> Registrar: “The clean copy has one answer. The carbon has two.”
+>
+> Worker: “The carbon also has a thumbprint over the lower time.”
+>
+> Registrar: “That is a mark. It is not a clock.”
+>
+> Responses:
+> - “Keep both readings.” — Cosmetic/local wording unless a current record owner supports a durable evidence choice.
+> - “Use the clean copy.” — Local report selection; it must not falsify source data.
+> - “Hold the report until we can compare the gauge.” — Quest delay only if the quest owner supports a waiting objective.
+>
+> Worker, if the player preserves both readings: “Then nobody gets to call the missing hour a mistake yet.”
+>
+> Registrar, if the clean copy is selected: “I can issue it. I will keep the carbon with the maintenance file.”
+>
+> Worker, if the report is held: “Good. I can show you which screw was already warm.”
+
+The scene branches for a few lines, then reconverges on the player's next action. It does not conclude which reading is correct.
+
+### 15.11 Side-conversation packet: “A verb for the notice”
+
+**Context:** A community representative is waiting for an answer about a repair commitment. The player can offer confirmed support, limited support, or refusal. The exact resources and faction consequences come from canonical owners.  
+**Purpose:** Make refusal a valid outcome and keep the requester's agency visible.
+
+> Representative: “The notice has a space for what you will do.”
+>
+> Player responses:
+> - “We will send the crew.” — Show only if the expedition owner confirms the party and route can be committed.
+> - “We can send tools, not people.” — Show only if the item owner and destination can receive them.
+> - “We cannot promise help.” — Always legible if the request can be refused.
+>
+> Representative, on a confirmed promise: “I will tell them the crew is coming when you put the names on the manifest.”
+>
+> Representative, on limited aid: “Tools do not keep a hand warm. They still give us something to try.”
+>
+> Representative, on refusal: “I would rather write no than send people out to wait for a maybe.”
+
+The lines do not award standing directly. The response is sent to the quest/faction/expedition owner; the later scene reflects the actual accepted result.
+
+### 15.12 Location card and arrival copy
+
+**Map card — required destination:** “A field report asks for a second reading. The route is open; the cause is not known.” Use only when the active quest and map owners verify both claims.
+
+**Map card — optional clue:** “The old mark is missing from the north side of the conduit. No one has checked the retaining wall.” Use only when the scene has established the conduit and the visible direction.
+
+**Map card — secret clue not yet solved:** “The carrier narrows when the party faces the drainage line. It may be a reflection from the cut.” Do not show the destination identity before the discovery gate passes.
+
+**Arrival prose, DRAFT:** “The room is colder than the tunnel by enough to make the brass gauge honest. A strip of paper has been pinned beneath its glass. The numbers do not match the copy in the shelter.”
+
+**Return prose, DRAFT:** “The mark did not survive the rain. Its absence did. On the wall below it, somebody measured the old bracket twice and wrote down two different heights.”
+
+All destination names and facts remain placeholders until location history, weather, route, and encounter catalogs are cross-checked. Arrival prose describes only what the player can observe.
+
+### 15.13 Reusable dialogue pattern library
+
+1. **Linear scene:** one necessary instruction and one exit. Use for briefings and clear safety information.
+2. **Hub-and-spoke:** a character offers evidence, motive, and practical next step as separate topics. Each spoke returns to the hub; topics already exhausted are visibly closed.
+3. **Short branch and reconverge:** one answer changes tone or local report, then the next actionable request is shared.
+4. **Relationship response:** wording responds to a canonical relationship band, not a hidden private score.
+5. **Knowledge response:** one line cites what the player has actually learned, with a second line that explains uncertainty.
+6. **Faction response:** access language comes from the current faction owner. A hostile response can still provide an exit or neutral alternative.
+7. **Repeated visit:** after the introduction, the NPC references a real new event or asks a different question; no randomized “you again” loop.
+8. **Failed quest response:** acknowledges the actual outcome and offers a valid follow-up or closure, not blame unsupported by the branch.
+9. **Skill observation:** adds an optional technical detail while preserving the same required objective.
+10. **Emotional-state line:** uses a current state only when that state is observable to the speaker and appropriate to disclose.
+11. **Quest-starting conversation:** the acceptance command appears as a clear response and updates the objective only after the quest owner accepts it.
+12. **Environmental discovery:** a note, mark, damaged object, or sound reveals a clue through an existing discovery path; prose states who could have placed it and when.
+
+Do not force all twelve structures into the first release. Choose the smallest set that gives this content a distinct rhythm.
+
+### 15.14 Audio and non-spoken scene alternatives
+
+A character who is absent can leave a field report, a radio fragment, a signed note, or no substitute at all. A recorded message has an authored date and audience; it cannot react to a decision that occurred after recording. Radio phrasing respects signal uncertainty and location. A note does not function as omniscient narration. If voice acting is later commissioned, each speaker gets line count, reactivity tags, localization and recording cost, silence/bark policy, and subtitle fallback. The game must retain complete meaning with text alone.
+
+### 15.15 Content-density budget
+
+For an optional side conversation, a useful initial budget is: one opening, two or three response choices, one or two response lines per choice, one reconvergence, and one revisited-state variant. Add another branch only when it expresses a real player decision or a different actor's knowledge. Track unique prose words, repeated facts, gated lines, recorded lines, and localization units. A large branch tree that reconverges without changing knowledge, relationship, or world state is a rewrite candidate.
+
+### 15.16 Authoring handoff checklist
+
+Each scene packet contains a one-sentence player purpose; existing speaker/location bindings; entry conditions; exact knowledge ledger; authored node/response list in the current supported format; visible and hidden condition explanations; consequence class and owner; branch diagram; return/repeat text; failure and unavailable-speaker behavior; short/long text limits; accessibility order; localization notes; house-voice review; and content-utilization evidence. Production begins only after the current schema is named and the cross-catalog collision check passes.

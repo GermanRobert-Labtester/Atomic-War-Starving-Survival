@@ -124,6 +124,10 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("needs_performance", new NeedsPerformanceDayOwner(this), phase: 5);
             // Plan 140 — generational legacy and campaign inheritance: evaluates active traits and heritage continuity.
             _campaignDay.Register("campaign_legacy", new CampaignLegacyDayOwner(this), phase: 5);
+            // Plan 141 — research downstream unlocks bridge: grants breakthrough items, crafting recipes, and capabilities.
+            _campaignDay.Register("research_unlock", new ResearchUnlockDayOwner(this), phase: 5);
+            // Plan 145 — unified ending resolution: evaluates whole-campaign state and epilogue personalization.
+            _campaignDay.Register("unified_ending", new UnifiedEndingDayOwner(this), phase: 5);
             // Plan 55 — retention runs last of all: it bounds the campaign logs
             // every other owner just appended to for this day.
             _campaignDay.Register("retention", new RetentionDayOwner(this), phase: 5);
@@ -300,6 +304,62 @@ namespace AtomicWar.GodotApp
                 var census = _m._campaignLegacy?.GetCensus();
                 events.Add(new DayStateChangeEvent(
                     "campaign_legacy_ticked", "campaign_legacy", null, null, census?.CompletedCampaignsCount ?? 0));
+            }
+        }
+
+        /// <summary>Plan 141 research-unlock day owner (ownerId <c>research_unlock</c>, phase 5).</summary>
+        private sealed class ResearchUnlockDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Research.ResearchUnlockState? _snapshot;
+            public ResearchUnlockDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupResearchUnlockBridge();
+                _snapshot = _m._researchUnlock?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._researchUnlock?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupResearchUnlockBridge();
+                _m.TickResearchUnlock(day);
+                var census = _m._researchUnlock?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "research_unlock_ticked", "research_unlock", null, null, census?.GrantedUnlocksCount ?? 0));
+            }
+        }
+
+        /// <summary>Plan 145 unified-ending day owner (ownerId <c>unified_ending</c>, phase 5).</summary>
+        private sealed class UnifiedEndingDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Endgame.UnifiedEndingSaveState? _snapshot;
+            public UnifiedEndingDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupUnifiedEnding();
+                _snapshot = _m._unifiedEnding?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._unifiedEnding?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupUnifiedEnding();
+                _m.TickUnifiedEnding(day);
+                var census = _m._unifiedEnding?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "unified_ending_ticked", "unified_ending", null, null, census?.IsResolved == true ? 1f : 0f));
             }
         }
 

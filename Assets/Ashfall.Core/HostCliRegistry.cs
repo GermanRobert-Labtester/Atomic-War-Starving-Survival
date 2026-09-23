@@ -105,6 +105,8 @@ namespace Ashfall.Core
         CookingSelfTest,
         NeedsPerformanceSelfTest,
         CampaignLegacySelfTest,
+        ResearchUnlockSelfTest,
+        UnifiedEndingSelfTest,
         OrphanSealWave1SelfTest,
         WarlordUiSelfTest,
         FactionCommuniqueBoardSelfTest,
@@ -698,6 +700,18 @@ namespace Ashfall.Core
                     "--campaign-legacy-selftest",
                     new[] { "--legacy-selftest" },
                     "Plan 140 generational legacy & campaign inheritance: catalog load, campaign archiving, shelter persistence, trait inheritance, and New Game+ context"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ResearchUnlockSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--research-unlock-selftest",
+                    new[] { "--research-unlocks-selftest" },
+                    "Plan 141 research downstream unlocks bridge: breakthrough item grant, crafting recipes, shelter, expedition, combat, and medical capabilities"),
+                new HostCliActionDescriptor(
+                    HostCliAction.UnifiedEndingSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--unified-ending-selftest",
+                    new[] { "--epilogue-selftest" },
+                    "Plan 145 unified ending resolution & epilogue personalization: political, social, moral, personal, and expedition resolution"),
                 new HostCliActionDescriptor(
                     HostCliAction.OrphanSealWave1SelfTest,
                     "Expansions & Campaign Modules",

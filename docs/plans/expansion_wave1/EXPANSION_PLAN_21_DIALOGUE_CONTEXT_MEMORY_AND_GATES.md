@@ -1812,3 +1812,356 @@ The implementation-ready scene package identifies the exact current condition so
 
 A playable vertical slice needs only five context facts: board inspected, one independent clue observed, one speaker available, report outcome selected, and callback milestone reached. If the runtime cannot express all five, reduce the content until it can or seek a bounded owner decision. This gives the narrative team a realistic foundation and prevents optional context from outrunning implementation capacity.
 
+
+### Dialogue memory and world-state interaction boundaries
+
+A dialogue graph can react to world state without owning that state. The graph asks whether the Annex is accessible; the current location owner answers. It asks whether the roster clue was inspected; the quest/discovery owner answers. It asks whether a worker is available; the current character or work owner answers. It asks whether the player chose annotation; the quest result or board owner answers. This read path must not copy values into a second mutable store.
+
+A player response travels in the opposite direction. The graph describes a supported command or effect, but the owning system validates and applies it. An option can be hidden if the command is unavailable. A stale option must be rejected gracefully at the command boundary. The dialogue system presents the owner’s actual result, including failure or pending status when supported.
+
+This boundary is especially important for relationship dialogue. A graph condition can read a current relationship fact; it should not directly increase affinity because a line was selected. If conversation itself changes a relationship under existing design, use the established interaction outcome. Avoid hidden multipliers based on response length or number of visits.
+
+### Context snapshot and refresh policy
+
+When a conversation opens, the current consumer gathers the relevant facts into a temporary evaluation context. It selects eligible topics and responses. The context is discarded or refreshed when the interaction closes or an owning action completes. It is not saved wholesale.
+
+Refreshing too frequently can cause the conversation to jump topics while a player reads. Refreshing too rarely can show stale options. The current UI lifecycle should define when the panel asks for updated content: on open, after a quest command, after a character availability change, and after returning from a map transition. If another owner changes while the conversation remains open, the player should not lose focus unexpectedly. The selected command is revalidated on submission.
+
+A fallback response is required if conditions change after rendering. For example, the player selects “Ask Oren about the old shift,” but Oren leaves before the command is processed. The system can show a short response that he has gone and preserve the note route. It must not attempt to call a destroyed node or apply a stale relationship effect.
+
+### Gate transparency and accessible control flow
+
+The user interface should preserve predictable focus through conditional dialogue changes. If a response disappears after a state refresh, focus moves to a sensible remaining choice and a visible message explains the change. The close/back action remains available. A keyboard or controller user can reach all valid responses. Color, portrait expression, or audio tone cannot be the only indicator that a choice is restricted.
+
+If locked choices are shown, the label and reason use plain language. “Unavailable: Oren is not here” is functional. “You lack trust” is not appropriate if the game offers no visible explanation of how trust was established. If the UI does not currently support disabled choices, do not design around them; use natural dialogue or omit the option.
+
+A knowledge gate should have an accessible source. The player can inspect a note through the text interaction, not only parse a tiny mark. A skill gate should state its benefit in the response. A faction gate should indicate access conditions through existing feedback. A character gate should not expose sensitive personal content as a locked tooltip.
+
+### Gate composition examples
+
+**The board was inspected, but the Annex was not.** Show the exact board observations and a route hint to the Annex. Do not show the technical panel observation.
+
+**The player has a repair capability but has not inspected the panel.** Offer an invitation to inspect; do not pre-reveal the result because the skill exists.
+
+**The player inspected the panel but has no repair capability.** Show the fresh scratch as a basic fact and leave its cause uncertain. The skill path can compare wear but not identify a worker.
+
+**The player heard Oren’s story before meeting Mara.** Mara can ask whether the account is direct and whether the player has another source. She does not repeat a basic objective as if the player knows nothing.
+
+**The player found the margin note before the scene.** The node can acknowledge the note and ask what it means to the current roster. It must not show the note again as a discovery reward.
+
+**The player has a strong relationship with Oren but never visited the Annex.** Oren can share his personal boundary or work history, but cannot describe a recent panel mark he did not see.
+
+**The player has low standing with an existing group.** A member may decline to alter an official record, but the player can still close their investigation through a local or personal route if main progression requires it.
+
+**The player selected unresolved closure.** Normal hub topics remain available. The investigation does not reappear as an active decision unless new evidence causes an authored reopen.
+
+### Fairness review for hidden emotional cues
+
+The broader dialogue design may eventually use hidden emotional states, but the Empty Shift does not need a latent emotion simulator. Characters can express fatigue, concern, irritation, or relief in authored lines. A hidden state is justified only when the current game already models it and a later choice materially depends on it. Otherwise writers should communicate the emotion through observable behavior and choice outcomes.
+
+Do not score a player’s “empathy” from a polite dialogue response. Do not infer guilt from a refusal. Do not make a character’s willingness to share crucial evidence depend on an unobservable emotional variable. The player can be tactful or blunt, and characters can respond, but the system should keep the cause legible.
+
+### Knowledge correction policy
+
+When new evidence corrects a previous line, the graph should offer a short bridge:
+- identify the earlier claim;
+- state the new source;
+- explain what part changed;
+- preserve what remains true;
+- offer the next decision.
+
+Example: “The note shows that ‘covered’ meant someone accepted the task. It does not show who arrived.” This corrects the interpretation while preserving the roster’s actual text. Avoid a character saying “We were wrong about everything” if only one term changed.
+
+If the earlier line was presented as direct fact and now proves false, the narrative should own that error. The source can explain why they believed it or acknowledge that they passed along an assumption. Do not silently replace the text on revisits and pretend the player never saw it.
+
+### Dialogue graph review methods
+
+A reviewer should trace a graph from several starting profiles:
+1. no quest, no discoveries, all characters present;
+2. quest active, board inspected, no Annex visit;
+3. Annex discovered first, quest accepted later;
+4. one witness absent;
+5. alternate note found;
+6. high skill and high relationship overlap;
+7. low relationship and a refusal;
+8. corrected information after save/load;
+9. unresolved closure with no late callback;
+10. prior choice plus a new side quest.
+
+For each profile, record eligible topics, visible response labels, expected source of each fact, effect route, and closure. A condition table should note when multiple predicates overlap. If the reviewer cannot explain why a line appears, simplify the gate or improve the player signal.
+
+### Dialogue context must not leak secrets
+
+Hidden content should not leak through disabled choice text, journal summaries, map labels, response counts, or a character’s generic fallback. If a hidden note has not been discovered, no line should mention an erased name. If a location is only approximate, the UI should not label it with its canonical internal name. If a branch is secret, ordinary dialogue should not reveal that an unseen branch exists.
+
+At the same time, secrecy must not hide a required route. Main content gets reliable entry and fallback. Optional secrets can remain difficult to find, but they are never silently included in progression checks.
+
+### Accessibility and authoring constraints
+
+Dialogue variants should not rely solely on voice acting, color, or facial expression to communicate evidence confidence. Subtitles and text interactions should convey the necessary nuance. If a speaker is visually obscured, their identity should remain available through current dialogue presentation. Focus order should be stable when a gate changes the set of options.
+
+Content authors should separate spoken text, response label, optional hint, and effect summary. A response label is an action statement, not a paragraph. Long explanations belong in dialogue or journal. Choice summaries need localization and screen-reader review. The current UI can limit simultaneous choices; respect that limit by splitting a hub or reconverging branches.
+
+### Minimal viable context layer and optional layers
+
+The MVP supports authored nodes, linear flow, short branches, one hub, simple prerequisite facts, player responses, recognized effects, and a closure path. The Empty Shift MVP uses no more than a handful of facts. Optional layers include relationship-specific lines, skill observations, faction access, visit memory, time windows, corrected-source history, and hidden emotional nuance. Add one layer only when it solves a demonstrated content need and has an owner.
+
+Do not add context dimensions merely because the plan lists them. A maintainable system is defined by a small supported grammar, clear ownership, deterministic resolution, testable fallbacks, and author-friendly documentation.
+
+
+### Worked context profiles and expected outcomes
+
+The following profiles give authors and implementers a shared review surface. They are not a replacement for the current test suite or a claim that every state currently exists.
+
+**Profile A — clean start.** The player has not seen the board, met Mara, or discovered the Annex. Available content: basic request, general survival topics, map lead after acceptance. Hidden content remains concealed. Expected result: player learns the task without being told what the roster proves.
+
+**Profile B — discovery before request.** The player inspected the board while exploring but did not open a quest. Available content: Mara recognizes the prior inspection only if a current discovery fact proves it; otherwise she offers a fresh inspect action. Expected result: no duplicate reward, no false memory.
+
+**Profile C — single source.** The player has a roster observation but no independent clue. Available content: compare, ask, or close unresolved. Expected result: no option to identify a worker as verified.
+
+**Profile D — second-hand account only.** The player heard that Oren worked the shift from another person. Available content: ask who told them, seek direct confirmation, or mark the report as indirect. Expected result: the journal names a report source if supported and does not convert it to player observation.
+
+**Profile E — direct observation and skill.** The player inspected the panel and has a relevant capability. Available content: technical comparison; general path remains. Expected result: the skill provides detail but does not decide identity.
+
+**Profile F — direct observation without skill.** The player inspected the panel but has no technical capability. Available content: basic description and a witness route. Expected result: the player can continue with less precise evidence.
+
+**Profile G — witness unavailable.** Oren has left. Available content: margin note or second witness. Expected result: personal dialogue is unavailable, but main path remains reachable.
+
+**Profile H — strong relationship, no evidence.** The player knows Oren well but has not inspected any record. Available content: Oren’s personal boundary and a request to inspect. Expected result: relationship does not create factual knowledge.
+
+**Profile I — evidence conflicts.** Roster, note, and testimony do not align. Available content: correction question and unresolved result. Expected result: graph preserves the conflict rather than selecting a preferred source automatically.
+
+**Profile J — branch completed.** The player annotated the roster and saved. Available content: callback based on the actual persisted result. Expected result: no option to apply the same annotation twice; unrelated topics remain accessible.
+
+**Profile K — newer evidence.** A later source contradicts the earlier report. Available content: explicit correction. Expected result: the player sees what changed and can revise where supported.
+
+**Profile L — optional secret absent.** The player never found the folded name. Available content: main quest closure. Expected result: no late scene presumes that the player knows the secret.
+
+### Transition table for dialogue topics
+
+| Current context | Topic behavior | Revisit behavior |
+|---|---|---|
+| No quest and no discovery | Offer request only through authored source | Keep ambient topics available |
+| Quest accepted, no clue | Explain next action | Do not replay opening after every map return |
+| First clue observed | Ask for second source | Acknowledge the clue briefly |
+| Evidence route blocked | Offer equivalent or show delay | Refresh only when cause changes |
+| Character absent | Use safe alternate or omit personal topic | Restore topic when character returns |
+| Report choice available | Present clear action and effect scope | Preserve choice availability until selected |
+| Outcome applied | Show closure and next useful hook | Do not reapply effect |
+| Outcome unresolved | Allow ordinary conversation | Reopen only on a new source |
+| New source contradicts report | Explain correction | Keep previous action legible |
+
+A topic can be hidden when it has no useful response. But the whole dialogue panel must not become a dead end. Close/back behavior remains stable and an ordinary topic can still be reached.
+
+### Gate test design principles
+
+Future tests, when authorized, should distinguish content eligibility from effect application. A condition test verifies that a line appears for the correct context. An interaction test verifies that the selected response reaches its current owner. A save round-trip verifies that durable results are restored. A replay test verifies that a repeated interaction does not duplicate effects. These are separate risks and should not be collapsed into one broad happy-path test.
+
+Use focused cases:
+- one positive and one negative case for each critical gate;
+- overlap case for skill and relationship conditions;
+- absent-character fallback;
+- location unavailable fallback;
+- stale response revalidated at selection time;
+- unresolved terminal outcome;
+- correction after an earlier claim;
+- save/reload between outcome and callback.
+
+Test coverage belongs to the existing owner’s test policy. Do not create speculative test names or assume public APIs before an implementation package exists.
+
+### Authoring rules for response conditions
+
+Conditions should be named for facts, not author interpretation. Use “player inspected the roster” rather than “player is attentive.” Use “Oren is present” rather than “Oren is ready to reveal the truth.” Use “annotation result applied” rather than “player chose responsibly.” These names keep dialogue from encoding moral judgments.
+
+A condition should have one clear source and expected lifetime. If a fact is derived from several owners, document the derivation and prefer reading current state directly through the existing consumer. Avoid hidden Boolean combinations in text labels. If authors cannot explain a gate without using internal abbreviations, the condition model may be too complex.
+
+### Content authoring interface needs
+
+A maintainable authoring surface should help writers see node IDs, source speaker, location, condition, text, responses, effects, and next nodes. It should catch missing references and unreachable nodes where the existing tooling allows. This plan does not propose a new editor until current content tooling is reviewed. A spreadsheet can support review but should not become canonical.
+
+Writers need a readable condition summary and a preview for at least three profiles: no special context, expected context, and conflicting/absent context. If the current tools cannot provide previews, maintain a manual gate matrix with the package. Do not ask authors to infer behavior from opaque code or unrelated UI callbacks.
+
+### Context-layer scope gate
+
+A proposed new context feature must answer: what content cannot currently be authored; which existing owner was checked; what player benefit it enables; what save state it adds; how deterministic resolution works; how authors validate it; and how it can be removed. If the answer is “more dynamic dialogue,” the feature is too vague. The Empty Shift does not require generalized sentiment inference, learned NPC beliefs, procedural conversation, or fully simulated memory. Those ideas remain outside the current scope unless a future proposal proves a concrete need.
+
+
+### Stale choice and concurrent update case
+
+A response can become stale if a character leaves or a quest closes while the conversation panel remains open. Before applying the response, the existing owner should recheck its prerequisites. If the action is no longer valid, the player receives a brief explanation and the panel refreshes without losing focus unexpectedly. No effect is applied twice.
+
+For example, the player selects “Ask Oren to confirm the handoff,” but Oren departs before the scene processes the choice. The game should not record testimony. It can say he has gone and offer the margin note route. If the quest was already resolved by another action, the conversation should acknowledge the result instead of reopening the evidence stage. This race is a host/lifecycle integration concern and must use the current command contract.
+
+### Hidden and knowledge-gated content
+
+A hidden branch should be discoverable through an authored cue, not a secret Boolean with no player-facing signal. The indentation beneath the old roster can be found by inspecting the reverse side or by comparing paper layers. If the player never performs that action, ordinary dialogue must not allude to the erased name.
+
+Knowledge-gated choices should describe an action the player can take with what they know. They must not assume the player accepts the game’s inferred interpretation. “Ask whether the mark means covered” is safer than “Confront Mara about the false roster.” The latter presupposes both a conclusion and an accusation.
+
+The branch remains optional. Its absence cannot suppress main quest completion, block location selection, or alter the ending baseline without explicit approval.
+
+### Hard-gate audit
+
+A hard gate blocks a required action or information. Each hard gate needs an explicit owner, player-visible reason, recovery route, and save behavior. If its condition can never change in the current playthrough, the quest must not wait on it. Optional gates can enrich or personalize a response without blocking the objective.
+
+Review every critical objective with all optional gates disabled. The main investigation still reaches a terminal result. If the path fails, move the information to a guaranteed source or downgrade the gate to an optional detail.
+
+### Context closeout
+
+Every gated response should preserve three things: the player can understand why it appears, the speaker’s knowledge has a source, and the required story remains reachable without optional context. That is the acceptance standard for future dialogue expansion, regardless of how many additional condition types the architecture eventually supports.
+
+## Pass 15 — Dialogue context snapshot, truthful gates, and remembered actions
+
+**Status: PROPOSAL, premise-gated.** The master world bible identifies delayed callbacks, cohort-tied memory, and under-connected narrative systems as promising lanes. This plan makes context checks legible while reusing current state owners. It does not create a second relationship store, dialogue-history ledger, faction reputation meter, skill tree, quest status, or memory engine.
+
+### 15.1 Correction and collision boundary
+
+Any Empty Shift conversation that remembers a work assignment, roster conflict, or shift outcome must first be compared with DutyRosterSystem and DutyRosterQuestRuntime plus the current duty-roster catalogs. The prior storyline is a DRAFT collision candidate. Do not preserve its own “who remembers the shift” state. For all dialogue, use existing authoritative sources for quest state, actor survival, faction standing, skill, map knowledge, relationship, inventory, and encounter outcomes. A gate is an evaluation of current owner facts, not a new memory.
+
+### 15.2 Context snapshot
+
+At a conversation boundary, gather a read-only snapshot of the minimum facts required to select valid lines. The snapshot should be immutable for that one response selection so a UI refresh does not see half-updated state. It may contain stable IDs and simple values such as current day, location ID, active quest/objective status, a previously recorded choice fact, faction standing band, relationship band, skill threshold, actor availability, location knowledge, item possession, and visit-count facts only when a current owner exposes them. Keep it small; do not copy every system into every dialogue DTO.
+
+The snapshot is not authoritative and is never saved. It is rebuilt on scene entry and after an owner event that changes a relevant field. If a needed fact has no owner or read API, write an integration dependency. Do not silently make a local cache authoritative because it is convenient for the dialogue panel.
+
+### 15.3 Gate types and evaluation order
+
+| Gate | Truth source | Player-facing behavior |
+|---|---|---|
+| Quest gate | Quest owner/read model. | Offer a line only when the current stage makes it useful. |
+| Knowledge gate | Existing journal, clue, signal, or narrative fact owner. | Explain what evidence the player has found, not the internal flag name. |
+| Relationship gate | Existing character/relationship owner. | Change tone or disclosure at a defined band; do not invent a new score. |
+| Reputation gate | Existing faction stance/standing authority. | Reflect access and trust as that owner reports them. |
+| Location gate | Map/discovery and current route authority. | Do not expose a destination as reachable if it is only rumored or blocked. |
+| Skill gate | Current skill progression owner. | Add a bonus observation or alternate wording; protect required clues from skill exclusion. |
+| Repeated visit | Existing visit/encounter history if exposed. | Use a specific change marker; do not repeat introductory copy forever. |
+| Failed quest | Canonical lifecycle and failure consequence owner. | Acknowledge the actual failure and present valid next steps. |
+| Prior action | Canonical choice/consequence record. | Remember what the player did, not an inferred motive. |
+| Emotional state | Existing trait, morale, guilt, trauma, or phantom-memory owner where relevant. | Use sparingly and never label diagnosis from a single gameplay value. |
+
+Evaluate hard eligibility first, then spoiler/knowledge safety, then access, then optional tone variants. If two gates conflict, the more restrictive requirement wins for the line that contains sensitive information. A failed optional gate should leave another conversational action, an explicit reason, or a graceful exit; it must not leave an empty dialogue panel.
+
+### 15.4 Memory fact versus memory interpretation
+
+A character memory should preserve an observable event: “the player returned with the package,” “the player declined the request,” or “the report omitted the witness.” An interpretation such as betrayal, kindness, cowardice, or loyalty belongs to the speaking character's perspective and may be wrong. Dialogue can show that interpretation, but must not convert it into an unowned global fact.
+
+Prefer an existing source record that already captures the action. Quest status, encounter resolution, consequence ledger, Chronicle milestone, relationship event, or NpcMemorySystem may be relevant; inspect each current API before relying on it. PhantomMemoryEngine is a distinct item-triggered per-survivor system with its own trigger rules and persisted records. It is not a generic dialogue-memory service. Do not put dialogue visit history into it merely because it already contains “memory” in its name.
+
+Use an event fact reference, not copied consequence state. If the event source is later migrated, maintain the reference mapping in the source owner. Presentation can say “you said the route was clear” only if an existing event records that exact line/choice, not only a broad flag like “helped faction.”
+
+### 15.5 Knowledge and information-flow rules
+
+For each character at each conversation node, list: knows; suspects; does not know; cannot know yet; source; and first valid exposure point. A character learns a player action only through a plausible channel—being present, receiving a report, hearing a broadcast, reading a posted result, or being told by a known messenger. Radio reception and location access do not imply perfect comprehension. Delayed information arrives only after the relevant system/event path allows delivery.
+
+Skill checks can reveal an additional clue from observable evidence. They cannot produce a fact that has no in-world source. Faction-gated dialogue may reveal institutional vocabulary or private procedure; it must not become a hidden mandatory gate to story comprehension. Repeated-visit dialogue may reflect wear, impatience, relief, or a new duty, but each version needs a world-state predicate rather than arbitrary “visit number” progression unless a current owner provides that count.
+
+### 15.6 Gate fairness and recovery
+
+When a response is hidden, the player should be able to understand the broad reason and how to act on it, unless explanation itself would reveal a mystery. Avoid false affordances: a disabled response must not look selectable; an apparently selectable response should not fail after commitment because a stale panel snapshot changed invisibly. Confirm the snapshot at command execution and return a clear refreshed result if a requirement changed.
+
+For a required clue, supply at least one non-skill route and one recovery path after optional failure. For faction and relationship gates, show the minimum action that can improve access without promising that a particular answer is correct. If a companion is unavailable, use another allowed speaker, a recorded message, or a different quest path; do not silently replace the character with a new one.
+
+### 15.7 Example gate table for The Long Thaw
+
+These examples remain DRAFT and contain no new IDs.
+
+| Moment | Gate | Allowed response | If gate fails |
+|---|---|---|---|
+| Registrar asks about the report | Knowledge owner says player saw only one of two records. | Ask where the second copy was made. | Explain that comparison is not yet possible; leave the investigation objective active. |
+| Workshop discussion | Inventory/crafting owner confirms substitute part. | Commit it, reserve it, or ask how to source another. | Do not show the consume option; offer a map or trade lead only if one is valid. |
+| Route briefing | Expedition owner confirms route reachability. | Choose exposed route or known route. | Mark the blocked route and display the reason from map/weather/faction owner. |
+| Witness debrief | Choice record says player preserved uncertainty. | Ask the witness to restate the observed facts. | If the witness is absent, use an authored report only if it contains the same verified testimony. |
+| Faction contact | Standing owner reports contact is hostile or closed. | Request a neutral intermediary or leave. | Do not present a free negotiation that the faction owner will later reject. |
+| Later callback | A confirmed due event exposes callback content. | Acknowledge, dispute the earlier account, or end scene. | If no delivery event fired, do not expose the callback early. |
+| Companion discussion | Current relationship/availability owner supports the scene. | Listen or ask a follow-up. | Do not synthesize a relationship level in UI. |
+
+### 15.8 Dialogue node authoring contract
+
+A candidate node may use the user's suggested shape—ID, speaker, location, conditions, text, player responses, effects, quest updates, relationship changes, world-state changes, and next node—only where the current data schema and effect dispatcher support those fields. The list is not permission to introduce a new node schema. If a schema is missing a needed field, first prove that current encounter, narrative consequence, or quest data cannot express the use case.
+
+For review, every response should state its text key, visible condition, hidden-condition explanation, consequence class, owning system, reconvergence node, failure response, and whether the option is reversible. Condition evaluation must be pure; effects apply only after an explicit player command through the current dispatcher/owner route.
+
+### 15.9 Acceptance matrix
+
+Review with paired cases: same action, different quest status; same relationship, different knowledge; same knowledge, different faction standing; same skills, missing optional item; same clue reached through two routes; first and repeated visit; quest active and then failed; callback due and not yet due; save/reload immediately before response; actor absent after choice; and an owner fact changing between panel display and command. Each case should prove truthful options, no duplicate state, stable saved outcome, readable recovery, and no path to a locked progression dead end.
+
+The plan advances when all gates name concrete read APIs and owners, test data represents valid and invalid states, hidden text has an information-flow review, and performance work is based on measurement rather than speculative memoization. This pass proposes no production gate or memory service and runs no tests.
+
+### 15.10 Gate precedence and snapshot invalidation
+
+A gate evaluator should have a documented order so that one condition cannot leak a line before another condition blocks it. The proposed order is:
+
+1. Verify the dialogue definition and response references are valid.
+2. Verify the speaker exists, is available, and can plausibly be at this scene.
+3. Verify location and route state.
+4. Verify quest stage and terminal status.
+5. Verify the player has the knowledge required to understand the line.
+6. Verify faction or relationship access for optional disclosure.
+7. Evaluate skill-conditioned observations.
+8. Select the appropriate repeated-visit or emotional tone variant.
+9. Construct the visible response list and a broad reason for unavailable options.
+10. On response submission, ask the owner to revalidate any condition that may have changed since the snapshot.
+
+This ordering is a design proposal, not a claim about current code. Hard safety/access conditions outrank optional tone. A skill observation must not reveal a future fact. An optional relationship response must not override a quest-completion requirement. If a character leaves the scene between display and submission, return a clear “conversation changed” result and refresh without applying partial effects.
+
+A conversation snapshot should have a clear invalidation trigger: scene entry; quest event; actor availability change; faction or relationship event relevant to the current node; location discovery/access event; or day/event transition when the node uses a time gate. Avoid polling the whole game state every frame. A snapshot can be cheaply recomputed at a command boundary.
+
+### 15.11 Gate examples with alternatives
+
+**Knowledge gate:** If the player has the first report only, ask where the second was filed. If both exist, ask whether to compare them. If the second is lost, offer a physical retest or close with uncertainty. All routes preserve the core objective.
+
+**Faction gate:** If the player's standing grants access, an official can provide a restricted maintenance record. If access is denied, a public copy, paid intermediary, or refusal branch may remain, but only if those routes exist in current catalogs. Never pretend that a hostile faction will negotiate because one dialogue option was labeled “appeal.”
+
+**Relationship gate:** A trusted companion can explain why a refusal mattered to them; a neutral companion can state observable behavior. The trusted line adds personal context but does not contain a required clue unavailable elsewhere.
+
+**Skill gate:** A trained survivor notices that the gauge face is mounted upside down. Another survivor can still find the maintenance label or compare two readings. Skill changes interpretation detail, not access to the only valid objective.
+
+**Repeated visit:** First entry establishes the request. After a real quest state change, the registrar quotes the updated objective. If nothing changed, return to the same concise hub with a clear exit rather than inventing impatience.
+
+**Failed quest:** If the deadline elapsed, a character can state which window has closed. They cannot claim a community was harmed unless the failure consequence owner recorded that result. The recovery choice is available only if the corresponding route remains valid.
+
+**Phantom memory:** If a scavenged object triggered a genuine PhantomMemoryEngine event, a character may react if the host/narrative path exposes that event to them. A different dialogue service must not replay the phantom text or duplicate morale/guilt effects.
+
+**Callback not due:** Keep the future branch invisible or display a neutral current topic. Do not hint that someone has returned before a valid event has delivered the callback.
+
+### 15.12 Explainable option reasons
+
+Player-facing explanations should say what action is missing, not expose implementation syntax:
+
+- “You have not compared the two copies.” (knowledge/evidence)
+- “The gate is closed to your party today.” (route/access)
+- “The report is not due for review yet.” (time)
+- “No one can take that shift now.” (actor/schedule, only if supported)
+- “You do not have enough material to commit this repair.” (inventory/crafting)
+- “The witness did not hear that exchange.” (information-flow boundary)
+- “The required contact is unavailable; the request remains open.” (actor availability)
+
+Avoid “Requires flag X,” “stat check failed,” or “relationship < 25.” An explanation is not a promise to reveal every secret branch. For a hidden response, communicate the next general action without naming the content.
+
+### 15.13 Memory quality and retention
+
+Remember consequential actions, not every conversation click. Candidate memories include accepted/refused requests, factual corrections, a publicly filed report, promise kept/broken, objective completed/failed, or a witnessed rescue. Casual flavor lines should not add persistent history. Before adding a memory, ask whether a later line or game system consumes it; unused history increases save size and continuity obligations.
+
+When the owner records a memory, prefer a stable event reference and compact outcome classification over a transcript copy. Store exact text only if the player explicitly authored it or the canonical journal already owns the quotation. On old saves, absent memory should mean “not recorded,” not “the player never did this,” unless the migration can prove that meaning. If one event has several interpretations, keep the fact singular and let speaker-specific dialogue interpret it.
+
+### 15.14 Dialogue fairness review
+
+For each important choice, review the option list at low and high skill, neutral and high/low relationship, friendly and hostile faction standing, with and without optional knowledge, active/failed/expired quests, actor present/absent, first/repeated visit, and valid/missing route. Check:
+- At least one valid way to exit or continue.
+- No essential fact is gated behind an invisible roll.
+- Locked responses do not look available.
+- Costs are stated before commitment when known.
+- The player is not blamed for an owner-level failure.
+- A refusal does not accidentally masquerade as acceptance.
+- A missing actor does not fabricate a new speaker.
+- Reopening the panel shows the current owner state.
+- Translation expansion does not clip or hide the reason.
+- Controller and keyboard focus order is stable.
+
+### 15.15 Context-read performance
+
+A dialogue panel should request only the context needed by its current scene. Prefer one context build on open plus event-driven refresh to repeated scans over every candidate node on every frame. Resolve IDs through already-built catalog indexes. Do not memoize across a quest or faction change without an invalidation contract. Measure large-catalog scene-open latency, allocations, hidden-condition evaluation cost, and repeated panel open/close behavior. Optimization is a separate evidence-backed task if a measured threshold is missed.
+
+### 15.16 Acceptance evidence
+
+A context-gate integration is reviewable when each gate points to a current API or a named missing seam; each memory is owned and consumed; conditions are deterministic; visible options remain fair under alternate states; snapshot invalidation is correct; no new mutable store was added; and save/load preserves existing owner facts. The focused test plan belongs to the later implementation package and should cover the matrix above without aggregating independent lifecycle cases.

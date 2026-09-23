@@ -1984,3 +1984,302 @@ The handoff receipt includes purpose, canonical records added or extended, exact
 
 No production code or game data changes occur as part of this planning pass. When promoted, each task must follow INTEGRATION_PLANS.md, WORKTREE_OWNERSHIP.md, TEST_POLICY.md, and AI_AGENT_WORKFLOW.md. Any architecture decision beyond an existing owner requires the designated authority rather than an improvised local system.
 
+
+### Production review: status, risk, and cut strategy
+
+The Empty Shift package has a wide range of possible content, but the production release should be staged. A status grid prevents optional material from being mistaken for required integration.
+
+**Slice A — narrative foundation.** Board interaction, one clue, one main quest entry, Mara or an existing character, and unresolved closure. Dependencies: current quest and dialogue owners. Risk: low if existing schemas represent the interaction.
+
+**Slice B — location evidence.** Annex exterior, a service-panel clue, one alternate source, and map fallback. Dependencies: location catalog, expedition candidate owner, map UI. Risk: moderate because availability and discovery must agree.
+
+**Slice C — character and side content.** Oren/Nessa/Sella scenes, Quiet Count, glove task, optional hidden note. Dependencies: character presence, relationship/food/item state only when used. Risk: content volume and continuity.
+
+**Slice D — cross-system effects.** Board edit affecting work assignment, food allocation, shelter service, or campaign policy. Dependencies: exact domain owners, save path, balance, migration, deterministic behavior. Risk: high until source evidence proves the contract.
+
+Do not bundle Slice D with the prose and location work merely because it is thematically connected. The story can ship at Slice A or B with truthful limitations. A later mechanics package has a clearer acceptance boundary and can be declined independently.
+
+### Risk register
+
+| Risk | Evidence to seek | Mitigation |
+|---|---|---|
+| Duplicate current roster or work-board feature | Canon registry, current data, UI/source consumer | Reuse or retire proposal |
+| Existing character collision | Character catalog and narrative continuity | Adapt voice/history rather than clone |
+| Ambiguous clue reads as proof | Cold read and objective mapping | Rewrite journal/dialogue boundaries |
+| Critical route depends on one NPC | Availability profile | Add note/location fallback |
+| Too many shelter pins | Map capacity and playtest | Fold interactions into existing hub |
+| Resource consequence has no authority | Core owner and save registration | Keep result narrative-only |
+| Quest outcome not saved | Quest save contract | Scope down or plan owner change |
+| Text visible only in asset | Accessibility/localization review | Add supported text interaction |
+| Repeated task becomes grind | Cadence and reward review | Ship static variants or remove |
+| Existing saves misread a new fact | Save profiles and migration evidence | Additive defaults or explicit migration |
+| Content package exceeds capacity | Production estimate | Cut optional slices |
+| Generated variation changes evidence | Variant invariant review | Reduce to presentation-only variation |
+
+Risk labels are provisional until current source and content are inspected. “Low” is not a substitute for evidence.
+
+### Branch and reference graph audit
+
+The package should contain a graph with nodes for quest starts, evidence interactions, dialogue scenes, location outcomes, and terminal result bands. Each edge lists the condition and target. An automated or manual review should catch:
+- unreachable nodes;
+- terminal states with unresolved required references;
+- choices that have no response path;
+- response path that starts the same quest twice;
+- location reference with no fallback;
+- alternative routes that yield contradictory confidence;
+- callback that fires before its cause;
+- branch that references a character who can never be present;
+- effect that has no consumer;
+- optional clue that accidentally becomes a required prerequisite.
+
+Graph reachability alone is not enough. The author should inspect evidence provenance: two clues must be independent if they are counted as corroboration. If both came from the same person’s copied note, they are related sources. Content validators can check references; a human reviewer determines source independence and narrative meaning.
+
+### Data migration and versioning scenarios
+
+**Additive records only:** older saves ignore new quests, unless a discovery fact already makes them eligible. No migration is expected; prove that from current save reconstruction.
+
+**Extension of an existing quest:** old saves may have the quest active or complete. Define how the new dialogue and outcomes behave for each state. Do not reset the quest.
+
+**New location interaction on an existing site:** old saves may already have visited the site. Decide whether the new interaction is discoverable on return or requires a new clue. Do not mark it seen by default.
+
+**New branch consuming old reputation/relationship state:** verify semantics and thresholds; do not infer a specific relationship outcome from a broad score without approval.
+
+**Changed meaning of a field:** requires explicit migration and current save owner. This should be avoided for an expansion content slice.
+
+**Retired content after partial play:** preserve saved outcomes or provide a compatibility path. Removing content from a catalog cannot cause a saved active quest to disappear silently.
+
+A migration table should list old representation, new representation, deterministic transformation, fallback, and evidence that older saves can contain the old form. If no evidence exists, do not invent a migration task.
+
+### Localization and copy review packet
+
+The prose includes terms that can become ambiguous in translation: planned, covered, worked, confirmed, attendance, and record. The localization packet defines each term with a short in-world example. “Covered” means someone took responsibility for a shift; it does not necessarily mean the person physically performed the task. “Worked” denotes performed work, but not necessarily a full shift. “Confirmed” refers to evidence, not character confidence.
+
+Map labels use short concepts; journal prose can preserve the distinction; dialogue can be less formal and character-specific. Translators should receive speaker and scene context for every line. Repeated English phrases may not translate to the same structure, so avoid assuming line reuse is free.
+
+Do not put text inside textures as the only representation. If the roster is rendered as an image, the inspect interaction or another current accessibility surface needs a text equivalent. If line length forces abbreviation, retain the key confidence distinction in the short form.
+
+### Content analytics without new telemetry
+
+Before asking for telemetry, use qualitative review and deterministic fixtures. A small content test can list whether a candidate is reachable under each profile. If the game already logs selection, use the established privacy-safe diagnostics. Do not add player tracking to answer questions that can be resolved by code inspection or focused manual play.
+
+Playtest questions include: what did players infer from the roster; which evidence did they treat as independent; did they understand “covered”; did they know they could close unresolved; did they confuse a locked Annex with a dead quest; did the interface expose the report’s consequence; and did optional scenes feel relevant rather than mandatory? Record observed behavior and quotes according to project policy, but avoid treating one participant’s conclusion as a balance metric.
+
+### Removal and rollback card
+
+If the package is cut, remove or leave only:
+- unshipped proposal prose in this plan;
+- canonical content records that no release has used;
+- optional assets with no remaining reference;
+- IDs and links from the plan index or generated catalogs through their owner.
+
+If the package has shipped, remove only through a versioned content/save plan. Preserve any outcomes that existing content or saves consume. Redirect active objectives to an authored closeout. Do not delete a save fact because the original location was removed from the next build.
+
+The rollback receipt records what was disabled, how active saves behave, which dependencies remain, and which canonical files changed. No destructive cleanup is authorized by this plan.
+
+### Production readiness checklist
+
+The package is ready for an implementation work item only after its canon review, schema mapping, exact file claims, objective proofs, fallback, location selection, condition sources, effect owners, save path, localization/accessibility review, content integrity validation plan, focused test plan, runtime route, and rollback behavior are all known. Anything beyond the existing architecture is submitted as a decision request with player value, dependencies, cost, and alternatives.
+
+
+### Content sample audit: one clue through every authority
+
+Use the correction mark as a content audit sample. The planning record says what the mark might mean. The canonical data row, once approved, defines the interaction and stable identity. The dialogue scene describes what Mara knows. The quest owner records that the player inspected it. The journal displays what the observation supports. The map shows the board only if the player knows its location. The save owner restores any outcome that a later scene needs. Each layer has a separate responsibility.
+
+A sample audit should reject any of these shortcuts:
+- dialogue directly sets a board state instead of invoking its owner;
+- journal text claims the player saw a mark before interaction proof exists;
+- asset text is treated as a canonical clue without an inspect interaction;
+- location candidate tags are copied into multiple registries;
+- a generated variant changes the mark’s meaning;
+- a save migration guesses that every shelter visit included an inspection;
+- a validator passes the ID but no host route can reach it.
+
+The audit also checks whether a different clue source can serve as fallback. The margin note can explain the mark’s possible use, but it is not the same source as the roster. If the player finds the note first, the next scene should consume that knowledge and avoid presenting it as a new discovery.
+
+### Change ownership and review routing
+
+When reviewers request a change, route it to the field or owner that controls the issue:
+- identity collisions go to the canon/content owner;
+- schema limits go to the data authority owner;
+- condition semantics go to the runtime consumer owner;
+- quest proof goes to quest lifecycle owner;
+- map selection goes to expedition/location owner;
+- save behavior goes to save owner;
+- presentation and focus go to UI owner;
+- text or voice goes to narrative/localization owner.
+
+A planning document can explain the issue but cannot assign an implementation path. If two owners disagree, pause for the named integrator or architecture decision. Do not “fix” the content by duplicating state in the least resistant layer.
+
+### Release trace minimum
+
+A release handoff should identify the changed files, approved content IDs, branch/outcome list, current consumers, save impact, localization and accessibility status, validator invocation, focused verification invocation, and known deferred features. It should include one reproducible path from start to callback. It should also state which proposed content was removed before release and why.
+
+This receipt allows the next team to continue without rereading every planning paragraph. It records implemented facts only. If the release contains only the narrative-only slice, the receipt says that no survivor schedule or meal values change. Future system plans can then build from a truthful baseline.
+
+
+### Regression watchlist
+
+Before merging a future content package, compare the new records against active catalogs and continuity anchors, then check for broken references, changed IDs, stale localization keys, inaccessible variants, and unused content. Review the generated integrity report if the repository provides one. If the new content changes a shared schema or consumer, the appropriate owner includes the focused compatibility check.
+
+After release, a follow-up audit can ask whether players reached the main investigation, whether unresolved outcomes were understandable, whether the optional content was worth its production cost, and whether any record variant contradicted the physical world. These questions guide content revision; they do not justify collecting new analytics without an approved privacy-safe route.
+
+A regression found in prose can be fixed in the canonical content. A regression in a state owner needs an implementation work item and exact path claim. Do not disguise a runtime defect by changing text to imply that the effect never mattered.
+
+### Documentation and data drift check
+
+After implementation, compare the plan’s promised behavior with the canonical records and runtime route. If the shipped slice changes an outcome, update the plan’s status and integration receipt so the next author does not design against an obsolete proposal. Keep proposal text clearly separated from verified implementation facts.
+
+An index should report measured file counts and current pass delta, but counts do not prove quality or reachability. The release receipt links to the authoritative data and focused evidence. If a proposed field was not implemented, state that the package was scoped down; do not leave the index implying that the feature exists.
+
+### Evidence quality in the content ledger
+
+For each clue, record whether it is a direct observation, an authored document, a first-person account, a second-hand report, or an inference. Note whether another clue shares the same source. This editorial evidence map prevents writers from accidentally treating a copied note as independent corroboration.
+
+The map is not a runtime confidence model. Its purpose is to let the quest owner and narrative reviewer understand what each branch can claim. If confidence later becomes a gameplay value, it requires a real repeated consumer, a current owner, and a separate architecture decision.
+
+### Record authority reminder
+
+A proposal key is not a shipped ID, a planning ledger is not gameplay data, and an authored variation is not a generated fact. Keep those boundaries visible in every handoff. Promote records only after the actual schema, consumer, validation route, and path owner are verified.
+
+## Pass 15 — Provenance contract for authored and generated story content
+
+**Status: PROPOSAL, premise-gated.** This pass turns the bible's JSON authority and data-first expansion rules into a content boundary contract. It recognizes that authored locations, encounter definitions, quest templates, generated quest instances, runtime state, and save payloads already exist in several owners. The goal is a traceable boundary between them, not a new registry or generation framework.
+
+### 15.1 Previous content collision correction
+
+The Empty Shift story and its location circuit are not accepted as a separate duty-roster, quest, character, or location family. DutyRosterSystem, DutyRosterQuestRuntime, duty-roster catalogs, QuestRuntimeCoordinator, the existing quest families, the world map catalog, and micro_locations.json are current evidence that must be searched before any record is promoted. Earlier prose can survive as a scene draft only if its characters, work behavior, geography, and consequences fit current canon and do not repeat an existing record. Keep all unresolved material marked PROPOSAL or DRAFT.
+
+### 15.2 Four data classes
+
+| Class | Identity | Authority | Lifetime |
+|---|---|---|---|
+| Permanent authored definition | Stable catalog ID, schema version, reviewed text and references. | Existing JSON catalog plus its current loader/validator/consumer. | Across releases; edits require normal compatibility and continuity review. |
+| Authored variation rule | Stable rule/template ID plus bounded options or gates. | Existing catalog family or an explicitly approved additive extension. | Versioned with its parent content. |
+| Generated runtime instance | Instance ID, source definition/template, seed and bound existing entities. | Existing generator during creation; existing QuestRuntimeCoordinator or specialized runtime owner after handoff. | Session or save lifetime according to that owner. |
+| Presentation projection | Localized/rendered text and visible state derived from current facts. | Existing host/read-model/UI path. | Rebuilt from the authoritative instance; not gameplay state. |
+
+A generated instance may select an authored definition, bind an existing item/location/character/faction, and vary copy within an authored grammar. It must not synthesize canon by creating unreviewed permanent entities or persist the same mutable outcome in two owners. If a new fact needs long-term persistence, the plan names the existing save-section owner or marks the work blocked for a signed architecture decision.
+
+### 15.3 Content envelope
+
+Each authored record should be auditable without inventing a universal mega-schema. Use the schema already owned by its catalog. In the plan and review packet, record these common metadata fields whether or not they are physically stored in JSON:
+
+- Stable source path and existing record ID, or “candidate with no ID assigned.”
+- Evidence status and last premise-audit date.
+- Content class: authored definition, authored variation, generated instance, runtime projection, or save state.
+- Owner catalog, loader, consumer, and validator.
+- Preconditions expressed with current supported schema features.
+- Existing entity references and their canonical IDs.
+- Localization/text-key source and prose approval status.
+- Whether the record is mandatory, optional, secret, temporary, repeatable, or one-shot.
+- Generation seed/version behavior if generation is used.
+- Save implications, including whether the state is reconstructed or persisted.
+- Retirement/replacement plan and branch compatibility notes.
+
+This is a review envelope, not an instruction to add duplicated metadata fields to six catalogs. Choose one existing mechanism for each concern after checking the code, schema, generated-document rules, and data authority.
+
+### 15.4 Deterministic generation boundary
+
+The current DynamicQuestGenerator source includes a path that asks ProceduralNarrativeSystem to generate a candidate using a NarrativeWorldSnapshot and ISeededRng, then registers that accepted candidate with QuestRuntimeCoordinator. Treat this as a concrete precedent. Do not infer that every generated encounter, destination, or dialogue choice already follows the same path.
+
+For each generator, freeze the minimum inputs that can change the result: stable world snapshot, eligible template IDs, existing entity candidates, seed stream, algorithm/content version, and any authored weights. Candidate enumeration is sorted by stable ID before seeded selection. Generation must not read host frame timing, wall clock, process-randomized hash order, UI focus, or a network response. A replay of the same seed, input snapshot, and content version should return the same choice and bindings.
+
+A generated instance records enough origin information to be explainable: which authored template was used, what existing location and actor IDs were bound, the generation day, and the seed/version already supported by its owner. Do not add another parallel “generation provenance database.” If the existing instance cannot retain a required provenance fact and that fact is needed to reproduce or debug a save, open a bounded owner extension with capture/restore and migration criteria.
+
+### 15.5 Authored truth and generated surface text
+
+Generated wording may vary sentence order, document genre, or a few authored phrase choices. It may not alter who owns a location, when an event occurred, what a faction believes, whether a character is alive, or the result of a prior decision. Those are authored canon or current world facts. A generated statement about an authored event must be checked against the event's timeline and perspective.
+
+Recommended variation layers:
+
+- **Layer A: Stable authored fact.** Exact historical event, required objective, item identity, faction relation, or known outcome.
+- **Layer B: Authored scene lens.** One of a reviewed set of voices or documentary forms that describes the same fact.
+- **Layer C: Bounded runtime binding.** Existing actor, location, resource, day, or threat band selected from valid candidates.
+- **Layer D: Optional surface variation.** Seeded short phrase, sensory detail, or question order that cannot change gameplay meaning.
+- **Layer E: Consequence.** A command routed to its canonical owner, never an arbitrary text-generated effect.
+
+Layer D must be removed when it creates ambiguity, localization problems, repeated phrasing, or a false promise about optional gameplay. Mechanical requirements and rewards must never be parsed from generated prose.
+
+### 15.6 Permanent and temporary geography
+
+A permanent authored location has stable identity, map/catalog membership, author-reviewed history, and canonical route references. Its state can change—blocked, damaged, contested, evacuated—through its existing evolution/world owner without mutating its historical definition. A temporary event destination can be a presentation state or an encounter attached to an existing location if that is what current systems support; it should not become a permanent map node merely because a random event referenced it.
+
+Micro-locations already have a dedicated micro_locations.json loader. New ideas for a shack, culvert, cache, station room, or storm shelter should first be tested as: existing node plus new encounter; existing micro-location record plus additional route evidence; or a genuinely missing permanent node. Only the last case requests a location catalog addition, and that request must include graph edges, valid destination selection, region, entry routes, hazards, map visibility, discovery, reuse, and fallback.
+
+### 15.7 Generated-data save policy
+
+Keep immutable definitions out of save files. Persist only runtime facts that cannot be reconstructed without changing the player's result: accepted quest instance, selected authored variant when the player has seen/committed to it, objective progress, terminal outcome, and any owner-specific anti-reroll receipt. A candidate that has not been shown or accepted may be regenerated if the existing owner guarantees the same deterministic result; otherwise the owner must define why the choice is frozen.
+
+On restore, validate references before applying a generated instance. Missing authored definitions should lead to a compatibility fallback or an explicit load diagnostic, never a silent retarget to unrelated text. Unknown fields remain governed by the current codec policy. Any schema addition requires a versioned migration from supported saves and an exactly-once review for events that might be replayed around save boundaries.
+
+### 15.8 Content gates and release evidence
+
+Structural gates prove unique IDs, schema version, valid enum/range values, reference resolution, map-node existence, and duplicate detection. Utilization gates prove an authored definition is reachable by a live producer and consumer. Continuity review proves characters know only available information, timelines agree, factions possess what they trade, and no ending gains a fact from an unseen branch. Playability review proves the record produces a legible decision and has a fallback when optional content is absent.
+
+Required release evidence for a content tranche:
+
+| Evidence | Pass condition |
+|---|---|
+| Catalog ownership | One identified source file and one current loader. |
+| Reference integrity | Every item, location, quest, actor, faction and knowledge key resolves. |
+| Reachability | At least one verified producer can surface each required record. |
+| Determinism | A fixed snapshot and seed reproduce generated bindings. |
+| Save review | The owner either reconstructs the state or has explicit migration and round-trip coverage. |
+| Narrative review | Voice, timeline, knowledge, setting constraints and outcome text agree. |
+| Accessibility review | Map and dialogue state is conveyed by readable text and focus behavior. |
+| Performance review | Candidate pools and content lookups are bounded and measured before optimization. |
+| Retirement | Replacement/deprecation preserves old-save and old-reference behavior. |
+
+### 15.9 Example of the boundary in play
+
+A proposal calls for a cold-weather service request with one required site and two possible clues. The authored part is the request's stable purpose, witness position, map hint family, valid objective alternatives, terminal outcomes, and reviewed prose. The generated part may bind one eligible site from a reviewed existing set and one eligible witness already in the cast. The runtime instance stores the chosen IDs and seed only through the quest owner. A dialogue line cannot invent a new faction or claim a substitute site contains the original evidence. If neither site is eligible, the request waits with a visible reason or uses a pre-authored alternate; the generator must not create a third unreviewed site.
+
+### 15.10 Promotion checklist
+
+Before DRAFT becomes candidate data, identify its source catalog and schema; before candidate data becomes shippable, verify the real loader, consumer, and integrity rule; before state becomes persistent, identify the save-section owner and migration; before a generated variant becomes replayable, identify its stable RNG stream; before a location becomes map-visible, prove a valid graph route and selection path; before a branch becomes canon, audit every reachable ending and old save. This plan records the intended evidence. It does not claim that any of those gates passed in this pass.
+
+### 15.11 Record examples
+
+**Authored encounter attached to a current site.** The stable content is a reviewed question, a set of responses, their supported effects, and a narrative source. The encounter references an existing location only after ID and consumer verification. If one line varies by weather, the weather fact comes from WeatherSystem or its current host projection; the record does not create another weather cache.
+
+**Generated quest candidate.** A live narrative template selects an existing location and resource from a sorted eligible set using the injected seeded RNG. The generated instance records the template and bindings under its current owner. The prose can say “the relay above the drainage cut” only when the selected location's authored description supports it. If the record is rejected by QuestRuntimeCoordinator, the template authority must not display it as accepted.
+
+**Dialogue projection.** The authored response key stays stable while the visible wording can depend on an existing relationship band or knowledge fact. The presentation layer resolves text; it does not store a second “NPC remembers this” entry. Any future callback reads a canonical prior event through its owner.
+
+**Temporary event.** A weather or faction event changes eligibility at a specific time. The authored location remains permanent; only the event window changes. When the window ends, the selector removes the temporary role and leaves normal map discovery and history unchanged.
+
+These examples are intended to clarify ownership; they are not proof that each named system currently exposes the required field or event.
+
+### 15.12 State transition between authoring and play
+
+Reviewers should distinguish an editorial state from a game state. Editorial states may include idea, canon review, DRAFT, premise audited, data candidate, approved, integrated, deprecated, or retired. Game state remains in the owner's runtime enum. Do not serialize “approved” into a save and do not let a catalog's editorial status control live eligibility unless an explicit shipped field is part of the schema.
+
+A content change follows this chain: concept; canon collision search; owner and schema identification; record drafting; structural validation; reference validation; utilization proof; narrative/branch review; deterministic/runtime review; focused owner verification; release note and index update; then integration closeout. Rejected ideas remain out of authoritative JSON. Superseded content is removed through an explicit ID/migration policy, not by editing a save's generated instance invisibly.
+
+### 15.13 Generated content rejection reasons
+
+The generation pipeline needs inspectable rejection categories, even if the current API names differ: no template eligible; all candidates invalid; required location missing; faction access closed; actor unavailable; objective incompatible with expedition; unsupported effect; duplicate instance; failed schema validation; output exceeds size budget; or owner registration refused. Each rejected draft must either produce a user-safe reason or remain an internal diagnostic. A rejection cannot consume the same RNG stream unpredictably if it is retried; the generation owner should define whether rejected candidates consume a draw and prove the choice remains deterministic.
+
+Never “fix” invalid generated content by swapping in an arbitrary first catalog row. That can silently change faction, geography, resource economics, or quest meaning. Fallbacks must be authored equivalence groups or a clear no-content outcome.
+
+### 15.14 Stability and content versioning
+
+Stable ID is the identity of a permanent authored record; title text is not identity. Changing prose does not create a new ID unless references or player-facing history require distinct treatment. Changing objectives, reward semantics, location, or effect meaning may require a new definition or explicit migration. The content version is tied to the authoritative schema or a dedicated current version contract; do not insert an unofficial version integer into every record.
+
+Generated instance reproducibility has two valid policies: freeze the accepted instance at the moment it is shown/accepted, or recompute it from inputs that are guaranteed stable and persisted by the owner. Do not mix policies in one quest family. If a balancing update changes an authored template, accepted instances should preserve the committed objective and reward meaning or migrate under a documented rule. A new version should not retroactively grant a better reward or strand an old target.
+
+### 15.15 Localization and text assembly boundary
+
+Permanent prose should be stored in the current data authority and use the localization arrangement adopted for that content family. Do not concatenate arbitrary generated fragments where grammar, gender, number, context, or translation order becomes unpredictable. For localized variants, author whole sentence alternatives or structured slots with agreement metadata only if the current localization contract supports them.
+
+Identifiers, journal facts, and hidden condition names should not leak into localized text. Text assembly may bind visible names from canonical catalogs, but missing names should fall back to a neutral authored phrase and emit a diagnostic. Never display raw null/empty keys as story prose.
+
+### 15.16 Data growth and performance budget
+
+A content plan should estimate record count, fields per record, text volume, average candidate count, maximum active instance count, and repeated lookup path. Large prose catalogs should load through the existing content loader or a proven lazy path; do not add per-frame full-catalog scans. Cache immutable parsed indexes only where the current owner does so and has invalidation rules. Measure startup time, peak allocation, selector latency, save size, and UI refresh cost before optimizing.
+
+Set a bounded acceptance target for each content family. The appropriate number is derived from measured current catalogs and design capacity, not “hundreds more” by default. Every added record needs utilization value, unique player purpose, reviewer capacity, and localization cost. A small collection of distinct, reusable scenes can outperform a large catalog of near-duplicates.
+
+### 15.17 Definition of complete
+
+This plan is complete for a particular content tranche only when the selected records have a canonical owner; authored and generated facts are separated; no runtime authority is copied; the scenario has a reachable producer; all references validate; player-visible text matches the selected bindings; the RNG and save behavior are explicit; old content and saves have a migration policy; and the actual consumer has a focused verification. A plan is not “integrated” because its pages have been drafted or because JSON parses.

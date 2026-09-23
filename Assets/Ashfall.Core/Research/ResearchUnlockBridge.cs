@@ -241,5 +241,64 @@ namespace Ashfall.Core.Research
                 unlockedCapabilities = state.unlockedCapabilities != null ? new List<string>(state.unlockedCapabilities) : new List<string>()
             };
         }
+
+        public bool HasCapability(string capabilityId)
+        {
+            if (string.IsNullOrEmpty(capabilityId)) return false;
+            return _state.unlockedCapabilities.Any(c => string.Equals(c, capabilityId, StringComparison.OrdinalIgnoreCase) ||
+                                                        c.EndsWith($":{capabilityId}", StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool HasRecipe(string recipeId)
+        {
+            if (string.IsNullOrEmpty(recipeId)) return false;
+            return _state.unlockedRecipeIds.Any(r => string.Equals(r, recipeId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool HasItem(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return false;
+            return _state.grantedItems.Any(i => string.Equals(i, itemId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool HasUnlock(string unlockId)
+        {
+            if (string.IsNullOrEmpty(unlockId)) return false;
+            return _state.grantedUnlockIds.Any(u => string.Equals(u, unlockId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public IReadOnlyList<string> UnlockedCapabilities => _state.unlockedCapabilities;
+        public IReadOnlyList<string> UnlockedRecipes => _state.unlockedRecipeIds;
+        public IReadOnlyList<string> GrantedItems => _state.grantedItems;
+        public IReadOnlyList<string> GrantedUnlockIds => _state.grantedUnlockIds;
+
+        public ResearchUnlockCensus GetCensus()
+        {
+            return new ResearchUnlockCensus(
+                _catalog.Count,
+                _state.grantedUnlockIds.Count,
+                _state.grantedItems.Count,
+                _state.unlockedRecipeIds.Count,
+                _state.unlockedCapabilities.Count);
+        }
+    }
+
+    public readonly struct ResearchUnlockCensus
+    {
+        public readonly int TotalCatalogUnlocks;
+        public readonly int GrantedUnlocksCount;
+        public readonly int GrantedItemsCount;
+        public readonly int UnlockedRecipesCount;
+        public readonly int UnlockedCapabilitiesCount;
+
+        public ResearchUnlockCensus(int catalog, int granted, int items, int recipes, int capabilities)
+        {
+            TotalCatalogUnlocks = catalog;
+            GrantedUnlocksCount = granted;
+            GrantedItemsCount = items;
+            UnlockedRecipesCount = recipes;
+            UnlockedCapabilitiesCount = capabilities;
+        }
     }
 }
+

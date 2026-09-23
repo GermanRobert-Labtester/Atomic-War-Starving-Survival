@@ -36,30 +36,41 @@ namespace AtomicWar.GodotApp.UI
 
         private ResearchSystem? _research;
         private ResearchHostSession? _host;
+        private ResearchUnlockHostSession? _unlockHost;
 
         public bool IsBound => _research != null || _host != null;
         public int RenderedRowCount { get; private set; }
 
         public void Bind(ResearchSystem? research)
         {
-            Bind(research, null);
+            Bind(research, null, null);
         }
 
         public void Bind(ResearchHostSession? host)
         {
-            Bind(host?.Engine, host);
+            Bind(host?.Engine, host, null);
         }
 
         public void Bind(ResearchSystem? research, ResearchHostSession? host)
         {
+            Bind(research, host, null);
+        }
+
+        public void Bind(ResearchSystem? research, ResearchHostSession? host, ResearchUnlockHostSession? unlockHost)
+        {
             if (_host != null)
                 _host.StateChanged -= RefreshView;
+            if (_unlockHost != null)
+                _unlockHost.StateChanged -= RefreshView;
 
             _research = research ?? host?.Engine;
             _host = host;
+            _unlockHost = unlockHost;
 
             if (_host != null)
                 _host.StateChanged += RefreshView;
+            if (_unlockHost != null)
+                _unlockHost.StateChanged += RefreshView;
 
             RefreshView();
         }

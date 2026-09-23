@@ -25,6 +25,12 @@ import sys
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 INDEX_FILE = REPO_ROOT / "docs" / "INDEX.md"
 
+# Documents at or above this character count are listed in the oversized
+# register. The threshold is a REPORTING boundary only — oversized documents
+# remain fully tracked and are never excluded from the repository or the
+# index. The register exists so their size stays visible and reviewable.
+OVERSIZED_CHARS = 100_000
+
 def get_doc_files():
     docs = []
     for p in sorted(REPO_ROOT.rglob("*.md")):
@@ -139,17 +145,31 @@ def generate_index_markdown(docs, verified_date):
             "path": rel_path,
             "title": title,
             "status": status,
-            "summary": summary
+            "summary": summary,
+            # Exact character count (Unicode code points, matching `wc -m`) so
+            # every document is tracked down to the character count.
+            "chars": len(content)
         })
 
     total_docs = len(docs)
+    total_chars = sum(item["chars"] for items in categorized.values() for item in items)
     duplicates = find_duplicate_generations(docs)
+
+    # Oversized register: every document at or above OVERSIZED_CHARS, with its
+    # exact character count. Documents are never dropped from the corpus, so
+    # this is the authoritative size record for the largest plans and prose.
+    oversized = sorted(
+        ((item["chars"], item["path"]) for items in categorized.values() for item in items
+         if item["chars"] >= OVERSIZED_CHARS),
+        key=lambda pair: (-pair[0], pair[1]))
+    oversized_chars = sum(chars for chars, _ in oversized)
 
     lines = [
         "# ASHFALL — Master Documentation Index",
         "",
         f"**Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)",
-        f"**Total Indexed Documents:** {total_docs} | **Last Verified:** {verified_date}",
+        f"**Total Indexed Documents:** {total_docs} | **Total Characters:** {total_chars:,} | **Last Verified:** {verified_date}",
+        f"**Oversized (>= {OVERSIZED_CHARS:,} characters):** {len(oversized)} documents carrying {oversized_chars:,} characters — tracked in full, see the register below",
         "",
         "| Status Badge | Meaning | Corpus Count |",
         "|---|---|---|",
@@ -159,13 +179,29 @@ def generate_index_markdown(docs, verified_date):
         "",
         "---",
         "",
+        f"## Oversized Document Register (>= {OVERSIZED_CHARS:,} characters) — {len(oversized)} documents, {oversized_chars:,} characters",
+        "",
+        "Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.",
+        "",
+        "| Characters | Document |",
+        "|---|---|",
+    ]
+
+    for chars, path in oversized:
+        rel_to_index = os.path.relpath(REPO_ROOT / path, INDEX_FILE.parent).replace('\\', '/')
+        lines.append(f"| {chars:,} | [`{path}`]({rel_to_index}) |")
+
+    lines.extend([
+        "",
+        "---",
+        "",
         "## Duplicate & Near-Duplicate Audit Generations",
         "",
         "The following documents share identical or near-identical filenames across root, `docs/`, and `deprecated_audits/`. Use the canonical location listed below:",
         "",
         "| Filename | Copies / Locations | Canonical Location | Notes |",
         "|---|---|---|---|"
-    ]
+    ])
 
     for name, paths in sorted(duplicates.items(), key=lambda x: len(x[1]), reverse=True):
         paths_str = "<br>".join(f"`{p}`" for p in paths)
@@ -200,8 +236,8 @@ def generate_index_markdown(docs, verified_date):
         items = categorized[cat_name]
         lines.append(f"## {cat_name} ({len(items)} documents)")
         lines.append("")
-        lines.append("| Status | Document | Title / Summary |")
-        lines.append("|---|---|---|")
+        lines.append("| Status | Document | Characters | Title / Summary |")
+        lines.append("|---|---|---|---|")
 
         for item in sorted(items, key=lambda x: (x['status'] != 'CURRENT', x['status'] != 'GENERATED', x['path'])):
             badge = "🟢 `CURRENT`" if item["status"] == "CURRENT" else ("🔵 `GENERATED`" if item["status"] == "GENERATED" else "🟡 `HISTORICAL`")
@@ -209,7 +245,7 @@ def generate_index_markdown(docs, verified_date):
             doc_link = f"[`{item['path']}`]({rel_to_index})"
             title_summary = f"**{item['title']}** — {item['summary']}" if item['title'] != item['summary'] else f"**{item['title']}**"
             title_summary = title_summary.replace("|", "\\|")
-            lines.append(f"| {badge} | {doc_link} | {title_summary} |")
+            lines.append(f"| {badge} | {doc_link} | {item['chars']:,} | {title_summary} |")
 
         lines.append("")
 

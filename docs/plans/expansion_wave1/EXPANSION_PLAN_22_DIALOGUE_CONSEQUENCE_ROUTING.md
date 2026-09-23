@@ -1931,3 +1931,458 @@ This late-game bridge should be considered only after the local story works. It 
 
 The story consequence is ready when: the player can predict the immediate scope; each effect has one current owner; no panel or dialogue callback becomes a parallel authority; unsupported work/food changes are omitted; repeated selection is safe; save restoration is truthful; callbacks use verified outcomes; and every non-success route still closes or remains explicitly active. The plan remains documentation-only until the required owners and integration authorization are confirmed.
 
+
+### System interaction scenarios for Empty Shift outcomes
+
+The story touches work, food, maintenance, relationships, maps, and quest results. That breadth creates useful design opportunities but also integration risk. Each scenario below states the player value and a safe boundary.
+
+#### Scenario A — Record only
+
+The player chooses to annotate the roster. The quest result records that the player distinguishes planned coverage from attendance. The board interaction shows the annotation if its current owner supports a persistent edit. No work assignment changes. No food value changes. The player receives a short acknowledgement from Mara or the journal.
+
+This is the preferred MVP because it can prove branch and persistence without depending on a new simulation system. If even the board is not stateful, the choice can complete as a narrative result and be acknowledged in later dialogue only if the quest owner persists it.
+
+#### Scenario B — Existing work owner accepts reassignment
+
+A later source identifies the current worker, and the current work system exposes an approved assignment command. The player may recommend a replacement. The owner validates that the survivor is available and eligible. If accepted, the work schedule changes through the owner; if rejected, the board remains annotated and the journal explains that no assignment was made. The quest cannot bypass skills, injuries, or existing work rules.
+
+This scenario is a future integration slice, not part of the narrative-only baseline. It requires save restore, deterministic event order, and focused verification.
+
+#### Scenario C — Existing food owner recalculates expected count
+
+If an existing food system reads a current roster, the proposal may update its inputs through that owner. If it does not, the story cannot claim that meal quantities change. A cook can still discuss whether the count is useful. Do not build a parallel allocation counter for one quest.
+
+The user-facing outcome must distinguish expected count from actual inventory. If the player holds a reserve, that choice should be explicit, bounded, and balanced by the current resource owner.
+
+#### Scenario D — Maintenance owner changes the Annex condition
+
+If the player repairs the service panel and an existing maintenance or location system models its condition, the repair can alter the current state. The work assignment is still separate: a repaired panel does not prove who completed prior maintenance. The scene can show both outcomes without conflating cause and evidence.
+
+#### Scenario E — Relationship response only
+
+Oren may appreciate being asked before his name is assigned. If the existing relationship owner supports that interaction, record it through its normal command. Otherwise, write a local dialogue acknowledgement and do not claim permanent trust. Relationship change must be proportionate and not a reward for selecting the author’s preferred report.
+
+#### Scenario F — Campaign policy callback
+
+A later leadership discussion may ask whether work boards should distinguish planned, covered, worked, and confirmed. The player’s earlier choice can be referenced if the outcome was persisted by an existing owner. The late-game decision should not unlock only for players who found a hidden clue. An unresolved or missing earlier result receives a neutral choice based on the current information.
+
+### Consequence dependencies and owner graph
+
+The outcome graph can be represented at design time as:
+
+Player response → current dialogue command route → primary quest/result owner → optional board/location owner → derived UI refresh → save capture/restore → later dialogue condition.
+
+Optional cross-system routes branch from the primary outcome only when their owner exists:
+- board outcome → work assignment owner;
+- board outcome → meal planning/resource owner;
+- physical repair → location/maintenance owner;
+- relationship reaction → current relationship owner;
+- campaign policy → current campaign/ending owner.
+
+Each route needs a dependency row. If the primary quest result succeeds but an optional owner rejects a secondary effect, the player sees the actual result and the quest does not lie. If a mandatory effect cannot apply, the primary choice should remain pending or offer a different option. The owner graph is editorial until exact APIs are verified.
+
+### Reward architecture
+
+Rewards should not be copied across all branch outcomes. The quest can grant a completion acknowledgment or unlock information without material payout. If the player repairs something, a resource cost and benefit use current craft rules. If the player escorts a worker, the return may be access to a conversation or safe route, not an arbitrary item. If evidence is lost, the player may still close the quest but receive a less certain result.
+
+A reward matrix should state:
+- reward type;
+- existing authority that grants it;
+- exact trigger;
+- whether the player sees the result immediately;
+- whether duplicate completion can grant it again;
+- whether failure-forward completion qualifies;
+- balancing reason;
+- localization/UI label.
+
+If no current reward owner applies, leave the option narrative. Avoid granting faction reputation for a choice that no faction reacts to in-world. Avoid bonus materials as compensation for choosing a cautious branch if that creates an obviously optimal answer.
+
+### Faction and community effects
+
+The Empty Shift does not introduce a new faction. If a current faction has a legitimate role in the shelter’s work records, it may react through existing standing or access. The design first asks whether a local group’s policy is better represented as a character or location practice. A minor board disagreement is not enough reason to create a new territorial group.
+
+A faction consequence needs an observable result: authorization changes, a representative agrees to review the record, a route-specific task becomes available, or a public notice is accepted. A line that says “they respect your judgment” is not sufficient. The effect must be within the existing faction owner’s meaning and persistence.
+
+Community outcomes can remain local. A board annotation may be adopted by a handful of workers without implying settlement-wide reform. A later scene can show one person checking the copy. Scope language matters: “Mara changed the sheet” is verifiable; “the community now records all shifts correctly” is an unsupported broad claim.
+
+### Ending consequence boundaries
+
+A late-game ending can reference the player’s history with work records only if campaign ending logic has a supported place for that fact. Even then, the reference should be proportional. The player’s annotation might give a character a reason to ask for another source; it should not determine an entire settlement’s governance outcome by itself.
+
+Ending consequences are separated from local and quest consequences in review. For every candidate ending reference, identify:
+- which earlier fact is consumed;
+- how it is saved;
+- what if the player never accepted the quest;
+- what if they resolved it as uncertain;
+- what if the character/source was absent;
+- whether other choices can produce equivalent evidence;
+- which ending route presents the result;
+- how the line stays truthful if the work system was never changed.
+
+If these questions cannot be answered, keep the ending hook in the plan only. Do not add ending flags in the dialogue graph.
+
+### Delay, expiry, and pending results
+
+A pending report is different from a blocked quest. Pending means the player submitted an action and the owner has not confirmed it. Blocked means the player cannot make progress until a condition changes. The current lifecycle may not distinguish those states; if it does not, use plain journal wording and a bounded next action without adding new save state.
+
+Every pending result needs:
+- a real receiver;
+- a supported delivery path;
+- an expected resolution event;
+- timeout/expiry behavior;
+- cancellation or retry policy;
+- duplicate suppression;
+- player-facing status.
+
+If no event system can deliver the result, the player should receive an immediate narrative closure instead of a fake pending state. A message sitting forever in a nonexistent queue is worse than a scoped result.
+
+### Consequence reversibility and compensation
+
+An annotation can be updated after a new source. A worker assignment may be changed through the current work system, with any costs that owner applies. A meal already distributed is final. A public claim may require a retraction. The player should know the difference before selecting a branch.
+
+When correcting a mistake, preserve causal history only at the level the current system can support. The journal might say a previous entry was revised. Do not build a full version-control system for one board. If the board has no history model, the quest can surface a correction conversation and show the current text without claiming archival provenance.
+
+Compensation is not always a resource payout. It can be a chance to apologize, reassign a safe task, clarify a notice, or accept that evidence was lost. The narrative should not erase consequences to make every branch converge on a perfect outcome.
+
+### Outcome/event ordering and determinism
+
+If a branch triggers a host event, the event should be based on a stable result from the primary owner. The order of side effects must not depend on collection iteration or dialogue node loading order. Any seeded variation in a later callback uses the existing RNG owner and must not change the underlying report. Repeated same-seed runs with the same player choices should produce the same state when deterministic behavior is required.
+
+The future implementation review will inspect event subscribers, save ordering, and restore callbacks. A scene may display after a choice, but the display does not own the state. Save checksums or existing replay tools, if relevant to the affected owner, should verify that the result survives the normal route. This plan does not call those tools or claim deterministic coverage.
+
+### UI and player feedback
+
+After a consequential choice, the UI should communicate:
+- accepted choice;
+- applied/pending/rejected state, where relevant;
+- immediate state change;
+- next action if one remains;
+- effect not applied if a system dependency is unavailable.
+
+Do not show multiple redundant popups for a single choice. The dialogue acknowledgement and journal update can work together if each provides distinct information. Map markers refresh only when a location or route actually changes. Focus and close behavior remain consistent with the current dialogue panel.
+
+Feedback should be accessible and readable. Use text to describe status, not only color. A pending effect must not appear as a completed checkmark. A failed owner command should not leave the response button in a success state. If a new status surface is needed, that UI work is a dependency and should be scoped under the existing presentation owner.
+
+### Acceptance and release decision
+
+The minimal route is accepted when a player can inspect the record, choose an honest outcome, see a truthful acknowledgement, save, reload, and continue without duplicate effects. Cross-system behavior is accepted only when its owner-specific command is verified. The release packet documents any feature intentionally omitted: no worker reassignment, no meal count change, no new faction reputation, no universal record history, or no ending dependency unless implemented through an approved current owner.
+
+
+### End-to-end route examples
+
+#### Route 1 — The player annotates
+
+The player inspected both roster copies, heard that “covered” may mean a substitute accepted the task, and found no source that confirms who worked. In the report meeting, the player chooses annotation. The existing quest owner records that result. If a board owner supports the edit, the next copy says “planned coverage; attendance not confirmed.” If it does not, the journal records the selected wording and the scene makes clear that the public sheet has not yet changed.
+
+On the next eligible visit, Mara reports whether she copied the annotation. If the player saved after the first choice, restore reconstructs the same outcome and does not offer a second reward. The map does not gain a new marker unless a location owner changes its availability. The story remains complete even if no work or food system was touched.
+
+#### Route 2 — The player closes unresolved
+
+The player has one roster and a witness who cannot remember the shift. They choose unresolved closure. The quest result is terminal for the current evidence set. The journal says the copies match but attendance is unknown. The ordinary shelter dialogue remains open. The optional hidden clue may later produce new evidence, but the main quest only reopens if an authored condition explicitly says so. A late callback can mention that the old record was kept; it cannot assert that the player chose an annotation.
+
+#### Route 3 — The player recommends reassignment
+
+The player obtains a current worker’s direct confirmation and asks to replace the old names. If the current assignment owner supports that command, it validates the proposed worker against existing availability and constraints. The UI reports whether the assignment changed. If rejected, the player can annotate instead. The dialogue does not mark the worker assigned simply because the choice was selected.
+
+#### Route 4 — The player repairs the panel
+
+The player uses a supported repair interaction and changes the Annex’s current condition. That repair can enable future inspection. It does not prove the previous shift was staffed. The quest evidence and maintenance state are separate. A later report can state both: the panel is serviceable now; prior attendance remains uncertain.
+
+#### Route 5 — The player follows the escort branch
+
+The player escorts a temporary worker and reaches a handoff. The receiver signs or verbally confirms receipt through a current event route. That supports delivery, not prior roster attendance. The journal should not merge the proof. If the player cannot travel, a different carrier or a delayed result is offered only when authored and supported.
+
+### Consequence relationship matrix
+
+| Consequence kind | Primary question | Reversible? | Evidence source | Owner check |
+|---|---|---:|---|---|
+| Cosmetic text | Did wording or tone change? | Yes | Choice response | Dialogue/presentation route |
+| Local notice | Is the current scene display updated? | Usually | Player action | Current scene/location owner |
+| Quest result | Did the objective resolve and how? | Rarely | Objective proof | Quest lifecycle/save owner |
+| Relationship response | Did the character’s persistent relation change? | According to system | Actual interaction | Relationship owner |
+| Faction access | Does the group permit a new action? | According to system | Shared/accepted action | Faction owner |
+| World/location state | Did physical access or condition change? | Depends | Repair/travel event | Location/world owner |
+| Resource result | Did a count or item amount change? | Often not fully | Existing resource command | Inventory/resource owner |
+| Campaign ending input | Should a later ending branch consume it? | Usually final | Persisted prior result | Campaign owner |
+
+The author must choose the smallest consequence scope that satisfies the player promise. A local board annotation is not a faction consequence. A character’s statement is not a relationship update. A completed escort is not proof of repaired infrastructure.
+
+### Ordering, save, and restore rehearsal
+
+A save can happen after the player chooses a report but before a callback. On load, the game reconstructs the quest result first through its save owner, then derives which callback is eligible. It should not replay the whole meeting. If the current save process restores host UI before Core state, the existing lifecycle decides when the panel refreshes; this plan does not rearrange that sequence.
+
+A save can also occur after a worker assignment succeeds but before the board visually refreshes. The restored board should derive from the assignment or board owner, not from a dialogue-local flag. If the two owners have independent state, the integration package must define source precedence. The player must not see one name on the board and another in the assignment panel.
+
+A failed save must follow current recovery policy. Do not display success optimistically if the persistent owner has not confirmed the action. If the domain change is committed but a presentation refresh fails, the UI can recover by re-reading state on the next open.
+
+### Event identity and duplicate suppression
+
+Any consequence crossing an event seam needs an identity or completion fact sufficient for the current owner to suppress duplicates. The design does not prescribe a new event ID format. It asks the implementation owner to demonstrate that repeated clicks, a repeated callback, or save restoration cannot apply the same result twice.
+
+One-time rewards are granted by the established quest completion path. A dialogue response cannot grant the same reward again on every revisit. An optional repeatable board task needs a current repeat policy. If no owner can distinguish a new cycle, keep the content one-time.
+
+### Resource and balance boundary
+
+The Quiet Count may discuss food, but its branch should not alter quantities unless the existing food/resource authority accepts an explicit supported command. If it does, balancing review considers the cost of holding or distributing a reserve, who benefits, and whether the branch creates an exploitable reward loop. The story must not grant food simply for asking a question.
+
+The Bench Ticket may use a current crafting item. Craft cost and return must follow the existing inventory/recipe owners. If the action unlocks a repair, the location owner sets the result. The quest’s text describes the practical outcome without asserting exact resource changes that the system did not apply.
+
+### Relationship and reputation boundary
+
+Character trust can differ from faction reputation. Oren’s willingness to confirm a task is an individual action. A faction adopting a work-board policy requires explicit shared authorization and a current faction effect. Do not conflate them into a single “community trust” reward.
+
+If the existing relationship system cannot represent the fine distinction, use dialogue-only reactions. The character can say that they appreciate being asked, but later content should not gate a major event on a relationship change that was never saved. If a faction’s access changes, show which service, meeting, or route became available.
+
+### Endgame and long-range callback matrix
+
+**No quest accepted:** a later leader can explain the current board policy without referencing the player’s earlier choice.
+
+**Quest resolved verified:** the ending scene may cite the verified practice, not claim every future roster is correct.
+
+**Quest annotated:** the leader may ask whether the distinction should be used more widely; the player can choose again.
+
+**Quest unresolved:** the leader receives an uncertain record and can decide whether to investigate independently.
+
+**Hidden name clue found:** an optional personal line can acknowledge the account if canon and save owner support it.
+
+**No resource effects integrated:** the ending remains narrative, with no claim that staffing or food efficiency improved.
+
+The campaign should not penalize players for skipping this optional thread. If its outcome is absent, a neutral baseline is used. A major ending must not silently assume that the player accepted a side quest.
+
+### Human review of consequence fairness
+
+A review group should read the choice text with no context, then read the result without seeing the choice. They ask:
+- Does the choice communicate what the player is authorizing?
+- Does the result acknowledge the same action?
+- Does a character claim more than they know?
+- Can an ordinary player infer the remaining uncertainty?
+- Is the reward proportional?
+- Can the branch be revised, and was that explained?
+- Can an absent NPC or unavailable location still produce closure?
+- Does a later scene remember the outcome correctly?
+- Is the lack of a systemic effect clearly reflected in the prose?
+
+If the result surprises players in a way that comes from hidden implementation rather than intended uncertainty, revise the choice or the acknowledgement. Consequences can be uncertain, but the game’s contract should be clear.
+
+### Failure-forward final states
+
+The investigation can end with an unresolved report, a damaged source, a rejected assignment, an absent witness, or a correction that arrives after the player acted. These are not identical. The journal should preserve which situation occurred. The game can offer a new action where plausible: request a second account, post a correction, keep a private copy, or leave the board as is. No forced apology, compensation, or resource penalty is required in every case.
+
+The system’s purpose is to make state truthful and consequences legible. If a failure route has no new action, it can still close as an honest result. The player should not be trapped in a quest that repeats a failed interaction forever.
+
+### Implementation review receipt
+
+When this proposal is promoted, the integrator should record:
+- actual owners and exact path claims;
+- effect routes and save boundaries;
+- deterministic assumptions;
+- any unsupported effects removed;
+- focused verification and runtime path;
+- player-visible outcome for each branch;
+- retry/idempotency evidence;
+- rollback or content retirement plan;
+- the remaining expansion hooks.
+
+Only that receipt can establish that the implementation matches the design. This plan remains a design contract until then.
+
+
+### Consequence audit with a cold reader
+
+A reviewer who has not read the design should see only the player-facing choice and result. Ask them to state what they expected, what changed, what did not change, and what remains uncertain. Compare that account with the intended owner effects. If the reviewer assumes that choosing “correct the names” reassigned a worker but the game only changed journal wording, the response overpromised. If they expect an unresolved report to remain active but it closes, the lifecycle copy is unclear.
+
+The audit should include one branch with no systemic effect. Its wording must be honest and satisfying as narrative content. A game can deliver a meaningful choice without changing a numeric resource; it cannot claim a numeric or organizational change that never happened. Record the cold-read result with the content handoff.
+
+### Rollback and branch retirement
+
+Before content is shipped, remove a branch by deleting its unreferenced authored records through the canonical data owner and regenerating indexes as required. After release, first inspect saves and current consumers. Active players need a closure or redirection if the branch disappears. Persisted report outcomes cannot be dropped while later content reads them.
+
+Rollback should preserve the last truthful player-facing state. If a board annotation feature is disabled, the journal can still report the player’s prior choice, but the game must not show an annotation that no longer exists. Document which effects remain, which are suppressed, and how a saved active quest resolves. Do not reset player state to simplify content retirement.
+
+### Failure messages and recovery clarity
+
+When a consequence cannot apply, tell the player what actually happened and what remains possible. “The schedule did not change; no replacement was confirmed” is clearer than a generic failure toast. “The note is ready, but Mara has not posted it” is truthful only if a pending state exists. Otherwise say that the player can raise the question again during the next visit.
+
+The recovery option should use the same owner path as the original effect. A retry cannot bypass validation or create a second result. If there is no safe retry route, close with an honest unresolved state and preserve any earlier applied consequence.
+
+### Consequence closeout
+
+A consequential dialogue choice is complete when the owning system accepts it, the player sees the actual result, and future content reads the same authoritative fact. If any of those parts is missing, keep the proposal local or mark the seam as an explicit dependency.
+
+## Pass 15 — Consequence routing, delayed callbacks, and Chronicle closure
+
+**Status: PROPOSAL, premise-gated.** This pass defines how authored dialogue could cause results without owning duplicate game state. It draws on the world bible's delayed moral-choice callback and endgame Chronicle lanes. It does not claim that a generic “dialogue graph” or deferred-event scheduler is already integrated.
+
+### 15.1 Prior-pass collision correction
+
+The Empty Shift storyline must be compared with the live duty-roster system and its catalogs before any consequence is promoted. If a response changes assignment, shift safety, coverage, or roster history, route it to DutyRosterQuestRuntime/DutyRosterSystem only after inspecting their supported commands. Do not add roster state to a dialogue consequence ledger. The story, route names, characters, and local outcomes in earlier passes remain DRAFT collision candidates.
+
+### 15.2 Consequence layers
+
+Use the consequence vocabulary from the master plan as an impact label, not as six independent storage systems:
+
+| Layer | Meaning | Canonical application |
+|---|---|---|
+| Cosmetic | Changes wording or tone only. | Dialogue presentation/read model. |
+| Local | Changes the current scene or encounter result. | Existing encounter result owner. |
+| Quest | Advances, fails, or resolves an objective. | Quest owner, commonly through its accepted event/command. |
+| Relationship | Changes a character relationship or remembers a social act. | Current relationship/character event owner. |
+| Faction | Changes access, standing, or hostility. | Faction stance/standing authority. |
+| World | Changes a location, resource, enemy, weather consequence, or future event. | The domain owner for that fact. |
+| Ending | Supplies a verified fact to a major resolution/Chronicle path. | Existing verdict, ending evaluator, or Chronicle input owner. |
+
+A response may touch more than one layer, but each mutation must be independently named and observable. “The world changes” is not a valid effect definition.
+
+### 15.3 Command envelope and exactly-once behavior
+
+Treat a dialogue response as a request, not a direct write into arbitrary systems. Before a production extension, compare its fields with the current EncounterChoiceEffectDispatcher, NarrativeConsequence graph/router, IFlagLedger, CampaignConsequenceLedger, quest event path, and host adapter. Reuse the narrowest current seam that can express the effect.
+
+For each committed choice, the review packet names: stable authored response ID; current encounter/quest instance; expected precondition; owner command; effect idempotency key if supported; result returned; journal/Chronicle fact if supported; and what happens if the command is rejected or replayed. A duplicate click, UI refresh, save boundary, event retry, or deterministic replay must not grant a reward twice or apply a faction shift twice.
+
+Do not have the panel first mutate a local “choice made” flag and then ask Core to apply the effect. Do not fire two owners from one vague string. If one action should cause independent effects, the owner/host event path should make their ordering explicit and provide a recoverable diagnostic when one rejects.
+
+### 15.4 Delayed callback design
+
+The master world bible identifies a strong content opening: early DoorEncounterSystem decisions can receive multi-month follow-up through a choice fact in IFlagLedger and a return around a later horizon. Source inspection confirms DoorEncounterSystem currently resolves and persists encounter IDs and reaction totals, but does not define a generic future-delivery queue in the inspected class. The repo has IFlagLedger and CampaignConsequenceLedger, but their presence alone does not prove that either supports due-day scheduling, save/restore, exactly-once dispatch, or event delivery.
+
+The safe proposal is a three-part slice:
+
+1. An early authored choice writes only its existing canonical choice/outcome fact through the current effect path.
+2. A later eligible encounter or quest is surfaced by a verified day/event scheduler. It reads that fact and an explicit eligibility window; it does not infer the choice from prose.
+3. Delivery records an owner-approved receipt so callback effects cannot repeat after load or event replay.
+
+If a current scheduler can perform all three, author content and add utilization evidence. If not, describe one bounded extension to an existing owner, with a new save field only after the owner, migration, defaulting, deterministic tick order, duplicate-delivery prevention, and focused test target are approved. Do not build a standalone CallbackManager, delayed quest queue, or second flag ledger from this proposal.
+
+Fallback policy: if the callback window is missed but the story is non-critical, expire it visibly and let the Chronicle omit it. If the callback is necessary to continue a quest, provide a verified alternate channel or delay the objective. If an old save has the choice fact but no delivery receipt, migration must define whether the callback remains eligible; do not reroll its consequences.
+
+### 15.5 Named outcome example
+
+DRAFT example with no assigned catalog ID: At an early shelter arrival, the player accepts a family’s testimony but refuses to call it proof against a faction. Much later, a member returns with a maintenance receipt that supports one part of the testimony and contradicts another. The first branch should preserve two separate facts: testimony was heard; attribution remained unproven. The later content should not convert “heard testimony” into “accused faction.” Its dialogue may say “you left my name off the charge” only if the speaker is the original witness or has a valid report path.
+
+Outcomes:
+- Accepted evidence and maintained uncertainty: callback reveals the new receipt; player can amend, keep, or append the record.
+- Accepted the accusation without evidence: callback challenges the attribution; the player can correct the record or stand by it; the existing faction/relationship owners decide any effects.
+- Refused the initial testimony: no callback may imply the player heard it privately. An alternate public notice or later witness statement is required if the storyline must continue.
+- Missed or expired callback: no invented penalty; at most the Chronicle records that the evidence was not revisited, if the Chronicle supports that distinction.
+
+### 15.6 Chronicle and ending boundary
+
+EpilogueChronicleBuilder and EpilogueChronicleCatalog are current source owners for presentation of Chronicle material. Their existence does not mean every new quest fact belongs in the ending matrix. An ending consequence needs a stable canonical input key already accepted by the verdict/ending path, a tested mapping for supported permutations, and prose that does not claim unavailable evidence.
+
+Prefer one Chronicle note keyed to a meaningful outcome class, rather than a different ending for every dialogue wording. Cosmetic tone should not multiply ending combinations. If an outcome is not collected by the existing Chronicle input, keep it as a local/quest/relationship consequence and mark the endgame link as future work requiring a premise audit.
+
+For each proposed new Chronicle line, specify: the source event; when it becomes known; whether absence means “no event,” “unknown,” or “not applicable”; which ending permutations can observe it; existing fallback text; localization impact; and continuity proof. Missing data must not default to the most flattering or punitive conclusion.
+
+### 15.7 Rejection, partial application, and fallback
+
+An effect owner may reject a command because an actor is absent, the location became inaccessible, an item was consumed, or a branch was already terminal. Define each rejection as one of: retry when a named precondition becomes true; show a different available response; close with a failure-forward quest route; or report an integration error during development. Production content must not show “choice applied” until the owner returns success.
+
+If effects span multiple owners, avoid pretending they are atomic unless the existing transaction seam proves it. Prefer a first owner command that emits a fact consumed by others; define repair/replay behavior; persist the event result through the existing save arrangement. Do not create a transaction coordinator only for dialogue. The integration plan must map event ordering in Setup/Save/Flush if host orchestration changes.
+
+### 15.8 Player-facing feedback
+
+Every meaningful response yields visible feedback: changed objective, updated access, revised map marker, altered relationship dialogue, faction standing notice, or a clear journal line. The response copy should state immediate cost before commitment when the cost is known. Delayed effects need a fair hint (“they may remember this”) without revealing future plot detail. Irreversible actions require a final accessible confirmation only when current interaction conventions call for one; do not use the panel as the gameplay authority.
+
+On rejection, preserve the selected response focus and explain the updated condition. On successful effects, ensure reopening the scene does not show an uncommitted option. Journal language distinguishes direct observation, attributed testimony, and player interpretation.
+
+### 15.9 Verification course and scope
+
+The premise audit should inspect current dispatcher behavior, flag semantics, ledger persistence, scheduler/day-tick ordering, DoorEncounter save state, quest event routing, and Chronicle inputs before assigning source paths. The focused verification matrix should cover: first application; repeated command; duplicate event; save before deadline; save on deadline; restore after deadline; old save without receipt; missing character; missed window; player refusal; quest expiry; ending with and without callback; and event replay under the same seed. Verify with the smallest owner tests under TEST_POLICY plus the relevant content-utilization/host selftest only after implementation ownership exists.
+
+This pass leaves all implementation and data authority untouched. It records a route to an auditable feature, names the known seam gap, and does not claim end-to-end integration.
+
+### 15.10 Owner routing matrix
+
+Before drafting an effect, fill this matrix with actual source paths and public methods. The owner examples below are search targets, not a completed wiring map.
+
+| Intended result | First owner to inspect | Required proof before authoring |
+|---|---|---|
+| Objective advances or fails | QuestRuntimeCoordinator plus specialized quest owner | Exact event/command; duplicate delivery behavior; terminal transition. |
+| Item is granted or consumed | Inventory and crafting/economy owner | Item ID exists; amount and failure timing are explicit. |
+| Location becomes known or accessible | WastelandMap/Discovery/LocationEvolution owner | Canonical map identity; topology; visibility; save owner. |
+| Faction access or standing changes | FactionStanceEngine/current faction owner | Correct faction namespace; threshold/access behavior; journal feedback. |
+| Character relationship changes | Current character/relationship owner | Supported relationship fields; affected actor and persistence. |
+| Choice fact is recorded | IFlagLedger/CampaignConsequenceLedger or current event owner | Key semantics, deduplication, scope, capture/restore, migration. |
+| Delayed callback is delivered | Day/event scheduler and encounter/quest owner | Due semantics, trigger ordering, exactly-once receipt, expired fallback. |
+| Chronicle text changes | EpilogueChronicle input/catalog path | Source fact, permutation coverage, missing-data behavior, localization. |
+| UI reports result | Existing Host event/read model/panel | Presentation is updated from owner result; no hidden gameplay mutation. |
+
+No row may remain at “some manager” at implementation start. If an owner is absent or inaccessible, narrow the content scope until an approved decision supplies one.
+
+### 15.11 Atomicity and ordering cases
+
+A single response can appear to combine effects that must be ordered. Example: consume a medicine item, advance an escort objective, and raise faction standing. If the item owner rejects consumption, the objective and standing should not still apply. If the item is consumed and a later notification fails, the player must not lose the item and receive no visible outcome. Define the transaction boundary in the existing host/event/save architecture. If the current path cannot coordinate the effects safely, split the player decision into smaller committed steps or ask for an explicit architecture review.
+
+Review these cases:
+- Response submitted twice from a slow panel.
+- Response accepted, then save occurs before secondary notification.
+- Secondary owner absent during load.
+- Actor or faction changes between opening and response.
+- Item is removed by another system before commit.
+- Quest expires on the same day as response.
+- Callback fires on the same tick as a new encounter.
+- Host retries an event after an exception.
+- A duplicate narrative fact already exists from an older content path.
+- Chronicle construction happens before a late callback is delivered.
+
+The desired behavior is either one committed result or a clear rejection with no partial side effects. Do not claim atomic behavior without an existing transaction contract.
+
+### 15.12 Delayed callback content variants
+
+For a callback that appears after a long gap, use more than one delivery form only if each remains truthful:
+
+- **Return visit:** the original speaker is available and the location can be reached.
+- **Radio report:** the event could plausibly be transmitted, the signal path is valid, and the message is not treated as perfect proof.
+- **Written notice:** someone recorded the outcome and the player can physically receive it.
+- **Third-party account:** the intermediary has a credible source and states the source.
+- **Chronicle-only mention:** the fact is stable, but no live callback scene can be scheduled.
+
+One form should be primary. Alternate forms are recovery channels for unavailable actors or locations, not extra rewards. If there is no verified deferred scheduler, do not encode a fixed day in content and claim delivery. Keep the later response as an ordinary eligible quest/encounter trigger until a scheduling owner is approved.
+
+### 15.13 Consequence summaries for the player
+
+After the owner accepts a response, summarize the result by fact and source:
+
+- “The witness statement was filed as unconfirmed.”
+- “The repair request is delayed until a second part is found.”
+- “The crew will use the known route.”
+- “The faction contact refused the proposed terms.”
+- “The callback window has passed; the investigation can continue through the archive.”
+- “The Chronicle records that the player preserved conflicting testimony.”
+
+These lines must reflect actual result payloads. If no owner event says the request was delayed, do not claim it. If a faction owner reports no standing change, do not display gratitude as a mechanical effect. For complex events, show immediate result first and journal detail separately.
+
+### 15.14 Consequence precedence and reversibility
+
+Mark each effect as reversible, compensable, or irreversible. A cosmetic line is reversible by presentation refresh. A local scene outcome may be revisited if the encounter owner permits it. A quest terminal state should not be reopened unless the quest owner explicitly supports that transition. A relationship or faction effect may be adjustable by later choices, but history should remain observable. An ending consequence is irreversible once its ending inputs are frozen.
+
+If one choice changes several layers, order player warnings from immediate cost to delayed branch effect. Offer a confirmation step only for established high-impact interaction patterns and ensure cancel returns without mutation. Do not make every dialogue feel like a legal waiver.
+
+### 15.15 Callback and ending interaction
+
+A delayed callback may arrive before the endgame, during the ending transition, or after its facts are frozen. The content contract must state the cutoff. If the callback occurs before Chronicle construction, it may contribute a fact through the current supported input path. If it occurs after the ending is frozen, it cannot retroactively rewrite the prior ending; it may appear as post-ending journal material only if the product supports that. If a save is loaded from before the transition, deterministic replay must yield the same ordered facts.
+
+The epilogue should not reward the player for selecting the “best sounding” dialogue response. It summarizes what happened and what the record can prove. Missing callback data has an explicit neutral/unknown interpretation. A callback that was never eligible is not evidence of indifference.
+
+### 15.16 Consequence test inventory for future implementation
+
+Keep independent tests for lifecycle, persistence, determinism, and routing. Suggested cases for the bounded implementation slice:
+1. A valid response applies once and emits one observable result.
+2. Repeating its command does not duplicate reward or standing.
+3. A response rejected by its first owner applies no dependent consequence.
+4. Save/restore after the first fact but before callback preserves eligibility.
+5. Save/restore after callback prevents a second effect.
+6. A callback outside its allowed time window takes the documented fallback.
+7. Old data with no callback receipt follows the approved migration rule.
+8. An ending receives a verified fact once and ignores absent/unknown facts correctly.
+9. Removing the speaking actor does not invent a substitute outcome.
+10. Replaying the same seed and event order yields stable consequence order.
+11. UI presentation reflects owner results and maintains focus on rejection.
+12. An inaccessible location yields a valid failure-forward route or clear deferral.
+
+These are proposed acceptance cases, not test files created or test runs performed. Select the smallest focused target after the source and ownership audit.
+
+### 15.17 Multi-plan integration seam
+
+The plans hand off in a narrow chain: Plan 19 defines which records are authored or generated; Plan 17 defines which quest owner accepts and tracks the instance; Plan 18 selects a valid location set for an expedition; Plan 20 authors the scene and response text in a supported content format; Plan 21 evaluates conditions from read-only owner facts; Plan 22 routes the accepted command and presents its result. Each boundary has a failure return: invalid record, failed registration, unavailable location, unavailable speaker, stale gate, or rejected consequence. A failure in one plan cannot be silently repaired by writing another plan's state.
+
+For the first integrated slice, use one active quest, one mandatory location, one optional clue, one scene, one gate, one accepted outcome, and one fallback. Keep callback scheduling and ending projection as separate acceptance milestones unless the current scheduler and Chronicle path can prove them already. This sequencing limits the blast radius while retaining an expansion path for later content.

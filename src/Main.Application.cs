@@ -659,6 +659,12 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.RelationshipDecaySelfTest:
                     GetTree().Quit(RelationshipDecaySelfTest.Run(_dataDir));
                     return;
+                case HostCliAction.ResearchUnlockSelfTest:
+                    GetTree().Quit(HostCliResearchUnlock.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.UnifiedEndingSelfTest:
+                    GetTree().Quit(HostCliUnifiedEnding.RunSelfTest(_dataDir));
+                    return;
             }
             }
             catch (System.Exception ex)

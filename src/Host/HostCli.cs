@@ -218,7 +218,9 @@ namespace AtomicWar.GodotApp
         PersonalQuestSelfTest,
         TimeCapsuleSelfTest,
         DeathLegacySelfTest,
-        RelationshipDecaySelfTest
+        RelationshipDecaySelfTest,
+        ResearchUnlockSelfTest,
+        UnifiedEndingSelfTest
     }
 
     /// <summary>
@@ -649,6 +651,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.DeathLegacySelfTest;
             if (Has(args, "--relationship-decay-selftest") || Has(args, "--social-drift-selftest"))
                 return HostCliAction.RelationshipDecaySelfTest;
+            if (Has(args, "--research-unlock-selftest") || Has(args, "--research-unlocks-selftest"))
+                return HostCliAction.ResearchUnlockSelfTest;
+            if (Has(args, "--unified-ending-selftest") || Has(args, "--epilogue-selftest"))
+                return HostCliAction.UnifiedEndingSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -861,6 +867,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --time-capsule-selftest  Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding");
             GD.Print("  --death-legacy-selftest  Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding");
             GD.Print("  --relationship-decay-selftest Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding");
+            GD.Print("  --research-unlock-selftest / --research-unlocks-selftest Plan 141 research unlock bridge: catalog load, downstream unlock queries, capability grants, recipe unlocks, and inventory awards");
+            GD.Print("  --unified-ending-selftest / --epilogue-selftest Plan 145 unified ending resolver: epilogue evaluation, personalized chronicle, survivor fates, legacy trait awards, and save round-trip");
 
             GD.Print("\n--- User Data & Log Configuration ---");
             GD.Print("  --user-data-dir <path>   Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR)");

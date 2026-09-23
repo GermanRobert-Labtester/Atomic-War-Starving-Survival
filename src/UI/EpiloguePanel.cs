@@ -21,6 +21,7 @@ namespace AtomicWar.GodotApp.UI
         private readonly EpilogueMatrixRuntime _runtime = new EpilogueMatrixRuntime();
         private EpilogueEvaluationContext _context = new EpilogueEvaluationContext();
         private CampaignOutcomeSnapshot? _snapshot;
+        private UnifiedEndingResult? _unifiedResult;
         private VBoxContainer _outcomesContainer = null!;
         private VBoxContainer _traceContainer = null!;
         private Label _narrativeLabel = null!;
@@ -49,6 +50,14 @@ namespace AtomicWar.GodotApp.UI
             if (snapshot == null) return;
             _snapshot = snapshot;
             _context = snapshot.ToContext();
+            RefreshView();
+        }
+
+        /// <summary>Unified ending resolution binding with personalized prose (Plan 145).</summary>
+        public void Bind(UnifiedEndingResult result)
+        {
+            if (result == null) return;
+            _unifiedResult = result;
             RefreshView();
         }
 
@@ -171,9 +180,19 @@ namespace AtomicWar.GodotApp.UI
             var fate = _snapshot?.Fate ?? _runtime.EvaluateRegionalFate(_context);
             var demographics = _snapshot?.Demographics ?? _runtime.EvaluateDemographics(_context);
             var moral = _snapshot?.MoralStanding ?? _runtime.EvaluateMoralStanding(_context);
-            string narrative = !string.IsNullOrEmpty(_snapshot?.NarrativeProse)
-                ? _snapshot!.NarrativeProse
-                : _runtime.GenerateEpilogueNarrative(_context);
+            string narrative;
+            if (_unifiedResult != null && !string.IsNullOrEmpty(_unifiedResult.fullPersonalizedChronicle))
+            {
+                narrative = _unifiedResult.fullPersonalizedChronicle;
+            }
+            else if (!string.IsNullOrEmpty(_snapshot?.NarrativeProse))
+            {
+                narrative = _snapshot!.NarrativeProse;
+            }
+            else
+            {
+                narrative = _runtime.GenerateEpilogueNarrative(_context);
+            }
 
             var outCard = AshfallUiHelpers.MakePanel();
             var outMargin = AshfallUiHelpers.MakeMargins((int)CoreTheme.SpacingSm);

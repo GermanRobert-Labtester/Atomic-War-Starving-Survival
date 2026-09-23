@@ -294,10 +294,12 @@ namespace Ashfall.Core.Tests.Save
             // retention (retention audit) + outpost_settlement (authored outposts);
             // Plan 134 added territory_control (dynamic territory & supply lines);
             // Plan 136 added cooking (wildlife trapping food pipeline & cooking system);
-            // Plan 140 added campaign_legacy (generational legacy & campaign inheritance).
-            Assert.Equal(226, SaveSectionRegistry.All.Count);
+            // Plan 140 added campaign_legacy (generational legacy & campaign inheritance);
+            // Plan 141 added research_unlock (research downstream unlocks bridge);
+            // Plan 145 added unified_ending (unified ending resolution & epilogue personalization).
+            Assert.Equal(228, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(226, keys.Count);
+            Assert.Equal(228, keys.Count);
         }
 
     }
