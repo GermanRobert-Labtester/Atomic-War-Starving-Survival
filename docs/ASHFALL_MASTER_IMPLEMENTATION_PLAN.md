@@ -2235,10 +2235,9 @@ intercepts route identically and can mint rescue missions through the existing
 **Exact seams (verified).**
 - `src/Host/RadioHostSession.cs` — dwell gate as session state fed by
   `BroadcastIntercepted`/triangulation quality; exposes transcript events to the panel.
-- `Assets/Ashfall.Core/Radio/FactorRadioEngine.cs` → read as
-  `Assets/Ashfall.Core/Radio/FactionRadioEngine.cs` — frequency/intercept primitives
-  (typo intentional in this line to keep the reader honest: **the file is
-  `FactionRadioEngine.cs`**; this expansion's own specs must cite it exactly).
+- `Assets/Ashfall.Core/Radio/FactionRadioEngine.cs` — frequency/intercept primitives
+  (`GetBroadcastAtFrequency`, `TryFindFactionAtFrequency`, both verified); the
+  expansion's specs cite it exactly.
 - `src/UI/RadioPanel.cs` — terminal sub-view within the existing bind; transcript
   buffer cleared in `Unbind`.
 - `RadioSignalLog` / `RadioRecordingSystem` — persistence of transcripts rides these
@@ -2813,7 +2812,7 @@ catalogs, and the save store's own focused files.
 **Risk register.** (a) A consumer comparing raw strings *before* canonicalization
 (bugs that only appear with old saves) — sweep `string.Equals(… factionId …)` call
 sites during implementation; (b) `events.json`/`combat_catalog.json` shared-file
-collision — integrator executes those two diffs; (c) prose/codex seach references
+collision — integrator executes those two diffs; (c) prose/codex search references
 breaking lookup-by-ID — codex lookups route through canonicalization too; (d)
 third-party/expansion catalogs (`locations_expansion3.json` implies more) — the
 manifest enumerates, the validator enforces, nothing relies on memory.

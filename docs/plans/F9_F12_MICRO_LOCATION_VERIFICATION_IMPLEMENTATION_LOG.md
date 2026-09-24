@@ -2978,3 +2978,51 @@ invariants, triage table — is intended to save two.
 ---
 
 — Final end of expansion. —
+
+```text
+EXPANSION METADATA
+document : docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md
+expansion: 2026-09-25, documentation-only, append-after-original
+basis    : original log (2026-09-04..2026-09-06) preserved byte-for-byte above
+evidence : current source + data + committed docs read 2026-09-25; wave outcomes as log records
+touches  : this file only
+```
+
+### Appendix R — Cross-Reference Index
+
+Navigation aid: every major claim family in the document, mapped to where it is stated and
+where its evidence lives. "Log" = the original implementation record above the expansion
+header; part/appendix numbers = this expansion.
+
+| Claim family | Stated in | Evidence |
+|---|---|---|
+| Verified production call chain (wave time) | Log, Phase 0 | Recon record; superseded structurally by Part II §II.2 |
+| Verified production call chain (today) | §II.2 | Source read 2026-09-25; module map §IV.1 |
+| Save contract (DTO, capture, restore, migration) | Log, Phase 0 F9 block; §II.4; §III.3 | Source (EncounterCatalog/NarrativeEncounterSystem); tests B-1..B-8 (Appendix E) |
+| RNG contract and continuation | Log, Phase 0 F10 + Phase 2; §II.3; §III.4; V.C | HostDefaults source; harness source; tests C-1..C-10 |
+| SeededRng API drift and PeekState/SeekState | Log, Phase 2 divergence; §II.6 C-1; V.C aftermath; Q-2/Q-3 | Current HostDefaults source vs determinism doc §2 |
+| Bridge merged narrative+patrol roll | §II.2; §IV.3; §VI.2 E-5; Q-5 | Current bridge source (Surface body) |
+| Catalog shape: 28 entries, categories, choices, keys | Log, Phase 0 (D1/D2); §II.5; Appendix C | micro_locations.json read 2026-09-25 |
+| Named outlier trade values | Log, Phase 0; V.E; Appendix K | items.json read 2026-09-25 (all six exact) |
+| Persistence tests, per-test anatomy | V.B | Test file; Appendix E register |
+| Determinism tests, per-test anatomy | V.C | Test file; Appendix E register |
+| Utilization methodology and gates | V.D; Appendix M | Test source (context loop); utilization report |
+| Economy methodology, ratio, farming resistance | V.E; Appendix K | Test source; balance report; items.json |
+| Stall root cause and verdict | Log, Phase 5 + Finding 3; V.F; L-10 | Log records; blame-hang narrative; current Shelter/ file location (C-10) |
+| Quarantine sweep and unquarantine | Log, Finding 1; V.G; L-9 | Commit 620381bd; current csproj note (C-14) |
+| Report reconciliation | Log, Finding 2; V.G; Appendix M.5 | Generated reports; generation-stamp mechanism |
+| Drift-management doctrine T-1..T-6 | V.Drift; L-13 | Log's cross-cutting section + seal record |
+| Integration framework and evidence hierarchy | §III.2, §III.5 | Derived from the wave's practice; gate ladder §VII.1 |
+| Invariants INV-01..INV-16 | Log citations; Appendix B | Per-invariant pins listed there |
+| Gate ladder G-0..G-12 | §VII.1 | Derived; encodes Findings 1-3 as gates |
+| Quarantine protocol | §VII.3 | Current csproj + TEST_POLICY references |
+| Rollback plan | §VII.4 | Derived from the wave's commit shape |
+| Interaction matrix and emergent behavior | §VI.1, §VI.2 | Catalog + report data; bridge/pool sources |
+| Seed register | Appendix D | Test names, report config blocks, host source |
+| Open questions Q-1..Q-10 | Appendix J | Each carries its own evidence note |
+| Operational sequence and budget | Appendix Q | Log phase records |
+
+**Reader shortcuts.** "Is anything broken?" → Appendix O. "What changed since the wave?" →
+§II.6. "How do I run the evidence?" → Appendix G. "How do I run the next wave?" → Part VII +
+Appendix L. "Where is invariant X?" → Appendix B. "Why does the report disagree with the log?"
+→ §II.6 C-8/C-9 and Appendix M.5.
