@@ -276,7 +276,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 219 | `combat` | Tactical Combat | `TacticalCombatSystem`, `CombatTraumaSystem` | `combat_catalog.json` | `CombatHostSession` | `CombatSaveStore` | `CombatPanel`, `CombatDetailPanel`, `CombatHistoryPanel` | `--combat-selftest`, `CombatBallisticsTests` | ✅ 6/6 |
 | 220 | `technical_material_archive` | Technical Material Archive | `TechnicalMaterialArchiveSystem` | `hemp_fiber_hackling_logs.json`, `wire_rope_stranding_assays.json`, `manila_hawser_breakage_reports.json`, `rope_transmission_splicing_audits.json`, `neoprene_gasket_degradation_logs.json`, `aramid_fiber_rot_reports.json`, `tire_retreading_compound_logs.json`, `celluloid_film_decomposition_records.json` | `Main` | `TechnicalMaterialArchiveSaveStore` | *None (GAP)* | , `TechnicalMaterialArchiveTests`, `CordageCableCatalogTests`, `PolymerTextileCatalogTests` | ❌ GAP |
 | 221 | `vehicle_customization` | Vehicles | `VehicleCustomizationSystem`, `VehicleCustomizationCatalog`, `VehicleModule`, `VehicleCustomizationCensus`, `VehicleModuleCatalogLoader` | `vehicle_modules.json` | `Main`, `VehicleCustomizationHostSession` | `VehicleCustomizationSaveStore` | *None (GAP)* | `--vehicle-customization-selftest`, `Plan152VehicleCustomizationHostIntegrationTests`, `Plan152VehicleCustomizationIntegrationTests`, `VehicleModuleCatalogLoaderTests` | ❌ GAP |
-| 222 | `visitor_integration` | Visitors | `VisitorIntegrationSystem`, `VisitorCatalogData` | `visitor_templates.json` | `Main`, `VisitorIntegrationHostSession` | `VisitorIntegrationSaveStore` | `VisitorIntegrationPanel` | `--visitor-integration-selftest`, `Plan214VisitorIntegrationTests` | ✅ 6/6 |
+| 222 | `visitor_integration` | Visitors | `VisitorIntegrationSystem`, `VisitorCatalogData` | `visitor_templates.json` | `Main`, `VisitorIntegrationHostSession` | `VisitorIntegrationSaveStore` | `VisitorIntegrationPanel`, `GameDashboardPanel` | `--visitor-integration-selftest`, `Plan214VisitorIntegrationTests` | ✅ 6/6 |
 | 223 | `deep_well` | Water & Infrastructure | `DeepWellSystem` | — *(Procedural)* | `DeepWellHostSession`, `DeepWellSaveStore` | `DeepWellSaveStore` | *None (GAP)* | , `DeepWellSystemTests` | ❌ GAP |
 | 224 | `piezometer_network` | Water & Infrastructure | `AquiferPiezometerEngine` | `piezometer_network_catalog.json` | `PiezometerHostSession` | `PiezometerSaveStore` | *None (GAP)* | , `Plan189IntakeAdvisoryBridgeTests` | ❌ GAP |
 | 225 | `water_condenser` | Water & Infrastructure | `AtmosphericCondenserSystem` | — *(Procedural)* | `WaterCondenserHostSession`, `WaterCondenserSaveStore` | `WaterCondenserSaveStore` | *None (GAP)* | , `AtmosphericCondenserSystemTests` | ❌ GAP |
@@ -2829,13 +2829,14 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 
 ### 222. `visitor_integration` — Plan 214 — admitted visitor stays, temporary housing, processing requirements, and departures (Visitors)
 - **Owner Domain:** `visitors`
-- **Setup Method:** `Main.SetupVisitorIntegration()` | **Cadence:** `None`
-- **UI Routes:** `expanded`
+- **Setup Method:** `Main.SetupVisitorIntegration()` | **Cadence:** `Daily (Visitor Lifecycle & Ration Draw)`
+- **UI Routes:** `visitor_integration`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Visitors/VisitorIntegrationSystem.cs`](../../Assets/Ashfall.Core/Visitors/VisitorIntegrationSystem.cs)
   - Host Session: [`src/Host/VisitorIntegrationHostSession.cs`](../../src/Host/VisitorIntegrationHostSession.cs)
   - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/VisitorIntegrationSaveStore.cs`](../../src/Host/VisitorIntegrationSaveStore.cs)
+  - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - UI Panel: [`src/UI/VisitorIntegrationPanel.cs`](../../src/UI/VisitorIntegrationPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Visitors/Plan214VisitorIntegrationTests.cs`](../../Ashfall.Core.Tests/Visitors/Plan214VisitorIntegrationTests.cs)
 
@@ -3309,7 +3310,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `vehicle_garage` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `verdict` | ✅ | ✅ | ✅ `Daily Machine Log Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `vinyl_morale` | ✅ | ✅ | ✅ `Daily Turntable Morale Broadcast` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `visitor_integration` | ✅ | ✅ | ⚡ `None` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `visitor_integration` | ✅ | ✅ | ✅ `Daily (Visitor Lifecycle & Ration Draw)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `wasteland_justice` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `wasteland_map` | ✅ | ✅ | ⚡ `On-Demand (Fog-of-War Discovery)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `wasteland_rumors` | ✅ | ✅ | ✅ `Daily (Decay & Propagation)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
