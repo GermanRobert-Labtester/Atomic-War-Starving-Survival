@@ -2708,3 +2708,273 @@ audit found):
 The one structural lesson to import: this hypothetical wave modifies no production code either.
 If it ever must, it stops being a verification wave and becomes a feature wave with a new plan —
 the framework's value depends on that boundary staying hard.
+
+### Appendix M — Audit Internals, Verified: How F11/F12 Construct Their Contexts
+
+This appendix records the verified internals of the audit tests — the machinery behind the
+numbers in `docs/discovery/` — because the reports' configuration blocks summarize the method
+but not the mechanics. Everything here was read from `MicroLocationUtilizationAuditTests.cs`
+(and the loaders it calls) on 2026-09-25.
+
+**M.1 Catalog loading.** `LoadMicroCatalog()` calls
+`NarrativeEncounterCatalogLoader.Load(DataDir(), FileSystemIO, SystemTextJsonSerializer)` — the
+production loader that merges the base `narrative_encounters.json`, the Plan-52 NPC-arc file,
+and expansion passes — then filters `id.StartsWith("micro_")` and asserts the count is 28 (the
+D1 pin, with the divergence named in a comment at the assertion site). Consequence: any future
+file that contributes a `micro_`-prefixed encounter to the merged catalog participates in the
+pin. The filter, not the file, is the unit of "the catalog."
+
+**M.2 Destination loading — the merged catalog.** `LoadDestinations()` calls
+`ExpeditionCatalogLoader.Load(...)`. That loader (verified at
+`Assets/Ashfall.Core/Expeditions/ExpeditionCatalogLoader.cs`) merges five sources: primary
+`expeditions.json` (75 entries today) plus four location files — `locations_expansion3.json`,
+`locations.json`, `year_of_ash_locations.json`, `holdfast_locations.json` — deduplicating by id
+and registering everything into the static `ExpeditionDefinitionRegistry`. Today's merged list
+is **299 destinations** (75 + 20 + 113 + 62 + 29, verified by summing new ids per file). This
+is the concrete mechanism behind §II.6 C-3: "53 destinations" (log), "75" (expeditions.json
+today), and the merged 299 are three different honest answers to "how many destinations," and
+only the loader's answer drives the audits.
+
+**M.3 What "location" means in the matrix.** `EligibleWeight(e, d, stance)` is
+`e.GetEffectiveWeight(stance, d.dangerLevel, d.id)` — the destination's **id** is passed as the
+locationId. So a micro-location's `requiredLocationId` matches destination ids, and the three
+required-location entries (`abandoned_hospital`, `location_flooded_subway_depot`,
+`loc_garrison_checkpoint_gamma`) are matched against destinations carrying exactly those ids —
+all three verified present in `expeditions.json`. In production the same string arrives as
+`exp.locationId` from the host's expedition context; matrix and production agree because both
+sides key on the destination identity.
+
+**M.4 The opportunity loop, precisely.** For i in 0..999: destination =
+`destinations[i % destinations.Count]`; a fresh `SeededRng(9000+i)` per opportunity; eligibility
+bookkeeping over all micros consumes zero RNG (comment in source: "metadata only"); the trigger
+is `rng.NextDouble() < d.encounterChancePerTick * 0.5f` — Stealth parity with `RollEncounter`,
+one unconditional draw per opportunity; on trigger, `sys.SelectEncounter("Stealth",
+d.dangerLevel, d.id, rng)` picks from the **micro-only pool** (the system holds only the 28
+micro entries — `RegisterRange(micros)`), drawing exactly once when anything is eligible.
+Depletion accumulates across the run in the one persistent system; selections and eligibility
+accumulate into per-entry dictionaries whose canonical form is the ordered
+`id:e=…,s=…` string embedded in the report.
+
+Two methodological facts worth stating explicitly:
+
+1. **The audits measure `NarrativeEncounterSystem.SelectEncounter` semantics, not the bridge's
+   merged roll.** The pool is micros-only by construction — the F11/F12 numbers are therefore
+   *micro-conditional* rates (given a narrative micro pool, what gets picked), which is the
+   right denominator for the questions those waves asked. The post-wave bridge merge
+   (§II.2) adds patrol competition that these simulations deliberately exclude; §VI.2 E-5
+   discusses the consequences, and Appendix L's Wave-D′ sketch extends the matrix to the joint
+   pool.
+2. **No location chance-multiplier is installed in the harness** — the parity formula is the
+   base chance × 0.5, matching `RollEncounter`'s default path (the multiplier hook is a host
+   delegate; absent a delegate, production multiplies by nothing).
+
+**M.5 Generation stamping of the committed reports.** The committed utilization report's
+opportunity counts (1000 for open entries, 559 for dMin-2 entries, 8 for each required-location
+entry; triggered=78) are the product of the loop above under the destination list *as of the
+report's last generation*. With today's merged list at 299, a regeneration will spread
+opportunities 3–4 per destination and shift every per-entry count — while gates (dead/orphan),
+methodology, and the classification logic hold unchanged. This is the same generation-stamp
+phenomenon the seal documented (64→78), now with its mechanism fully identified: **the report's
+numbers are a function of the merged destination catalog, which is the fastest-growing input in
+the repository.** Anyone diffing regenerated reports should expect opportunity-count movement
+from catalog growth alone, and should re-run twice on a fixed tree (G-7) before attributing
+movement to content.
+
+**M.6 Trade values in the economy audit.** The ledger loads `items.json` directly
+(`JsonDocument` over the wrapped `items` array, `tradeValue` numeric or 0) — the value
+authority is the raw catalog, not a C# default when a field is missing. A missing
+`tradeValue` is silently 0 in the ledger, which the F12 ledger test's finite-value pin
+complements: an item that *should* carry value but lost its field shows up as a ledger row of
+0 net, visible in the report rather than thrown — the audit prefers observable wrongness over
+hidden exceptions, consistent with the honest-bare-notice philosophy of the surface path.
+
+### Appendix N — The Wire Format, Precisely
+
+What the F9 tests mean by "wire round-trip," and what this expansion verified about it:
+
+- The save DTO family (`NarrativeEncounterState`, `EncounterResolutionRecord`,
+  `PendingSurfacedEncounter`, and the choice/definition shapes) is serialized by the
+  repository's `SystemTextJsonSerializer` options — the same serializer the production store
+  path uses (the store's `SaveStoreHub.Checksummed<T>` is built on it; the test files construct
+  the serializer explicitly rather than relying on incidental defaults).
+- The field names on the wire are the C# field names (e.g. `depletedEncounterIds`,
+  `depletesOnResolve`) — the same convention the catalogs mirror in their JSON keys (§II.5).
+- A "wire payload" in the tests is therefore: capture → `CaptureState()` → serialize →
+  deserialize → `RestoreState()` on a fresh system, with the serializer doing all shape
+  conversion. No test writes JSON by hand; B-7's legacy payload is built by serializing a state
+  whose `depletedEncounterIds` is left null, which is exactly the pre-F1 wire shape (the field
+  absent because it did not exist, null on read).
+- The one thing this expansion did *not* verify byte-for-byte is the exact serializer options
+  (naming policy, indentation) as configured in the shared serializer type; the tests' use of
+  the shared serializer is verified by using-statements and constructor calls in the test
+  files, and the round-trip property itself is what the tests pin — options changes that
+  preserve round-trip fidelity are out of the wave's contract by design.
+
+### Appendix O — Failure Triage: Symptom → Suspect → Instrument
+
+A maintenance-facing index: when the micro-location domain misbehaves, start here. Each row
+names the symptom class, the most likely culprit given the architecture, and the test or
+command that discriminates.
+
+| Symptom | First suspects | Discriminating instrument |
+|---|---|---|
+| A looted site can be looted again after reload | Restore path dropped the list (D-1 broken); legacy migration misfiring on a present list (INV-13) | B-1 (wire round-trip), B-7 (legacy null path); check the saved payload for a present vs null `depletedEncounterIds` |
+| A site becomes one-shot after a "leave it" choice | Depletes flag authored on the wrong choice (INV-04 violation in content) or `TryResolve` marking unconditionally | F11 structural suite + the memorial pair; inspect the entry's `depletesOnResolve` flags |
+| Rewards duplicated after reload | Consequence authorities reapplied without their idempotence gates | B-8 (world flag), B-5 (pending resolves once); check resolution-id composition |
+| Two runs with the same seed diverge mid-expedition | Stream sharing broken (INV-06); a zero-draw boundary now draws (R-3); insertion-order dependence in eligibility | C-7 (static scan), C-5/C-6 (zero-draw), then the sweep (C-10) with its seed+tick+segment report |
+| Determinism green but encounters differ from an older save | Expected: content or pool edits change selection identity while per-world determinism holds (§VI.2 E-4). Not a bug unless continuation parity also fails | C-4/C-10 for parity; catalog diff for the explanation |
+| Full suite hangs | An unbounded loop over a missing precondition (the Finding 3 pattern) | `--blame-hang`; look for `while` loops guarding on data a catalog load provides |
+| Wave/feature tests pass alone but vanish from project runs | Quarantine sweep (Finding 1 pattern) | Family count inside the project vs isolated count (G-10); read the csproj Compile Remove block |
+| Utilization report numbers moved | Destination catalog growth (M.5) or genuine content change | Re-run twice on fixed tree (G-7); diff the merged destination count; check dead/orphan gates stayed 0/0 |
+| Economy ratio moved across the band | Trade-value edits, grant edits, or pool composition | Ledger table diff; the band verdict line; INV-10 — report, decide, ledger |
+| An item grant silently yields nothing | Grant id orphaned by an items.json rename | F11 reference test (#2) and F12 ledger test (#1) both name it |
+| A journal key never unlocks in play | Key not in the micro namespace or colliding; knowledge gate refusing | F11 namespace test (#4); `TryDiscoverKnowledge` dedup gate |
+| New micro entry absent from the pool | Count pin fired and was ignored; or dMin/requiredLocation excludes every context | F11 test #1 (count) and #5 (eligibility matrix); check the pin was updated with the content change |
+| Selections stop entirely on a route | Every eligible candidate depleted (E-1 route exhaustion — emergent, by design) or total pool weight zero → bare-notice DTO | The bare-notice branch (§IV.3); utilization report's per-destination context |
+| A required-location micro never appears | Its destination id changed (matrix matches on destination id, M.3) | F11 eligibility matrix row; cross-check the id against `expeditions.json`/location files |
+
+Two meta-rules the table encodes: **content symptoms go to F11/F12 tests; behavior symptoms go
+to F9/F10 tests** — the four files partition the failure space cleanly enough that the first
+test to run is usually determined by the symptom's noun. And **any symptom reproducible only
+"sometimes" under parallel execution is the registry-sharing contract, not a bug** (INV-16):
+run serially before diagnosing.
+
+### Appendix P — Provenance of This Expansion's Claims
+
+Consolidated verification statement for everything asserted above the appendices and within
+them, so a reviewer can re-walk the evidence without re-deriving the method.
+
+**Verified by direct read of current source (2026-09-25)** — the load-bearing set:
+`ExpeditionSystem.TickHours`/`RollEncounter` bodies and line positions;
+`ExpeditionEncounterBridge.Surface` full body including the merged-pool roll, bare-notice
+branch, walk order, and `resolved_at_lead`/resolution-id guards; `NarrativeEncounterSystem`
+`GetEligibleCandidates`/`SelectEncounter`/`TryResolve`/`RestoreState`/
+`ReconstructDepletionFromHistory` bodies; `EncounterCatalog.cs` DTO fields, defaults, and
+`GetEffectiveWeight`; `NarrativeSaveStore` constants and `SaveStoreHub.Checksummed` seam;
+`ExpeditionHostSession` `DemoSeed`/`TickHours`/bridge wiring; `SeededRng` algorithm,
+initializer, and `PeekState`/`SeekState`; `ExpeditionCatalogLoader` merge behavior and file
+list; the four wave test files' attributes and method names; the harness and `CountingRng`
+bodies; the env gates in both audit files; `CropStrainCatalog`'s `FileExists`; the csproj
+quarantine region's manifest-gate note.
+
+**Verified by direct read of current data (2026-09-25)**: `micro_locations.json` wrapper,
+count (28), and every inventory row of Appendix C including weights, multipliers, dangers,
+choice counts, depleting counts, grants, journal keys, flags, and discoveries;
+`expeditions.json` count (75) and the presence of the three required destination ids;
+`items.json` count (724), `tradeValue` field, and the six named outlier values; the four
+loader location files' entry counts (20/113/62/29).
+
+**Verified by direct read of committed docs (2026-09-25)**: the three discovery reports'
+configuration blocks, findings sections, canonical traces, ledger rows, and recommendation
+lines; `docs/CURRENT_AUTHORITY.md`'s data-layer table.
+
+**Verified in git history (2026-09-25)**: commits 45307130 and 620381bd exist with the subjects
+quoted in Appendix H.
+
+**Log records (accepted as historical, not re-executed)**: all build results, the 8/8 and 31/31
+and 87/87 and 100/100 and 64-seed and 1000-opportunity and 100-expedition execution outcomes,
+the Godot selftest 262-catalog figure, the 25-minute stall and 69-second final verdict, the
+wave-time API state of `SeededRng`, the wave-time 53-destination count, and the scaffold
+project's existence and removal.
+
+**UNVERIFIED (log text only)**: `.f9f12_scaffold/` (removed; nothing to inspect); the exact
+upstream commit that removed the RNG state API (hash never recorded); the precise serializer
+options configuration (Appendix N's stated boundary); the exact destination ids behind the
+C-1..C-3 named seeds (test fixtures are their own authority).
+
+**Superseded-but-recorded**: determinism doc §2's no-state-getter sentence (superseded by
+`PeekState`/`SeekState`, Q-3); the log's 9/7 test-count distribution (superseded by 10/6,
+C-5/C-6); the log's production chain through `SelectEncounter` (superseded by the bridge's
+merged roll, C-2); AGENTS.md's UI-21 row (rotated out, C-13).
+
+---
+
+## Expansion Closeout (2026-09-25)
+
+**What this expansion is.** A documentation-only deepening of the F9–F12 verification wave's
+log: the current-authority audit (Part II), the reusable integration framework (Part III), the
+code architecture as it stands (Part IV), the per-wave methodology with per-test anatomy
+(Part V), the interaction matrix (Part VI), the acceptance ladder (Part VII), and the
+appendices. The original log above it is preserved byte-for-byte; nothing in it was edited.
+
+**What this expansion is not.** It is not a re-run of anything. No test, build, or Godot
+session was executed. It changes no production file, catalog, test, or other document. Its
+ factual currency is the working tree as read on 2026-09-25; its historical currency is the
+wave log, which remains the authority for everything that happened during 2026-09-04 through
+2026-09-06.
+
+**The one-paragraph state of the domain, for someone who reads nothing else.** The
+micro-location pipeline is healthy and its evidence layer is intact: 28 authored entries, all
+reachable, none redundant, none dead; depletion, pending, and history persist through a
+checksummed envelope with a legacy migration that never guesses; the encounter stream is
+single-stream deterministic with draw-count continuation proven across 100 seeds; the reward
+economy sits at 25.7% of primary loot value, inside the 10–30% band, with the anti-farm
+property enforced by four independent gates. Since the wave, the surface path gained a merged
+narrative+patrol roll (the wave's selection tests still pin both layers), the RNG regained
+state access under new names (the draw-count design needs none), and the destination catalog
+nearly doubled (the audits iterate it, so they did not notice; the reports' generation stamps
+did). The open items are cataloged in Appendix J; none blocks anything.
+
+**Handoff.** Future verification waves should start from Part VII's ladder and Appendix L's
+sketch, claim paths per `WORKTREE_OWNERSHIP.md`, keep the divergence ledger current (T-6), and
+append — never rewrite — to this log. The framework's one hard rule bears repeating as the
+final sentence: a verification wave verifies; the moment it must change production behavior, it
+stops and becomes a plan.
+
+— End of expansion. —
+
+### Appendix Q — The Wave as an Operational Sequence
+
+A reconstruction of the wave's working sequence, from the log's own phase records, in the order
+a re-enactment would follow. Commands are representative of the repository's conventions; every
+*outcome* quoted is a log record.
+
+1. **Reconnaissance day.** Read the trigger path, bridge, selection, DTO, store, RNG, and both
+   content catalogs; run `dotnet build Ashfall.csproj` and
+   `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` (0/0 errors, 0/0 warnings);
+   write the baseline evidence block and the verified call chain into the log; record D1, D2,
+   the cadence no-op, the plan adaptations, and the API-intersection decision.
+2. **Persistence day.** Write `MicroLocationPersistenceWaveTests.cs` against the DTO the recon
+   found already shipped; run the file alone (8/8); record the F9.13 supersession; commit
+   45307130 with the log by pathspec.
+3. **Determinism days.** Build the harness (full catalog, registered destinations, scavenging
+   authority, one stream); write the three named-seed repeats; hit the upstream `SeededRng`
+   removal; re-cut continuation to draw counts the same day; add the zero-draw pair, the scan,
+   the replay, the filtering test, and the 100-seed sweep; run serially; write
+   `MICRO_LOCATION_DETERMINISM.md` with the F10.9 escape-clause note.
+4. **Utilization day.** Write the structural suite (count pin, references, reachability,
+   namespace, contexts); build the 1000-opportunity simulation with the dual-run requirement;
+   add the redundancy scan; generate the report under the env gate; record findings (0 dead,
+   0 orphan, 3 sample-misses, 4 low-yield, 0 redundant).
+5. **Economy day.** Write the ledger, the 100-expedition simulation, the two farming-resistance
+   gates, the outlier pins, and the env-gated report; read the headline (19.5%, inside band);
+   record the greedy-methodology artifacts and the thin-sampling note; generate
+   `MICRO_LOCATION_BALANCE.md`.
+6. **Revalidation window.** Trunk had moved (Flagship XI Slice 5); re-run all 31 serially;
+   selftest 262 catalogs / 10,837 ids; attempt the full suite; hit the 25-minute stall;
+   reproduce the pre-existing condition; disclose the CropStrainCatalog fix; note the tree
+   oscillating under other streams' in-flight edits.
+7. **Forensics window.** `--blame-hang` → the geothermal drilling loop → null strata →
+   `no_strata` forever; fix in place with a depth-0 stratum; leave uncommitted for the owner;
+   re-run the full suite to the 8328/8315/13 verdict with every failure attributed.
+8. **Seal day.** Discover the quarantine sweep via family counts; unquarantine by commit
+   620381bd; regenerate both reports; reconcile (64→78 triggered; 19.5%→25.7%; gates
+   unchanged); verify bit-stability by double reproduction; draft the AGENTS.md annotation and
+   decline to commit it over foreign edits; write the three findings; declare SEALED.
+
+The sequence's shape is worth noticing: **recon, then one evidence domain per working day,
+then a revalidation window that treated trunk defects as first-class findings, then a seal that
+reconciled rather than re-argued.** Each day produced a committed artifact before the next
+began; nothing was batched at the end. That cadence — commit small, ledger immediately,
+reconcile once — is the operational half of the framework, and it is what kept the wave
+attributable while three other streams moved the same tree.
+
+**Re-enactment budget.** For a future wave of comparable scope: reconnaissance 1 day;
+persistence 1; determinism 2 (the harness is half the work); utilization 1; economy 1;
+revalidation 1; forensics 0–1 (only if the trunk cooperates by breaking); seal 0.5. Roughly
+seven to eight focused days, of which the framework in this expansion — ladder, templates,
+invariants, triage table — is intended to save two.
+
+---
+
+— Final end of expansion. —

@@ -1206,3 +1206,310 @@ The bounded vocabulary, with producer → consumer → resolution for every id. 
 **V.J.6 Cross-plan flags consumed by Plan 25 (not produced by it).** `flag_messenger_kept`, `flag_become_warlord` (`MoralChoiceIds`, consumed by the messenger's keeper). Plan 25's whitelist records these as consumed-only with their external producers named — the dependency direction the `[H]/[O]/[X]` classification in the continuity matrix formalizes.
 
 **V.J.7 Lint contract.** The generator derives the whitelist from shipped data; a review diff that adds a flag without a producer row, or a consumer without a producer, fails review by inspection. `orphan_knocks` is the file's own empty-by-convention field for detected orphans. Any new prefix (the vocabulary is closed at five) is an architecture decision, not content.
+
+### V.K — Batch plan expanded: per-batch engineering checklists
+
+The original §5 fixed the batch order and the vertical-slice gate; the closeout recorded the batches as executed with per-batch commits on main. This section restates each batch as an engineering checklist — the form a re-run, a port, or a follow-up wave should copy. Every batch keeps the repo workflow: bounded outcome restated, exact files listed, existing owners inspected first, smallest coherent change, focused verification, handoff notes. All fifteen are `VERIFIED-IMPLEMENTED` at closeout; checklists are kept in the imperative so they remain usable as acceptance scripts.
+
+**Batch 1 — Forensic documentation.**
+- [ ] Integration plan (this file, original section) + 8 companion docs exist and cross-reference by path: closeout, continuity matrix, QA matrix, witness runtime contract, witness candidate matrix, testimony style guide, political timeline, authority map.
+- [ ] Every "verified" claim in the companions cites a path that exists at writing time.
+- [ ] No doc duplicates another's authority: the plan owns seams; the closeout owns outcomes; the continuity matrix owns flags; the runtime contract owns selection rules.
+- Gates: docs-only; no build impact.
+
+**Batch 2 — Seam S1 runtime.**
+- [ ] `FactionActionCatalog` loader + `FactionActionDefinition` (schema_version 1).
+- [ ] `FactionActionBoard` with constructor-injected band sources; `AvailableActions`, `Resolve`, `ComputeBand`, `BandForTrust`, flag ledger, events.
+- [ ] Additive `AdjustTrust` seam on guild/hydro; `SetAggressionLevel` reachable; camp members/lockout seams.
+- [ ] `FactionActionBoardState` DTO with `CaptureState`/`RestoreState`; `MusterSaveStore.FactionActions` null-tolerant.
+- Gates: `FactionActionBoardTests` green via `scripts/run_test.sh`; `dotnet build Ashfall.Core.Tests` clean.
+
+**Batch 3 — Seam S2 runtime.**
+- [ ] `WitnessCatalog` v2 DTO (`faction_id`, `priority`, `subject_id`, `testimonies[]`); v1 fallback synthesis; documented beyond-current rejection.
+- [ ] `WitnessSelector.Select` + `SelectTestimony` + `IWitnessEligibility` + `PassAllWitnessEligibility`.
+- [ ] Witness results ledger in `MusterSystem` (`RecordWitnessResult` idempotent, ordered read, deep-copied capture/restore).
+- [ ] Count pins softened to floors (`MusterContentCatalogTests` `>= 3`; UI test `>= 3`; copy no longer "Three accounts").
+- Gates: `WitnessSelectionTests` green; muster catalog tests green.
+
+**Batch 4 — Seam S3 runtime.**
+- [ ] `MusterPaths` constants, `MusterPathInput`, `MusterPathEvaluator.Evaluate` pure and total.
+- [ ] `MusterState.musterPath` additive; `SetMusterPath` enum-validated; `MusterPath` read-only exposure.
+- [ ] Host mapping table implemented (war standings, treaty counts, board flags, camp state).
+- Gates: `MusterPathEvaluatorTests` green (all three paths + degenerate inputs).
+
+**Batch 5 — Seam S4 runtime.**
+- [ ] `FlagTrigger` added; grammar otherwise untouched; `FactionWarTriggerTable` entries required per stage.
+- [ ] `FactionWarContentCatalog` stage/choice `requiresFlag`/`producesFlag`/`standingDelta` fields.
+- [ ] Host `StandingDeltaApplier` → `FactionWarSystem.ModifyStanding`; runner-produced flags into the shared ledger.
+- [ ] `faction_war_events.json` schema extended in its existing key style (camelCase), no 06C row touched.
+- Gates: `FactionWarFlagExtensionTests` + trigger-table totality green.
+
+**Batch 6 — Vertical slice GATE (no scale-out before green).**
+- [ ] A1 (`act_salvage_rights_offer`) resolvable end-to-end with a produced grievance flag.
+- [ ] E-P1 fires on that flag; W6-class testimony (2 witnesses) delivers on real flags; arrivals scene stages; negotiated path evaluates.
+- [ ] Save/load round-trip preserves board history, flags, path, witness ledger.
+- [ ] The slice runs over real data (no test fixtures) — the pattern later codified as `FactionEcologyHeadlessDemo`.
+- Gates: slice demo + save/load tests green; `dotnet build Ashfall.csproj` 0/0.
+
+**Batch 7 — 25A ecology content (4 commits: Guild / Hydro / Raiders / Coalition).**
+- [ ] 12 actions authored to V.A rules; every flagged choice whitelisted; `neutral` variant present; min_days staggered 60–230.
+- [ ] Journal sentences authored per choice; no choice text repeats another's sentence.
+- [ ] Boot/integrity registration; content-utilization scan clean.
+- Gates: data-integrity-selftest; action-board tests over real data.
+
+**Batch 8 — 25E culture.**
+- [ ] `muster_faction_culture.json` + Core loader + codex consumption; entries follow V.G authoring rules.
+- [ ] (Later DEC-99 wave: dedicated `FactionCultureCodexPanel`, route registration, `FactionsPanel` button, `FactionCultureCodexTests`.)
+- Gates: loader tests; panel route gate tests (DEC-99 wave).
+
+**Batch 9 — 25C escalation content.**
+- [ ] E-P1..P6 authored to V.C spec; triggers registered in the table; flags whitelisted; quality flags consumed by the summit-envoy testimony.
+- [ ] All minDays ≤ 259 verified against `MusterOpeningDay`.
+- Gates: war extension tests; continuity matrix rows added.
+
+**Batch 10 — 25C war context + weariness content.**
+- [ ] E-W1..W6 gated on the six 06C `ChainResolvedTrigger` anchors; E-R1..R4 to V.C″ spec; ceasefire untouched.
+- [ ] Witness gates for the war/peace set wired (elder, singer, overflow medic).
+- Gates: war extension tests; narrative-continuity check at content batch.
+
+**Batch 11 — Paths finalized.**
+- [ ] Thresholds frozen (`DominanceTensionThreshold = 60`); precedence documented in-code; degenerate cases pinned by test.
+- [ ] Re-evaluation policy implemented in the host; old-save empty-field behavior pinned.
+- Gates: evaluator tests over mapped-real-input cases.
+
+**Batch 12 — 25B witnesses (15 at closeout; 27 after Plan 84).**
+- [ ] Roster authored to V.B schema; bind-or-substitute ledger closed (zero orphans); testimony voice per style guide; count pins floors.
+- [ ] Plan 84 wave additions: three investigation threads × 4, founding + ecology sets preserved intact, `Plan84WitnessExpansionTests` added.
+- Gates: witness selection tests; testimony catalog tests; Plan 84 thread tests.
+
+**Batch 13 — 25F camp scenes.**
+- [ ] 4 scenes / 18 variants authored to V.H rules; director implemented (`PathMatches` ordinal; seen-suppression); `CampScenesSeen` persisted additively.
+- Gates: scene catalog tests; muster-uitest.
+
+**Batch 14 — 25D + 25G cross-plan + treaty feed.**
+- [ ] `RegionalTreatyFeed` adapter + `SetupRegionalTreaty` load; fallback documented; `RegionalTreatyFeedTests` green.
+- [ ] Cross-plan bindings: messenger's keeper substitution; subject-living resolver port; item sink; whitelist generator + `plan25_flags.json`.
+- Gates: feed tests; whitelist diff clean; `--bridge-selftest`.
+
+**Batch 15 — 25H QA + closeout.**
+- [ ] `--faction-ecology-selftest` verb registered (Parse + PrintHelp, help-contract green); demo walks 27 checks over real data.
+- [ ] QA matrix written; 15-step late-game journey scripted; closeout written with delivered-counts table, limitations list, final gate results.
+- [ ] Host build 0/0; data-integrity 0 findings; muster-selftest / muster-uitest / bridge-selftest PASS.
+- [ ] Follow-up list recorded (epilogue consumption, census binding, item economy later bound, codex panel later shipped, telemetry playtest recommended).
+
+**Batch-to-gate summary.**
+
+| Batch | Primary gates |
+|---|---|
+| 1 | docs review |
+| 2–5 | focused seam tests via `scripts/run_test.sh`; Core build clean |
+| 6 | vertical slice demo + save/load |
+| 7–10, 12–13 | data-integrity-selftest; content-utilization; narrative-continuity (content batches) |
+| 11 | evaluator tests |
+| 14 | feed tests; bridge-selftest |
+| 15 | full host gate set incl. `--faction-ecology-selftest` |
+
+---
+
+## Part VI — Cross-system interaction matrix and emergent-consequence design
+
+Plan 25's rule was to extend owners, never to add cross-domain rules. This part records where the political stack *touches* other systems, with the direction of dependency made explicit, and where emergent consequences are designed rather than accidental.
+
+### VI.1 Interaction matrix
+
+| System | Direction | Channel | Verified anchor | Design note |
+|---|---|---|---|---|
+| Trade surfaces (Silent Foundry, Deep Coast) | Plan 25 reads nothing; trade reads its own stance | `FactionStanceEngine` stays sovereign; ecology factions are not trade-faction ids | `Economy/FactionStanceEngine.cs:13` | No bridge exists by design. A guild favor does not discount foundry goods; if a future plan wants that, it is a new seam with its own audit |
+| Raid pressure / expedition danger | outward (treaty breach → raid pressure per DEC-96); raider aggression feeds the existing raid-chance formula | `IronRaidersSystem.aggressionLevel`, mutated only by board effects (±0.05..0.25) | `FactionActionBoard.cs:259`; `IronRaidersSystem.cs:46–50` | The levy math stays honest: running convoys raises aggression exactly as fighting does less; the host's raid roll remains the sole consumer |
+| Radio | content-only, both directions | faction radio corpora remain their own catalogs; war communiques stage 06C chain text | `faction_radio_corpus.json`, `faction_war_radio.json` | Political flags do not unlock radio lines; radio reflects war state through the 06C presentation path, not the board |
+| Morale | inward | chain choice `moraleDelta` (06C field, reused by Plan 25 chains) | `faction_war_events.json` all 16 chains | Morale is the only player-facing currency Plan 25 chains spend; deltas bounded −2..+2, never on neutral choices |
+| Survivor relationships | read-only via resolver | `SubjectLivingResolver` (muster) reads roster liveness | `src/Main.Muster.cs:49` | Relationships are never written by political content; a dead friend changes testimony availability, not affection |
+| Needs/health/power/water | none | no channel | — | The political stack cannot touch shelter vitals; only the item sink moves matter, one audited transfer at a time |
+| Quests (Approach A–D) | untouched | `QuestApproach` → `endingKey` flow canon | `MusterSystem`, `muster_epilogues.json` | The path evaluator runs beside the quest spine, never across it |
+| Epilogue / Verdict | future hook `[X]` | `MusterState.musterPath` + `witnessResults` recorded, unconsumed | `MusterSystem.cs:44,168` | The one designed-but-open seam; see VI.3 |
+| Save system | additive | four new fields (III.4) | `MusterSaveStore.cs:30`, `MusterSystem.cs:38,44` | No field renamed, no format bumped |
+| Codex/journal | presentation | board journal strings; witness panel; culture codex | `FactionActionPanel`, `JournalWitnessPanel`, `FactionCultureCodexPanel` | Panels render state; they never compute it |
+
+### VI.2 Emergent-consequence design (what the crossings produce)
+
+The plan's promise was traceability: every political outcome should be explainable by named prior choices. The shipped crossings produce four durable emergent shapes. None is random; all are ledger-readable.
+
+1. **The escalation budget.** Twelve grievance flags exist; six have chain triggers. A shelter that disputes the Guild claim, defaults the toll, refuses the appeal, breaks the parley, sides against the intake auditors, and fights the levy has armed the entire escalation band by day 250 — six public events, a hostile-leaning testimony panel, `GrievanceUnresolved` true, and an `old_enemies`-heavy camp. The same shelter one apology earlier lives in a different game. Both are authored; neither is punished by hidden math.
+2. **The war-shadow camp.** The three war-window choices that produce flags (wounded, requisition, families) decide which camp-fire scenes stage months after the Muster window. Taking the wounded at day 536 is why the overflow medic can testify at day 565+ if the consumer wave arrives; sheltering retaliation families at 555 is why the confrontation fire is about them. The war is distant; its paperwork arrives by witness.
+3. **The quiet-faction fork.** E-R3's `flag_peace_faction_forms` is the only flag with three downstream courts: another chain (E-R4), a testimony (the deserter elder), and a path input (`PeacePressure`). Naming the list at the forward-roster camp is therefore the single highest-leverage political choice in the war window — and the data says so structurally, which is the honest way for a system to say it.
+4. **The testimony biography.** `witnessResults` accumulates what the shelter actually heard said about itself, variant by variant. Two campaigns with identical standings can carry different ledgers — one heard the claimant's gratitude, the other her grievance — and that ledger, not a number, is what a future Verdict should weigh.
+
+### VI.3 The epilogue/Verdict seam (designed, not built)
+
+Status: `VERIFIED-NOT-IMPLEMENTED` as a consumer; the contract side is `VERIFIED-IMPLEMENTED`. What exists: `musterPath` (validated enum, additive) and `witnessResults` (idempotent, ordered, save-stable). What the future consumer (continuity matrix `[X]`, Plan 15A/15B) may assume:
+
+- Inputs are exactly those two fields plus the existing epilogue matrix inputs; no new reads may be introduced.
+- The path adjectives prose (negotiated / victors / unsettled) — an epilogue may shade by path but may not contradict the Approach ending's own text.
+- Witness results are evidence, not verdicts: a testimony was delivered, in a variant, on a day. The consumer weighs; it does not re-litigate gates.
+- Dead witnesses' absences are representable (authored absent variants) — the epilogue never resurrects.
+- Tone: the Verdict scene should read the ledger the way the ledger was written — specific days, named speakers, quoted phrases already in ink — and reach a human-scale conclusion, not a faction scorecard.
+
+Nothing in this section authorizes starting that work; it records the contract so the future plan starts from evidence.
+
+### VI.4 Tone discipline across crossings
+
+Every crossing above passes through the same register check the closeout applied: politics in ASHFALL is logistics with memory. Standing moves are receipts, chalk, ledgers, and empty chairs — never speeches. War weariness is a roster with nothing new written in it. The camp fire's judgment is who gets served first. When a future wave adds a crossing, it should be describable in one sentence of that register before it is describable in code.
+
+---
+
+## Part VII — Verification and acceptance
+
+### VII.1 Focused test matrix per seam
+
+Current `[Fact]`/`[Theory]` counts were grepped from the working tree on 2026-09-25; closeout-era counts (recorded when the suites shipped) are noted where they differ, because suites grew in the Plan 84/DEC-99 waves.
+
+| Seam / concern | Test file | Cases today | Covers |
+|---|---|---|---|
+| S1 board | `Ashfall.Core.Tests/FactionActionBoardTests.cs` | 17 (closeout: 16) | availability windows, bands, resolution effects per faction, idempotence, cooldowns, item sink, flag production, events |
+| S2 selection | `Ashfall.Core.Tests/WitnessSelectionTests.cs` | 14 (closeout: 13) | day gate, flag families (any/all/forbids), first-match order, priority/ordinal ordering, liveness port, diversity cap, ledger idempotence |
+| S2 content | `Ashfall.Core.Tests/Plan84WitnessExpansionTests.cs` | thread tests | 27-entry roster integrity; three investigation threads; founding + ecology preservation |
+| S3 path | `Ashfall.Core.Tests/MusterPathEvaluatorTests.cs` | 14 (closeout: 13) | victors/negotiated precedence, unsettled fallback, degenerate inputs, threshold boundary, overwrite idempotence |
+| S4 extension | `Ashfall.Core.Tests/FactionWarFlagExtensionTests.cs` | 10 (closeout: 9) | flag gating, flag production, standing-delta routing, applier absence, grammar closure |
+| S4 totality | trigger-table totality (in `FactionWarChainRunnerTests` / content tests) | pinned | explicit trigger entry per stage incl. the 17 Plan 25 stages |
+| End-to-end | `Factions/Plan25FactionEcologyTests.cs` | 5 | DEC-96 contract: treaty feed, standing read model, resolver binding, item sink, breach consequence |
+| Content floors | `Ashfall.Core.Tests/MusterContentCatalogTests.cs` | rows | witness floor (`>= 3`, line 55), epilogue floor (`>= 8`, line 77), knowledge-key presence |
+| Feed | `RegionalTreatyFeedTests` (closeout: 3) | mapping rows | narrative → mechanical mapping, skip-whole-row fallback |
+
+Selection rule unchanged from `TEST_POLICY.md`: a builder touches S1, runs `FactionActionBoardTests` and the content floors, not the suite. Aggregations stay homogeneous; lifecycle/save/determinism tests are never aggregated away.
+
+### VII.2 Gate commands
+
+| Gate | Command | Political-stack expectation |
+|---|---|---|
+| Focused xUnit | `bash scripts/run_test.sh <test-file-or-dir>` (≤180 s cap) | touched-seam suites green |
+| Host build | `dotnet build Ashfall.csproj` | 0 errors / 0 warnings |
+| Data integrity | `godot --headless -- --data-integrity-selftest` | 0 findings across catalogs (closeout: 161) |
+| Bridge | `godot --headless -- --bridge-selftest` | exit 0 |
+| Muster domain | `--muster-selftest` | closeout: PASS 25/25 |
+| Muster UI | `--muster-uitest` | PASS |
+| Faction ecology end-to-end | `--faction-ecology-selftest` | PASS 27/27 checks (dispatch `src/Host/HostCli.SelfTests.cs:783` → `FactionEcologyHeadlessDemo.Run` over real data) |
+| Content utilization | scanner run at content batches | no dead political content |
+| Narrative continuity | continuity check at content batches | flag producer/consumer rows agree with the whitelist |
+
+A content-only change (actions/chains/witnesses/culture/scenes JSON) still owes: data-integrity, the touched catalog's content tests, the whitelist diff, and — if a flag or trigger changed — the war extension tests. Runtime is not required for pure prose edits; it is required whenever a gate flag or trigger key moves.
+
+### VII.3 The MUST PRESERVE / MUST NOT contract, restated and expanded
+
+**MUST PRESERVE** (each row: what, where, how verified).
+
+| Item | Anchor | Verification |
+|---|---|---|
+| `MusterOpeningDay = 260` | `MusterSystem.cs:333` | constant read at that line; muster tests |
+| 06C chain ids / days / bands (22 chains, 480–605) | `faction_war_events.json` | chain-id list identical to closeout baseline; bands `cold_war|open_conflict|the_offensive|culmination` untouched |
+| Ceasefire terminator `evt_d588_ceasefire_by_exhaustion` | same file | present, ungated by any Plan 25 flag |
+| Approach A–D → endingKey flow | `QuestApproach` / `muster_epilogues.json` | path evaluator never writes quest or ending state |
+| Additive-only save formats | `MusterSaveStore`, `MusterState` | old-save load test; no field renamed/retyped |
+| Faction canon (dossiers, names, access rules) | `holdfast_factions.json` etc. | dossier files untouched by political content |
+| v1 witness loading forever | `WitnessCatalogLoader` | v1 fixture test remains green |
+| `unsettled` as total fallback | evaluator | degenerate-input tests |
+| Founding + ecology witness sets | `muster_witnesses.json` | Plan 84 preservation tests |
+| Trigger-table totality | `FactionWarTriggerTable` + test | new stage ⇒ new entry, test-pinned |
+
+**MUST NOT** (each: prohibition, and the failure it prevents).
+
+| Prohibition | Prevents |
+|---|---|
+| New standing/war/treaty resolution systems | a second authority drifting from the first |
+| `System.Random` / `Guid.NewGuid()` / hash-order iteration in political code | unreplayable politics, broken determinism tests |
+| Engine references in `Assets/Ashfall.Core/` | Core losing its engine-free contract |
+| Dead content (flags with no consumer, witnesses with unfirable gates, scenes with no stage path) | silent promise-breaking; whitelist/scanner exist to catch it |
+| Witness resurrection or dead-subject testimony | save honesty; census truth |
+| Retconned dates (Muster 260, war 480–605, ceasefire 588) | canon drift across waves |
+| A new guild/hydro/etc. currency | scalar fragmentation worsening |
+| Display-name keys in code or cross-references | localization-unfriendly coupling |
+| Snake_case keys added to `faction_war_events.json` | second schema in one catalog |
+| Political panels computing standing/path/eligibility | UI becoming a gameplay authority |
+| Plan 25 chains gating/ending the ceasefire or any 06C chain | content wave seizing war resolution |
+| Hand edits to `whitelists/plan25_flags.json` | generated-artifact rot (regenerate instead) |
+
+### VII.4 Rollback plan
+
+Rollback for the political stack is unusual in one respect: the stack is *additive end to end*, so rollback is peeling, not surgery. Order matters.
+
+1. **Content-only rollback** (chains, actions, witnesses, culture, scenes): revert the data file(s); loaders return smaller catalogs; floors (`>= 3`, `>= 8`) keep tests green for any size above the floor; regenerate the whitelist. No code change. Save compat: extra persisted flags for removed content are inert keys in the ledger — harmless, and documented.
+2. **Host-adapter rollback** (feed, item sink, resolver binding, panels): revert the `src/` change; Core behavior unchanged; treaty catalog returns to empty (documented pre-feed behavior).
+3. **Seam rollback** (any of S1–S4): revert the Core files; saves with `FactionActions`/`musterPath`/`witnessResults` fields load into the rolled-back host because the save store ignores unknown/legacy-empty fields under the additive contract. The reverse direction (old host, new save) is the one that must never ship.
+4. **Never rollback by data surgery on saves.** There is no supported save migration for political fields and none should be improvised; the additive contract is the migration.
+5. **Post-rollback verification:** focused seam tests for whatever remains, data-integrity selftest, and one `--faction-ecology-selftest` run if any seam remains.
+
+### VII.5 Acceptance definition (closeout parity)
+
+Plan 25 work is "done" when: the plan §17 checklist items hold; the closeout's delivered-counts table matches the tree (with any post-closeout waves separately rowed, as §II.5 does); all gates in VII.2 pass at their applicable batches; the whitelist is regenerated and empty of orphans; and the continuity matrix's producer→consumer rows equal the shipped data. A future wave claiming "Plan 25 follow-up" re-runs this definition against its own diff — the definition travels.
+
+### V.L — Faction band models in depth
+
+The board's band computation is the only place the four ecology factions' very different scalar designs become one comparable vocabulary. Each model is worth stating exactly, because content authors reason about bands while the systems reason about floats and ints.
+
+**Guild (trust scalar).** `ScavengerGuildState.trust` is a float with a hard floor at 0 and no ceiling; gains and losses flow through fixed-size mutate paths (±1/+4 class gains, −4-class losses at the system's own sites) plus the board's authored `trust_delta` (−3..+4). The absence of a ceiling is by design — the Guild keeps accounts, and its good graces are meant to be bankable — while the floor at 0 encodes the canon rule that the Guild does not wage war on debtors; it just stops honoring theirs. `BandForTrust` maps the scalar onto the five-band vocabulary with the hostile band representing "no further credit", not enmity.
+
+**Hydro Barons (trust scalar).** Same shape, different economy: water is metered, so hydro trust moves in smaller increments and recovers through paid terms (`pay_standard`, credit terms, queue relief) rather than favors. The Barons are the only faction with two distinct escalation chains (E-P3, E-P5) attached to two distinct grievance flags, which is the data saying their disputes are procedural and therefore repeatable.
+
+**Iron Raiders (aggression + visibility, no trust).** The Toll does not like or dislike; it prices. `aggressionLevel` (0..1, clamped at the setter) is the price of defiance; `visibility` (floor 0.1) is the price of being worth pricing. Raider action effects move only these: `honor_terms`/`broker_internal` buy aggression down (−0.10..−0.25), `run_convoy`/`fight` buy it up (+0.15/+0.25), and the flags record the deed separately because aggression decays through the system's own rhythms while the ledger remembers. A shelter can be at neutral band with a grievance flag set — the band is now, the flag is forever — and the E-P6 trigger fires on the flag, not the band.
+
+**Deserter Coalition (members + lockout).** The camp's scalars are demographic: `membersRallied` and `garrisonLockoutRisk` (0..100). Coalition actions move `lockout_delta` (mediation service −5) and `members_delta` rather than any affection scalar; the band derives from formed/members/lockout, so the coalition's political standing is literally how many people showed up and how exposed the camp is. This is the one faction where attendance is the standing.
+
+**Central Garrison and the wider cast.** The garrison, rebuilders, forward roster, Ash Sign, and black ops appear in Plan 25 chains only as counterparties (`factionsInvolved`) — the board does not band them, and their standing lives in the war system, touched only through the 8 audited `standingDelta` values. The political spine stays four-factioned by design: those are the four powers a shelter can actually sit across a table from.
+
+### V.M — The Muster window, operationally (days 260–360)
+
+What the seams actually do during the gathering, in the order a host tick encounters them. This is the operational answer to "what does the political stack do at runtime," and it is what `--muster-uitest` exercises at panel level.
+
+| Window | Runtime behavior |
+|---|---|
+| Day 260 (`MusterOpeningDay`) | `MusterSystem` sets `musterTriggered`; the gathering opens regardless of politics — the path only colors it. Camp-scene `min_day` gates (260) begin passing |
+| 260+ (arrival beat) | `StageCampScene("camp_scene_arrivals", day)` matches a variant by path (`negotiated`/`victors`/`unsettled` framing); seen-scene suppression marks it |
+| 261 (earliest founding testimony) | `witness_3_signals_intercept` passes its day gate (241/243 passed earlier; 261 is the last of the three); `DeliverWitnesses` begins returning the founding accounts with priority-40 dominance |
+| 262–270 (ecology verdicts) | The coalition and war-flag witnesses come eligible: camp medic (262), dissenter and overflow medic (265), deserter elder (268), queue singer (270). Their variants are decided by the ledger built since day 60 |
+| Mid-window (evaluation point) | Host re-evaluates the path as camp membership stabilizes; `SetMusterPath` overwrite is safe; scene variants selected after the write reflect it (`PathMatches` ordinal compare) |
+| Panel behavior throughout | `FactionActionPanel` refreshes by day tick; coalition actions (opens 210–230, repeating) remain the live business of the window; culture codex reads `Culture` |
+| Day 360 | Epilogue matrix *view* (calendar canon); play continues. The political stack keeps state; the war window is still ahead |
+
+Two operational cautions follow from the verified code. First, `DeliverWitnesses` is host-called, not event-driven: a host that never calls it delivers nothing — the ledger stays empty truthfully (nothing was heard), which is correct but worth knowing when diagnosing an "empty testimony" report. Second, path evaluation before day 260 is legal and harmless (it describes the current situation), but the authored scene gating treats the Muster opening as the meaningful evaluation horizon; the selftest pins "arrivals stay dark before the Muster opens."
+
+### V.N — Consolidated data authoring style guide (political catalogs)
+
+The repo-wide rules (snake_case ids, schema-version discipline, restrained tone) plus the political stack's specific conventions, consolidated from the shipped data and the closeout-era guides. New content that cannot follow a row should not be authored until the row is changed deliberately.
+
+1. **Ids.** `act_*`, `witness_*`, `culture_*`, `camp_scene_*`, `evt_p25_*` for stages; flags `flag_<prefix>_<faction>_<deed>` with prefix ∈ `favor|grievance|escalation|war|peace`. Faction ids reference existing dossiers verbatim.
+2. **Schema case.** New political catalogs use snake_case keys (actions, witnesses, culture, scenes — all verified snake_case). `faction_war_events.json` extensions use its existing camelCase (`requiresFlag`, `producesFlag`, `standingDelta`). Never mix within a file.
+3. **Schema versioning.** Additive optional fields do not bump the version; new required fields or semantic changes do. A loader must reject versions beyond its current one with empty-catalog semantics and must document the rejection (the silent-empty trap the v1 loader had is the named anti-pattern).
+4. **Prose register.** First person for testimony; plain declaratives for action journals ("The shelter defaulted on the Hydro purification toll."); customs titled by practice; no second-person address, no emotional instruction, no omniscient narration in witness bodies. Numbers in text only when a witness would count ("three drinks past careful").
+5. **Disagreement without contradiction.** Variant families (helped/failed/absent) must be different readings of the same facts. The founding Voss thread is the canonical example: three accounts that agree on the paperwork and disagree about what it means.
+6. **Flags.** One flag per choice; favor and grievance as alternatives; every flag whitelisted with producer and consumer rows before the content ships; consumed-but-external flags cite their producer system in the whitelist's `producer` array.
+7. **Effects.** Ranges of V.A.2; a choice never moves two faction systems at once (the multi-key effect object exists for band-variant authoring convenience, not for cross-faction spending).
+8. **Bounded vocabularies.** Bands, variant ids (`account|helped|failed|absent|complicated`), paths (three constants), and escalation/war/peace flag prefixes are closed sets; extending one is an architecture decision recorded here first.
+9. **Dates.** Only repo-pacing anchors (60, 200–250, 260, 512–584, 588). No calendar dates, no season names not already canon.
+10. **Generated artifacts.** `whitelists/plan25_flags.json` is regenerated, never hand-edited; its diff in review is read as a content-contract change.
+
+### V.O — Host session operational contract (`MusterHostSession`)
+
+The session is the political stack's composition root; its surface, as verified, is small enough to state completely.
+
+**Constructed dependencies.** `MusterSystem` engine, the four faction systems (band sources), and injected catalogs: `Board` (the session constructs or accepts `FactionActionBoard`), `Witnesses`, `CampScenes`, `Culture` — the latter three loaded from the data directory at lines 110–114 with per-catalog try-load fallbacks.
+
+**Ports the host (or a test) sets.**
+- `SubjectLivingResolver: Func<string, bool>?` — census liveness; bound to the survivor roster in `Main.Muster.cs:49`; unset means pass-all liveness (truthful default for unnamed witnesses).
+- `ItemSink: IFactionActionItemSink?` — inventory transfer; bound to shelter inventory at `Main.Muster.cs:50`; unset means item effects no-op while trust/flag effects still apply (the resolution is still recorded — partial application is the honest reading of "the shelter promised what it could not carry").
+
+**Operations.** `ResolveFactionAction(actionId, choiceId, day)` (wraps `Board.Resolve`, sets `LastEvent`, raises state-changed); `DeliverWitnesses(day, maxCount = 0)` (selection + ledger write-back + `LastEvent`); `StageCampScene(sceneId, day)` (director call + seen-suppression + `LastEvent`); `SelectWitnesses`-shaped reads via `Witnesses`/`Board` exposure for panels. `LastEvent` carries the human-readable fact of the last operation ("Faction action resolved: …", "N witness testimonies delivered (day N).", "Camp scene staged: scene / variant.") — the session's only presentation output, deliberately one string.
+
+**Persistence.** The session round-trips `Board` state through `MusterSaveStore.FactionActions` and reads `MusterSystem`'s own capture/restore for `musterPath`/`witnessResults`; `CampScenesSeen` rides the same save section. The restore order (systems → board → engine fields) is the session's responsibility and is exercised by the checksum-stability check in the selftest demo.
+
+**Lifecycle.** Panels bind once (`Bind`, `BindCulture`) and refresh per day tick or interaction (`RefreshView(day)`); the session raises `OnStateChanged`-class notifications for the journal and panel refresh; disposal follows the repo's panel lifecycle rules (visible feedback, focus preservation, no leaking subscriptions). UI tests cover the binding and refresh paths (`--muster-uitest`).
+
+### V.P — Performance and scaling notes
+
+The political stack is event-sourced-by-ledger rather than simulated-per-tick, and its costs are bounded by content counts, not by campaign length:
+
+- `AvailableActions(day)`: O(12) per call, called on refresh, not per frame.
+- Band computation: O(1) per faction per call; four factions, memoized within a single availability pass.
+- `WitnessSelector.Select`: O(27 × ≤3 testimonies × ≤3 flag lists) per call; a few hundred string comparisons worst case.
+- Path evaluation: O(1) arithmetic over an 11-field input; host mapping is the only cost, and it reads existing state.
+- Chain staging: unchanged 06C cost plus 16 trigger evaluations whose flags are hash-set lookups in the shared ledger.
+- Save size: the political delta is one resolution record per action taken (≤ 12 classes, repeating actions capped by cooldowns), one result per delivered witness (≤ 27), one string, one seen-list (≤ 4). Kilobytes, not megabytes.
+- Scaling headroom: doubling the roster or the chain count doubles the corresponding linear passes; nothing in the design is superlinear, and the selector's `maxCount` exists precisely so a future consumer can cap delivery work without touching the ledger.

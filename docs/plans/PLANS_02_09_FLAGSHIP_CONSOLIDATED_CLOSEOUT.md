@@ -2945,3 +2945,690 @@ This expansion claims three things about itself, all checkable:
    checkable by diffing the first 62 lines against any prior revision.
 3. Its size is between the 200,000-character floor and the 250,000
    soft cap — `wc -m` at hand-off, reported in the final message.
+
+---
+
+## Part VIII — Appendices
+
+### Appendix A — Glossary
+
+Terms as used in this document and the code it describes.
+
+| Term | Meaning |
+|---|---|
+| **Authority (single)** | The one owner of a mutable concern. E.g. war standing's authority is `FactionWarSystem`; the chain runner never writes it, only requests via `StandingDeltaApplier`. |
+| **Authored day / playable day** | The two calendars bridged by `ToAuthoredDay` (480 epoch vs 180 epoch) for war-chain `minDay` values. |
+| **Band** | War-phase partition field on event chains (e.g. `cold_war`). |
+| **Blueprint node / blueprint-tier** | A `research_knowledge.json` node representing a manufacturing capability, paired 1:1 with a relic's `research_unlock_id`; 16 exist. |
+| **Breakthrough item** | The consumable awarded when a blueprint node completes (e.g. `item_dosimeter_calibrated`). |
+| **Capture/Restore** | The persistence pair every stateful Core system implements; capture deep-copies to a DTO, restore rebuilds without aliasing. |
+| **Checksum envelope** | The save wrapper whose hash covers exactly one version's field set; validated before migration. |
+| **Cold turkey** | The 72 h unmanaged withdrawal regimen; harsher morale and tremor penalties, faster clock. |
+| **CommandPreview / CommandResult** | The optimistic-concurrency command seam (expected vs current state version) used by detox commands. |
+| **Core** | `Assets/Ashfall.Core/` — engine-free domain logic, `netstandard2.1`. |
+| **Drift gate** | A generated artifact's `--check` mode; documentation drift fails CI. |
+| **Edge detection (audio)** | Cueing only on state transitions via boolean snapshots, never on state persistence. |
+| **Epoch** | See authored/playable day. |
+| **Frozen envelope** | A `YearOfAshSaveV{n}` class whose field set may never change; the migration ladder's rungs. |
+| **Host** | `src/` — the Godot 4 .NET 8 presentation/process layer. |
+| **Host session** | The host-side composition object owning Core systems for one mode (e.g. `YearOfAshHostSession`, `VinylMoraleHostSession`). |
+| **IBindablePanel** | The UI contract (`Bind`/`Unbind`/`IsBound`) verified by the scene-binding selftest. |
+| **Letter arc** | The five-state personal-letter progression (`Found→Addressed→Delivered`, with `Withheld`/`Unanswered` branches). |
+| **Managed detox** | The 120 h staffed withdrawal regimen; slow, gentle, keeps hands working. |
+| **Migration ladder** | The v1→v5 `YearOfAshSave` upgrade chain, one frozen class and one block per rung. |
+| **Needle texture** | Authored prose describing a record's playback sound; pairs with `audio_cue_id`. |
+| **Phantom knock** | The vigil's one-shot event at 95 % duration. |
+| **Projection** | A host-side translation of a Core fact into presentation (radio line, journal entry, cue). Never writes back. |
+| **Produces flag / requires flag** | The Plan 25 gating economy: stages and choices author flags; later stages and choices gate on them. |
+| **Reactive ambience** | Audio beds derived from shelter/surface state via evaluators; contrast: one-shot cues. |
+| **Relic pairing** | A `relic_id` + `research_unlock_id` join between the two research catalogs. |
+| **Roundtrip fact** | A test asserting save-capture followed by restore preserves behavior, not just bytes. |
+| **Scene ownership (`scene_ownership.kind`)** | Structural field declaring a scene's contract category; consumed by lint family F. |
+| **Standing** | Faction relationship values owned by `FactionWarSystem`; modified by host-applied choice deltas. |
+| **Surfaced stage** | The chain stage currently awaiting resolution — its trigger satisfied, `minDay` met, flag gate passed. |
+| **Tier (data flow)** | T1 authored JSON → T2 Core system → T3 host session → T4 save → T5 presentation. |
+| **Trigger DSL** | The `FactionWarTrigger` class family + `FactionWarTriggerTable` mapping authored condition strings to predicates. |
+| **Vector (disease)** | Transmission route: water, air, blood, spore; each with a canonical countermeasure item. |
+| **Vigil** | The 240 s bedside state machine: spaced recitations, phantom knock, completion or recorded skip. |
+| **Work phase** | The workshop's 0–4 activity code (idle, examining, dismantling, repairing, researching). |
+| **Zero-choice auto-advance** | `TickDay` resolving choice-less stages automatically so narrative never deadlocks. |
+
+### Appendix B — Catalog & ID Inventory per Workstream
+
+Everything authored that the six workstreams read, with current paths
+and measured counts *(measured 2026-09-25 unless noted)*.
+
+**A — Relic research**
+
+| Artifact | Path | Count |
+|---|---|---|
+| Relic recipes | `Assets/StreamingAssets/Data/relic_recipes.json` | 39 recipes; 16 with `research_unlock_id`; 23 without |
+| Knowledge nodes | `Assets/StreamingAssets/Data/research_knowledge.json` | 62 nodes; 16 blueprint-tier |
+| Blueprint unlock ids | the 16 `knowledge_*_blueprint` ids (table in V.A.3) | 16 |
+| Breakthrough items | 16 distinct `item_*` ids (same table) | 16 |
+| Research state fields | `ResearchState` (points, unlocked, completed, blueprint progress) | 4 groups |
+
+**B — Vinyl**
+
+| Artifact | Path | Count |
+|---|---|---|
+| Record archive | `Assets/StreamingAssets/Data/narrative/vinyl_record_archive.json` | 30 records |
+| Formats | same file | 18 × 33 RPM LP, 12 × 78 RPM shellac |
+| Morale modifiers | same file | +5 … +10 daily |
+| Broadcast frequencies | same file | 30 of 30 records keyed |
+| Definition fields (Core) | `VinylRecordDefinition` | record_id, display_name, genre, morale_daily_bonus, flashback_suppression, audio_cue_id, description |
+
+**C — Letters & faction war**
+
+| Artifact | Path | Count |
+|---|---|---|
+| War event chains | `Assets/StreamingAssets/Data/faction_war_events.json` | 38 chains |
+| War journal / radio / dialogue / communiques / location overrides | `faction_war_{journal,radio,dialogue,communiques,location_overrides}.json` | 5 files, per-file counts not re-measured |
+| Letter states | `LetterDeliveryState` | 5 |
+| Trigger classes | `FactionWarTrigger` family | 6 (+ table) |
+| Save versions | `YearOfAshSave` ladder | 5 current, 4 frozen envelopes |
+| Chain-runner state schema | nested `schemaVersion` | 1 |
+
+**D — Audio**
+
+| Artifact | Path | Count |
+|---|---|---|
+| Registered cues | `src/Audio/AudioCueCatalog.cs` (generated doc mirror: `docs/audio/AUDIO_CUE_CATALOG.md`) | 196 *(per doc header, last verified 2026-09-18)* |
+| Bus name constants | same file | 15 |
+| Documented buses (prose table) | catalog doc | 12 |
+| Controller types | `src/Audio/` | 2 flagship controllers + evaluators + `AudioManager` |
+
+**E — Scenes**
+
+| Artifact | Path | Count |
+|---|---|---|
+| Lint allowlist | `scripts/ci/scene-lint.py` | 4 UI directories + 2 top-level scenes |
+| Check families | same file | 6 (A–F) |
+| Snapshot golden targets | `docs/ui/SNAPSHOT_COVERAGE.md` | 29 at 1280×800 *(per current authority map)* |
+
+**F — Medical**
+
+| Artifact | Path | Count |
+|---|---|---|
+| Diseases | `Assets/StreamingAssets/Data/disease_catalog.json` | 20 |
+| Vectors | same file | 4 (water 5+1, air 6, blood 4+1, spore 4) |
+| Countermeasure items | same file | `clean_water`, `gas_mask`, `antibiotics`, `hazmat_suit`, `medical_kit`, `iodine_pills` |
+| Vector protocols | same file | 4 (water 3 d, air 2 d, blood 5 d, spore 4 d) |
+| Exposure sources | same file | 4 verified samples (butchery, autopsy, micro-hazard, foul water) |
+| Dependency constants | `ChemicalDependencySystem` | 11 public consts + kind severity table |
+| Vigil constants | `VigilStateMachine` | `DefaultDuration = 240 s` |
+
+### Appendix C — Scenario Walkthroughs
+
+Four end-to-end sequences for the stateful workstreams (the audio and
+scene walkthroughs complete the set in Appendix K), each tracing real
+seams. Names of survivors
+are placeholders; mechanics are verified.
+
+#### C.1 "The Pen on the Shelf" — relic to capability
+
+1. **Day 12, expedition return.** A scavenging trip deposits
+   `relic_micro_dosimeter_pen` in the workshop inventory. No system
+   reacts yet — a relic in a crate is inert authored data.
+2. **Day 13, bench assignment.** The player assigns a researcher. The
+   workshop writes `selectedRelicId`, reserves parts
+   (`reservedComponentIds`/`Amounts`), and enters phase 1 (examining)
+   with `hoursRequired` from authored data.
+3. **Days 13–15, hours accrue.** Host ticks advance `progressHours` in
+   game-hours. Phases proceed examining → dismantling → repairing →
+   researching (0→4). A canceled day would restore the reservation
+   lists from state — parts are never lost to an interruption.
+4. **Completion.** The workshop reads the authored
+   `research_unlock_id` (`knowledge_micro_dosimeter_blueprint`) and
+   calls `TryAddBlueprintProgress` with the node's `requiredPoints`.
+   `discoveryState` walks `identified → in_progress → unlocked`;
+   `OnBlueprintUnlocked` fires exactly once; `sourceTechIds` records the
+   relic.
+5. **Day 16, research project.** The node is now a research project
+   (`StartResearch`, 6 authored days, medical category). `Tick(newDay)`
+   counts down; `CompleteResearch` awards `item_dosimeter_calibrated`
+   as the breakthrough capability.
+6. **Persistence check.** The save now carries: workshop completion,
+   blueprint progress with its source relic, points spent, the completed
+   node. `RelicResearchUnlock_SaveLoad_RoundTripsState` is the scaled-
+   down proof of exactly this path.
+
+Failure interjections the design survives: researcher dies mid-phase
+(state restores, hours persist); the node was already unlocked by
+another relic's route (award returns false, no double-spend); save from
+before the blueprint ledger existed (lazy repair yields an empty
+ledger).
+
+#### C.2 "A Frequency, Then a Disc" — vinyl discovery
+
+1. **Day 30, radio drift.** A survivor idles at the tuner; the dial
+   crosses 88.4 MHz. The radio bridge keys
+   `broadcast_frequency_mhz` — the music plays *before anyone owns it*.
+   The bridge records `lastBroadcastRecordId`, day, signal strength.
+2. **Day 34, the find.** The same record's `record_id` surfaces in a
+   ruin. `VinylRecordAcquisitionMap` routes the discovery;
+   `AcquireRecord` appends to `ownedRecordIds` — acquisition order,
+   which the panel lists by.
+3. **Day 34, evening.** `VinylMoralePanel.RefreshView` now lists the
+   disc; `UpdateRecordPreview` shows catalog number, wear prose, +N
+   daily morale, needle texture. The player plays it:
+   `PlayRecord` → `ActionResult` success, `currentPlayingId` set,
+   `isTurntableActive` true.
+4. **Day 35, the tick.** `TickDay(35)` applies the daily morale once —
+   `lastPlayedDay == 35` now blocks a second application; a re-play on
+   day 36 reapplies. `totalPlays` and `totalMoraleApplied` accumulate.
+5. **Save/load mid-song.** Capture preserves ownership order, playing
+   state, and the radio block. Restore does not replay the song; it
+   preserves the fact it was playing.
+
+The design beat: the archive's morale numbers are the least of its
+content. The frequency-first discovery means the object resolves a
+memory the player already has — specificity (Pillar 1) doing mechanical
+work.
+
+#### C.3 "The Letter in the Coat" — the letter arc
+
+1. **Day 88, found.** `DiscoverLetter("letter_final_…", 88)` creates a
+   record at `Found`, `foundDay = 88`. The event fires; the host may
+   narrate.
+2. **Day 90, addressed.** The player names a recipient:
+   `AddressLetter` moves the record to `Addressed` with the survivor
+   id. Idempotent re-addressing is allowed; the state machine does not
+   punish indecision yet.
+3. **Day 90, the choice.** Deliver (+6 morale by default, recorded as
+   `moraleDeltaApplied`), Withhold (drawer, recoverable), or wait.
+4. **Day 140, decay.** Unattended, the player (or an authored beat)
+   marks it `Unanswered` — the Withheld→Unanswered decay path. The
+   record keeps both day fields: found 88, resolved 140. Fifty-two
+   days of silence, persisted.
+5. **Day 141, regret.** `MarkUnanswered` leaves the record recoverable:
+   `AddressLetter` succeeds again. Deliver is still available. Only
+   `Delivered` is final — the table in V.C.3 is the whole moral
+   grammar.
+6. **Roundtrip.** `StateSaveAndRestore_PreservesAllDeliveryRecords`
+   proves notes and deltas survive; the save answers "what did I do"
+   without replay.
+
+#### C.4 "Ninety-Six Hours" — withdrawal week
+
+1. **Day 60, the habit.** A survivor's repeated consumption crosses
+   `DependencyThreshold = 0.3`; `OnDependencyFormed` fires. Nothing is
+   confiscated; the ledger simply notes the body now expects the dose.
+2. **Day 61, the decision.** The player previews both regimens:
+   managed (120 h, −1 morale/h, staffable at ×1.25 speed) vs cold
+   turkey (72 h, −3 morale/h, ×0.40 crafting and ×0.30 combat
+   tremors). `CommandPreview` shows the trade; `ExecuteBegin…` carries
+   a state version so a stale panel cannot start two detoxes.
+3. **Days 61–66, managed path.** `TickHours` advances
+   `detoxProgressHours` only for the staffed survivor. Penalty events
+   do not fire (managed has none); morale drain requests arrive hourly
+   and the host applies them to the morale authority.
+4. **Hour 96.** `DetoxSuccessThresholdHours` passes — from here the
+   detox holds. Hour 120: `OnDetoxCompleted`. The dependency decays
+   `0.05`/clean day thereafter.
+5. **The relapse branch.** Had the shelter instead endured a siege, the
+   war's daily friction would have fed `ReportStress`; at threshold,
+   `OnDependencyReFormedByStress` undoes the detox — and the host that
+   named the stressor can narrate exactly why.
+6. **The end it exists for.** When a dweller instead reaches the end of
+   treatable illness, `VigilStateMachine.StartVigil` opens the 240 s
+   arc: names spaced across the first 85 %, the phantom knock at 95 %,
+   completion — or a recorded skip. The save keeps `WasSkipped`.
+   Nothing else in the package judges it; the memory systems that read
+   it later will have that choice.
+
+#### C.5 Reading the Walkthroughs Together
+
+The four stateful sequences (with the audio and scene walkthroughs of
+Appendix K completing the set of six) deliberately share a shape: an inert authored thing
+(a relic, a disc, a letter, a dose) becomes a live state through a
+player command; the state accrues time (hours, days, weeks); the save
+remembers the accumulation; and the end state is either a capability, a
+memory, or a recorded absence. That shape — *command, accumulate,
+remember* — is the flagship package's actual architectural contribution,
+and it is why the six streams integrated without a single shared
+mutable structure between them.
+
+### Appendix D — Open Questions Register
+
+Questions this expansion surfaced and could not close. None blocks
+current work; each names an owner-by-role rather than a person.
+
+| # | Question | Evidence status | Suggested first step |
+|---|---|---|---|
+| 1 | Should the vinyl archive's real-world performer/repertoire credits be fictionalized to satisfy the tone rule? | Content conflict verified (field contents read 2026-09-25); no repo rule beyond `AGENTS.md` tone applies | Content-owner decision; data-only change; distinctness test unaffected |
+| 2 | Is the audio doc's manual bus table (12) vs registry constants (15) drift acceptable? | Drift verified | Either generate the bus table or move it out of the generated doc |
+| 3 | Should `triggerCondition` string typos fail loudly at catalog load? | Failure mode identified (table lookup); current loudness not audited | Add a catalog-integrity rule enumerating `FactionWarTriggerTable` keys |
+| 4 | Are all 16 breakthrough items craftable/obtainable end-to-end? | Contract test asserts string existence only | Content-utilization gate run scoped to the 16 ids |
+| 5 | Do any host flag consumers double-award if a war chain re-surfaces after a pre-v3 migration replay? | Risk identified in V.C.12; audit not performed | Read-only audit of `producedFlags` consumers |
+| 6 | What renders for an owned `record_id` that later leaves the archive? | Weak edge identified in V.B.10 | Panel fallback decision + test |
+| 7 | Should the scene-lint allowlist gain orphan detection (UI `.tscn` outside the allowlist)? | Gap identified in V.E.10 | Lint-family G proposal via `INTEGRATION_PLANS.md` |
+| 8 | Is there a required vocabulary for `scene_ownership.kind`? | Presence enforced; vocabulary unvalidated | Generate vocabulary from existing scenes, then gate |
+| 9 | Should dependency withdrawal emits per-kind authored tells (prose diagnosis for addiction like diseases have)? | Seam exists (`KindBaseSeverity`, tells pattern in diseases) | Content package proposal |
+| 10 | What is the current scene count and binding count? | Historical 26/22; not re-run | One `scene-lint.py` + `--scene-binding-selftest` run by anyone touching UI |
+| 11 | Does `MedicalHeadlessDemo` still reflect the current pipeline shape? | Present but not read in full by this expansion | Sweep-agent read |
+| 12 | Should `RegisterDefaults`-era references in older docs be swept? | This document records the mechanism change; other docs unexamined | `docs/` grep during the next docs-atlas pass |
+
+### Appendix E — Unverified & Historical Claims Register
+
+Every claim inherited from the 2026-09-01 closeout that this expansion
+did **not** re-establish, consolidated so no reader has to hunt for the
+label:
+
+| Closeout claim | Status | Where discussed |
+|---|---|---|
+| 5,317 tests passed / 17 s full suite | `UNVERIFIED (historical closeout text)` — suite not re-run (policy) | VII.1 |
+| Data integrity: 138 catalogs / 5,563 IDs | `UNVERIFIED (historical closeout text)`; also conflicts with CURRENT_AUTHORITY's 129/4,793 (older snapshot) and 708 JSON files counted directly — all are artifacts of their own dates | II.0, VII.1 |
+| Content utilization: 413 catalogs | `UNVERIFIED (historical closeout text)` | VII.1 |
+| Scene binding 22/22 | `UNVERIFIED (historical closeout text)`; verb present, count not re-run | II.5, V.E, D.12 |
+| Bridge shim removal gate PASS | `UNVERIFIED (historical closeout text)` | VII.1 |
+| Accessibility 5/5, onboarding 20/20 | `UNVERIFIED (historical closeout text)` | VII.1 |
+| Scene lint 26 scenes / 0 errors | `UNVERIFIED (historical closeout text)`; script current and read | II.5, V.E |
+| Audio catalog 74 cues | Historical number; current doc self-reports 196 *(measured)* | II.4, V.D |
+| Disease catalog 15 diseases | Historical; current 20 *(measured)* | II.6, V.F |
+| Save codec v4 current | Historical; current v5 with v1–v4 frozen *(verified)* | II.3, V.C |
+| "Nodes statically registered in `RegisterDefaults()`" | Historical; mechanism replaced by JSON catalog loader *(verified)* | I.4, II.1, V.A |
+| VinylMoralePanel empty-state specifics (hint text, button disabling) | Behavior per closeout; panel entry points verified, full body not line-read | II.2, IV.2.4 |
+| Zero-regression claim vs Plan 14 | Historical outcome; no re-verification attempted | I.1 (base doc) |
+
+Conversely, claims this expansion *upgraded* from historical to
+verified: the 16 relic pairings (both sides read), the 30-record archive
+(parsed), the five-state letter machine (full source), the chain runner
+API and trigger table (full source), the codec ladder (full source),
+both audio controllers (full source), the dependency constants (full
+source), the vigil state machine (full source), every named test file's
+existence, and every current file path cited in Part II.
+
+### Appendix F — Source Reading List (this expansion's evidence base)
+
+Files read directly (not merely located) on 2026-09-25:
+
+| File | Lines | Why |
+|---|---|---|
+| `Assets/Ashfall.Core/Narrative/LetterDeliverySystem.cs` | 199 | full state machine spec (V.C.3) |
+| `Assets/Ashfall.Core/Medical/VigilStateMachine.cs` | 141 | full vigil spec (V.F.5) |
+| `Ashfall.Core.Tests/RelicResearchUnlockContractTests.cs` | 80 | contract anatomy (V.A.8) |
+| `scripts/ci/scene-lint.py` | header + docstring | lint families (V.E.3) |
+| `docs/audio/AUDIO_CUE_CATALOG.md` | header + bus tables | cue/bus counts (V.D.3) |
+| `docs/CURRENT_AUTHORITY.md` | all 102 lines | authority grounding (I.4, II.0) |
+| Selected regions: `ResearchSystem.cs`, `WorkshopReverseEngineeringSystem.cs`, `FactionWarChainRunner.cs`, `FactionWarContentCatalog.cs`, `YearOfAshSave.cs`, `YearOfAshHostSession.cs`, `Main.YearOfAsh.cs`, `ShelterAudioController.cs`, `SurfaceAmbienceController.cs`, `ChemicalDependencySystem.cs`, `VinylMoraleSystem.cs`, `VinylMoraleHostSession.cs`, `VinylMoralePanel.cs`, `ResearchLegacyCatalogFixture.cs`, `ResearchKnowledgeCatalogLoader.cs` | — | API surfaces cited in Parts II–V |
+
+Data files parsed with read-only JSON inspection:
+`relic_recipes.json`, `research_knowledge.json`,
+`narrative/vinyl_record_archive.json`, `faction_war_events.json`,
+`disease_catalog.json`.
+
+Commands run for measurement only: `wc -l`/`wc -m`, file listings, and
+the JSON inspections above. No build, no test run, no Godot process, no
+writes outside this document.
+
+---
+
+## Expansion Close-Out
+
+**What this document adds to the 2026-09-01 closeout:** the machinery
+behind the outcomes — the tier flow, the event contract, the codec
+ladder, the per-component specifications, per-workstream chapters with
+test anatomy and failure modes, the interaction matrix, the gate
+ladder, and a full accounting of what changed in the twenty-four days
+between the closeout and this expansion (deleted `RegisterDefaults`,
+74→196 cues, 15→20 diseases, v4→v5 codec, the `narrative/` data
+relocation, and the Plan 25/30B/123 wiring that grew around the war
+chains).
+
+**What it deliberately does not do:** approve work, re-run gates, or
+touch anything but itself. It is a map with the survey date stamped on
+it; the next surveyor should re-stamp, not trust.
+
+**Standing invitation:** where this document and source disagree,
+source wins and this document's "verified 2026-09-25" mark should be
+treated as expired. That is not a defect of the document; it is the
+only property that makes documents like this worth writing.
+
+*End of expansion. Base closeout (2026-09-01) preserved above, byte-for-byte.*
+
+### Appendix G — Integrator Checklists per Workstream
+
+Procedural complements to the descriptive chapters: what an integrator
+touches, in order, when a package lands on each workstream. Checklists
+assume `INTEGRATION_PLANS.md` order and `WORKTREE_OWNERSHIP.md` claims
+are already settled — these cover the *mechanical* sequence only.
+
+#### G.1 Workstream A checklist (relic/research package)
+
+1. Data change first: edit `relic_recipes.json` /
+   `research_knowledge.json` (snake_case, `schema_version` intact).
+2. If a pairing is added or removed, update the `Assert.Equal(16, …)`
+   tripwire consciously — it is a signed contract number, not a
+   maintenance chore.
+3. Run the DAG check path (`ValidateDag`) via loader tests if
+   prerequisites changed.
+4. Run `RelicResearchUnlockContractTests.cs` alone, then the research
+   save-integration file.
+5. If a new breakthrough item id appears, confirm the item exists in
+   the item catalog — string existence is checked, reachability is not.
+6. No Godot headless run owed unless the workshop panel changed.
+
+#### G.2 Workstream B checklist (vinyl package)
+
+1. Archive edits: keep `daily_morale_modifier` pairwise-distinct (the
+   30-record test enforces count and distinctness).
+2. New records need `record_id` uniqueness, a `catalog_number`, and a
+   `broadcast_frequency_mhz` if the radio bridge should hear them.
+3. Core definition (`audio_cue_id`, `flashback_suppression`) and the
+   JSON archive are separate authorities — update both or neither.
+4. Panel changes: `RefreshView`/`UpdateRecordPreview` invariants, then
+   `scene-lint.py` and the binding selftest for the panel scene.
+5. Run `VinylMoraleSystemTests.cs` alone; catalog/loader changes add
+   `VinylRecordCatalogTests.cs`.
+
+#### G.3 Workstream C checklist (letters/war/codec package)
+
+1. Content-only change (chains, stages, choices): edit the
+   `faction_war_*.json` family; keep `triggerCondition` strings within
+   `FactionWarTriggerTable` keys; keep `leadsToStageId` targets real.
+2. Runner change: `FactionWarChainRunnerTests.cs` alone; then the
+   `YearOfAshTests.cs` codec facts if state shape moved.
+3. Save-shape change: add a rung (frozen class + migration block +
+   version bump + two tests: migrate-from and roundtrip-current).
+   Never edit a frozen envelope. Never remove a rung.
+4. Host routing change: verify handlers only project and mark
+   `_yearOfAshDirty`; anything that mutates Core state from an event
+   handler is a design regression.
+5. Letter change: `LetterDeliverySystemTests.cs` alone; preserve the
+   terminal-`Delivered` grammar unless the foreman signs a redesign.
+6. If a chain surfaces in the playable window for the first time, a
+   headless boot of the demo path is the cheap runtime check.
+
+#### G.4 Workstream D checklist (audio package)
+
+1. Cue additions live in the registry; run
+   `generate-audio-catalog.py --check` — regenerate, never hand-edit
+   the catalog document.
+2. Controller changes: keep edge detection (snapshot booleans), keep
+   `ThrowIfDisposed` guards, keep subscription re-entrancy.
+3. New bus: treat as a cross-cutting package (registry constants,
+   generated doc, settings UI, accessibility catalog) — see V.D.13.
+4. Run the touched file in `Ashfall.Core.Tests/Audio/`; evaluator
+   changes stay in Core tests, controller changes in host behavior.
+
+#### G.5 Workstream E checklist (scene package)
+
+1. New scenes: add to the lint allowlist consciously; declare
+   `scene_ownership.kind`.
+2. Run `python3 scripts/ci/scene-lint.py` before any Godot run.
+3. Structural change to a panel scene: run
+   `--scene-binding-selftest` headless.
+4. Never resolve the case-distinct path trap by renaming directories —
+   fix the reference; the linter's family D exists because someone
+   did it the other way.
+
+#### G.6 Workstream F checklist (medical package)
+
+1. Disease data changes: schema-first — keep the field set complete
+   (including `tell`, `timing_clue`, `phases`); run
+   `DiseaseCatalogExpansionTests` and update its expectations with the
+   data in the same package.
+2. Countermeasure ids must exist in the item catalog; vector coverage
+   should stay total (every disease names one).
+3. Dependency changes: behavior in `ChemicalDependencySystemTests`,
+   command-seam changes in `ChemicalDependencyCommandTests` — do not
+   merge the files.
+4. Vigil changes: duration/spacing constants are gameplay tuning —
+   change with a foreman signature; the frame-rate-independence
+   property (elapsed-time scheduling) is not negotiable.
+5. Exposure-path changes: run the three wildlife-disease bridge files.
+
+### Appendix H — Wording Drift: Closeout Language vs Current Source
+
+The closeout's vocabulary drifted from the source it described. This
+table maps closeout-era wording to what an integrator will find today,
+so grep sessions start from the right terms:
+
+| Closeout says | Current source says | Note |
+|---|---|---|
+| "Statically registered in `ResearchSystem.RegisterDefaults()`" | `research_knowledge.json` + `ResearchKnowledgeCatalogLoader.LoadAndRegister`; `RegisterDefaults` deleted | Plan 34 data-authority move |
+| "`FactionWarContentCatalogLoader`" | same name, but lives inside `FactionWarContentCatalog.cs` (line 323), not its own file | file layout drift |
+| "v3/v4 save codec migration" | v5 current; v3/v4 are frozen rungs 3–4 of five | ladder grew at the top only |
+| "74 cues" | 196 registered cues | registry + gate grew together |
+| "15 diseases" | 20 diseases; catalog gained `vector_protocols`/`exposure_sources`/`phases` | additive growth |
+| "`relic_recipes.json` research_unlock_id definitions" | unchanged, plus the join side now lives in `research_knowledge.json` | two-catalog contract explicit |
+| "audio catalog sync" | generated document + `--check` drift gate | document became an instrument |
+| "scene binding self-test 22/22" | same verb; current count unstamped | the claim class this expansion wants generated, not narrated |
+
+#### H.1 Chronology of Verified Drift (2026-09-01 → 2026-09-25)
+
+Ordered by the evidence's own dating where available; otherwise by
+inference strength:
+
+1. **2026-09-01 — closeout stamps v4.** Chain-runner save section is
+   the newest rung; `YearOfAshSave_V4_CapturesAndRestoresChainRunnerProgress`
+   is the acceptance test.
+2. **Between stamps — Plan 34 data authority.** `RegisterDefaults()`
+   deleted; 62-node JSON catalog ships; the fixture's doc comment
+   records the deletion ("the test-project replacement for the deleted
+   RegisterDefaults()").
+3. **Between stamps — Plan 25 flag economy.** `requiresFlag` gates on
+   stages and choices; `ExternalFlagProbe` joins host flags.
+4. **Between stamps — Plans 30B/123 consequence routing.**
+   `WireFactionWarConsequenceRouting` projects clashes, decrees, and
+   runner events into radio, journal, and sound-ranging.
+5. **≤ 2026-09-18 — audio registry growth.** The catalog document's
+   own "Last Verified: 2026-09-18" header with 196 cues; three new bus
+   constants post-date the prose table's 12.
+6. **Between stamps — disease expansion.** 15→20 diseases; vector
+   protocols, exposure sources, phases, immunity fields.
+7. **Between stamps — v5 rung.** Ice-road economy section added;
+   v1–v4 frozen; migration tests extended.
+8. **2026-09-25 — this survey.** Paths, counts, and APIs re-verified;
+   drift recorded here.
+
+The pattern across all eight entries: every drift is additive at the
+data or seam level, and none required touching another workstream's
+authority. That is the closeout's architecture holding under six
+concurrent waves of change — the strongest evidence in this document
+that the six-invariant frame in Part III is load-bearing rather than
+ceremonial.
+
+### Appendix I — Maintaining This Document
+
+For whoever extends or re-surveys this expansion:
+
+1. **Re-stamp, don't trust.** Every "verified 2026-09-25" mark is a
+   survey date, not a perpetual truth. A new survey replaces marks, it
+   does not append to them.
+2. **Keep the register honest.** New unverified claims go into
+   Appendix E, not into prose footnotes. When a claim is verified,
+   move it out; the register should shrink over time or it is not
+   being used.
+3. **Counts are data.** Any number in this document (16, 30, 38, 20,
+   196, 62, 5) came from a measurement or a contract assertion. Change
+   numbers by changing the artifact and its test together, then update
+   the relevant table — never update the table alone.
+4. **Chapters are single-authority.** Cross-workstream content belongs
+   in Part VI. If a Part V chapter needs another chapter's mechanism,
+   reference it by section number instead of restating it.
+5. **The base closeout is immutable.** The 2026-09-01 text above the
+   separator is preserved byte-for-byte by policy; corrections to it
+   belong in expansion text, not edits to history.
+6. **Size discipline.** This document is intentionally bounded
+   (200k–250k characters). Growth past the soft cap means a new
+   document with a pointer here, not an ever-growing monolith.
+
+### Appendix J — Shared-Seam Ownership and Change Speeds
+
+#### J.1 The Shared Seams, and Who May Touch What
+
+The six workstreams meet at five shared seams. The closeout's
+coordination rules (`AGENTS.md` §5–6, `WORKTREE_OWNERSHIP.md`) resolve
+into this concrete table:
+
+| Shared seam | Owner (extends it) | Consumers (read/bind only) | Nobody may… |
+|---|---|---|---|
+| Catalog JSON files | The content authority for that family | Loaders in Core | Write a second mutable copy of any catalog's data in code |
+| Core event surface | The system that declares the event | Host sessions, panels, controllers | Mutate the raising system's state from inside a handler |
+| Save sections | The system owning the state DTO | Host capture/restore composition | Hand-edit save JSON, or alias a restored DTO into live state |
+| Host CLI selftest verbs | The gate's owning script/host | CI definitions, verification docs | Treat a passing selftest as coverage of an unchanged premise |
+| `AudioCueCatalog` registry | The audio owner | Every cue consumer | Hand-edit the generated catalog document |
+
+Two structural facts keep this table honest. First, the chain runner's
+`ExternalFlagProbe` / `StandingDeltaApplier` pattern shows the general
+form: when two Core systems must interact, the *host* binds them with
+delegates — Core systems never import each other. Second, the generated
+documents (`--check` gates) mean the "documentation" seam is owned too:
+an integrator who changes the registry and regenerates is inside their
+claim; one who edits the markdown is not.
+
+#### J.2 Two-Speed Changes
+
+Every workstream supports two change speeds, and knowing which speed a
+change needs is most of the coordination problem:
+
+**Data speed** (no Core compile; content authority approves):
+
+- Add a relic pairing (update the 16-tripwire).
+- Add records to the vinyl archive (keep distinctness).
+- Add war chains, stages, choices (respect trigger-table vocabulary).
+- Add diseases, vector protocols, exposure sources (keep vector
+  coverage total).
+- Add cues to the registry (regenerate the catalog).
+
+**Code speed** (Core/host compile; foreman package + path claims):
+
+- New state fields (default-tolerant) or a new save rung (frozen
+  envelope).
+- New events or new trigger classes.
+- New panels or new selftest verbs.
+
+The recurring failure this distinction prevents: a data-speed change
+smuggled into a code package (or vice versa) — e.g. adding a dependency
+kind by editing only the JSON, when `ChemicalDependencyKind` is an
+enum in Core and the JSON `kind` string binds to it. When the data
+needs a code change to be reachable, it is a code-speed change wearing
+a data costume.
+
+#### J.3 Quick Reference Card
+
+One row per workstream, the whole package on one screen:
+
+| | Entry point (Core) | Host composition | Save face | Fastest gate | Deepest doc |
+|---|---|---|---|---|---|
+| A | `ResearchSystem` · `WorkshopReverseEngineeringSystem` | `Main` research/workshop partials | `ResearchState` | `RelicResearchUnlockContractTests` | V.A |
+| B | `VinylMoraleSystem` | `VinylMoraleHostSession` → `VinylMoralePanel` | `VinylMoraleState` | `VinylMoraleSystemTests` | V.B |
+| C | `LetterDeliverySystem` · `FactionWarChainRunner` · `FactionWarSystem` | `YearOfAshHostSession` → `Main.YearOfAsh.cs` | `YearOfAshSave` v5 | codec facts in `YearOfAshTests` | V.C |
+| D | `ReactiveAmbienceEvaluator` | `ShelterAudioController` · `SurfaceAmbienceController` | none (by contract) | `generate-audio-catalog.py --check` | V.D |
+| E | — (scripts) | `scene-lint.py` · `--scene-binding-selftest` | none | `scene-lint.py` | V.E |
+| F | `DiseaseSystem` · `ChemicalDependencySystem` · `VigilStateMachine` | `MedicalPipelineCoordinator` | `MedicalPipelineSave` + ledgers | `DiseaseSystemTests` / `ChemicalDependencyCommandTests` | V.F |
+
+#### J.4 Where the Next Survey Should Look First
+
+Priority order for whoever re-stamps this map, based on where drift
+actually accumulated between 2026-09-01 and 2026-09-25:
+
+1. **The war-chain family** — it grew flags, routing, a save rung, and
+   three expansion test files in one interval. It is the most active
+   seam in the package.
+2. **The audio registry and its document** — largest numeric drift,
+   one known prose/code divergence (bus table).
+3. **The medical catalog** — additive growth plus a command seam whose
+   consumers are still filling in.
+4. **The research catalogs** — quiet since the Plan 34 move, but the
+   two-catalog join is the largest unchecked surface (question 4).
+5. **Vinyl and scene tooling** — stable; standard re-stamping.
+
+---
+
+*End of appendices. Base closeout (2026-09-01) preserved above, byte-for-byte.*
+
+### Appendix K — Completing the Set: Audio and Scene Walkthroughs
+
+Appendix C traced the four stateful workstreams. The two remaining
+ones — the audio projection and the validation substrate — deserve the
+same treatment, because their walkthroughs are exactly inverted: nothing
+the player does here creates state, and that absence is the point.
+
+#### K.1 "The Third Shift" — a night in the shelter's soundscape
+
+1. **19:40, generator on.** The power grid starts; `GenerationWatts`
+   crosses zero. `ShelterAudioController`'s next tick snapshot flips
+   `_generatorRunning` from false to true — one
+   `ShelterGeneratorStart` cue on the `Generator` bus. The bus routes
+   into `Ambience`, so the player's ambience slider governs it.
+2. **21:15, breaker trip.** A combat workbench overdraws the grid;
+   `OnPowerChanged` arrives with `Kind == Tripped`. One
+   `ShelterBreakerTrip` on the `SFX`-adjacent `Alerts` path. The
+   generator truth is re-derived, not trusted from the event:
+   `GenerationWatts > 0 && FuelUnits > 0` fails, the snapshot flips,
+   `ShelterGeneratorStop` follows. Two cues, one failure — no storm.
+3. **21:15–21:40, brownout window.** The tick summary reports
+   `IsBrownout`; the klaxon fires once on the rising edge. Nothing
+   re-fires while the state persists, because the snapshot boolean
+   never flips again. When the load sheds and brownout clears, one
+   `ShelterPowerRestore`.
+4. **22:00, filter change missed.** `StartingLevelSystem` raises
+   `airHazardWarning`; the controller compares against `_filterHazard`
+   (false) and plays `ShelterAirFilter` once. The ventilation loop
+   under it keeps running — layering, not replacement.
+5. **Throughout, the surface.** Upstairs, `SurfaceAmbienceController`
+   has held the location bed since the last expedition
+   (`SetLocation` on departure), the weather subscription has shifted
+   its layering twice, and the scarcity authority has been asked for
+   nothing. The three inputs never negotiated; the controller
+   arbitrates output only.
+6. **What the save remembers: nothing.** Every cue in this night is
+   re-derivable from the state the shelter systems already persist.
+   The next load rebuilds the same soundscape from snapshots — first
+   bind primes state with `emitTransitions: false`, so even the load
+   itself is silent until something *changes*.
+
+The walkthrough's moral: the audio layer's correctness is measured by
+the count of cues, not the richness. A quiet night that cues exactly
+four times is a passed test.
+
+#### K.2 "One Broken Reference" — a scene regression, end to end
+
+1. **The edit.** A contributor moves
+   `assets/ui/panels/vinyl_morale.tscn`'s background texture to a
+   reorganized folder and updates the `ext_resource` path by hand —
+   on a case-insensitive laptop, typing `Assets/ui/...` where the tree
+   is `assets/ui/...`. The panel still opens on their machine.
+2. **Lint, family D.** `python3 scripts/ci/scene-lint.py` resolves the
+   reference against the real tree, finds `res://Assets/ui/...`
+   missing while `res://assets/ui/...` exists, and fails with the
+   file, line, and both paths. No Godot boot was paid.
+3. **Had the lint passed, family C would be next.** A copy-pasted
+   panel carries a duplicate UID; the linter's cross-resource
+   duplicate check fails it, because Godot's UID index would silently
+   redirect one of the two references.
+4. **Had the path been right but the script renamed**, family E fails
+   it: the referenced `.cs` is not a loadable source.
+5. **Structure green → instantiation.** The contributor fixes the
+   path; `--scene-binding-selftest` now instantiates the panel and
+   walks its contract — `IBindablePanel` present, `Bind`/`Unbind`
+   wired, `OnClose` connected. A root-type swap or a detached script
+   would fail here, the rung below any screenshot.
+6. **Binding green → the actual feature.** Only now does the vinyl
+   walkthrough (C.2) mean anything — its every step assumed this
+   substrate. The scene workstreams are the package's foundation not
+   because they are first, but because every other walkthrough stands
+   on them.
+7. **What the save remembers: nothing, again.** Scenes are structure;
+   the regression never touched state. The two "zero-save"
+   workstreams (D and E) bracket the four stateful ones — presentation
+   on one side, validation on the other, and the save file holding
+   only what the game means, never how it looks or sounds.
+
+#### K.3 The Six, Together
+
+| Walkthrough | Workstream | State created | The beat |
+|---|---|---|---|
+| C.1 The Pen on the Shelf | A | blueprint progress, completion | salvage becomes capability |
+| C.2 A Frequency, Then a Disc | B | ownership, play, broadcast record | an object resolves a memory |
+| C.3 The Letter in the Coat | C | delivery record with both days | regret is recoverable; delivery is final |
+| C.4 Ninety-Six Hours | F | ledger, detox clock, maybe relapse | the trade is honest and the body keeps books |
+| K.1 The Third Shift | D | none | four cues, no more |
+| K.2 One Broken Reference | E | none | structure fails loudly, early, cheaply |
+
+Command, accumulate, remember — and for the two that neither accumulate
+nor remember: derive, and check. That is the whole architecture,
+walked.

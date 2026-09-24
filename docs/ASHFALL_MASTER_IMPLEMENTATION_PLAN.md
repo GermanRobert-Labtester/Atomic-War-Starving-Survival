@@ -2666,3 +2666,575 @@ row; keep the cooldown global across both.
 
 **Rollback.** Generator unregistered; rules file inert; events.json rows remain as
 flavor-pool entries.
+
+---
+
+### Task 24 — Modularize `src/Main.cs` into Domain Partial Files
+
+**Status re-baseline.** SUPERSEDED — the split exists. Verified: 190+ files matching
+`src/Main.*.cs`, including the plan's named survivors/economy/medical/verdict slices
+(`Main.Survivors.cs`, `Main.Economy.cs`, `Main.Medical.cs`, `Main.Verdict.cs` all
+present) and two the plan did not predict: `Main.SaveOrchestrator.cs` (save/flush
+orchestration extracted) and the plan-wave slices `Main.Plans46_49.cs` …
+`Main.Plans216_202Interpersonal.cs`. `Main.Combat.cs` and `Main.Foundry.cs` from the
+plan's layout **do not exist** under those names — combat and foundry wiring lives in
+other partials and the `src/Combat/`, `src/Foundry/` areas. The concurrent
+shelter-operations stream owns `Main.ShelterOperations.cs` (read-only here).
+
+**Failure-mode analysis.**
+- *Declaring victory:* the adversarial residue of a completed refactor is unverified
+  parity — a partial that sets up a system but whose save/flush call lives elsewhere
+  is exactly the drift `scripts/ci/triad-drift-gate.sh` exists to catch.
+- *Rename churn:* "finishing" the plan's literal layout by renaming slices
+  (`Main.Combat.cs` into existence) would collide with the plan-wave naming the repo
+  actually adopted and churn diffs for zero behavior. The plan's layout was a
+  proposal; the repo's layout is the standard.
+- *Doc rot:* `docs/ASHFALL_CODE_INDEX.md` and the generated architecture map
+  (`scripts/ci/generate-architecture-map.sh`) must agree with the real partial list;
+  an audit that finds divergence files the doc fix, not a code rename.
+
+**Remaining work (re-scoped to audit + documentation).**
+1. Triad parity: run `bash scripts/ci/triad-drift-gate.sh`; investigate any
+   Setup/Save/Flush asymmetry it reports.
+2. Orphan check: for each `SetupX` in `Main.cs` partials, confirm a corresponding
+   save and flush path exists (the orchestrator partial is the hub).
+3. Document the achieved layout: update the code index entry for `src/Main.cs`
+   partials (or file the doc task with the integrator if the index is
+   generator-owned — `generate-docs-index.py` exists; never hand-edit generated
+   output).
+4. Close Task 24 in the ledger with evidence, per `AI_AGENT_WORKFLOW.md` handoff
+   rules.
+
+**Integration contract.** No behavior change. The audit's output is evidence:
+green triad gate, zero orphaned setup/flush pairs, index agrees with tree.
+
+**Exact seams (verified).**
+- `src/Main.cs` — root partial with `_Ready()`/`_Process()` orchestration.
+- `src/Main.SaveOrchestrator.cs` — save/flush hub.
+- `scripts/ci/triad-drift-gate.sh` — the parity gate.
+- `scripts/ci/generate-architecture-map.sh` / `generate-docs-index.py` — doc
+  generators (generated outputs are never hand-edited).
+
+**Data schema.** None. **Save-section impact.** None. **Determinism notes.** None.
+
+**Verification plan.** The gate itself; a no-op build. Nothing else — this task's
+discipline is *not running things*.
+
+**Risk register.** (a) "Helpfully" refactoring partial names — explicitly forbidden;
+(b) audit findings touching the shelter stream's partial — report, don't touch;
+(c) doc generator drift discovered — hand to the integrator with the diff.
+
+**Rollback.** Documentation-only; revert the doc commit.
+
+---
+
+### Task 25 — Reconcile Dual Faction-ID Namespaces in JSON
+
+**Status re-baseline.** OPEN — the highest blast-radius task in the plan, and the
+only one where the audit found *both* namespaces alive in shipped data. Verified:
+`iron_garrison` appears in `codex_entries.json`, `locations_expansion3.json`,
+`combat_catalog.json`, `faction_intelligence.json`, `events.json`;
+`faction_central_garrison` appears in `year_of_ash_survivors.json`,
+`faction_war_events.json`, `characters.json`, `faction_lore.json`,
+`foundry_accords.json`, and `door_encounters.json` (sample entry verified using it
+as `visitorFaction`). `Economy/FactionStanceEngine.cs` (verified members:
+`GetTrust`, `GetEffectiveTrust`, `ModifyTrust`, `SetTrust`, `GetStance`,
+`WillTrade`, `WillShareIntel`) contains **no alias table**. The plan's
+`RestoreState()` alias-dictionary idea predates the current stance engine shape —
+the migration needs a design decision (below) before code.
+
+**Failure-mode analysis.**
+- *Half-migration:* rewriting data files but not save payloads strands old saves
+  whose stance/debt/relationship records carry `iron_garrison` — restore then
+  silently drops or duplicates standing for the same fictional faction. The save
+  path is the harder half and must be designed first.
+- *Alias forever:* an alias table that persists indefinitely becomes a second
+  namespace with extra steps; content keeps using the short ID because the alias
+  forgives it. The migration needs an end state: data fully canonical, alias
+  existing only at the save-restore boundary with a deprecation date.
+- *Checksum churn:* faction IDs appear inside checksummed save structures. A restore
+  alias that maps at load (before capture of canonical form) keeps roundtrip
+  checksums stable for migrated saves; an alias applied at use-sites would not.
+- *Validator blindness:* if the integrity validator has no notion of the alias, it
+  cannot flag *new* uses of the retired ID — the migration would silently regress.
+
+**Integration contract (proposed end state).** One canonical namespace
+(`faction_central_garrison` family, matching the newest and most content-heavy
+catalogs); all JSON data canonicalized in one reviewed migration; the stance/debt/
+relationship restore paths map legacy IDs at load; the validator flags any
+non-canonical faction ID in data; codex/lore text survives (display names are
+content, not IDs — prose keeps its voice).
+
+**Exact seams (verified).**
+- `Assets/Ashfall.Core/Economy/FactionStanceEngine.cs` — legacy-ID mapping at
+  restore/use boundary (a pure `CanonicalizeFactionId(string)` function; every
+  public entry point routes through it).
+- All data consumers listed in the audit table above (files verified to contain the
+  legacy ID — each needs a reviewed diff, and `events.json`/`combat_catalog.json`
+  are shared files: integrator-owned, claim via the foreman).
+- `Assets/Ashfall.Core/CatalogIntegrityValidator.cs` (+ Checkers/Rules) — add the
+  canonical-namespace check so regressions gate.
+- Save stores holding faction-keyed records (stance, debt, encounter history) —
+  locate by `*SaveStore*.cs` grep during implementation; map at restore.
+
+**Data schema.** The alias lives in code at the boundary, but its *audit* is data.
+Migration manifest (tooling artifact, not shipped catalog):
+
+```json
+{
+  "migration": "faction_namespace_2026_09",
+  "legacy_to_canonical": {
+    "iron_garrison": "faction_central_garrison"
+  },
+  "files_to_migrate": [
+    "codex_entries.json", "locations_expansion3.json", "combat_catalog.json",
+    "faction_intelligence.json", "events.json"
+  ],
+  "validator_rule": "faction_ids_must_be_canonical"
+}
+```
+
+**Save-section impact.** Restore-time mapping in every store whose payloads can
+contain faction IDs; no layout changes; checksums stay stable because canonical
+forms are written back on next save. Old saves load once through the alias and are
+canonical thereafter.
+
+**Determinism notes.** Canonicalization is a pure string function; ordinal
+comparison everywhere; no locale-fold shenanigans.
+
+**UI/panel contract.** Panels render display names from `faction_lore.json`-family
+content (verified to use canonical IDs already); no panel references raw IDs.
+
+**Verification plan.** New focused test: `CanonicalizeFactionId` mapping + identity
+for canonical IDs; stance-engine roundtrip with a legacy payload; validator test
+flagging a planted legacy ID. Then `--data-integrity-selftest` across the migrated
+catalogs, and the save store's own focused files.
+
+**Risk register.** (a) A consumer comparing raw strings *before* canonicalization
+(bugs that only appear with old saves) — sweep `string.Equals(… factionId …)` call
+sites during implementation; (b) `events.json`/`combat_catalog.json` shared-file
+collision — integrator executes those two diffs; (c) prose/codex seach references
+breaking lookup-by-ID — codex lookups route through canonicalization too; (d)
+third-party/expansion catalogs (`locations_expansion3.json` implies more) — the
+manifest enumerates, the validator enforces, nothing relies on memory.
+
+**Rollback.** Data diffs revert per file; the alias function is harmless if kept
+(map is identity after migration); validator rule stays as permanent hygiene.
+
+---
+
+## PART V.CLOSING — SPEC-LEVEL EVIDENCE TALLY
+
+Across the 25 specifications: **62+ distinct verified citations** (file paths, enum
+members, method signatures, catalog schemas, row counts, line numbers), **9 claims
+carried as `UNVERIFIED (historical plan text)`** with their design-target status
+made explicit (Tasks 1, 4, 5, 6, 8, 9, 12, 13, 21 constants and method names), and
+**4 outright path corrections** (Tasks 14, 15, 20, 24's plan paths do not exist;
+current paths cited). Every "remaining work" list is derived from what the audit
+could *not* find in the tree — which is the honest definition of what is left to do.
+
+---
+
+## PART VI — CROSS-SYSTEM INTERACTION MATRIX & EMERGENT CONSEQUENCES
+
+### VI.1 Shared-System Touch Matrix
+
+Rows are tasks; columns are shared authorities (all verified paths). A cell marks a
+task whose spec reads (r), writes (w), or must coordinate (c) with that authority.
+Integrators use this to order packages and spot collisions; builders use it to know
+which seams they must *not* edit directly.
+
+| Task | `PowerGridSystem` (Shelter/) | `WeatherSystem` + `WeatherKind` | `LedgerDebtSystem` family | `FactionStanceEngine` / faction IDs | `CampaignDayCoordinator` | `door_encounters.json` | `items.json` | `WorldSaveStore` / store matrix | `MedicalWardSystem` | Radio family (`RadioHostSession` + engine) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 determinism | r | – | – | – | c | – | – | – | – | – |
+| 2 edge saveables | – | – | – | – | – | – | – | w | – | – |
+| 3 schema sweep | – | – | – | – | – | r | r | – | – | – |
+| 4 vinyl→radio | w | – | – | c | c | – | r | r | – | w |
+| 5 trapping→disease | – | – | – | – | c | – | r | – | – | – |
+| 6 sky armor→weather | r | w | – | – | c | – | r | r | – | – |
+| 7 apprenticeship | – | – | – | – | c | – | r | r | r | – |
+| 8 warlord arrears | – | r | w | c | c | w | – | r | – | – |
+| 9 pathology barter | – | – | w | c | – | – | r | r | r | – |
+| 10 pharma recipes | – | – | – | – | – | – | w | – | – | – |
+| 11 relic blueprints | – | – | – | – | – | – | w | r | – | – |
+| 12 vehicles | – | r | – | – | c | – | w | w | – | – |
+| 13 vinyl wear | – | – | – | – | c | – | w | r | – | r |
+| 14 excavation gates | w | – | – | – | c | – | w | r | – | – |
+| 15 evidence tags | – | – | – | c | – | – | r | r | – | – |
+| 16 trauma UI | – | – | – | – | – | – | – | – | – | – |
+| 17 breakers | w | – | – | – | c | – | – | r | – | – |
+| 18 transcription | – | – | – | r | – | – | – | r | – | w |
+| 19 ballistics | – | – | – | – | – | – | – | – | – | – |
+| 20 air HUD | r | – | – | – | – | – | – | – | – | – |
+| 21 blowout→surgery | – | – | – | – | c | – | – | – | w | – |
+| 22 callbacks | – | – | – | c | c | w | – | r | – | – |
+| 23 slump crises | – | c | – | – | w | – | r | r | – | – |
+| 24 Main.cs audit | – | – | – | – | – | – | – | c | – | – |
+| 25 faction namespace | – | – | c | w | – | r | – | c | – | c |
+
+Coordination hotspots (cells marked **c** that involve two or more active tasks):
+
+1. **`CampaignDayCoordinator` phase space** — Tasks 4, 5, 6, 7, 8, 12, 13, 14, 17,
+   21, 22, 23 all register or depend on day phases. The phase registry is the plan's
+   most contested shared resource. Integrator rule: new owners register at the latest
+   phase that still sees their inputs; any two tasks needing the same phase arbitrate
+   in `INTEGRATION_PLANS.md`, not in code.
+2. **Faction IDs** — Tasks 4, 8, 9, 15, 22, 25 all touch faction-keyed data. Task 25
+   defines canonicalization; every other faction-touching task must consume it or
+   land before it knowingly on legacy IDs. Recommended order: Task 25's
+   `CanonicalizeFactionId` lands early as identity-plus-map, so later tasks call it
+   from day one.
+3. **`items.json`** — Tasks 4, 5, 6, 7, 10, 11, 12, 13, 14, 23 author or reference
+   rows. The file is the plan's highest-traffic shared artifact and the concurrent
+   shelter stream also touches it. All additions are append-only rows with unique
+   IDs; no edits to existing rows without a claim.
+4. **Save-store matrix** — Tasks 2, 4, 6, 8, 9, 11, 12, 13, 22, 23, 25 bump or wire
+   sections. Every bump goes through the generator's `--check`; no hand-edited
+   matrix rows.
+
+### VI.2 Emergent-Consequence Design
+
+The plan's bridges are designed to compose. The intended emergent chains, with the
+guardrail that keeps each from curdling:
+
+1. **The storm week.** Rad-hail breaches a roof cell (Task 6) during the same window
+   a blizzard delays warlord collectors (Task 8). The player faces repair materials
+   versus arrears resolution with one fuel/production budget. *Guardrail:* Task 23's
+   cooldown counts the warlord delay as a major crisis, so the slump generator stays
+   silent that window — the cascade is weather-driven, not system-driven.
+2. **The sick caravan.** A hunter skips cooking to save fuel (Task 5), imports
+   zoonotic flu, and the pharmacy inflates antibiotics (Task 9). The desperation
+   concession offers heirloom trades; a vinyl broadcast (Task 4) raised the wanderer
+   odds that brought the trader who carries the medicine. *Guardrail:* concession is
+   once-per-infection and stance-gated — the story resolves; it does not loop.
+3. **The apprentices' foundry.** A youth apprenticeship (Task 7) staffs the foundry
+   when the blowout hits (Task 21); the safety priority rule turns a lethal event
+   into a minor-burn ward admission, and the trauma dossier (Task 16) records the
+   memory. *Guardrail:* the safety rule applies only to rostered apprentices — adult
+   workers keep real stakes.
+4. **The dark vault.** An excavated vault (Task 14) joins the grid without a breaker
+   review (Task 17) and browns out the medical ward during a surgical chain
+   (Task 21). *Guardrail:* critical rooms (medical) are non-breakable by the Task 17
+   data flag; the vault's wiring cost is the intended friction, not a trap.
+5. **The returned deserter.** The family admitted in the verified sample encounter
+   (`door_encounter_garrison_deserter_family`) returns months later (Task 22); if
+   the child's father died in the interim, the memorial variant plays; garrison
+   standing (Task 25's canonical faction) shifts through the same
+   `FactionStanceEngine` the trade gouging (Task 9) reads. *Guardrail:* snapshots
+   freeze the past visit — callbacks reference memory, not current state, which is
+   the tonal point.
+
+Each chain uses only verified seams and one seeded draw per decision site; a replay
+tool diffing two seeds should be able to walk any of these narratives deterministically.
+
+### VI.3 Deliberate Non-Interactions
+
+Equally important — pairs the plan intentionally does *not* wire:
+
+- **Tasks 10/11 content ↔ Tasks 16–20 UI:** no panel reads recipe rows directly;
+  catalogs flow through systems.
+- **Task 12 vehicles ↔ Task 6 sky armor:** vehicle modules do not reinforce shelter
+  cells; the material tiers are separate authorities.
+- **Task 18 transcription ↔ Task 4 broadcast:** the player's own broadcasts never
+  auto-transcribe as foreign intercepts; the program path is distinct from the
+  intercept path.
+- **Task 23 slump ↔ Phase 3 content catalogs:** the generator schedules *events*,
+  never content unlocks; scarcity of items is not a crisis lever.
+
+---
+
+## PART VII — VERIFICATION & ACCEPTANCE
+
+### VII.1 The Gate Ladder, Rebuilt
+
+The original plan's six gates assumed one verification verb per phase
+(`dotnet test --nologo` and two `--panel-selftest`/`--ui-smoke-selftest` verbs that
+the audit could not confirm exist — the verified HostCli verbs are
+`--data-integrity-selftest`, `--content-utilization-selftest`, and per-panel
+selftests). Under `TEST_POLICY.md`, the ladder becomes a **focused-test ladder with
+a shared-terminal acceptance**:
+
+```mermaid
+graph TD
+    F["F: Focused builder gate<br/>bash scripts/run_test.sh <file-or-dir> (<=100 cases, 180s)"]
+    D["D: Data gates<br/>--data-integrity-selftest, --content-utilization-selftest"]
+    S["S: Structure gates<br/>triad-drift-gate.sh, generate-save-store-matrix.sh --check"]
+    P["P: Purity gates<br/>forbidden-api-gate.sh, catch-policy-gate.sh, uid-sidecar-gate.sh"]
+    A["A: Integrator acceptance<br/>affected-region dedup + save roundtrip + verify-fast.sh"]
+
+    F --> A
+    D --> A
+    S --> A
+    P --> A
+```
+
+Rule: a package advances when *its* rungs pass; nobody runs the full suite to feel
+safe. The full suite and soak runs remain foreman/user-authorized events (TEST_POLICY
+selection rules, quoted in Part III.7).
+
+### VII.2 Focused Selection Per Phase
+
+| Phase | Tasks | First target (new/modified file, run alone) | Regional follow-ups | Data/structure gates |
+|---|---|---|---|---|
+| 1 | 1 | the four systems' existing test files | thermal/schedule regional files | forbidden-api (determinism sweep), `verify-fast.sh` at package end |
+| 1 | 2 | `SaveStoreChecksumSweepTests.cs` | evolving-world `.Live.cs` regional tests | `generate-save-store-matrix.sh --check` if stores touched |
+| 1 | 3 | new sweep-script unit test | – | `--data-integrity-selftest`, `--content-utilization-selftest` |
+| 2 | 4 | new vinyl-broadcast lifecycle test | vinyl, caravan, power regional files | integrity (faction refs) |
+| 2 | 5 | new contagion/mitigation test | trapping, disease, kitchen regional | integrity (item refs) |
+| 2 | 6 | new armor-weather stage test | thermal, radon regional | integrity (repair items) |
+| 2 | 7 | new apprenticeship quota/XP test | cohort, duty roster, progression regional | integrity |
+| 2 | 8 | new arrears/delay/encounter test | warlord, debt, encounter regional | integrity (encounter + debt refs) |
+| 2 | 9 | new pathology-pricing test | trade seam, economy regional | integrity |
+| 3 | 10–15 | per-task new catalog-row checks (aggregated, per-row failures) | system regional files | integrity + utilization on every catalog |
+| 4 | 16–20 | per-task new UI/host test slice | panel-family regional files | triad gate, snapshot goldens where added |
+| 5 | 21 | new accident/surgical-chain test | foundry policy, ward regional | integrity |
+| 5 | 22 | new callback queue test | encounter, memorial regional | integrity (callback IDs) |
+| 5 | 23 | new slump cooldown test | coordinator regional | integrity (event IDs) |
+| 6 | 24 | none (gate run only) | – | `triad-drift-gate.sh` |
+| 6 | 25 | `CanonicalizeFactionId` + restore-alias tests | stance, debt, encounter regional | integrity with new canonical rule; store matrix `--check` |
+
+Counts stay inside TEST_POLICY's builder envelope (below ~100 cases per package);
+anything larger is split by file.
+
+### VII.3 Acceptance Criteria Per Phase
+
+- **Phase 1:** the four named systems' focused suites pass for documented reasons;
+  any quarantine carries a written reason and a passing replacement target; evolving-
+  world payloads provably ride checksummed envelopes; the schema sweep artifact
+  exists with zero unexplained unversioned catalogs.
+- **Phase 2:** each bridge's contract sentence (Part V) demonstrably holds in its
+  focused test; no bridge introduced a new system-to-system C# reference; phase
+  registrations documented; `--data-integrity-selftest` zero errors with all new
+  catalogs referenced.
+- **Phase 3:** every new/extended catalog passes integrity **and** utilization
+  (reachability); numeric targets restated honestly against the 2026-09-25 counts
+  (pharma 27 ≥ 25 closed; relics 39 ≥ 30 closed as restorations; vehicles 8 < 12
+  remains the open number).
+- **Phase 4:** new surfaces bind/unbind with zero leaked nodes (UI telemetry),
+  keyboard/close behavior preserved, existing golden snapshots either unchanged or
+  deliberately re-baselined in their own commit; no panel computes gameplay values.
+- **Phase 5:** each narrative chain replays deterministically under fixed seeds
+  (accident chain, callback chain, crisis cooldown); content tone reviewed against
+  the restrained-voice rule.
+- **Phase 6:** Task 24 closed with triad-gate evidence and an accurate index entry;
+  Task 25 lands with data fully canonical, restore-alias proven against old-save
+  fixtures, and the validator enforcing canonical IDs going forward.
+
+### VII.4 Acceptance Order and Sequencing
+
+Recommended package order given the coordination hotspots (Part VI.1):
+
+1. Task 24 audit (cheap, unblocks ledger hygiene) and Task 3 sweep (data truth).
+2. Task 2 wiring audit (save correctness before new state arrives).
+3. Task 25 canonicalization early (identity map first, data diffs as integrator
+   packages) — so faction-touching Tasks 4/8/9/15/22 build on canonical IDs.
+4. Phase 2 bridges in plan order (each is independent; 6 and 17 share the power/
+   shelter seam and should pair).
+5. Phase 3 content in plan order (12 first — the true gap; 10/11/15 close as audits
+   unless design reopens them).
+6. Phase 4 surfaces (17 pairs with 14's vault rooms; 20 pairs with 6's breach dose).
+7. Phase 5 chains last (they compose everything, per Part VI.2).
+
+### VII.5 What "Done" Means for This Document
+
+This expansion is itself subject to the repo's evidence rules: any claim in Parts
+II–V that a later audit finds stale should be corrected in place with a dated note,
+not silently left. The `UNVERIFIED (historical plan text)` labels are invitations to
+verify, not permanent furniture.
+
+---
+
+## PART VIII — APPENDICES
+
+### Appendix A — Glossary
+
+| Term | Meaning in this repository |
+|---|---|
+| **Authority (owner)** | The single system/file allowed to hold and mutate one concern's truth. Extending it is the only sanctioned change (AGENTS.md rule 5). |
+| **Bridge** | A Phase 2 style cross-system connection made through Core facts + day-phase consumption, never direct system references. |
+| **Capture/Restore** | The state-object contract (`CaptureState()`/`RestoreState(dto)`) that makes Core state persistent; capture must return defensive clones. |
+| **Catalog class** | The typed Core representation of one JSON catalog (`WildlifeTrappingCatalog.cs`, `MentorshipCatalog`); systems never parse JSON directly. |
+| **Checksummed envelope** | A save file wrapper whose `Checksum` field is an ordinal reflection walk over public instance fields (`SaveChecksum.cs`, `MaxDepth = 32`). |
+| **Core** | `Assets/Ashfall.Core/`, `netstandard2.1`, engine-free domain logic. |
+| **Day-phase** | A registered position in `CampaignDayCoordinator`'s ordered day advance (`IDayAdvanceOwner`, phase argument); the arbitration mechanism for tick order. |
+| **Focused verification** | `scripts/run_test.sh <target>`: smallest test file/directory, 180 s cap, no full suite by default (TEST_POLICY). |
+| **Host session** | A `src/Host/*HostSession.cs` class owning tick relay, command routing, and event fan-out for one domain (190 exist). |
+| **IBindablePanel** | The `Bind`/`Unbind` panel contract (`SurvivorsPanel`, `RadioPanel`, `CombatPanel` implement it); panels are views, never authorities. |
+| **`ISeededRng`** | The only sanctioned randomness source (`Ports.cs:113`); all chance is seeded, replayable, and never wall-clock derived. |
+| **Integrity pipeline** | `CatalogIntegrityValidator` + `--data-integrity-selftest` (referential) and `--content-utilization-selftest` (reachability). |
+| **Legacy ID** | A data identifier scheduled for canonicalization (currently `iron_garrison`, Task 25). |
+| **Save store** | A `src/Host/*SaveStore.cs` class serializing one domain's envelope (185 exist); completeness is generator-enforced. |
+| **Schema version** | Root `"schema_version": N` in a catalog; restore paths default missing fields from older versions. |
+| **Triad** | Setup/Save/Flush parity across `Main.*.cs` partials; enforced by `scripts/ci/triad-drift-gate.sh`. |
+| **UNVERIFIED (historical plan text)** | A 2026-08-21 plan claim not re-confirmable in the 2026-09-25 tree; treated as design history, never as fact. |
+
+### Appendix B — File-Path Migration Table (2026-08-21 plan path → verified current path)
+
+| Plan's path (2026-08-21) | Current verified path (2026-09-25) | Note |
+|---|---|---|
+| `Assets/Ashfall.Core/ShelterThermalSystem.cs` | same (Core root) | Unmoved. |
+| `Assets/Ashfall.Core/ShelterScheduleSystem.cs` | same (Core root; loader sibling `ShelterScheduleCatalogLoader.cs`) | Unmoved. |
+| `Assets/Ashfall.Core/SumpFloodingSystem.cs` | same (Core root; `SumpDrainageCatalog.cs` sibling) | Unmoved. |
+| `Assets/Ashfall.Core/AirlockSecuritySystem.cs` | same (Core root) | Unmoved. |
+| `Assets/Ashfall.Core/LocationEvolutionSaveable.cs` | `Assets/Ashfall.Core/LocationEvolutionSystem.cs` (+ `.Live.cs`) | Renamed/restructured; contract present. |
+| `Assets/Ashfall.Core/WildlifeSaveable.cs` | `Assets/Ashfall.Core/WildlifeMigrationSystem.cs` (+ `.Live.cs`) | Renamed/restructured; contract present. |
+| *(unnamed landmark saveable)* | `Assets/Ashfall.Core/LandmarkDegradationSystem.cs` (+ `.Live.cs`) | `LandmarkSaveState` verified. |
+| `Assets/Ashfall.Core/VinylMoraleSystem.cs` | same (Core root) | Unmoved. |
+| `Assets/Ashfall.Core/Radio/FactionRadioEngine.cs` | same | Unmoved. |
+| `Assets/Ashfall.Core/WildlifeTrappingSystem.cs` | same (Core root; catalog + events siblings) | Unmoved. |
+| `Assets/Ashfall.Core/Disease/DiseaseSystem.cs` | same | Unmoved. |
+| `Assets/Ashfall.Core/Shelter/SkyLayerArmorSystem.cs` | same | Plan already used the modern path here. |
+| `Assets/Ashfall.Core/World/WeatherSystem.cs` | same; `WeatherKind.cs` at Core root | Unmoved. |
+| `Assets/Ashfall.Core/CohortSystem.cs` | same (+ `CohortTuning.cs`, `ApprenticeshipSystem.cs`) | Unmoved. |
+| `Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs` | same | Unmoved. |
+| `Assets/Ashfall.Core/Warlords/WarlordDoctrineSystem.cs` | same | Unmoved. |
+| `Assets/Ashfall.Core/Economy/TradeScreenSeam.cs` | same | Member names differ from plan. |
+| `Assets/Ashfall.Core/ExcavationSystem.cs` | same | Unmoved. |
+| `Assets/Ashfall.Core/ExpeditionVehicleSystem.cs` | same (+ `Vehicles/`, `Expeditions/` dirs) | Unmoved. |
+| `Assets/Ashfall.Core/Foundry/SilentFoundrySystem.cs` | same (+ `SilentFoundryConsequencePolicy.cs`) | Policy sibling is the seam the plan lacked. |
+| `Assets/Ashfall.Core/Medical/MedicalWardSystem.cs` | same | Unmoved. |
+| `Assets/Ashfall.Core/YearOfAsh/DoorEncounterSystem.cs` | same (+ `YearOfAshRadonSystem.cs`) | Unmoved. |
+| `Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs` | same | Unmoved. |
+| `Assets/Ashfall.Core/Economy/FactionStanceEngine.cs` | same | No alias table yet (Task 25 open). |
+| `Assets/StreamingAssets/Data/excavation_events.json` | `Assets/StreamingAssets/Data/excavation_sites.json` + `excavation_hazard_mitigation.json` | Plan's file does not exist. |
+| `Assets/StreamingAssets/Data/narrative/verdict_dossiers.json` | `Assets/StreamingAssets/Data/verdict_items.json` (+ `verdict_data/locations/npcs/questlines/radio.json`, `narrative/relic_provenance_dossiers.json`) | Plan's file does not exist. |
+| `src/UI/VentilationPanel.cs` | *(none; nearest surfaces: `GameHudOverlay.cs`, `ShelterHudPanel.cs`, `EmergencyResponseHud.cs`)* | Plan's file does not exist. |
+| `src/UI/HUD.cs` | `src/UI/GameHudOverlay.cs` (HUD family) | Plan's file does not exist. |
+| `src/Main.cs` monolith | `src/Main.cs` + 190+ `src/Main.*.cs` partials | Task 24 superseded. |
+| *(plan's proposed `Main.Combat.cs`, `Main.Foundry.cs`)* | not present under those names | Combat/foundry wiring lives in other partials + `src/Combat/`, `src/Foundry/`. |
+
+### Appendix C — Scenario Walkthroughs (design-replay, not implemented features)
+
+**C.1 "Ash Week" (Tasks 6 + 8 + 23 composed).**
+Day 112, mid-window. `WeatherSystem` declares a RadHail day (severity from
+`IWeatherSeverityProvider`). Task 6's rules scale 15.0 kinetic by the verified
+`CeilingMaterialTier` resistance of the shelter's mixed roof: wood cells over the
+gen-room drop toward the damaged threshold (leaks, −5 °C via the thermal input), the
+concrete core holds. Same window: the blizzard delays the warlord collectors — one
+seeded draw grants 3 days, one arrears row registers through `DebtTemplateCatalog`,
+and `door_encounter_stranded_collectors` queues. Day 115 clears; the player pays the
+arrears by trading the heirloom-tagged seeds (Task 9's concession multiplies their
+worth) instead of losing standing. The slump generator (Task 23) stays silent: the
+delay counted as the window's major crisis. Save: roof durability + leak flags, debt
+row, encounter latch — three sections, all versioned, all checksummed.
+
+**C.2 "The Long Callback" (Tasks 22 + 25 + 16).**
+Day 190: the verified deserter-family encounter resolves with admit-and-treat; the
+snapshot freezes the survivor's `moralBranch: "humanist"`, `guiltLevel: 2`. Task 22's
+callback declaration schedules a return between days 280–330. Day 301: the survivor
+is dead (fate recorded in the survivor-fate authority); the memorial variant fires,
+referencing the carving from the `Memorial/` state, authored lines only. Faction
+standing moves against the canonical garrison ID through `FactionStanceEngine`
+(post-Task 25 there is exactly one ID to move). The trauma dossier sub-tab (Task 16)
+shows the memory in the top-N window, aggregate guilt ticked once. Replay: same seed
+reaches the same day-301 variant — the delay draw, the fate, and the latch are all
+state.
+
+**C.3 "Brownout Surgery" (Tasks 17 + 14 + 21 + 20).**
+The vault dug on day 140 (Task 14) was wired and shored before occupancy, joining
+`PowerGridSystem` as an ordinary room. Day 155: a crucible blowout (Task 21, policy-
+tiered) burns two workers; the clinic is staffed, `StaffingPreflight` passes, the
+ward admits them. During recovery the vault's drill draw spikes the load; the
+breaker panel (Task 17) shows the surge in `TotalDrawWatts`; the player sheds the
+vault — the medical room refuses (critical flag). `OnTickSummary` reflects the new
+steady state; the air-quality indicator (Task 20) never pulses: CO stayed nominal
+because the duct valves were open. Nothing about this chain exists yet; every seam
+it runs through does.
+
+### Appendix D — Open Questions (blocking decisions, in AGENTS.md rule-10 terms)
+
+1. **Task 25 canonical target.** Is `faction_central_garrison` the confirmed
+   canonical family for all garrison references, and does any third ID exist in
+   catalogs the audit did not open? Needs a foreman decision + a full-data scan
+   before the migration manifest freezes.
+2. **Task 10/11 re-opened?** With 27 pharma recipes and 39 restorations landed, do
+   the original numeric targets still describe missing design (specific missing
+   formulas/manufacturing blueprints), or are the tasks closed as audits? Design
+   authority call.
+3. **Task 12 module economy.** Vehicle modules imply slots and a garage UI
+   (`Main.VehicleGarage.cs` exists). Who owns the module balance table, and do
+   modules drop, craft, or buy? Unsigned.
+4. **Task 18 dwell clock.** Simulation seconds or host frames for the transcription
+   lock? Affects replay scope and UI tests; decide before implementation.
+5. **Task 21 accident numbers.** `base_daily_chance`, casualty counts, and
+   stabilization scaling need a balance signature (the `ashfall-balance-sim`
+   tooling is the natural venue) before code adopts constants.
+6. **Task 2 residue.** If the wiring audit finds any of the three evolving-world
+   payloads unwired, is the fix integrator-owned (store seams) or builder-owned?
+   Per `WORKTREE_OWNERSHIP.md` at execution time.
+7. **Snapshot goldens.** Tasks 16/17/18/20 add or alter visible surfaces; which join
+   the 29-target golden set, and who re-baselines?
+8. **This document's maintenance.** Parts II–V carry a 2026-09-25 evidence date;
+   when the shelter-operations stream lands, Task 17/20 rows and the `items.json`
+   counts may need a dated correction pass. Suggest the foreman assign that as a
+   read-only sweep after the stream integrates.
+
+### Appendix E — Provenance
+
+- **Original plan:** `docs/ASHFALL_MASTER_IMPLEMENTATION_PLAN.md` (2026-08-21,
+  preserved byte-for-byte above the 2026-09-25 expansion header).
+- **Expansion:** written 2026-09-25 against the working tree. Verification methods:
+  `Glob`/`find` for existence, `Grep` for members and vocabulary, direct JSON reads
+  for catalog counts and schemas, targeted line reads for API signatures. No tests
+  were run and no other file was modified in producing this expansion, per its
+  documentation-only charter.
+- **Sibling authorities respected:** `AGENTS.md`, `docs/CURRENT_AUTHORITY.md`,
+  `docs/ASHFALL_CODE_INDEX.md`, `INTEGRATION_PLANS.md`, `WORKTREE_OWNERSHIP.md`,
+  `TEST_POLICY.md`, `KNOWN_DEBT.md`, `AI_AGENT_WORKFLOW.md`, and the generated
+  matrices (`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`,
+  `docs/cli/HOST_CLI_COMMAND_CATALOG.md`) — this expansion defers to all of them
+  wherever they speak, and flags (Appendix D.8) where drift between them and the
+  tree needs an owner's correction.
+
+*End of expansion.*
+
+### Appendix F — Integration Readiness Checklist (per task, execution gate)
+
+Each row is the minimum evidence a package must attach at handoff
+(`AI_AGENT_WORKFLOW.md`). "Claim" = exact paths written to `WORKTREE_OWNERSHIP.md`
+before editing. Readiness classes: **READY** (spec is executable as written),
+**READY-AFTER-DECISION** (an Appendix D question blocks the start), **AUDIT-ONLY**
+(no production change intended).
+
+| Task | Class | Claim before editing | Handoff evidence |
+|---|---|---|---|
+| 1 | READY | the four Core-root files + their test files | failure classification log; focused runs; determinism sweep note |
+| 2 | AUDIT-ONLY→wiring | (findings dictate) | call-site trace for 3 payloads; sweep test result; matrix `--check` if stores touched |
+| 3 | READY | sweep script + version-added file list | sweep artifact; integrity + utilization green |
+| 4 | READY | vinyl system, radio engine, power system, caravan system + new rules catalog | lifecycle test; integrity on faction refs |
+| 5 | READY-AFTER-DECISION (D5 adjacent: mitigation constants) | trapping, cooking authority + new rules catalog | mitigation test incl. fuel-absent branch |
+| 6 | READY | armor system, weather system, thermal, radon + new rules catalog | stage/repair test; radon source-term review |
+| 7 | READY | apprenticeship, cohort, duty roster, progression + mentorship catalog rows | quota/XP/accident test |
+| 8 | READY-AFTER-DECISION (balance constants) | warlord, debt family, encounter JSON + debt template | delay/arrears/maturity test |
+| 9 | READY-AFTER-DECISION (cap constant) | trade seam, stance engine, debt family + rules catalog + tag row | gouge/concession/indenture test |
+| 10 | AUDIT-ONLY unless D2 reopens | reagent union diff only | per-row audit output; gates green |
+| 11 | AUDIT-ONLY unless D2 reopens | – | boundary note; gates green |
+| 12 | READY | vehicles.json, vehicle/expedition Core, garage partials + new modules catalog | transit/breakdown/tow test; integrity+utilization |
+| 13 | READY-AFTER-DECISION (wear adoption) | vinyl system + rules catalog + solvent row | wear/clean/restore test; count audit attached |
+| 14 | READY | excavation system, subterranean, hazard JSON + 2 item rows | gate/risk/restore test |
+| 15 | AUDIT-ONLY (tag enforcement) | verdict items JSON + teardown/sale guard sites | aggregated tag check; guard test |
+| 16 | READY | survivors panel + session | UI slice; node telemetry; no Core change |
+| 17 | READY | power system, session, panel | shed/trip/restore test; UI slice |
+| 18 | READY-AFTER-DECISION (D4 clock) | radio session + panel | dwell-gate test; UI slice |
+| 19 | READY | combat Core owner, session, panels | cache invalidation test; distribution sanity |
+| 20 | READY | ventilation, radon authority, HUD family + thresholds catalog | hysteresis test; UI slice |
+| 21 | READY-AFTER-DECISION (D5) | foundry policy/system, ward, injury owner + accident catalog | chain test incl. fallback branch |
+| 22 | READY | encounter system, JSON, memorial owner | callback/dead-variant/restore test |
+| 23 | READY | coordinator, events.json rows + rules catalog | cooldown/season test |
+| 24 | AUDIT-ONLY | doc/index targets only | triad gate output; index diff or filed doc task |
+| 25 | READY-AFTER-DECISION (D1) | stance engine, validator, enumerated data files (shared files via integrator) | canonicalization tests; old-save fixture; validator rule test |
+
+Three closing observations from the readiness pass:
+
+1. **Nine tasks are executable today with no further decisions** (1, 3, 4, 6, 7, 14,
+   16, 17, 20, 22, 23 — eleven counting the audit-only 2/24 starts), which is the
+   honest measure of how much of the 2026-08-21 plan survived five weeks intact.
+2. **Five tasks are one decision away** (5, 8, 9, 18, 21, plus 12/13's module and
+   wear adoptions) — in every case the blocker is a numeric or clock-semantics
+   signature, not architecture. The architecture was never the hard part; the
+   evidence discipline was.
+3. **Four tasks are already closed or closing as audits** (2-wiring, 10, 11, 15,
+   24) — the tree ran ahead of the plan. Recording that honestly, rather than
+   re-implementing what exists, is this expansion's core deliverable.
+
+*End of Appendix F. End of the 2026-09-25 expansion.*
