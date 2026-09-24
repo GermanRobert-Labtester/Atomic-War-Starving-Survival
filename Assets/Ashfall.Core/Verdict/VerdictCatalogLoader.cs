@@ -88,15 +88,6 @@ namespace Ashfall.Core.Verdict
             public string rarity = string.Empty;
         }
 
-        [Serializable]
-        internal sealed class VerdictItemsRoot
-        {
-#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
-            public int schema_version;
-#pragma warning restore CS0649
-            public List<VerdictItemEntry> items = new List<VerdictItemEntry>();
-        }
-
         public static List<VerdictItemEntry> LoadItems(
             string dataDir, IFileIO fileIO, IJsonSerializer json)
         {

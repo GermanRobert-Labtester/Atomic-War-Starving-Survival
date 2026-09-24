@@ -5,20 +5,6 @@ using Ashfall.Core.Save;
 
 namespace Ashfall.Core.Lifecycle
 {
-    /// <summary>
-    /// Lifecycle phases for ASHFALL sessions and host participants.
-    /// </summary>
-    public enum SessionLifecyclePhase
-    {
-        Construct,
-        Bind,
-        Restore,
-        Activate,
-        Unbind,
-        Dispose,
-        Reset,
-        DeletePersistence
-    }
 
     /// <summary>
     /// Contract for a session or subsystem registered with the lifecycle coordinator.

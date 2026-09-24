@@ -50,6 +50,104 @@ namespace Ashfall.Core.Tests.Water
         }
 
         [Fact]
+        public void TickDay_DuplicateAndBackwardTicks_AreIdempotent()
+        {
+            var water = new WaterTreatmentSystem();
+            var c = MakeCondenser(water: water);
+            Assert.True(c.TryBuild(true, out _));
+
+            c.TickDay(5);
+            float rawAfterFirstTick = water.State.rawWater;
+            float integrityAfterFirstTick = c.MembraneIntegrity;
+            long ledgerAfterFirstTick = c.TotalYieldLiters;
+
+            c.TickDay(5);
+            c.TickDay(4);
+
+            Assert.Equal(rawAfterFirstTick, water.State.rawWater);
+            Assert.Equal(integrityAfterFirstTick, c.MembraneIntegrity);
+            Assert.Equal(ledgerAfterFirstTick, c.TotalYieldLiters);
+            Assert.Equal(5, c.CaptureState().lastCondenseDay);
+        }
+
+        [Fact]
+        public void TickDay_NegativeDay_FailsBeforeMutation()
+        {
+            var water = new WaterTreatmentSystem();
+            var c = MakeCondenser(water: water);
+            Assert.True(c.TryBuild(true, out _));
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => c.TickDay(-1));
+
+            Assert.Equal(0f, water.State.rawWater);
+            Assert.Equal(100f, c.MembraneIntegrity);
+            Assert.Equal(0L, c.TotalYieldLiters);
+        }
+
+        [Fact]
+        public void Restore_MalformedState_FailsClosed()
+        {
+            var grid = MakeGrid();
+            var c = MakeCondenser(grid: grid);
+
+            c.RestoreState(new AtmosphericCondenserState
+            {
+                systemId = "   ",
+                schemaVersion = -4,
+                built = true,
+                enabled = true,
+                membraneIntegrity = float.NaN,
+                totalYieldLiters = -50L,
+                lastCondenseDay = -99
+            });
+
+            var state = c.CaptureState();
+            Assert.Equal(AtmosphericCondenserSystem.SystemId, state.systemId);
+            Assert.Equal(1, state.schemaVersion);
+            Assert.True(c.IsBuilt);
+            Assert.True(float.IsFinite(c.MembraneIntegrity));
+            Assert.Equal(0f, c.MembraneIntegrity);
+            Assert.Equal(0L, c.TotalYieldLiters);
+            Assert.Equal(-1, state.lastCondenseDay);
+            Assert.True(grid.IsRoomServed(AtmosphericCondenserSystem.PowerRoomId));
+        }
+
+        [Fact]
+        public void StateAndEventPayloads_AreDetachedSnapshots()
+        {
+            var c = MakeCondenser();
+            AtmosphericCondenserState? eventState = null;
+            c.OnStateChanged += state => eventState = state;
+
+            Assert.True(c.TryBuild(true, out _));
+            Assert.NotNull(eventState);
+
+            c.State.membraneIntegrity = 0f;
+            eventState!.totalYieldLiters = 999L;
+
+            Assert.Equal(100f, c.MembraneIntegrity);
+            Assert.Equal(0L, c.TotalYieldLiters);
+        }
+
+        [Fact]
+        public void YieldLedger_SaturatesInsteadOfOverflowing()
+        {
+            var c = MakeCondenser();
+            c.RestoreState(new AtmosphericCondenserState
+            {
+                built = true,
+                enabled = true,
+                membraneIntegrity = 100f,
+                totalYieldLiters = long.MaxValue - 1L,
+                lastCondenseDay = 1
+            });
+
+            c.TickDay(2);
+
+            Assert.Equal(long.MaxValue, c.TotalYieldLiters);
+        }
+
+        [Fact]
         public void Build_RequiresCapability_NeverGrantedByResearch()
         {
             var c = MakeCondenser();
@@ -117,7 +215,9 @@ namespace Ashfall.Core.Tests.Water
             Assert.Equal(0L, c2.TotalYieldLiters);
 
             // Spent membrane: no exchange surface, no yield, no wear.
-            c2.State.membraneIntegrity = 0f;
+            var spentState = c2.CaptureState();
+            spentState.membraneIntegrity = 0f;
+            c2.RestoreState(spentState);
             Assert.True(c2.SetEnabled(true, out _));
             c2.TickDay(3);
             Assert.Equal(0L, c2.TotalYieldLiters);
@@ -150,7 +250,9 @@ namespace Ashfall.Core.Tests.Water
             Assert.False(c.ReplaceMembrane(out var full)); // fresh membrane
             Assert.Equal("membrane_integrity_full", full);
 
-            c.State.membraneIntegrity = 30f;
+            var wornState = c.CaptureState();
+            wornState.membraneIntegrity = 30f;
+            c.RestoreState(wornState);
             Assert.True(c.ReplaceMembrane(out var ok), ok);
             Assert.Equal(100f, c.MembraneIntegrity, 1);
         }

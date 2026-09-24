@@ -79,7 +79,9 @@ namespace Ashfall.Core.UI
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(CrisisId, Kind, Severity, IsActive);
+            int hash = StableHash.Combine(StableHash.Of(CrisisId), Kind);
+            hash = StableHash.Combine(hash, (int)Severity);
+            return StableHash.Combine(hash, IsActive ? 1 : 0);
         }
     }
 

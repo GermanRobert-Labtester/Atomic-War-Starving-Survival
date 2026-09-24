@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Ashfall.Core.Shelter;
 using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
@@ -67,6 +68,7 @@ namespace AtomicWar.GodotApp
             }
 
             // Detect schedule conflicts from shelter assignments.
+            SetupShelterAssignment();
             var roomAssignments = BuildRoomAssignments();
             var workAssignments = BuildWorkspaceAssignments();
             if (roomAssignments.Count > 0 || workAssignments.Count > 0)
@@ -103,23 +105,42 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Returns survivor→room assignments from current shelter state for conflict detection.
-        /// Returns empty when holdfast runtime is not yet wired or doesn't expose assignments.
+        /// Returns survivor→room assignments from the canonical shelter-assignment
+        /// owner for conflict detection. The legacy Holdfast runtime session never
+        /// exposed assignments, so this reads ShelterAssignmentSystem directly.
         /// </summary>
         private Dictionary<string, string> BuildRoomAssignments()
         {
-            // TODO: wire to _holdfastRuntime.RoomAssignments when HoldfastRuntimeSession exposes them.
-            return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var assignments = _shelterAssignment?.System.GetAssignments();
+            if (assignments == null) return map;
+            for (int i = 0; i < assignments.Count; i++)
+            {
+                var a = assignments[i];
+                if (a == null || a.Status != ShelterAssignmentStatus.Active) continue;
+                if (string.IsNullOrWhiteSpace(a.SurvivorId) || string.IsNullOrWhiteSpace(a.RoomId)) continue;
+                map[a.SurvivorId] = a.RoomId;
+            }
+            return map;
         }
 
         /// <summary>
-        /// Returns survivor→workspace assignments from current shelter state for conflict detection.
-        /// Returns empty when holdfast runtime is not yet wired or doesn't expose assignments.
+        /// Returns survivor→workspace assignments from the canonical
+        /// shelter-assignment owner for conflict detection.
         /// </summary>
         private Dictionary<string, string> BuildWorkspaceAssignments()
         {
-            // TODO: wire to _holdfastRuntime.WorkspaceAssignments when HoldfastRuntimeSession exposes them.
-            return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var assignments = _shelterAssignment?.System.GetAssignments();
+            if (assignments == null) return map;
+            for (int i = 0; i < assignments.Count; i++)
+            {
+                var a = assignments[i];
+                if (a == null || a.Status != ShelterAssignmentStatus.Active) continue;
+                if (string.IsNullOrWhiteSpace(a.SurvivorId) || string.IsNullOrWhiteSpace(a.WorkstationId)) continue;
+                map[a.SurvivorId] = a.WorkstationId;
+            }
+            return map;
         }
     }
 }

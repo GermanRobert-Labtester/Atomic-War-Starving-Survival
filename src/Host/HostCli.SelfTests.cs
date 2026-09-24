@@ -716,7 +716,10 @@ namespace AtomicWar.GodotApp
         {
             var report = TravelEncounterHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return EmitSummaryFromHeadlessReport("patrol_encounter_selftest", report);
+            int patrolCode = EmitSummaryFromHeadlessReport("patrol_encounter_selftest", report);
+            var watchReport = HostCliNightWatch.RunSelfTest(dataDirectory);
+            int watchCode = EmitSummaryFromHeadlessReport("night_watch_selftest", watchReport);
+            return patrolCode != 0 ? patrolCode : watchCode;
         }
 
         public static int RunHoldfastSelfTest(string dataDirectory)

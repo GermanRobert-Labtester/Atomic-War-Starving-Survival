@@ -106,7 +106,7 @@ namespace Ashfall.Core.Education
         /// <param name="manualAvailabilityPermille">
         ///     Quality and availability of reading manuals (0 = none, 1000 = full library).
         /// </param>
-        /// <param name="sessionSeed">Deterministic seed for session variance (use HashCode.Combine).</param>
+        /// <param name="sessionSeed">Deterministic seed for session variance (combine with <see cref="StableHash"/>).</param>
         /// <returns>Session result; caller applies ComprehensionGained to learner.ComprehensionPermille.</returns>
         public static CurriculumSessionResult AdvanceLiteracySession(
             LearnerRecord learner,
@@ -141,8 +141,9 @@ namespace Ashfall.Core.Education
             };
             baseYield = (baseYield * literacyMultiplier) / 1000;
 
-            // Deterministic session variance ±15% using seeded hash
-            int hash = HashCode.Combine(sessionSeed, learner.SurvivorId, learner.ComprehensionPermille);
+            // Deterministic session variance ±15% using the stable Core mixer.
+            int hash = StableHash.Combine(sessionSeed, learner.SurvivorId);
+            hash = StableHash.Combine(hash, learner.ComprehensionPermille);
             int variance = ((hash & 0x7FFFFFFF) % 31) - 15; // -15..+15
             baseYield = Math.Max(1, baseYield + (baseYield * variance) / 100);
 

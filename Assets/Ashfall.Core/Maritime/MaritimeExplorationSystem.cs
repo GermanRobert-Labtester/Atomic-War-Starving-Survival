@@ -34,16 +34,6 @@ namespace Ashfall.Core.Maritime
 
     // ── Enums ────────────────────────────────────────────────────────────────
 
-    public enum MaritimeZoneType
-    {
-        Coastal = 0,
-        Estuary = 1,
-        OpenOcean = 2,
-        DeepTrench = 3,
-        UnderwaterRidge = 4,
-        ContaminatedZone = 5
-    }
-
     public enum DiveSiteType
     {
         CoastalShallows = 0,
@@ -516,7 +506,9 @@ namespace Ashfall.Core.Maritime
                     int lootCount = Math.Min(2, site.LootItemIds.Count);
                     for (int i = 0; i < lootCount; i++)
                     {
-                        int lootIdx = Math.Abs((seed + i * 37)) % site.LootItemIds.Count;
+                        int lootIdx = StableHash.NonNegativeRemainder(
+                            unchecked(seed + i * 37),
+                            site.LootItemIds.Count);
                         string item = site.LootItemIds[lootIdx];
                         exp.LootCollected.Add(item);
                     }
@@ -563,9 +555,10 @@ namespace Ashfall.Core.Maritime
             // Skill mitigates hazard
             float effectiveRisk = Math.Clamp(totalHazardRisk - (diverSkill * 0.4f), 5.0f, 95.0f);
 
-            // Deterministic pseudo-random roll
-            int hash = Math.Abs((seed * 397) ^ site.SiteId.GetHashCode());
-            int roll = hash % 100;
+            // Deterministic pseudo-random roll. StableHash keeps the outcome
+            // identical across processes; the remainder helper is int.Min-safe.
+            int hash = unchecked((seed * 397) ^ StableHash.Of(site.SiteId));
+            int roll = StableHash.NonNegativeRemainder(hash, 100);
 
             if (roll < effectiveRisk)
             {

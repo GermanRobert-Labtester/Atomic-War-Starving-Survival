@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-24<br>
-**Total Registered Actions:** 212 entries / 301 flag tokens (aliases included)
+**Last Verified:** 2026-09-25<br>
+**Total Registered Actions:** 222 entries / 318 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -41,6 +41,12 @@
 | `--glassworks-selftest` | `--the-glass-selftest` | Expansion 29 The Glass: vitrification batch annealing, purity tiers, corrective lens grinding, theodolite calibration, and vision prescriptions |
 | `--broadsheet-press-selftest` | `--the-press-selftest` | Expansion 30 The Press: movable-type wear and reset, ink and paper consumables, print runs by publication kind, audience reach and morale stabilization, rumor debunk correction, and the bound archive of what the shelter printed |
 | `--kilnworks-selftest` | `--the-kiln-selftest` | Expansion 31 The Kiln: batch firing stages, thermal shock, draw grades, lime calcination yield, refractory lining wear and reline, kiln fuel reserve, and fired-output tallies |
+| `--dependency-taper-selftest` | `--the-habit-selftest` | Expansion 35 The Habit: substance dependence titration schedules, withdrawal symptom tracking, clinical substitution, and taper adherence |
+| `--antenatal-care-selftest` | `--the-quickening-selftest` | Expansion 37 The Quickening: antenatal vitals tracking, gestation trimesters, clinical delivery risk assessment, neonatal health monitoring, and maternal care |
+| `--clinical-ward-selftest` | `--the-ward-selftest` | Expansion 38 The Ward: triage acuity, clinical ward bed allocation, sterile supply autoclave cycles, biohazard linen decontamination, and barrier nursing protocols |
+| `--chemical-reagent-selftest` | `--the-reagent-selftest` | Expansion 39 The Reagent: chemical reactor vessel safety, thermal/pressure runaway envelopes, catalyst degradation, reagent purity grading, and acidic effluent neutralization |
+| `--mechanical-driveline-selftest` | `--the-wheel-selftest` | Expansion 40 The Wheel: rotational line shaft power transmission, friction drag, bearing wear, lubricant reserve depletion, and machine tool runout |
+| `--sleep-acoustic-selftest` | `--the-quiet-selftest` | Expansion 41 The Quiet: sleeping quarter soundproofing attenuation, bunk decibels, crowding density penalties, quiet hours compliance, sensory relief kits, and restorative sleep |
 | `--agriculture-selftest` | — | Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition |
 | `--orphan-seal-wave1-selftest` | — | ORPHAN-SEAL-PRIORITY-W1: ten priority orphan authorities — catalog, command, state round-trip |
 | `--commitments-selftest` | — | Plan 38 commitments & deadlines: catalog, warning ladder, exactly-once miss + consequence routing, met settlement, save round-trip |
@@ -132,6 +138,7 @@
 | `--journal-weather-panel-selftest` | — | Journal and Weather forecast panel integration and live data binding |
 | `--medical-selftest` | — | Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip |
 | `--medical-ward-save-selftest` | — | Medical ward save store round-trip, bed allocation, and affliction persistence |
+| `--affliction-bridge-selftest` | `--affliction-bridges-selftest` | Plan 143 affliction to quest/work bridge: catalog load, work speed/quality modifiers, duty exclusion union, role fitness evaluation, duty roster throughput, quest gates, and recovery |
 | `--narrative-selftest` | — | Narrative domain: dialog trees, echoes, flags, and story event resolution |
 | `--narrative-continuity-selftest` | — | Plan 50: normalize narrative graphs (questline stages, event chains, quest refs), lint dangling refs/reachability/flag set-vs-read/case discipline, write artifacts/narrative-continuity.{json,md} |
 | `--npc-arc-selftest` | — | Plan 52 recurring NPC arcs: resolution precedence, encounter→quest memory, save round-trip, distress suppression |
@@ -221,6 +228,9 @@
 | `--ideological-friction-selftest` | `--ideology-selftest` | Plan 148 ideological friction: confrontations, conversions, bunker factions, and mediation |
 | `--romance-family-selftest` | `--romance-selftest` | Plan 150 romance & family dynamics: courtship stages, partnership, bonded pairs, family units, adoption |
 | `--vehicle-customization-selftest` | `--vehicle-modules-selftest` | Plan 152 vehicle module slots, effective stats, bunk capacity, and base camps |
+| `--culture-creation-selftest` | — | Plan 178: Survivor art & culture creation, medium/theme expressions, masterworks, morale bonus, and cultural identity |
+| `--psychological-profile-selftest` | — | Plan 179: Survivor psychological profiles, trauma-induced phobias, coping mechanisms, and therapy |
+| `--skill-certification-selftest` | — | Plan 180: Formal skill certification tiers, exams, specialization perks, and survivor qualification tracking |
 | `--user-data-dir` | — | <path> Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR) |
 | `--log-dir` | — | <path> Configure log output directory for headless runs (or set ASHFALL_LOG_DIR) |
 | `--host-help` | `--help` | This list |

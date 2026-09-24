@@ -17,25 +17,33 @@ namespace Ashfall.Core.Shelter
     {
         private readonly ShelterAssignmentState _state;
         private readonly List<ShelterRoom> _rooms;
-        private readonly ISeededRng _rng;
+        private readonly Dictionary<string, int> _baseCapacities;
 
         public event Action<ShelterAssignmentEvent>? OnAssignmentChanged;
 
         public ShelterAssignmentSystem(ShelterAssignmentState state,
             IEnumerable<ShelterRoom> rooms, ISeededRng rng)
         {
-            _state = state ?? throw new ArgumentNullException(nameof(state));
+            if (state == null) throw new ArgumentNullException(nameof(state));
             if (rooms == null) throw new ArgumentNullException(nameof(rooms));
+            _ = rng ?? throw new ArgumentNullException(nameof(rng));
+
             _rooms = new List<ShelterRoom>();
-            foreach (var r in rooms)
+            _baseCapacities = new Dictionary<string, int>(StringComparer.Ordinal);
+            var roomIds = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var room in rooms)
             {
-                if (r == null || string.IsNullOrEmpty(r.RoomId)) continue;
-                _rooms.Add(r);
+                if (room == null || string.IsNullOrWhiteSpace(room.RoomId)) continue;
+                string roomId = room.RoomId.Trim();
+                if (!roomIds.Add(roomId)) continue;
+                _rooms.Add(CloneRoom(room, roomId));
+                _baseCapacities[roomId] = Math.Max(0, room.Capacity);
             }
             if (_rooms.Count == 0)
                 throw new InvalidOperationException("ShelterAssignmentSystem: at least one room required.");
-            _rng = rng ?? throw new ArgumentNullException(nameof(rng));
-            _state.NormalizeAndValidate(_rooms);
+
+            _state = new ShelterAssignmentState();
+            _state.RestoreInto(state, _rooms);
         }
 
         public IReadOnlyList<ShelterRoom> Rooms => _rooms;
@@ -47,8 +55,12 @@ namespace Ashfall.Core.Shelter
         {
             if (string.IsNullOrEmpty(survivorId)) return null;
             for (int i = 0; i < _state.Assignments.Count; i++)
-                if (_state.Assignments[i].SurvivorId == survivorId)
-                    return _state.Assignments[i];
+            {
+                var assignment = _state.Assignments[i];
+                if (assignment != null
+                    && string.Equals(assignment.SurvivorId, survivorId, StringComparison.Ordinal))
+                    return assignment;
+            }
             return null;
         }
 
@@ -57,8 +69,13 @@ namespace Ashfall.Core.Shelter
             var list = new List<ShelterAssignment>();
             if (string.IsNullOrEmpty(roomId)) return list;
             for (int i = 0; i < _state.Assignments.Count; i++)
-                if (_state.Assignments[i].RoomId == roomId)
-                    list.Add(_state.Assignments[i]);
+            {
+                var assignment = _state.Assignments[i];
+                if (assignment != null
+                    && assignment.Status == ShelterAssignmentStatus.Active
+                    && string.Equals(assignment.RoomId, roomId, StringComparison.Ordinal))
+                    list.Add(assignment);
+            }
             return list;
         }
 
@@ -66,7 +83,13 @@ namespace Ashfall.Core.Shelter
         {
             int n = 0;
             for (int i = 0; i < _state.Assignments.Count; i++)
-                if (_state.Assignments[i].RoomId == roomId) n++;
+            {
+                var assignment = _state.Assignments[i];
+                if (assignment != null
+                    && assignment.Status == ShelterAssignmentStatus.Active
+                    && string.Equals(assignment.RoomId, roomId, StringComparison.Ordinal))
+                    n++;
+            }
             return n;
         }
 
@@ -95,6 +118,23 @@ namespace Ashfall.Core.Shelter
             return 0;
         }
 
+        /// <summary>
+        /// Reprojects authored room capacities plus completed construction bonuses.
+        /// The supplied map is derived from ShelterExpansionSystem's completed
+        /// rooms; repeated calls replace, rather than stack, those bonuses.
+        /// </summary>
+        public void ApplyCapacityBonuses(IReadOnlyDictionary<string, int> capacityBonuses)
+        {
+            foreach (var room in _rooms)
+            {
+                _baseCapacities.TryGetValue(room.RoomId, out int baseCapacity);
+                int bonus = 0;
+                if (capacityBonuses != null)
+                    capacityBonuses.TryGetValue(room.RoomId, out bonus);
+                room.Capacity = Math.Max(0, baseCapacity + Math.Max(0, bonus));
+            }
+        }
+
         public bool CanAssign(string survivorId, string roomId)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(roomId))
@@ -102,7 +142,8 @@ namespace Ashfall.Core.Shelter
             var room = FindRoom(roomId);
             if (room == null) return false;
             if (GetRoomOccupancy(roomId) >= room.Capacity) return false;
-            if (GetAssignmentForSurvivor(survivorId) != null) return false;
+            var existing = GetAssignmentForSurvivor(survivorId);
+            if (existing?.Status == ShelterAssignmentStatus.Active) return false;
             return true;
         }
 
@@ -116,19 +157,33 @@ string? workstationId = null, int day = 0)
             var room = FindRoom(roomId);
             if (room == null)
                 return new ShelterAssignmentResult(false, "unknown_room", null!);
-            if (GetAssignmentForSurvivor(survivorId) != null)
+            var existing = GetAssignmentForSurvivor(survivorId);
+            if (existing?.Status == ShelterAssignmentStatus.Active)
                 return new ShelterAssignmentResult(false, "already_assigned", null!);
             if (GetRoomOccupancy(roomId) >= room.Capacity)
                 return new ShelterAssignmentResult(false, "room_full", null!);
-            var assignment = new ShelterAssignment
+
+            ShelterAssignment assignment;
+            if (existing != null)
             {
-                SurvivorId = survivorId,
-                RoomId = roomId,
-                WorkstationId = workstationId ?? string.Empty,
-                AssignedDay = day,
-                Status = ShelterAssignmentStatus.Active
-            };
-            _state.Assignments.Add(assignment);
+                existing.RoomId = roomId;
+                existing.WorkstationId = workstationId ?? string.Empty;
+                existing.AssignedDay = day;
+                existing.Status = ShelterAssignmentStatus.Active;
+                assignment = existing;
+            }
+            else
+            {
+                assignment = new ShelterAssignment
+                {
+                    SurvivorId = survivorId,
+                    RoomId = roomId,
+                    WorkstationId = workstationId ?? string.Empty,
+                    AssignedDay = day,
+                    Status = ShelterAssignmentStatus.Active
+                };
+                _state.Assignments.Add(assignment);
+            }
             OnAssignmentChanged?.Invoke(new ShelterAssignmentEvent(
                 ShelterAssignmentEventKind.Assigned, survivorId, roomId, day));
             return new ShelterAssignmentResult(true, "ok", assignment);
@@ -140,7 +195,8 @@ string? workstationId = null, int day = 0)
                 return new ShelterAssignmentResult(false, "missing_survivor_id", null!);
             for (int i = 0; i < _state.Assignments.Count; i++)
             {
-                if (_state.Assignments[i].SurvivorId == survivorId)
+                if (_state.Assignments[i] != null
+                    && string.Equals(_state.Assignments[i].SurvivorId, survivorId, StringComparison.Ordinal))
                 {
                     string roomId = _state.Assignments[i].RoomId;
                     _state.Assignments.RemoveAt(i);
@@ -163,8 +219,20 @@ string? workstationId = null, int day = 0)
         private ShelterRoom? FindRoom(string roomId)
         {
             for (int i = 0; i < _rooms.Count; i++)
-                if (_rooms[i].RoomId == roomId) return _rooms[i];
+                if (string.Equals(_rooms[i].RoomId, roomId, StringComparison.Ordinal)) return _rooms[i];
             return null;
+        }
+
+        private static ShelterRoom CloneRoom(ShelterRoom source, string roomId)
+        {
+            return new ShelterRoom
+            {
+                RoomId = roomId,
+                DisplayName = source.DisplayName ?? string.Empty,
+                Capacity = Math.Max(0, source.Capacity),
+                RequiredSkillId = source.RequiredSkillId ?? string.Empty,
+                WorkstationId = source.WorkstationId ?? string.Empty
+            };
         }
     }
 
@@ -216,6 +284,7 @@ string? requiredSkillId = null, string? workstationId = null)
 
         public void NormalizeAndValidate(IReadOnlyList<ShelterRoom> rooms)
         {
+            Assignments ??= new List<ShelterAssignment>();
             var validIds = new HashSet<string>(StringComparer.Ordinal);
             for (int i = 0; i < rooms.Count; i++) validIds.Add(rooms[i].RoomId);
 
@@ -223,25 +292,52 @@ string? requiredSkillId = null, string? workstationId = null)
             var seen = new HashSet<string>(StringComparer.Ordinal);
             for (int i = Assignments.Count - 1; i >= 0; i--)
             {
-                var a = Assignments[i];
-                if (a == null || string.IsNullOrEmpty(a.SurvivorId) ||
-                    !validIds.Contains(a.RoomId))
+                var assignment = Assignments[i];
+                if (assignment == null || string.IsNullOrWhiteSpace(assignment.SurvivorId) ||
+                    string.IsNullOrWhiteSpace(assignment.RoomId) ||
+                    !validIds.Contains(assignment.RoomId))
                 {
                     Assignments.RemoveAt(i);
                     continue;
                 }
-                if (!seen.Add(a.SurvivorId)) Assignments.RemoveAt(i);
+                if (!seen.Add(assignment.SurvivorId))
+                {
+                    Assignments.RemoveAt(i);
+                    continue;
+                }
+                if (!Enum.IsDefined(typeof(ShelterAssignmentStatus), assignment.Status))
+                    assignment.Status = ShelterAssignmentStatus.Decommissioned;
+                assignment.SurvivorId = assignment.SurvivorId.Trim();
+                assignment.RoomId = assignment.RoomId.Trim();
+                assignment.WorkstationId ??= string.Empty;
             }
         }
 
-        public ShelterAssignmentState Capture() => new ShelterAssignmentState
+        public ShelterAssignmentState Capture()
         {
-            Assignments = new List<ShelterAssignment>(Assignments)
-        };
+            var copy = new ShelterAssignmentState
+            {
+                Assignments = new List<ShelterAssignment>()
+            };
+            if (Assignments == null) return copy;
+            foreach (var assignment in Assignments)
+            {
+                if (assignment == null) continue;
+                copy.Assignments.Add(new ShelterAssignment
+                {
+                    SurvivorId = assignment.SurvivorId,
+                    RoomId = assignment.RoomId,
+                    WorkstationId = assignment.WorkstationId,
+                    AssignedDay = assignment.AssignedDay,
+                    Status = assignment.Status
+                });
+            }
+            return copy;
+        }
 
         public void RestoreInto(ShelterAssignmentState state, IReadOnlyList<ShelterRoom> rooms)
         {
-            Assignments = state.Assignments ?? new List<ShelterAssignment>();
+            Assignments = state?.Capture().Assignments ?? new List<ShelterAssignment>();
             NormalizeAndValidate(rooms);
         }
     }

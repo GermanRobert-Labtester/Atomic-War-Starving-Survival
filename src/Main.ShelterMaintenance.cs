@@ -7,6 +7,7 @@
 
 using System;
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.Shelter;
 
 namespace AtomicWar.GodotApp
@@ -71,20 +72,62 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Returns the weather stress multiplier for shelter component degradation.
-        /// TODO: wire to _weatherSondeHost.ActiveConditions when WeatherHostSession exposes condition strings.
+        /// Returns the weather stress multiplier for shelter component degradation,
+        /// derived from the canonical live weather kind. Unknown or missing weather
+        /// stays neutral rather than inventing stress.
         /// </summary>
         private float GetWeatherStressMultiplier()
         {
-            return 1.0f;
+            var kind = _world?.Weather?.Current;
+            if (kind == null) return 1.0f;
+            switch (kind.Value)
+            {
+                case WeatherKind.FalloutStorm:
+                case WeatherKind.RadHail:
+                case WeatherKind.GlassStorm:
+                case WeatherKind.EMPStorm:
+                    return 1.5f;
+                case WeatherKind.Blizzard:
+                case WeatherKind.BlackRain:
+                case WeatherKind.AcidSnow:
+                case WeatherKind.BlackSnow:
+                case WeatherKind.IceStorm:
+                case WeatherKind.BloodRain:
+                case WeatherKind.AshLightning:
+                    return 1.25f;
+                case WeatherKind.Ashfall:
+                case WeatherKind.BioFog:
+                case WeatherKind.ParticulateFog:
+                case WeatherKind.ThermalInversion:
+                    return 1.1f;
+                default:
+                    return 1.0f;
+            }
         }
 
         /// <summary>
-        /// Returns the radiation stress multiplier for shelter component degradation.
-        /// TODO: wire to radiation system when shelter radiation level is exposed.
+        /// Returns the radiation stress multiplier for shelter component degradation,
+        /// derived from the average lifetime dose across the living roster. Dosimeter
+        /// records are transient runtime state, so this read never mutates saves.
         /// </summary>
         private float GetRadiationStressMultiplier()
         {
+            var roster = _survivors?.RosterState;
+            var radiation = _survivors?.Radiation;
+            if (roster == null || radiation == null) return 1.0f;
+            float total = 0f;
+            int count = 0;
+            for (int i = 0; i < roster.Count; i++)
+            {
+                var s = roster[i];
+                if (s == null || string.IsNullOrEmpty(s.Id) || !s.IsAlive) continue;
+                total += radiation.GetDosimeter(s.Id).LifetimeDose;
+                count++;
+            }
+            if (count == 0) return 1.0f;
+            float average = total / count;
+            if (average >= 200f) return 1.5f;
+            if (average >= 50f) return 1.25f;
             return 1.0f;
         }
     }

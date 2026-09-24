@@ -43,6 +43,118 @@ namespace Ashfall.Core.Tests.Water
         }
 
         [Fact]
+        public void TickDay_DuplicateAndBackwardTicks_AreIdempotent()
+        {
+            var water = new WaterTreatmentSystem();
+            var well = MakeWell(water: water);
+            Assert.True(well.TryBuild(true, out _));
+
+            well.TickDay(5);
+            float rawAfterFirstTick = water.State.rawWater;
+            float conditionAfterFirstTick = well.Condition;
+            long ledgerAfterFirstTick = well.TotalYieldLiters;
+
+            well.TickDay(5);
+            well.TickDay(4);
+
+            Assert.Equal(rawAfterFirstTick, water.State.rawWater);
+            Assert.Equal(conditionAfterFirstTick, well.Condition);
+            Assert.Equal(ledgerAfterFirstTick, well.TotalYieldLiters);
+            Assert.Equal(5, well.State.lastPumpDay);
+        }
+
+        [Fact]
+        public void TickDay_NegativeDay_FailsBeforeMutation()
+        {
+            var water = new WaterTreatmentSystem();
+            var well = MakeWell(water: water);
+            Assert.True(well.TryBuild(true, out _));
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => well.TickDay(-1));
+
+            Assert.Equal(0f, water.State.rawWater);
+            Assert.Equal(100f, well.Condition);
+            Assert.Equal(0L, well.TotalYieldLiters);
+        }
+
+        [Fact]
+        public void Restore_MalformedState_FailsClosed()
+        {
+            var grid = MakeGrid();
+            var well = MakeWell(grid: grid);
+
+            well.RestoreState(new DeepWellState
+            {
+                systemId = "   ",
+                schemaVersion = -3,
+                built = true,
+                enabled = true,
+                condition = float.NaN,
+                totalYieldLiters = -20L,
+                lastPumpDay = -99
+            });
+
+            var state = well.CaptureState();
+            Assert.Equal(DeepWellSystem.SystemId, state.systemId);
+            Assert.Equal(1, state.schemaVersion);
+            Assert.True(well.IsBuilt);
+            Assert.True(float.IsFinite(well.Condition));
+            Assert.Equal(0f, well.Condition);
+            Assert.Equal(0L, well.TotalYieldLiters);
+            Assert.Equal(-1, state.lastPumpDay);
+            Assert.True(grid.IsRoomServed(DeepWellSystem.PowerRoomId));
+        }
+
+        [Fact]
+        public void StateAndEventPayloads_AreDetachedSnapshots()
+        {
+            var well = MakeWell();
+            DeepWellState? eventState = null;
+            DeepWellState? wornEventState = null;
+            well.OnStateChanged += state => eventState = state;
+            well.OnPumpWorn += state => wornEventState = state;
+
+            Assert.True(well.TryBuild(true, out _));
+            Assert.NotNull(eventState);
+
+            well.State.condition = 0f;
+            eventState!.totalYieldLiters = 999L;
+
+            Assert.Equal(100f, well.Condition);
+            Assert.Equal(0L, well.TotalYieldLiters);
+
+            var nearWornState = well.CaptureState();
+            nearWornState.condition = DeepWellSystem.PumpWornThreshold + 0.1f;
+            nearWornState.lastPumpDay = -1;
+            well.RestoreState(nearWornState);
+            well.TickDay(1);
+
+            Assert.NotNull(wornEventState);
+            wornEventState!.condition = 100f;
+            wornEventState.totalYieldLiters = 999L;
+            Assert.Equal(DeepWellSystem.PumpWornThreshold - 0.1f, well.Condition, 3);
+            Assert.Equal(16L, well.TotalYieldLiters);
+        }
+
+        [Fact]
+        public void YieldLedger_SaturatesInsteadOfOverflowing()
+        {
+            var well = MakeWell();
+            well.RestoreState(new DeepWellState
+            {
+                built = true,
+                enabled = true,
+                condition = 100f,
+                totalYieldLiters = long.MaxValue - 1L,
+                lastPumpDay = 1
+            });
+
+            well.TickDay(2);
+
+            Assert.Equal(long.MaxValue, well.TotalYieldLiters);
+        }
+
+        [Fact]
         public void Build_RequiresCapability_ResearchNeverGrantsInfrastructure()
         {
             var well = MakeWell();

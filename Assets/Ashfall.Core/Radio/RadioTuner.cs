@@ -243,14 +243,4 @@ namespace Ashfall.Core.Radio
         public bool IsLocked;
         public float VuStrength;
     }
-
-    internal static class DoubleClampExtensions
-    {
-        public static double ClampTo(this double v, double min, double max)
-        {
-            if (v < min) return min;
-            if (v > max) return max;
-            return v;
-        }
-    }
 }

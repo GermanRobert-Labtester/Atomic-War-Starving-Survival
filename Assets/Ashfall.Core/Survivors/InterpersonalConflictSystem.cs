@@ -652,5 +652,54 @@ namespace Ashfall.Core.Survivors
                 }
             }
         }
+
+        public InterpersonalConflictCensus GetCensus()
+        {
+            int active = 0, resolved = 0, crisis = 0;
+            for (int i = 0; i < _state.Conflicts.Count; i++)
+            {
+                var c = _state.Conflicts[i];
+                if (c.IsResolved) resolved++;
+                else
+                {
+                    active++;
+                    if (c.Severity == ConflictSeverity.Crisis) crisis++;
+                }
+            }
+            return new InterpersonalConflictCensus(
+                _state.Conflicts.Count,
+                active,
+                resolved,
+                crisis,
+                _state.Grievances.Count,
+                _state.Resolutions.Count);
+        }
+    }
+
+    public struct InterpersonalConflictCensus
+    {
+        public int TotalConflicts { get; }
+        public int ActiveConflicts { get; }
+        public int ResolvedConflicts { get; }
+        public int CrisisConflicts { get; }
+        public int GrievancesCount { get; }
+        public int ResolutionsCount { get; }
+
+        public InterpersonalConflictCensus(
+            int totalConflicts,
+            int activeConflicts,
+            int resolvedConflicts,
+            int crisisConflicts,
+            int grievancesCount,
+            int resolutionsCount)
+        {
+            TotalConflicts = totalConflicts;
+            ActiveConflicts = activeConflicts;
+            ResolvedConflicts = resolvedConflicts;
+            CrisisConflicts = crisisConflicts;
+            GrievancesCount = grievancesCount;
+            ResolutionsCount = resolutionsCount;
+        }
     }
 }
+

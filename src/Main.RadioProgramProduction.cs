@@ -53,7 +53,30 @@ namespace AtomicWar.GodotApp
                     return true;
                 },
                 TryConsumePrepCost = (itemId, count) =>
-                    inv != null && inv.TryConsumeById(itemId, count)
+                    inv != null && inv.TryConsumeById(itemId, count),
+                ApplyShelterMoraleDelta = delta =>
+                {
+                    if (_survivors != null && delta != 0f)
+                    {
+                        foreach (var s in _survivors.RosterState)
+                        {
+                            if (s.IsAlive)
+                            {
+                                var surv = _survivors.Find(s.Id);
+                                if (surv != null)
+                                    _survivors.Needs.Modify(surv, Ashfall.Core.Survivors.NeedKind.Morale, delta);
+                            }
+                        }
+                    }
+                },
+                PresenterCapabilityProvider = presenterId =>
+                {
+                    if (string.IsNullOrEmpty(presenterId) || _survivors == null) return 1.0f;
+                    var surv = _survivors.Find(presenterId);
+                    if (surv == null) return 1.0f;
+                    float factor = (surv.Health / 100f) * 0.5f + (surv.Morale / 100f) * 0.5f;
+                    return Math.Clamp(factor * 1.2f, 0.5f, 2.0f);
+                }
             };
 
             _radioProgramProduction = new RadioProgramProductionHostSession(system);
@@ -95,6 +118,13 @@ namespace AtomicWar.GodotApp
                 return "No scheduled broadcast fact available for delivery.";
 
             return _radioProgramProduction.TryDeliver(jobId, fact, _simDay);
+        }
+
+        public string ResolveRadioProgramFollowUp(string hookId, string resolutionAction)
+        {
+            SetupRadioProgramProduction();
+            if (_radioProgramProduction == null) return "Radio program production is unavailable.";
+            return _radioProgramProduction.ResolveFollowUp(hookId, resolutionAction, _simDay);
         }
 
         private void SaveRadioProgramProduction()

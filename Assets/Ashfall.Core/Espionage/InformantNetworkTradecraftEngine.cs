@@ -143,9 +143,11 @@ namespace Ashfall.Core.Espionage
                 _ => 200
             };
 
-            // Deterministic roll for operation detection/interception
-            int hash = HashCode.Combine(worldSeed, informant.InformantId, simTick, (int)informant.ActiveMethod);
-            int roll = Math.Abs(hash % 1000);
+            // Deterministic roll for operation detection/interception.
+            int hash = StableHash.Combine(worldSeed, informant.InformantId);
+            hash = StableHash.Combine(hash, simTick);
+            hash = StableHash.Combine(hash, (int)informant.ActiveMethod);
+            int roll = StableHash.NonNegativeRemainder(hash, 1000);
 
             bool intercepted = roll < (methodRisk + informant.SuspicionPermille / 4);
             int suspicionDelta = intercepted ? (methodRisk / 2) : 20;
@@ -181,8 +183,10 @@ namespace Ashfall.Core.Espionage
             if (!informant.IsCompromised && !informant.IsDoubleAgent) return false;
 
             int detectionPower = Math.Clamp(shelterCounterIntelRatingPermille, 100, 1000);
-            int hash = HashCode.Combine(worldSeed, informant.InformantId, simTick, "ci_sweep");
-            int roll = Math.Abs(hash % 1000);
+            int hash = StableHash.Combine(worldSeed, informant.InformantId);
+            hash = StableHash.Combine(hash, simTick);
+            hash = StableHash.Combine(hash, "ci_sweep");
+            int roll = StableHash.NonNegativeRemainder(hash, 1000);
 
             return roll < detectionPower;
         }

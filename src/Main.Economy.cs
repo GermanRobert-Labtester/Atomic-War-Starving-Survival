@@ -224,7 +224,8 @@ namespace AtomicWar.GodotApp
             SetupEconomy();
             SetupPowerGrid();
             _silentFoundry = AtomicWar.GodotApp.SilentFoundryHostSession.Create(
-                _dataDir, _expansions, _inventory, _journal, market: _economy.Market);
+                _dataDir, _expansions, _inventory, _journal, market: _economy.Market,
+                seedSupplies: _campaignInitializationMode == CampaignInitializationMode.FreshInitialize);
             _silentFoundry.BindPowerAndThermal(_powerGrid?.System, _shelterThermal?.System);
             // Plan B66: heavy batches emit smoke/CO through the canonical
             // ventilation authority (register/deactivate around each batch).

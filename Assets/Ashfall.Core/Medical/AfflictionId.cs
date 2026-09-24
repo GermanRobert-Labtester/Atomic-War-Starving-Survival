@@ -94,7 +94,7 @@ namespace Ashfall.Core.Medical
 
         public bool Equals(AfflictionId other) => string.Equals(Value, other.Value, StringComparison.Ordinal);
         public override bool Equals(object? obj) => obj is AfflictionId other && Equals(other);
-        public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(Value);
+        public override int GetHashCode() => StableHash.Of(Value);
         public int CompareTo(AfflictionId other) => string.CompareOrdinal(Value, other.Value);
         public override string ToString() => Value;
 
@@ -236,7 +236,7 @@ namespace Ashfall.Core.Medical
 
         public bool Equals(AfflictionEpisodeId other) => string.Equals(Value, other.Value, StringComparison.Ordinal);
         public override bool Equals(object? obj) => obj is AfflictionEpisodeId other && Equals(other);
-        public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(Value);
+        public override int GetHashCode() => StableHash.Of(Value);
         public int CompareTo(AfflictionEpisodeId other) => string.CompareOrdinal(Value, other.Value);
         public override string ToString() => Value;
 

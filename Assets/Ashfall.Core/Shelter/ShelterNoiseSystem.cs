@@ -144,10 +144,8 @@ namespace Ashfall.Core.Shelter
             _sourceDefs.Clear();
             foreach (var src in catalog.sources)
             {
-                if (!string.IsNullOrEmpty(src.source_def_id))
-                {
-                    _sourceDefs[src.source_def_id] = src;
-                }
+                if (src == null || string.IsNullOrWhiteSpace(src.source_def_id)) continue;
+                _sourceDefs[src.source_def_id.Trim()] = src;
             }
         }
 
@@ -172,7 +170,7 @@ namespace Ashfall.Core.Shelter
             return src;
         }
 
-        private static NoiseSourceType ParseSourceType(string type) => type.ToLowerInvariant() switch
+        private static NoiseSourceType ParseSourceType(string? type) => (type ?? string.Empty).ToLowerInvariant() switch
         {
             "human_activity" => NoiseSourceType.HumanActivity,
             "industrial_process" => NoiseSourceType.IndustrialProcess,
@@ -185,7 +183,7 @@ namespace Ashfall.Core.Shelter
             _ => NoiseSourceType.Machinery
         };
 
-        private static NoiseFrequency ParseFrequency(string freq) => freq.ToLowerInvariant() switch
+        private static NoiseFrequency ParseFrequency(string? freq) => (freq ?? string.Empty).ToLowerInvariant() switch
         {
             "low" => NoiseFrequency.Low,
             "high" => NoiseFrequency.High,
@@ -194,7 +192,7 @@ namespace Ashfall.Core.Shelter
 
         public ShelterNoiseSystem(ShelterNoiseState? state = null)
         {
-            _state = state ?? new ShelterNoiseState();
+            _state = CloneState(state);
             RebuildLookups();
         }
 
@@ -243,8 +241,8 @@ namespace Ashfall.Core.Shelter
                 profile = new RoomAcousticProfile
                 {
                     RoomId = trimmedId,
-                    WallSoundproofing = Math.Clamp(wallSoundproofing, 0f, 100f),
-                    DoorSoundproofing = Math.Clamp(doorSoundproofing, 0f, 100f),
+                    WallSoundproofing = SanitizeRange(wallSoundproofing, 0f, 100f),
+                    DoorSoundproofing = SanitizeRange(doorSoundproofing, 0f, 100f),
                     BaseNoiseLevel = 0f,
                     EffectiveNoiseLevel = 0f
                 };
@@ -262,27 +260,37 @@ namespace Ashfall.Core.Shelter
             float durationHours = 24f,
             bool canSoundproof = true)
         {
+            if (string.IsNullOrWhiteSpace(roomId))
+                throw new ArgumentNullException(nameof(roomId));
+            if (!Enum.IsDefined(typeof(NoiseSourceType), type))
+                throw new ArgumentOutOfRangeException(nameof(type));
+            if (!Enum.IsDefined(typeof(NoiseFrequency), freq))
+                throw new ArgumentOutOfRangeException(nameof(freq));
+            if (_state.NextSequence == int.MaxValue)
+                throw new InvalidOperationException("Shelter noise source sequence exhausted.");
+
+            string canonicalRoomId = roomId.Trim();
+            RegisterRoom(canonicalRoomId);
             var source = new NoiseSource
             {
                 SourceId = $"ns_{_state.NextSequence++}",
                 Type = type,
-                RoomId = roomId ?? string.Empty,
-                NoiseOutput = Math.Clamp(output, 0f, 100f),
+                RoomId = canonicalRoomId,
+                NoiseOutput = SanitizeRange(output, 0f, 100f),
                 Frequency = freq,
-                DurationHours = Math.Clamp(durationHours, 0.5f, 24f),
+                DurationHours = SanitizeRange(durationHours, 0.5f, 24f),
                 IsActive = true,
                 CanBeSoundproofed = canSoundproof
             };
 
             _state.Sources.Add(source);
             _sourceLookup[source.SourceId] = source;
-            RegisterRoom(roomId);
             return source;
         }
 
         public NoiseSource? GetNoiseSource(string sourceId)
         {
-            if (string.IsNullOrEmpty(sourceId)) return null;
+            if (string.IsNullOrWhiteSpace(sourceId)) return null;
             if (_sourceLookup.TryGetValue(sourceId, out var s)) return s;
             var fallback = _state.Sources.FirstOrDefault(src => string.Equals(src.SourceId, sourceId, StringComparison.OrdinalIgnoreCase));
             if (fallback != null) _sourceLookup[sourceId] = fallback;
@@ -311,8 +319,8 @@ namespace Ashfall.Core.Shelter
         public bool SoundproofRoom(string roomId, float wallAdd, float doorAdd)
         {
             var profile = RegisterRoom(roomId);
-            profile.WallSoundproofing = Math.Clamp(profile.WallSoundproofing + wallAdd, 0f, 100f);
-            profile.DoorSoundproofing = Math.Clamp(profile.DoorSoundproofing + doorAdd, 0f, 100f);
+            profile.WallSoundproofing = SanitizeRange(profile.WallSoundproofing + wallAdd, 0f, 100f);
+            profile.DoorSoundproofing = SanitizeRange(profile.DoorSoundproofing + doorAdd, 0f, 100f);
             return true;
         }
 
@@ -326,7 +334,7 @@ namespace Ashfall.Core.Shelter
 
         public bool IsHourWithinQuietHours(int hour)
         {
-            if (!_state.QuietHoursActive) return false;
+            if (!_state.QuietHoursActive || hour < 0 || hour > 23) return false;
             if (_state.QuietHoursStart > _state.QuietHoursEnd)
             {
                 // Over midnight: e.g. 22 to 6
@@ -338,6 +346,7 @@ namespace Ashfall.Core.Shelter
         public void TickDay(int currentDay, int currentHour = 12)
         {
             bool inQuietPeriod = IsHourWithinQuietHours(currentHour);
+            int safeDay = Math.Max(0, currentDay);
 
             // 1. Calculate Room Noise Levels
             float maxRoomNoise = 0f;
@@ -345,18 +354,27 @@ namespace Ashfall.Core.Shelter
 
             foreach (var profile in _state.RoomProfiles)
             {
+                if (profile == null || string.IsNullOrWhiteSpace(profile.RoomId)) continue;
+                float wall = SanitizeRange(profile.WallSoundproofing, 0f, 100f);
+                float door = SanitizeRange(profile.DoorSoundproofing, 0f, 100f);
+                profile.WallSoundproofing = wall;
+                profile.DoorSoundproofing = door;
+
                 var roomSources = _state.Sources
-                    .Where(s => s.IsActive && string.Equals(s.RoomId, profile.RoomId, StringComparison.OrdinalIgnoreCase))
+                    .Where(s => s != null
+                        && s.IsActive
+                        && string.Equals(s.RoomId, profile.RoomId, StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
                 float rawNoise = 0f;
                 foreach (var src in roomSources)
                 {
-                    float sourceContrib = src.NoiseOutput * (src.DurationHours / 24f);
+                    float sourceContrib = SanitizeRange(src.NoiseOutput, 0f, 100f)
+                        * (SanitizeRange(src.DurationHours, 0.5f, 24f) / 24f);
 
                     // Low frequency penetrates soundproofing more easily
                     float dampeningEffect = src.CanBeSoundproofed
-                        ? (profile.WallSoundproofing * 0.5f + profile.DoorSoundproofing * 0.5f) / 100f
+                        ? (wall * 0.5f + door * 0.5f) / 100f
                         : 0f;
 
                     if (src.Frequency == NoiseFrequency.Low)
@@ -368,192 +386,196 @@ namespace Ashfall.Core.Shelter
                         dampeningEffect *= 1.2f; // High frequency easily blocked
                     }
 
-                    dampeningEffect = Math.Clamp(dampeningEffect, 0f, 0.85f);
-                    rawNoise += (sourceContrib * (1.0f - dampeningEffect));
+                    dampeningEffect = SanitizeRange(dampeningEffect, 0f, 0.85f);
+                    rawNoise += sourceContrib * (1f - dampeningEffect);
                 }
 
-                profile.EffectiveNoiseLevel = Math.Clamp(rawNoise, 0f, 100f);
-                if (profile.EffectiveNoiseLevel > maxRoomNoise)
-                {
-                    maxRoomNoise = profile.EffectiveNoiseLevel;
-                }
+                profile.EffectiveNoiseLevel = SanitizeRange(rawNoise, 0f, 100f);
+                maxRoomNoise = Math.Max(maxRoomNoise, profile.EffectiveNoiseLevel);
                 totalRoomNoise += profile.EffectiveNoiseLevel;
             }
 
             // 2. Shelter overall noise: 60% max room peak + 40% average
             float avgNoise = _state.RoomProfiles.Count > 0 ? (totalRoomNoise / _state.RoomProfiles.Count) : 0f;
-            _state.OverallNoiseLevel = Math.Clamp((maxRoomNoise * 0.6f) + (avgNoise * 0.4f), 0f, 100f);
+            _state.OverallNoiseLevel = SanitizeRange(
+                (maxRoomNoise * 0.6f) + (avgNoise * 0.4f),
+                0f,
+                100f);
 
             // 3. Detection Risk
             float dailyRiskIncrease = 0f;
             if (_state.OverallNoiseLevel > 50f)
-            {
                 dailyRiskIncrease = (_state.OverallNoiseLevel - 50f) * 0.3f;
-            }
 
             if (inQuietPeriod && _state.OverallNoiseLevel > 30f)
             {
-                // Violation during quiet hours
-                dailyRiskIncrease += 5.0f;
+                if (_state.NextSequence == int.MaxValue)
+                    throw new InvalidOperationException("Shelter noise event sequence exhausted.");
+                dailyRiskIncrease += 5f;
                 var ev = new NoiseEvent
                 {
                     EventId = $"nev_{_state.NextSequence++}",
                     EventType = "quiet_hours_violation",
-                    Day = currentDay,
+                    Day = safeDay,
                     RoomId = "shelter",
                     Description = "Loud activity detected during designated quiet hours!",
                     NoiseLevel = _state.OverallNoiseLevel,
-                    DetectionRiskAdded = 5.0f
+                    DetectionRiskAdded = 5f
                 };
                 _state.Events.Add(ev);
                 OnNoiseSpike?.Invoke(ev);
             }
 
-            _state.DetectionRisk = Math.Clamp(_state.DetectionRisk + dailyRiskIncrease - 1.0f, 0f, 100f);
+            _state.DetectionRisk = SanitizeRange(
+                _state.DetectionRisk + dailyRiskIncrease - 1f,
+                0f,
+                100f);
 
             if (dailyRiskIncrease > 0f)
-            {
                 OnThreatDetectionRiskIncreased?.Invoke(_state.DetectionRisk);
-            }
         }
 
         public float GetRoomNoise(string roomId)
         {
-            var profile = _state.RoomProfiles.FirstOrDefault(r => string.Equals(r.RoomId, roomId, StringComparison.OrdinalIgnoreCase));
-            return profile?.EffectiveNoiseLevel ?? 0f;
+            if (string.IsNullOrWhiteSpace(roomId)) return 0f;
+            var profile = _state.RoomProfiles.FirstOrDefault(r =>
+                r != null && string.Equals(r.RoomId, roomId.Trim(), StringComparison.OrdinalIgnoreCase));
+            return SanitizeRange(profile?.EffectiveNoiseLevel ?? 0f, 0f, 100f);
         }
 
         public void AttenuateDetectionRisk(float amount)
         {
-            _state.DetectionRisk = Math.Clamp(_state.DetectionRisk - amount, 0f, 100f);
+            _state.DetectionRisk = SanitizeRange(_state.DetectionRisk - amount, 0f, 100f);
         }
 
-        public ShelterNoiseState CaptureState()
-        {
-            var state = new ShelterNoiseState
-            {
-                SchemaVersion = _state.SchemaVersion,
-                NextSequence = _state.NextSequence,
-                OverallNoiseLevel = _state.OverallNoiseLevel,
-                DetectionRisk = _state.DetectionRisk,
-                QuietHoursActive = _state.QuietHoursActive,
-                QuietHoursStart = _state.QuietHoursStart,
-                QuietHoursEnd = _state.QuietHoursEnd,
-                RoomProfiles = new List<RoomAcousticProfile>(_state.RoomProfiles.Count),
-                Sources = new List<NoiseSource>(_state.Sources.Count),
-                Events = new List<NoiseEvent>(_state.Events.Count)
-            };
-
-            foreach (var r in _state.RoomProfiles)
-            {
-                state.RoomProfiles.Add(new RoomAcousticProfile
-                {
-                    RoomId = r.RoomId,
-                    BaseNoiseLevel = r.BaseNoiseLevel,
-                    WallSoundproofing = r.WallSoundproofing,
-                    DoorSoundproofing = r.DoorSoundproofing,
-                    EffectiveNoiseLevel = r.EffectiveNoiseLevel
-                });
-            }
-
-            foreach (var s in _state.Sources)
-            {
-                state.Sources.Add(new NoiseSource
-                {
-                    SourceId = s.SourceId,
-                    Type = s.Type,
-                    RoomId = s.RoomId,
-                    NoiseOutput = s.NoiseOutput,
-                    Frequency = s.Frequency,
-                    DurationHours = s.DurationHours,
-                    IsActive = s.IsActive,
-                    CanBeSoundproofed = s.CanBeSoundproofed
-                });
-            }
-
-            foreach (var e in _state.Events)
-            {
-                state.Events.Add(new NoiseEvent
-                {
-                    EventId = e.EventId,
-                    EventType = e.EventType,
-                    Day = e.Day,
-                    RoomId = e.RoomId,
-                    Description = e.Description,
-                    NoiseLevel = e.NoiseLevel,
-                    DetectionRiskAdded = e.DetectionRiskAdded
-                });
-            }
-
-            return state;
-        }
+        public ShelterNoiseState CaptureState() => CloneState(_state);
 
         public void RestoreState(ShelterNoiseState state)
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
-
-            _state.SchemaVersion = state.SchemaVersion;
-            _state.NextSequence = state.NextSequence;
-            _state.OverallNoiseLevel = state.OverallNoiseLevel;
-            _state.DetectionRisk = state.DetectionRisk;
-            _state.QuietHoursActive = state.QuietHoursActive;
-            _state.QuietHoursStart = state.QuietHoursStart;
-            _state.QuietHoursEnd = state.QuietHoursEnd;
-            _state.RoomProfiles.Clear();
-            _state.Sources.Clear();
-            _state.Events.Clear();
-
-            if (state.RoomProfiles != null)
-            {
-                foreach (var r in state.RoomProfiles)
-                {
-                    _state.RoomProfiles.Add(new RoomAcousticProfile
-                    {
-                        RoomId = r.RoomId,
-                        BaseNoiseLevel = r.BaseNoiseLevel,
-                        WallSoundproofing = r.WallSoundproofing,
-                        DoorSoundproofing = r.DoorSoundproofing,
-                        EffectiveNoiseLevel = r.EffectiveNoiseLevel
-                    });
-                }
-            }
-
-            if (state.Sources != null)
-            {
-                foreach (var s in state.Sources)
-                {
-                    _state.Sources.Add(new NoiseSource
-                    {
-                        SourceId = s.SourceId,
-                        Type = s.Type,
-                        RoomId = s.RoomId,
-                        NoiseOutput = s.NoiseOutput,
-                        Frequency = s.Frequency,
-                        DurationHours = s.DurationHours,
-                        IsActive = s.IsActive,
-                        CanBeSoundproofed = s.CanBeSoundproofed
-                    });
-                }
-            }
-
-            if (state.Events != null)
-            {
-                foreach (var e in state.Events)
-                {
-                    _state.Events.Add(new NoiseEvent
-                    {
-                        EventId = e.EventId,
-                        EventType = e.EventType,
-                        Day = e.Day,
-                        RoomId = e.RoomId,
-                        Description = e.Description,
-                        NoiseLevel = e.NoiseLevel,
-                        DetectionRiskAdded = e.DetectionRiskAdded
-                    });
-                }
-            }
-
+            var restored = CloneState(state);
+            _state.SchemaVersion = restored.SchemaVersion;
+            _state.NextSequence = restored.NextSequence;
+            _state.OverallNoiseLevel = restored.OverallNoiseLevel;
+            _state.DetectionRisk = restored.DetectionRisk;
+            _state.QuietHoursActive = restored.QuietHoursActive;
+            _state.QuietHoursStart = restored.QuietHoursStart;
+            _state.QuietHoursEnd = restored.QuietHoursEnd;
+            _state.RoomProfiles = restored.RoomProfiles;
+            _state.Sources = restored.Sources;
+            _state.Events = restored.Events;
             RebuildLookups();
+        }
+
+        private static ShelterNoiseState CloneState(ShelterNoiseState? source)
+        {
+            var copy = new ShelterNoiseState
+            {
+                SchemaVersion = source?.SchemaVersion ?? 1,
+                NextSequence = source?.NextSequence ?? 1,
+                OverallNoiseLevel = SanitizeRange(source?.OverallNoiseLevel ?? 20f, 0f, 100f),
+                DetectionRisk = SanitizeRange(source?.DetectionRisk ?? 5f, 0f, 100f),
+                QuietHoursActive = source?.QuietHoursActive ?? false,
+                QuietHoursStart = Math.Clamp(source?.QuietHoursStart ?? 22, 0, 23),
+                QuietHoursEnd = Math.Clamp(source?.QuietHoursEnd ?? 6, 0, 23),
+                RoomProfiles = new List<RoomAcousticProfile>(),
+                Sources = new List<NoiseSource>(),
+                Events = new List<NoiseEvent>()
+            };
+            if (source == null) return copy;
+
+            int maxSequence = 0;
+            var roomIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (source.RoomProfiles != null)
+            {
+                foreach (var profile in source.RoomProfiles)
+                {
+                    if (profile == null || string.IsNullOrWhiteSpace(profile.RoomId)
+                        || !roomIds.Add(profile.RoomId.Trim())) continue;
+                    copy.RoomProfiles.Add(new RoomAcousticProfile
+                    {
+                        RoomId = profile.RoomId.Trim(),
+                        BaseNoiseLevel = SanitizeRange(profile.BaseNoiseLevel, 0f, 100f),
+                        WallSoundproofing = SanitizeRange(profile.WallSoundproofing, 0f, 100f),
+                        DoorSoundproofing = SanitizeRange(profile.DoorSoundproofing, 0f, 100f),
+                        EffectiveNoiseLevel = SanitizeRange(profile.EffectiveNoiseLevel, 0f, 100f)
+                    });
+                }
+            }
+
+            var sourceIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (source.Sources != null)
+            {
+                foreach (var noiseSource in source.Sources)
+                {
+                    if (noiseSource == null || string.IsNullOrWhiteSpace(noiseSource.SourceId)
+                        || string.IsNullOrWhiteSpace(noiseSource.RoomId)
+                        || !sourceIds.Add(noiseSource.SourceId.Trim())) continue;
+                    copy.Sources.Add(new NoiseSource
+                    {
+                        SourceId = noiseSource.SourceId.Trim(),
+                        Type = Enum.IsDefined(typeof(NoiseSourceType), noiseSource.Type)
+                            ? noiseSource.Type
+                            : NoiseSourceType.Machinery,
+                        RoomId = noiseSource.RoomId.Trim(),
+                        NoiseOutput = SanitizeRange(noiseSource.NoiseOutput, 0f, 100f),
+                        Frequency = Enum.IsDefined(typeof(NoiseFrequency), noiseSource.Frequency)
+                            ? noiseSource.Frequency
+                            : NoiseFrequency.Medium,
+                        DurationHours = SanitizeRange(noiseSource.DurationHours, 0.5f, 24f),
+                        IsActive = noiseSource.IsActive,
+                        CanBeSoundproofed = noiseSource.CanBeSoundproofed
+                    });
+                    if (TryParseSequence(noiseSource.SourceId, "ns_", out int sequence))
+                        maxSequence = Math.Max(maxSequence, sequence);
+                }
+            }
+
+            var eventIds = new HashSet<string>(StringComparer.Ordinal);
+            if (source.Events != null)
+            {
+                foreach (var noiseEvent in source.Events)
+                {
+                    if (noiseEvent == null || string.IsNullOrWhiteSpace(noiseEvent.EventId)
+                        || !eventIds.Add(noiseEvent.EventId.Trim())) continue;
+                    copy.Events.Add(new NoiseEvent
+                    {
+                        EventId = noiseEvent.EventId.Trim(),
+                        EventType = noiseEvent.EventType ?? string.Empty,
+                        Day = Math.Max(0, noiseEvent.Day),
+                        RoomId = noiseEvent.RoomId ?? string.Empty,
+                        Description = noiseEvent.Description ?? string.Empty,
+                        NoiseLevel = SanitizeRange(noiseEvent.NoiseLevel, 0f, 100f),
+                        DetectionRiskAdded = SanitizeFinite(noiseEvent.DetectionRiskAdded)
+                    });
+                    if (TryParseSequence(noiseEvent.EventId, "nev_", out int sequence))
+                        maxSequence = Math.Max(maxSequence, sequence);
+                }
+            }
+
+            if (copy.NextSequence < 1) copy.NextSequence = 1;
+            long requiredSequence = (long)maxSequence + 1;
+            if (requiredSequence > copy.NextSequence && requiredSequence <= int.MaxValue)
+                copy.NextSequence = (int)requiredSequence;
+            return copy;
+        }
+
+        private static bool TryParseSequence(string value, string prefix, out int sequence)
+        {
+            sequence = 0;
+            return !string.IsNullOrEmpty(value)
+                && value.StartsWith(prefix, StringComparison.Ordinal)
+                && value.Length > prefix.Length
+                && int.TryParse(value.Substring(prefix.Length), out sequence);
+        }
+
+        private static float SanitizeFinite(float value) =>
+            float.IsNaN(value) || float.IsInfinity(value) ? 0f : value;
+
+        private static float SanitizeRange(float value, float min, float max)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value)) return min;
+            return Math.Clamp(value, min, max);
         }
     }
 }

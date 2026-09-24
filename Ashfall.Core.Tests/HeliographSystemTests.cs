@@ -7,6 +7,87 @@ namespace Ashfall.Core.Tests
     public sealed class HeliographSystemTests
     {
         [Fact]
+        public void NonFiniteVisibility_FailsClosed()
+        {
+            var system = new HeliographSystem(
+                hasLineOfSight: (_, _) => true,
+                visibility01: () => float.NaN);
+            Assert.True(system.RegisterStation("heli_a", "node_a"));
+            Assert.True(system.RegisterStation("heli_b", "node_b"));
+
+            var result = system.Transmit("msg_nan", "heli_a", "heli_b", "status_check", 1);
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal("weather_visibility_blocked", system.State.messages[0].block_reason);
+        }
+
+        [Fact]
+        public void NonFiniteStationCondition_IsBounded()
+        {
+            var system = new HeliographSystem();
+
+            Assert.True(system.RegisterStation("heli_a", "node_a", float.NaN));
+
+            var station = system.GetStation("heli_a")!;
+            Assert.InRange(station.condition, 0f, 100f);
+            Assert.False(station.is_operational);
+            Assert.True(system.SetStationCondition("heli_a", float.PositiveInfinity));
+            Assert.InRange(system.GetStation("heli_a")!.condition, 0f, 100f);
+        }
+
+        [Fact]
+        public void LoadCatalog_NullStation_IsIgnored()
+        {
+            var system = new HeliographSystem();
+
+            system.LoadCatalog(new HeliographCatalog
+            {
+                stations = new System.Collections.Generic.List<HeliographStationDefinition>
+                {
+                    null!,
+                    new HeliographStationDefinition
+                    {
+                        station_id = "heli_ok",
+                        map_node_id = "node_ok",
+                        condition = 80f
+                    }
+                }
+            });
+
+            Assert.Single(system.State.stations);
+            Assert.NotNull(system.GetStation("heli_ok"));
+        }
+
+        [Fact]
+        public void StationIdentity_IsCaseInsensitiveAndWhitespaceSafe()
+        {
+            var system = new HeliographSystem(
+                hasLineOfSight: (_, _) => true,
+                visibility01: () => 1f);
+            Assert.True(system.RegisterStation(" heli_a ", " node_a ", 90f));
+            Assert.True(system.RegisterStation("HELI_B", "NODE_B", 90f));
+
+            var result = system.Transmit("msg_case", "heli_a", "heli_b", "status_check", 1);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(1, system.State.delivered_count);
+        }
+
+        [Fact]
+        public void Restore_NullRecords_FailsClosed()
+        {
+            var system = new HeliographSystem();
+            system.RestoreState(new HeliographState
+            {
+                stations = new System.Collections.Generic.List<HeliographStationState> { null! },
+                messages = new System.Collections.Generic.List<HeliographMessageState> { null! }
+            });
+
+            Assert.Empty(system.State.stations);
+            Assert.Empty(system.State.messages);
+        }
+
+        [Fact]
         public void BlockedLineOfSightDoesNotDeliverOrDiscover()
         {
             bool discovered = false;

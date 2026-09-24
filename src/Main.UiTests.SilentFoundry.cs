@@ -41,8 +41,15 @@ namespace AtomicWar.GodotApp
             }
 
             BuildUserInterface();
+            // Fresh-world probe: foundry starter stock seeds only under fresh
+            // init (restore skips it to avoid duplicating onto saved inventory).
+            _campaignInitializationMode = CampaignInitializationMode.FreshInitialize;
             SetupExpansions();
             SetupSilentFoundry();
+
+            // Campaign panels are menu-blocked by design; the real player path
+            // opens them during play. Mirror the CompositionRoot probe idiom.
+            _state = GameState.Playing;
 
             bool pass = true;
             void Check(bool cond, string name)
@@ -67,13 +74,19 @@ namespace AtomicWar.GodotApp
                 $"DayProvider tracks live campaign day after advance (before={dayAtBind}, after={dayAfterCalendarAdvance})");
 
             SetupHoldfastRuntime();
+            // The headless path never starts a campaign, so no roster exists.
+            // Seed the canonical demo roster (includes the player survivor id).
+            _holdfastRuntime.Survivors?.SeedDemoRoster();
             var playerRadState = _holdfastRuntime.Survivors?.RadStateFor(_holdfastRuntime.PlayerSurvivorId);
             Check(playerRadState != null, "player rad state resolves for the freshness probe");
-            float radiationBeforeExposure = _silentFoundry.GuildStanceEngine.PartyRadiationProvider();
-            playerRadState!.RadiationDose = radiationBeforeExposure + 25f;
-            float radiationAfterExposure = _silentFoundry.GuildStanceEngine.PartyRadiationProvider();
-            Check(radiationAfterExposure == radiationBeforeExposure + 25f,
-                $"PartyRadiationProvider tracks live holdfast radiation after exposure (before={radiationBeforeExposure}, after={radiationAfterExposure})");
+            if (playerRadState != null)
+            {
+                float radiationBeforeExposure = _silentFoundry.GuildStanceEngine.PartyRadiationProvider();
+                playerRadState.RadiationDose = radiationBeforeExposure + 25f;
+                float radiationAfterExposure = _silentFoundry.GuildStanceEngine.PartyRadiationProvider();
+                Check(radiationAfterExposure == radiationBeforeExposure + 25f,
+                    $"PartyRadiationProvider tracks live holdfast radiation after exposure (before={radiationBeforeExposure}, after={radiationAfterExposure})");
+            }
             // Register foundry items into the shared inventory catalog.
             SetupInventory();
             Check(_inventory.Catalog.Get("item_foundry_plowshare") != null, "foundry items registered in inventory catalog");

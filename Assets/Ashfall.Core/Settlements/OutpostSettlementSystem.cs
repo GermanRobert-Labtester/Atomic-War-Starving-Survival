@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core.Settlements
 {
@@ -200,6 +201,35 @@ namespace Ashfall.Core.Settlements
         }
 
         /// <summary>
+        /// Establishes an outpost and consumes its complete authored build bill
+        /// through the canonical inventory transaction boundary.
+        /// </summary>
+        public bool TryEstablishOutpost(string outpostId, IPlayerInventoryPort? inventory)
+        {
+            if (string.IsNullOrWhiteSpace(outpostId)
+                || !_definitions.TryGetValue(outpostId, out var def)
+                || !_instances.TryGetValue(outpostId, out var inst)
+                || inst.IsEstablished
+                || inventory == null)
+                return false;
+
+            bool established = false;
+            bool paid = inventory.TryConsumeBill(def.BuildCost, () =>
+            {
+                inst.IsEstablished = true;
+                inst.ConditionPermille = 1000;
+                inst.DaysSinceSupply = 0;
+                inst.IsStarving = false;
+                inst.IsOverrun = false;
+                inst.RationReserve = 0;
+                established = true;
+            });
+            if (!paid || !established) return false;
+            OnOutpostEstablishedSeam?.Invoke(outpostId, def.GraphNodeId);
+            return true;
+        }
+
+        /// <summary>
         /// Assigns a survivor from the central roster to garrison an outpost.
         /// Respects bunks capacity and optional fitness gating.
         /// </summary>
@@ -212,6 +242,9 @@ namespace Ashfall.Core.Settlements
 
             if (inst.GarrisonSurvivorIds.Contains(survivorId)) return false;
             if (inst.GarrisonSurvivorIds.Count >= def.MaxGarrisonBunks) return false;
+            foreach (var other in _instances.Values)
+                if (other.IsEstablished && other.GarrisonSurvivorIds.Contains(survivorId))
+                    return false;
 
             if (fitnessCheck != null && !fitnessCheck(survivorId))
                 return false;
@@ -250,6 +283,42 @@ namespace Ashfall.Core.Settlements
             inst.DaysSinceSupply = 0;
             inst.IsStarving = false;
 
+            OnOutpostSuppliedSeam?.Invoke(outpostId, rationsDelivered);
+            return true;
+        }
+
+        /// <summary>
+        /// Supplies an established outpost from canonical inventory in one
+        /// atomic bill, updating the reserve only after the bill commits.
+        /// </summary>
+        public bool TrySupplyOutpost(
+            string outpostId,
+            string rationItemId,
+            int rationsDelivered,
+            IPlayerInventoryPort? inventory)
+        {
+            if (string.IsNullOrWhiteSpace(outpostId)
+                || string.IsNullOrWhiteSpace(rationItemId)
+                || rationsDelivered <= 0
+                || inventory == null
+                || !_instances.TryGetValue(outpostId, out var inst)
+                || !inst.IsEstablished
+                || inst.IsOverrun)
+                return false;
+
+            var bill = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+            {
+                [rationItemId] = rationsDelivered
+            };
+            bool supplied = false;
+            bool paid = inventory.TryConsumeBill(bill, () =>
+            {
+                inst.RationReserve = checked(inst.RationReserve + rationsDelivered);
+                inst.DaysSinceSupply = 0;
+                inst.IsStarving = false;
+                supplied = true;
+            });
+            if (!paid || !supplied) return false;
             OnOutpostSuppliedSeam?.Invoke(outpostId, rationsDelivered);
             return true;
         }
@@ -333,6 +402,8 @@ namespace Ashfall.Core.Settlements
             if (!inst.IsEstablished) return false;
 
             inst.IsEstablished = false;
+            foreach (string survivorId in inst.GarrisonSurvivorIds)
+                OnGarrisonRelievedSeam?.Invoke(outpostId, survivorId);
             inst.GarrisonSurvivorIds.Clear();
             inst.RationReserve = 0;
             inst.IsStarving = false;

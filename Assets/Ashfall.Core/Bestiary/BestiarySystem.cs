@@ -280,5 +280,37 @@ namespace Ashfall.Core.Bestiary
                 SightingType = s.SightingType
             }).ToList() ?? new List<CreatureSightingRecord>();
         }
+
+        public BestiaryCensus GetCensus()
+        {
+            int kills = 0, butchered = 0;
+            for (int i = 0; i < _state.Discoveries.Count; i++)
+            {
+                kills += _state.Discoveries[i].KillCount;
+                butchered += _state.Discoveries[i].ButcherCount;
+            }
+            int total = _catalog.AllCreatures.Count > 0 ? _catalog.AllCreatures.Count : TotalCanonicalFaunaCount;
+            return new BestiaryCensus(DiscoveredCount, total, GetCompletionPercentage(), _state.Sightings.Count, kills, butchered);
+        }
+    }
+
+    public struct BestiaryCensus
+    {
+        public readonly int TotalDiscovered;
+        public readonly int TotalCanonicalFauna;
+        public readonly float CompletionPercentage;
+        public readonly int TotalSightings;
+        public readonly int TotalKills;
+        public readonly int TotalButchered;
+
+        public BestiaryCensus(int totalDiscovered, int totalCanonical, float completion, int sightings, int kills, int butchered)
+        {
+            TotalDiscovered = totalDiscovered;
+            TotalCanonicalFauna = totalCanonical;
+            CompletionPercentage = completion;
+            TotalSightings = sightings;
+            TotalKills = kills;
+            TotalButchered = butchered;
+        }
     }
 }

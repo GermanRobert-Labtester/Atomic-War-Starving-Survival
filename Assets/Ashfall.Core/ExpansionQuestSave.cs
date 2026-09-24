@@ -19,17 +19,6 @@ namespace Ashfall.Core
         public string checksum = string.Empty;
     }
 
-    /// <summary>
-    /// Frozen v1 envelope shape for migration validation.
-    /// </summary>
-    [Serializable]
-    public class ExpansionQuestSaveEnvelopeV1
-    {
-        public int version = 1;
-        public ExpansionQuestSystemState state = new ExpansionQuestSystemState();
-        public string checksum = string.Empty;
-    }
-
     public static class ExpansionQuestSaveCodec
     {
         public static string Encode(ExpansionQuestSaveEnvelope envelope, IJsonSerializer json)

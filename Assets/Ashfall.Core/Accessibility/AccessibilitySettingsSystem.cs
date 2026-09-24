@@ -256,5 +256,66 @@ namespace Ashfall.Core.Accessibility
             _state.AutoWalk = saved.AutoWalk;
             _state.AimAssist = saved.AimAssist;
         }
+
+        public AccessibilityCensus GetCensus()
+        {
+            return new AccessibilityCensus(
+                activeProfileId: _state.ActiveProfileId,
+                loadedProfilesCount: _profiles.Count,
+                fontScale: _state.FontScale,
+                highContrast: _state.HighContrast,
+                reducedMotion: _state.ReducedMotion,
+                colorblindMode: _state.ColorblindMode,
+                screenReaderFriendly: _state.ScreenReaderFriendly,
+                visualAudioAlerts: _state.VisualAudioAlerts,
+                monoAudio: _state.MonoAudio,
+                autoWalk: _state.AutoWalk,
+                aimAssist: _state.AimAssist,
+                cognitiveLoadReduction: _state.CognitiveLoadReduction);
+        }
+    }
+
+    public struct AccessibilityCensus
+    {
+        public string ActiveProfileId { get; }
+        public int LoadedProfilesCount { get; }
+        public float FontScale { get; }
+        public bool HighContrast { get; }
+        public bool ReducedMotion { get; }
+        public string ColorblindMode { get; }
+        public bool ScreenReaderFriendly { get; }
+        public bool VisualAudioAlerts { get; }
+        public bool MonoAudio { get; }
+        public bool AutoWalk { get; }
+        public bool AimAssist { get; }
+        public bool CognitiveLoadReduction { get; }
+
+        public AccessibilityCensus(
+            string activeProfileId,
+            int loadedProfilesCount,
+            float fontScale,
+            bool highContrast,
+            bool reducedMotion,
+            string colorblindMode,
+            bool screenReaderFriendly,
+            bool visualAudioAlerts,
+            bool monoAudio,
+            bool autoWalk,
+            bool aimAssist,
+            bool cognitiveLoadReduction)
+        {
+            ActiveProfileId = activeProfileId;
+            LoadedProfilesCount = loadedProfilesCount;
+            FontScale = fontScale;
+            HighContrast = highContrast;
+            ReducedMotion = reducedMotion;
+            ColorblindMode = colorblindMode;
+            ScreenReaderFriendly = screenReaderFriendly;
+            VisualAudioAlerts = visualAudioAlerts;
+            MonoAudio = monoAudio;
+            AutoWalk = autoWalk;
+            AimAssist = aimAssist;
+            CognitiveLoadReduction = cognitiveLoadReduction;
+        }
     }
 }

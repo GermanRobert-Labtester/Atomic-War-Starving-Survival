@@ -7,6 +7,7 @@ using System.Text.Json;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.Survivors;
+using Ashfall.Core.World;
 
 namespace Ashfall.Core
 {
@@ -974,10 +975,264 @@ namespace Ashfall.Core
             // terrain vocabulary, neutral default, and upkeep constraints.
             ValidateVehicleArmorGradeCatalog(dataDirectory, files, report);
 
+            // Expansion 36: strict watch operations catalog and canonical
+            // location references. The runtime loader is the same contract.
+            ValidateNightWatchOperationsCatalog(dataDirectory, files, report);
+
+            // Shelter Operations Board: construction and outpost bills must
+            // resolve to canonical items; capacity effects must resolve to
+            // canonical shelter-assignment rooms.
+            ValidateShelterOperationsCatalogs(dataDirectory, files, report);
+
             report.AuthoredIds = ctx.Authored;
             report.ReuseCount = ctx.Reuse;
 
             return report;
+        }
+
+        public static void ValidateNightWatchOperationsCatalog(
+            string dataDirectory,
+            IFileIO files,
+            CatalogIntegrityReport report)
+        {
+            if (string.IsNullOrEmpty(dataDirectory) || files == null || report == null) return;
+            string catalogPath = files.Combine(dataDirectory, World.NightWatchOperationsCatalogLoader.DefaultFileName);
+            if (!files.FileExists(catalogPath)) return;
+            var loaded = World.NightWatchOperationsCatalogLoader.Load(dataDirectory, files);
+            foreach (var error in loaded.Errors) report.Error("night_watch_operations: " + error);
+            if (loaded.Catalog == null) return;
+
+            string locationsPath = files.Combine(dataDirectory, "locations.json");
+            if (!files.FileExists(locationsPath)) return;
+            try
+            {
+                var ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                using var document = JsonDocument.Parse(files.ReadAllText(locationsPath));
+                if (document.RootElement.TryGetProperty("locations", out var rows) && rows.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var row in rows.EnumerateArray())
+                    {
+                        if (row.TryGetProperty("id", out var id) && id.ValueKind == JsonValueKind.String)
+                            ids.Add(id.GetString() ?? string.Empty);
+                    }
+                }
+                var referenceErrors = new List<string>();
+                World.NightWatchOperationsCatalogLoader.ValidateWorldLocations(loaded.Catalog, ids, referenceErrors);
+                foreach (var error in referenceErrors) report.Error("night_watch_operations: " + error);
+            }
+            catch (Exception ex)
+            {
+                report.Error("night_watch_operations: locations validation failed: " + ex.Message);
+            }
+        }
+
+        public static void ValidateShelterOperationsCatalogs(
+            string dataDirectory,
+            IFileIO files,
+            CatalogIntegrityReport report)
+        {
+            if (string.IsNullOrEmpty(dataDirectory) || files == null || report == null) return;
+
+            var itemIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var roomIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            string itemsPath = files.Combine(dataDirectory, "items.json");
+            string roomsPath = files.Combine(dataDirectory, "shelter_rooms.json");
+            try
+            {
+                if (files.FileExists(itemsPath))
+                {
+                    using var items = JsonDocument.Parse(files.ReadAllText(itemsPath));
+                    CollectCatalogIds(items.RootElement, itemIds);
+                }
+                if (files.FileExists(roomsPath))
+                {
+                    using var rooms = JsonDocument.Parse(files.ReadAllText(roomsPath));
+                    if (rooms.RootElement.TryGetProperty("rooms", out var rows)
+                        && rows.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var row in rows.EnumerateArray())
+                        {
+                            if (row.ValueKind == JsonValueKind.Object
+                                && row.TryGetProperty("id", out var id)
+                                && id.ValueKind == JsonValueKind.String)
+                            {
+                                var roomId = id.GetString();
+                                if (!string.IsNullOrWhiteSpace(roomId)) roomIds.Add(roomId);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                report.Error("shelter operations item/room references could not be loaded: " + ex.Message);
+                return;
+            }
+
+            ValidateShelterConstructionCatalog(dataDirectory, files, report, itemIds, roomIds);
+            ValidateOutpostCostCatalog(dataDirectory, files, report, itemIds);
+        }
+
+        private static void ValidateShelterConstructionCatalog(
+            string dataDirectory,
+            IFileIO files,
+            CatalogIntegrityReport report,
+            HashSet<string> itemIds,
+            HashSet<string> roomIds)
+        {
+            const string fileName = "shelter_construction.json";
+            string path = files.Combine(dataDirectory, fileName);
+            if (!files.FileExists(path)) return;
+
+            try
+            {
+                using var document = JsonDocument.Parse(files.ReadAllText(path));
+                var root = document.RootElement;
+                if (root.ValueKind != JsonValueKind.Object)
+                {
+                    report.Error(fileName + ": root must be an object");
+                    return;
+                }
+                if (!root.TryGetProperty("blueprints", out var blueprints)
+                    || blueprints.ValueKind != JsonValueKind.Array)
+                {
+                    report.Error(fileName + ": blueprints array is required");
+                }
+                else
+                {
+                    var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                    int index = 0;
+                    foreach (var blueprint in blueprints.EnumerateArray())
+                    {
+                        string entry = fileName + $": blueprints[{index}]";
+                        if (blueprint.ValueKind != JsonValueKind.Object)
+                        {
+                            report.Error(entry + " must be an object");
+                            index++;
+                            continue;
+                        }
+                        string id = ReadCatalogString(blueprint, "blueprint_id");
+                        if (string.IsNullOrWhiteSpace(id) || !seen.Add(id))
+                            report.Error(entry + ": blueprint_id is missing or duplicated");
+                        string roomId = ReadCatalogString(blueprint, "canonical_room_id");
+                        if (string.IsNullOrWhiteSpace(roomId) || !roomIds.Contains(roomId))
+                            report.Error(entry + ": canonical_room_id '" + roomId + "' does not resolve to shelter_rooms.json");
+                        if (!blueprint.TryGetProperty("capacity_bonus", out var capacity)
+                            || capacity.ValueKind != JsonValueKind.Number
+                            || !capacity.TryGetInt32(out int bonus)
+                            || bonus < 0)
+                            report.Error(entry + ": capacity_bonus must be a non-negative integer");
+                        ValidateShelterCostObject(blueprint, "resource_costs", entry, itemIds, report);
+                        index++;
+                    }
+                }
+
+                if (!root.TryGetProperty("upgrades", out var upgrades)
+                    || upgrades.ValueKind != JsonValueKind.Array)
+                {
+                    report.Error(fileName + ": upgrades array is required");
+                }
+                else
+                {
+                    int index = 0;
+                    foreach (var upgrade in upgrades.EnumerateArray())
+                    {
+                        string entry = fileName + $": upgrades[{index}]";
+                        if (upgrade.ValueKind != JsonValueKind.Object)
+                        {
+                            report.Error(entry + " must be an object");
+                            index++;
+                            continue;
+                        }
+                        ValidateShelterCostObject(upgrade, "resource_costs", entry, itemIds, report);
+                        index++;
+                    }
+                }
+
+                if (!root.TryGetProperty("crew_rules", out var crewRules)
+                    || crewRules.ValueKind != JsonValueKind.Object
+                    || !crewRules.TryGetProperty("max_crew_per_project", out var maxCrew)
+                    || maxCrew.ValueKind != JsonValueKind.Number
+                    || !maxCrew.TryGetInt32(out int crewCount)
+                    || crewCount < 1)
+                    report.Error(fileName + ": crew_rules.max_crew_per_project must be a positive integer");
+            }
+            catch (Exception ex)
+            {
+                report.Error(fileName + ": validation failed: " + ex.Message);
+            }
+        }
+
+        private static void ValidateOutpostCostCatalog(
+            string dataDirectory,
+            IFileIO files,
+            CatalogIntegrityReport report,
+            HashSet<string> itemIds)
+        {
+            const string fileName = "outposts.json";
+            string path = files.Combine(dataDirectory, fileName);
+            if (!files.FileExists(path)) return;
+
+            try
+            {
+                using var document = JsonDocument.Parse(files.ReadAllText(path));
+                if (!document.RootElement.TryGetProperty("outposts", out var outposts)
+                    || outposts.ValueKind != JsonValueKind.Array)
+                {
+                    report.Error(fileName + ": outposts array is required");
+                    return;
+                }
+                int index = 0;
+                foreach (var outpost in outposts.EnumerateArray())
+                {
+                    string entry = fileName + $": outposts[{index}]";
+                    if (outpost.ValueKind != JsonValueKind.Object)
+                    {
+                        report.Error(entry + " must be an object");
+                        index++;
+                        continue;
+                    }
+                    ValidateShelterCostObject(outpost, "build_cost", entry, itemIds, report);
+                    index++;
+                }
+            }
+            catch (Exception ex)
+            {
+                report.Error(fileName + ": validation failed: " + ex.Message);
+            }
+        }
+
+        private static void ValidateShelterCostObject(
+            JsonElement owner,
+            string propertyName,
+            string entry,
+            HashSet<string> itemIds,
+            CatalogIntegrityReport report)
+        {
+            if (!owner.TryGetProperty(propertyName, out var costs)
+                || costs.ValueKind != JsonValueKind.Object)
+            {
+                report.Error(entry + ": " + propertyName + " must be an object");
+                return;
+            }
+
+            foreach (var cost in costs.EnumerateObject())
+            {
+                if (!itemIds.Contains(cost.Name))
+                    report.Error(entry + ": cost item '" + cost.Name + "' does not resolve to items.json");
+                if (cost.Value.ValueKind != JsonValueKind.Number
+                    || !cost.Value.TryGetInt32(out int amount)
+                    || amount < 1)
+                    report.Error(entry + ": cost '" + cost.Name + "' must be a positive integer");
+            }
+        }
+
+        private static string ReadCatalogString(JsonElement element, string propertyName)
+        {
+            return element.TryGetProperty(propertyName, out var value)
+                && value.ValueKind == JsonValueKind.String
+                ? value.GetString() ?? string.Empty
+                : string.Empty;
         }
 
         /// <summary>

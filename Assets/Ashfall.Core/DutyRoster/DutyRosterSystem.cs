@@ -5,6 +5,7 @@ using Ashfall.Core.DutyRoster;
 using Ashfall.Core.Survivors;
 #pragma warning disable CS8618
 using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.World;
 
 namespace Ashfall.Core
 {
@@ -52,6 +53,26 @@ namespace Ashfall.Core
         public List<string> fitnessWarningReasons = new List<string>();
     }
 
+    /// <summary>
+    /// Expansion 36 watch-specific shift record. General duty assignments stay
+    /// in <see cref="DutyRosterAssignmentEntry"/>; this bounded sub-object only
+    /// records which survivor stood which authored watch post and when.
+    /// </summary>
+    [Serializable]
+    public class DutyRosterWatchShift
+    {
+        public string shift_id = string.Empty;
+        public string post_id = string.Empty;
+        public string survivorId = string.Empty;
+        public int day = -1;
+        public int start_hour = 0;
+        public int duration_hours = 1;
+        public int fatigue_before_permille = 0;
+        public int fatigue_after_permille = 0;
+        public string fatigue_tier = "Alert";
+        public bool completed = false;
+    }
+
     [Serializable]
     public class DutyRosterPneumaticMemo
     {
@@ -95,6 +116,8 @@ namespace Ashfall.Core
         public List<string> overflowVisited = new List<string>();
         public List<DutyRosterRow> rows = new List<DutyRosterRow>();
         public List<DutyRosterAssignmentEntry> assignments = new List<DutyRosterAssignmentEntry>();
+        public List<DutyRosterWatchShift> watch_shifts = new List<DutyRosterWatchShift>();
+        public int watch_schema_version = 1;
         public List<DutyRosterPneumaticMemo> pneumaticMemos = new List<DutyRosterPneumaticMemo>();
         public List<string> hiddenFromNorth = new List<string>();
         public List<string> blankRowsLivingNames = new List<string>();
@@ -415,6 +438,169 @@ namespace Ashfall.Core
         {
             return _assignments.Assign(role, survivorId);
         }
+
+        /// <summary>
+        /// Expansion 36 watch-shift command. It validates the survivor through
+        /// the same canonical duty/fitness gate, but stores only a watch-specific
+        /// shift sub-object; it does not create a second survivor roster.
+        /// </summary>
+        public ActionResult AssignWatchShift(
+            string shiftId,
+            string postId,
+            string survivorId,
+            int day,
+            int startHour,
+            int durationHours,
+            bool confirmFitnessWarning = false,
+            int? fatigueBeforePermille = null)
+        {
+            EnsureLists();
+            if (string.IsNullOrWhiteSpace(shiftId) || string.IsNullOrWhiteSpace(postId) || string.IsNullOrWhiteSpace(survivorId))
+                return ActionResult.Failed("invalid_watch_shift", "watch.invalid_shift");
+            if (day < 0 || startHour < 0 || startHour > 23 || durationHours < 1 || durationHours > 12 || startHour + durationHours > 24)
+                return ActionResult.Failed("invalid_watch_shift_time", "watch.invalid_shift_time");
+
+            string id = shiftId.Trim();
+            if (_state.watch_shifts.Exists(x => x != null && string.Equals(x.shift_id, id, StringComparison.OrdinalIgnoreCase)))
+                return ActionResult.Blocked("watch_shift_exists", "watch.shift_exists");
+
+            var validation = _assignments.ValidateAssign(DutyRosterIds.RoleNightWatch, survivorId, confirmFitnessWarning);
+            if (!validation.IsSuccess) return validation;
+
+            int end = startHour + durationHours;
+            for (int i = 0; i < _state.watch_shifts.Count; i++)
+            {
+                var existing = _state.watch_shifts[i];
+                if (existing == null || existing.completed || existing.day != day || !string.Equals(existing.survivorId, survivorId, StringComparison.OrdinalIgnoreCase))
+                    continue;
+                int existingEnd = existing.start_hour + existing.duration_hours;
+                if (startHour < existingEnd && existing.start_hour < end)
+                    return ActionResult.Blocked("watch_shift_overlap", "watch.shift_overlap");
+            }
+
+            int before = Math.Clamp(fatigueBeforePermille ?? 0, 0, 1000);
+            _state.watch_shifts.Add(new DutyRosterWatchShift
+            {
+                shift_id = id,
+                post_id = postId.Trim(),
+                survivorId = survivorId.Trim(),
+                day = day,
+                start_hour = startHour,
+                duration_hours = durationHours,
+                fatigue_before_permille = Math.Clamp(before, 0, 1000),
+                fatigue_after_permille = Math.Clamp(before, 0, 1000),
+                fatigue_tier = WatchFatigueTier.Alert.ToString(),
+                completed = false
+            });
+            PruneWatchShifts();
+            RaiseChanged();
+            return ActionResult.Success("watch.shift_assigned");
+        }
+
+        public ActionResult CompleteWatchShift(string shiftId, int fatigueAfterPermille, int? restQualityPermille = null)
+        {
+            EnsureLists();
+            for (int i = 0; i < _state.watch_shifts.Count; i++)
+            {
+                var shift = _state.watch_shifts[i];
+                if (shift == null || !string.Equals(shift.shift_id, shiftId?.Trim(), StringComparison.OrdinalIgnoreCase))
+                    continue;
+                if (shift.completed) return ActionResult.Blocked("watch_shift_complete", "watch.shift_complete");
+                int after = Math.Clamp(fatigueAfterPermille, 0, 1000);
+                // If the caller did not supply a measured post-shift value, the
+                // signed pure engine supplies the deterministic watch calculation.
+                if (restQualityPermille.HasValue)
+                    after = NightWatchPatrolReadinessEngine.AdvanceWatchFatigue(
+                        shift.fatigue_before_permille, shift.duration_hours, restQualityPermille.Value);
+                shift.fatigue_after_permille = after;
+                shift.fatigue_tier = NightWatchPatrolReadinessEngine.ClassifyFatigue(after).ToString();
+                shift.completed = true;
+                RaiseChanged();
+                return ActionResult.Success("watch.shift_completed");
+            }
+            return ActionResult.Failed("unknown_watch_shift", "watch.unknown_shift");
+        }
+
+        public IReadOnlyList<DutyRosterWatchShift> GetWatchShifts(int? day = null)
+        {
+            EnsureLists();
+            var result = new List<DutyRosterWatchShift>();
+            for (int i = 0; i < _state.watch_shifts.Count; i++)
+            {
+                var shift = _state.watch_shifts[i];
+                if (shift == null || (day.HasValue && shift.day != day.Value)) continue;
+                result.Add(CopyWatchShift(shift));
+            }
+            return result;
+        }
+
+        public int GetWatchShiftCount(string postId, int day, bool completedOnly = false)
+        {
+            EnsureLists();
+            if (string.IsNullOrWhiteSpace(postId)) return 0;
+            int count = 0;
+            for (int i = 0; i < _state.watch_shifts.Count; i++)
+            {
+                var shift = _state.watch_shifts[i];
+                if (shift == null || shift.day != day || !string.Equals(shift.post_id, postId.Trim(), StringComparison.OrdinalIgnoreCase)) continue;
+                if (completedOnly && !shift.completed) continue;
+                count++;
+            }
+            return count;
+        }
+
+        public int GetAverageWatchFatigue(string postId, int day)
+        {
+            EnsureLists();
+            int total = 0;
+            int count = 0;
+            for (int i = 0; i < _state.watch_shifts.Count; i++)
+            {
+                var shift = _state.watch_shifts[i];
+                if (shift == null || shift.day != day || !string.Equals(shift.post_id, postId?.Trim(), StringComparison.OrdinalIgnoreCase)) continue;
+                total += shift.fatigue_after_permille;
+                count++;
+            }
+            return count == 0 ? 0 : total / count;
+        }
+
+        public DutyRosterWatchShift? FindWatchShift(string shiftId)
+        {
+            EnsureLists();
+            for (int i = 0; i < _state.watch_shifts.Count; i++)
+            {
+                if (_state.watch_shifts[i] != null && string.Equals(_state.watch_shifts[i].shift_id, shiftId?.Trim(), StringComparison.OrdinalIgnoreCase))
+                    return CopyWatchShift(_state.watch_shifts[i]);
+            }
+            return null;
+        }
+
+        private void PruneWatchShifts()
+        {
+            const int cap = 128;
+            if (_state.watch_shifts.Count <= cap) return;
+            _state.watch_shifts.Sort((a, b) =>
+            {
+                int day = a.day.CompareTo(b.day);
+                if (day != 0) return day;
+                return string.CompareOrdinal(a.shift_id, b.shift_id);
+            });
+            _state.watch_shifts.RemoveRange(0, _state.watch_shifts.Count - cap);
+        }
+
+        private static DutyRosterWatchShift CopyWatchShift(DutyRosterWatchShift shift) => new DutyRosterWatchShift
+        {
+            shift_id = shift.shift_id ?? string.Empty,
+            post_id = shift.post_id ?? string.Empty,
+            survivorId = shift.survivorId ?? string.Empty,
+            day = shift.day,
+            start_hour = shift.start_hour,
+            duration_hours = shift.duration_hours,
+            fatigue_before_permille = Math.Clamp(shift.fatigue_before_permille, 0, 1000),
+            fatigue_after_permille = Math.Clamp(shift.fatigue_after_permille, 0, 1000),
+            fatigue_tier = shift.fatigue_tier ?? string.Empty,
+            completed = shift.completed
+        };
 
         /// <summary>Plan 24B A2 — optional duty-hour projection (bound by the
         /// host to its derived ledger). Null ⇒ the hours surface is unavailable
@@ -794,10 +980,50 @@ namespace Ashfall.Core
         {
             if (_state.rows == null) _state.rows = new List<DutyRosterRow>();
             if (_state.assignments == null) _state.assignments = new List<DutyRosterAssignmentEntry>();
+            if (_state.watch_schema_version <= 0) _state.watch_schema_version = 1;
+            if (_state.watch_schema_version > 1)
+                throw new InvalidOperationException($"duty roster watch schema {_state.watch_schema_version} is newer than supported 1.");
+            if (_state.watch_shifts == null) _state.watch_shifts = new List<DutyRosterWatchShift>();
+            NormalizeWatchShifts();
             if (_state.pneumaticMemos == null) _state.pneumaticMemos = new List<DutyRosterPneumaticMemo>();
             if (_state.hiddenFromNorth == null) _state.hiddenFromNorth = new List<string>();
             if (_state.blankRowsLivingNames == null) _state.blankRowsLivingNames = new List<string>();
             if (_state.overflowVisited == null) _state.overflowVisited = new List<string>();
+        }
+
+        private void NormalizeWatchShifts()
+        {
+            const int cap = 128;
+            var normalized = new List<DutyRosterWatchShift>();
+            var ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var shift in _state.watch_shifts ?? new List<DutyRosterWatchShift>())
+            {
+                if (shift == null || string.IsNullOrWhiteSpace(shift.shift_id) ||
+                    string.IsNullOrWhiteSpace(shift.post_id) || string.IsNullOrWhiteSpace(shift.survivorId) ||
+                    shift.day < 0 || shift.start_hour < 0 || shift.start_hour > 23 ||
+                    shift.duration_hours < 1 || shift.duration_hours > 12 ||
+                    shift.start_hour + shift.duration_hours > 24) continue;
+                var copy = CopyWatchShift(shift);
+                copy.shift_id = copy.shift_id.Trim();
+                copy.post_id = copy.post_id.Trim();
+                copy.survivorId = copy.survivorId.Trim();
+                if (!ids.Add(copy.shift_id)) continue;
+                copy.fatigue_tier = NightWatchPatrolReadinessEngine.ClassifyFatigue(copy.fatigue_after_permille).ToString();
+                normalized.Add(copy);
+            }
+
+            normalized.Sort((a, b) =>
+            {
+                int day = a.day.CompareTo(b.day);
+                if (day != 0) return day;
+                int start = a.start_hour.CompareTo(b.start_hour);
+                if (start != 0) return start;
+                int post = string.CompareOrdinal(a.post_id, b.post_id);
+                if (post != 0) return post;
+                return string.CompareOrdinal(a.shift_id, b.shift_id);
+            });
+            if (normalized.Count > cap) normalized.RemoveRange(cap, normalized.Count - cap);
+            _state.watch_shifts = normalized;
         }
 
         private void RebuildIndexes()
@@ -845,6 +1071,7 @@ namespace Ashfall.Core
         private static void CopyState(DutyRosterSystemState from, DutyRosterSystemState to)
         {
             to.systemId = from.systemId;
+            to.watch_schema_version = from.watch_schema_version <= 0 ? 1 : from.watch_schema_version;
             to.expansionUnlocked = from.expansionUnlocked;
             to.wallInspected = from.wallInspected;
             to.chartScript = from.chartScript;
@@ -892,6 +1119,16 @@ namespace Ashfall.Core
                             ? new List<string>(a.fitnessWarningReasons)
                             : new List<string>()
                     });
+                }
+            }
+
+            to.watch_shifts = new List<DutyRosterWatchShift>();
+            if (from.watch_shifts != null)
+            {
+                for (int i = 0; i < from.watch_shifts.Count; i++)
+                {
+                    if (from.watch_shifts[i] != null)
+                        to.watch_shifts.Add(CopyWatchShift(from.watch_shifts[i]));
                 }
             }
 

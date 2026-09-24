@@ -10,9 +10,9 @@
       "defense_rating": 80,
       "radio_relay_range": 15,
       "build_cost": {
-        "scrap": 50,
-        "timber": 30,
-        "rations": 20
+        "scrap_metal": 50,
+        "scrap_wood": 30,
+        "dried_rations": 20
       }
     },
     {
@@ -24,9 +24,9 @@
       "defense_rating": 60,
       "radio_relay_range": 10,
       "build_cost": {
-        "scrap": 70,
-        "timber": 40,
-        "rations": 25
+        "scrap_metal": 70,
+        "scrap_wood": 40,
+        "dried_rations": 25
       }
     },
     {
@@ -38,9 +38,9 @@
       "defense_rating": 40,
       "radio_relay_range": 30,
       "build_cost": {
-        "scrap": 40,
-        "electronics": 15,
-        "rations": 15
+        "scrap_metal": 40,
+        "electronic_scrap": 15,
+        "dried_rations": 15
       }
     },
     {
@@ -52,9 +52,9 @@
       "defense_rating": 50,
       "radio_relay_range": 5,
       "build_cost": {
-        "scrap": 80,
-        "timber": 50,
-        "rations": 30
+        "scrap_metal": 80,
+        "scrap_wood": 50,
+        "dried_rations": 30
       }
     }
   ]

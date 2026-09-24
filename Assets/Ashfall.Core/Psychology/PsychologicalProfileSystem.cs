@@ -350,5 +350,37 @@ namespace Ashfall.Core.Psychology
             var json = s.Serialize(state);
             _state = s.Deserialize<PsychologyState>(json) ?? new PsychologyState();
         }
+
+        public PsychologicalProfileCensus GetCensus()
+        {
+            int totalPhobias = 0;
+            int managedPhobias = 0;
+            int totalCoping = 0;
+            foreach (var p in _state.Profiles)
+            {
+                totalPhobias += p.phobias.Count;
+                managedPhobias += p.phobias.Count(x => x.is_managed);
+                totalCoping += p.coping_mechanisms.Count;
+            }
+            return new PsychologicalProfileCensus(_state.Profiles.Count, totalPhobias, managedPhobias, totalCoping, _state.TotalTherapySessions);
+        }
+    }
+
+    public struct PsychologicalProfileCensus
+    {
+        public readonly int TotalProfiles;
+        public readonly int TotalPhobias;
+        public readonly int ManagedPhobias;
+        public readonly int TotalCopingMechanisms;
+        public readonly int TotalTherapySessions;
+
+        public PsychologicalProfileCensus(int totalProfiles, int totalPhobias, int managedPhobias, int totalCopingMechanisms, int totalTherapySessions)
+        {
+            TotalProfiles = totalProfiles;
+            TotalPhobias = totalPhobias;
+            ManagedPhobias = managedPhobias;
+            TotalCopingMechanisms = totalCopingMechanisms;
+            TotalTherapySessions = totalTherapySessions;
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace Ashfall.Core.Tests.Settlements
             Assert.Equal("node_north_ridge", northWatch!.GraphNodeId);
             Assert.Equal(4, northWatch.MaxGarrisonBunks);
             Assert.Equal(80, northWatch.DefenseRating);
-            Assert.True(northWatch.BuildCost.ContainsKey("scrap"));
+            Assert.True(northWatch.BuildCost.ContainsKey("scrap_metal"));
         }
 
         [Fact]
@@ -61,9 +61,9 @@ namespace Ashfall.Core.Tests.Settlements
 
             var inventory = new Dictionary<string, int>
             {
-                { "scrap", 100 },
-                { "timber", 50 },
-                { "rations", 50 }
+                { "scrap_metal", 100 },
+                { "scrap_wood", 50 },
+                { "dried_rations", 50 }
             };
 
             bool costConsumer(string item, int qty)
@@ -80,7 +80,7 @@ namespace Ashfall.Core.Tests.Settlements
             Assert.True(success);
             Assert.Equal("outpost_north_watch", establishedId);
             Assert.Equal("node_north_ridge", establishedNode);
-            Assert.Equal(50, inventory["scrap"]); // 100 - 50
+            Assert.Equal(50, inventory["scrap_metal"]); // 100 - 50
 
             var inst = system.GetInstance("outpost_north_watch");
             Assert.NotNull(inst);

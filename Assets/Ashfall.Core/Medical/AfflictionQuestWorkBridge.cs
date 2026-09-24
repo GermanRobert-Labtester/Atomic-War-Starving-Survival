@@ -59,9 +59,26 @@ namespace Ashfall.Core.Medical
     public sealed class QuestGateCheckResult
     {
         public bool IsBlocked { get; set; }
+        public bool IsUnlocked => UnlockedQuestTags.Count > 0;
         public List<string> UnlockedQuestTags { get; set; } = new List<string>();
         public List<string> BlockingAfflictionIds { get; set; } = new List<string>();
         public List<string> UnlockingAfflictionIds { get; set; } = new List<string>();
+    }
+
+    public readonly struct AfflictionBridgeCensus
+    {
+        public int AuthoredWorkModifiersCount { get; }
+        public int AuthoredQuestGatesCount { get; }
+        public int SchemaVersion { get; }
+        public int WorkModifierCount => AuthoredWorkModifiersCount;
+        public int QuestGateCount => AuthoredQuestGatesCount;
+
+        public AfflictionBridgeCensus(int workMods, int questGates, int schema)
+        {
+            AuthoredWorkModifiersCount = workMods;
+            AuthoredQuestGatesCount = questGates;
+            SchemaVersion = schema;
+        }
     }
 
     // ── Bridge ──────────────────────────────────────────────────────────────
@@ -75,6 +92,8 @@ namespace Ashfall.Core.Medical
     {
         private readonly List<AfflictionWorkModifierDef> _workModifiers = new List<AfflictionWorkModifierDef>();
         private readonly List<AfflictionQuestGateDef> _questGates = new List<AfflictionQuestGateDef>();
+
+        public int SchemaVersion { get; private set; } = 1;
 
         public event Action<string, string>? OnQuestUnlocked;   // (survivorId, questTag)
         public event Action<string, string>? OnQuestBlocked;    // (survivorId, questTag)
@@ -90,18 +109,33 @@ namespace Ashfall.Core.Medical
                 var catalog = JsonSerializer.Deserialize<AfflictionBridgeCatalog>(json, options);
                 if (catalog == null) return;
 
+                SchemaVersion = catalog.schema_version;
+
                 if (catalog.affliction_work_modifiers != null)
                 {
                     foreach (var m in catalog.affliction_work_modifiers)
+                    {
                         if (!string.IsNullOrWhiteSpace(m.affliction_id))
+                        {
+                            _workModifiers.RemoveAll(existing =>
+                                string.Equals(existing.affliction_id, m.affliction_id, StringComparison.OrdinalIgnoreCase));
                             _workModifiers.Add(m);
+                        }
+                    }
                 }
 
                 if (catalog.affliction_quest_gates != null)
                 {
                     foreach (var g in catalog.affliction_quest_gates)
+                    {
                         if (!string.IsNullOrWhiteSpace(g.affliction_id))
+                        {
+                            _questGates.RemoveAll(existing =>
+                                string.Equals(existing.affliction_id, g.affliction_id, StringComparison.OrdinalIgnoreCase) &&
+                                string.Equals(existing.quest_tag, g.quest_tag, StringComparison.OrdinalIgnoreCase));
                             _questGates.Add(g);
+                        }
+                    }
                 }
             }
             catch (Exception) { /* malformed catalog falls back to built-in defaults; authoring errors are enforced by the data-integrity gate */ }
@@ -109,6 +143,7 @@ namespace Ashfall.Core.Medical
 
         public IReadOnlyList<AfflictionWorkModifierDef> GetAllWorkModifiers() => _workModifiers;
         public IReadOnlyList<AfflictionQuestGateDef> GetAllQuestGates() => _questGates;
+        public AfflictionBridgeCensus GetCensus() => new AfflictionBridgeCensus(_workModifiers.Count, _questGates.Count, SchemaVersion);
 
         // ── Work efficiency projection ─────────────────────────────────────
 
@@ -149,12 +184,11 @@ namespace Ashfall.Core.Medical
         // ── Quest gate projection ──────────────────────────────────────────
 
         /// <summary>
-        /// Given a survivor's active affliction IDs and quest tag, determines
-        /// whether the quest is blocked or unlocked by any affliction.
-        /// Fires events as a side-effect for host adapters.
+        /// Pure query: given a quest tag and active affliction IDs, determines
+        /// whether the quest is blocked or unlocked by any affliction without firing events.
+        /// Safe to call during UI render, previews, or frame updates.
         /// </summary>
-        public QuestGateCheckResult CheckQuestGates(
-            string survivorId,
+        public QuestGateCheckResult QueryQuestGate(
             string questTag,
             IEnumerable<string> activeAfflictionIds)
         {
@@ -175,19 +209,41 @@ namespace Ashfall.Core.Medical
                     if (string.Equals(gate.gate_type, "blocks", StringComparison.OrdinalIgnoreCase))
                     {
                         result.IsBlocked = true;
-                        result.BlockingAfflictionIds.Add(afflictionId);
-                        OnQuestBlocked?.Invoke(survivorId, questTag);
+                        if (!result.BlockingAfflictionIds.Contains(afflictionId))
+                            result.BlockingAfflictionIds.Add(afflictionId);
                     }
                     else if (string.Equals(gate.gate_type, "unlocks", StringComparison.OrdinalIgnoreCase))
                     {
                         if (!result.UnlockedQuestTags.Contains(gate.quest_tag))
                             result.UnlockedQuestTags.Add(gate.quest_tag);
-                        result.UnlockingAfflictionIds.Add(afflictionId);
-                        OnQuestUnlocked?.Invoke(survivorId, gate.quest_tag);
+                        if (!result.UnlockingAfflictionIds.Contains(afflictionId))
+                            result.UnlockingAfflictionIds.Add(afflictionId);
                     }
                 }
             }
 
+            return result;
+        }
+
+        /// <summary>
+        /// Given a survivor's active affliction IDs and quest tag, determines
+        /// whether the quest is blocked or unlocked by any affliction.
+        /// Fires events as a side-effect for host adapters.
+        /// </summary>
+        public QuestGateCheckResult CheckQuestGates(
+            string survivorId,
+            string questTag,
+            IEnumerable<string> activeAfflictionIds)
+        {
+            var result = QueryQuestGate(questTag, activeAfflictionIds);
+            if (result.IsBlocked)
+            {
+                OnQuestBlocked?.Invoke(survivorId, questTag);
+            }
+            foreach (var unlocked in result.UnlockedQuestTags)
+            {
+                OnQuestUnlocked?.Invoke(survivorId, unlocked);
+            }
             return result;
         }
 
@@ -223,6 +279,50 @@ namespace Ashfall.Core.Medical
             if (activeAfflictionIds == null || string.IsNullOrWhiteSpace(dutyType)) return false;
             var modifiers = CalculateWorkModifiers(activeAfflictionIds);
             return modifiers.IsDutyExcluded(dutyType);
+        }
+
+        /// <summary>
+        /// Checks whether a canonical duty roster role is excluded by any active affliction.
+        /// Maps standard roster role IDs ("expedition", "mess", "night_watch", "ward", "hatch_opener")
+        /// to the corresponding authored excluded duty categories.
+        /// </summary>
+        public bool IsRoleExcluded(
+            IEnumerable<string> activeAfflictionIds,
+            string roleId,
+            out List<string> excludedDuties)
+        {
+            excludedDuties = new List<string>();
+            if (activeAfflictionIds == null || string.IsNullOrWhiteSpace(roleId)) return false;
+
+            var workMods = CalculateWorkModifiers(activeAfflictionIds);
+            if (workMods.ExcludedDutyTypes.Count == 0) return false;
+
+            var relevantDuties = GetDutiesForRole(roleId);
+            foreach (var duty in relevantDuties)
+            {
+                if (workMods.IsDutyExcluded(duty) && !excludedDuties.Contains(duty))
+                {
+                    excludedDuties.Add(duty);
+                }
+            }
+
+            return excludedDuties.Count > 0;
+        }
+
+        public static IReadOnlyList<string> GetDutiesForRole(string roleId)
+        {
+            string raw = (roleId ?? string.Empty).ToLowerInvariant().Trim();
+            string normalized = raw.StartsWith("role") ? raw.Substring(4).Trim('_') : raw;
+            return normalized switch
+            {
+                "expedition" => new[] { "expedition", "outdoor_duty", "heavy_labour" },
+                "mess" or "cook" or "kitchen" => new[] { "food_handling", "mess" },
+                "night_watch" or "nightwatch" or "guard" or "watch" or "patrol" => new[] { "guard_duty", "combat_duty", "patrol", "night_watch" },
+                "ward" or "medic" or "medical" => new[] { "medical_duty", "ward" },
+                "hatch_opener" or "hatch" => new[] { "heavy_labour", "airlock", "hatch_opener" },
+                "intake_sleeper" or "intake" => new[] { "heavy_labour" },
+                _ => new[] { roleId ?? string.Empty }
+            };
         }
     }
 }

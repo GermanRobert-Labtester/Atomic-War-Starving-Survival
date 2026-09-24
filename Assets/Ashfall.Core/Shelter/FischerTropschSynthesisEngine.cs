@@ -51,15 +51,6 @@ namespace Ashfall.Core.Shelter
         public int service_units = 1;
     }
 
-    [Serializable]
-    public sealed class LubricantServiceRecord
-    {
-        public string consumer_id = string.Empty;
-        public string product_id = string.Empty;
-        public string grade = string.Empty;
-        public int service_tick;
-    }
-
     public sealed class SynthesisTickResult
     {
         public bool Progressed { get; set; }

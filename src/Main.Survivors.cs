@@ -124,6 +124,11 @@ namespace AtomicWar.GodotApp
                     if (_state == GameState.Playing && !_isRestoringSurvivorState)
                         UpdateHud();
                 };
+
+                _survivors.OnSurvivorExposed += (survivorId, delta) =>
+                {
+                    ApplyRadiationExposure(survivorId, delta, _simDay);
+                };
             }
 
             if (_inventory != null)

@@ -429,5 +429,63 @@ namespace Ashfall.Core.Shelter
                 }
             }
         }
+
+        public ShelterArchiveCensus GetCensus()
+        {
+            int milestones = 0, memorials = 0, decisions = 0, discoveries = 0, events = 0;
+            foreach (var e in _state.Entries)
+            {
+                switch (e.Type)
+                {
+                    case ArchiveEntryType.Milestone: milestones++; break;
+                    case ArchiveEntryType.Memorial: memorials++; break;
+                    case ArchiveEntryType.Decision: decisions++; break;
+                    case ArchiveEntryType.Discovery: discoveries++; break;
+                    case ArchiveEntryType.Event: events++; break;
+                }
+            }
+
+            return new ShelterArchiveCensus(
+                entryCount: _state.Entries.Count,
+                categoryCount: _state.AuthoredCategories.Count,
+                foundingDay: _state.FoundingDay,
+                milestoneCount: milestones,
+                memorialCount: memorials,
+                decisionCount: decisions,
+                discoveryCount: discoveries,
+                eventCount: events);
+        }
+    }
+
+    public struct ShelterArchiveCensus
+    {
+        public int EntryCount { get; }
+        public int CategoryCount { get; }
+        public int FoundingDay { get; }
+        public int MilestoneCount { get; }
+        public int MemorialCount { get; }
+        public int DecisionCount { get; }
+        public int DiscoveryCount { get; }
+        public int EventCount { get; }
+
+        public ShelterArchiveCensus(
+            int entryCount,
+            int categoryCount,
+            int foundingDay,
+            int milestoneCount,
+            int memorialCount,
+            int decisionCount,
+            int discoveryCount,
+            int eventCount)
+        {
+            EntryCount = entryCount;
+            CategoryCount = categoryCount;
+            FoundingDay = foundingDay;
+            MilestoneCount = milestoneCount;
+            MemorialCount = memorialCount;
+            DecisionCount = decisionCount;
+            DiscoveryCount = discoveryCount;
+            EventCount = eventCount;
+        }
     }
 }

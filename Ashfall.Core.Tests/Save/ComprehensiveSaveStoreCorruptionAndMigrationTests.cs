@@ -307,9 +307,15 @@ namespace Ashfall.Core.Tests.Save
             // Plan 199 added human_migration (seasonal human migration schedule engine);
             // Plan 159 added shelter_governance (shelter governance & political system);
             // Plan 176 added aging (chronological age progression, life stages, retirement, elder mentorship).
-            Assert.Equal(249, SaveSectionRegistry.All.Count);
+            // Expansion 40 added mechanical_driveline; Expansion 41 added sleep_acoustic_rest.
+            // Plan 162 added shelter_archive; Plan 177 added survivor_dreams; Plan 184 added accessibility_settings.
+            // Plan 185 added memory_decay; Plan 202 added interpersonal_conflict; Plan 216 added exercise.
+            // Plan 178 added culture_creation; Plan 179 added psychological_profiles; Plan 180 added skill_certifications.
+            // Plan 187 added bestiary_knowledge; Plan 198 added health_history.
+            Assert.Equal(266, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(249, keys.Count);
+            Assert.Equal(266, keys.Count);
+
         }
 
     }

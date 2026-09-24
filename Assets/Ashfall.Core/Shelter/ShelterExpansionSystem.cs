@@ -8,8 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core.Shelter
 {
@@ -31,6 +33,40 @@ namespace Ashfall.Core.Shelter
         DepthExcavation  = 4
     }
 
+    public enum ConstructionStartCode
+    {
+        Started,
+        UnknownBlueprint,
+        UnknownRoom,
+        UnknownUpgrade,
+        InvalidDepth,
+        DepthLocked,
+        OccupiedCell,
+        UnsafeStability,
+        AlreadyUpgraded,
+        DuplicateProject,
+        InvalidTarget,
+        CostConsumerUnavailable,
+        InsufficientResources
+    }
+
+    public sealed class ConstructionStartResult
+    {
+        public bool Succeeded { get; }
+        public ConstructionStartCode Code { get; }
+        public ConstructionProjectDto? Project { get; }
+
+        public ConstructionStartResult(
+            bool succeeded,
+            ConstructionStartCode code,
+            ConstructionProjectDto? project = null)
+        {
+            Succeeded = succeeded;
+            Code = code;
+            Project = project?.Clone();
+        }
+    }
+
     public sealed class BlueprintDef
     {
         [JsonPropertyName("blueprint_id")]
@@ -41,6 +77,12 @@ namespace Ashfall.Core.Shelter
 
         [JsonPropertyName("room_type_id")]
         public string RoomTypeId { get; set; } = string.Empty;
+
+        [JsonPropertyName("canonical_room_id")]
+        public string CanonicalRoomId { get; set; } = string.Empty;
+
+        [JsonPropertyName("capacity_bonus")]
+        public int CapacityBonus { get; set; }
 
         [JsonPropertyName("description")]
         public string Description { get; set; } = string.Empty;
@@ -59,6 +101,18 @@ namespace Ashfall.Core.Shelter
 
         [JsonPropertyName("resource_costs")]
         public Dictionary<string, int> ResourceCosts { get; set; } = new();
+    }
+
+    public sealed class ShelterCrewRules
+    {
+        [JsonPropertyName("max_crew_per_project")]
+        public int MaxCrewPerProject { get; set; } = 3;
+
+        [JsonPropertyName("skill_id")]
+        public string SkillId { get; set; } = "skill_crafting";
+
+        [JsonPropertyName("fatigue_per_day")]
+        public float FatiguePerDay { get; set; } = 2.0f;
     }
 
     public sealed class UpgradeDef
@@ -89,11 +143,13 @@ namespace Ashfall.Core.Shelter
     {
         public string RoomId { get; set; } = string.Empty;
         public string RoomTypeId { get; set; } = string.Empty;
+        public string CanonicalRoomId { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public double Condition { get; set; } = 100.0; // 0..100
         public List<string> Upgrades { get; set; } = new();
         public List<string> ConnectedRoomIds { get; set; } = new();
         public int Capacity { get; set; } = 4;
+        public int CapacityBonus { get; set; }
         public int GridX { get; set; }
         public int GridY { get; set; }
         public int DepthLevel { get; set; } = 1;
@@ -105,9 +161,11 @@ namespace Ashfall.Core.Shelter
             {
                 RoomId = RoomId,
                 RoomTypeId = RoomTypeId,
+                CanonicalRoomId = CanonicalRoomId,
                 Name = Name,
                 Condition = Condition,
                 Capacity = Capacity,
+                CapacityBonus = CapacityBonus,
                 GridX = GridX,
                 GridY = GridY,
                 DepthLevel = DepthLevel,
@@ -134,6 +192,7 @@ namespace Ashfall.Core.Shelter
         public int ConstructionDay { get; set; }
         public int CompletionDay { get; set; } = -1;
         public ProjectStatus Status { get; set; } = ProjectStatus.Active;
+        public List<string> CrewSurvivorIds { get; set; } = new();
 
         public ConstructionProjectDto Clone()
         {
@@ -151,7 +210,10 @@ namespace Ashfall.Core.Shelter
                 LaborInvestedDays = LaborInvestedDays,
                 ConstructionDay = ConstructionDay,
                 CompletionDay = CompletionDay,
-                Status = Status
+                Status = Status,
+                CrewSurvivorIds = CrewSurvivorIds == null
+                    ? new List<string>()
+                    : new List<string>(CrewSurvivorIds)
             };
             foreach (var kv in ResourceCosts)
             {
@@ -167,6 +229,7 @@ namespace Ashfall.Core.Shelter
         public double StabilityRating { get; set; } = 100.0;
         public int MaxDepthUnlocked { get; set; } = 1;
         public int TotalRoomsConstructed { get; set; }
+        public int LastCrewProgressDay { get; set; }
         public List<ExpansionRoomDto> Rooms { get; set; } = new();
         public List<ConstructionProjectDto> Projects { get; set; } = new();
     }
@@ -184,16 +247,32 @@ namespace Ashfall.Core.Shelter
         private readonly Dictionary<string, UpgradeDef> _upgrades = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, ExpansionRoomDto> _rooms = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, ConstructionProjectDto> _projects = new(StringComparer.OrdinalIgnoreCase);
+        private ShelterCrewRules _crewRules = new();
 
         public double StabilityRating { get; private set; } = 100.0;
         public int MaxDepthUnlocked { get; private set; } = 1;
         public int TotalRoomsConstructed { get; private set; }
+        public int LastCrewProgressDay { get; private set; }
+        public ShelterCrewRules CrewRules => new ShelterCrewRules
+        {
+            MaxCrewPerProject = _crewRules.MaxCrewPerProject,
+            SkillId = _crewRules.SkillId,
+            FatiguePerDay = _crewRules.FatiguePerDay
+        };
+
+        public IReadOnlyDictionary<string, BlueprintDef> Blueprints => _blueprints;
+        public IReadOnlyDictionary<string, UpgradeDef> Upgrades => _upgrades;
 
         // Seams for host UI / audio / simulation alerts
         public Action<ConstructionProjectDto>? OnProjectStartedSeam { get; set; }
         public Action<ConstructionProjectDto>? OnProjectCompletedSeam { get; set; }
         public Action<ExpansionRoomDto>? OnRoomRenovatedSeam { get; set; }
         public Action<double>? OnStabilityRiskWarningSeam { get; set; }
+        public Func<string, bool>? IsCrewSurvivorEligible { get; set; }
+        public Func<string, string, float>? ResolveCrewSkillBonus { get; set; }
+        public Action<string, string, float, int>? RecordCrewSkillPractice { get; set; }
+        public Action<string, float>? ApplyCrewFatigue { get; set; }
+        public Action<string, float>? ApplySurvivorMoraleDelta { get; set; }
 
         public ShelterExpansionSystem()
         {
@@ -231,6 +310,10 @@ namespace Ashfall.Core.Shelter
                         var bpId = item.GetProperty("blueprint_id").GetString() ?? string.Empty;
                         var name = item.GetProperty("name").GetString() ?? string.Empty;
                         var roomType = item.GetProperty("room_type_id").GetString() ?? string.Empty;
+                        var canonicalRoomId = item.TryGetProperty("canonical_room_id", out var roomIdElem)
+                            ? roomIdElem.GetString() ?? string.Empty : string.Empty;
+                        var capacityBonus = item.TryGetProperty("capacity_bonus", out var capacityElem)
+                            ? capacityElem.GetInt32() : 0;
                         var desc = item.TryGetProperty("description", out var dElem) ? dElem.GetString() ?? string.Empty : string.Empty;
                         var labor = item.TryGetProperty("base_labor_days", out var lElem) ? lElem.GetDouble() : 8.0;
                         var minDepth = item.TryGetProperty("min_depth_level", out var minElem) ? minElem.GetInt32() : 1;
@@ -251,6 +334,8 @@ namespace Ashfall.Core.Shelter
                             BlueprintId = bpId,
                             Name = name,
                             RoomTypeId = roomType,
+                            CanonicalRoomId = canonicalRoomId,
+                            CapacityBonus = Math.Max(0, capacityBonus),
                             Description = desc,
                             BaseLaborDays = labor,
                             MinDepthLevel = minDepth,
@@ -259,6 +344,20 @@ namespace Ashfall.Core.Shelter
                             ResourceCosts = costs
                         };
                     }
+                }
+
+                if (root.TryGetProperty("crew_rules", out var crewElem)
+                    && crewElem.ValueKind == JsonValueKind.Object)
+                {
+                    _crewRules = new ShelterCrewRules
+                    {
+                        MaxCrewPerProject = crewElem.TryGetProperty("max_crew_per_project", out var maxCrewElem)
+                            ? Math.Max(1, maxCrewElem.GetInt32()) : 3,
+                        SkillId = crewElem.TryGetProperty("skill_id", out var skillElem)
+                            ? skillElem.GetString() ?? "skill_crafting" : "skill_crafting",
+                        FatiguePerDay = crewElem.TryGetProperty("fatigue_per_day", out var fatigueElem)
+                            ? Math.Max(0f, fatigueElem.GetSingle()) : 2.0f
+                    };
                 }
 
                 if (root.TryGetProperty("upgrades", out var upgElem) && upgElem.ValueKind == JsonValueKind.Array)
@@ -309,6 +408,7 @@ namespace Ashfall.Core.Shelter
                 BlueprintId = "bp_hydroponic_bay",
                 Name = "Hydroponic Bay Expansion",
                 RoomTypeId = "room_hydroponics",
+                CanonicalRoomId = "room_greenhouse_shelter",
                 BaseLaborDays = 8.0,
                 MinDepthLevel = 1,
                 MaxDepthLevel = 3,
@@ -320,12 +420,33 @@ namespace Ashfall.Core.Shelter
                 BlueprintId = "bp_deep_bunkhouse",
                 Name = "Reinforced Living Quarters",
                 RoomTypeId = "room_deep_dormitory",
+                CanonicalRoomId = "room_bunks",
+                CapacityBonus = 4,
                 BaseLaborDays = 6.0,
                 MinDepthLevel = 1,
                 MaxDepthLevel = 4,
                 StabilityCost = 4.0,
                 ResourceCosts = new Dictionary<string, int> { ["scrap_metal"] = 10, ["scrap_wood"] = 10 }
             };
+            _blueprints["bp_deep_shaft_expansion"] = new BlueprintDef
+            {
+                BlueprintId = "bp_deep_shaft_expansion",
+                Name = "Sub-Level Shaft Excavation",
+                RoomTypeId = "room_shaft_stairwell",
+                CanonicalRoomId = "room_bunker_corridor",
+                BaseLaborDays = 14.0,
+                MinDepthLevel = 0,
+                MaxDepthLevel = 5,
+                StabilityCost = 12.0,
+                ResourceCosts = new Dictionary<string, int>
+                {
+                    ["scrap_metal"] = 25,
+                    ["concrete_rubble"] = 15,
+                    ["wooden_plank"] = 6
+                }
+            };
+
+            _crewRules = new ShelterCrewRules();
 
             _upgrades.Clear();
             _upgrades["upg_structural_pillar"] = new UpgradeDef
@@ -363,6 +484,239 @@ namespace Ashfall.Core.Shelter
             }
             return false;
         }
+
+        public ConstructionStartResult TryStartRoomConstruction(
+            string blueprintId,
+            int gridX,
+            int gridY,
+            int depthLevel,
+            int currentDay,
+            IPlayerInventoryPort? inventory)
+        {
+            if (!_blueprints.TryGetValue(blueprintId ?? string.Empty, out var bp))
+                return Failed(ConstructionStartCode.UnknownBlueprint);
+            if (depthLevel < bp.MinDepthLevel || depthLevel > bp.MaxDepthLevel)
+                return Failed(ConstructionStartCode.InvalidDepth);
+            if (depthLevel > MaxDepthUnlocked)
+                return Failed(ConstructionStartCode.DepthLocked);
+            if (IsCellOccupied(gridX, gridY, depthLevel))
+                return Failed(ConstructionStartCode.OccupiedCell);
+            if (StabilityRating - bp.StabilityCost < MinimumSafeStability)
+                return Failed(ConstructionStartCode.UnsafeStability);
+            if (HasActiveTargetProject(ConstructionProjectType.NewRoom, gridX, gridY, depthLevel))
+                return Failed(ConstructionStartCode.DuplicateProject);
+            if (inventory == null)
+                return Failed(ConstructionStartCode.CostConsumerUnavailable);
+
+            var project = NewProject("build", currentDay, ConstructionProjectType.NewRoom);
+            project.BlueprintId = bp.BlueprintId;
+            project.GridX = gridX;
+            project.GridY = gridY;
+            project.DepthLevel = depthLevel;
+            project.LaborRequiredDays = bp.BaseLaborDays;
+            project.ResourceCosts = new Dictionary<string, int>(bp.ResourceCosts);
+            project.ConstructionDay = currentDay;
+            return CommitProject(project, inventory);
+        }
+
+        public ConstructionStartResult TryStartRenovation(
+            string targetRoomId,
+            int currentDay,
+            IPlayerInventoryPort? inventory)
+        {
+            if (!_rooms.TryGetValue(targetRoomId ?? string.Empty, out var room))
+                return Failed(ConstructionStartCode.UnknownRoom);
+            if (room.Condition >= 99.0)
+                return Failed(ConstructionStartCode.InvalidTarget);
+            if (HasActiveRoomProject(targetRoomId))
+                return Failed(ConstructionStartCode.DuplicateProject);
+            if (inventory == null)
+                return Failed(ConstructionStartCode.CostConsumerUnavailable);
+
+            double conditionDeficit = 100.0 - room.Condition;
+            var project = NewProject("renov", currentDay, ConstructionProjectType.Renovation);
+            project.TargetRoomId = targetRoomId;
+            project.LaborRequiredDays = Math.Max(1.0, Math.Round(conditionDeficit / 25.0, 1));
+            project.ResourceCosts = new Dictionary<string, int> { ["scrap_metal"] = 2 };
+            project.ConstructionDay = currentDay;
+            return CommitProject(project, inventory);
+        }
+
+        public ConstructionStartResult TryStartUpgrade(
+            string targetRoomId,
+            string upgradeId,
+            int currentDay,
+            IPlayerInventoryPort? inventory)
+        {
+            if (!_rooms.TryGetValue(targetRoomId ?? string.Empty, out var room))
+                return Failed(ConstructionStartCode.UnknownRoom);
+            if (!_upgrades.TryGetValue(upgradeId ?? string.Empty, out var upgrade))
+                return Failed(ConstructionStartCode.UnknownUpgrade);
+            if (room.Upgrades.Contains(upgradeId))
+                return Failed(ConstructionStartCode.AlreadyUpgraded);
+            if (HasActiveRoomProject(targetRoomId))
+                return Failed(ConstructionStartCode.DuplicateProject);
+            if (inventory == null)
+                return Failed(ConstructionStartCode.CostConsumerUnavailable);
+
+            var project = NewProject("upg", currentDay, ConstructionProjectType.Upgrade);
+            project.TargetRoomId = targetRoomId;
+            project.UpgradeId = upgradeId;
+            project.LaborRequiredDays = upgrade.LaborDays;
+            project.ResourceCosts = new Dictionary<string, int>(upgrade.ResourceCosts);
+            project.ConstructionDay = currentDay;
+            return CommitProject(project, inventory);
+        }
+
+        public ConstructionStartResult TryStartDepthExcavation(
+            int currentDay,
+            IPlayerInventoryPort? inventory)
+        {
+            if (!_blueprints.TryGetValue("bp_deep_shaft_expansion", out var blueprint))
+                return Failed(ConstructionStartCode.UnknownBlueprint);
+            int nextDepth = MaxDepthUnlocked + 1;
+            if (nextDepth > blueprint.MaxDepthLevel)
+                return Failed(ConstructionStartCode.DepthLocked);
+            if (StabilityRating - blueprint.StabilityCost < MinimumSafeStability)
+                return Failed(ConstructionStartCode.UnsafeStability);
+            if (HasActiveDepthExcavation(nextDepth))
+                return Failed(ConstructionStartCode.DuplicateProject);
+            if (inventory == null)
+                return Failed(ConstructionStartCode.CostConsumerUnavailable);
+
+            var project = NewProject($"shaft_lv{nextDepth}", currentDay, ConstructionProjectType.DepthExcavation);
+            project.BlueprintId = blueprint.BlueprintId;
+            project.DepthLevel = nextDepth;
+            project.LaborRequiredDays = blueprint.BaseLaborDays;
+            project.ResourceCosts = new Dictionary<string, int>(blueprint.ResourceCosts);
+            project.ConstructionDay = currentDay;
+            return CommitProject(project, inventory);
+        }
+
+        public bool TryAssignCrew(string projectId, string survivorId)
+        {
+            if (string.IsNullOrWhiteSpace(projectId) || string.IsNullOrWhiteSpace(survivorId)
+                || !_projects.TryGetValue(projectId, out var project)
+                || project.Status != ProjectStatus.Active
+                || (IsCrewSurvivorEligible != null && !IsCrewSurvivorEligible(survivorId)))
+                return false;
+
+            foreach (var existing in _projects.Values)
+                if (existing.Status == ProjectStatus.Active
+                    && existing.CrewSurvivorIds.Contains(survivorId, StringComparer.Ordinal))
+                    return false;
+            if (project.CrewSurvivorIds.Count >= _crewRules.MaxCrewPerProject
+                || project.CrewSurvivorIds.Contains(survivorId, StringComparer.Ordinal))
+                return false;
+
+            project.CrewSurvivorIds.Add(survivorId);
+            project.CrewSurvivorIds.Sort(StringComparer.Ordinal);
+            return true;
+        }
+
+        public bool RelieveCrew(string projectId, string survivorId)
+        {
+            if (string.IsNullOrWhiteSpace(projectId) || string.IsNullOrWhiteSpace(survivorId)
+                || !_projects.TryGetValue(projectId, out var project))
+                return false;
+            return project.CrewSurvivorIds.Remove(survivorId);
+        }
+
+        public int ProgressAssignedProjects(int currentDay)
+        {
+            if (currentDay <= LastCrewProgressDay || currentDay <= 0)
+                return 0;
+            LastCrewProgressDay = currentDay;
+            var projects = new List<ConstructionProjectDto>(_projects.Values);
+            projects.Sort((left, right) => StringComparer.Ordinal.Compare(left.ProjectId, right.ProjectId));
+            int completed = 0;
+            foreach (var project in projects)
+            {
+                if (project.Status != ProjectStatus.Active || project.CrewSurvivorIds.Count == 0)
+                    continue;
+
+                double labor = 0.0;
+                var crew = new List<string>(project.CrewSurvivorIds);
+                crew.Sort(StringComparer.Ordinal);
+                foreach (string survivorId in crew)
+                {
+                    float bonus = ResolveCrewSkillBonus?.Invoke(survivorId, _crewRules.SkillId) ?? 0f;
+                    bonus = float.IsNaN(bonus) || float.IsInfinity(bonus) ? 0f : Math.Clamp(bonus, 0f, 1f);
+                    labor += 1.0 + bonus;
+                    RecordCrewSkillPractice?.Invoke(survivorId, _crewRules.SkillId, 1f, currentDay);
+                    ApplyCrewFatigue?.Invoke(survivorId, _crewRules.FatiguePerDay);
+                }
+
+                if (ProgressProject(project.ProjectId, labor, currentDay))
+                    completed++;
+            }
+            return completed;
+        }
+
+        private ConstructionStartResult CommitProject(
+            ConstructionProjectDto project,
+            IPlayerInventoryPort inventory)
+        {
+            bool inserted = false;
+            bool paid = inventory.TryConsumeBill(project.ResourceCosts, () =>
+            {
+                _projects.Add(project.ProjectId, project);
+                inserted = true;
+            });
+            if (!paid || !inserted)
+                return Failed(ConstructionStartCode.InsufficientResources);
+
+            OnProjectStartedSeam?.Invoke(project);
+            return new ConstructionStartResult(true, ConstructionStartCode.Started, project);
+        }
+
+        private ConstructionProjectDto NewProject(
+            string prefix,
+            int currentDay,
+            ConstructionProjectType type)
+        {
+            string projectId = $"{prefix}_{currentDay}_{_projects.Count}";
+            int suffix = _projects.Count;
+            while (_projects.ContainsKey(projectId))
+                projectId = $"{prefix}_{currentDay}_{++suffix}";
+            return new ConstructionProjectDto
+            {
+                ProjectId = projectId,
+                ProjectType = type,
+                Status = ProjectStatus.Active
+            };
+        }
+
+        private bool HasActiveTargetProject(ConstructionProjectType type, int gridX, int gridY, int depthLevel)
+        {
+            foreach (var project in _projects.Values)
+                if (project.Status == ProjectStatus.Active && project.ProjectType == type
+                    && project.GridX == gridX && project.GridY == gridY && project.DepthLevel == depthLevel)
+                    return true;
+            return false;
+        }
+
+        private bool HasActiveRoomProject(string roomId)
+        {
+            foreach (var project in _projects.Values)
+                if (project.Status == ProjectStatus.Active
+                    && string.Equals(project.TargetRoomId, roomId, StringComparison.Ordinal))
+                    return true;
+            return false;
+        }
+
+        private bool HasActiveDepthExcavation(int depthLevel)
+        {
+            foreach (var project in _projects.Values)
+                if (project.Status == ProjectStatus.Active
+                    && project.ProjectType == ConstructionProjectType.DepthExcavation
+                    && project.DepthLevel == depthLevel)
+                    return true;
+            return false;
+        }
+
+        private static ConstructionStartResult Failed(ConstructionStartCode code)
+            => new(false, code);
 
         public ConstructionProjectDto? StartRoomConstruction(
             string blueprintId,
@@ -463,6 +817,12 @@ namespace Ashfall.Core.Shelter
         public ConstructionProjectDto StartDepthExcavation(int currentDay)
         {
             int nextDepth = MaxDepthUnlocked + 1;
+            foreach (var activeProject in _projects.Values)
+                if (activeProject.Status == ProjectStatus.Active
+                    && activeProject.ProjectType == ConstructionProjectType.DepthExcavation
+                    && activeProject.DepthLevel == nextDepth)
+                    return activeProject.Clone();
+
             string projectId = $"shaft_lv{nextDepth}";
             var project = new ConstructionProjectDto
             {
@@ -513,8 +873,10 @@ namespace Ashfall.Core.Shelter
                         {
                             RoomId = roomId,
                             RoomTypeId = bp.RoomTypeId,
+                            CanonicalRoomId = bp.CanonicalRoomId,
                             Name = bp.Name,
                             Condition = 100.0,
+                            CapacityBonus = bp.CapacityBonus,
                             GridX = project.GridX,
                             GridY = project.GridY,
                             DepthLevel = project.DepthLevel,
@@ -553,8 +915,19 @@ namespace Ashfall.Core.Shelter
 
                 case ConstructionProjectType.DepthExcavation:
                     MaxDepthUnlocked = Math.Max(MaxDepthUnlocked, project.DepthLevel);
-                    AdjustStability(-10.0);
+                    if (_blueprints.TryGetValue(project.BlueprintId, out var shaftBlueprint))
+                        AdjustStability(-shaftBlueprint.StabilityCost);
+                    else
+                        AdjustStability(-10.0);
                     break;
+            }
+
+            if (project.ProjectType == ConstructionProjectType.Upgrade
+                && _upgrades.TryGetValue(project.UpgradeId, out var completedUpgrade)
+                && completedUpgrade.MoraleBonus != 0)
+            {
+                foreach (string survivorId in project.CrewSurvivorIds)
+                    ApplySurvivorMoraleDelta?.Invoke(survivorId, completedUpgrade.MoraleBonus);
             }
 
             OnProjectCompletedSeam?.Invoke(project);
@@ -596,6 +969,20 @@ namespace Ashfall.Core.Shelter
             return list;
         }
 
+        public IReadOnlyDictionary<string, int> GetCompletedCapacityBonuses()
+        {
+            var bonuses = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var room in _rooms.Values)
+            {
+                if (!room.IsConstructed || room.CapacityBonus <= 0
+                    || string.IsNullOrWhiteSpace(room.CanonicalRoomId))
+                    continue;
+                bonuses.TryGetValue(room.CanonicalRoomId, out int total);
+                bonuses[room.CanonicalRoomId] = checked(total + room.CapacityBonus);
+            }
+            return bonuses;
+        }
+
         public ConstructionProjectDto? GetProject(string projectId)
         {
             if (_projects.TryGetValue(projectId, out var p))
@@ -620,7 +1007,8 @@ namespace Ashfall.Core.Shelter
                 SchemaVersion = 1,
                 StabilityRating = StabilityRating,
                 MaxDepthUnlocked = MaxDepthUnlocked,
-                TotalRoomsConstructed = TotalRoomsConstructed
+                TotalRoomsConstructed = TotalRoomsConstructed,
+                LastCrewProgressDay = LastCrewProgressDay
             };
             foreach (var r in _rooms.Values)
             {
@@ -641,6 +1029,7 @@ namespace Ashfall.Core.Shelter
             StabilityRating = Math.Clamp(state.StabilityRating, 0.0, 100.0);
             MaxDepthUnlocked = Math.Max(1, state.MaxDepthUnlocked);
             TotalRoomsConstructed = Math.Max(0, state.TotalRoomsConstructed);
+            LastCrewProgressDay = Math.Max(0, state.LastCrewProgressDay);
 
             _rooms.Clear();
             if (state.Rooms != null)

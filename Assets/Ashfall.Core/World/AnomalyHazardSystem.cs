@@ -28,13 +28,6 @@ namespace Ashfall.Core.World
         Classified = 2    // detector capability met the authored threshold: full identity
     }
 
-    public enum HazardWarningProfile
-    {
-        Late = 0,      // warnings fire at 60% of warning radius, lower confidence
-        Standard = 1,  // warnings fire at 85% of warning radius
-        Early = 2      // warnings fire at the full warning radius, highest confidence
-    }
-
     [Serializable]
     public sealed class AnomalyHazardInstance
     {

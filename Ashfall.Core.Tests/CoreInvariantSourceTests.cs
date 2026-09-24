@@ -15,7 +15,9 @@ namespace Ashfall.Core.Tests
     /// (no UnityEngine/*, no Godot/*, no JsonUtility).
     ///
     /// Invariant 4 — Core must be DETERMINISTIC
-    /// (no System.Random, no Guid.NewGuid, no DateTime.Now, no GetHashCode()).
+    /// (no System.Random, no Guid.NewGuid, no DateTime.Now, no runtime
+    /// string/object hash APIs, and no HashCode.Combine). RuntimeHelpers
+    /// identity hashing remains valid only for process-local reference sets.
     ///
     /// These are compile-proofed by the asmdef (noEngineReferences) for the
     /// engine side but NOT for the nondeterminism side, so we scan the source
@@ -91,7 +93,8 @@ namespace Ashfall.Core.Tests
             string[] banned =
             {
                 "System.Random", "new Random(", "Guid.NewGuid(",
-                "DateTime.Now", "DateTime.UtcNow", ".GetHashCode()"
+                "DateTime.Now", "DateTime.UtcNow", ".GetHashCode()",
+                "StringComparer.Ordinal.GetHashCode(", "HashCode.Combine("
             };
             var offenders = AllCoreStatements()
                 .Where(l => banned.Any(b => l.Contains(b, StringComparison.Ordinal)))

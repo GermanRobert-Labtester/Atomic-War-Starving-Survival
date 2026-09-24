@@ -447,6 +447,22 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void Readout_NegativeOrOverflowingCounters_StayBounded()
+        {
+            var knowing = new ReckoningState { phase = ReckoningPhase.Knowing };
+            var culpable = new ReckoningState { phase = ReckoningPhase.Culpable };
+
+            var negative = VerdictReadout.LineFor(knowing, enrolledEvidence: -1, readCount: 0);
+            var overflow = VerdictReadout.LineFor(
+                culpable,
+                enrolledEvidence: int.MaxValue,
+                readCount: 1);
+
+            Assert.Contains("shelter instruments", negative);
+            Assert.Contains("shelter instruments", overflow);
+        }
+
+        [Fact]
         public void Readout_Resolved_WhenCountPresented()
         {
             var s = new ReckoningState { countPresented = true };

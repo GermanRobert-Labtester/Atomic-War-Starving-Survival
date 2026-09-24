@@ -39,39 +39,4 @@ namespace Ashfall.Core
             cancelledDay = cancelledDay
         };
     }
-
-    /// <summary>
-    /// Central mapping from debt consequence severity to raid pressure and priority (F5.1 / F5.3).
-    /// </summary>
-    public static class DebtBountySeverity
-    {
-        public const float LowBountyBoost = 0.05f;
-        public const float ModerateBountyBoost = 0.15f;
-        public const float SevereRaidBoost = 0.30f;
-        public const float MaxAggregateBountyBoost = 0.50f;
-
-        public static float GetRaidChanceBoost(string severity)
-        {
-            if (string.Equals(severity, "severe", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(severity, "raid", StringComparison.OrdinalIgnoreCase))
-                return SevereRaidBoost;
-            if (string.Equals(severity, "moderate", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(severity, "bounty", StringComparison.OrdinalIgnoreCase))
-                return ModerateBountyBoost;
-            if (string.Equals(severity, "low", StringComparison.OrdinalIgnoreCase))
-                return LowBountyBoost;
-            return ModerateBountyBoost;
-        }
-
-        public static int GetPriority(string severity)
-        {
-            if (string.Equals(severity, "severe", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(severity, "raid", StringComparison.OrdinalIgnoreCase))
-                return 3;
-            if (string.Equals(severity, "moderate", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(severity, "bounty", StringComparison.OrdinalIgnoreCase))
-                return 2;
-            return 1;
-        }
-    }
 }

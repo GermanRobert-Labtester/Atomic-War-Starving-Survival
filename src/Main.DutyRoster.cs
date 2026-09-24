@@ -43,9 +43,16 @@ namespace AtomicWar.GodotApp
             _expansions?.BindDutyRoster(_dutyRoster.Roster);
             SetupFitnessForDuty();
             _dutyRoster.Roster.EvaluateRoleFitness = EvaluateDutyRoleFitness;
-            // Plan 137 — Bind needs-derived work speed multiplier
+            // Plan 137 / Plan 143 — Bind needs and medical affliction derived work speed multiplier
             _dutyRoster.Roster.WorkSpeedMultiplierLookup = survivorId =>
-                GetNeedsPerformanceModifiers(survivorId).WorkSpeedMultiplier;
+            {
+                float needsMult = GetNeedsPerformanceModifiers(survivorId).WorkSpeedMultiplier;
+                SetupMedical();
+                var activeAfflictions = GetActiveAfflictionIds(survivorId);
+                var workMods = _medical?.Bridge?.CalculateWorkModifiers(activeAfflictions);
+                float afflictionSpeed = workMods?.SpeedMultiplier ?? 1.0f;
+                return Math.Max(0.1f, needsMult * afflictionSpeed);
+            };
 
             // Cross-host roundtrip: a save written here (or by the Unity host) restores
             // the chart, marks, and encounter counters instead of starting blank.

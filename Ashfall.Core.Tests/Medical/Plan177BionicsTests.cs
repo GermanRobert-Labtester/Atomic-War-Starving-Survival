@@ -422,5 +422,20 @@ namespace Ashfall.Core.Tests.Plan177Medical
             };
             Assert.Equal(run(9), run(9));
         }
+
+        // Guard-extraction hardening: null/empty/unknown servicing ids fail
+        // closed (false) instead of throwing inside the implant lookup.
+        [Fact]
+        public void ServicingGuards_NullEmptyUnknownIds_ReturnFalse()
+        {
+            var (system, _) = Create(LegServo());
+            foreach (var bad in new string?[] { null, string.Empty, "ghost_implant" })
+            {
+                Assert.False(system.PerformMaintenance(bad!, LimbId.LeftArm, "repair_kit", day: 6));
+                Assert.False(system.PerformMaintenance("s1", LimbId.LeftArm, bad!, day: 6));
+                Assert.False(system.Repair(bad!, LimbId.LeftArm, "repair_kit"));
+                Assert.False(system.Repair("s1", LimbId.LeftArm, bad!));
+            }
+        }
     }
 }

@@ -10,6 +10,120 @@ namespace Ashfall.Core.Tests
     public sealed class ItemLoreSystemTests
     {
         [Fact]
+        public void Constructor_CapturedState_DoesNotAliasInput()
+        {
+            var state = new ItemLoreState
+            {
+                NextSequence = 3,
+                LoreEntries = new List<ItemLoreEntry>
+                {
+                    new ItemLoreEntry
+                    {
+                        LoreId = "lore_2",
+                        ItemInstanceId = "item_axe_01",
+                        Text = "Recovered from a flooded shelter."
+                    }
+                },
+                Provenances = new List<ItemProvenanceChain>
+                {
+                    new ItemProvenanceChain
+                    {
+                        ItemInstanceId = "item_axe_01",
+                        LoreEntryIds = new List<string> { "lore_2" }
+                    }
+                }
+            };
+
+            var system = new ItemLoreSystem(state);
+            state.LoreEntries.Clear();
+            state.Provenances.Clear();
+
+            Assert.Equal(1, system.TotalLoreEntriesCount);
+            Assert.Equal(1, system.TrackedItemCount);
+        }
+
+        [Fact]
+        public void Restore_StaleNextSequence_DoesNotCreateDuplicateLoreIds()
+        {
+            var state = new ItemLoreState
+            {
+                NextSequence = 1,
+                LoreEntries = new List<ItemLoreEntry>
+                {
+                    new ItemLoreEntry
+                    {
+                        LoreId = "lore_2",
+                        ItemInstanceId = "item_axe_01",
+                        Text = "Existing lore."
+                    }
+                },
+                Provenances = new List<ItemProvenanceChain>
+                {
+                    new ItemProvenanceChain
+                    {
+                        ItemInstanceId = "item_axe_01",
+                        LoreEntryIds = new List<string> { "lore_2" }
+                    }
+                }
+            };
+            var system = new ItemLoreSystem(state);
+
+            system.AddLore("item_axe_01", LoreTriggerType.Combat, "First new lore.", 4);
+            system.AddLore("item_axe_01", LoreTriggerType.Trade, "Second new lore.", 5);
+
+            Assert.Equal(3, system.TotalLoreEntriesCount);
+            Assert.Equal(3, system.GetLoreEntries("item_axe_01").Select(entry => entry.LoreId).Distinct().Count());
+        }
+
+        [Fact]
+        public void Queries_ReturnReadOnlySnapshots()
+        {
+            var system = new ItemLoreSystem();
+            system.RegisterItem("item_axe_01", crafterId: "surv_smith", craftingDay: 2);
+
+            var provenance = system.GetProvenance("item_axe_01")!;
+            provenance.OwnershipChain.Add("tampered_owner");
+            provenance.Significance = SignificanceLevel.Legendary;
+            var lore = system.GetLoreEntries("item_axe_01");
+            lore[0].Text = "tampered lore";
+
+            var liveProvenance = system.GetProvenance("item_axe_01")!;
+            Assert.DoesNotContain("tampered_owner", liveProvenance.OwnershipChain);
+            Assert.NotEqual(SignificanceLevel.Legendary, liveProvenance.Significance);
+            Assert.NotEqual("tampered lore", system.GetLoreEntries("item_axe_01")[0].Text);
+        }
+
+        [Fact]
+        public void Restore_NullEntries_FailsClosed()
+        {
+            var state = new ItemLoreState
+            {
+                LoreEntries = new List<ItemLoreEntry> { null! },
+                Provenances = new List<ItemProvenanceChain> { null! }
+            };
+
+            var system = new ItemLoreSystem();
+            system.RestoreState(state);
+
+            Assert.Equal(0, system.TotalLoreEntriesCount);
+            Assert.Equal(0, system.TrackedItemCount);
+        }
+
+        [Fact]
+        public void TransferOwnership_UsesCanonicalItemIdInEvent()
+        {
+            var system = new ItemLoreSystem();
+            string? eventItemId = null;
+            system.OnOwnershipTransferred += (itemId, _) => eventItemId = itemId;
+
+            bool transferred = system.TransferOwnership(" item_axe_01 ", "surv_smith", day: 3);
+
+            Assert.True(transferred);
+            Assert.Equal("item_axe_01", eventItemId);
+            Assert.NotNull(system.GetProvenance("item_axe_01"));
+        }
+
+        [Fact]
         public void RegisterItem_WithCrafter_AddsInitialCraftingLore()
         {
             var system = new ItemLoreSystem();

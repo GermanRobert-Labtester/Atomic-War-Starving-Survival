@@ -61,7 +61,35 @@ namespace AtomicWar.GodotApp
                     missing.BlockingReasons, Array.Empty<string>(), 0f);
             }
 
-            return _fitnessForDuty.EvaluateForRole(BuildFitnessFacts(survivorId), requirements);
+            var verdict = _fitnessForDuty.EvaluateForRole(BuildFitnessFacts(survivorId), requirements);
+            SetupMedical();
+            if (_medical?.Bridge != null)
+            {
+                var activeAfflictions = GetActiveAfflictionIds(survivorId);
+                if (_medical.Bridge.IsRoleExcluded(activeAfflictions, roleId, out var excludedDuties))
+                {
+                    var blockers = new List<string>(verdict.BlockingReasons);
+                    foreach (var duty in excludedDuties)
+                    {
+                        string reason = $"affliction_excluded_{duty}";
+                        if (!blockers.Contains(reason)) blockers.Add(reason);
+                    }
+                    if (!blockers.Contains("affliction_duty_excluded"))
+                        blockers.Add("affliction_duty_excluded");
+
+                    return new RoleFitnessVerdict(
+                        verdict.SurvivorId,
+                        verdict.RoleId,
+                        verdict.BaseVerdict,
+                        allowed: false,
+                        warning: verdict.Warning,
+                        blockingReasons: blockers,
+                        warningReasons: verdict.WarningReasons,
+                        recommendedMaxHours: 0f);
+                }
+            }
+
+            return verdict;
         }
 
         private FitnessVerdict EvaluateSurvivorFitness(string survivorId)

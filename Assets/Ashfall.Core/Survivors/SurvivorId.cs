@@ -159,7 +159,7 @@ namespace Ashfall.Core.Survivors
 
         public override bool Equals(object? obj) => obj is SurvivorId other && Equals(other);
 
-        public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(Value);
+        public override int GetHashCode() => StableHash.Of(Value);
 
         /// <summary>Ordinal ordering — the canonical deterministic survivor order.</summary>
         public int CompareTo(SurvivorId other) => string.CompareOrdinal(Value, other.Value);
@@ -176,11 +176,9 @@ namespace Ashfall.Core.Survivors
         // No custom IEqualityComparer / IComparer is provided, deliberately.
         // Because this struct implements IEquatable<SurvivorId> and
         // IComparable<SurvivorId>, EqualityComparer<SurvivorId>.Default and
-        // List.Sort() already use the ordinal semantics above without boxing, so a
-        // hand-written comparer would only duplicate them — and forwarding to
-        // id.GetHashCode() inside one would trip Core's determinism gate, which
-        // bans parameterless GetHashCode() calls because .NET randomizes string
-        // hashing per process.
+        // List.Sort() already use the ordinal semantics above without boxing.
+        // A hand-written comparer would only duplicate them; GetHashCode above
+        // uses StableHash so dictionary buckets remain process-stable too.
     }
 
     /// <summary>

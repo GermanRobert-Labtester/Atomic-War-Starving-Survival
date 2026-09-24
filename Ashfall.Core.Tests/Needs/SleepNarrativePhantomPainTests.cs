@@ -43,6 +43,17 @@ namespace Ashfall.Core.Tests.Needs
         }
 
         [Fact]
+        public void Project_NegativeExtremeDay_StillReturnsRestfulLine()
+        {
+            var projection = new SleepNarrativeProjection(new SurvivorMentalHealthSystem());
+
+            var beat = projection.Project("survivor_boundary", day: int.MinValue + 1);
+
+            Assert.Equal(SleepBeatKind.Restful, beat.Kind);
+            Assert.NotEmpty(beat.Text);
+        }
+
+        [Fact]
         public void Project_WithoutPhantomPain_HealthySurvivorIsRestful()
         {
             var mentalHealth = new SurvivorMentalHealthSystem();

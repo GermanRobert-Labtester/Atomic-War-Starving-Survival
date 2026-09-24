@@ -47,28 +47,28 @@ namespace AtomicWar.GodotApp
 
                 // Check 3: Canonical template definitions verification
                 var templates = host.GetAllTemplates();
-                bool hasStandardWorker = templates.Any(t => t.template_id == "standard_worker" && t.default_blocks.Count > 0);
-                bool hasNightGuard = templates.Any(t => t.template_id == "night_guard" && t.default_blocks.Count > 0);
-                bool hasScavenger = templates.Any(t => t.template_id == "scavenger_flexible" && t.default_blocks.Count > 0);
-                bool hasCaretaker = templates.Any(t => t.template_id == "infirmary_caretaker" && t.default_blocks.Count > 0);
+                bool hasEarlyRiser = templates.Any(t => t.template_id == "routine_early_riser" && t.default_blocks.Count > 0);
+                bool hasNightOwl = templates.Any(t => t.template_id == "routine_night_owl" && t.default_blocks.Count > 0);
+                bool hasStandard = templates.Any(t => t.template_id == "routine_standard" && t.default_blocks.Count > 0);
+                bool hasNightShift = templates.Any(t => t.template_id == "routine_night_shift" && t.default_blocks.Count > 0);
 
-                if (hasStandardWorker && hasNightGuard && hasScavenger && hasCaretaker)
+                if (hasEarlyRiser && hasNightOwl && hasStandard && hasNightShift)
                 {
-                    GD.Print("[PASS] Check 3: All 4 canonical routine templates (standard_worker, night_guard, scavenger_flexible, infirmary_caretaker) verified.");
+                    GD.Print("[PASS] Check 3: All 4 canonical routine templates (routine_early_riser, routine_night_owl, routine_standard, routine_night_shift) verified.");
                     passed++;
                 }
                 else
                 {
-                    GD.PrintErr($"[FAIL] Check 3: Template verification failed: worker={hasStandardWorker}, night={hasNightGuard}, scav={hasScavenger}, care={hasCaretaker}");
+                    GD.PrintErr($"[FAIL] Check 3: Template verification failed: early={hasEarlyRiser}, owl={hasNightOwl}, standard={hasStandard}, night={hasNightShift}");
                 }
 
                 // Check 4: Routine assignment
-                var alphaRoutine = host.AssignRoutine("survivor_alpha", "standard_worker");
+                var alphaRoutine = host.AssignRoutine("survivor_alpha", "routine_standard");
                 if (alphaRoutine != null && host.TrackedRoutineCount == 1 &&
-                    alphaRoutine.SurvivorId == "survivor_alpha" && alphaRoutine.TemplateId == "standard_worker" &&
+                    alphaRoutine.SurvivorId == "survivor_alpha" && alphaRoutine.TemplateId == "routine_standard" &&
                     alphaRoutine.TimeBlocks.Count > 0)
                 {
-                    GD.Print($"[PASS] Check 4: Routine 'standard_worker' assigned to 'survivor_alpha' ({alphaRoutine.TimeBlocks.Count} time blocks).");
+                    GD.Print($"[PASS] Check 4: Routine 'routine_standard' assigned to 'survivor_alpha' ({alphaRoutine.TimeBlocks.Count} time blocks).");
                     passed++;
                 }
                 else
@@ -79,15 +79,15 @@ namespace AtomicWar.GodotApp
                 // Check 5: Hourly activity resolution
                 string sleepAct = host.GetActivityAtHour("survivor_alpha", 2); // 2 AM should be Sleep
                 string workAct = host.GetActivityAtHour("survivor_alpha", 11); // 11 AM should be Work
-                string mealAct = host.GetActivityAtHour("survivor_alpha", 12); // 12 PM should be Meal
+                string mealAct = host.GetActivityAtHour("survivor_alpha", 19); // 7 PM should be Meal (dinner block)
                 if (sleepAct == "Sleep" && workAct == "Work" && mealAct == "Meal")
                 {
-                    GD.Print($"[PASS] Check 5: Hourly activity resolution verified: 2h={sleepAct}, 11h={workAct}, 12h={mealAct}.");
+                    GD.Print($"[PASS] Check 5: Hourly activity resolution verified: 2h={sleepAct}, 11h={workAct}, 19h={mealAct}.");
                     passed++;
                 }
                 else
                 {
-                    GD.PrintErr($"[FAIL] Check 5: Hourly activity mismatch: 2h={sleepAct}, 11h={workAct}, 12h={mealAct}");
+                    GD.PrintErr($"[FAIL] Check 5: Hourly activity mismatch: 2h={sleepAct}, 11h={workAct}, 19h={mealAct}");
                 }
 
                 // Check 6: Chronotype preference assignment
@@ -155,8 +155,8 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Check 10: Conflict detection (roommate sleep schedule clash)
-                // survivor_beta assigned to night_guard (sleeps daytime, wake night)
-                host.AssignRoutine("survivor_beta", "night_guard");
+                // survivor_beta assigned to routine_night_shift (sleeps 10-18, wakes 18)
+                host.AssignRoutine("survivor_beta", "routine_night_shift");
                 var roomAssignments = new Dictionary<string, string>
                 {
                     { "survivor_alpha", "bunk_room_1" },

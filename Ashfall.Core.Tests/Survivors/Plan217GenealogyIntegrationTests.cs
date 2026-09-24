@@ -42,6 +42,56 @@ namespace Ashfall.Core.Tests.Survivors
         }
 
         [Fact]
+        public void GenerateFamilyName_RequestedArchetype_UsesAuthoredComponents()
+        {
+            var lineage = new GenerationalLineageExtension(new GenerationalSuccessionEngine());
+            lineage.LoadFamilyNameCatalog(SampleFamilyCatalog);
+
+            string generated = lineage.GenerateFamilyName(
+                new SeededRng(42),
+                archetype: "old_world");
+
+            Assert.True(
+                generated.StartsWith("Von", StringComparison.Ordinal)
+                || generated.StartsWith("De", StringComparison.Ordinal),
+                generated);
+            Assert.True(
+                generated.Contains("Vance", StringComparison.Ordinal)
+                || generated.Contains("Sterling", StringComparison.Ordinal),
+                generated);
+            Assert.True(
+                generated.EndsWith("field", StringComparison.Ordinal)
+                || generated.EndsWith("wood", StringComparison.Ordinal),
+                generated);
+        }
+
+        [Fact]
+        public void GenerateFamilyName_UnknownArchetype_FallsBackToTemplate()
+        {
+            var lineage = new GenerationalLineageExtension(new GenerationalSuccessionEngine());
+            lineage.LoadFamilyNameCatalog(SampleFamilyCatalog);
+
+            string generated = lineage.GenerateFamilyName(
+                new SeededRng(42),
+                archetype: "missing_culture");
+
+            Assert.Contains(generated, new[] { "Vance", "Sterling", "Rustborn" });
+        }
+
+        [Fact]
+        public void LoadFamilyNameCatalog_InvalidReload_ClearsAuthorityAndWarns()
+        {
+            var log = new RecordingLog();
+            var lineage = new GenerationalLineageExtension(new GenerationalSuccessionEngine(), log);
+            lineage.LoadFamilyNameCatalog(SampleFamilyCatalog);
+
+            lineage.LoadFamilyNameCatalog("{ invalid json");
+
+            Assert.Equal("Wanderer", lineage.GenerateFamilyName(new SeededRng(42)));
+            Assert.Contains(log.Warnings, warning => warning.Contains("family name catalog", StringComparison.OrdinalIgnoreCase));
+        }
+
+        [Fact]
         public void GenealogyBridge_OnChildBorn_EstablishesLineage_AndInheritsFamilyName()
         {
             var engine = new GenerationalSuccessionEngine();
@@ -168,6 +218,15 @@ namespace Ashfall.Core.Tests.Survivors
             Assert.Equal("spouse_x", restoredLineage.GetSpouse("descendant"));
             Assert.Equal("descendant", restoredLineage.GetSpouse("spouse_x"));
             Assert.NotEmpty(restoredLineage.GetDescendants("ancestor"));
+        }
+
+        private sealed class RecordingLog : ILog
+        {
+            public List<string> Warnings { get; } = new List<string>();
+
+            public void Info(string message) { }
+            public void Warn(string message) => Warnings.Add(message);
+            public void Error(string message) => Warnings.Add(message);
         }
     }
 }

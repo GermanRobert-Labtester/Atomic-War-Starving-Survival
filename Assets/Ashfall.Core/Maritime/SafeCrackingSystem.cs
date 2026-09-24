@@ -453,7 +453,7 @@ namespace Ashfall.Core.Maritime
             for (int i = 0; i < difficulty; i++)
             {
                 hash = unchecked(hash * 397 + i);
-                combo[i] = Math.Abs(hash) % 10;
+                combo[i] = StableHash.NonNegativeRemainder(hash, 10);
             }
             return combo;
         }

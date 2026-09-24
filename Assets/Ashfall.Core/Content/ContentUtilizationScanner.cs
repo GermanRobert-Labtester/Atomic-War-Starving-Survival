@@ -1150,6 +1150,7 @@ namespace Ashfall.Core.Content
                 ["caravan_trade_routes.json"] = new[] { "CaravanTradeNetworkSystem" },
                 ["power_subgrid_nodes.json"] = new[] { "PowerDistributionSubgridSystem" },
                 ["perimeter_defenses.json"] = new[] { "PerimeterDefenseSystem" },
+                ["night_watch_operations.json"] = new[] { "NightWatchOperationsCatalogLoader", "NightWatchHostSession", "PerimeterDefenseSystem" },
                 // Plans 202-205 flagship
                 ["plastic_pyrolysis_catalog.json"] = new[] { "PlasticPyrolysisSystem" },
                 ["cargo_airdrop_catalog.json"] = new[] { "CargoAirdropSystem" },

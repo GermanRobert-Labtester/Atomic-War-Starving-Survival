@@ -118,6 +118,9 @@ namespace Ashfall.Core.UI
             R("runflat_tire",        "Run-Flat Wheel Set",             PanelGroup.Expanded);
             R("sofc_power",          "Solid-Oxide Fuel Cell",           PanelGroup.Expanded);
             R("sound_ranging",       "Acoustic Sound-Ranging",          PanelGroup.Expanded);
+            R("night_watch",         "The Watch // Patrol Readiness",    PanelGroup.Expanded);
+            R("visitor_integration", "Visitor Integration",             PanelGroup.Expanded);
+            R("personal_belongings", "Personal Belongings",             PanelGroup.Expanded);
             R("cvd_diamond",         "Synthetic Diamond Tooling",       PanelGroup.Expanded);
             R("amphibious_draisine", "Amphibious Draisine Outrigger",   PanelGroup.Expanded);
             R("sanitation",          "Waste & Sanitation",               PanelGroup.Expanded);

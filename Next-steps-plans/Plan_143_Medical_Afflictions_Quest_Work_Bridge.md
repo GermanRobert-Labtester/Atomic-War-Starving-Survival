@@ -11,8 +11,7 @@ package.
 Bind the catalog and canonical live affliction IDs to the existing duty assignment and quest availability
 owners, then surface truthful reasons in the existing medical and work/quest panels.
 
-**Current state:** PARTIAL: the stateless bridge and six-row rule catalog exist with Core tests; no host
-reference to AfflictionQuestWorkBridge was found in src at this audit.
+**Current state:** INTEGRATED: Full host integration sealed across MedicalHostSession, Main.Medical, Main.DutyRoster, Main.SurvivorFitness, AfflictionsPanel, and AfflictionBridgeSelfTest (12/12 checks passing on Godot headless).
 
 **Non-goals:** No new affliction store or bridge save section, no diagnosis from UI labels, no duplicate
 duty roster, no event-based quest unlock without a real runtime mapping, no automatic dismissal of

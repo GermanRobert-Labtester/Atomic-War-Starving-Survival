@@ -715,6 +715,7 @@ namespace AtomicWar.GodotApp
                 case "runflat_tire":
                 case "sofc_power":
                 case "sound_ranging":
+                case "night_watch":
                 case "cvd_diamond":
                 case "amphibious_draisine":
                 case "sanitation":

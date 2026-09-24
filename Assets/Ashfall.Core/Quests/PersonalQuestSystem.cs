@@ -47,6 +47,7 @@ namespace Ashfall.Core.Quests
         public string title { get; set; } = string.Empty;
         public string category { get; set; } = string.Empty;
         public string required_trait { get; set; } = string.Empty;
+        public string required_class { get; set; } = string.Empty;
         public string summary { get; set; } = string.Empty;
         public List<PersonalQuestStageDef> stages { get; set; } = new();
     }
@@ -132,7 +133,8 @@ namespace Ashfall.Core.Quests
             var results = new List<PersonalQuestDef>();
             foreach (var q in _catalog.Values)
             {
-                if (string.Equals(q.required_trait, trait, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(q.required_trait, trait, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(q.required_class, trait, StringComparison.OrdinalIgnoreCase))
                 {
                     results.Add(q);
                 }
@@ -162,7 +164,8 @@ namespace Ashfall.Core.Quests
             PersonalQuestDef? matched = null;
             foreach (var q in _catalog.Values)
             {
-                if (string.Equals(q.required_trait, trait, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(q.required_trait, trait, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(q.required_class, trait, StringComparison.OrdinalIgnoreCase))
                 {
                     bool alreadyUsed = false;
                     for (int i = 0; i < _state.completedQuests.Count; i++)
@@ -389,6 +392,46 @@ namespace Ashfall.Core.Quests
                     });
                 }
             }
+        }
+
+        public PersonalQuestCensus GetCensus()
+        {
+            int failed = 0;
+            int abandoned = 0;
+            for (int i = 0; i < _state.completedQuests.Count; i++)
+            {
+                if (_state.completedQuests[i].status == PersonalQuestStatus.Failed) failed++;
+                else if (_state.completedQuests[i].status == PersonalQuestStatus.Abandoned) abandoned++;
+            }
+            return new PersonalQuestCensus(
+                _catalog.Count,
+                _state.activeQuests.Count,
+                _state.completedQuests.Count,
+                failed,
+                abandoned);
+        }
+    }
+
+    public struct PersonalQuestCensus
+    {
+        public int TotalCatalogQuests { get; }
+        public int ActiveQuestsCount { get; }
+        public int CompletedQuestsCount { get; }
+        public int FailedQuestsCount { get; }
+        public int AbandonedQuestsCount { get; }
+
+        public PersonalQuestCensus(
+            int totalCatalogQuests,
+            int activeQuestsCount,
+            int completedQuestsCount,
+            int failedQuestsCount,
+            int abandonedQuestsCount)
+        {
+            TotalCatalogQuests = totalCatalogQuests;
+            ActiveQuestsCount = activeQuestsCount;
+            CompletedQuestsCount = completedQuestsCount;
+            FailedQuestsCount = failedQuestsCount;
+            AbandonedQuestsCount = abandonedQuestsCount;
         }
     }
 }

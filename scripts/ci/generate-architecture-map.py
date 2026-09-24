@@ -633,17 +633,17 @@ ARCHITECTURE_GRAPH = {
     },
     "child_development": {
         "domain": "Plans 178-201 Expansion Block",
-        "core": ["GenerationalSystem"],
+        "core": ["GenerationalSystem", "ChildDevelopmentSystem", "ChildDevelopmentCensus"],
         "catalog": ["development_traits.json"],
-        "host": ["Main"],
+        "host": ["Main", "ChildDevelopmentHostSession"],
         "setup": "SetupGenerational",
         "ticked": True,
         "tick_type": "Daily Sim Tick",
         "store": ["GenerationalSaveStore"],
         "ui": ["NurseryPanel", "GameDashboardPanel"],
         "routes": ["nursery", "century_seed"],
-        "cli": ["--save-store-checksum-selftest"],
-        "tests": ["GenerationalSystemTests", "GenerationalLineageExtensionTests"]
+        "cli": ["--child-development-selftest", "--save-store-checksum-selftest"],
+        "tests": ["Plan183ChildDevelopmentIntegrationTests", "GenerationalSystemTests", "GenerationalLineageExtensionTests"]
     },
     "prisoner_management": {
         "domain": "Plans 178-201 Expansion Block",
@@ -1613,8 +1613,8 @@ ARCHITECTURE_GRAPH = {
     },
     "survivor_social": {
         "domain": "Shelter & Infrastructure",
-        "core": ["SurvivorSocialCoordinator", "LeadershipSystem", "IdeologicalFrictionSystem", "RationConflictSystem", "TraumaBondSystem", "SkillAtrophySystem"],
-        "catalog": [],
+        "core": ["SurvivorSocialCoordinator", "LeadershipSystem", "LeadershipCensus", "IdeologicalFrictionSystem", "RationConflictSystem", "TraumaBondSystem", "SkillAtrophySystem"],
+        "catalog": ["leadership_policies.json"],
         "host": ["SurvivorSocialCoordinator"],
         "setup": "SetupSurvivorSocial",
         "ticked": True,
@@ -1622,8 +1622,8 @@ ARCHITECTURE_GRAPH = {
         "store": ["SurvivorSocialSaveStore"],
         "ui": ["ShelterPanel"],
         "routes": ["shelter"],
-        "cli": ["--shelter-operations-selftest"],
-        "tests": ["SurvivorSocialCoordinatorTests"]
+        "cli": ["--shelter-operations-selftest", "--leadership-succession-selftest"],
+        "tests": ["SurvivorSocialCoordinatorTests", "Plan208LeadershipSuccessionIntegrationTests"]
     },
     "weight_of_choices": {
         "domain": "Factions & Diplomacy",
@@ -1753,17 +1753,17 @@ ARCHITECTURE_GRAPH = {
     },
     "perimeter_defense": {
         "domain": "Combat & Defense",
-        "core": ["PerimeterDefenseSystem"],
-        "catalog": ["perimeter_defenses.json"],
-        "host": ["Main"],
+        "core": ["PerimeterDefenseSystem", "NightWatchOperationsCatalogLoader", "NightWatchPatrolReadinessEngine"],
+        "catalog": ["perimeter_defenses.json", "night_watch_operations.json"],
+        "host": ["Main", "NightWatchHostSession"],
         "setup": "SetupPerimeterDefense",
         "ticked": True,
-        "tick_type": "Daily Emplacement Tick",
+        "tick_type": "Daily Emplacement + Watch Readiness Tick",
         "store": ["PerimeterDefenseSaveStore"],
-        "ui": ["GameDashboardPanel"],
-        "routes": [],
-        "cli": ["--save-store-checksum-selftest"],
-        "tests": ["PerimeterDefenseTests"]
+        "ui": ["GameDashboardPanel", "NightWatchPanel"],
+        "routes": ["night_watch"],
+        "cli": ["--patrol-encounter-selftest"],
+        "tests": ["PerimeterDefenseTests", "NightWatchPatrolReadinessEngineTests", "NightWatchOperationsTests", "NightWatchHostIntegrationTests"]
     },
     "hydroponic_biomes": {
         "domain": "Shelter & Farming",
@@ -1990,19 +1990,20 @@ ARCHITECTURE_GRAPH = {
         "tests": ["BioFermentationEngineTests"]
     },
     "personal_quests": {
-        "domain": "Survivor Quests (Plan 200)",
-        "core": ["PersonalQuestSystem"],
+        "domain": "Quests",
+        "core": ["PersonalQuestSystem", "PersonalQuestDef", "PersonalQuestSaveState", "PersonalQuestCensus"],
         "catalog": ["personal_quests.json"],
-        "host": ["PersonalQuestHostSession"],
+        "host": ["Main", "PersonalQuestHostSession"],
         "setup": "SetupPersonalQuests",
         "ticked": True,
-        "tick_type": "Daily (Stage Progress & Life Stories)",
+        "tick_type": "Daily Sim Tick",
         "store": ["PersonalQuestSaveStore"],
-        "ui": ["PersonalQuestPanel", "GameDashboardPanel"],
-        "routes": ["personal_quests"],
+        "ui": ["PersonalQuestPanel"],
+        "routes": [],
         "cli": ["--personal-quests-selftest"],
         "tests": ["Plan200PersonalQuestsIntegrationTests", "PersonalQuestSystemTests"]
     },
+
     "narrative_questlines": {
         "domain": "Campaign & Quests",
         "core": ["NarrativeQuestlineSystem"],
@@ -2242,6 +2243,23 @@ ARCHITECTURE_GRAPH = {
     "kilnworks": { "domain": "Shelter", "core": ["KilnFiringLedger", "KilnFiringState", "KilnFiringCensus", "KilnFiringEngine"], "catalog": [], "host": ["Main", "KilnworksHostSession"], "setup": "SetupKilnworks", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["KilnworksSaveStore"], "ui": [], "routes": [], "cli": ["--kilnworks-selftest"], "tests": ["KilnFiringLedgerTests", "KilnFiringEngineTests"] },
     "wildlife_harvest": { "domain": "Hunting", "core": ["WildlifeHarvestLedger", "WildlifeHarvestState", "WildlifeHarvestCensus", "WildlifeHarvestQuotaEngine"], "catalog": [], "host": ["Main", "WildlifeHarvestHostSession"], "setup": "SetupWildlifeHarvest", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["WildlifeHarvestSaveStore"], "ui": [], "routes": [], "cli": ["--wildlife-harvest-selftest"], "tests": ["WildlifeHarvestQuotaEngineTests", "WildlifeHarvestLedgerTests"] },
     "storm_forecast": { "domain": "World", "core": ["StormForecastLedger", "StormForecastState", "StormForecastCensus", "StormForecastReadinessEngine"], "catalog": [], "host": ["Main", "StormForecastHostSession"], "setup": "SetupStormForecast", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["StormForecastSaveStore"], "ui": [], "routes": [], "cli": ["--storm-forecast-selftest"], "tests": ["StormForecastReadinessEngineTests", "StormForecastLedgerTests"] },
+    "antenatal_maternal_health": { "domain": "Survivors", "core": ["AntenatalMaternalCareLedger", "AntenatalMaternalCareState", "AntenatalMaternalCensus", "AntenatalMaternalHealthEngine"], "catalog": [], "host": ["Main", "AntenatalMaternalHealthHostSession"], "setup": "SetupAntenatalMaternalHealth", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["AntenatalMaternalHealthSaveStore"], "ui": [], "routes": [], "cli": ["--antenatal-care-selftest"], "tests": ["AntenatalMaternalHealthEngineTests", "AntenatalMaternalCareLedgerTests"] },
+    "dependency_taper_withdrawal": { "domain": "Medical", "core": ["DependencyTaperLedger", "DependencyTaperState", "DependencyTaperCensus", "DependencyTaperWithdrawalEngine"], "catalog": [], "host": ["Main", "DependencyTaperWithdrawalHostSession"], "setup": "SetupDependencyTaperWithdrawal", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["DependencyTaperWithdrawalSaveStore"], "ui": [], "routes": [], "cli": ["--dependency-taper-selftest"], "tests": ["DependencyTaperWithdrawalEngineTests", "DependencyTaperLedgerTests"] },
+    "clinical_ward_triage": { "domain": "Medical", "core": ["ClinicalWardLedger", "ClinicalWardTriageState", "ClinicalWardCensus", "ClinicalWardTriageEngine"], "catalog": [], "host": ["Main", "ClinicalWardTriageHostSession"], "setup": "SetupClinicalWardTriage", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["ClinicalWardTriageSaveStore"], "ui": [], "routes": [], "cli": ["--clinical-ward-selftest"], "tests": ["ClinicalWardTriageEngineTests", "ClinicalWardLedgerTests"] },
+    "chemical_reagent_synthesis": { "domain": "Shelter", "core": ["ChemicalReagentLedger", "ChemicalReagentSynthesisState", "ChemicalReagentCensus", "ChemicalReagentSynthesisEngine"], "catalog": [], "host": ["Main", "ChemicalReagentSynthesisHostSession"], "setup": "SetupChemicalReagentSynthesis", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["ChemicalReagentSynthesisSaveStore"], "ui": [], "routes": [], "cli": ["--chemical-reagent-selftest"], "tests": ["ChemicalReagentSynthesisEngineTests", "ChemicalReagentLedgerTests"] },
+    "mechanical_driveline": { "domain": "Shelter", "core": ["MechanicalDrivelineLedger", "MechanicalDrivelineState", "MechanicalDrivelineCensus", "MechanicalPowerDrivelineEngine"], "catalog": [], "host": ["Main", "MechanicalDrivelineHostSession"], "setup": "SetupMechanicalDriveline", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["MechanicalDrivelineSaveStore"], "ui": [], "routes": [], "cli": ["--mechanical-driveline-selftest"], "tests": ["MechanicalPowerDrivelineEngineTests", "MechanicalDrivelineLedgerTests"] },
+    "sleep_acoustic_rest": { "domain": "Needs", "core": ["SleepAcousticLedger", "SleepAcousticState", "SleepAcousticCensus", "SleepAcousticRestEngine"], "catalog": [], "host": ["Main", "SleepAcousticRestHostSession"], "setup": "SetupSleepAcousticRest", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["SleepAcousticRestSaveStore"], "ui": [], "routes": [], "cli": ["--sleep-acoustic-selftest"], "tests": ["SleepAcousticRestEngineTests", "SleepAcousticLedgerTests"] },
+    "shelter_archive": { "domain": "Shelter", "core": ["ShelterArchiveSystem", "ShelterArchiveState", "ShelterArchiveCensus"], "catalog": ["archive_categories.json"], "host": ["Main", "ShelterArchiveHostSession"], "setup": "SetupShelterArchive", "ticked": True, "tick_type": "Daily Archive Timeline Tick", "store": ["ShelterArchiveSaveStore"], "ui": [], "routes": [], "cli": ["--shelter-archive-selftest"], "tests": ["Plan162ArchiveIntegrationTests", "ShelterArchiveSystemTests"] },
+    "survivor_dreams": { "domain": "Survivors", "core": ["DreamSystem", "DreamSystemState", "DreamCensus"], "catalog": ["dream_templates.json"], "host": ["Main", "DreamHostSession"], "setup": "SetupSurvivorDreams", "ticked": True, "tick_type": "Daily Dream Cycle Tick", "store": ["DreamSaveStore"], "ui": [], "routes": [], "cli": ["--dream-system-selftest"], "tests": ["Plan177DreamSleepIntegrationTests"] },
+    "accessibility_settings": { "domain": "Settings", "core": ["AccessibilitySettingsSystem", "AccessibilitySettingsState", "AccessibilityCensus"], "catalog": ["accessibility_profiles.json"], "host": ["Main", "AccessibilitySettingsHostSession"], "setup": "SetupAccessibilitySettings", "ticked": False, "tick_type": "User Preference Save", "store": ["AccessibilitySettingsSaveStore"], "ui": [], "routes": [], "cli": ["--accessibility-settings-selftest"], "tests": ["Plan184AccessibilitySettingsIntegrationTests"] },
+    "memory_decay": { "domain": "Cognition", "core": ["MemoryDecaySystem", "MemoryDecayState", "MemoryDecayCensus"], "catalog": ["memory_decay_rates.json"], "host": ["Main", "MemoryDecayHostSession"], "setup": "SetupMemoryDecay", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["MemoryDecaySaveStore"], "ui": [], "routes": [], "cli": ["--memory-decay-selftest"], "tests": ["Plan185MemoryDecayIntegrationTests", "MemoryDecaySystemTests"] },
+    "interpersonal_conflict": { "domain": "Survivors", "core": ["InterpersonalConflictSystem", "InterpersonalConflictState", "InterpersonalConflictCensus"], "catalog": ["conflict_templates.json"], "host": ["Main", "InterpersonalConflictHostSession"], "setup": "SetupInterpersonalConflict", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["InterpersonalConflictSaveStore"], "ui": [], "routes": [], "cli": ["--interpersonal-conflict-selftest"], "tests": ["Plan202InterpersonalConflictIntegrationTests", "InterpersonalConflictSystemTests"] },
+    "exercise": { "domain": "Survivors", "core": ["ExerciseSystem", "ExerciseSystemState", "ExerciseCensus"], "catalog": ["exercise_routines.json"], "host": ["Main", "ExerciseHostSession"], "setup": "SetupExercise", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["ExerciseSaveStore"], "ui": [], "routes": [], "cli": ["--exercise-selftest"], "tests": ["Plan216ExerciseIntegrationTests", "ExerciseSystemTests"] },
+    "culture_creation": { "domain": "Culture", "core": ["CultureCreationSystem", "CultureCreationState", "CultureCreationCensus"], "catalog": ["art_forms.json"], "host": ["Main", "CultureCreationHostSession"], "setup": "SetupCultureCreation", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["CultureCreationSaveStore"], "ui": [], "routes": [], "cli": ["--culture-creation-selftest"], "tests": ["Plan178ArtCultureIntegrationTests"] },
+    "psychological_profiles": { "domain": "Psychology", "core": ["PsychologicalProfileSystem", "PsychologyState", "PsychologicalProfileCensus"], "catalog": ["psychology_profiles.json"], "host": ["Main", "PsychologicalProfileHostSession"], "setup": "SetupPsychologicalProfiles", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["PsychologicalProfileSaveStore"], "ui": [], "routes": [], "cli": ["--psychological-profile-selftest"], "tests": ["Plan179UnifiedPsychologyIntegrationTests"] },
+    "skill_certifications": { "domain": "Survivors", "core": ["SkillCertificationSystem", "SkillCertificationState", "SkillCertificationCensus"], "catalog": ["skill_certifications.json"], "host": ["Main", "SkillCertificationHostSession"], "setup": "SetupSkillCertifications", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["SkillCertificationSaveStore"], "ui": [], "routes": [], "cli": ["--skill-certification-selftest"], "tests": ["Plan180SkillCertificationTests"] },
+    "bestiary_knowledge": { "domain": "Narrative", "core": ["BestiarySystem", "BestiaryState", "BestiaryCensus"], "catalog": ["wasteland_wildlife_bestiary.json"], "host": ["Main", "BestiaryHostSession"], "setup": "SetupBestiary", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["BestiarySaveStore"], "ui": [], "routes": [], "cli": ["--bestiary-selftest"], "tests": ["Plan187BestiaryIntegrationTests"] },
+    "health_history": { "domain": "Medical", "core": ["HealthHistorySystem", "HealthHistoryState", "HealthHistoryCensus"], "catalog": ["medical_record_templates.json"], "host": ["Main", "HealthHistoryHostSession"], "setup": "SetupHealthHistory", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["HealthHistorySaveStore"], "ui": [], "routes": [], "cli": ["--health-history-selftest"], "tests": ["Plan198HealthHistoryIntegrationTests", "Plan198MedicalRecordLogTests"] },
 }
 
 def scan_codebase_symbols():

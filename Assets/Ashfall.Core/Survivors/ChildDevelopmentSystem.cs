@@ -349,5 +349,44 @@ namespace Ashfall.Core.Survivors
                 }
             }
         }
+
+        public ChildDevelopmentCensus GetCensus()
+        {
+            int infant = 0, toddler = 0, child = 0, adolescent = 0, youngAdult = 0;
+            for (int i = 0; i < _state.Profiles.Count; i++)
+            {
+                switch (_state.Profiles[i].Stage)
+                {
+                    case DevelopmentStage.Infant: infant++; break;
+                    case DevelopmentStage.Toddler: toddler++; break;
+                    case DevelopmentStage.Child: child++; break;
+                    case DevelopmentStage.Adolescent: adolescent++; break;
+                    case DevelopmentStage.YoungAdult: youngAdult++; break;
+                }
+            }
+            return new ChildDevelopmentCensus(_state.Profiles.Count, infant, toddler, child, adolescent, youngAdult, _state.MilestoneHistory.Count);
+        }
+    }
+
+    public struct ChildDevelopmentCensus
+    {
+        public readonly int TotalChildren;
+        public readonly int InfantCount;
+        public readonly int ToddlerCount;
+        public readonly int ChildCount;
+        public readonly int AdolescentCount;
+        public readonly int YoungAdultCount;
+        public readonly int TotalMilestones;
+
+        public ChildDevelopmentCensus(int totalChildren, int infantCount, int toddlerCount, int childCount, int adolescentCount, int youngAdultCount, int totalMilestones)
+        {
+            TotalChildren = totalChildren;
+            InfantCount = infantCount;
+            ToddlerCount = toddlerCount;
+            ChildCount = childCount;
+            AdolescentCount = adolescentCount;
+            YoungAdultCount = youngAdultCount;
+            TotalMilestones = totalMilestones;
+        }
     }
 }

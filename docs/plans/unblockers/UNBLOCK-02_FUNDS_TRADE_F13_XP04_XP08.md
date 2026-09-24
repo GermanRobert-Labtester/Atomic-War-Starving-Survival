@@ -1,4 +1,68 @@
 # ASHFALL — UNBLOCK PROGRAM · PLAN 2
+
+> **Current-owner XP-04-F6 revision — 2026-09-24.** This addendum is scoped to the loan-shark/enforcer slice. The original F13/XP-08 decision packet below is historical where signed decisions and runtime source supersede its premise. Do not treat this document as a fresh F13 signature.
+
+> **Planning revision — 2026-09-24.** The evidence and decision gates in this section govern the older inventory below. VERIFIED means inspected in current source; PROPOSAL means a path for a future claimed package. This document is not an implementation claim.
+
+## Current-evidence premise and bounded outcome
+
+**VERIFIED Core:** `Assets/Ashfall.Core/Economy/LoanSharkEnforcerEngine.cs`. **VERIFIED or absent host:** src/Host/BlackMarketHostSession.cs; src/Main.BlackMarket.cs. **Save custody:** black_market captures current debt and FactionBountySystem state; no loan_shark section verified. **Authored data:** `Assets/StreamingAssets/Data/black_market_inventory.json`. **Player route:** src/UI/BlackMarketPanel.cs. The old NON-INT label is a 2026-09-01 census observation and may not describe current code.
+
+**Authority collision:** BlackMarketSystem already issues, repays, defaults, and places bounties for underworld debt. LoanSharkEnforcerEngine also owns debt records and calls FundsLedger/FactionBountySystem; mounting it directly would create two debt balances and duplicate default/bounty effects. A signed reconciliation map is required. The bounded next outcome is: One existing black-market debt acquires an observable, deterministic escalation projection without a second principal or payment ledger. The producer must be a committed BlackMarketSystem loan/repayment/default event; the accepted destination is one current debt status plus a bounded enforcer-risk readout, with no duplicate FundsLedger movement. A class name, content row, panel label, or event notification alone does not prove that transition.
+
+The [Master Expansion Authority v2.0](../../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md) informs the narrative register, Core/host/save/UI lenses, and anti-duplication checklist. Its Part II labels content proposals separately from verified repository facts and asks for one bounded outcome. Any older text in this document that calls for a new save section, panel, or system is conditional until this current-evidence section and a signed claim permit it.
+
+**Source-specific premise correction.** `BlackMarketSystem` already persists `UnderworldDebtRecord`, takes and repays loans through `BlackMarketSettlementService`, ticks overdue debt and delegates bounty placement. `LoanSharkEnforcerEngine` holds its own `LoanDebtRecord` list and can touch `FundsLedger`/`FactionBountySystem`; direct hosting would duplicate balance, stage and bounty effects. Decide whether its formulas become pure calculations over `UnderworldDebtRecord` or whether a signed migration replaces that owner. Until then XP-04-F6 remains a Core-only component.
+
+### Integration architecture and exact ownership
+
+| Layer | Current owner or seam | Required decision before edit |
+|---|---|---|
+| Canonical domain rule | `BlackMarketSystem owns live underworld loans; LoanSharkEnforcerEngine is Core-only candidate for extended escalation` | Confirm the one state field changed by the chosen case. |
+| Source fact | a committed BlackMarketSystem loan/repayment/default event | Identify stable event ID, subject ID, day, and committed status. |
+| Destination | one current debt status plus a bounded enforcer-risk readout, with no duplicate FundsLedger movement | Read the destination owner API and show a before/after state. |
+| Godot composition | src/Host/BlackMarketHostSession.cs; src/Main.BlackMarket.cs | Bind once after restore; detach on reset; claim shared Main paths. |
+| Persistence | black_market captures current debt and FactionBountySystem state; no loan_shark section verified | Prove a matching capture/restore path or stop at the ownership gate. |
+| Player view | src/UI/BlackMarketPanel.cs | Bind a read model and show accepted or refused outcome. |
+
+**Non-goals.** Do not attach a second loan balance, funds movement, bounty, or day tick to the live black-market debt. Preserve engine-free Core, JSON data authority, seeded replay, and the current save owner. Add content only after a loader and player consumer are named.
+
+### Dependency-ordered implementation framework
+
+1. **Phase 0 — recensus and path claim.** Read `INTEGRATION_PLANS.md`, `WORKTREE_OWNERSHIP.md`, `TEST_POLICY.md`, `KNOWN_DEBT.md`, the exact Core type, host, save registry, catalog, and panel. Claim only the files needed for one outcome. If a newer signed decision contradicts this document, update the plan and stop at the decision gate.
+2. **Phase 1 — identity and transaction boundary.** Write the producer payload and receiving method signature. State invalid actor, unknown ID, missing item, insufficient resource, wrong phase, and repeated-event refusals as applicable. Keep the source owner separate from the destination mutation. The host may translate facts but may not calculate gameplay outcomes.
+3. **Phase 2 — data and prose.** Reuse `Assets/StreamingAssets/Data/black_market_inventory.json` through its current loader. Record valid IDs and consumers before adding rows. A proposed string needs a writer, audience, trigger, available field, and absence fallback. It may express uncertainty; it must never assert a reward before the owner has committed it.
+4. **Phase 3 — Core and save.** Extend `BlackMarketSystem owns live underworld loans; LoanSharkEnforcerEngine is Core-only candidate for extended escalation` only where the current API lacks the one required contract. Capture the applied event identity or transaction result in its owning section. Restore a pre-change and post-change snapshot into fresh objects; repeat the same event and prove no duplicate effect. Document old-save defaults and recovery from a save between source and destination writes.
+5. **Phase 4 — host lifecycle and day order.** Attach in the existing composition owner after dependencies restore. Put day-tick work in the current campaign-day phase, not a panel refresh. Use ordered stable IDs and the campaign RNG only for actual random decisions. Dirty the owning save after accepted mutation, publish a read model, unsubscribe on reset, and make setup idempotent.
+6. **Phase 5 — player route and accessibility.** Bind the approved panel to current owner state. Show cause, day, consequence, next action, and a plain refusal. Keep close/back/focus and scale legible. Read-only refresh and reopen must not mutate state or roll again.
+7. **Phase 6 — focused acceptance and rollback.** Select `Ashfall.Core.Tests/Economy/LoanSharkEnforcerEngineTests.cs` only if its public contract still matches the chosen case; add or change the smallest fixture for the new behavior. Follow `TEST_POLICY.md` when an implementation package exists. Verify one accepted result, one negative result, old-save baseline, restore/replay, and visible outcome. The rollback is removal of the new adapter/content route while retaining canonical owner state. This documentation revision runs no production tests.
+
+### Exact claim packet for the first slice
+
+**Likely files, subject to the live ownership ledger:** `Assets/Ashfall.Core/Economy/LoanSharkEnforcerEngine.cs`; `Assets/Ashfall.Core/Economy/BlackMarketSystem.cs`; `Assets/Ashfall.Core/Economy/FundsLedger.cs`; `src/Host/BlackMarketHostSession.cs`; `src/Main.BlackMarket.cs`; `src/UI/BlackMarketPanel.cs`; existing `black_market` save and `FactionBountySystem`. These are audit targets, not an automatic claim. The integrator records each selected path in `WORKTREE_OWNERSHIP.md`; shared composition, panel registry and save registry paths remain integrator-owned.
+
+**Stop condition:** Stop until a signed field-by-field debt reconciliation chooses one balance, one stage, one interest clock, and one bounty identity. The F6 engine may remain Core-only if its calculations cannot be adapted without duplicate state.
+
+**Reviewable acceptance:** a valid source ID produces one accepted owner change; the nearest invalid ID or unavailable destination produces a named refusal with unchanged resource state; a saved retry produces no second effect; the player readout reflects the actual accepted state. A larger content catalog follows only after that one route is reachable.
+
+### C# integration placement sketch
+
+```csharp
+var quote = blackMarketHost.PreviewLoan(syndicateId, units, termDays);
+// BlackMarketHostSession.TakeLoan is the existing settlement command.
+// Any LoanSharkEnforcerEngine formula must read the resulting canonical
+// UnderworldDebtRecord; it must not issue a second FundsLedger credit.
+var current = blackMarketHost.System;
+```
+
+This is a call-direction framework, not a compilable patch: parameter names and the exact return contract are to be copied from source by the integrator after Phase 0. The complete route is source fact → domain owner → destination owner → save carrier → read-only UI. A missing arrow is an explicit integration dependency, never an invitation to invent a local counter.
+
+### Architecture completion gate
+
+A future builder may call the selected case integrated only after an owner claim and a focused proof show: (1) a real producer; (2) one accepted mutation; (3) one refusal before costs are taken; (4) no duplicate on same-ID retry; (5) the same visible result after restore; (6) no separate mutable authority; and (7) a truthful panel route. The present deliverable completes the planning architecture and records candidate prose; it does not claim runtime behavior.
+
+## Historical F13, XP-04 and XP-08 decision packet
+
 ## Funds Authority and Trade Unblock: F13 / XP-04, Trade Legs, Trade Routes, Seasonal Migration
 
 **Status:** planning deliverable only. Read-only pass. No production, data, test,
@@ -1781,7 +1845,7 @@ each is re-verified at intake.
 
 ### G.2 Indirect contact (no boundary note needed, but mentioned for completeness)
 
-| Expansion | Why no note | 
+| Expansion | Why no note |
 |---|---|
 | 12 · Second Generation | generational content; inheritance routes through Plan 206's sealed legacy flow, not funds |
 | 13 · Faithful | belief/ritual; offerings use goods through canonical inventory |
@@ -1907,3 +1971,755 @@ DEC-25..DEC-31) and add the C3 192/199 addendum only after F13-E/F execute.
 **End of UNBLOCK-02.** This document is a proposal to release blocked plans; it
 does not execute, claim, or certify any of them. The next action belongs to the
 foreman.
+
+## Polished diegetic candidates and use conditions
+
+These are original candidate lines. They are not committed JSON. Each requires a current owner fact, a real consumer field, and an editorial pass against nearby content before promotion. The first-person or institutional speaker should be assigned at implementation time; the plan does not invent a survivor voice.
+
+### Candidate 01
+
+> The ledger prints the due day in full. The collector cannot move it by closing the counter.
+
+**Publication contract:** Name the author or office and the reader, the current catalog or command trigger, and the one verified state the line describes. It must be unavailable before a committed BlackMarketSystem loan/repayment/default event commits. If the owner refuses, use a separate refusal sentence and leave this aftermath line hidden. Confirm that the text fits the current panel field, remains readable at supported scale, and does not reveal simulation details absent from the read model.
+
+### Candidate 02
+
+> A partial payment is recorded against the outstanding balance before any new demand is made.
+
+**Publication contract:** Name the author or office and the reader, the current catalog or command trigger, and the one verified state the line describes. It must be unavailable before a committed BlackMarketSystem loan/repayment/default event commits. If the owner refuses, use a separate refusal sentence and leave this aftermath line hidden. Confirm that the text fits the current panel field, remains readable at supported scale, and does not reveal simulation details absent from the read model.
+
+### Candidate 03
+
+> The grace notice states a date and an amount; it does not announce a bounty.
+
+**Publication contract:** Name the author or office and the reader, the current catalog or command trigger, and the one verified state the line describes. It must be unavailable before a committed BlackMarketSystem loan/repayment/default event commits. If the owner refuses, use a separate refusal sentence and leave this aftermath line hidden. Confirm that the text fits the current panel field, remains readable at supported scale, and does not reveal simulation details absent from the read model.
+
+### Candidate 04
+
+> A defaulted account is marked in the same ledger that issued the funds.
+
+**Publication contract:** Name the author or office and the reader, the current catalog or command trigger, and the one verified state the line describes. It must be unavailable before a committed BlackMarketSystem loan/repayment/default event commits. If the owner refuses, use a separate refusal sentence and leave this aftermath line hidden. Confirm that the text fits the current panel field, remains readable at supported scale, and does not reveal simulation details absent from the read model.
+
+### Candidate 05
+
+> The patrol notice names one debt. A second notice for the same default is withheld.
+
+**Publication contract:** Name the author or office and the reader, the current catalog or command trigger, and the one verified state the line describes. It must be unavailable before a committed BlackMarketSystem loan/repayment/default event commits. If the owner refuses, use a separate refusal sentence and leave this aftermath line hidden. Confirm that the text fits the current panel field, remains readable at supported scale, and does not reveal simulation details absent from the read model.
+
+### Candidate 06
+
+> The debtor may inspect the amount without taking another loan.
+
+**Publication contract:** Name the author or office and the reader, the current catalog or command trigger, and the one verified state the line describes. It must be unavailable before a committed BlackMarketSystem loan/repayment/default event commits. If the owner refuses, use a separate refusal sentence and leave this aftermath line hidden. Confirm that the text fits the current panel field, remains readable at supported scale, and does not reveal simulation details absent from the read model.
+
+### Candidate 07
+
+> The trade refusal cites the current sanction, not an invented shortage.
+
+**Publication contract:** Name the author or office and the reader, the current catalog or command trigger, and the one verified state the line describes. It must be unavailable before a committed BlackMarketSystem loan/repayment/default event commits. If the owner refuses, use a separate refusal sentence and leave this aftermath line hidden. Confirm that the text fits the current panel field, remains readable at supported scale, and does not reveal simulation details absent from the read model.
+
+### Candidate 08
+
+> The final receipt closes the account and removes future collection pressure.
+
+**Publication contract:** Name the author or office and the reader, the current catalog or command trigger, and the one verified state the line describes. It must be unavailable before a committed BlackMarketSystem loan/repayment/default event commits. If the owner refuses, use a separate refusal sentence and leave this aftermath line hidden. Confirm that the text fits the current panel field, remains readable at supported scale, and does not reveal simulation details absent from the read model.
+
+
+## XP-04-F6 reconciliation and escalation dossiers
+
+The matrix tests legal and illegal transitions at every loan stage. Each entry is a candidate slice; most should be resolved by the current BlackMarketSystem and require only an adapter or read-model correction. A second debt ledger is a stop condition.
+
+### F6-001. Current debt — issuance — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-002. Current debt — partial repayment — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-003. Current debt — full repayment — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-004. Current debt — interest tick — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-005. Current debt — grace boundary — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-006. Current debt — default transition — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-007. Current debt — bounty handoff — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-008. Current debt — trade sanction — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-009. Current debt — enforcer risk — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-010. Current debt — forgiveness — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-011. Current debt — old save — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-012. Current debt — double delivery — Identity
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-013. Grace debt — issuance — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-014. Grace debt — partial repayment — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-015. Grace debt — full repayment — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-016. Grace debt — interest tick — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-017. Grace debt — grace boundary — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-018. Grace debt — default transition — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-019. Grace debt — bounty handoff — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-020. Grace debt — trade sanction — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-021. Grace debt — enforcer risk — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-022. Grace debt — forgiveness — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-023. Grace debt — old save — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-024. Grace debt — double delivery — Identity
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-025. Delinquent debt — issuance — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-026. Delinquent debt — partial repayment — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-027. Delinquent debt — full repayment — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-028. Delinquent debt — interest tick — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-029. Delinquent debt — grace boundary — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-030. Delinquent debt — default transition — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-031. Delinquent debt — bounty handoff — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-032. Delinquent debt — trade sanction — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-033. Delinquent debt — enforcer risk — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-034. Delinquent debt — forgiveness — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-035. Delinquent debt — old save — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-036. Delinquent debt — double delivery — Identity
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-037. Defaulted debt — issuance — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-038. Defaulted debt — partial repayment — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-039. Defaulted debt — full repayment — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-040. Defaulted debt — interest tick — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-041. Defaulted debt — grace boundary — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-042. Defaulted debt — default transition — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-043. Defaulted debt — bounty handoff — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-044. Defaulted debt — trade sanction — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-045. Defaulted debt — enforcer risk — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-046. Defaulted debt — forgiveness — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-047. Defaulted debt — old save — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-048. Defaulted debt — double delivery — Identity
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-049. Settled debt — issuance — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-050. Settled debt — partial repayment — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-051. Settled debt — full repayment — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-052. Settled debt — interest tick — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-053. Settled debt — grace boundary — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-054. Settled debt — default transition — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-055. Settled debt — bounty handoff — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-056. Settled debt — trade sanction — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-057. Settled debt — enforcer risk — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-058. Settled debt — forgiveness — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-059. Settled debt — old save — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-060. Settled debt — double delivery — Identity
+
+**Stage premise:** The loan is closed by accepted payment and must not accrue interest or raid risk. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-061. Forgiven debt — issuance — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-062. Forgiven debt — partial repayment — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-063. Forgiven debt — full repayment — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-064. Forgiven debt — interest tick — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-065. Forgiven debt — grace boundary — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-066. Forgiven debt — default transition — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-067. Forgiven debt — bounty handoff — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-068. Forgiven debt — trade sanction — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-069. Forgiven debt — enforcer risk — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-070. Forgiven debt — forgiveness — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-071. Forgiven debt — old save — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-072. Forgiven debt — double delivery — Identity
+
+**Stage premise:** The creditor has closed the claim; no debit or new bounty can follow. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** A debt needs one canonical ID that maps to the existing UnderworldDebtRecord. LoanDebtRecordSaveState is not an automatic second persisted ledger. The reconciliation packet records whether the F6 engine becomes a pure calculator, a one-way migration, or is retired. A new mutable debt list is blocked until a signed decision names it as sole owner.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-073. Current debt — issuance — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-074. Current debt — partial repayment — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-075. Current debt — full repayment — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-076. Current debt — interest tick — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-077. Current debt — grace boundary — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-078. Current debt — default transition — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-079. Current debt — bounty handoff — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-080. Current debt — trade sanction — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-081. Current debt — enforcer risk — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-082. Current debt — forgiveness — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-083. Current debt — old save — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-084. Current debt — double delivery — Funds and bounty
+
+**Stage premise:** Loan issued; due day lies ahead; no delinquency sanction may be projected. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-085. Grace debt — issuance — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-086. Grace debt — partial repayment — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-087. Grace debt — full repayment — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-088. Grace debt — interest tick — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-089. Grace debt — grace boundary — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-090. Grace debt — default transition — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-091. Grace debt — bounty handoff — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-092. Grace debt — trade sanction — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-093. Grace debt — enforcer risk — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-094. Grace debt — forgiveness — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-095. Grace debt — old save — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-096. Grace debt — double delivery — Funds and bounty
+
+**Stage premise:** Due day passed into a defined grace interval; the amount is owed but bounty escalation has not occurred. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-097. Delinquent debt — issuance — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-098. Delinquent debt — partial repayment — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-099. Delinquent debt — full repayment — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-100. Delinquent debt — interest tick — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-101. Delinquent debt — grace boundary — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-102. Delinquent debt — default transition — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-103. Delinquent debt — bounty handoff — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-104. Delinquent debt — trade sanction — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Show the sanction in the existing black-market quote, not a second store-wide embargo. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-105. Delinquent debt — enforcer risk — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Compute a bounded risk readout without spawning a raid until a signed raid producer consumes it. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-106. Delinquent debt — forgiveness — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Record the authorized close reason and do not invent a refund. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-107. Delinquent debt — old save — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Restore a pre-F6 black-market debt without silently converting units or inventing past interest. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-108. Delinquent debt — double delivery — Funds and bounty
+
+**Stage premise:** Grace expired and collection pressure may rise under the current owner; payment remains possible. **Action premise:** Re-send the same loan or default callback after restore and compare funds and bounty counts. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-109. Defaulted debt — issuance — Funds and bounty
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Validate creditor, debtor, principal, term and credit gate before issuing any funds. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-110. Defaulted debt — partial repayment — Funds and bounty
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Apply no more than the outstanding amount and record one FundsLedger debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-111. Defaulted debt — full repayment — Funds and bounty
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Close the current debt only after settlement confirms the final debit. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-112. Defaulted debt — interest tick — Funds and bounty
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Accrue no more than once per campaign day, using the owner’s integer rounding contract. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-113. Defaulted debt — grace boundary — Funds and bounty
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Use due day and grace length from the persisted record rather than a UI timer. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-114. Defaulted debt — default transition — Funds and bounty
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Advance stage only once and preserve the source event ID on replay. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+### F6-115. Defaulted debt — bounty handoff — Funds and bounty
+
+**Stage premise:** The current debt owner has committed default; one bounty may be requested from FactionBountySystem. **Action premise:** Use FactionBountySystem once for the committed default and capture its identity. A case is legal only when the current BlackMarketSystem command and saved debt state allow it; otherwise the expected result is a named refusal with unchanged balance, bounty count and trade quote. **Review:** `FundsLedger` owns integer chits and `FactionBountySystem` owns bounty records. The current `BlackMarketSettlementService` and host already route loan and repay actions. The proposed adapter must quote before settlement, debit or credit exactly once, then publish the accepted owner event; it cannot update a second outstanding amount and call that success.
+
+The focused evidence note must identify the existing syndicate and debtor IDs, the exact day, due day, amount before and after, the `FundsLedger` transaction result, and any `FactionBountySystem` bounty ID. Capture the current black-market save, restore it, repeat the same event, and compare the panel line. If the standalone F6 engine cannot be made a pure extension of the current debt owner, leave this entry BLOCKED for a signed ownership decision.
+
+
+## XP-04-F6 editorial closeout
+
+The current owner collision is the decisive architectural gate. The present Core engine is a delivered component but not a hosted authority; the signed FundsLedger and live BlackMarketSystem debt route remain canonical. A future implementation must reconcile those records before exposing new collection mechanics. This document only completes the decision-ready integration architecture.

@@ -126,5 +126,57 @@ namespace Ashfall.Core.Tests.Voice
             Assert.True(result1.HasLine);
             Assert.Equal(result1.LineId, result2.LineId);
         }
+
+        [Fact]
+        public void SelectLine_EqualPriority_IsIndependentOfInputOrder()
+        {
+            var survivor = new SurvivorVoiceContext("surv_05", "profile_calm", 500, 300);
+            var forward = new[]
+            {
+                new VoiceLineCandidate { LineId = "tie_a", EventKind = "idle", PriorityWeight = 100 },
+                new VoiceLineCandidate { LineId = "tie_b", EventKind = "idle", PriorityWeight = 100 }
+            };
+            var reverse = new[]
+            {
+                forward[1],
+                forward[0]
+            };
+
+            var a = VoiceLineSelectionEngine.SelectLine(survivor, "idle", forward, deterministicSeed: 42);
+            var b = VoiceLineSelectionEngine.SelectLine(survivor, "idle", reverse, deterministicSeed: 42);
+
+            Assert.True(a.HasLine);
+            Assert.Equal(a.LineId, b.LineId);
+            Assert.Equal(a.AudioCueKey, b.AudioCueKey);
+        }
+
+        [Fact]
+        public void SelectLine_DuplicateLineId_UsesStableOutputTieBreak()
+        {
+            var survivor = new SurvivorVoiceContext("surv_06", "profile_calm", 500, 300);
+            var first = new VoiceLineCandidate
+            {
+                LineId = "duplicate",
+                VoiceKey = "voice_a",
+                TextKey = "text_a",
+                AudioCueKey = "cue_b",
+                EventKind = "idle",
+                PriorityWeight = 100
+            };
+            var second = new VoiceLineCandidate
+            {
+                LineId = "duplicate",
+                VoiceKey = "voice_a",
+                TextKey = "text_a",
+                AudioCueKey = "cue_a",
+                EventKind = "idle",
+                PriorityWeight = 100
+            };
+
+            var a = VoiceLineSelectionEngine.SelectLine(survivor, "idle", new[] { first, second }, 42);
+            var b = VoiceLineSelectionEngine.SelectLine(survivor, "idle", new[] { second, first }, 42);
+
+            Assert.Equal(a.AudioCueKey, b.AudioCueKey);
+        }
     }
 }

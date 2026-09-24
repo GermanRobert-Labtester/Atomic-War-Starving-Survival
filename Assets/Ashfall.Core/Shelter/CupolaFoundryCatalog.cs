@@ -136,31 +136,4 @@ namespace Ashfall.Core.Shelter
         public FoundryMoldProfile? GetMold(string moldId) =>
             string.IsNullOrEmpty(moldId) ? null : _molds.TryGetValue(moldId, out var m) ? m : null;
     }
-
-    public static class CupolaFoundryCatalogLoader
-    {
-        public const string DefaultFileName = "cupola_foundry_catalog.json";
-
-        public static CupolaFoundryCatalog? Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
-        {
-            if (fileIO == null || json == null) return null;
-            string path = fileIO.Combine(dataDir, DefaultFileName);
-            if (!fileIO.FileExists(path)) return null;
-
-            string raw = fileIO.ReadAllText(path);
-            CupolaFoundryCatalogDto? dto;
-            try
-            {
-                dto = json.Deserialize<CupolaFoundryCatalogDto>(raw);
-            }
-            catch (Exception ex)
-            {
-                CatalogDiagnostics.Warn(path, "cupola_foundry_catalog", ex);
-                return null;
-            }
-            if (dto?.charges == null || dto.molds == null) return null;
-
-            return new CupolaFoundryCatalog(dto.charges, dto.molds, dto.maintenance);
-        }
-    }
 }

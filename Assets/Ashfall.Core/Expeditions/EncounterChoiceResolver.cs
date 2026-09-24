@@ -23,17 +23,21 @@ namespace Ashfall.Core.Expeditions
 
         public EncounterChoiceResolver(EncounterChoiceState state)
         {
-            _state = state ?? throw new ArgumentNullException(nameof(state));
+            if (state == null) throw new ArgumentNullException(nameof(state));
+            _state = state.Capture();
         }
 
         public IReadOnlyList<EncounterResolution> History => _state.History;
 
         public bool IsResolved(string expeditionId, string encounterId)
         {
+            if (_state.History == null) return false;
             for (int i = 0; i < _state.History.Count; i++)
             {
                 var h = _state.History[i];
-                if (h.ExpeditionId == expeditionId && h.EncounterId == encounterId)
+                if (h != null
+                    && string.Equals(h.ExpeditionId, expeditionId, StringComparison.Ordinal)
+                    && string.Equals(h.EncounterId, encounterId, StringComparison.Ordinal))
                     return true;
             }
             return false;
@@ -42,15 +46,16 @@ namespace Ashfall.Core.Expeditions
         public EncounterChoiceResult Resolve(EncounterChoiceRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
-            if (string.IsNullOrEmpty(request.ExpeditionId))
+            if (string.IsNullOrWhiteSpace(request.ExpeditionId))
                 return EncounterChoiceResult.Fail("missing_expedition_id");
-            if (string.IsNullOrEmpty(request.EncounterId))
+            if (string.IsNullOrWhiteSpace(request.EncounterId))
                 return EncounterChoiceResult.Fail("missing_encounter_id");
-            if (string.IsNullOrEmpty(request.ChoiceId))
+            if (string.IsNullOrWhiteSpace(request.ChoiceId))
                 return EncounterChoiceResult.Fail("missing_choice_id");
             if (IsResolved(request.ExpeditionId, request.EncounterId))
                 return EncounterChoiceResult.Fail("already_resolved");
 
+            _state.History ??= new List<EncounterResolution>();
             var resolution = new EncounterResolution
             {
                 ExpeditionId = request.ExpeditionId,
@@ -104,14 +109,46 @@ namespace Ashfall.Core.Expeditions
     {
         public List<EncounterResolution> History = new List<EncounterResolution>();
 
-        public EncounterChoiceState Capture() => new EncounterChoiceState
+        public EncounterChoiceState Capture()
         {
-            History = new List<EncounterResolution>(History)
-        };
+            var copy = new EncounterChoiceState
+            {
+                History = new List<EncounterResolution>()
+            };
+            if (History == null) return copy;
+
+            foreach (var resolution in History)
+            {
+                var cloned = CloneResolution(resolution);
+                if (cloned != null)
+                    copy.History.Add(cloned);
+            }
+            return copy;
+        }
 
         public void RestoreInto(EncounterChoiceState state)
         {
-            History = state.History ?? new List<EncounterResolution>();
+            History = state?.Capture().History ?? new List<EncounterResolution>();
+        }
+
+        private static EncounterResolution? CloneResolution(EncounterResolution? source)
+        {
+            if (source == null
+                || string.IsNullOrWhiteSpace(source.ExpeditionId)
+                || string.IsNullOrWhiteSpace(source.EncounterId)
+                || string.IsNullOrWhiteSpace(source.ChoiceId))
+                return null;
+
+            return new EncounterResolution
+            {
+                ExpeditionId = source.ExpeditionId,
+                EncounterId = source.EncounterId,
+                ChoiceId = source.ChoiceId,
+                Day = source.Day,
+                Outcome = source.Outcome ?? string.Empty,
+                TriggeredCombat = source.TriggeredCombat,
+                LootSummary = source.LootSummary ?? string.Empty
+            };
         }
     }
 

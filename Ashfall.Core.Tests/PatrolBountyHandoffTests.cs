@@ -28,6 +28,66 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void Constructor_CapturedState_DoesNotAliasInput()
+        {
+            var state = new FactionBountySystemState
+            {
+                Bounties = new List<FactionBountyRecord>
+                {
+                    new FactionBountyRecord
+                    {
+                        BountyId = "bounty_loaded",
+                        FactionId = "faction_ash_sign",
+                        State = FactionBountyState.Active
+                    }
+                }
+            };
+            var system = new FactionBountySystem(state);
+
+            state.Bounties.Clear();
+            state.Bounties.Add(new FactionBountyRecord { BountyId = "bounty_injected" });
+
+            Assert.Single(system.AllBounties);
+            Assert.Equal("bounty_loaded", system.AllBounties[0].BountyId);
+        }
+
+        [Fact]
+        public void Capture_NullProvenance_NormalizesWithoutThrowing()
+        {
+            var state = new FactionBountySystemState
+            {
+                Bounties = new List<FactionBountyRecord>
+                {
+                    new FactionBountyRecord
+                    {
+                        BountyId = "bounty_legacy",
+                        FactionId = "faction_ash_sign",
+                        State = FactionBountyState.Active,
+                        Provenance = null!
+                    }
+                }
+            };
+            var system = new FactionBountySystem(state);
+
+            var captured = system.CaptureState();
+
+            Assert.Single(captured.Bounties);
+            Assert.Equal("patrol_violation", captured.Bounties[0].Provenance.SourceType);
+        }
+
+        [Fact]
+        public void IssuePatrolBounty_BlankProvenanceOrNegativeDay_FailsClosed()
+        {
+            var system = new FactionBountySystem();
+
+            Assert.Null(system.IssuePatrolBounty(" ", "enc_a", "choice_fight", -15, 10));
+            Assert.Null(system.IssuePatrolBounty("warlords_sector_4", " ", "choice_fight", -15, 10));
+            Assert.Null(system.IssuePatrolBounty("warlords_sector_4", "enc_a", " ", -15, 10));
+            Assert.Null(system.IssuePatrolBounty("warlords_sector_4", "enc_a", "choice_fight", -15, -1));
+            Assert.Empty(system.AllBounties);
+        }
+
+        [Fact]
         public void SeverityCalculation_ThresholdTable_MapsToExpectedSeverity()
         {
             var cases = new[]

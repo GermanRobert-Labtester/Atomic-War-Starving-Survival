@@ -9,6 +9,80 @@ namespace Ashfall.Core.Tests.Expeditions
     public class EncounterChoiceResolverTests
     {
         [Fact]
+        public void Constructor_CapturedState_DoesNotAliasInput()
+        {
+            var state = new EncounterChoiceState
+            {
+                History = new List<EncounterResolution>
+                {
+                    new EncounterResolution
+                    {
+                        ExpeditionId = "exp_loaded",
+                        EncounterId = "enc_loaded",
+                        ChoiceId = "loaded_choice"
+                    }
+                }
+            };
+            var resolver = new EncounterChoiceResolver(state);
+
+            Assert.True(resolver.IsResolved("exp_loaded", "enc_loaded"));
+            state.History.Clear();
+
+            Assert.True(resolver.IsResolved("exp_loaded", "enc_loaded"));
+            Assert.Single(resolver.History);
+        }
+
+        [Fact]
+        public void Capture_ResolutionObject_IsSnapshot()
+        {
+            var resolver = new EncounterChoiceResolver(new EncounterChoiceState());
+            resolver.Resolve(new EncounterChoiceRequest
+            {
+                ExpeditionId = "exp_1",
+                EncounterId = "enc_a",
+                ChoiceId = "trade"
+            });
+
+            var snapshot = resolver.CaptureState();
+            snapshot.History[0].ChoiceId = "tampered";
+
+            Assert.Equal("trade", resolver.History[0].ChoiceId);
+        }
+
+        [Fact]
+        public void Restore_CapturedState_DoesNotAliasInput()
+        {
+            var source = new EncounterChoiceResolver(new EncounterChoiceState());
+            source.Resolve(new EncounterChoiceRequest
+            {
+                ExpeditionId = "exp_1",
+                EncounterId = "enc_a",
+                ChoiceId = "trade"
+            });
+            var saved = source.CaptureState();
+            var restored = new EncounterChoiceResolver(new EncounterChoiceState());
+
+            restored.RestoreState(saved);
+            saved.History.Clear();
+
+            Assert.Single(restored.History);
+            Assert.Equal("trade", restored.History[0].ChoiceId);
+        }
+
+        [Fact]
+        public void Constructor_NullHistoryEntry_FailsClosed()
+        {
+            var state = new EncounterChoiceState
+            {
+                History = new List<EncounterResolution> { null! }
+            };
+
+            var resolver = new EncounterChoiceResolver(state);
+
+            Assert.Empty(resolver.History);
+        }
+
+        [Fact]
         public void Resolve_AddsHistoryEntry()
         {
             var r = new EncounterChoiceResolver(new EncounterChoiceState());
@@ -69,6 +143,10 @@ namespace Ashfall.Core.Tests.Expeditions
             Assert.False(r.Resolve(new EncounterChoiceRequest { ExpeditionId = "", EncounterId = "x", ChoiceId = "y" }).Succeeded);
             Assert.False(r.Resolve(new EncounterChoiceRequest { ExpeditionId = "x", EncounterId = "", ChoiceId = "y" }).Succeeded);
             Assert.False(r.Resolve(new EncounterChoiceRequest { ExpeditionId = "x", EncounterId = "y", ChoiceId = "" }).Succeeded);
+            Assert.False(r.Resolve(new EncounterChoiceRequest { ExpeditionId = " ", EncounterId = "x", ChoiceId = "y" }).Succeeded);
+            Assert.False(r.Resolve(new EncounterChoiceRequest { ExpeditionId = "x", EncounterId = " ", ChoiceId = "y" }).Succeeded);
+            Assert.False(r.Resolve(new EncounterChoiceRequest { ExpeditionId = "x", EncounterId = "y", ChoiceId = " " }).Succeeded);
+            Assert.Empty(r.History);
         }
 
         [Fact]

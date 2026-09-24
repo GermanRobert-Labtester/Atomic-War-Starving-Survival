@@ -9,25 +9,19 @@ namespace Ashfall.Core
     public class SickBand
     {
         public string survivorId;
-        public int band;              // DoseLedgerSystem.BandGreen..BandBlack
+        public int band;
         public int diagnosedDay;
         public int releaseDay = -1;
-        public string palliativePlan; // empty = none assigned
+        public string palliativePlan;
 
         /// <summary>
         /// Plan 60 / D5 — which fact produced <see cref="band">band</see>: a dose
         /// reading (<see cref="SickListSystem.SourceDose"/>) or an illness
-        /// prognosis (<see cref="SickListSystem.SourceIllness"/>). The band ladder is
-        /// shared; its meaning is named, so "red" never silently means two things.
-        /// Additive: saves written before it existed load as <c>dose</c>.
+        /// prognosis (<see cref="SickListSystem.SourceIllness"/>).
         /// </summary>
         public string severitySource;
 
-        /// <summary>
-        /// Origin id for <see cref="severitySource"/> — the disease id when the
-        /// source is illness, empty for dose-named rows. Provenance, not state: no
-        /// system reads it to compute progression.
-        /// </summary>
+        /// <summary>Origin id for provenance; it is not a progression input.</summary>
         public string sourceId;
     }
 
@@ -40,138 +34,157 @@ namespace Ashfall.Core
 
     /// <summary>
     /// ASHFALL: THE DOSE — the named sick, by dose band, not by death.
-    /// A Black-band survivor is not removed; they are named, cared for, or
-    /// abandoned, and the ledger remembers which.
+    /// A Black-band survivor remains on the roster and receives care.
     /// </summary>
     public class SickListSystem
     {
         public const string SystemId = "sick_list_system";
-
-        /// <summary>Band came from a dose-ledger reading (the original meaning).</summary>
         public const string SourceDose = "dose";
-
-        /// <summary>Band came from an illness prognosis (DiseaseTriage).</summary>
         public const string SourceIllness = "illness";
 
-        private readonly SickListSystemState _state = new SickListSystemState();
-        private readonly Dictionary<string, SickBand> _bands = new Dictionary<string, SickBand>();
+        private static readonly StringComparer IdentityComparer = StringComparer.OrdinalIgnoreCase;
+        private readonly Dictionary<string, SickBand> _bands =
+            new Dictionary<string, SickBand>(IdentityComparer);
 
-        public event Action<string, int> OnDiagnosed;   // survivorId, band
-        public event Action<string> OnReleased;         // survivorId
-        public event Action<string, string> OnPalliativeAssigned; // survivorId, plan
+        public event Action<string, int> OnDiagnosed;
+        public event Action<string> OnReleased;
+        public event Action<string, string> OnPalliativeAssigned;
         public event Action<SickListSystemState> OnStateChanged;
 
-        public SickListSystemState State => _state;
-        public IReadOnlyList<SickBand> Bands => _state.bands;
+        public SickListSystemState State => CaptureState();
+        public IReadOnlyList<SickBand> Bands => CaptureState().bands;
 
-        /// <summary>Name a survivor into a dose band. Re-diagnosis moves the band; history is kept.</summary>
+        /// <summary>Name a survivor into a dose band. Re-diagnosis moves the band and keeps one row.</summary>
         public bool Diagnose(string survivorId, int band, int day) =>
             Diagnose(survivorId, band, day, SourceDose, null);
 
         /// <summary>
-        /// Plan 60 / D5 — name a survivor into the shared band ladder and record
-        /// <em>which authority</em> put them there. Passing
-        /// <see cref="SourceIllness"/> with a disease id keeps the sick list a single
-        /// triage surface over two different sources of urgency.
+        /// Name a survivor into the shared band ladder and record which authority
+        /// produced the classification.
         /// </summary>
         public bool Diagnose(string survivorId, int band, int day, string severitySource, string sourceId)
         {
-            if (string.IsNullOrEmpty(survivorId)) return false;
-            var entry = _bands.TryGetValue(survivorId, out var existing)
-                ? existing
-                : new SickBand { survivorId = survivorId, diagnosedDay = day };
-            if (!_bands.ContainsKey(survivorId))
-                _state.bands.Add(entry);
-            _bands[survivorId] = entry;
+            string id = NormalizeId(survivorId);
+            if (string.IsNullOrWhiteSpace(id) || !IsValidBand(band) || day < 0) return false;
+
+            if (!_bands.TryGetValue(id, out var entry))
+            {
+                entry = new SickBand
+                {
+                    survivorId = id,
+                    diagnosedDay = day,
+                    releaseDay = -1,
+                    palliativePlan = string.Empty,
+                    severitySource = SourceDose,
+                    sourceId = string.Empty
+                };
+                _bands[id] = entry;
+            }
+
             entry.band = band;
             entry.releaseDay = -1;
-            entry.severitySource = string.IsNullOrEmpty(severitySource) ? SourceDose : severitySource;
-            entry.sourceId = sourceId ?? string.Empty;
-            OnDiagnosed?.Invoke(survivorId, band);
+            entry.severitySource = NormalizeSeveritySource(severitySource);
+            entry.sourceId = NormalizeId(sourceId);
+            OnDiagnosed?.Invoke(id, band);
             RaiseChanged();
             return true;
         }
 
-        /// <summary>Release a survivor from the sick list (e.g. recovering band). Keeps the row.</summary>
+        /// <summary>Release a survivor from the sick list while retaining the historical row.</summary>
         public bool Release(string survivorId, int day)
         {
-            if (!_bands.TryGetValue(survivorId, out var entry)) return false;
+            string id = NormalizeId(survivorId);
+            if (!_bands.TryGetValue(id, out var entry) || day < entry.diagnosedDay) return false;
             entry.releaseDay = day;
-            OnReleased?.Invoke(survivorId);
+            OnReleased?.Invoke(id);
             RaiseChanged();
             return true;
         }
 
         public bool AssignPalliative(string survivorId, string plan)
         {
-            if (!_bands.TryGetValue(survivorId, out var entry)) return false;
-            if (string.IsNullOrEmpty(plan)) return false;
-            entry.palliativePlan = plan;
-            OnPalliativeAssigned?.Invoke(survivorId, plan);
+            string id = NormalizeId(survivorId);
+            string normalizedPlan = plan?.Trim() ?? string.Empty;
+            if (!_bands.TryGetValue(id, out var entry) || string.IsNullOrWhiteSpace(normalizedPlan)) return false;
+            entry.palliativePlan = normalizedPlan;
+            OnPalliativeAssigned?.Invoke(id, normalizedPlan);
             RaiseChanged();
             return true;
         }
 
-        public SickBand? GetBand(string survivorId) =>
-            _bands.TryGetValue(survivorId, out var b) ? b : null;
+        public SickBand? GetBand(string survivorId)
+        {
+            string id = NormalizeId(survivorId);
+            return _bands.TryGetValue(id, out var band) ? CloneBand(band) : null;
+        }
 
         public SickListSystemState CaptureState()
         {
-            // Fresh copy, ordinal-ordered: never return the live state to the
-            // envelope (aliasing), and dictionary iteration order is not a
-            // cross-host guarantee.
-            var copy = new SickListSystemState { systemId = _state.systemId };
-            var keys = new List<string>(_bands.Count);
-            foreach (var kv in _bands) keys.Add(kv.Key);
-            keys.Sort(string.CompareOrdinal);
-            for (int i = 0; i < keys.Count; i++)
-            {
-                var b = _bands[keys[i]];
-                copy.bands.Add(new SickBand
-                {
-                    survivorId = b.survivorId,
-                    band = b.band,
-                    diagnosedDay = b.diagnosedDay,
-                    releaseDay = b.releaseDay,
-                    palliativePlan = b.palliativePlan,
-                    severitySource = b.severitySource,
-                    sourceId = b.sourceId
-                });
-            }
+            var copy = new SickListSystemState { systemId = SystemId };
+            var keys = new List<string>(_bands.Keys);
+            keys.Sort(StringComparer.Ordinal);
+            foreach (string key in keys)
+                copy.bands.Add(CloneBand(_bands[key]));
             return copy;
         }
 
         public void RestoreState(SickListSystemState saved)
         {
-            if (saved == null) return;
-            _state.systemId = SystemId;
             _bands.Clear();
-            _state.bands.Clear();
-            if (saved.bands != null)
+            if (saved?.bands == null)
             {
-                foreach (var b in saved.bands)
+                RaiseChanged();
+                return;
+            }
+
+            foreach (var source in saved.bands)
+            {
+                if (source == null) continue;
+                string id = NormalizeId(source.survivorId);
+                if (string.IsNullOrWhiteSpace(id) || !IsValidBand(source.band)
+                    || source.diagnosedDay < 0
+                    || (source.releaseDay >= 0 && source.releaseDay < source.diagnosedDay)
+                    || _bands.ContainsKey(id)) continue;
+
+                var copy = new SickBand
                 {
-                    if (b == null || string.IsNullOrEmpty(b.survivorId)) continue;
-                    var copy = new SickBand
-                    {
-                        survivorId = b.survivorId,
-                        band = b.band,
-                        diagnosedDay = b.diagnosedDay,
-                        releaseDay = b.releaseDay,
-                        palliativePlan = b.palliativePlan,
-                        // Additive fields: a pre-D5 save omits them, and the
-                        // sick list's original meaning was the dose ledger.
-                        severitySource = string.IsNullOrEmpty(b.severitySource)
-                            ? SourceDose : b.severitySource,
-                        sourceId = b.sourceId ?? string.Empty
-                    };
-                    _bands[b.survivorId] = copy;
-                    _state.bands.Add(copy);
-                }
+                    survivorId = id,
+                    band = source.band,
+                    diagnosedDay = source.diagnosedDay,
+                    releaseDay = source.releaseDay < 0 ? -1 : source.releaseDay,
+                    palliativePlan = source.palliativePlan?.Trim() ?? string.Empty,
+                    severitySource = NormalizeSeveritySource(source.severitySource),
+                    sourceId = NormalizeId(source.sourceId)
+                };
+                _bands[id] = copy;
             }
             RaiseChanged();
         }
 
-        private void RaiseChanged() => OnStateChanged?.Invoke(_state);
+        private void RaiseChanged() => OnStateChanged?.Invoke(CaptureState());
+
+        private static SickBand CloneBand(SickBand source) => new SickBand
+        {
+            survivorId = NormalizeId(source.survivorId),
+            band = source.band,
+            diagnosedDay = source.diagnosedDay,
+            releaseDay = source.releaseDay,
+            palliativePlan = source.palliativePlan?.Trim() ?? string.Empty,
+            severitySource = NormalizeSeveritySource(source.severitySource),
+            sourceId = NormalizeId(source.sourceId)
+        };
+
+        private static bool IsValidBand(int band) =>
+            band >= DoseLedgerSystem.BandGreen && band <= DoseLedgerSystem.BandBlack;
+
+        private static string NormalizeSeveritySource(string? value)
+        {
+            string normalized = NormalizeId(value);
+            return string.Equals(normalized, SourceIllness, StringComparison.OrdinalIgnoreCase)
+                ? SourceIllness
+                : SourceDose;
+        }
+
+        private static string NormalizeId(string? value) => value?.Trim() ?? string.Empty;
     }
 }

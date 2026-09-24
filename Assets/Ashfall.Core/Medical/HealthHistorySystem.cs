@@ -406,5 +406,34 @@ namespace Ashfall.Core.Medical
         {
             _state = state ?? new HealthHistoryState();
         }
+
+        public HealthHistoryCensus GetCensus()
+        {
+            int chronic = 0;
+            for (int i = 0; i < _state.Records.Count; i++)
+            {
+                if (string.Equals(_state.Records[i].Outcome, "chronic", StringComparison.OrdinalIgnoreCase))
+                    chronic++;
+            }
+            return new HealthHistoryCensus(_state.Records.Count, _state.Events.Count, _state.Vaccinations.Count, _state.Trends.Count, chronic);
+        }
+    }
+
+    public struct HealthHistoryCensus
+    {
+        public readonly int TotalRecords;
+        public readonly int TotalEvents;
+        public readonly int TotalVaccinations;
+        public readonly int TotalTrends;
+        public readonly int ActiveChronicConditions;
+
+        public HealthHistoryCensus(int records, int events, int vaccinations, int trends, int chronic)
+        {
+            TotalRecords = records;
+            TotalEvents = events;
+            TotalVaccinations = vaccinations;
+            TotalTrends = trends;
+            ActiveChronicConditions = chronic;
+        }
     }
 }

@@ -187,13 +187,46 @@ namespace AtomicWar.GodotApp
         private void SetupShelterExpansion()
         {
             if (_shelterExpansion != null) return;
+            SetupSurvivors();
+            SetupShelterAssignment();
             var system = new ShelterExpansionSystem();
             var catalog = TryReadWave1Catalog("shelter_construction.json");
             if (catalog != null) system.LoadCatalog(catalog);
             var saved = ShelterExpansionSaveStore.TryLoad();
             if (saved != null) system.RestoreState(saved);
+
+            system.IsCrewSurvivorEligible = survivorId =>
+            {
+                var survivor = _survivors?.Find(survivorId);
+                return survivor != null && survivor.IsAlive && survivor.Health > 0f
+                    && EvaluateSurvivorFitness(survivorId).Level != FitnessLevel.Incapacitated;
+            };
+            system.ResolveCrewSkillBonus = (survivorId, _) =>
+                EnsureSharedSkillProgression().GetDisciplineSkillBonus(survivorId, "crafting");
+            system.ApplyCrewFatigue = (survivorId, amount) =>
+            {
+                var survivor = _survivors?.Find(survivorId);
+                if (survivor != null) _survivors!.Needs.Modify(survivor, NeedKind.Fatigue, amount);
+            };
+            system.ApplySurvivorMoraleDelta = (survivorId, delta) =>
+            {
+                var survivor = _survivors?.Find(survivorId);
+                if (survivor != null) _survivors!.Needs.Modify(survivor, NeedKind.Morale, delta);
+            };
+            system.OnProjectStartedSeam += _ => _orphanSealWave1Dirty = true;
+            system.OnProjectCompletedSeam += project =>
+            {
+                _shelterAssignment?.System.ApplyCapacityBonuses(system.GetCompletedCapacityBonuses());
+                _journal?.TryAddRawEntry(
+                    "shelter_construction_completed",
+                    $"Shelter project {project.ProjectId} was completed.",
+                    null!, Math.Max(1, _simDay));
+                _orphanSealWave1Dirty = true;
+            };
+
             _shelterExpansion = new ShelterExpansionHostSession(system);
             _shelterExpansion.StateChanged += () => _orphanSealWave1Dirty = true;
+            _shelterAssignment?.System.ApplyCapacityBonuses(system.GetCompletedCapacityBonuses());
         }
 
         private void SetupConfessionSecrets()
@@ -322,6 +355,7 @@ namespace AtomicWar.GodotApp
             TickCommunications(day);
             _colony!.TickDay(day);
             TickSurvivorAutonomy(day);
+            TickShelterOperationsCrews(day);
             TickSeasonalCelebration(day);
             _shelterFestival?.TickDay(day);
             TickFactionCovertOps(day);
@@ -411,21 +445,36 @@ namespace AtomicWar.GodotApp
             if (_seasonalCelebration == null) return;
             var holiday = _seasonalCelebration.CheckHoliday(day);
             if (holiday == null) return;
-            bool alreadyObserved = false;
-            foreach (var record in _seasonalCelebration.System.History)
-            {
-                if (record != null && string.Equals(record.HolidayId, holiday.HolidayId, StringComparison.OrdinalIgnoreCase))
-                {
-                    alreadyObserved = true;
-                    break;
-                }
-            }
-            if (alreadyObserved) return;
+            if (_seasonalCelebration.System.IsHolidayOccurrenceResolved(holiday.HolidayId, day))
+                return;
             _journal?.TryAddRawEntry(
                 "seasonal_holiday",
                 $"Today is {holiday.Name}. The shelter decides whether to mark it or let it pass quietly.",
                 null!, day);
             _orphanSealWave1Dirty = true;
+        }
+
+        private void TickShelterOperationsCrews(int day)
+        {
+            if (_shelterExpansion == null) return;
+            var rng = _campaignDay?.Rng?.Fork(CampaignStreamIds.Shelter, day, 61)
+                ?? new SeededRng(6100 + day);
+            var skills = EnsureSharedSkillProgression();
+            _shelterExpansion.System.RecordCrewSkillPractice = (survivorId, skillId, xp, currentDay) =>
+            {
+                var definition = skills.GetSkill(skillId);
+                if (definition == null) return;
+                skills.RecordAction(
+                    new SimpleSkillActor(survivorId),
+                    definition.disciplineId,
+                    xp,
+                    currentDay,
+                    rng);
+            };
+            int completed = _shelterExpansion.TickCrews(day);
+            if (completed > 0)
+                _shelterAssignment?.System.ApplyCapacityBonuses(
+                    _shelterExpansion.System.GetCompletedCapacityBonuses());
         }
 
         private void ResetOrphanSealWave1()

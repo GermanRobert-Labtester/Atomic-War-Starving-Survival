@@ -199,7 +199,7 @@ namespace Ashfall.Core.Tests
 
             // 3. Save/load round-trip across both map and power grid authorities
             var capturedMap = mapSystem.CaptureState();
-            var capturedGrid = gridState; // persistent state DTO
+            var capturedGrid = gridSystem.CaptureState();
 
             var restoredMap = new WastelandMapSystem(capturedMap, nodes, routes);
             var restoredDamagedMap = new DamagedMapSystem(zones, restoredMap);

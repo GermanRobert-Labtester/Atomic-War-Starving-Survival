@@ -17,15 +17,6 @@ namespace Ashfall.Core.Radio
     }
 
     [Serializable]
-    public sealed class UvCoronaEnvironmentState
-    {
-        public string environment_id = "clear";
-        public float visibility = 1f;
-        public float humidity = 0.2f;
-        public float ash_load;
-    }
-
-    [Serializable]
     public sealed class CoronaObservation
     {
         public string observation_id = string.Empty;

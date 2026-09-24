@@ -24,16 +24,6 @@ namespace Ashfall.Core.Radio
         ResolvedIgnored = 10
     }
 
-    public enum DistressOutcomeType
-    {
-        SurvivorRecruit = 0,
-        SurvivorAlliedGroup = 1,
-        GrimMemorialLog = 2,
-        RaiderTrapCombat = 3,
-        PrewarMysteryBeacon = 4,
-        ResourceCache = 5
-    }
-
     [Serializable]
     public sealed class DistressMessageFragment
     {

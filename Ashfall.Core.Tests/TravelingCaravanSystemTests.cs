@@ -31,6 +31,58 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void Constructor_CapturedState_DoesNotAliasInput()
+        {
+            var input = new TravelingCaravanState
+            {
+                activeCaravans = new List<CaravanEntry>(),
+                completedTradesCount = 0
+            };
+            var system = new TravelingCaravanSystem(input);
+
+            input.completedTradesCount = 42;
+            input.activeCaravans.Add(new CaravanEntry { caravanId = "injected" });
+
+            Assert.Equal(0, system.State.completedTradesCount);
+            Assert.Equal(0, system.CaravanCount);
+        }
+
+        [Fact]
+        public void DailyTick_MalformedRouteAndNullEntry_FailClosed()
+        {
+            var input = new TravelingCaravanState
+            {
+                activeCaravans = new List<CaravanEntry>
+                {
+                    null,
+                    new CaravanEntry
+                    {
+                        caravanId = "empty-route",
+                        routeNodeIds = new List<string>(),
+                        stayDurationDays = 1
+                    }
+                }
+            };
+            var system = new TravelingCaravanSystem(input);
+
+            system.DailyTick();
+
+            Assert.Equal(1, system.CaravanCount);
+        }
+
+        [Fact]
+        public void SpawnCaravan_DuplicateIdOrBlankRoute_DoesNotCreateSecondAuthority()
+        {
+            var system = new TravelingCaravanSystem();
+            system.SpawnCaravan("c1", "Trader", "f1", new List<string> { "node_a" });
+            system.SpawnCaravan("c1", "Duplicate", "f1", new List<string> { "node_b" });
+            system.SpawnCaravan("c2", "Blank", "f1", new List<string> { " " });
+
+            Assert.Equal(1, system.CaravanCount);
+            Assert.NotNull(system.GetCaravanAtNode("node_a"));
+        }
+
+        [Fact]
         public void DailyTick_AdvancesWaypointsAndLoopsRoute()
         {
             var system = new TravelingCaravanSystem();
@@ -72,6 +124,44 @@ namespace Ashfall.Core.Tests
             bool failStock = system.TryBuyItem("c1", "item_canned_food", 10, ref insufficientRations);
             Assert.False(failStock);
             Assert.Equal(100, insufficientRations);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void TryBuyItem_NonPositiveAmount_DoesNotMutate(int amount)
+        {
+            var system = new TravelingCaravanSystem();
+            system.SpawnCaravan("c1", "Trader", "f1", new List<string> { "node_market" });
+            var caravan = system.GetCaravanAtNode("node_market")!;
+            int stockBefore = caravan.inventory.Find(i => i.itemId == "item_canned_food")!.quantity;
+            int rations = 10;
+
+            bool success = system.TryBuyItem("c1", "item_canned_food", amount, ref rations);
+
+            Assert.False(success);
+            Assert.Equal(10, rations);
+            Assert.Equal(stockBefore, caravan.inventory.Find(i => i.itemId == "item_canned_food")!.quantity);
+            Assert.Equal(0, system.State.completedTradesCount);
+        }
+
+        [Fact]
+        public void TryBuyItem_OverflowingPrice_FailsClosed()
+        {
+            var system = new TravelingCaravanSystem();
+            system.SpawnCaravan("c1", "Trader", "f1", new List<string> { "node_market" });
+            var caravan = system.GetCaravanAtNode("node_market")!;
+            var stock = caravan.inventory.Find(i => i.itemId == "item_canned_food")!;
+            stock.priceRations = int.MaxValue;
+            stock.quantity = 3;
+            int rations = 5;
+
+            bool success = system.TryBuyItem("c1", stock.itemId, 2, ref rations);
+
+            Assert.False(success);
+            Assert.Equal(5, rations);
+            Assert.Equal(3, stock.quantity);
+            Assert.Equal(0, system.State.completedTradesCount);
         }
 
         [Fact]

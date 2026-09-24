@@ -23,6 +23,132 @@ namespace Ashfall.Core.Tests.Shelter
         }
 
         [Fact]
+        public void Constructor_CapturedStateAndRooms_DoNotAliasAuthority()
+        {
+            var state = new ShelterAssignmentState
+            {
+                Assignments = new List<ShelterAssignment>
+                {
+                    new ShelterAssignment
+                    {
+                        SurvivorId = "survivor_1",
+                        RoomId = "room_bunks",
+                        Status = ShelterAssignmentStatus.Active
+                    }
+                }
+            };
+            var rooms = new List<ShelterRoom>
+            {
+                new ShelterRoom("room_bunks", "Bunks", 4)
+            };
+
+            var system = new ShelterAssignmentSystem(state, rooms, new SeededRng(1));
+            state.Assignments.Clear();
+            rooms[0].Capacity = 0;
+
+            Assert.Equal(4, system.GetRoomCapacity("room_bunks"));
+            Assert.Equal("room_bunks", system.GetAssignmentForSurvivor("survivor_1")?.RoomId);
+        }
+
+        [Fact]
+        public void Capture_AssignmentObject_IsSnapshot()
+        {
+            var system = MakeGrid();
+            system.Assign("survivor_1", "room_bunks");
+
+            var snapshot = system.CaptureState();
+            snapshot.Assignments[0].RoomId = "tampered";
+
+            Assert.Equal("room_bunks", system.GetAssignmentForSurvivor("survivor_1")?.RoomId);
+        }
+
+        [Fact]
+        public void Restore_CapturedState_DoesNotAliasInput()
+        {
+            var source = MakeGrid();
+            source.Assign("survivor_1", "room_bunks");
+            var saved = source.CaptureState();
+            var restored = MakeGrid();
+
+            restored.RestoreState(saved);
+            saved.Assignments[0].RoomId = "tampered";
+            saved.Assignments[0].Status = ShelterAssignmentStatus.Decommissioned;
+
+            Assert.Equal("room_bunks", restored.GetAssignmentForSurvivor("survivor_1")?.RoomId);
+            Assert.Equal(ShelterAssignmentStatus.Active, restored.GetAssignmentForSurvivor("survivor_1")?.Status);
+        }
+
+        [Fact]
+        public void InactiveAssignments_DoNotConsumeRoomCapacityOrOccupancy()
+        {
+            var state = new ShelterAssignmentState
+            {
+                Assignments = new List<ShelterAssignment>
+                {
+                    new ShelterAssignment
+                    {
+                        SurvivorId = "survivor_1",
+                        RoomId = "room_bunks",
+                        Status = ShelterAssignmentStatus.OnLeave
+                    }
+                }
+            };
+            var system = new ShelterAssignmentSystem(state, new List<ShelterRoom>
+            {
+                new ShelterRoom("room_bunks", "Bunks", 1)
+            }, new SeededRng(1));
+
+            Assert.Equal(0, system.GetRoomOccupancy("room_bunks"));
+            Assert.Empty(system.GetAssignmentsForRoom("room_bunks"));
+            Assert.True(system.CanAssign("survivor_2", "room_bunks"));
+            Assert.True(system.Assign("survivor_2", "room_bunks").Succeeded);
+            Assert.Equal(1, system.GetRoomOccupancy("room_bunks"));
+        }
+
+        [Fact]
+        public void Assign_ReactivatesInactiveAssignment()
+        {
+            var state = new ShelterAssignmentState
+            {
+                Assignments = new List<ShelterAssignment>
+                {
+                    new ShelterAssignment
+                    {
+                        SurvivorId = "survivor_1",
+                        RoomId = "room_bunks",
+                        Status = ShelterAssignmentStatus.Decommissioned
+                    }
+                }
+            };
+            var system = new ShelterAssignmentSystem(state, new List<ShelterRoom>
+            {
+                new ShelterRoom("room_bunks", "Bunks", 1),
+                new ShelterRoom("room_clinic", "Clinic", 1)
+            }, new SeededRng(1));
+
+            var result = system.Assign("survivor_1", "room_clinic", day: 9);
+
+            Assert.True(result.Succeeded);
+            Assert.Single(system.GetAssignments());
+            Assert.Equal("room_clinic", result.Assignment?.RoomId);
+            Assert.Equal(ShelterAssignmentStatus.Active, result.Assignment?.Status);
+        }
+
+        [Fact]
+        public void Constructor_NullAssignmentList_FailsClosed()
+        {
+            var state = new ShelterAssignmentState { Assignments = null! };
+
+            var system = new ShelterAssignmentSystem(state, new List<ShelterRoom>
+            {
+                new ShelterRoom("room_bunks", "Bunks", 1)
+            }, new SeededRng(1));
+
+            Assert.Empty(system.GetAssignments());
+            Assert.True(system.Assign("survivor_1", "room_bunks").Succeeded);
+        }
+
+        [Fact]
         public void Assign_AddsAssignment()
         {
             var sys = MakeGrid();

@@ -4,19 +4,6 @@ using System.Collections.Generic;
 
 namespace Ashfall.Core.Launch
 {
-    /// <summary>
-    /// Category of public store / marketing capability claim.
-    /// </summary>
-    public enum StoreClaimCategory
-    {
-        GameplayCore,
-        Accessibility,
-        AudioVisual,
-        DataAndSaves,
-        AiAndAuthorship,
-        SystemRequirements,
-        Localization
-    }
 
     /// <summary>
     /// An individual factual claim presented on public store pages or marketing copy.

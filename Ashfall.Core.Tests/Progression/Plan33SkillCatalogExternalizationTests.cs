@@ -57,7 +57,8 @@ namespace Ashfall.Core.Tests.Progression
         {
             var defs = SkillCatalogLoader.Load(_dataDir, _fileIO, _serializer);
             Assert.NotEmpty(defs);
-            Assert.Equal(160, defs.Count);
+            Assert.Equal(161, defs.Count);
+            Assert.Contains(defs, def => def.id == "skill_crafting");
         }
 
         [Fact]

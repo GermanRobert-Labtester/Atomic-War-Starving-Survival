@@ -29,7 +29,9 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            string tempDir = Path.Combine(Path.GetTempPath(), "ashfall_legacy_test_" + Guid.NewGuid().ToString("N"));
+            // Use a stable scratch path: selftest state is isolated by the cleanup
+            // below and must not introduce process-dependent determinism input.
+            string tempDir = Path.Combine(Path.GetTempPath(), "ashfall_legacy_test");
             Directory.CreateDirectory(tempDir);
 
             try

@@ -282,5 +282,34 @@ namespace Ashfall.Core.Culture
                 }
             }
         }
+
+        public CultureCreationCensus GetCensus()
+        {
+            int masterworks = _state.Artworks.Count(a => a.IsMasterwork);
+            return new CultureCreationCensus(
+                _state.Artworks.Count,
+                _state.TotalCulturalValue,
+                _state.ShelterCulturalIdentity,
+                GetShelterCultureMoraleBonus(),
+                masterworks);
+        }
+    }
+
+    public struct CultureCreationCensus
+    {
+        public readonly int TotalArtworks;
+        public readonly float TotalCulturalValue;
+        public readonly string CulturalIdentity;
+        public readonly float ShelterCultureMoraleBonus;
+        public readonly int MasterworkCount;
+
+        public CultureCreationCensus(int totalArtworks, float totalCulturalValue, string culturalIdentity, float shelterCultureMoraleBonus, int masterworkCount)
+        {
+            TotalArtworks = totalArtworks;
+            TotalCulturalValue = totalCulturalValue;
+            CulturalIdentity = culturalIdentity;
+            ShelterCultureMoraleBonus = shelterCultureMoraleBonus;
+            MasterworkCount = masterworkCount;
+        }
     }
 }

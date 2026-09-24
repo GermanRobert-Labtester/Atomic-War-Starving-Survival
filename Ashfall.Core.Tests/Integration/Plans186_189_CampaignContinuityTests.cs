@@ -70,7 +70,7 @@ namespace Ashfall.Core.Tests.Integration
             inv.AddById("item_decryption_keycard_prewar", 1);
             var decryptResult = archaeology.ProgressDecryption(archive.archiveId, 10f, 4.0f, hasPower: true, hasKeycard: true);
             Assert.True(decryptResult.IsSuccess);
-            Assert.True(archive.unlocked);
+            Assert.True(archaeology.Archives[0].unlocked);
             Assert.Contains(archive.archiveId, researchState.unlockedIds);
 
             // 4. Plan 188: Decrypted intelligence unlocks high-value mercenary bounty

@@ -156,27 +156,44 @@ namespace Ashfall.Core
             _state.effluentTankCapacity = _protocolCatalog.effluent_treatment?.default_tank_capacity_liters ?? 200f;
         }
 
+        /// <summary>
+        /// A case still locks its survivor while it is not terminally resolved
+        /// (Complete, Bypassed, or Failed). Centralizes the terminal set so a
+        /// future status only needs one update.
+        /// </summary>
+        private static bool IsUnresolved(DeconStatus status) =>
+            status != DeconStatus.Complete
+            && status != DeconStatus.Bypassed
+            && status != DeconStatus.Failed;
+
+        /// <summary>
+        /// CR3-06: caseId changes every day, so the caseId predicate alone lets
+        /// a survivor re-enqueue every new day forever, even with an unresolved
+        /// case on the queue or as the active case. Lock by (survivorId +
+        /// not-yet-resolved) — matches MentalHealthCrisisSystem's survivor+status
+        /// pattern. When <paramref name="rewashStillLocks"/> is false, an active
+        /// case awaiting rewash no longer locks (protocol cycles may start on it).
+        /// </summary>
+        private bool HasUnresolvedCaseFor(string survivorId, bool rewashStillLocks)
+        {
+            if (_state.queue.Exists(c => c.survivorId == survivorId && IsUnresolved(c.status)))
+                return true;
+            var active = _state.activeCase;
+            if (active == null || active.survivorId != survivorId)
+                return false;
+            if (!rewashStillLocks && active.status == DeconStatus.RewashRequired)
+                return false;
+            return IsUnresolved(active.status);
+        }
+
         public ActionResult Enqueue(string survivorId, string gearId, float surfaceContamination)
         {
             var caseId = $"decon_{_currentDay}_{survivorId}";
             if (_state.queue.Exists(c => c.caseId == caseId))
                 return ActionResult.Blocked("already_queued", "decon.already_queued");
 
-            // CR3-06: caseId changes every day, so the caseId predicate alone
-            // lets a survivor re-enqueue every new day forever, even with an
-            // unresolved case on the queue or as the active case. Lock by
-            // (survivorId + not-yet-resolved) — matches MentalHealthCrisisSystem's
-            // survivor+status pattern. Keeps the caseId check as defense-in-depth.
-            if (_state.queue.Exists(c => c.survivorId == survivorId
-                                     && c.status != DeconStatus.Complete
-                                     && c.status != DeconStatus.Bypassed
-                                     && c.status != DeconStatus.Failed))
-                return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
-            if (_state.activeCase != null
-                && _state.activeCase.survivorId == survivorId
-                && _state.activeCase.status != DeconStatus.Complete
-                && _state.activeCase.status != DeconStatus.Bypassed
-                && _state.activeCase.status != DeconStatus.Failed)
+            // Keeps the caseId check above as defense-in-depth.
+            if (HasUnresolvedCaseFor(survivorId, rewashStillLocks: true))
                 return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
 
             var deconCase = new DeconCase
@@ -309,18 +326,9 @@ namespace Ashfall.Core
             if (protocol == null)
                 return ActionResult.Blocked("unknown_protocol", "decon.unknown_protocol");
 
-            // Check queue/active locks (same as Enqueue)
-            if (_state.queue.Exists(c => c.survivorId == survivorId
-                                     && c.status != DeconStatus.Complete
-                                     && c.status != DeconStatus.Bypassed
-                                     && c.status != DeconStatus.Failed))
-                return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
-            if (_state.activeCase != null
-                && _state.activeCase.survivorId == survivorId
-                && _state.activeCase.status != DeconStatus.Complete
-                && _state.activeCase.status != DeconStatus.Bypassed
-                && _state.activeCase.status != DeconStatus.Failed
-                && _state.activeCase.status != DeconStatus.RewashRequired)
+            // Check queue/active locks (same as Enqueue, except an active case
+            // awaiting rewash may start its protocol cycle).
+            if (HasUnresolvedCaseFor(survivorId, rewashStillLocks: false))
                 return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
 
             // Consume chelator FIRST — a failed precondition must consume

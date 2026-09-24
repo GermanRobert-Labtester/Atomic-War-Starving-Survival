@@ -569,7 +569,27 @@ namespace AtomicWar.GodotApp
             ResetKilnworks();
             ResetWildlifeHarvest();
             ResetStormForecast();
+            ResetDependencyTaperWithdrawal();
+            ResetAntenatalMaternalHealth();
+            ResetClinicalWardTriage();
+            ResetChemicalReagentSynthesis();
+            ResetMechanicalDriveline();
+            ResetSleepAcousticRest();
+            ResetShelterArchive();
+            ResetSurvivorDreams();
+            ResetAccessibilitySettings();
+            ResetPersonalQuests();
+            ResetMemoryDecay();
+            ResetInterpersonalConflict();
+            ResetExercise();
+            ResetCultureCreation();
+            ResetPsychologicalProfiles();
+            ResetSkillCertifications();
+            ResetBestiary();
+            ResetHealthHistory();
+            ResetChildDevelopment();
         }
+
 
         /// <summary>
         /// Executes an in-memory reset of all registered sessions in safe reverse-dependency order.

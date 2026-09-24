@@ -19,6 +19,7 @@
 // ============================================================================
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Ashfall.Core.IO;
@@ -488,18 +489,37 @@ namespace Ashfall.Core.Medical
 
         // ── Maintenance & repair (§6.9) ────────────────────────────────
 
+        /// <summary>
+        /// Resolves a live, defined implant with bound inventory delegates and a
+        /// held kit for a servicing action. Maintenance and repair share this
+        /// exact guard chain; callers still perform their own consumption.
+        /// </summary>
+        private bool TryResolveServiceableImplant(
+            string survivorId, LimbId limb, string kitItemId,
+            [NotNullWhen(true)] out ImplantInstanceState? instance,
+            [NotNullWhen(true)] out ImplantDefinition? def)
+        {
+            instance = null;
+            def = null;
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(kitItemId))
+                return false;
+            instance = InstanceFor(survivorId, limb);
+            if (instance == null || instance.destroyed) { def = null; return false; }
+            def = Definition(instance.implant_id);
+            if (def == null) return false;
+            if (_itemCount == null || _itemConsume == null) return false;
+            if (_itemCount(kitItemId) <= 0) return false;
+            return true;
+        }
+
         /// <summary>Scheduled maintenance: consumes a canonical kit, resets the
         /// interval clock, and restores bounded condition.</summary>
         public bool PerformMaintenance(string survivorId, LimbId limb, string kitItemId, int day)
         {
-            var instance = InstanceFor(survivorId, limb);
-            if (instance == null || instance.destroyed) return false;
-            var def = Definition(instance.implant_id);
-            if (def == null) return false;
-            if (_itemCount == null || _itemConsume == null) return false;
-            if (_itemCount(kitItemId) <= 0) return false;
+            if (!TryResolveServiceableImplant(survivorId, limb, kitItemId, out var instance, out var def))
+                return false;
 
-            _itemConsume(kitItemId, 1);
+            _itemConsume!(kitItemId, 1);
             instance.condition = Math.Min(def.condition_max, instance.condition + 40f);
             instance.last_maintenance_day = day;
             OnImplantConditionChanged?.Invoke(instance);
@@ -509,14 +529,10 @@ namespace Ashfall.Core.Medical
         /// <summary>Repair a damaged (not destroyed) implant with a repair kit.</summary>
         public bool Repair(string survivorId, LimbId limb, string kitItemId)
         {
-            var instance = InstanceFor(survivorId, limb);
-            if (instance == null || instance.destroyed) return false;
-            var def = Definition(instance.implant_id);
-            if (def == null) return false;
-            if (_itemCount == null || _itemConsume == null) return false;
-            if (_itemCount(kitItemId) <= 0) return false;
+            if (!TryResolveServiceableImplant(survivorId, limb, kitItemId, out var instance, out var def))
+                return false;
 
-            _itemConsume(kitItemId, 1);
+            _itemConsume!(kitItemId, 1);
             instance.condition = Math.Min(def.condition_max, instance.condition + 60f);
             instance.last_maintenance_day = _state.last_tick_day;
             OnImplantConditionChanged?.Invoke(instance);

@@ -108,6 +108,23 @@ namespace Ashfall.Core.Tests.Shelter
             restored.RestoreState(legacy);
         }
 
+        // kilnworks replay coverage: paired runs must remain identical.
+        [Fact]
+        public void KilnworksDeterminismReplay_IsStableAcrossIdenticalRuns()
+        {
+            static string Run()
+            {
+                var ledger = new KilnFiringLedger();
+                ledger.AddBatch("kilnworks_batch", KilnLoadKind.RefractoryTile, 900);
+                ledger.AdvanceFiring("kilnworks_batch");
+                ledger.CalcinateLimestone(500, 900, 12);
+                var census = ledger.GetCensus();
+                return $"{census.BatchCount}:{census.FuelReservePermille}:{census.LiningWearPermille}:{census.CumulativeQuicklimeKg}";
+            }
+
+            Assert.Equal(Run(), Run());
+        }
+
         [Fact]
         public void RefuelAndReline_ClampAndClearWear()
         {

@@ -2,11 +2,12 @@
 # THE WATCH
 ### Wave 5 · Night Watch, Patrols, Perimeter, Detection, Gates, Territory, and Readiness
 
-**Document status:** Design plan (pre-integration). Not a claim. Not an authorization.
+**Document status:** INTEGRATED — full host/runtime/persistence/player-surface integration sealed 2026-09-24.
 **Date:** 2026-09-22
-**Domain owners touched:** `Ashfall.Core.World` (PatrolTerritoryAuthority), `Ashfall.Core.Combat` (SoundRangingThreatEngine), `Ashfall.Core.Narrative` (PatrolEncounterValidator, NightWatchCatalog), `Ashfall.Core.Radio` (PatrolRadioHooks)
-**Proposed host owner:** `WatchHouseHostSession` (extends watch, patrol, and territory surfaces)
-**Existing save sections:** patrol territory state, night watch catalog state, radio signal state
+**Integration record:** `docs/plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md` (DEC-331). The signed pure engine is now composed by `NightWatchHostSession`; authored operations data is live; watch state rides the existing `perimeter_defense` and `duty_roster` save owners; the routed `NightWatchPanel` and runtime probe are live.
+**Domain owners touched:** `Ashfall.Core.World` (`NightWatchPatrolReadinessEngine` and watch operations), `Ashfall.Core.Defense` (`PerimeterDefenseSystem`), `Ashfall.Core.DutyRoster` (`DutyRosterSystem`), `Ashfall.Core.Combat` (`SoundRangingThreatEngine`), `Ashfall.Core.Factions` (`TerritoryControlSystem`), `Ashfall.Core.Shelter` (`ShelterSecuritySystem`), and `Ashfall.Core.Narrative` (`NightWatchCatalog`)
+**Host owner:** `NightWatchHostSession` with thin `Main.NightWatch` composition
+**Existing save owners:** `perimeter_defense` (watch operations), `duty_roster` (watch shifts), and `shelter_security` (gate lockdown)
 **Existing CLI verbs:** `--territory-selftest` (if present), `--data-integrity-selftest`, `--content-utilization-selftest`
 **Rule compliance:** Godot authoritative; Core engine-free; JSON data authoritative; one authority per concern; deterministic seeded RNG.
 

@@ -38,6 +38,11 @@ namespace AtomicWar.GodotApp
             SetupSurvivors();
             SetupCrafting();
 
+            // The headless UiTest path never starts a campaign, so no starting
+            // cohort exists. Seed the canonical demo roster for the
+            // morale-application checks below (no-op when a roster exists).
+            _survivors?.SeedDemoRoster();
+
             Check(_shelterWorkshop != null, "shelter workshop initialized");
             Check(_crafting?.Workshop != null, "relic workshop initialized");
             Check(_workshopPanel != null, "WorkshopPanel constructed");

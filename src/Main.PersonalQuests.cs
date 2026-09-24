@@ -3,6 +3,7 @@
 
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Quests;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -66,6 +67,15 @@ namespace AtomicWar.GodotApp
             AddChild(_personalQuestPanel);
         }
 
+        public PersonalQuestCensus GetPersonalQuestsCensus() =>
+            _personalQuests?.System.GetCensus() ?? default;
+
+        public void ResetPersonalQuests()
+        {
+            _personalQuests = null;
+            _personalQuestsDirty = false;
+        }
+
         public void ShowPersonalQuestPanel()
         {
             SetupPersonalQuestPanel();
@@ -77,3 +87,4 @@ namespace AtomicWar.GodotApp
         }
     }
 }
+

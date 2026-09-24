@@ -211,6 +211,39 @@ namespace Ashfall.Core.Tests.Maritime
         }
 
         [Fact]
+        public void ExecuteExpedition_IntMinSeed_CompletesWithoutOverflow()
+        {
+            var system = new MaritimeExplorationSystem();
+            var site = system.RegisterDiveSite(
+                "site_extreme_seed",
+                "Extreme Seed",
+                "zone_test",
+                DiveSiteType.SunkenVessel,
+                depthMeters: 20f,
+                hazardLevel: 10f,
+                lootItemIds: new[] { "scrap_metal", "copper_pipe" });
+            Assert.True(system.DiscoverSite(site.SiteId));
+            var suit = system.RegisterEquipment("eq_extreme", "basic_dive_suit", depthRating: 50f);
+            var (planned, reason, expedition) = system.PlanExpedition(
+                site.SiteId,
+                new[] { "diver_extreme" },
+                new[] { suit.EquipmentId },
+                day: 1);
+
+            Assert.True(planned, reason);
+            Assert.NotNull(expedition);
+            var (executed, message) = system.ExecuteExpedition(
+                expedition!.ExpeditionId,
+                currentDay: 1,
+                diverSkill: 90,
+                seed: int.MinValue);
+
+            Assert.True(executed, message);
+            Assert.Equal(MaritimeExpeditionStatus.Completed, expedition.Status);
+            Assert.NotEmpty(expedition.LootCollected);
+        }
+
+        [Fact]
         public void SaveRestoreState_PreservesZonesSitesExpeditionsAndEquipment()
         {
             var system1 = new MaritimeExplorationSystem();

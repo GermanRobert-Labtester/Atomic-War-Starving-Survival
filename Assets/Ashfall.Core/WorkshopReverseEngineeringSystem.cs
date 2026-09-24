@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 #pragma warning disable CS8618
 using Ashfall.Core.Inventory;
 
@@ -292,6 +293,45 @@ ILog? log = null)
                 });
         }
 
+        /// <summary>
+        /// Resolves a relic for a mutating workshop action through the single
+        /// guard chain the inline sites previously triplicated: workshop idle,
+        /// non-empty id, catalog-known, and not already completed. Returns false
+        /// with the exact failure result the inline guards produced.
+        /// </summary>
+        private bool TryResolveActionableRelic(
+            string relicId,
+            string completedCode,
+            string completedMessage,
+            [NotNullWhen(true)] out RelicDefinition? relic,
+            out ActionResult failure)
+        {
+            if (IsBusy)
+            {
+                relic = null;
+                failure = ActionResult.Blocked("workshop_busy", "workshop.already_busy");
+                return false;
+            }
+            if (string.IsNullOrEmpty(relicId))
+            {
+                relic = null;
+                failure = ActionResult.Failed("invalid_relic", "workshop.invalid_relic");
+                return false;
+            }
+            if (!_relicCatalog.TryGetValue(relicId, out relic))
+            {
+                failure = ActionResult.Failed("unknown_relic", "workshop.unknown_relic");
+                return false;
+            }
+            if (IsRelicCompleted(relicId))
+            {
+                failure = ActionResult.Blocked(completedCode, completedMessage);
+                return false;
+            }
+            failure = ActionResult.Success("workshop.relic_resolved");
+            return true;
+        }
+
         // ── Actions ──────────────────────────────────────────────────────────
 
         /// <summary>Examine a relic — returns its description and metadata without consuming anything.</summary>
@@ -314,14 +354,8 @@ ILog? log = null)
         /// <summary>Start dismantling a relic. Consumes the relic, yields scrap/components.</summary>
         public ActionResult StartDismantle(string relicId, string researcherId)
         {
-            if (IsBusy)
-                return ActionResult.Blocked("workshop_busy", "workshop.already_busy");
-            if (string.IsNullOrEmpty(relicId))
-                return ActionResult.Failed("invalid_relic", "workshop.invalid_relic");
-            if (!_relicCatalog.TryGetValue(relicId, out var relic))
-                return ActionResult.Failed("unknown_relic", "workshop.unknown_relic");
-            if (IsRelicCompleted(relicId))
-                return ActionResult.Blocked("already_dismantled", "workshop.already_dismantled");
+            if (!TryResolveActionableRelic(relicId, "already_dismantled", "workshop.already_dismantled", out var relic, out var failure))
+                return failure;
 
             var skill = _getSurvivorSkill(researcherId ?? string.Empty);
             float hours = Math.Max(1f, relic.repair_time_hours * 0.5f / skill);
@@ -344,14 +378,8 @@ ILog? log = null)
         /// <summary>Start repairing a relic. Reserves required components from inventory.</summary>
         public ActionResult StartRepair(string relicId, string researcherId)
         {
-            if (IsBusy)
-                return ActionResult.Blocked("workshop_busy", "workshop.already_busy");
-            if (string.IsNullOrEmpty(relicId))
-                return ActionResult.Failed("invalid_relic", "workshop.invalid_relic");
-            if (!_relicCatalog.TryGetValue(relicId, out var relic))
-                return ActionResult.Failed("unknown_relic", "workshop.unknown_relic");
-            if (IsRelicCompleted(relicId))
-                return ActionResult.Blocked("already_repaired", "workshop.already_repaired");
+            if (!TryResolveActionableRelic(relicId, "already_repaired", "workshop.already_repaired", out var relic, out var failure))
+                return failure;
 
             // Check and consume component availability atomically
             if (relic.required_components != null && relic.required_components.Count > 0)
@@ -391,14 +419,8 @@ ILog? log = null)
         /// <summary>Start researching a relic. Progresses the associated research node.</summary>
         public ActionResult StartResearch(string relicId, string researcherId)
         {
-            if (IsBusy)
-                return ActionResult.Blocked("workshop_busy", "workshop.already_busy");
-            if (string.IsNullOrEmpty(relicId))
-                return ActionResult.Failed("invalid_relic", "workshop.invalid_relic");
-            if (!_relicCatalog.TryGetValue(relicId, out var relic))
-                return ActionResult.Failed("unknown_relic", "workshop.unknown_relic");
-            if (IsRelicCompleted(relicId))
-                return ActionResult.Blocked("already_researched", "workshop.already_researched");
+            if (!TryResolveActionableRelic(relicId, "already_researched", "workshop.already_researched", out var relic, out var failure))
+                return failure;
             if (string.IsNullOrEmpty(relic.research_unlock_id))
                 return ActionResult.Blocked("no_research_unlock", "workshop.no_research_unlock");
 

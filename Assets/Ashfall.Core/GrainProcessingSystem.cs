@@ -92,7 +92,7 @@ namespace Ashfall.Core
         private readonly Inventory.Inventory _inventory;
         private readonly ILog _log;
         private readonly Dictionary<string, GrainProcessingRecipe> _recipes =
-            new Dictionary<string, GrainProcessingRecipe>(StringComparer.Ordinal);
+            new Dictionary<string, GrainProcessingRecipe>(StringComparer.OrdinalIgnoreCase);
         private GrainProcessingState _state = new GrainProcessingState();
         private int _currentDay;
 
@@ -112,43 +112,63 @@ namespace Ashfall.Core
 
         public void RegisterRecipe(GrainProcessingRecipe recipe)
         {
-            if (recipe == null || string.IsNullOrEmpty(recipe.recipe_id)
-                || string.IsNullOrEmpty(recipe.input_item_id)
-                || string.IsNullOrEmpty(recipe.output_item_id)
+            if (recipe == null || string.IsNullOrWhiteSpace(recipe.recipe_id)
+                || string.IsNullOrWhiteSpace(recipe.input_item_id)
+                || string.IsNullOrWhiteSpace(recipe.output_item_id)
                 || recipe.input_quantity <= 0
                 || recipe.output_quantity <= 0
+                || !IsFinite(recipe.processing_hours)
                 || recipe.processing_hours < MinimumProcessingHours)
                 return;
 
-            _recipes[recipe.recipe_id] = recipe;
+            string recipeId = recipe.recipe_id.Trim();
+            _recipes[recipeId] = new GrainProcessingRecipe
+            {
+                recipe_id = recipeId,
+                input_item_id = recipe.input_item_id.Trim(),
+                input_quantity = recipe.input_quantity,
+                output_item_id = recipe.output_item_id.Trim(),
+                output_quantity = recipe.output_quantity,
+                processing_hours = recipe.processing_hours
+            };
         }
 
         public void LoadCatalog(GrainProcessingCatalog catalog)
         {
             if (catalog == null) return;
-            foreach (var recipe in catalog.recipes)
-                RegisterRecipe(recipe);
-            foreach (var silo in catalog.silos)
-                RegisterSilo(silo.silo_id, silo.integrity, silo.moisture_pct);
+            if (catalog.recipes != null)
+            {
+                foreach (var recipe in catalog.recipes)
+                    RegisterRecipe(recipe);
+            }
+            if (catalog.silos != null)
+            {
+                foreach (var silo in catalog.silos)
+                {
+                    if (silo == null) continue;
+                    RegisterSilo(silo.silo_id, silo.integrity, silo.moisture_pct);
+                }
+            }
         }
 
         public GrainProcessingRecipe? GetRecipe(string recipeId)
         {
-            if (string.IsNullOrEmpty(recipeId)) return null;
-            _recipes.TryGetValue(recipeId, out var recipe);
+            if (string.IsNullOrWhiteSpace(recipeId)) return null;
+            _recipes.TryGetValue(recipeId.Trim(), out var recipe);
             return recipe;
         }
 
         public bool RegisterSilo(string siloId, float integrity = 100f, float moisturePct = 12f)
         {
-            if (string.IsNullOrEmpty(siloId)) return false;
-            if (FindSilo(siloId) != null) return false;
+            if (string.IsNullOrWhiteSpace(siloId)) return false;
+            string canonicalSiloId = siloId.Trim();
+            if (FindSilo(canonicalSiloId) != null) return false;
 
             _state.silos.Add(new GrainSiloState
             {
-                silo_id = siloId,
-                integrity = Math.Clamp(integrity, 0f, 100f),
-                moisture_pct = Math.Clamp(moisturePct, 0f, 100f),
+                silo_id = canonicalSiloId,
+                integrity = SanitizeRange(integrity, 0f, 100f),
+                moisture_pct = SanitizeRange(moisturePct, 0f, 100f),
                 last_tick_day = _currentDay
             });
             OnStateChanged?.Invoke();
@@ -209,11 +229,14 @@ namespace Ashfall.Core
             var silo = FindSilo(siloId);
             if (silo == null)
                 return ActionResult.Failed("unknown_silo", "grain.unknown_silo");
-            if (string.IsNullOrEmpty(treatmentItemId) || treatmentQuantity <= 0 || pestReduction <= 0f)
+            if (string.IsNullOrWhiteSpace(treatmentItemId)
+                || treatmentQuantity <= 0
+                || !IsFinite(pestReduction)
+                || pestReduction <= 0f)
                 return ActionResult.Blocked("invalid_treatment", "grain.invalid_treatment");
 
             var bill = new InventoryBill();
-            bill.AddCost(treatmentItemId, treatmentQuantity);
+            bill.AddCost(treatmentItemId.Trim(), treatmentQuantity);
             bool committed = _inventory.TryExecuteTransaction(bill, () =>
             {
                 silo.pest_pressure = Math.Max(0f, silo.pest_pressure - pestReduction);
@@ -228,15 +251,22 @@ namespace Ashfall.Core
 
         public void TickDay(int day)
         {
-            if (day < _currentDay) return;
+            if (day < 0 || (_state.last_tick_day >= 0 && day <= _currentDay)) return;
             _currentDay = day;
             _state.last_tick_day = day;
 
             for (int i = 0; i < _state.silos.Count; i++)
             {
                 var silo = _state.silos[i];
+                if (silo == null || string.IsNullOrWhiteSpace(silo.silo_id)) continue;
+                silo.integrity = SanitizeRange(silo.integrity, 0f, 100f);
+                silo.moisture_pct = SanitizeRange(silo.moisture_pct, 0f, 100f);
+                silo.pest_pressure = SanitizeRange(silo.pest_pressure, 0f, 100f);
                 var previousBand = GetSafetyBand(silo);
-                int elapsed = silo.last_tick_day < 0 ? 0 : Math.Max(0, day - silo.last_tick_day);
+                long elapsedLong = silo.last_tick_day < 0 ? 0 : (long)day - silo.last_tick_day;
+                int elapsed = elapsedLong <= 0
+                    ? 0
+                    : elapsedLong >= int.MaxValue ? int.MaxValue : (int)elapsedLong;
                 if (elapsed > 0)
                 {
                     float moisturePenalty = Math.Max(0f, silo.moisture_pct - 12f) * MoisturePestFactor;
@@ -252,6 +282,7 @@ namespace Ashfall.Core
             }
 
             var jobs = new List<GrainProcessingJob>(_state.active_jobs);
+            jobs.RemoveAll(job => job == null || string.IsNullOrWhiteSpace(job.job_id));
             jobs.Sort((a, b) => string.CompareOrdinal(a.job_id, b.job_id));
             for (int i = 0; i < jobs.Count; i++)
             {
@@ -259,8 +290,17 @@ namespace Ashfall.Core
                 if (job.is_complete) continue;
                 var recipe = GetRecipe(job.recipe_id);
                 var silo = FindSilo(job.silo_id);
-                if (recipe == null || silo == null) continue;
+                if (recipe == null || silo == null)
+                {
+                    job.is_blocked = true;
+                    OnJobBlocked?.Invoke(job);
+                    continue;
+                }
 
+                job.progress_hours = SanitizeRange(job.progress_hours, 0f, float.MaxValue);
+                job.total_hours_required = Math.Max(
+                    MinimumProcessingHours,
+                    SanitizeRange(job.total_hours_required, MinimumProcessingHours, float.MaxValue));
                 if (job.progress_hours < job.total_hours_required)
                     job.progress_hours += 8f;
                 if (job.progress_hours < job.total_hours_required) continue;
@@ -279,8 +319,10 @@ namespace Ashfall.Core
                 job.is_complete = true;
                 job.is_blocked = false;
                 job.output_granted = output;
-                _state.total_batches_completed++;
-                _state.total_output_granted += output;
+                if (_state.total_batches_completed < int.MaxValue)
+                    _state.total_batches_completed++;
+                long totalOutput = (long)_state.total_output_granted + output;
+                _state.total_output_granted = (int)Math.Min(totalOutput, int.MaxValue);
                 _log.Info($"[Grain] {job.recipe_id} completed: {output} output units");
                 OnJobCompleted?.Invoke(job);
             }
@@ -300,39 +342,112 @@ namespace Ashfall.Core
 
         private GrainSiloState? FindSilo(string siloId)
         {
-            if (string.IsNullOrEmpty(siloId)) return null;
+            if (string.IsNullOrWhiteSpace(siloId)) return null;
+            string canonicalSiloId = siloId.Trim();
             for (int i = 0; i < _state.silos.Count; i++)
-                if (_state.silos[i].silo_id == siloId) return _state.silos[i];
+            {
+                var silo = _state.silos[i];
+                if (silo != null
+                    && string.Equals(silo.silo_id, canonicalSiloId, StringComparison.OrdinalIgnoreCase))
+                    return silo;
+            }
             return null;
         }
 
         private static GrainSiloSafetyBand GetSafetyBand(GrainSiloState silo)
         {
-            if (silo.integrity <= 10f || silo.pest_pressure >= 80f)
+            float integrity = SanitizeRange(silo.integrity, 0f, 100f);
+            float pestPressure = SanitizeRange(silo.pest_pressure, 0f, 100f);
+            if (integrity <= 10f || pestPressure >= 80f)
                 return GrainSiloSafetyBand.Critical;
-            if (silo.integrity <= 35f || silo.pest_pressure >= 50f)
+            if (integrity <= 35f || pestPressure >= 50f)
                 return GrainSiloSafetyBand.Infested;
-            if (silo.integrity <= 65f || silo.pest_pressure >= 20f)
+            if (integrity <= 65f || pestPressure >= 20f)
                 return GrainSiloSafetyBand.Watch;
             return GrainSiloSafetyBand.Safe;
         }
 
         private static int CalculateOutput(GrainProcessingRecipe recipe, GrainSiloState silo)
         {
-            if (silo.integrity > 65f && silo.pest_pressure < 20f)
+            float integrity = SanitizeRange(silo.integrity, 0f, 100f);
+            float pestPressure = SanitizeRange(silo.pest_pressure, 0f, 100f);
+            if (integrity > 65f && pestPressure < 20f)
                 return recipe.output_quantity;
 
-            float pestLoss = Math.Clamp(silo.pest_pressure / 100f * 0.5f, 0f, 0.5f);
-            float integrityLoss = Math.Clamp((100f - silo.integrity) / 100f * 0.2f, 0f, 0.2f);
-            return Math.Max(0, (int)Math.Floor(recipe.output_quantity * (1f - pestLoss - integrityLoss)));
+            float pestLoss = SanitizeRange(pestPressure / 100f * 0.5f, 0f, 0.5f);
+            float integrityLoss = SanitizeRange((100f - integrity) / 100f * 0.2f, 0f, 0.2f);
+            float output = recipe.output_quantity * (1f - pestLoss - integrityLoss);
+            if (!IsFinite(output)) return 0;
+            return Math.Max(0, (int)Math.Floor(output));
         }
 
-        private static GrainProcessingState CloneState(GrainProcessingState src)
+        private static GrainProcessingState CloneState(GrainProcessingState? source)
         {
-            if (src == null) return new GrainProcessingState();
-            var serializer = new SystemTextJsonSerializer();
-            string json = serializer.Serialize(src);
-            return serializer.Deserialize<GrainProcessingState>(json) ?? new GrainProcessingState();
+            var copy = new GrainProcessingState
+            {
+                system_id = string.IsNullOrWhiteSpace(source?.system_id)
+                    ? GrainProcessingSystem.SystemId
+                    : source!.system_id,
+                total_batches_completed = Math.Max(0, source?.total_batches_completed ?? 0),
+                total_output_granted = Math.Max(0, source?.total_output_granted ?? 0),
+                last_tick_day = source?.last_tick_day ?? -1,
+                silos = new List<GrainSiloState>(),
+                active_jobs = new List<GrainProcessingJob>()
+            };
+            if (source == null) return copy;
+
+            var siloIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (source.silos != null)
+            {
+                foreach (var silo in source.silos)
+                {
+                    if (silo == null || string.IsNullOrWhiteSpace(silo.silo_id)
+                        || !siloIds.Add(silo.silo_id.Trim())) continue;
+                    copy.silos.Add(new GrainSiloState
+                    {
+                        silo_id = silo.silo_id.Trim(),
+                        integrity = SanitizeRange(silo.integrity, 0f, 100f),
+                        pest_pressure = SanitizeRange(silo.pest_pressure, 0f, 100f),
+                        moisture_pct = SanitizeRange(silo.moisture_pct, 0f, 100f),
+                        last_tick_day = silo.last_tick_day
+                    });
+                }
+            }
+
+            var jobIds = new HashSet<string>(StringComparer.Ordinal);
+            if (source.active_jobs != null)
+            {
+                foreach (var job in source.active_jobs)
+                {
+                    if (job == null || string.IsNullOrWhiteSpace(job.job_id)
+                        || !jobIds.Add(job.job_id.Trim())) continue;
+                    copy.active_jobs.Add(new GrainProcessingJob
+                    {
+                        job_id = job.job_id.Trim(),
+                        recipe_id = job.recipe_id?.Trim() ?? string.Empty,
+                        silo_id = job.silo_id?.Trim() ?? string.Empty,
+                        worker_id = job.worker_id?.Trim() ?? string.Empty,
+                        day_started = job.day_started,
+                        progress_hours = SanitizeRange(job.progress_hours, 0f, float.MaxValue),
+                        total_hours_required = Math.Max(
+                            MinimumProcessingHours,
+                            SanitizeRange(job.total_hours_required, MinimumProcessingHours, float.MaxValue)),
+                        is_complete = job.is_complete,
+                        is_blocked = job.is_blocked,
+                        output_granted = Math.Max(0, job.output_granted)
+                    });
+                }
+            }
+            return copy;
+        }
+
+        private static bool IsFinite(float value) =>
+            !float.IsNaN(value) && !float.IsInfinity(value);
+
+        private static float SanitizeRange(float value, float min, float max)
+        {
+            if (!IsFinite(value)) return min;
+            return Math.Clamp(value, min, max);
         }
     }
 

@@ -4,7 +4,7 @@
 
 **Method:** programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)
 
-**Scope:** 46 recently integrated plans (UNBLOCK-OLDEST batches,
+**Scope:** 71 recently integrated plans (UNBLOCK-OLDEST batches,
 flagship integration commits, and the 2026-09-23 Plans 210/214 full-integration package).
 
 Every verdict below is re-measured from current source: Core type declarations,
@@ -15,7 +15,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 
 | Verdict | Plans |
 |---|---:|
-| **INTEGRATED** | 46 |
+| **INTEGRATED** | 71 |
 
 ## 2. Per-plan verification
 
@@ -23,6 +23,13 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 |---|---|---|---|---|---|---|---|---|
 | 30 | Expansion 30 — The Press | `broadsheet_press` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 31 | Expansion 31 — The Kiln | `kilnworks` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 35 | Expansion 35 — The Habit | `dependency_taper_withdrawal` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 36 | Expansion 36 — The Watch | `perimeter_defense` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 37 | Expansion 37 — The Quickening | `antenatal_maternal_health` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 38-exp | Expansion 38 — The Ward | `clinical_ward_triage` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 39-exp | Expansion 39 — The Reagent | `chemical_reagent_synthesis` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 40-exp | Expansion 40 — The Wheel | `mechanical_driveline` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 41-exp | Expansion 41 — The Quiet | `sleep_acoustic_rest` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 38 | Commitments & Deadlines | `commitment` | ✅ 2/2 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 39 | Session Durability | `session_durability` | ✅ 3/3 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 42 | Survivor Voice | `survivor_voice` | ✅ 3/3 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
@@ -42,30 +49,48 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 | 138 | Shelter Defense & Security | `shelter_security` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 140 | Generational Legacy | `campaign_legacy` | ✅ 6/7 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 141 | Research Unlock Bridge | `research_unlock` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 143 | Afflictions → Quest/Work Bridge | read model | ✅ 1/1 identifiers referenced | — | ✅ | — | ✅ | **INTEGRATED** |
 | 145 | Unified Ending & Epilogue | `unified_ending` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 147 | NPC Memory & Relationships | `npc_memory` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 148 | Ideological Friction | `ideological_friction` | ✅ 5/5 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 150 | Romance & Family | `romance_family` | ✅ 7/7 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 151 | Working Animals / Companions | `companion_animals` | ✅ 1/1 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 152 | Vehicle Customization | `vehicle_customization` | ✅ 6/6 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 155 | Black Market & Underground Economy | `black_market` | ✅ 2/2 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 162 | Shelter History & Archive | `shelter_archive` | ✅ 4/4 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 165 | Mod & Content-Pack Contract | read model | ✅ 1/1 identifiers referenced | — | ✅ | — | ✅ | **INTEGRATED** |
 | 166 | Shelter Identity & Origin | `shelter_identity` | ✅ 3/3 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 167 | Tunnel Network | inside `wasteland_map` | ✅ 1/1 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 168 | Propaganda & Morale Warfare | `propaganda_campaigns` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 169 | Audio Accessibility | read model | ✅ 1/1 identifiers referenced | — | ✅ | — | ✅ | **INTEGRATED** |
 | 171 | Dynamic Quest Generation | inside `procedural_narrative` | ✅ 1/1 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 172 | Radiation Mutation & Genetic Instability | `mutation_tree` | ✅ 1/1 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 173 | Radio Production & Audience | `radio_program_production` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 174 | Survivor Backstories | `backstory` | ✅ 3/3 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 177 | Dream & Sleep Event System | `survivor_dreams` | ✅ 4/4 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 178 | Art & Culture Creation | `culture_creation` | ✅ 2/2 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 179 | Psychology & Phobia | `psychological_profiles` | ✅ 2/2 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 180 | Skill Certification | `skill_certifications` | ✅ 2/2 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 181 | Difficulty Settings *(uncommitted)* | `difficulty_settings` | ✅ 5/5 identifiers referenced | ✅ | ✅ | ✅ | — | **INTEGRATED** |
 | 182 | Relationship Decay | `relationship_decay` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 183 | Child Development Stages | `child_development` | ✅ 3/3 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 184 | Accessibility Options System | `accessibility_settings` | ✅ 4/4 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 185 | Memory & Knowledge Decay | `memory_decay` | ✅ 4/4 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 186 | Shelter Maintenance *(uncommitted)* | `shelter_maintenance` | ✅ 4/4 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 187 | Bestiary UI & Encounter Tracking | `bestiary_knowledge` | ✅ 3/3 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 188 | Survivor Daily Routines *(uncommitted)* | `survivor_routines` | ✅ 4/4 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
-| 200 | Personal Quests | `personal_quests` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | — | **INTEGRATED** |
+| 198 | Health History & Medical Records | `health_history` | ✅ 3/3 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 200 | Survivor Personal Quests & Character Arcs | `personal_quests` | ✅ 4/5 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 202 | Interpersonal Conflict & Grievance | `interpersonal_conflict` | ✅ 4/4 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 203 | Rumor Network | `wasteland_rumors` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | — | **INTEGRATED** |
 | 205 | Shelter Noise | `shelter_noise` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | — | **INTEGRATED** |
 | 206 | Death & Legacy | `death_legacy` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 207 | Shelter Reputation | `shelter_reputation` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 208 | Leadership Succession & Challenges | inside `survivor_social` | ✅ 2/2 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 210 | Personal Belongings & Effects *(uncommitted)* | inside `survivor_social` | ✅ 2/2 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 212 | Time Capsules | `time_capsules` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 214 | Visitor Integration & Housing *(uncommitted)* | `visitor_integration` | ✅ 2/3 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
+| 216 | Survivor Exercise & Physical Training | `exercise` | ✅ 4/4 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 220 | Shelter Atmosphere | `shelter_atmosphere` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 
 ## 3. Evidence detail
@@ -99,6 +124,111 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `cli_flag`: --kilnworks-selftest
 - ✅ `tests`: KilnFiringLedgerTests, KilnFiringEngineTests
 - Host reference files (first authority, up to 8): `src/Main.Kilnworks.cs`, `src/Host/KilnworksHostSession.cs`, `src/Host/HostCli.Kilnworks.cs`
+
+### Plan 35 — Expansion 35 — The Habit — INTEGRATED
+
+- ✅ `authority`: DependencyTaperLedger [Core], DependencyTaperState [Core], DependencyTaperCensus [Core], DependencyTaperWithdrawalEngine [Core]
+- ✅ `host_refs`: 5/5 identifiers referenced
+- ✅ `save_section`: `dependency_taper_withdrawal`
+- ✅ `triad`: SetupDependencyTaperWithdrawal / SaveDependencyTaperWithdrawal
+- ✅ `save_file`: dependency_taper_withdrawal_save.json
+- ✅ `save_store`: DependencyTaperWithdrawalSaveStore
+- ✅ `host_session`: DependencyTaperWithdrawalHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --dependency-taper-selftest
+- ✅ `tests`: DependencyTaperWithdrawalEngineTests, DependencyTaperLedgerTests
+- Host reference files (first authority, up to 8): `src/Host/DependencyTaperWithdrawalHostSession.cs`, `src/Host/HostCli.DependencyTaperWithdrawal.cs`
+
+### Plan 36 — Expansion 36 — The Watch — INTEGRATED
+
+- ✅ `authority`: NightWatchPatrolReadinessEngine [Core]
+- ✅ `host_refs`: 2/2 identifiers referenced
+- ✅ `save_section`: `perimeter_defense`
+- ✅ `triad`: SetupPerimeterDefense / SavePerimeterDefense
+- ✅ `save_file`: perimeter_defense_save.json
+- ✅ `save_store`: PerimeterDefenseSaveStore
+- ✅ `host_session`: NightWatchHostSession
+- ✅ `ui_panel`: NightWatchPanel
+- ✅ `route`: night_watch
+- ✅ `cli_flag`: --patrol-encounter-selftest
+- ✅ `tests`: NightWatchPatrolReadinessEngineTests, NightWatchOperationsTests, NightWatchHostIntegrationTests
+- Host reference files (first authority, up to 8): `src/Host/NightWatchHostSession.cs`
+
+### Plan 37 — Expansion 37 — The Quickening — INTEGRATED
+
+- ✅ `authority`: AntenatalMaternalCareLedger [Core], AntenatalMaternalCareState [Core], AntenatalMaternalCensus [Core], AntenatalMaternalHealthEngine [Core]
+- ✅ `host_refs`: 5/5 identifiers referenced
+- ✅ `save_section`: `antenatal_maternal_health`
+- ✅ `triad`: SetupAntenatalMaternalHealth / SaveAntenatalMaternalHealth
+- ✅ `save_file`: antenatal_maternal_health_save.json
+- ✅ `save_store`: AntenatalMaternalHealthSaveStore
+- ✅ `host_session`: AntenatalMaternalHealthHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --antenatal-care-selftest
+- ✅ `tests`: AntenatalMaternalHealthEngineTests, AntenatalMaternalCareLedgerTests
+- Host reference files (first authority, up to 8): `src/Host/AntenatalMaternalHealthHostSession.cs`, `src/Host/HostCli.AntenatalMaternalHealth.cs`
+
+### Plan 38-exp — Expansion 38 — The Ward — INTEGRATED
+
+- ✅ `authority`: ClinicalWardLedger [Core], ClinicalWardTriageState [Core], ClinicalWardCensus [Core], ClinicalWardTriageEngine [Core]
+- ✅ `host_refs`: 5/5 identifiers referenced
+- ✅ `save_section`: `clinical_ward_triage`
+- ✅ `triad`: SetupClinicalWardTriage / SaveClinicalWardTriage
+- ✅ `save_file`: clinical_ward_triage_save.json
+- ✅ `save_store`: ClinicalWardTriageSaveStore
+- ✅ `host_session`: ClinicalWardTriageHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --clinical-ward-selftest
+- ✅ `tests`: ClinicalWardTriageEngineTests, ClinicalWardLedgerTests
+- Host reference files (first authority, up to 8): `src/Host/ClinicalWardTriageHostSession.cs`, `src/Host/HostCli.ClinicalWardTriage.cs`
+
+### Plan 39-exp — Expansion 39 — The Reagent — INTEGRATED
+
+- ✅ `authority`: ChemicalReagentLedger [Core], ChemicalReagentSynthesisState [Core], ChemicalReagentCensus [Core], ChemicalReagentSynthesisEngine [Core]
+- ✅ `host_refs`: 5/5 identifiers referenced
+- ✅ `save_section`: `chemical_reagent_synthesis`
+- ✅ `triad`: SetupChemicalReagentSynthesis / SaveChemicalReagentSynthesis
+- ✅ `save_file`: chemical_reagent_synthesis_save.json
+- ✅ `save_store`: ChemicalReagentSynthesisSaveStore
+- ✅ `host_session`: ChemicalReagentSynthesisHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --chemical-reagent-selftest
+- ✅ `tests`: ChemicalReagentSynthesisEngineTests, ChemicalReagentLedgerTests
+- Host reference files (first authority, up to 8): `src/Host/ChemicalReagentSynthesisHostSession.cs`
+
+### Plan 40-exp — Expansion 40 — The Wheel — INTEGRATED
+
+- ✅ `authority`: MechanicalDrivelineLedger [Core], MechanicalDrivelineState [Core], MechanicalDrivelineCensus [Core], MechanicalPowerDrivelineEngine [Core]
+- ✅ `host_refs`: 5/5 identifiers referenced
+- ✅ `save_section`: `mechanical_driveline`
+- ✅ `triad`: SetupMechanicalDriveline / SaveMechanicalDriveline
+- ✅ `save_file`: mechanical_driveline_save.json
+- ✅ `save_store`: MechanicalDrivelineSaveStore
+- ✅ `host_session`: MechanicalDrivelineHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --mechanical-driveline-selftest
+- ✅ `tests`: MechanicalPowerDrivelineEngineTests, MechanicalDrivelineLedgerTests
+- Host reference files (first authority, up to 8): `src/Host/MechanicalDrivelineHostSession.cs`, `src/Host/HostCli.MechanicalDriveline.cs`
+
+### Plan 41-exp — Expansion 41 — The Quiet — INTEGRATED
+
+- ✅ `authority`: SleepAcousticLedger [Core], SleepAcousticState [Core], SleepAcousticCensus [Core], SleepAcousticRestEngine [Core]
+- ✅ `host_refs`: 5/5 identifiers referenced
+- ✅ `save_section`: `sleep_acoustic_rest`
+- ✅ `triad`: SetupSleepAcousticRest / SaveSleepAcousticRest
+- ✅ `save_file`: sleep_acoustic_rest_save.json
+- ✅ `save_store`: SleepAcousticRestSaveStore
+- ✅ `host_session`: SleepAcousticRestHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --sleep-acoustic-selftest
+- ✅ `tests`: SleepAcousticRestEngineTests, SleepAcousticLedgerTests
+- Host reference files (first authority, up to 8): `src/Host/SleepAcousticRestHostSession.cs`
 
 ### Plan 38 — Commitments & Deadlines — INTEGRATED
 
@@ -353,7 +483,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: shelter_security
 - ✅ `cli_flag`: --shelter-security-selftest
 - ✅ `tests`: Plan138ShelterSecurityIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.ShelterSecurity.cs`, `src/Host/ShelterSecurityHostSession.cs`, `src/Host/ShelterSecuritySelfTest.cs`
+- Host reference files (first authority, up to 8): `src/Main.ShelterSecurity.cs`, `src/Host/ShelterSecurityHostSession.cs`, `src/Host/ShelterSecuritySelfTest.cs`, `src/Host/NightWatchHostSession.cs`, `src/Host/HostCli.NightWatch.cs`
 
 ### Plan 140 — Generational Legacy — INTEGRATED
 
@@ -384,6 +514,21 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `cli_flag`: --research-unlock-selftest
 - ✅ `tests`: Plan141ResearchUnlockHostIntegrationTests
 - Host reference files (first authority, up to 8): `src/Host/ResearchUnlockHostSession.cs`
+
+### Plan 143 — Afflictions → Quest/Work Bridge — INTEGRATED
+
+- ✅ `authority`: AfflictionQuestWorkBridge [Core]
+- ✅ `host_refs`: 1/1 identifiers referenced
+- — `save_section`: read model / no own section
+- — `triad`: —
+- — `save_file`: —
+- — `save_store`: —
+- — `host_session`: wired through Main
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --affliction-bridge-selftest
+- ✅ `tests`: Plan143AfflictionBridgeIntegrationTests, Plan143AfflictionBridgeHostIntegrationTests
+- Host reference files (first authority, up to 8): `src/Host/MedicalHostSession.cs`, `src/Host/AfflictionBridgeSelfTest.cs`
 
 ### Plan 145 — Unified Ending & Epilogue — INTEGRATED
 
@@ -445,6 +590,21 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `tests`: Plan150RomanceFamilyHostIntegrationTests
 - Host reference files (first authority, up to 8): `src/Host/RomanceFamilyHostSession.cs`
 
+### Plan 151 — Working Animals / Companions — INTEGRATED
+
+- ✅ `authority`: CompanionAnimalSystem [Core]
+- ✅ `host_refs`: 1/1 identifiers referenced
+- ✅ `save_section`: `companion_animals`
+- ✅ `triad`: SetupCompanionAnimals / SaveCompanionAnimals
+- ✅ `save_file`: companion_animals_save.json
+- ✅ `save_store`: CompanionSaveStore
+- — `host_session`: wired through Main
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --working-animals-selftest
+- ✅ `tests`: Plan151WorkingAnimalsTests
+- Host reference files (first authority, up to 8): `src/Main.Companion.cs`, `src/Host/CompanionAnimalHostSession.cs`, `src/Host/WorkingAnimalsSelfTest.cs`, `src/UI/KennelPanel.cs`
+
 ### Plan 152 — Vehicle Customization — INTEGRATED
 
 - ✅ `authority`: VehicleCustomizationSystem [Core], VehicleCustomizationCatalog [Core], VehicleModule [Core], VehicleCustomizationCensus [Core], VehicleModuleCatalogLoader [Core]
@@ -459,6 +619,36 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `cli_flag`: --vehicle-customization-selftest
 - ✅ `tests`: Plan152VehicleCustomizationHostIntegrationTests
 - Host reference files (first authority, up to 8): `src/Host/VehicleCustomizationHostSession.cs`
+
+### Plan 155 — Black Market & Underground Economy — INTEGRATED
+
+- ✅ `authority`: BlackMarketSystem [Core]
+- ✅ `host_refs`: 2/2 identifiers referenced
+- ✅ `save_section`: `black_market`
+- ✅ `triad`: SetupBlackMarket / SaveBlackMarket
+- ✅ `save_file`: black_market_save.json
+- ✅ `save_store`: BlackMarketSaveStore
+- ✅ `host_session`: BlackMarketHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --black-market-selftest
+- ✅ `tests`: Plan155BlackMarketIntegrationTests
+- Host reference files (first authority, up to 8): `src/Host/BlackMarketHostSession.cs`, `src/Host/BlackMarketSelfTest.cs`, `src/UI/BlackMarketSnapshotFixture.cs`
+
+### Plan 162 — Shelter History & Archive — INTEGRATED
+
+- ✅ `authority`: ShelterArchiveSystem [Core], ShelterArchiveState [Core], ShelterArchiveCensus [Core]
+- ✅ `host_refs`: 4/4 identifiers referenced
+- ✅ `save_section`: `shelter_archive`
+- ✅ `triad`: SetupShelterArchive / SaveShelterArchive
+- ✅ `save_file`: shelter_archive_save.json
+- ✅ `save_store`: ShelterArchiveSaveStore
+- ✅ `host_session`: ShelterArchiveHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --shelter-archive-selftest
+- ✅ `tests`: Plan162ArchiveIntegrationTests, ShelterArchiveSystemTests
+- Host reference files (first authority, up to 8): `src/Main.Plans162_185.cs`, `src/Main.ShelterArchive.cs`, `src/Host/ShelterArchiveHostSession.cs`, `src/Host/HostCli.ShelterArchive.cs`
 
 ### Plan 165 — Mod & Content-Pack Contract — INTEGRATED
 
@@ -550,6 +740,36 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `tests`: DynamicQuestGeneratorTests
 - Host reference files (first authority, up to 8): `src/Main.DynamicQuestGeneration.cs`, `src/Host/ProceduralNarrativeHostSession.cs`, `src/Host/DynamicQuestHostSession.cs`, `src/Host/HostCli.DynamicQuest.cs`
 
+### Plan 172 — Radiation Mutation & Genetic Instability — INTEGRATED
+
+- ✅ `authority`: MutationSystem [Core]
+- ✅ `host_refs`: 1/1 identifiers referenced
+- ✅ `save_section`: `mutation_tree`
+- ✅ `triad`: SetupMutations / SaveMutations
+- ✅ `save_file`: mutation_save.json
+- ✅ `save_store`: MutationSaveStore
+- — `host_session`: wired through Main
+- ✅ `ui_panel`: MutationTreePanel
+- ✅ `route`: mutation_tree
+- ✅ `cli_flag`: --radiation-mutation-selftest
+- ✅ `tests`: Plan172RadiationMutationTests
+- Host reference files (first authority, up to 8): `src/Main.Audio.cs`, `src/Main.Plans178_181.cs`, `src/Host/RadiationMutationHostSession.cs`, `src/UI/MutationTreePanel.cs`, `src/Audio/ExpansionAudioBridge.cs`, `src/Audio/AudioSelfTest.cs`
+
+### Plan 173 — Radio Production & Audience — INTEGRATED
+
+- ✅ `authority`: RadioProgramProductionSystem [Core]
+- ✅ `host_refs`: 2/2 identifiers referenced
+- ✅ `save_section`: `radio_program_production`
+- ✅ `triad`: SetupRadioProgramProduction / SaveRadioProgramProduction
+- ✅ `save_file`: radio_program_production_save.json
+- ✅ `save_store`: RadioProgramProductionSaveStore
+- ✅ `host_session`: RadioProgramProductionHostSession
+- ✅ `ui_panel`: RadioPanel
+- ✅ `route`: radio
+- ✅ `cli_flag`: --radio-production-selftest
+- ✅ `tests`: Plan173RadioProductionIntegrationTests
+- Host reference files (first authority, up to 8): `src/Main.RadioProgramProduction.cs`, `src/Host/RadioProgramProductionHostSession.cs`, `src/Host/RadioProgramProductionSelfTest.cs`
+
 ### Plan 174 — Survivor Backstories — INTEGRATED
 
 - ✅ `authority`: BackstorySystem [Core], BackstoryCensus [Core]
@@ -564,6 +784,66 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `cli_flag`: --backstory-selftest
 - ✅ `tests`: Plan174BackstoryHostIntegrationTests
 - Host reference files (first authority, up to 8): `src/Host/BackstoryHostSession.cs`
+
+### Plan 177 — Dream & Sleep Event System — INTEGRATED
+
+- ✅ `authority`: DreamSystem [Core], DreamSystemState [Core], DreamCensus [Core]
+- ✅ `host_refs`: 4/4 identifiers referenced
+- ✅ `save_section`: `survivor_dreams`
+- ✅ `triad`: SetupSurvivorDreams / SaveSurvivorDreams
+- ✅ `save_file`: survivor_dreams_save.json
+- ✅ `save_store`: DreamSaveStore
+- ✅ `host_session`: DreamHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --dream-system-selftest
+- ✅ `tests`: Plan177DreamSleepIntegrationTests
+- Host reference files (first authority, up to 8): `src/Main.SleepNarrative.cs`, `src/Main.DreamSystem.cs`, `src/Host/DreamHostSession.cs`, `src/Host/HostCli.DreamSystem.cs`
+
+### Plan 178 — Art & Culture Creation — INTEGRATED
+
+- ✅ `authority`: CultureCreationSystem [Core]
+- ✅ `host_refs`: 2/2 identifiers referenced
+- ✅ `save_section`: `culture_creation`
+- ✅ `triad`: SetupCultureCreation / SaveCultureCreation
+- ✅ `save_file`: culture_creation_save.json
+- ✅ `save_store`: CultureCreationSaveStore
+- ✅ `host_session`: CultureCreationHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --culture-creation-selftest
+- ✅ `tests`: Plan178ArtCultureIntegrationTests, CultureCreationSystemTests
+- Host reference files (first authority, up to 8): `src/Host/CultureCreationHostSession.cs`
+
+### Plan 179 — Psychology & Phobia — INTEGRATED
+
+- ✅ `authority`: PsychologicalProfileSystem [Core]
+- ✅ `host_refs`: 2/2 identifiers referenced
+- ✅ `save_section`: `psychological_profiles`
+- ✅ `triad`: SetupPsychologicalProfiles / SavePsychologicalProfiles
+- ✅ `save_file`: psychological_profiles_save.json
+- ✅ `save_store`: PsychologicalProfileSaveStore
+- ✅ `host_session`: PsychologicalProfileHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --psychological-profile-selftest
+- ✅ `tests`: Plan179UnifiedPsychologyIntegrationTests
+- Host reference files (first authority, up to 8): `src/Host/PsychologicalProfileHostSession.cs`
+
+### Plan 180 — Skill Certification — INTEGRATED
+
+- ✅ `authority`: SkillCertificationSystem [Core]
+- ✅ `host_refs`: 2/2 identifiers referenced
+- ✅ `save_section`: `skill_certifications`
+- ✅ `triad`: SetupSkillCertifications / SaveSkillCertifications
+- ✅ `save_file`: skill_certifications_save.json
+- ✅ `save_store`: SkillCertificationSaveStore
+- ✅ `host_session`: SkillCertificationHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --skill-certification-selftest
+- ✅ `tests`: Plan180SkillCertificationTests
+- Host reference files (first authority, up to 8): `src/Host/SkillCertificationHostSession.cs`
 
 ### Plan 181 — Difficulty Settings — INTEGRATED
 
@@ -595,6 +875,51 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `tests`: Plan182RelationshipDecayIntegrationTests
 - Host reference files (first authority, up to 8): `src/Main.RelationshipDecay.cs`, `src/Host/RelationshipDecayHostSession.cs`, `src/Host/RelationshipDecaySelfTest.cs`
 
+### Plan 183 — Child Development Stages — INTEGRATED
+
+- ✅ `authority`: ChildDevelopmentSystem [Core], ChildDevelopmentCensus [Core]
+- ✅ `host_refs`: 3/3 identifiers referenced
+- ✅ `save_section`: `child_development`
+- ✅ `triad`: SetupGenerational / SaveGenerational
+- ✅ `save_file`: child_development_save.json
+- ✅ `save_store`: GenerationalSaveStore
+- ✅ `host_session`: ChildDevelopmentHostSession
+- ✅ `ui_panel`: NurseryPanel
+- ✅ `route`: nursery, century_seed
+- ✅ `cli_flag`: --child-development-selftest
+- ✅ `tests`: Plan183ChildDevelopmentIntegrationTests
+- Host reference files (first authority, up to 8): `src/Main.AntenatalMaternalHealth.cs`, `src/Main.ChildDevelopment.cs`, `src/Host/AntenatalMaternalHealthHostSession.cs`, `src/Host/ChildDevelopmentHostSession.cs`, `src/Host/ChildDevelopmentSelfTest.cs`
+
+### Plan 184 — Accessibility Options System — INTEGRATED
+
+- ✅ `authority`: AccessibilitySettingsSystem [Core], AccessibilitySettingsState [Core], AccessibilityCensus [Core]
+- ✅ `host_refs`: 4/4 identifiers referenced
+- ✅ `save_section`: `accessibility_settings`
+- ✅ `triad`: SetupAccessibilitySettings / SaveAccessibilitySettings
+- ✅ `save_file`: accessibility_settings_save.json
+- ✅ `save_store`: AccessibilitySettingsSaveStore
+- ✅ `host_session`: AccessibilitySettingsHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --accessibility-settings-selftest
+- ✅ `tests`: Plan184AccessibilitySettingsIntegrationTests
+- Host reference files (first authority, up to 8): `src/Main.AccessibilitySettings.cs`, `src/Host/AccessibilitySettingsHostSession.cs`, `src/Host/HostCli.AccessibilitySettings.cs`
+
+### Plan 185 — Memory & Knowledge Decay — INTEGRATED
+
+- ✅ `authority`: MemoryDecaySystem [Core], MemoryDecayState [Core], MemoryDecayCensus [Core]
+- ✅ `host_refs`: 4/4 identifiers referenced
+- ✅ `save_section`: `memory_decay`
+- ✅ `triad`: SetupMemoryDecay / SaveMemoryDecay
+- ✅ `save_file`: memory_decay_save.json
+- ✅ `save_store`: MemoryDecaySaveStore
+- ✅ `host_session`: MemoryDecayHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --memory-decay-selftest
+- ✅ `tests`: Plan185MemoryDecayIntegrationTests, MemoryDecaySystemTests
+- Host reference files (first authority, up to 8): `src/Main.Plans162_185.cs`, `src/Main.MemoryDecay.cs`, `src/Host/MemoryDecayHostSession.cs`, `src/Host/HostCli.MemoryDecay.cs`
+
 ### Plan 186 — Shelter Maintenance — INTEGRATED
 
 - ✅ `authority`: ShelterMaintenanceSystem [Core], ShelterComponentCatalogLoader [Core], ShelterMaintenanceCensus [Core]
@@ -609,6 +934,21 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `cli_flag`: --shelter-maintenance-selftest
 - ✅ `tests`: Plan186ShelterMaintenanceIntegrationTests
 - Host reference files (first authority, up to 8): `src/Main.ShelterMaintenance.cs`, `src/Host/ShelterMaintenanceHostSession.cs`
+
+### Plan 187 — Bestiary UI & Encounter Tracking — INTEGRATED
+
+- ✅ `authority`: BestiarySystem [Core], BestiaryCensus [Core]
+- ✅ `host_refs`: 3/3 identifiers referenced
+- ✅ `save_section`: `bestiary_knowledge`
+- ✅ `triad`: SetupBestiary / SaveBestiary
+- ✅ `save_file`: bestiary_knowledge_save.json
+- ✅ `save_store`: BestiarySaveStore
+- ✅ `host_session`: BestiaryHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --bestiary-selftest
+- ✅ `tests`: Plan187BestiaryIntegrationTests
+- Host reference files (first authority, up to 8): `src/Host/BestiaryHostSession.cs`
 
 ### Plan 188 — Survivor Daily Routines — INTEGRATED
 
@@ -625,20 +965,50 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `tests`: Plan188SurvivorRoutineIntegrationTests
 - Host reference files (first authority, up to 8): `src/Main.SurvivorRoutines.cs`, `src/Host/SurvivorRoutineHostSession.cs`
 
-### Plan 200 — Personal Quests — INTEGRATED
+### Plan 198 — Health History & Medical Records — INTEGRATED
 
-- ✅ `authority`: PersonalQuestSystem [Core]
-- ✅ `host_refs`: 2/2 identifiers referenced
+- ✅ `authority`: HealthHistorySystem [Core], HealthHistoryCensus [Core]
+- ✅ `host_refs`: 3/3 identifiers referenced
+- ✅ `save_section`: `health_history`
+- ✅ `triad`: SetupHealthHistory / SaveHealthHistory
+- ✅ `save_file`: health_history_save.json
+- ✅ `save_store`: HealthHistorySaveStore
+- ✅ `host_session`: HealthHistoryHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --health-history-selftest
+- ✅ `tests`: Plan198HealthHistoryIntegrationTests, Plan198MedicalRecordLogTests
+- Host reference files (first authority, up to 8): `src/Host/HealthHistoryHostSession.cs`
+
+### Plan 200 — Survivor Personal Quests & Character Arcs — INTEGRATED
+
+- ✅ `authority`: PersonalQuestSystem [Core], PersonalQuestDef [Core], PersonalQuestSaveState [Core], PersonalQuestCensus [Core]
+- ✅ `host_refs`: 4/5 identifiers referenced
 - ✅ `save_section`: `personal_quests`
 - ✅ `triad`: SetupPersonalQuests / SavePersonalQuests
 - ✅ `save_file`: personal_quests_save.json
 - ✅ `save_store`: PersonalQuestSaveStore
 - ✅ `host_session`: PersonalQuestHostSession
 - ✅ `ui_panel`: PersonalQuestPanel
-- ✅ `route`: personal_quests
+- — `route`: —
 - ✅ `cli_flag`: --personal-quests-selftest
-- — `tests`: no named fixture (host selftest only)
+- ✅ `tests`: Plan200PersonalQuestsIntegrationTests, PersonalQuestSystemTests
 - Host reference files (first authority, up to 8): `src/Host/PersonalQuestHostSession.cs`
+
+### Plan 202 — Interpersonal Conflict & Grievance — INTEGRATED
+
+- ✅ `authority`: InterpersonalConflictSystem [Core], InterpersonalConflictState [Core], InterpersonalConflictCensus [Core]
+- ✅ `host_refs`: 4/4 identifiers referenced
+- ✅ `save_section`: `interpersonal_conflict`
+- ✅ `triad`: SetupInterpersonalConflict / SaveInterpersonalConflict
+- ✅ `save_file`: interpersonal_conflict_save.json
+- ✅ `save_store`: InterpersonalConflictSaveStore
+- ✅ `host_session`: InterpersonalConflictHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --interpersonal-conflict-selftest
+- ✅ `tests`: Plan202InterpersonalConflictIntegrationTests, InterpersonalConflictSystemTests
+- Host reference files (first authority, up to 8): `src/Main.Plans216_202Interpersonal.cs`, `src/Main.InterpersonalConflict.cs`, `src/Host/InterpersonalConflictHostSession.cs`, `src/Host/HostCli.InterpersonalConflict.cs`
 
 ### Plan 203 — Rumor Network — INTEGRATED
 
@@ -668,7 +1038,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: shelter_atmosphere
 - ✅ `cli_flag`: --shelter-atmosphere-selftest
 - — `tests`: no named fixture (host selftest only)
-- Host reference files (first authority, up to 8): `src/Main.ShelterAtmosphere.cs`, `src/Host/ShelterAtmosphereHostSession.cs`, `src/Host/ShelterAtmosphereSelfTest.cs`
+- Host reference files (first authority, up to 8): `src/Main.ShelterAtmosphere.cs`, `src/Host/ShelterAtmosphereHostSession.cs`, `src/Host/ShelterAtmosphereSelfTest.cs`, `src/Host/SleepAcousticRestHostSession.cs`
 
 ### Plan 206 — Death & Legacy — INTEGRATED
 
@@ -699,6 +1069,21 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `cli_flag`: --shelter-reputation-selftest
 - ✅ `tests`: Plan207ShelterReputationIntegrationTests
 - Host reference files (first authority, up to 8): `src/Main.ShelterReputation.cs`, `src/Host/ShelterReputationHostSession.cs`, `src/Host/ShelterReputationSelfTest.cs`
+
+### Plan 208 — Leadership Succession & Challenges — INTEGRATED
+
+- ✅ `authority`: LeadershipSystem [Core], LeadershipCensus [Core]
+- ✅ `host_refs`: 2/2 identifiers referenced
+- ✅ `save_section`: `survivor_social` (nested)
+- ✅ `triad`: SetupSurvivorSocial / SaveSurvivorSocial
+- ✅ `save_file`: persisted inside parent aggregate
+- — `save_store`: —
+- — `host_session`: wired through Main
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --leadership-succession-selftest
+- ✅ `tests`: Plan208LeadershipSuccessionIntegrationTests
+- Host reference files (first authority, up to 8): `src/Main.Plans182_185.cs`, `src/Main.SurvivorSocial.cs`, `src/Main.ShelterGovernance.cs`, `src/Host/ShelterGovernanceHostSession.cs`, `src/Host/LeadershipSuccessionSelfTest.cs`
 
 ### Plan 210 — Personal Belongings & Effects — INTEGRATED
 
@@ -744,6 +1129,21 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `cli_flag`: --visitor-integration-selftest
 - ✅ `tests`: Plan214VisitorIntegrationTests
 - Host reference files (first authority, up to 8): `src/Main.VisitorIntegration.cs`, `src/Host/VisitorIntegrationHostSession.cs`, `src/Host/VisitorIntegrationSelfTest.cs`
+
+### Plan 216 — Survivor Exercise & Physical Training — INTEGRATED
+
+- ✅ `authority`: ExerciseSystem [Core], ExerciseSystemState [Core], ExerciseCensus [Core]
+- ✅ `host_refs`: 4/4 identifiers referenced
+- ✅ `save_section`: `exercise`
+- ✅ `triad`: SetupExercise / SaveExercise
+- ✅ `save_file`: exercise_save.json
+- ✅ `save_store`: ExerciseSaveStore
+- ✅ `host_session`: ExerciseHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --exercise-selftest
+- ✅ `tests`: Plan216ExerciseIntegrationTests, ExerciseSystemTests
+- Host reference files (first authority, up to 8): `src/Main.Exercise.cs`, `src/Host/ExerciseHostSession.cs`
 
 ### Plan 220 — Shelter Atmosphere — INTEGRATED
 

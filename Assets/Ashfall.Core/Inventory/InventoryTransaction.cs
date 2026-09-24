@@ -34,7 +34,7 @@ namespace Ashfall.Core.Inventory
             string.Equals(ItemId, other.ItemId, StringComparison.Ordinal) && Amount == other.Amount;
 
         public override bool Equals(object? obj) => obj is InventoryBillItem other && Equals(other);
-        public override int GetHashCode() => HashCode.Combine(ItemId, Amount);
+        public override int GetHashCode() => StableHash.Combine(StableHash.Of(ItemId), Amount);
         public override string ToString() => $"{Amount}x {ItemId}";
     }
 

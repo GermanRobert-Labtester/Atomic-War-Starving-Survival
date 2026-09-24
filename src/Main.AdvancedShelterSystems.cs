@@ -313,6 +313,7 @@ namespace AtomicWar.GodotApp
                 or WeatherKind.BlackSnow or WeatherKind.BloodRain;
 
             _perimeterDefense.TickDay(currentDay, severe);
+            TickNightWatch(currentDay, severe);
         }
 
         private void SetupPerimeterDefense()

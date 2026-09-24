@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Needs;
 using Xunit;
@@ -18,8 +19,7 @@ namespace Ashfall.Core.Tests.Plan177Psych
         public void Calm_survivor_reads_restful_and_is_not_emitted()
         {
             var mental = CreateSystem();
-            var record = mental.GetOrCreateRecord("sv_calm");
-            record.stressPermille = 100;
+            SetRecord(mental, "sv_calm", stressPermille: 100);
 
             var beat = new SleepNarrativeProjection(mental).Project("sv_calm", 5);
 
@@ -31,9 +31,7 @@ namespace Ashfall.Core.Tests.Plan177Psych
         public void Insomnia_alone_reads_troubled()
         {
             var mental = CreateSystem();
-            var record = mental.GetOrCreateRecord("sv_tired");
-            record.stressPermille = 150;
-            record.insomniaDaysRemaining = 3;
+            SetRecord(mental, "sv_tired", stressPermille: 150, insomniaDaysRemaining: 3);
 
             Assert.Equal(SleepBeatKind.Troubled, new SleepNarrativeProjection(mental).Project("sv_tired", 5).Kind);
         }
@@ -42,10 +40,8 @@ namespace Ashfall.Core.Tests.Plan177Psych
         public void Trauma_with_insomnia_reads_nightmare_and_emits()
         {
             var mental = CreateSystem();
-            var record = mental.GetOrCreateRecord("sv_scarred");
-            record.stressPermille = 200;
-            record.insomniaDaysRemaining = 2;
-            record.activeTraumaIds.Add("trauma_nightmares");
+            SetRecord(mental, "sv_scarred", stressPermille: 200, insomniaDaysRemaining: 2,
+                activeTraumaIds: new List<string> { "trauma_nightmares" });
 
             var beat = new SleepNarrativeProjection(mental).Project("sv_scarred", 6);
 
@@ -84,17 +80,17 @@ namespace Ashfall.Core.Tests.Plan177Psych
         public void Projection_mutates_no_state()
         {
             var mental = CreateSystem();
-            var record = mental.GetOrCreateRecord("sv_still");
-            record.stressPermille = 500;
-            record.insomniaDaysRemaining = 4;
-            int stressBefore = record.stressPermille;
-            int insomniaBefore = record.insomniaDaysRemaining;
+            SetRecord(mental, "sv_still", stressPermille: 500, insomniaDaysRemaining: 4);
+            var before = mental.GetOrCreateRecord("sv_still");
+            int stressBefore = before.stressPermille;
+            int insomniaBefore = before.insomniaDaysRemaining;
 
             new SleepNarrativeProjection(mental).Project("sv_still", 9);
 
-            Assert.Equal(stressBefore, record.stressPermille);
-            Assert.Equal(insomniaBefore, record.insomniaDaysRemaining);
-            Assert.Empty(record.activeTraumaIds);
+            var after = mental.GetOrCreateRecord("sv_still");
+            Assert.Equal(stressBefore, after.stressPermille);
+            Assert.Equal(insomniaBefore, after.insomniaDaysRemaining);
+            Assert.Empty(after.activeTraumaIds);
         }
 
         [Fact]
@@ -103,12 +99,30 @@ namespace Ashfall.Core.Tests.Plan177Psych
             string Line(int seed)
             {
                 var mental = CreateSystem();
-                mental.GetOrCreateRecord("sv_rep").insomniaDaysRemaining = 1;
+                SetRecord(mental, "sv_rep", insomniaDaysRemaining: 1);
                 var beat = new SleepNarrativeProjection(mental, new SeededRng(seed)).Project("sv_rep", 7);
                 return beat.Text;
             }
 
             Assert.Equal(Line(1986), Line(1986));
+        }
+
+        private static void SetRecord(
+            SurvivorMentalHealthSystem system,
+            string survivorId,
+            int stressPermille = 200,
+            int insomniaDaysRemaining = 0,
+            List<string>? activeTraumaIds = null)
+        {
+            var state = system.CaptureState();
+            state.survivorRecords[survivorId] = new SurvivorMentalHealthRecord
+            {
+                survivorId = survivorId,
+                stressPermille = stressPermille,
+                insomniaDaysRemaining = insomniaDaysRemaining,
+                activeTraumaIds = activeTraumaIds ?? new List<string>()
+            };
+            system.RestoreState(state);
         }
 
         [Fact]

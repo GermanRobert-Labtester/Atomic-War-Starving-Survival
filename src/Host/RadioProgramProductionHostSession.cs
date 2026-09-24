@@ -5,6 +5,7 @@
 // Purpose      : Thin Godot adapter — LastEvent + commands; no gameplay math.
 // ============================================================================
 using System;
+using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Radio;
 
@@ -64,6 +65,21 @@ namespace AtomicWar.GodotApp
                 ? "Program delivered."
                 : $"Delivery blocked ({result.FailureCode}).";
         }
+
+        public string ResolveFollowUp(string hookId, string resolutionAction, int day)
+        {
+            var result = System.ResolveFollowUpHook(hookId, resolutionAction, day);
+            RaiseStateChanged();
+            return result.Status == ActionResult.StatusKind.Success
+                ? $"Follow-up resolved ({hookId})."
+                : $"Cannot resolve follow-up ({result.FailureCode}).";
+        }
+
+        public System.Collections.Generic.IReadOnlyList<RadioProgramFollowUpHook> GetUnresolvedFollowUps() =>
+            System.State.FollowUps.Where(f => !f.Resolved).ToList();
+
+        public int ActiveJobsCount => System.State.Jobs.Count(j => j.Status == (int)RadioProgramJobStatus.Preparing || j.Status == (int)RadioProgramJobStatus.Ready);
+        public int DeliveredCount => System.State.TotalDelivered;
 
         public RadioProgramProductionState CaptureSave() => System.CaptureState();
 

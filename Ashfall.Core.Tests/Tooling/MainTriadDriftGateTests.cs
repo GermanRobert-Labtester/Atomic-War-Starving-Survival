@@ -37,6 +37,7 @@ namespace Ashfall.Core.Tests
         private static readonly HashSet<string> SetupWithoutSaveAllowlist =
             new HashSet<string>(StringComparer.Ordinal)
             {
+                "ChildDevelopment", // Plan 183 child state persists through the survivor_social aggregate; no duplicate child-development save section.
                 "DailyBriefingModal",
                 "DeepCoast",
                 "EncounterChoiceResolver",

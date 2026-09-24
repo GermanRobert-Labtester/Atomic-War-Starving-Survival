@@ -12,6 +12,7 @@
 // created here.
 // ============================================================================
 using System;
+using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Settlements;
@@ -149,11 +150,35 @@ namespace AtomicWar.GodotApp
         {
             var session = EnsureOutpostSettlement();
             if (session == null) return false;
-            bool ok = session.Establish(outpostId, (itemId, count) =>
-                _inventory?.Inventory != null && _inventory.Inventory.TryConsumeById(itemId, count));
+            bool ok = session.TryEstablish(outpostId, _inventory?.Inventory);
             if (ok) _outpostSettlementDirty = true;
             return ok;
         }
+
+        internal bool SupplyOutpost(string outpostId, int rations)
+        {
+            var session = EnsureOutpostSettlement();
+            string rationItemId = ResolveCanonicalRationItemId();
+            if (session == null || string.IsNullOrEmpty(rationItemId)) return false;
+            bool ok = session.TrySupply(outpostId, rationItemId, rations, _inventory?.Inventory);
+            if (ok) _outpostSettlementDirty = true;
+            return ok;
+        }
+
+        internal bool AbandonOutpost(string outpostId)
+        {
+            var session = EnsureOutpostSettlement();
+            if (session == null) return false;
+            bool ok = session.Abandon(outpostId);
+            if (ok) _outpostSettlementDirty = true;
+            return ok;
+        }
+
+        internal IReadOnlyList<OutpostDef> GetOutpostDefinitions()
+            => EnsureOutpostSettlement()?.System.GetAllDefinitions() ?? Array.Empty<OutpostDef>();
+
+        internal IReadOnlyList<OutpostInstance> GetOutpostInstances()
+            => EnsureOutpostSettlement()?.System.GetAllInstances() ?? Array.Empty<OutpostInstance>();
 
         /// <summary>Assign a fit roster survivor to an outpost garrison.</summary>
         internal bool AssignOutpostGarrison(string outpostId, string survivorId)

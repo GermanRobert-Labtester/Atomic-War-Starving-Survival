@@ -6,15 +6,6 @@ using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core.Shelter
 {
-    public enum OpticStageKind
-    {
-        RoughGrind,
-        FineGrind,
-        Polish,
-        FigureTest,
-        CorrectivePolish,
-        Completed
-    }
 
     [Serializable]
     public sealed class OpticStageDef

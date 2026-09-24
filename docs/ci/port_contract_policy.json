@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 301,
+  "total_seams": 307,
   "ports": [
     {
       "class_name": "AeroponicsSystem",
@@ -2453,6 +2453,54 @@
       "file_path": "Assets/Ashfall.Core/Survivors/SurvivorRoutineSystem.cs",
       "owner": "survivors",
       "reason": "Integration seam in SurvivorRoutineSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "AntenatalMaternalCareLedger",
+      "method_name": "RegisterPregnancy",
+      "file_path": "Assets/Ashfall.Core/Survivors/AntenatalMaternalCareLedger.cs",
+      "owner": "medical",
+      "reason": "Integration seam in AntenatalMaternalCareLedger \u2014 host session and probe register authored pregnancies (Expansion 37).",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "ChemicalReagentLedger",
+      "method_name": "RegisterOrUpdateReactor",
+      "file_path": "Assets/Ashfall.Core/Shelter/ChemicalReagentLedger.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in ChemicalReagentLedger \u2014 host session registers reactor vessels from the authored catalog (Expansion 39).",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "MechanicalDrivelineLedger",
+      "method_name": "RegisterOrUpdateBranch",
+      "file_path": "Assets/Ashfall.Core/Shelter/MechanicalDrivelineLedger.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in MechanicalDrivelineLedger \u2014 host session registers line-shaft branches from the authored catalog (Expansion 40).",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "NightWatchOperationsState",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/World/NightWatchOperationsState.cs",
+      "owner": "shelter",
+      "reason": "Invoked within Core via PerimeterDefenseSystem.BindWatchCatalog; the host binds the watch catalog through that perimeter seam (Expansion 36).",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
+      "class_name": "PerimeterDefenseSystem",
+      "method_name": "BindWatchCatalog",
+      "file_path": "Assets/Ashfall.Core/Defense/PerimeterDefenseSystem.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in PerimeterDefenseSystem \u2014 host session binds authored night-watch operations (Expansion 36).",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "SleepAcousticLedger",
+      "method_name": "RegisterOrUpdateQuarter",
+      "file_path": "Assets/Ashfall.Core/Needs/SleepAcousticLedger.cs",
+      "owner": "shelter",
+      "reason": "Integration seam in SleepAcousticLedger \u2014 host session registers sleeping quarters from the authored catalog (Expansion 41).",
       "classification": "HOST_REQUIRED"
     }
   ]

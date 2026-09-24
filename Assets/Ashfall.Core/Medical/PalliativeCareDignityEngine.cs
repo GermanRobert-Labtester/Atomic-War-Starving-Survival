@@ -202,8 +202,10 @@ namespace Ashfall.Core.Medical
 
             transitionScore = Math.Clamp(transitionScore, 100, 900);
 
-            int hash = HashCode.Combine(worldSeed, patient.SurvivorId, simTick, (int)patient.CurrentGriefStage);
-            int roll = Math.Abs(hash % 1000);
+            int hash = StableHash.Combine(worldSeed, patient.SurvivorId);
+            hash = StableHash.Combine(hash, simTick);
+            hash = StableHash.Combine(hash, (int)patient.CurrentGriefStage);
+            int roll = StableHash.NonNegativeRemainder(hash, 1000);
 
             if (roll < transitionScore)
             {

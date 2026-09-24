@@ -248,8 +248,9 @@ namespace Ashfall.Core.Medical
                 _                                       => 750
             };
 
-            // Seeded variance ±5%
-            int hash = HashCode.Combine(surgerySeed, procedureComplexityPermille, (int)ward.Cleanliness);
+            // Seeded variance ±5% using the stable Core mixer.
+            int hash = StableHash.Combine(surgerySeed, procedureComplexityPermille);
+            hash = StableHash.Combine(hash, (int)ward.Cleanliness);
             int variance = ((hash & 0x7FFFFFFF) % 11) - 5;
             shockRisk = Math.Clamp(shockRisk + variance * 5, 20, 980);
 

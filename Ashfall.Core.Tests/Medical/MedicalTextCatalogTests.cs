@@ -107,6 +107,23 @@ namespace Ashfall.Core.Tests.Medical
         }
 
         [Fact]
+        public void MedicalTextCatalog_SymptomSelection_IntMinSeedIsBounded()
+        {
+            string dataDir = FindDataDir();
+            var catalog = MedicalTextCatalog.LoadFromDirectory(
+                dataDir,
+                new FileSystemIO(),
+                new SystemTextJsonSerializer());
+            var entry = catalog.TryGetConditionText("medical_radiation_exposure");
+
+            Assert.NotNull(entry);
+            Assert.NotNull(entry!.symptom_descriptions);
+            string selected = catalog.GetSymptomProse("medical_radiation_exposure", int.MinValue);
+
+            Assert.Contains(selected, entry.symptom_descriptions);
+        }
+
+        [Fact]
         public void MedicalTextCatalog_AccuracyAudit_NoDebunkedClaims()
         {
             string dataDir = FindDataDir();
@@ -177,6 +194,31 @@ namespace Ashfall.Core.Tests.Medical
             Assert.Equal(prose1.DiagnosisSummary, prose2.DiagnosisSummary);
             Assert.Equal(prose1.SymptomLine, prose2.SymptomLine);
             Assert.Equal(prose1.ComplicationWarning, prose2.ComplicationWarning);
+        }
+
+        [Fact]
+        public void MedicalConditionResolver_RuntimeAliases_ShareCanonicalProseProjection()
+        {
+            string dataDir = FindDataDir();
+            var catalog = MedicalTextCatalog.LoadFromDirectory(
+                dataDir,
+                new FileSystemIO(),
+                new SystemTextJsonSerializer());
+
+            var direct = MedicalConditionResolver.GetClinicalProse(
+                catalog,
+                "medical_radiation_exposure",
+                "survivor_alias");
+            var runtimeAlias = MedicalConditionResolver.GetClinicalProse(
+                catalog,
+                MedicalTreatmentCatalog.RadiationSicknessId,
+                "survivor_alias");
+
+            Assert.NotNull(direct);
+            Assert.NotNull(runtimeAlias);
+            Assert.Equal(direct!.CatalogId, runtimeAlias!.CatalogId);
+            Assert.Equal(direct.SymptomLine, runtimeAlias.SymptomLine);
+            Assert.Equal(direct.DiagnosisSummary, runtimeAlias.DiagnosisSummary);
         }
 
         [Fact]

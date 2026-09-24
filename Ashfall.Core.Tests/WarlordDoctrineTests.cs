@@ -319,6 +319,20 @@ namespace Ashfall.Core.Tests
         // ── Player/system consequences ─────────────────────────────────
 
         [Fact]
+        public void Warlord_CollectorVoice_IntMinDay_RemainsBounded()
+        {
+            var catalog = LoadCatalog();
+            catalog.CollectorVoice["synthetic_three"] = new List<string> { "alpha", "beta", "gamma" };
+
+            foreach (var state in new[] { "demand", "paid", "short", "refused", "synthetic_three" })
+            {
+                string line = catalog.CollectorLine(state, int.MinValue);
+                Assert.False(string.IsNullOrEmpty(line));
+            }
+            Assert.Equal(string.Empty, catalog.CollectorLine(null!, int.MinValue));
+        }
+
+        [Fact]
         public void Warlord_TributeEscalates_OnShortPayment_AndCaps()
         {
             var w = NewWarlord(111);

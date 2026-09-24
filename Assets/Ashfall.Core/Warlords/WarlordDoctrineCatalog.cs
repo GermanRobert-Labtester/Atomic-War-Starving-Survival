@@ -91,10 +91,14 @@ namespace Ashfall.Core.Warlords
         /// <summary>Picks a collector line deterministically from the authored set (seeded by day).</summary>
         public string CollectorLine(string state, int day)
         {
-            if (!CollectorVoice.TryGetValue(state, out var lines) || lines == null || lines.Count == 0)
+            if (string.IsNullOrEmpty(state)
+                || !CollectorVoice.TryGetValue(state, out var lines)
+                || lines == null
+                || lines.Count == 0)
                 return string.Empty;
-            int n = day < 0 ? -day : day;
-            return lines[n % lines.Count];
+
+            int index = StableHash.NonNegativeRemainder(day, lines.Count);
+            return lines[index] ?? string.Empty;
         }
 
         public WarlordDoctrineDef? GetDoctrine(string id)

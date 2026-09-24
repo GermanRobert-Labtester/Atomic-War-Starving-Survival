@@ -531,5 +531,70 @@ namespace Ashfall.Core.Cognition
                 _state.RecentReinforcements.AddRange(state.RecentReinforcements);
             }
         }
+
+        public MemoryDecayCensus GetCensus()
+        {
+            int vivid = 0, clear = 0, vague = 0, fragmentary = 0, forgotten = 0;
+            int certified = 0, preserved = 0;
+            for (int i = 0; i < _state.Records.Count; i++)
+            {
+                var r = _state.Records[i];
+                switch (r.Clarity)
+                {
+                    case MemoryClarity.Vivid: vivid++; break;
+                    case MemoryClarity.Clear: clear++; break;
+                    case MemoryClarity.Vague: vague++; break;
+                    case MemoryClarity.Fragmentary: fragmentary++; break;
+                    case MemoryClarity.Forgotten: forgotten++; break;
+                }
+                if (r.IsCertified) certified++;
+                if (r.IsPreserved) preserved++;
+            }
+            return new MemoryDecayCensus(
+                _state.Records.Count,
+                vivid,
+                clear,
+                vague,
+                fragmentary,
+                forgotten,
+                certified,
+                preserved,
+                _domainRates.Count);
+        }
+    }
+
+    public struct MemoryDecayCensus
+    {
+        public int TotalRecords { get; }
+        public int VividCount { get; }
+        public int ClearCount { get; }
+        public int VagueCount { get; }
+        public int FragmentaryCount { get; }
+        public int ForgottenCount { get; }
+        public int CertifiedCount { get; }
+        public int PreservedCount { get; }
+        public int DomainRatesCount { get; }
+
+        public MemoryDecayCensus(
+            int totalRecords,
+            int vividCount,
+            int clearCount,
+            int vagueCount,
+            int fragmentaryCount,
+            int forgottenCount,
+            int certifiedCount,
+            int preservedCount,
+            int domainRatesCount)
+        {
+            TotalRecords = totalRecords;
+            VividCount = vividCount;
+            ClearCount = clearCount;
+            VagueCount = vagueCount;
+            FragmentaryCount = fragmentaryCount;
+            ForgottenCount = forgottenCount;
+            CertifiedCount = certifiedCount;
+            PreservedCount = preservedCount;
+            DomainRatesCount = domainRatesCount;
+        }
     }
 }

@@ -34,7 +34,7 @@ public readonly struct SaveProfileId : IEquatable<SaveProfileId>
 
     public bool Equals(SaveProfileId other) => string.Equals(Value, other.Value, StringComparison.Ordinal);
     public override bool Equals(object? obj) => obj is SaveProfileId other && Equals(other);
-    public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(Value);
+    public override int GetHashCode() => StableHash.Of(Value);
     public override string ToString() => Value;
     public static bool operator ==(SaveProfileId left, SaveProfileId right) => left.Equals(right);
     public static bool operator !=(SaveProfileId left, SaveProfileId right) => !left.Equals(right);
@@ -68,7 +68,7 @@ public readonly struct SaveSlotId : IEquatable<SaveSlotId>
 
     public bool Equals(SaveSlotId other) => string.Equals(Value, other.Value, StringComparison.Ordinal);
     public override bool Equals(object? obj) => obj is SaveSlotId other && Equals(other);
-    public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(Value);
+    public override int GetHashCode() => StableHash.Of(Value);
     public override string ToString() => Value;
     public static bool operator ==(SaveSlotId left, SaveSlotId right) => left.Equals(right);
     public static bool operator !=(SaveSlotId left, SaveSlotId right) => !left.Equals(right);

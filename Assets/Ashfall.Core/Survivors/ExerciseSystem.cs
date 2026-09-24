@@ -411,5 +411,52 @@ namespace Ashfall.Core.Survivors
                 }
             }
         }
+
+        public ExerciseCensus GetCensus()
+        {
+            int activeStreaks = 0;
+            float totalConditioning = 0f;
+            for (int i = 0; i < _state.Profiles.Count; i++)
+            {
+                var p = _state.Profiles[i];
+                if (p.WorkoutStreak > 0) activeStreaks++;
+                totalConditioning += p.Cardio + p.Strength + p.Flexibility + p.Endurance;
+            }
+            float avgConditioning = _state.Profiles.Count > 0 ? totalConditioning / (_state.Profiles.Count * 4f) : 0f;
+            return new ExerciseCensus(
+                _state.Profiles.Count,
+                _routines.Count,
+                activeStreaks,
+                avgConditioning,
+                _state.BaselineFitnessFloor,
+                _state.DeconditioningRatePerDay);
+        }
+    }
+
+    public struct ExerciseCensus
+    {
+        public int TrackedProfilesCount { get; }
+        public int AuthoredRoutinesCount { get; }
+        public int ActiveStreakCount { get; }
+        public float AverageConditioningScore { get; }
+        public float BaselineFitnessFloor { get; }
+        public float DeconditioningRatePerDay { get; }
+
+        public ExerciseCensus(
+            int trackedProfilesCount,
+            int authoredRoutinesCount,
+            int activeStreakCount,
+            float averageConditioningScore,
+            float baselineFitnessFloor,
+            float deconditioningRatePerDay)
+        {
+            TrackedProfilesCount = trackedProfilesCount;
+            AuthoredRoutinesCount = authoredRoutinesCount;
+            ActiveStreakCount = activeStreakCount;
+            AverageConditioningScore = averageConditioningScore;
+            BaselineFitnessFloor = baselineFitnessFloor;
+            DeconditioningRatePerDay = deconditioningRatePerDay;
+        }
     }
 }
+

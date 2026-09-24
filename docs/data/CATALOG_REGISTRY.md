@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
 **Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-24
-**Total Catalogs:** 706 | **Total Definitions:** 14305 | **Domain Families:** 32
+**Total Catalogs:** 708 | **Total Definitions:** 14376 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -69,7 +69,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 78 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (226 Catalogs, 3488 Definitions)
+### Core / Miscellaneous (228 Catalogs, 3559 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -206,6 +206,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narrative_progression.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterSystem` |
 | `naval_vessels.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `needs_performance.json` | 0 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `night_watch_operations.json` | 67 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `noise_sources.json` | 15 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `npc_arcs.json` | 24 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `npc_memory_dialogue.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
@@ -258,9 +259,10 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `runflat_tire_catalog.json` | 3 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `sanitation_facilities.json` | 9 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `scavenging_tables.json` | 54 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `seasonal_human_migration.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `seasonal_human_migration.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `seismic_fault_catalog.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SeismicDynamicsSystem` |
 | `settlements.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `skill_certifications.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `skills.json` | 160 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SkillCatalogLoader` |
 | `sky_defense_ordnance.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SkyDefenseOrdnanceCatalogLoader` |
 | `sky_layer_armor_catalog.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |

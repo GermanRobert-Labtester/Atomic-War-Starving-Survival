@@ -199,14 +199,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        [Obsolete("Migrate to aggregate campaign persistence.")]
-        public bool TrySave(string basePathOverride = null!, string tradePathOverride = null!) =>
-            TrySaveToLegacyFiles(basePathOverride, tradePathOverride);
-
-        [Obsolete("Migrate to aggregate campaign persistence.")]
-        public bool TryReload(string basePathOverride = null!, string tradePathOverride = null!) =>
-            TryReloadFromLegacyFiles(basePathOverride, tradePathOverride);
-
         public void SeedDevelopmentState()
         {
             Trade.SeedInventory("item_triplicate_carbon", 1);

@@ -64,8 +64,14 @@ namespace AtomicWar.GodotApp
                 _startingSuppliesProfileId,
                 seedWhenNoSave: _campaignInitializationMode ==
                     CampaignInitializationMode.FreshInitialize);
-            if (_campaignInitializationMode == CampaignInitializationMode.FreshInitialize)
+            // Shares the GrantDifficultyStartingBonusesOnce once-flag: composition
+            // order varies by entry point (StartNewGame grants explicitly after
+            // Compose), so whichever site fires first wins and the bonus applies
+            // exactly once per fresh campaign instead of twice.
+            if (_campaignInitializationMode == CampaignInitializationMode.FreshInitialize
+                && !_difficultyBonusesGrantedForCampaign)
             {
+                _difficultyBonusesGrantedForCampaign = true;
                 foreach (string itemId in DifficultyStartingBonusItemIds())
                 {
                     if (!_inventory.TryAdd(itemId, 1))

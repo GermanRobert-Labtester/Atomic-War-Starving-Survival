@@ -48,11 +48,4 @@ namespace Ashfall.Core.Economy
         public TradeStance NewStance;
         public string Message;
     }
-
-    /// <summary>Scarcity override descriptor (hardcore mode flag).</summary>
-    public class ScarcityOverride
-    {
-        public string Source;
-        public bool IsHardcore;
-    }
 }

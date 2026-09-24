@@ -133,7 +133,9 @@ namespace Ashfall.Core.Tests.Shelter
 
             // Wear is 0.2/pumping day (400-day lifetime); drive to just above
             // the threshold, then cross it with one pumping day.
-            well.State.condition = DeepWellSystem.PumpWornThreshold + 0.1f;
+            var nearWornState = well.CaptureState();
+            nearWornState.condition = DeepWellSystem.PumpWornThreshold + 0.1f;
+            well.RestoreState(nearWornState);
             well.TickDay(1); // crosses to 39.9 → warn edge fires
             Assert.Equal(1, wornCount);
 
@@ -160,9 +162,11 @@ namespace Ashfall.Core.Tests.Shelter
             int spentCount = 0;
             c.OnMembraneSpent += _ => spentCount++;
 
-            // 15 L/day at index 1.0 wears the membrane 0.75/day (2000 L
+            // 15 L/day at index 1.0 wears the membrane 0.5/day (200-day
             // lifetime); drive to just above zero, then cross.
-            c.State.membraneIntegrity = 0.4f;
+            var nearSpentState = c.CaptureState();
+            nearSpentState.membraneIntegrity = 0.4f;
+            c.RestoreState(nearSpentState);
             c.TickDay(1); // integrity → 0 → spent edge fires
             Assert.Equal(1, spentCount);
             Assert.Equal(0f, c.MembraneIntegrity, 3);

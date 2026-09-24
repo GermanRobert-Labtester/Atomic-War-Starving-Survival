@@ -6,12 +6,14 @@
 // ============================================================================
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.Factions;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Combat;
+using Ashfall.Core.Campaign;
 
 namespace AtomicWar.GodotApp
 {
@@ -264,6 +266,67 @@ namespace AtomicWar.GodotApp
             };
 
             return _mutations;
+        }
+
+        private RadiationMutationHostSession? _mutationSession;
+
+        public RadiationMutationHostSession EnsureMutationSession()
+        {
+            if (_mutationSession != null) return _mutationSession;
+            _mutationSession = new RadiationMutationHostSession(EnsureMutations());
+            return _mutationSession;
+        }
+
+        public bool ApplyRadiationExposure(string survivorId, float dose, int day)
+        {
+            if (string.IsNullOrWhiteSpace(survivorId) || dose <= 0f) return false;
+            EnsureMutations().AddRadiationExposure(survivorId, dose, day);
+            return true;
+        }
+
+        public void TickMutations(int day, List<DayStateChangeEvent>? events = null)
+        {
+            SetupMutations();
+            if (_mutations == null) return;
+
+            if (_survivors != null)
+            {
+                var survivors = _survivors.RosterState
+                    .Where(s => s.IsAlive)
+                    .OrderBy(s => s.Id, StringComparer.Ordinal);
+
+                foreach (var s in survivors)
+                {
+                    if (_mutations.TryMutateSurvivor(s.Id, day))
+                    {
+                        events?.Add(new DayStateChangeEvent("mutation_developed", "mutation_tree", s.Id, null, day));
+                    }
+                }
+            }
+        }
+
+        public GeneTherapyResult PerformGeneTherapy(string survivorId, string mutationId)
+        {
+            SetupMutations();
+            return EnsureMutations().PerformGeneTherapy(survivorId, mutationId, _simDay);
+        }
+
+        public void AdministerRadAway(string survivorId, float detoxAmount)
+        {
+            SetupMutations();
+            EnsureMutations().AdministerRadAway(survivorId, detoxAmount, _simDay);
+        }
+
+        public SurvivorMutationProfile? GetSurvivorMutationProfile(string survivorId)
+        {
+            SetupMutations();
+            return EnsureMutations().GetProfile(survivorId);
+        }
+
+        public List<string> GetSurvivorCapabilities(string survivorId)
+        {
+            SetupMutations();
+            return EnsureMutations().GetCapabilityTags(survivorId);
         }
 
         private void SetupMutations()

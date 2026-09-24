@@ -252,8 +252,9 @@ namespace Ashfall.Core.World
                                  speciesTamabilityPermille * 300) / 1000;
 
             // Deterministic variance ±8%
-            int hash      = HashCode.Combine(tamingSeed, animalHungerPermille, trustExposurePermille);
-            int variance  = ((hash & 0x7FFFFFFF) % 17) - 8; // -8..+8
+            int hash = StableHash.Combine(tamingSeed, animalHungerPermille);
+            hash = StableHash.Combine(hash, trustExposurePermille);
+            int variance = ((hash & 0x7FFFFFFF) % 17) - 8; // -8..+8
             baseReadiness = Math.Clamp(baseReadiness + (baseReadiness * variance) / 100, 0, 1000);
 
             bool isTameable = baseReadiness >= TamingReadinessThreshold;

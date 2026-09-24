@@ -18,6 +18,7 @@ using Ashfall.Core.Education;
 using Ashfall.Core.Events;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Factions;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Phantoms;
 using Ashfall.Core.Save;
 using Ashfall.Core.Shelter;
@@ -130,6 +131,23 @@ namespace AtomicWar.GodotApp
             => System.HoldCelebration(holidayId, scaleId, participants, rng);
 
         public float SkipHoliday(string holidayId) => System.SkipHoliday(holidayId);
+
+        public bool TryHoldCelebration(string holidayId, string scaleId, int participants, int day,
+            string foodItemId, string fuelItemId, IPlayerInventoryPort? inventory, ISeededRng? rng,
+            out CelebrationRecord? record)
+        {
+            bool held = System.TryHoldCelebration(holidayId, scaleId, participants, day,
+                foodItemId, fuelItemId, inventory, rng, out record);
+            if (held) RaiseStateChanged();
+            return held;
+        }
+
+        public bool TrySkipHoliday(string holidayId, int day, out float moralePenalty)
+        {
+            bool skipped = System.TrySkipHoliday(holidayId, day, out moralePenalty);
+            if (skipped) RaiseStateChanged();
+            return skipped;
+        }
 
         public float CommemorateAnniversary(string typeId, string entityName, int day)
             => System.CommemorateAnniversary(typeId, entityName, day);
@@ -385,6 +403,49 @@ namespace AtomicWar.GodotApp
 
         public bool ProgressProject(string projectId, double dailyLabor, int currentDay)
             => System.ProgressProject(projectId, dailyLabor, currentDay);
+
+        public ConstructionStartResult TryStartRoomConstruction(string blueprintId, int x, int y, int depth,
+            int currentDay, IPlayerInventoryPort? inventory)
+            => Track(System.TryStartRoomConstruction(blueprintId, x, y, depth, currentDay, inventory));
+
+        public ConstructionStartResult TryStartRenovation(string roomId, int currentDay,
+            IPlayerInventoryPort? inventory)
+            => Track(System.TryStartRenovation(roomId, currentDay, inventory));
+
+        public ConstructionStartResult TryStartUpgrade(string roomId, string upgradeId, int currentDay,
+            IPlayerInventoryPort? inventory)
+            => Track(System.TryStartUpgrade(roomId, upgradeId, currentDay, inventory));
+
+        public ConstructionStartResult TryStartDepthExcavation(int currentDay, IPlayerInventoryPort? inventory)
+            => Track(System.TryStartDepthExcavation(currentDay, inventory));
+
+        public bool AssignCrew(string projectId, string survivorId)
+        {
+            bool assigned = System.TryAssignCrew(projectId, survivorId);
+            if (assigned) RaiseStateChanged();
+            return assigned;
+        }
+
+        public bool RelieveCrew(string projectId, string survivorId)
+        {
+            bool relieved = System.RelieveCrew(projectId, survivorId);
+            if (relieved) RaiseStateChanged();
+            return relieved;
+        }
+
+        public int TickCrews(int day)
+        {
+            int completed = System.ProgressAssignedProjects(day);
+            if (completed > 0) RaiseStateChanged();
+            return completed;
+        }
+
+        private ConstructionStartResult Track(ConstructionStartResult result)
+        {
+            if (result.Succeeded) RaiseStateChanged();
+            return result;
+        }
+
 
         public void TickDay(int day) { /* labor is explicit; no free progress */ }
 

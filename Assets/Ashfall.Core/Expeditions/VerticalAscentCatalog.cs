@@ -78,31 +78,4 @@ namespace Ashfall.Core.Expeditions
         public AscentRigProfile? GetRig(string rigId) =>
             string.IsNullOrEmpty(rigId) ? null : _rigs.TryGetValue(rigId, out var r) ? r : null;
     }
-
-    public static class VerticalAscentCatalogLoader
-    {
-        public const string DefaultFileName = "climbing_winch_catalog.json";
-
-        public static VerticalAscentCatalog? Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
-        {
-            if (fileIO == null || json == null) return null;
-            string path = fileIO.Combine(dataDir, DefaultFileName);
-            if (!fileIO.FileExists(path)) return null;
-
-            string raw = fileIO.ReadAllText(path);
-            VerticalAscentCatalogDto? dto;
-            try
-            {
-                dto = json.Deserialize<VerticalAscentCatalogDto>(raw);
-            }
-            catch (Exception ex)
-            {
-                CatalogDiagnostics.Warn(path, "climbing_winch_catalog", ex);
-                return null;
-            }
-            if (dto?.rigs == null) return null;
-
-            return new VerticalAscentCatalog(dto.rigs);
-        }
-    }
 }

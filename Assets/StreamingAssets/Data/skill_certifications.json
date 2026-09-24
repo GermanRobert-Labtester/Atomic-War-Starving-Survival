@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "certifications": [
+    {
+      "cert_id": "cert_certified_medic",
+      "cert_name": "Certified Medic",
+      "discipline": "medical",
+      "required_tier": "Proficient",
+      "required_level": 40.0,
+      "exam_difficulty": 50.0,
+      "required_experience": [
+        "first_aid_application",
+        "skill_field_surgery"
+      ],
+      "benefits": [
+        "unlock_advanced_surgery",
+        "treatment_speed_15"
+      ],
+      "description": "Formal qualification in clinical care, emergency stabilization, and surgical triage."
+    },
+    {
+      "cert_id": "cert_master_engineer",
+      "cert_name": "Master Engineer",
+      "discipline": "crafting",
+      "required_tier": "Expert",
+      "required_level": 60.0,
+      "exam_difficulty": 65.0,
+      "required_experience": [
+        "structural_repairs",
+        "component_machining"
+      ],
+      "benefits": [
+        "unlock_heavy_machinery",
+        "fabrication_quality_20"
+      ],
+      "description": "Mastery of precision mechanics, structural reinforcement, and line shaft maintenance."
+    },
+    {
+      "cert_id": "cert_expert_tracker",
+      "cert_name": "Expert Tracker",
+      "discipline": "survival",
+      "required_tier": "Expert",
+      "required_level": 60.0,
+      "exam_difficulty": 60.0,
+      "required_experience": [
+        "wildlife_tracking",
+        "wasteland_foraging"
+      ],
+      "benefits": [
+        "unlock_rare_game",
+        "expedition_forage_25"
+      ],
+      "description": "Advanced survival tracking, game harvesting, and hazardous territory navigation."
+    },
+    {
+      "cert_id": "cert_certified_trader",
+      "cert_name": "Certified Trader",
+      "discipline": "scavenging",
+      "required_tier": "Proficient",
+      "required_level": 40.0,
+      "exam_difficulty": 45.0,
+      "required_experience": [
+        "skill_supply_chain_master",
+        "market_negotiation"
+      ],
+      "benefits": [
+        "unlock_faction_trade",
+        "price_margin_10"
+      ],
+      "description": "Accredited barterer capable of negotiating favorable terms and access with external syndicates."
+    },
+    {
+      "cert_id": "cert_master_combatant",
+      "cert_name": "Master Combatant",
+      "discipline": "combat",
+      "required_tier": "Expert",
+      "required_level": 60.0,
+      "exam_difficulty": 70.0,
+      "required_experience": [
+        "perimeter_defense",
+        "tactical_skirmish"
+      ],
+      "benefits": [
+        "unlock_tactical_command",
+        "combat_accuracy_15"
+      ],
+      "description": "Tactical combat mastery, perimeter defense leadership, and firearm coordination."
+    },
+    {
+      "cert_id": "cert_certified_teacher",
+      "cert_name": "Certified Teacher",
+      "discipline": "science",
+      "required_tier": "Proficient",
+      "required_level": 40.0,
+      "exam_difficulty": 50.0,
+      "required_experience": [
+        "apprentice_mentoring",
+        "codex_instruction"
+      ],
+      "benefits": [
+        "unlock_skill_acceleration",
+        "training_speed_20"
+      ],
+      "description": "Formal educator capable of accelerating apprentice development and skill retention."
+    },
+    {
+      "cert_id": "cert_master_chef",
+      "cert_name": "Master Chef",
+      "discipline": "survival",
+      "required_tier": "Expert",
+      "required_level": 60.0,
+      "exam_difficulty": 55.0,
+      "required_experience": [
+        "ration_preparation",
+        "wildlife_cooking"
+      ],
+      "benefits": [
+        "unlock_gourmet_rations",
+        "morale_meal_boost_10"
+      ],
+      "description": "Culinary expert skilled in decontaminating ingredients and preparing morale-lifting meals."
+    },
+    {
+      "cert_id": "cert_certified_leader",
+      "cert_name": "Certified Leader",
+      "discipline": "science",
+      "required_tier": "Expert",
+      "required_level": 60.0,
+      "exam_difficulty": 75.0,
+      "required_experience": [
+        "dispute_mediation",
+        "skill_de_escalator"
+      ],
+      "benefits": [
+        "unlock_governance_council",
+        "shelter_resolve_10"
+      ],
+      "description": "Accredited community leader proven in mediation, crisis governance, and survivor morale management."
+    }
+  ],
+  "specializations": [
+    {
+      "spec_id": "spec_combat_medic",
+      "spec_name": "Combat Medic",
+      "required_cert_ids": [
+        "cert_certified_medic"
+      ],
+      "unique_abilities": [
+        "field_triage",
+        "rapid_stabilization"
+      ],
+      "description": "Cross-trained specialist delivering emergency clinical care under active hostile fire."
+    },
+    {
+      "spec_id": "spec_field_engineer",
+      "spec_name": "Field Engineer",
+      "required_cert_ids": [
+        "cert_master_engineer"
+      ],
+      "unique_abilities": [
+        "expedition_rig_overhaul",
+        "improvised_fabrication"
+      ],
+      "description": "Engineering specialist adapted to wasteland conditions and mobile equipment maintenance."
+    },
+    {
+      "spec_id": "spec_master_tracker",
+      "spec_name": "Master Tracker",
+      "required_cert_ids": [
+        "cert_expert_tracker"
+      ],
+      "unique_abilities": [
+        "apex_predator_taming",
+        "deep_wasteland_scouting"
+      ],
+      "description": "Elite wilderness scout tracking apex fauna and navigating uncharted radioactive terrain."
+    },
+    {
+      "spec_id": "spec_trade_master",
+      "spec_name": "Trade Master",
+      "required_cert_ids": [
+        "cert_certified_trader"
+      ],
+      "unique_abilities": [
+        "syndicate_arbitration",
+        "black_market_concessions"
+      ],
+      "description": "Master negotiator capable of establishing regional trade routes and securing premium terms."
+    },
+    {
+      "spec_id": "spec_tactical_commander",
+      "spec_name": "Tactical Commander",
+      "required_cert_ids": [
+        "cert_master_combatant",
+        "cert_certified_leader"
+      ],
+      "unique_abilities": [
+        "shelter_garrison_aura",
+        "coordinated_ambush"
+      ],
+      "description": "Combined arms and strategic authority directing defense drills and expedition squads."
+    },
+    {
+      "spec_id": "spec_academic",
+      "spec_name": "Academic",
+      "required_cert_ids": [
+        "cert_certified_teacher"
+      ],
+      "unique_abilities": [
+        "accelerated_research",
+        "memory_preservation"
+      ],
+      "description": "Shelter scholar and pedagogue leading research breakthroughs and historical documentation."
+    }
+  ]
+}

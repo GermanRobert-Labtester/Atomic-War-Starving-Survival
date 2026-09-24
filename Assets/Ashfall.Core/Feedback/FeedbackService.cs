@@ -92,8 +92,7 @@ namespace Ashfall.Core.Feedback
                 DedupeKey = evt.DedupeKey,
                 SourceSystem = evt.SourceSystem,
                 PresentationContext = evt.PresentationContext,
-                IsDiagnosticOnly = isDiag,
-                TimestampTick = Environment.TickCount64
+                IsDiagnosticOnly = isDiag
             };
         }
 

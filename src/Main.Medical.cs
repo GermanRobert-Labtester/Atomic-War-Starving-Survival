@@ -91,6 +91,130 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// Plan 143: Gathers all canonical active medical affliction IDs for a survivor.
+        /// Queries the active pipeline handlers (respiratory, radiation, health deficit,
+        /// chemical dependency, psychology/trauma, diseases) and physiological limb conditions.
+        /// </summary>
+        public IReadOnlyList<string> GetActiveAfflictionIds(string survivorId)
+        {
+            var activeIds = new List<string>();
+            if (string.IsNullOrEmpty(survivorId)) return activeIds;
+
+            SetupMedical();
+            EnsureMedicalPipeline();
+
+            // 1. Pipeline active episodes
+            if (_medical?.Pipeline != null && Ashfall.Core.Survivors.SurvivorId.TryParse(survivorId, out var svId))
+            {
+                foreach (var handler in _medical.Pipeline.Handlers)
+                {
+                    if (handler == null) continue;
+                    var episode = handler.GetEpisode(svId);
+                    if (episode != null && episode.IsActive)
+                    {
+                        if (!activeIds.Contains(handler.DefinitionId.Value))
+                            activeIds.Add(handler.DefinitionId.Value);
+                    }
+                }
+            }
+
+            // 2. Direct domain fallbacks
+            var rad = _survivors?.RadStateFor(survivorId);
+            if (rad is { HasAcuteRadiationSickness: true })
+            {
+                if (!activeIds.Contains(Ashfall.Core.Medical.MedicalTreatmentCatalog.RadiationSicknessId))
+                    activeIds.Add(Ashfall.Core.Medical.MedicalTreatmentCatalog.RadiationSicknessId);
+            }
+
+            float respDeg = _phase0?.Respiratory?.RespiratoryDegradation(survivorId) ?? 0f;
+            if (respDeg > 0f)
+            {
+                if (!activeIds.Contains(Ashfall.Core.Medical.MedicalTreatmentCatalog.RespiratoryDegenerationId))
+                    activeIds.Add(Ashfall.Core.Medical.MedicalTreatmentCatalog.RespiratoryDegenerationId);
+            }
+
+            if (_phase0?.CombatTrauma != null && _phase0.CombatTrauma.GetHypervigilanceLevel(survivorId) >= 0.6f)
+            {
+                if (!activeIds.Contains(Ashfall.Core.Medical.MedicalTreatmentCatalog.CombatTraumaId))
+                    activeIds.Add(Ashfall.Core.Medical.MedicalTreatmentCatalog.CombatTraumaId);
+            }
+
+            if (_medical?.Engine != null && _medical.Engine.Ledger.TryGetValue(survivorId, out var deps))
+            {
+                if (deps.Any(d => d.dependencyLevel >= Ashfall.Core.Medical.ChemicalDependencySystem.DependencyThreshold || d.inColdTurkey))
+                {
+                    if (!activeIds.Contains(Ashfall.Core.Medical.MedicalTreatmentCatalog.ChemicalDependencyId))
+                        activeIds.Add(Ashfall.Core.Medical.MedicalTreatmentCatalog.ChemicalDependencyId);
+                }
+            }
+
+            // 3. Limb conditions (Plan 190 AmputationSystem integration)
+            if (_amputation != null && _amputation.State.survivorLimbs.TryGetValue(survivorId, out var limbs))
+            {
+                if (limbs != null)
+                {
+                    foreach (var limb in limbs)
+                    {
+                        if (limb == null) continue;
+                        if (limb.limb == Ashfall.Core.Medical.LimbId.LeftLeg || limb.limb == Ashfall.Core.Medical.LimbId.RightLeg)
+                        {
+                            if (limb.condition == Ashfall.Core.Medical.LimbCondition.Wounded
+                                || limb.condition == Ashfall.Core.Medical.LimbCondition.Amputated
+                                || limb.condition == Ashfall.Core.Medical.LimbCondition.Gangrenous)
+                            {
+                                if (!activeIds.Contains("affliction_broken_leg"))
+                                    activeIds.Add("affliction_broken_leg");
+                            }
+                        }
+                        else if (limb.limb == Ashfall.Core.Medical.LimbId.LeftArm || limb.limb == Ashfall.Core.Medical.LimbId.RightArm)
+                        {
+                            if (limb.condition == Ashfall.Core.Medical.LimbCondition.Wounded
+                                || limb.condition == Ashfall.Core.Medical.LimbCondition.Amputated
+                                || limb.condition == Ashfall.Core.Medical.LimbCondition.Gangrenous)
+                            {
+                                if (!activeIds.Contains("affliction_broken_arm"))
+                                    activeIds.Add("affliction_broken_arm");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return activeIds;
+        }
+
+        /// <summary>
+        /// Plan 143: Pure query checking if a quest tag is blocked for a survivor.
+        /// </summary>
+        public bool IsQuestBlockedForSurvivor(string survivorId, string questTag, out List<string> blockingAfflictions)
+        {
+            blockingAfflictions = new List<string>();
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(questTag)) return false;
+
+            SetupMedical();
+            var activeAfflictions = GetActiveAfflictionIds(survivorId);
+            var gateResult = _medical.Bridge.QueryQuestGate(questTag, activeAfflictions);
+            if (gateResult.IsBlocked)
+            {
+                blockingAfflictions.AddRange(gateResult.BlockingAfflictionIds);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Plan 143: Pure query returning quest tags unlocked by the survivor's medical conditions.
+        /// </summary>
+        public IReadOnlyList<string> GetUnlockedQuestsForSurvivor(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return Array.Empty<string>();
+
+            SetupMedical();
+            var activeAfflictions = GetActiveAfflictionIds(survivorId);
+            return _medical.Bridge.GetUnlockedQuestTags(activeAfflictions);
+        }
+
+        /// <summary>
         /// Task #133: construct and bind the unified medical pipeline once the
         /// inventory, survivors, and Phase-0 sessions exist. Idempotent.
         /// </summary>

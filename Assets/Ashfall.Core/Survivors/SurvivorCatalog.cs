@@ -25,15 +25,6 @@ namespace Ashfall.Core.Survivors
         public string activeQuestlineId = string.Empty;
     }
 
-    [Serializable]
-    internal sealed class SurvivorDefinitionsRoot
-    {
-#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
-        public int schema_version;
-#pragma warning restore CS0649
-        public List<SurvivorDefinition> survivors = new List<SurvivorDefinition>();
-    }
-
     /// <summary>One roster entry: a definition instantiated into the bunker.</summary>
     [Serializable]
     public class SurvivorRosterEntry

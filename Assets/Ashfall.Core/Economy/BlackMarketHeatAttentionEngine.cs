@@ -225,9 +225,11 @@ namespace Ashfall.Core.Economy
             record.RelocationCount++;
             record.Band = BlackMarketAttentionBand.CriticalLockout;
 
-            // Deterministic anti-reroll location selection
-            int seed = campaignSeed ^ record.SyndicateId.GetHashCode() ^ (record.RelocationCount * 7919);
-            int locationIndex = Math.Abs(seed) % PossibleLocations.Length;
+            // Deterministic anti-reroll location selection. Do not use
+            // HashCode/string.GetHashCode here: both vary across processes.
+            int seed = StableHash.Combine(campaignSeed, record.RelocationCount);
+            seed = StableHash.Combine(seed, record.SyndicateId);
+            int locationIndex = StableHash.NonNegativeRemainder(seed, PossibleLocations.Length);
             record.CurrentLocationKey = PossibleLocations[locationIndex];
 
             OnRelocationTriggered?.Invoke(syndicateId, record.CurrentLocationKey);

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 182,
-  "headless_test_count": 180,
+  "total_tests": 206,
+  "headless_test_count": 204,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1144,6 +1144,123 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "dependency_taper_selftest",
+      "action": "DependencyTaperWithdrawalSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--dependency-taper-selftest",
+      "aliases": [
+        "--the-habit-selftest"
+      ],
+      "description": "Expansion 35 The Habit: chemical dependency taper schedules, withdrawal symptom bands, peer-support mitigation, and shelter care policy posture",
+      "headless_compatible": true,
+      "expected_summary_id": "dependency_taper_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "antenatal_care_selftest",
+      "action": "AntenatalMaternalHealthSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--antenatal-care-selftest",
+      "aliases": [
+        "--the-quickening-selftest"
+      ],
+      "description": "Expansion 37 The Quickening: antenatal trimester progression, maternal nutritional demand, clinic readiness, and neonatal delivery resolution",
+      "headless_compatible": true,
+      "expected_summary_id": "antenatal_care_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "clinical_ward_selftest",
+      "action": "ClinicalWardTriageSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--clinical-ward-selftest",
+      "aliases": [
+        "--the-ward-selftest"
+      ],
+      "description": "Expansion 38 The Ward: clinical triage priority, surgical suite readiness, sterile consumable supply consumption, and nosocomial infection risks",
+      "headless_compatible": true,
+      "expected_summary_id": "clinical_ward_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "chemical_reagent_selftest",
+      "action": "ChemicalReagentSynthesisSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--chemical-reagent-selftest",
+      "aliases": [
+        "--the-reagent-selftest"
+      ],
+      "description": "Expansion 39 The Reagent: chemical synthesis reactor safety, catalyst purity, stoichiometric mass balance, and acidic effluent neutralization",
+      "headless_compatible": true,
+      "expected_summary_id": "chemical_reagent_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "mechanical_driveline_selftest",
+      "action": "MechanicalDrivelineSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--mechanical-driveline-selftest",
+      "aliases": [
+        "--the-wheel-selftest"
+      ],
+      "description": "Expansion 40 The Wheel: mechanical power driveline line shafts, friction transmission, machine tool tolerance, and millwright maintenance",
+      "headless_compatible": true,
+      "expected_summary_id": "mechanical_driveline_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "sleep_acoustic_selftest",
+      "action": "SleepAcousticRestSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--sleep-acoustic-selftest",
+      "aliases": [
+        "--the-quiet-selftest"
+      ],
+      "description": "Expansion 41 The Quiet: sleep quality index, acoustic decibel attenuation, quiet hours compliance, and sensory relief kit deployment",
+      "headless_compatible": true,
+      "expected_summary_id": "sleep_acoustic_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_archive_selftest",
+      "action": "ShelterArchiveSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--shelter-archive-selftest",
+      "aliases": [
+        "--archive-system-selftest"
+      ],
+      "description": "Plan 162 shelter history & archive: institutional memory, governance decisions, historical milestones, casualty memorials, and search indexing",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_archive_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "dream_system_selftest",
+      "action": "DreamSystemSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--dream-system-selftest",
+      "aliases": [
+        "--dreams-selftest"
+      ],
+      "description": "Plan 177 survivor dream & sleep event system: dream templates catalog, nocturnal dream generation, nightmare compounding, and psychological interpretations",
+      "headless_compatible": true,
+      "expected_summary_id": "dream_system_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "accessibility_settings_selftest",
+      "action": "AccessibilitySettingsSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--accessibility-settings-selftest",
+      "aliases": [
+        "--accessibility-options-selftest"
+      ],
+      "description": "Plan 184 accessibility options system: visual, hearing, motor, and cognitive profiles, high contrast, font scaling, and custom assists",
+      "headless_compatible": true,
+      "expected_summary_id": "accessibility_settings_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "shelter_maintenance_selftest",
       "action": "ShelterMaintenanceSelfTest",
       "category": "Expansions & Campaign Modules",
@@ -1726,6 +1843,20 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "affliction_bridge_selftest",
+      "action": "AfflictionBridgeSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--affliction-bridge-selftest",
+      "aliases": [
+        "--affliction-bridges-selftest",
+        "--affliction-quest-work-selftest"
+      ],
+      "description": "Plan 143: Medical Afflictions \u2192 Quest & Work Bridge: catalog loading, work modifiers, duty exclusions, quest gates, and UI projection",
+      "headless_compatible": true,
+      "expected_summary_id": "affliction_bridge_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "time_capsule_selftest",
       "action": "TimeCapsuleSelfTest",
       "category": "Host Domains & Save Stores",
@@ -1789,6 +1920,193 @@
       "description": "Plan 210: Survivor keepsake claims, sentimental bonding, favorites, gifts, loss reporting, inheritance, and UI binding",
       "headless_compatible": true,
       "expected_summary_id": "personal_belongings_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "memory_decay_selftest",
+      "action": "MemoryDecaySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--memory-decay-selftest",
+      "aliases": [
+        "--memory-system-selftest"
+      ],
+      "description": "Plan 185: Survivor memory & knowledge decay, cognitive degradation, reinforcement, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "memory_decay_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "interpersonal_conflict_selftest",
+      "action": "InterpersonalConflictSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--interpersonal-conflict-selftest",
+      "aliases": [
+        "--conflict-system-selftest"
+      ],
+      "description": "Plan 202: Interpersonal conflict & grievance, dispute escalation, mediation resolution, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "interpersonal_conflict_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "exercise_selftest",
+      "action": "ExerciseSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--exercise-selftest",
+      "aliases": [
+        "--physical-training-selftest"
+      ],
+      "description": "Plan 216: Survivor exercise & physical training, athletic conditioning, workout routines, deconditioning, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "exercise_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "radiation_mutation_selftest",
+      "action": "RadiationMutationSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--radiation-mutation-selftest",
+      "aliases": [
+        "--mutation-system-selftest"
+      ],
+      "description": "Plan 172: Radiation mutation, genetic instability, exposure thresholds, and mutation tree progression",
+      "headless_compatible": true,
+      "expected_summary_id": "radiation_mutation_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "radio_production_selftest",
+      "action": "RadioProgramProductionSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--radio-production-selftest",
+      "aliases": [
+        "--radio-program-production-selftest"
+      ],
+      "description": "Plan 173: Radio station content creation, audience response, broadcast delivery, and follow-ups",
+      "headless_compatible": true,
+      "expected_summary_id": "radio_production_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "working_animals_selftest",
+      "action": "WorkingAnimalsSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--working-animals-selftest",
+      "aliases": [
+        "--companion-animal-selftest"
+      ],
+      "description": "Plan 151: Working animals and companion system: adoption, training, guard modifiers, and pack capacity",
+      "headless_compatible": true,
+      "expected_summary_id": "working_animals_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "black_market_selftest",
+      "action": "BlackMarketSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--black-market-selftest",
+      "aliases": [
+        "--underworld-economy-selftest"
+      ],
+      "description": "Plan 155: Black market and underground economy: contacts, syndicate stock, loan credit, and debt enforcement",
+      "headless_compatible": true,
+      "expected_summary_id": "black_market_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "culture_creation_selftest",
+      "action": "CultureCreationSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--culture-creation-selftest",
+      "aliases": [
+        "--art-culture-selftest"
+      ],
+      "description": "Plan 178: Art & culture creation, artworks, masterworks, cultural identity, and display morale bonuses",
+      "headless_compatible": true,
+      "expected_summary_id": "culture_creation_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "psychological_profile_selftest",
+      "action": "PsychologicalProfileSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--psychological-profile-selftest",
+      "aliases": [
+        "--phobia-system-selftest",
+        "--unified-psychology-selftest"
+      ],
+      "description": "Plan 179: Unified psychology & phobia system, trauma, coping mechanisms, therapy, and resilience",
+      "headless_compatible": true,
+      "expected_summary_id": "psychological_profile_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "skill_certification_selftest",
+      "action": "SkillCertificationSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--skill-certification-selftest",
+      "aliases": [
+        "--skill-tier-selftest",
+        "--certifications-selftest"
+      ],
+      "description": "Plan 180: Skill certification & tier system, exams, qualifications, and specializations",
+      "headless_compatible": true,
+      "expected_summary_id": "skill_certification_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "child_development_selftest",
+      "action": "ChildDevelopmentSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--child-development-selftest",
+      "aliases": [
+        "--child-stages-selftest"
+      ],
+      "description": "Plan 183: Child development stages: age brackets, chore capacity, education, milestones, and canonical projection",
+      "headless_compatible": true,
+      "expected_summary_id": "child_development_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "bestiary_selftest",
+      "action": "BestiarySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--bestiary-selftest",
+      "aliases": [
+        "--creature-encounters-selftest",
+        "--bestiary-ui-selftest"
+      ],
+      "description": "Plan 187: Bestiary creature tracking, 24-fauna catalog, sightings, kill/butcher counts, and tiered lore unlocks",
+      "headless_compatible": true,
+      "expected_summary_id": "bestiary_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "health_history_selftest",
+      "action": "HealthHistorySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--health-history-selftest",
+      "aliases": [
+        "--medical-records-selftest",
+        "--vaccination-history-selftest"
+      ],
+      "description": "Plan 198: Health history & medical records, templates, diagnostic events, vaccination decay, and health trends",
+      "headless_compatible": true,
+      "expected_summary_id": "health_history_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "leadership_succession_selftest",
+      "action": "LeadershipSuccessionSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--leadership-succession-selftest",
+      "aliases": [
+        "--succession-selftest",
+        "--leadership-challenges-selftest"
+      ],
+      "description": "Plan 208: Leadership succession, deputy appointment, challenges, policy enactments, and leader death succession",
+      "headless_compatible": true,
+      "expected_summary_id": "leadership_succession_selftest",
       "timeout_seconds": 30
     },
     {

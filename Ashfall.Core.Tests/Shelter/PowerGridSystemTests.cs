@@ -38,6 +38,157 @@ namespace Ashfall.Core.Tests.Shelter
         }
 
         [Fact]
+        public void Constructor_CapturedStateAndRooms_DoNotAliasAuthority()
+        {
+            var state = new PowerGridState
+            {
+                GenerationWatts = 500f,
+                BatteryCapacityWh = 1000f,
+                BatteryReserveWh = 900f,
+                Priorities = new List<RoomPriorityRecord>
+                {
+                    new RoomPriorityRecord { RoomId = "room_a", Priority = PowerGridRoomPriority.Critical }
+                }
+            };
+            var rooms = new List<PowerGridRoom>
+            {
+                new PowerGridRoom("room_a", "Room A", 100f)
+            };
+
+            var grid = new PowerGridSystem(state, rooms, new SeededRng(1));
+            state.GenerationWatts = 0f;
+            state.Priorities.Clear();
+            rooms[0].RoomId = "tampered";
+            rooms[0].DrawWatts = 999f;
+
+            Assert.Equal(500f, grid.BaseGenerationWatts);
+            Assert.Equal(100f, grid.GetRoomDrawWatts("room_a"));
+            Assert.Equal(PowerGridRoomPriority.Critical, grid.State.GetRoomPriority("room_a"));
+        }
+
+        [Fact]
+        public void Capture_PriorityRecord_IsSnapshot()
+        {
+            var grid = MakeGrid();
+            grid.SetPriority("room_clinic", PowerGridRoomPriority.Critical);
+            var record = grid.State.Priorities.Find(p => p.RoomId == "room_clinic")!;
+
+            var snapshot = grid.CaptureState();
+            snapshot.Priorities.Find(p => p.RoomId == "room_clinic")!.Priority = PowerGridRoomPriority.Disabled;
+
+            Assert.Equal(PowerGridRoomPriority.Critical, record.Priority);
+            Assert.Equal(PowerGridRoomPriority.Critical, grid.State.GetRoomPriority("room_clinic"));
+        }
+
+        [Fact]
+        public void Restore_CapturedState_DoesNotAliasInput()
+        {
+            var source = MakeGrid();
+            source.SetBreaker("room_greenhouse", false);
+            source.SetPriority("room_clinic", PowerGridRoomPriority.Critical);
+            var saved = source.CaptureState();
+            var restored = MakeGrid();
+
+            restored.RestoreState(saved);
+            saved.ClosedBreakers.Clear();
+            saved.Priorities.Find(p => p.RoomId == "room_clinic")!.Priority = PowerGridRoomPriority.Disabled;
+
+            Assert.Contains("room_greenhouse", restored.State.ClosedBreakers);
+            Assert.Equal(PowerGridRoomPriority.Critical, restored.State.GetRoomPriority("room_clinic"));
+        }
+
+        [Fact]
+        public void MalformedStateAndRooms_FailClosedAndNormalize()
+        {
+            var state = new PowerGridState
+            {
+                GenerationWatts = float.NaN,
+                FuelUnits = float.PositiveInfinity,
+                BatteryCapacityWh = float.NaN,
+                BatteryReserveWh = float.PositiveInfinity,
+                GeneratorCondition = float.NaN,
+                Priorities = new List<RoomPriorityRecord>
+                {
+                    new RoomPriorityRecord { RoomId = "room_a", Priority = PowerGridRoomPriority.Low },
+                    new RoomPriorityRecord { RoomId = "room_a", Priority = PowerGridRoomPriority.Critical }
+                }
+            };
+            var rooms = new List<PowerGridRoom>
+            {
+                new PowerGridRoom("room_a", "Room A", float.NaN),
+                new PowerGridRoom("room_b", "Room B", -10f)
+            };
+
+            var grid = new PowerGridSystem(state, rooms, new SeededRng(1));
+
+            Assert.Equal(0f, grid.BaseGenerationWatts);
+            Assert.Equal(0f, grid.FuelUnits);
+            Assert.Equal(0f, grid.BatteryCapacityWh);
+            Assert.Equal(0f, grid.BatteryReserveWh);
+            Assert.Equal(0f, grid.GeneratorCondition);
+            Assert.Equal(0f, grid.TotalDrawWatts);
+            Assert.Equal(PowerGridRoomPriority.Critical, grid.State.GetRoomPriority("room_a"));
+        }
+
+        [Fact]
+        public void Constructor_InstalledCoatedParts_RepublishRuntimeContribution()
+        {
+            var state = new PowerGridState
+            {
+                GenerationWatts = 800f,
+                InstalledCoatedPartItemIds = new List<string> { "item_coated_diesel_injector" }
+            };
+            var rooms = new List<PowerGridRoom>
+            {
+                new PowerGridRoom("room_a", "Room A", 100f)
+            };
+
+            var grid = new PowerGridSystem(state, rooms, new SeededRng(1));
+
+            Assert.Equal(25f, grid.GenerationContributions[PowerGridSystem.EbPvdInstalledSourceId], 2);
+            Assert.Equal(825f, grid.GenerationWatts, 2);
+        }
+
+        [Fact]
+        public void NumericCommands_NonFiniteValues_FailClosed()
+        {
+            var grid = MakeGrid();
+            float fuelBefore = grid.FuelUnits;
+            float batteryBefore = grid.BatteryReserveWh;
+
+            grid.AddFuel(float.NaN);
+            grid.AddFuel(float.PositiveInfinity);
+            grid.ConfigureSurge(float.NaN, float.PositiveInfinity);
+            var surge = grid.ApplySurgeDay(1, float.NaN);
+
+            Assert.Equal(fuelBefore, grid.FuelUnits);
+            Assert.Equal(batteryBefore, grid.BatteryReserveWh);
+            Assert.Equal(0f, grid.EmpStormSeverity);
+            Assert.Equal(0f, grid.SurgeBatteryDrain);
+            Assert.Empty(surge);
+        }
+
+        [Fact]
+        public void DynamicCommands_MalformedInputFailsClosedAndStoredRoomIsSnapshot()
+        {
+            var grid = MakeGrid();
+            var room = new PowerGridRoom("sump_a", "Lower Level", 90f,
+                PowerGridRoomPriority.Standard, "pump_off");
+
+            Assert.False(grid.RegisterLoadRoom(new PowerGridRoom("bad_draw", "Bad", float.NaN)));
+            Assert.False(grid.RegisterLoadRoom(new PowerGridRoom("bad_priority", "Bad", 10f,
+                (PowerGridRoomPriority)999)));
+            Assert.True(grid.RegisterLoadRoom(room));
+            room.RoomId = "tampered";
+            room.DrawWatts = 999f;
+
+            Assert.Equal(90f, grid.GetRoomDrawWatts("sump_a"));
+            Assert.True(grid.SetPriority("room_clinic", PowerGridRoomPriority.Critical));
+            Assert.False(grid.SetPriority("room_clinic", (PowerGridRoomPriority)999));
+            Assert.Equal(PowerGridRoomPriority.Critical, grid.State.GetRoomPriority("room_clinic"));
+        }
+
+        [Fact]
         public void InitialState_ComputesTotalDraw()
         {
             var grid = MakeGrid();

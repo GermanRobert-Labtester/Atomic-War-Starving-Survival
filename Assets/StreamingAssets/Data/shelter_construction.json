@@ -6,6 +6,8 @@
       "blueprint_id": "bp_hydroponic_bay",
       "name": "Hydroponic Bay Expansion",
       "room_type_id": "room_hydroponics",
+      "canonical_room_id": "room_greenhouse_shelter",
+      "capacity_bonus": 0,
       "description": "Subterranean growing beds with UV lamps and recycled nutrient drip systems.",
       "base_labor_days": 8,
       "min_depth_level": 1,
@@ -14,13 +16,15 @@
       "resource_costs": {
         "scrap_metal": 12,
         "scrap_wood": 8,
-        "electronics": 4
+        "electronic_scrap": 4
       }
     },
     {
       "blueprint_id": "bp_deep_bunkhouse",
       "name": "Reinforced Living Quarters",
       "room_type_id": "room_deep_dormitory",
+      "canonical_room_id": "room_bunks",
+      "capacity_bonus": 4,
       "description": "Heavy-beam partitioned living space accommodating expanding families and adult graduates.",
       "base_labor_days": 6,
       "min_depth_level": 1,
@@ -35,6 +39,8 @@
       "blueprint_id": "bp_medical_infirmary",
       "name": "Shelter Clinic & Quarantine Ward",
       "room_type_id": "room_infirmary",
+      "canonical_room_id": "room_clinic",
+      "capacity_bonus": 0,
       "description": "Sterile recovery wing equipped with diagnostic benches and trauma recovery beds.",
       "base_labor_days": 10,
       "min_depth_level": 1,
@@ -42,14 +48,16 @@
       "stability_cost": 6,
       "resource_costs": {
         "scrap_metal": 15,
-        "electronics": 6,
-        "medical_supplies": 5
+        "electronic_scrap": 6,
+        "medical_kit": 5
       }
     },
     {
       "blueprint_id": "bp_classroom_library",
       "name": "Bunker Classroom & Archive",
       "room_type_id": "room_classroom",
+      "canonical_room_id": "room_reading_quiet_room",
+      "capacity_bonus": 0,
       "description": "Dedicated learning and study enclave with desks, chalkboard, and secured archive shelves.",
       "base_labor_days": 7,
       "min_depth_level": 1,
@@ -58,13 +66,15 @@
       "resource_costs": {
         "scrap_metal": 8,
         "scrap_wood": 12,
-        "paper_reams": 4
+        "paper_stock": 4
       }
     },
     {
       "blueprint_id": "bp_deep_shaft_expansion",
       "name": "Sub-Level Shaft Excavation",
       "room_type_id": "room_shaft_stairwell",
+      "canonical_room_id": "room_bunker_corridor",
+      "capacity_bonus": 0,
       "description": "Vertical reinforced excavation opening a new deeper sub-level for bunker growth.",
       "base_labor_days": 14,
       "min_depth_level": 0,
@@ -73,13 +83,15 @@
       "resource_costs": {
         "scrap_metal": 25,
         "concrete_rubble": 15,
-        "structural_beams": 6
+        "wooden_plank": 6
       }
     },
     {
       "blueprint_id": "bp_sub_workshop",
       "name": "Heavy Fabrication Machine Shop",
       "room_type_id": "room_machine_shop",
+      "canonical_room_id": "room_workshop_heavy",
+      "capacity_bonus": 0,
       "description": "Lathes, drill presses, and hydraulic jacks for component fabrication and vehicle overhaul.",
       "base_labor_days": 10,
       "min_depth_level": 1,
@@ -87,8 +99,8 @@
       "stability_cost": 7,
       "resource_costs": {
         "scrap_metal": 20,
-        "electronics": 8,
-        "gears": 5
+        "electronic_scrap": 8,
+        "mechanical_components": 5
       }
     }
   ],
@@ -114,7 +126,7 @@
       "morale_bonus": 4,
       "resource_costs": {
         "scrap_wood": 5,
-        "insulation_batts": 4
+        "cloth": 4
       }
     },
     {
@@ -126,7 +138,7 @@
       "morale_bonus": 5,
       "resource_costs": {
         "scrap_metal": 6,
-        "filter_cartridges": 2
+        "filter_pack": 2
       }
     },
     {
@@ -138,8 +150,13 @@
       "morale_bonus": 6,
       "resource_costs": {
         "scrap_wood": 6,
-        "fabric_scraps": 4
+        "cloth": 4
       }
     }
-  ]
+  ],
+  "crew_rules": {
+    "max_crew_per_project": 3,
+    "skill_id": "skill_crafting",
+    "fatigue_per_day": 2.0
+  }
 }

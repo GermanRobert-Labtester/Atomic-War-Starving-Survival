@@ -166,8 +166,9 @@ namespace Ashfall.Core.World
             baseConfidence = Math.Max(0, baseConfidence - severityPenalty);
 
             // Deterministic variance ±5%
-            int hash      = HashCode.Combine(forecastSeed, leadTimeHours, (int)stormSeverity);
-            int variance  = ((hash & 0x7FFFFFFF) % 11) - 5; // -5..+5
+            int hash = StableHash.Combine(forecastSeed, leadTimeHours);
+            hash = StableHash.Combine(hash, (int)stormSeverity);
+            int variance = ((hash & 0x7FFFFFFF) % 11) - 5; // -5..+5
             int confidence = Math.Clamp(baseConfidence + (baseConfidence * variance) / 100, 0, 1000);
 
             ForecastConfidenceTier tier = confidence switch

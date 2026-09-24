@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+using System;
+using System.Collections.Generic;
 using Ashfall.Core;
 using Xunit;
 
@@ -6,6 +8,106 @@ namespace Ashfall.Core.Tests
 {
     public class SickListSystemTests
     {
+        [Fact]
+        public void Identity_IsTrimmedCaseInsensitiveAndReDiagnosisKeepsOneRow()
+        {
+            var sys = new SickListSystem();
+
+            Assert.True(sys.Diagnose(" SV_MAE ", DoseLedgerSystem.BandAmber, 10));
+            Assert.True(sys.Diagnose("sv_mae", DoseLedgerSystem.BandRed, 11));
+
+            Assert.Single(sys.Bands);
+            Assert.Equal("SV_MAE", sys.GetBand("SV_MAE")!.survivorId);
+            Assert.Equal(DoseLedgerSystem.BandRed, sys.GetBand("sv_mae")!.band);
+        }
+
+        [Fact]
+        public void InvalidBandDayAndReleaseTransitions_AreRejected()
+        {
+            var sys = new SickListSystem();
+
+            Assert.False(sys.Diagnose("sv_bad_band", 99, 5));
+            Assert.False(sys.Diagnose("sv_bad_day", DoseLedgerSystem.BandRed, -1));
+            Assert.Empty(sys.Bands);
+
+            sys.Diagnose("sv_valid", DoseLedgerSystem.BandRed, 20);
+            Assert.False(sys.Release("sv_valid", 19));
+            Assert.Equal(-1, sys.GetBand("sv_valid")!.releaseDay);
+            Assert.True(sys.Release("SV_VALID", 21));
+        }
+
+        [Fact]
+        public void UnsupportedSeveritySource_FailsBackToDoseProvenance()
+        {
+            var sys = new SickListSystem();
+
+            sys.Diagnose("sv_source", DoseLedgerSystem.BandAmber, 5, "unknown_source", " source_id ");
+
+            var band = sys.GetBand("sv_source")!;
+            Assert.Equal(SickListSystem.SourceDose, band.severitySource);
+            Assert.Equal("source_id", band.sourceId);
+        }
+
+        [Fact]
+        public void Restore_FiltersMalformedAndDuplicateRows()
+        {
+            var sys = new SickListSystem();
+            var state = new SickListSystemState { systemId = "  " };
+            state.bands.Add(null!);
+            state.bands.Add(new SickBand { survivorId = "  ", band = DoseLedgerSystem.BandRed });
+            state.bands.Add(new SickBand
+            {
+                survivorId = " SV_BAD ",
+                band = 99,
+                diagnosedDay = -4,
+                releaseDay = -8,
+                severitySource = "unknown",
+                sourceId = " x "
+            });
+            state.bands.Add(new SickBand
+            {
+                survivorId = "sv_good",
+                band = DoseLedgerSystem.BandAmber,
+                diagnosedDay = 7,
+                releaseDay = 9,
+                severitySource = SickListSystem.SourceIllness,
+                sourceId = " disease_x "
+            });
+            state.bands.Add(new SickBand
+            {
+                survivorId = "SV_GOOD",
+                band = DoseLedgerSystem.BandBlack,
+                diagnosedDay = 8,
+                releaseDay = -1
+            });
+
+            sys.RestoreState(state);
+            var captured = sys.CaptureState();
+
+            Assert.Equal(SickListSystem.SystemId, captured.systemId);
+            Assert.Single(captured.bands);
+            Assert.Equal("sv_good", captured.bands[0].survivorId);
+            Assert.Equal(DoseLedgerSystem.BandAmber, captured.bands[0].band);
+            Assert.Equal("disease_x", captured.bands[0].sourceId);
+        }
+
+        [Fact]
+        public void StateBandAndChangeEventQueries_AreDetachedSnapshots()
+        {
+            var sys = new SickListSystem();
+            SickListSystemState? changed = null;
+            sys.OnStateChanged += state => changed = state;
+            sys.Diagnose("sv_snapshot", DoseLedgerSystem.BandRed, 8);
+
+            changed!.bands.Clear();
+            sys.State.bands.Clear();
+            sys.GetBand("sv_snapshot")!.band = DoseLedgerSystem.BandGreen;
+
+            Assert.Single(sys.Bands);
+            Assert.Equal(DoseLedgerSystem.BandRed, sys.GetBand("sv_snapshot")!.band);
+            Assert.Single(sys.CaptureState().bands);
+        }
+
         [Fact]
         public void Diagnose_AddsBandAndFiresEvent()
         {

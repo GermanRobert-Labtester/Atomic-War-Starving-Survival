@@ -68,6 +68,11 @@ namespace AtomicWar.GodotApp
             if (belongingsCatalogIo.FileExists(belongingsCatalogPath))
                 _survivorSocial.Belongings.LoadCatalog(belongingsCatalogIo.ReadAllText(belongingsCatalogPath));
 
+            // Plan 208 — load authored leadership policies
+            string leadershipPoliciesCatalogPath = CatalogPath.ResolveCatalog("leadership_policies.json");
+            if (belongingsCatalogIo.FileExists(leadershipPoliciesCatalogPath))
+                _survivorSocial.Leadership.LoadCatalog(belongingsCatalogIo.ReadAllText(leadershipPoliciesCatalogPath));
+
             // Push the read model to the survivor-relations panel.
             RefreshSurvivorSocialReadModel();
         }
@@ -179,6 +184,24 @@ namespace AtomicWar.GodotApp
             SetupSurvivorSocial();
             return _survivorSocial != null
                 && _survivorSocial.ResolveLeadershipChallenge(challengeId, challengerWon);
+        }
+
+        public LeadershipCensus GetLeadershipCensus()
+        {
+            SetupSurvivorSocial();
+            return _survivorSocial?.Leadership.GetCensus() ?? default;
+        }
+
+        public bool SetLeadershipPolicy(string policyId)
+        {
+            SetupSurvivorSocial();
+            return _survivorSocial != null && _survivorSocial.Leadership.SetPolicy(policyId);
+        }
+
+        public LeadershipSystem? GetLeadershipSystem()
+        {
+            SetupSurvivorSocial();
+            return _survivorSocial?.Leadership;
         }
     }
 }

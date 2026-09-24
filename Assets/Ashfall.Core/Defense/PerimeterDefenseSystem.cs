@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.World;
 
 namespace Ashfall.Core.Defense
 {
@@ -34,6 +35,9 @@ namespace Ashfall.Core.Defense
         public List<PerimeterIntrusionLogEntry> intrusion_log { get; set; } = new List<PerimeterIntrusionLogEntry>();
         /// <summary>Plan 203 Wave F: assault sequence for day-derived jam rolls when the caller cannot supply a day.</summary>
         public int assault_count { get; set; }
+
+        /// <summary>Expansion 36 additive watch operations sub-state.</summary>
+        public NightWatchOperationsState watch_operations { get; set; } = new NightWatchOperationsState();
     }
 
     public sealed class AssaultSimulationResult
@@ -62,6 +66,7 @@ namespace Ashfall.Core.Defense
         private readonly ILog _log;
 
         private PerimeterDefenseSave _state = new PerimeterDefenseSave();
+        private NightWatchOperationsCatalog? _watchCatalog;
 
         // Plan 203: bounded intrusion history (never unbounded persistence).
         public const int IntrusionLogCapacity = 32;
@@ -89,6 +94,11 @@ namespace Ashfall.Core.Defense
 
         public IReadOnlyList<PerimeterDefenseDefinition> Definitions => _defenseDefs;
         public IReadOnlyList<EmplacementRuntimeState> Emplacements => _state.emplacements;
+        public NightWatchOperationsCatalog? WatchCatalog => _watchCatalog;
+        public NightWatchOperationsState WatchOperations => _state.watch_operations;
+        public IReadOnlyList<NightWatchPostState> WatchPosts => _state.watch_operations.posts;
+        public IReadOnlyList<NightWatchRouteState> WatchRoutes => _state.watch_operations.routes;
+        public IReadOnlyList<NightWatchDrillState> WatchDrills => _state.watch_operations.drills;
 
         public PerimeterDefenseSystem(
             IEnumerable<PerimeterDefenseDefinition> definitions,
@@ -242,6 +252,245 @@ namespace Ashfall.Core.Defense
         public IReadOnlyList<PerimeterSectorState> Sectors => _state.sectors;
         public IReadOnlyList<PerimeterIntrusionLogEntry> IntrusionLog => _state.intrusion_log;
 
+        /// <summary>
+        /// Binds authored Watch operations to the existing perimeter authority.
+        /// Physical defenses, alarms, and intrusion history remain in their
+        /// original fields; only watch-specific operational state is nested.
+        /// </summary>
+        public void BindWatchCatalog(NightWatchOperationsCatalog? catalog)
+        {
+            _watchCatalog = catalog;
+            _state.watch_operations ??= new NightWatchOperationsState();
+            _state.watch_operations.BindCatalog(catalog);
+        }
+
+        public NightWatchPostState? FindWatchPost(string postId)
+        {
+            if (string.IsNullOrWhiteSpace(postId)) return null;
+            for (int i = 0; i < _state.watch_operations.posts.Count; i++)
+            {
+                if (string.Equals(_state.watch_operations.posts[i].post_id, postId.Trim(), StringComparison.OrdinalIgnoreCase))
+                    return _state.watch_operations.posts[i];
+            }
+            return null;
+        }
+
+        public NightWatchRouteState? FindWatchRoute(string routeId)
+        {
+            if (string.IsNullOrWhiteSpace(routeId)) return null;
+            for (int i = 0; i < _state.watch_operations.routes.Count; i++)
+            {
+                if (string.Equals(_state.watch_operations.routes[i].route_id, routeId.Trim(), StringComparison.OrdinalIgnoreCase))
+                    return _state.watch_operations.routes[i];
+            }
+            return null;
+        }
+
+        public NightWatchDrillState? FindWatchDrill(string drillId)
+        {
+            if (string.IsNullOrWhiteSpace(drillId)) return null;
+            for (int i = 0; i < _state.watch_operations.drills.Count; i++)
+            {
+                if (string.Equals(_state.watch_operations.drills[i].drill_id, drillId.Trim(), StringComparison.OrdinalIgnoreCase))
+                    return _state.watch_operations.drills[i];
+            }
+            return null;
+        }
+
+        public ActionResult SetWatchPostActive(string postId, bool active)
+        {
+            var post = FindWatchPost(postId);
+            if (post == null) return ActionResult.Failed("unknown_watch_post", "watch.unknown_post");
+            if (post.active == active) return ActionResult.Blocked("watch_post_unchanged", "watch.post_unchanged");
+            post.active = active;
+            OnEventRaised?.Invoke(active ? "watch.post_activated" : "watch.post_deactivated");
+            return ActionResult.Success(active ? "watch.post_activated" : "watch.post_deactivated");
+        }
+
+        public ActionResult SetWatchPostCondition(string postId, int conditionPermille)
+        {
+            var post = FindWatchPost(postId);
+            if (post == null) return ActionResult.Failed("unknown_watch_post", "watch.unknown_post");
+            post.condition_permille = Math.Clamp(conditionPermille, 0, 1000);
+            OnEventRaised?.Invoke("watch.post_condition_changed");
+            return ActionResult.Success("watch.post_condition_updated");
+        }
+
+        public ActionResult RepairWatchPost(string postId, int day)
+        {
+            var post = FindWatchPost(postId);
+            if (post == null) return ActionResult.Failed("unknown_watch_post", "watch.unknown_post");
+            if (post.condition_permille >= 1000) return ActionResult.Blocked("watch_post_full", "watch.post_full");
+            if (!_inventory.HasSufficient("scrap_metal", 1))
+                return ActionResult.Blocked("missing_scrap_metal", "watch.missing_material");
+            if (!_inventory.TryConsume("scrap_metal", 1))
+                return ActionResult.Failed("watch_repair_consume_failed", "watch.repair_failed");
+            post.condition_permille = Math.Min(1000, post.condition_permille + 250);
+            post.last_maintenance_day = Math.Max(0, day);
+            post.active = true;
+            OnEventRaised?.Invoke("watch.post_repaired");
+            return ActionResult.Success("watch.post_repaired");
+        }
+
+        public int GetAverageWatchPostNightVision(string sectorId, bool activeOnly = true)
+        {
+            if (_watchCatalog == null || string.IsNullOrWhiteSpace(sectorId)) return 0;
+            int total = 0;
+            int count = 0;
+            for (int i = 0; i < _watchCatalog.posts.Count; i++)
+            {
+                var definition = _watchCatalog.posts[i];
+                if (definition == null || !string.Equals(definition.sector_id, sectorId.Trim(), StringComparison.OrdinalIgnoreCase)) continue;
+                var state = FindWatchPost(definition.post_id);
+                if (state == null || (activeOnly && !state.active)) continue;
+                total += (int)((long)definition.night_vision_bonus_permille * state.condition_permille / 1000);
+                count++;
+            }
+            return count == 0 ? 0 : total / count;
+        }
+
+        public void RecordWatchReadiness(int day, NightWatchReadinessSnapshot snapshot)
+        {
+            int evaluationDay = Math.Max(0, day);
+            string sector = snapshot.SectorId ?? string.Empty;
+            int readiness = snapshot.OverallReadinessPermille;
+            int gateReadiness = snapshot.GateReadiness.ReadinessPermille;
+            int coverageGrade = (int)snapshot.PatrolCoverage.CoverageGrade;
+            bool changed = _state.watch_operations.last_evaluation_day != evaluationDay ||
+                           _state.watch_operations.last_readiness_permille != readiness ||
+                           _state.watch_operations.last_gate_readiness_permille != gateReadiness ||
+                           _state.watch_operations.last_coverage_grade != coverageGrade ||
+                           !string.Equals(_state.watch_operations.last_coverage_sector, sector, StringComparison.Ordinal);
+
+            _state.watch_operations.last_evaluation_day = evaluationDay;
+            _state.watch_operations.last_readiness_permille = readiness;
+            _state.watch_operations.last_gate_readiness_permille = gateReadiness;
+            _state.watch_operations.last_coverage_grade = coverageGrade;
+            _state.watch_operations.last_coverage_sector = sector;
+            if (changed) OnEventRaised?.Invoke("watch.readiness_evaluated");
+        }
+
+        public ActionResult RecordWatchRoute(string routeId, int day, bool debriefed = true)
+        {
+            if (day < 0) return ActionResult.Failed("invalid_watch_day", "watch.invalid_day");
+            var route = FindWatchRoute(routeId);
+            if (route == null) return ActionResult.Failed("unknown_watch_route", "watch.unknown_route");
+            route.rounds_completed = Math.Max(0, route.rounds_completed + 1);
+            route.last_completed_day = Math.Max(0, day);
+            var definition = _watchCatalog?.Route(routeId);
+            route.debrief_pending = definition?.requires_debrief == true && !debriefed;
+            if (debriefed) route.last_debrief_day = Math.Max(0, day);
+            OnEventRaised?.Invoke("watch.route_completed");
+            return ActionResult.Success("watch.route_completed");
+        }
+
+        public ActionResult MarkWatchShiftCompleted(string postId)
+        {
+            var post = FindWatchPost(postId);
+            if (post == null) return ActionResult.Failed("unknown_watch_post", "watch.unknown_post");
+            post.shifts_completed = Math.Max(0, post.shifts_completed + 1);
+            OnEventRaised?.Invoke("watch.shift_completed");
+            return ActionResult.Success("watch.shift_completed");
+        }
+
+        public ActionResult RecordWatchDebrief(string routeId, int day)
+        {
+            if (day < 0) return ActionResult.Failed("invalid_watch_day", "watch.invalid_day");
+            var route = FindWatchRoute(routeId);
+            if (route == null) return ActionResult.Failed("unknown_watch_route", "watch.unknown_route");
+            if (route.last_completed_day < 0)
+                return ActionResult.Blocked("watch_route_not_walked", "watch.route_not_walked");
+            if (day < route.last_completed_day)
+                return ActionResult.Failed("watch_debrief_before_route", "watch.debrief_before_route");
+            if (!route.debrief_pending)
+                return ActionResult.Blocked("watch_debrief_not_pending", "watch.debrief_not_pending");
+            route.last_debrief_day = day;
+            route.debrief_pending = false;
+            OnEventRaised?.Invoke("watch.route_debriefed");
+            return ActionResult.Success("watch.route_debriefed");
+        }
+
+        public ActionResult RecordWatchDrill(string drillId, int day, bool passed)
+        {
+            if (day < 0) return ActionResult.Failed("invalid_watch_day", "watch.invalid_day");
+            var drill = FindWatchDrill(drillId);
+            if (drill == null) return ActionResult.Failed("unknown_watch_drill", "watch.unknown_drill");
+            var definition = _watchCatalog?.Drill(drillId);
+            int effect = definition?.readiness_effect_permille ?? (passed ? 100 : -100);
+            if (passed) drill.passes = Math.Max(0, drill.passes + 1);
+            else drill.failures = Math.Max(0, drill.failures + 1);
+            drill.last_completed_day = Math.Max(0, day);
+            drill.readiness_permille = Math.Clamp(drill.readiness_permille + effect, 0, 1000);
+            OnEventRaised?.Invoke(passed ? "watch.drill_passed" : "watch.drill_failed");
+            return ActionResult.Success(passed ? "watch.drill_passed" : "watch.drill_failed");
+        }
+
+        public int GetWatchDrillRecencyPermille(string drillId, int currentDay)
+        {
+            var drill = FindWatchDrill(drillId);
+            if (drill == null || drill.last_completed_day < 0) return 0;
+            if (drill.last_completed_day > currentDay) return 0;
+            int age = Math.Max(0, currentDay - drill.last_completed_day);
+            return Math.Clamp(1000 - (age * 50), 0, 1000);
+        }
+
+        public int GetWatchPostCount(string sectorId, bool activeOnly = true)
+        {
+            if (_watchCatalog == null || string.IsNullOrWhiteSpace(sectorId)) return 0;
+            int count = 0;
+            for (int i = 0; i < _watchCatalog.posts.Count; i++)
+            {
+                var definition = _watchCatalog.posts[i];
+                if (definition == null || !string.Equals(definition.sector_id, sectorId.Trim(), StringComparison.OrdinalIgnoreCase)) continue;
+                var state = FindWatchPost(definition.post_id);
+                if (state != null && (!activeOnly || state.active)) count++;
+            }
+            return count;
+        }
+
+        public int GetAverageWatchPostCondition(string sectorId, bool activeOnly = true)
+        {
+            if (_watchCatalog == null || string.IsNullOrWhiteSpace(sectorId)) return 0;
+            int total = 0;
+            int count = 0;
+            for (int i = 0; i < _watchCatalog.posts.Count; i++)
+            {
+                var definition = _watchCatalog.posts[i];
+                if (definition == null || !string.Equals(definition.sector_id, sectorId.Trim(), StringComparison.OrdinalIgnoreCase)) continue;
+                var state = FindWatchPost(definition.post_id);
+                if (state == null || (activeOnly && !state.active)) continue;
+                total += state.condition_permille;
+                count++;
+            }
+            return count == 0 ? 0 : total / count;
+        }
+
+        /// <summary>Records an acoustic/watch contact in the existing bounded intrusion log.</summary>
+        public void RecordWatchDetection(string sectorId, int day, string detail, int confidencePermille)
+        {
+            LogIntrusion(new PerimeterIntrusionLogEntry
+            {
+                day = Math.Max(0, day),
+                sector_id = string.IsNullOrWhiteSpace(sectorId) ? "gate" : sectorId.Trim(),
+                kind = "acoustic_contact",
+                detail = $"{Math.Clamp(confidencePermille, 0, 1000)}‰ {detail ?? string.Empty}".Trim()
+            });
+            OnEventRaised?.Invoke("watch.acoustic_contact");
+        }
+
+        private void TickWatchOperations(int day, bool severeWeather)
+        {
+            if (_watchCatalog == null) return;
+            _state.watch_operations.last_evaluation_day = Math.Max(0, day);
+            if (!severeWeather) return;
+            for (int i = 0; i < _state.watch_operations.posts.Count; i++)
+            {
+                var post = _state.watch_operations.posts[i];
+                if (post == null || !post.active) continue;
+                post.condition_permille = Math.Max(0, post.condition_permille - 5);
+            }
+        }
+
         private PerimeterSectorState EnsureSector(string sectorId)
         {
             var existing = FindSector(sectorId);
@@ -328,6 +577,8 @@ namespace Ashfall.Core.Defense
                     }
                 }
             }
+
+            TickWatchOperations(day, severeWeather);
         }
 
         private void TriggerSectorAlarm(PerimeterSectorState sector, int day, bool isFalse, string detail)
@@ -372,6 +623,32 @@ namespace Ashfall.Core.Defense
             sector.alarm_armed = !sector.alarm_armed;
             if (!sector.alarm_armed) sector.alarm_spent = false;
             OnEventRaised?.Invoke("defense.alarm_disarmed");
+            return ActionResult.Success(sector.alarm_armed ? "defense.alarm_armed" : "defense.alarm_disarmed");
+        }
+
+        /// <summary>
+        /// Toggles a canonical perimeter alarm relay. A watch may establish the
+        /// relay before the first physical emplacement exists; the sector row
+        /// remains in the existing perimeter owner and is never a second
+        /// registry.
+        /// </summary>
+        public ActionResult ToggleSectorAlarm(string sectorId)
+        {
+            if (!PerimeterSector.IsValid(sectorId))
+                return ActionResult.Failed("unknown_sector", "defense.unknown_sector");
+            var sector = FindSector(sectorId);
+            if (sector == null)
+            {
+                sector = new PerimeterSectorState
+                {
+                    sector_id = sectorId,
+                    alarm_armed = false
+                };
+                _state.sectors.Add(sector);
+            }
+            sector.alarm_armed = !sector.alarm_armed;
+            if (!sector.alarm_armed) sector.alarm_spent = false;
+            OnEventRaised?.Invoke(sector.alarm_armed ? "defense.alarm_armed" : "defense.alarm_disarmed");
             return ActionResult.Success(sector.alarm_armed ? "defense.alarm_armed" : "defense.alarm_disarmed");
         }
 
@@ -676,7 +953,8 @@ namespace Ashfall.Core.Defense
                 systemId = SystemId,
                 schema_version = 2,
                 last_tick_day = _state.last_tick_day,
-                assault_count = _state.assault_count
+                assault_count = _state.assault_count,
+                watch_operations = _state.watch_operations.Clone()
             };
 
             foreach (var emp in _state.emplacements)
@@ -763,6 +1041,9 @@ namespace Ashfall.Core.Defense
             }
             if (_state.intrusion_log.Count > IntrusionLogCapacity)
                 _state.intrusion_log.RemoveRange(0, _state.intrusion_log.Count - IntrusionLogCapacity);
+
+            _state.watch_operations = save.watch_operations?.Clone() ?? new NightWatchOperationsState();
+            _state.watch_operations.BindCatalog(_watchCatalog);
         }
 
         private static PerimeterSectorState CloneSector(PerimeterSectorState s)

@@ -24,6 +24,7 @@
 // ============================================================================
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Ashfall.Core.Expeditions
@@ -550,15 +551,38 @@ namespace Ashfall.Core.Expeditions
         /// raised at trigger time — resolution belongs to the encounter
         /// authority). Deterministic.
         /// </summary>
+        /// <summary>
+        /// Resolves a catalog-known, restored junction with its live state.
+        /// Inspect and obstruction-clearing share this exact guard chain.
+        /// </summary>
+        private bool TryResolveRestoredJunction(
+            string junctionId,
+            [NotNullWhen(true)] out RailwayJunctionDef? def,
+            [NotNullWhen(true)] out RailwayJunctionState? state,
+            out ActionResult failure)
+        {
+            def = string.IsNullOrEmpty(junctionId) ? null : FindJunction(junctionId);
+            if (def == null)
+            {
+                state = null;
+                failure = ActionResult.Failed(RailwayInterlockFailures.UnknownJunction, "railix.unknown_junction");
+                return false;
+            }
+            if (!Restored(junctionId))
+            {
+                state = null;
+                failure = ActionResult.Blocked(RailwayInterlockFailures.JunctionNotRestored, "railix.junction_not_restored");
+                return false;
+            }
+            state = _state.junctions[junctionId];
+            failure = ActionResult.Success("railix.junction_resolved");
+            return true;
+        }
+
         public ActionResult InspectJunction(string junctionId)
         {
-            var def = FindJunction(junctionId);
-            if (def == null)
-                return ActionResult.Failed(RailwayInterlockFailures.UnknownJunction, "railix.unknown_junction");
-            if (!Restored(junctionId))
-                return ActionResult.Blocked(RailwayInterlockFailures.JunctionNotRestored, "railix.junction_not_restored");
-
-            var state = _state.junctions[junctionId];
+            if (!TryResolveRestoredJunction(junctionId, out _, out var state, out var failure))
+                return failure;
             state.last_inspection_day = CurrentDay();
 
             if (state.tamper_risk_state == "suspected" || state.tamper_risk_state == "detected")
@@ -583,13 +607,8 @@ namespace Ashfall.Core.Expeditions
         /// <summary>Clears weather obstruction (labor/equipment abstraction).</summary>
         public ActionResult ClearJunctionObstruction(string junctionId)
         {
-            var def = FindJunction(junctionId);
-            if (def == null)
-                return ActionResult.Failed(RailwayInterlockFailures.UnknownJunction, "railix.unknown_junction");
-            if (!Restored(junctionId))
-                return ActionResult.Blocked(RailwayInterlockFailures.JunctionNotRestored, "railix.junction_not_restored");
-
-            var state = _state.junctions[junctionId];
+            if (!TryResolveRestoredJunction(junctionId, out var def, out var state, out var failure))
+                return failure;
             if (state.obstruction_level <= 0.01f)
                 return ActionResult.Blocked(RailwayInterlockFailures.MaterialsMissing, "railix.no_obstruction");
 

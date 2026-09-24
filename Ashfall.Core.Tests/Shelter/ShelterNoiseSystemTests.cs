@@ -10,6 +10,127 @@ namespace Ashfall.Core.Tests.Shelter
     public sealed class ShelterNoiseSystemTests
     {
         [Fact]
+        public void Constructor_CapturedState_DoesNotAliasInput()
+        {
+            var state = new ShelterNoiseState
+            {
+                Sources = new List<NoiseSource>
+                {
+                    new NoiseSource { SourceId = "ns_loaded", RoomId = "room_a", NoiseOutput = 20f }
+                },
+                RoomProfiles = new List<RoomAcousticProfile>
+                {
+                    new RoomAcousticProfile { RoomId = "room_a" }
+                }
+            };
+
+            var system = new ShelterNoiseSystem(state);
+            state.Sources.Clear();
+            state.RoomProfiles.Clear();
+
+            Assert.Single(system.Sources);
+            Assert.Single(system.RoomProfiles);
+        }
+
+        [Fact]
+        public void AddNoiseSource_BlankRoom_DoesNotLeavePartialMutation()
+        {
+            var system = new ShelterNoiseSystem();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                system.AddNoiseSource(NoiseSourceType.Machinery, " ", output: 50f));
+
+            Assert.Empty(system.Sources);
+            Assert.Empty(system.RoomProfiles);
+            Assert.Equal(1, system.State.NextSequence);
+        }
+
+        [Fact]
+        public void Restore_StaleSequence_DoesNotDuplicateSourceOrEventIds()
+        {
+            var state = new ShelterNoiseState
+            {
+                NextSequence = 1,
+                QuietHoursActive = true,
+                QuietHoursStart = 22,
+                QuietHoursEnd = 6,
+                Sources = new List<NoiseSource>
+                {
+                    new NoiseSource { SourceId = "ns_2", RoomId = "room_a", NoiseOutput = 20f }
+                },
+                Events = new List<NoiseEvent>
+                {
+                    new NoiseEvent { EventId = "nev_2", EventType = "existing" }
+                },
+                RoomProfiles = new List<RoomAcousticProfile>
+                {
+                    new RoomAcousticProfile { RoomId = "room_a" }
+                }
+            };
+            var system = new ShelterNoiseSystem();
+            system.RestoreState(state);
+
+            system.AddNoiseSource(NoiseSourceType.Machinery, "room_a", output: 20f);
+            system.TickDay(1, 23);
+
+            Assert.Equal(2, system.Sources.Count);
+            Assert.Equal(2, system.Sources.Select(source => source.SourceId).Distinct().Count());
+            Assert.Equal(2, system.Events.Select(noiseEvent => noiseEvent.EventId).Distinct().Count());
+        }
+
+        [Fact]
+        public void NonFiniteStateAndCommands_RemainBounded()
+        {
+            var state = new ShelterNoiseState
+            {
+                OverallNoiseLevel = float.NaN,
+                DetectionRisk = float.PositiveInfinity,
+                QuietHoursStart = -5,
+                QuietHoursEnd = 99,
+                RoomProfiles = new List<RoomAcousticProfile>
+                {
+                    new RoomAcousticProfile
+                    {
+                        RoomId = "room_a",
+                        WallSoundproofing = float.NaN,
+                        DoorSoundproofing = float.PositiveInfinity
+                    }
+                },
+                Sources = new List<NoiseSource>
+                {
+                    new NoiseSource
+                    {
+                        SourceId = "ns_1",
+                        RoomId = "room_a",
+                        NoiseOutput = float.NaN,
+                        DurationHours = float.PositiveInfinity
+                    }
+                }
+            };
+            var system = new ShelterNoiseSystem(state);
+
+            system.SoundproofRoom("room_a", float.NaN, float.PositiveInfinity);
+            system.AttenuateDetectionRisk(float.NaN);
+            system.TickDay(1, 23);
+
+            Assert.InRange(system.OverallNoiseLevel, 0f, 100f);
+            Assert.InRange(system.DetectionRisk, 0f, 100f);
+            Assert.InRange(system.GetRoomNoise("room_a"), 0f, 100f);
+            Assert.InRange(system.State.RoomProfiles[0].WallSoundproofing, 0f, 100f);
+        }
+
+        [Fact]
+        public void LoadCatalog_NullSourceEntry_IsIgnored()
+        {
+            var system = new ShelterNoiseSystem();
+
+            system.LoadCatalog("{\"schema_version\":1,\"sources\":[null,{\"source_def_id\":\"source_ok\",\"type\":\"generator\",\"frequency\":\"low\",\"default_output\":20,\"duration_hours\":4}]}" );
+
+            Assert.Single(system.GetAllSourceDefs());
+            Assert.NotNull(system.GetSourceDef("source_ok"));
+        }
+
+        [Fact]
         public void AddNoiseSource_RegistersSourceAndRoom()
         {
             var system = new ShelterNoiseSystem();

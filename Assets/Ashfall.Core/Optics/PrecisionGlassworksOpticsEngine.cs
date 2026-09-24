@@ -177,7 +177,7 @@ namespace Ashfall.Core.Optics
         /// <param name="targetBand">Target vision correction the lens must satisfy.</param>
         /// <param name="grinderSkillPermille">Grinder artisan skill (0..1000).</param>
         /// <param name="abrasiveGritAvailablePermille">Available abrasive stock (0..1000).</param>
-        /// <param name="grindSeed">Deterministic seed for outcome variance (use HashCode.Combine).</param>
+        /// <param name="grindSeed">Deterministic seed for outcome variance (combine with <see cref="StableHash"/>).</param>
         public static LensGrindingResult GrindCorrectionLens(
             GlassPurityTier glassPurity,
             VisionCorrectionBand targetBand,
@@ -205,7 +205,8 @@ namespace Ashfall.Core.Optics
             int baseQuality = (glassTierBonus + grinderSkillPermille) / 2;
 
             // Deterministic variance ±10%
-            int hash = HashCode.Combine(grindSeed, (int)glassPurity, (int)targetBand);
+            int hash = StableHash.Combine(grindSeed, (int)glassPurity);
+            hash = StableHash.Combine(hash, (int)targetBand);
             int variance = ((hash & 0x7FFFFFFF) % 21) - 10; // -10..+10
             baseQuality = Math.Clamp(baseQuality + (baseQuality * variance) / 100, 0, 1000);
 

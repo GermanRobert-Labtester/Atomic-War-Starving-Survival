@@ -98,16 +98,18 @@ namespace Ashfall.Core.Radio
 
         public bool RegisterStation(string stationId, string mapNodeId, float condition = 100f)
         {
-            if (string.IsNullOrEmpty(stationId) || string.IsNullOrEmpty(mapNodeId))
+            if (string.IsNullOrWhiteSpace(stationId) || string.IsNullOrWhiteSpace(mapNodeId))
                 return false;
-            if (FindStation(stationId) != null) return false;
+            string canonicalStationId = stationId.Trim();
+            if (FindStation(canonicalStationId) != null) return false;
 
+            float boundedCondition = SanitizeRange(condition, 0f, 100f);
             _state.stations.Add(new HeliographStationState
             {
-                station_id = stationId,
-                map_node_id = mapNodeId,
-                condition = Math.Clamp(condition, 0f, 100f),
-                is_operational = condition > 0f
+                station_id = canonicalStationId,
+                map_node_id = mapNodeId.Trim(),
+                condition = boundedCondition,
+                is_operational = boundedCondition > 0f
             });
             OnStateChanged?.Invoke();
             return true;
@@ -119,7 +121,7 @@ namespace Ashfall.Core.Radio
         {
             var station = FindStation(stationId);
             if (station == null) return false;
-            station.condition = Math.Clamp(condition, 0f, 100f);
+            station.condition = SanitizeRange(condition, 0f, 100f);
             station.is_operational = station.condition > 0f;
             OnStateChanged?.Invoke();
             return true;
@@ -128,8 +130,12 @@ namespace Ashfall.Core.Radio
         public void LoadCatalog(HeliographCatalog catalog)
         {
             if (catalog == null) return;
+            if (catalog.stations == null) return;
             foreach (var station in catalog.stations)
+            {
+                if (station == null) continue;
                 RegisterStation(station.station_id, station.map_node_id, station.condition);
+            }
         }
 
         public ActionResult Transmit(
@@ -141,17 +147,18 @@ namespace Ashfall.Core.Radio
             string revealLocationId = "",
             string distressSignalId = "")
         {
-            if (string.IsNullOrEmpty(messageId) || string.IsNullOrEmpty(payloadKey))
+            if (string.IsNullOrWhiteSpace(messageId) || string.IsNullOrWhiteSpace(payloadKey))
                 return ActionResult.Blocked("invalid_message", "heliograph.invalid_message");
-            if (FindMessage(messageId) != null)
+            string canonicalMessageId = messageId.Trim();
+            if (FindMessage(canonicalMessageId) != null)
                 return ActionResult.Blocked("message_already_recorded", "heliograph.message_already_recorded");
 
             var message = new HeliographMessageState
             {
-                message_id = messageId,
-                origin_station_id = originStationId ?? string.Empty,
-                target_station_id = targetStationId ?? string.Empty,
-                payload_key = payloadKey,
+                message_id = canonicalMessageId,
+                origin_station_id = originStationId?.Trim() ?? string.Empty,
+                target_station_id = targetStationId?.Trim() ?? string.Empty,
+                payload_key = payloadKey.Trim(),
                 reveal_location_id = revealLocationId ?? string.Empty,
                 distress_signal_id = distressSignalId ?? string.Empty,
                 transmitted_day = day
@@ -210,32 +217,108 @@ namespace Ashfall.Core.Radio
             if (origin.condition < 20f || target.condition < 20f) return "station_degraded";
             if (_hasLineOfSight != null && !_hasLineOfSight(origin.map_node_id, target.map_node_id))
                 return "line_of_sight_blocked";
-            float visibility = _visibility01 == null ? 1f : Math.Clamp(_visibility01(), 0f, 1f);
+            float visibility = _visibility01 == null ? 1f : _visibility01();
+            if (float.IsNaN(visibility) || float.IsInfinity(visibility))
+                return "weather_visibility_blocked";
+            visibility = Math.Clamp(visibility, 0f, 1f);
             if (visibility < MinimumVisibility01) return "weather_visibility_blocked";
             return string.Empty;
         }
 
         private HeliographStationState? FindStation(string stationId)
         {
-            if (string.IsNullOrEmpty(stationId)) return null;
+            if (string.IsNullOrWhiteSpace(stationId)) return null;
+            string canonicalId = stationId.Trim();
             for (int i = 0; i < _state.stations.Count; i++)
-                if (_state.stations[i].station_id == stationId) return _state.stations[i];
+            {
+                var station = _state.stations[i];
+                if (station != null
+                    && string.Equals(station.station_id, canonicalId, StringComparison.OrdinalIgnoreCase))
+                    return station;
+            }
             return null;
         }
 
         private HeliographMessageState? FindMessage(string messageId)
         {
+            if (string.IsNullOrWhiteSpace(messageId)) return null;
+            string canonicalId = messageId.Trim();
             for (int i = 0; i < _state.messages.Count; i++)
-                if (_state.messages[i].message_id == messageId) return _state.messages[i];
+            {
+                var message = _state.messages[i];
+                if (message != null
+                    && string.Equals(message.message_id, canonicalId, StringComparison.OrdinalIgnoreCase))
+                    return message;
+            }
             return null;
         }
 
-        private static HeliographState CloneState(HeliographState src)
+        private static HeliographState CloneState(HeliographState? source)
         {
-            if (src == null) return new HeliographState();
-            var serializer = new SystemTextJsonSerializer();
-            string json = serializer.Serialize(src);
-            return serializer.Deserialize<HeliographState>(json) ?? new HeliographState();
+            var copy = new HeliographState
+            {
+                system_id = string.IsNullOrWhiteSpace(source?.system_id)
+                    ? HeliographSystem.SystemId
+                    : source!.system_id,
+                delivered_count = 0,
+                stations = new List<HeliographStationState>(),
+                messages = new List<HeliographMessageState>()
+            };
+            if (source == null) return copy;
+
+            var stationIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (source.stations != null)
+            {
+                foreach (var station in source.stations)
+                {
+                    if (station == null || string.IsNullOrWhiteSpace(station.station_id)
+                        || string.IsNullOrWhiteSpace(station.map_node_id)
+                        || !stationIds.Add(station.station_id.Trim())) continue;
+                    float condition = SanitizeRange(station.condition, 0f, 100f);
+                    copy.stations.Add(new HeliographStationState
+                    {
+                        station_id = station.station_id.Trim(),
+                        map_node_id = station.map_node_id.Trim(),
+                        condition = condition,
+                        is_operational = station.is_operational && condition > 0f
+                    });
+                }
+            }
+
+            var messageIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (source.messages != null)
+            {
+                foreach (var message in source.messages)
+                {
+                    if (message == null || string.IsNullOrWhiteSpace(message.message_id)
+                        || string.IsNullOrWhiteSpace(message.payload_key)
+                        || !messageIds.Add(message.message_id.Trim())) continue;
+                    var status = Enum.IsDefined(typeof(HeliographMessageStatus), message.status)
+                        ? (HeliographMessageStatus)message.status
+                        : HeliographMessageStatus.Pending;
+                    copy.messages.Add(new HeliographMessageState
+                    {
+                        message_id = message.message_id.Trim(),
+                        origin_station_id = message.origin_station_id?.Trim() ?? string.Empty,
+                        target_station_id = message.target_station_id?.Trim() ?? string.Empty,
+                        payload_key = message.payload_key.Trim(),
+                        reveal_location_id = message.reveal_location_id?.Trim() ?? string.Empty,
+                        distress_signal_id = message.distress_signal_id?.Trim() ?? string.Empty,
+                        transmitted_day = message.transmitted_day,
+                        status = (int)status,
+                        block_reason = message.block_reason ?? string.Empty
+                    });
+                    if (status == HeliographMessageStatus.Delivered)
+                        copy.delivered_count++;
+                }
+            }
+            return copy;
+        }
+
+        private static float SanitizeRange(float value, float min, float max)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value)) return min;
+            return Math.Clamp(value, min, max);
         }
     }
 

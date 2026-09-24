@@ -49,18 +49,23 @@ namespace Ashfall.Core.Shelter
 
         public PowerGridSystem(PowerGridState state, IEnumerable<PowerGridRoom> rooms, ISeededRng rng)
         {
-            _state = state ?? throw new ArgumentNullException(nameof(state));
+            if (state == null) throw new ArgumentNullException(nameof(state));
             if (rooms == null) throw new ArgumentNullException(nameof(rooms));
             _rooms = new List<PowerGridRoom>();
-            foreach (var r in rooms)
+            var roomIds = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var room in rooms)
             {
-                if (r == null || string.IsNullOrEmpty(r.RoomId)) continue;
-                _rooms.Add(r);
+                if (room == null || string.IsNullOrWhiteSpace(room.RoomId)) continue;
+                string roomId = room.RoomId.Trim();
+                if (!roomIds.Add(roomId)) continue;
+                _rooms.Add(CloneRoom(room, roomId));
             }
             if (_rooms.Count == 0)
                 throw new InvalidOperationException("PowerGridSystem: at least one room required.");
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
-            _state.NormalizeAndValidate(_rooms);
+            _state = new PowerGridState();
+            _state.RestoreInto(state, _rooms);
+            RepublishEbPvdInstalledContribution();
         }
 
         public PowerGridState State => _state;
@@ -491,7 +496,8 @@ namespace Ashfall.Core.Shelter
         public bool SetPriority(string roomId, PowerGridRoomPriority priority)
         {
             var r = FindRoom(roomId);
-            if (r == null) return false;
+            if (r == null || !Enum.IsDefined(typeof(PowerGridRoomPriority), priority))
+                return false;
             _state.SetRoomPriority(roomId, priority);
             OnPowerChanged?.Invoke(new PowerGridEvent(PowerGridEventKind.PriorityChanged,
                 roomId, _state.SimDay, priority.ToString()));
@@ -517,12 +523,20 @@ namespace Ashfall.Core.Shelter
         /// </summary>
         public bool RegisterLoadRoom(PowerGridRoom room)
         {
-            if (room == null || string.IsNullOrEmpty(room.RoomId)) return false;
-            if (FindRoom(room.RoomId) != null) return false;
-            _rooms.Add(room);
+            if (room == null || string.IsNullOrWhiteSpace(room.RoomId)
+                || float.IsNaN(room.DrawWatts)
+                || float.IsInfinity(room.DrawWatts)
+                || room.DrawWatts < 0f
+                || !Enum.IsDefined(typeof(PowerGridRoomPriority), room.DefaultPriority))
+                return false;
+
+            string roomId = room.RoomId.Trim();
+            if (FindRoom(roomId) != null) return false;
+            var cloned = CloneRoom(room, roomId);
+            _rooms.Add(cloned);
             OnPowerChanged?.Invoke(new PowerGridEvent(
                 PowerGridEventKind.LoadRoomRegistered,
-                room.RoomId, _state.SimDay, "load_room_registered", room.DrawWatts));
+                roomId, _state.SimDay, "load_room_registered", cloned.DrawWatts));
             return true;
         }
 
@@ -577,8 +591,9 @@ namespace Ashfall.Core.Shelter
 
         public void AddFuel(float units)
         {
-            if (units <= 0) return;
-            _state.FuelUnits += units;
+            if (units <= 0f || float.IsNaN(units) || float.IsInfinity(units)) return;
+            double next = (double)_state.FuelUnits + units;
+            _state.FuelUnits = (float)Math.Min(next, float.MaxValue);
             OnPowerChanged?.Invoke(new PowerGridEvent(PowerGridEventKind.FuelAdded, null!,
                 _state.SimDay, "fuel_added", units));
         }
@@ -597,8 +612,12 @@ namespace Ashfall.Core.Shelter
         /// <summary>Catalog-driven surge tuning (0..1 each). Applies from the next surge.</summary>
         public void ConfigureSurge(float empStormSeverity, float batteryDrainFraction)
         {
-            _empStormSurgeSeverity = Math.Clamp(empStormSeverity, 0f, 1f);
-            _surgeBatteryDrainFraction = Math.Clamp(batteryDrainFraction, 0f, 1f);
+            _empStormSurgeSeverity = float.IsNaN(empStormSeverity) || float.IsInfinity(empStormSeverity)
+                ? 0f
+                : Math.Clamp(empStormSeverity, 0f, 1f);
+            _surgeBatteryDrainFraction = float.IsNaN(batteryDrainFraction) || float.IsInfinity(batteryDrainFraction)
+                ? 0f
+                : Math.Clamp(batteryDrainFraction, 0f, 1f);
         }
 
         public float EmpStormSeverity => _empStormSurgeSeverity;
@@ -615,6 +634,8 @@ namespace Ashfall.Core.Shelter
         /// </summary>
         public IReadOnlyList<string> ApplySurgeDay(int day, float severity01)
         {
+            if (float.IsNaN(severity01) || float.IsInfinity(severity01))
+                return Array.Empty<string>();
             float severity = Math.Clamp(severity01, 0f, 1f);
             if (severity <= 0f) return Array.Empty<string>();
             if (day <= _state.LastSurgeDay) return Array.Empty<string>();
@@ -942,6 +963,20 @@ namespace Ashfall.Core.Shelter
             return null;
         }
 
+        private static PowerGridRoom CloneRoom(PowerGridRoom source, string canonicalRoomId)
+        {
+            return new PowerGridRoom
+            {
+                RoomId = canonicalRoomId,
+                DisplayName = source.DisplayName ?? string.Empty,
+                DrawWatts = PowerGridState.SanitizeNonNegativeFinite(source.DrawWatts),
+                DefaultPriority = Enum.IsDefined(typeof(PowerGridRoomPriority), source.DefaultPriority)
+                    ? source.DefaultPriority
+                    : PowerGridRoomPriority.Standard,
+                FailureEffectId = source.FailureEffectId ?? string.Empty
+            };
+        }
+
         /// <summary>
         /// Current draw a room presents to the distribution network: its catalog
         /// draw when powered, 0 when tripped/open/disabled (SHELTER_HARDENING —
@@ -1110,71 +1145,163 @@ string? failureEffectId = null)
 
         public void NormalizeAndValidate(IReadOnlyList<PowerGridRoom> rooms)
         {
-            if (BatteryCapacityWh < 0) BatteryCapacityWh = 0;
-            if (BatteryReserveWh < 0) BatteryReserveWh = 0;
+            ClosedBreakers ??= new List<string>();
+            TrippedRooms ??= new List<string>();
+            Priorities ??= new List<RoomPriorityRecord>();
+            InstalledCoatedPartItemIds ??= new List<string>();
+
+            GenerationWatts = SanitizeNonNegativeFinite(GenerationWatts);
+            FuelUnits = SanitizeNonNegativeFinite(FuelUnits);
+            BatteryCapacityWh = SanitizeNonNegativeFinite(BatteryCapacityWh);
+            BatteryReserveWh = SanitizeNonNegativeFinite(BatteryReserveWh);
             if (BatteryReserveWh > BatteryCapacityWh) BatteryReserveWh = BatteryCapacityWh;
-            if (FuelUnits < 0) FuelUnits = 0;
-            if (GenerationWatts < 0) GenerationWatts = 0;
-            if (InstalledBatteryBankCount < 0) InstalledBatteryBankCount = 0;
-            if (InstalledBatteryBankCount > PowerGridSystem.MaxInstalledBatteryBanks)
-                InstalledBatteryBankCount = PowerGridSystem.MaxInstalledBatteryBanks;
-            if (GeneratorCondition < 0f) GeneratorCondition = 0f;
-            if (GeneratorCondition > 100f) GeneratorCondition = 100f;
+            InstalledBatteryBankCount = Math.Clamp(
+                InstalledBatteryBankCount,
+                0,
+                PowerGridSystem.MaxInstalledBatteryBanks);
+            GeneratorCondition = IsFinite(GeneratorCondition)
+                ? Math.Clamp(GeneratorCondition, 0f, 100f)
+                : 0f;
+            if (SimDay < 0) SimDay = 0;
+            if (LastSurgeDay < 0) LastSurgeDay = 0;
+
             var validIds = new HashSet<string>(StringComparer.Ordinal);
-            for (int i = 0; i < rooms.Count; i++) validIds.Add(rooms[i].RoomId);
-
-            for (int i = ClosedBreakers.Count - 1; i >= 0; i--)
-                if (!validIds.Contains(ClosedBreakers[i])) ClosedBreakers.RemoveAt(i);
-            for (int i = TrippedRooms.Count - 1; i >= 0; i--)
-                if (!validIds.Contains(TrippedRooms[i])) TrippedRooms.RemoveAt(i);
-            for (int i = Priorities.Count - 1; i >= 0; i--)
-                if (!validIds.Contains(Priorities[i].RoomId)) Priorities.RemoveAt(i);
-
-            // Default breakers: every room starts closed unless explicitly opened.
             for (int i = 0; i < rooms.Count; i++)
+                validIds.Add(rooms[i].RoomId);
+
+            NormalizeIdList(ClosedBreakers, validIds);
+            NormalizeIdList(TrippedRooms, validIds);
+            NormalizePriorities(validIds);
+            NormalizeInstalledCoatedParts();
+        }
+
+        public PowerGridState Capture()
+        {
+            var copy = new PowerGridState
             {
-                if (!validIds.Contains(rooms[i].RoomId)) continue;
-                if (!ClosedBreakers.Contains(rooms[i].RoomId) &&
-                    !IsBreakerClosed(rooms[i].RoomId))
+                SimDay = Math.Max(0, SimDay),
+                GenerationWatts = SanitizeNonNegativeFinite(GenerationWatts),
+                FuelUnits = SanitizeNonNegativeFinite(FuelUnits),
+                BatteryReserveWh = SanitizeNonNegativeFinite(BatteryReserveWh),
+                BatteryCapacityWh = SanitizeNonNegativeFinite(BatteryCapacityWh),
+                ClosedBreakers = new List<string>(),
+                TrippedRooms = new List<string>(),
+                Priorities = new List<RoomPriorityRecord>(),
+                LastSurgeDay = Math.Max(0, LastSurgeDay),
+                InstalledBatteryBankCount = Math.Clamp(
+                    InstalledBatteryBankCount,
+                    0,
+                    PowerGridSystem.MaxInstalledBatteryBanks),
+                GeneratorCondition = IsFinite(GeneratorCondition)
+                    ? Math.Clamp(GeneratorCondition, 0f, 100f)
+                    : 0f,
+                InstalledCoatedPartItemIds = new List<string>()
+            };
+            if (copy.BatteryReserveWh > copy.BatteryCapacityWh)
+                copy.BatteryReserveWh = copy.BatteryCapacityWh;
+
+            if (ClosedBreakers != null)
+            {
+                foreach (var roomId in ClosedBreakers)
+                    if (!string.IsNullOrWhiteSpace(roomId)) copy.ClosedBreakers.Add(roomId);
+            }
+            if (TrippedRooms != null)
+            {
+                foreach (var roomId in TrippedRooms)
+                    if (!string.IsNullOrWhiteSpace(roomId)) copy.TrippedRooms.Add(roomId);
+            }
+            if (Priorities != null)
+            {
+                foreach (var priority in Priorities)
                 {
-                    // first-time init: leave ClosedBreakers empty (closed-by-default)
+                    if (priority == null || string.IsNullOrWhiteSpace(priority.RoomId)) continue;
+                    copy.Priorities.Add(new RoomPriorityRecord
+                    {
+                        RoomId = priority.RoomId,
+                        Priority = priority.Priority
+                    });
+                }
+            }
+            if (InstalledCoatedPartItemIds != null)
+            {
+                foreach (var itemId in InstalledCoatedPartItemIds)
+                    if (!string.IsNullOrWhiteSpace(itemId)) copy.InstalledCoatedPartItemIds.Add(itemId);
+            }
+            return copy;
+        }
+
+        public void RestoreInto(PowerGridState state, IReadOnlyList<PowerGridRoom> rooms)
+        {
+            if (state == null) throw new ArgumentNullException(nameof(state));
+            var restored = state.Capture();
+            SimDay = restored.SimDay;
+            GenerationWatts = restored.GenerationWatts;
+            FuelUnits = restored.FuelUnits;
+            BatteryReserveWh = restored.BatteryReserveWh;
+            BatteryCapacityWh = restored.BatteryCapacityWh;
+            LastSurgeDay = restored.LastSurgeDay;
+            InstalledBatteryBankCount = restored.InstalledBatteryBankCount;
+            GeneratorCondition = restored.GeneratorCondition;
+            ClosedBreakers = restored.ClosedBreakers;
+            TrippedRooms = restored.TrippedRooms;
+            Priorities = restored.Priorities;
+            InstalledCoatedPartItemIds = restored.InstalledCoatedPartItemIds;
+            NormalizeAndValidate(rooms);
+        }
+
+        internal static float SanitizeNonNegativeFinite(float value) =>
+            IsFinite(value) && value > 0f ? value : 0f;
+
+        private static bool IsFinite(float value) =>
+            !float.IsNaN(value) && !float.IsInfinity(value);
+
+        private static void NormalizeIdList(List<string> values, HashSet<string> validIds)
+        {
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = values.Count - 1; i >= 0; i--)
+            {
+                string roomId = values[i];
+                if (string.IsNullOrWhiteSpace(roomId)
+                    || !validIds.Contains(roomId)
+                    || !seen.Add(roomId))
+                {
+                    values.RemoveAt(i);
                 }
             }
         }
 
-        public PowerGridState Capture() => new PowerGridState
+        private void NormalizePriorities(HashSet<string> validIds)
         {
-            SimDay = SimDay,
-            GenerationWatts = GenerationWatts,
-            FuelUnits = FuelUnits,
-            BatteryReserveWh = BatteryReserveWh,
-            BatteryCapacityWh = BatteryCapacityWh,
-            ClosedBreakers = new List<string>(ClosedBreakers),
-            TrippedRooms = new List<string>(TrippedRooms),
-            Priorities = new List<RoomPriorityRecord>(Priorities),
-            LastSurgeDay = LastSurgeDay,
-            InstalledBatteryBankCount = InstalledBatteryBankCount,
-            GeneratorCondition = GeneratorCondition,
-            InstalledCoatedPartItemIds = new List<string>(InstalledCoatedPartItemIds ?? new List<string>())
-        };
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = Priorities.Count - 1; i >= 0; i--)
+            {
+                var priority = Priorities[i];
+                if (priority == null
+                    || string.IsNullOrWhiteSpace(priority.RoomId)
+                    || !validIds.Contains(priority.RoomId)
+                    || !seen.Add(priority.RoomId))
+                {
+                    Priorities.RemoveAt(i);
+                    continue;
+                }
+                if (!Enum.IsDefined(typeof(PowerGridRoomPriority), priority.Priority))
+                    priority.Priority = PowerGridRoomPriority.Standard;
+            }
+        }
 
-        public void RestoreInto(PowerGridState state, IReadOnlyList<PowerGridRoom> rooms)
+        private void NormalizeInstalledCoatedParts()
         {
-            SimDay = state.SimDay;
-            GenerationWatts = state.GenerationWatts;
-            FuelUnits = state.FuelUnits;
-            BatteryReserveWh = state.BatteryReserveWh;
-            BatteryCapacityWh = state.BatteryCapacityWh;
-            LastSurgeDay = state.LastSurgeDay;
-            InstalledBatteryBankCount = Math.Clamp(state.InstalledBatteryBankCount, 0, PowerGridSystem.MaxInstalledBatteryBanks);
-            GeneratorCondition = Math.Clamp(state.GeneratorCondition, 0f, 100f);
-            ClosedBreakers = state.ClosedBreakers ?? new List<string>();
-            TrippedRooms = state.TrippedRooms ?? new List<string>();
-            Priorities = state.Priorities ?? new List<RoomPriorityRecord>();
-            InstalledCoatedPartItemIds = state.InstalledCoatedPartItemIds != null
-                ? new List<string>(state.InstalledCoatedPartItemIds)
-                : new List<string>();
-            NormalizeAndValidate(rooms);
+            var normalized = new List<string>();
+            var seenItems = new HashSet<string>(StringComparer.Ordinal);
+            var seenFamilies = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var itemId in InstalledCoatedPartItemIds)
+            {
+                if (string.IsNullOrWhiteSpace(itemId) || !seenItems.Add(itemId)) continue;
+                string family = PowerGridSystem.ResolveCoatedPartFamily(itemId);
+                if (string.IsNullOrEmpty(family) || !seenFamilies.Add(family)) continue;
+                normalized.Add(itemId);
+            }
+            InstalledCoatedPartItemIds = normalized;
         }
     }
 
@@ -1183,19 +1310,6 @@ string? failureEffectId = null)
     {
         public string RoomId;
         public PowerGridRoomPriority Priority;
-    }
-
-    [Serializable]
-    public sealed class PowerGridSystemState
-    {
-        public int SimDay;
-        public float GenerationWatts;
-        public float FuelUnits;
-        public float BatteryReserveWh;
-        public float BatteryCapacityWh;
-        public List<string> ClosedBreakers = new List<string>();
-        public List<string> TrippedRooms = new List<string>();
-        public List<RoomPriorityRecord> Priorities = new List<RoomPriorityRecord>();
     }
 
     [Serializable]

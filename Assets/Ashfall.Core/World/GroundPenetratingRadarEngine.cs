@@ -5,12 +5,6 @@ using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core.World
 {
-    [Serializable]
-    public sealed class GprSurveyTarget
-    {
-        public string target_id = string.Empty;
-        public string anomaly_profile_id = string.Empty;
-    }
 
     [Serializable]
     public sealed class SubsurfaceObservation

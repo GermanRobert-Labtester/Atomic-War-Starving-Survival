@@ -145,7 +145,9 @@ namespace Ashfall.Core.Medical
                 return string.Empty;
 
             int count = entry.symptom_descriptions.Count;
-            int index = seed.HasValue ? Math.Abs(seed.Value) % count : 0;
+            int index = seed.HasValue
+                ? StableHash.NonNegativeRemainder(seed.Value, count)
+                : 0;
             return entry.symptom_descriptions[index];
         }
 

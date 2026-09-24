@@ -195,6 +195,22 @@ namespace Ashfall.Core.Tests.Expeditions
             Assert.NotNull(restoredTrain);
             Assert.Equal("node_b", restoredTrain!.currentNodeId);
         }
+
+        // Guard-extraction hardening: null/empty/unknown train ids fail closed
+        // with train_not_found instead of throwing inside the predicate.
+        [Fact]
+        public void Dispatch_NullEmptyUnknownTrainIds_BlockedTrainNotFound()
+        {
+            var sys = new RailwaySystem(new SeededRng(42));
+            sys.RegisterCatalog(CreateTestCatalog());
+            foreach (var bad in new string?[] { null, string.Empty, "ghost_train" })
+            {
+                var a = sys.DispatchTrain(bad!, "seg_a_b");
+                Assert.Equal("train_not_found", a.FailureCode);
+                var b = sys.DispatchExpedition(bad!, "node_b");
+                Assert.Equal("train_not_found", b.FailureCode);
+            }
+        }
     }
 
     // ── Plan 73 §7.18: rail logistics extensions ──────────────────────

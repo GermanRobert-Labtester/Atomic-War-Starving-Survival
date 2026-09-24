@@ -327,7 +327,26 @@ namespace AtomicWar.GodotApp
             SetupKilnworks();
             SetupWildlifeHarvest();
             SetupStormForecast();
+            SetupDependencyTaperWithdrawal();
+            SetupAntenatalMaternalHealth();
+            SetupClinicalWardTriage();
+            SetupChemicalReagentSynthesis();
+            SetupMechanicalDriveline();
+            SetupSleepAcousticRest();
+            SetupShelterArchive();
+            SetupSurvivorDreams();
+            SetupAccessibilitySettings();
+            SetupMemoryDecay();
+            SetupInterpersonalConflict();
+            SetupExercise();
+            SetupCultureCreation();
+            SetupPsychologicalProfiles();
+            SetupSkillCertifications();
+            SetupBestiary();
+            SetupHealthHistory();
+            SetupChildDevelopment();
             // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
+
             // before any early SaveAll so Continue cannot drop resolved choices.
             SetupMoralChoice();
 
@@ -572,8 +591,26 @@ namespace AtomicWar.GodotApp
                 SaveKilnworks();
                 SaveWildlifeHarvest();
                 SaveStormForecast();
+                SaveDependencyTaperWithdrawal();
+                SaveAntenatalMaternalHealth();
+                SaveClinicalWardTriage();
+                SaveChemicalReagentSynthesis();
+                SaveMechanicalDriveline();
+                SaveSleepAcousticRest();
+                SaveShelterArchive();
+                SaveSurvivorDreams();
+                SaveAccessibilitySettings();
+                SaveMemoryDecay();
+                SaveInterpersonalConflict();
+                SaveExercise();
+                SaveCultureCreation();
+                SavePsychologicalProfiles();
+                SaveSkillCertifications();
+                SaveBestiary();
+                SaveHealthHistory();
 
                 if (_sectionCaptureFailed)
+
                 {
                     GD.PrintErr("[Ashfall Godot] SaveAll aborted: one or more sections failed to capture; previous campaign envelope preserved.");
                     FeedbackMessages.Emit(new FeedbackEvent(

@@ -180,7 +180,7 @@ namespace AtomicWar.GodotApp
                     dir = Directory.GetParent(dir)?.FullName ?? string.Empty;
                 }
             }
-            catch (Exception) { }
+            catch (Exception) { /* cleanup: optional probe file is unavailable */ }
             return string.Empty;
         }
     }

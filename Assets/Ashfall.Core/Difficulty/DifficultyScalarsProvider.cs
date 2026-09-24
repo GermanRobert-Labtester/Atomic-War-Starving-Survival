@@ -92,7 +92,9 @@ namespace Ashfall.Core.Difficulty
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(PresetId, _scalars.hunger_rate_mult, _scalars.thirst_rate_mult, _scalars.radiation_gain_mult);
+            // Equal providers always have the same preset id. A stable hash is
+            // sufficient here; the complete equality contract remains above.
+            return StableHash.Of(PresetId);
         }
     }
 }

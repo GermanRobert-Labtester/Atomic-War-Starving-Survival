@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.UI;
 using Ashfall.Core.Medical;
@@ -226,6 +227,39 @@ namespace AtomicWar.GodotApp.UI
                             }
                         }
                         RenderedActiveCount++;
+                    }
+                }
+
+                // Plan 143: Medical Afflictions -> Quest & Work Bridge projection
+                if (_medical?.Bridge != null)
+                {
+                    var activeAfflictionIds = new List<string>();
+                    if (s.Health < 30f) activeAfflictionIds.Add(MedicalTreatmentCatalog.HealthDeficitId);
+                    if (rad is { HasAcuteRadiationSickness: true }) activeAfflictionIds.Add(MedicalTreatmentCatalog.RadiationSicknessId);
+                    if (respDeg > 0f) activeAfflictionIds.Add(MedicalTreatmentCatalog.RespiratoryDegenerationId);
+                    if (_medical.Pipeline != null && Ashfall.Core.Survivors.SurvivorId.TryParse(s.Id, out var projSv))
+                    {
+                        var rec = new PatientRecordProjector(_medical.Pipeline).Project(projSv);
+                        foreach (var a in rec.Afflictions)
+                        {
+                            if (!string.IsNullOrEmpty(a.AfflictionId) && !activeAfflictionIds.Contains(a.AfflictionId))
+                                activeAfflictionIds.Add(a.AfflictionId);
+                        }
+                    }
+
+                    if (activeAfflictionIds.Count > 0)
+                    {
+                        var workMods = _medical.Bridge.CalculateWorkModifiers(activeAfflictionIds);
+                        if (workMods.SpeedMultiplier < 1.0f || workMods.ExcludedDutyTypes.Count > 0)
+                        {
+                            string dutyExcl = workMods.ExcludedDutyTypes.Count > 0 ? $" · Excluded duties: {string.Join(", ", workMods.ExcludedDutyTypes)}" : string.Empty;
+                            AddDimSubline(_activeList, $"   ↳ Work Impact: {workMods.SpeedMultiplier * 100:0}% speed, {workMods.QualityMultiplier * 100:0}% quality{dutyExcl}");
+                        }
+                        var unlocked = _medical.Bridge.GetUnlockedQuestTags(activeAfflictionIds);
+                        if (unlocked.Count > 0)
+                        {
+                            AddDimSubline(_activeList, $"   ↳ Unlocked Quests: {string.Join(", ", unlocked)}");
+                        }
                     }
                 }
             }

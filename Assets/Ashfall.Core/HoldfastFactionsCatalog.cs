@@ -60,26 +60,6 @@ namespace Ashfall.Core
             };
         }
 
-        /// <summary>
-        /// Legacy compatibility surface. Faction members are authored by
-        /// <c>holdfast_npcs.json</c>; this catalog must not carry a second roster.
-        /// </summary>
-        [Obsolete("Use HoldfastNpcCatalog for faction members.")]
-        public string[] NotableMembers() => Array.Empty<string>();
-
-        /// <summary>
-        /// Legacy compatibility surface. Hostile reactions belong to authored
-        /// quest and faction systems, not to the static trade identity record.
-        /// </summary>
-        [Obsolete("Use authored quest and faction systems for hostile actions.")]
-        public string[] HostileActions() => Array.Empty<string>();
-
-        /// <summary>
-        /// Legacy compatibility surface. Trust changes belong to the mutable
-        /// standing authorities and are not static catalog data.
-        /// </summary>
-        [Obsolete("Use the mutable standing authority for trust requirements.")]
-        public string[] TrustBuildingRequirements() => Array.Empty<string>();
     }
 
     /// <summary>Immutable-after-load Holdfast faction catalog.</summary>

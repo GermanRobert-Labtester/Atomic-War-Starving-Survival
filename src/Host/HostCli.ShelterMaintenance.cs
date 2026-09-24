@@ -62,24 +62,24 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Check 4: Specific component definition & initial state query
-                var airComp = host.GetComponent("air_filtration_primary");
-                var airDef = host.GetDefinition("air_filtration_primary");
+                var airComp = host.GetComponent("comp_air_filter_hepa");
+                var airDef = host.GetDefinition("comp_air_filter_hepa");
                 if (airComp != null && airDef != null && airComp.IsOperational &&
                     !airComp.HasWarning && Math.Abs(airComp.Condition - 100.0f) < 0.01f)
                 {
-                    GD.Print($"[PASS] Check 4: Component 'air_filtration_primary' verified: Condition {airComp.Condition}%, Operational: {airComp.IsOperational}.");
+                    GD.Print($"[PASS] Check 4: Component 'comp_air_filter_hepa' verified: Condition {airComp.Condition}%, Operational: {airComp.IsOperational}.");
                     passed++;
                 }
                 else
                 {
-                    GD.PrintErr($"[FAIL] Check 4: Query failed for 'air_filtration_primary'.");
+                    GD.PrintErr($"[FAIL] Check 4: Query failed for 'comp_air_filter_hepa'.");
                 }
 
                 // Check 5: Daily degradation tick
                 float initialIntegrity = host.AverageIntegrity;
                 host.TickDay(currentDay: 2, weatherStressMult: 1.0f, radiationStressMult: 1.0f);
                 float tickedIntegrity = host.AverageIntegrity;
-                var tickedAir = host.GetComponent("air_filtration_primary");
+                var tickedAir = host.GetComponent("comp_air_filter_hepa");
 
                 if (tickedIntegrity < initialIntegrity && tickedAir != null && tickedAir.Condition < 100.0f)
                 {
@@ -95,7 +95,7 @@ namespace AtomicWar.GodotApp
                 float preStressCond = tickedAir!.Condition;
                 // Run tick under high weather and radiation stress (3.0x each)
                 host.TickDay(currentDay: 3, weatherStressMult: 3.0f, radiationStressMult: 3.0f);
-                var stressedAir = host.GetComponent("air_filtration_primary");
+                var stressedAir = host.GetComponent("comp_air_filter_hepa");
                 float stressedLoss = preStressCond - stressedAir!.Condition;
                 float baseLoss = 100.0f - preStressCond;
 
@@ -114,13 +114,13 @@ namespace AtomicWar.GodotApp
                 for (int d = 4; d <= 45; d++)
                 {
                     host.TickDay(currentDay: d, weatherStressMult: 2.0f, radiationStressMult: 2.0f);
-                    if (host.GetComponent("air_filtration_primary")?.HasWarning == true)
+                    if (host.GetComponent("comp_air_filter_hepa")?.HasWarning == true)
                         break;
                 }
 
-                var warningAir = host.GetComponent("air_filtration_primary");
+                var warningAir = host.GetComponent("comp_air_filter_hepa");
                 var warnings = host.GetWarningComponents();
-                if (warningAir != null && warningAir.HasWarning && warnings.Any(w => w.ComponentId == "air_filtration_primary"))
+                if (warningAir != null && warningAir.HasWarning && warnings.Any(w => w.ComponentId == "comp_air_filter_hepa"))
                 {
                     GD.Print($"[PASS] Check 7: Warning threshold triggered correctly at condition {warningAir.Condition:F1}%.");
                     passed++;
@@ -135,13 +135,13 @@ namespace AtomicWar.GodotApp
                 for (int d = 46; d <= 90; d++)
                 {
                     host.TickDay(currentDay: d, weatherStressMult: 2.5f, radiationStressMult: 2.5f);
-                    if (host.GetComponent("air_filtration_primary")?.IsOperational == false)
+                    if (host.GetComponent("comp_air_filter_hepa")?.IsOperational == false)
                         break;
                 }
 
-                var failedAir = host.GetComponent("air_filtration_primary");
+                var failedAir = host.GetComponent("comp_air_filter_hepa");
                 var failedList = host.GetFailedComponents();
-                if (failedAir != null && !failedAir.IsOperational && failedList.Any(f => f.ComponentId == "air_filtration_primary"))
+                if (failedAir != null && !failedAir.IsOperational && failedList.Any(f => f.ComponentId == "comp_air_filter_hepa"))
                 {
                     GD.Print($"[PASS] Check 8: Critical failure triggered correctly: Component is non-operational at condition {failedAir.Condition:F1}%.");
                     passed++;
@@ -153,8 +153,8 @@ namespace AtomicWar.GodotApp
 
                 // Check 9: Preventive maintenance (Clean)
                 float beforeClean = failedAir!.Condition;
-                bool cleaned = host.PerformMaintenance("air_filtration_primary", "Clean", skillLevel: 50f, day: 91);
-                var cleanedAir = host.GetComponent("air_filtration_primary");
+                bool cleaned = host.PerformMaintenance("comp_air_filter_hepa", "Clean", skillLevel: 50f, day: 91);
+                var cleanedAir = host.GetComponent("comp_air_filter_hepa");
                 if (cleaned && cleanedAir != null && cleanedAir.Condition > beforeClean)
                 {
                     GD.Print($"[PASS] Check 9: Preventive cleaning restored condition: {beforeClean:F1}% -> {cleanedAir.Condition:F1}%.");
@@ -166,8 +166,8 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Check 10: Standard Repair restores operational status
-                bool repaired = host.PerformMaintenance("air_filtration_primary", "Repair", skillLevel: 75f, day: 92);
-                var repairedAir = host.GetComponent("air_filtration_primary");
+                bool repaired = host.PerformMaintenance("comp_air_filter_hepa", "Repair", skillLevel: 75f, day: 92);
+                var repairedAir = host.GetComponent("comp_air_filter_hepa");
                 if (repaired && repairedAir != null && repairedAir.IsOperational && repairedAir.Condition > 40.0f && !repairedAir.HasWarning)
                 {
                     GD.Print($"[PASS] Check 10: Repair completed: Condition restored to {repairedAir.Condition:F1}%, Operational={repairedAir.IsOperational}, Warning cleared.");
@@ -179,8 +179,8 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Check 11: Complete Overhaul restores to 100% max condition
-                bool overhauled = host.PerformMaintenance("air_filtration_primary", "Overhaul", skillLevel: 100f, day: 93);
-                var overhauledAir = host.GetComponent("air_filtration_primary");
+                bool overhauled = host.PerformMaintenance("comp_air_filter_hepa", "Overhaul", skillLevel: 100f, day: 93);
+                var overhauledAir = host.GetComponent("comp_air_filter_hepa");
                 if (overhauled && overhauledAir != null && Math.Abs(overhauledAir.Condition - 100.0f) < 0.01f)
                 {
                     GD.Print($"[PASS] Check 11: Overhaul restored component to 100.0% max condition.");

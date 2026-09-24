@@ -162,7 +162,44 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("wildlife_harvest", new WildlifeHarvestDayOwner(this), phase: 5);
             // Expansion 33 — storm forecast observation-post drift and drill recency.
             _campaignDay.Register("storm_forecast", new StormForecastDayOwner(this), phase: 5);
+            // Expansion 35 — chemical dependency taper programs, withdrawal management, and care posture.
+            _campaignDay.Register("dependency_taper_withdrawal", new DependencyTaperWithdrawalDayOwner(this), phase: 5);
+            // Expansion 37 — antenatal maternal care, trimester progressions, and neonatal deliveries.
+            _campaignDay.Register("antenatal_maternal_health", new AntenatalMaternalHealthDayOwner(this), phase: 5);
+            // Expansion 38 — clinical ward triage priority, surgical suite readiness, and sterile supply inventory.
+            _campaignDay.Register("clinical_ward_triage", new ClinicalWardTriageDayOwner(this), phase: 5);
+            // Expansion 39 — chemical synthesis reactor safety, catalyst purity, and reagent grading.
+            _campaignDay.Register("chemical_reagent_synthesis", new ChemicalReagentSynthesisDayOwner(this), phase: 5);
+            // Expansion 40 — mechanical power driveline, line shafts, and machine tools.
+            _campaignDay.Register("mechanical_driveline", new MechanicalDrivelineDayOwner(this), phase: 5);
+            // Expansion 41 — sleep quality, soundproofing, and shelter crowding.
+            _campaignDay.Register("sleep_acoustic_rest", new SleepAcousticRestDayOwner(this), phase: 5);
+            // Plan 162 — shelter history & archive: institutional memory and milestones.
+            _campaignDay.Register("shelter_archive", new ShelterArchiveDayOwner(this), phase: 5);
+            // Plan 177 — survivor dream & sleep event system: nocturnal dream generation.
+            _campaignDay.Register("survivor_dreams", new SurvivorDreamsDayOwner(this), phase: 5);
+            // Plan 185 — memory & knowledge decay across cognition, skills, and relationships.
+            _campaignDay.Register("memory_decay", new MemoryDecayDayOwner(this), phase: 5);
+            // Plan 200 — survivor personal quests and character arcs.
+            _campaignDay.Register("personal_quests", new PersonalQuestsDayOwner(this), phase: 5);
+            // Plan 202 — interpersonal conflict, grievance accumulation, and mediation resolution.
+            _campaignDay.Register("interpersonal_conflict", new InterpersonalConflictDayOwner(this), phase: 5);
+            // Plan 216 — survivor exercise routines, physical training adaptation, and conditioning decay.
+            _campaignDay.Register("exercise", new ExerciseDayOwner(this), phase: 5);
+            // Plan 178 — art and culture creation: survivor artworks, masterworks, cultural identity, and display morale bonus.
+            _campaignDay.Register("culture_creation", new CultureCreationDayOwner(this), phase: 5);
+            // Plan 179 — unified psychology and phobia profiles: phobias, coping mechanisms, resilience, and therapy.
+            _campaignDay.Register("psychological_profiles", new PsychologicalProfilesDayOwner(this), phase: 5);
+            // Plan 180 — skill certification and tier system: formal qualifications, exams, benefits, and specializations.
+            _campaignDay.Register("skill_certifications", new SkillCertificationsDayOwner(this), phase: 5);
+            // Plan 187 — bestiary knowledge and creature encounters tracking.
+            _campaignDay.Register("bestiary_knowledge", new BestiaryDayOwner(this), phase: 5);
+            // Plan 198 — survivor medical records, longitudinal history, and vaccinations.
+            _campaignDay.Register("health_history", new HealthHistoryDayOwner(this), phase: 5);
+            // Plan 183 — child development stages, milestones, education, and chore capacity.
+            _campaignDay.Register("child_development_stages", new ChildDevelopmentDayOwner(this), phase: 5);
             // Plan 186 — shelter maintenance & degradation: applies daily component wear and environmental stress.
+
             _campaignDay.Register("shelter_maintenance", new ShelterMaintenanceDayOwner(this), phase: 5);
             // Plan 188 — individual survivor daily routines: ticks satisfaction and detects schedule conflicts.
             _campaignDay.Register("survivor_routines", new SurvivorRoutinesDayOwner(this), phase: 5);
@@ -1512,6 +1549,9 @@ namespace AtomicWar.GodotApp
                 _m.ApplyGriefNeedsModifiers();
                 _m._medicalWardSession?.DrainDayEvents(events);
 
+                // Plan 172: evaluate deterministic radiation mutation development on day boundary
+                _m.TickMutations(day, events);
+
                 if (_m._expansionHubDirty) _m.SaveExpansionHub();
 
                 events.Add(new DayStateChangeEvent("medical_disease_ticked", "medical_disease", null, null, day));
@@ -2404,5 +2444,514 @@ namespace AtomicWar.GodotApp
                     "storm_forecast_ticked", "storm_forecast", null, null, warnings));
             }
         }
+
+        /// <summary>Expansion 35 dependency taper withdrawal day owner (ownerId <c>dependency_taper_withdrawal</c>, phase 5).</summary>
+        private sealed class DependencyTaperWithdrawalDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Medical.DependencyTaperState? _snapshot;
+            public DependencyTaperWithdrawalDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupDependencyTaperWithdrawal();
+                _snapshot = _m._dependencyTaper?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._dependencyTaper?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupDependencyTaperWithdrawal();
+                var results = _m._dependencyTaper?.AdvanceAll(peerSupportRunToday: true);
+                var census = _m.GetDependencyTaperCensus();
+                events.Add(new DayStateChangeEvent(
+                    "dependency_taper_ticked", "dependency_taper_withdrawal", null, null, census.ActiveProgramsCount));
+            }
+        }
+
+        /// <summary>Expansion 37 antenatal maternal health day owner (ownerId <c>antenatal_maternal_health</c>, phase 5).</summary>
+        private sealed class AntenatalMaternalHealthDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.AntenatalMaternalCareState? _snapshot;
+            public AntenatalMaternalHealthDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupAntenatalMaternalHealth();
+                _snapshot = _m._antenatalMaternalHealth?.Ledger.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._antenatalMaternalHealth?.Ledger.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupAntenatalMaternalHealth();
+                var results = _m._antenatalMaternalHealth?.AdvanceDay(day);
+                var census = _m.GetAntenatalMaternalCensus();
+                events.Add(new DayStateChangeEvent(
+                    "antenatal_maternal_health_ticked", "antenatal_maternal_health", null, null, census.ActivePregnanciesCount));
+            }
+        }
+
+        /// <summary>Expansion 38 clinical ward triage day owner (ownerId <c>clinical_ward_triage</c>, phase 5).</summary>
+        private sealed class ClinicalWardTriageDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Medical.ClinicalWardTriageState? _snapshot;
+            public ClinicalWardTriageDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupClinicalWardTriage();
+                _snapshot = _m._clinicalWardTriage?.Ledger.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._clinicalWardTriage?.Ledger.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupClinicalWardTriage();
+                _m._clinicalWardTriage?.AdvanceDay(day, seed: day * 31);
+                var census = _m.GetClinicalWardCensus();
+                events.Add(new DayStateChangeEvent(
+                    "clinical_ward_triage_ticked", "clinical_ward_triage", null, null, census.ActiveAdmissionsCount));
+            }
+        }
+
+        /// <summary>Expansion 39 chemical reagent synthesis day owner (ownerId <c>chemical_reagent_synthesis</c>, phase 5).</summary>
+        private sealed class ChemicalReagentSynthesisDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Shelter.ChemicalReagentSynthesisState? _snapshot;
+            public ChemicalReagentSynthesisDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupChemicalReagentSynthesis();
+                _snapshot = _m._chemicalReagentSynthesis?.Ledger.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._chemicalReagentSynthesis?.Ledger.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupChemicalReagentSynthesis();
+                _m._chemicalReagentSynthesis?.AdvanceDay(day);
+                var census = _m.GetChemicalReagentCensus();
+                events.Add(new DayStateChangeEvent(
+                    "chemical_reagent_synthesis_ticked", "chemical_reagent_synthesis", null, null, census.ActiveReactorsCount));
+            }
+        }
+
+        /// <summary>Expansion 40 mechanical power driveline day owner (ownerId <c>mechanical_driveline</c>, phase 5).</summary>
+        private sealed class MechanicalDrivelineDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Shelter.MechanicalDrivelineState? _snapshot;
+            public MechanicalDrivelineDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupMechanicalDriveline();
+                _snapshot = _m._mechanicalDriveline?.Ledger.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._mechanicalDriveline?.Ledger.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupMechanicalDriveline();
+                _m._mechanicalDriveline?.AdvanceDay(8);
+                var census = _m.GetMechanicalDrivelineCensus();
+                events.Add(new DayStateChangeEvent(
+                    "mechanical_driveline_ticked", "mechanical_driveline", null, null, census.ActiveBranchesCount));
+            }
+        }
+
+        /// <summary>Expansion 41 sleep acoustic rest day owner (ownerId <c>sleep_acoustic_rest</c>, phase 5).</summary>
+        private sealed class SleepAcousticRestDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Needs.SleepAcousticState? _snapshot;
+            public SleepAcousticRestDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSleepAcousticRest();
+                _snapshot = _m._sleepAcousticRest?.Ledger.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._sleepAcousticRest?.Ledger.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupSleepAcousticRest();
+                _m._sleepAcousticRest?.AdvanceDay(8);
+                var census = _m.GetSleepAcousticCensus();
+                events.Add(new DayStateChangeEvent(
+                    "sleep_acoustic_rest_ticked", "sleep_acoustic_rest", null, null, census.QuartersCount));
+            }
+        }
+
+        /// <summary>Plan 162 shelter archive day owner (ownerId <c>shelter_archive</c>, phase 5).</summary>
+        private sealed class ShelterArchiveDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Shelter.ShelterArchiveState? _snapshot;
+            public ShelterArchiveDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupShelterArchive();
+                _snapshot = _m._shelterArchive?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._shelterArchive?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupShelterArchive();
+                _m.TickShelterArchive(day);
+                var census = _m.GetShelterArchiveCensus();
+                events.Add(new DayStateChangeEvent(
+                    "shelter_archive_ticked", "shelter_archive", null, null, census.EntryCount));
+            }
+        }
+
+        /// <summary>Plan 177 survivor dreams day owner (ownerId <c>survivor_dreams</c>, phase 5).</summary>
+        private sealed class SurvivorDreamsDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.DreamSystemState? _snapshot;
+            public SurvivorDreamsDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSurvivorDreams();
+                _snapshot = _m._dreamSystem?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._dreamSystem?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupSurvivorDreams();
+                _m.TickSurvivorDreams(day);
+                var census = _m.GetDreamCensus();
+                events.Add(new DayStateChangeEvent(
+                    "survivor_dreams_ticked", "survivor_dreams", null, null, census.RecordedDreamsCount));
+            }
+        }
+
+        /// <summary>Plan 185 memory decay day owner (ownerId <c>memory_decay</c>, phase 5).</summary>
+        private sealed class MemoryDecayDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Cognition.MemoryDecayState? _snapshot;
+            public MemoryDecayDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupMemoryDecay();
+                _snapshot = _m._memoryDecay?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._memoryDecay?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupMemoryDecay();
+                _m.TickMemoryDecay(day);
+                var census = _m.GetMemoryDecayCensus();
+                events.Add(new DayStateChangeEvent(
+                    "memory_decay_ticked", "memory_decay", null, null, census.TotalRecords));
+            }
+        }
+
+        /// <summary>Plan 200 survivor personal quests day owner (ownerId <c>personal_quests</c>, phase 5).</summary>
+        private sealed class PersonalQuestsDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Quests.PersonalQuestSaveState? _snapshot;
+            public PersonalQuestsDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                var session = _m.EnsurePersonalQuests();
+                _snapshot = session.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null)
+                {
+                    var session = _m.EnsurePersonalQuests();
+                    session.RestoreState(_snapshot);
+                }
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickPersonalQuests(day);
+                var census = _m.GetPersonalQuestsCensus();
+                events.Add(new DayStateChangeEvent(
+                    "personal_quests_ticked", "personal_quests", null, null, census.ActiveQuestsCount));
+            }
+        }
+
+        /// <summary>Plan 202 interpersonal conflict day owner (ownerId <c>interpersonal_conflict</c>, phase 5).</summary>
+        private sealed class InterpersonalConflictDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.InterpersonalConflictState? _snapshot;
+            public InterpersonalConflictDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupInterpersonalConflict();
+                _snapshot = _m._interpersonalConflict?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._interpersonalConflict?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupInterpersonalConflict();
+                _m.TickInterpersonalConflict(day);
+                var census = _m.GetInterpersonalConflictCensus();
+                events.Add(new DayStateChangeEvent(
+                    "interpersonal_conflict_ticked", "interpersonal_conflict", null, null, census.ActiveConflicts));
+            }
+        }
+
+        /// <summary>Plan 216 exercise day owner (ownerId <c>exercise</c>, phase 5).</summary>
+        private sealed class ExerciseDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.ExerciseSystemState? _snapshot;
+            public ExerciseDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupExercise();
+                _snapshot = _m._exercise?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._exercise?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupExercise();
+                _m.TickExercise(day);
+                var census = _m.GetExerciseCensus();
+                events.Add(new DayStateChangeEvent(
+                    "exercise_ticked", "exercise", null, null, census.TrackedProfilesCount));
+            }
+        }
+
+        /// <summary>Plan 178 art and culture creation day owner (ownerId <c>culture_creation</c>, phase 5).</summary>
+        private sealed class CultureCreationDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Culture.CultureCreationState? _snapshot;
+            public CultureCreationDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupCultureCreation();
+                _snapshot = _m._cultureCreation?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._cultureCreation?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupCultureCreation();
+                if (_m._cultureCreationDirty) _m.SaveCultureCreation();
+                var census = _m.GetCultureCreationCensus();
+                events.Add(new DayStateChangeEvent(
+                    "culture_creation_ticked", "culture_creation", null, null, census.TotalArtworks));
+            }
+        }
+
+        /// <summary>Plan 179 psychological profile day owner (ownerId <c>psychological_profiles</c>, phase 5).</summary>
+        private sealed class PsychologicalProfilesDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Psychology.PsychologyState? _snapshot;
+            public PsychologicalProfilesDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupPsychologicalProfiles();
+                _snapshot = _m._psychologicalProfiles?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._psychologicalProfiles?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupPsychologicalProfiles();
+                if (_m._psychologicalProfilesDirty) _m.SavePsychologicalProfiles();
+                var census = _m.GetPsychologicalProfileCensus();
+                events.Add(new DayStateChangeEvent(
+                    "psychological_profiles_ticked", "psychological_profiles", null, null, census.TotalProfiles));
+            }
+        }
+
+        /// <summary>Plan 180 skill certification day owner (ownerId <c>skill_certifications</c>, phase 5).</summary>
+        private sealed class SkillCertificationsDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.SkillCertificationState? _snapshot;
+            public SkillCertificationsDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSkillCertifications();
+                _snapshot = _m._skillCertifications?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._skillCertifications?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupSkillCertifications();
+                if (_m._skillCertificationsDirty) _m.SaveSkillCertifications();
+                var census = _m.GetSkillCertificationCensus();
+                events.Add(new DayStateChangeEvent(
+                    "skill_certifications_ticked", "skill_certifications", null, null, census.CertifiedSurvivorsCount));
+            }
+        }
+
+        /// <summary>Plan 187 bestiary day owner (ownerId <c>bestiary_knowledge</c>, phase 5).</summary>
+        private sealed class BestiaryDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Bestiary.BestiaryState? _snapshot;
+            public BestiaryDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupBestiary();
+                _snapshot = _m._bestiary?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._bestiary?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupBestiary();
+                if (_m._bestiaryDirty) _m.SaveBestiary();
+                var census = _m.GetBestiaryCensus();
+                events.Add(new DayStateChangeEvent(
+                    "bestiary_ticked", "bestiary_knowledge", null, null, census.TotalDiscovered));
+            }
+        }
+
+        /// <summary>Plan 198 health history day owner (ownerId <c>health_history</c>, phase 5).</summary>
+        private sealed class HealthHistoryDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Medical.HealthHistoryState? _snapshot;
+            public HealthHistoryDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupHealthHistory();
+                _snapshot = _m._healthHistory?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._healthHistory?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupHealthHistory();
+                _m._healthHistory?.TickDay(day);
+                if (_m._healthHistoryDirty) _m.SaveHealthHistory();
+                var census = _m.GetHealthHistoryCensus();
+                events.Add(new DayStateChangeEvent(
+                    "health_history_ticked", "health_history", null, null, census.TotalRecords));
+            }
+        }
+
+        /// <summary>Plan 183 child development day owner (ownerId <c>child_development_stages</c>, phase 5).</summary>
+        private sealed class ChildDevelopmentDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.ChildDevelopmentState? _snapshot;
+            public ChildDevelopmentDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupChildDevelopment();
+                _snapshot = _m._childDevelopment?.System.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._childDevelopment?.System.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupChildDevelopment();
+                _m._childDevelopment?.TickDay(day);
+                var census = _m.GetChildDevelopmentCensus();
+                events.Add(new DayStateChangeEvent(
+                    "child_development_ticked", "child_development_stages", null, null, census.TotalChildren));
+            }
+        }
     }
 }
+

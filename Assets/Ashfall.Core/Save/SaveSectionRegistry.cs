@@ -304,7 +304,25 @@ namespace Ashfall.Core.Save
             new("kilnworks", "SaveKilnworks", "SetupKilnworks", "shelter", "Expansion 31 — queued kiln batches, kiln fuel reserve, refractory lining wear, and drawn-output tallies. Metallurgy stays with CupolaFoundryEngine.", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("wildlife_harvest", "SaveWildlifeHarvest", "SetupWildlifeHarvest", "hunting", "Expansion 32 — per-species seasonal harvest ledger and sustainable quota", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("storm_forecast", "SaveStormForecast", "SetupStormForecast", "world", "Expansion 33 — observation-post forecast skill, storm-response drill recency, and issued warnings", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("dependency_taper_withdrawal", "SaveDependencyTaperWithdrawal", "SetupDependencyTaperWithdrawal", "medical", "Expansion 35 — chemical dependency taper programs, withdrawal management, and care policy posture", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("antenatal_maternal_health", "SaveAntenatalMaternalHealth", "SetupAntenatalMaternalHealth", "survivors", "Expansion 37 — antenatal care, maternal trimester progression, and delivery health ledger", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("clinical_ward_triage", "SaveClinicalWardTriage", "SetupClinicalWardTriage", "medical", "Expansion 38 — clinical ward triage priority, surgical suite readiness, and sterile supply inventory", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("chemical_reagent_synthesis", "SaveChemicalReagentSynthesis", "SetupChemicalReagentSynthesis", "shelter", "Expansion 39 — chemical synthesis reactor safety, catalyst purity, and reagent grading", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("mechanical_driveline", "SaveMechanicalDriveline", "SetupMechanicalDriveline", "shelter", "Expansion 40 — mechanical power driveline line shafts, friction transmission, and machine tool tolerance", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("sleep_acoustic_rest", "SaveSleepAcousticRest", "SetupSleepAcousticRest", "needs", "Expansion 41 — sleep quality, soundproofing acoustic attenuation, and shelter quiet hours", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_archive", "SaveShelterArchive", "SetupShelterArchive", "shelter", "Plan 162 — Shelter history & archive: institutional memory, governance decisions, historical milestones, and memorial records", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("survivor_dreams", "SaveSurvivorDreams", "SetupSurvivorDreams", "survivors", "Plan 177 — Survivor dream & sleep event system: dream templates, sleep cycle dream generation, consecutive nightmares, and interpretation", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("accessibility_settings", "SaveAccessibilitySettings", "SetupAccessibilitySettings", "settings", "Plan 184 — Accessibility settings: visual, hearing, motor, and cognitive profiles, high contrast, font scaling, and custom accessibility overrides", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("memory_decay", "SaveMemoryDecay", "SetupMemoryDecay", "cognition", "Plan 185 — Survivor memory & knowledge decay across skill, knowledge, and relation domains", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("interpersonal_conflict", "SaveInterpersonalConflict", "SetupInterpersonalConflict", "survivors", "Plan 202 — Interpersonal conflict, grievance accumulation, and mediation resolution", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("exercise", "SaveExercise", "SetupExercise", "survivors", "Plan 216 — Survivor exercise routines, physical training adaptation, and conditioning decay", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("culture_creation", "SaveCultureCreation", "SetupCultureCreation", "culture", "Plan 178 — Art and culture creation: survivor artworks, masterworks, cultural identity, and display morale bonus", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("psychological_profiles", "SavePsychologicalProfiles", "SetupPsychologicalProfiles", "psychology", "Plan 179 — Unified psychology and phobia profiles: phobias, coping mechanisms, resilience, and therapy", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("skill_certifications", "SaveSkillCertifications", "SetupSkillCertifications", "survivors", "Plan 180 — Skill certification and tier system: formal qualifications, exams, benefits, and specializations", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("bestiary_knowledge", "SaveBestiary", "SetupBestiary", "hunting", "Plan 187 — Bestiary creature discovery, sighting records, tiered lore unlocks, kill and butcher tracking", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("health_history", "SaveHealthHistory", "SetupHealthHistory", "medical", "Plan 198 — Longitudinal health histories, diagnostic logs, recovery events, vaccination tracking, and health trends", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
+
 
 
         private static readonly Dictionary<string, SaveSectionMetadata> ByKeyMap =
@@ -576,7 +594,25 @@ namespace Ashfall.Core.Save
                 { "kilnworks", "kilnworks_save.json" },
                 { "wildlife_harvest", "wildlife_harvest_save.json" },
                 { "storm_forecast", "storm_forecast_save.json" },
+                { "dependency_taper_withdrawal", "dependency_taper_withdrawal_save.json" },
+                { "antenatal_maternal_health", "antenatal_maternal_health_save.json" },
+                { "clinical_ward_triage", "clinical_ward_triage_save.json" },
+                { "chemical_reagent_synthesis", "chemical_reagent_synthesis_save.json" },
+                { "mechanical_driveline", "mechanical_driveline_save.json" },
+                { "sleep_acoustic_rest", "sleep_acoustic_rest_save.json" },
+                { "shelter_archive", "shelter_archive_save.json" },
+                { "survivor_dreams", "survivor_dreams_save.json" },
+                { "accessibility_settings", "accessibility_settings_save.json" },
+                { "memory_decay", "memory_decay_save.json" },
+                { "interpersonal_conflict", "interpersonal_conflict_save.json" },
+                { "exercise", "exercise_save.json" },
+                { "culture_creation", "culture_creation_save.json" },
+                { "psychological_profiles", "psychological_profiles_save.json" },
+                { "skill_certifications", "skill_certifications_save.json" },
+                { "bestiary_knowledge", "bestiary_knowledge_save.json" },
+                { "health_history", "health_history_save.json" },
             };
+
 
 
         /// <summary>

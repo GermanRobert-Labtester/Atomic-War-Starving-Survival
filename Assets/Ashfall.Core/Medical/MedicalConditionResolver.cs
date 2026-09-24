@@ -86,8 +86,10 @@ namespace Ashfall.Core.Medical
             int seed = 0;
             if (!string.IsNullOrEmpty(survivorId))
             {
-                // Stable deterministic pseudo-hash using StableHash (djb2/x33) without System.Random or GetHashCode
-                seed = Math.Abs((StableHash.Of(survivorId) * 397) ^ StableHash.Of(runtimeConditionId));
+                // Stable deterministic prose seed. Combine the canonical
+                // catalog row so runtime aliases cannot diverge, and avoid the
+                // int.MinValue throw path inherent in Math.Abs.
+                seed = StableHash.Combine(StableHash.Of(survivorId), entry.id);
             }
 
             return new ClinicalProseSnapshot

@@ -251,9 +251,12 @@ namespace Ashfall.Core.Excavation
                 return new SeismicTriggerOutcome(false, 0, 0, profile.StructuralIntegrityPermille, false);
             }
 
-            // Deterministic hash roll
-            int hash = HashCode.Combine(worldSeed, profile.NodeId, simTick, profile.StructuralIntegrityPermille);
-            int rollPermille = Math.Abs(hash % 1000);
+            // Deterministic hash roll. HashCode.Combine is process-randomized
+            // in .NET and cannot participate in a replayable simulation.
+            int hash = StableHash.Combine(worldSeed, profile.NodeId);
+            hash = StableHash.Combine(hash, simTick);
+            hash = StableHash.Combine(hash, profile.StructuralIntegrityPermille);
+            int rollPermille = StableHash.NonNegativeRemainder(hash, 1000);
 
             if (rollPermille < eval.InducedSeismicRiskPermille)
             {

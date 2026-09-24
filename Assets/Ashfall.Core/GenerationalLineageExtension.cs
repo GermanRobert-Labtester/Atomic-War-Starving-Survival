@@ -99,11 +99,19 @@ namespace Ashfall.Core
             if (string.IsNullOrWhiteSpace(json)) return;
             try
             {
-                _familyNameCatalog = System.Text.Json.JsonSerializer.Deserialize<FamilyNameCatalogData>(json);
+                var catalog = System.Text.Json.JsonSerializer.Deserialize<FamilyNameCatalogData>(json);
+                if (catalog == null)
+                    throw new InvalidOperationException("Family name catalog deserialized to null.");
+                if (catalog.schema_version != 1)
+                    throw new InvalidOperationException($"Unsupported family name catalog schema {catalog.schema_version}.");
+
+                _familyNameCatalog = catalog;
             }
-            catch
+            catch (Exception ex)
             {
-                // Fallback
+                // A failed reload must not leave a hidden previous authority active.
+                _familyNameCatalog = null;
+                _log.Warn("[Lineage] family name catalog load failed: " + ex.Message);
             }
         }
 
@@ -143,15 +151,51 @@ namespace Ashfall.Core
             return string.Empty;
         }
 
+        /// <summary>
+        /// Generates a deterministic family name from the loaded data authority.
+        /// A named cultural archetype uses its authored prefix/root/suffix pools;
+        /// an unknown or incomplete archetype falls back to the flat templates.
+        /// </summary>
         public string GenerateFamilyName(ISeededRng? rng = null, string? archetype = null)
         {
+            if (!string.IsNullOrWhiteSpace(archetype)
+                && _familyNameCatalog?.cultural_archetypes != null)
+            {
+                var selectedArchetype = _familyNameCatalog.cultural_archetypes.FirstOrDefault(def =>
+                    def != null && string.Equals(def.archetype, archetype, StringComparison.OrdinalIgnoreCase));
+                if (selectedArchetype != null)
+                {
+                    string root = PickFamilyNameComponent(selectedArchetype.roots, rng);
+                    if (!string.IsNullOrEmpty(root))
+                    {
+                        string prefix = PickFamilyNameComponent(selectedArchetype.prefixes, rng);
+                        string suffix = PickFamilyNameComponent(selectedArchetype.suffixes, rng);
+                        return prefix + root + suffix;
+                    }
+                }
+            }
+
             if (_familyNameCatalog?.templates != null && _familyNameCatalog.templates.Count > 0)
             {
-                int idx = rng != null ? rng.Next(0, _familyNameCatalog.templates.Count) : 0;
-                return _familyNameCatalog.templates[idx % _familyNameCatalog.templates.Count];
+                string template = PickFamilyNameComponent(_familyNameCatalog.templates, rng);
+                if (!string.IsNullOrEmpty(template))
+                    return template;
             }
 
             return "Wanderer";
+        }
+
+        private static string PickFamilyNameComponent(IEnumerable<string>? components, ISeededRng? rng)
+        {
+            if (components == null) return string.Empty;
+            var candidates = components
+                .Where(component => !string.IsNullOrWhiteSpace(component))
+                .Select(component => component.Trim())
+                .ToList();
+            if (candidates.Count == 0) return string.Empty;
+
+            int index = rng != null ? rng.Next(0, candidates.Count) : 0;
+            return candidates[index];
         }
 
         public GenerationalLineageExtension(GenerationalSuccessionEngine engine, ILog? log = null)

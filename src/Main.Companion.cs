@@ -21,6 +21,7 @@ namespace AtomicWar.GodotApp
     public partial class Main
     {
         private CompanionAnimalSystem? _companions;
+        private CompanionAnimalHostSession? _companionSession;
 
         /// <summary>Preferred food tag → concrete stocked item id (host mapping;
         /// the item quantities stay in the canonical inventory).</summary>
@@ -245,6 +246,59 @@ namespace AtomicWar.GodotApp
         {
             if (_companions == null) return new CompanionAssignResult { Success = false, ReasonCode = "companion_system_unbound" };
             return _companions.TreatSickness(companionId, itemId);
+        }
+
+        public CompanionAnimalHostSession EnsureCompanionSession()
+        {
+            EnsureCompanions();
+            if (_companionSession == null && _companions != null)
+            {
+                _companionSession = new CompanionAnimalHostSession(_companions);
+            }
+            return _companionSession!;
+        }
+
+        public CompanionAssignResult AssignCompanion(string companionId, string survivorId, CompanionRole role)
+        {
+            EnsureCompanions();
+            if (_companions == null) return CompanionAssignResult.Fail("companion_system_unbound");
+            return _companions.Assign(companionId, survivorId, role, id => _survivors?.Find(id)?.IsAlive ?? true);
+        }
+
+        public CompanionFeedResult FeedCompanion(string companionId, int day)
+        {
+            EnsureCompanions();
+            if (_companions == null) return new CompanionFeedResult { ReasonCode = "companion_system_unbound" };
+            var c = _companions.Companion(companionId);
+            if (c == null) return new CompanionFeedResult { ReasonCode = "unknown_companion" };
+            var profile = _companions.Profile(c.species_id);
+            if (profile == null) return new CompanionFeedResult { ReasonCode = "unknown_species" };
+            return _companions.Feed(c, profile, day, CompanionPreferredFoodMap);
+        }
+
+        public CompanionAssignResult RegisterCompanion(string companionId, string speciesId, int tamedDay, string? name = null)
+        {
+            EnsureCompanions();
+            if (_companions == null) return CompanionAssignResult.Fail("companion_system_unbound");
+            return _companions.RegisterCompanion(companionId, speciesId, tamedDay, name);
+        }
+
+        public IReadOnlyList<CompanionState> GetAllCompanions()
+        {
+            EnsureCompanions();
+            return _companions?.State.companions ?? (IReadOnlyList<CompanionState>)Array.Empty<CompanionState>();
+        }
+
+        public float GetGuardModifierTotal()
+        {
+            EnsureCompanions();
+            return _companions?.GetGuardModifierTotal() ?? 0f;
+        }
+
+        public float GetPackCapacityBonusForSurvivor(string survivorId)
+        {
+            EnsureCompanions();
+            return _companions?.GetPackCapacityBonusForSurvivor(survivorId) ?? 0f;
         }
 
         private static string SicknessLabel(CompanionSicknessState s) => s switch

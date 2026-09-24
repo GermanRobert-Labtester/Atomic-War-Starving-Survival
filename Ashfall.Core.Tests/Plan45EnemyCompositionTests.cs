@@ -92,6 +92,24 @@ public class Plan45EnemyCompositionTests : CatalogTestBase
     }
 
     [Fact]
+    public void Selector_NegativeExtremeDanger_RemainsBounded()
+    {
+        ReloadCatalog();
+
+        var ambush = EnemyCompositionSelector.SelectAmbushComposition(
+            int.MinValue,
+            EnemyCompositionSelector.MaxAmbushCount);
+        var raid = EnemyCompositionSelector.SelectRaidComposition(
+            int.MinValue,
+            EnemyCompositionSelector.MaxAmbushCount);
+
+        Assert.Equal(EnemyCompositionSelector.MaxAmbushCount, ambush.Count);
+        Assert.Equal(EnemyCompositionSelector.MaxAmbushCount, raid.Count);
+        Assert.All(ambush, id => Assert.True(CombatCatalog.HasCombatant(id)));
+        Assert.All(raid, id => Assert.True(CombatCatalog.HasCombatant(id)));
+    }
+
+    [Fact]
     public void Selector_AnchorArchetypeLeadsEveryGroup()
     {
         ReloadCatalog();

@@ -183,7 +183,7 @@ namespace Ashfall.Core.Tests
             Assert.Contains(versioned, f => f.SectionKey == "expansion_quest" && f.Version == ExpansionQuestSaveEnvelope.CurrentVersion);
             Assert.Contains(versioned, f => f.SectionKey == "weight_of_choices" && f.Version == Ashfall.Core.Factions.WeightOfChoicesSave.CurrentSaveVersion);
 
-            // 166 unversioned checksum envelopes, including the Plans 130–133
+            // 260 unversioned checksum envelopes, including the Plans 130–133
             // state sections (powder_metallurgy, nvis_communications, lyophilization, draisine_recovery),
             // Tasks 5–8 state sections (weather_hardening, geothermal_aquifer, counter_intelligence, recon_telemetry),
             // Plans 146–149 state sections (route_infrastructure, ebpvd_coating, microfluidic_diagnostic, mine_clearing_flail, rail_grinding),
@@ -197,12 +197,9 @@ namespace Ashfall.Core.Tests
             // Plan 157 added grain_milling_archive.
             // Plan 159 added leatherwork_archive.
             // Plan 143 added narrative_questlines.
-            // B5–B8 Phase 6 added deep_well (pins were already stale at 186/180
-            // before this package — live registry was 190; bumped to the true count).
-            // D1 drift rematch 2026-09-17: the live registry advanced by one
-            // further unversioned checksum section since that pin (VersionReport
-            // is the authority; pins track its current output).
-            Assert.Equal(188, envelopes.Count);
+            // B5–B8 Phase 6 and subsequent registered sections are included;
+            // VersionReport is the authority for the current count.
+            Assert.Equal(260, envelopes.Count);
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -215,7 +212,7 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
-            Assert.Contains("Save Persistence Inventory (194 sections: 6 versioned codecs, 188 checksum envelopes):", inventory);
+            Assert.Contains("Save Persistence Inventory (266 sections: 6 versioned codecs, 260 checksum envelopes):", inventory);
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);

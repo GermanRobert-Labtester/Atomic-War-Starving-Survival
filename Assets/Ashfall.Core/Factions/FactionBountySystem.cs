@@ -69,8 +69,8 @@ namespace Ashfall.Core.Factions
 
         public FactionBountySystem(FactionBountySystemState? state = null)
         {
-            _state = state ?? new FactionBountySystemState();
-            _state.Bounties ??= new List<FactionBountyRecord>();
+            _state = new FactionBountySystemState();
+            RestoreState(state);
         }
 
         public static FactionBountySeverity CalculateSeverity(int authoredStandingDelta)
@@ -91,6 +91,13 @@ namespace Ashfall.Core.Factions
             int authoredStandingDelta,
             int day)
         {
+            if (string.IsNullOrWhiteSpace(factionId)
+                || string.IsNullOrWhiteSpace(encounterId)
+                || string.IsNullOrWhiteSpace(choiceId)
+                || day < 0)
+            {
+                return null;
+            }
             if (authoredStandingDelta > PatrolBountyStandingThreshold)
             {
                 return null;
@@ -195,27 +202,14 @@ namespace Ashfall.Core.Factions
                 Bounties = new List<FactionBountyRecord>()
             };
 
-            foreach (var b in _state.Bounties)
+            if (_state.Bounties != null)
             {
-                if (b == null) continue;
-                copy.Bounties.Add(new FactionBountyRecord
+                foreach (var bounty in _state.Bounties)
                 {
-                    BountyId = b.BountyId,
-                    FactionId = b.FactionId,
-                    AuthoredStandingDelta = b.AuthoredStandingDelta,
-                    Severity = b.Severity,
-                    State = b.State,
-                    IssuedDay = b.IssuedDay,
-                    ResolvedDay = b.ResolvedDay,
-                    Provenance = new FactionBountyProvenance
-                    {
-                        SourceType = b.Provenance.SourceType,
-                        EncounterId = b.Provenance.EncounterId,
-                        ChoiceId = b.Provenance.ChoiceId,
-                        SourceResolutionId = b.Provenance.SourceResolutionId,
-                        Day = b.Provenance.Day
-                    }
-                });
+                    var cloned = CloneRecord(bounty);
+                    if (cloned != null)
+                        copy.Bounties.Add(cloned);
+                }
             }
 
             return copy;
@@ -223,31 +217,39 @@ namespace Ashfall.Core.Factions
 
         public void RestoreState(FactionBountySystemState? state)
         {
-            _state.Bounties.Clear();
+            _state.Bounties = new List<FactionBountyRecord>();
             if (state?.Bounties == null) return;
 
-            foreach (var b in state.Bounties)
+            foreach (var bounty in state.Bounties)
             {
-                if (b == null) continue;
-                _state.Bounties.Add(new FactionBountyRecord
-                {
-                    BountyId = b.BountyId,
-                    FactionId = b.FactionId,
-                    AuthoredStandingDelta = b.AuthoredStandingDelta,
-                    Severity = b.Severity,
-                    State = b.State,
-                    IssuedDay = b.IssuedDay,
-                    ResolvedDay = b.ResolvedDay,
-                    Provenance = new FactionBountyProvenance
-                    {
-                        SourceType = b.Provenance?.SourceType ?? "patrol_violation",
-                        EncounterId = b.Provenance?.EncounterId ?? string.Empty,
-                        ChoiceId = b.Provenance?.ChoiceId ?? string.Empty,
-                        SourceResolutionId = b.Provenance?.SourceResolutionId ?? string.Empty,
-                        Day = b.Provenance?.Day ?? b.IssuedDay
-                    }
-                });
+                var cloned = CloneRecord(bounty);
+                if (cloned != null)
+                    _state.Bounties.Add(cloned);
             }
+        }
+
+        private static FactionBountyRecord? CloneRecord(FactionBountyRecord? source)
+        {
+            if (source == null) return null;
+
+            return new FactionBountyRecord
+            {
+                BountyId = source.BountyId ?? string.Empty,
+                FactionId = source.FactionId ?? string.Empty,
+                AuthoredStandingDelta = source.AuthoredStandingDelta,
+                Severity = source.Severity,
+                State = source.State,
+                IssuedDay = source.IssuedDay,
+                ResolvedDay = source.ResolvedDay,
+                Provenance = new FactionBountyProvenance
+                {
+                    SourceType = source.Provenance?.SourceType ?? "patrol_violation",
+                    EncounterId = source.Provenance?.EncounterId ?? string.Empty,
+                    ChoiceId = source.Provenance?.ChoiceId ?? string.Empty,
+                    SourceResolutionId = source.Provenance?.SourceResolutionId ?? string.Empty,
+                    Day = source.Provenance?.Day ?? source.IssuedDay
+                }
+            };
         }
     }
 }

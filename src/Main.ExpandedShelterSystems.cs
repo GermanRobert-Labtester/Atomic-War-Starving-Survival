@@ -163,6 +163,7 @@ namespace AtomicWar.GodotApp
             SetupOutpostSettlement();
             SetupWeatherCascade();
             SetupTerritoryControl();
+            SetupNightWatch();
             SetupCooking();
             SetupPresentation();
             SetupOrphanSealWave1();
@@ -363,6 +364,7 @@ namespace AtomicWar.GodotApp
             SaveCampaignLegacy();
             SaveResearchUnlock();
             SaveUnifiedEnding();
+            SaveNightWatch();
         }
 
         /// <summary>Capture research progress into the campaign envelope (Plan 34: research state must round-trip).</summary>
@@ -541,6 +543,9 @@ namespace AtomicWar.GodotApp
                     break;
                 case "sound_ranging":
                     OpenSoundRangingPanel();
+                    break;
+                case "night_watch":
+                    ShowNightWatchPanel();
                     break;
                 case "cvd_diamond":
                     OpenCvdDiamondPanel();
@@ -821,6 +826,7 @@ namespace AtomicWar.GodotApp
             ResetCampaignLegacy();
             ResetResearchUnlock();
             ResetUnifiedEnding();
+            ResetNightWatch();
             _expandedShelterRoster = new DutyRosterSystem();
 
             _airlockSecurityDirty = false;

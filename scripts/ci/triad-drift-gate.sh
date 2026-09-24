@@ -82,6 +82,8 @@ found_saves.discard("SaveAllExpandedShelterSystems")
 # save section for one would manufacture an empty second authority, so they are
 # exempted here by name rather than silenced in the host.
 found_saves.discard("SavePresentation")  # Holdfast presentation slate: derived read model, persists nothing.
+found_saves.discard("SaveNightWatch")    # Night watch: composite coordinator, persists through perimeter_defense, duty_roster, and shelter_security.
+found_saves.discard("SaveNightWatchPatrolReadiness")  # Alias for SaveNightWatch coordinator.
 
 found_setups = set(re.findall(method_qualifier + r" void (Setup[A-Za-z0-9_]+)\(", all_main_code))
 

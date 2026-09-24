@@ -26,6 +26,100 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void TickDay_SameDay_IsIdempotent()
+        {
+            var system = Create(out var inventory);
+            system.RegisterRecipe(new GrainProcessingRecipe
+            {
+                recipe_id = "recipe_ash_grain_flour",
+                input_item_id = "crop_ash_grain",
+                input_quantity = 2,
+                output_item_id = "item_grain_flour",
+                output_quantity = 3,
+                processing_hours = 12f
+            });
+            inventory.AddById("crop_ash_grain", 2);
+            Assert.True(system.StartMilling("recipe_ash_grain_flour", "silo_01").IsSuccess);
+
+            system.TickDay(1);
+            system.TickDay(1);
+
+            Assert.Single(system.State.active_jobs);
+            Assert.Equal(8f, system.State.active_jobs[0].progress_hours);
+        }
+
+        [Fact]
+        public void RegisterSilo_NonFiniteMetrics_AreBounded()
+        {
+            var system = Create(out _);
+
+            Assert.True(system.RegisterSilo("silo_nan", float.NaN, float.PositiveInfinity));
+
+            var silo = system.GetSilo("silo_nan")!;
+            Assert.InRange(silo.integrity, 0f, 100f);
+            Assert.InRange(silo.moisture_pct, 0f, 100f);
+        }
+
+        [Fact]
+        public void TreatSilo_NonFiniteReduction_DoesNotMutate()
+        {
+            var system = Create(out var inventory);
+            inventory.AddById("item_silo_pest_treatment", 1);
+            system.GetSilo("silo_01")!.pest_pressure = 20f;
+
+            var result = system.TreatSilo("silo_01", "item_silo_pest_treatment", 1, float.NaN);
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal(1, inventory.CountById("item_silo_pest_treatment"));
+            Assert.Equal(20f, system.GetSilo("silo_01")!.pest_pressure);
+        }
+
+        [Fact]
+        public void LoadCatalog_NullEntries_AreIgnored()
+        {
+            var system = new GrainProcessingSystem(new Inventory.Inventory());
+
+            system.LoadCatalog(new GrainProcessingCatalog
+            {
+                recipes = new List<GrainProcessingRecipe> { null! },
+                silos = new List<GrainSiloDefinition> { null! }
+            });
+
+            Assert.Empty(system.Recipes);
+            Assert.Empty(system.State.silos);
+        }
+
+        [Fact]
+        public void Restore_MalformedRecords_IsNormalized()
+        {
+            var system = new GrainProcessingSystem(new Inventory.Inventory());
+            system.RestoreState(new GrainProcessingState
+            {
+                silos = new List<GrainSiloState>
+                {
+                    null!,
+                    new GrainSiloState { silo_id = "silo_a", integrity = float.NaN },
+                    new GrainSiloState { silo_id = "SILO_A", integrity = 50f }
+                },
+                active_jobs = new List<GrainProcessingJob> { null! }
+            });
+
+            Assert.Single(system.State.silos);
+            Assert.InRange(system.State.silos[0].integrity, 0f, 100f);
+            Assert.Empty(system.State.active_jobs);
+        }
+
+        [Fact]
+        public void SiloIdentity_IsCaseInsensitiveAndTrimmed()
+        {
+            var system = Create(out _);
+
+            Assert.True(system.RegisterSilo(" silo_case ", 80f));
+            Assert.NotNull(system.GetSilo("SILO_CASE"));
+            Assert.False(system.RegisterSilo("silo_case", 90f));
+        }
+
+        [Fact]
         public void Milling_ConsumesInputAtomically_AndGrantsKitchenConsumableOutput()
         {
             var system = Create(out var inventory);

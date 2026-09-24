@@ -157,16 +157,27 @@ namespace Ashfall.Core.Voice
                 return VoiceLineSelectionResult.None;
             }
 
-            // Deterministic priority and weighted selection
-            // Sort primary by PriorityWeight descending, then stable tie-break by LineId hash + seed
+            // Deterministic priority and weighted selection. StableHash avoids
+            // .NET's process-randomized string hash; ordinal fields make the
+            // final ordering total even if authored line IDs collide.
             qualifying.Sort((a, b) =>
             {
                 int cmp = b.PriorityWeight.CompareTo(a.PriorityWeight);
                 if (cmp != 0) return cmp;
 
-                int hashA = (a.LineId?.GetHashCode() ?? 0) ^ deterministicSeed;
-                int hashB = (b.LineId?.GetHashCode() ?? 0) ^ deterministicSeed;
-                return hashA.CompareTo(hashB);
+                cmp = StableHash.Combine(deterministicSeed, a.LineId)
+                    .CompareTo(StableHash.Combine(deterministicSeed, b.LineId));
+                if (cmp != 0) return cmp;
+
+                cmp = string.CompareOrdinal(a.LineId, b.LineId);
+                if (cmp != 0) return cmp;
+                cmp = string.CompareOrdinal(a.VoiceKey, b.VoiceKey);
+                if (cmp != 0) return cmp;
+                cmp = string.CompareOrdinal(a.TextKey, b.TextKey);
+                if (cmp != 0) return cmp;
+                cmp = string.CompareOrdinal(a.AudioCueKey, b.AudioCueKey);
+                if (cmp != 0) return cmp;
+                return string.CompareOrdinal(a.RequiredTraumaTag, b.RequiredTraumaTag);
             });
 
             var selected = qualifying[0];

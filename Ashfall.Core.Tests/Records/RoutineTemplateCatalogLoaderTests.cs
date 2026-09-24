@@ -56,10 +56,10 @@ namespace Ashfall.Core.Tests.Records
             Assert.True(result.Success);
 
             var ids = result.Catalog!.templates.Select(t => t.template_id).ToHashSet(StringComparer.OrdinalIgnoreCase);
-            Assert.Contains("standard_worker", ids);
-            Assert.Contains("night_guard", ids);
-            Assert.Contains("scavenger_flexible", ids);
-            Assert.Contains("infirmary_caretaker", ids);
+            Assert.Contains("routine_standard", ids);
+            Assert.Contains("routine_night_shift", ids);
+            Assert.Contains("routine_early_riser", ids);
+            Assert.Contains("routine_night_owl", ids);
         }
 
         [Fact]
@@ -92,9 +92,9 @@ namespace Ashfall.Core.Tests.Records
             var system = new SurvivorRoutineSystem();
             system.BindValidatedCatalog(result.Catalog!);
 
-            var record = system.AssignRoutine("survivor_alpha", "standard_worker");
+            var record = system.AssignRoutine("survivor_alpha", "routine_standard");
             Assert.Equal("survivor_alpha", record.SurvivorId);
-            Assert.Equal("standard_worker", record.TemplateId);
+            Assert.Equal("routine_standard", record.TemplateId);
             Assert.NotEmpty(record.TimeBlocks);
             Assert.Equal(1, system.TrackedRoutineCount);
         }
@@ -108,12 +108,12 @@ namespace Ashfall.Core.Tests.Records
 
             var system = new SurvivorRoutineSystem();
             system.BindValidatedCatalog(result.Catalog!);
-            system.AssignRoutine("survivor_alpha", "standard_worker");
+            system.AssignRoutine("survivor_alpha", "routine_standard");
 
-            // standard_worker: sleep ~23-7, work ~9-17, meal ~12-13
+            // routine_standard: sleep ~23-7, work ~9-17, meal ~13-14
             string sleepAct = system.GetActivityAtHour("survivor_alpha", 2);
             string workAct = system.GetActivityAtHour("survivor_alpha", 11);
-            string mealAct = system.GetActivityAtHour("survivor_alpha", 12);
+            string mealAct = system.GetActivityAtHour("survivor_alpha", 13);
 
             Assert.Equal("Sleep", sleepAct);
             Assert.Equal("Work", workAct);
@@ -150,8 +150,8 @@ namespace Ashfall.Core.Tests.Records
             var system = new SurvivorRoutineSystem();
             system.BindValidatedCatalog(result.Catalog!);
 
-            system.AssignRoutine("survivor_alpha", "standard_worker");  // sleeps 23-7
-            system.AssignRoutine("survivor_beta", "night_guard");       // sleeps during day
+            system.AssignRoutine("survivor_alpha", "routine_standard");  // sleeps 23-7
+            system.AssignRoutine("survivor_beta", "routine_night_shift"); // sleeps during day
 
             var roomAssignments = new Dictionary<string, string>
             {
@@ -178,7 +178,7 @@ namespace Ashfall.Core.Tests.Records
 
             var system1 = new SurvivorRoutineSystem();
             system1.BindValidatedCatalog(result.Catalog!);
-            system1.AssignRoutine("survivor_alpha", "standard_worker");
+            system1.AssignRoutine("survivor_alpha", "routine_standard");
             system1.SetPreference("survivor_alpha", "early_riser", "morning", "extrovert");
             system1.SetEnforcementLevel("strict");
             system1.EvaluateDailySatisfaction("survivor_alpha", 1, 8, 8, 3, 2);
@@ -197,7 +197,7 @@ namespace Ashfall.Core.Tests.Records
 
             var restoredRoutine = system2.GetRoutine("survivor_alpha");
             Assert.NotNull(restoredRoutine);
-            Assert.Equal("standard_worker", restoredRoutine!.TemplateId);
+            Assert.Equal("routine_standard", restoredRoutine!.TemplateId);
         }
     }
 }

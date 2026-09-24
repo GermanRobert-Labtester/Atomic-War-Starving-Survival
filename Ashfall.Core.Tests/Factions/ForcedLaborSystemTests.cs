@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Factions;
 using Xunit;
@@ -25,6 +26,117 @@ namespace Ashfall.Core.Tests.Factions
                 throw new FileNotFoundException("Could not find labor_camps.json");
             }
             return File.ReadAllText(path);
+        }
+
+        [Fact]
+        public void CaptureRestore_LaborerRecords_AreDeepSnapshots()
+        {
+            var system = new ForcedLaborSystem();
+            system.LoadCatalog(LoadLaborCampsCatalogJson(), new SystemTextJsonSerializer());
+            system.AssignLaborer("captive_save", "camp_sump_drainage", true, out _);
+
+            var snapshot = system.CaptureState();
+            snapshot.laborers[0].campId = "tampered";
+            snapshot.laborers[0].physicalStrain = 99f;
+
+            Assert.Equal("camp_sump_drainage", system.Laborers.First().campId);
+            Assert.Equal(0f, system.Laborers.First().physicalStrain);
+
+            var source = system.CaptureState();
+            var restored = new ForcedLaborSystem();
+            restored.RestoreState(source);
+            source.laborers[0].campId = "tampered_again";
+            Assert.Equal("camp_sump_drainage", restored.Laborers.First().campId);
+        }
+
+        [Fact]
+        public void Restore_NullAndNonFiniteState_IsNormalized()
+        {
+            var system = new ForcedLaborSystem();
+            system.RestoreState(new ForcedLaborState
+            {
+                crueltyIndex = float.NaN,
+                resistancePressure = float.PositiveInfinity,
+                guardCount = -4,
+                totalEscaped = -2,
+                laborers = new List<ForcedLaborerState>
+                {
+                    null!,
+                    new ForcedLaborerState
+                    {
+                        captiveId = "captive_nan",
+                        campId = "camp_sump_drainage",
+                        physicalStrain = float.NaN,
+                        health = float.PositiveInfinity,
+                        individualResentment = float.NegativeInfinity
+                    }
+                }
+            });
+
+            Assert.InRange(system.CrueltyIndex, 0f, 100f);
+            Assert.InRange(system.ResistancePressure, 0f, 100f);
+            Assert.Equal(0, system.GuardCount);
+            Assert.Equal(0, system.TotalEscaped);
+            Assert.Single(system.Laborers);
+            Assert.InRange(system.Laborers.First().physicalStrain, 0f, 100f);
+            Assert.InRange(system.Laborers.First().health, 0f, 100f);
+        }
+
+        [Fact]
+        public void LoadCatalog_InvalidReload_ClearsPreviousAuthority()
+        {
+            var system = new ForcedLaborSystem();
+            system.LoadCatalog(LoadLaborCampsCatalogJson(), new SystemTextJsonSerializer());
+            Assert.NotNull(system.GetCamp("camp_sump_drainage"));
+
+            system.LoadCatalog("{ invalid json", new SystemTextJsonSerializer());
+
+            Assert.Null(system.GetCamp("camp_sump_drainage"));
+        }
+
+        [Fact]
+        public void CalculateProductivity_NonFiniteInputs_RemainBounded()
+        {
+            var system = new ForcedLaborSystem();
+            var camp = new LaborCampDefinition
+            {
+                base_productivity = float.NaN,
+                guard_requirement_ratio = float.PositiveInfinity
+            };
+            var laborer = new ForcedLaborerState
+            {
+                physicalStrain = float.NaN,
+                health = float.NegativeInfinity
+            };
+
+            float result = system.CalculateProductivity(camp, laborer, float.NaN);
+
+            Assert.True(float.IsFinite(result));
+            Assert.True(result >= 0.1f);
+        }
+
+        [Fact]
+        public void Identity_IsCaseInsensitiveAndTrimmed()
+        {
+            var system = new ForcedLaborSystem();
+            system.LoadCatalog(LoadLaborCampsCatalogJson(), new SystemTextJsonSerializer());
+
+            Assert.True(system.AssignLaborer(" CAPTIVE_ID ", " CAMP_SUMP_DRAINAGE ", true, out _));
+
+            Assert.Single(system.Laborers);
+            Assert.Equal("CAPTIVE_ID", system.Laborers.First().captiveId);
+            Assert.Equal("CAMP_SUMP_DRAINAGE", system.Laborers.First().campId);
+        }
+
+        [Fact]
+        public void DailyShift_NullRng_FailsBeforeMutation()
+        {
+            var system = new ForcedLaborSystem();
+            system.LoadCatalog(LoadLaborCampsCatalogJson(), new SystemTextJsonSerializer());
+            system.AssignLaborer("captive_1", "camp_sump_drainage", true, out _);
+
+            Assert.Throws<ArgumentNullException>(() => system.AdvanceDailyShift(null!));
+            Assert.Equal(0, system.Laborers.First().shiftsCompleted);
         }
 
         [Fact]

@@ -66,6 +66,107 @@ namespace Ashfall.Core
         public string Checksum = string.Empty;
     }
 
+    // The watch fields were added to DutyRosterSystemState after the v1/v2
+    // save shapes were frozen. These checksum-only projections retain the
+    // historical public-field shape so an old envelope can be authenticated
+    // before it is migrated forward. They are never serialized themselves.
+    [Serializable]
+    internal sealed class LegacyDutyRosterSystemStateChecksum
+    {
+        public string systemId = string.Empty;
+        public bool expansionUnlocked;
+        public bool wallInspected;
+        public string chartScript = string.Empty;
+        public bool kessPencilAllowed;
+        public bool waitInk;
+        public bool blankRowsAccess;
+        public bool mutationRosterInUse;
+        public bool mutationRosterStillBlank;
+        public bool mutationRosterBurned;
+        public bool mutationRationProtocol;
+        public string endingId = string.Empty;
+        public bool secondWinterActive;
+        public int seedSalt;
+        public int lastMorningDay;
+        public int daysLeftBlank;
+        public int lastBurnDay;
+        public bool overflowAccess;
+        public List<string> overflowVisited = new List<string>();
+        public List<DutyRosterRow> rows = new List<DutyRosterRow>();
+        public List<DutyRosterAssignmentEntry> assignments = new List<DutyRosterAssignmentEntry>();
+        public List<DutyRosterPneumaticMemo> pneumaticMemos = new List<DutyRosterPneumaticMemo>();
+        public List<string> hiddenFromNorth = new List<string>();
+        public List<string> blankRowsLivingNames = new List<string>();
+
+        public static LegacyDutyRosterSystemStateChecksum From(DutyRosterSystemState? state)
+        {
+            state ??= new DutyRosterSystemState();
+            return new LegacyDutyRosterSystemStateChecksum
+            {
+                systemId = state.systemId,
+                expansionUnlocked = state.expansionUnlocked,
+                wallInspected = state.wallInspected,
+                chartScript = state.chartScript,
+                kessPencilAllowed = state.kessPencilAllowed,
+                waitInk = state.waitInk,
+                blankRowsAccess = state.blankRowsAccess,
+                mutationRosterInUse = state.mutationRosterInUse,
+                mutationRosterStillBlank = state.mutationRosterStillBlank,
+                mutationRosterBurned = state.mutationRosterBurned,
+                mutationRationProtocol = state.mutationRationProtocol,
+                endingId = state.endingId,
+                secondWinterActive = state.secondWinterActive,
+                seedSalt = state.seedSalt,
+                lastMorningDay = state.lastMorningDay,
+                daysLeftBlank = state.daysLeftBlank,
+                lastBurnDay = state.lastBurnDay,
+                overflowAccess = state.overflowAccess,
+                overflowVisited = state.overflowVisited != null ? new List<string>(state.overflowVisited) : new List<string>(),
+                rows = state.rows != null ? new List<DutyRosterRow>(state.rows) : new List<DutyRosterRow>(),
+                assignments = state.assignments != null ? new List<DutyRosterAssignmentEntry>(state.assignments) : new List<DutyRosterAssignmentEntry>(),
+                pneumaticMemos = state.pneumaticMemos != null ? new List<DutyRosterPneumaticMemo>(state.pneumaticMemos) : new List<DutyRosterPneumaticMemo>(),
+                hiddenFromNorth = state.hiddenFromNorth != null ? new List<string>(state.hiddenFromNorth) : new List<string>(),
+                blankRowsLivingNames = state.blankRowsLivingNames != null ? new List<string>(state.blankRowsLivingNames) : new List<string>()
+            };
+        }
+    }
+
+    [Serializable]
+    internal sealed class LegacyDutyRosterSaveV1Checksum
+    {
+        public int saveVersion;
+        public int simDay;
+        public LegacyDutyRosterSystemStateChecksum roster = new LegacyDutyRosterSystemStateChecksum();
+        public MoraleMarkSystemState marks = new MoraleMarkSystemState();
+        public ShelterEncounterSystemState encounters = new ShelterEncounterSystemState();
+        public string Checksum = string.Empty;
+    }
+
+    [Serializable]
+    internal sealed class LegacyDutyRosterSaveV2Checksum
+    {
+        public int saveVersion;
+        public int simDay;
+        public LegacyDutyRosterSystemStateChecksum roster = new LegacyDutyRosterSystemStateChecksum();
+        public MoraleMarkSystemState marks = new MoraleMarkSystemState();
+        public ShelterEncounterSystemState encounters = new ShelterEncounterSystemState();
+        public DutyRosterOverflowState overflow = new DutyRosterOverflowState();
+        public string Checksum = string.Empty;
+    }
+
+    [Serializable]
+    internal sealed class LegacyDutyRosterSaveV3Checksum
+    {
+        public int saveVersion;
+        public int simDay;
+        public LegacyDutyRosterSystemStateChecksum roster = new LegacyDutyRosterSystemStateChecksum();
+        public MoraleMarkSystemState marks = new MoraleMarkSystemState();
+        public ShelterEncounterSystemState encounters = new ShelterEncounterSystemState();
+        public DutyRosterOverflowState overflow = new DutyRosterOverflowState();
+        public DutyRosterQuestState quests = new DutyRosterQuestState();
+        public string Checksum = string.Empty;
+    }
+
     /// <summary>
     /// Serialization codec for the Duty Roster expansion state. Same rules as
     /// HoldfastSaveCodec: the checksum is recomputed on encode, and decode
@@ -117,7 +218,7 @@ DutyRosterQuestRuntime? quests = null)
                 var v1 = json.Deserialize<DutyRosterSaveV1>(jsonText);
                 if (v1 != null && v1.saveVersion == 1)
                 {
-                    ValidateChecksum(v1.Checksum, v1, "v1");
+                    ValidateChecksum(v1.Checksum, v1, "v1", ComputeLegacyV1Checksum(v1));
                     var migrated = new DutyRosterSave
                     {
                         saveVersion = DutyRosterSave.CurrentSaveVersion,
@@ -136,7 +237,7 @@ DutyRosterQuestRuntime? quests = null)
                 var v2 = json.Deserialize<DutyRosterSaveV2>(jsonText);
                 if (v2 != null && v2.saveVersion == 2)
                 {
-                    ValidateChecksum(v2.Checksum, v2, "v2");
+                    ValidateChecksum(v2.Checksum, v2, "v2", ComputeLegacyV2Checksum(v2));
                     var migrated = new DutyRosterSave
                     {
                         saveVersion = DutyRosterSave.CurrentSaveVersion,
@@ -186,7 +287,13 @@ DutyRosterQuestRuntime? quests = null)
                 throw new InvalidOperationException(
                     "DutyRosterSave: saveVersion " + save.saveVersion + " is not a valid version.");
 
-            ValidateChecksum(save.Checksum, save, "v" + save.saveVersion);
+            ValidateChecksum(
+                save.Checksum,
+                save,
+                "v" + save.saveVersion,
+                save.saveVersion == DutyRosterSave.CurrentSaveVersion
+                    ? ComputeLegacyV3Checksum(save)
+                    : null);
 
             if (save.overflow == null) save.overflow = new DutyRosterOverflowState();
             if (save.overflow.visitedNodes == null) save.overflow.visitedNodes = new List<string>();
@@ -194,13 +301,62 @@ DutyRosterQuestRuntime? quests = null)
             return save;
         }
 
-        private static void ValidateChecksum(string expected, object payload, string label)
+        private static string ComputeLegacyV1Checksum(DutyRosterSaveV1 save)
+        {
+            return SaveChecksum.Compute(new LegacyDutyRosterSaveV1Checksum
+            {
+                saveVersion = save.saveVersion,
+                simDay = save.simDay,
+                roster = LegacyDutyRosterSystemStateChecksum.From(save.roster),
+                marks = save.marks,
+                encounters = save.encounters,
+                Checksum = save.Checksum
+            });
+        }
+
+        private static string ComputeLegacyV2Checksum(DutyRosterSaveV2 save)
+        {
+            return SaveChecksum.Compute(new LegacyDutyRosterSaveV2Checksum
+            {
+                saveVersion = save.saveVersion,
+                simDay = save.simDay,
+                roster = LegacyDutyRosterSystemStateChecksum.From(save.roster),
+                marks = save.marks,
+                encounters = save.encounters,
+                overflow = save.overflow,
+                Checksum = save.Checksum
+            });
+        }
+
+        private static string ComputeLegacyV3Checksum(DutyRosterSave save)
+        {
+            return SaveChecksum.Compute(new LegacyDutyRosterSaveV3Checksum
+            {
+                saveVersion = save.saveVersion,
+                simDay = save.simDay,
+                roster = LegacyDutyRosterSystemStateChecksum.From(save.roster),
+                marks = save.marks,
+                encounters = save.encounters,
+                overflow = save.overflow,
+                quests = save.quests,
+                Checksum = save.Checksum
+            });
+        }
+
+        private static void ValidateChecksum(
+            string expected,
+            object payload,
+            string label,
+            string? legacyChecksum = null)
         {
             if (string.IsNullOrEmpty(expected))
                 throw new InvalidOperationException(
                     "DutyRosterSave: save carries no checksum (truncated or tampered file).");
             string actual = SaveChecksum.Compute(payload);
-            if (!string.Equals(expected, actual, StringComparison.Ordinal))
+            bool currentMatches = string.Equals(expected, actual, StringComparison.Ordinal);
+            bool legacyMatches = legacyChecksum != null &&
+                string.Equals(expected, legacyChecksum, StringComparison.Ordinal);
+            if (!currentMatches && !legacyMatches)
                 throw new InvalidOperationException(
                     "DutyRosterSave: checksum mismatch (" + label + ", corrupt or foreign save).");
         }

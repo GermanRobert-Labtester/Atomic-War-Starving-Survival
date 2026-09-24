@@ -4,15 +4,6 @@ using System.Collections.Generic;
 
 namespace Ashfall.Core.Thirdonary
 {
-    public enum ThirdonaryCategory
-    {
-        Environmental,
-        Crafting,
-        Medical,
-        Combat,
-        Lore,
-        Social
-    }
 
     [Serializable]
     public sealed class ThirdonaryQuestDef

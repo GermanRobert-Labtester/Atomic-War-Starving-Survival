@@ -1,5 +1,7 @@
 # Plan 143 — Medical Afflictions → Quest & Work Bridge
 
+**Status:** INTEGRATED / SEALED (Full host, duty roster, survivor fitness, quest, UI, and CLI self-test integration completed).
+
 ## Goal
 
 Connect medical afflictions to quest availability and work efficiency so that sick survivors unlock/lock specific quests and produce less work output. Currently afflictions are tracked in the medical pipeline but have no downstream effect on quests or duty performance. This makes illness a meaningful gameplay factor that shapes what the player can do and how efficiently the shelter operates.

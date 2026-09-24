@@ -130,6 +130,15 @@ namespace Ashfall.Core
         WildlifeHarvestSelfTest,
         StormForecastSelfTest,
         KilnworksSelfTest,
+        DependencyTaperWithdrawalSelfTest,
+        AntenatalMaternalHealthSelfTest,
+        ClinicalWardTriageSelfTest,
+        ChemicalReagentSynthesisSelfTest,
+        MechanicalDrivelineSelfTest,
+        SleepAcousticRestSelfTest,
+        ShelterArchiveSelfTest,
+        DreamSystemSelfTest,
+        AccessibilitySettingsSelfTest,
         ShelterMaintenanceSelfTest,
         SurvivorRoutinesSelfTest,
         OrphanSealWave1SelfTest,
@@ -211,8 +220,24 @@ namespace Ashfall.Core
         DeathLegacySelfTest,
         RelationshipDecaySelfTest,
         VisitorIntegrationSelfTest,
-        PersonalBelongingsSelfTest
+        PersonalBelongingsSelfTest,
+        MemoryDecaySelfTest,
+        InterpersonalConflictSelfTest,
+        ExerciseSelfTest,
+        AfflictionBridgeSelfTest,
+        RadiationMutationSelfTest,
+        RadioProgramProductionSelfTest,
+        WorkingAnimalsSelfTest,
+        BlackMarketSelfTest,
+        CultureCreationSelfTest,
+        PsychologicalProfileSelfTest,
+        SkillCertificationSelfTest,
+        ChildDevelopmentSelfTest,
+        BestiarySelfTest,
+        HealthHistorySelfTest,
+        LeadershipSuccessionSelfTest
     }
+
 
     /// <summary>
     /// Metadata descriptor for a single registered host-CLI command or verb.
@@ -878,6 +903,60 @@ namespace Ashfall.Core
                     new[] { "--the-weather-selftest" },
                     "Expansion 33 The Weather: forecast confidence vs lead time, warning issuance gate, seasonal readiness composite, and black-rain absorption"),
                 new HostCliActionDescriptor(
+                    HostCliAction.DependencyTaperWithdrawalSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--dependency-taper-selftest",
+                    new[] { "--the-habit-selftest" },
+                    "Expansion 35 The Habit: chemical dependency taper schedules, withdrawal symptom bands, peer-support mitigation, and shelter care policy posture"),
+                new HostCliActionDescriptor(
+                    HostCliAction.AntenatalMaternalHealthSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--antenatal-care-selftest",
+                    new[] { "--the-quickening-selftest" },
+                    "Expansion 37 The Quickening: antenatal trimester progression, maternal nutritional demand, clinic readiness, and neonatal delivery resolution"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ClinicalWardTriageSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--clinical-ward-selftest",
+                    new[] { "--the-ward-selftest" },
+                    "Expansion 38 The Ward: clinical triage priority, surgical suite readiness, sterile consumable supply consumption, and nosocomial infection risks"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ChemicalReagentSynthesisSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--chemical-reagent-selftest",
+                    new[] { "--the-reagent-selftest" },
+                    "Expansion 39 The Reagent: chemical synthesis reactor safety, catalyst purity, stoichiometric mass balance, and acidic effluent neutralization"),
+                new HostCliActionDescriptor(
+                    HostCliAction.MechanicalDrivelineSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--mechanical-driveline-selftest",
+                    new[] { "--the-wheel-selftest" },
+                    "Expansion 40 The Wheel: mechanical power driveline line shafts, friction transmission, machine tool tolerance, and millwright maintenance"),
+                new HostCliActionDescriptor(
+                    HostCliAction.SleepAcousticRestSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--sleep-acoustic-selftest",
+                    new[] { "--the-quiet-selftest" },
+                    "Expansion 41 The Quiet: sleep quality index, acoustic decibel attenuation, quiet hours compliance, and sensory relief kit deployment"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ShelterArchiveSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--shelter-archive-selftest",
+                    new[] { "--archive-system-selftest" },
+                    "Plan 162 shelter history & archive: institutional memory, governance decisions, historical milestones, casualty memorials, and search indexing"),
+                new HostCliActionDescriptor(
+                    HostCliAction.DreamSystemSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--dream-system-selftest",
+                    new[] { "--dreams-selftest" },
+                    "Plan 177 survivor dream & sleep event system: dream templates catalog, nocturnal dream generation, nightmare compounding, and psychological interpretations"),
+                new HostCliActionDescriptor(
+                    HostCliAction.AccessibilitySettingsSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--accessibility-settings-selftest",
+                    new[] { "--accessibility-options-selftest" },
+                    "Plan 184 accessibility options system: visual, hearing, motor, and cognitive profiles, high contrast, font scaling, and custom assists"),
+                new HostCliActionDescriptor(
                     HostCliAction.ShelterMaintenanceSelfTest,
                     "Expansions & Campaign Modules",
                     "--shelter-maintenance-selftest",
@@ -1182,6 +1261,12 @@ namespace Ashfall.Core
                     new[] { "--personal-quest-selftest" },
                     "Plan 200: Survivor personal quests, character arcs, stage progression, save persistence, and UI binding"),
                 new HostCliActionDescriptor(
+                    HostCliAction.AfflictionBridgeSelfTest,
+                    "Host Domains & Save Stores",
+                    "--affliction-bridge-selftest",
+                    new[] { "--affliction-bridges-selftest", "--affliction-quest-work-selftest" },
+                    "Plan 143: Medical Afflictions → Quest & Work Bridge: catalog loading, work modifiers, duty exclusions, quest gates, and UI projection"),
+                new HostCliActionDescriptor(
                     HostCliAction.TimeCapsuleSelfTest,
                     "Host Domains & Save Stores",
                     "--time-capsule-selftest",
@@ -1210,8 +1295,93 @@ namespace Ashfall.Core
                     "Host Domains & Save Stores",
                     "--personal-belongings-selftest",
                     new[] { "--keepsakes-selftest" },
-                    "Plan 210: Survivor keepsake claims, sentimental bonding, favorites, gifts, loss reporting, inheritance, and UI binding")
+                    "Plan 210: Survivor keepsake claims, sentimental bonding, favorites, gifts, loss reporting, inheritance, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.MemoryDecaySelfTest,
+                    "Host Domains & Save Stores",
+                    "--memory-decay-selftest",
+                    new[] { "--memory-system-selftest" },
+                    "Plan 185: Survivor memory & knowledge decay, cognitive degradation, reinforcement, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.InterpersonalConflictSelfTest,
+                    "Host Domains & Save Stores",
+                    "--interpersonal-conflict-selftest",
+                    new[] { "--conflict-system-selftest" },
+                    "Plan 202: Interpersonal conflict & grievance, dispute escalation, mediation resolution, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ExerciseSelfTest,
+                    "Host Domains & Save Stores",
+                    "--exercise-selftest",
+                    new[] { "--physical-training-selftest" },
+                    "Plan 216: Survivor exercise & physical training, athletic conditioning, workout routines, deconditioning, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RadiationMutationSelfTest,
+                    "Host Domains & Save Stores",
+                    "--radiation-mutation-selftest",
+                    new[] { "--mutation-system-selftest" },
+                    "Plan 172: Radiation mutation, genetic instability, exposure thresholds, and mutation tree progression"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RadioProgramProductionSelfTest,
+                    "Host Domains & Save Stores",
+                    "--radio-production-selftest",
+                    new[] { "--radio-program-production-selftest" },
+                    "Plan 173: Radio station content creation, audience response, broadcast delivery, and follow-ups"),
+                new HostCliActionDescriptor(
+                    HostCliAction.WorkingAnimalsSelfTest,
+                    "Host Domains & Save Stores",
+                    "--working-animals-selftest",
+                    new[] { "--companion-animal-selftest" },
+                    "Plan 151: Working animals and companion system: adoption, training, guard modifiers, and pack capacity"),
+                new HostCliActionDescriptor(
+                    HostCliAction.BlackMarketSelfTest,
+                    "Host Domains & Save Stores",
+                    "--black-market-selftest",
+                    new[] { "--underworld-economy-selftest" },
+                    "Plan 155: Black market and underground economy: contacts, syndicate stock, loan credit, and debt enforcement"),
+                new HostCliActionDescriptor(
+                    HostCliAction.CultureCreationSelfTest,
+                    "Host Domains & Save Stores",
+                    "--culture-creation-selftest",
+                    new[] { "--art-culture-selftest" },
+                    "Plan 178: Art & culture creation, artworks, masterworks, cultural identity, and display morale bonuses"),
+                new HostCliActionDescriptor(
+                    HostCliAction.PsychologicalProfileSelfTest,
+                    "Host Domains & Save Stores",
+                    "--psychological-profile-selftest",
+                    new[] { "--phobia-system-selftest", "--unified-psychology-selftest" },
+                    "Plan 179: Unified psychology & phobia system, trauma, coping mechanisms, therapy, and resilience"),
+                new HostCliActionDescriptor(
+                    HostCliAction.SkillCertificationSelfTest,
+                    "Host Domains & Save Stores",
+                    "--skill-certification-selftest",
+                    new[] { "--skill-tier-selftest", "--certifications-selftest" },
+                    "Plan 180: Skill certification & tier system, exams, qualifications, and specializations"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ChildDevelopmentSelfTest,
+                    "Host Domains & Save Stores",
+                    "--child-development-selftest",
+                    new[] { "--child-stages-selftest" },
+                    "Plan 183: Child development stages: age brackets, chore capacity, education, milestones, and canonical projection"),
+                new HostCliActionDescriptor(
+                    HostCliAction.BestiarySelfTest,
+                    "Host Domains & Save Stores",
+                    "--bestiary-selftest",
+                    new[] { "--creature-encounters-selftest", "--bestiary-ui-selftest" },
+                    "Plan 187: Bestiary creature tracking, 24-fauna catalog, sightings, kill/butcher counts, and tiered lore unlocks"),
+                new HostCliActionDescriptor(
+                    HostCliAction.HealthHistorySelfTest,
+                    "Host Domains & Save Stores",
+                    "--health-history-selftest",
+                    new[] { "--medical-records-selftest", "--vaccination-history-selftest" },
+                    "Plan 198: Health history & medical records, templates, diagnostic events, vaccination decay, and health trends"),
+                new HostCliActionDescriptor(
+                    HostCliAction.LeadershipSuccessionSelfTest,
+                    "Host Domains & Save Stores",
+                    "--leadership-succession-selftest",
+                    new[] { "--succession-selftest", "--leadership-challenges-selftest" },
+                    "Plan 208: Leadership succession, deputy appointment, challenges, policy enactments, and leader death succession")
         };
+
 
         private static readonly HostCliActionDescriptor[] _uiDescriptors = new[]
         {

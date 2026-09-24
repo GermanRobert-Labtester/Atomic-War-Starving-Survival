@@ -96,15 +96,6 @@ namespace Ashfall.Core
         public double moraleEffect { get; set; } = 0.0;
     }
 
-    [Serializable]
-    internal sealed class HoldfastItemsRoot
-    {
-#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
-        public int schema_version;
-#pragma warning restore CS0649
-        public List<HoldfastItemDto> items = new List<HoldfastItemDto>();
-    }
-
     /// <summary>
     /// JSON DTO for holdfast_factions.json. Avoids the alias collision in
     /// HoldfastFactionEntry (it defines both `id` and `Id`, which fall over

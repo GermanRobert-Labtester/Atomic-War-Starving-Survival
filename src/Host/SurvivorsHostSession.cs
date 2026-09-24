@@ -97,6 +97,8 @@ namespace AtomicWar.GodotApp
 
         private sealed class RadSurvivorWrapper : SurvivorRadState { }
 
+        public event Action<string, float>? OnSurvivorExposed;
+
         public SurvivorsHostSession()
         {
             Needs = new NeedsSystem();
@@ -107,6 +109,10 @@ namespace AtomicWar.GodotApp
                     var survivor = Find(s.Id);
                     if (survivor == null || needId != "health") return;
                     Needs.Modify(survivor, NeedKind.Health, delta);
+                },
+                onExposed: (s, delta) =>
+                {
+                    OnSurvivorExposed?.Invoke(s.Id, delta);
                 },
                 // C2 / Plan 21A (P7) — exposure-scaled protective wear (e.g.
                 // black-rain hazmat melt). Default 1 keeps unbound hosts on the
@@ -359,6 +365,7 @@ namespace AtomicWar.GodotApp
             Radiation.AdjustDose(state, acuteDose);
             if (!string.IsNullOrEmpty(reason))
                 state.LastExposureReason = reason;
+            OnSurvivorExposed?.Invoke(survivorId, acuteDose);
             return acuteDose;
         }
 

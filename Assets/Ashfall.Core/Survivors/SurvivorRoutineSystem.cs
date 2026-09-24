@@ -266,22 +266,30 @@ namespace Ashfall.Core.Survivors
             var routine = GetRoutine(survivorId);
             if (routine == null || routine.TimeBlocks.Count == 0) return "Idle";
 
-            foreach (var block in routine.TimeBlocks)
-            {
-                if (block.start_hour <= block.end_hour)
-                {
-                    if (hour >= block.start_hour && hour < block.end_hour)
-                        return block.activity_type;
-                }
-                else
-                {
-                    // Block wraps across midnight (e.g. 21 to 5)
-                    if (hour >= block.start_hour || hour < block.end_hour)
-                        return block.activity_type;
-                }
-            }
+            // Specific exceptions (Meal/Social/Sleep) may overlap a broad Work
+            // or Personal block. Resolve the shortest matching block rather than
+            // relying on authored list order, which previously hid lunch and
+            // other deliberate exceptions.
+            var match = routine.TimeBlocks
+                .Where(block => IsActiveAtHour(block, hour))
+                .OrderBy(GetBlockDuration)
+                .ThenBy(block => block.block_id, StringComparer.Ordinal)
+                .FirstOrDefault();
+            return match?.activity_type ?? "Personal";
+        }
 
-            return "Personal";
+        private static bool IsActiveAtHour(TimeBlockDef block, int hour)
+        {
+            if (block.start_hour <= block.end_hour)
+                return hour >= block.start_hour && hour < block.end_hour;
+            return hour >= block.start_hour || hour < block.end_hour;
+        }
+
+        private static int GetBlockDuration(TimeBlockDef block)
+        {
+            return block.start_hour <= block.end_hour
+                ? Math.Max(0, block.end_hour - block.start_hour)
+                : 24 - block.start_hour + Math.Max(0, block.end_hour);
         }
 
         // ── Satisfaction Evaluation ────────────────────────────────────────

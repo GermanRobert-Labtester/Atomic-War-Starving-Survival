@@ -5,13 +5,6 @@ using System.Collections.Generic;
 
 namespace Ashfall.Core.Medical
 {
-    public enum MedicalProcedureStatus
-    {
-        Active = 0,
-        Completed = 1,
-        Cancelled = 2,
-        Failed = 3
-    }
 
     /// <summary>Serialized scheduled-procedure row.</summary>
     [Serializable]

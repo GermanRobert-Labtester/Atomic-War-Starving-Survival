@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Ashfall.Core.Radio
@@ -148,11 +149,13 @@ namespace Ashfall.Core.Radio
             {
                 return rng.Next(0, count);
             }
-            // Deterministic hash fallback using StableHash (djb2/x33).
-            // HashCode.Combine is runtime-randomized in modern .NET and would
-            // break cross-host determinism. StableHash.Of is deterministic.
-            int hash = StableHash.Of(day.ToString() + ":" + ((int)(seedModifier * 100)).ToString());
-            return Math.Abs(hash) % count;
+            // Deterministic hash fallback using the stable Core mixer.
+            // HashCode/string.GetHashCode are runtime-randomized in modern
+            // .NET and would break cross-host determinism.
+            int hash = StableHash.Combine(
+                day,
+                ((int)(seedModifier * 100)).ToString(CultureInfo.InvariantCulture));
+            return StableHash.NonNegativeRemainder(hash, count);
         }
 
         /// <summary>

@@ -23,7 +23,7 @@ namespace Ashfall.Core.Tests.Shelter
 
         private static PowerGridSystem MakeSystem(out PowerGridState state)
         {
-            state = new PowerGridState
+            var initialState = new PowerGridState
             {
                 GenerationWatts = 800f,
                 BatteryCapacityWh = 4000f,
@@ -37,7 +37,9 @@ namespace Ashfall.Core.Tests.Shelter
             rooms.Single(r => r.RoomId == "room_air_filtration").DefaultPriority = PowerGridRoomPriority.Critical;
             rooms.Single(r => r.RoomId == "room_foundry").DefaultPriority = PowerGridRoomPriority.Low;
             rooms.Single(r => r.RoomId == "room_workshop").DefaultPriority = PowerGridRoomPriority.Low;
-            return new PowerGridSystem(state, rooms, new SeededRng(7));
+            var system = new PowerGridSystem(initialState, rooms, new SeededRng(7));
+            state = system.State;
+            return system;
         }
 
         [Fact]

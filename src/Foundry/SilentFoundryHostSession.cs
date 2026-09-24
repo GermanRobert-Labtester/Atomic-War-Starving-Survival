@@ -232,7 +232,8 @@ namespace AtomicWar.GodotApp
             InventoryHostSession inventory,
             JournalSystem? journal = null,
             MarketSystem? market = null,
-            ILog? log = null)
+            ILog? log = null,
+            bool seedSupplies = true)
         {
             log = log ?? new GodotLog();
             var files = new FileSystemIO();
@@ -265,7 +266,11 @@ namespace AtomicWar.GodotApp
             var saltMine = new SaltMineExtractionSystem();
             var session = new SilentFoundryHostSession(engine, saltMine, catalog, foundryItems,
                 inventory.Inventory, inventory.Catalog, journal, market, policyCatalog, log);
-            SeedFoundrySupplies(inventory);
+            // Starter stock is a fresh-campaign grant only. Seeding on restore
+            // would duplicate charge materials onto the restored inventory
+            // every Continue/load, so the caller gates it on fresh init.
+            if (seedSupplies)
+                SeedFoundrySupplies(inventory);
             return session;
         }
 

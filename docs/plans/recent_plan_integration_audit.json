@@ -3,7 +3,7 @@
   "generated_at": "2026-09-24",
   "method": "programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)",
   "verdict_counts": {
-    "INTEGRATED": 46
+    "INTEGRATED": 71
   },
   "plans": [
     {
@@ -160,6 +160,536 @@
         "KilnworksHostSession": [
           "src/Main.Kilnworks.cs",
           "src/Host/KilnworksHostSession.cs"
+        ]
+      }
+    },
+    {
+      "plan": "35",
+      "title": "Expansion 35 \u2014 The Habit",
+      "section": "dependency_taper_withdrawal",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "DependencyTaperLedger [Core], DependencyTaperState [Core], DependencyTaperCensus [Core], DependencyTaperWithdrawalEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "5/5 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`dependency_taper_withdrawal`"
+        ],
+        "triad": [
+          true,
+          "SetupDependencyTaperWithdrawal / SaveDependencyTaperWithdrawal"
+        ],
+        "save_file": [
+          true,
+          "dependency_taper_withdrawal_save.json"
+        ],
+        "save_store": [
+          true,
+          "DependencyTaperWithdrawalSaveStore"
+        ],
+        "host_session": [
+          true,
+          "DependencyTaperWithdrawalHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--dependency-taper-selftest"
+        ],
+        "tests": [
+          true,
+          "DependencyTaperWithdrawalEngineTests, DependencyTaperLedgerTests"
+        ]
+      },
+      "host_ref_files": {
+        "DependencyTaperLedger": [
+          "src/Host/DependencyTaperWithdrawalHostSession.cs",
+          "src/Host/HostCli.DependencyTaperWithdrawal.cs"
+        ],
+        "DependencyTaperState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/DependencyTaperWithdrawalHostSession.cs"
+        ],
+        "DependencyTaperCensus": [
+          "src/Main.DependencyTaperWithdrawal.cs",
+          "src/Host/DependencyTaperWithdrawalHostSession.cs"
+        ],
+        "DependencyTaperWithdrawalEngine": [
+          "src/Main.DependencyTaperWithdrawal.cs",
+          "src/Host/DependencyTaperWithdrawalHostSession.cs",
+          "src/Host/HostCli.DependencyTaperWithdrawal.cs"
+        ],
+        "DependencyTaperWithdrawalHostSession": [
+          "src/Main.DependencyTaperWithdrawal.cs",
+          "src/Host/DependencyTaperWithdrawalHostSession.cs",
+          "src/Host/HostCli.DependencyTaperWithdrawal.cs"
+        ]
+      }
+    },
+    {
+      "plan": "36",
+      "title": "Expansion 36 \u2014 The Watch",
+      "section": "perimeter_defense",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "NightWatchPatrolReadinessEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "2/2 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`perimeter_defense`"
+        ],
+        "triad": [
+          true,
+          "SetupPerimeterDefense / SavePerimeterDefense"
+        ],
+        "save_file": [
+          true,
+          "perimeter_defense_save.json"
+        ],
+        "save_store": [
+          true,
+          "PerimeterDefenseSaveStore"
+        ],
+        "host_session": [
+          true,
+          "NightWatchHostSession"
+        ],
+        "ui_panel": [
+          true,
+          "NightWatchPanel"
+        ],
+        "route": [
+          true,
+          "night_watch"
+        ],
+        "cli_flag": [
+          true,
+          "--patrol-encounter-selftest"
+        ],
+        "tests": [
+          true,
+          "NightWatchPatrolReadinessEngineTests, NightWatchOperationsTests, NightWatchHostIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "NightWatchPatrolReadinessEngine": [
+          "src/Host/NightWatchHostSession.cs"
+        ],
+        "NightWatchHostSession": [
+          "src/Main.NightWatch.cs",
+          "src/Host/NightWatchHostSession.cs",
+          "src/Host/HostCli.NightWatch.cs",
+          "src/UI/NightWatchPanel.cs"
+        ]
+      }
+    },
+    {
+      "plan": "37",
+      "title": "Expansion 37 \u2014 The Quickening",
+      "section": "antenatal_maternal_health",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "AntenatalMaternalCareLedger [Core], AntenatalMaternalCareState [Core], AntenatalMaternalCensus [Core], AntenatalMaternalHealthEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "5/5 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`antenatal_maternal_health`"
+        ],
+        "triad": [
+          true,
+          "SetupAntenatalMaternalHealth / SaveAntenatalMaternalHealth"
+        ],
+        "save_file": [
+          true,
+          "antenatal_maternal_health_save.json"
+        ],
+        "save_store": [
+          true,
+          "AntenatalMaternalHealthSaveStore"
+        ],
+        "host_session": [
+          true,
+          "AntenatalMaternalHealthHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--antenatal-care-selftest"
+        ],
+        "tests": [
+          true,
+          "AntenatalMaternalHealthEngineTests, AntenatalMaternalCareLedgerTests"
+        ]
+      },
+      "host_ref_files": {
+        "AntenatalMaternalCareLedger": [
+          "src/Host/AntenatalMaternalHealthHostSession.cs",
+          "src/Host/HostCli.AntenatalMaternalHealth.cs"
+        ],
+        "AntenatalMaternalCareState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs"
+        ],
+        "AntenatalMaternalCensus": [
+          "src/Main.AntenatalMaternalHealth.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs"
+        ],
+        "AntenatalMaternalHealthEngine": [
+          "src/Main.AntenatalMaternalHealth.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs",
+          "src/Host/HostCli.AntenatalMaternalHealth.cs"
+        ],
+        "AntenatalMaternalHealthHostSession": [
+          "src/Main.AntenatalMaternalHealth.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs",
+          "src/Host/HostCli.AntenatalMaternalHealth.cs"
+        ]
+      }
+    },
+    {
+      "plan": "38-exp",
+      "title": "Expansion 38 \u2014 The Ward",
+      "section": "clinical_ward_triage",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "ClinicalWardLedger [Core], ClinicalWardTriageState [Core], ClinicalWardCensus [Core], ClinicalWardTriageEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "5/5 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`clinical_ward_triage`"
+        ],
+        "triad": [
+          true,
+          "SetupClinicalWardTriage / SaveClinicalWardTriage"
+        ],
+        "save_file": [
+          true,
+          "clinical_ward_triage_save.json"
+        ],
+        "save_store": [
+          true,
+          "ClinicalWardTriageSaveStore"
+        ],
+        "host_session": [
+          true,
+          "ClinicalWardTriageHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--clinical-ward-selftest"
+        ],
+        "tests": [
+          true,
+          "ClinicalWardTriageEngineTests, ClinicalWardLedgerTests"
+        ]
+      },
+      "host_ref_files": {
+        "ClinicalWardLedger": [
+          "src/Host/ClinicalWardTriageHostSession.cs",
+          "src/Host/HostCli.ClinicalWardTriage.cs"
+        ],
+        "ClinicalWardTriageState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/ClinicalWardTriageHostSession.cs"
+        ],
+        "ClinicalWardCensus": [
+          "src/Main.ClinicalWardTriage.cs",
+          "src/Host/ClinicalWardTriageHostSession.cs"
+        ],
+        "ClinicalWardTriageEngine": [
+          "src/Main.ClinicalWardTriage.cs",
+          "src/Host/ClinicalWardTriageHostSession.cs",
+          "src/Host/HostCli.ClinicalWardTriage.cs"
+        ],
+        "ClinicalWardTriageHostSession": [
+          "src/Main.ClinicalWardTriage.cs",
+          "src/Host/ClinicalWardTriageHostSession.cs",
+          "src/Host/HostCli.ClinicalWardTriage.cs"
+        ]
+      }
+    },
+    {
+      "plan": "39-exp",
+      "title": "Expansion 39 \u2014 The Reagent",
+      "section": "chemical_reagent_synthesis",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "ChemicalReagentLedger [Core], ChemicalReagentSynthesisState [Core], ChemicalReagentCensus [Core], ChemicalReagentSynthesisEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "5/5 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`chemical_reagent_synthesis`"
+        ],
+        "triad": [
+          true,
+          "SetupChemicalReagentSynthesis / SaveChemicalReagentSynthesis"
+        ],
+        "save_file": [
+          true,
+          "chemical_reagent_synthesis_save.json"
+        ],
+        "save_store": [
+          true,
+          "ChemicalReagentSynthesisSaveStore"
+        ],
+        "host_session": [
+          true,
+          "ChemicalReagentSynthesisHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--chemical-reagent-selftest"
+        ],
+        "tests": [
+          true,
+          "ChemicalReagentSynthesisEngineTests, ChemicalReagentLedgerTests"
+        ]
+      },
+      "host_ref_files": {
+        "ChemicalReagentLedger": [
+          "src/Host/ChemicalReagentSynthesisHostSession.cs"
+        ],
+        "ChemicalReagentSynthesisState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/ChemicalReagentSynthesisHostSession.cs"
+        ],
+        "ChemicalReagentCensus": [
+          "src/Main.ChemicalReagentSynthesis.cs",
+          "src/Host/ChemicalReagentSynthesisHostSession.cs"
+        ],
+        "ChemicalReagentSynthesisEngine": [
+          "src/Main.ChemicalReagentSynthesis.cs",
+          "src/Host/ChemicalReagentSynthesisHostSession.cs",
+          "src/Host/HostCli.ChemicalReagentSynthesis.cs"
+        ],
+        "ChemicalReagentSynthesisHostSession": [
+          "src/Main.ChemicalReagentSynthesis.cs",
+          "src/Host/ChemicalReagentSynthesisHostSession.cs",
+          "src/Host/HostCli.ChemicalReagentSynthesis.cs"
+        ]
+      }
+    },
+    {
+      "plan": "40-exp",
+      "title": "Expansion 40 \u2014 The Wheel",
+      "section": "mechanical_driveline",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "MechanicalDrivelineLedger [Core], MechanicalDrivelineState [Core], MechanicalDrivelineCensus [Core], MechanicalPowerDrivelineEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "5/5 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`mechanical_driveline`"
+        ],
+        "triad": [
+          true,
+          "SetupMechanicalDriveline / SaveMechanicalDriveline"
+        ],
+        "save_file": [
+          true,
+          "mechanical_driveline_save.json"
+        ],
+        "save_store": [
+          true,
+          "MechanicalDrivelineSaveStore"
+        ],
+        "host_session": [
+          true,
+          "MechanicalDrivelineHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--mechanical-driveline-selftest"
+        ],
+        "tests": [
+          true,
+          "MechanicalPowerDrivelineEngineTests, MechanicalDrivelineLedgerTests"
+        ]
+      },
+      "host_ref_files": {
+        "MechanicalDrivelineLedger": [
+          "src/Host/MechanicalDrivelineHostSession.cs",
+          "src/Host/HostCli.MechanicalDriveline.cs"
+        ],
+        "MechanicalDrivelineState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/MechanicalDrivelineHostSession.cs"
+        ],
+        "MechanicalDrivelineCensus": [
+          "src/Main.MechanicalDriveline.cs",
+          "src/Host/MechanicalDrivelineHostSession.cs"
+        ],
+        "MechanicalPowerDrivelineEngine": [
+          "src/Main.MechanicalDriveline.cs",
+          "src/Host/MechanicalDrivelineHostSession.cs"
+        ],
+        "MechanicalDrivelineHostSession": [
+          "src/Main.MechanicalDriveline.cs",
+          "src/Host/MechanicalDrivelineHostSession.cs",
+          "src/Host/HostCli.MechanicalDriveline.cs"
+        ]
+      }
+    },
+    {
+      "plan": "41-exp",
+      "title": "Expansion 41 \u2014 The Quiet",
+      "section": "sleep_acoustic_rest",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "SleepAcousticLedger [Core], SleepAcousticState [Core], SleepAcousticCensus [Core], SleepAcousticRestEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "5/5 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`sleep_acoustic_rest`"
+        ],
+        "triad": [
+          true,
+          "SetupSleepAcousticRest / SaveSleepAcousticRest"
+        ],
+        "save_file": [
+          true,
+          "sleep_acoustic_rest_save.json"
+        ],
+        "save_store": [
+          true,
+          "SleepAcousticRestSaveStore"
+        ],
+        "host_session": [
+          true,
+          "SleepAcousticRestHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--sleep-acoustic-selftest"
+        ],
+        "tests": [
+          true,
+          "SleepAcousticRestEngineTests, SleepAcousticLedgerTests"
+        ]
+      },
+      "host_ref_files": {
+        "SleepAcousticLedger": [
+          "src/Host/SleepAcousticRestHostSession.cs"
+        ],
+        "SleepAcousticState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/SleepAcousticRestHostSession.cs"
+        ],
+        "SleepAcousticCensus": [
+          "src/Main.SleepAcousticRest.cs",
+          "src/Host/SleepAcousticRestHostSession.cs"
+        ],
+        "SleepAcousticRestEngine": [
+          "src/Main.SleepAcousticRest.cs",
+          "src/Host/SleepAcousticRestHostSession.cs",
+          "src/Host/HostCli.SleepAcousticRest.cs"
+        ],
+        "SleepAcousticRestHostSession": [
+          "src/Main.SleepAcousticRest.cs",
+          "src/Host/SleepAcousticRestHostSession.cs",
+          "src/Host/HostCli.SleepAcousticRest.cs"
         ]
       }
     },
@@ -1320,7 +1850,9 @@
         "ShelterSecuritySystem": [
           "src/Main.ShelterSecurity.cs",
           "src/Host/ShelterSecurityHostSession.cs",
-          "src/Host/ShelterSecuritySelfTest.cs"
+          "src/Host/ShelterSecuritySelfTest.cs",
+          "src/Host/NightWatchHostSession.cs",
+          "src/Host/HostCli.NightWatch.cs"
         ],
         "ShelterSecurityHostSession": [
           "src/Main.ShelterSecurity.cs",
@@ -1474,6 +2006,66 @@
           "src/Host/ResearchUnlockHostSession.cs",
           "src/Host/HostCli.ResearchUnlock.cs",
           "src/UI/ResearchPanel.cs"
+        ]
+      }
+    },
+    {
+      "plan": "143",
+      "title": "Afflictions \u2192 Quest/Work Bridge",
+      "section": null,
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "AfflictionQuestWorkBridge [Core]"
+        ],
+        "host_refs": [
+          true,
+          "1/1 identifiers referenced"
+        ],
+        "save_section": [
+          null,
+          "read model / no own section"
+        ],
+        "triad": [
+          null,
+          "\u2014"
+        ],
+        "save_file": [
+          null,
+          "\u2014"
+        ],
+        "save_store": [
+          null,
+          "\u2014"
+        ],
+        "host_session": [
+          null,
+          "wired through Main"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--affliction-bridge-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan143AfflictionBridgeIntegrationTests, Plan143AfflictionBridgeHostIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "AfflictionQuestWorkBridge": [
+          "src/Host/MedicalHostSession.cs",
+          "src/Host/AfflictionBridgeSelfTest.cs"
         ]
       }
     },
@@ -1769,6 +2361,68 @@
       }
     },
     {
+      "plan": "151",
+      "title": "Working Animals / Companions",
+      "section": "companion_animals",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "CompanionAnimalSystem [Core]"
+        ],
+        "host_refs": [
+          true,
+          "1/1 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`companion_animals`"
+        ],
+        "triad": [
+          true,
+          "SetupCompanionAnimals / SaveCompanionAnimals"
+        ],
+        "save_file": [
+          true,
+          "companion_animals_save.json"
+        ],
+        "save_store": [
+          true,
+          "CompanionSaveStore"
+        ],
+        "host_session": [
+          null,
+          "wired through Main"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--working-animals-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan151WorkingAnimalsTests"
+        ]
+      },
+      "host_ref_files": {
+        "CompanionAnimalSystem": [
+          "src/Main.Companion.cs",
+          "src/Host/CompanionAnimalHostSession.cs",
+          "src/Host/WorkingAnimalsSelfTest.cs",
+          "src/UI/KennelPanel.cs"
+        ]
+      }
+    },
+    {
       "plan": "152",
       "title": "Vehicle Customization",
       "section": "vehicle_customization",
@@ -1841,6 +2495,149 @@
           "src/Main.VehicleCustomization.cs",
           "src/Host/VehicleCustomizationHostSession.cs",
           "src/Host/HostCli.VehicleCustomization.cs"
+        ]
+      }
+    },
+    {
+      "plan": "155",
+      "title": "Black Market & Underground Economy",
+      "section": "black_market",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "BlackMarketSystem [Core]"
+        ],
+        "host_refs": [
+          true,
+          "2/2 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`black_market`"
+        ],
+        "triad": [
+          true,
+          "SetupBlackMarket / SaveBlackMarket"
+        ],
+        "save_file": [
+          true,
+          "black_market_save.json"
+        ],
+        "save_store": [
+          true,
+          "BlackMarketSaveStore"
+        ],
+        "host_session": [
+          true,
+          "BlackMarketHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--black-market-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan155BlackMarketIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "BlackMarketSystem": [
+          "src/Host/BlackMarketHostSession.cs",
+          "src/Host/BlackMarketSelfTest.cs",
+          "src/UI/BlackMarketSnapshotFixture.cs"
+        ],
+        "BlackMarketHostSession": [
+          "src/Main.BlackMarket.cs",
+          "src/Host/BlackMarketHostSession.cs",
+          "src/Host/BlackMarketSelfTest.cs",
+          "src/UI/BlackMarketPanel.cs",
+          "src/UI/BlackMarketSnapshotFixture.cs"
+        ]
+      }
+    },
+    {
+      "plan": "162",
+      "title": "Shelter History & Archive",
+      "section": "shelter_archive",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "ShelterArchiveSystem [Core], ShelterArchiveState [Core], ShelterArchiveCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "4/4 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`shelter_archive`"
+        ],
+        "triad": [
+          true,
+          "SetupShelterArchive / SaveShelterArchive"
+        ],
+        "save_file": [
+          true,
+          "shelter_archive_save.json"
+        ],
+        "save_store": [
+          true,
+          "ShelterArchiveSaveStore"
+        ],
+        "host_session": [
+          true,
+          "ShelterArchiveHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--shelter-archive-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan162ArchiveIntegrationTests, ShelterArchiveSystemTests"
+        ]
+      },
+      "host_ref_files": {
+        "ShelterArchiveSystem": [
+          "src/Main.Plans162_185.cs",
+          "src/Main.ShelterArchive.cs",
+          "src/Host/ShelterArchiveHostSession.cs",
+          "src/Host/HostCli.ShelterArchive.cs"
+        ],
+        "ShelterArchiveState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/ShelterArchiveHostSession.cs"
+        ],
+        "ShelterArchiveCensus": [
+          "src/Main.ShelterArchive.cs",
+          "src/Host/ShelterArchiveHostSession.cs"
+        ],
+        "ShelterArchiveHostSession": [
+          "src/Main.ShelterArchive.cs",
+          "src/Host/ShelterArchiveHostSession.cs",
+          "src/Host/HostCli.ShelterArchive.cs"
         ]
       }
     },
@@ -2225,6 +3022,137 @@
       }
     },
     {
+      "plan": "172",
+      "title": "Radiation Mutation & Genetic Instability",
+      "section": "mutation_tree",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "MutationSystem [Core]"
+        ],
+        "host_refs": [
+          true,
+          "1/1 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`mutation_tree`"
+        ],
+        "triad": [
+          true,
+          "SetupMutations / SaveMutations"
+        ],
+        "save_file": [
+          true,
+          "mutation_save.json"
+        ],
+        "save_store": [
+          true,
+          "MutationSaveStore"
+        ],
+        "host_session": [
+          null,
+          "wired through Main"
+        ],
+        "ui_panel": [
+          true,
+          "MutationTreePanel"
+        ],
+        "route": [
+          true,
+          "mutation_tree"
+        ],
+        "cli_flag": [
+          true,
+          "--radiation-mutation-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan172RadiationMutationTests"
+        ]
+      },
+      "host_ref_files": {
+        "MutationSystem": [
+          "src/Main.Audio.cs",
+          "src/Main.Plans178_181.cs",
+          "src/Host/RadiationMutationHostSession.cs",
+          "src/UI/MutationTreePanel.cs",
+          "src/Audio/ExpansionAudioBridge.cs",
+          "src/Audio/AudioSelfTest.cs"
+        ]
+      }
+    },
+    {
+      "plan": "173",
+      "title": "Radio Production & Audience",
+      "section": "radio_program_production",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "RadioProgramProductionSystem [Core]"
+        ],
+        "host_refs": [
+          true,
+          "2/2 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`radio_program_production`"
+        ],
+        "triad": [
+          true,
+          "SetupRadioProgramProduction / SaveRadioProgramProduction"
+        ],
+        "save_file": [
+          true,
+          "radio_program_production_save.json"
+        ],
+        "save_store": [
+          true,
+          "RadioProgramProductionSaveStore"
+        ],
+        "host_session": [
+          true,
+          "RadioProgramProductionHostSession"
+        ],
+        "ui_panel": [
+          true,
+          "RadioPanel"
+        ],
+        "route": [
+          true,
+          "radio"
+        ],
+        "cli_flag": [
+          true,
+          "--radio-production-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan173RadioProductionIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "RadioProgramProductionSystem": [
+          "src/Main.RadioProgramProduction.cs",
+          "src/Host/RadioProgramProductionHostSession.cs",
+          "src/Host/RadioProgramProductionSelfTest.cs"
+        ],
+        "RadioProgramProductionHostSession": [
+          "src/Main.RadioProgramProduction.cs",
+          "src/Host/RadioProgramProductionHostSession.cs",
+          "src/Host/RadioProgramProductionSelfTest.cs",
+          "src/UI/RadioPanel.cs"
+        ]
+      }
+    },
+    {
       "plan": "174",
       "title": "Survivor Backstories",
       "section": "backstory",
@@ -2288,6 +3216,273 @@
           "src/Main.Backstory.cs",
           "src/Host/BackstoryHostSession.cs",
           "src/Host/HostCli.Backstory.cs"
+        ]
+      }
+    },
+    {
+      "plan": "177",
+      "title": "Dream & Sleep Event System",
+      "section": "survivor_dreams",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "DreamSystem [Core], DreamSystemState [Core], DreamCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "4/4 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`survivor_dreams`"
+        ],
+        "triad": [
+          true,
+          "SetupSurvivorDreams / SaveSurvivorDreams"
+        ],
+        "save_file": [
+          true,
+          "survivor_dreams_save.json"
+        ],
+        "save_store": [
+          true,
+          "DreamSaveStore"
+        ],
+        "host_session": [
+          true,
+          "DreamHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--dream-system-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan177DreamSleepIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "DreamSystem": [
+          "src/Main.SleepNarrative.cs",
+          "src/Main.DreamSystem.cs",
+          "src/Host/DreamHostSession.cs",
+          "src/Host/HostCli.DreamSystem.cs"
+        ],
+        "DreamSystemState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/DreamHostSession.cs"
+        ],
+        "DreamCensus": [
+          "src/Main.DreamSystem.cs",
+          "src/Host/DreamHostSession.cs"
+        ],
+        "DreamHostSession": [
+          "src/Main.DreamSystem.cs",
+          "src/Host/DreamHostSession.cs",
+          "src/Host/HostCli.DreamSystem.cs"
+        ]
+      }
+    },
+    {
+      "plan": "178",
+      "title": "Art & Culture Creation",
+      "section": "culture_creation",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "CultureCreationSystem [Core]"
+        ],
+        "host_refs": [
+          true,
+          "2/2 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`culture_creation`"
+        ],
+        "triad": [
+          true,
+          "SetupCultureCreation / SaveCultureCreation"
+        ],
+        "save_file": [
+          true,
+          "culture_creation_save.json"
+        ],
+        "save_store": [
+          true,
+          "CultureCreationSaveStore"
+        ],
+        "host_session": [
+          true,
+          "CultureCreationHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--culture-creation-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan178ArtCultureIntegrationTests, CultureCreationSystemTests"
+        ]
+      },
+      "host_ref_files": {
+        "CultureCreationSystem": [
+          "src/Host/CultureCreationHostSession.cs"
+        ],
+        "CultureCreationHostSession": [
+          "src/Main.CultureCreation.cs",
+          "src/Host/CultureCreationHostSession.cs",
+          "src/Host/CultureCreationSelfTest.cs"
+        ]
+      }
+    },
+    {
+      "plan": "179",
+      "title": "Psychology & Phobia",
+      "section": "psychological_profiles",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "PsychologicalProfileSystem [Core]"
+        ],
+        "host_refs": [
+          true,
+          "2/2 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`psychological_profiles`"
+        ],
+        "triad": [
+          true,
+          "SetupPsychologicalProfiles / SavePsychologicalProfiles"
+        ],
+        "save_file": [
+          true,
+          "psychological_profiles_save.json"
+        ],
+        "save_store": [
+          true,
+          "PsychologicalProfileSaveStore"
+        ],
+        "host_session": [
+          true,
+          "PsychologicalProfileHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--psychological-profile-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan179UnifiedPsychologyIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "PsychologicalProfileSystem": [
+          "src/Host/PsychologicalProfileHostSession.cs"
+        ],
+        "PsychologicalProfileHostSession": [
+          "src/Main.PsychologicalProfiles.cs",
+          "src/Host/PsychologicalProfileHostSession.cs",
+          "src/Host/PsychologicalProfileSelfTest.cs"
+        ]
+      }
+    },
+    {
+      "plan": "180",
+      "title": "Skill Certification",
+      "section": "skill_certifications",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "SkillCertificationSystem [Core]"
+        ],
+        "host_refs": [
+          true,
+          "2/2 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`skill_certifications`"
+        ],
+        "triad": [
+          true,
+          "SetupSkillCertifications / SaveSkillCertifications"
+        ],
+        "save_file": [
+          true,
+          "skill_certifications_save.json"
+        ],
+        "save_store": [
+          true,
+          "SkillCertificationSaveStore"
+        ],
+        "host_session": [
+          true,
+          "SkillCertificationHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--skill-certification-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan180SkillCertificationTests"
+        ]
+      },
+      "host_ref_files": {
+        "SkillCertificationSystem": [
+          "src/Host/SkillCertificationHostSession.cs"
+        ],
+        "SkillCertificationHostSession": [
+          "src/Main.SkillCertification.cs",
+          "src/Host/SkillCertificationHostSession.cs",
+          "src/Host/SkillCertificationSelfTest.cs"
         ]
       }
     },
@@ -2447,6 +3642,226 @@
       }
     },
     {
+      "plan": "183",
+      "title": "Child Development Stages",
+      "section": "child_development",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "ChildDevelopmentSystem [Core], ChildDevelopmentCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "3/3 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`child_development`"
+        ],
+        "triad": [
+          true,
+          "SetupGenerational / SaveGenerational"
+        ],
+        "save_file": [
+          true,
+          "child_development_save.json"
+        ],
+        "save_store": [
+          true,
+          "GenerationalSaveStore"
+        ],
+        "host_session": [
+          true,
+          "ChildDevelopmentHostSession"
+        ],
+        "ui_panel": [
+          true,
+          "NurseryPanel"
+        ],
+        "route": [
+          true,
+          "nursery, century_seed"
+        ],
+        "cli_flag": [
+          true,
+          "--child-development-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan183ChildDevelopmentIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "ChildDevelopmentSystem": [
+          "src/Main.AntenatalMaternalHealth.cs",
+          "src/Main.ChildDevelopment.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs",
+          "src/Host/ChildDevelopmentHostSession.cs",
+          "src/Host/ChildDevelopmentSelfTest.cs"
+        ],
+        "ChildDevelopmentCensus": [
+          "src/Main.ChildDevelopment.cs",
+          "src/Host/ChildDevelopmentHostSession.cs"
+        ],
+        "ChildDevelopmentHostSession": [
+          "src/Main.ChildDevelopment.cs",
+          "src/Host/ChildDevelopmentHostSession.cs",
+          "src/Host/ChildDevelopmentSelfTest.cs"
+        ]
+      }
+    },
+    {
+      "plan": "184",
+      "title": "Accessibility Options System",
+      "section": "accessibility_settings",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "AccessibilitySettingsSystem [Core], AccessibilitySettingsState [Core], AccessibilityCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "4/4 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`accessibility_settings`"
+        ],
+        "triad": [
+          true,
+          "SetupAccessibilitySettings / SaveAccessibilitySettings"
+        ],
+        "save_file": [
+          true,
+          "accessibility_settings_save.json"
+        ],
+        "save_store": [
+          true,
+          "AccessibilitySettingsSaveStore"
+        ],
+        "host_session": [
+          true,
+          "AccessibilitySettingsHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--accessibility-settings-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan184AccessibilitySettingsIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "AccessibilitySettingsSystem": [
+          "src/Main.AccessibilitySettings.cs",
+          "src/Host/AccessibilitySettingsHostSession.cs",
+          "src/Host/HostCli.AccessibilitySettings.cs"
+        ],
+        "AccessibilitySettingsState": [
+          "src/Host/AccessibilitySettingsHostSession.cs"
+        ],
+        "AccessibilityCensus": [
+          "src/Main.AccessibilitySettings.cs",
+          "src/Host/AccessibilitySettingsHostSession.cs"
+        ],
+        "AccessibilitySettingsHostSession": [
+          "src/Main.AccessibilitySettings.cs",
+          "src/Host/AccessibilitySettingsHostSession.cs",
+          "src/Host/HostCli.AccessibilitySettings.cs"
+        ]
+      }
+    },
+    {
+      "plan": "185",
+      "title": "Memory & Knowledge Decay",
+      "section": "memory_decay",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "MemoryDecaySystem [Core], MemoryDecayState [Core], MemoryDecayCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "4/4 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`memory_decay`"
+        ],
+        "triad": [
+          true,
+          "SetupMemoryDecay / SaveMemoryDecay"
+        ],
+        "save_file": [
+          true,
+          "memory_decay_save.json"
+        ],
+        "save_store": [
+          true,
+          "MemoryDecaySaveStore"
+        ],
+        "host_session": [
+          true,
+          "MemoryDecayHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--memory-decay-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan185MemoryDecayIntegrationTests, MemoryDecaySystemTests"
+        ]
+      },
+      "host_ref_files": {
+        "MemoryDecaySystem": [
+          "src/Main.Plans162_185.cs",
+          "src/Main.MemoryDecay.cs",
+          "src/Host/MemoryDecayHostSession.cs",
+          "src/Host/HostCli.MemoryDecay.cs"
+        ],
+        "MemoryDecayState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/MemoryDecayHostSession.cs"
+        ],
+        "MemoryDecayCensus": [
+          "src/Main.MemoryDecay.cs",
+          "src/Host/MemoryDecayHostSession.cs"
+        ],
+        "MemoryDecayHostSession": [
+          "src/Main.MemoryDecay.cs",
+          "src/Host/MemoryDecayHostSession.cs",
+          "src/Host/HostCli.MemoryDecay.cs"
+        ]
+      }
+    },
+    {
       "plan": "186",
       "title": "Shelter Maintenance",
       "section": "shelter_maintenance",
@@ -2516,6 +3931,74 @@
           "src/Main.ShelterMaintenance.cs",
           "src/Host/ShelterMaintenanceHostSession.cs",
           "src/Host/HostCli.ShelterMaintenance.cs"
+        ]
+      }
+    },
+    {
+      "plan": "187",
+      "title": "Bestiary UI & Encounter Tracking",
+      "section": "bestiary_knowledge",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "BestiarySystem [Core], BestiaryCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "3/3 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`bestiary_knowledge`"
+        ],
+        "triad": [
+          true,
+          "SetupBestiary / SaveBestiary"
+        ],
+        "save_file": [
+          true,
+          "bestiary_knowledge_save.json"
+        ],
+        "save_store": [
+          true,
+          "BestiarySaveStore"
+        ],
+        "host_session": [
+          true,
+          "BestiaryHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--bestiary-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan187BestiaryIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "BestiarySystem": [
+          "src/Host/BestiaryHostSession.cs"
+        ],
+        "BestiaryCensus": [
+          "src/Main.Bestiary.cs",
+          "src/Host/BestiaryHostSession.cs"
+        ],
+        "BestiaryHostSession": [
+          "src/Main.Bestiary.cs",
+          "src/Host/BestiaryHostSession.cs",
+          "src/Host/BestiarySelfTest.cs"
         ]
       }
     },
@@ -2593,8 +4076,76 @@
       }
     },
     {
+      "plan": "198",
+      "title": "Health History & Medical Records",
+      "section": "health_history",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "HealthHistorySystem [Core], HealthHistoryCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "3/3 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`health_history`"
+        ],
+        "triad": [
+          true,
+          "SetupHealthHistory / SaveHealthHistory"
+        ],
+        "save_file": [
+          true,
+          "health_history_save.json"
+        ],
+        "save_store": [
+          true,
+          "HealthHistorySaveStore"
+        ],
+        "host_session": [
+          true,
+          "HealthHistoryHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--health-history-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan198HealthHistoryIntegrationTests, Plan198MedicalRecordLogTests"
+        ]
+      },
+      "host_ref_files": {
+        "HealthHistorySystem": [
+          "src/Host/HealthHistoryHostSession.cs"
+        ],
+        "HealthHistoryCensus": [
+          "src/Main.HealthHistory.cs",
+          "src/Host/HealthHistoryHostSession.cs"
+        ],
+        "HealthHistoryHostSession": [
+          "src/Main.HealthHistory.cs",
+          "src/Host/HealthHistoryHostSession.cs",
+          "src/Host/HealthHistorySelfTest.cs"
+        ]
+      }
+    },
+    {
       "plan": "200",
-      "title": "Personal Quests",
+      "title": "Survivor Personal Quests & Character Arcs",
       "section": "personal_quests",
       "persisted_inside": null,
       "verdict": "INTEGRATED",
@@ -2602,11 +4153,11 @@
       "checks": {
         "authority": [
           true,
-          "PersonalQuestSystem [Core]"
+          "PersonalQuestSystem [Core], PersonalQuestDef [Core], PersonalQuestSaveState [Core], PersonalQuestCensus [Core]"
         ],
         "host_refs": [
           true,
-          "2/2 identifiers referenced"
+          "4/5 identifiers referenced"
         ],
         "save_section": [
           true,
@@ -2633,27 +4184,110 @@
           "PersonalQuestPanel"
         ],
         "route": [
-          true,
-          "personal_quests"
+          null,
+          "\u2014"
         ],
         "cli_flag": [
           true,
           "--personal-quests-selftest"
         ],
         "tests": [
-          null,
-          "no named fixture (host selftest only)"
+          true,
+          "Plan200PersonalQuestsIntegrationTests, PersonalQuestSystemTests"
         ]
       },
       "host_ref_files": {
         "PersonalQuestSystem": [
           "src/Host/PersonalQuestHostSession.cs"
         ],
+        "PersonalQuestSaveState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/PersonalQuestHostSession.cs",
+          "src/Host/PersonalQuestSaveStore.cs"
+        ],
+        "PersonalQuestCensus": [
+          "src/Main.PersonalQuests.cs"
+        ],
         "PersonalQuestHostSession": [
           "src/Main.PersonalQuests.cs",
           "src/Host/PersonalQuestHostSession.cs",
           "src/Host/PersonalQuestSelfTest.cs",
           "src/UI/PersonalQuestPanel.cs"
+        ]
+      }
+    },
+    {
+      "plan": "202",
+      "title": "Interpersonal Conflict & Grievance",
+      "section": "interpersonal_conflict",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "InterpersonalConflictSystem [Core], InterpersonalConflictState [Core], InterpersonalConflictCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "4/4 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`interpersonal_conflict`"
+        ],
+        "triad": [
+          true,
+          "SetupInterpersonalConflict / SaveInterpersonalConflict"
+        ],
+        "save_file": [
+          true,
+          "interpersonal_conflict_save.json"
+        ],
+        "save_store": [
+          true,
+          "InterpersonalConflictSaveStore"
+        ],
+        "host_session": [
+          true,
+          "InterpersonalConflictHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--interpersonal-conflict-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan202InterpersonalConflictIntegrationTests, InterpersonalConflictSystemTests"
+        ]
+      },
+      "host_ref_files": {
+        "InterpersonalConflictSystem": [
+          "src/Main.Plans216_202Interpersonal.cs",
+          "src/Main.InterpersonalConflict.cs",
+          "src/Host/InterpersonalConflictHostSession.cs",
+          "src/Host/HostCli.InterpersonalConflict.cs"
+        ],
+        "InterpersonalConflictState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/InterpersonalConflictHostSession.cs"
+        ],
+        "InterpersonalConflictCensus": [
+          "src/Main.InterpersonalConflict.cs",
+          "src/Host/InterpersonalConflictHostSession.cs"
+        ],
+        "InterpersonalConflictHostSession": [
+          "src/Main.InterpersonalConflict.cs",
+          "src/Host/InterpersonalConflictHostSession.cs",
+          "src/Host/HostCli.InterpersonalConflict.cs"
         ]
       }
     },
@@ -2784,7 +4418,8 @@
         "ShelterNoiseSystem": [
           "src/Main.ShelterAtmosphere.cs",
           "src/Host/ShelterAtmosphereHostSession.cs",
-          "src/Host/ShelterAtmosphereSelfTest.cs"
+          "src/Host/ShelterAtmosphereSelfTest.cs",
+          "src/Host/SleepAcousticRestHostSession.cs"
         ],
         "ShelterAtmosphereHostSession": [
           "src/Main.ShelterAtmosphere.cs",
@@ -2929,6 +4564,72 @@
           "src/Host/ShelterReputationHostSession.cs",
           "src/Host/ShelterReputationSelfTest.cs",
           "src/UI/ShelterReputationPanel.cs"
+        ]
+      }
+    },
+    {
+      "plan": "208",
+      "title": "Leadership Succession & Challenges",
+      "section": null,
+      "persisted_inside": "survivor_social",
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "LeadershipSystem [Core], LeadershipCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "2/2 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`survivor_social` (nested)"
+        ],
+        "triad": [
+          true,
+          "SetupSurvivorSocial / SaveSurvivorSocial"
+        ],
+        "save_file": [
+          true,
+          "persisted inside parent aggregate"
+        ],
+        "save_store": [
+          null,
+          "\u2014"
+        ],
+        "host_session": [
+          null,
+          "wired through Main"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--leadership-succession-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan208LeadershipSuccessionIntegrationTests"
+        ]
+      },
+      "host_ref_files": {
+        "LeadershipSystem": [
+          "src/Main.Plans182_185.cs",
+          "src/Main.SurvivorSocial.cs",
+          "src/Main.ShelterGovernance.cs",
+          "src/Host/ShelterGovernanceHostSession.cs",
+          "src/Host/LeadershipSuccessionSelfTest.cs"
+        ],
+        "LeadershipCensus": [
+          "src/Main.SurvivorSocial.cs"
         ]
       }
     },
@@ -3131,6 +4832,79 @@
           "src/Host/VisitorIntegrationHostSession.cs",
           "src/Host/VisitorIntegrationSelfTest.cs",
           "src/UI/VisitorIntegrationPanel.cs"
+        ]
+      }
+    },
+    {
+      "plan": "216",
+      "title": "Survivor Exercise & Physical Training",
+      "section": "exercise",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "ExerciseSystem [Core], ExerciseSystemState [Core], ExerciseCensus [Core]"
+        ],
+        "host_refs": [
+          true,
+          "4/4 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`exercise`"
+        ],
+        "triad": [
+          true,
+          "SetupExercise / SaveExercise"
+        ],
+        "save_file": [
+          true,
+          "exercise_save.json"
+        ],
+        "save_store": [
+          true,
+          "ExerciseSaveStore"
+        ],
+        "host_session": [
+          true,
+          "ExerciseHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--exercise-selftest"
+        ],
+        "tests": [
+          true,
+          "Plan216ExerciseIntegrationTests, ExerciseSystemTests"
+        ]
+      },
+      "host_ref_files": {
+        "ExerciseSystem": [
+          "src/Main.Exercise.cs",
+          "src/Host/ExerciseHostSession.cs"
+        ],
+        "ExerciseSystemState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/ExerciseHostSession.cs"
+        ],
+        "ExerciseCensus": [
+          "src/Main.Exercise.cs",
+          "src/Host/ExerciseHostSession.cs"
+        ],
+        "ExerciseHostSession": [
+          "src/Main.Exercise.cs",
+          "src/Host/ExerciseHostSession.cs",
+          "src/Host/HostCli.Exercise.cs"
         ]
       }
     },

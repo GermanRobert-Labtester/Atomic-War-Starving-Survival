@@ -49,6 +49,7 @@ namespace Ashfall.Core
     public sealed class AtmosphericCondenserSystem
     {
         public const string SystemId = "water_condenser";
+        public const int CurrentSchemaVersion = 1;
 
         /// <summary>Plan 189 intake source id for condensate.</summary>
         public const string SourceId = "source_atmospheric_condenser";
@@ -119,7 +120,7 @@ namespace Ashfall.Core
             _log = log ?? NullLog.Instance;
         }
 
-        public AtmosphericCondenserState State => _state;
+        public AtmosphericCondenserState State => CaptureState();
         public bool IsBuilt => _state.built;
         public bool IsEnabled => _state.enabled;
         public float MembraneIntegrity => _state.membraneIntegrity;
@@ -145,9 +146,11 @@ namespace Ashfall.Core
             _state.built = true;
             _state.enabled = true;
             _state.membraneIntegrity = 100f;
+            _state.totalYieldLiters = 0L;
+            _state.lastCondenseDay = -1;
             RegisterArrayLoad();
             _log.Info("[WaterCondenser] Peltier condensation array built; registered as a grid load.");
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
             return true;
         }
 
@@ -161,7 +164,7 @@ namespace Ashfall.Core
             }
             if (_state.enabled == enabled) return true; // idempotent toggle
             _state.enabled = enabled;
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
             return true;
         }
 
@@ -185,7 +188,7 @@ namespace Ashfall.Core
 
             _state.membraneIntegrity = 100f;
             _membraneSpentWarned = false;
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
             return true;
         }
 
@@ -198,28 +201,34 @@ namespace Ashfall.Core
         /// </summary>
         public void TickDay(int day)
         {
+            if (day < 0)
+                throw new ArgumentOutOfRangeException(nameof(day), "Campaign day cannot be negative.");
+
             if (!_state.built || !_state.enabled) return;
+            if (day <= _state.lastCondenseDay) return; // exactly once per successful campaign day
             if (!_powerGrid.IsRoomServed(PowerRoomId)) return; // power owns availability
             if (_state.membraneIntegrity <= 0f) return; // spent membrane: no exchange surface
 
             float humidityIndex = HumidityIndexFor(_weather.Current);
-            float yield = BaseYieldLitersPerDay * humidityIndex * (_state.membraneIntegrity / 100f);
-            if (yield <= 0f) return;
+            float integrity = SanitizeIntegrity(_state.membraneIntegrity);
+            float yield = BaseYieldLitersPerDay * humidityIndex * (integrity / 100f);
+            if (!IsFinite(yield) || yield <= 0f) return;
 
             var add = _waterTreatment.TryAddWaterFromSource(SourceId, WaterType.Raw, yield);
             if (add.Status != ActionResult.StatusKind.Success)
                 return; // intake blocked: vapor stays in the exhaust stream
 
-            _state.totalYieldLiters += (long)MathF.Round(yield);
-            _state.membraneIntegrity = MathF.Max(0f,
+            long amount = (long)MathF.Round(yield);
+            _state.totalYieldLiters = SaturatingAdd(_state.totalYieldLiters, amount);
+            _state.membraneIntegrity = SanitizeIntegrity(
                 _state.membraneIntegrity - MembraneWearPerCondensingDay);
             _state.lastCondenseDay = day;
             if (!_membraneSpentWarned && _state.membraneIntegrity <= 0f)
             {
                 _membraneSpentWarned = true;
-                OnMembraneSpent?.Invoke(_state);
+                OnMembraneSpent?.Invoke(CaptureState());
             }
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
         }
 
         /// <summary>§6.3: expose the array as a named grid load. Idempotent;
@@ -233,13 +242,13 @@ namespace Ashfall.Core
 
         public AtmosphericCondenserState CaptureState() => new AtmosphericCondenserState
         {
-            systemId = _state.systemId,
-            schemaVersion = _state.schemaVersion,
+            systemId = SystemId,
+            schemaVersion = CurrentSchemaVersion,
             built = _state.built,
             enabled = _state.enabled,
-            membraneIntegrity = _state.membraneIntegrity,
-            totalYieldLiters = _state.totalYieldLiters,
-            lastCondenseDay = _state.lastCondenseDay
+            membraneIntegrity = SanitizeIntegrity(_state.membraneIntegrity),
+            totalYieldLiters = Math.Max(0L, _state.totalYieldLiters),
+            lastCondenseDay = _state.built ? Math.Max(-1, _state.lastCondenseDay) : -1
         };
 
         public void RestoreState(AtmosphericCondenserState? saved)
@@ -247,18 +256,31 @@ namespace Ashfall.Core
             if (saved == null) return;
             _state = new AtmosphericCondenserState
             {
-                systemId = string.IsNullOrEmpty(saved.systemId) ? SystemId : saved.systemId,
-                schemaVersion = saved.schemaVersion,
+                systemId = SystemId,
+                schemaVersion = CurrentSchemaVersion,
                 built = saved.built,
                 enabled = saved.enabled,
-                membraneIntegrity = Math.Clamp(saved.membraneIntegrity, 0f, 100f),
+                membraneIntegrity = SanitizeIntegrity(saved.membraneIntegrity),
                 totalYieldLiters = Math.Max(0L, saved.totalYieldLiters),
-                lastCondenseDay = saved.lastCondenseDay
+                lastCondenseDay = saved.built ? Math.Max(-1, saved.lastCondenseDay) : -1
             };
             if (_state.built)
                 RegisterArrayLoad();
             _membraneSpentWarned = _state.built && _state.membraneIntegrity <= 0f;
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
+        }
+
+        private static bool IsFinite(float value) =>
+            !float.IsNaN(value) && !float.IsInfinity(value);
+
+        private static float SanitizeIntegrity(float value) =>
+            IsFinite(value) ? Math.Clamp(value, 0f, 100f) : 0f;
+
+        private static long SaturatingAdd(long current, long amount)
+        {
+            if (amount <= 0L) return Math.Max(0L, current);
+            long normalized = Math.Max(0L, current);
+            return normalized > long.MaxValue - amount ? long.MaxValue : normalized + amount;
         }
     }
 }

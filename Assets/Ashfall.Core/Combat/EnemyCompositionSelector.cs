@@ -85,7 +85,9 @@ namespace Ashfall.Core.Combat
                 // groups even without a shared RNG stream.
                 int idx = i == 0
                     ? 0
-                    : (dangerLevel + i) % pool.Length;
+                    : StableHash.NonNegativeRemainder(
+                        unchecked(dangerLevel + i),
+                        pool.Length);
                 if (rng != null && i > 0)
                     idx = rng.Next(0, pool.Length);
                 result[i] = pool[idx];
@@ -128,7 +130,9 @@ namespace Ashfall.Core.Combat
             {
                 int idx = i == 0
                     ? (dangerLevel >= 5 ? 0 : 2)   // anchor: warlord enforcer vs scavenger attacker
-                    : (dangerLevel + i) % RaidPool.Length;
+                    : StableHash.NonNegativeRemainder(
+                        unchecked(dangerLevel + i),
+                        RaidPool.Length);
                 if (rng != null && i > 0)
                     idx = rng.Next(0, RaidPool.Length);
                 result[i] = RaidPool[idx];

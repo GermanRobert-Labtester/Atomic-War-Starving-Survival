@@ -56,15 +56,18 @@ namespace AtomicWar.GodotApp
             _verdict.TickRadio(260); // fires the corpus whose dayTrigger <= 260
             bool someFired = _verdict.Radio.FiredCount > 0;
 
-            // Refresh the panel and count rendered transmission rows (expect all 13).
+            // Refresh the panel and count rendered transmission rows. The panel
+            // lists the full authored corpus (fired + pending), so expect the
+            // live corpus count rather than a pinned number that rots on expansion.
+            int expectedRows = _verdict.Radio.Corpus.Count;
             _verdictPanel!.RefreshView();
             int rows = _verdictPanel.RenderedRadioRowCount();
-            bool transmissions = rows == 13;
+            bool transmissions = rows == expectedRows;
 
             // Leak check: repeat refresh must not double the row count.
             _verdictPanel.RefreshView();
             int rows2 = _verdictPanel.RenderedRadioRowCount();
-            bool noLeak = rows2 == 13;
+            bool noLeak = rows2 == expectedRows;
 
             bool pass = panel && session && carrierOpenSoon && someFired && transmissions && noLeak;
             GD.Print($"[VerdictUiTest] panel={panel} session={session} " +

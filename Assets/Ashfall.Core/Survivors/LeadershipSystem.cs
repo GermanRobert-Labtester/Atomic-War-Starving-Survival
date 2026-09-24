@@ -658,5 +658,41 @@ namespace Ashfall.Core.Survivors
                 && value >= _nextChallengeSeq)
                 _nextChallengeSeq = value + 1;
         }
+
+        public LeadershipCensus GetCensus()
+        {
+            int unresolved = 0;
+            for (int i = 0; i < _challenges.Count; i++)
+            {
+                if (!_challenges[i].is_resolved) unresolved++;
+            }
+            return new LeadershipCensus(
+                _currentLeaderId ?? string.Empty,
+                _designatedSuccessorId ?? string.Empty,
+                _deputyLeaderId ?? string.Empty,
+                _activePolicyId ?? string.Empty,
+                _challenges.Count,
+                unresolved);
+        }
+    }
+
+    public struct LeadershipCensus
+    {
+        public readonly string CurrentLeaderId;
+        public readonly string DesignatedSuccessorId;
+        public readonly string DeputyLeaderId;
+        public readonly string ActivePolicyId;
+        public readonly int TotalChallenges;
+        public readonly int UnresolvedChallenges;
+
+        public LeadershipCensus(string leader, string successor, string deputy, string policy, int totalChallenges, int unresolvedChallenges)
+        {
+            CurrentLeaderId = leader;
+            DesignatedSuccessorId = successor;
+            DeputyLeaderId = deputy;
+            ActivePolicyId = policy;
+            TotalChallenges = totalChallenges;
+            UnresolvedChallenges = unresolvedChallenges;
+        }
     }
 }

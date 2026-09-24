@@ -37,7 +37,8 @@ namespace Ashfall.Core.Factions
             ISeededRng rng,
             ILog? log = null)
         {
-            _state = state ?? new CounterIntelligenceState();
+            _state = CloneState(state);
+            _currentDay = _state.lastProcessedDay;
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
         }
@@ -78,6 +79,9 @@ namespace Ashfall.Core.Factions
 
         public VettingResult VetCandidate(string candidateId, string officerId)
         {
+            if (string.IsNullOrWhiteSpace(candidateId))
+                return VettingResult.Failed("unknown_candidate", "counterintel.unknown_candidate");
+
             var candidate = GetCandidate(candidateId);
             if (candidate == null)
                 return VettingResult.Failed("unknown_candidate", "counterintel.unknown_candidate");
@@ -91,9 +95,12 @@ namespace Ashfall.Core.Factions
             candidate.lastUpdatedDay = _currentDay;
 
             // Deterministic suspicion computation (no hidden truth exposed)
-            float suspicion = candidate.scrutinyRating;
-            foreach (var flag in candidate.suspicionFlags)
-                suspicion += 10f;
+            float suspicion = SanitizeRating(candidate.scrutinyRating);
+            if (candidate.suspicionFlags != null)
+            {
+                foreach (var flag in candidate.suspicionFlags)
+                    suspicion = Math.Min(SuspicionMax, suspicion + 10f);
+            }
             suspicion = Math.Clamp(suspicion, SuspicionMin, SuspicionMax);
 
             if (suspicion >= 70f)
@@ -118,7 +125,10 @@ namespace Ashfall.Core.Factions
 
         public CiInterrogationResult Interrogate(string suspectId, string officerId, float pressureLevel)
         {
-            var detainee = _state.detainees.Find(d => d.suspectId == suspectId);
+            if (string.IsNullOrWhiteSpace(suspectId))
+                return CiInterrogationResult.Failed("not_detained", "counterintel.not_detained");
+
+            var detainee = _state.detainees.Find(d => d != null && d.suspectId == suspectId);
             if (detainee == null)
                 return CiInterrogationResult.Failed("not_detained", "counterintel.not_detained");
 
@@ -128,12 +138,17 @@ namespace Ashfall.Core.Factions
             detainee.interrogationCount++;
             detainee.interrogationStatus = "completed";
 
-            // Deterministic confession check
+            // Deterministic confession check. Invalid pressure and thresholds
+            // fail closed instead of turning a malformed call into a guaranteed
+            // confession or a non-finite state write.
+            float boundedPressure = SanitizeUnit(pressureLevel);
             var agent = GetAgent(suspectId);
             if (agent != null && _profiles.TryGetValue(agent.profileId, out var profile))
             {
-                float roll = (float)_rng.NextDouble();
-                if (roll < profile.ConfessionThreshold * pressureLevel)
+                double sample = _rng.NextDouble();
+                float roll = SanitizeUnit((float)sample);
+                float threshold = SanitizeUnit(profile.ConfessionThreshold);
+                if (roll < threshold * boundedPressure)
                 {
                     detainee.confessionOutcome = "full";
                     agent.isExposed = true;
@@ -142,7 +157,7 @@ namespace Ashfall.Core.Factions
                     OnInterrogationCompleted?.Invoke(suspectId, "full_confession");
                     return CiInterrogationResult.Success("full_confession", profile.SabotageTargets);
                 }
-                else if (roll < profile.ConfessionThreshold * 0.6f)
+                else if (roll < threshold * 0.6f)
                 {
                     detainee.confessionOutcome = "partial";
                     OnInterrogationCompleted?.Invoke(suspectId, "partial_intel");
@@ -157,6 +172,8 @@ namespace Ashfall.Core.Factions
 
         public ActionResult DetainSuspect(string suspectId)
         {
+            if (string.IsNullOrWhiteSpace(suspectId))
+                return ActionResult.Failed("invalid_suspect", "counterintel.invalid_suspect");
             if (IsDetained(suspectId))
                 return ActionResult.Blocked("already_detained", "counterintel.already_detained");
 
@@ -180,6 +197,10 @@ namespace Ashfall.Core.Factions
             var candidate = GetCandidate(candidateId);
             if (candidate == null)
                 return ActionResult.Failed("unknown_candidate", "counterintel.unknown_candidate");
+            if (candidate.status == "defector_accepted"
+                || _state.defectorAsylum.Exists(entry => entry != null
+                    && string.Equals(entry.candidateId, candidateId, StringComparison.OrdinalIgnoreCase)))
+                return ActionResult.Blocked("already_accepted", "counterintel.already_accepted");
 
             candidate.status = "defector_accepted";
             _state.defectorAsylum.Add(new DefectorAsylumState
@@ -199,6 +220,9 @@ namespace Ashfall.Core.Factions
 
         public SabotageResult ResolveSabotage(string agentId)
         {
+            if (string.IsNullOrWhiteSpace(agentId))
+                return SabotageResult.Failed("unknown_agent", "counterintel.unknown_agent");
+
             var agent = GetAgent(agentId);
             if (agent == null)
                 return SabotageResult.Failed("unknown_agent", "counterintel.unknown_agent");
@@ -209,9 +233,21 @@ namespace Ashfall.Core.Factions
             if (!_profiles.TryGetValue(agent.profileId, out var profile))
                 return SabotageResult.Failed("unknown_profile", "counterintel.unknown_profile");
 
-            // Deterministic sabotage target selection
-            int idx = (int)(_rng.NextDouble() * profile.SabotageTargets.Count);
-            string target = profile.SabotageTargets[idx];
+            var targets = (profile.SabotageTargets ?? new List<string>())
+                .Where(target => !string.IsNullOrWhiteSpace(target))
+                .ToList();
+            if (targets.Count == 0)
+                return SabotageResult.Failed("no_sabotage_targets", "counterintel.no_sabotage_targets");
+
+            // Deterministic sabotage target selection with a total index even
+            // for a custom/test RNG returning 1.0 or a non-finite sample.
+            double sample = _rng.NextDouble();
+            int idx = double.IsNaN(sample) || sample <= 0d
+                ? 0
+                : sample >= 1d
+                    ? targets.Count - 1
+                    : (int)(sample * targets.Count);
+            string target = targets[idx];
 
             _log.Warn($"[CounterIntel] Sabotage detected: agent={agentId}, target={target}");
             OnSabotageDiscovered?.Invoke(target, agentId, _currentDay.ToString());
@@ -238,14 +274,147 @@ namespace Ashfall.Core.Factions
         {
             if (saved == null) return;
             _state = CloneState(saved);
+            _currentDay = _state.lastProcessedDay;
         }
 
-        private static CounterIntelligenceState CloneState(CounterIntelligenceState src)
+        private static CounterIntelligenceState CloneState(CounterIntelligenceState? src)
         {
-            if (src == null) return new CounterIntelligenceState();
-            var s = new SystemTextJsonSerializer();
-            var json = s.Serialize(src);
-            return s.Deserialize<CounterIntelligenceState>(json) ?? new CounterIntelligenceState();
+            var copy = new CounterIntelligenceState
+            {
+                systemId = string.IsNullOrWhiteSpace(src?.systemId)
+                    ? CounterIntelligenceSystem.SystemId
+                    : src!.systemId,
+                lastProcessedDay = src?.lastProcessedDay ?? -1,
+                candidates = new List<VettingCandidateState>(),
+                undercoverAgents = new List<UndercoverAgentState>(),
+                surveillanceLog = new List<SurveillanceLogEntry>(),
+                knownEvidenceIds = new List<string>(),
+                detainees = new List<DetaineeState>(),
+                defectorAsylum = new List<DefectorAsylumState>()
+            };
+            if (src == null) return copy;
+
+            var candidateIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (src.candidates != null)
+            {
+                foreach (var candidate in src.candidates)
+                {
+                    if (candidate == null || string.IsNullOrWhiteSpace(candidate.candidateId)
+                        || !candidateIds.Add(candidate.candidateId)) continue;
+                    copy.candidates.Add(new VettingCandidateState
+                    {
+                        candidateId = candidate.candidateId,
+                        claimedBackground = candidate.claimedBackground ?? string.Empty,
+                        scrutinyRating = SanitizeRating(candidate.scrutinyRating),
+                        suspicionFlags = CloneDistinct(candidate.suspicionFlags),
+                        quarantineClearance = candidate.quarantineClearance ?? "none",
+                        evidenceIds = CloneDistinct(candidate.evidenceIds),
+                        interviewCount = Math.Max(0, candidate.interviewCount),
+                        assignedVetterId = candidate.assignedVetterId ?? string.Empty,
+                        status = candidate.status ?? "awaiting_vetting",
+                        lastUpdatedDay = candidate.lastUpdatedDay
+                    });
+                }
+            }
+
+            var agentIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (src.undercoverAgents != null)
+            {
+                foreach (var agent in src.undercoverAgents)
+                {
+                    if (agent == null || string.IsNullOrWhiteSpace(agent.survivorId)
+                        || !agentIds.Add(agent.survivorId)) continue;
+                    copy.undercoverAgents.Add(new UndercoverAgentState
+                    {
+                        survivorId = agent.survivorId,
+                        profileId = agent.profileId ?? string.Empty,
+                        sourceFactionId = agent.sourceFactionId ?? string.Empty,
+                        isExposed = agent.isExposed,
+                        exposureDay = agent.exposureDay,
+                        isInactive = agent.isInactive,
+                        inactivationDay = agent.inactivationDay
+                    });
+                }
+            }
+
+            if (src.surveillanceLog != null)
+            {
+                foreach (var entry in src.surveillanceLog)
+                {
+                    if (entry == null || string.IsNullOrWhiteSpace(entry.subjectId)) continue;
+                    copy.surveillanceLog.Add(new SurveillanceLogEntry
+                    {
+                        day = entry.day,
+                        subjectId = entry.subjectId,
+                        observerId = entry.observerId ?? string.Empty,
+                        observation = entry.observation ?? string.Empty,
+                        suspicionDelta = SanitizeFinite(entry.suspicionDelta)
+                    });
+                }
+            }
+
+            copy.knownEvidenceIds.AddRange(CloneDistinct(src.knownEvidenceIds));
+            var detaineeIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (src.detainees != null)
+            {
+                foreach (var detainee in src.detainees)
+                {
+                    if (detainee == null || string.IsNullOrWhiteSpace(detainee.suspectId)
+                        || !detaineeIds.Add(detainee.suspectId)) continue;
+                    copy.detainees.Add(new DetaineeState
+                    {
+                        suspectId = detainee.suspectId,
+                        detentionDay = detainee.detentionDay,
+                        interrogationStatus = detainee.interrogationStatus ?? "pending",
+                        confessionOutcome = detainee.confessionOutcome ?? "none",
+                        interrogationCount = Math.Max(0, detainee.interrogationCount)
+                    });
+                }
+            }
+
+            var asylumIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (src.defectorAsylum != null)
+            {
+                foreach (var asylum in src.defectorAsylum)
+                {
+                    if (asylum == null || string.IsNullOrWhiteSpace(asylum.candidateId)
+                        || !asylumIds.Add(asylum.candidateId)) continue;
+                    copy.defectorAsylum.Add(new DefectorAsylumState
+                    {
+                        candidateId = asylum.candidateId,
+                        claimedFactionId = asylum.claimedFactionId ?? string.Empty,
+                        status = asylum.status ?? "pending",
+                        decisionDay = asylum.decisionDay,
+                        grantedIntelIds = CloneDistinct(asylum.grantedIntelIds)
+                    });
+                }
+            }
+            return copy;
+        }
+
+        private static List<string> CloneDistinct(IEnumerable<string>? values)
+        {
+            var result = new List<string>();
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            if (values == null) return result;
+            foreach (var value in values)
+            {
+                if (!string.IsNullOrWhiteSpace(value) && seen.Add(value))
+                    result.Add(value);
+            }
+            return result;
+        }
+
+        private static float SanitizeFinite(float value) =>
+            float.IsNaN(value) || float.IsInfinity(value) ? 0f : value;
+
+        private static float SanitizeRating(float value) =>
+            Math.Clamp(SanitizeFinite(value), SuspicionMin, SuspicionMax);
+
+        private static float SanitizeUnit(float value)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value)) return 0f;
+            return Math.Clamp(value, 0f, 1f);
         }
     }
 

@@ -69,6 +69,195 @@ namespace Ashfall.Core.Tests.Needs
         }
 
         [Fact]
+        public void CatalogAndRecordQueries_AreDetachedSnapshots()
+        {
+            var system = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(101));
+            var record = system.GetOrCreateRecord("survivor_snapshot");
+            record.stressPermille = 700;
+            record.activeTraumaIds.Add("trauma_test_shock");
+
+            system.Traumas["trauma_test_shock"].stress_floor_permille = 1;
+
+            var state = system.CaptureState();
+            Assert.Equal(200, state.survivorRecords["survivor_snapshot"].stressPermille);
+            Assert.Empty(state.survivorRecords["survivor_snapshot"].activeTraumaIds);
+
+            Assert.True(system.InflictTrauma("survivor_catalog", "trauma_test_shock", out _));
+            Assert.Equal(250, system.GetStressFloor("survivor_catalog"));
+        }
+
+        [Fact]
+        public void LoadCatalog_NullEntriesAndWhitespaceIds_AreFiltered()
+        {
+            var catalog = new PsychologicalTraumaCatalog
+            {
+                trauma_types = new List<TraumaTypeDefinition>
+                {
+                    null!,
+                    new TraumaTypeDefinition { id = " TRAUMA_CANONICAL ", stress_floor_permille = 200 }
+                },
+                recovery_actions = null!,
+                crisis_events = new List<CrisisEventDefinition> { null! }
+            };
+            var system = new SurvivorMentalHealthSystem();
+
+            system.LoadCatalog(catalog);
+
+            Assert.True(system.Traumas.ContainsKey("trauma_canonical"));
+            Assert.Empty(system.Therapies);
+            Assert.Empty(system.Crises);
+        }
+
+        [Fact]
+        public void PrescribeTherapy_OverflowingChance_IsClampedAndCanResolve()
+        {
+            var catalog = CreateSampleCatalog();
+            catalog.recovery_actions[0].stress_reduction_permille = int.MaxValue;
+            catalog.recovery_actions[0].daily_resolution_chance_permille = int.MaxValue;
+            catalog.recovery_actions[0].counselor_bonus_permille = int.MaxValue;
+            var system = new SurvivorMentalHealthSystem(catalog, new SeededRng(42));
+            system.GetOrCreateRecord("survivor_therapy_overflow");
+            Assert.True(system.InflictTrauma("survivor_therapy_overflow", "trauma_test_guilt", out _));
+
+            Assert.True(system.PrescribeTherapy(
+                "survivor_therapy_overflow", "therapy_test_quiet", hasCounselor: true, out _));
+
+            Assert.Empty(system.GetOrCreateRecord("survivor_therapy_overflow").activeTraumaIds);
+            Assert.Equal(1, system.CaptureState().totalCatharsisBreakthroughs);
+        }
+
+        [Fact]
+        public void AddStress_IntMax_DoesNotOverflow()
+        {
+            var system = new SurvivorMentalHealthSystem();
+            system.RestoreState(new SurvivorMentalHealthState
+            {
+                survivorRecords = new Dictionary<string, SurvivorMentalHealthRecord>
+                {
+                    ["survivor_overflow"] = new SurvivorMentalHealthRecord
+                    {
+                        survivorId = "survivor_overflow",
+                        stressPermille = 1000
+                    }
+                }
+            });
+
+            system.AddStress("survivor_overflow", int.MaxValue);
+
+            Assert.Equal(1000, system.GetOrCreateRecord("survivor_overflow").stressPermille);
+        }
+
+        [Fact]
+        public void TickDay_DuplicateAndBackwardTicks_AreIdempotent()
+        {
+            var system = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(101));
+            system.RestoreState(new SurvivorMentalHealthState
+            {
+                survivorRecords = new Dictionary<string, SurvivorMentalHealthRecord>
+                {
+                    ["survivor_tick"] = new SurvivorMentalHealthRecord
+                    {
+                        survivorId = "survivor_tick",
+                        stressPermille = 800,
+                        currentCrisisId = "crisis_test_panic",
+                        crisisDaysRemaining = 2,
+                        activeTraumaIds = new List<string> { "trauma_test_shock" }
+                    }
+                }
+            });
+
+            system.TickDay(10);
+            var afterFirst = system.CaptureState();
+            system.TickDay(10);
+            system.TickDay(9);
+
+            var afterDuplicate = system.CaptureState();
+            Assert.Equal(afterFirst.survivorRecords["survivor_tick"].crisisDaysRemaining,
+                afterDuplicate.survivorRecords["survivor_tick"].crisisDaysRemaining);
+            Assert.Equal(afterFirst.survivorRecords["survivor_tick"].insomniaDaysRemaining,
+                afterDuplicate.survivorRecords["survivor_tick"].insomniaDaysRemaining);
+            Assert.Equal(10, afterDuplicate.lastTickDay);
+            Assert.Throws<ArgumentOutOfRangeException>(() => system.TickDay(-1));
+        }
+
+        [Fact]
+        public void Restore_MalformedState_IsNormalized()
+        {
+            var system = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(101));
+            system.RestoreState(new SurvivorMentalHealthState
+            {
+                systemId = "  ",
+                survivorRecords = new Dictionary<string, SurvivorMentalHealthRecord>
+                {
+                    [" SURVIVOR_BAD "] = new SurvivorMentalHealthRecord
+                    {
+                        survivorId = " survivor_bad ",
+                        stressPermille = -50,
+                        activeTraumaIds = new List<string> { " TRAUMA_TEST_SHOCK ", "trauma_test_shock", null!, "unknown" },
+                        insomniaDaysRemaining = -2,
+                        currentCrisisId = " CRISIS_TEST_PANIC ",
+                        crisisDaysRemaining = -3,
+                        therapySessionCount = -4
+                    },
+                    ["survivor_bad"] = new SurvivorMentalHealthRecord { survivorId = "survivor_bad" }
+                },
+                totalCatharsisBreakthroughs = -1
+            });
+
+            var state = system.CaptureState();
+            Assert.Equal(SurvivorMentalHealthSystem.SystemId, state.systemId);
+            Assert.Single(state.survivorRecords);
+            var record = state.survivorRecords["survivor_bad"];
+            Assert.Equal(0, record.stressPermille);
+            Assert.Equal(new[] { "trauma_test_shock", "unknown" }, record.activeTraumaIds);
+            Assert.Equal(0, record.insomniaDaysRemaining);
+            Assert.Equal("crisis_test_panic", record.currentCrisisId);
+            Assert.Equal(0, record.crisisDaysRemaining);
+            Assert.Equal(0, record.therapySessionCount);
+            Assert.Equal(0, state.totalCatharsisBreakthroughs);
+        }
+
+        [Fact]
+        public void CountersSaturate_InsteadOfWrapping()
+        {
+            var system = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(101));
+            system.GetOrCreateRecord("survivor_counter", 100);
+            system.InflictTrauma("survivor_counter", "trauma_test_shock", out _);
+            system.RestoreState(new SurvivorMentalHealthState
+            {
+                totalCatharsisBreakthroughs = int.MaxValue,
+                survivorRecords = new Dictionary<string, SurvivorMentalHealthRecord>
+                {
+                    ["survivor_counter"] = new SurvivorMentalHealthRecord
+                    {
+                        survivorId = "survivor_counter",
+                        activeTraumaIds = new List<string> { "trauma_test_shock" }
+                    }
+                }
+            });
+
+            Assert.True(system.ResolveTrauma("survivor_counter", "TRAUMA_TEST_SHOCK", out _));
+            Assert.Equal(int.MaxValue, system.CaptureState().totalCatharsisBreakthroughs);
+        }
+
+        [Fact]
+        public void CaptureRestore_AreDeepCopies()
+        {
+            var system = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(101));
+            system.GetOrCreateRecord("survivor_copy", 300);
+            system.InflictTrauma("survivor_copy", "trauma_test_shock", out _);
+            var state = system.CaptureState();
+            state.survivorRecords["survivor_copy"].activeTraumaIds.Clear();
+
+            Assert.Single(system.GetOrCreateRecord("survivor_copy").activeTraumaIds);
+
+            var restored = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(101));
+            restored.RestoreState(state);
+            state.survivorRecords["survivor_copy"].stressPermille = 0;
+            Assert.NotEqual(0, restored.GetOrCreateRecord("survivor_copy").stressPermille);
+        }
+
+        [Fact]
         public void InflictTrauma_RaisesStressFloorAndStress()
         {
             var system = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(101));
@@ -106,9 +295,9 @@ namespace Ashfall.Core.Tests.Needs
 
             // Tick 2 days to clear crisis
             system.TickDay(1);
-            Assert.Equal(1, rec.crisisDaysRemaining);
+            Assert.Equal(1, system.GetOrCreateRecord("survivor_beta").crisisDaysRemaining);
             system.TickDay(2);
-            Assert.Empty(rec.currentCrisisId);
+            Assert.Empty(system.GetOrCreateRecord("survivor_beta").currentCrisisId);
             Assert.Equal(0, system.GetProductivityPenaltyPermille("survivor_beta"));
         }
 
@@ -126,6 +315,30 @@ namespace Ashfall.Core.Tests.Needs
             // Therapy should have reduced stress and processed trauma
             var rec = system.GetOrCreateRecord("survivor_gamma");
             Assert.Equal(1, rec.therapySessionCount);
+        }
+
+        [Fact]
+        public void MutatingTherapies_StillRequiresAValidSurvivorId()
+        {
+            var system = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(101));
+
+            Assert.Throws<ArgumentException>(() =>
+                system.InflictTrauma("   ", "trauma_test_shock", out _));
+            Assert.Throws<ArgumentException>(() =>
+                system.PrescribeTherapy(string.Empty, "therapy_test_quiet", false, out _));
+        }
+
+        [Fact]
+        public void LegacySaveWithoutDayCursor_RestoresSentinel()
+        {
+            const string legacy = "{\"systemId\":\"survivor_mental_health\",\"survivorRecords\":{},\"totalCatharsisBreakthroughs\":0}";
+            var saved = new SystemTextJsonSerializer().Deserialize<SurvivorMentalHealthState>(legacy);
+
+            Assert.NotNull(saved);
+            Assert.Equal(-1, saved!.lastTickDay);
+            var restored = new SurvivorMentalHealthSystem(CreateSampleCatalog(), new SeededRng(202));
+            restored.RestoreState(saved);
+            Assert.Equal(-1, restored.CaptureState().lastTickDay);
         }
 
         [Fact]

@@ -41,6 +41,16 @@ namespace AtomicWar.GodotApp
             SetupDutyRoster();
             SetupSurvivors();
 
+            // Campaign panels are menu-blocked by design; the real player path
+            // opens them during play. Mirror the CompositionRoot probe idiom.
+            _state = GameState.Playing;
+
+            // Duty assignees are roster survivors in production (the Plan 24
+            // fitness gate blocks synthetic occupant ids). Enroll the probe's
+            // home occupants as survivors so the assignment path is real.
+            _survivors?.AddSurvivor("npc_kess_adler", "Kess Adler");
+            _survivors?.AddSurvivor("npc_ansel_duth", "Ansel Duth");
+
             bool pass = true;
             void Check(bool cond, string name)
             {
@@ -96,7 +106,13 @@ namespace AtomicWar.GodotApp
 
             // Quest runtime through the real host path: start, advance, complete.
             // The authored soft gate is day 60; advance the host clock there.
-            while (_dutyRoster.Clock.Day < 60) _dutyRoster.TickDay();
+            // Task #112 removed day ownership from the session (SyncDay drives the
+            // clock from the campaign calendar), so a bare TickDay loop spins forever.
+            for (int probeDay = _dutyRoster.Clock.Day + 1; probeDay <= 60; probeDay++)
+            {
+                _dutyRoster.SyncDay(probeDay);
+                _dutyRoster.TickDay();
+            }
             Check(_dutyRoster.Quests.GetAvailableQuests(_dutyRoster.Clock.Day).Count >= 1, "quests available at the real clock day");
             Check(_dutyRoster.StartRosterQuest(DutyRosterIds.QuestTheChart).StartsWith("quest started"), "chart quest starts through the host");
             for (int s = 0; s < 5 && !_dutyRoster.Quests.IsComplete(DutyRosterIds.QuestTheChart); s++)

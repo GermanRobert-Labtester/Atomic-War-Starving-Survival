@@ -52,6 +52,117 @@ namespace Ashfall.Core.Tests.Factions
             };
         }
 
+        [Fact]
+        public void Constructor_CapturedState_DoesNotAliasInput()
+        {
+            var state = new CounterIntelligenceState();
+            state.candidates.Add(CreateCandidate("cand_1"));
+            state.undercoverAgents.Add(CreateAgent("surv_1", "agent_test"));
+            var system = CreateSystem(state);
+
+            state.candidates.Clear();
+            state.undercoverAgents.Clear();
+
+            Assert.Single(system.State.candidates);
+            Assert.Single(system.State.undercoverAgents);
+        }
+
+        [Fact]
+        public void ResolveSabotage_EmptyTargets_FailsClosed()
+        {
+            var system = CreateSystem();
+            system.RegisterProfile(new InfiltratorProfileDef
+            {
+                ProfileId = "agent_test",
+                SabotageTargets = new System.Collections.Generic.List<string>()
+            });
+            system.State.undercoverAgents.Add(CreateAgent("agent_1", "agent_test"));
+
+            var result = system.ResolveSabotage("agent_1");
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal("no_sabotage_targets", result.FailureCode);
+        }
+
+        [Fact]
+        public void ResolveSabotage_RngUpperBound_RemainsInRange()
+        {
+            var system = new CounterIntelligenceSystem(null, new MockRng(1.0), new TestLog());
+            system.RegisterProfile(new InfiltratorProfileDef
+            {
+                ProfileId = "agent_test",
+                SabotageTargets = new System.Collections.Generic.List<string> { "power" }
+            });
+            system.State.undercoverAgents.Add(CreateAgent("agent_1", "agent_test"));
+
+            var result = system.ResolveSabotage("agent_1");
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal("power", result.Target);
+        }
+
+        [Fact]
+        public void AcceptDefector_AlreadyAccepted_IsIdempotent()
+        {
+            var system = CreateSystem();
+            var candidate = CreateCandidate("cand_1");
+            system.State.candidates.Add(candidate);
+
+            var first = system.AcceptDefector("cand_1");
+            var second = system.AcceptDefector("cand_1");
+
+            Assert.True(first.IsSuccess);
+            Assert.False(second.IsSuccess);
+            Assert.Equal("already_accepted", second.FailureCode);
+            Assert.Single(system.State.defectorAsylum);
+        }
+
+        [Fact]
+        public void Interrogate_InfinitePressure_CannotForceFullConfession()
+        {
+            var system = new CounterIntelligenceSystem(null, new MockRng(0.9), new TestLog());
+            system.RegisterProfile(new InfiltratorProfileDef
+            {
+                ProfileId = "agent_test",
+                ConfessionThreshold = 0.5f,
+                SabotageTargets = new System.Collections.Generic.List<string> { "power" }
+            });
+            system.State.undercoverAgents.Add(CreateAgent("surv_1", "agent_test"));
+            system.State.detainees.Add(new DetaineeState { suspectId = "surv_1" });
+
+            var result = system.Interrogate("surv_1", "officer_1", float.PositiveInfinity);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal("refused", result.Outcome);
+            Assert.False(system.State.undercoverAgents[0].isExposed);
+        }
+
+        [Fact]
+        public void VetCandidate_NonFiniteScrutiny_FailsClosed()
+        {
+            var system = CreateSystem();
+            var candidate = CreateCandidate("cand_1", float.NaN);
+            system.State.candidates.Add(candidate);
+
+            var result = system.VetCandidate("cand_1", "officer_1");
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(0f, result.Suspicion);
+            Assert.Equal("cleared", result.Status);
+        }
+
+        [Fact]
+        public void DetainSuspect_BlankId_FailsClosed()
+        {
+            var system = CreateSystem();
+
+            var result = system.DetainSuspect(" ");
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal("invalid_suspect", result.FailureCode);
+            Assert.Empty(system.State.detainees);
+        }
+
         // ── Catalog ──────────────────────────────────────────────────
 
         [Fact]
@@ -195,7 +306,7 @@ namespace Ashfall.Core.Tests.Factions
             var result = testSystem.Interrogate("survivor_1", "officer_1", 1.0f);
             Assert.True(result.IsSuccess);
             Assert.Equal("full_confession", result.Outcome);
-            Assert.True(agent.isExposed);
+            Assert.True(testSystem.State.undercoverAgents[0].isExposed);
             Assert.Equal("survivor_1", exposedId);
             Assert.Equal(1, testSystem.State.detainees[0].interrogationCount);
         }
@@ -341,6 +452,19 @@ namespace Ashfall.Core.Tests.Factions
         }
 
         // ── Determinism ──────────────────────────────────────────────
+
+        [Fact]
+        public void Restore_RehydratesCurrentDayForFirstMutation()
+        {
+            var source = CreateSystem();
+            source.TickDay(5);
+            var restored = CreateSystem(source.CaptureState());
+
+            var result = restored.DetainSuspect("surv_after_restore");
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(5, restored.State.detainees[0].detentionDay);
+        }
 
         [Fact]
         public void Deterministic_SameSeed_SameInterrogationOutcome()

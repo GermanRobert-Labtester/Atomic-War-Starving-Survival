@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Settlements;
 using Ashfall.Core.Save;
 
@@ -87,6 +88,10 @@ namespace AtomicWar.GodotApp
         public bool Establish(string outpostId, Func<string, int, bool>? costConsumer = null)
             => System.EstablishOutpost(outpostId, costConsumer);
 
+        /// <summary>Establish an outpost against the atomic canonical inventory bill.</summary>
+        public bool TryEstablish(string outpostId, IPlayerInventoryPort? inventory)
+            => System.TryEstablishOutpost(outpostId, inventory);
+
         /// <summary>Assign a roster survivor to an outpost garrison.</summary>
         public bool AssignGarrison(string outpostId, string survivorId, Func<string, bool>? fitnessCheck = null)
             => System.AssignGarrison(outpostId, survivorId, fitnessCheck);
@@ -98,6 +103,11 @@ namespace AtomicWar.GodotApp
         /// <summary>Deliver rations to an outpost reserve.</summary>
         public bool Supply(string outpostId, int rationsDelivered)
             => System.SupplyOutpost(outpostId, rationsDelivered);
+
+        /// <summary>Supply an established outpost from canonical inventory.</summary>
+        public bool TrySupply(string outpostId, string rationItemId, int rationsDelivered,
+            IPlayerInventoryPort? inventory)
+            => System.TrySupplyOutpost(outpostId, rationItemId, rationsDelivered, inventory);
 
         /// <summary>Abandon an established outpost.</summary>
         public bool Abandon(string outpostId) => System.AbandonOutpost(outpostId ?? string.Empty);

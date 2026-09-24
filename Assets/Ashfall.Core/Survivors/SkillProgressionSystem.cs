@@ -474,6 +474,27 @@ int currentDay, ISeededRng? rng = null)
         return totals.TryGetValue(disciplineId, out float v) ? v : 0f;
     }
 
+    /// <summary>
+    /// Compute an active catalog bonus directly from persisted skill state.
+    /// Unlike the actor cache, this remains truthful immediately after restore.
+    /// </summary>
+    public float GetDisciplineSkillBonus(string actorId, string disciplineId)
+    {
+        if (string.IsNullOrEmpty(actorId) || string.IsNullOrEmpty(disciplineId)
+            || !_bySurvivor.TryGetValue(actorId, out var state))
+            return 0f;
+
+        float total = 0f;
+        for (int i = 0; i < state.activeSkillIds.Count; i++)
+        {
+            var skill = GetSkill(state.activeSkillIds[i]);
+            if (skill != null && string.Equals(skill.disciplineId, disciplineId, StringComparison.Ordinal))
+                total += skill.skillBonus;
+        }
+        return Math.Max(0f, total);
+    }
+
+
     // ─── Save / Load ─────────────────────────────────────────────────
 
     /// <summary>

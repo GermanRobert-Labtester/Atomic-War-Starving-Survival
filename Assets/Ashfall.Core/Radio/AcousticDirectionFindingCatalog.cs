@@ -106,31 +106,4 @@ namespace Ashfall.Core.Radio
         public AcousticWarningWindowDef? GetWindow(string windowId) =>
             string.IsNullOrEmpty(windowId) ? null : _windows.TryGetValue(windowId, out var w) ? w : null;
     }
-
-    public static class AcousticDirectionFindingCatalogLoader
-    {
-        public const string DefaultFileName = "acoustic_triangulation_catalog.json";
-
-        public static AcousticDirectionFindingCatalog? Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
-        {
-            if (fileIO == null || json == null) return null;
-            string path = fileIO.Combine(dataDir, DefaultFileName);
-            if (!fileIO.FileExists(path)) return null;
-
-            string raw = fileIO.ReadAllText(path);
-            AcousticDirectionFindingCatalogDto? dto;
-            try
-            {
-                dto = json.Deserialize<AcousticDirectionFindingCatalogDto>(raw);
-            }
-            catch (Exception ex)
-            {
-                CatalogDiagnostics.Warn(path, "acoustic_triangulation_catalog", ex);
-                return null;
-            }
-            if (dto?.arrays == null) return null;
-
-            return new AcousticDirectionFindingCatalog(dto.arrays, dto.signal_bands, dto.warning_windows);
-        }
-    }
 }

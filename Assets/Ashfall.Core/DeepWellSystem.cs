@@ -13,7 +13,7 @@ namespace Ashfall.Core
     public sealed class DeepWellState
     {
         public string systemId = DeepWellSystem.SystemId;
-        public int schemaVersion = 1;
+        public int schemaVersion = DeepWellSystem.CurrentSchemaVersion;
         public bool built;
         public bool enabled = true;
         public float condition = 100f;
@@ -46,6 +46,7 @@ namespace Ashfall.Core
     public sealed class DeepWellSystem
     {
         public const string SystemId = "deep_well";
+        public const int CurrentSchemaVersion = 1;
 
         /// <summary>Plan 189 intake source id for deep-well water.</summary>
         public const string SourceId = "source_deep_well";
@@ -98,7 +99,7 @@ namespace Ashfall.Core
             _log = log ?? NullLog.Instance;
         }
 
-        public DeepWellState State => _state;
+        public DeepWellState State => CaptureState();
         public bool IsBuilt => _state.built;
         public bool IsEnabled => _state.enabled;
         public float Condition => _state.condition;
@@ -128,9 +129,11 @@ namespace Ashfall.Core
             _state.built = true;
             _state.enabled = true;
             _state.condition = 100f;
+            _state.totalYieldLiters = 0L;
+            _state.lastPumpDay = -1;
             RegisterPumpLoad();
             _log.Info("[DeepWell] Deep-well pump built and registered as a critical grid load.");
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
             return true;
         }
 
@@ -144,7 +147,7 @@ namespace Ashfall.Core
             }
             if (_state.enabled == enabled) return true; // idempotent toggle
             _state.enabled = enabled;
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
             return true;
         }
 
@@ -166,7 +169,7 @@ namespace Ashfall.Core
 
             _state.condition = 100f;
             _pumpWornWarned = false; // fresh service: a new wear cycle may warn again
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
             return true;
         }
 
@@ -179,25 +182,31 @@ namespace Ashfall.Core
         /// </summary>
         public void TickDay(int day)
         {
+            if (day < 0)
+                throw new ArgumentOutOfRangeException(nameof(day), "Campaign day cannot be negative.");
+
             if (!_state.built || !_state.enabled) return;
+            if (day <= _state.lastPumpDay) return; // exactly once per successful campaign day
             if (!_powerGrid.IsRoomServed(PowerRoomId)) return; // unserved pump is silent — power owns availability
 
-            float yield = RatedYieldLitersPerDay * (_state.condition / 100f);
-            if (yield <= 0f) return;
+            float condition = SanitizeCondition(_state.condition);
+            float yield = RatedYieldLitersPerDay * (condition / 100f);
+            if (!IsFinite(yield) || yield <= 0f) return;
 
             var add = _waterTreatment.TryAddWaterFromSource(SourceId, WaterType.Raw, yield);
             if (add.Status != ActionResult.StatusKind.Success)
                 return; // intake blocked (advisory/full pool): water stays in the aquifer
 
-            _state.totalYieldLiters += (long)MathF.Round(yield);
-            _state.condition = MathF.Max(0f, _state.condition - WearPerPumpingDay);
+            long amount = (long)MathF.Round(yield);
+            _state.totalYieldLiters = SaturatingAdd(_state.totalYieldLiters, amount);
+            _state.condition = SanitizeCondition(_state.condition - WearPerPumpingDay);
             _state.lastPumpDay = day;
             if (!_pumpWornWarned && _state.condition < PumpWornThreshold)
             {
                 _pumpWornWarned = true;
-                OnPumpWorn?.Invoke(_state);
+                OnPumpWorn?.Invoke(CaptureState());
             }
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
         }
 
         /// <summary>§6.3: expose the pump as a named grid load. Idempotent;
@@ -211,13 +220,13 @@ namespace Ashfall.Core
 
         public DeepWellState CaptureState() => new DeepWellState
         {
-            systemId = _state.systemId,
-            schemaVersion = _state.schemaVersion,
+            systemId = SystemId,
+            schemaVersion = CurrentSchemaVersion,
             built = _state.built,
             enabled = _state.enabled,
-            condition = _state.condition,
-            totalYieldLiters = _state.totalYieldLiters,
-            lastPumpDay = _state.lastPumpDay
+            condition = SanitizeCondition(_state.condition),
+            totalYieldLiters = Math.Max(0L, _state.totalYieldLiters),
+            lastPumpDay = _state.built ? Math.Max(-1, _state.lastPumpDay) : -1
         };
 
         public void RestoreState(DeepWellState? saved)
@@ -225,13 +234,13 @@ namespace Ashfall.Core
             if (saved == null) return;
             _state = new DeepWellState
             {
-                systemId = string.IsNullOrEmpty(saved.systemId) ? SystemId : saved.systemId,
-                schemaVersion = saved.schemaVersion,
+                systemId = SystemId,
+                schemaVersion = CurrentSchemaVersion,
                 built = saved.built,
                 enabled = saved.enabled,
-                condition = Math.Clamp(saved.condition, 0f, 100f),
+                condition = SanitizeCondition(saved.condition),
                 totalYieldLiters = Math.Max(0L, saved.totalYieldLiters),
-                lastPumpDay = saved.lastPumpDay
+                lastPumpDay = saved.built ? Math.Max(-1, saved.lastPumpDay) : -1
             };
             // The grid's room list is not persisted — re-expose the pump load
             // after restore (idempotent, deterministic, no events replayed).
@@ -240,7 +249,20 @@ namespace Ashfall.Core
             // B5–B8 expansion: re-seed the warn latch from the restored state
             // (an already-worn restored pump never replays its warning).
             _pumpWornWarned = _state.built && _state.condition < PumpWornThreshold;
-            OnStateChanged?.Invoke(_state);
+            OnStateChanged?.Invoke(CaptureState());
+        }
+
+        private static bool IsFinite(float value) =>
+            !float.IsNaN(value) && !float.IsInfinity(value);
+
+        private static float SanitizeCondition(float value) =>
+            IsFinite(value) ? Math.Clamp(value, 0f, 100f) : 0f;
+
+        private static long SaturatingAdd(long current, long amount)
+        {
+            if (amount <= 0L) return Math.Max(0L, current);
+            long normalized = Math.Max(0L, current);
+            return normalized > long.MaxValue - amount ? long.MaxValue : normalized + amount;
         }
     }
 }

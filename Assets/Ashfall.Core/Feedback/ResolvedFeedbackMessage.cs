@@ -18,6 +18,5 @@ namespace Ashfall.Core.Feedback
         public string? SourceSystem { get; init; }
         public string? PresentationContext { get; init; }
         public bool IsDiagnosticOnly { get; init; }
-        public long TimestampTick { get; init; }
     }
 }

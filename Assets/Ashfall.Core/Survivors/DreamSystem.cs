@@ -295,5 +295,63 @@ namespace Ashfall.Core.Survivors
             var json = s.Serialize(state);
             _state = s.Deserialize<DreamSystemState>(json) ?? new DreamSystemState();
         }
+
+        public DreamCensus GetCensus()
+        {
+            int peaceful = 0, nightmare = 0, memory = 0, prophetic = 0, interpreted = 0;
+            foreach (var r in _state.DreamRecords)
+            {
+                if (r.is_interpreted) interpreted++;
+                switch (r.dream_type.ToLowerInvariant())
+                {
+                    case "peaceful": peaceful++; break;
+                    case "nightmare": nightmare++; break;
+                    case "memory": memory++; break;
+                    case "prophetic": prophetic++; break;
+                }
+            }
+
+            return new DreamCensus(
+                authoredTemplatesCount: _state.AuthoredTemplates.Count,
+                recordedDreamsCount: _state.DreamRecords.Count,
+                interpretedDreamsCount: interpreted,
+                peacefulCount: peaceful,
+                nightmareCount: nightmare,
+                memoryCount: memory,
+                propheticCount: prophetic,
+                trackedSurvivorsWithNightmares: _state.ConsecutiveNightmares.Count);
+        }
+    }
+
+    public struct DreamCensus
+    {
+        public int AuthoredTemplatesCount { get; }
+        public int RecordedDreamsCount { get; }
+        public int InterpretedDreamsCount { get; }
+        public int PeacefulCount { get; }
+        public int NightmareCount { get; }
+        public int MemoryCount { get; }
+        public int PropheticCount { get; }
+        public int TrackedSurvivorsWithNightmares { get; }
+
+        public DreamCensus(
+            int authoredTemplatesCount,
+            int recordedDreamsCount,
+            int interpretedDreamsCount,
+            int peacefulCount,
+            int nightmareCount,
+            int memoryCount,
+            int propheticCount,
+            int trackedSurvivorsWithNightmares)
+        {
+            AuthoredTemplatesCount = authoredTemplatesCount;
+            RecordedDreamsCount = recordedDreamsCount;
+            InterpretedDreamsCount = interpretedDreamsCount;
+            PeacefulCount = peacefulCount;
+            NightmareCount = nightmareCount;
+            MemoryCount = memoryCount;
+            PropheticCount = propheticCount;
+            TrackedSurvivorsWithNightmares = trackedSurvivorsWithNightmares;
+        }
     }
 }

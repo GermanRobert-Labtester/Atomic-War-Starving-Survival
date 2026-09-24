@@ -9,14 +9,6 @@ using System.Text;
 
 namespace Ashfall.Core.Endgame
 {
-    public enum EndingCategory
-    {
-        Political = 0,
-        Social = 1,
-        Personal = 2,
-        Moral = 3,
-        Judicial = 4
-    }
 
     public enum SurvivorFateStatus
     {

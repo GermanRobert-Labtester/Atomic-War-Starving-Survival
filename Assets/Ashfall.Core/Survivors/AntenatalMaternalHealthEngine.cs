@@ -255,8 +255,10 @@ namespace Ashfall.Core.Survivors
                                   state.MedicalSupervisionQualityPermille * 30 +
                                   state.ShelterSanitationQualityPermille * 15) / 100;
 
-            // Deterministic variance ±8%
-            int hash = HashCode.Combine(birthSeed, state.GestationDays, state.MotherSurvivorId?.GetHashCode() ?? 0);
+            // Deterministic variance ±8%. All replay inputs use the stable
+            // Core mixer; HashCode/string.GetHashCode vary across processes.
+            int hash = StableHash.Combine(birthSeed, state.GestationDays);
+            hash = StableHash.Combine(hash, state.MotherSurvivorId);
             int variance = ((hash & 0x7FFFFFFF) % 17) - 8;
             compositeScore = Math.Clamp(compositeScore + (compositeScore * variance) / 100, 0, 1000);
 

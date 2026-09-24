@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ashfall.Core.Save;
 #pragma warning disable CS8618
 
@@ -72,8 +73,8 @@ namespace Ashfall.Core.Factions
     {
         public const string SystemId = "forced_labor_system";
 
-        private readonly Dictionary<string, LaborCampDefinition> _camps = new Dictionary<string, LaborCampDefinition>(StringComparer.Ordinal);
-        private readonly Dictionary<string, ForcedLaborerState> _laborers = new Dictionary<string, ForcedLaborerState>(StringComparer.Ordinal);
+        private readonly Dictionary<string, LaborCampDefinition> _camps = new Dictionary<string, LaborCampDefinition>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, ForcedLaborerState> _laborers = new Dictionary<string, ForcedLaborerState>(StringComparer.OrdinalIgnoreCase);
 
         private float _crueltyIndex = 0f;
         private float _resistancePressure = 0f;
@@ -90,7 +91,8 @@ namespace Ashfall.Core.Factions
         public event Action<string>? OnRebellionTriggered;
         public event Action<bool, string>? OnRebellionResolved;
 
-        public IReadOnlyCollection<ForcedLaborerState> Laborers => _laborers.Values;
+        public IReadOnlyCollection<ForcedLaborerState> Laborers =>
+            _laborers.Values.Select(CloneLaborer).ToList();
         public float CrueltyIndex => _crueltyIndex;
         public float ResistancePressure => _resistancePressure;
         public int GuardCount => _guardCount;
@@ -101,29 +103,29 @@ namespace Ashfall.Core.Factions
 
         public void LoadCatalog(string jsonText, IJsonSerializer serializer)
         {
+            _camps.Clear();
             if (string.IsNullOrWhiteSpace(jsonText) || serializer == null) return;
             try
             {
                 var catalog = serializer.Deserialize<LaborCampsCatalog>(jsonText);
-                if (catalog?.camps != null)
+                if (catalog?.camps == null) return;
+                foreach (var camp in catalog.camps)
                 {
-                    _camps.Clear();
-                    foreach (var c in catalog.camps)
-                    {
-                        if (!string.IsNullOrEmpty(c.camp_id))
-                            _camps[c.camp_id] = c;
-                    }
+                    if (camp == null || string.IsNullOrWhiteSpace(camp.camp_id)) continue;
+                    _camps[camp.camp_id.Trim()] = CloneCamp(camp);
                 }
             }
-            catch
+            catch (Exception)
             {
-                // Graceful fallback
+                // A malformed reload must not leave the previous catalog active.
+                _camps.Clear();
             }
         }
 
         public LaborCampDefinition? GetCamp(string campId)
         {
-            return _camps.TryGetValue(campId, out var c) ? c : null;
+            if (string.IsNullOrWhiteSpace(campId)) return null;
+            return _camps.TryGetValue(campId.Trim(), out var camp) ? CloneCamp(camp) : null;
         }
 
         public void SetGuardCount(int guards)
@@ -133,11 +135,13 @@ namespace Ashfall.Core.Factions
 
         public bool AssignLaborer(string captiveId, string campId, bool restrained, out string failureReason)
         {
-            if (string.IsNullOrEmpty(captiveId))
+            if (string.IsNullOrWhiteSpace(captiveId))
             {
                 failureReason = "Captive ID required";
                 return false;
             }
+            captiveId = captiveId.Trim();
+            campId = campId?.Trim() ?? string.Empty;
             if (!_camps.TryGetValue(campId, out var camp))
             {
                 failureReason = "Labor camp assignment not found";
@@ -171,12 +175,12 @@ namespace Ashfall.Core.Factions
 
         public bool UnassignLaborer(string captiveId)
         {
-            return _laborers.Remove(captiveId);
+            return !string.IsNullOrWhiteSpace(captiveId) && _laborers.Remove(captiveId.Trim());
         }
 
         public bool EmancipateLaborer(string captiveId)
         {
-            if (_laborers.Remove(captiveId))
+            if (!string.IsNullOrWhiteSpace(captiveId) && _laborers.Remove(captiveId.Trim()))
             {
                 _crueltyIndex = Math.Max(0f, _crueltyIndex - 4.0f);
                 _resistancePressure = Math.Max(0f, _resistancePressure - 5.0f);
@@ -189,23 +193,24 @@ namespace Ashfall.Core.Factions
         {
             if (camp == null || laborer == null) return 0f;
 
-            // Exhaustion penalty
-            float strainPenalty = Math.Clamp(laborer.physicalStrain / 100f, 0f, 0.6f);
-            float baseProd = camp.base_productivity * (1f - strainPenalty);
-
-            // Guard oversight modifier
-            float requiredRatio = Math.Max(0.1f, camp.guard_requirement_ratio);
-            float oversight = Math.Clamp(guardRatio / requiredRatio, 0.3f, 1.2f);
-
-            // Health penalty
-            float healthMult = Math.Clamp(laborer.health / 100f, 0.2f, 1.0f);
-
-            return Math.Max(0.1f, baseProd * oversight * healthMult);
+            float strain = SanitizeRange(laborer.physicalStrain, 0f, 100f);
+            float health = SanitizeRange(laborer.health, 0f, 100f);
+            float baseProductivity = SanitizeFinite(camp.base_productivity);
+            float requiredRatio = Math.Max(0.1f, SanitizeFinite(camp.guard_requirement_ratio));
+            float safeGuardRatio = Math.Max(0f, SanitizeFinite(guardRatio));
+            float strainPenalty = Math.Clamp(strain / 100f, 0f, 0.6f);
+            float baseProd = Math.Max(0f, baseProductivity * (1f - strainPenalty));
+            float oversight = Math.Clamp(safeGuardRatio / requiredRatio, 0.3f, 1.2f);
+            float healthMult = Math.Clamp(health / 100f, 0.2f, 1f);
+            float result = baseProd * oversight * healthMult;
+            return IsFinite(result) ? Math.Max(0.1f, result) : 0.1f;
         }
 
         public RebellionRiskBreakdown CalculateRebellionRisk()
         {
             var risk = new RebellionRiskBreakdown();
+            _crueltyIndex = SanitizeRange(_crueltyIndex, 0f, 100f);
+            _resistancePressure = SanitizeRange(_resistancePressure, 0f, 100f);
             if (_laborers.Count == 0) return risk;
 
             // Population pressure
@@ -218,8 +223,9 @@ namespace Ashfall.Core.Factions
             float requiredGuards = 0f;
             foreach (var l in _laborers.Values)
             {
+                if (l == null) continue;
                 if (_camps.TryGetValue(l.campId, out var c))
-                    requiredGuards += c.guard_requirement_ratio;
+                    requiredGuards += Math.Max(0f, SanitizeFinite(c.guard_requirement_ratio));
                 else
                     requiredGuards += 0.25f;
             }
@@ -232,16 +238,20 @@ namespace Ashfall.Core.Factions
             // Resentment
             risk.resentmentFactor = (_resistancePressure / 100f) * 0.35f;
 
-            risk.totalRisk = Math.Clamp(risk.populationPressure + risk.crueltyFactor + risk.guardDeficiency + risk.resentmentFactor, 0.02f, 0.95f);
+            risk.totalRisk = SanitizeRange(
+                risk.populationPressure + risk.crueltyFactor + risk.guardDeficiency + risk.resentmentFactor,
+                0.02f,
+                0.95f);
             return risk;
         }
 
         public void AdvanceDailyShift(ISeededRng rng)
         {
+            if (rng == null) throw new ArgumentNullException(nameof(rng));
             if (_laborers.Count == 0)
             {
-                _resistancePressure = Math.Max(0f, _resistancePressure - 2.0f);
-                _crueltyIndex = Math.Max(0f, _crueltyIndex - 0.5f);
+                _resistancePressure = SanitizeRange(_resistancePressure - 2f, 0f, 100f);
+                _crueltyIndex = SanitizeRange(_crueltyIndex - 0.5f, 0f, 100f);
                 return;
             }
 
@@ -251,41 +261,52 @@ namespace Ashfall.Core.Factions
 
             foreach (var laborer in _laborers.Values)
             {
-                if (!_camps.TryGetValue(laborer.campId, out var camp)) continue;
+                if (laborer == null || !_camps.TryGetValue(laborer.campId, out var camp)) continue;
 
                 // Productivity
                 float prod = CalculateProductivity(camp, laborer, guardRatio);
                 totalShiftOutput += prod;
-                laborer.shiftsCompleted++;
+                if (laborer.shiftsCompleted < int.MaxValue) laborer.shiftsCompleted++;
 
                 // Strain & Health decay
-                laborer.physicalStrain = Math.Min(100f, laborer.physicalStrain + (camp.health_stress_per_shift * 2f));
-                laborer.health = Math.Max(5f, laborer.health - camp.health_stress_per_shift);
-                laborer.individualResentment = Math.Min(100f, laborer.individualResentment + camp.rebellion_pressure_gain);
+                laborer.physicalStrain = SanitizeRange(
+                    laborer.physicalStrain + (SanitizeFinite(camp.health_stress_per_shift) * 2f),
+                    0f,
+                    100f);
+                laborer.health = SanitizeRange(
+                    laborer.health - SanitizeFinite(camp.health_stress_per_shift),
+                    0f,
+                    100f);
+                laborer.individualResentment = SanitizeRange(
+                    laborer.individualResentment + SanitizeFinite(camp.rebellion_pressure_gain),
+                    0f,
+                    100f);
 
                 // Injury roll
-                if (rng.NextDouble() < camp.injury_risk_per_shift)
+                if (rng.NextDouble() < SanitizeProbability(camp.injury_risk_per_shift))
                 {
                     laborer.health = Math.Max(0f, laborer.health - 25f);
                     OnLaborerInjured?.Invoke(laborer.captiveId, $"Severe crush trauma at {camp.name}");
                 }
 
                 // Sabotage roll
-                if (rng.NextDouble() < camp.sabotage_opportunity * (laborer.individualResentment / 100f))
+                if (rng.NextDouble() < SanitizeProbability(camp.sabotage_opportunity)
+                    * (laborer.individualResentment / 100f))
                 {
-                    _totalSabotages++;
-                    _crueltyIndex = Math.Min(100f, _crueltyIndex + 2.0f);
+                    if (_totalSabotages < int.MaxValue) _totalSabotages++;
+                    _crueltyIndex = SanitizeRange(_crueltyIndex + 2f, 0f, 100f);
                     OnSabotageCommitted?.Invoke(laborer.captiveId, $"Sabotaged tools and severed safety cables at {camp.name}");
                 }
 
                 // Escape roll
-                float escapeChance = camp.escape_opportunity * (laborer.isRestrained ? 0.4f : 1.0f);
+                float escapeChance = SanitizeProbability(camp.escape_opportunity)
+                    * (laborer.isRestrained ? 0.4f : 1f);
                 if (guardRatio < camp.guard_requirement_ratio) escapeChance *= 1.8f;
 
-                if (rng.NextDouble() < escapeChance * 0.25f)
+                if (rng.NextDouble() < SanitizeProbability(escapeChance * 0.25f))
                 {
                     toRemove.Add(laborer.captiveId);
-                    _totalEscaped++;
+                    if (_totalEscaped < int.MaxValue) _totalEscaped++;
                     OnEscapeAttempted?.Invoke(laborer.captiveId, true);
                 }
             }
@@ -299,17 +320,23 @@ namespace Ashfall.Core.Factions
             OnLaborOutputGenerated?.Invoke("shelter_scrap_materials", totalShiftOutput);
 
             // Accumulate global pressure
-            _resistancePressure = Math.Min(100f, _resistancePressure + (_laborers.Count * 1.2f));
-            _crueltyIndex = Math.Min(100f, _crueltyIndex + (_laborers.Count * 0.4f));
+            _resistancePressure = SanitizeRange(
+                _resistancePressure + (_laborers.Count * 1.2f),
+                0f,
+                100f);
+            _crueltyIndex = SanitizeRange(
+                _crueltyIndex + (_laborers.Count * 0.4f),
+                0f,
+                100f);
 
             // Evaluate rebellion
             var risk = CalculateRebellionRisk();
             if (!_isRebellionActive && risk.totalRisk > 0.40f)
             {
-                if (rng.NextDouble() < risk.totalRisk * 0.35f)
+                if (rng.NextDouble() < SanitizeProbability(risk.totalRisk * 0.35f))
                 {
                     _isRebellionActive = true;
-                    _totalRebellions++;
+                    if (_totalRebellions < int.MaxValue) _totalRebellions++;
                     OnRebellionTriggered?.Invoke("Captive laborers have overpowered guards and barricaded the excavation galleries!");
                 }
             }
@@ -317,6 +344,7 @@ namespace Ashfall.Core.Factions
 
         public bool SuppressRebellion(bool lethalForce, ISeededRng rng)
         {
+            if (rng == null) throw new ArgumentNullException(nameof(rng));
             if (!_isRebellionActive) return false;
 
             double roll = rng.NextDouble();
@@ -325,12 +353,13 @@ namespace Ashfall.Core.Factions
             if (success)
             {
                 _isRebellionActive = false;
-                _resistancePressure = Math.Max(10f, _resistancePressure - 50f);
+                _resistancePressure = SanitizeRange(_resistancePressure - 50f, 10f, 100f);
                 if (lethalForce)
                 {
-                    _crueltyIndex = Math.Min(100f, _crueltyIndex + 15f);
+                    _crueltyIndex = SanitizeRange(_crueltyIndex + 15f, 0f, 100f);
                     // Casualties: remove 1-2 laborers
-                    int casualtyCount = Math.Min(_laborers.Count, rng.Next(1, 3));
+                    int casualtyRoll = Math.Clamp(rng.Next(1, 3), 1, 2);
+                    int casualtyCount = Math.Min(_laborers.Count, casualtyRoll);
                     var keys = new List<string>(_laborers.Keys);
                     for (int i = 0; i < casualtyCount && i < keys.Count; i++)
                     {
@@ -343,7 +372,7 @@ namespace Ashfall.Core.Factions
             else
             {
                 _resistancePressure = 100f;
-                _crueltyIndex = Math.Min(100f, _crueltyIndex + 10f);
+                _crueltyIndex = SanitizeRange(_crueltyIndex + 10f, 0f, 100f);
                 OnRebellionResolved?.Invoke(false, "Suppression failed! Rebels maintain control of the worksite.");
                 return false;
             }
@@ -354,15 +383,18 @@ namespace Ashfall.Core.Factions
             var state = new ForcedLaborState
             {
                 systemId = SystemId,
-                crueltyIndex = _crueltyIndex,
-                resistancePressure = _resistancePressure,
-                guardCount = _guardCount,
+                crueltyIndex = SanitizeRange(_crueltyIndex, 0f, 100f),
+                resistancePressure = SanitizeRange(_resistancePressure, 0f, 100f),
+                guardCount = Math.Max(0, _guardCount),
                 isRebellionActive = _isRebellionActive,
-                totalEscaped = _totalEscaped,
-                totalRebellions = _totalRebellions,
-                totalSabotages = _totalSabotages
+                totalEscaped = Math.Max(0, _totalEscaped),
+                totalRebellions = Math.Max(0, _totalRebellions),
+                totalSabotages = Math.Max(0, _totalSabotages)
             };
-            foreach (var kv in _laborers) state.laborers.Add(kv.Value);
+            foreach (var laborer in _laborers.Values)
+            {
+                if (laborer != null) state.laborers.Add(CloneLaborer(laborer));
+            }
             return state;
         }
 
@@ -376,25 +408,76 @@ namespace Ashfall.Core.Factions
             _totalEscaped = 0;
             _totalRebellions = 0;
             _totalSabotages = 0;
-
             if (state == null) return;
 
-            _crueltyIndex = state.crueltyIndex;
-            _resistancePressure = state.resistancePressure;
-            _guardCount = state.guardCount;
+            _crueltyIndex = SanitizeRange(state.crueltyIndex, 0f, 100f);
+            _resistancePressure = SanitizeRange(state.resistancePressure, 0f, 100f);
+            _guardCount = Math.Max(0, state.guardCount);
             _isRebellionActive = state.isRebellionActive;
-            _totalEscaped = state.totalEscaped;
-            _totalRebellions = state.totalRebellions;
-            _totalSabotages = state.totalSabotages;
+            _totalEscaped = Math.Max(0, state.totalEscaped);
+            _totalRebellions = Math.Max(0, state.totalRebellions);
+            _totalSabotages = Math.Max(0, state.totalSabotages);
+            if (state.laborers == null) return;
 
-            if (state.laborers != null)
+            foreach (var laborer in state.laborers)
             {
-                foreach (var l in state.laborers)
-                {
-                    if (!string.IsNullOrEmpty(l.captiveId))
-                        _laborers[l.captiveId] = l;
-                }
+                if (laborer == null || string.IsNullOrWhiteSpace(laborer.captiveId)
+                    || string.IsNullOrWhiteSpace(laborer.campId)) continue;
+                var clone = CloneLaborer(laborer);
+                _laborers[clone.captiveId] = clone;
             }
         }
+
+        private static ForcedLaborerState CloneLaborer(ForcedLaborerState source)
+        {
+            return new ForcedLaborerState
+            {
+                captiveId = source.captiveId?.Trim() ?? string.Empty,
+                campId = source.campId?.Trim() ?? string.Empty,
+                shiftsCompleted = Math.Max(0, source.shiftsCompleted),
+                physicalStrain = SanitizeRange(source.physicalStrain, 0f, 100f),
+                health = SanitizeRange(source.health, 0f, 100f),
+                isRestrained = source.isRestrained,
+                individualResentment = SanitizeRange(source.individualResentment, 0f, 100f)
+            };
+        }
+
+        private static LaborCampDefinition CloneCamp(LaborCampDefinition source)
+        {
+            return new LaborCampDefinition
+            {
+                camp_id = source.camp_id?.Trim() ?? string.Empty,
+                name = source.name ?? string.Empty,
+                labor_intensity = source.labor_intensity ?? string.Empty,
+                base_productivity = SanitizeFinite(source.base_productivity),
+                guard_requirement_ratio = SanitizeRange(source.guard_requirement_ratio, 0f, 100f),
+                injury_risk_per_shift = SanitizeProbability(source.injury_risk_per_shift),
+                health_stress_per_shift = SanitizeRange(source.health_stress_per_shift, 0f, 100f),
+                hunger_drain_modifier = SanitizeRange(source.hunger_drain_modifier, 0f, 100f),
+                morale_harm_bystander = SanitizeFinite(source.morale_harm_bystander),
+                coercion_requirement = SanitizeRange(source.coercion_requirement, 0f, 100f),
+                escape_opportunity = SanitizeProbability(source.escape_opportunity),
+                sabotage_opportunity = SanitizeProbability(source.sabotage_opportunity),
+                rebellion_pressure_gain = SanitizeRange(source.rebellion_pressure_gain, 0f, 100f),
+                tags = source.tags == null
+                    ? new List<string>()
+                    : source.tags.Where(tag => !string.IsNullOrWhiteSpace(tag)).Distinct(StringComparer.Ordinal).ToList()
+            };
+        }
+
+        private static bool IsFinite(float value) =>
+            !float.IsNaN(value) && !float.IsInfinity(value);
+
+        private static float SanitizeFinite(float value) =>
+            IsFinite(value) ? value : 0f;
+
+        private static float SanitizeRange(float value, float min, float max)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value)) return min;
+            return Math.Clamp(value, min, max);
+        }
+
+        private static float SanitizeProbability(float value) =>
+            SanitizeRange(value, 0f, 1f);
     }
 }

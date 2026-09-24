@@ -30,6 +30,15 @@
       "is_expert_skill": false
     },
     {
+      "id": "skill_crafting",
+      "display_name": "General Crafting",
+      "description": "Builds and repairs with the tools and materials the shelter has left.",
+      "discipline_id": "crafting",
+      "xp_threshold": 50.0,
+      "skill_bonus": 0.1,
+      "is_expert_skill": false
+    },
+    {
       "id": "skill_workshop_sense",
       "display_name": "Workshop Sense",
       "description": "Knows how much wear a tool can take and how much abuse a scrap part will accept before it quits.",

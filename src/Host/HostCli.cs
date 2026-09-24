@@ -247,7 +247,31 @@ namespace AtomicWar.GodotApp
         RailTrackMaintenanceSelfTest,
         GlassworksSelfTest,
         BroadsheetPressSelfTest,
-        KilnworksSelfTest
+        KilnworksSelfTest,
+        DependencyTaperWithdrawalSelfTest,
+        AntenatalMaternalHealthSelfTest,
+        ClinicalWardTriageSelfTest,
+        ChemicalReagentSynthesisSelfTest,
+        MechanicalDrivelineSelfTest,
+        SleepAcousticRestSelfTest,
+        ShelterArchiveSelfTest,
+        DreamSystemSelfTest,
+        AccessibilitySettingsSelfTest,
+        MemoryDecaySelfTest,
+        InterpersonalConflictSelfTest,
+        ExerciseSelfTest,
+        AfflictionBridgeSelfTest,
+        RadiationMutationSelfTest,
+        RadioProductionSelfTest,
+        WorkingAnimalsSelfTest,
+        BlackMarketSelfTest,
+        CultureCreationSelfTest,
+        PsychologicalProfileSelfTest,
+        SkillCertificationSelfTest,
+        ChildDevelopmentSelfTest,
+        BestiarySelfTest,
+        HealthHistorySelfTest,
+        LeadershipSuccessionSelfTest
     }
 
     /// <summary>
@@ -736,6 +760,54 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ShelterMaintenanceSelfTest;
             if (Has(args, "--survivor-routines-selftest") || Has(args, "--routines-selftest"))
                 return HostCliAction.SurvivorRoutinesSelfTest;
+            if (Has(args, "--dependency-taper-selftest") || Has(args, "--the-habit-selftest"))
+                return HostCliAction.DependencyTaperWithdrawalSelfTest;
+            if (Has(args, "--antenatal-care-selftest") || Has(args, "--the-quickening-selftest"))
+                return HostCliAction.AntenatalMaternalHealthSelfTest;
+            if (Has(args, "--clinical-ward-selftest") || Has(args, "--the-ward-selftest"))
+                return HostCliAction.ClinicalWardTriageSelfTest;
+            if (Has(args, "--chemical-reagent-selftest") || Has(args, "--the-reagent-selftest"))
+                return HostCliAction.ChemicalReagentSynthesisSelfTest;
+            if (Has(args, "--mechanical-driveline-selftest") || Has(args, "--the-wheel-selftest"))
+                return HostCliAction.MechanicalDrivelineSelfTest;
+            if (Has(args, "--sleep-acoustic-selftest") || Has(args, "--the-quiet-selftest"))
+                return HostCliAction.SleepAcousticRestSelfTest;
+            if (Has(args, "--shelter-archive-selftest") || Has(args, "--archive-system-selftest"))
+                return HostCliAction.ShelterArchiveSelfTest;
+            if (Has(args, "--dream-system-selftest") || Has(args, "--dreams-selftest"))
+                return HostCliAction.DreamSystemSelfTest;
+            if (Has(args, "--accessibility-settings-selftest") || Has(args, "--accessibility-options-selftest"))
+                return HostCliAction.AccessibilitySettingsSelfTest;
+            if (Has(args, "--memory-decay-selftest") || Has(args, "--memory-system-selftest"))
+                return HostCliAction.MemoryDecaySelfTest;
+            if (Has(args, "--interpersonal-conflict-selftest") || Has(args, "--conflict-system-selftest"))
+                return HostCliAction.InterpersonalConflictSelfTest;
+            if (Has(args, "--exercise-selftest") || Has(args, "--physical-training-selftest"))
+                return HostCliAction.ExerciseSelfTest;
+            if (Has(args, "--affliction-bridge-selftest") || Has(args, "--affliction-bridges-selftest") || Has(args, "--affliction-quest-work-selftest"))
+                return HostCliAction.AfflictionBridgeSelfTest;
+            if (Has(args, "--radiation-mutation-selftest") || Has(args, "--mutation-system-selftest"))
+                return HostCliAction.RadiationMutationSelfTest;
+            if (Has(args, "--radio-production-selftest") || Has(args, "--radio-program-production-selftest"))
+                return HostCliAction.RadioProductionSelfTest;
+            if (Has(args, "--working-animals-selftest") || Has(args, "--companion-animal-selftest"))
+                return HostCliAction.WorkingAnimalsSelfTest;
+            if (Has(args, "--black-market-selftest") || Has(args, "--underworld-economy-selftest"))
+                return HostCliAction.BlackMarketSelfTest;
+            if (Has(args, "--culture-creation-selftest") || Has(args, "--art-culture-selftest"))
+                return HostCliAction.CultureCreationSelfTest;
+            if (Has(args, "--psychological-profile-selftest") || Has(args, "--phobia-system-selftest") || Has(args, "--unified-psychology-selftest"))
+                return HostCliAction.PsychologicalProfileSelfTest;
+            if (Has(args, "--skill-certification-selftest") || Has(args, "--skill-tier-selftest") || Has(args, "--certifications-selftest"))
+                return HostCliAction.SkillCertificationSelfTest;
+            if (Has(args, "--child-development-selftest") || Has(args, "--child-stages-selftest"))
+                return HostCliAction.ChildDevelopmentSelfTest;
+            if (Has(args, "--bestiary-selftest") || Has(args, "--creature-encounters-selftest") || Has(args, "--bestiary-ui-selftest"))
+                return HostCliAction.BestiarySelfTest;
+            if (Has(args, "--health-history-selftest") || Has(args, "--medical-records-selftest") || Has(args, "--vaccination-history-selftest"))
+                return HostCliAction.HealthHistorySelfTest;
+            if (Has(args, "--leadership-succession-selftest") || Has(args, "--succession-selftest") || Has(args, "--leadership-challenges-selftest"))
+                return HostCliAction.LeadershipSuccessionSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -965,6 +1037,65 @@ namespace AtomicWar.GodotApp
             GD.Print("  --user-data-dir <path>   Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR)");
             GD.Print("  --log-dir <path>         Configure log output directory for headless runs (or set ASHFALL_LOG_DIR)");
 
+            GD.Print("\n--- Registered Compatibility Flags ---");
+            GD.Print("  --dependency-taper-selftest / --the-habit-selftest  Chemical dependency taper and withdrawal integration probe");
+            GD.Print("  --antenatal-care-selftest / --the-quickening-selftest  Antenatal and maternal health integration probe");
+            GD.Print("  --clinical-ward-selftest / --the-ward-selftest  Clinical ward triage integration probe");
+            GD.Print("  --chemical-reagent-selftest / --the-reagent-selftest  Chemical reagent synthesis integration probe");
+            GD.Print("  --mechanical-driveline-selftest / --the-wheel-selftest  Mechanical driveline integration probe");
+            GD.Print("  --sleep-acoustic-selftest / --the-quiet-selftest  Sleep acoustic rest integration probe");
+            GD.Print("  --shelter-archive-selftest / --archive-system-selftest  Shelter archive integration probe");
+            GD.Print("  --dream-system-selftest / --dreams-selftest  Dream system integration probe");
+            GD.Print("  --accessibility-settings-selftest / --accessibility-options-selftest  Accessibility settings integration probe");
+            GD.Print("  --memory-decay-selftest / --memory-system-selftest  Memory decay integration probe");
+            GD.Print("  --interpersonal-conflict-selftest / --conflict-system-selftest  Interpersonal conflict integration probe");
+            GD.Print("  --exercise-selftest / --physical-training-selftest  Exercise and physical training integration probe");
+            GD.Print("  --affliction-bridge-selftest / --affliction-bridges-selftest / --affliction-quest-work-selftest  Affliction quest-work bridge probe");
+            GD.Print("  --radiation-mutation-selftest / --mutation-system-selftest  Radiation mutation integration probe");
+            GD.Print("  --radio-production-selftest / --radio-program-production-selftest  Radio program production probe");
+            GD.Print("  --working-animals-selftest / --companion-animal-selftest  Working animals integration probe");
+            GD.Print("  --black-market-selftest / --underworld-economy-selftest  Black market integration probe");
+            GD.Print("  --culture-creation-selftest / --art-culture-selftest  Culture creation integration probe");
+            GD.Print("  --psychological-profile-selftest / --phobia-system-selftest / --unified-psychology-selftest  Psychological profile integration probe");
+            GD.Print("  --skill-certification-selftest / --skill-tier-selftest / --certifications-selftest  Skill certification integration probe");
+            GD.Print("  --child-development-selftest / --child-stages-selftest  Child development integration probe");
+            GD.Print("  --bestiary-selftest / --creature-encounters-selftest / --bestiary-ui-selftest  Bestiary integration probe");
+            GD.Print("  --health-history-selftest / --medical-records-selftest / --vaccination-history-selftest  Health history integration probe");
+            GD.Print("  --leadership-succession-selftest / --succession-selftest / --leadership-challenges-selftest  Leadership succession integration probe");
+            GD.Print("  --aging-selftest / --elderly-survivor-selftest  Survivor aging and life-stage compatibility probes");
+            GD.Print("  --atmosphere-selftest / --shelter-atmosphere-selftest  Shelter atmosphere compatibility probes");
+            GD.Print("  --audio-access-selftest / --audio-accessibility-selftest  Audio accessibility compatibility probes");
+            GD.Print("  --backstory-selftest / --backstories-selftest  Survivor backstory compatibility probes");
+            GD.Print("  --campaign-legacy-selftest / --legacy-selftest  Generational legacy compatibility probes");
+            GD.Print("  --communique-board-selftest / --faction-communique-board-selftest  Faction communique compatibility probes");
+            GD.Print("  --difficulty-settings-selftest / --difficulty-sliders-selftest  Difficulty configuration compatibility probes");
+            GD.Print("  --dynamic-quest-selftest / --dynamic-quests-selftest  Dynamic quest compatibility probes");
+            GD.Print("  --governance-selftest / --shelter-governance-selftest  Shelter governance compatibility probes");
+            GD.Print("  --hidden-agenda-selftest / --hidden-agendas-selftest  Hidden-agenda compatibility probes");
+            GD.Print("  --human-migration-selftest / --migration-selftest  Human migration compatibility probes");
+            GD.Print("  --keepsakes-selftest  Personal keepsake compatibility probes");
+            GD.Print("  --maintenance-selftest / --shelter-maintenance-selftest  Shelter maintenance compatibility probes");
+            GD.Print("  --mechanical-origin-selftest / --origin-mechanics-selftest  Origin mechanics compatibility probes");
+            GD.Print("  --meta-progression-selftest / --meta-selftest  Cross-run meta-progression compatibility probes");
+            GD.Print("  --mod-contract-selftest / --mod-support-selftest  Mod contract and support compatibility probes");
+            GD.Print("  --needs-perf-selftest / --needs-performance-selftest  Needs performance compatibility probes");
+            GD.Print("  --personal-quest-selftest  Personal quest compatibility probes");
+            GD.Print("  --propaganda-campaign-selftest  Propaganda campaign compatibility probes");
+            GD.Print("  --reputation-selftest / --shelter-reputation-selftest  Shelter reputation compatibility probes");
+            GD.Print("  --routines-selftest / --survivor-routines-selftest  Survivor routine compatibility probes");
+            GD.Print("  --rumors-selftest  Wasteland rumor compatibility probes");
+            GD.Print("  --security-selftest  Shelter security compatibility probes");
+            GD.Print("  --shelter-identity-selftest / --shelter-naming-selftest  Shelter identity and naming compatibility probes");
+            GD.Print("  --shelter-noise-selftest  Shelter noise compatibility probes");
+            GD.Print("  --social-drift-selftest  Social drift compatibility probes");
+            GD.Print("  --standing-gates-selftest  Standing-gate compatibility probes");
+            GD.Print("  --storm-forecast-selftest / --the-weather-selftest / --weather-cascade-selftest  Weather forecast and cascade compatibility probes");
+            GD.Print("  --survivor-death-selftest / --wills-selftest  Survivor death and will compatibility probes");
+            GD.Print("  --the-wild-selftest / --wildlife-harvest-selftest  Wildlife migration and harvest compatibility probes");
+            GD.Print("  --time-capsules-selftest  Time-capsule compatibility probes");
+            GD.Print("  --trade-route-selftest / --trade-routes-selftest  Trade route compatibility probes");
+            GD.Print("  --tunnel-selftest / --tunnel-network-selftest  Tunnel network compatibility probes");
+            GD.Print("  --visitors-selftest  Visitor integration compatibility probes");
             GD.Print("\n--- General & Information ---");
             GD.Print("  --host-help / --help     This list");
             GD.Print("  --version / -v           Show build, data schema, and save schema versions");

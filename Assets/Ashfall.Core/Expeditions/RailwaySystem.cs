@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
@@ -337,14 +338,41 @@ namespace Ashfall.Core.Expeditions
             return def.distance_km * burnRate;
         }
 
+        /// <summary>
+        /// Resolves a known, idle, service-ready train for a dispatch action.
+        /// Train and expedition dispatch share this exact guard chain.
+        /// </summary>
+        private bool TryResolveDispatchableTrain(
+            string trainId,
+            [NotNullWhen(true)] out TrainState? train,
+            out ActionResult failure)
+        {
+            train = string.IsNullOrEmpty(trainId)
+                ? null
+                : _state.trains.Find(t => t.trainId == trainId);
+            if (train == null)
+            {
+                failure = ActionResult.Blocked("train_not_found", "railway.train_not_found");
+                return false;
+            }
+            if (train.status != TrainDispatchStatus.Idle && train.status != TrainDispatchStatus.Arrived)
+            {
+                failure = ActionResult.Blocked("train_not_idle", "railway.train_not_idle");
+                return false;
+            }
+            if (train.transmissionServiceRequired)
+            {
+                failure = ActionResult.Blocked("transmission_service_required", "railway.transmission_service_required");
+                return false;
+            }
+            failure = ActionResult.Success("railway.train_resolved");
+            return true;
+        }
+
         public ActionResult DispatchTrain(string trainId, string segmentId)
         {
-            var train = _state.trains.Find(t => t.trainId == trainId);
-            if (train == null) return ActionResult.Blocked("train_not_found", "railway.train_not_found");
-            if (train.status != TrainDispatchStatus.Idle && train.status != TrainDispatchStatus.Arrived)
-                return ActionResult.Blocked("train_not_idle", "railway.train_not_idle");
-            if (train.transmissionServiceRequired)
-                return ActionResult.Blocked("transmission_service_required", "railway.transmission_service_required");
+            if (!TryResolveDispatchableTrain(trainId, out var train, out var failure))
+                return failure;
 
             if (!_segmentDefs.TryGetValue(segmentId, out var def))
                 return ActionResult.Blocked("invalid_segment", "railway.invalid_segment");
@@ -649,12 +677,8 @@ namespace Ashfall.Core.Expeditions
         /// <summary>Dispatch a train on an expedition route (Plan 73 §7.3).</summary>
         public ActionResult DispatchExpedition(string trainId, string destinationNodeId)
         {
-            var train = _state.trains.Find(t => t.trainId == trainId);
-            if (train == null) return ActionResult.Blocked("train_not_found", "railway.train_not_found");
-            if (train.status != TrainDispatchStatus.Idle && train.status != TrainDispatchStatus.Arrived)
-                return ActionResult.Blocked("train_not_idle", "railway.train_not_idle");
-            if (train.transmissionServiceRequired)
-                return ActionResult.Blocked("transmission_service_required", "railway.transmission_service_required");
+            if (!TryResolveDispatchableTrain(trainId, out var train, out var failure))
+                return failure;
 
             if (!_nodes.ContainsKey(destinationNodeId))
                 return ActionResult.Blocked("invalid_destination", "railway.invalid_destination");

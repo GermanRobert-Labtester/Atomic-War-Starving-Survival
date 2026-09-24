@@ -523,5 +523,22 @@ namespace Ashfall.Core.Tests.Expeditions
                 JsonSerializer.Serialize(a),
                 JsonSerializer.Serialize(b));
         }
+
+        // Guard-extraction hardening: null/empty/unknown junction ids fail
+        // closed with UnknownJunction instead of throwing inside FindJunction.
+        [Fact]
+        public void JunctionGuards_NullEmptyUnknownIds_FailClosedUnknownJunction()
+        {
+            var e = CreateEngine(restoreAll: false);
+            foreach (var bad in new string?[] { null, string.Empty, "no_such_junction" })
+            {
+                var inspect = e.InspectJunction(bad!);
+                Assert.Equal(ActionResult.StatusKind.Failed, inspect.Status);
+                Assert.Equal(RailwayInterlockFailures.UnknownJunction, inspect.FailureCode);
+                var clear = e.ClearJunctionObstruction(bad!);
+                Assert.Equal(ActionResult.StatusKind.Failed, clear.Status);
+                Assert.Equal(RailwayInterlockFailures.UnknownJunction, clear.FailureCode);
+            }
+        }
     }
 }

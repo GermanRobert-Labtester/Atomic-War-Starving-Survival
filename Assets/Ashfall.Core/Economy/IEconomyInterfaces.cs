@@ -28,17 +28,4 @@ namespace Ashfall.Core.Economy
         bool TryGetPriceShock(PriceShockKind kind, int dayOffsetFromShockStart, out PriceShockRule rule);
         float GetScarcityMultiplier(int currentDay, string itemId);
     }
-
-    /// <summary>
-    /// Trade event notification surface for reactive UI binding.
-    /// </summary>
-    public interface ITradeEvents
-    {
-        event Action<string, float, float> OnTrustChanged;
-        event Action<FactionRaidResult> OnRaidResolved;
-        event Action<FactionSuccessionResult> OnFactionSuccession;
-        event Action<FactionSurrenderResult> OnFactionSurrender;
-        event Action OnEconomyChanged;
-        event Action<bool> OnBarterOnlyModeChanged;
-    }
 }

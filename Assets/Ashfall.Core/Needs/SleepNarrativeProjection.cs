@@ -122,7 +122,9 @@ namespace Ashfall.Core.Needs
                 _ => RestfulJournalKey
             };
 
-            int index = _rng != null ? _rng.Next(0, lines.Length) : day % lines.Length;
+            int index = _rng != null
+                ? _rng.Next(0, lines.Length)
+                : StableHash.NonNegativeRemainder(day, lines.Length);
 
             // Per-survivor key: the journal dedupes raw entries by knowledge key,
             // so this records each survivor's sleep trouble once instead of

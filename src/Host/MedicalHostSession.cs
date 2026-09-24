@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 #pragma warning disable CS8618
@@ -25,6 +26,13 @@ namespace AtomicWar.GodotApp
         /// bound — unbound sessions (headless selftests) keep working unchanged.
         /// </summary>
         public MedicalPipelineCoordinator? Pipeline { get; private set; }
+
+        /// <summary>
+        /// Plan 143: Stateless Medical Afflictions -> Quest & Work Bridge.
+        /// Projects affliction state into work speed/quality modifiers, duty exclusions,
+        /// and quest gates.
+        /// </summary>
+        public AfflictionQuestWorkBridge Bridge { get; } = new AfflictionQuestWorkBridge();
 
         public float TotalMoraleDrain { get; private set; }
         public float ActiveCraftingPenalty { get; private set; }
@@ -198,8 +206,26 @@ namespace AtomicWar.GodotApp
                 // the coordinator restores it when the host completes wiring.
                 session._pendingPipelineSave = pipelineSave;
             }
+
+            // Plan 143: Load affliction bridge rules catalog
+            string dataRoot = (!string.IsNullOrEmpty(dataDir) && Directory.Exists(dataDir) ? dataDir : CatalogPath.ResolveDataDir());
+            string rulesPath = Path.Combine(dataRoot, "affliction_bridge_rules.json");
+            if (File.Exists(rulesPath))
+            {
+                try
+                {
+                    session.Bridge.LoadCatalog(File.ReadAllText(rulesPath));
+                }
+                catch (Exception ex)
+                {
+                    session.LastEvent = $"Bridge catalog load warning: {ex.Message}";
+                }
+            }
+
             return session;
         }
+
+        public void LoadBridgeRules(string json) => Bridge.LoadCatalog(json);
 
         private MedicalPipelineSaveState? _pendingPipelineSave;
 

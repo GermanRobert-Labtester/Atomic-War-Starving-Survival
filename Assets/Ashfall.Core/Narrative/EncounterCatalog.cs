@@ -3,13 +3,6 @@ using System.Collections.Generic;
 
 namespace Ashfall.Core.Narrative
 {
-    public enum EncounterCategory
-    {
-        Hazard,
-        Discovery,
-        Social,
-        Trade
-    }
 
     /// <summary>One selectable choice on an encounter (data-driven).</summary>
     [System.Serializable]

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ashfall.Core.Economy;
 using Ashfall.Core.World;
 #pragma warning disable CS8618
@@ -84,24 +85,34 @@ namespace Ashfall.Core
 
         public TravelingCaravanSystem(TravelingCaravanState? state = null)
         {
-            _state = state ?? new TravelingCaravanState();
-            if (_state.activeCaravans == null)
-                _state.activeCaravans = new List<CaravanEntry>();
+            _state = new TravelingCaravanState();
+            if (state != null)
+                RestoreState(state);
         }
 
         public void SpawnCaravan(string caravanId, string name, string factionId, List<string> route,
             string originRegion = "settlement")
         {
-            if (route == null || route.Count == 0) return;
+            if (string.IsNullOrWhiteSpace(caravanId) || route == null) return;
+            _state.activeCaravans ??= new List<CaravanEntry>();
+            if (_state.activeCaravans.Any(c =>
+                    c != null && string.Equals(c.caravanId, caravanId, StringComparison.OrdinalIgnoreCase)))
+                return;
+
+            var validRoute = route
+                .Where(node => !string.IsNullOrWhiteSpace(node))
+                .Select(node => node.Trim())
+                .ToList();
+            if (validRoute.Count == 0) return;
 
             var caravan = new CaravanEntry
             {
-                caravanId = caravanId,
+                caravanId = caravanId.Trim(),
                 caravanName = name,
                 factionId = factionId,
                 originRegion = originRegion,
-                currentNodeId = route[0],
-                routeNodeIds = new List<string>(route),
+                currentNodeId = validRoute[0],
+                routeNodeIds = validRoute,
                 routeIndex = 0,
                 daysAtCurrentNode = 0,
                 stayDurationDays = 2,
@@ -180,7 +191,10 @@ namespace Ashfall.Core
 
         public CaravanEntry? GetCaravanAtNode(string nodeId)
         {
-            return _state.activeCaravans.Find(c => c.currentNodeId == nodeId && !c.isRobbed);
+            if (string.IsNullOrWhiteSpace(nodeId) || _state.activeCaravans == null) return null;
+            return _state.activeCaravans.Find(c =>
+                c != null && string.Equals(c.currentNodeId, nodeId, StringComparison.OrdinalIgnoreCase)
+                && !c.isRobbed);
         }
 
         /// <summary>
@@ -215,7 +229,8 @@ namespace Ashfall.Core
 
             foreach (var caravan in _state.activeCaravans)
             {
-                if (caravan.isRobbed) continue;
+                if (caravan == null || caravan.isRobbed) continue;
+                if (!TryNormalizeRoute(caravan)) continue;
 
                 // Plan 14A — embargo evaluation against the authoritative
                 // weather, per caravan origin region.
@@ -347,16 +362,22 @@ namespace Ashfall.Core
 
         public bool TryBuyItem(string caravanId, string itemId, int amount, ref int playerRations)
         {
-            var caravan = _state.activeCaravans.Find(c => c.caravanId == caravanId);
-            if (caravan == null || caravan.isRobbed) return false;
+            if (string.IsNullOrWhiteSpace(caravanId) || string.IsNullOrWhiteSpace(itemId) || amount <= 0)
+                return false;
+            if (_state.activeCaravans == null) return false;
 
-            var stock = caravan.inventory.Find(i => i.itemId == itemId);
-            if (stock == null || stock.quantity < amount) return false;
+            var caravan = _state.activeCaravans.Find(c =>
+                c != null && string.Equals(c.caravanId, caravanId, StringComparison.OrdinalIgnoreCase));
+            if (caravan == null || caravan.isRobbed || caravan.inventory == null) return false;
 
-            int totalCost = stock.priceRations * amount;
-            if (playerRations < totalCost) return false;
+            var stock = caravan.inventory.Find(i =>
+                i != null && string.Equals(i.itemId, itemId, StringComparison.OrdinalIgnoreCase));
+            if (stock == null || stock.quantity < amount || stock.priceRations < 0) return false;
 
-            playerRations -= totalCost;
+            long totalCost = (long)stock.priceRations * amount;
+            if (totalCost > int.MaxValue || playerRations < totalCost) return false;
+
+            playerRations -= (int)totalCost;
             stock.quantity -= amount;
             _state.completedTradesCount++;
             OnTradeCompleted?.Invoke(caravan, itemId, amount);
@@ -373,40 +394,11 @@ namespace Ashfall.Core
 
             if (_state.activeCaravans != null)
             {
-                foreach (var c in _state.activeCaravans)
+                foreach (var caravan in _state.activeCaravans)
                 {
-                    if (c == null) continue;
-                    var copy = new CaravanEntry
-                    {
-                        caravanId = c.caravanId,
-                        caravanName = c.caravanName,
-                        factionId = c.factionId,
-                        originRegion = c.originRegion ?? "settlement",
-                        currentNodeId = c.currentNodeId,
-                        routeIndex = c.routeIndex,
-                        daysAtCurrentNode = c.daysAtCurrentNode,
-                        stayDurationDays = c.stayDurationDays,
-                        guardCount = c.guardCount,
-                        isRobbed = c.isRobbed,
-                        embargoBlocked = c.embargoBlocked,
-                        routeNodeIds = c.routeNodeIds != null ? new List<string>(c.routeNodeIds) : new List<string>(),
-                        inventory = new List<CaravanInventoryItem>()
-                    };
-
-                    if (c.inventory != null)
-                    {
-                        foreach (var inv in c.inventory)
-                        {
-                            if (inv == null) continue;
-                            copy.inventory.Add(new CaravanInventoryItem
-                            {
-                                itemId = inv.itemId,
-                                quantity = inv.quantity,
-                                priceRations = inv.priceRations
-                            });
-                        }
-                    }
-                    snapshot.activeCaravans.Add(copy);
+                    var copy = CloneCaravan(caravan);
+                    if (copy != null)
+                        snapshot.activeCaravans.Add(copy);
                 }
             }
 
@@ -417,44 +409,110 @@ namespace Ashfall.Core
         {
             if (state == null) return;
             _state.completedTradesCount = Math.Max(0, state.completedTradesCount);
-            _state.activeCaravans.Clear();
+            _state.activeCaravans = new List<CaravanEntry>();
             if (state.activeCaravans != null)
             {
-                foreach (var c in state.activeCaravans)
+                foreach (var caravan in state.activeCaravans)
                 {
-                    if (c == null) continue;
-                    var copy = new CaravanEntry
-                    {
-                        caravanId = c.caravanId,
-                        caravanName = c.caravanName,
-                        factionId = c.factionId,
-                        originRegion = c.originRegion ?? "settlement",
-                        currentNodeId = c.currentNodeId,
-                        routeIndex = c.routeIndex,
-                        daysAtCurrentNode = c.daysAtCurrentNode,
-                        stayDurationDays = c.stayDurationDays,
-                        guardCount = c.guardCount,
-                        isRobbed = c.isRobbed,
-                        embargoBlocked = c.embargoBlocked,
-                        routeNodeIds = c.routeNodeIds != null ? new List<string>(c.routeNodeIds) : new List<string>(),
-                        inventory = new List<CaravanInventoryItem>()
-                    };
-                    if (c.inventory != null)
-                    {
-                        foreach (var inv in c.inventory)
-                        {
-                            if (inv == null) continue;
-                            copy.inventory.Add(new CaravanInventoryItem
-                            {
-                                itemId = inv.itemId,
-                                quantity = inv.quantity,
-                                priceRations = inv.priceRations
-                            });
-                        }
-                    }
-                    _state.activeCaravans.Add(copy);
+                    var copy = CloneCaravan(caravan);
+                    if (copy != null)
+                        _state.activeCaravans.Add(copy);
                 }
             }
+        }
+
+        private static CaravanEntry? CloneCaravan(CaravanEntry? source)
+        {
+            if (source == null) return null;
+
+            var copy = new CaravanEntry
+            {
+                caravanId = source.caravanId ?? string.Empty,
+                caravanName = source.caravanName ?? string.Empty,
+                factionId = source.factionId ?? string.Empty,
+                originRegion = string.IsNullOrWhiteSpace(source.originRegion)
+                    ? "settlement"
+                    : source.originRegion,
+                routeIndex = source.routeIndex,
+                daysAtCurrentNode = Math.Max(0, source.daysAtCurrentNode),
+                stayDurationDays = Math.Max(1, source.stayDurationDays),
+                guardCount = Math.Max(0, source.guardCount),
+                isRobbed = source.isRobbed,
+                embargoBlocked = source.embargoBlocked,
+                routeNodeIds = new List<string>(),
+                inventory = new List<CaravanInventoryItem>()
+            };
+
+            if (source.routeNodeIds != null)
+            {
+                foreach (var nodeId in source.routeNodeIds)
+                {
+                    if (!string.IsNullOrWhiteSpace(nodeId))
+                        copy.routeNodeIds.Add(nodeId.Trim());
+                }
+            }
+
+            if (copy.routeNodeIds.Count > 0)
+            {
+                copy.routeIndex = StableHash.NonNegativeRemainder(source.routeIndex, copy.routeNodeIds.Count);
+                copy.currentNodeId = copy.routeNodeIds[copy.routeIndex];
+            }
+            else
+            {
+                copy.routeIndex = 0;
+                copy.currentNodeId = string.Empty;
+            }
+
+            if (source.inventory != null)
+            {
+                foreach (var item in source.inventory)
+                {
+                    if (item == null) continue;
+                    copy.inventory.Add(new CaravanInventoryItem
+                    {
+                        itemId = item.itemId ?? string.Empty,
+                        quantity = item.quantity,
+                        priceRations = item.priceRations
+                    });
+                }
+            }
+
+            return copy;
+        }
+
+        private static bool TryNormalizeRoute(CaravanEntry caravan)
+        {
+            if (caravan.routeNodeIds == null || caravan.routeNodeIds.Count == 0)
+                return false;
+
+            bool hasInvalidNode = false;
+            for (int i = 0; i < caravan.routeNodeIds.Count; i++)
+            {
+                if (string.IsNullOrWhiteSpace(caravan.routeNodeIds[i]))
+                {
+                    hasInvalidNode = true;
+                    break;
+                }
+            }
+
+            if (hasInvalidNode)
+            {
+                caravan.routeNodeIds = caravan.routeNodeIds
+                    .Where(node => !string.IsNullOrWhiteSpace(node))
+                    .Select(node => node.Trim())
+                    .ToList();
+            }
+
+            int count = caravan.routeNodeIds.Count;
+            if (count == 0) return false;
+
+            caravan.routeIndex = StableHash.NonNegativeRemainder(caravan.routeIndex, count);
+            caravan.currentNodeId = caravan.routeNodeIds[caravan.routeIndex];
+            if (caravan.stayDurationDays < 1)
+                caravan.stayDurationDays = 1;
+            if (caravan.daysAtCurrentNode < 0)
+                caravan.daysAtCurrentNode = 0;
+            return true;
         }
     }
 }

@@ -243,7 +243,7 @@ namespace Ashfall.Core.Memorial
             if (string.IsNullOrEmpty(epitaph) && EpitaphCatalog != null)
             {
                 string cause = string.IsNullOrEmpty(input.Cause) ? "unspecified" : input.Cause;
-                int seed = Math.Abs(input.Day * 7919) + (input.SurvivorId?.GetHashCode() ?? 0);
+                int seed = StableHash.Combine(input.Day, input.SurvivorId);
                 epitaph = EpitaphCatalog.SelectEpitaph(cause, EpitaphRng ?? new SeededRng(seed));
             }
 

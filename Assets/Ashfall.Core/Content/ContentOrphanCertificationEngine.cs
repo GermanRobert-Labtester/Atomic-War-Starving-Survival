@@ -3,15 +3,6 @@ using System.Collections.Generic;
 
 namespace Ashfall.Core.Content
 {
-    /// <summary>
-    /// Certification status of an authored content row or candidate asset.
-    /// </summary>
-    public enum ContentCertificationStatus
-    {
-        CertifiedActive = 0,   // Composed canonical consumer verified; active in gameplay
-        ExcludedDormant = 1,   // Authored and valid, but deliberately parked pending prerequisites
-        OrphanWarning = 2      // Loaded in catalog but lacks a composed consumer or fallback
-    }
 
     /// <summary>
     /// Authored content candidate row metadata.

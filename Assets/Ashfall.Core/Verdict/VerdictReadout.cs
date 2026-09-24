@@ -48,7 +48,9 @@ namespace Ashfall.Core.Verdict
         /// <summary>Deterministic index from state, avoiding per-frame RNG.</summary>
         public static string LineFor(ReckoningState state, int enrolledEvidence, int readCount)
         {
-            int idx = (readCount + enrolledEvidence) % 3;
+            int idx = StableHash.NonNegativeRemainder(
+                unchecked(readCount + enrolledEvidence),
+                3);
             if (state == null) return DormantLines[0];
 
             if (state.countPresented) return ResolvedLines[0];
