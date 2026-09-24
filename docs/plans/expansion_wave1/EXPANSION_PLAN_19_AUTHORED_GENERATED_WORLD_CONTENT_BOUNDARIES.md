@@ -3355,3 +3355,279 @@ Acceptance requires unique IDs and safe references; every claim classified as st
 For the coverage worksheet, classify each proposed join as exact authored reference, owner-approved mapping, heuristic lead, or no evidence. Only the first two may become gameplay gates. Heuristic search can nominate review work but cannot select dialogue, unlock service, or alter machine condition. Give each unresolved gap a disposition: author a static companion record, reuse an attributed generic record, leave the machine family unlinked, or request a separate architecture decision for dynamic event generation.
 
 Close the audit with a version/date stamp, source files, and consumer paths. Re-run counts when source catalogs change; do not copy the previous pass's counts into an implementation claim. This allows future reviewers to distinguish a stable authority contract from a temporary content census.
+
+## Pass 33A — Water Units, Cohort Snapshots, and Budget Provenance
+
+### The four quantities that must not be merged
+
+A budget report should carry a unit and owner on every row.
+
+**Inventory units:** the campaign ration owner directly removes clean_water or irradiated_water item quantities under the chosen ration policy. Its current code requests 3 clean units for Standard, 2 for Half, and 2 irradiated units for Irradiated. The direct 30-day policy scenarios are 90 clean units, 60 clean units, or 60 irradiated units if that policy is held constant. These item quantities are not liters and do not state the count per survivor in the data visible here.
+
+**Physiological need:** NeedsSystem drifts each survivor's thirst meter by the profile thirst-per-hour rate, game hours, and DifficultyScalarsProvider.ThirstMult. Current preset multipliers are Sparing 0.75, Standard 1.0, Austere 1.35, Dirge 1.75. That meter's range is a need-state scale, not a water amount. Do not convert a need point into a liter or inventory item without a current documented consumer.
+
+**Source volume:** WaterSourceSystem carries float liters, nominal source flow in liters/day, contamination, activation/discovery, and test history. The source catalog's flow rate is not delivered, potable, or automatically treated output. Actual available volume depends on current source state and the systems that move, store, test, and treat it.
+
+**Action demand:** medical, agricultural, crafting, industrial, and treatment operations may consume water on specific commands or schedules. Each command's amount, unit, frequency, validation, and owner must be listed. A one-time action is not a daily draw; an authored recipe cost is not proof that a campaign ran the recipe.
+
+A fifth observation may be useful: cleanWater float in WaterTreatmentSystem state versus clean_water integer inventory. The current review has not proven whether every host path reconciles these stores into one total. Do not add them in the same “available water” number until the host's active bridge, save ownership, and transfer commands establish a no-double-count contract.
+
+### Scenario definition for “mid-game cohort”
+
+For comparability, select one existing campaign save or an existing authored cohort profile, freeze its survivor IDs and life stages at a declared campaign day, and record its difficulty preset, ration policy, inventory, water-treatment state, source states, active visitors, and ongoing jobs. Do not invent a canonical eight-person “midgame cohort.” The starting cohort catalog is a starting profile, while a midgame roster can grow, lose members, or include visitors. A scenario is a snapshot; it is not a new authored default.
+
+Every budget output should contain:
+- scenario ID, save/build/data version, snapshot day, horizon length;
+- survivor roster count and relevant life-stage membership;
+- difficulty preset ID and effective scalar;
+- ration policy by day or the explicit constant-policy assumption;
+- starting item inventory and separate treatment/source store snapshots;
+- each source's nominal flow and current usable/contamination state;
+- scheduled/system-command draws with units, frequency, and source owner;
+- unknown or unmodeled consumers;
+- ending stock by resource type, not one summed total;
+- confidence label and formula/version.
+
+### Authored versus generated content
+
+Authored: preset multipliers, source definitions, ration policy labels, cohort profile descriptions, treatment efficiency constants, recipe costs, water-quality text, and narrative records. Runtime: actual survivor roster, need meters, active policy, inventory count, source activation/contamination, stored volume, jobs, and commands completed. Derived projection: 30-day scenario balance and shortage day. Narrative interpretation: characters' beliefs about fairness, danger, or whether a source is “enough.” Do not store a derived projection as a second resource authority.
+
+Projection must be deterministic for the same snapshot and policy sequence, but must not advance RNG or mutate a live campaign. If a projection cannot model a consumer, it should show “not included” rather than assume zero. A source's base contamination or nominal flow can be shown as authored context but must be labeled as such. Historical scenario results should retain their snapshot ID, so a later change to cohort or difficulty creates a new projection rather than rewriting the old one.
+
+
+### Pass 33B — A reproducible 30-day workbook without false precision
+
+A future design audit should print four separate sheets, not a single composite number.
+
+**Sheet A, policy debit:** record the daily ration policy and its direct inventory request. Constant Standard = 3 × 30 = 90 clean_water units; constant Half = 2 × 30 = 60 clean_water units; constant Irradiated = 0 clean_water plus 2 × 30 = 60 irradiated_water units. Label these as requested debits from the current daily owner. Check actual inventory-removal semantics if stock is insufficient before calling them realized consumption.
+
+**Sheet B, physiological drift:** for each roster member, record baseline thirst profile, actual simulated game hours, effective difficulty scalar, any attributed need modifications, and final thirst meter. Do not convert the need-state delta into litres. The simulation's clamping and other modifiers must be represented; no linear hand calculation should override those functions.
+
+**Sheet C, source/treatment volumes:** record WaterSourceSystem nominal flow, current active/discovered state, stored liters, source contamination and test recency; then record WaterTreatmentSystem tank values, job input/output/losses, treatment fuel/filter demands, and water storage. Keep gross flow separate from usable clean output and prove that source liters are not double-counted with treatment tanks or inventory items.
+
+**Sheet D, discrete draws:** list command ID, owner, water type/item, amount, unit, condition for running, date/interval, and whether the command was actually completed in the snapshot. Medical or crafting cost is an available action cost, not an automatic daily draw. Visitor daily-water fields should be included only if VisitorIntegrationSystem actually advances that visitor in the selected run.
+
+Workbook acceptance: each row traces to a live owner or labels itself authored assumption; missing values are marked unknown; all values carry units; no mutually exclusive policy cases are added together; starting and ending stock are distinct; and totals can be recomputed from raw rows. Run the same read-only projection twice and require identical output without mutating campaign checksum or RNG state. The workbook is a design deliverable; no test/simulation should be claimed from static arithmetic alone.
+
+Content authors may use the sheet to write “the standard policy asks for ninety item units over thirty days,” but should not write “the settlement needs ninety liters” or “Dirge drinks 75 percent more water.” The latter statements confuse unit and scalar semantics. Add a visible note when active policy varies over time; a constant-policy comparison is a controlled scenario, not a forecast.
+
+
+### Pass 33C — Report schema, epistemic labels, and version discipline
+
+A future report should carry four named sections rather than one “water remaining” field:
+1. Ration policy requests: inventory item ID, units/day, selected policy, days, requested total, and actual stock debit if the day owner exposes it.
+2. Need trajectory: survivor ID, initial thirst meter, applied difficulty scalar, simulated hours, owner-applied modifiers, final meter, and projection version.
+3. Source/treatment flow: source ID, authored nominal flow and contamination, runtime active state, measured test result/day, storage tank, treatment job input/output/waste, and any transfer into inventory.
+4. Other consumer draws: command owner, specific resource, units, frequency, scenario inclusion status, and completion evidence.
+
+A report version should identify game/data content version, formula version, snapshot timestamp in campaign days, cohort fingerprint, difficulty ID, and assumptions. It must not use operating-system time to generate campaign facts or seed randomness. A format change should retain old reports as historical output; it must not reinterpret a past row using new treatment efficiency.
+
+Epistemic labels: catalog says (authored nominal value), owner reports (current saved/runtime value), test found (dated measured result), scenario assumes (controlled input), projection estimates (derived output), unknown (not modeled), and player concludes (quest interpretation). Use consistent labels in UI and diegetic prose. A line like “450 liters a day” must say whether it refers to authored source flow or owner-observed output; never call it potable supply without treatment result.
+
+If a report has no verified link between two owners, leave two rows. A future integration can add a transfer/bridge only under a separate architecture decision. Schema validation should enforce units, bounded multipliers, finite quantities, stable source IDs, nonnegative horizon, and consistent snapshot identifiers. The current documentation pass does not add a report catalog or schema.
+
+
+### Pass 33D — Content audit priority and provenance closeout
+
+Prioritize audit rows by player consequence: first any source advertised as active or required for core progression; then every source with an existing map/location binding; then test records that gate a health or treatment choice; then optional sources and flavor-only logs. This order reduces false promises before adding volume. A missing prose pairing for an optional source is less urgent than an invalid source-location reference used by a quest.
+
+Archive the raw census result with date, game commit, file hashes or catalog version, and method. Preserve exact source IDs and never silently replace invalid IDs by display-name matching. For authored numbers, record unit and whether they are nominal, measured, or simulated. For derived projections, store formula version and snapshot identity in the output, not in a duplicate resource ledger.
+
+Closeout categories: complete exact link; record exists but not discoverable; source exists but location unresolved; live owner exists but no read-only projection; action has no returned result; or deliberate no-link. Each disposition names a responsible future package and the decision needed. This gives future writers enough clarity to extend content without repeating the same census.
+
+
+### Pass 33E — Unknown demand register
+
+Keep a register of potentially material water uses that are not included in a scenario: optional medical treatment, crop cycles, foundry operations, visitor integration, construction, expedition return, and treatment loss. Each entry is either confirmed inactive, confirmed included with units, or unknown. A definitive surplus or shortage conclusion is permitted only when the scenario owner can explain every material active draw and transfer. This register is review metadata, not a mutable campaign ledger.
+
+## Pass 34A — Evidence, Retelling, and the Authored/Generated Boundary
+
+### Design premise
+
+A returned expedition creates a sharp boundary between authored event and generated interpretation. The game may know that an objective failed and that named party members returned. A survivor may know why the objective failed. The shelter may know only that the team is late. A faction may publish a claim that the team fled. Those are not interchangeable facts. The World Bible’s house rule is public account versus evidenced truth, with provenance-tagged knowledge. This packet makes that rule concrete for a single quest spine and protects it from generated prose inventing campaign truth.
+
+### Content layers
+
+The authored layer defines stable identities and semantics: the failed-objective quest premise, the returning-party scene, possible testimony roles, clue meanings, closed response choices, canonical consequence IDs, and the narrative facts that each choice can assert. Authored prose may name a location only if it exists in current data, or clearly mark it as a proposed content record requiring an integrity check. Authored records must include prerequisites, exclusions, trigger location/channel, speaker voice, supported quest state, and localization-ready text fields. They cannot assert an expedition result that the host has not delivered.
+
+The runtime layer supplies only observed values: which expedition and objective resolved, who returned, whether a forced passage occurred, which encounter actually ran, day anchors, and whether a clue or map location is already known. It may choose among eligible authored variants through the existing seeded random contract. It may not generate new survivor identity, create a new consequence kind, or fabricate a location-to-witness relationship. If runtime evidence is absent, show a neutral authored line and do not imply that a character saw the event.
+
+The generated/personalized layer is limited to safe substitutions and variant selection. It can use the returning character’s authored name, a known destination name, a true count supplied by the result, and a voice-approved phrase variant. Counts must be sourced from an event snapshot; a displayed “three returned” cannot be recomputed from a roster that has since changed. Generated rumor wording can alter uncertainty or register but cannot alter underlying truth, evidence class, branch availability, or consequences. A public notice may say “the party returned without the relay key” only if those two facts are both present in the resolved event. It must not turn a failed objective into a death, betrayal, or faction attack.
+
+### Record and provenance model
+
+Each clue proposed for the packet carries a stable content ID, source event ID, source channel, observed day, confidence band, speaker or document source, and supported inference set. Evidence provenance should use the current Codex/knowledge path if it supports these fields. Otherwise, the plan must request a bounded contract decision rather than add a quest-local knowledge database. Distinguish witnessed fact (“I carried the empty case”), inference (“the relay never answered”), and rumor (“they left the station running”) in both prose and choice requirements. A rumor can invite investigation; it cannot satisfy a verified-evidence gate.
+
+### Data review checklist
+
+Before turning any packet into JSON, map each proposed field to the present schema, consumer and validator. Confirm every ID is unique, every location and character reference resolves, every consequence belongs to a closed vocabulary, and every generated token is escaped and localized through the existing pipeline. Confirm no field becomes a parallel story-state authority. The content utilization path must demonstrate that the item is reachable from a real event, route or quest transition, not merely present in a catalog. Retiring a scene must leave old saves readable and should preserve an explicit fallback text. Performance review should check lazy loading, bounded candidate resolution, and no whole-corpus string scan on each conversation open.
+
+### Authoring schema proposal and content operations
+
+A draft content record for this spine can be represented as an authored event package with: stable record ID; package/version; content kind; quest IDs; source event type; required facts; excluded facts; location/channel; speaker IDs; authored line variant IDs; evidence class; consequence references; expiration rule; localization key; accessibility summary; and retirement fallback. This list is a field proposal only. The first implementation task is to compare it against the current quest, dialogue, encounter and narrative schemas and map each needed value to an existing field. Remove any field that duplicates a fact already owned elsewhere. If a contract decision is required for one genuinely missing fact, describe its narrow semantics and migration cost before asking for it.
+
+Keep the authored record stable; keep the event payload transient or owned by the current save/event authority; keep generated substitutions constrained to approved tokens. The authored prose may include named content that never becomes eligible in a particular campaign, while runtime state chooses only among eligible records. This split enables localization, deterministic replay, and balance review without persisting generated text blobs. Save the identity of a selected variant only where reloading could change a player-facing verdict, consequence, or clue. Purely cosmetic delivery variants may be chosen deterministically from a stable seed if the existing contract allows it.
+
+The localization source should avoid concatenating sentence fragments that change grammar or identity semantics. Use complete sentence variants for neutral, uncertain and verified reports. Include speaker, channel, tense and intended evidence confidence in author metadata, not as visible labels. Every token needs a missing-value behavior. If the survivor’s name is unavailable, use a role term the voice allows; if the destination name is absent, remove the location clause cleanly; if a return count is unknown, avoid a number. The fallback must not introduce false precision.
+
+Content review can be run as a repeatable authoring workflow: identify the source event; verify exact owner and event payload; draft a small content graph; validate IDs and references; inspect all gate combinations; review voice and epistemic scope; localize; run static reachability; then run a focused integration fixture once implementation exists. High-volume authoring should use a bounded bank, such as twelve notice variants by evidence state and six returnee lines by speaker role, rather than generating hundreds of near-duplicates. Variation must be meaningful: certainty, privacy, faction framing, emotional register and next action. Avoid mere adjective swaps that inflate the catalog while testing nothing new.
+
+A content retirement policy is required because the quest can be discovered early and resolved in old saves. If a record is retired, preserve its stable ID alias or map it to a neutral replacement that retains the same evidence requirements. Do not delete a referenced clue or consequence. Do not silently convert a removed branch into a success. Retired optional lines may degrade to a neutral debrief; an active quest with unresolved required evidence must remain completable through a declared fallback.
+
+### Narrative quality, safety, and performance controls
+
+A high-volume prose bank must preserve truth before variety. For the return story, author separate lines for verified result, witness observation, unconfirmed public claim, missing source, and corrected report. These are distinct semantic slots, not random synonyms. A line tagged verified may not be selected from a rumor fact. A line that accuses a faction requires an authored evidence gate and a supported consequence route. A location description can suggest that a relay is silent, but cannot claim it caused the expedition failure unless the world state says so. Every short description should carry source and time context when those change interpretation.
+
+The maintainable minimum is one authored graph with clear gates and static string tokens. Optional expansion layers include alternate faction framing, additional testimony sources, location-specific investigation, and a late-game record callback. Avoid a generated quest layer in the first release. Generated content may select a predefined location or wording variant, but the base contract for quest identity, required actions, failure and reward remains authored. A procedural branch is justified only if it produces replayable variety without changing evidence semantics and if a content consumer proves it is reachable.
+
+Text and metadata need bounded loading. Load the relevant quest graph and its referenced strings when the quest becomes available; do not search all narrative catalogs each time the conversation panel opens. Keep maps, quest state and dialogue state as projections from their owners. The authoring tool should report unresolved IDs, dead nodes, cycles without an explicit loop policy, missing localization keys, incompatible evidence categories, and branches with no terminal or recovery path. A static audit must be able to identify the exact content record that produced a line shown to the player.
+
+Review the topic for trauma-sensitive presentation. A survivor who declines attribution remains in control of their name. The game should not force the player to interrogate a returnee or frame silence as guilt. Provide a skip/leave choice and ensure the quest has a neutral closure. These constraints are content quality and interaction requirements, not a clinical system. No new profile or psychological inference is needed.
+
+### Release rubric
+
+The first authoring handoff should include a one-page source table, the smallest legal schema mapping, the complete text inventory, a branch reachability report, and a list of statements the game is not permitted to infer. Generated content is acceptable only when every token has a source and safe absence behavior. For each content row, reviewers should answer whether it reports an observation, an inference, or a public belief; whether that distinction survives localization; and whether a player can trace the claim to a character, instrument, or document. Do not use raw prose length as the measure of content depth. Measure distinct gate combinations, unique narrative actions, evidence classes served and reusability without semantic loss. These checks keep high-volume banks useful to implementation and QA.
+
+## Pass 35A — Doctrine Fact, Enforcement Event, and Public Account
+
+### Evidence boundary
+
+The Part 46 prompt is phrased as a coverage audit, not as a verified finding that enforcement encounters are missing. The live doctrine schema has 24 records and the fields observed in source include narrative journal and radio keys, but no direct enforcement encounter field. Warlord doctrine transitions, strategic actions, faction-war events, radio records, and player-facing narrative encounters are distinct content and runtime layers. An AI choice to impose a toll is not automatically an authored scene; a journal key is not automatically a seen event; a text containing the word “Warlord” is not automatically a doctrine-specific enforcement record.
+
+For each doctrine, the authoring audit must list: doctrine ID; behavior/action set; journal and radio key; action or state event capable of proving enforcement; authored encounter IDs; location bindings; runtime consumer; delivery channel; prerequisites; player discoverability; and outcome owner. Classify each candidate as DIRECTLY LINKED, INDIRECTLY RELATED, or NOT FOUND IN REVIEWED CORPUS. “Not found” requires a bounded search across the current faction-war, narrative encounter, radio, journal, quest, and location-override content; it is not permission to assume there is no enforcement behavior in other systems. The first playable slice uses one doctrine with an end-to-end verified route. The other 23 remain rows in the coverage matrix until examined.
+
+### Static canon and runtime state
+
+Static authoring defines the doctrine’s public language, its institutional rationale, permitted enforcement methods, limits it claims to observe, and the consequence vocabulary for a specific scene. Runtime state supplies which doctrine is active, which strategic action actually resolved, where it occurred, when it happened, and which party observed it. The player’s knowledge state supplies whether the relevant journal, radio, or encounter was actually received. These values must remain distinct. An authored description can explain what a doctrine tends to do; it cannot prove that a particular action occurred in this campaign.
+
+Generated variation is limited to selecting among authored voice or notice variants after the evidence gate is true. It cannot generate a new doctrine, enforcement policy, faction action, consequence type, witness, or location. If the campaign knows only that a doctrine is active, the safe prose says the rule is in force or that observers expect it; it does not claim that the checkpoint collected a fee. If a delivered radio broadcast discusses the doctrine but not the action, it supports “the faction announced” rather than “the road enforced.”
+
+### Content package proposal
+
+A compact authored package may contain a stable encounter or quest ID, doctrine ID, source event ID, player-delivery condition, location/channel, evidence class, prerequisites/exclusions, response IDs, consequence references, voice block, day/deadline semantics, localization keys, and a neutral fallback. Map these needs into current schemas before proposing new fields. The first package must not add a new enforcement registry. A loader that already consumes faction radio or quest content should remain the integration target if it can represent the scene; if no consumer supports the required fact, pause and request a contract decision.
+
+Static validation should detect unknown doctrine IDs, unknown locations/speakers, unresolved content keys, doctrine without a review row, encounter with no runtime trigger, consequence outside a closed vocabulary, and a scene that can surface before its source event. Keep authoring volume manageable: one complete sample, a compact set of meaningful variants, then expand only for doctrines where the audit proves different actions or player experiences. Reuse the evidence-review graph shape but preserve doctrine-specific voice and political meaning.
+
+### Coverage matrix design and audit outputs
+
+The practical expansion artifact is a doctrine evidence matrix with one row per catalog ID. Minimum columns: doctrinal principle; visible action candidates; authored source keys; source-key consumer; campaign event identity; encounter/reception evidence; canonical locations; current player reachability; consequence owner; coverage status; safe authoring next step. These are review fields for an audit sheet, not a new runtime data authority. Keep row IDs synchronized with the doctrine catalog, and regenerate counts rather than pasting stale totals into the plan.
+
+Coverage statuses have strict meaning. “Journaled” means a journal content key exists, not that a player received it. “Broadcast authored” means a radio record resolves, not that the receiver delivered it. “Action possible” means doctrine behavior can select an action, not that this save performed it. “Enforcement encountered” means an observable, player-reachable event identifies a specific action and source. “Consequence integrated” means a result reached the named system owner and survived save/replay. This controlled vocabulary prevents content presence from masquerading as game functionality.
+
+The open World Bible question should be answered with a measurable query: for each doctrine, count direct enforcement content only where a stable event or trigger links doctrine ID to an authored, player-observable encounter. Report linked candidates separately from generic faction-war events whose text mentions a Warlord or checkpoint. Since the doctrine schema presently has no explicit enforcement encounter reference field, a robust join may live in external trigger conditions or host code; search both before claiming “missing.” If a record is only a narrative marker emitted on doctrine selection, classify it as doctrine-change exposition, not enforcement evidence.
+
+Generated descriptions must follow exact provenance. If the player is at an active checkpoint, the live territory and gate owners may provide current conditions. If an old radio broadcast has been heard, it provides the broadcast’s authored claim and day. If a journal key was emitted but not delivered, the player has no knowledge. A procedural rumor engine may carry a rumor only through its own source and propagation contract; this plan will not create a separate doctrine-rumor line. Dynamic text can personalize speaker/route labels from verified IDs, but not invent a collector or a payment amount.
+
+For content banks, author five meaningful dimensions rather than many superficial variants: institutional rationale, enforcement action, witness perspective, level of evidence, and player access. Each combination needs an authored allowlist and invalid-combination fallback. Localization should keep statements atomic so a grammatical rewrite cannot change “announced” to “enforced.” Content integrity should catch an encounter without a supporting trigger, a key without a consumer, duplicate source identity, and consequences unresolvable by the current closed vocabulary.
+
+At closeout, publish the audit scope and exact search paths. If any file family was not inspected, say so. “No enforcement encounter found” is bounded to the reviewed corpus and date, while “no enforcement exists” is a broad architecture claim and is not permitted from a catalog-only scan.
+
+### Authored bank blueprint and allowed variation
+
+A high-volume content bank for doctrine enforcement should be organized by evidence state rather than by doctrine count alone. Suggested first bank: 12 notice variants (announcement, correction, retraction, conflicting copy, unsigned copy, old copy, redacted source, public summary, private memo, route-specific warning, no active notice, unavailable notice); 8 witness roles (driver, clerk, repairer, observer, courier, radio operator, records keeper, neutral trader); 6 evidence outcomes (confirmed action, announcement only, contradictory record, no observation, inaccessible source, stale doctrine); and 6 closure variants. These are authoring targets, not immediate data additions. Each bank entry needs a use condition and a semantic contract. “The order was written,” “the order was read,” and “the order was enforced” cannot share a generic message key.
+
+Variation dimensions: speaker voice; degree of certainty; public/private channel; day or event phase; location state; and player’s prior choice. Restrict combinations with an allowlist. For instance, a late-game closure that cites a public challenge may only appear if a supported publication event exists; it cannot be paired with an anonymous private statement. The generator should fall back to a complete neutral sentence rather than splice fragments or choose a mismatched bank entry.
+
+A data-authoring template can record source_event, source_channel, doctrine_id, evidence_class, location_id, speaker_id, audience, validity window, prerequisites, exclusions, line key, response IDs, owner effects and retirement mapping. Existing schemas may not contain every field. Do not put the template into production JSON until owners confirm field compatibility and validator coverage. An external planning matrix can carry review-only columns without creating runtime state. If a missing field is necessary for gameplay, propose one narrowly, identify migration defaults and stop for architecture authority.
+
+### Prose continuity rules
+
+Each doctrine may speak about necessity, order, survival, control, labor, tribute or defense, but a broadcast cannot narrate events it did not observe. Authored doctrine copy sets political intent; encounter dialogue sets what a speaker knows; a journal records what the player learned; and the world event records what happened. Keep these layers separate in the content graph. Repeated institutional phrases should be tracked to prevent every faction speaker from sounding like the same clerk. A recurring character retains their own stake even when the doctrine changes.
+
+Continuity review asks whether a line contradicts the campaign day, current doctrine, territorial control, event result, player source history, or character availability. A doctrine can transition after the broadcast; old text remains true as a record of what was said then. A corrected note must cite the later source and preserve the earlier version. A generated summary may shorten, never strengthen, the evidence claim.
+
+### Tooling and review cost
+
+Author tooling should list each doctrine’s keys, possible consumer, matched source corpus and implementation status. It should produce orphaned-key, dead-record, missing-voice, unknown-location, missing-reward-owner and unsupported-consequence warnings. Human review remains necessary to decide whether a generic war event truly enforces a doctrine. A content bank with hundreds of combinations is more expensive than its word count suggests: each combination adds validation, localization, voice review and replay testing. Start with a small verified sample and expand when metrics show actual reuse or a new player experience.
+
+### Fifty-row content census without a second registry
+
+A major expansion can organize its authoring review into four layers rather than one giant catalog. Layer 1 is the 24-doctrine census: which doctrine keys and public principles are authored. Layer 2 is the source/delivery census: where each journal and radio key resolves, who consumes it, and how player reception is recorded. Layer 3 is the event/encounter census: which faction actions can produce observable enforcement, where they occur, and how long they remain reachable. Layer 4 is the quest/UI census: whether a player can discover, investigate, resolve, revisit, and understand the case. Each row points to a current file or API and status; no layer stores gameplay truth.
+
+To keep authoring practical, make one row per doctrine and append source evidence rather than copying full prose into the matrix. If one doctrine has three distinct enforcement actions, create subrows for actions with stable IDs. If several doctrine rows share a generic checkpoint event, record shared use while preserving the active doctrine predicate. Rows can be marked: authored text only; source generated; event possible; event resolved; player-delivered; quest-reachable; consequence integrated. Each status should have an exact proof. An event can be possible and not resolved, resolved and not encountered, encountered and not understood, understood and not published.
+
+Content lint should check which stages lack a downstream consumer. It should detect contradictory claims, such as a radio line stating “every wagon paid” where the authored enforcement record only logs a subset. It should flag exact doctrine IDs embedded in prose but absent from branch prerequisites; line keys referencing removed radio IDs; a journal record that has no first-heard pathway; and a late-game callback with no quest input. These checks can be static and bounded. They should not infer narrative meaning from similarity of text or assume every mention of checkpoint is enforcement.
+
+Review should also examine the faction’s internal point of view. A doctrine description can describe strategic intention, but a scene should give a specific local speaker their own practical concern. Some enforcement can be inconsistent because of staffing or conflict without the whole faction becoming incoherent. The text should distinguish deliberate exception, informal tolerance, clerical mistake, coercion and rumor where the campaign provides evidence. Do not add a hidden “compliance quality” score. If the design needs one, it belongs to a separately approved faction owner and is outside this plan.
+
+Localization and accessibility are content constraints. Stable IDs are not displayed. Date, source and audience are separate UI fields where possible. A screen reader should announce when a line is an authored broadcast or a character’s reported statement if the current design supports source attribution. Do not rely on punctuation alone to label uncertainty. Short lines should remain understandable when read outside their original scene, such as in a journal excerpt or briefing summary.
+
+### Canonical audit-to-author workflow
+
+The evidence audit is the handoff between design and implementation. Start with a doctrine row and exact file/API reference. Read the authored keys and identify the loader. Follow the key through host wiring to a reachable surface. Determine whether campaign state represents doctrine selected, action resolved, content scheduled, content delivered, and source learned. Record each boundary separately. Trace any effect through its owner and save section. Only after this chain is understood should a writer create a specific scene. If a static catalog scan does not find the binding, search the consumer and event bridge before declaring absence.
+
+A review package contains the scope/date of inspected files, rows verified, rows not reviewed, the selected sample doctrine, the source event, location crosswalk, proposed graph, exact schema mappings, and unresolved owner questions. It should also include negative results so future work does not repeat the same partial audit. A future agent can continue from the matrix without rereading the 24 large doctrine prose blocks. Store concise evidence landmarks in the expansion index, but avoid copying entire doctrine descriptions into these plans.
+
+The authoring pipeline can be staged:
+
+- Intake: choose one doctrine row, report its evidence grade, and reject unsupported claims.
+- Shape: draw the quest graph and identify one primary source and one fallback.
+- Schema map: map node, gate, line, event, reward and consequence fields to current data schemas.
+- Continuity: compare faction voice, campaign day, location state, and previous player knowledge.
+- Reachability: prove at least one entry and a neutral terminal in every supported state.
+- Runtime: route a single typed event through existing owner/host/save paths.
+- Quality: review UX, deterministic replay, persistence, localization and performance.
+- Handoff: mark verified, blocked, not applicable, or deferred with evidence.
+
+Do not build a custom editor or validation authority merely to make this packet easier to fill. Use existing catalog diagnostics and content integrity gates. If those tools cannot express a required check, propose a narrow validator extension in the owning data package and secure path claims before changing it.
+
+### Canon, sources, and non-fictional certainty
+
+The fictional world may present propaganda, but the game’s underlying state must be explicit to the player only through what they learn. Public/account and hidden/evidenced layers belong to the narrative design, not to a second runtime ledger. The content can make the player decide whether a record should be public; it cannot make the game’s hidden truth depend on an unrecorded interpretation. The author’s note should state the intended truth and the exact source that would establish it, even if the final scene never gives the player certainty.
+
+A false claim can be playable when it is authored as a claim and not used as confirmed truth. Character voice may be biased. UI summaries should attribute the claim to the speaker. A faction radio speech can be persuasive and still be clearly sourced. Avoid presenting “hidden account” as omniscient narration if no event state supports it. Every evidence class should have a source-strength description available for writers and QA, even if that taxonomy stays author-only.
+
+### Action-to-story mapping rubric
+
+For each doctrine, create one editorial row with the following audit prompts: What action can this doctrine cause? What event confirms that the action resolved? Can the result identify a target? Does the player have a channel to learn it? Which authored content key describes the doctrine itself? Which content key describes the specific action? Does an existing consequence owner record the result? What statement may a character make without additional evidence? Which location state or encounter can make the fact playable? What is the safe output if the chain stops at each step?
+
+This rubric guards against several invalid jumps. A doctrine’s eligible action list is not an action log. A selected goal is not a completed action. A journal marker is not a delivered journal entry. A radio key request is not a successful transmission. A faction-war event that mentions a checkpoint is not automatically a consequence of the current doctrine. A location override is not an encounter. A rumor is not a witness record. A player-facing scene is reachable only when its trigger, content and host route connect.
+
+A content audit may discover content with indirect links. For example, a faction-war chain might have a target location and event stage but no doctrine ID. If the live runtime supplies the active doctrine in the same resolved action event, a bridge might permit a contextual line. If only the location overlaps, do not claim doctrinal causality. Mark it INDIRECT and ask whether an explicit owner-approved join is meaningful. Never use string similarity between ID/title/body to manufacture association.
+
+A DRAFT content patch can be represented as a “candidate story linkage” document: source record; proposed condition; supporting proof; expected player observation; false/unknown fallback; collision review; production cost; and owner approval needed. Keep this out of mutable game data until its premise passes. Once approved, the authored relationship should be deterministic and lintable. A static scanner can check exact reference validity; a human must decide whether the narrative assertion follows.
+
+### Quality bar for generated and personalized text
+
+A speaker may have voice variants by doctrine because political commitments differ, but all variants need the same fact boundary. “I support the rule” and “I witnessed the collection” are separate axes. A character may affirm the rule without seeing it used, or oppose the rule while confirming a specific event. Store ideological stance only if an existing character/faction owner has it; otherwise write a scene-specific opinion rather than invent a persistent trait. Avoid unbounded dynamic nouns such as substituting any faction name into a line with an accusatory verb.
+
+For each generated/personalized sentence, validate tokens against the current snapshot: speaker, location, faction display name, date, event/action, and evidence label. Missing fields should remove the full clause or select a complete neutral alternative. Do not substitute “Warlord” for an unidentified speaker in an intimate line. A summary should name what the player knows, not silently include campaign facts not delivered.
+
+Retirement preserves meaning. If one doctrine line is removed, an old saved report still refers to its recorded source ID and displays a neutral archived label if the current localized string is gone. Do not dynamically rebuild the historical report from the latest doctrine description, since that content may have changed. Versioned localization keys and old-save fallback are content lifecycle requirements.
+
+### Full doctrine audit worksheet and update policy
+
+The planning matrix should use one stable row per doctrine and one child row per distinct enforcement action if the current campaign can represent one. For each row, capture the current display label and description key, preferred goal, eligible action IDs, target rule, journal key, radio key, transition destination/signal/condition, and whether a source consumer is present. The next columns answer player-facing questions: Did the action resolve? Is there a stable event ID? Is a target location available? Which channel delivered the information? Does any authored encounter represent the enforcement? Can the player inspect or question a source? Which owner receives a response? Can the case close without the source? Each answer includes a source file or call-site reference, review date, confidence and remaining caveat.
+
+Update policy: the matrix is not a catalog mirror. It stores enough information to answer coverage and authoring questions, then points to canonical data. Recompute counts when doctrine catalog changes. When an ID is renamed or removed, preserve a migration note and trace any old quest record. If a doctrine is added, its new row starts unreviewed. It does not inherit another doctrine’s encounter or voice through a wildcard. If the faction source catalog adds an encounter, reclassify the row only after runtime reachability and player delivery are proven.
+
+Authoring can choose the smallest meaningful cross-section: one doctrine with a resolved action; one doctrine that has a journal/radio marker only; one doctrine whose target rule is none or withdrawal; and one doctrine with multiple eligible actions. These comparison samples expose schema weaknesses without writing all content. After the schema and consumer are understood, expand by measured user-facing distinction. The plan is compatible with a future audit of all 24 rows but does not claim this turn completed that entire census.
+
+Every content packet carries an author-only truth ledger: claim, supporting evidence, source type, event/day, permissible speaker knowledge, contradictory evidence, unknowns, and safe fallback. An automated linter can ensure the declared sources resolve and the response’s consequence IDs are legal. Human reviewers judge whether the claim follows. Generated text must select among complete approved claims rather than create new combinations of actions, locations and speakers. A neutral output is always present.
+
+Governance should prevent one team from changing doctrine prose and unintentionally rewriting old campaign events. Static doctrine descriptions are current canon; saved events are historical truth. A change to a description key affects future interpretation, not old player memories. If a narrative correction is needed, create a dated erratum or new authored record with an explicit relation to the old one. Keep save migration and localization mapping on the owning package. Do not convert DRAFT content into CANON from this plan alone.
+
+## Plan 19 Closeout and Integration Course — Content Authority
+
+### Complete scope receipt
+
+Plan 19 establishes the truth boundary for all six plans. Authored catalogs define stable doctrine descriptions, voices, scene identities, evidence meanings, response options, and permissible consequences. Campaign owners define which doctrine is current, which action resolved, where and when it happened, what location state exists, and what save result persists. Player knowledge owners define which broadcasts, records and clues were actually received. Generated variation can select a complete authored line from eligible candidates; it cannot invent an action, witness, faction motive, location, consequence or fact.
+
+The 24-row doctrine matrix is an audit aid, not a second catalog. It distinguishes authored text, source request, player delivery, possible action, resolved action, encountered evidence, reachable quest, and integrated consequence. “Not found in reviewed corpus” stays bounded to the inspected files and date. A missing direct reference field does not prove missing enforcement content if runtime triggers or host bridges may provide a join. The plan requires a source-to-consumer trace before drafting doctrine-specific claims.
+
+### Integration course
+
+1. Select an audit scope and record exact catalogs, loaders, host consumers and runtime call sites reviewed.
+2. For each doctrine row, identify its existing keys, behavior inputs, action/event evidence, locations, delivery channels and consequence owners.
+3. Classify every relationship direct, indirect or not found; require evidence for every claim.
+4. Choose a single sample and write an author-only truth ledger, permissible speaker knowledge and safe fallback.
+5. Map each proposed field to current schemas; remove fields that duplicate current owner state.
+6. Run existing static validation and content reachability tooling when an implementation package is authorized.
+7. Verify localization, old-save display, retired content fallback and generated-token absence behavior.
+8. Only then consider authoring additional doctrine rows based on distinct player-observable differences.
+
+### Acceptance and cut line
+
+Each authored record must resolve all IDs, show its trigger and player channel, state the evidence class, declare closed consequences, have a reachable terminal and supply a neutral fallback. Every generated token needs a current source and behavior when missing. Historical records cannot be rebuilt from today’s doctrine description. Content retirement preserves active case identity or maps it to a safe unresolved closure. A correction is a new dated record and never silently rewrites what the player already learned.
+
+The core release needs a single verified source and bounded graph; a large prose bank or all-doctrine matrix is not a prerequisite. Expansion adds authored source groups only when they create a unique experience. The handoff includes the audit worksheet, fields-to-schema map, validation output, localization inventory, reachable branch table, migration behavior, unresolved rows and owner approvals. No runtime catalog or validator is added by this documentation closeout. If the existing authoring tools cannot express one necessary contract, file a separate architecture proposal with ownership, defaults, migration and rollback; do not improvise a parallel registry.

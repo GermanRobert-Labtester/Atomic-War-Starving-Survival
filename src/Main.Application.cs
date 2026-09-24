@@ -659,6 +659,12 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.RelationshipDecaySelfTest:
                     GetTree().Quit(RelationshipDecaySelfTest.Run(_dataDir));
                     return;
+                case HostCliAction.VisitorIntegrationSelfTest:
+                    GetTree().Quit(VisitorIntegrationSelfTest.Run(_dataDir));
+                    return;
+                case HostCliAction.PersonalBelongingsSelfTest:
+                    GetTree().Quit(PersonalBelongingsSelfTest.Run(_dataDir));
+                    return;
                 case HostCliAction.ResearchUnlockSelfTest:
                     GetTree().Quit(HostCliResearchUnlock.RunSelfTest(_dataDir));
                     return;
@@ -712,6 +718,15 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.AgingSelfTest:
                     GetTree().Quit(HostCliAging.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DifficultySettingsSelfTest:
+                    GetTree().Quit(HostCliDifficultySettings.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ShelterMaintenanceSelfTest:
+                    GetTree().Quit(HostCliShelterMaintenance.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SurvivorRoutinesSelfTest:
+                    GetTree().Quit(HostCliSurvivorRoutines.RunSelfTest(_dataDir));
                     return;
             }
             }

@@ -123,6 +123,9 @@ namespace Ashfall.Core
         DynamicQuestSelfTest,
         ShelterGovernanceSelfTest,
         AgingSelfTest,
+        DifficultySettingsSelfTest,
+        ShelterMaintenanceSelfTest,
+        SurvivorRoutinesSelfTest,
         OrphanSealWave1SelfTest,
         WarlordUiSelfTest,
         FactionCommuniqueBoardSelfTest,
@@ -200,7 +203,9 @@ namespace Ashfall.Core
         PersonalQuestSelfTest,
         TimeCapsuleSelfTest,
         DeathLegacySelfTest,
-        RelationshipDecaySelfTest
+        RelationshipDecaySelfTest,
+        VisitorIntegrationSelfTest,
+        PersonalBelongingsSelfTest
     }
 
     /// <summary>
@@ -825,6 +830,24 @@ namespace Ashfall.Core
                     new[] { "--elderly-survivor-selftest" },
                     "Plan 176 aging & elderly survivor system: chronological age progression, life stages, retirement, elder mentorship, and milestones"),
                 new HostCliActionDescriptor(
+                    HostCliAction.DifficultySettingsSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--difficulty-settings-selftest",
+                    new[] { "--difficulty-sliders-selftest" },
+                    "Plan 181 difficulty settings system: preset selection, custom slider lanes, clamp bounds, ironman lock enforcement, and save/restore"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ShelterMaintenanceSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--shelter-maintenance-selftest",
+                    new[] { "--maintenance-selftest" },
+                    "Plan 186 shelter maintenance & degradation system: component catalog validation, daily wear/degradation ticks, condition tracking, preventive maintenance tasks, repair ledger, and save/restore"),
+                new HostCliActionDescriptor(
+                    HostCliAction.SurvivorRoutinesSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--survivor-routines-selftest",
+                    new[] { "--routines-selftest" },
+                    "Plan 188 individual survivor daily routines system: template catalog validation, hourly schedule assignments, chronotypes, activity satisfaction, conflict resolution, and save/restore"),
+                new HostCliActionDescriptor(
                     HostCliAction.OrphanSealWave1SelfTest,
                     "Expansions & Campaign Modules",
                     "--orphan-seal-wave1-selftest",
@@ -1133,7 +1156,19 @@ namespace Ashfall.Core
                     "Host Domains & Save Stores",
                     "--relationship-decay-selftest",
                     new[] { "--social-drift-selftest" },
-                    "Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding")
+                    "Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.VisitorIntegrationSelfTest,
+                    "Host Domains & Save Stores",
+                    "--visitor-integration-selftest",
+                    new[] { "--visitors-selftest" },
+                    "Plan 214: Admitted visitor stays, temporary housing, processing requirements, recruitment handoff, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.PersonalBelongingsSelfTest,
+                    "Host Domains & Save Stores",
+                    "--personal-belongings-selftest",
+                    new[] { "--keepsakes-selftest" },
+                    "Plan 210: Survivor keepsake claims, sentimental bonding, favorites, gifts, loss reporting, inheritance, and UI binding")
         };
 
         private static readonly HostCliActionDescriptor[] _uiDescriptors = new[]

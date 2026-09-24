@@ -115,6 +115,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `shelter_fire_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `shelter_governance_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 159) |
 | `shelter_identity_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `shelter_maintenance_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 186) |
 | `shelter_hatch_unsealed` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `social_dispute_mediated` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
 | `social_dispute_unresolved` | Main.Plans46_49.cs | yes | via briefing panel | HANDLED |
@@ -129,6 +130,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `subterranean_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `survivor_condition` | Main.MedicalTriage.cs | yes | via briefing panel | HANDLED |
 | `survivor_perished` | SurvivorFateSystem.cs | yes | via briefing panel | HANDLED |
+| `survivor_routines_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 188) |
 | `survivor_social_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `survivors_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `territory_control_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 134) |

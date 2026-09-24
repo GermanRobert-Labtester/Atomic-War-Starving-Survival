@@ -63,6 +63,9 @@ namespace AtomicWar.GodotApp.UI
         /// <summary>Read-only age profile projection supplied by Main (Plan 176).</summary>
         public Func<string, Ashfall.Core.Survivors.SurvivorAgeProfile?>? AgeProfileProvider { get; set; }
 
+        /// <summary>Read-only daily routine projection supplied by Main (Plan 188).</summary>
+        public Func<string, Ashfall.Core.Survivors.SurvivorRoutineRecord?>? RoutineProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 

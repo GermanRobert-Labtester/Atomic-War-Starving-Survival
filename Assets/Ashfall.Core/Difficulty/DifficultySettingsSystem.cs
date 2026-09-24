@@ -22,6 +22,32 @@ namespace Ashfall.Core.Difficulty
     }
 
     /// <summary>
+    /// Plan 181 — bounded read model of the live difficulty settings. Consumed by
+    /// the host census probe and the settings panel; it never mutates the system.
+    /// </summary>
+    public struct DifficultySettingsCensus
+    {
+        public int PresetCount { get; }
+        public string ActivePresetId { get; }
+        public bool IsCustom { get; }
+        public bool IsLocked { get; }
+        public int CustomizedScalarCount { get; }
+        public bool ActivePresetResolves { get; }
+
+        public DifficultySettingsCensus(
+            int presetCount, string activePresetId, bool isCustom, bool isLocked,
+            int customizedScalarCount, bool activePresetResolves)
+        {
+            PresetCount = presetCount;
+            ActivePresetId = activePresetId;
+            IsCustom = isCustom;
+            IsLocked = isLocked;
+            CustomizedScalarCount = customizedScalarCount;
+            ActivePresetResolves = activePresetResolves;
+        }
+    }
+
+    /// <summary>
     /// Plan 181 — Coordinates campaign difficulty presets, granular slider customizations,
     /// and mid-campaign modification locking without bypassing DifficultyPresetCatalog authority.
     /// </summary>
@@ -51,6 +77,20 @@ namespace Ashfall.Core.Difficulty
         }
 
         // ── Catalog Loading ────────────────────────────────────────────────
+
+        /// <summary>
+        /// Plan 181 — binds a catalog instance already owned by the campaign (the
+        /// canonical <see cref="DifficultyPresetCatalog"/>). No second catalog is
+        /// loaded; the settings authority shares the campaign's catalog instance.
+        /// </summary>
+        public void BindCatalog(DifficultyPresetCatalog catalog)
+        {
+            if (catalog == null) return;
+            _catalog = catalog;
+            _catalog.Index();
+            if (string.IsNullOrWhiteSpace(_state.ActivePresetId) && !string.IsNullOrWhiteSpace(_catalog.default_preset_id))
+                _state.ActivePresetId = _catalog.default_preset_id;
+        }
 
         public void LoadCatalog(string json)
         {
@@ -187,6 +227,39 @@ namespace Ashfall.Core.Difficulty
             return DifficultyScalars.Legacy();
         }
 
+        /// <summary>
+        /// Plan 181 — the effective scalars as the canonical typed provider consumed
+        /// by existing systems. Custom configurations get a validated provider with
+        /// the synthetic <c>difficulty_custom</c> id.
+        /// </summary>
+        public DifficultyScalarsProvider GetEffectiveProvider()
+        {
+            return DifficultyScalarsProvider.FromScalars(_state.ActivePresetId, GetEffectiveScalars());
+        }
+
+        /// <summary>Plan 181 — bounded census of preset count, active selection, lock, and customizations.</summary>
+        public DifficultySettingsCensus GetCensus()
+        {
+            var scalars = GetEffectiveScalars();
+            int customized = 0;
+            if (scalars.hunger_rate_mult != 1f) customized++;
+            if (scalars.thirst_rate_mult != 1f) customized++;
+            if (scalars.radiation_gain_mult != 1f) customized++;
+            if (scalars.disease_onset_mult != 1f) customized++;
+            if (scalars.hostile_encounter_mult != 1f) customized++;
+            if (scalars.market_price_mult != 1f) customized++;
+            if (scalars.equipment_decay_mult != 1f) customized++;
+            if (scalars.crisis_deadline_mult != 1f) customized++;
+
+            return new DifficultySettingsCensus(
+                _catalog.presets.Count,
+                _state.ActivePresetId,
+                _state.IsCustom,
+                _state.IsLocked,
+                customized,
+                _catalog.TryGet(_state.ActivePresetId, out _));
+        }
+
         // ── Save / Restore ─────────────────────────────────────────────────
 
         public DifficultySettingsState CaptureState()
@@ -204,7 +277,12 @@ namespace Ashfall.Core.Difficulty
         public void RestoreState(DifficultySettingsState? saved)
         {
             if (saved == null) return;
-            _state.SchemaVersion = saved.SchemaVersion;
+            // Schema gate: a missing field is a legacy v1 payload; a newer schema is
+            // refused rather than silently mis-read.
+            if (saved.SchemaVersion > _state.SchemaVersion)
+                throw new InvalidOperationException(
+                    $"difficulty settings schema {saved.SchemaVersion} is newer than supported {_state.SchemaVersion}.");
+            _state.SchemaVersion = saved.SchemaVersion <= 0 ? _state.SchemaVersion : saved.SchemaVersion;
             _state.ActivePresetId = string.IsNullOrWhiteSpace(saved.ActivePresetId) ? "difficulty_standard" : saved.ActivePresetId;
             _state.IsLocked = saved.IsLocked;
             _state.IsCustom = saved.IsCustom;

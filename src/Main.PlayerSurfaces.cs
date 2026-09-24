@@ -813,6 +813,8 @@ namespace AtomicWar.GodotApp
                 "propaganda",
                 "rumors",
                 "shelter_security",
+                "visitor_integration",
+                "personal_belongings",
                 "personal_quests",
                 "time_capsule",
                 "death_legacy",

@@ -60,6 +60,7 @@ namespace Ashfall.Core.Tests
                 "OrphanSealWave1", // ORPHAN-SEAL-W1 composite; child SaveXxx methods own the twelve registered sections (declarative triad gate owns Save registration)
                 "Plans94To97Panel",
                 "PersonalQuestPanel", // Plan 200 — panel binder only; the quest system persists via SavePersonalQuests
+                "PersonalBelongingsPanel", // Plan 210 — panel binder only; claims persist inside the survivor_social aggregate via SurvivorSocialCoordinator
                 "RumorBoardPanel", // Plan 203 — read-only rumor board; the network persists via SaveRumorNetwork
                 "TimeCapsulePanel", // Plan 212 — panel binder only; the capsule system persists via SaveTimeCapsules
                 "ShelterAcoustics", // Audio presentation / acoustic direction; transient simulation facts

@@ -1,0 +1,44 @@
+# Prose Wave 156 — Twenty Canon-Bounded Expansion Plans
+
+Twenty fresh anchors across ten authored corpora, rotating technical craft, acoustic observation, radio cipher, seasonal records, found objects, broadcast, bestiary, transactional encounter, and world-state report registers named in the Master World Bible.
+
+**Charter:** prose planning only. No code, production JSON, schema, field consumer, trigger, route, runtime delivery, save behavior, state, or player-facing reachability is added or claimed. All content remains DRAFT / PROPOSAL. Packet forms are editorial lenses, not approved fields.
+
+**Bible authority used:** Part 8 house voice; Part 35 subject rotation; Part 43 seed bank treated as proposal-only; Part 46 question-bank domains used as prompts, never as proof of a missing feature or content gap. Plans extend existing source families and require a fresh source/consumer audit before any future promotion.
+
+**Scale:** each plan contains six movements × eight focuses × four forms = 192 editorial packets. Character counts are Unicode code points in each saved Markdown file, excluding this index. Each plan is checked against the requested 1,200,000–2,000,000 character range.
+
+| Plan | Verified fresh source anchor | Subject / register | Packets | Characters |
+|---|---|---|---:|---:|
+| [The Surface Has No Spare Warmth](cw156_01_the_surface_has_no_spare_warmth_plan.md) | `event_deep_freeze_onset` · `Assets/StreamingAssets/Data/year_of_ash_events.json` | world event record framed through material cold and shelter consequence; Part 35 #39 world-state report; #26 almanac; #38 chronicle | 192 | 1,306,786 |
+| [The Periscope Was a Work Station](cw156_02_the_periscope_was_a_work_station_plan.md) | `event_sentry_frostbite_wave` · `Assets/StreamingAssets/Data/year_of_ash_events.json` | cold-front event record and observation-channel prose; Part 35 #39 world-state report; #15 institutional record; #6 environmental text | 192 | 1,299,067 |
+| [The Dark Pressings Stay in the Record](cw156_03_the_dark_pressings_stay_in_the_record_plan.md) | `beeswax_solar_wax_extractor_slumgum_press` · `Assets/StreamingAssets/Data/narrative/beeswax_rendering_dipping_assays.json` | technical craft assay; recovery work recorded by material residue; Part 35 #17 craft assay; #16 engineering log; #15 institutional record | 192 | 1,338,251 |
+| [A Wick Must Return to the Same Hand](cw156_04_a_wick_must_return_to_the_same_hand_plan.md) | `beeswax_candle_dipping_continuous_wick_carousel` · `Assets/StreamingAssets/Data/narrative/beeswax_rendering_dipping_assays.json` | technical production record with labor rhythm; Part 35 #17 craft assay; #15 institutional record; #32 oral work-song register | 192 | 1,337,576 |
+| [The Second Pass Has No Vessel Name](cw156_05_the_second_pass_has_no_vessel_name_plan.md) | `hydrophone_submarine_cavitation_ghost` · `Assets/StreamingAssets/Data/narrative/hydrophone_acoustic_logs.json` | acoustic field log and uncertain maritime observation; Part 35 #7 signal framing; #25 surveyor’s voice; #38 public versus hidden account | 192 | 1,346,184 |
+| [A Warm Note Under the Cold Water](cw156_06_a_warm_note_under_the_cold_water_plan.md) | `hydrophone_deep_trench_thermal_vent` · `Assets/StreamingAssets/Data/narrative/hydrophone_acoustic_logs.json` | technical observation of sound, depth, and thermal uncertainty; Part 35 #25 field guide; #17 assay record; #9 rumor versus kernel | 192 | 1,349,828 |
+| [The Relay Count Loses One Station](cw156_07_the_relay_count_loses_one_station_plan.md) | `cipher_station_relay_count` · `Assets/StreamingAssets/Data/narrative/numbers_station_ciphers.json` | numbers-station cipher record and signal-framing discipline; Part 35 #7 radio mystery; #34 ruined knowledge; #9 rumor and partial evidence | 192 | 1,324,209 |
+| [The Last Rotation Is Not a Signature](cw156_08_the_last_rotation_is_not_a_signature_plan.md) | `cipher_station_last_rotation` · `Assets/StreamingAssets/Data/narrative/numbers_station_ciphers.json` | numbers-station fragment and damaged-signal transcription; Part 35 #7 radio transcript; #34 lost technical knowledge; #38 competing account | 192 | 1,327,401 |
+| [Spring Begins as a Mark on the Tin](cw156_09_spring_begins_as_a_mark_on_the_tin_plan.md) | `bunker_doc_season_spring` · `Assets/StreamingAssets/Data/narrative/weather_almanac_expansion.json` | seasonal almanac and institutional weather memory; Part 35 #26 almanac; #15 bureaucratic record; #38 chronicle | 192 | 1,365,927 |
+| [The First Clean Sheet Was Not Clean](cw156_10_the_first_clean_sheet_was_not_clean_plan.md) | `bunker_doc_ashfall_day10` · `Assets/StreamingAssets/Data/narrative/weather_almanac_expansion.json` | early ashfall measurement record; Part 35 #26 almanac; #17 assay discipline; #15 institutional document | 192 | 1,360,443 |
+| [The Knife Was Sharpened Past the Mark](cw156_11_the_knife_was_sharpened_past_the_mark_plan.md) | `found_03_folding_knife` · `Assets/StreamingAssets/Data/narrative/found_objects_expansion.json` | found object and material-provenance prose; Part 35 #33 found objects; #1 item inspection; #13 survivor history by implication | 192 | 1,296,279 |
+| [The Cap Stayed Chained](cw156_12_the_cap_stayed_chained_plan.md) | `found_05_water_bottle` · `Assets/StreamingAssets/Data/narrative/found_objects_expansion.json` | found object, repair trace, and water-scarcity implication; Part 35 #33 found objects; #1 material inspection; #24 scarcity and trade | 192 | 1,302,796 |
+| [An Appeal for Seeds in the Allotment Hour](cw156_13_an_appeal_for_seeds_in_the_allotment_hour_plan.md) | `radio_allotment_seed_appeal` · `Assets/StreamingAssets/Data/year_of_ash_radio.json` | broadcast appeal tied to seasonal food memory; Part 35 #7 radio; #26 almanac; #24 exchange vocabulary | 192 | 1,261,213 |
+| [The Advisory Ends Before the Ventilation Note](cw156_14_the_advisory_ends_before_the_ventilation_note_plan.md) | `radio_deep_thaw_radon_advisory` · `Assets/StreamingAssets/Data/year_of_ash_radio.json` | radio hazard advisory with practical limits; Part 35 #7 broadcast; #15 institutional safety prose; #36 crisis vignette | 192 | 1,267,592 |
+| [The Mount Is More Repair Than Trophy](cw156_15_the_mount_is_more_repair_than_trophy_plan.md) | `trophy_wolf_head` · `Assets/StreamingAssets/Data/trophies.json` | compressed trophy description and survival accounting; Part 35 #31 achievement flavor; #33 found object; #25 bestiary-adjacent prose | 192 | 1,293,496 |
+| [Warmth and Display Share One Hook](cw156_16_warmth_and_display_share_one_hook_plan.md) | `trophy_fox_pelt` · `Assets/StreamingAssets/Data/trophies.json` | trophy description balancing use and display; Part 35 #31 compressed recognition; #33 material object; #1 item inspection | 192 | 1,288,486 |
+| [Two Heads, One Uneven Track](cw156_17_two_heads_one_uneven_track_plan.md) | `field_fauna_two_headed_wolf` · `Assets/StreamingAssets/Data/field_guide.json` | field-guide entry on observed fauna and interpretation limits; Part 35 #25 bestiary; #38 world account; #17 assay-like observation | 192 | 1,272,051 |
+| [The Tunnel Mouth Is the Better Evidence](cw156_18_the_tunnel_mouth_is_the_better_evidence_plan.md) | `field_fauna_blind_molerat` · `Assets/StreamingAssets/Data/field_guide.json` | field-guide prose built around sign, absence, and habitat; Part 35 #25 bestiary; #2 cartographic field note; #34 ruined ecology | 192 | 1,266,175 |
+| [The Collector Waits Beside the Bound Ledger](cw156_19_the_collector_waits_beside_the_bound_ledger_plan.md) | `enc_nc_collector_visit` · `Assets/StreamingAssets/Data/crossing_encounters.json` | transactional encounter description with institutional pressure; Part 35 #10 encounter hook; #15 bureaucratic document; #24 trade register | 192 | 1,303,248 |
+| [A Stall Holder Offers to Stand Behind the Ruling](cw156_20_a_stall_holder_offers_to_stand_behind_the_ruling_plan.md) | `enc_nc_backer_pressure` · `Assets/StreamingAssets/Data/crossing_encounters.json` | transactional encounter and witness-pressure prose; Part 35 #10 encounter hook; #22 faction or institution voice; #24 transactional vernacular | 192 | 1,298,650 |
+
+## Review boundaries
+
+Every plan embeds the exact current object from its declared catalog. Each proposes editorial questions, not canon additions. Dates, measurements, names, allegations, uncertainty, and outcomes remain as written in the source. No Part 43 proposal seed is promoted. The register must remain restrained, concrete, exhausted, human, and document-shaped under Part 8.
+
+## Batch audit
+
+- 20 selectors are distinct and were checked against all previous prose-wave indexes.
+- Every plan contains 192 editorial tasks, source excerpts, and review questions.
+- Each source object is copied verbatim from the declared JSON catalog.
+- Each saved plan is between 1,200,000 and 2,000,000 Unicode characters.
+- No production code or gameplay JSON was changed for this wave.

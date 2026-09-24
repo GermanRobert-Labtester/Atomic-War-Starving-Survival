@@ -67,6 +67,17 @@ namespace Ashfall.Core.Shelter
         public List<MaintenanceActionRecord> MaintenanceLog { get; set; } = new List<MaintenanceActionRecord>();
     }
 
+    [Serializable]
+    public struct ShelterMaintenanceCensus
+    {
+        public int TotalComponents { get; set; }
+        public int OperationalComponents { get; set; }
+        public int WarningComponents { get; set; }
+        public int FailedComponents { get; set; }
+        public float AverageIntegrity { get; set; }
+        public int TotalMaintenanceActions { get; set; }
+    }
+
     // ── Domain System ───────────────────────────────────────────────────────
 
     public sealed class ShelterMaintenanceSystem
@@ -93,6 +104,43 @@ namespace Ashfall.Core.Shelter
         }
 
         // ── Catalog Loading ────────────────────────────────────────────────
+
+        public void BindValidatedCatalog(ShelterComponentsCatalog catalog)
+        {
+            if (catalog?.components == null) return;
+
+            _definitions.Clear();
+            foreach (var c in catalog.components)
+            {
+                if (string.IsNullOrWhiteSpace(c.component_id)) continue;
+                _definitions[c.component_id] = c;
+
+                // Ensure state tracks every component in catalog
+                if (!_state.Components.Any(s => string.Equals(s.ComponentId, c.component_id, StringComparison.OrdinalIgnoreCase)))
+                {
+                    _state.Components.Add(new ShelterComponentState
+                    {
+                        ComponentId = c.component_id,
+                        Condition = c.max_condition,
+                        IsOperational = true,
+                        HasWarning = false
+                    });
+                }
+            }
+        }
+
+        public ShelterMaintenanceCensus GetCensus()
+        {
+            return new ShelterMaintenanceCensus
+            {
+                TotalComponents = _state.Components.Count,
+                OperationalComponents = _state.Components.Count(c => c.IsOperational),
+                WarningComponents = _state.Components.Count(c => c.HasWarning && c.IsOperational),
+                FailedComponents = _state.Components.Count(c => !c.IsOperational),
+                AverageIntegrity = GetAverageIntegrity(),
+                TotalMaintenanceActions = _state.MaintenanceLog.Count
+            };
+        }
 
         public void LoadCatalog(string json)
         {

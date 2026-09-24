@@ -61,6 +61,13 @@ namespace AtomicWar.GodotApp
             _survivorSocial.Leadership.OnStateChanged += OnLeadershipStateChanged;
             _survivorSocial.OnBelongingsChanged += OnPersonalBelongingsChanged;
 
+            // Plan 210 — load the authored keepsake catalog so template grants
+            // resolve against JSON authority rather than an empty registry.
+            string belongingsCatalogPath = CatalogPath.ResolveCatalog("personal_belongings.json");
+            var belongingsCatalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+            if (belongingsCatalogIo.FileExists(belongingsCatalogPath))
+                _survivorSocial.Belongings.LoadCatalog(belongingsCatalogIo.ReadAllText(belongingsCatalogPath));
+
             // Push the read model to the survivor-relations panel.
             RefreshSurvivorSocialReadModel();
         }

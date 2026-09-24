@@ -169,6 +169,41 @@ namespace Ashfall.Core.Tests.Visitors
         }
 
         [Fact]
+        public void AdmitVisitor_WithSourceIdentity_RoundTripsAndResolves()
+        {
+            var system = new VisitorIntegrationSystem();
+            var visitor = system.AdmitVisitor(
+                name: "Meridian Trader",
+                type: VisitorType.Trader,
+                admittedBy: "sentry_1",
+                currentDay: 3,
+                sourceVisitorId: "trader_meridian_01");
+
+            Assert.Equal("trader_meridian_01", visitor.SourceVisitorId);
+            Assert.Same(visitor, system.GetVisitorBySource("trader_meridian_01"));
+            Assert.Null(system.GetVisitorBySource("trader_unknown"));
+
+            var restored = new VisitorIntegrationSystem();
+            restored.RestoreState(system.CaptureState());
+            var restoredVisitor = restored.GetVisitorBySource("trader_meridian_01");
+            Assert.NotNull(restoredVisitor);
+            Assert.Equal(VisitorType.Trader, restoredVisitor.Type);
+        }
+
+        [Fact]
+        public void GetVisitorBySource_ReturnsDepartedStayForIdempotentHandoff()
+        {
+            // The host de-duplicates admission on the source id, so the lookup
+            // must still resolve a stay that has already closed.
+            var system = new VisitorIntegrationSystem();
+            var visitor = system.AdmitVisitor("Mira", VisitorType.Refugee, "g", 1, sourceVisitorId: "arrival_7");
+            system.DepartVisitor(visitor.VisitorId, DepartureType.Voluntary, "left", 4);
+
+            Assert.NotNull(system.GetVisitorBySource("arrival_7"));
+            Assert.Empty(system.GetActiveVisitors());
+        }
+
+        [Fact]
         public void CaptureAndRestoreState_RoundTripsAllVisitorData()
         {
             var system = new VisitorIntegrationSystem();

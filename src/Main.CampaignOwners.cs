@@ -152,6 +152,10 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("shelter_governance", new ShelterGovernanceDayOwner(this), phase: 5);
             // Plan 176 — aging & elderly survivor system: advances chronological age and evaluates milestones/retirement.
             _campaignDay.Register("aging", new AgingDayOwner(this), phase: 5);
+            // Plan 186 — shelter maintenance & degradation: applies daily component wear and environmental stress.
+            _campaignDay.Register("shelter_maintenance", new ShelterMaintenanceDayOwner(this), phase: 5);
+            // Plan 188 — individual survivor daily routines: ticks satisfaction and detects schedule conflicts.
+            _campaignDay.Register("survivor_routines", new SurvivorRoutinesDayOwner(this), phase: 5);
             // Plan 55 — retention runs last of all: it bounds the campaign logs
             // every other owner just appended to for this day.
             _campaignDay.Register("retention", new RetentionDayOwner(this), phase: 5);
@@ -722,6 +726,62 @@ namespace AtomicWar.GodotApp
                 int tracked = _m._aging?.Census.TotalTrackedSurvivors ?? 0;
                 events.Add(new DayStateChangeEvent(
                     "aging_ticked", "aging", null, null, tracked));
+            }
+        }
+
+        /// <summary>Plan 186 shelter maintenance day owner (ownerId <c>shelter_maintenance</c>, phase 5).</summary>
+        private sealed class ShelterMaintenanceDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Shelter.ShelterMaintenanceState? _snapshot;
+            public ShelterMaintenanceDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupShelterMaintenance();
+                _snapshot = _m._shelterMaintenance?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._shelterMaintenance?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupShelterMaintenance();
+                _m.TickShelterMaintenance(day);
+                int failed = _m._shelterMaintenance?.Census.FailedComponents ?? 0;
+                events.Add(new DayStateChangeEvent(
+                    "shelter_maintenance_ticked", "shelter_maintenance", null, null, failed));
+            }
+        }
+
+        /// <summary>Plan 188 survivor routines day owner (ownerId <c>survivor_routines</c>, phase 5).</summary>
+        private sealed class SurvivorRoutinesDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.SurvivorRoutineState? _snapshot;
+            public SurvivorRoutinesDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSurvivorRoutines();
+                _snapshot = _m._survivorRoutines?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._survivorRoutines?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupSurvivorRoutines();
+                _m.TickSurvivorRoutines(day);
+                int routines = _m._survivorRoutines?.Census.TotalRoutines ?? 0;
+                events.Add(new DayStateChangeEvent(
+                    "survivor_routines_ticked", "survivor_routines", null, null, routines));
             }
         }
 

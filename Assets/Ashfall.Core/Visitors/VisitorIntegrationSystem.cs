@@ -115,6 +115,15 @@ namespace Ashfall.Core.Visitors
     public sealed class VisitorRecord
     {
         public string VisitorId { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Stable external/source identity this stay was opened from (for
+        /// example an AirlockSecuritySystem admission visitor id). Empty when
+        /// the stay has no external provenance. Used to make admission handoff
+        /// idempotent without duplicating the airlock's own incident ledger.
+        /// </summary>
+        public string SourceVisitorId { get; set; } = string.Empty;
+
         public string Name { get; set; } = string.Empty;
         public VisitorType Type { get; set; } = VisitorType.Refugee;
         public int ArrivalDay { get; set; } = 1;
@@ -231,11 +240,13 @@ namespace Ashfall.Core.Visitors
             string? notes = null,
             float dailyFood = 1.0f,
             float dailyWater = 1.5f,
-            int plannedDurationDays = -1)
+            int plannedDurationDays = -1,
+            string sourceVisitorId = "")
         {
             var visitor = new VisitorRecord
             {
                 VisitorId = $"vis_{_state.NextSequence++}",
+                SourceVisitorId = sourceVisitorId ?? string.Empty,
                 Name = string.IsNullOrWhiteSpace(name) ? "Unknown Visitor" : name.Trim(),
                 Type = type,
                 ArrivalDay = currentDay,
@@ -261,7 +272,8 @@ namespace Ashfall.Core.Visitors
             string templateId,
             string name,
             string admittedBy,
-            int currentDay = 1)
+            int currentDay = 1,
+            string sourceVisitorId = "")
         {
             if (string.IsNullOrWhiteSpace(templateId)) return null;
             if (!_templates.TryGetValue(templateId, out var tpl)) return null;
@@ -282,7 +294,8 @@ namespace Ashfall.Core.Visitors
                 notes: tpl.Description,
                 dailyFood: tpl.DailyFoodConsumption,
                 dailyWater: tpl.DailyWaterConsumption,
-                plannedDurationDays: duration);
+                plannedDurationDays: duration,
+                sourceVisitorId: sourceVisitorId);
 
             visitor.Housing = tpl.ParseHousing();
             return visitor;
@@ -471,6 +484,13 @@ namespace Ashfall.Core.Visitors
             return _state.Visitors.FirstOrDefault(v => v.VisitorId == visitorId);
         }
 
+        public VisitorRecord? GetVisitorBySource(string sourceVisitorId)
+        {
+            if (string.IsNullOrWhiteSpace(sourceVisitorId)) return null;
+            return _state.Visitors.FirstOrDefault(v =>
+                string.Equals(v.SourceVisitorId, sourceVisitorId, StringComparison.Ordinal));
+        }
+
         public VisitorIntegrationSaveState CaptureState()
         {
             var capture = new VisitorIntegrationSaveState
@@ -487,6 +507,7 @@ namespace Ashfall.Core.Visitors
                 capture.Visitors.Add(new VisitorRecord
                 {
                     VisitorId = v.VisitorId,
+                    SourceVisitorId = v.SourceVisitorId,
                     Name = v.Name,
                     Type = v.Type,
                     ArrivalDay = v.ArrivalDay,
@@ -552,6 +573,7 @@ namespace Ashfall.Core.Visitors
                     _state.Visitors.Add(new VisitorRecord
                     {
                         VisitorId = v.VisitorId,
+                        SourceVisitorId = v.SourceVisitorId,
                         Name = v.Name,
                         Type = v.Type,
                         ArrivalDay = v.ArrivalDay,

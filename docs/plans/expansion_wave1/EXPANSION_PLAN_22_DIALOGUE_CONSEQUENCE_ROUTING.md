@@ -3540,3 +3540,336 @@ Handoff states achieved severity: flavor, knowledge, quest, machine mutation, or
 For each outcome, record expected before/after facts by owner: journal knowledge, quest stage, machine condition, inventory, character relationship, and visible UI. Unchanged owners should be explicitly marked unchanged. A scene can be narratively complete while the machine remains unchanged; the journal must say so. A failed command should preserve balances and machine condition unless its owner returns a documented partial result.
 
 Integration evidence should include both the accepted path and the rejected/stale path, save/reload after a durable result, and a screenshot or headless-visible output from the actual UI seam if applicable. A passing content validator proves references and field shape, not player reachability or consequence routing. Keep that distinction in closeout claims.
+
+## Pass 33A — Route Water Decisions to Existing Resource Owners
+
+### The no-double-count rule
+
+A planning quest can compare values; it cannot apply them. Route every consequence to its current authority:
+- difficulty preset selection and persistence: existing DifficultyDirector/settings/campaign-manifest owner;
+- survivor thirst meter: NeedsSystem through current survivor host command;
+- ration policy: StartingLevelSystem and its existing daily ration owner;
+- inventory clean_water and irradiated_water: existing inventory authority;
+- raw/clean/brackish/irradiated tank quantities and treatment jobs: WaterTreatmentSystem and its current host/save path;
+- source flow, discovery, active source, contamination, and water test history: WaterSourceSystem if bound to the campaign path;
+- visitors: VisitorIntegrationSystem's own state and daily-rate fields;
+- crop, foundry, medical, or other task consumption: each operation's existing command owner;
+- journal/codex: existing JournalSystem knowledge keys;
+- quest progress: existing quest owner.
+
+A shared budget presentation may read those states, but should not deduct stock or add water. If inventory and treatment tanks are separate stores, a transfer must be an explicit existing command/result; never mirror a balance in a view model. If the live campaign currently uses only one of those paths, the plan must verify that fact from host setup before proposing a cross-ledger total.
+
+### Transaction sequence for a player choice
+
+1. Construct projection from one source snapshot and label its timestamp/assumptions.
+2. Show alternate ration scenarios as previews, without mutating policy.
+3. Player selects an actual supported policy or treatment command.
+4. Re-read current campaign day, policy, inventory, and owner-specific eligibility.
+5. Invoke the single canonical command.
+6. Read accepted/rejected result and actual quantities, if returned.
+7. Mark the projection stale and rebuild from current owners.
+8. Update quest/journal through their owners only after command confirmation.
+9. Display immediate and delayed consequences only when emitted by the relevant day owner or resource event.
+
+Failure routes: insufficient stock keeps state unchanged; stale projection requests refresh; invalid preset returns the current preset; untreated source leaves quality unknown; unavailable treatment returns its owner's reason; newly arrived survivor triggers a new scenario; day advance recomputes without charging twice. The player may keep the old receipt as historical context, but it must not control current decisions.
+
+### Consequence scale and release boundary
+
+Flavor: characters disagree about the chalk-board labels. Local: a journal records which comparison the player performed. System: a supported ration policy or water operation changes owner state. Cross-system: thirst, disease, crop, or treatment consequences arrive through existing owners. Saga: a water decision affects ending evidence only if an accepted Chronicle input already exists. Do not skip tiers in the prose.
+
+Implementation closeout needs an accepted and rejected operation, a 30-day read-only scenario replay, before/after owner snapshots, same-seed consistency, save/reload, and a check that inventory units and tank liters were not double counted. Until the scenario API can read all necessary inputs without simulation side effects, ship only the explanatory comparison page and label the remainder as a design gap.
+
+
+### Pass 33B — Scenario commands, negative cases, and user-facing receipts
+
+Split a budget review into a read-only projection command and separate state-changing decisions. The projection returns scenario identity, assumptions, per-ledger totals, modeled/unmodeled consumers, and uncertainty reasons. It must not reserve inventory, run a water test, advance a treatment job, or update the difficulty preset. This pure-projection contract is a design requirement; confirm whether a current API already meets it before implementation.
+
+If player selects a real ration policy, route once through the existing StartingLevelSystem command and let the daily owner apply its normal debit. If they select a water test, route through WaterSourceSystem's current test command and preserve the test result fields. If they start treatment, use WaterTreatmentSystem's command and report actual input, clean output, waste, fuel, and filter effects. Each action returns its own typed result; the budget panel refreshes all ledgers after confirmation. Do not submit all three systems from one “balance budget” response.
+
+Negative cases:
+- Previewed ration case differs from active policy: no mutation; label preview.
+- Inventory below ration request: show shortage/rejected or partial behavior exactly as the owner returns; no artificial negative balance.
+- Treatment output never transfers to inventory: keep tank and item counts separate.
+- Water-test call fails: preserve prior historical test as stale, do not write a new result.
+- Cohort changed during preview: invalidate snapshot and require refresh before forecast/commit.
+- Player presses twice: one command receipt and at most one resource change.
+- Save occurs mid-job: restore through treatment's existing save path, then reconstruct scenario.
+- A day advances while panel is open: update the snapshot and call out the change.
+- Any consumer lacks a unit: display unknown and exclude it from a “surplus” claim.
+
+Receipt language must distinguish scenario projection (“under these assumptions”), policy request (“the daily owner requested”), actual debit (“inventory decreased”), treatment completion (“owner returned output”), and source quality (“last test reported”). A scenario cannot say “we saved 30 days of water” unless the canonical resource owners actually show that outcome over thirty advances.
+
+Implementation stop condition: if a projection would need to instantiate or advance systems, it is not read-only and must not run against the campaign as a preview. Build a pure input snapshot and projection contract first, or limit the story to side-by-side source facts and policy arithmetic.
+
+
+### Pass 33C — Integration rollback and owner conflict handling
+
+The proposed budget spans several owners, so integration needs staged acceptance and rollback boundaries. Read-only presentation can ship independently of source treatment. If the treatment/inventory transfer is unresolved, roll back only the combined total and retain separated rows. If difficulty preset persistence is invalid, suppress cross-preset preview rather than applying a local fallback. If cohort snapshot cannot be frozen, expose current roster counts and remove the 30-day forecast. If quest save fails, leave resource owners untouched and report the quest transition failure for recovery.
+
+Conflict table:
+- Quest says policy changed; StartingLevelSystem reports old policy: do not update the journal as success.
+- Inventory and treatment tanks disagree: display separate balances and escalate seam audit.
+- Water test result is newer than the displayed source snapshot: refresh before interpretation.
+- Source catalog changed after a saved scenario: keep historical report labeled by version, generate a fresh scenario only on player request.
+- Another system consumes water during the panel: invalidate the preview, reread owners, and prevent stale commit.
+- Day advance ticks the ration owner while the view is open: refresh actual stock after its result; never reapply the debit from the scenario command.
+
+The integration must establish operation ordering. Preview is read-only; daily ration tick remains sole owner of its debit; treatment job owns its inputs/outputs; inventory transactions remain inventory-owned; scenario receipt and quest state are applied only after a user action succeeds. No observer may call a foreign store's remove/add method directly.
+
+Release closeout should state exactly which layers are integrated: authored source labels, owner readings, water test, treatment, inventory bridge, difficulty comparison, quest and UI. Anything absent stays visibly marked unknown. This allows a useful vertical slice without claiming a comprehensive 30-day ecological water model.
+
+
+### Pass 33D — Owner contracts and end-to-end acceptance checklist
+
+Before binding the water budget to quests, capture one named owner contract per operation: read API, command API, result shape, save section, event/fact emitted, and current UI surface. The budget presenter can consume snapshots, but only the owning system may mutate state. If a system has no read API, that row stays unknown; if it has no command result, no success dialogue is authored.
+
+End-to-end acceptance sequence: load a fixed campaign snapshot; render the four preset comparison and three ration-policy arithmetic cases; verify no owner state changes; change one source input through its owner; refresh and observe the scenario become different; commit one supported ration or treatment action; observe exactly one owner receipt and resource mutation; save/reload; confirm the actual result persists and the projection recomputes from it. Rejected command must preserve unrelated owners. A second click must not repeat a completed debit or job.
+
+Closeout must state whether water volume, need state, inventory units, and treatment storage are integrated or merely shown beside one another. Use “separated but visible” as a valid minimum milestone. A full budget claim is reserved for proven conversions and all material daily draws; any unmodeled draw blocks a definitive “enough for thirty days” conclusion.
+
+
+### Pass 33E — Vertical slice exit criteria
+
+A vertical slice is complete when a player can compare one policy debit with one difficulty scalar, see the units and assumptions, make a supported choice or decline, and return without unintended state mutation. It is not complete when the panel merely renders four preset names. Full 30-day availability claims remain out of scope until source/treatment transfer and active consumer schedules are reconciled.
+
+## Pass 34A — Consequence Ledger for the Returning Expedition
+
+### Consequence classification
+
+The choice to write, delay, or publish a report may affect several layers, but each layer needs an explicit owner and observable proof. Cosmetic consequence: the notice’s wording and the clerk’s tone change. Local scene consequence: the desk scene advances to a new node or closes. Quest consequence: the report objective becomes complete, partially complete, blocked, or failed under the current quest authority. Relationship consequence: a named survivor’s relationship changes only through the relationship owner when a supported command exists. Faction consequence: a public account changes standing only through the standing/incident owner with a valid event and reason. World consequence: a map marker or location availability changes only through cartography/selection ownership. Ending consequence: a chronicle or epilogue may consume a bounded fact later, but this quest must not edit the ending resolver directly.
+
+A line such as “The shelter believes the team ran” is not itself proof that faction standing dropped. A corrected public notice is not proof that the distant relay came back online. An acknowledged message is not proof of a completed rescue. The UI should distinguish “record corrected,” “testimony added,” and “follow-up lead available” using the actual quest result. If an owner does not expose a consequence command, keep the option cosmetic or mark it as a future proposal; do not create direct mutations inside the dialogue response callback.
+
+### Exactly-once and ordering
+
+At result handling, first capture the authoritative expedition outcome and its stable identity. Then make eligible quest transitions, add only observed clues to the existing knowledge path, and emit any supported public-account event. Finally refresh map and conversation projections. The exact order must be confirmed against the current host event bridge; this sequence is a proposal to prevent a UI from observing a consequence before its evidence exists. A load after any step must not duplicate the report, standing event, relationship command, or follow-up clue. Prefer an existing idempotency identity from the owning event. Do not invent identity from current day alone if two expedition results can share a day.
+
+If consequence application fails, preserve the original result and expose a retryable or blocked projection. Do not mark the quest resolved while its required side effect is unapplied. If the existing owner guarantees atomic transition, use that contract rather than layering a quest-local transaction log. If it does not, the implementation plan must identify the owning save section and propose the smallest safe idempotency field for owner review. Dialogue is never the retry mechanism.
+
+### Result table
+
+| Player action | Direct outcome | Permitted downstream effect | Required evidence |
+| --- | --- | --- | --- |
+| Correct neutral report | Report objective can complete | Update notice projection | Quest owner accepted transition |
+| Publish accusation | Record accusation as a choice | Standing/relationship only if mapped | Supported consequence ID and owner result |
+| Delay notice | Quest remains in progress or blocked | Unlock valid clue task | Candidate and clue are actually available |
+| Hear testimony | Add observed statement | Knowledge/codex projection | Speaker present and source provenance |
+| Leave scene | No gameplay mutation | Preserve current choice state | Save/load retains node availability |
+
+### Closeout gates and rollback
+
+Before integration, run a static route audit showing every response reaches a valid node or terminal outcome, every consequence ID resolves, and every state write has one owner. The route audit should include returnee absent, false rumor not yet heard, clue unavailable, player abandons optional follow-up, and old save with no report choice. The focused verification belongs to the eventual integration package; this documentation pass does not run tests. If any new field requires an unapproved save migration, remove it from the first slice and keep the scene cosmetic. Rollback means disabling the new scene entry and falling back to the existing expedition debrief while preserving previously recorded result facts and legacy save readability.
+
+### Failure-forward outcome matrix
+
+The spine needs distinct outcomes so “failure” does not collapse into a single red toast. A mission objective may fail while all members return; a party may return with one survivor unavailable; the party may abort before reaching the destination; weather may force passage and cause an objective to become impossible; the player may refuse to publish an account; a selected investigation may expire; or the report may be corrected after an initial rumor spreads. Each row must map from the real expedition/quest event to a permitted consequence. Outcomes that cannot currently be distinguished are excluded from implementation until the owner exposes them.
+
+| Situation | Quest handling | Narrative handling | World-facing effect |
+| --- | --- | --- | --- |
+| Objective failed, party returned | Start report quest | Witness account with source | Notice only after player chooses |
+| No returnees | Do not start returnee scene | Existing loss/debrief route | Existing loss consequences only |
+| Party returned, key missing | Start evidence check | State only that the case is empty if observed | Optional clue lead |
+| Expedition aborted before evidence | Keep report unavailable or neutral | Explain no source was collected | No accusation or standing effect |
+| Storm forced passage | Preserve forced-passage fact separately | Allow costly success/failure wording | Use only actual travel/party consequences |
+| Second witness unavailable | Block or delay follow-up | Explain dependency | Shelter interview fallback |
+| Deadline elapsed | Close the timed branch by authored rule | Explain what became unavailable | Continue through neutral report if supported |
+| Rumor corrected later | Keep original choice history | Show correction without erasing prior account | Apply only supported new event |
+
+### Reward design and production boundary
+
+Rewards should reinforce evidence work, not turn every moral choice into a loot payout. Valid candidate rewards include journal/chronicle entries, a new verified map clue, access to a follow-up conversation, an existing standing event, or an existing inventory item if an authored event and owner already support it. A neutral report can be a successful reward outcome. Show the player what was recorded and what remains uncertain. Never promise a faction alliance, permanent reputation reversal, shelter-wide morale gain, or free equipment unless an existing consequence route guarantees it.
+
+The core-game candidate is the single shelter report scene plus a short quest that can close neutrally. The evidence expedition, faction-specific hearing, delayed rumor correction, and late-game chronicle echo belong to optional expansion scope until their owners and production costs are confirmed. A reusable scene costs less than a unique location encounter only when it reuses a proven graph and does not add a large condition matrix. Estimate writing by node and variant counts, implementation by field/consumer mapping, integration by event/save seam, QA by reachable combinations, and localization by complete strings and tokens. Do not combine these into a vague “small narrative task.”
+
+### Rollback and observability
+
+The new consequence route can be disabled independently of the expedition record. On rollback, the player still sees the ordinary debrief and the original resolved result remains intact. Do not delete a persisted report choice; preserve it as a journal fact or ignore it safely if the feature is disabled. Telemetry, if requested by product design, must use aggregate event counts and avoid storing player-authored text or sensitive inference. Debug views should expose gate IDs, source IDs and blocked reasons to developers without leaking hidden clues to players. The final closeout must state which rows were implemented, which remain authored-only, which evidence fields were verified, and which explicit dependencies prevented promotion.
+
+### Core/expansion boundary and integration checklist
+
+Core game scope should be limited to the debrief report, a neutral evidence-based close, one optional testimony exchange, and a clear return to ordinary play. That slice improves the clarity of an existing expedition outcome without requiring a new world simulation. Expansion scope can add the deeper investigation, alternate faction hearing, map lead, repeated rumor correction and epilogue callback. Each optional feature must still use existing quest, expedition, narrative, knowledge, map and consequence owners. No plan authorizes an independent standing, rumor, evidence, identity or expedition-result ledger.
+
+Before implementation, the integrator should produce a dependency graph with one row per owner: expedition result provider; quest transition owner; content catalog and validator; dialogue graph consumer; knowledge provenance source; map selection/visibility owner; relationship owner; faction standing owner; save capture/restore; UI panel and navigation. Mark each as verified or blocked with source evidence. Only then sequence work: validate the content shape; expose a read-only result projection if needed; implement the single quest transition; connect the scene; connect only one supported consequence; add focused save/replay coverage; inspect the map fallback; review UX and localization; then run the bounded quality gate.
+
+An implementation claim requires all of these proofs: source event reaches the quest; the appropriate content is selectable; every branch has a visible outcome; the selected choice persists; replay does not duplicate effects; missing evidence produces an honest fallback; old saves load without invented knowledge; controller and keyboard navigation can exit every node; and UI text agrees with actual owner state. A compiling data file or visible dialogue sample alone is not end-to-end integration.
+
+Rollback uses a feature/package gate or removes the quest’s discoverability while retaining compatible record IDs. Do not roll back by dropping a world-state fact that another system has already consumed. If disabling the feature leaves a persisted active quest, supply a migration/closure or keep the old graph available. The final integration closeout should include files touched, field-to-owner map, exact content IDs, save behavior, test target and result, unresolved premises, performance measurement, accessibility review, and rollback status. Documentation additions in this pass make no assertion that any of those gates have already run.
+
+### Release rubric
+
+Closeout requires a reviewer to follow the story from expedition resolution through quest entry, dialogue choice, owner command, saved result and visible summary. For each transition, record source event, owning system, idempotency behavior, save section and observable output. Any unsupported side effect is either removed or explicitly deferred. The story can be valuable with cosmetic and quest-local outcomes alone; it does not need a reputation swing to justify the writing. The team should not declare the route integrated until a reload and replay demonstrate no duplicate consequence and the player can still close the quest when optional evidence is absent. The integration note should state the limits in plain terms so future authors do not expand the promise beyond the shipped behavior.
+
+## Pass 35A — Consequence Routing for Doctrine Enforcement Stories
+
+### Typed outcomes
+
+A doctrine scene can produce several kinds of result that must stay separate. Cosmetic: notice wording or speaker tone changes. Local: the current conversation node closes. Quest: the evidence task becomes complete, unresolved, blocked, or expired. Character: a relationship change is requested only if the relationship owner has an explicit command. Faction: standing or access changes only through a current owner event with a supported reason. World: a checkpoint, map marker, or territory projection changes only after an authoritative action resolves. Ending: a future chronicle may record a bounded, verified campaign fact, but this plan does not edit ending logic.
+
+Do not make a quest choice directly execute a doctrine action. The warlord AI owns its strategy and action schedule. The player may investigate an action, submit evidence through a supported event, or choose a public statement. If the existing world lacks a player command to dispute a notice, the first version may end at the evidence log and leave the public statement cosmetic. Do not claim that a faction changed policy because the player selected a well-worded sentence.
+
+### Proposed effect sequence
+
+1. Receive the already-resolved doctrine/action event with its stable event identity, location, and day.
+2. Determine whether the event has a supported authored encounter or evidence consumer. If not, do not synthesize one from the doctrine description.
+3. Update the quest using its current owner, including an unresolved result when evidence conflicts.
+4. Record a learned source through the current journal/Codex/discovery path only when the player received it.
+5. Apply an explicitly supported relationship, standing, or map command, if any, through its owning adapter.
+6. Refresh the dialogue/map projection and display the outcome it can prove.
+
+The actual host event order may differ; integration must map this proposal to real callbacks before implementation. Every stateful effect needs deterministic identity and replay protection. Prefer the event identity supplied by the owner. Do not use a new quest-local counter or day-only key that can collide across multiple enforcement actions. Loading a save between the quest transition and the standing event must not duplicate the effect. If the current owner cannot guarantee this, the scope stops at a non-mutating evidence report until the owner approves the smallest necessary idempotency contract.
+
+### Failure, rollback, and review
+
+If no enforcement event exists for a doctrine, the quest can still investigate doctrine publicity and report “no verified encounter found” only as an audit result, never as an in-world fact. If a witness is lost or a location becomes inaccessible, the quest closes unresolved or supplies a verified alternative source. If a doctrine transitions while the quest is active, preserve the historical source identity or block reinterpretation. If a consequence consumer fails, show the actual pending/blocked state; do not mark the report published.
+
+Rollback disables the new quest/scene entry while preserving existing doctrine markers, faction radio, journal, and action history. It does not delete or reverse actions already owned by WarlordDoctrineSystem. Static review should list all 24 doctrine rows and their current evidence coverage, plus the single sample route’s reachable branches and result identities. Production cost includes catalog census, dialogue and encounter authoring, validator support, owner adapter work, save/replay review, localization, and map/UI updates; do not estimate it as “one quest.” The game can ship a strong core scene with one doctrine sample while leaving unverified doctrine rows for later waves.
+
+### Consequence matrix and progression receipts
+
+| Choice/result | Immediate receipt | Owner allowed to act | Out-of-scope effect |
+| --- | --- | --- | --- |
+| Read an authored doctrine broadcast | Source is available in the radio/journal view | Existing radio or journal host | Does not prove enforcement |
+| Inspect an enforcement register | Record ID and source are added to the quest/evidence view | Quest and current evidence owner | Does not change Warlord policy |
+| Confirm a witnessed action | Quest records a bounded result | Existing quest/event bridge | Does not imply every road uses the rule |
+| Submit unresolved account | Quest closes as unresolved | Quest/journal owner | No automatic rumor or standing mutation |
+| Publish a verified account | Show where the account was published | Existing public-account/standing owner if mapped | No free reputation bonus |
+| Decline attribution | Show private or unattributed closure if supported | Consent/content owner | No relationship penalty inferred |
+
+Receipts should name what happened: “Broadcast added to radio history,” “Register inspected,” or “Case closed unresolved.” Avoid generic “Faction influence changed” feedback unless an owner reports the actual result. If no public-account system accepts the new report, keep publication as a dialogue choice that closes the local quest only; mark the future integration route separately.
+
+### Exactly-once behavior and rollback
+
+Stable identity should derive from the source action/event and selected consequence ID, not merely doctrine ID, because the same doctrine may act repeatedly. The owning system decides how to deduplicate. The quest and public-account effect must either be atomic under an existing transaction/event contract or be independently idempotent with an approved stable key. After save/load at each boundary, the action record, quest state, journal note and any standing change must appear once. Randomly selecting a different encounter variant on reload is prohibited if the variant changes evidence or outcome; cosmetic prose may vary only through an existing deterministic path.
+
+Rollback disables discovery of the new investigation but preserves all existing strategic action, radio, journal and faction-war records. It must not reverse a real Warlord action or strip content from a saved quest that was already accepted. Old records should remain readable if the new UI is removed. If a content package is retired, map its active case to an unresolved close or retain the old graph until the quest can finish.
+
+### Implementation gate sequence
+
+Before code, the integrator must produce a bounded census of 24 doctrine records, doctrine transition coverage, all 48 reference IDs, radio and journal consumers, faction-war chains, location overrides, quest/evidence/encounter corpora, and player reachability. Select one sample row with a verified event-to-player path. Claim only the exact package paths through the current worktree authority. Confirm whether the narrative request event fires once per doctrine transition or on load/restore, whether its marker is captured in the current Warlord save state, and whether player delivery is independently tracked. The source code already suggests campaign doctrine markers are separate from player reception; the integration must verify this before saying the broadcast was heard.
+
+Next, author the smallest data slice; run the existing integrity path; connect an event using the current host bridge; route one quest state; review any UI panel against the real result; add focused persistence and deterministic replay coverage; then run content reachability and accessibility review. Performance review should prove doctrine lookup is indexed or bounded and does not scan the entire narrative corpus per frame. If any premise is unverified, preserve the design as DRAFT and do not introduce an adapter or save field speculatively.
+
+### World effect scope, observation, and delayed callbacks
+
+The story has a satisfying close even when its only durable effect is a quest record. If an existing faction standing consumer accepts an event about public testimony, the effect should be small, traceable and based on the player’s actual action; do not assume that every exposed doctrine report changes opinion. If an existing rumor owner receives a public claim, keep truthfulness, origin, subject, decay and propagation within that owner’s schema. A conversation itself is not automatically a rumor event. If a map or territory owner reports a site changing controller, use that fact in the next scene only after the world update is committed.
+
+A delayed callback can appear in a later radio, journal or ending projection only if the fact is enrolled through a supported NarrativeConsequence or Chronicle input. The callback should reference one bounded fact—e.g., “the player filed the register as unresolved”—not restate the entire quest graph. It must be suppressed if the player never learned or selected that result. If no accepted route exists, retain the callback as authored-only content and exclude it from implementation scope. Do not change the completed Plan 145 ending contract through an unreviewed plan proposal.
+
+### Event envelope and idempotency contract
+
+A proposed report envelope can carry case ID, doctrine ID, source-event identity, evidence IDs, action classification, location ID, observed day, player choice, publication audience, and consequence references. This envelope is a design sketch, not a new mutable store. The live event system may already provide some or all of these values; map them rather than duplicating. Remove unnecessary fields before data authoring. A source event without stable identity cannot be safely counted twice. If the Warlord event has an ID but the player source-delivery system does not, use the event ID for campaign fact and the current discovery owner for player knowledge.
+
+Failure behavior should be explicit: if the quest transition fails, preserve the source event; if a public effect fails, do not claim publication succeeded; if the save fails after a command, replay must use the owner’s idempotency contract; if a source is retired, retain an old-save fallback; if a doctrine transitions, do not rewrite the resolved case. Recovery text should say “Report not recorded” or “Source unavailable” and offer a valid retry only where the owner accepts one.
+
+### Telemetry and acceptance
+
+Developer observability should record selected quest/source IDs, gate results, owner command result, duplicate suppression, and latency. It should avoid logging private free text or leaking undiscovered doctrine facts to player-facing output. A focused harness in a future implementation package should replay the same seed/save twice, load before and after publication, resolve two actions under the same doctrine, and test a doctrine change during an active case. This document does not add tests or run them. The acceptance package must also inspect panel disposal, repeated-open cost, localization fallback, controller close/back behavior, and map updates. No UI callback should own the doctrine consequence.
+
+### Integration coverage, data lifecycle, and acceptance ledger
+
+The owner handoff needs a row for every seam and proof of its behavior. The Warlord doctrine owner supplies current doctrine and resolved actions; its save store owns AI state and narrative markers. The faction-war or event owner supplies authored action events where applicable. Radio reception and journal/discovery owners prove what the player received. The quest owner tracks the case and its selected terminal route. The location/map owners provide present reachability and map visibility. Relationship and standing owners accept only their typed commands. The dialogue host presents responses and refreshes projections. Localization and accessibility services expose readable text and navigation. No row becomes “integrated” because a document contains its name.
+
+Data versioning must be explicit. Adding a doctrine-to-encounter reference is a schema proposal only after proving no existing route already supplies that link. If accepted, the validator should check doctrine ID, encounter ID, source trigger, canonical location and allowed consequence references. Legacy rows with no encounter field should remain valid and mean “no direct link authored,” not “this doctrine has no behavior.” Removing an encounter reference from a live save must preserve active quest closure. The content migration should use a neutral terminal and must not invent a completed investigation.
+
+A compact acceptance ledger includes: catalog reference resolves; source consumer exists; player delivery is recorded; source reaches the correct scene; scene respects current location/doctrine; all branches terminate; choice is stored once; effect reaches one owner; save/load reproduces the same result; deterministic replay does not duplicate it; old saves default to unknown; UI reports true status; keyboard/controller can leave; localization handles expanded text; lookup stays within budget; rollback is possible. Each row is PASS, BLOCKED, or NOT APPLICABLE with evidence, never an optimistic blank.
+
+### Release tier and production estimate
+
+Core release tier: a shelter discussion that teaches policy-versus-action distinction and can close as unresolved, provided a real current doctrine signal reaches the player. This creates a complete experience without a new map site. First expansion tier: one audited enforcement event and a location visit, with a witness and a record. Second tier: doctrine-specific story variants only for doctrines with distinct observable outcomes. Late-game tier: a retrospective across more than one doctrine transition, using the chronicle contract. Each tier has independent acceptance and rollback.
+
+Estimate work by six cost categories: evidence census, story/character writing, content/schema and validation, host bridge, persistent quest/result state, and QA/localization/UI. A 24-row census can be a medium analytical task but a high editorial review task; 24 complete encounter arcs are large narrative production. Reuse is highest for neutral evidence handling and low for doctrine-specific institutional choices. Do not claim the whole set is core content. The expansion plan should stage it so a single well-integrated case can ship without creating an unfinished promise to cover every AI doctrine.
+
+### Campaign-scale consequence traces
+
+**Trace A — public announcement, no enforcement evidence.** Warlord doctrine marker emits the authored narrative request. The radio owner resolves the key and delivers it. The player hears the rule. The quest records an announcement source and offers an announcement-only report. No faction standing event fires, no map location changes, and no payment is inferred. The journal reports that the order was announced and that collection remains unverified.
+
+**Trace B — resolved enforcement action, not yet player-known.** The Warlord action or faction event commits under its owner. The player has not encountered or received a source. The case remains undiscovered. The journal does not reveal the action. A later radio/encounter can deliver it if that route is authored; until then, the player sees no secret map marker.
+
+**Trace C — conflicting witness and register.** The player receives both sources, each with its own source ID and date. The quest offers verified, contradictory, or unresolved reporting based on the content rules. If evidence cannot establish which is authoritative, unresolved is the correct result. The report may add an archive note, but reputation and rumor do not change unless an owner accepts a command.
+
+**Trace D — doctrine changes after report.** The earlier case retains its doctrine/event anchor. A newly delivered source can open a second comparison. The previous record remains in journal history. The quest does not rewrite the old source or mark it false merely because the policy changed.
+
+**Trace E — public statement reaches an existing faction owner.** The command is accepted with its stable event identity and an explicit target/audience. The faction system reports the actual standing/access result. Only after that result does the UI display a consequence summary. If rejected, the local report may still be complete; the player sees that the faction did not accept the filing.
+
+### What the player must see
+
+Before action, the player sees whether the response files privately, publishes publicly, or simply closes the case. After action, a receipt summarizes the owner result. If it is local-only, say “Case note saved.” If the radio owner delivered a new transmission, say “Transmission added to radio history.” If the faction owner changed standing, name the faction and actual result. If no owner effect occurred, do not show a generic influence animation. This precision improves UX and makes consequence routing reviewable.
+
+A journal projection should display source type, date, speaker/author, known location and confidence in a consistent order. Do not add a fabricated confidence percentage. If the underlying content only distinguishes witnessed/second-hand/unknown, use those labels. A public statement can be emotionally strong while its evidence remains weak; the UI should not equate conviction with truth.
+
+### Technical acceptance outline
+
+The future implementation package should verify each trace using current public APIs, not direct private-field mutation. Persistence should test a save after the doctrine marker but before radio delivery, after source delivery, after quest acceptance, and after an effect command. Determinism should use the existing seeded RNG only if a random content choice affects outcome; authored route selection should remain deterministic. Duplicate callback delivery should be harmless. UI testing should verify source labels and effect preview at supported resolutions, keyboard/controller focus, and panel reopen. Content performance should measure graph resolution and source lookup, not speculative full-corpus generation. No test is run in this documentation pass.
+
+### Integration sequence by dependency and owner
+
+**Phase 0 — Evidence audit.** Build the 24-row coverage sheet from current doctrine records, linked narrative keys, Warlord state, faction-war events, radio and journal reception, location records and player routes. Record exactly what was searched and leave unresolved rows visibly open. No code/data edits yet.
+
+**Phase 1 — Content shape.** Select one doctrine and one specific player-visible event. Write the shortest complete quest graph and neutral closure. Validate the factual wording with narrative and systems owners. No broad schema or save change.
+
+**Phase 2 — Route proof.** Connect the existing source event and delivery route to quest discovery. Verify UI access, return behavior, and map/shelter fallback. A source key without a delivery proof fails this phase.
+
+**Phase 3 — Effect proof.** Keep the first outcome quest-local unless an existing consequence owner has an exact supported command. Add one typed downstream effect only when its target, reason and idempotency semantics are approved. Do not combine standing, rumor and map effects in one vague “enforcement result.”
+
+**Phase 4 — Persistence and replay.** Use the existing save owners. Verify state capture, restore, stable case identity and duplicate callback suppression. Add a migration only for a field accepted by the owning system. Old saves default safely to unknown/unselected.
+
+**Phase 5 — Content breadth.** Expand to a second doctrine only if it produces a different observed experience. Then consider location variants, faction hearings, repeatable contracts, hidden discovery and late-game chronicle. Each one needs a separate dependency decision.
+
+### Stop conditions and architectural decision record
+
+Stop implementation if the doctrine narrative callback is not connected to a player delivery surface, if enforcement is not represented as a resolved event, if the location belongs only to the AI graph, if the quest system cannot persist a selected route, if effect identity cannot be made idempotent, or if an existing claim overlaps the proposed files. Document the specific blocker and point to the current owner; do not create a bridge in a panel as a workaround. If adding a doctrine-to-event association requires a new architecture contract, write a narrow decision proposal describing ownership, schema/default, validation, save behavior, migration, event identity and rollback. The current user request authorizes plan expansion, not code or data implementation.
+
+The operational handoff should report: plan files changed; measured word increase; doctrine records censused; inspected source paths; proposed exact sample; current unverified joins; integration order; tests to run later; and shared paths untouched. A documentation plan may be expansive while its first implementation slice remains deliberately small. That separation makes the content more buildable and reduces the risk of trying to integrate twenty-four unchecked stories at once.
+
+### Shared six-plan integration closeout: complete narrative and systems trace
+
+This closeout binds the six plans into one dependency-ordered product slice. Plan 19’s provenance contract is the source boundary. Plan 17’s quest graph defines the case and lifecycle. Plan 18’s selector contributes a player location only when the case requires one and an existing destination is valid. Plan 20 authors scenes and prose from verified facts. Plan 21 evaluates context and memory through owner projections. Plan 22 routes the player’s selected outcome to the quest owner and only then to any approved downstream system. No plan creates a second quest registry, destination graph, world-state ledger, dialogue runtime, knowledge database, faction standing store or save authority.
+
+The end-to-end product journey begins with a Warlord doctrine event or narrative marker. The doctrine owner remains authoritative for current doctrine and AI strategy. A radio/journal/event owner resolves and delivers a player-facing source. The player discovers and accepts a case. The quest owner records its case identity and objective. The content boundary declares whether the source is an authored announcement, a resolved action, a witness report or an inference. If field travel is required, the location selector reserves a proven destination and declares a safe fallback. Dialogue presents only the facts the player has learned, with a neutral route when evidence is incomplete. The player chooses a report action. The quest owner stores that route. Any relationship, standing, public-account, map or chronicle effect is sent through a current owner with a stable source/event identity. UI refreshes from the owner’s result and shows a receipt. Save/reload and replay preserve the same facts without duplication.
+
+#### Shared acceptance matrix
+
+| Gate | Required evidence | Owner/proof | Status before implementation |
+| --- | --- | --- | --- |
+| Doctrine row selected | Exact current doctrine ID and fields | Warlord catalog/source census | Must be rechecked |
+| Action proven | Resolved action event and identity | Warlord/faction event owner | Unverified for sample |
+| Player received source | Delivery record, not catalog presence | Radio/journal/discovery owner | Must be verified |
+| Quest reachable | Entry path and valid terminals | Existing quest owner | Proposed only |
+| Site reachable | Crosswalk, map/expedition binding, route | Map/expedition owner | Candidate only |
+| Dialogue truthful | Predicates, source provenance, voice | Content/host consumers | DRAFT |
+| Consequence routed | Accepted typed command and result | Named owner per effect | None claimed |
+| Persistence safe | Capture/restore and old-save default | Existing save owner | Must be mapped |
+| Replay safe | Stable idempotency identity | Source/effect owners | Must be proven |
+| UI accessible | Focus, close/back, labels, scaling | Existing UI contract | Design requirement |
+| Performance bounded | Candidate/gate lookup measurement | Current host/content owner | Future verification |
+| Rollback safe | Disable discovery without data loss | Package and save owner | Proposed |
+
+The matrix makes the six plans one coherent integration packet while keeping each implementation gate measurable. No row is considered passed because prose exists.
+
+#### Integration waves and ownership
+
+**Wave A: census and contract.** Verify the 24 doctrine entries, journal/radio keys, consumers, faction-war event references, location crosswalks, quest schemas and current save owner. Record exact searched sources, distinguish direct/indirect/not found, and choose one proven sample. Stop if doctrine event delivery or source identity cannot be established.
+
+**Wave B: authored data.** Draft one encounter/quest package and map every field to current schema. Validate references, response graph, closed consequences and localization. Do not bulk-author all doctrine cases yet. Add a neutral fallback and retire behavior. This wave changes authoritative JSON only after integration ownership and current path claims exist.
+
+**Wave C: one player route.** Bind the existing event and knowledge receipt through the current host seam. Implement quest lifecycle and one short scene. The location selector may remain unused if the source is at the shelter/radio. Show actual quest state in the current UI. Keep faction, rumor, relationship and ending effects out of the sample unless a named existing command is proven.
+
+**Wave D: persistence and quality.** Extend the current save owner only if state demands it. Verify old saves, reload at every transition, stable IDs, duplicate events, deterministic replays, controller/keyboard navigation, localization expansion, content reachability, and bounded lookup. Add the focused tests required by the eventual implementation package; this plan did not run them.
+
+**Wave E: breadth.** Expand to doctrine-specific variants when census rows prove unique player-facing action or evidence. Add multi-location quests, consentful witness paths, repeatable cases, faction hearings, and chronicle callback in separate packages with their own claims and rollback. Do not treat breadth as part of the first integration acceptance.
+
+#### Rollback, data lifecycle, and release scope
+
+The core game candidate is one shelter-based doctrine report that can close as announcement-only, confirmed action when proven, or unresolved. It has no required new map site and no automatic standing mutation. The expansion candidate adds one location encounter and a second independent evidence source. The broad 24-doctrine atlas is a longer content program. Rollback hides the new quest entry and returns players to existing radio/journal/debrief surfaces while preserving doctrine actions and existing saved records. A disabled feature must not delete a source that another system already consumed.
+
+Release notes should say exactly which sample doctrine, source, scene and effect shipped. If the action-to-enforcement join remains unverified, label the delivered feature as doctrine announcement/investigation rather than enforcement coverage. The integration closeout is complete only when file ownership, source evidence, data IDs, API route, save behavior, focused test results, UI review, performance observation, accessibility review and rollback status are recorded. Until then, Plans 17–22 remain substantial DRAFT designs, not integrated game features.
+
+### Plan 22 closeout — integration ownership and final handoff
+
+Plan 22 is the integration ledger for the complete six-plan packet. It makes no authority of its own: quest lifecycle belongs to the current quest owner; content truth belongs to authored records plus live source owners; location eligibility belongs to map/expedition owners; dialogue context is a read-only projection; and every durable effect belongs to its named consequence/save owner. The cross-plan story is complete as a design when one sample can be traced from doctrine source through player knowledge, quest, optional site, dialogue choice, owner command, persisted result and visible receipt. The trace must include an unresolved ending that needs no unsupported effect.
+
+The closeout checklist is: source and delivery verified; doctrine/action relationship classified; quest identity and terminals mapped; location crosswalk or no-travel decision recorded; data fields mapped to existing schemas; graph gates and localization complete; typed effect owner named; stable event identity and idempotency proven; save/restore and old-save defaults documented; map/UI behavior accurate; accessibility and performance review complete; focused tests named and passed by the implementation owner; rollback and retirement documented; and handoff records exact paths and evidence. Any unchecked prerequisite keeps the sample DRAFT.
+
+Integration is deliberately staged. First complete the 24-row census; then integrate one verified case with no speculative standing/rumeur/ending effects; then add one owner-approved downstream effect if needed; then broaden to further doctrine cases based on distinct gameplay. The large expansion scope is the authored matrix, alternative witnesses, multiple locations, side quest portfolio, hidden and repeatable cases, late-game hearing, and chronicle callback. Each remains separately estimated and can be cut without breaking the core case.
+
+Final handoff records current plan word counts, sample doctrine and source, selected route, owner API and save section, files claimed, data IDs, focused verification commands/results, content coverage, remaining unknowns, performance timing, UX/accessibility results, rollback status and whether any authority decision remains. No production work is implied by this closeout. It exists to make the six plans reviewable as one cohesive implementation course while preserving honest boundaries around what current code proves.

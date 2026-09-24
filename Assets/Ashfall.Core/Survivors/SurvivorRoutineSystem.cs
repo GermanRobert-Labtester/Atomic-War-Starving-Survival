@@ -103,6 +103,16 @@ namespace Ashfall.Core.Survivors
         public List<RoutineConflictRecord> Conflicts { get; set; } = new List<RoutineConflictRecord>();
     }
 
+    [Serializable]
+    public struct SurvivorRoutineCensus
+    {
+        public int TotalRoutines { get; set; }
+        public int TotalPreferences { get; set; }
+        public int ActiveConflicts { get; set; }
+        public int ResolvedConflicts { get; set; }
+        public string EnforcementLevel { get; set; }
+    }
+
     // ── Domain System ───────────────────────────────────────────────────────
 
     public sealed class SurvivorRoutineSystem
@@ -130,6 +140,29 @@ namespace Ashfall.Core.Survivors
         }
 
         // ── Catalog Loading ────────────────────────────────────────────────
+
+        public void BindValidatedCatalog(RoutineTemplatesCatalog catalog)
+        {
+            if (catalog?.templates == null) return;
+            _templates.Clear();
+            foreach (var t in catalog.templates)
+            {
+                if (string.IsNullOrWhiteSpace(t.template_id)) continue;
+                _templates[t.template_id] = t;
+            }
+        }
+
+        public SurvivorRoutineCensus GetCensus()
+        {
+            return new SurvivorRoutineCensus
+            {
+                TotalRoutines = _state.Routines.Count,
+                TotalPreferences = _state.Preferences.Count,
+                ActiveConflicts = _state.Conflicts.Count(c => !c.IsResolved),
+                ResolvedConflicts = _state.Conflicts.Count(c => c.IsResolved),
+                EnforcementLevel = _state.EnforcementLevel
+            };
+        }
 
         public void LoadCatalog(string json)
         {

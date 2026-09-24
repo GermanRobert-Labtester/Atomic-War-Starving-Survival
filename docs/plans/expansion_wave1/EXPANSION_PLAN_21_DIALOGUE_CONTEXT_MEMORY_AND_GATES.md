@@ -3291,3 +3291,346 @@ Verification should compare dashboard, journal, catalog, quest view, and restore
 After loading a save, rehydrate machine owners, journal knowledge, and quest state before constructing the conversation packet. Never reuse an in-memory packet from the prior run or slot. If restoration reports a missing optional log catalog, preserve durable quest facts but remove choices that depend on that source; show neutral fallback copy. If the machine owner restores a different current state than the pre-save view, rebuild the scene and invalidate any pending action.
 
 A panel closed during a pending inspection must not commit it unless the command owner already accepted it. Reopening should query the receipt or service state, not submit again. A second UI surface that records a clue should become visible through its canonical knowledge owner, while retaining original source attribution.
+
+## Pass 33A — Difficulty, Ration, Cohort, and Source Context Gates
+
+### Context packet for the 30-day view
+
+Build a read-only scenario packet from current canonical owners:
+- campaign snapshot day and campaign/save identity;
+- active difficulty preset ID and effective thirst multiplier;
+- survivor IDs, current need values, and relevant life-stage state;
+- ration policy and whether the projection holds it constant or reads a day-by-day history;
+- inventory counts for clean_water and irradiated_water;
+- WaterTreatmentSystem tank quantities, clearly separated until reconciliation is proven;
+- WaterSourceSystem source state, discovered/active status, stored liters, contamination, last test day/result, and nominal catalog flow;
+- active visitors and their authored daily water rates, if the current visitor owner uses them in the scenario;
+- action/job draws, with exact resource, amount, unit, and schedule;
+- known unknowns and stale fields.
+
+The packet is not a save state and cannot change inventory, survivor needs, treatment jobs, source activity, or policy. It is rebuilt whenever the player opens the budget view and revalidated when an action is selected.
+
+### Gate matrix
+
+**Difficulty gate:** only the preset ID stored for the campaign and the provider's current scalar count as effective. A settings preview or uncommitted preset selection does not alter the campaign scenario. **Ration gate:** a future policy switch can be projected as a scenario, but actual policy changes use the existing ration command and owner. **Cohort gate:** late arrivals/deaths invalidate per-person totals and require a new snapshot. **Unit gate:** do not sum inventory item quantities, liters, and thirst-meter points. **Source gate:** nominal flow is visible as catalog context; operational output requires current source state. **Quality gate:** a test result is valid for its source and test day, not every connected source unless the water owner establishes propagation and validity. **Consumer gate:** list only discrete draws for which current amount and schedule are known. **Freshness gate:** after any inventory, policy, cohort, source, test, or job change, mark the prior projection stale.
+
+Four-valued results:
+- true: required snapshot and all modeled inputs are current;
+- false: a checked condition does not hold, such as a source being inactive;
+- unknown: owner does not expose a required amount or the units cannot be reconciled;
+- stale: the input was valid but changed after the scenario was calculated.
+Do not coerce unknown to zero. A “surplus” label is forbidden while an essential consumer remains unknown.
+
+### Memory and dialogue
+
+A saved scenario receipt may record that a player ran a projection, plus its snapshot identity and declared assumptions, only if an existing journal/quest owner supports this. It should not copy every mutable stock value into a new dialogue save store. Re-opening the budget after a new day should create a fresh projection; a past report remains an attributed historical estimate. If the player changes difficulty, the result is recalculated for the new committed preset, not retroactively rewritten into the old one.
+
+Character dialogue must query knowledge, not infer it from catalog presence. A source card can be authored and loaded but undiscovered; a water test may exist in the save but not be read; a character may know the spring while the map does not. Keep these gates distinct. Skill may explain contamination units or test confidence but must not be the sole path to the mandatory meaning of a water warning.
+
+
+### Pass 33B — Freshness, revalidation, and save-resume contract
+
+A 30-day projection can become stale without a single dramatic event. A survivor joins, leaves, or dies; a child changes life stage; a ration policy changes; an item is consumed; a water treatment job completes; a source test is taken; a source becomes inactive; or a visitor's state changes. Define a source fingerprint from stable IDs and owner-provided revisions if available. If no revision exists, compare a fresh read at action time and recalculate. Do not trust a cached projection across day advance or save restore.
+
+The displayed context should reveal the scenario assumptions: “same roster, same ration policy for thirty days” or “current policy held constant.” A projection under Dirge is not the campaign's current state if the save remains Standard. Previewing another preset is presentation only; selecting a new preset uses the authorized new-campaign/settings route and its persisted campaign rules. Never alter live difficulty when a player merely compares rows.
+
+Save/resume behavior: persist actual campaign owners through their existing save sections. A scenario history may persist only if an existing quest/journal owner has a suitable durable field; otherwise the completed scenario can be regenerated. If a saved report is shown later, mark it historical with its snapshot day. On load, compare it against current roster, policy, stock, source, and jobs before offering “refresh.” Do not overwrite the prior record; write a new scenario result or show a fresh unpersisted preview.
+
+Gate cases: empty roster, no difficulty owner, malformed/missing preset, unknown ration policy, inventory below requested policy amount, treatment tank present but no bridge to inventory, source flow but inactive source, old test result, schedule not exposing an interval, unknown consumer, source count changed, and a fresh cohort snapshot. Each case yields an explicit state. Missing preset falls back only as the current difficulty authority defines; no quest-side default should overrule that.
+
+Medical treatment, hydroponics, foundry operation, visitors, and industrial consumers may share the item name while using different units or scheduling. A context packet must not infer that they share a stock store or are active simultaneously. Branch availability comes from the owner that will execute the command, and all dynamic quantity text must be recomputed before confirmation.
+
+
+### Pass 33C — Accessibility and projection integrity
+
+A budget view can be mathematically correct and still mislead if it collapses a state scale into a resource bar. Present inventory units and liters with visible unit labels, and thirst as an individual condition meter. Screen-reader output should announce resource name, unit, source owner, snapshot date, and whether the number is actual, authored, or projected. Never use color alone to signal scarcity, contamination, unknown, or stale data.
+
+Do not average away severe individual thirst in a cohort summary. The panel can show cohort range, median, and named severe outliers only if the existing roster provider exposes them. Averages are optional context, not a substitute for per-survivor inspection. If privacy or screen-space constraints prevent names, expose count and severity bands without hiding that individual status varies.
+
+Knowledge gates should not reveal exact water source IDs before discovery. A locked response can say “You need a recorded test before the medic will interpret this result,” only if a valid test is genuinely required. Do not use a hard skill gate to hide the fact that contamination has been measured; skill can explain measurement confidence, not erase the source data.
+
+Comparison layout has four rows for the four presets and a separate policy section. If the player previews another preset, label it PREVIEW and leave the committed campaign preset visible. Keyboard/controller navigation should move between row groups predictably; opening a source detail should return focus to the selected row. Unknown consumer count and stale snapshot warnings must be textual, persistent until refresh, and not communicated only by an icon.
+
+Context integrity checks include rounding. Do not round a small but nonzero treatment output to zero while separately calling it absent; show a bounded precision appropriate to the owner. Do not sum floats from liters with integer item counts. A displayed “remaining” value should be derived from the same snapshot as its inputs and identify omitted demand.
+
+
+### Pass 33D — Context truth table for campaign changes
+
+| Campaign change while view is open | Required behavior |
+|---|---|
+| Difficulty preview changes | Keep committed campaign scalar; label the preview only |
+| Difficulty is actually changed through an allowed route | Rebuild thirst comparison; preserve prior report as historical |
+| Survivor joins or leaves | Invalidate roster snapshot and per-person projection |
+| Ration policy changes | Recompute policy debit; do not edit prior receipt |
+| Clean inventory changes | Refresh current stock and state whether the projection is stale |
+| Source test is recorded | Use the new dated result; retain previous test as history |
+| Treatment job advances | Re-read tank/job results; do not infer output from elapsed time |
+| Save slot changes | Discard transient packet and reconstruct all owners |
+| Unknown consumer appears | Remove surplus conclusion and mark omitted demand |
+
+A previewed scenario is never an implicit player choice. Any “apply” button must identify the owner command, current policy, resource effect, and confirmation step. Return focus to the affected row after refresh so the player can compare old assumptions with new values. A campaign day boundary invalidates any owner snapshot whose day-sensitive values may have ticked.
+
+
+### Pass 33E — Hidden information and fair explanation
+
+A hidden source can support discovery play, but it cannot be a silent dependency for the basic budget comparison. A locked source dialogue should leave the player a usable policy and inventory view. If a report is hidden by faction access, explain the access limit without revealing the report's contents. If its source identity is unknown, the player can still record that an unattributed report exists.
+
+## Pass 34A — Context Gates for Honest Testimony
+
+### Gate matrix
+
+This packet specifies dialogue availability around “The Return Column” without creating an additional persistent memory system. Every gate must read an existing fact through its owner or a read-only projection. Quest acceptance comes from the quest owner; expedition outcome from the expedition result; identity and availability from the roster; map visibility from cartography; standing from the standing owner; and knowledge provenance from the Codex or narrative knowledge path if the required fact is exposed there. A dialogue panel may cache a view for rendering but never become an authority.
+
+| Gate | Required evidence | On false | Player-facing fallback |
+| --- | --- | --- | --- |
+| Returned party | Resolved expedition lists one or more living returnees | Scene stays unavailable | Ordinary expedition debrief |
+| Objective failed | Result identifies the objective as unmet | No failure-forward report scene | Standard outcome summary |
+| Rell is present | Roster/scene availability says Rell can speak | Hide voiced response | Use authored statement only if one exists; otherwise allow delay |
+| Empty case observed | Result or inventory evidence records the case | Hide item-specific response | Use the neutral report option |
+| Relay clue known | Provenance says player learned the lamp went dark | Hide follow-up inference question | Offer inspection or return visit only when valid |
+| Report already published | Quest/world record says publication occurred | Show publication choice | Keep the choice available |
+| Faction account known | A channel has delivered the account | Hide rebuttal or challenge | Do not preview unlearned faction rhetoric |
+
+These rows are design contracts, not assertions that each exact field already exists. During integration, mark each field VERIFIED, PROJECTABLE, or BLOCKED with source references. A PROJECTABLE fact may be exposed through an existing host adapter if that is within its current contract. A BLOCKED fact pauses this branch; do not replace missing evidence with a guessed boolean in dialogue state.
+
+### Memory tiers and repetition
+
+The scene needs only narrow memory: whether the player chose correction, publication, or delay; whether testimony has been heard; and which clue source was actually learned. Use the quest’s persisted choice and current knowledge owner where possible. Do not store a transcript, player free text, or an inferred emotional profile. Revisit variation should derive from those remembered actions and the current world facts. If a save predates a field, default to an uncommitted state and provide a neutral line. A migration may not reinterpret missing data as “player accused the team.”
+
+Emotional tone is a presentation layer: Vesta may sound relieved after a corrected notice, tense after a public accusation, or tired if the issue has been deferred repeatedly. These variants do not create secret relationship scores. If the relation owner reports a relevant established relationship state, the scene can select a voice variant within authored bounds. It cannot recalculate relationship from conversation frequency. An unavailable companion must not appear in a remembered line unless the content is a stored message or journal record with a real source.
+
+### Repeat-visit and failure behavior
+
+On the first visit, show the initial question. After the report is corrected, show a brief acknowledgment and one new question about the follow-up clue. If the player left without deciding, resume at the same hub with the current choices. If the player chose delay and the required witness remains unavailable, explain what is missing and offer to wait, abandon the optional follow-up, or use another valid route. If the player’s selected quest route later fails because its deadline elapsed, acknowledge that fact and expose any authored continuation; never reopen a completed consequence as if it had not fired.
+
+### Accessibility and freshness
+
+Gate explanations must be available through visible text, not color alone. Disabled options should identify the missing knowledge in ordinary language without exposing information the player has not learned. Keep focus order stable when options appear or disappear; restore focus to the hub if a node is gated after returning from a child branch. Freshness tests should cover immediate repeat visit, next-day return, save/load between clue and conversation, changed roster availability, and a stale map clue. A stale clue may lead to a blocked explanation, not an invisible node. All deadline comparisons use an anchored day and authored window.
+
+### State-by-state dialogue availability
+
+The quest status controls scene entry, while evidence and context control individual nodes. Inactive and unavailable quests expose no entry. Available/discovered quests may show a board lead; acceptance is an explicit action. In progress shows only the unresolved choice. Blocked state presents its dependency and any supported fallback. Partially completed state identifies what is recorded and what remains. Failed state gets a short acknowledgment and the authored continuation, if any. Completed state shows closure once. Resolved state may supply a later callback but must not replay the active choice. Expired and abandoned states explain how the player reached closure. Reopened state requires a new supported fact; old dialogue should not reappear solely because the game loaded a save.
+
+| Quest state | Entry copy | Available actions | Prohibited implication |
+| --- | --- | --- | --- |
+| Available / discovered | “A report is waiting at the desk.” | Inspect or accept | Claim that a returnee consented |
+| Accepted / in progress | “The clerk needs a verified account.” | Hear, compare, correct, defer | Promise that every witness is reachable |
+| Blocked | “The signal record is not available here.” | Wait, use shelter witness, abandon optional lead | Mark the quest failed without authored rule |
+| Partially completed | “One account is recorded; the cause remains open.” | Review source, continue, close neutral report | Turn uncertainty into accusation |
+| Failed / expired | “The filing window closed before the second witness arrived.” | Read closure, pursue permitted sequel | Hide the deadline or imply a factual verdict |
+| Completed / resolved | “The notice now matches the evidence collected.” | Review journal, leave | Offer duplicate irreversible actions |
+
+These lines are placeholders for UX review and localization. If a state label does not exist in the live quest system, map the design to the nearest supported state and document the difference. Do not add a parallel dialogue lifecycle just to match this table. The plan’s required contract is clear feedback for players and no silent loss of an active quest.
+
+### Skills, reputation, and knowledge
+
+A skill gate may expose a question, a source comparison, or an alternate way to interpret timing. It should not unlock the only completion route. An unsuccessful check can reveal that the player lacks enough evidence and return to the main hub. A reputation gate may alter whether a faction representative attends or whether a public board will display a note; the gate must be based on the current faction owner and cannot be inferred from a dialogue choice. A knowledge gate requires a provenance record for the exact clue. An unknown rumor stays unknown even if the player guesses it in dialogue.
+
+Faction-specific, location-specific, repeated-visit, failed-quest and player-action-reactive dialogue are all useful here, but they compose as conditions rather than as a combinatorial prose explosion. Prioritize the conditions that change the player’s understanding or available action. The first slice should have a neutral fallback whenever multiple gates overlap, and gate evaluation should be stable for the same saved facts. Store only the minimum choice needed to resume and render the scene; do not save every line read.
+
+### Test matrix
+
+Content review should enumerate all gate pairs that could conflict: player knows rumor but witness is absent; witness is present but no clue is known; report has been published and the quest deadline has passed; faction representative is unavailable after an expedition; player has high reputation but no evidence; old save has no explicit report choice. Verify no contradictory node appears, one fallback is always reachable, and return navigation restores focus. Confirm hidden emotional variants do not reveal the outcome choice before the player sees the report. Use source-owner read APIs rather than polling panels for state.
+
+### Consent, hidden state, and player trust
+
+The scene must separate private testimony from public attribution. A returnee can agree to speak to the player while refusing to have their name printed. Treat those as two separate consent decisions only if the project has a current consent owner capable of recording them; otherwise keep the first slice to a single explicit authorization with no inferred permission to publish. The player must see the audience and scope of each choice. “Record this for the file” is too vague if the record will appear on a public board or affect a faction.
+
+Hidden emotional states may shape authored tone only through an established relationship or character-state owner. Do not invent “fear of blame” as an invisible dialogue variable. If no relevant state exists, provide a stable voice line. Relationship changes must be visible through the normal relation projection and must not secretly modify quest eligibility in the same response unless the consequence contract states that effect. A refusal should preserve access to neutral completion and should not be framed as dishonesty.
+
+Gates should reveal their source without spoiling hidden content. A disabled response might say “You do not have a statement from the relay crew” rather than disclose the crew’s later whereabouts. When the player has not learned a rumor, dialogue cannot quote it. When an old save contains a completed expedition but no migrated provenance, treat its knowledge as unknown or use a safe broad line. Never backfill knowledge from the current catalog because that would make old runs omniscient.
+
+A content designer should review gate count, not just scene count. For each gate, answer: source owner, source field, save/migration behavior, visible blocked message, and safe false default. If two conditions are redundant, remove one. If the matrix exceeds the authoring team’s capacity, split the scene into independent conversations rather than adding a hidden priority override. The acceptance measure is a truthful, comprehensible choice set, not maximum personalization.
+
+### Release rubric
+
+The gate review should include a player-facing walkthrough with an ordinary save, a save made between clue and conversation, and a save predating the optional quest. At every disabled choice, the player should understand the next available action without learning a secret prematurely. Hidden state is justified only when an existing owner can explain it and the presentation meaningfully changes. If the player must guess which invisible condition failed, the gate is incomplete. If the gate is merely decorative, remove it. The first slice needs no emotional inference, no transcript archive and no new player profile. It needs clear memory of the actual report choice and a safe default for every older save.
+
+## Pass 35A — Doctrine and Evidence Context Gates
+
+### Gate authority matrix
+
+This dialogue family depends on facts from several separate owners. The dialogue layer consumes a read-only context snapshot; it does not derive faction policy, journal delivery, territorial control, or player reputation itself. Before implementation, each proposed fact below needs an exact source field/API and a reviewed save/load path. If a fact is not exposed, mark it blocked instead of synthesizing a conversation-local substitute.
+
+| Context fact | Gate source | False or unknown behavior | Safe text |
+| --- | --- | --- | --- |
+| Current doctrine is the subject | WarlordDoctrineSystem read projection | Hide doctrine-specific scene | Generic road notice, if authored |
+| Radio key was delivered | Radio reception/knowledge owner | Do not quote broadcast | “A notice is being discussed” only when independently known |
+| Journal key was received | Journal/discovery owner | Keep source unavailable | No journal-specific response |
+| Enforcement action resolved | Action/event owner | Do not offer confirmed-action route | Record announcement or unresolved claim |
+| Location is player-accessible | Map and expedition owners | No location scene | Continue at shelter hub |
+| Witness is present and willing | Character/roster/consent owner if supported | Hide witness-specific response | Anonymous record or leave scene |
+| Player saw the receipt | Existing inventory/document/knowledge owner | Do not count it as inspected proof | Allow testimony to remain second-hand |
+| Relevant standing is known | Standing projection | No reputation-gated option | Use neutral access route |
+
+The table is an integration checklist, not proof that the project exposes all of these facts through dialogue today. The world bible says current owners are authoritative; the exact context source should be verified through a small call-site census and ownership record. Do not expose hidden doctrine state if the player has not learned its identity.
+
+### Memory scope and state changes
+
+Memory needs are deliberately small: quest accepted or not; source record inspected or not; witness permission for public attribution if a consent owner supports it; and the player’s selected report route. Prefer the existing quest, journal, inventory-document, and consent state owners. The dialogue graph should not persist a transcript, a new “trust” counter, or a secret conclusion. A recurring visit derives its line from a real stored outcome and current owner projections. A save predating the choice must default to undecided; it must not default to “player sided with the faction.”
+
+The active doctrine may change between the first conversation and a return visit. The scene should preserve the historical doctrine that was actually under investigation if that fact is already stored by the quest/event owner; it must not silently reinterpret the old report using the current doctrine. If there is no historical snapshot, show a neutral “the situation has changed” line and block the old doctrinal comparison. No wall-clock or latest catalog read may rewrite past campaign context.
+
+### Emotional, skill, and faction conditions
+
+Character personality is authored in voice blocks and can influence wording. Hidden emotional states are not inferred from silence, refusal, or conversation count. Skill checks may reveal an available detail but cannot establish an unseen enforcement fact. A failed check must reconverge to the unresolved branch. Reputation can change who will speak or where a notice is accepted, but any such gate requires an existing standing consumer and an explanation in the UI; no threshold should be invented for this plan. Faction-specific responses must appear only after the player has learned the faction context and must not reveal a hidden goal through an unearned line.
+
+Review combinations for stale doctrine, radio heard but not action, action occurred but no player witness, map location known but closed, anonymous source, duplicate visit, and old save lacking a selected response. Every state needs a neutral fall-through and an accessible exit. Hidden-state variation should add meaning, not turn one scene into dozens of hard-to-author permutations.
+
+### Decision and memory model
+
+The dialogue should evaluate facts from a snapshot at scene entry. At minimum, it needs the doctrine ID under investigation, the player-visible source IDs, the active quest state, known location and scene availability, any relevant event identity, and a fresh campaign day if the quest is timed. It should not hold an open reference to a mutable AI object or query UI controls to infer state. If the active doctrine changes while the scene is open, resolve the current response against the entry snapshot or close and refresh the graph before presenting a new option. Never combine half-old and half-new facts.
+
+Remembering the player’s action requires one explicit route marker owned by the quest system: source inspected, report selected, and optional publication requested. Avoid storing every dialogue node visited. If the player repeats a conversation after loading, the same supported source should not be awarded twice. If a later event contradicts the earlier conclusion, reopen only through an authored quest transition that cites the new event. A previously published unresolved record remains unresolved in history; it should not be silently rewritten to a confirmed result.
+
+A source may have three distinct knowledge states: not present in world; present but not delivered to player; and learned by player. If the current knowledge system only represents first-heard identity, use that exact limit and do not add a secret “available in catalog” state that the UI treats as player knowledge. Dialogue can say the player has no record yet, but should not reveal that a hidden broadcast exists. A journal marker emitted by WarlordDoctrineSystem may be a campaign trigger; verify how it becomes a readable player-facing journal entry before using it as knowledge.
+
+### Gate truth table
+
+Test combinations should include: doctrine known, no action event; doctrine unknown, action event exists; broadcast delivered but no encounter; encounter occurred but source record not inspected; source inspected but party lacks permission to publish; location known but closed by faction state; doctrine changed since the initial report; quest completed and later contradictory event arrives; and old save with marker but no per-player delivery record. For each case, specify visible text, enabled responses, quest effect and safe fallback. Every branch must retain a way to leave and return.
+
+Knowledge and reputation gates must be explainable. A skill check can reveal an inconsistency but does not create evidence. High standing can provide access to a room only when access uses the current faction/territory authority. Low standing cannot silently erase a public route unless that policy is in an explicit owner. A refusal to publish should still permit private quest completion. Emotional tone variants must never alter gate truth, consequences or the user’s ability to exit.
+
+### Data freshness and failure handling
+
+Persist only player choices and whatever source IDs the current quest contract requires. For older saves with no choice record, show the undecided hub. For a missing doctrine key, render a neutral unavailable-source response rather than a fallback invented from doctrine description. For a removed speaker, use a documented authored record or a generic close; do not generate a substitute survivor. On stale graph detection, refresh all context together and return focus to a stable hub node. The player sees a short explanation; developer diagnostics log which owner projection was stale.
+
+### Context freshness, repetition, and availability windows
+
+A doctrine question can become stale when the campaign changes its active doctrine, territorial controller, event stage, location state, or player knowledge. Snapshot only what the selected dialogue graph needs and define when it refreshes. Opening the conversation takes a consistent read. Returning from a subscene rechecks whether the source has been invalidated. A changed doctrine should close or neutralize the obsolete branch rather than show current doctrine text as the historical order. A changed controller may alter who occupies the site but not erase the memory of an earlier event.
+
+First visit, repeat visit, next-day return, and post-transition return are different contexts. First visit introduces the case. Repeat before a decision resumes it. Repeat after completion acknowledges the actual result. Post-transition return may explain that the faction changed its policy, but only if that later transition is observed and delivered. Never produce a generic “they have changed” line from the internal AI state alone. The player may not know the transition has occurred.
+
+Timed content is optional. If used, anchor the deadline to the accepted quest day or a named faction event day, not to the number of times a panel opens. Display a clear date/window and a warning before closure. An expired report can remain unresolved or move to a later hearing if authored; it cannot fail by hidden calendar arithmetic. An open-ended investigation is preferable when the game has no appropriate persistent deadline owner.
+
+### Dialogue state availability grid
+
+| Quest/owner context | Graph response | Memory requirement | Safe fallback |
+| --- | --- | --- | --- |
+| Doctrine key present, no player delivery | No doctrine quotation | None | Generic shelter rumor only if learned elsewhere |
+| Broadcast delivered, no action event | “An order was announced” | Radio history | Announcement-only resolution |
+| Action event present, no witness route | Do not claim firsthand knowledge | Event identity | Source unavailable / unresolved |
+| Witness statement heard, document absent | Attribute claim to speaker | Knowledge provenance if available | Do not mark document inspected |
+| Document inspected, public consent absent | Private evidence response only | Consent owner or local choice | Keep source anonymous |
+| Current doctrine differs from quest snapshot | Historical report remains scoped | Stored case source identity | Neutral “situation changed” line |
+| Location was consumed by another event | Hide repeat encounter | Encounter/event state | Journal or shelter route |
+| Old save lacks delivery memory | Do not infer broadcast receipt | Migration default unknown | Unavailable-source response |
+
+The grid is a content contract. The implementation must map it to the smallest set of current owner APIs. If a current system does not distinguish delivered from authored, the choice is to defer the knowledge-gated text or obtain an approved owner contract—not to add a dialogue-only receipt ledger.
+
+### Accessibility and player confidence
+
+Blocked responses need words, not only color or an icon. A player should know whether an option requires a heard broadcast, a witnessed action, a visited site, a signed source, or simply a later day. This wording should avoid spoilers. Focus order remains stable when a response appears after a source is found. Tooltips must be accessible by controller and keyboard. Date, doctrine and source names should be read as separate structured labels when the accessibility layer supports it.
+
+Onboarding can teach one distinction: “A rule was announced” and “a rule was enforced” are separate claims. Do not add a tutorial modal that interrupts the first conversation. Teach through a short choice preview and a journal glossary entry only if the current Codex route supports it. The quest should remain playable if the player skips the glossary.
+
+### Conversation-specific memory without an omniscient journal
+
+A major case can accumulate many sources, but the dialogue should ask the current knowledge owner for each one rather than keep a shadow transcript. A case view may project a source checklist: known broadcast, inspected copy, witness account, verified action, and public result. The checklist is a UI projection assembled from existing source facts and quest progress. If one of those facts has no persistence owner, mark it unavailable; do not store it in a panel’s private list. On restore, the same sources and choices must appear.
+
+Memory should distinguish “heard the clerk say it,” “saw the document,” and “recorded a conclusion.” A line might be paraphrased in a later summary only if the source ID remains available. If player response text is not authored, there is no free-text memory to replay. The game does not need to remember every accusation the player spoke; it must remember only the closed choices that changed route or consequence. This reduces save size, migration burden and privacy risk.
+
+A repeated conversation may have one of five states: not started; started/no evidence; one source recorded; report selected; resolved. Choose this minimal ladder only if the existing quest owner can represent it. Otherwise map to its supported statuses, retaining evidence detail in existing item/knowledge state. Avoid a parallel dialogue status enumeration that disagrees with the main quest lifecycle Plan 17.
+
+### Six context groupings for author review
+
+- **Campaign context:** day, active doctrine, territorial state, relevant event phase. Review whether these are a live snapshot or a historical case anchor.
+- **Player knowledge:** delivered radio, discovered location, inspected document, testimony heard. Hidden data is not player knowledge.
+- **Character context:** availability, consent to speak, consent to be identified, relationship. Do not infer consent from relationship.
+- **Quest context:** inactive, discovered, active, blocked, partially complete, failed-forward, complete or reopened. Display only the states the current owner exposes.
+- **Location context:** discovered, dispatchable, occupied, consumed encounter, accessible interview. A visible map location does not guarantee the unique encounter remains.
+- **Interface context:** selected response, focus, current graph version, panel lifecycle. UI state must not become gameplay memory.
+
+Each group can change independently. Define refresh points and precedence so stale data does not produce a contradictory choice. If campaign context changes, update the historical comparison separately from the live present. If character consent changes, hide the naming response but preserve the anonymous completion path. If the graph version is retired, route to a compatible neutral terminal rather than reopening an old choice.
+
+### UX acceptance and cognitive load
+
+The conversation should surface no more than the evidence the player can act on in the moment. A case board can place sources in date order with source type labels, but should not require the player to memorize 24 doctrine names. New terms should be introduced in plain language and supported by a glossary only if the game already has the current codex route. Responses should describe likely scope (“file a private report,” “publish the verified action”), while a confirmation step is reserved for materially consequential actions. Back/close should always return to the expected panel and preserve focus. Disabled options disclose the missing prerequisite without revealing hidden content.
+
+### Relationship, reputation, and emotional response boundaries
+
+The player can build trust with an individual by keeping a source anonymous, but no plan should predict that trust value unless a relationship owner confirms a supported effect. There are four distinct questions: Did the speaker consent to tell the player? Did the speaker consent to have their name recorded? Did the player choose to publish the account? Did a faction or community actually receive it? These are not interchangeable. The first slice can avoid persistent consent state by making the player choose whether to record the statement at all, then displaying the exact audience before publication. If private and public audiences must persist, use the current consent and journal owners or defer the feature.
+
+Faction reputation can gate who agrees to an interview, but should not gate access to all facts. A low-reputation player may hear public radio or inspect a public board if the current world supports those channels. A high-reputation player may be offered a private register only if a character authorizes it. Relationship-based, faction-based and knowledge-based dialogue may combine, but precedence must be explicit: missing consent should hide the public attribution option even when relationship is high; absent evidence should hide a confirmed claim even when faction trust is high.
+
+Emotional states can be presented through visible acting cues or authored line variants tied to available survivor state. Do not use a secret “guilt” or “loyalty” score to select an accusatory response. The player should not be punished for expressing uncertainty or refusing to publish a claim. Failure reactions should acknowledge that the selected evidence path did not resolve the question, not that the player is cowardly or disloyal. Characters can disagree openly; the quest state remains factual and owner-driven.
+
+### Availability, consent, and no-softlock rules
+
+For each optional gate, record whether it is necessary for story flavor, a new clue, an owner command, or completion. Only the first three can justify a disabled response; none should block the neutral close unless the entire quest is designed around that exact owner action. If a character is absent, do not synthesize them through generated dialogue. If they died after providing a valid record, preserve the record and remove only future conversation. If consent is revoked before publication, hide the naming route; if the report was already published, the game needs an explicit correction/removal owner before promising revocation. If such an owner does not exist, do not add a revoke choice with no effect.
+
+The same rules apply when the doctrine changes. A conversation can retain the old case and ask whether the player wants to compare a new announcement, but the player must know it is a new source. If no valid new source exists, show the previous case summary and close. Do not automatically reopen every prior quest when the Warlord changes doctrine. Trigger new cases only from existing delivered event signals and bounded active-case rules.
+
+### Player testing scenarios for gates
+
+Walk through as a new player who has not met the Warlords; a player who has heard the radio but not visited a checkpoint; a player who inspected the receipt but refused to identify Ivo; a high-standing player whose preferred witness is absent; a low-standing player with public evidence; a save loaded after doctrine transition; and an old save that lacks delivery details. Ask each player to explain which facts are known, which are disputed, and what action remains possible. Confusion is a content defect even when predicates technically pass. This qualitative review complements, not replaces, static gate matrix checks and focused implementation tests.
+
+### Predicate composition and deterministic evaluation
+
+A dialogue node can combine predicates for doctrine, event, delivery, location, witness and quest state, but conditions should be evaluated from a stable read snapshot. The authoring contract should define conjunction, disjunction, negation and unknown behavior. Missing source is not the same as false evidence; unknown must not enable a branch that requires proof. If a node accepts either a witness or a record, that alternative must be explicit and the result should retain which source actually satisfied the requirement. Otherwise later dialogue may incorrectly claim both sources were seen.
+
+Evaluate pure predicates before choosing a response. Do not let response ordering, dictionary iteration or visit count influence which fact becomes active. If the graph supports deterministic seeded variation, use it for voice polish only after eligibility is resolved. A randomized line must not reveal an event the quest gate did not permit. Persist a result only where reloading could alter an irreversible selection. Cosmetic line selection can be regenerated if it stays semantically equivalent, but the deterministic content contract should still keep paired replays aligned when possible.
+
+Cross-plan state ownership is explicit: Plan17 defines quest lifecycle; Plan18 selects valid player destinations; Plan19 defines authoring and provenance boundaries; Plan20 structures the graph and prose; Plan21 resolves context and memory gates; Plan22 routes effects. No plan may bypass another owner. Plan20 cannot mark a quest completed by closing a dialogue. Plan21 cannot invent an eligible location. Plan22 cannot turn a gate pass into a faction standing mutation. Integration should preserve these boundaries in APIs and save ownership.
+
+### Hidden quest and clue discovery
+
+A hidden enforcement investigation could begin when a player notices the same notice copied in two locations or hears an existing repeatable phrase. That trigger must be an authored discovery record consumed by the current discovery system. It should not require the player to inspect every map node. The hidden quest title can remain undisclosed until the clue is actually learned. Once discovered, it should appear in the journal with enough information to continue. If the clue is unavailable on a particular run, the hidden quest is optional content and cannot block main progression.
+
+Discovery metadata should name its trigger type, exact record/location/encounter, repeat policy, first-heard behavior and fallback. Repeated exposure to the same source should not create duplicate quest instances. A second copy can reopen or deepen an existing case only if its stable identity differs and the quest owner supports that. An “ambient rumor” should use the existing RumorSystem if the story asks to propagate it; do not add a parallel rumor type or treat dialogue text as automatically propagated.
+
+### Gate QA and accessibility matrix
+
+In addition to the previous state cases, review player knowledge with case-sensitive source IDs, translation keys, a stale catalog alias, missing speaker display name, unknown location after a map reset, no active doctrine, repeated same-day radio reception, a clue received after quest abandonment, and quest reopen following an actual new action. Each should resolve to a neutral line, a clear blocked explanation, or a new valid case. No missing key should crash or display an internal ID.
+
+Focus must move predictably as response lists change. Screen readers should announce disabled reason text and distinguish speaker from player option. High-contrast mode should differentiate known and hidden leads without relying only on a faction color. An option whose precondition fails between opening and selecting must revalidate before effect; if stale, return to the hub and explain what changed without consuming the player’s turn or supplies.
+
+### Full dialogue state contract and failure recovery
+
+A node evaluation result should be explainable as a set of true/false/unknown predicates and one selected authored node. Unknown is an explicit status because old saves and inaccessible source records are expected. If the current graph contract supports only boolean predicates, the authoring adapter must define which safe default means unknown; it must not conflate “not yet learned” with “false claim.” Multiple eligible branches require a stable authored priority or an explicit choice hub. They must not depend on unordered dictionary iteration. A selected branch that changes the world is revalidated immediately before its command.
+
+The graph can represent linear scenes, hub-and-spoke conversations, short reconvergent branches, knowledge-gated questions, relationship/faction/location gates, repeated-visit text, failure reactions, player-action memory and quest updates. The first playable slice should use a hub with a small number of short branches. Relationship, faction, skill, location and emotional-state conditions are optional layers, not a checklist that every dialogue must implement. Add a gate only where it unlocks a genuinely different response or protects factual integrity.
+
+Recovery matrix:
+
+- Context snapshot stale before player selects: refresh graph, return to hub, preserve focus.
+- Context changes during command: reject stale command, show current owner reason, do not spend resources twice.
+- Source key exists but delivery missing: hide quotation and keep generic route.
+- Character absent: hide live line; use a stored note only if one exists.
+- Player declined publication: preserve private/unresolved state and permit exit.
+- Doctrine changed: retain historical case anchor; offer a separately sourced update.
+- Quest package retired: map active case to safe neutral closure or keep the legacy graph readable.
+- Old save lacks choice: initialize as undecided/unknown, never infer a side.
+- Faction access lost after acceptance: offer a valid alternate source or explain the block.
+- Map destination no longer valid: remove its action marker and offer the quest’s explicit fallback.
+
+A repeated visit must acknowledge both the quest state and the actual event chronology. Replaying a scene cannot award evidence twice. A failed check should identify what remains unknown and where to continue. It should not make the character speak as if they had been interrogated successfully. The player’s skill may change what they notice, not the source’s historical knowledge.
+
+### Quality measures and playtest questions
+
+Measure gate comprehensibility through direct questions: “What do you know now?” “What is still uncertain?” “Who authored this record?” “What can you do next?” “What happens if you leave?” A player need not remember internal doctrine names to answer. The UI should expose enough context to make choices informed, without turning every line into a legal disclaimer. Check the smallest screen scaling and longest localization string. Confirm keyboard and controller close/back routes and focus restoration. These reviews assess the conversation surface; they do not authorize a new relationship or faction-state owner.
+
+## Plan 21 Closeout and Integration Course — Context, Memory, and Gates
+
+### Complete scope receipt
+
+Plan 21 defines how dialogue reads current campaign facts without becoming an authority. It gates on current doctrine, resolved action, source delivery, player knowledge, quest state, location availability, character presence/consent and any supported standing/relationship context. It separates absent, authored-but-undelivered, delivered, and learned sources wherever current owners expose those states. It remembers only player choices and source IDs required to resume a case; it does not persist transcripts, hidden loyalty, inferred guilt, or a new trust score.
+
+Context is evaluated from a stable snapshot. Unknown is distinct from false. An old save defaults safely to undecided or unknown. A doctrine transition does not rewrite a historical case. A missing witness does not establish guilt. A skill check may reveal an existing clue but cannot turn a rumor into fact. Gates explain the next action without exposing secrets. Disabled choices preserve accessible exit and completion routes.
+
+### Integration course
+
+1. Enumerate predicates used by the selected Plan20 graph and identify the live read-only source for each.
+2. Record true/false/unknown and stale-state behavior; remove redundant or decorative gates.
+3. Ensure quest lifecycle and source memory use Plan17 and existing journal/knowledge/save owners.
+4. Bind location gates to Plan18’s valid candidate projection, not static labels or UI controls.
+5. Preserve historical source identity across doctrine changes, location-state changes and package updates.
+6. Define refresh points and stale-command behavior before connecting effects under Plan22.
+7. Test first visit, repeat visit, next-day visit, missing source, absent speaker, consent refusal, faction access change, old save, and reopened case.
+8. Review visible blocked reasons, focus restoration, controller/keyboard parity, high contrast and localization.
+
+### Acceptance and cut line
+
+Every dialogue predicate has an owner, source field/API, safe false/unknown default, save/migration behavior and player-facing fallback. No panel owns hidden gameplay memory. A choice that becomes stale between display and selection is revalidated before command; it cannot consume time or supplies twice. If current owners cannot distinguish delivery from catalog presence, omit the gated line or request a narrow owner contract. The first slice needs only the actual report choice and source it uses; relationship/reputation/skill/emotional layers remain optional.
+
+Closeout proof includes a truth table, old-save walkthrough, stale-context route, repeated-visit behavior, navigation lifecycle, and a short playtest in which players can explain what they know and what remains uncertain. The plan is integrated only when the context snapshot and save owner are recorded and the implementation tests pass under focused policy. Until then it remains a design contract. Rollback removes the contextual line variants but preserves the quest’s stable choices and source history.

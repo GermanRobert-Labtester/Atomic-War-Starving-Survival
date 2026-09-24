@@ -236,7 +236,12 @@ namespace AtomicWar.GodotApp
         OriginMechanicsSelfTest,
         DynamicQuestSelfTest,
         ShelterGovernanceSelfTest,
-        AgingSelfTest
+        AgingSelfTest,
+        DifficultySettingsSelfTest,
+        ShelterMaintenanceSelfTest,
+        SurvivorRoutinesSelfTest,
+        VisitorIntegrationSelfTest,
+        PersonalBelongingsSelfTest
     }
 
     /// <summary>
@@ -667,6 +672,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.DeathLegacySelfTest;
             if (Has(args, "--relationship-decay-selftest") || Has(args, "--social-drift-selftest"))
                 return HostCliAction.RelationshipDecaySelfTest;
+            if (Has(args, "--visitor-integration-selftest") || Has(args, "--visitors-selftest"))
+                return HostCliAction.VisitorIntegrationSelfTest;
+            if (Has(args, "--personal-belongings-selftest") || Has(args, "--keepsakes-selftest"))
+                return HostCliAction.PersonalBelongingsSelfTest;
             if (Has(args, "--research-unlock-selftest") || Has(args, "--research-unlocks-selftest"))
                 return HostCliAction.ResearchUnlockSelfTest;
             if (Has(args, "--unified-ending-selftest") || Has(args, "--epilogue-selftest"))
@@ -703,6 +712,12 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ShelterGovernanceSelfTest;
             if (Has(args, "--aging-selftest") || Has(args, "--elderly-survivor-selftest"))
                 return HostCliAction.AgingSelfTest;
+            if (Has(args, "--difficulty-settings-selftest") || Has(args, "--difficulty-sliders-selftest"))
+                return HostCliAction.DifficultySettingsSelfTest;
+            if (Has(args, "--shelter-maintenance-selftest") || Has(args, "--maintenance-selftest"))
+                return HostCliAction.ShelterMaintenanceSelfTest;
+            if (Has(args, "--survivor-routines-selftest") || Has(args, "--routines-selftest"))
+                return HostCliAction.SurvivorRoutinesSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -915,6 +930,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --time-capsule-selftest  Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding");
             GD.Print("  --death-legacy-selftest  Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding");
             GD.Print("  --relationship-decay-selftest Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding");
+            GD.Print("  --visitor-integration-selftest Plan 214: admitted visitor stays, temporary housing, processing requirements, recruitment handoff, and UI binding");
+            GD.Print("  --personal-belongings-selftest Plan 210: survivor keepsake claims, favorites, gifts, loss reporting, inheritance, and UI binding");
             GD.Print("  --research-unlock-selftest / --research-unlocks-selftest Plan 141 research unlock bridge: catalog load, downstream unlock queries, capability grants, recipe unlocks, and inventory awards");
             GD.Print("  --unified-ending-selftest / --epilogue-selftest Plan 145 unified ending resolver: epilogue evaluation, personalized chronicle, survivor fates, legacy trait awards, and save round-trip");
             GD.Print("  --npc-memory-selftest / --npc-memory-test Plan 147 per-NPC memory: trust, grudge, favors owed, forgiveness, dialogue tone, and trade pricing modifiers");

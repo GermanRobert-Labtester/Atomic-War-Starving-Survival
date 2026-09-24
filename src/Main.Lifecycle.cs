@@ -560,6 +560,9 @@ namespace AtomicWar.GodotApp
             ResetHumanMigration();
             ResetShelterGovernance();
             ResetAging();
+            ResetShelterMaintenance();
+            ResetSurvivorRoutines();
+            ResetDifficultySettings();
         }
 
         /// <summary>

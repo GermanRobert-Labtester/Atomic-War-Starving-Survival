@@ -86,32 +86,7 @@ namespace AtomicWar.GodotApp
             float sentimentalValue = 50f,
             string description = "")
         {
-            if (string.IsNullOrWhiteSpace(survivorId) || string.IsNullOrWhiteSpace(itemId))
-                return false;
-
-            SetupInventory();
-            SetupSurvivors();
-            SetupSurvivorSocial();
-            if (_survivors?.Needs.Get(survivorId)?.IsAliveState != true)
-                return false;
-            if (_inventory?.Inventory == null || _inventory.Inventory.CountById(itemId) <= 0)
-                return false;
-            if (_survivorSocial!.Belongings.HasClaimForItem(itemId))
-                return false;
-
-            var definition = _inventory.Catalog.Get(itemId);
-            string name = definition?.displayName ?? itemId;
-            var belonging = _survivorSocial.Belongings.RegisterBelonging(
-                survivorId,
-                itemId,
-                name,
-                category,
-                sentimentalValue,
-                condition: 100f,
-                acquiredDay: _simDay,
-                acquiredFrom: "holdfast_inventory",
-                description: description);
-            return belonging != null;
+            return EnsurePersonalBelongings().Claim(survivorId, itemId, category, sentimentalValue, description);
         }
 
         /// <summary>Transfers claim metadata; physical inventory remains shared.</summary>
@@ -121,16 +96,7 @@ namespace AtomicWar.GodotApp
             string belongingId,
             string reason = "Gift")
         {
-            SetupSurvivorSocial();
-            if (_survivors?.Needs.Get(fromSurvivorId)?.IsAliveState != true
-                || _survivors?.Needs.Get(toSurvivorId)?.IsAliveState != true)
-                return false;
-            return _survivorSocial!.Belongings.GiftBelonging(
-                fromSurvivorId,
-                toSurvivorId,
-                belongingId,
-                _simDay,
-                reason) != null;
+            return EnsurePersonalBelongings().Gift(fromSurvivorId, toSurvivorId, belongingId, reason);
         }
 
         public bool SetPersonalBelongingFavorite(
@@ -138,10 +104,7 @@ namespace AtomicWar.GodotApp
             string belongingId,
             bool isFavorite = true)
         {
-            SetupSurvivorSocial();
-            if (_survivors?.Needs.Get(survivorId)?.IsAliveState != true)
-                return false;
-            return _survivorSocial!.Belongings.SetFavorite(survivorId, belongingId, isFavorite);
+            return EnsurePersonalBelongings().SetFavorite(survivorId, belongingId, isFavorite);
         }
 
         public bool ReportPersonalBelongingLoss(
@@ -149,14 +112,7 @@ namespace AtomicWar.GodotApp
             string belongingId,
             bool stolen = false)
         {
-            SetupSurvivorSocial();
-            if (_survivors?.Needs.Get(survivorId)?.IsAliveState != true)
-                return false;
-            return _survivorSocial!.Belongings.ReportTheftOrLoss(
-                survivorId,
-                belongingId,
-                _simDay,
-                stolen);
+            return EnsurePersonalBelongings().ReportLoss(survivorId, belongingId, stolen);
         }
 
         /// <summary>

@@ -108,6 +108,11 @@ namespace AtomicWar.GodotApp
                 _difficultyScalars = DifficultyScalarsProvider.Legacy;
                 _difficultyPresetId = _difficultyScalars.PresetId;
             }
+
+            // Plan 181 — the signed settings authority owns the mutable runtime
+            // preset, custom sliders, and lock. It overrides the effective scalars
+            // only; the campaign identity preset above is unchanged.
+            ApplyDifficultySettingsToScalars();
         }
 
         /// <summary>
@@ -121,6 +126,7 @@ namespace AtomicWar.GodotApp
             var preset = director.ResolvePreset(presetId);
             _difficultyPresetId = preset.id;
             _difficultyScalars = DifficultyScalarsProvider.FromPreset(preset);
+            SyncDifficultySettingsPreset(preset.id);
         }
 
         private bool TrySelectDifficultyForNewCampaign(string? requestedId, out string error)

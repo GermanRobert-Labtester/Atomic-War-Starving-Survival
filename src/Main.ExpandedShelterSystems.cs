@@ -148,6 +148,7 @@ namespace AtomicWar.GodotApp
             SetupPropaganda();
             SetupRumorNetwork();
             SetupShelterSecurity();
+            SetupVisitorIntegration();
             SetupPersonalQuests();
             SetupTimeCapsules();
             SetupDeathLegacy();
@@ -324,6 +325,7 @@ namespace AtomicWar.GodotApp
             SavePropaganda();
             SaveRumorNetwork();
             SaveShelterSecurity();
+            SaveVisitorIntegration();
             SaveWeatherHardening();
             SaveGeothermalAquifer();
             SaveShelterSchedule();
@@ -495,6 +497,7 @@ namespace AtomicWar.GodotApp
             TickPropaganda(day);
             TickRumorNetwork(day);
             TickShelterSecurity(day);
+            TickVisitorIntegration(day);
             TickPersonalQuests(day);
             TickTimeCapsule(day);
             TickSurvivorDeathLegacy(day);
@@ -664,6 +667,12 @@ namespace AtomicWar.GodotApp
                 case "shelter_security":
                     ShowShelterSecurityPanel();
                     break;
+                case "visitor_integration":
+                    ShowVisitorIntegrationPanel();
+                    break;
+                case "personal_belongings":
+                    ShowPersonalBelongingsPanel();
+                    break;
                 case "personal_quests":
                     ShowPersonalQuestPanel();
                     break;
@@ -740,6 +749,8 @@ namespace AtomicWar.GodotApp
             RemovePanel(_medicalWardPanel); _medicalWardPanel = null!;
             RemovePanel(_shelterDecorPanel); _shelterDecorPanel = null!;
             RemovePanel(_shelterReputationPanel); _shelterReputationPanel = null!;
+            _visitorIntegrationPanel?.Unbind();
+            RemovePanel(_visitorIntegrationPanel); _visitorIntegrationPanel = null!;
             RemovePanel(_personalQuestPanel); _personalQuestPanel = null!;
             RemovePanel(_timeCapsulePanel); _timeCapsulePanel = null!;
             RemovePanel(_deathLegacyPanel); _deathLegacyPanel = null!;
@@ -848,6 +859,9 @@ namespace AtomicWar.GodotApp
             _rumorNetworkDirty = false;
             _shelterSecurity = null!;
             _shelterSecurityDirty = false;
+            _visitorIntegration = null!;
+            _visitorIntegrationDirty = false;
+            ResetPersonalBelongings();
             _personalQuests = null!;
             _personalQuestsDirty = false;
             _timeCapsule = null!;

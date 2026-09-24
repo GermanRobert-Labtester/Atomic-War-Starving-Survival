@@ -1,0 +1,44 @@
+# Prose Wave 158 — Twenty Canon-Bounded Expansion Plans
+
+Twenty fresh anchors across eight authored corpora, rotating interrogation records, ruined-location prose, trade ledgers, weather documents, exchange protocols, surface encounters, and clinical language under the Master World Bible’s subject catalog.
+
+**Charter:** prose planning only. No code, production JSON, schema, field consumer, trigger, route, runtime delivery, save behavior, state, or player-facing reachability is added or claimed. All content remains DRAFT / PROPOSAL. Packet forms are editorial lenses, not approved fields.
+
+**Bible authority used:** Part 8 house voice; Part 35 subject rotation; Part 43 seed bank treated as proposal-only; Part 46 question-bank domains used as prompts, never as proof of a missing feature or content gap. Plans extend existing source families and require a fresh source/consumer audit before any future promotion.
+
+**Scale:** each plan contains six movements × eight focuses × four forms = 192 editorial packets. Character counts are Unicode code points in each saved Markdown file, excluding this index. Each plan is checked against the requested 1,200,000–2,000,000 character range.
+
+| Plan | Verified fresh source anchor | Subject / register | Packets | Characters |
+|---|---|---|---:|---:|
+| [The Scout Has No Reason to Trust the Questions](cw158_01_the_scout_has_no_reason_to_trust_the_questions_plan.md) | `captive_raider_scout` · `Assets/StreamingAssets/Data/captive_interrogations.json` | pressured captive profile with restraint around claims and coercion; Part 35 #35 confession and interrogation; #12 voice-signed character; #9 contested information | 192 | 1,296,489 |
+| [A Valve Is Not a Doctrine](cw158_02_a_valve_is_not_a_doctrine_plan.md) | `captive_zealot_infiltrator` · `Assets/StreamingAssets/Data/captive_interrogations.json` | captured infiltrator description and belief under practical pressure; Part 35 #35 pressured testimony; #20 religious material; #22 faction voice | 192 | 1,296,157 |
+| [Two Projectors, One Stopped Reel](cw158_03_two_projectors_one_stopped_reel_plan.md) | `deep_lore_grand_cinema` · `Assets/StreamingAssets/Data/narrative/deep_lore_texts.json` | ruined-knowledge location prose through interrupted public culture; Part 35 #34 deep lore; #33 found objects; #38 public memory | 192 | 1,367,029 |
+| [The Production Board Still Has Magnets](cw158_04_the_production_board_still_has_magnets_plan.md) | `deep_lore_upland_logging_camp` · `Assets/StreamingAssets/Data/narrative/deep_lore_texts.json` | deep-lore location and labor record in a deserted worksite; Part 35 #34 ruined knowledge; #15 institutional record; #16 engineering log | 192 | 1,365,629 |
+| [The East Concourse Is Still Arranged for Waiting](cw158_05_the_east_concourse_is_still_arranged_for_waiting_plan.md) | `deep_lore_stadium_evacuation_center` · `Assets/StreamingAssets/Data/narrative/deep_lore_texts.json` | evacuation site described through temporary infrastructure; Part 35 #34 archive; #15 public record; #38 chronicle | 192 | 1,373,339 |
+| [The Counter Outlasted the Shift](cw158_06_the_counter_outlasted_the_shift_plan.md) | `deep_lore_automated_abattoir` · `Assets/StreamingAssets/Data/narrative/deep_lore_texts.json` | industrial deep lore and abandoned process observation; Part 35 #34 ruined-knowledge text; #16 engineering log; #17 craft process | 192 | 1,369,473 |
+| [The Checkpoint Transaction Has Two Measures](cw158_07_the_checkpoint_transaction_has_two_measures_plan.md) | `bunker_doc_transaction_02` · `Assets/StreamingAssets/Data/narrative/trade_ledgers_expansion.json` | transaction ledger as deadpan record of exchange and valuation; Part 35 #15 ledger; #24 trade vernacular; #38 chronicle | 192 | 1,369,324 |
+| [The Shallows Market Records Its Own Terms](cw158_08_the_shallows_market_records_its_own_terms_plan.md) | `bunker_doc_transaction_03` · `Assets/StreamingAssets/Data/narrative/trade_ledgers_expansion.json` | market transaction document with location-bound exchange details; Part 35 #15 ledger; #24 market record; #2 cartographic reference | 192 | 1,370,567 |
+| [The Debt Register Leaves the Quarter Visible](cw158_09_the_debt_register_leaves_the_quarter_visible_plan.md) | `bunker_doc_debt_register` · `Assets/StreamingAssets/Data/narrative/trade_ledgers_expansion.json` | bureaucratic debt document and the people named by its columns; Part 35 #15 ledger; #24 transactional record; #11 moral-choice framing | 192 | 1,372,588 |
+| [Outbound Salt Has Eight Bags](cw158_10_outbound_salt_has_eight_bags_plan.md) | `bunker_doc_caravan_01` · `Assets/StreamingAssets/Data/narrative/trade_ledgers_expansion.json` | caravan manifest and logistical prose; Part 35 #15 manifest; #24 caravan commerce; #2 cartographic movement | 192 | 1,361,976 |
+| [Three Grams Is One Sheet’s Answer](cw158_11_three_grams_is_one_sheet_s_answer_plan.md) | `bunker_doc_ashfall_day100` · `Assets/StreamingAssets/Data/narrative/weather_almanac_expansion.json` | ashfall measurement note and local observation method; Part 35 #26 almanac; #17 assay discipline; #15 institutional record | 192 | 1,368,035 |
+| [The Katabatic Is the Door Word](cw158_12_the_katabatic_is_the_door_word_plan.md) | `bunker_doc_wind_day22` · `Assets/StreamingAssets/Data/narrative/weather_almanac_expansion.json` | weather log using an institutional vocabulary for a local condition; Part 35 #26 almanac; #2 cartographic field note; #38 chronicle | 192 | 1,369,259 |
+| [A Favor Is Counted Beside the Tool](cw158_13_a_favor_is_counted_beside_the_tool_plan.md) | `standard_community_barter` · `Assets/StreamingAssets/Data/barter_rules.json` | community exchange description grounded in informal barter; Part 35 #24 trade; #15 protocol; #32 spoken social memory | 192 | 1,292,401 |
+| [The Restricted Exchange Still Has a Human Hand](cw158_14_the_restricted_exchange_still_has_a_human_hand_plan.md) | `strict_rationing_barter` · `Assets/StreamingAssets/Data/barter_rules.json` | barter policy description under scarcity pressure; Part 35 #24 trade; #11 moral framing; #15 institutional protocol | 192 | 1,286,390 |
+| [The Chain Runs Across the Ash](cw158_15_the_chain_runs_across_the_ash_plan.md) | `enc_the_surveyor_still_working` · `Assets/StreamingAssets/Data/narrative_encounters.json` | surface encounter built around a continuing survey task; Part 35 #10 encounter hook; #2 cartographic prose; #25 surveyor’s voice | 192 | 1,344,579 |
+| [Fourteen Trees and Fourteen Supports](cw158_16_fourteen_trees_and_fourteen_supports_plan.md) | `enc_the_orchard_with_stakes` · `Assets/StreamingAssets/Data/narrative_encounters.json` | ecological encounter with visible cultivation and uncertain explanation; Part 35 #10 encounter; #25 bestiary/gazetteer voice; #36 crisis vignette | 192 | 1,348,692 |
+| [Ninety-One Point Three Comes from the Mast](cw158_17_ninety_one_point_three_comes_from_the_mast_plan.md) | `enc_the_tower_classroom` · `Assets/StreamingAssets/Data/narrative_encounters.json` | radio-location encounter with a schoolroom below the signal; Part 35 #10 encounter; #7 radio; #21 children’s memory | 192 | 1,342,960 |
+| [The Rim Furnace Makes a Narrow Thread](cw158_18_the_rim_furnace_makes_a_narrow_thread_plan.md) | `enc_glass_blower_of_the_rim` · `Assets/StreamingAssets/Data/narrative_encounters.json` | craft encounter with a person working fused material; Part 35 #10 encounter; #17 craft assay; #12 voice-signed NPC | 192 | 1,335,414 |
+| [The Description Is Not the Person](cw158_19_the_description_is_not_the_person_plan.md) | `trauma_combat_shock` · `Assets/StreamingAssets/Data/psychological_trauma.json` | clinical glossary prose for a trauma category; Part 35 #13 psychological history; #18 clinical restraint; #15 institutional language | 192 | 1,280,412 |
+| [A Category Cannot Measure the Debt Someone Feels](cw158_20_a_category_cannot_measure_the_debt_someone_feels_plan.md) | `trauma_survivor_guilt` · `Assets/StreamingAssets/Data/psychological_trauma.json` | clinical descriptor and survivor-facing language under uncertainty; Part 35 #13 psychological history; #18 clinical restraint; #14 intimate writing | 192 | 1,286,311 |
+
+## Review boundaries
+
+Every plan embeds the exact current object from its declared catalog. Each proposes editorial questions, not canon additions. Dates, measurements, names, allegations, uncertainty, and outcomes remain as written in the source. No Part 43 proposal seed is promoted. The register must remain restrained, concrete, exhausted, human, and document-shaped under Part 8.
+
+## Batch audit
+
+- 20 selectors are distinct and were checked against all previous prose-wave indexes.
+- Every plan contains 192 editorial tasks, source excerpts, and review questions.
+- Each source object is copied verbatim from the declared JSON catalog.
+- Each saved plan is between 1,200,000 and 2,000,000 Unicode characters.
+- No production code or gameplay JSON was changed for this wave.

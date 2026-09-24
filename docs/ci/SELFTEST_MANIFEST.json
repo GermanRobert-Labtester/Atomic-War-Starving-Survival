@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 171,
-  "headless_test_count": 169,
+  "total_tests": 176,
+  "headless_test_count": 174,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1053,6 +1053,45 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "difficulty_settings_selftest",
+      "action": "DifficultySettingsSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--difficulty-settings-selftest",
+      "aliases": [
+        "--difficulty-sliders-selftest"
+      ],
+      "description": "Plan 181 difficulty settings system: preset selection, custom slider lanes, clamp bounds, ironman lock enforcement, and save/restore",
+      "headless_compatible": true,
+      "expected_summary_id": "difficulty_settings_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_maintenance_selftest",
+      "action": "ShelterMaintenanceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--shelter-maintenance-selftest",
+      "aliases": [
+        "--maintenance-selftest"
+      ],
+      "description": "Plan 186 shelter maintenance & degradation system: component catalog validation, daily wear/degradation ticks, condition tracking, preventive maintenance tasks, repair ledger, and save/restore",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_maintenance_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "survivor_routines_selftest",
+      "action": "SurvivorRoutinesSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--survivor-routines-selftest",
+      "aliases": [
+        "--routines-selftest"
+      ],
+      "description": "Plan 188 individual survivor daily routines system: template catalog validation, hourly schedule assignments, chronotypes, activity satisfaction, conflict resolution, and save/restore",
+      "headless_compatible": true,
+      "expected_summary_id": "survivor_routines_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "orphan_seal_wave1_selftest",
       "action": "OrphanSealWave1SelfTest",
       "category": "Expansions & Campaign Modules",
@@ -1646,6 +1685,32 @@
       "description": "Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding",
       "headless_compatible": true,
       "expected_summary_id": "relationship_decay_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "visitor_integration_selftest",
+      "action": "VisitorIntegrationSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--visitor-integration-selftest",
+      "aliases": [
+        "--visitors-selftest"
+      ],
+      "description": "Plan 214: Admitted visitor stays, temporary housing, processing requirements, recruitment handoff, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "visitor_integration_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "personal_belongings_selftest",
+      "action": "PersonalBelongingsSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--personal-belongings-selftest",
+      "aliases": [
+        "--keepsakes-selftest"
+      ],
+      "description": "Plan 210: Survivor keepsake claims, sentimental bonding, favorites, gifts, loss reporting, inheritance, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "personal_belongings_selftest",
       "timeout_seconds": 30
     },
     {

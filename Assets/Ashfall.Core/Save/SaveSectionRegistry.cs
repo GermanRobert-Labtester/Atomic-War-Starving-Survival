@@ -139,6 +139,7 @@ namespace Ashfall.Core.Save
             new("propaganda_campaigns", "SavePropaganda", "SetupPropaganda", "shelter", "Plan 168 — propaganda messages, multi-day campaigns, detection, and morale warfare", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("wasteland_rumors", "SaveRumorNetwork", "SetupRumorNetwork", "world", "Plan 203 / 131 — wasteland rumors, information hubs, propagation, and intercepts", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_security", "SaveShelterSecurity", "SetupShelterSecurity", "shelter", "Plan 138 — shelter security zones, clearances, locks, lockdowns, and breaches", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("visitor_integration", "SaveVisitorIntegration", "SetupVisitorIntegration", "visitors", "Plan 214 — admitted visitor stays, temporary housing, processing requirements, and departures", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("time_capsules", "SaveTimeCapsules", "SetupTimeCapsules", "communication", "Plan 212 — time capsules, legacy messages, delayed discovery, and cross-generational communication", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("death_legacy", "SaveDeathLegacy", "SetupDeathLegacy", "survivors", "Plan 206 — survivor death records, last wills, estate inheritance, and disputes", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("relationship_decay", "SaveRelationshipDecay", "SetupRelationshipDecay", "social", "Plan 182 — survivor pair bond decay, interaction tracking, and social drift", LifecycleGroup: ExpandedShelterLifecycleGroup),
@@ -294,6 +295,9 @@ namespace Ashfall.Core.Save
             new("human_migration", "SaveHumanMigration", "SetupHumanMigration", "world", "Plan 199 — Seasonal human migration engine, regional population weights, and dwell hysteresis", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_governance", "SaveShelterGovernance", "SetupShelterGovernance", "governance", "Plan 159 — Shelter governance & political system: ideological blocs, policy consent, civil disputes, and shelter stability", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("aging", "SaveAging", "SetupAging", "survivors", "Plan 176 — Aging & elderly survivor system: chronological age progression, life stages, retirement, elder mentorship, and milestones", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_maintenance", "SaveShelterMaintenance", "SetupShelterMaintenance", "shelter", "Plan 186 — Shelter maintenance & degradation: component condition, environmental stress, maintenance actions, and alert states", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("survivor_routines", "SaveSurvivorRoutines", "SetupSurvivorRoutines", "survivors", "Plan 188 — Individual survivor daily routines: activity time blocks, chronotypes, satisfaction evaluation, and interpersonal conflicts", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("difficulty_settings", "SaveDifficultySettings", "SetupDifficultySettings", "campaign", "Plan 181 — runtime difficulty settings: active preset, custom slider values, and the ironman lock. The campaign identity preset stays in the checksummed header.", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -421,6 +425,7 @@ namespace Ashfall.Core.Save
                 { "propaganda_campaigns", "propaganda_save.json" },
                 { "wasteland_rumors", "rumor_network_save.json" },
                 { "shelter_security", "shelter_security_save.json" },
+                { "visitor_integration", "visitor_integration_save.json" },
                 { "time_capsules", "time_capsules_save.json" },
                 { "death_legacy", "death_legacy_save.json" },
                 { "relationship_decay", "relationship_decay_save.json" },
@@ -556,6 +561,9 @@ namespace Ashfall.Core.Save
                 { "human_migration", "human_migration_save.json" },
                 { "shelter_governance", "shelter_governance_save.json" },
                 { "aging", "aging_save.json" },
+                { "shelter_maintenance", "shelter_maintenance_save.json" },
+                { "survivor_routines", "survivor_routines_save.json" },
+                { "difficulty_settings", "difficulty_settings_save.json" },
             };
 
 

@@ -3813,3 +3813,420 @@ For larger prose batches, choose distinct source registers—technician note, ta
 Before a line enters a data catalog, tag speaker, source, tense, certainty, location, gate, consequence, and localization context. A line that says “the machine is failing” requires a live authoritative result; “Vale thinks the sound is changing” requires an attributed report; “the old log records a warm housing” requires a dated authored source. Reject lines that blur these categories. Keep response intent labels shorter than body copy and make costs visible before confirmation.
 
 Read order must introduce speaker and source before a long record excerpt. Avoid color-only diagnostic descriptions; pair status color with text and a meaningful icon/label. Controller focus should land on the first valid response and remain usable after a stale-context refresh. Accessibility review is part of dialogue production, not a polish-only expansion phase.
+
+## Pass 33A — Water Ledger Story, Character Voices, and Location Copy (DRAFT)
+
+### Story packet — “The Line Under the Number”
+
+The shelter board has thirty tick marks, one for each day on the planning sheet. Beside them sit two containers: a ration inventory tally in units and a source estimate written in liters/day. The disagreement is not that one character is lying. They are answering different questions. A quartermaster counts what the ration owner removes; a hydrogeologist counts what a source could provide before treatment and loss; a medic watches thirst in each survivor; a greenhouse worker knows how much one action can draw. The player's role is to ask what each number means before committing the reserve.
+
+Quartermaster Leena Marku is exact about inventory and avoids translating the count into “days of water” without knowing future ration policy. She says: “Three is the daily request on this board. It is not a promise that three are left.”
+Hydrogeologist Emil Sato speaks in ranges and qualifiers: “The well can move that volume when the source and pump agree. Potable output is a second question.”
+Medic Arvo Neri observes people rather than tanks: “Thirst rises in each person. The preset changes how quickly. I cannot read that as liters.”
+Greenhouse keeper Sima Radu focuses on competing use: “The plants do not drink by policy. They ask when the cycle runs.”
+These are proposed characters pending valid character IDs and owner access; do not bind names to existing survivors by similarity alone.
+
+### Dialogue hub and branch copy
+
+Hub: “Which number should we put first?”
+- “Count the ration requests.” Show the three constant-policy scenarios and label them inventory units across thirty days.
+- “Show me thirst pressure.” Show difficulty multipliers and, only if a read-only projection exists, survivor need trajectories.
+- “Count the source.” Show nominal source flow with a visible “authored capacity, not treated output” label.
+- “List the other draws.” Show only actions and jobs confirmed in the current scenario; mark unknown consumers.
+Each branch returns to the hub and stores no state until the player selects a supported action.
+
+Original copy:
+- Board description: “The chalk line reaches day thirty, then stops. Under it, the quartermaster has written UNITS. Someone else added LITERS in smaller letters, without crossing the first word out.”
+- Inventory row help: “Stock is counted in the item units used by the ration owner.”
+- Needs row help: “This meter describes a survivor's thirst state. It is not a volume.”
+- Source card: “Nominal flow from the source record. Current contamination, equipment, and treatment may reduce what reaches storage.”
+- Unknown draw: “No scheduled amount is included for this activity.”
+- Closing line: “They left the words units and liters on the board. This time nobody erased either.”
+
+No line says water “runs out on day X” until a full scenario computation supports that forecast. Avoid language that turns a model estimate into a prophecy. A player who chooses irradiated supplement should see the separate irradiation risk/medical consequence contract, not a clean-water savings line alone.
+
+### Side stories and reusable high-volume fields
+
+1. “The Cup With Two Measures”: a small character quest about a marked cup used for rationing versus testing. It adds a source-attributed discovery and a reconciliation choice.
+2. “Rain on the Roof Sheet”: discovery of a rain-catchment source record and discussion of contamination. It does not declare the collector operational.
+3. “Three Nights on Half”: a survival quest reads an existing ration-policy history if available; absent history, it remains a scenario, not a memory claim.
+4. “The Seed Tray's Share”: a greenhouse worker requests water through a current action. If the command is unavailable, the scene is only a planning conversation.
+5. “A Test Before the Thaw”: investigation of a water-test result with source, day, tester, measured contamination, and confidence, if an existing test owner supplies those values.
+6. “The Dry Margin”: optional journal prose on the social choices around reserves, not a new morale score.
+
+Reusable scene fields: speaker role and valid identity; scene context; source IDs; observation date; unit label; certainty; known/unknown status; player response intent; consequence owner; result wording; fallback text; localization/accessibility note. Vary the underlying question, not just the name of the container. Short fragments should focus on the tangible work of measuring, carrying, cleaning, waiting, and choosing who receives a reserve. Keep engineering details readable and avoid real-world procedural instructions that could be unsafe.
+
+
+### Pass 33B — Branching conversation: ration board and water test
+
+**Scene: the planning table.** The quartermaster has one column labeled STOCK and another labeled REQUEST. The medic places a survivor roster beside it. The water technician brings a source card with flow and contamination fields. The player can inspect each item in any order; no branch is mandatory before the comparison.
+
+Quartermaster: “I can tell you what the ration owner asks us to set aside. I can't promise the shelf has it.”
+Medic: “The thirst reading belongs to a person. It rises on its own clock.”
+Technician: “This card gives the source's declared flow. The sample tells us something else.”
+Player options reconverge:
+- “Keep units, need, and liters separate.”
+- “Show the current roster and policy.”
+- “What has actually been tested?”
+- “End the review without a forecast.”
+
+If the player asks for a total and an owner field is unknown, the NPC should refuse the false precision: “Not until we know what the greenhouse cycle actually drew.” If all modeled inputs are known and the read-only projection returns a valid forecast, replace that line with a source-attributed summary of the returned range. Do not author a static day-of-exhaustion message.
+
+A test branch names source ID, sample day, tester, contamination result, and accuracy only if each value exists in WaterSourceSystem's persisted test result. A stale result is still a historical test; it is not “the water today.” Dialogue can say “Last tested on day X” rather than declaring safe or unsafe now. Test interpretations should be written for uncertainty and not turn a raw contamination number into a medical diagnosis without the actual quality protocol.
+
+Optional character story: Leena inherited a ration board from a previous quartermaster whose unit labels were rubbed away by wet sleeves. She can choose to rewrite the labels or keep the old marks as history. The choice can alter only a supported document or a local scene; it should not change stock or ration policy. A second arc follows a water tester who signed a report while the pump was offline. The player can preserve the report, request a repeat test, or note the limitation. The story is about conditions of measurement, not misconduct.
+
+Location prose: “The source shed smells of wet stone and hot wire. The flow gauge taps once when the pump catches. A paper test strip is pinned under glass, its date facing outward.” Use only if the actual location, pump, gauge, and record exist. In a general map description, omit dynamic flow language. Player-facing copy should differentiate “potential source,” “active,” “sampled,” “test current,” and “quality unknown.”
+
+Endings:
+- Reconciled ledger: both unit sets remain and the assumption is stated.
+- Partial ledger: known policy debit is documented, other demand unknown.
+- Disputed source: sample result is attributed and another test is suggested.
+- Declined: the player closes the review without changing campaign state.
+The journal summary always records its snapshot day and whether it is a scenario or actual history.
+
+
+### Pass 33C — Story fragments, shelter lore, and branching closeout
+
+**The chalk board's history:** “Day 4: clean stock counted. Day 11: policy changed. Day 18: names added in the margin. Day 30: no total entered.” This is a sample authored object, not a claim about campaign events. If used as a static prop, label its chronology as authored fiction. If used as a live scenario, fill dates only from canonical campaign records.
+
+**Shelter lore:** older residents teach that a cup with a blue thread belongs to the tester, not the person drinking. A child has tied the thread to a cracked handle; an apprentice thinks the mark means “safe.” The story asks whether to teach the difference between a sampling vessel and a ration cup. Keep folklore human and practical; do not let a superstition override a water-quality result or confer a mechanical blessing.
+
+**Quest-only dialogue branches:**
+- If player knows only the source card: technician explains nominal flow versus tested quality.
+- If player has a current test: medic asks for the source/day and reads only supported findings.
+- If player has an old test: quartermaster marks it as historical and asks whether to retest.
+- If player has no source discovery: characters speak about the shelter inventory and do not name an undiscovered site.
+- If budget projection is incomplete: close with the known policy debit and list the unknown draw in plain words.
+These branches reconverge on the choice to act, defer, or preserve an uncertain report.
+
+**Location description — rain catchment walk:** “The gutters lean toward a tank that has not yet been opened. A strip of old paint marks the route of water down the wall. The inspection card hangs under the eave, face turned away from the rain.” Use only if this location and object exist in the shipped world. It does not claim the catchment is active.
+
+**Faction story seed — Shared Measure:** a neighboring group proposes exchanging a test kit for an agreed sample record. The player can share method, share only the result, refuse, or ask for a reciprocal test. This is a trade/diplomacy quest seed, not a guaranteed treaty or faction-standing change. It belongs in an expansion unless the current core campaign already has a supported inter-settlement sample exchange.
+
+Writing production should vary not only voices but stakes: domestic allocation, clinical observation, technical yield, ecological use, and diplomatic trust. A reusable branch is safe when its conditions correspond to actual known states. Text for “clean” and “unsafe” quality requires the exact WaterQualityProfile or source-test interpretation contract; otherwise write “result recorded” and let a panel show the source-backed measurement.
+
+
+### Pass 33D — Radio, journal, and environmental prose variants
+
+Radio fragment, attributed to the shelter clerk: “The board says ninety requests under the same policy. It says nothing about the pump.” This may be used only for the constant Standard-policy arithmetic and should be tagged as an authored explanation, not an in-world broadcast unless the radio owner supports scheduling and delivery.
+
+Journal closeout for an incomplete model: “The thirty-day sheet compares the ration request with the roster's thirst settings. It does not reconcile source flow with treated storage. No reserve was changed.” This is a concise factual summary and should be generated only from confirmed scenario inputs.
+
+Environmental notice: “Keep samples off the ration shelf. Put the source ID and day on the jar before it leaves the room.” Use as fictional workflow only if sample handling is actually represented; otherwise write as a static text clue, not a command prompt.
+
+Two alternate character closes:
+- Quartermaster: “We can work with a number that admits what it leaves out.”
+- Medic: “A thirst reading tells me who needs help. It doesn't tell me what the pump made.”
+These lines teach the distinction without making any character omniscient. Each prose variant should have a source-state tag, exact display location, and neutral fallback if the relevant report is missing. Keep radio, codex, quest dialogue, and UI tutorial copy in their actual owning corpora; do not clone lines across catalogs merely to increase the content count.
+
+
+### Pass 33E — Quiet character callbacks
+
+After a later review, Leena may say, “We kept the old sheet behind the new one.” The line should appear only when the earlier receipt exists. Sato can ask whether anyone retested the source; Neri can ask which survivor's thirst changed; Sima can point to a crop cycle only if its owner reports one. These callbacks keep each voice attached to its evidence and avoid a generic narrator summarizing unknown system state.
+
+## Pass 34A — Sample Dialogue: The Return Column
+
+### Scene contract
+
+This is an authored hub-and-spoke scene for the shelter notice desk after a party returns without completing its objective. It is available only when current campaign evidence confirms a failed objective and the returning survivors are available to speak. It must not show in the generic expedition-failure callback when no one returned. The scene routes back to the quest record in Plan 17 and uses the location/fallback decision in Plan 18. The scene itself does not mutate expedition state or write reputation directly.
+
+### First conversation
+
+Clerk Vesta: “The sheet says returned. That is what it measures.”
+
+Rell, field recorder: “It measures boots on this side of the gate. The relay stayed dark.”
+
+Vesta: “Then give me the sentence you can prove.”
+
+Player responses:
+
+1. “Write that the party returned and the objective failed. Leave the reason open.” This is a local scene effect and advances the quest only if the existing quest authority accepts a neutral report. It records no inferred sabotage.
+2. “Rell carried the empty key case. Let them testify.” This is knowledge-gated: it is available only when that item/result evidence is in the current run. It opens a short reconverging branch in which Rell explains the observed chain of events and the player chooses whether to name the missing relay key.
+3. “The team ran.” This is a public-account choice, not a truth claim. It may change the notice wording. Any standing or relationship change requires a current consequence route and authored consequence ID; without one, the branch is cosmetic and must be labeled that way in implementation notes.
+4. “Hold the notice until another witness is found.” This begins the follow-up quest route. If there is no valid destination, the dialogue offers a shelter interview or an explicit delay instead of inventing map content.
+
+### Reconverging testimony branch
+
+Rell: “I can tell you what my hands carried. The box was empty when we crossed back.”
+
+Player: “Did you see the relay fail?”
+
+Rell: “I saw the lamp go out. I did not see who touched the switch.”
+
+This branch models the difference between observation and accusation. A skill check, if the current dialogue framework exposes one, can unlock a follow-up question about signal timing; it cannot grant truth that the witness did not observe. A failed skill check still returns to the choice hub with a plain explanation and an accessible route to inspect the map note. Do not hard-fail the quest because the player did not invest in a skill.
+
+### Craft and voice notes
+
+Vesta’s speech is clipped, administrative, and protective of records because inaccurate notices have previously put people at risk. Rell is concrete, reluctant to overstate, and uncomfortable when the player asks them to name a culprit. Neither character gives a lore lecture. Repeated visits should acknowledge whether the notice was corrected, postponed, or published; do not replay the opening scene verbatim after state changes. If a survivor is unavailable due to a real roster state, use a written statement only when the game has an authored record for that person. Never synthesize a letter from an absent character.
+
+### Production breakdown
+
+The first playable slice requires one hub scene, four responses, one optional two-node testimony branch, two reconverging nodes, and three state-dependent closing lines. The build review must count every node reachable in each quest state, check response focus order and keyboard/controller navigation, and verify that visible wording names the consequence scope. Voice, localization, and UI copy must fit the compact conversation panel without clipping. These sample lines are original draft prose, not shipped canon. They should be reviewed alongside the recurring-speaker voice block and the project’s restraint/tone rules.
+
+### Extended branch samples and character distinctions
+
+When Vesta is asked why she prepared the notice before hearing the party, she answers: “Because people ask before the ink dries. I wanted a sentence ready that could not blame the dead.” This line can appear only if the scene has already established that no party member was reported dead. It reveals her concern without asserting that anyone died. If asked whether the relay failed, she says: “I file what arrives. I do not repair a silence by naming its cause.” That is a voice signature: procedural care, not cold indifference.
+
+Rell’s optional line after the player chooses a neutral report: “Write the lamp. Leave the hand that touched it blank.” This line should appear once, after the player has heard Rell’s testimony and chosen not to accuse. On a revisit, do not repeat it; use a short acknowledgment such as “The corrected copy is on the board.” Repetition state must come from a persisted choice or a quest state, not a conversation-local boolean that resets on reload.
+
+A third voice, Mara, a shelter runner who learned of the failed objective from another household, provides the public-account perspective. She says: “The market says the team came home with the key.” If the player has not discovered this rumor, this line is not eligible. If they have, Mara must be identified as repeating hearsay rather than witnessing the expedition. Responses can ask who told her, correct the specific claim, or decline to discuss the crew. The “who told her” response yields a clue only if the rumor source system or authored encounter supplies a source identity. Otherwise it remains a conversation choice with no hidden source invented.
+
+For a faction branch, the authorized speaker might frame the failure as a breach of route discipline. Their exact identity and faction membership require source verification. Keep this branch short: one greeting, one contested phrasing, two player responses, and a reconvergent exit. The player can accept a factual route deviation if the expedition result verifies it, or reject the speaker’s added motive. Neither response rewrites the outcome record. A faction-specific line may affect future access only through a supported standing gate; it may not serve as an undocumented soft lock.
+
+### Reusable dialogue components
+
+Reuse a small, typed set of nodes: EntryNode presents context; EvidenceNode names the source and confidence; ChoiceHub offers a closed set; ClarificationNode explains a gated concept; ConsequencePreviewNode describes the likely scope in player-facing language; TerminalNode returns to the owning quest. These are authoring patterns, not new runtime classes unless the current dialogue framework demonstrably lacks equivalent node types. Linear scenes work for debriefs; hub-and-spoke for the report choice; short reconverging branches for testimony; relationship and reputation gates only when read-only contracts exist; repeated-visit lines derive from recorded actions; failure reactions mention the specific failed route; skill gates add information without blocking completion.
+
+Each response should carry an author-only intent note, its mechanical effect reference or “cosmetic only” marker, and its return node. Avoid choice labels that imply a stronger effect than the owner can deliver. “Correct the record” can update a report; “clear the crew’s name” implies a broader social outcome that needs evidence and multiple systems. Provide concise labels for the UI and full response text for narration separately when the current schema supports it.
+
+### Side-story scene cards and location texture
+
+At loc_municipal_archive, if the destination is verified to support an existing archive interaction, the player may find two versions of a report notice with different dates. The text should not name the author until a document field proves it. Sample environmental copy: “The carbon sheet kept the pressure of the first signature. The second had been written after the lamps went out.” This is atmosphere and a clue to inspect the timestamp, not proof of deliberate falsification. If the archive site has no suitable current interaction, retain the line as a future authoring card and do not attach a new destination object by assumption.
+
+At loc_radio_relay_mast, a possible short scene asks what the player listens for: carrier tone, recorded call sign, or mechanical relay click. Each response should route to an observation appropriate to current audio/evidence systems. The scene can instead be a text encounter if the actual audio apparatus is not wired. Sample line: “The mast turns in the wind. No voice comes back. The instrument still marks the interval.” The wording avoids claiming whether the silence is technical, human, or environmental.
+
+At the shelter, Vesta has a second side scene after publication. “I moved the first sheet behind the corrected one. I did not burn it.” The line communicates that correction does not erase history. If the player had chosen accusation, Vesta’s wording can be firmer: “The board remembers what we printed, and who asked us to print it.” Neither line guarantees faction or relationship change. They expose consequence and invite a later quest.
+
+Each location card needs a purpose, availability condition, intended evidence, map visibility, authored description, encounter cost, fallback, and reason for reusability. A location is not made quest-only merely by attaching a quest marker. If a site is intended to appear only for this quest, it requires a real content record and selection contract. Prefer known locations and optional discovery where possible. Avoid loading the campaign with map markers that disappear without explanation.
+
+### Release rubric
+
+A dialogue sample is ready for implementation only when all player options have labels, all labels reflect their actual effects, and every gate has a plain-language explanation or a safe hidden fallback. Review scenes in context of the panel’s available space and focus model; line count is not a substitute for readable turn-taking. Use full sentences for localized variants, preserve silence as a valid response, and keep the characters distinct through what they refuse to claim as much as through vocabulary. The narrative director should sign off on Vesta’s procedural care, Rell’s eyewitness restraint, and Mara’s explicitly second-hand rumor before the story is treated as canon. The first slice can ship with fewer lines if every state is legible and no line asserts unseen facts.
+
+## Pass 35A — Sample Scene: The Order on the Gate Has No Witness
+
+### Entry scene at the Toll House
+
+This scene is conditional on an existing player-accessible route to loc_toll_house and on a verified notice or witness that refers to the currently active doctrine. The location name is an authored candidate in the Warlord territory catalog; dispatchability and encounter reachability still need source review. If the player has only heard a general broadcast, this is not the correct entry scene. Use the ordinary quest hub until a real lead exists.
+
+Nera, a road clerk: “They posted a new number before dawn. The driver says it was different when he crossed.”
+
+Ivo, a wagon mender: “I saw the chalk. I did not see the hand that wrote it.”
+
+Nera: “The order has a seal. The second copy has a signature. That is not the same thing.”
+
+Player options:
+
+1. “Show me both copies and tell me where each came from.” Opens the evidence node. It is available only if both sources are actually present in the scene or in a delivered record.
+2. “Who collected the charge?” Asks for an observed action. If neither witness saw collection, the response says so plainly and does not guess.
+3. “The doctrine changed. That settles it.” This is a player assertion, not a fact. The scene asks whether the player means “the rule was announced” or “the rule was enforced.” If the system cannot store that distinction, keep it as a local dialogue branch.
+4. “I will not put either name on the public notice.” Preserves anonymity where the current consent/content contract allows it and offers an unresolved close.
+
+### Evidence node and reconvergence
+
+Nera: “The first paper came over the radio desk. No mark from the gate.”
+
+Ivo: “Mine came from a driver who paid. I saw the receipt when he asked me to mend the strap.”
+
+Player: “Did you see the collector?”
+
+Ivo: “No. I saw the receipt. It says where he went after.”
+
+The scene can only call the receipt firsthand evidence if the player actually obtains or inspects the record. Otherwise, Ivo’s statement is hearsay about a physical document and needs its own provenance. A successful skill option might identify an inconsistent date or seal only if the game already exposes an applicable skill check and document inspection consumer. A failed check does not block the unresolved route; the player can record that the documents differ and leave the cause open.
+
+After the evidence node, all branches reconverge on the notice choice: record an announcement, record a witnessed act, or mark the claim unresolved. The choices should preview scope: “journal this source,” “publish the witnessed event” (only if a supported public-account command exists), or “close without a verdict.” Do not label a choice “expose the Warlords” unless it truly affects public knowledge and faction consequence owners.
+
+### Voice, tone, and recurring visits
+
+Nera protects chain-of-custody and resents pressure to convert forms into proof. Ivo is practical and precise; he will say “I saw the receipt,” never “I know who took the charge” without direct evidence. A Warlord clerk’s voice should express a coherent institutional rationale rather than generic menace. The player can disagree with the policy without the speaker becoming a caricature. The story should not borrow real-world faction names or recognizable historical propaganda.
+
+On return after a neutral close, Nera says: “The notice stayed open. The blanks are honest.” After an authored confirmation, she says: “The board names the action and the source. I made the source line larger.” These are state variants only if corresponding campaign facts exist. Do not replay the entire scene on each visit. All variants require a concise UI label, localization key, voice context, and response route. The first playable script is a short hub-and-spoke conversation; optional radio and checkpoint scenes are expansion content after their actual consumers are verified.
+
+### Three scene branches and a compact story arc
+
+Scene one, “The Board at Dawn,” begins in the shelter only after the player receives a current notice. A clerk reads the date and stated rule without interpreting it. A driver reports a payment; a mechanic remembers a broken strap and a receipt, but did not see the transaction. The player chooses to trace the paper, ask what the driver witnessed, or leave the matter unresolved. The scene teaches the distinction between an order and its enforcement through character disagreement, not an exposition panel.
+
+Scene two, “The Gate Keeps Its Own Copy,” is an optional location encounter at an audited Warlord checkpoint. A guard has one posted copy, a clerk has a register, and the player may compare them. None should reveal a hidden secret simply because the scene is at a gate. The guard’s personal line is: “I can tell you what I was told to do. I can’t tell you what every wagon paid.” The clerk’s line is: “The register has a column for collected. It has no column for refused.” These original lines support a design where a formal procedure omits lived experience. If the current event does not present both sources, the scene must be reduced accordingly.
+
+Scene three, “After the Price,” occurs at the shelter after the player has selected an evidence outcome. A late-game faction representative asks whether the player’s record will be used to challenge a transition in doctrine. The player can share the verified event, share an unresolved account, or decline. This is an expansion scene, not a new voting or faction-governance feature. It can show a political consequence only if a live owner consumes one; otherwise its purpose is character and information continuity.
+
+### Branching dialogue sample
+
+Guard: “The order says what we are meant to collect.”
+
+Player: “Did your post collect it?”
+
+Guard: “Not from every cart that crossed.”
+
+Player: “Which ones?”
+
+Guard: “The ones written in the book. You can read the book if the clerk says yes.”
+
+This is a knowledge-gated invitation. It does not prove that the book is accessible or that consent exists. A second branch can offer a public ledger review if that is a real interaction. If not, replace the line with “I can tell you what I saw.” Do not falsely present an NPC’s permission as the player’s access to a file.
+
+Clerk: “The second copy has another figure.”
+
+Player: “Which one is true?”
+
+Clerk: “Those papers answer different questions. One names the order. One records a collection. The same hand could have written both.”
+
+Player: “Then I’ll mark the difference and leave the cause open.”
+
+Clerk: “That is a record I can keep.”
+
+### Character arcs and late-game use
+
+Nera’s arc concerns accountability without exposing vulnerable sources. Ivo’s arc is about whether a practical craft worker will accept being treated as a witness after making a repair. A faction clerk can be a late-game recurring character whose loyalty lies with procedure rather than doctrine leadership. Give each a distinctive vocabulary, fear, desire and boundary. Their dialogue changes after a player action only when the action is persisted and the character can plausibly learn it. Late-game scenes should reveal institutions through changed paperwork, access and speech, not introduce an omniscient narrator.
+
+An endgame callback may quote a report’s verified summary or unresolved status, if the existing chronicle/ending input accepts that fact. Do not append the whole conversation to the ending. Keep the callback to a single sourced memory line or omit it. Core scope is one shelter scene and one proven action case; the checkpoint and late-game branches remain expansion options with separate production estimates.
+
+### Side quest scenes and environmental prose
+
+Side scene “The Blank Column” is an optional talk with the checkpoint register keeper. She shows a ruled page where the official form has columns for date, wagon, and amount, but no place for refusal. Sample environmental note: “The paper is soft at the corners. The empty column is darker where a thumb held the page flat.” This is an atmospheric clue, not proof that a payment was concealed. The player can ask whether refusals were recorded, compare the form with a delivered notice, or leave the entry unmarked. The keeper’s answer must match the actual data package; if no form record exists, this remains a prose candidate rather than a generated pickup.
+
+Side scene “The Strap Mender’s Receipt” begins at a shelter workbench. Ivo says: “I took the wagon in after the crossing. The paper was folded around the broken buckle.” The player may inspect the receipt if a real item or document owner supports it, ask Ivo to read the date aloud, or record only that he remembers seeing a paper. A direct read can add a source record; testimony alone should remain a statement by Ivo. The choice to keep his name off the notice needs an explicit consent boundary.
+
+Side scene “Frequency Without a Name” uses a radio operator. “The voice gave a rule and a road. It gave no collector’s name.” This scene is only available after the relevant broadcast has actually reached the player’s radio history. If a catalog key exists but no reception is recorded, use no line. The player can replay the broadcast, compare its date to the register, or leave. Replaying is not a second discovery and should not award duplicate journal state.
+
+Environmental location descriptions should explain what the player can perceive now: a board partly covered by rain, a register tied to a post, a waiting line painted over an older line. They should not state that an order was enforced when the location state does not prove it. Variant fields can cover accessible, contested, evacuated, or retired location states only when the location owner selects those states. A location-only description cannot carry quest completion authority.
+
+### Branch quality and UX delivery
+
+A dialogue branch should be short enough for the conversation panel, but not so compressed that it hides the evidentiary distinction. Response labels can be concise (“Inspect the register,” “Ask what was witnessed,” “Leave the cause open”) while narration carries nuance. If a choice has an irreversible public effect, confirm its audience and show that effect in the option text. A neutral leave/exit response remains available in every scene. On narrow scaling or localization expansion, the graph should split long exposition into speaker turns rather than truncate it.
+
+Content QA should sample every one of the six evidence outcomes with one line each and verify that the narrator never crosses the boundary. A read-aloud or screen-reader pass should identify speaker changes and choice purpose. Do not require voice audio to make the scene understandable. The first production slice can be text-only and remain complete.
+
+### Branch bank: twelve playable scene beats
+
+These scene beats are a high-volume authoring plan, not twelve guaranteed new quests. Each is independent and may be activated only after its evidence and consumer are verified.
+
+1. **Notice arrives:** a radio operator identifies the sender and date, then lets the player choose whether to replay or file it.
+2. **Old board uncovered:** a worker removes a newer paper and finds an older notice beneath it; the player may compare dates, not infer why it was hidden.
+3. **Refusal remembered:** a driver reports refusing a charge; the report remains testimony until a second source confirms it.
+4. **Receipt found:** a receipt is presented by its owner; inspection is a separate player action from hearing about it.
+5. **Book unavailable:** a clerk says the register is sealed; the player can wait, ask for an authorized excerpt if supported, or close unresolved.
+6. **Two signatures:** one signature is a posting authority, another a collector acknowledgement; the UI explains they do not prove the same event.
+7. **Empty watch:** an abandoned checkpoint contains an unstaffed desk; it proves absence at the visit time only.
+8. **Boundary argument:** two factions contest whether the road lies inside a toll zone; use the territorial owner for current boundaries and do not add a parallel map.
+9. **Clerk’s correction:** an official acknowledges a copying error; a correction can alter the record only through the owning content or quest command.
+10. **Witness withdraws:** a source retracts consent to be named; preserve privacy and let the player continue with an anonymous account if supported.
+11. **Rule changes:** a later doctrine signal is delivered; the scene compares its language with the old notice but does not rewrite the original case.
+12. **Case returned:** a later character asks what was settled; show confirmed facts and unresolved items separately.
+
+### Short prose bank
+
+Checkpoint notice: “The board has one nail left. The old holes are darker than the new paper.”
+
+Register margin: “Amount copied twice. Collector’s mark absent. The clerk drew a line through neither.”
+
+Driver’s statement: “I gave them nothing. That is what I remember. I cannot tell you what the wagon behind me gave.”
+
+Radio log: “Instruction received at first bell. Receipt of instruction is not receipt of payment.”
+
+Shelter board after unresolved closure: “Accounts differ. No collection verified.”
+
+These lines are drafts, source-bounded and localization-ready candidates. Each needs an authoring context and cannot be selected merely because a doctrine name matches. The prose bank should include calm, pressure, refusal and late-arrival variants only when they express a different known context. Do not inflate to dozens of near-synonyms.
+
+### Graph structure and reuse
+
+The implementation-ready graph uses one entry, one source-selection hub, evidence-specific child nodes, a report-choice hub and three terminal outcomes. Optional character scenes can be separate small graphs that return to the quest hub. A linear scene suits broadcast playback; a hub-and-spoke conversation suits record comparison; short branches reconverge after clarification; relationship, knowledge, reputation and faction gates remain read-only predicates; repeated visits select a concise outcome line; failures mention the lost evidence; and player memory drives one truthful callback. Quest updates, relationship changes and world-state effects are explicit and routed, never hidden in text callbacks.
+
+A scene graph should be authored as stable nodes with speaker, location/channel, conditions, text key, response IDs, effects, quest updates, relationship requests, world-state requests and next-node IDs only to the extent the current schema supports them. Adding a field to this conceptual model does not approve a new dialogue engine. If the current encounter schema has closed consequence strings, keep using them; do not embed free-form system effects in response text.
+
+### Character dossier and faction voice sheet
+
+**Nera, records clerk.** Wants the shelter to keep a record that can survive a change of controller. She values exact dates and distinct copies. She is not secretly a rebel or an informant; her conflict is whether administrative precision can protect people when institutions use the same paper to punish them. She avoids naming motives without testimony. Her voice uses short statements, corrections, and careful questions. Sample: “The seal belongs to the office. The mark belongs to the person who touched the page.”
+
+**Ivo, wagon mender.** Wants work to stay practical and private. He is willing to describe what passed across his bench but resents being turned into a symbol for a political argument. He distinguishes a broken strap from the reason it broke. Sample: “I fixed the buckle. I did not bless the cargo.” He can become a recurring character if the player respects source and attribution boundaries; relationship effects still require the existing owner.
+
+**Marek, checkpoint clerk.** Works under the Warlord doctrine and believes predictable procedures keep armed men from improvising. He can criticize missing signatures without becoming a defector. He speaks in operational terms: shift, register, copy, exception. Sample: “When the book is complete, no one needs to remember who shouted.” That line carries confidence in process and an underlying fear of arbitrary force.
+
+**Sera, route runner.** Knows which notices arrive and when, but not what occurs at every post. Her special function is delivery provenance, not universal intelligence. Sample: “I carried it sealed. The first hand opened it at the toll house.” Only use that line if the campaign records the handoff; otherwise say “I carried it sealed as far as the toll house.”
+
+### Shelter lore and location descriptions
+
+At the shelter notice wall, several nail holes remain after the papers are removed. Residents use the gaps to infer that rules change before the official board changes. That belief is a piece of shelter folklore, not evidence of a hidden policy. A resident might say, “The board has a shadow for every paper it takes down.” Use the idiom sparingly and attach it to this speaker. The journal can note that residents disagree about whether the shadows mean anything.
+
+At the weighbridge, if canonical location content supports it, the painted scale marks show a replacement plank that sits slightly higher than the old one. This observation might indicate repair, damage, or a deliberate change; the player can inspect it through existing location interaction. Sample description: “The lower line is under fresh pitch. An older groove crosses the timber below it.” Do not claim that the toll amount changed because of the plank. At the grain silo, a posted notice may be weighed down by a rusted bolt. The bolt’s source is unknown unless a clue says otherwise.
+
+Shelter lore should expand as the player learns, but not become a global morale effect by default. A repeated saying may enter the journal if the existing journal accepts it; otherwise it remains dialogue. Character personalities should drive how the saying is interpreted: Nera treats it as rumor, Ivo as a joke, Marek as a complaint, Sera as a warning about bad schedules. Distinct voices prevent the institution itself from speaking with one mouth.
+
+### Branch writing budget
+
+For the first polished sample, budget roughly 18 dialogue nodes, 4 optional line variants, 6 response labels, 3 terminal summaries, and 2 environmental text lines. Every added state variant should have a gate row. Voiceover, if desired, is a later asset/cost decision. The first pass can remain text-based. A conversation should be readable in a single UI panel or page sequence with no paragraph wall. Put source/date in structured journal detail, not hidden inside an overlong line.
+
+### Doctrine-specific voice variations
+
+The writers’ room can draft voice contrasts for testing without committing to new factions or mechanics. These are candidate lines attached to distinct speakers, and they become available only if their doctrine source and character identity resolve.
+
+A toll collector who supports regular tribute: “Same mark, same amount. A traveler can hate a known price and still plan around it.” This conveys the speaker’s rationale, not whether the current player paid.
+
+A checkpoint clerk under a consolidation principle: “The post moved closer to the road. The register did not move closer to the truth.” This suggests disagreement inside procedure without claiming misconduct.
+
+A driver who has experienced a withdrawal order: “They left before the last wagon. That is what I saw from the ditch.” The scene must gate it on an actual withdrawal event and an available witness; otherwise it is prohibited text.
+
+A courier discussing indirect action: “The notice crossed three hands before it reached the board. I can name the hands. I cannot name who wrote the sentence.” Use only if the delivery chain is authored and tracked.
+
+A laborer describing a labor-focused doctrine: “The roster says a shift. The wrist says how long it lasted.” This is a character’s metaphor, not proof of a particular work obligation or injury; the relevant labor/health owner must supply any mechanical state.
+
+A trader in a resource-stranglehold scene: “Every crate still had a price. The road between them became the price.” This line can evoke scarcity while avoiding invented commodity quantities or regional market modifiers.
+
+### Reusable journal, location, and radio descriptions
+
+Journal entry template, announcement only: “On [day], [source] announced [rule]. No source in this case confirms that it was applied at [location].” The final text should use a complete localized variant rather than raw token concatenation if the grammar changes by language.
+
+Journal entry template, observed enforcement: “[Witness/source] reports [action] at [location] on [day]. The record establishes the action described, not that the same rule was applied elsewhere.”
+
+Journal entry template, conflicting records: “The notice and register disagree about [bounded field]. The available sources do not resolve which version governed [specific crossing].”
+
+Map description template: “A known checkpoint associated with the current report.” Do not use “active enforcement site” unless a live world-state fact supports it.
+
+Radio lead template: “A road instruction for [named route] is being repeated. The sender gives a rule and a date; no collection is described.” This content must not be delivered merely because the catalog contains a radio key.
+
+### Character arc progression beats
+
+Nera begins with a careful private note and gradually learns to file a clear uncertainty rather than waiting for a perfect record. Ivo begins by refusing to be publicly named and may later choose to read his receipt himself, if the consent boundary is supported. Marek begins convinced that a complete form prevents arbitrary force and later must confront a specific omission only if the game’s sources establish it. Sera’s arc concerns the burden of carrying official notices without endorsing them. None of these arcs requires a new relationship score; the choices are written as distinct quest results and later callbacks can read those results.
+
+Side quests should include short debrief reactions when the player returns, but not force a chain. A player who leaves a witness alone has a complete path. A player who asks for a document may learn no new fact and still complete the side activity as “source unavailable.” This avoids making every narrative interaction a fetch quest.
+
+The late-game faction hearing, if pursued, can put two records on the table and ask what the official chronicle may say. The chair does not ask the player to adjudicate every doctrine. It asks whether the summary accurately reports the available evidence. That narrower conflict supports political drama while remaining grounded in the game’s information systems.
+
+### Main story arc: The Board, the Book, and the Road
+
+**Opening: The Board.** A delivered radio notice announces a change in road procedure. At the shelter board, residents disagree about what it means. One thinks the rule begins immediately; another remembers a different rate from an older paper. The player can replay the broadcast, ask for the source, or defer. The story’s first dramatic question is not “Who is evil?” but “Which part of the claim is known?” The writing leaves room for fear and material pressure without turning uncertainty into a puzzle with a secretly predetermined villain.
+
+**Middle: The Book.** A witness provides a receipt or a register entry, if a verified encounter makes one available. The player learns that a posted rule and a specific collection are related but not identical records. Nera wants the source preserved; Ivo wants his name withheld; Marek wants the procedure judged by its actual form; Sera worries that a notice arriving late can change a route even if no one collects anything. Their personalities produce a conflict about privacy, timing and responsibility. No character is an exposition dispenser.
+
+**Closing: The Road.** The player selects a private note, a public account, an unresolved case, or no publication. The choice should have a clear, immediate receipt and a truthful journal summary. If an existing public consequence owner accepts the report, the world may respond through that system. If not, the close remains a local record. Later, a new doctrine announcement may invite comparison; it never rewrites the old report. The late-game callback asks what the player chose to preserve, not whether they “won” against the Warlords.
+
+### Optional side-quest episodes
+
+**The Driver Who Waited:** a protection/escort episode in which a witness refuses a direct route. The player can choose a safer, longer existing route, help the witness remain anonymous, or decide not to escort. This quest is only viable if current escort/expedition owners can model the action; otherwise turn it into a shelter interview, not a pseudo-escort with no mechanics.
+
+**The Clerk’s Copy:** a resource/crafting episode about salvaging archival paper or ink. The player can recover materials only through existing scavenging/crafting systems. If the game has no usable record-restoration recipe, keep this as narrative texture and do not invent an item or recipe solely to support the line.
+
+**The Quiet Post:** a discovery episode at an unstaffed or evacuated location, if current location state permits it. The player finds absence rather than an enforcement scene. The text must state the observation time and cannot prove that the site was always empty.
+
+**The Second Hearing:** a faction episode in late game where rival speakers contest the same record. It creates a closed dialogue choice and a journal outcome, not a new tribunal manager. Its production cost is high due to character, faction, state and chronology dependencies.
+
+Each episode lists required location, availability, failure state, reward, branching potential, reusability, production cost and core/expansion status. The main story can ship without any optional episode. This separation avoids making every doctrine investigation a chain of expeditions.
+
+### Narrative polish and repetition control
+
+Use varied sentence length and concrete objects: pin, carbon copy, buckle, register, axle, nail shadow, wet ink. Avoid explaining political doctrine in a monologue. Give the player one new fact or one consequential choice per scene. Each recurring speaker has a distinct avoid-list: Nera does not use threat language; Ivo does not speculate about faction command; Marek does not claim a receipt proves what he did not see; Sera does not claim to know every checkpoint. Keep a voice sheet near the authored graph, and audit all later expansions against it.
+
+## Plan 20 Closeout and Integration Course — Scenes and Story
+
+### Complete scope receipt
+
+Plan 20 supplies the dramatic and human texture: the board, the book and the road. The case is carried by Nera, Ivo, Marek and Sera, each with a distinct motive and limit on what they can claim. The player hears a doctrine announcement, examines evidence when it is actually available, and decides whether to record a confirmed action, an announcement, a contradiction or uncertainty. Environmental prose uses objects—paper, register, buckle, board and road—to make institutional pressure tangible without turning atmosphere into proof.
+
+The graph supports a hub-and-spoke conversation, evidence nodes, optional character scenes, public/private response choices and later state variants. Short branches reconverge; repeated visits acknowledge actual saved outcomes; skill checks add interpretation but never create facts. The sample lines, character dossiers, shelter lore and late-game hearing are DRAFT prose. They require canon and voice review and must map to existing dialogue/encounter schemas before data authoring.
+
+### Integration course
+
+1. Choose a verified source delivery route and define which scene can open from it.
+2. Map nodes, speaker IDs, conditions, response IDs, effect references and next-node IDs to the existing content schema.
+3. Keep response effects out of generic UI callbacks; commands route through quest or owning system adapters.
+4. Draft complete localization units, not grammar-sensitive fragments; define missing-token fallback.
+5. Review every statement against the truth ledger and character knowledge limits.
+6. Build a graph reachability report for every quest state, disabled gate and terminal outcome.
+7. Review panel size, line length, speaker transitions, focus, close/back controls, and keyboard/controller navigation.
+8. Retain neutral exit and unresolved completion when optional evidence is unavailable.
+
+### Acceptance and cut line
+
+A complete scene has legible choice labels, a visible consequence scope, no hidden fact in a gated line, and a way to leave. Screen-reader behavior identifies speakers and options. Localization expansion must not clip text or change evidence semantics. The first implementation uses one shelter scene and perhaps one proven optional evidence encounter. Radio playback, escort, crafting episode, a new location scene, multiple doctrine voices and late-game hearing are separate expansion slices with their own owner checks and estimates.
+
+The story can be removed without damaging the Warlord simulation. Rollback hides the quest entry and uses existing journal/radio/debrief surfaces. Previously saved source IDs remain readable through the archive fallback. The handoff includes scene graph, line inventory, voice sheets, all prose marked as observed/inferred/public claim, localization keys, disabled-path copy, graph lint result, accessibility review, expected panel behavior and integration dependencies. Do not report these samples as shipped canon before production review.

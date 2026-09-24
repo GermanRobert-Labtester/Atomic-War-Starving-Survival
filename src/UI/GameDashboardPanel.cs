@@ -472,6 +472,8 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "PROPAGANDA", "propaganda");
             AddNavButton(content, "RUMORS", "rumors");
             AddNavButton(content, "SECURITY", "shelter_security");
+            AddNavButton(content, "VISITORS", "visitor_integration");
+            AddNavButton(content, "PERSONAL EFFECTS", "personal_belongings");
             AddNavButton(content, "PERSONAL QUESTS", "personal_quests");
             AddNavButton(content, "TIME CAPSULE", "time_capsule");
             AddNavButton(content, "WILLS & LEGACY", "death_legacy");
