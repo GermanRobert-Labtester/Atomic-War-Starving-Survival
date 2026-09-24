@@ -204,7 +204,7 @@ the preamble:
 
 | If you are… | Read, in order |
 |---|---|
-| A foreman assigning a Packages 02–09-adjacent task | Part II (what exists now), then the relevant Part V chapter's "Expansion hooks", then `WORKTREE_OWNERSHIP.md`. |
+| A foreman assigning a Plans 02–09-adjacent task | Part II (what exists now), then the relevant Part V chapter's "Expansion hooks", then `WORKTREE_OWNERSHIP.md`. |
 | An integrator touching a shared seam (save, events, catalogs) | Part III (framework), Part IV (module map), `docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`. |
 | A builder implementing inside one workstream | That workstream's Part V chapter end to end; Part III only for the tier diagram. |
 | A sweep agent doing read-only triage | Part II audit tables and Part VII gate ladder; nothing else is needed. |
@@ -1797,10 +1797,12 @@ The migration invariants, each enforced in `Decode` / `MigrateToCurrent`:
    section past the v3 checksum.
 3. **Defaults are fresh-system defaults.** New sections initialize "at
    field initialisers, which are the same defaults a fresh system would
-   construct" (source comment). Migration never invents content: a v3
-   save resumes with every chain unstarted, and the war narrative replays
-   from the beginning — a stated design trade, chosen over synthesizing
-   mid-chain state.
+   construct" (source comment). The rung table makes the pattern
+   visible: each payload version defaults exactly the sections
+   introduced after it — the v2→v3 step and the v3→v4 step differ only
+   in which section starts empty. Migration never invents content; the
+   replay-from-the-beginning trade is analyzed in III.4, and the
+   double-award audit it motivates is risk 1 in V.C.12.
 4. **Re-stamp and re-hash.** The upgraded envelope gets a fresh checksum
    over the current field set and the current version number, so the
    *next* save round is a normal v5 write.
@@ -2139,7 +2141,7 @@ Audio-side test artifacts found on 2026-09-25:
 - Top-level: `AudioConditionSystemTests`,
   `AudioEventIntegrationTests`, `MachineTellAudioSyncTests`.
 
-The named-generations are themselves history: the Plan 52 scarcity
+The named plan generations are themselves history: the Plan 52 scarcity
 integration and Plan 67 cassette sets post-date or parallel the
 flagship closeout, and the accessibility catalog loader tests connect
 the audio registry to the UI-accessibility gate (the closeout matrix's
@@ -2315,7 +2317,34 @@ Each rung assumes the rungs below it: snapshots are meaningless if
 binding fails, and binding is meaningless if lint fails. The ordering is
 also the debugging order when a scene regression lands.
 
-#### V.E.7 Verification Anatomy
+#### V.E.7 Save and Persistence: The Second Zero
+
+Like the audio controllers, the scene workstream persists nothing — for
+the inverse reason. Workstream D derives output from state a game
+system already owns; Workstream E observes structure that already
+exists on disk, and writes nothing a gameplay system reads back. Its
+durable outputs — lint reports, the snapshot gallery under `docs/ui/`
+— are build-time documentation, not save sections. The integrator
+consequence is the mirror of audio's: a scene-package change never
+needs a save-migration review, and a save-shaped change never needs a
+lint review, because there is no state in which the two could meet.
+The one trap runs the other way: a `.tscn` is itself serialized data,
+so a scene edit is a data edit owned by the scene tree's content
+authority, not by whichever system's panel the scene happens to host.
+
+#### V.E.8 Determinism
+
+Both gates are file-driven and take no input that varies between runs:
+the linter walks the allowlisted tree and the binding selftest
+instantiates fixed scenes in a fixed order, so the same tree state
+yields the same verdict on every machine — the property that makes a
+red CI line actionable without a re-run. Rendered-pixel comparison is
+a separate instrument with its own coverage ledger
+(`docs/ui/SNAPSHOT_COVERAGE.md`), and the rung ordering in V.E.6 keeps
+the exact structural checks and the ledger-tracked visual checks from
+being confused with each other.
+
+#### V.E.9 Verification Anatomy
 
 The workstream's verification *is* its tooling — there are no xUnit
 files, by design:
@@ -2332,7 +2361,7 @@ answerable from files stays out of the engine (fast, parallel, no
 license/boot cost), and only true instantiation questions pay the Godot
 boot.
 
-#### V.E.8 Evolution Since Closeout (verified)
+#### V.E.10 Evolution Since Closeout (verified)
 
 | Area | 2026-09-01 | 2026-09-25 |
 |---|---|---|
@@ -2340,7 +2369,7 @@ boot.
 | Binding test | 22/22 (historical) | verb present in the host CLI; current count not re-run by this expansion |
 | Ecosystem | lint + binding | + snapshot coverage docs, TIER3 readiness, node-diagnostics and leak-triage guides (`docs/ui/`) |
 
-#### V.E.9 Failure Modes and Mitigations
+#### V.E.11 Failure Modes and Mitigations
 
 | Failure | Mitigation |
 |---|---|
@@ -2350,7 +2379,7 @@ boot.
 | Scene without an ownership contract | Family F flags missing `scene_ownership.kind` |
 | Linter itself drifts from tree layout | Allowlist is explicit in one place; tree changes are lint changes by review |
 
-#### V.E.10 Risks
+#### V.E.12 Risks
 
 1. **Allowlist stagnation.** New UI directories must be added to the
    lint allowlist by hand; a forgotten addition means unlinted scenes.
@@ -2363,7 +2392,7 @@ boot.
    named individually; a renamed entry scene breaks the allowlist loudly
    (lint fails to find it), which is the correct failure direction.
 
-#### V.E.11 Expansion Hooks (not approvals)
+#### V.E.13 Expansion Hooks (not approvals)
 
 - **Orphan-scene detection** — report `.tscn` files under the UI tree
   that are neither allowlisted nor referenced, closing risk 1.
@@ -2440,14 +2469,15 @@ catalog's diagnosis mechanics live in three field groups:
 | Diagnosis | `tell`, `tell_secondary`, `timing_clue`, `guidance` | the *observable* symptoms a player actually sees; `timing_clue` rewards attention to onset order |
 | Care | `countermeasure_item_id`, `treatments`, `immunity_duration_days`, `immunity_strength`, `phases` | the countermeasure that blocks the vector, treatments that shorten illness, and recovery immunity |
 
-**Vector countermeasures** form the catalog's strategic spine — one
-stock item per transmission route, verified across all 20 diseases:
+**Vector countermeasures** form the catalog's strategic spine — a
+canonical stock item per transmission route, with two authored
+exceptions onto specialist items, verified across all 20 diseases:
 
 | Vector | Countermeasure | Diseases | Lethality range |
 |---|---|---|---|
-| `water` | `clean_water` | 5 (cholera, typhoid, wellspring cramps, silt jaundice, dysentery) + acute radiation syndrome | 0.2–0.8 |
-| `air` | `gas_mask` | 6 (zoonotic flu, fungal respiratory, condemned-air cough, dry-bunker hiss, meningococcal fever) | 0.15–0.6 |
-| `blood` | `antibiotics` | 4 (blood fever, septic rust wound fever, reused-needle fever, bloodborne hepatitis) + prion tremor (medical kit) | 0.2–0.85 |
+| `water` | `clean_water` | 5 (cholera, typhoid, wellspring cramps, silt jaundice, dysentery) + acute radiation syndrome (`iodine_pills`) | 0.2–0.8 |
+| `air` | `gas_mask` | 5 (zoonotic flu, fungal respiratory, condemned-air cough, dry-bunker hiss, meningococcal fever) | 0.15–0.6 |
+| `blood` | `antibiotics` | 4 (blood fever, septic rust wound fever, reused-needle fever, bloodborne hepatitis) + prion tremor (`medical_kit`) | 0.2–0.85 |
 | `spore` | `hazmat_suit` | 4 (spore blight, deep-excavation mold lung, silo lung, spore wound dermatitis) | 0.22–0.65 |
 
 The countermeasure mapping is also the economy hook: `clean_water`
@@ -2507,7 +2537,7 @@ manages, not a moral failing of a survivor sheet entry; the event
 payload (`survivorId, source, kind`) names the stressor for narrative
 consumption.
 
-**Command seam.** Detox begins go through
+**Command seam.** Beginning a detox goes through
 `PreviewBeginManagedDetox`/`ExecuteBeginManagedDetox` and the cold-turkey
 pair, each carrying `expectedStateVersion`/`currentStateVersion`
 arguments — optimistic concurrency at the command boundary, so a UI
@@ -2614,7 +2644,7 @@ tests from file listing and closeout claims)*:
 | `ChemicalDependencySystemTests` | tolerance loop, regimen durations, thresholds |
 | `ChemicalDependencyCommandTests` | preview/execute contract incl. state-version rejection |
 | `WildlifeDiseaseBridgeTests` / `FallbackTests` / `MappingTests` | exposure mapping from trapping, fallback safety |
-| `MedicalHeadlessDemo` | headless smoke of the pipeline |
+| `MedicalDiagnosisAndCareIntegrationTests` / `Ashfall.Core.Tests/Medical/MedicalPipelineTests` | pipeline integration and architecture-gate coverage |
 
 Per `TEST_POLICY.md` the dependency command tests deserve their own file
 (separate from behavior tests) because they exercise the command seam's
@@ -2847,6 +2877,11 @@ and the generated-artifact checks that came to surround it since.
 | 2 — engine, headless | Onboarding journey | `godot --headless --path . -- --onboarding-journey-selftest` | Godot | first-session assertions | PASS, 20/20 *(historical)* |
 | 3 — full suite | Whole test project | `dotnet test Ashfall.Core.Tests` | dotnet | everything | PASS, 5,317 passed / 17 s *(historical; not re-run)* |
 
+Every closeout-era result annotated *(historical)* in the table above
+carries the `UNVERIFIED (historical closeout text)` mark defined in
+I.4; Appendix E consolidates the full register so no claim has to be
+hunted down across tables.
+
 Per `AGENTS.md` and `TEST_POLICY.md`, tier 3 is not a default — it ran
 once at closeout and its numbers are historical. Every routine change
 should stay at tier 0–2 for its own paths.
@@ -2942,7 +2977,7 @@ This expansion claims three things about itself, all checkable:
    `git status --porcelain -- docs/plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md`
    at the time of hand-off.
 2. It preserved the base closeout byte-for-byte above the separator —
-   checkable by diffing the first 62 lines against any prior revision.
+   checkable by diffing the first 65 lines against any prior revision.
 3. Its size is between the 200,000-character floor and the 250,000
    soft cap — `wc -m` at hand-off, reported in the final message.
 
@@ -3051,11 +3086,11 @@ and measured counts *(measured 2026-09-25 unless noted)*.
 | Artifact | Path | Count |
 |---|---|---|
 | Diseases | `Assets/StreamingAssets/Data/disease_catalog.json` | 20 |
-| Vectors | same file | 4 (water 5+1, air 6, blood 4+1, spore 4) |
+| Vectors | same file | 4 (water 6, air 5, blood 5, spore 4) |
 | Countermeasure items | same file | `clean_water`, `gas_mask`, `antibiotics`, `hazmat_suit`, `medical_kit`, `iodine_pills` |
 | Vector protocols | same file | 4 (water 3 d, air 2 d, blood 5 d, spore 4 d) |
 | Exposure sources | same file | 4 verified samples (butchery, autopsy, micro-hazard, foul water) |
-| Dependency constants | `ChemicalDependencySystem` | 11 public consts + kind severity table |
+| Dependency constants | `ChemicalDependencySystem` | 12 public consts (11 tuning + `SystemId`) + kind severity table |
 | Vigil constants | `VigilStateMachine` | `DefaultDuration = 240 s` |
 
 ### Appendix C — Scenario Walkthroughs
@@ -3202,11 +3237,11 @@ current work; each names an owner-by-role rather than a person.
 | 4 | Are all 16 breakthrough items craftable/obtainable end-to-end? | Contract test asserts string existence only | Content-utilization gate run scoped to the 16 ids |
 | 5 | Do any host flag consumers double-award if a war chain re-surfaces after a pre-v3 migration replay? | Risk identified in V.C.12; audit not performed | Read-only audit of `producedFlags` consumers |
 | 6 | What renders for an owned `record_id` that later leaves the archive? | Weak edge identified in V.B.10 | Panel fallback decision + test |
-| 7 | Should the scene-lint allowlist gain orphan detection (UI `.tscn` outside the allowlist)? | Gap identified in V.E.10 | Lint-family G proposal via `INTEGRATION_PLANS.md` |
+| 7 | Should the scene-lint allowlist gain orphan detection (UI `.tscn` outside the allowlist)? | Gap identified in V.E.12 | Lint-family G proposal via `INTEGRATION_PLANS.md` |
 | 8 | Is there a required vocabulary for `scene_ownership.kind`? | Presence enforced; vocabulary unvalidated | Generate vocabulary from existing scenes, then gate |
 | 9 | Should dependency withdrawal emits per-kind authored tells (prose diagnosis for addiction like diseases have)? | Seam exists (`KindBaseSeverity`, tells pattern in diseases) | Content package proposal |
 | 10 | What is the current scene count and binding count? | Historical 26/22; not re-run | One `scene-lint.py` + `--scene-binding-selftest` run by anyone touching UI |
-| 11 | Does `MedicalHeadlessDemo` still reflect the current pipeline shape? | Present but not read in full by this expansion | Sweep-agent read |
+| 11 | Which of the fifty-plus files under `Ashfall.Core.Tests/Medical/` pin Plans 02–09 behavior versus later ward-scale plans? | Directory present; not enumerated by this expansion | Sweep-agent read of the directory against the closeout's named files |
 | 12 | Should `RegisterDefaults`-era references in older docs be swept? | This document records the mechanism change; other docs unexamined | `docs/` grep during the next docs-atlas pass |
 
 ### Appendix E — Unverified & Historical Claims Register
@@ -3220,7 +3255,7 @@ label:
 | 5,317 tests passed / 17 s full suite | `UNVERIFIED (historical closeout text)` — suite not re-run (policy) | VII.1 |
 | Data integrity: 138 catalogs / 5,563 IDs | `UNVERIFIED (historical closeout text)`; also conflicts with CURRENT_AUTHORITY's 129/4,793 (older snapshot) and 708 JSON files counted directly — all are artifacts of their own dates | II.0, VII.1 |
 | Content utilization: 413 catalogs | `UNVERIFIED (historical closeout text)` | VII.1 |
-| Scene binding 22/22 | `UNVERIFIED (historical closeout text)`; verb present, count not re-run | II.5, V.E, D.12 |
+| Scene binding 22/22 | `UNVERIFIED (historical closeout text)`; verb present, count not re-run | II.5, V.E, VII.1 |
 | Bridge shim removal gate PASS | `UNVERIFIED (historical closeout text)` | VII.1 |
 | Accessibility 5/5, onboarding 20/20 | `UNVERIFIED (historical closeout text)` | VII.1 |
 | Scene lint 26 scenes / 0 errors | `UNVERIFIED (historical closeout text)`; script current and read | II.5, V.E |
@@ -3229,7 +3264,7 @@ label:
 | Save codec v4 current | Historical; current v5 with v1–v4 frozen *(verified)* | II.3, V.C |
 | "Nodes statically registered in `RegisterDefaults()`" | Historical; mechanism replaced by JSON catalog loader *(verified)* | I.4, II.1, V.A |
 | VinylMoralePanel empty-state specifics (hint text, button disabling) | Behavior per closeout; panel entry points verified, full body not line-read | II.2, IV.2.4 |
-| Zero-regression claim vs Plan 14 | Historical outcome; no re-verification attempted | I.1 (base doc) |
+| Zero-regression claim vs Plan 14 | Historical outcome; no re-verification attempted | Base document §1 (Executive Summary) |
 
 Conversely, claims this expansion *upgraded* from historical to
 verified: the 16 relic pairings (both sides read), the 30-record archive
@@ -3247,7 +3282,7 @@ Files read directly (not merely located) on 2026-09-25:
 |---|---|---|
 | `Assets/Ashfall.Core/Narrative/LetterDeliverySystem.cs` | 199 | full state machine spec (V.C.3) |
 | `Assets/Ashfall.Core/Medical/VigilStateMachine.cs` | 141 | full vigil spec (V.F.5) |
-| `Ashfall.Core.Tests/RelicResearchUnlockContractTests.cs` | 80 | contract anatomy (V.A.8) |
+| `Ashfall.Core.Tests/RelicResearchUnlockContractTests.cs` | 79 | contract anatomy (V.A.8) |
 | `scripts/ci/scene-lint.py` | header + docstring | lint families (V.E.3) |
 | `docs/audio/AUDIO_CUE_CATALOG.md` | header + bus tables | cue/bus counts (V.D.3) |
 | `docs/CURRENT_AUTHORITY.md` | all 102 lines | authority grounding (I.4, II.0) |
@@ -3261,31 +3296,6 @@ Data files parsed with read-only JSON inspection:
 Commands run for measurement only: `wc -l`/`wc -m`, file listings, and
 the JSON inspections above. No build, no test run, no Godot process, no
 writes outside this document.
-
----
-
-## Expansion Close-Out
-
-**What this document adds to the 2026-09-01 closeout:** the machinery
-behind the outcomes — the tier flow, the event contract, the codec
-ladder, the per-component specifications, per-workstream chapters with
-test anatomy and failure modes, the interaction matrix, the gate
-ladder, and a full accounting of what changed in the twenty-four days
-between the closeout and this expansion (deleted `RegisterDefaults`,
-74→196 cues, 15→20 diseases, v4→v5 codec, the `narrative/` data
-relocation, and the Plan 25/30B/123 wiring that grew around the war
-chains).
-
-**What it deliberately does not do:** approve work, re-run gates, or
-touch anything but itself. It is a map with the survey date stamped on
-it; the next surveyor should re-stamp, not trust.
-
-**Standing invitation:** where this document and source disagree,
-source wins and this document's "verified 2026-09-25" mark should be
-treated as expired. That is not a defect of the document; it is the
-only property that makes documents like this worth writing.
-
-*End of expansion. Base closeout (2026-09-01) preserved above, byte-for-byte.*
 
 ### Appendix G — Integrator Checklists per Workstream
 
@@ -3536,10 +3546,6 @@ actually accumulated between 2026-09-01 and 2026-09-25:
    two-catalog join is the largest unchecked surface (question 4).
 5. **Vinyl and scene tooling** — stable; standard re-stamping.
 
----
-
-*End of appendices. Base closeout (2026-09-01) preserved above, byte-for-byte.*
-
 ### Appendix K — Completing the Set: Audio and Scene Walkthroughs
 
 Appendix C traced the four stateful workstreams. The two remaining
@@ -3556,7 +3562,7 @@ the player does here creates state, and that absence is the point.
    into `Ambience`, so the player's ambience slider governs it.
 2. **21:15, breaker trip.** A combat workbench overdraws the grid;
    `OnPowerChanged` arrives with `Kind == Tripped`. One
-   `ShelterBreakerTrip` on the `SFX`-adjacent `Alerts` path. The
+   `ShelterBreakerTrip` on the `Sfx`-adjacent `Alerts` path. The
    generator truth is re-derived, not trusted from the event:
    `GenerationWatts > 0 && FuelUnits > 0` fails, the snapshot flips,
    `ShelterGeneratorStop` follows. Two cues, one failure — no storm.
@@ -3632,3 +3638,28 @@ four times is a passed test.
 Command, accumulate, remember — and for the two that neither accumulate
 nor remember: derive, and check. That is the whole architecture,
 walked.
+
+---
+
+## Expansion Close-Out
+
+**What this document adds to the 2026-09-01 closeout:** the machinery
+behind the outcomes — the tier flow, the event contract, the codec
+ladder, the per-component specifications, per-workstream chapters with
+test anatomy and failure modes, the interaction matrix, the gate
+ladder, and a full accounting of what changed in the twenty-four days
+between the closeout and this expansion (deleted `RegisterDefaults`,
+74→196 cues, 15→20 diseases, v4→v5 codec, the `narrative/` data
+relocation, and the Plan 25/30B/123 wiring that grew around the war
+chains).
+
+**What it deliberately does not do:** approve work, re-run gates, or
+touch anything but itself. It is a map with the survey date stamped on
+it; the next surveyor should re-stamp, not trust.
+
+**Standing invitation:** where this document and source disagree,
+source wins and this document's "verified 2026-09-25" mark should be
+treated as expired. That is not a defect of the document; it is the
+only property that makes documents like this worth writing.
+
+*End of expansion. Base closeout (2026-09-01) preserved above, byte-for-byte.*

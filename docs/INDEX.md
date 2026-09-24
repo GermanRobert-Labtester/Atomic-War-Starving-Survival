@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5412 | **Total Characters:** 1,695,043,981 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 1959 documents carrying 1,651,872,211 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5412 | **Total Characters:** 1,695,309,878 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 1960 documents carrying 1,652,157,724 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 1959 documents, 1,651,872,211 characters
+## Oversized Document Register (>= 100,000 characters) — 1960 documents, 1,652,157,724 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1606,6 +1606,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 287,559 | [`docs/expansions/prose_wave31/cw31_06_the_roads_share_a_crater_plan.md`](expansions/prose_wave31/cw31_06_the_roads_share_a_crater_plan.md) |
 | 286,817 | [`docs/expansions/prose_wave32/cw32_04_the_key_without_an_owner_plan.md`](expansions/prose_wave32/cw32_04_the_key_without_an_owner_plan.md) |
 | 286,413 | [`piagentsplans/24-radio-signals-airwaves.md`](../piagentsplans/24-radio-signals-airwaves.md) |
+| 285,513 | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) |
 | 285,032 | [`docs/expansions/prose_wave32/cw32_06_the_names_called_by_another_office_plan.md`](expansions/prose_wave32/cw32_06_the_names_called_by_another_office_plan.md) |
 | 284,579 | [`docs/expansions/prose_wave32/cw32_02_file_open_past_the_return_date_plan.md`](expansions/prose_wave32/cw32_02_file_open_past_the_return_date_plan.md) |
 | 283,641 | [`docs/expansions/prose_wave31/cw31_04_the_timetable_beneath_the_ash_plan.md`](expansions/prose_wave31/cw31_04_the_timetable_beneath_the_ash_plan.md) |
@@ -7433,7 +7434,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/00-master-roadmap.md`](../piagentsplans/00-master-roadmap.md) | 13,729 | **ASHFALL — Master Roadmap: 20 Evidence-Grounded Next Steps** — None block development outright — tests are green and migration is complete. The P0 list below |
 | 🟢 `CURRENT` | [`piagentsplans/01-needs-radiation-save-roundtrip-tests.md`](../piagentsplans/01-needs-radiation-save-roundtrip-tests.md) | 256,078 | **Plan 01 — NeedsSystem & RadiationSystem Save Round-Trip Integrity, Metabolic Simulation & Deterministic State Verification (closes H10)** — **Package:** `PLAN-01-NEEDS-RADIATION-SAVE-ROUNDTRIP-TESTS` |
 | 🟢 `CURRENT` | [`piagentsplans/02-09-consolidated-remaining-work.md`](../piagentsplans/02-09-consolidated-remaining-work.md) | 14,537 | **Plans 02–09 — Consolidated Remaining Work** — Finish only the verified gaps across catalog loading, data authority, relic research unlocks, |
-| 🟢 `CURRENT` | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) | 19,616 | **Plan 02 — Comprehensive Catalog Ingestion Hardening, Diagnostic Telemetry & Zero Silent Failure Architecture (closes H4)** — **Package:** `PLAN-02-LOADER-BARE-CATCH-HARDENING` |
+| 🟢 `CURRENT` | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) | 285,513 | **Plan 02 — Comprehensive Catalog Ingestion Hardening, Diagnostic Telemetry & Zero Silent Failure Architecture (closes H4)** — **Package:** `PLAN-02-LOADER-BARE-CATCH-HARDENING` |
 | 🟢 `CURRENT` | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) | 2,304 | **Plan 03 — `schema_version` & Data-Authority Hygiene Sweep** — Bring every root-level JSON catalog in `Assets/StreamingAssets/Data/` up to the authority |
 | 🟢 `CURRENT` | [`piagentsplans/04-relic-blueprint-expansion.md`](../piagentsplans/04-relic-blueprint-expansion.md) | 2,471 | **Plan 04 — Workshop Relic Blueprint Expansion (6 → 30 relics)** — Exploit the fully-implemented, underused `WorkshopReverseEngineeringSystem` by expanding |
 | 🟢 `CURRENT` | [`piagentsplans/05-vinyl-record-catalog.md`](../piagentsplans/05-vinyl-record-catalog.md) | 2,513 | **Plan 05 — Vinyl Record Catalog Expansion (1 → 20 albums)** — Give the fully-wired `VinylMoraleSystem` (turntable playback, duration tracking, shelter-wide |
