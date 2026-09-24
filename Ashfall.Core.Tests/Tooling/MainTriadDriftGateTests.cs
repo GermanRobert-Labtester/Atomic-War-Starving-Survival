@@ -76,6 +76,7 @@ namespace Ashfall.Core.Tests
                 "NeedsPerformance", // Plan 137: NeedsPerformanceBridge is a pure domain projection over the live survivor needs state; modifiers are calculated dynamically with zero persistent state, avoiding parallel needs stores per Rule 5
                 "AudioAccessibility", // Plan 169: Audio accessibility coordinator binds to live AudioManager and UserSettingsStore; persistent preferences belong to user settings, not campaign save slots
                 "TunnelNetwork", // Plan 167: TunnelNetworkSystem is owned and persisted through WastelandMapSystem.Tunnels inside the canonical world-map save section; no duplicate save store
+                "DynamicQuestGeneration", // Plan 171: DynamicQuestGenerator is candidate generator; accepted quests persist via QuestRuntimeCoordinator; no duplicate save section
             };
 
 

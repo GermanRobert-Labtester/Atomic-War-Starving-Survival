@@ -150,6 +150,8 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("human_migration", new HumanMigrationDayOwner(this), phase: 5);
             // Plan 159 — shelter governance: evaluates policy consent, disputes, and shelter stability.
             _campaignDay.Register("shelter_governance", new ShelterGovernanceDayOwner(this), phase: 5);
+            // Plan 176 — aging & elderly survivor system: advances chronological age and evaluates milestones/retirement.
+            _campaignDay.Register("aging", new AgingDayOwner(this), phase: 5);
             // Plan 55 — retention runs last of all: it bounds the campaign logs
             // every other owner just appended to for this day.
             _campaignDay.Register("retention", new RetentionDayOwner(this), phase: 5);
@@ -692,6 +694,34 @@ namespace AtomicWar.GodotApp
                 int stability = _m._shelterGovernance?.StabilityRating ?? 100;
                 events.Add(new DayStateChangeEvent(
                     "shelter_governance_ticked", "shelter_governance", null, null, stability));
+            }
+        }
+
+        /// <summary>Plan 176 aging & elderly survivor day owner (ownerId <c>aging</c>, phase 5).</summary>
+        private sealed class AgingDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.AgingState? _snapshot;
+            public AgingDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupAging();
+                _snapshot = _m._aging?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._aging?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupAging();
+                _m.TickAging(day);
+                int tracked = _m._aging?.Census.TotalTrackedSurvivors ?? 0;
+                events.Add(new DayStateChangeEvent(
+                    "aging_ticked", "aging", null, null, tracked));
             }
         }
 

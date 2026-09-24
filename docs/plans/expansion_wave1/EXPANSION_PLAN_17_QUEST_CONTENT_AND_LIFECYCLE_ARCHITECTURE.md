@@ -2925,3 +2925,244 @@ No seed is repeatable by default. A recurring shipment audit is appropriate only
 Reusable pieces are the evidence-pair contract, report choice, missing-source fallback, and callback format. The workers, batch facts, voices, and item references are authored per story. Reuse does not mean reskinning one exact dialogue exchange across every technical trade. A second assay arc must use a materially different decision, source conflict, and consequence. The first release slice needs two source records, a discoverable path, three report labels, a journal acknowledgement, and one return line. A small team can author and validate it without new art if an existing archive surface can present records. New voiced cast, workshop animation, physical match-production interaction, and multiple seasons are not in the minimum scope.
 
 The packet is complete only when the content reviewer can answer: which claim is supported by each record; which missing fact remains unknown; what the player can refuse; what each terminal state means; whether any reward has an actual owner; and how an unavailable clue still reaches an honest conclusion. If any answer requires a new item quantity, location route, or reputation rule, the proposal returns to premise review instead of adding a convenient flag.
+
+## Pass 28 — Relief Without a Failure Counter: caregiving as labor and relationship
+
+### Source premise and content boundary
+
+The World Bible Part 46 asks what caregiving failure looks like and which relationships it strains. Current CaregivingSystem supports an authored story about pressure and handoff, but its actual facts are narrower than “failure” suggests. Core stores caregiver-to-patient assignments and patient bond strength. During a positive-hour tick it applies a recovery bonus, caregiver fatigue, affinity, bond growth, and a one-time dialogue-threshold event. Assignments can end when a caregiver or patient is no longer alive. Save capture persists assignments and bond; it does not persist hours, missed visits, neglect, consent, a caregiver’s expressed limits, or a failed-care outcome. Assignment validation checks survivor identity, life, caregiver fitness, and patient need. Reassignment automatically releases a prior pairing. The Godot host connects care starts to the Duty Roster: the caregiver’s existing role is vacated, and restore order reapplies this vacancy. This is a DRAFT authored quest extension using those boundaries; it does not assert that Core records a lapse or can diagnose a patient.
+
+### Quest packet: “The Cup on the Rail”
+
+**Purpose:** make the cost of sustained care legible as a labor and relationship choice, then let the player take a truthful action through the existing assignment interface. The dramatic problem is not a hidden medical emergency. A caregiver asks for relief after routine work has narrowed their life to the bedside; the patient objects to becoming a task passed between people. A third survivor has written down which shelter jobs have gone uncovered while the caregiver has been unavailable. None of those facts proves harm. The quest asks whether the shelter can acknowledge care as work while respecting both survivors as people.
+
+**Typical structure:** a short hub-and-spoke conversation in the shelter, followed by a reconvergent resolution. It is a character quest with a small relationship/civic layer, not a new medical simulation. The player may hear the patient first, caregiver first, or roster keeper first; order changes optional lines, but the central choice remains available. Do not force an expedition: the playable pressure is allocation of one already assigned survivor.
+
+**Required locations:** caregiving panel or equivalent shelter interaction; one authored bedside scene only if the narrative system can target a ward/shelter location; one duty-roster interaction for optional context. If there is no valid location-aware dialogue route, deliver the scene through the existing shelter hub. Do not mint a map destination or new ward instance.
+
+**Availability:** offer only when a live caregiving pair is queryable and both IDs resolve to living survivors. The caregiver’s previous duty may be discussed only when the current roster actually identifies a prior role; never infer a specific missed shift solely from the care assignment. A no-pair version can appear as a general conversation lead, but it must not promise an assignment-changing resolution until a valid pair is selected. If the assignment or survivor state changes between presentation and response, re-read and gracefully close the branch.
+
+**Opening prose seed:**
+
+> The cup has gone cold on the rail. No one remembers setting it there. Mara sits with both hands around it anyway, as if warmth might arrive by agreement. Across the room, Iven watches the door instead of the blanket. “I asked for a person,” he says. “They keep sending a shift.” Mara does not look up. “I am a person. I just want one hour in which nobody needs me to prove it.”
+
+Names are placeholders until an entity audit maps the scene to an approved roster. The scene contains no diagnosis, unlogged duration, or claim that care was withheld.
+
+### Resolution graph and lifecycle
+
+1. **Discovered:** enter through a spoken request, a care-start event surfaced by an existing narrative consumer, or opening a shelter interaction. Do not imply an event-to-quest bridge exists until the consumer is verified.
+2. **Accepted:** the player agrees to hear all three perspectives. Acceptance records only the quest’s own state if the existing quest owner has that contract. It does not mutate care, affinity, fatigue, or roster state.
+3. **In progress:** inspect assignment, survivor availability, and any assigned duty from canonical owners. Present unknown as unknown. Optional conversations do not create a silent failure when skipped.
+4. **Resolution A — relieve:** if a valid replacement exists, expose the ordinary assignment command. Existing single-caregiver and single-patient reassignment behavior applies. Report success only after the host command succeeds and a post-query confirms the pair.
+5. **Resolution B — unassign:** the player may end the current pairing through the existing action. This is a real local consequence: assignment ends and the existing event fires. Bond is retained by Core, so do not narrate the relationship as erased. The patient may have no caregiver afterward; state that plainly.
+6. **Resolution C — defer:** acknowledge the request but take no assignment action. This is a narrative closure only if the current quest owner supports “resolved without intervention”; do not award operational success or claim conditions improved. If unsupported, retain the quest as available/in-progress.
+7. **Changed circumstances:** death ends an assignment through existing Core behavior. Narrative may close as changed circumstances without fabricated causal blame. Patient recovery may make assignment validation fail; current need is authoritative, and rejection is not evidence of neglect.
+
+**Failure states:** invalid IDs; dead or incapacitated candidate; patient no longer needs care; assignment changed before response; stale command version; no compatible replacement; or player exits. These differ from patient harm. Recover by refreshing state, offering a non-operational dialogue close, retaining an eligible unresolved quest, or pointing to the existing panel. Never create an unbounded retry.
+
+**Rewards:** authored recognition: private lines, a roster-board note acknowledging care as labor, and journal summary if a current journal route exists. Mechanical reward is limited to the effects already caused by a successful assignment/unassignment; no bonus affinity, fatigue relief, recovery, item, faction standing, or roster mark for choosing a “kind” response. A reward proposal must identify a valid owner and balancing review.
+
+### Reusable quest-family schema
+
+Use this packet as a template for care-related stories: trigger evidence; pair eligibility; current canonical snapshot; speaker order; player understanding goal; available owner commands; command revalidation; narrative-only closure; state-changed fallback; consequence scope; return behavior; and optional authored callback. Reuse it for distinct situations—a novice asks to learn bedside work, a patient rejects a familiar caregiver’s manner, a caregiver requests a different duty, or a survivor returns after an assignment ended—but do not multiply near-identical errands. Every variant needs a different human question and a verifiable owner fact.
+
+**Production estimate:** medium for one quest and three short scenes if current quest/dialogue consumers support conditional conversation and command results; high if a new event bridge or persistent resolution is required. Keep event-to-quest routing out of the first slice unless evidence identifies a supported subscriber. One concise shelter character quest fits the core game; a wider companion anthology is an expansion candidate.
+
+**Acceptance evidence:** entity mapping for each speaker; traces of valid reassignment, rejected assignment, and unassignment through current APIs; confirmation that roster vacancy is applied/restored once; proof bond is retained on unassignment; and a quest-state contract with no new caregiving field. These are gates, not work performed by this document.
+## Pass 29 — A Place Is Not a Destination: micro-location evidence and quest coverage
+
+### Verified inventory and question framing
+
+The World Bible Part 46 asks which micro-locations lack narrative encounters. A focused static census provides a useful baseline, but not a complete playability answer: locations.json contains 179 location records; micro_locations.json contains 28 encounter definitions. Three definitions have a nonempty requiredLocationId that exactly matches a location ID: micro_hospital_chapel_ledger → abandoned_hospital; micro_depot_undertow_raft_line → location_flooded_subway_depot; and micro_gamma_levy_board → loc_garrison_checkpoint_gamma. The other 25 have no required location. EncounterDefinition.GetEffectiveWeight applies an exact ordinal location check only when requiredLocationId is nonempty. The common NarrativeEncounterSystem loads micro_locations.json into the same encounter catalog and selects by weight, depletion, weather gate, stance, danger, and location. Therefore “25 unbound records” means globally eligible under those checks, not “25 missing encounters,” “25 universally reachable,” or “25 map destinations.” A separate route/consumer audit is needed to prove where and how often these records are offered.
+
+### DRAFT coverage quest: “The Index Without a Map”
+
+This short discovery/investigation quest turns the difference between a place, an encounter, and a map destination into an in-world question. The shelter archive has three surviving references: a hospital chapel visitor book, a flooded-depot raft line, and a checkpoint levy board. The references are already authored micro-location encounters. The player is asked to compare what the records actually say, not to repair a supposedly broken map. Each site contributes one observation; none alone proves who maintained a route, who imposed a levy, or who visited the hospital.
+
+**Quest purpose:** teach that a location can host an authored encounter while the encounter may be globally eligible, exact-location-gated, or unreachable because its reference is invalid. In fiction, the archive keeper is trying to decide which reports belong under a place heading and which belong under “seen somewhere on the road.” The player’s final annotation can be “verified at named site,” “portable account,” or “not enough evidence.” These are authored journal categories only unless an existing quest/chronicle owner supports them. Do not create a second map ledger or a free-text evidence database.
+
+**Typical structure:** environmental discovery at any of the three existing encounter sites; an optional shelter-hub conversation; a three-clue investigation with partial completion; reconvergence at the archive. The player can accept the investigation before visiting all sites and can resolve it with one or two sources as an explicitly incomplete account. No forced expedition itinerary: location access remains governed by existing expedition/map owners and normal destination availability.
+
+**Required locations:** one existing shelter archive interaction if supported; otherwise an existing journal or hub return. The three encounter-bound sites are optional evidence sources, not guaranteed spawns for this DRAFT quest. The current micro encounter record is not itself proof that its site is reachable in a given campaign. A future implementation must either reserve a real required location through the current expedition-selection contract or provide an authored clue/equivalent evidence route.
+
+**Quest states:** discovered from a real encounter resolution or archive conversation only after a live subscriber is verified; accepted; in progress with a count of evidence observations held by the quest owner; blocked when no remaining eligible location can appear; partially completed after one or two records; resolved with a scope-limited conclusion; reopened only after an additional canonical discovery. “Blocked” must have a visible recovery route, such as a later expedition or an alternate existing record. If the quest owner cannot represent these states or evidence observations, ship the authored content as standalone encounter/journal prose instead of shadow-saving it.
+
+**Branching conclusion:** (A) “Keep the exact names”: preserve the three-site evidence chain and state that the other 25 general records are not site census results. (B) “Use the reports as a travel index”: useful to route future searches but lower confidence about origins. (C) “Leave the page unfinished”: a valid failure-forward resolution; no player is penalized for unavailable locations. None grants faction standing, inventory, or map unlock automatically. Any reward requires a canonical owner and a fresh design decision.
+
+**Sample closing prose:**
+
+> “Three names can make a route look certain. The archive keeper draws a line under the last one, then leaves the space below it blank. ‘If we fill every blank with a guess,’ she says, ‘someone will walk there expecting a door.’”
+
+The line makes no factual claim about an absent door or faction and can be removed if no matching archive character exists.
+
+### Reusable quest portfolio and cost
+
+The same packet supports three smaller follow-ups: a character quest about whose name is missing from the hospital book; a faction-neutral discovery at the depot asking whether a route mark is still current; and a civic investigation of how paid/owed marks change on the checkpoint board. These are distinct questions, not three fetch errands. They reuse real encounter IDs and destination IDs, but require current entity, quest-link, and effect-consumer mapping. Do not copy the encounter text into quest records; reference it through stable content IDs when the current schema allows.
+
+**Core versus expansion:** the coverage rules and one optional investigation belong in the core documentation architecture; the three-site quest chain is a modest expansion, since it depends on cross-site availability and authored callback wiring. A data-only release can ship location-bound micro encounters independently; a multi-step campaign quest needs a reliable resolution-to-quest event path.
+
+**Production cost:** low for a static coverage report and corrected references; medium for one quest using existing encounter resolution and journal owners; high if a new subscription, location reservation, or persistent evidence ledger is proposed.
+
+**Done when:** an automated or repeatable census classifies every record as exact-site, global, invalid-reference, or intentionally dormant; checks IDs against the location catalog and reachable destination set; verifies content utilization separately; and documents every uncovered destination only after the consumer path is inspected. No new quest, map, or save authority is implied by this pass.
+## Pass 30 — The Map Has Two Edges: regional knowledge and playable destinations
+
+### Current evidence and limit
+
+Part 46 asks which map regions have low destination density. The data exposes three different structures: map_regions.json has eight region records, each listing two points_of_interest labels; wasteland_map_v1.json has 22 canonical travel nodes and 68 routes; locations.json has 179 location records. Neither the 22 travel nodes nor the 179 location rows carries a region field. CatalogIntegrityValidator explicitly treats map_regions.json/points_of_interest as identifiers local to that catalog and consumed as CartographySystem KnownPoiIds labels, not cross-catalog references. None of the 16 region POI labels matches a location ID or canonical travel node in the reviewed pair. So density by playable destination is not computable from a direct join. Prefix loc_ is not proof of a destination ID.
+
+The live UI path also matters. Main.GetCartographyProjection and MapPanel project canonical WastelandMap nodes and persisted knowledge. Main.RecordCartographySurvey mutates the canonical WastelandMap owner and awards existing scavenging skill XP. Core also contains mutable region-survey methods and a loader for map_regions.json, but that API’s existence is not proof the Godot host uses it. Plans must use the currently wired map path or pause for an owner decision; they cannot awaken a parallel region ledger to answer the density question.
+
+### DRAFT quest architecture: “The Map Has Two Edges”
+
+**Player outcome:** an archive keeper asks the player to reconcile a region chart with the route map. One sheet names terrain and hazards; the other shows travel nodes and links. The sheets agree that travel is dangerous, but not where every mark belongs. The player records what is verified, leaves uncertain marks in a margin, and chooses which real route to survey next. The quest teaches that a region with no mapped destination is not necessarily empty.
+
+**Quest type:** discovery/investigation with a small cartography action and failure-forward conclusion. It can fit the core game after a valid quest-to-map route exists; a larger regional anthology belongs in an expansion. It is not a new selector or cartographer career.
+
+**Trigger and availability:** an archive conversation can offer the comparison without a region-to-destination link. A region-specific continuation requires a canonical map node and a current survey or route action through WastelandMap. Until that relationship is authored and validated, the eight region labels are source text, not selectable destination IDs.
+
+**Objectives:** compare the two sheets; identify one or more verified map nodes through current map knowledge; optionally survey a route node through the existing map host if an eligible living survivor and access are available; return with the canonical result; conclude with verified, uncertain, or unvisited annotations. Quest progress must not count reading a label as discovering a location. If the existing quest owner cannot record partial evidence, ship this as a linear archive conversation or journal note rather than adding another quest-state store.
+
+**Resolution routes:**
+- A canonical destination is present and surveyed: report only what the returned map result confirms.
+- A chart label has no verified destination crosswalk: preserve the uncertainty; do not reward a guessed location.
+- A route is inaccessible: retain a blocked/delayed objective only if the quest owner supports that state; otherwise resolve the chart comparison as incomplete without claiming a survey.
+- The player leaves the chart: allow postponement without erasing map knowledge.
+- The chart and map disagree: WastelandMap wins for actual travel; keep the chart as a separate authored source until reconciled by an approved authority.
+
+**Rewards:** authored knowledge and a truthful journal conclusion. The survey action already awards its existing scavenging XP; completion must not award it again. No region-discovery bonus, faction standing, route unlock, map marker, or item is implied.
+
+### Regional story portfolio
+
+The eight region records can seed distinct place-focused stories after a canonical crosswalk is approved: Ash Valley Basin pairs ash storm/radiation-pocket observations with quarry/radar labels; Dead Coast Estuary uses corrosive fog/submerged rebar around port/tide-gate labels; Ironspire Metropolis frames collapse/sniper risk around metro/hospital labels; Missile Silo Grounds uses EMP residue/toxic slurry around silo/bunker labels; Iron Ridge Escarpment uses rockslide/gale around mine/lookout labels; Verdant Impact Basin contrasts mutated flora/spore drift with commune/spring labels; Submerged Industrial Run centers methane/flash flooding around pump/oil-depot labels; Frozen Highland Gap uses black ice/hypothermia gale around crossing/repeater labels. These are writing prompts, not verified destinations, applied hazards, or faction claims. Each quest must identify which facts are flavor, which node IDs are canonical, and which hazards have a live gameplay consumer.
+
+Vary the player question across content: who maintains a route; whose measurements are trusted; which warning should be published; what must remain unmarked; how scarcity changes passage; how a shelter remembers an old survey; what a community owes; when a dangerous shortcut should stay secret. Avoid eight copies of “visit two points.”
+
+**Dependencies and cost:** architecture decision on region-to-node ownership; exact map/destination census; verified quest subscriber and map action; save review only if quest evidence persists; deterministic route state; entity/content mapping. Static research is low cost, one quest medium, a multi-region chain high. This is a DRAFT scaffold, not approval to modify MapRegion, map nodes, location catalogs, or quest state.
+### Pass 30B — Region quest cards and failure-forward portfolio
+
+The quest portfolio below uses only the eight region names, terrain, hazards, and POI labels already present in map_regions.json. These are archive/rumor concepts until each label is tied to a canonical node. The card’s required location is therefore “existing shelter archive” for the first slice; regional travel remains optional and disabled until the crosswalk exists.
+
+| Region seed | Quest form and question | Possible progress evidence | Failure-forward resolution |
+|---|---|---|---|
+| Ash Valley Basin | Investigation: did the quarry and radar notes come from one survey? | Two distinct authored records, not a guessed route | Preserve them as separate claims |
+| Dead Coast Estuary | Survival/discovery: which tide warning is current? | A canonical survey plus dated testimony | Mark chart stale; return without crossing |
+| Ironspire Metropolis | Character/escort: who should receive a hospital warning? | Verified route and consent to share | Keep warning private or delayed |
+| Missile Silo Grounds | Timed/critical: can the warning arrive before access closes? | Owner-verified day window and route eligibility | Defer without inventing a deadline |
+| Iron Ridge Escarpment | Expedition: is the lookout a real reachable node? | Crosswalk match and reachable route | Convert to map-room research |
+| Verdant Impact Basin | Resource/survival: which spring account can be trusted? | Existing water source fact and source provenance | Carry two conflicting accounts |
+| Submerged Industrial Run | Investigation: who wrote “listen before opening”? | Authored document or encounter result | Leave author unknown |
+| Frozen Highland Gap | Faction-neutral discovery: does the repeater still answer? | Existing radio signal or verified discovery route | Record no confirmed reply |
+
+No card asserts that the named hazard is simulated, a faction owns a site, or an NPC is already present. Any timer, water test, escort, reward, or radio result requires a current owner. In particular, the “timed” silo concept is unavailable until an actual time-window owner and recovery path are identified. This preserves the quest taxonomy without making content impossible through invented gates.
+
+**Quest reuse rules:** all cards share a small lifecycle skeleton—offer, evidence gathered, route unavailable, partial conclusion, final interpretation, optional revisit—but each must differ in player question and information risk. Location availability is not a reward. A region chart label cannot satisfy a destination objective. If the quest owner lacks partial completion, the first shipping slice is one linear archival quest with a final uncertainty choice. Mechanical rewards remain out until an owner-backed balance case exists.
+
+**Production sequence:** source/ID census; architecture decision; one canonical node-region mapping slice; one Ash Valley or Dead Coast quest prototype; resolve one current-map survey; then expand the quest family only if the prototype’s event and save path are stable. The four remaining region cards are content backlog, not a promise to create eight quests at once.
+
+## Pass 31 — The Empty Place on the Scale: Caravan Quest Portfolio (DRAFT)
+
+### Scope and evidence boundary
+
+This pass develops an authored quest portfolio around an arriving caravan, its visible cargo, the settlement's need, and what a trader is willing to say. It is a content and integration proposal, not a claim that the proposed quest chain, region-to-settlement specialty mapping, or character already exists. The World Bible's caravan-specialty prompt supports this topic; current code supplies useful but distinct building blocks: route records describe origin/destination, travel days, risk, faction, imports and exports; RegionalSupplyRouter derives specialty lots from goods provenance; RegionalPriceAtlas applies authored modifiers with a neutral default; TradeTellEngine chooses posture text by stance and trust. No new trade ledger, route schedule, price authority, quest state store, or cargo generator is proposed.
+
+### Quest packet: “The Empty Place on the Scale”
+
+Premise: a scheduled trader reaches a settlement after a harsh leg. The player sees an unusually small or unfamiliar specialty assortment and hears the quartermaster explain that the route's expected surplus did not arrive intact. The quest is not “make the caravan carry a hand-picked item.” Its authored trigger is a confirmed visit / available trading scene; its premise facts are read from current route, cargo, and authored context. Until a host proves that a route-arrival fact is exposed to quests, the trigger remains a DRAFT integration dependency.
+
+Quest classes and outcomes:
+- A discovery beat asks the player to compare the manifest, stall, and a local worksite. It can resolve through inspection and adds no resource.
+- A faction or character branch asks whether to disclose a local production capability, keep it private, or bargain for a future shipment. These are authored decisions whose results must route through existing quest/faction/market owners only where a real effect is supported.
+- A resource branch lets the player offer a currently owned, eligible good through the existing barter flow. A quest must never create inventory, reserve hidden stock, or debit an offer twice.
+- An investigation branch follows a discrepancy between the route's authored demand/surplus description and the observed caravan cargo. It can conclude as ordinary loss, a trader's deliberate reprioritization, or inconclusive evidence; these are possible story interpretations, not facts the simulation may assert without authored evidence.
+- A failure-continuation branch preserves play if the player leaves before the caravan departs, refuses the offer, lacks the requested goods, or cannot access the stop. Reframe the outcome as a missed window, a smaller exchange, or a later clue, rather than silently marking unrelated objectives complete.
+
+Required locations should be constrained to currently resolvable places: the active shelter/trading scene, the existing caravan route stop if it is materialized, and at most one discovered worksite or clue destination selected by an owned expedition/location seam. Do not make a new named POI mandatory until its ID, discoverability, fallback, map visibility, and consumer are confirmed. A missing worksite becomes a clue at the available trade scene; the quest remains possible through conversation and manifest comparison.
+
+Quest lifecycle proposal: Available when its proven arrival/visit precondition is true; Discovered when a manifest or tell exposes the discrepancy; Accepted after the player explicitly agrees to investigate; In Progress while any required evidence is unresolved; Blocked only when a named prerequisite is temporarily unavailable; Partially Completed after a clue is recorded but the negotiation remains; Failed only when the authored opportunity expires or an explicit branch closes; Reopened only by a supported later arrival or new authored evidence; Completed when the chosen branch resolves; Resolved when its consequences have been applied and the log can stop showing pending work. “Abandoned” means the player stops tracking it, not that a trade is reversed. If current quest schema cannot express all these statuses, map to supported states and document the limitation; do not extend save state by implication.
+
+Acceptance checklist for a future implementation package:
+1. Show a journal card only after its actual trigger is witnessed.
+2. Every branch has one explicit completion and one recoverable failure path.
+3. No branch depends on an invented settlement-specialty field.
+4. Cargo and barter quantities are re-read at action time.
+5. Closing or missing a visit has legible feedback and a future clue or honest expiry.
+6. Replay and save semantics use current quest authority and deterministic existing inputs.
+
+Production slice: one quest with three short stages, two reconverging negotiation branches, one optional clue, and three endings (cooperation, guarded agreement, or missed opportunity). Begin with one route and one actual authored destination; prove host facts first. Add further routes only when distinct cargo provenance creates a genuinely different player decision. Cost remains medium because branch QA and state recovery exceed the writing volume; expansion is gated by route and quest ownership evidence.
+
+
+### Pass 31B — Quest variants, rewards, and production card
+
+| Quest seed | Entry condition | Core play | Failure that continues | Reward shape | Reuse |
+|---|---|---|---|---|---|
+| Manifest at the Table | Current caravan scene is confirmed and quest not previously resolved | Ask about route expectation, compare current stock, choose a negotiation posture | Visit closes; journal records missed window only if the window is authored | Information or ordinary successful barter; no free goods | Medium: same graph can consume different observed lots |
+| The Missing Lash Point | Player notices an empty tie-down or a marked manifest gap | Inspect an available clue source or ask the escort; decide whether to share the finding | Clue site unavailable; preserve the lead and offer a later visit | Clue and relationship-facing scene only, unless a canonical owner supports more | Low to medium; requires authored evidence variants |
+| A Repairable Specialty | Eligible local or caravan good is actually visible | Offer a supported barter, request a repair instruction, or keep the capability private | Needed item absent; discuss technique or decline | Trade receipt, recipe only if a recipe authority owns it, or narrative acknowledgement | High as a scene template, but recipes are content-specific |
+| The Next Load | Prior agreement fact exists and later visit is confirmed | Verify what changed, fulfill or release the earlier agreement | Trader does not return or cargo differs; close the promise as unresolved without phantom delivery | Completion record or apology/alternative branch | Low; requires durable agreement owner and future-arrival evidence |
+
+Reward discipline matters: quest rewards should prefer information, access to an already implemented service, a current trade opportunity, or a small authored relationship beat. A quest should not award “regional price discount,” faction standing, a new map region, a recipe, or guaranteed future cargo unless those outcomes are already owned, persisted, and validated. Ordinary goods obtained via barter are transaction results, not quest rewards; do not count them twice in journal totals.
+
+Story texture can be carried through optional inspection rather than adding a second quest. A player can inspect the route sheet, count the lash points, or listen to the escort. Each clue needs an evidence label (seen, read, reported), a source ID, and a resulting dialogue option; if the current content contract has no source attribution field, keep the clue authored in a single graph node and avoid pretending it is a general-purpose evidence framework.
+
+The thin slice should be measured by distinct states and effects, not prose volume. Suggested authoring budget: 8–12 nodes, 4 player intent responses at the hub, 3 reconverging decisions, 2 nonfatal failure exits, 3 conclusions, and no more than 5 durable quest flags. A content reviewer can then trace every flag to an observable journal change. Add a second route only after the first route proves arrivals can be observed and replayed. If the trade scene has no route-arrival event, keep the design as an opportunistic shelter merchant scene and remove scheduled-travel claims.
+
+## Pass 32A — “The Third Turn” Maintenance Investigation Portfolio (DRAFT)
+
+### Core premise and playable promise
+
+Part 47 asks for closed loops, not just more logs. “The Third Turn” is a shelter-scale maintenance investigation about a recurring vibration heard during the night shift. A machine tell, an old handwritten record, and a technician's account disagree about whether the sound is worsening. The player must distinguish a warning from proof, decide which inspection can be spared, and leave a truthful record for the next shift. The fiction does not assert that an actual component is failing. Only the current system owner can establish the machine's condition; the authored logs provide historical testimony and context.
+
+This premise builds on verified structures without claiming the integration already exists. Main.ShelterInfrastructure builds MachineConditionReadings from several current host owners and evaluates machine quirk/glitch content. A repeat-once glitch can be recorded through JournalSystem's existing glitch-noted knowledge. BunkerMaintenanceCatalog loads the authored maintenance-glitch file, while bunker maintenance logs and equipment failure logs are separate narrative files. These records do not by themselves prove live wear, and the proposed quest must not mutate a machine's health by reading prose.
+
+### Portfolio cards
+
+**Primary investigation — The Third Turn.** Entry: a supported live diagnostic tell is presented to the player or an existing journal/codex fact establishes that a specific glitch was noted. Core loop: compare the tell with a dated maintenance entry; request a second account; choose to inspect, defer with a named reason, or stop treating the sound as evidence. Required locations: shelter machine/maintenance presentation and one authored archive, journal, or work area only if that location is truly addressable. Failure-forward: no inspection capacity, unavailable witness, contradictory records, or machine condition returning to normal resolves into an uncertainty finding rather than a false diagnosis. Reward: a documented conclusion, an existing service action if directly supported, or a character response; no free parts, condition points, or skill grants. Type: investigation + shelter survival. Reuse: high, if multiple actual condition owner keys map to authored incident packets through validated IDs.
+
+**Character quest — The Night Mechanic's Margin.** Entry: a rostered technician or speaker is available through an existing character/dialogue owner. The technician says that they write down sounds because no shift receives the same machine twice. Player can protect the note from blame, ask for a second signature, or file it under the machine rather than the person. Outcomes change the scene's trust and attribution; no relationship meter or duty roster is modified without a currently supported command. Failure-forward: the character is absent; their note remains but conversation waits. Reward: a new dialogue node, an attributed codex discovery, or a resolved quest receipt. Reuse: medium; voice variation must be authored by identity, not randomized titles.
+
+**Faction/operations quest — The Service Window.** Entry: a visible service schedule, shortage, or maintenance task exists in the current economy/workshop owner. The player weighs taking a machine offline now against waiting for available work and parts. Choices may be “inspect only,” “defer and post a reason,” or “use the existing repair command.” The quest itself does not invent a queue or consume resources. Failure-forward: unavailable part or work slot leaves a logged deferral and a later retry. Reward: truthful service receipt or preserved capacity; no promised uptime bonus absent a supported measurement.
+
+### State, exit, and evidence discipline
+
+Proposal states: Available after a supported tell/source is observed; Discovered after the player inspects a record or hears a report; Accepted when the player agrees to reconcile it; In Progress while evidence or a decision remains; Blocked when a specific owner reports a temporary constraint; Partially Completed when one source has been recorded but interpretation remains; Completed when the chosen investigation outcome is recorded; Resolved after any supported downstream consequence is confirmed. Failed is reserved for an explicitly time-limited inspection or witness opportunity that closes. Abandoned means the player stops tracking the task, not that a repair was attempted. Reopened requires a later, independently observed signal with a supported link to the same incident. If current QuestSystem exposes fewer states, map this proposal onto actual states and keep richer wording in the design only.
+
+Evidence classes must not collapse: live reading, authored historical log, character report, player's interpretation, repair receipt. A historical record can be old, incomplete, or refer to a different machine. The quest should let the player say “same sound, uncertain cause,” rather than force a binary solved/unsolved answer. Data with no exact machine ID or condition key remains context, never a diagnostic result.
+
+### Production slice and success criteria
+
+First slice: one machine family; one noncritical tell; two historical records; one character; three player intent responses; one explicit deferral; two endings (documented uncertainty or corroborated issue). Keep it outside critical progression so absence of a diagnostic, log, or character never strands a campaign. The player sees what was observed, what was reported, what action the owner accepted, and what remains unknown. Integration readiness requires exact current APIs for tell discovery, journal facts, quest transitions, character availability, and optional maintenance commands. Production cost: medium for a single scene, high for multiple machine families because condition keys, log references, and narrative voice need per-row review.
+
+
+### Pass 32B — Side-quest bank, outcomes, and production sequencing
+
+The primary arc should be accompanied by small independent stories that add variety without requiring a generalized maintenance simulator.
+
+**“A Label Turned Inward” — discovery quest.** A player finds a service tag whose date is legible but whose machine reference is turned to the wall. The player can read it, ask who filed it, or leave it alone. Its outcome adds only a discovered authored record if the existing narrative discovery path supports this exact catalog. Failure states: the tag is unreadable, the content was already seen, or no matching source record exists. Reward: provenance and one character reaction. Reuse is medium; the sensory template can be reused but each record identity is authored. Production cost low. Core if it explains a safety-relevant live interaction, optional expansion if purely archival.
+
+**“Last Safe Window” — survival/service quest.** A current machine owner presents a real service option whose downtime overlaps another authored need. The player chooses whether to use it now, wait for a named availability condition, or record refusal. The quest does not create a timer: it observes whatever schedule already owns the service. Failure states include resource shortage and changed schedule; both keep a later route where the owner permits one. Reward: a returned result or informed tradeoff, never a guaranteed efficiency buff. Reuse high only if several owners expose consistent service results. Production cost high because balance and save behavior are cross-system.
+
+**“Two Hands on the Wrench” — relationship/character quest.** Two people disagree over whether to document a repair before completing it. The player can mediate, defer judgment, or select an existing work result. Relationship consequence is optional and gated on a proven owner. If no relationship action exists, branches change only the characters' spoken tone and journal framing. Failure state: a witness is absent; the disagreement remains unresolved instead of casting a random survivor. Reward: human closure and a future callback only when Chronicle can remember the exact action. Reuse medium.
+
+**“The Part That Fits” — resource/crafting quest.** A part from an authored inventory/recipe source appears to match a machine request. Player may compare specifications, request an ordinary transaction, or refuse a risky fit. This story is blocked until the real repair API declares accepted items and the inventory authority confirms possession. It never generates a spare or introduces a crafting recipe by narrative fiat. Reward: completed transaction receipt or a declined offer. Production cost high; put in an expansion unless it closes an already-critical onboarding gap.
+
+Recommended sequence: first ship the non-mutating discovery and record comparison; next test one existing repair result in a sandboxed implementation package; only then author consequences tied to uptime or campaign supply. Keep each quest independently completable. A broken optional record must not prevent an ordinary machine action. Core content should teach players to distinguish observation and action. Expansion content may add deeper crew histories, repeated service callbacks, rare component provenance, and campaign chronicle branches after their owners are verified. Completion analytics should count resolved evidence questions and confirmed commands separately; “quest complete” alone hides whether players understood the machinery.
+
+
+### Pass 32C — Completion receipts and quest graph hardening
+
+Require each quest implementation card to state trigger owner/event, source IDs, player-facing surface, legal transitions supported by the current quest owner, optional service command, save owner, failure-forward route, and focused acceptance evidence. Reject any card where “machine got worse” is inferred from dialogue or a generic maintenance file.
+
+The completion receipt should answer four questions: what the player did, what the source owner confirmed, what remains uncertain, and whether another action is available. Example: “You recorded Vale's report. No inspection was run. The diagnostic tell has not returned. The service window remains available.” This is more informative than an opaque “investigated” state and does not require a new telemetry system if projected from existing quest outcome and machine reading.
+
+Include a negative-result completion. The player can establish that two records cannot confidently be joined, preserve them separately, and close the optional investigation. If later evidence appears, reopen only through an owner-backed trigger and identify the changed fact. Do not re-open a solved quest whenever the same tell renders again.
+
+Stage graph: optional trigger; discovery of one dated record or witness report; reconciliation of identity/date/source; player intent to inspect, defer, or document uncertainty; owner-confirmed result; closeout. A missing source can route to “unknown; preserve report” and then a supported decision. A core tutorial variant must distinguish “observe” from “act” and keep an action reversible until the command confirms it. The wider investigation remains optional so missing tell, log, or character never strands campaign progress.
+
+Expand to additional characters only when each adds a distinct source class or human tradeoff. A second mechanic repeating Vale's note adds no loop closure. Measure success by correct distinction between observation and action, legible failure recovery, and the number of confirmed commands, not only by quest completion rate.
+
+
+### Pass 32D — Quest quality signals and implementation backlog
+
+Do not evaluate this arc by completion percentage alone. Useful design measures are: players who can identify which statement is a current reading versus a report; optional leads abandoned without blocking core shelter play; stale service choices rejected without loss; number of decisions that end in documented uncertainty; and confirmed repairs separated from narrative conclusions. These are future evaluation questions, not new runtime telemetry requirements. If no analytics authority exists, use focused review scenarios instead of adding tracking.
+
+Ordered backlog: (1) verify the actual quest and JournalSystem transition APIs; (2) make one read-only record comparison packet; (3) validate character availability; (4) add a failure-forward closure; (5) only then bind one owner-confirmed inspection result; (6) add recurring callbacks after a canonical event exists. Each item can be declined independently if current evidence is stale.

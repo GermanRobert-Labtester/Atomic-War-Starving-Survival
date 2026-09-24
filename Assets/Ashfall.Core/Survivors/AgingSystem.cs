@@ -71,6 +71,35 @@ namespace Ashfall.Core.Survivors
         public List<SurvivorAgingRecord> Records { get; set; } = new List<SurvivorAgingRecord>();
     }
 
+    /// <summary>
+    /// Diagnostic read-only snapshot census for Plan 176 survivor aging and demographics.
+    /// </summary>
+    public struct AgingCensus
+    {
+        public int TotalTrackedSurvivors { get; }
+        public int RetiredSurvivors { get; }
+        public int ElderlySurvivors { get; }
+        public int TotalMilestonesCelebrated { get; }
+        public int DaysPerYear { get; }
+        public int MinRetirementAge { get; }
+
+        public AgingCensus(
+            int totalTrackedSurvivors,
+            int retiredSurvivors,
+            int elderlySurvivors,
+            int totalMilestonesCelebrated,
+            int daysPerYear,
+            int minRetirementAge)
+        {
+            TotalTrackedSurvivors = totalTrackedSurvivors;
+            RetiredSurvivors = retiredSurvivors;
+            ElderlySurvivors = elderlySurvivors;
+            TotalMilestonesCelebrated = totalMilestonesCelebrated;
+            DaysPerYear = daysPerYear;
+            MinRetirementAge = minRetirementAge;
+        }
+    }
+
     // ── Domain System ───────────────────────────────────────────────────────
 
     public sealed class AgingSystem
@@ -100,6 +129,30 @@ namespace Ashfall.Core.Survivors
 
         // ── Catalog Loading ────────────────────────────────────────────────
 
+        public void BindValidatedCatalog(LifeStagesCatalog catalog)
+        {
+            if (catalog == null) return;
+            if (catalog.days_per_year > 0)
+                _state.DaysPerYear = catalog.days_per_year;
+            if (catalog.min_retirement_age_years > 0)
+                _state.MinRetirementAgeYears = catalog.min_retirement_age_years;
+
+            _stages.Clear();
+            if (catalog.life_stages != null)
+            {
+                foreach (var s in catalog.life_stages)
+                    if (!string.IsNullOrWhiteSpace(s.stage_id))
+                        _stages.Add(s);
+            }
+
+            _milestones.Clear();
+            if (catalog.milestones != null)
+            {
+                foreach (var m in catalog.milestones)
+                    _milestones.Add(m);
+            }
+        }
+
         public void LoadCatalog(string json)
         {
             if (string.IsNullOrWhiteSpace(json)) return;
@@ -108,32 +161,28 @@ namespace Ashfall.Core.Survivors
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var catalog = JsonSerializer.Deserialize<LifeStagesCatalog>(json, options);
                 if (catalog == null) return;
-
-                if (catalog.days_per_year > 0)
-                    _state.DaysPerYear = catalog.days_per_year;
-                if (catalog.min_retirement_age_years > 0)
-                    _state.MinRetirementAgeYears = catalog.min_retirement_age_years;
-
-                _stages.Clear();
-                if (catalog.life_stages != null)
-                {
-                    foreach (var s in catalog.life_stages)
-                        if (!string.IsNullOrWhiteSpace(s.stage_id))
-                            _stages.Add(s);
-                }
-
-                _milestones.Clear();
-                if (catalog.milestones != null)
-                {
-                    foreach (var m in catalog.milestones)
-                        _milestones.Add(m);
-                }
+                BindValidatedCatalog(catalog);
             }
             catch (Exception) { /* malformed catalog falls back to built-in defaults; authoring errors are enforced by the data-integrity gate */ }
         }
 
         public IReadOnlyList<LifeStageDef> GetAllLifeStages() => _stages;
         public IReadOnlyList<AgingMilestoneDef> GetAllMilestones() => _milestones;
+
+        public AgingCensus GetCensus()
+        {
+            int totalTracked = _state.Records.Count;
+            int retired = _state.Records.Count(r => r.IsRetired);
+            int elderly = _state.Records.Count(r => r.LastEvaluatedStage == (int)SurvivorLifeStage.Elderly);
+            int milestones = _state.Records.Sum(r => r.CelebratedMilestoneAges?.Count ?? 0);
+            return new AgingCensus(
+                totalTracked,
+                retired,
+                elderly,
+                milestones,
+                _state.DaysPerYear,
+                _state.MinRetirementAgeYears);
+        }
 
         // ── Survivor Registration & Evaluation ─────────────────────────────
 

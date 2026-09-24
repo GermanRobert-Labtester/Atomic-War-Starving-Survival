@@ -2,9 +2,9 @@
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all Core integration ports and host wiring contracts (Plan 36).",
   "generated_at": "2026-09-18",
-  "total_seams": 296,
+  "total_seams": 298,
   "counts": {
-    "HOST_REQUIRED": 191,
+    "HOST_REQUIRED": 193,
     "OPTIONAL_HOST": 7,
     "LIVE_VIA_CORE": 54,
     "TEST_ONLY": 44,
@@ -758,9 +758,12 @@
       "owner": "core-architecture",
       "classification": "HOST_REQUIRED",
       "status": "BOUND",
-      "observed_caller_count": 1,
+      "observed_caller_count": 4,
       "observed_callers": [
-        "src/Host/Phase0HostSession.cs"
+        "src/Host/AgingHostSession.cs",
+        "src/Host/HostCli.Aging.cs",
+        "src/Host/Phase0HostSession.cs",
+        "src/Main.Aging.cs"
       ],
       "reason": "Integration seam in CombatPerks.",
       "diagnostic": false,
@@ -775,9 +778,12 @@
       "owner": "core-architecture",
       "classification": "HOST_REQUIRED",
       "status": "BOUND",
-      "observed_caller_count": 1,
+      "observed_caller_count": 4,
       "observed_callers": [
-        "src/Host/Phase0HostSession.cs"
+        "src/Host/AgingHostSession.cs",
+        "src/Host/HostCli.Aging.cs",
+        "src/Host/Phase0HostSession.cs",
+        "src/Main.Aging.cs"
       ],
       "reason": "Integration seam in CombatTraumaSystem.",
       "diagnostic": false,
@@ -5291,9 +5297,12 @@
       "owner": "core-architecture",
       "classification": "HOST_REQUIRED",
       "status": "BOUND",
-      "observed_caller_count": 1,
+      "observed_caller_count": 4,
       "observed_callers": [
-        "src/Host/Phase0HostSession.cs"
+        "src/Host/AgingHostSession.cs",
+        "src/Host/HostCli.Aging.cs",
+        "src/Host/Phase0HostSession.cs",
+        "src/Main.Aging.cs"
       ],
       "reason": "Integration seam in RationConflictSystem.",
       "diagnostic": false,
@@ -7375,9 +7384,12 @@
       "owner": "survivors",
       "classification": "TEST_ONLY",
       "status": "BOUND",
-      "observed_caller_count": 1,
+      "observed_caller_count": 4,
       "observed_callers": [
-        "src/Host/Phase0HostSession.cs"
+        "src/Host/AgingHostSession.cs",
+        "src/Host/HostCli.Aging.cs",
+        "src/Host/Phase0HostSession.cs",
+        "src/Main.Aging.cs"
       ],
       "reason": "Plan 176 aging authority is Core-only (no host owner); seam covered by AgingSystem tests.",
       "diagnostic": true,
@@ -7732,6 +7744,41 @@
         "src/Host/ShelterGovernanceHostSession.cs"
       ],
       "reason": "Integration seam in ShelterGovernanceEngine.",
+      "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "quests.dynamicquestgenerator.bindauthoredtemplates",
+      "class_name": "DynamicQuestGenerator",
+      "method_name": "BindAuthoredTemplates",
+      "file_path": "Assets/Ashfall.Core/Quests/DynamicQuestGenerator.cs",
+      "owner": "quests",
+      "classification": "HOST_REQUIRED",
+      "status": "BOUND",
+      "observed_caller_count": 2,
+      "observed_callers": [
+        "src/Host/DynamicQuestHostSession.cs",
+        "src/Host/HostCli.DynamicQuest.cs"
+      ],
+      "reason": "Integration seam in DynamicQuestGenerator.",
+      "diagnostic": false,
+      "activation_condition": null,
+      "expiry": null
+    },
+    {
+      "port_id": "survivors.agingsystem.bindvalidatedcatalog",
+      "class_name": "AgingSystem",
+      "method_name": "BindValidatedCatalog",
+      "file_path": "Assets/Ashfall.Core/Survivors/AgingSystem.cs",
+      "owner": "survivors",
+      "classification": "HOST_REQUIRED",
+      "status": "BOUND",
+      "observed_caller_count": 1,
+      "observed_callers": [
+        "src/Host/AgingHostSession.cs"
+      ],
+      "reason": "Integration seam in AgingSystem.",
       "diagnostic": false,
       "activation_condition": null,
       "expiry": null

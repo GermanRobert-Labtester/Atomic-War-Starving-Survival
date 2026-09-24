@@ -4,8 +4,8 @@
 
 ## Summary Metrics
 
-- **Total integration seams:** 296
-- **Host-required (`HOST_REQUIRED`):** 191 (all verified called from `src/`)
+- **Total integration seams:** 298
+- **Host-required (`HOST_REQUIRED`):** 193 (all verified called from `src/`)
 - **Optional host ports (`OPTIONAL_HOST`):** 7
 - **Live via Core (`LIVE_VIA_CORE`):** 54
 - **Test/Diagnostic only (`TEST_ONLY`):** 44
@@ -57,8 +57,8 @@
 | `CatalogIntegrityDefinitionChecker.RegisterOrReference` | core-architecture | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in CatalogIntegrityDefinitionChecker. |
 | `ChildDevelopmentSystem.RegisterChild` | survivors | `TEST_ONLY` | 0 | 🧪 TEST | Child registration is exercised in Core tests; no production host caller yet. |
 | `CombatCatalog.Register` | core-architecture | `HOST_REQUIRED` | 27 | ✅ BOUND | Integration seam in CombatCatalog. |
-| `CombatPerks.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in CombatPerks. |
-| `CombatTraumaSystem.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in CombatTraumaSystem. |
+| `CombatPerks.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 4 | ✅ BOUND | Integration seam in CombatPerks. |
+| `CombatTraumaSystem.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 4 | ✅ BOUND | Integration seam in CombatTraumaSystem. |
 | `CommitmentSystem.RegisterCommitment` | commitments | `LIVE_VIA_CORE` | 3 | ✅ BOUND | Integration seam in CommitmentSystem. |
 | `CompanionAnimalSystem.BindFoodPort` | ecology | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in CompanionAnimalSystem. |
 | `CompanionAnimalSystem.RegisterCompanion` | ecology | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in CompanionAnimalSystem. |
@@ -208,7 +208,7 @@
 | `RailwayInterlockEngine.BindInventory` | expeditions | `HOST_REQUIRED` | 10 | ✅ BOUND | Integration seam in RailwayInterlockEngine. |
 | `RailwaySystem.RegisterCatalog` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in RailwaySystem. |
 | `RailwaySystem.RegisterLogisticsCatalog` | expeditions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in RailwaySystem. |
-| `RationConflictSystem.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in RationConflictSystem. |
+| `RationConflictSystem.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 4 | ✅ BOUND | Integration seam in RationConflictSystem. |
 | `RebelBranchCatalog.Register` | core-architecture | `HOST_REQUIRED` | 27 | ✅ BOUND | Integration seam in RebelBranchCatalog. |
 | `ReconTelemetrySystem.RegisterPlatform` | expeditions | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in ReconTelemetrySystem. |
 | `RelationshipDecaySystem.RegisterOrUpdatePair` | survivors | `TEST_ONLY` | 2 | ✅ BOUND | Pair-bond registration is Core-test exercised; no production host caller yet. |
@@ -303,7 +303,7 @@
 | `RetentionPolicyCatalog.RegisterPolicy` | records | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Protected obligation table registered in the catalog constructor. |
 | `ShelterGovernanceEngine.RegisterBlocDefinition` | governance | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Catalog-load self-registration; called by ShelterGovernanceEngine.LoadCatalog. |
 | `ShelterIdentitySystem.RegisterOrigin` | shelter | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Catalog-load self-registration; called by ShelterIdentitySystem.LoadCatalog. |
-| `AgingSystem.RegisterSurvivor` | survivors | `TEST_ONLY` | 1 | ✅ BOUND | Plan 176 aging authority is Core-only (no host owner); seam covered by AgingSystem tests. |
+| `AgingSystem.RegisterSurvivor` | survivors | `TEST_ONLY` | 4 | ✅ BOUND | Plan 176 aging authority is Core-only (no host owner); seam covered by AgingSystem tests. |
 | `AssetManifestCatalog.RegisterEntry` | assets | `TEST_ONLY` | 0 | 🧪 TEST | Plan 50 asset manifest registration exercised by tests; host resolution uses the catalog loader. |
 | `MaritimeExplorationSystem.RegisterDiveSite` | maritime | `TEST_ONLY` | 0 | 🧪 TEST | Island system (no host/save/panel); catalog registration covered by tests only. |
 | `MaritimeExplorationSystem.RegisterEquipment` | maritime | `TEST_ONLY` | 0 | 🧪 TEST | Island system (no host/save/panel); catalog registration covered by tests only. |
@@ -324,3 +324,5 @@
 | `ShelterIdentitySystem.BindOrigins` | holdfast | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in ShelterIdentitySystem. |
 | `ModSupportSystem.BindSpecification` | mods | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in ModSupportSystem. |
 | `ShelterGovernanceEngine.BindValidatedBlocs` | governance | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in ShelterGovernanceEngine. |
+| `DynamicQuestGenerator.BindAuthoredTemplates` | quests | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in DynamicQuestGenerator. |
+| `AgingSystem.BindValidatedCatalog` | survivors | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in AgingSystem. |

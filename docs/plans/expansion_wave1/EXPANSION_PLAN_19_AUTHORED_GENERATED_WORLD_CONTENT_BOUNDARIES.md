@@ -3091,3 +3091,267 @@ High-volume expansions must use a batch manifest with expected row count, unique
 ### Generated-content red-team
 
 Try to generate a variant that says the carton was “stored for two months,” assigns it to a named person, or claims the failure caused a medical emergency. Each must fail validation unless an authored source supports the value. Try an absent writer, a repeated ID, a missing record, a mistranslated uncertainty term, and a save containing a response ID from an obsolete version. The expected behavior is a safe neutral line, an explicit unresolved state, or a reviewed migration—not confident invention or silent completion.
+
+## Pass 28 — Caregiving testimony, simulation facts, and authored interpretation
+
+Part 46’s caregiving-failure question is a provenance test. A moving scene can overstate what the simulation knows. Current CaregivingSystem facts are narrow: one caregiver per patient and one patient per caregiver; assignment start/end events; alive, fitness, and need validation; tick-driven recovery, fatigue, affinity, and bond changes; a dialogue event when bond crosses its threshold; and save data for active assignment plus bond. The duty-roster host vacates the caregiver’s existing role when care begins and reapplies that rule on restore. It does not store care hours, shift attendance, patient consent, why an assignment ended, who requested relief, or the emotional meaning of a handoff.
+
+### Three provenance layers
+
+**Layer A — canonical simulation facts.** Query current assignment through the caregiving owner. Query survivor life/fitness/health, medical admission, disease/radiation, relationships, and duty-roster role from their respective owners. A quest may take a point-in-time display snapshot, but revalidate before action. Save ownership remains with current systems. Do not copy fatigue, condition, role, or bond into new mutable quest fields.
+
+**Layer B — authored testimony.** Caregiver, patient, and roster keeper can have distinct scripted perspectives. Their words are character statements, not measurements. One may remember an earlier duty; another may dislike being passed between people; neither proves a missing assignment or medical outcome. Attribute each statement to a known speaker. If the source fact is absent, communicate uncertainty rather than inventing a roster record.
+
+**Layer C — narrative interpretation.** The story may interpret routine as tiring, care as labor, and handoff as emotionally difficult. Those are authored themes, not automatic state transitions. They may affect a local line but cannot mutate affinity, bond, fatigue, diagnosis, faction reputation, or campaign state unless a separately approved canonical command does so.
+
+### The Cup on the Rail as provenance example
+
+The cold cup, request for a person instead of a shift, and roster keeper’s concern about uncovered work are authored details. They are not generated from tick hours. The title does not imply a persisted cup object. If the roster keeper mentions a former job, read the current duty-roster query before using role-specific text; care start vacates the role. Say “the work you left” only if roster history or an authored preceding scene supports it. If evidence is absent, use general copy such as “The board has a space where your name used to be,” and only if the current UI can truthfully show that.
+
+Dialogue about fatigue may use current fatigue only when the needs owner exposes it and a reviewed threshold exists. Otherwise let a character request relief without a numeric or diagnostic claim. Patient need is dynamic: if recovery changes the validation result, an attempt to assign a replacement can be rejected as “does not need care.” Frame that as the current system no longer accepting the action, not proof that the previous caregiver failed.
+
+### Authored versus generated variation
+
+Keep the central scene and consequential response labels authored. Optional greeting, relationship phrasing, and ambient cup/blanket details may use small authored variants if an established seeded selector exists. Variation may not change eligibility, consequences, blame, diagnosis, or quest success. Do not use generic generation to invent identity, relationship history, absence, or medical claims. If deterministic variation cannot be proven, use one stable line per branch.
+
+A generated quest instance may select an eligible existing pair only if the current quest owner can bind IDs safely and the content says “assigned caregiver” without gender, history, or relationship assumptions. First release should author one entity-mapped pair after census; templating is a later layer. Names, pronouns, voice, relationship labels, and condition references require review against current roster and canon.
+
+### Record and migration policy
+
+No new “caregiving failure” field is justified. No hours ledger, missed-visit counter, patient-consent flag, fatigue history, or handoff audit should be implicit content infrastructure. If a later design makes one of these facts mechanically necessary, produce a separate architecture decision: owner, mutation rules, capture/restore, deterministic clock, old-save migration, truthful UI, and existing consumer. Without that decision, store authored narrative outcome only in the existing quest owner if supported, and keep care truth in CaregivingSystem.
+
+### Reusable review checklist
+
+For each care-related line or condition ask: Is this owner fact, authored testimony, or interpretation? Can the fact be queried now? Does it remain true between display and click? Does the line imply elapsed hours or missed labor that the save lacks? Does it assign medical causality outside the clinical owner? Does the choice claim a relationship effect that no owner returns? Could the prose run after save/restore without duplicating an event? Are variants cosmetic and deterministic? Mark unsupported claims as DRAFT copy questions, not schema requirements.
+
+**Production cost:** low for authored dialogue using exposed pair/role facts; medium for conditional gates across owners; high for persistent accountability history or procedural care simulation. One bounded shelter handoff quest fits core. A larger companion anthology is expansion content only after content mapping, speaker review, and proof that variants ask distinct human questions. The next batch should prefer a few high-quality branches over generated “failure” incidents.
+## Pass 29 — Exact-site micro encounter provenance
+
+This pass uses the World Bible’s location-coverage question to separate authored catalog facts from runtime inference. The reviewed JSON contains 28 authored micro encounter definitions. Three carry exact requiredLocationId values corresponding to location records: abandoned_hospital, location_flooded_subway_depot, and loc_garrison_checkpoint_gamma. The remaining 25 have an empty requirement. The common loader marks all 28 as micro definitions and registers them in the common encounter catalog. At runtime, candidate eligibility and weighted selection determine whether one appears. Therefore catalog presence is authored truth; encounter appearance is runtime outcome; “this destination lacks narrative” remains unproven until every catalog and consumer is joined.
+
+### Provenance schema for coverage decisions
+
+Each proposed site/encounter addition should carry these review-only fields in its planning card:
+- canonical destination ID and source location catalog;
+- authored encounter ID and source JSON file;
+- binding mode: exact, global, or intentionally dormant;
+- selection owner and call site that supplies location context;
+- eligibility conditions (danger, stance, weather gate, depletion, quest state);
+- candidate weight and RNG stream if a weight change is proposed;
+- authored evidence purpose and intended player interpretation;
+- route reachability evidence and fallback;
+- content-utilization result and collision scan;
+- save/restore impact, even when the expected result is none.
+
+These fields are an audit template, not an invitation to add a second metadata catalog. Keep authored location and encounter truth in the existing JSON authorities. Keep selected encounters, resolved choices, and depletion in the existing runtime/save owner. A report can derive the join without persisting it.
+
+### Three epistemic levels
+
+**Verified:** there are 179 records in locations.json and 28 micro encounter definitions. Three exact requiredLocationId references resolve in that catalog. Twenty-five definitions are unbound. The code has an exact ordinal eligibility check for nonempty requirements and loads the micro file into NarrativeEncounterSystem.
+
+**High-confidence implication:** exact-bound entries cannot be selected off-site through this GetEffectiveWeight check; unbound entries can be eligible at more than one site, subject to their remaining gates. The loaded definitions share the common encounter candidate set instead of constituting a destination-generation pool.
+
+**Unknown pending consumer census:** which of the 179 records can start an expedition; whether every route passes the canonical location ID; how often each global micro entry is offered; whether other catalogs provide narrative coverage at any destination; and whether a location with no candidate is intentionally quiet. Do not write “missing content” against a catalog row until these questions are answered.
+
+### Authoring policy
+
+For a truly site-specific encounter, set requiredLocationId to the canonical, existing location ID and retain exact spelling/case. Validate that the encounter ID is unique across the common catalog, all referenced choices parse, and any flags/items/effects resolve through supported consumers. Add no new map location merely to give a text entry somewhere to bind. If an encounter is intentionally portable, leave the requirement empty and author copy that remains coherent at multiple destinations; avoid named architecture, climate, faction presence, or salvage claim that only one site supports.
+
+Do not “fix” the 25 global definitions by assigning arbitrary destinations to make a coverage chart look full. Their current prose may be deliberately portable or may require a voice/location review; only an entity-level audit can decide. Similarly, do not duplicate one global entry into multiple exact-bound clones. If reusable prose with site-specific variants is desired, inspect whether the current data schema supports variants; otherwise author a single stable entry or a small set of distinct records with clear reuse rationale.
+
+### Generated content boundary
+
+The runtime may choose which authored encounter appears, but it should not generate a new history for that site. Seeded weighting can vary presentation without altering canon. A generated variation must preserve the factual meaning of the location and choice consequences. A local record may say that someone marked a board, left a ledger, or rigged a line because the authored entry says so; it must not infer the identity of the author, their faction, the date, or later events unless another canonical owner supplies evidence.
+
+A content-coverage report should be reproducible from source data and stable ordering. Sort IDs ordinally; distinguish empty reference from invalid reference; report counts and individual rows; do not use hash iteration order or runtime RNG for the audit. Keep this report as a generated diagnostic only if the repository has an owning generator; otherwise document the manual command and output recipe without hand-editing generated artifacts.
+
+### Duplicate and collision firewall
+
+Before adding a location-bound record, search the complete encounter corpus for same-site subject, choice, flag, reward, and prose phrase. Existing examples already include a hospital chapel ledger, an Undertow-marked flooded-depot raft line, and a Gamma levy board. New work should extend their consequences or voices only through the existing quest/dialogue owners; it should not rewrite or clone those source records. The dead-livestock micro-hazard already maps a specific authored exposure flag into the canonical DiseaseSystem through MicroLocationHazardRegistry. Do not add a second contamination ledger or duplicate disease effect.
+
+**Production cost:** low for the static audit; medium for new content using existing fields; high for adding selector tiers, per-site generated narratives, new flags, or saved exposure history. **Core versus expansion:** source validation and exact ID integrity belong in the core content pipeline; new destination story packs are expansion content. Save impact is expected none for a pure join report and must be confirmed if the proposed content adds durable outcomes.
+## Pass 30 — Region names, POI labels, and destination identity
+
+Part 46’s low-density question exposes a provenance boundary: map_regions.json defines eight regions and sixteen local POI labels; wasteland_map_v1.json defines 22 canonical travel nodes/routes; locations.json defines 179 location records. Neither node nor location rows carry a region field. CatalogIntegrityValidator intentionally exempts map_regions.json/points_of_interest from global reference resolution because CartographySystem stores values as KnownPoiIds labels. The reviewed source establishes regional label authorship, not destination membership. A loc_ prefix is not sufficient evidence to promote a label into a canonical ID.
+
+### Evidence ladder for regional claims
+
+- **Authored regional fact:** region ID/name, terrain, hazard labels, scouting difficulty, and two POI labels in map_regions.json.
+- **Authored travel fact:** node IDs, display names, routes, and map presentation fields in wasteland_map_v1.json.
+- **Authored location fact:** location ID, description, danger, travel time, and radiation fields in locations.json.
+- **Verified regional link:** none by direct region field or matching POI ID in the reviewed map/location catalogs.
+- **Runtime map behavior:** MapPanel projects canonical WastelandMap nodes/knowledge. Main.RecordCartographySurvey acts through WastelandMap and shared skill progression. The separate region APIs in CartographySystem do not prove live host integration.
+- **Proposal:** define a missing relation only after the architecture owner chooses its canonical shape.
+
+Every regional plan should carry this ladder so prose does not turn a label into a navigable place.
+
+### Authored versus runtime state
+
+Keep region names, terrain, hazard labels, and POI labels authored. Keep route graph, node unlocks, fog, survey provenance, and player discovery with WastelandMap. Keep any future node-to-region relationship in one ratified authority. Derive density counts from that relationship; do not persist a cached count or copy membership into quest saves. Quest objectives use stable canonical location IDs only after mapping is validated.
+
+Runtime may report known, surveyed, or visited from WastelandMap’s actual knowledge. It cannot generate that a route lies in Dead Coast or Iron Ridge. Narrative may use region terrain/hazard wording as atmosphere only when the player has access to that region context. Before then, phrase it as a chart’s claim, not a live forecast.
+
+### Authoring provenance fields
+
+A planning card for a regional story records region ID, intended canonical destinations after mapping, source catalog for each claim, whether each hazard is mechanical or flavor-only, trigger route, evidence freshness, exact map event needed, and fallback. These are review fields, not new runtime JSON authority. Prose cards additionally name the speaker perspective and confidence: the chart says; a survivor remembers; the map confirms. This makes a contradiction usable as story without recasting a data mismatch as deception.
+
+### Migration and duplicate-state policy
+
+If a foreman selects node-owned region IDs, old saves can keep their existing map knowledge; membership is static content, not saved discovery. If membership is dynamic, the design must explain who mutates it, deterministic inputs, save owner, migration default, and meaning of prior discoveries. If old POI labels are replaced with canonical IDs, migration must preserve saved discoveries keyed by old labels; never silently rewrite those values. A report can identify unmatched labels, but only its owning generator may produce generated artifacts.
+
+Do not globally remove the validator’s local-definition exemption. Add a precise cross-catalog validation only after the target relationship is ratified. The quality report should then cover duplicate region IDs, duplicate labels, unknown region IDs, missing node membership, duplicate membership when disallowed, orphan map nodes, inaccessible nodes, unused regions, and narrative-candidate coverage. Keep local-label validation separate from cross-reference validation.
+
+### Content release boundary
+
+The first safe slice is an authored atlas page that calls itself a chart and offers no route action. The next slice is an approved static node-to-region relation plus validation and a deterministic density report. Only then should region-gated quests or arrival prose be enabled. Generated variation may alter wording or environmental detail but cannot assign a destination to a region, change a hazard claim, or reveal an unverified route.
+
+Production cost: low for a source report and atlas copy; medium for one static relation owner and validator; high for changing topology, dynamic membership, or migrating regional discovery state. A full eight-region anthology is high content cost because every scene needs location, encounter, route, and prose integration. No new region, faction, location, or persistent fact is canonized in this pass.
+### Pass 30B — Regional record card and change-control contract
+
+A future crosswalk can be represented as a reviewed authored relation, but the target owner must be chosen first. A planning-only record card should contain: region ID; canonical node ID; assignment status (proposed, approved, rejected, retired); source for the match; why the match is geographically and narratively defensible; whether more than one region may contain the node; route reachability; narrative records attached; hazard semantics; reviewer/date; and migration consequence. Do not store this whole editorial workflow in game JSON. Runtime needs only the minimal approved relation and its schema contract.
+
+**Assignment rules:** never match by a title string alone; use exact IDs after a human-readable evidence review. Do not automatically choose the nearest map coordinate until the canonical graph has a stable coordinate owner and a design decision says nearest-region membership is meaningful. Do not infer relation from a scavenging-table location_type, faction field, map hazard, radio content, or geologic-sounding name. If a node cannot be defended, leave it unassigned. A global/unregional node is a valid authored status, not necessarily a defect.
+
+**Change lifecycle:** a proposed link enters DRAFT with source evidence; the map owner approves it; a validator confirms both IDs and cardinality; content authors may then reference the relation; saved discoveries remain keyed to map node IDs. Removal marks the link retired in source control and updates quest availability/fallback. If the relationship ever becomes dynamic due to world-state control or terrain change, that is a separate architecture proposal with persistent ownership and deterministic transition rules.
+
+**Generated reporting:** a static tool may summarize 0/1/many node membership per region, reachable nodes per campaign phase, encounter coverage, and unassigned nodes. It must distinguish “no data” from “zero” and “global.” Rows are stable-sorted by region ID then node ID. The report cannot automatically classify a region as impoverished, empty, unsafe, or forgotten. Those are design judgements based on player experience, not arithmetic.
+
+**Story truth protocol:** an NPC may say “my map puts the old repeater in the highland gap” as attributed testimony, but narrator/system copy cannot say “the repeater is in Frozen Highland Gap” before link approval. If two characters disagree, preserve the source on each claim and offer verification only when a canonical map action exists. An incorrect chart can be an intentional plot element, but do not turn unresolved data shape into intentional deception without an authored rationale.
+
+**Done when:** relation ownership is signed; schema and validator target are specified; migration is no-op for existing map saves; route selectors consume only approved links; coverage reporting distinguishes region labels from destination IDs; and a rollback removes content dependency before data relation retirement.
+
+## Pass 31 — Cargo Truth, Price Neutrality, and Authored Trade Provenance
+
+### Boundary map
+
+This pass formalizes how a future caravan story can use current trade data without turning computed presentation into duplicate authored authority. There are at least four different concepts in source and data; they must remain separately named in plans, tests, and UI.
+
+1. Route specification: caravan_trade_routes.json provides a faction, origin/destination region IDs, travel/risk/season/arrival parameters, guard strength, and authored import-demand/export-surplus item IDs. It describes route behavior and declared trade context.
+2. Production provenance: economy_goods.json regionalSupply annotates a good with one current supply vocabulary. RegionalSupplyRouter maps route origins to accepted tags and selects at most four specialty lots (staples are handled separately); the eligible pool and its scarcity come from authored goods data.
+3. Merchant offering: merchant_caravans.json is consumed by ShelterBarterSystem; its fixed catalog stock/demand-tag contract must not be assumed to be the same record or consumer as TravelingCaravanSystem's origin-provenance cargo. A story can refer to whichever live screen/owner actually presents the merchant, but integration must identify that owner explicitly.
+4. Price context: regional_prices.json supplies modifier overrides relative to economy_goods base prices. Item entries override category entries; absent entries are neutral 1000 permille. Coverage gaps are therefore unexpressed regional differences, not missing transaction values.
+
+Generated in this architecture means runtime selection or projection from authored facts under a deterministic contract. “The caravan has these lots today” is generated cargo; “this faction exports scrap on this route” is authored trade context; “the price modifier is 0.8” is authored atlas data; the final displayed price is a computed projection. A journal sentence may describe the cargo the player actually observed, but must not claim an item was carried merely because a region has a matching tag when the current seeded selection omitted it. Likewise a static prose line cannot imply a specific shortage when the active trade owner shows a different state.
+
+Data coverage review rule: report counts by namespace and consumer, not just raw JSON rows. For a regional price audit, count distinct region IDs, distinct item IDs, category entries, overlapping overrides, and goods without an item/category override. Keep price regions (flotilla, foundry, greenhouse, traplines, settlement, coastal) distinct from route origin regions (including settlement, iron_basin, industrial_belt, deep_coast, ash_flats in the visible route samples). A new alias or crosswalk needs a named owner and integrity validation; never silently treat similar names as equivalent. RegionalPriceAtlas neutral fallback preserves a valid base price in an uncovered region, so player-facing UI should say “standard rate” only if that wording is accurate for the consumer, not “price unavailable.”
+
+High-value expansion candidates should be ranked by player consequence:
+- A modifier coverage gap matters if it erases a meaningful local surplus/imported-scarce story or makes a route's authored supply role unintelligible.
+- An unannotated good affects provenance labels or cargo eligibility, but does not necessarily make the good untradeable.
+- An origin with no matching specialty goods can yield only the baseline inventory; that is honest scarcity. Do not pad the inventory with a fictitious substitute.
+- Route demand/surplus items that cannot resolve to a current goods definition should be catalog integrity findings, not runtime prose guesses.
+
+Content should carry provenance metadata in authoring notes: static line, authored route claim, runtime-confirmed observation, or conditional line. Conditional line dependencies should enumerate identifiers and the consumer able to resolve them. If those facts are not available at dialogue selection time, use neutral language. Example: “The list was shorter by the time we reached you” is safe as a character's account; “the Scale crew took the membranes at Kilo” requires an authored, witnessed event fact.
+
+Minimum viable data work is an audit table, not a new schema: route ID → valid origin/destination → imports/exports resolve → goods provenance eligible → price override or neutral fallback → player-facing consumer → narrative claims safe to display. Only after this matrix exposes a repeated, consequential gap should the team propose data additions. Any such additions require schema, catalog validator, live-consumer binding, and review of canonical IDs. Never duplicate base prices, computed cargo, or mutable visit state into quest JSON.
+
+Acceptance criteria for downstream implementation:
+- A reload reproduces the same authored catalog and the same generated result for the same supported seed.
+- No narrative card reports unobserved cargo as fact.
+- An omitted price row displays a valid neutral calculation.
+- Every trade claim can be traced to a route, good, current inventory, or explicitly labeled rumor.
+- Separate caravan consumers remain separate until a deliberate integration decision joins them.
+
+
+### Pass 31B — Coverage audit and content acceptance table
+
+The first authoring task should be a reproducible read-only inventory:
+- enumerate current route-origin and destination IDs;
+- enumerate current economy goods with a nonempty regionalSupply tag and count each accepted tag;
+- evaluate, for each distinct origin, which goods are eligible for specialty cargo and which three base staples are supplied separately;
+- record the max-lot cap and actual selected lots under a named deterministic seed;
+- enumerate regional price regions and item/category rules, identifying overrides and neutral cases;
+- connect each list to its actual consumer: TravelingCaravanSystem, ShelterBarterSystem, route network, TradeScreenPresenter, or RegionalPriceAtlas.
+
+Keep the inventory as evidence for a design review; do not hand-copy a generated sample into a second authoritative catalog. If data changes, regenerate the report from sources. A sample is an example of one deterministic run, not a promise that every caravan carries those goods.
+
+A review row should classify each proposed line as: observed fact, catalog declaration, character report, player inference, or rumor. These labels control language. Observed facts may use present-tense exact quantities; catalog declarations may say “the route lists”; character reports need attribution (“the trader says”); player inference should be phrased as a question; rumors must remain uncertain. This rule lets narrative be vivid without making a dynamic catalog claim false.
+
+Price coverage can be expanded deliberately without turning every region-good pair into content. Pick a small authored matrix where price modifiers support a meaningful trade decision: local surplus versus imported scarcity, with an item-level override only where a category rule would misrepresent a distinctive good. Preserve base_price as the only base value. Check category-item precedence and legal modifier bounds through the existing validation path. An entry that changes a number but not a visible decision is low-priority production work.
+
+Downstream gate: implementation is ready only when the owner can answer whether route data and merchant stock are being displayed by the same view, what catalog supplies actual cargo, and whether a price quote is computed before or after trust/transaction rules. Any unresolved response blocks exact quest text and price rewards, but not neutral scene prose.
+
+## Pass 32A — Machine Condition, Historical Log, and Player Claim Provenance
+
+### Current authority map
+
+The World Bible's maintenance-log question should not be answered by counting filenames alone. Current evidence shows:
+- shelter_machine_identities.json defines seven named machine identities, including HEPA, foundry cupola, generator, ventilation, water still, boiler, and airlock machinery, with condition owners described in the authored records.
+- Main.ShelterInfrastructure builds current readings from several host systems and evaluates diagnostic tells/glitch events against those readings. JournalSystem's glitch-noted key records that a glitch was noted; it is knowledge, not a repair or condition ledger.
+- bunker_maintenance_glitches.json contains a separate set of authored emergency/glitch records; BunkerMaintenanceCatalog can load and query those entries, and BunkerMaintenanceProjection maps glitch IDs to room/category groupings.
+- bunker_maintenance_logs_batch_2.json, bunker_maintenance_logs_batch_3.json, and equipment_failure_logs.json contain different dated narrative records, with overlapping domains such as generator, water, ventilation, heating, and equipment. Their presence does not prove that they are generated from live condition changes or joined to the seven identity records.
+- Carbide tool wear audits and other specialty wear corpora concern authored tooling history; they are not a campaign machine condition source.
+
+The safe scope is a provenance and coverage plan. No new maintenance event store, wear ledger, repair queue, MachineCondition mirror, or dynamic journal generator should be introduced. Existing machine owners remain authoritative for current readings. Existing narrative discovery/catalog owners remain authoritative for authored documents and known-glitch content. Quest and dialogue systems consume projections and request actions through those owners.
+
+### Four-way content classification
+
+Every proposed record receives one primary source class:
+1. Static authored record: a predetermined log with author, date, system, and content. It may describe a fictional past event but cannot be treated as a live event.
+2. Current measurement: a value queried from its machine owner at scene time. It can support a present-tense diagnostic only within the owner's freshness window.
+3. Witness account: a character's report, explicitly attributed and potentially incomplete.
+4. Reconstructed interpretation: player or analyst synthesis derived from multiple sources, with confidence and unresolved alternatives. This is not a source of truth and must not mutate machine condition.
+
+A future contextual journal card may cite multiple sources, but it must preserve each source class and ID. Example structure for a design artifact: incident concept ID; optional machine identity ID; optional condition key; static log IDs; observation source; speaker; discovered/known condition; authored line IDs; supported consequence command; stale-data behavior. Any field without a consumer remains documentation metadata, not a candidate persisted schema.
+
+### Corpus gap hypothesis, without false positives
+
+The initial visible counts show substantial existing maintenance material: ten log records in batch 2, twenty-five in batch 3, twenty glitch records, and twenty equipment-failure records. These totals overlap in theme and are not comparable units. Some identity machine families may have no exact stable link to any one record; that is a crosswalk hypothesis requiring row-by-row comparison, not a proven missing corpus. Before authoring another generic maintenance corpus, produce a matrix of machine ID → condition owner/key → existing tell/glitch ID → exact log reference, if any → current consumer → player-observable outcome. Mark “no exact binding found” separately from “no relevant prose exists.”
+
+A maintenance story can reuse an existing log only as historical context, not duplicate it in a new quest catalog. If a gap is verified, add a narrowly scoped authored companion entry in the existing narrative authority after the proper owner approves the data path. A new static log should not encode today's condition value, and a runtime value must never be baked into the permanent record.
+
+### Determinism, save, and migration boundary
+
+Current readings should be queried, not copied into a separate dialogue save section. A durable quest fact records the player's action or accepted conclusion, not every value read during dialogue. If a future story requires a measurement snapshot as evidence, the owning machine system must expose an immutable, stable result or a canonical event; until then, store only that the player observed an existing diagnostic tell. Reopening an investigation requires a new owner-backed observation, not a repeated UI refresh.
+
+Authored IDs need uniqueness and reference validation. If the content schema cannot carry condition keys or machine IDs, put the mapping in a validated owner-specific table only after architecture approval; do not scrape free text, infer from system labels, or normalize “generator” strings into machine_generator. Unknown IDs should produce a visible validation finding and neutral scene copy, not a silent match.
+
+### Coverage acceptance
+
+A downstream data audit is useful if it reports: exact identity coverage; machine-condition keys with tell or glitch coverage; authored log records by subsystem, dates, and speakers; current discovery/codex consumer; unresolved references; and evidence of any runtime event bridge. Report counts with raw IDs to permit correction. Do not call seven machines “fully covered” because seven cards render, nor call a subsystem “missing” because its name differs. Pass criteria: every exact join has a source and consumer; every unmatched family is categorized as an authored prose gap, an owner event gap, or a deliberate non-link; no record is double-counted as both live state and historical evidence.
+
+
+### Pass 32B — Crosswalk contract and data-authoring acceptance
+
+The first useful deliverable is a crosswalk worksheet with one row per authored identity or narrative record. Suggested columns:
+- machine ID, display name, declared condition owner;
+- individual condition keys actually read by the host;
+- tell or glitch ID and its threshold/eligibility source;
+- whether a journal knowledge fact is applied, and which exact key;
+- maintenance record ID, authored date, author, subsystem label, and file path;
+- exact machine identity reference in that record, if one exists;
+- current runtime consumer and player-visible surface;
+- whether the link is authored, dynamic, or a proposed inference;
+- confidence, unresolved conflict, and next responsible owner.
+
+Rows must retain raw IDs and original labels; normalized groupings belong in a separate analysis column. “Generator” can refer to multiple systems, so a label match is not a stable join. Exact ID match is strongest, then explicit authored reference, then owner-approved condition-key map; fuzzy text search is a discovery aid only. A fuzzy match must never drive gameplay.
+
+If the matrix shows that one machine condition has no dedicated maintenance record, there are three safe treatments:
+1. Declare a genuine content gap and write a static, clearly dated historical record that does not pretend to report current values.
+2. Reuse a relevant general maintenance record as background, preserving its original author/date and not claiming it concerns the current machine.
+3. Keep prose neutral and rely on the live tell alone.
+A fourth treatment—generate a per-campaign log from current condition—is a new runtime content architecture, requiring an explicit authority decision, deterministic identity, save/replay rules, player authorship model, localization plan, and data validation. It is outside this pass.
+
+Record schema proposal stays conceptual until schema owners approve it. The content packet could include record_id, source_type, authored_at_day (for static fiction, not current campaign date), author/speaker, machine_ref (optional exact ID), subsystem_ref (optional controlled ID), condition_ref (only a validated key), body, discovery mechanism, and related record IDs. Existing corpora use differing field names; do not normalize every file in place or duplicate data into a new canonical mega-catalog. A migration would require a mapping file, old-ID preservation, validator coverage, and consumer census.
+
+Quality gate for new prose: every claim is either a verifiable static fact, a present owner query, an attributed report, or a labeled interpretation. Numeric readings include units, date, and measuring context when authored; do not improvise thresholds. Every claimed part replacement points to an existing item or remains a non-mechanical story object. Mentioning a repair does not prove the machine is running. A log can be incomplete on purpose, but the UI should disclose “record fragment” rather than silently presenting a partial sentence as a complete report.
+
+Before merge of a later data package, compare the coverage worksheet with the current authoring catalog and content utilization classifications. Existing logs in CODEX_ONLY or similar status are not automatically live; an explicit loader, discovery route, rendering surface, and player knowledge path must be proven. Conversely, a catalog that is read-only can still serve authored story content if the route to access it is real. Keep those two axes—runtime behavior and player discovery—independent.
+
+
+### Pass 32C — Crosswalk worksheet and content gap decisions
+
+Create one row per authored identity or narrative record: machine ID and display name; actual condition owner and populated keys; tell/glitch ID and eligibility source; existing journal key; maintenance record ID/date/author/system; exact machine reference if authored; actual discovery/render consumer; proposed link type; confidence; unresolved conflict; and next owner. Preserve raw IDs and original labels. “Generator” can denote multiple systems, so a name match is discovery evidence, never a gameplay join.
+
+If a machine family has no dedicated record, choose among three treatments: write a static dated historical record without claiming current condition; reuse a relevant general maintenance source with its original attribution; or keep dialogue neutral and rely on the live tell. Generating a per-campaign log from current state would require an explicit architecture decision, deterministic identity, save/replay rules, authoring model, and validator; it is outside this plan pass.
+
+New corpus rows should add distinct narrative functions: a witness handoff, formal inspection, repair receipt, training note, or unresolved shift close. Avoid mass-producing equivalent wear descriptions. Preserve old IDs and dates; corrections add a new attributed source instead of rewriting a past player's knowledge. A record can be intentionally incomplete, but the UI should label it a fragment rather than imply completeness.
+
+Acceptance requires unique IDs and safe references; every claim classified as static fact, live query, attributed report, or interpretation; no current value baked into permanent content; exact consumer and discovery route proven. If a link requires new schema fields, census every consumer, migration fallback, and validator before proposing the change. Documentation here does not authorize data edits or a new loader.
+
+
+### Pass 32D — Evidence score and closure rules
+
+For the coverage worksheet, classify each proposed join as exact authored reference, owner-approved mapping, heuristic lead, or no evidence. Only the first two may become gameplay gates. Heuristic search can nominate review work but cannot select dialogue, unlock service, or alter machine condition. Give each unresolved gap a disposition: author a static companion record, reuse an attributed generic record, leave the machine family unlinked, or request a separate architecture decision for dynamic event generation.
+
+Close the audit with a version/date stamp, source files, and consumer paths. Re-run counts when source catalogs change; do not copy the previous pass's counts into an implementation claim. This allows future reviewers to distinguish a stable authority contract from a temporary content census.

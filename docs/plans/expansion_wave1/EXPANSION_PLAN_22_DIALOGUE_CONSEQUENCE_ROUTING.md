@@ -3233,3 +3233,310 @@ Stop the integration if the only way to remember the response is a new dialogue-
 The reviewer should be able to demonstrate: first test read with no second source; both records read in either order; a mismatch between same batch and same carton; player refusal; unavailable speaker; unavailable location; invalid response ID; inventory query without mutation; transfer rejection; transfer accepted exactly once; panel reopen; campaign save and reload; and localized long labels. Each case records expected quest state, visible text, and owner mutation. Any unverified case remains a named blocker rather than a guessed pass.
 
 The core slice’s measurable outcome is modest but complete: the player can read two different tests, identify their limits, choose a report treatment, see whether that choice was recorded, and encounter no false material promise. Expansion work can make the archive echo through future craft content, but only by adding another authored source and an actual consumer, not by making the first report silently control the economy.
+
+## Pass 28 — Consequence routing for a care handoff
+
+This pass defines where “The Cup on the Rail” may cause change. Relevant authorities are CaregivingSystem, which owns assignments/bond and emits start/end/bond/dialogue events; DutyRosterSystem, whose Godot integration vacates the caregiver’s role when care starts; and existing needs, health, medical, disease, radiation, and relationship owners. Quest and dialogue are orchestrators, not authorities over those values.
+
+### Effect classes
+
+| Player action | Consequence class | Owning path | Required result handling |
+|---|---|---|---|
+| Ask a character a question | Cosmetic/local | Dialogue graph | Advance node only; no simulation mutation |
+| Inspect current pair | Read-only | Caregiving host query | Refresh and display pair |
+| Assign replacement | Local system | CaregivingHostSession command | On success reconcile pair; on failure show safe reason and preserve state |
+| End assignment | Local system | CaregivingHostSession unassign action | Confirm current pair, report ended pair, preserve bond semantics |
+| Hear roster explanation | Cosmetic/local | DutyRoster read query | No role mutation from prose |
+| Reopen scene | Quest-local | Existing quest owner if supported | Recompute facts; never replay old commands |
+| Mark quest resolved | Quest consequence | Existing quest lifecycle owner | Advance only after defined terminal response |
+| Change affinity, fatigue, health, faction standing, or medical status | Out of scope | Existing respective owners | No such effect absent a separately approved command |
+
+### Transaction sequence
+
+1. **Present:** build read-only context from current pair and optional roster query. Bind actors to current canonical survivor IDs. If the pair is missing, hide pair-specific responses.
+2. **Choose:** player selects semantic intent (“seek replacement,” “end assignment,” or “defer”), never a direct set-value operation.
+3. **Preview:** if current host exposes preview for assignment, call it with current version and show availability. For unassignment, confirm the target still has the expected caregiver because the current API is void and does not return a structured result. Do not claim success until a post-query confirms change.
+4. **Execute:** call existing host action once. Do not retry automatically after stale or failed result. Host events and roster vacancy remain owner behavior.
+5. **Reconcile:** query pair again. For assignment, verify selected caregiver is now assigned. For unassignment, verify patient has no caregiver. If post-query disagrees, show unresolved status and use existing bounded diagnostics; do not synthesize success.
+6. **Advance quest:** update lifecycle only after reconciliation and only through existing quest owner. A deferred conversation is not completed merely because dialogue reached its last node.
+7. **Save:** rely on caregiving and duty-roster save owners. Quest owner persists only lifecycle it already supports. Do not create a transaction journal, outbox, or new save section as shortcut.
+
+### Exactly-once behavior and event ordering
+
+A successful care start causes the care system’s start event, then the Godot subscriber empties the prior duty role. Restore order contains a vacancy rule for either load order. Quest logic must not clear the role again. A care end event does not itself restore a prior role in the reviewed code; dialogue must not promise automatic return to work. If role restoration is desired, it needs a separate owner/behavior decision and collision review.
+
+A bond-threshold event does not prove that a dialogue consumer displayed a scene and is not a quest reward. Confirm the event listener and delivery semantics before adding a callback. Event replay after load must not duplicate quest completion or authored rewards. Keep any later callback idempotent through the existing quest event contract, not a new care-event ledger.
+
+### Failure matrix
+
+- **Assignment rejected:** no pair mutation; do not show the successful relief ending.
+- **Stale preview:** refresh and require another player action; no blind retry.
+- **Patient no longer needs care:** close the operational branch neutrally; do not imply harm.
+- **Candidate cannot provide care:** do not say they refused. Offer another valid candidate or defer.
+- **Unassignment target changed:** re-query and ask the player to choose against current state; never unassign a different caregiver silently.
+- **Quest owner lacks deferred state:** leave quest available/in progress or end conversation only; no parallel quest store.
+- **Survivor dies:** canonical system ends assignment; narrative may acknowledge changed circumstances without assigning unsupported blame.
+- **Roster query unavailable:** omit work-specific claims and use only care-owner actions.
+- **Host/save unavailable:** state that no confirmed change occurred and retain current quest state.
+
+### Observability and UI
+
+Distinguish “assignment active,” “assignment ended,” “replacement assigned,” and “conversation deferred.” Avoid a success toast on button press alone. Keep medical status and privacy in their current UI owners; a public roster note reveals no patient condition. Keyboard/controller back closes dialogue without selecting “leave as-is.” Focus returns to the originating shelter panel. Use readable, non-color-only feedback for unavailable candidates. These are UX integration checks, not new authority.
+
+**Minimum viable route:** authored hub scene; read-only pair context; existing assignment/unassignment actions; result-backed text; lifecycle advance only if current owner supports it. **Optional:** idempotent bond callback, later return line, roster-aware prose. **Deferred:** fatigue reward, automatic caregiver rotation, restored labor assignment, persisted consent, faction standing, and care-failure history. Each crosses an owner boundary and requires architecture review.
+
+**Production cost:** medium for one result-aware scene; high where structured unassignment results, new event bridge, persistent deferred state, or automatic duty restoration is needed. The core game can include a handoff as authored story plus existing action. A multi-person care arc is expansion content after queue review, ownership, data mapping, focused verification plan, and exact consequence contract. No code, data, save state, or tests changed in this planning pass.
+## Pass 29 — Micro-encounter consequences through canonical owners
+
+This pass binds the coverage audit to consequence discipline. The existing micro encounter definitions carry authored choice consequences, and the common NarrativeEncounterSystem resolves choices into its current result payload and saved history. The host routes selected effects into owners. One concrete existing seam is micro_dead_livestock: its micro_contamination_exposure flag is handled by MicroLocationHazardRegistry, which maps it to disease_zoonotic_flu through the canonical DiseaseSystem and guards replay. This is evidence for one specific hazard route, not a general “micro-location consequence bus” that new effects can assume.
+
+### Effect routing table
+
+| Authored outcome | Consequence owner | Safe content claim | Audit before extension |
+|---|---|---|---|
+| Morale/guilt deltas | Current narrative/encounter outcome path | Encounter choice changes the authored dimensions | Verify how UI/report exposes each delta |
+| Item grant | Inventory owner through host consequence applier | A listed item is granted if the command succeeds | Confirm item ID, quantity cap, and failure behavior |
+| Depletion | NarrativeEncounterSystem state | A depleting choice prevents that encounter from recurring under its owner rules | Confirm save/restore and duplicate-resolution guards |
+| World flag | Existing flag ledger | The flag is recorded if host wiring accepts it | Identify every consumer and exactly-once behavior |
+| micro_contamination_exposure | DiseaseSystem via MicroLocationHazardRegistry | Dead-livestock exposure is routed to the canonical disease owner | Do not clone exposure state or infection |
+| Quest progress | Existing quest owner, if a subscriber exists | A known event can advance an authored objective | Verify subscriber, event identity, replay behavior, and save owner |
+| Location discovery | Existing map/discovery owner | Only a real map command changes discovery | Encounter selection alone is not a new map reveal |
+| Faction standing | Existing faction owner | Only a supported consequence changes standing | A faction mark, board, or symbol does not itself alter standing |
+
+Do not make the narrative dialogue callback the owner of consequences. It may request a command, observe an authoritative result, and display localized feedback. A follow-up scene that merely interprets evidence is cosmetic/local; a response that grants a resource or changes a flag is a separate owner-mediated effect.
+
+### Exactly-once sequence
+
+1. Candidate selection receives the canonical expedition location ID and applies the existing exact requirement check.
+2. The selected encounter ID is presented to the player; catalog existence alone does not create a resolution.
+3. The player chooses an authored choice ID.
+4. NarrativeEncounterSystem validates the encounter and choice, records the resolution, and returns the current consequence payload.
+5. The host applies each supported effect through its owning subsystem. Unsupported or unavailable routes must fail visibly or be omitted during authoring validation; do not claim success from a prose transition.
+6. For an accepted world flag, the host commits the flag before calling the hazard registry. The registry checks whether the flag was already set and invokes the disease authority once.
+7. Quest/dialogue consumers observe the result only after successful resolution and must be idempotent across save/reload/event replay.
+8. UI reports the outcome from returned owner results, not from choice text.
+
+This ordering matters when an encounter is depleting: a retry cannot double-grant an item or reinfect a survivor. A future quest callback must not reapply any of the original choice effects.
+
+### Coverage failures and recovery
+
+- **Invalid requiredLocationId:** the bound encounter has zero effective weight at all catalog locations. Correct the authored reference to a valid canonical location only after confirming intended site; otherwise disable the entry through the established catalog policy and report it as invalid.
+- **Known but inaccessible location:** do not claim successful coverage merely because the ID exists. Use an equivalent reachable site only if it supports the same authored evidence, or add a clue/delayed objective through the quest owner.
+- **Wrong location ID passed by host:** exact-bound content is excluded. Diagnose the resolver/caller seam; do not weaken exact matching globally.
+- **No eligible candidates:** let the current encounter system return no selection and preserve normal expedition flow. Do not force a global micro encounter as filler without design evidence.
+- **Selected encounter but failed choice resolution:** retain the current state and show a truthful failure. Do not trigger flags, items, disease, or quest progress.
+- **Host effect owner absent:** preserve the canonical source state where safe, surface unavailable behavior, and log the integration gap through existing diagnostics. Never create a parallel fallback inventory or disease counter.
+- **Questionable consequence implied by prose:** revise copy or acquire explicit canon; do not implement an effect because the text sounds consequential.
+
+### Acceptance, cost, and release scope
+
+A future content batch is ready only after: all micro encounter IDs are unique across the common catalog; every nonempty requiredLocationId maps to exactly one intended location; every location identifier passed at runtime is canonical; content utilization sees all entries consumed through a real runtime route; bounded seeded replays show stable candidate/choice outcomes; each effect maps to one owner; and return/fallback behavior remains possible when no micro encounter is eligible. Static JSON validation can be low cost. End-to-end quest callback and location selection are medium/high, depending on whether a current event subscriber and location reservation already exist.
+
+The core game should keep the canonical loader, exact filter, deterministic encounter choice, and owner-routed effects stable. An expansion can add location-specific encounter packs only after the coverage census identifies genuinely quiet or thematically mismatched destinations. No additional registry, map pool, hazard service, quest event bus, save section, production code, data, or tests are authorized by this planning pass.
+## Pass 30 — Regional knowledge effects through the canonical map owner
+
+Main.RecordCartographySurvey validates a node and survivor ID, checks that the survivor is alive and WastelandMap is available, calls WastelandMap.DiscoverSurvey, records five scavenging XP through shared skill progression using the existing campaign RNG fork, marks world state dirty, and refreshes the map panel. Cartography display derives from canonical map nodes and saved knowledge. Core also has region registration/survey methods and can parse map_regions.json, but no live host instantiation was found in the reviewed usage search. The validator calls the POI labels catalog-local. Content must therefore use the wired map action and avoid a competing regional state path.
+
+### Consequence classes
+
+| Action | Class | Current owner | Boundary |
+|---|---|---|---|
+| Read an atlas entry | Cosmetic/knowledge display | Existing archive/journal surface if supported | No discovery mutation |
+| Compare chart and map | Local dialogue | Dialogue/quest owner | No route assignment |
+| Survey a canonical node | Map consequence | WastelandMap via Main survey route | Use returned success; no duplicate discovery |
+| Grant survey XP | Skill consequence | Existing shared skill progression | Never duplicate from quest reward |
+| Reveal region membership | Architecture decision | No verified crosswalk owner | No current effect allowed |
+| Select quest destination | Map/expedition owner | Existing graph and selector | Requires canonical reachable node |
+| Record quest completion | Quest consequence | Existing lifecycle owner | Persist only supported quest state |
+| Change relation/standing | Out of scope | Existing relationship/faction owner | No inference from terrain or hazard copy |
+
+### Ordered action contract
+
+1. Resolve a canonical travel-node ID; reject region-local labels as node IDs.
+2. Verify current map access and living surveyor.
+3. Call the existing Main survey route once; it delegates mutation to WastelandMap and shared skill progression.
+4. Confirm canonical map knowledge changed before advancing a quest objective. Button press is not survey completion.
+5. Advance through the existing quest owner using observed node/effect evidence. If no subscriber or API exists, retain the content as an atlas conversation.
+6. Refresh map UI from its canonical projection. Do not make an unresolved POI into a marker.
+7. Save through current map and quest owners only where their existing contracts require it. Static membership does not warrant a new save section.
+
+Do not call CartographySystem.SurveyRegion and Main.RecordCartographySurvey for one player action. The former mutates region state separately and risks duplicate discovery/skill semantics. A foreman must decide whether that API is historical or intended for another host before implementation; this plan does not choose.
+
+### Failure and recovery
+
+- **Label has no approved mapping:** no survey command; preserve atlas prose.
+- **Unknown node ID:** fail before mutation; do not substitute a similar name.
+- **Node locked/unreachable:** keep the quest partial/delayed only if supported; never auto-unlock.
+- **Survey returns false:** no XP or completion claim.
+- **Survivor unavailable:** no fictional scout or action-history record; offer another supported eligible survivor or return to shelter.
+- **Duplicate click/event:** rely on current map knowledge/idempotency; do not add a second ledger.
+- **Quest consumer absent:** resolve as reading only, not a gameplay survey quest.
+- **Stale save/restore:** rebuild from canonical map/quest owners; no regional snapshot overrides node knowledge.
+
+### UI, performance, rollout
+
+Separate atlas prose from live travel actions. A survey button shows node, surveyor, and result. Region-record counts cannot masquerade as destination counts. Provide focus return, keyboard/controller support, non-color-only route state, and readable “label not linked” feedback. Compute a future region-node report once at catalog load or offline, not every panel refresh.
+
+Implementation staircase: (0) content-only atlas copy; (1) crosswalk decision and source census; (2) membership in one ratified owner; (3) reference validation and route reachability report; (4) quest consumes successful canonical survey; (5) replay and save/restore verification; (6) optional regional encounter weighting only after measured need. If the owner declines the crosswalk, stop after stage 0 and keep regions descriptive.
+
+Cost is low for copy, medium for a crosswalk/validator/UI, and high for guaranteed regional destinations or encounter arbitration. No production changes, data edits, state mutations, or tests occurred in this planning pass.
+### Pass 30B — Route/result acceptance matrix and bounded integration
+
+| Case | Preconditions | Expected owner mutation | Quest/dialogue result | Save/replay expectation |
+|---|---|---|---|---|
+| Read atlas page only | Archive content available | None | Text viewed; no survey claim | No map or quest state added unless existing journal supports it |
+| Select unresolved POI label | No approved node relation | None | Explain that the mark is not a route | Reopen returns to same truthful status |
+| Survey valid node | Living surveyor; canonical map permits action | WastelandMap knowledge; existing scavenging XP | Advance only after confirmed result | Existing map/skill owners capture state |
+| Survey rejected | Node/survivor invalid or action unavailable | None | Keep objective incomplete or offer archive-only close | No XP, flag, or duplicate quest progress |
+| Repeat survey callback | Same canonical node already surveyed | Follow WastelandMap semantics | Do not duplicate reward or claim new POI | Replay remains deterministic |
+| Crosswalk revised | Content change with old map save | Static relation changes only | Recompute route eligibility; preserve node knowledge | No serialized region membership to migrate |
+| Region quest selects node | Approved relation and reachable path | Existing expedition owner dispatches | Objective opens at canonical node | Same seed/state yields same choice |
+| Optional location unavailable | Candidate filtered or no slot | None | Drop optional candidate | Mandatory objective remains possible |
+| Relation revoked | No current mapping | None | Use archive-only fallback or retire quest branch | No stale quest snapshot overrides map |
+
+**Integration ownership:** data authoring owns region descriptions and an approved static relation if the architecture decision selects one. WastelandMap owns travel nodes, route graph, fog, and surveys. Expedition selection owns dispatch candidate choice. NarrativeEncounterSystem owns weighted encounter eligibility/resolution. Quest authority owns objective lifecycle. Dialogue only presents state and issues supported commands. The host coordinates these seams and persists through their existing save owners. Any proposal that gives the dialogue graph a region count cache, persistent node copy, route list, or survey ledger is rejected as a parallel authority.
+
+**Instrumentation:** future selection traces should count how many nodes were eligible and why candidates were excluded, but report only bounded aggregates by canonical region/node IDs. Do not log personal character text or add per-frame telemetry. Use deterministic seeded replay for selection; static crosswalk validation needs no random seed. Run focused tests only after the responsible integrator claims paths and chooses a test target under TEST_POLICY.
+
+**Rollout:** ship region chart copy independently; then approve the crosswalk; validate and render node-region tags; add one quest using a successful canonical survey; observe selection/fallback in a bounded playtest; only then add regional weighting or rarity. Roll back by removing the quest dependency and static relation while leaving canonical map discovery untouched. This sequence keeps prose useful even if the crosswalk decision is delayed.
+
+## Pass 31 — Route the Bargain Once, Then Let the World Speak
+
+### Effect ownership and branch routing
+
+A negotiation scene may create several kinds of consequence, but one choice must not be fanned out indiscriminately. Route each effect to the single current authority that owns it, then expose a result fact for journal/dialogue projection where supported.
+
+- Cosmetic consequence: choose one authored reaction/tell for this screen. No durable write.
+- Scene-local consequence: advance a node or close the current scene in the existing dialogue owner.
+- Quest consequence: apply one validated quest transition through the quest owner. A consequence ID is not itself proof the transition happened.
+- Inventory/economy consequence: submit the accepted offer once through the canonical barter/trade command. Display the resulting receipt or failure returned by that owner.
+- Relationship consequence: request a supported relationship change only when its owner/API is confirmed; no local trust cache.
+- Faction consequence: use the canonical standing/access owner when a signed, authored branch actually intends it; a trader's line alone does not change faction standing.
+- World/map consequence: reveal or mark only through the existing map/world owner after a real clue or event. Do not add a new location because the dialogue says “north road.”
+- Ending/Chronicle consequence: emit or record only the canonical resolution fact already supported by the current completion seam.
+
+Atomic bargain flow: (1) player selects a response; (2) host re-reads current visit, quest state, cargo and offer eligibility; (3) canonical trade operation validates balances and stock; (4) its result returns success/failure and actual quantities; (5) only on success does the quest transition apply; (6) only after confirmed transition does the journal/Chronicle projection update; (7) dialogue closes or reconverges. If the quest transition fails after a committed trade, define an idempotent recovery receipt or design the content so the trade owner can report the outcome before any separate quest mutation. Do not claim atomicity until the real API supports it. A second click must not double-debit or duplicate rewards.
+
+Failure routing:
+- Trader absent: no bargain command; preserve quest state and provide a supported delay/missed-window update.
+- Required item absent: do not synthesize it; allow alternate information branch or explicit refusal.
+- Stock changed: show current unavailability, refresh view, keep player inventory unchanged.
+- Price changed/recomputed: show the current quote before commit; no stale cached quote.
+- Quest already resolved: suppress stale response effects and return to current scene state.
+- Map clue cannot be recorded: retain the dialogue outcome only if no map reward was promised; otherwise surface a retryable integration failure to the owner rather than silently consuming the clue.
+- Partial delivery: only describe partial completion if barter/trade returns actual accepted quantity and the quest schema can represent it. Otherwise use all-or-nothing offers.
+
+Observable completion should match the consequence. “They owe us a shipment” is permitted only if a durable contract owner records a shipment obligation. Without that owner, use “They agreed to discuss it on their next visit” only if an authored, supported future visit exists; otherwise use a present-tense agreement that does not promise a callback. A repaired route, reduced hostility, new map pin, or resource grant must never be inferred from warm prose.
+
+UI/UX requirements: response label states intent; disabled responses give concise reason; commit displays actual barter result; failure retains the scene and refreshes available actions; close/back remains functional; keyboard/controller focus returns to a sensible node after refresh; journal feedback is accessible without relying on color. The trade tell remains descriptive presentation and does not impersonate the decision result.
+
+Acceptance package for implementation: exact Core/host/JSON owners, command/result seam, failure semantics, save/event implications, and focused verification commands must be named before edits. Minimum slice tests cover double-submit, stale stock, insufficient offered inventory, absent caravan, quest already completed, failed effect routing, and save/load restoration. Keep the exact required sources of truth separate: route system schedules the caravan; cargo router selects lots; barter/trade owns exchange; quest system owns objectives; tell engine renders posture; map/Chronicle own their facts. A fully integrated feature exists only when source command, observable result, durable state where needed, and narrative text agree.
+
+
+### Pass 31B — Transaction outcome matrix
+
+| Attempt | Authoritative result | Quest update | Dialogue/journal |
+|---|---|---|---|
+| Offer is valid and accepted | Trade owner returns committed quantities/receipt | Advance only the matching offer step once | Confirm exact completed exchange |
+| Offer has insufficient goods | Trade owner rejects without mutation | Keep step active; show alternate information response | Explain what is short using current inventory |
+| Caravan departed | Route/caravan owner reports absence | Delay or resolve a designed missed-window branch | Do not show a stale trade option |
+| Requested lot is not present | Current inventory projection excludes it | Preserve alternate negotiation path | Never imply the good was sold unless sale history proves it |
+| Quest was completed in another UI path | Quest owner reports terminal/resolved | Suppress stale quest reward | Refresh card and scene |
+| Clue destination is unavailable | Selector returns explicit unresolved reason | Keep lead active or move to authored clue fallback | State delay; do not award discovery |
+| Player closes scene | No command is committed | No state transition | Preserve current focus/back behavior |
+
+For asynchronous or multi-step integration, attach a stable command/idempotency key from the existing command system if one exists. Do not mint an ad-hoc GUID for determinism or replay. If there is no idempotency seam, prevent double-submit in the UI and still make the domain command validate current balances and stock; UI disabling alone is not correctness.
+
+A future result projection should expose success, rejection reason, actual quantity, actual price, and any quest transition ID. Presentation may map reason codes to restrained copy, but cannot reinterpret a rejection as success. The log should distinguish player choice from world outcome: “You offered 3 filter cartridges” is not “the convoy received them” until the transaction confirms transfer.
+
+Acceptance evidence must include one observable path from authored response through command owner to updated inventory/quest state, and one rejected path proving no state was partially applied. The plan remains a proposal until exact public APIs, save ownership, and active claim boundaries are checked for the implementation package.
+
+## Pass 32A — From Tell to Record to Accepted Action
+
+### Consequence spine
+
+The intended loop is: machine owner supplies a current fact → existing tell projection presents a human-readable observation → the player decides whether to preserve or investigate it → JournalSystem or the existing quest owner records the supported knowledge/action → if the player requests a repair, the specific machine/service owner validates and performs it → a result is projected in dialogue/journal. This spine is a design target, not evidence that the complete loop is already wired. In source review, the tell path and journal note path exist; a general tell-to-work-order or tell-to-maintenance-log bridge was not established. That gap must be treated as an explicit implementation dependency.
+
+Effect taxonomy:
+- Flavor: the character recognizes a sound; no persistent change.
+- Knowledge: an authored record is discovered or an existing glitch-noted fact is applied through its current journal owner.
+- Quest: a stage moves only after source facts or a command result support it.
+- Machine: only the machine owner changes condition through a valid action. Prose and catalog lookup cannot repair it.
+- Inventory: only a confirmed service command consumes parts. A quest response cannot call inventory mutation independently.
+- Relationship: only the canonical relationship command changes durable trust, if available.
+- Map/world: no map location appears because a log refers to a place. Existing map discovery must validate the clue.
+- Chronicle: summarize a canonical event only if a persistent event fact already exists.
+
+### Proposed command path
+
+1. Build a fresh context packet from current machine reading, noted tell, authored records discovered, and quest state.
+2. Present response intent with the effect disclosed: preserve the note, ask for inspection, defer, or request a supported service.
+3. At selection, revalidate source freshness, player permissions, service availability, costs, and quest state.
+4. Route exactly one action through the owning API.
+5. Inspect the returned result. If the command rejects, retain the scene, display its reason, and apply no completion/reward.
+6. Apply the quest transition only after action/knowledge result is confirmed.
+7. Refresh machine tell from current reading; do not claim a durable fix just because the action returned “accepted” if completion is scheduled.
+8. Journal an outcome with distinct verbs: observed, reported, inspected, repaired, deferred. These verbs communicate which owner produced evidence.
+
+### Failure and recovery matrix
+
+- Tell is no longer eligible: stale response disabled; refresh from the machine owner.
+- Historical log not found: keep the story at “reported,” do not synthesize the document.
+- Repeated tell already noted: do not duplicate codex discovery; allow a new investigation only when supported.
+- Character unavailable: offer a readable record or leave the branch closed; no random NPC substitute.
+- Service command unavailable: allow the player to document or defer; do not consume parts.
+- Service consumes resource but later validation fails: architecture blocker. The implementation must order operations or provide a receipt/reversal contract before shipping.
+- Repair is scheduled but not complete: show pending state only if the service owner exposes it; do not display “repaired.”
+- Save/load during the arc: restore quest and journal through their current authorities; reread machine owner state and rebuild the view.
+- Player abandons quest: do not cancel a repair already committed by its owner; report current machine state separately.
+- Two UI surfaces submit the same request: domain-level validation or current command/idempotency contract must prevent duplicate resource loss.
+
+### Observability and release acceptance
+
+A later integration must demonstrate one end-to-end story in which the same machine identity appears in a tell, a verified record, a player action, and a truthful conclusion. Evidence should include the source item ID, condition key, host query, journal/quest command, machine command (if any), save owner, and exact focused verification. A panel showing a tell and a catalog listing 20 glitches is not enough to prove a closed loop. A successful user path must expose current reading, origin of historical evidence, action cost/result, and state after save/reload; a rejected path must prove no partial consequence.
+
+Architectural stop condition: if no existing machine command can perform the proposed repair, split the story so its completion is “finding documented” or “decision deferred.” Do not create a generic MaintenanceAuthority, shared wear ledger, or cross-machine repair façade in the content plan. New architecture choices belong to an approved owner decision outside this documentation wave.
+
+
+### Pass 32B — Severity levels, UI contracts, and consequence examples
+
+Apply Part 47's severity ladder intentionally:
+- Level 0 flavor: hear a rhythm, read a log, discuss a missing signature. No persistent gameplay change.
+- Level 1 local state: record a quest decision or witness interaction through the supported quest/journal owner.
+- Level 2 system state: a real maintenance command changes an actual machine condition, consumes supported parts, or creates owner-defined downtime.
+- Level 3 cascade: changed condition affects power, water, ventilation, staffing, or another dependent system only through already implemented daily owners and events.
+- Level 4 world state: a surface repair site or route changes only through its map/route owner after a canonical result.
+- Level 5 saga state: a chronicle or ending references the incident only if a durable fact is enrolled through its accepted contract.
+
+One story should not jump from Level 0 tell to Level 3 cascade through prose. Every crossing requires a named command/result owner and an observable acceptance test. A visible machine response may naturally influence player decisions, but the authored plan must not imply unimplemented cascades.
+
+UI command sequence: display the observation with timestamp/source; show the record and speaker attribution; present response intent; reveal resource/time costs before commit; require confirmation for irreversible service actions; return either a committed receipt or concise failure reason; refresh the reading and available responses; append a journal line only after its owner confirms. On failure, focus stays on a sensible actionable response, close/back remains functional, and the player can still access the source record. Do not disable the whole panel because one service command is blocked.
+
+Consequence examples:
+- “Preserve the report” records only that the player chose to keep the note, if the journal supports that exact fact. It does not certify the diagnosis.
+- “Ask for inspection” creates no state until a service owner accepts a valid inspection job; the UI distinguishes requested, scheduled, and completed.
+- “Use a spare” routes through a validated repair operation; if no such operation exists, this option is not shown.
+- “Tell the crew it is safe” is never a consequence in the MVP because neither dialogue nor quest owns a safety certification.
+- “Do not name the witness” is a narrative line until an access policy owner can enforce identity masking.
+
+Branch result needs stable identifiers for idempotent journal/quest progression. Prefer an existing command receipt ID; if none exists, do not invent a random identity inside UI code. For content design, use an authored response ID plus accepted quest transition to reason about exactly-once behavior, then have implementation owners decide the command contract.
+
+Do not make a failure path punitive by silently degrading another machine or consuming shift labor. If a service owner reports an outage or consumed item, that actual result may create a complication through its own event path; the quest can narrate it after it happens. The implementation must test all side effects together and then perform a fresh provenance audit so narrative text and current state agree.
+
+
+### Pass 32C — Integration slices and closed-loop proof
+
+Phase zero inventories the seven machine identities, condition keys actually populated in host readings, tell/glitch eligibility, one-shot journal note handling, room/category projections, exact discovery consumers for maintenance corpora, and machine-specific service commands. Deliver raw-ID crosswalk and unmatched-join list without changing data.
+
+Phase one is a read-only scene: show one existing diagnostic source and one discovered authored record. No machine command runs. Prove missing/stale evidence falls back safely. Phase two binds one real inspection or repair command; show cost/downtime, revalidate immediately before commit, consume one result, and advance the quest only after success. Test accepted, insufficient supplies, stale condition, unavailable schedule, double-submit, and restored-state paths. Phase three refreshes the current reading and distinguishes requested, scheduled, and complete. Phase four adds other machine families or Chronicle callbacks only after the coverage census and durable event contract exist.
+
+Acceptance table columns: publisher, payload, freshness, consumer, durability, visible output, failure fallback. Example loop: machine owner provides current fuel; host builds a reading; tell logic projects it; journal records supported knowledge; quest checks that fact; service owner validates action; UI shows its receipt; save restores durable owners; view recomputes from restored state. Missing edges remain explicit gaps.
+
+Handoff states achieved severity: flavor, knowledge, quest, machine mutation, or saga consequence. Name evidence for every achieved level and list higher levels intentionally deferred. A catalog that loads and a panel that shows a tell do not prove closed-loop integration. If no current machine command can perform the proposed repair, close the story as “finding documented” or “decision deferred”; do not introduce a generic maintenance authority, shared wear ledger, or cross-machine repair facade.
+
+
+### Pass 32D — Observable routing matrix closeout
+
+For each outcome, record expected before/after facts by owner: journal knowledge, quest stage, machine condition, inventory, character relationship, and visible UI. Unchanged owners should be explicitly marked unchanged. A scene can be narratively complete while the machine remains unchanged; the journal must say so. A failed command should preserve balances and machine condition unless its owner returns a documented partial result.
+
+Integration evidence should include both the accepted path and the rejected/stale path, save/reload after a durable result, and a screenshot or headless-visible output from the actual UI seam if applicable. A passing content validator proves references and field shape, not player reachability or consequence routing. Keep that distinction in closeout claims.

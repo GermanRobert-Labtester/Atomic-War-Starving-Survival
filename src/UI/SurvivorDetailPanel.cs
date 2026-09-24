@@ -60,6 +60,9 @@ namespace AtomicWar.GodotApp.UI
         /// <summary>Read-only political bloc projection supplied by Main (Plan 159).</summary>
         public Func<string, string?>? PoliticalBlocProvider { get; set; }
 
+        /// <summary>Read-only age profile projection supplied by Main (Plan 176).</summary>
+        public Func<string, Ashfall.Core.Survivors.SurvivorAgeProfile?>? AgeProfileProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
@@ -197,6 +200,16 @@ namespace AtomicWar.GodotApp.UI
             if (!string.IsNullOrEmpty(politicalBloc))
             {
                 AddRow(_survivorInfo, $"Political Bloc: {politicalBloc}", Ashfall.Core.UI.Theme.Warm);
+                RenderedRowCount++;
+            }
+
+            var ageProfile = AgeProfileProvider?.Invoke(s.Id);
+            if (ageProfile != null)
+            {
+                string retirementStatus = ageProfile.IsRetired
+                    ? " [Retired Elder]"
+                    : (ageProfile.IsRetirementEligible ? " [Retirement Eligible]" : string.Empty);
+                AddRow(_survivorInfo, $"Demographic: {ageProfile.EffectiveAgeYears} yrs · {ageProfile.Stage}{retirementStatus}", Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 

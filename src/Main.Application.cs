@@ -701,8 +701,17 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ShelterIdentitySelfTest:
                     GetTree().Quit(HostCliShelterIdentity.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.OriginMechanicsSelfTest:
+                    GetTree().Quit(HostCliOriginMechanics.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DynamicQuestSelfTest:
+                    GetTree().Quit(HostCliDynamicQuest.RunSelfTest(_dataDir));
+                    return;
                 case HostCliAction.ShelterGovernanceSelfTest:
                     GetTree().Quit(HostCliShelterGovernance.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.AgingSelfTest:
+                    GetTree().Quit(HostCliAging.RunSelfTest(_dataDir));
                     return;
             }
             }
@@ -831,6 +840,7 @@ namespace AtomicWar.GodotApp
             FlushRetentionIfDirty();
             FlushCampaignLegacyIfDirty();
             FlushShelterGovernanceIfDirty();
+            FlushAgingIfDirty();
 
             // ── Sleep / End Day countdown timer (Phase 2 continuation)
             if (_advanceTimerRemaining > 0 && !_advanceCancelled)

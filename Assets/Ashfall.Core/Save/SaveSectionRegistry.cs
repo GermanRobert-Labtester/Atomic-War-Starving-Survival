@@ -293,6 +293,7 @@ namespace Ashfall.Core.Save
             new("trade_routes", "SaveTradeRoutes", "SetupTradeRoutes", "economy", "Plan 192 — Scheduled trade route contracts, tariffs, reliability tiers, and exclusive goods", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("human_migration", "SaveHumanMigration", "SetupHumanMigration", "world", "Plan 199 — Seasonal human migration engine, regional population weights, and dwell hysteresis", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_governance", "SaveShelterGovernance", "SetupShelterGovernance", "governance", "Plan 159 — Shelter governance & political system: ideological blocs, policy consent, civil disputes, and shelter stability", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("aging", "SaveAging", "SetupAging", "survivors", "Plan 176 — Aging & elderly survivor system: chronological age progression, life stages, retirement, elder mentorship, and milestones", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -554,6 +555,7 @@ namespace Ashfall.Core.Save
                 { "trade_routes", "trade_routes_save.json" },
                 { "human_migration", "human_migration_save.json" },
                 { "shelter_governance", "shelter_governance_save.json" },
+                { "aging", "aging_save.json" },
             };
 
 

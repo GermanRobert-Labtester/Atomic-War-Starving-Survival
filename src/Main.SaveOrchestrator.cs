@@ -315,7 +315,9 @@ namespace AtomicWar.GodotApp
             SetupTradeRoutes();
             SetupHumanMigration();
             SetupShelterIdentity();
+            SetupDynamicQuestGeneration();
             SetupShelterGovernance();
+            SetupAging();
             // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
             // before any early SaveAll so Continue cannot drop resolved choices.
             SetupMoralChoice();
@@ -551,6 +553,7 @@ namespace AtomicWar.GodotApp
                 SaveHumanMigration();
                 SaveShelterIdentity();
                 SaveShelterGovernance();
+                SaveAging();
 
                 if (_sectionCaptureFailed)
                 {

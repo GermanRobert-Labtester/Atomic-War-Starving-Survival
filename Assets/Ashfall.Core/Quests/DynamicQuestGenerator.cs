@@ -12,7 +12,9 @@ namespace Ashfall.Core.Quests
         EscortSurvivor = 1,
         InvestigateAnomaly = 2,
         DefendOutpost = 3,
-        DiplomaticRelay = 4
+        DiplomaticRelay = 4,
+        ScoutExploration = 5,
+        DisputeResolution = 6
     }
 
     public enum ProceduralQuestStatus
@@ -38,6 +40,8 @@ namespace Ashfall.Core.Quests
         public float MoraleReward { get; set; } = 5f;
         public float FactionStandingReward { get; set; } = 0f;
         public string TargetFactionId { get; set; } = string.Empty;
+        public string RewardItemId { get; set; } = string.Empty;
+        public int RewardItemCount { get; set; }
     }
 
     [Serializable]
@@ -59,6 +63,8 @@ namespace Ashfall.Core.Quests
         public float MoraleReward { get; set; } = 5f;
         public float FactionStandingReward { get; set; } = 0f;
         public string TargetFactionId { get; set; } = string.Empty;
+        public string RewardItemId { get; set; } = string.Empty;
+        public int RewardItemCount { get; set; }
 
         public bool IsFulfilled => CurrentQuantity >= RequiredQuantity;
     }
@@ -170,6 +176,36 @@ namespace Ashfall.Core.Quests
             _templates.Add(template);
         }
 
+        /// <summary>
+        /// Plan 171 — replaces the built-in templates with an already-validated
+        /// authored catalog. The host uses the strict
+        /// <see cref="DynamicQuestTemplateCatalogLoader"/> and this seam, so the
+        /// built-in defaults cannot mask an authored typo.
+        /// </summary>
+        public void BindAuthoredTemplates(IEnumerable<ProceduralQuestTemplate> templates)
+        {
+            if (templates == null) return;
+            _templates.Clear();
+            foreach (var template in templates)
+            {
+                if (template != null && !string.IsNullOrEmpty(template.TemplateId))
+                    _templates.Add(template);
+            }
+        }
+
+        /// <summary>Read-only census of the live generator (Plan 171).</summary>
+        public DynamicQuestGeneratorCensus GetCensus()
+        {
+            return new DynamicQuestGeneratorCensus(
+                _templates.Count,
+                _state.Quests.Count,
+                AvailableCount,
+                ActiveCount,
+                _state.CompletedQuestIds.Count,
+                _state.FailedQuestIds.Count,
+                _state.Quests.Count(q => q.Status == ProceduralQuestStatus.Expired));
+        }
+
         public IReadOnlyList<ProceduralQuest> GenerateQuests(int currentDay, ISeededRng? rng = null)
         {
             if (_state.LastGenerationDay > 0 && currentDay - _state.LastGenerationDay < _state.CooldownDays)
@@ -213,7 +249,9 @@ namespace Ashfall.Core.Quests
                     CurrentQuantity = 0,
                     MoraleReward = tmpl.MoraleReward,
                     FactionStandingReward = tmpl.FactionStandingReward,
-                    TargetFactionId = tmpl.TargetFactionId
+                    TargetFactionId = tmpl.TargetFactionId,
+                    RewardItemId = tmpl.RewardItemId,
+                    RewardItemCount = tmpl.RewardItemCount
                 };
 
                 _state.Quests.Add(quest);
@@ -328,7 +366,9 @@ namespace Ashfall.Core.Quests
                     CurrentQuantity = q.CurrentQuantity,
                     MoraleReward = q.MoraleReward,
                     FactionStandingReward = q.FactionStandingReward,
-                    TargetFactionId = q.TargetFactionId
+                    TargetFactionId = q.TargetFactionId,
+                    RewardItemId = q.RewardItemId,
+                    RewardItemCount = q.RewardItemCount
                 });
             }
 
@@ -338,6 +378,13 @@ namespace Ashfall.Core.Quests
         public void RestoreState(DynamicQuestGeneratorState state)
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
+
+            // Schema gate: a newer payload must not be silently down-cast.
+            if (state.SchemaVersion > 1)
+                throw new InvalidOperationException(
+                    $"DynamicQuestGeneratorState schema {state.SchemaVersion} is newer than supported (1).");
+            if (state.SchemaVersion < 1)
+                state.SchemaVersion = 1;
 
             _state.SchemaVersion = state.SchemaVersion;
             _state.NextSequence = state.NextSequence;
@@ -370,7 +417,9 @@ namespace Ashfall.Core.Quests
                         CurrentQuantity = q.CurrentQuantity,
                         MoraleReward = q.MoraleReward,
                         FactionStandingReward = q.FactionStandingReward,
-                        TargetFactionId = q.TargetFactionId
+                        TargetFactionId = q.TargetFactionId,
+                        RewardItemId = q.RewardItemId,
+                        RewardItemCount = q.RewardItemCount
                     });
                 }
             }
@@ -384,6 +433,39 @@ namespace Ashfall.Core.Quests
             {
                 _state.FailedQuestIds.AddRange(state.FailedQuestIds);
             }
+        }
+    }
+
+    /// <summary>
+    /// Read-only census of the live dynamic quest generator (Plan 171). Exposed
+    /// for the architecture scanner and the host self-test probe.
+    /// </summary>
+    public struct DynamicQuestGeneratorCensus
+    {
+        public int TemplateCount { get; }
+        public int TotalQuests { get; }
+        public int AvailableQuests { get; }
+        public int ActiveQuests { get; }
+        public int CompletedQuests { get; }
+        public int FailedQuests { get; }
+        public int ExpiredQuests { get; }
+
+        public DynamicQuestGeneratorCensus(
+            int templateCount,
+            int totalQuests,
+            int availableQuests,
+            int activeQuests,
+            int completedQuests,
+            int failedQuests,
+            int expiredQuests)
+        {
+            TemplateCount = templateCount;
+            TotalQuests = totalQuests;
+            AvailableQuests = availableQuests;
+            ActiveQuests = activeQuests;
+            CompletedQuests = completedQuests;
+            FailedQuests = failedQuests;
+            ExpiredQuests = expiredQuests;
         }
     }
 }

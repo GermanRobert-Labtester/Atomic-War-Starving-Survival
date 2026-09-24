@@ -2987,3 +2987,277 @@ Do not reserve more than one mandatory expedition site for the first quest chapt
 ### Reuse, replay, and exclusion examples
 
 The selector can reuse the evidence-pair packet for other craft mysteries, but only those with a real location and distinct evidence roles. It cannot reuse this story’s “storage failure” label for every industrial record. Exclude sites that merely contain generic workshop props, already-consumed once-only evidence, or a contradicted map identity. Optional ambient tools may vary; evidence-bearing object placement and wording remain authored and stable. On repeat campaigns, the same deterministic request may produce another optional location, but required records and their fallback do not disappear randomly.
+
+## Pass 28 — Shelter-bound quests and honest location selection
+
+This pass adapts Part 46’s caregiving prompt to the selector architecture while respecting the story’s actual scope. “The Cup on the Rail” is a shelter character quest, not an expedition. Its required scene is a shelter interaction, with optional bedside and duty-roster conversations where supported. It must not consume a surface destination slot, add a hidden map icon, or manufacture an expedition just to make a quest fit this plan.
+
+### Location role assignment
+
+| Role | Story use | Selector behavior | Visibility |
+|---|---|---|---|
+| Permanent shelter hub | Quest offer, conversation, journal return | Existing route; outside expedition pool | Already known; never a newly discovered tile |
+| Bedside scene anchor | Optional patient conversation | Existing ward/shelter context only if host supports it | No expedition marker |
+| Duty-roster board | Optional context about the caregiver’s prior role | Query current roster at visit time | No new destination |
+| Expedition location | None required | No selection or reservation | No map change |
+| Future clue site | Not part of this packet | Add only for a separately audited evidence objective | Ordinary discovery and fallback rules |
+
+The location service should accept a quest requirement only after content declares it as a typed requirement. A narrative mention of the bedside is not sufficient to create a destination. Here the requirement is “shelter interaction available,” not “surface location spawned.” The selector therefore has no row for this quest in any expedition pool. This guards against treating every conversation as a destination and then solving the resulting overpopulation with ranking rules.
+
+### Eligibility, priority, and guarantees
+
+The general expedition selection order remains: mandatory active quest destinations; critical progression sites; character/faction destinations; recently discovered candidates; theme-matched locations; optional locations; rare surprises. A shelter-only quest contributes nothing to the expedition-required tier. It remains playable during an expedition only if the existing host supports that concurrency. If the shelter panel is unavailable during a sortie, the quest remains pending and explains when it can be revisited; do not relocate a bedside scene outdoors as fallback.
+
+For a future quest that genuinely requires travel to support a care handoff—such as retrieving an authored medical record—the location requirement must name its evidence role and explain why expedition access is necessary. Reserve the candidate before optional selection, provide a deterministic clue if hidden, and offer an equivalent evidence path or explicit delay if invalid. Do not guarantee that a patient’s condition is worsening, because care assignment does not encode that state.
+
+### Exclusion and fallback rules
+
+- Exclude shelter interactions from map generation unless the existing map authority represents the shelter as an expedition destination.
+- Exclude a quest location when its only rationale is dialogue flavor, imagined travel, or a missing event bridge.
+- If the required host scene cannot render, keep the quest available in an existing journal/hub surface if that route exists; otherwise retain it unresolved and report the integration gap.
+- If a real evidence location becomes invalid, use an authored equivalent only when both locations provide the same objective evidence; otherwise delay and surface an explicit clue. Never silently remove the objective.
+- If optional slots are occupied, drop the optional location, never the shelter quest. The selector owns neither assignment nor dialogue outcome.
+
+### Replayable selector traces
+
+**Trace S — shelter-only:** “The Cup on the Rail” is active; an expedition starts. Candidate building sees no required destination from this quest and selects the ordinary expedition set. The journal still lists a shelter conversation. Returning permits the scene. Expected invariant: candidate set and selector random stream are unchanged by this quest.
+
+**Trace T — future evidence objective:** a separately audited quest requires one record site. Dispatch reserves one eligible record site and records the authored requirement ID. Theme and optional pools fill remaining slots. If the site is absent from catalog, deterministic fallback selects a documented equivalent; if none is valid, delay only if the quest owner supports that state. Expected invariant: no silent dead end and no duplicated destination.
+
+**Trace U — host contention:** the player returns from an expedition while shelter dialogue is inaccessible. The selector invents no substitute. The quest remains visible with a truthful access note; availability is re-evaluated on the next eligible visit.
+
+### Map and UX requirements
+
+A quest panel must distinguish “available at shelter” from “appears on the expedition map.” The latter is false here. Do not display a stale marker from a prior sortie. A bedside scene uses an ordinary conversation affordance and accessible subtitle/interaction feedback. Selector explainability should say “no expedition location required,” rather than listing a fabricated null destination or generic fallback. Hidden-location rules apply only to actual map requirements.
+
+**Reusability:** the role table and shelter-only trace apply to character conversations, shelter mediation, relationship callbacks, and roster debriefs. They also identify when the selector should not be involved. **Production cost:** low if hub dialogue routes exist; medium if quest availability cannot be queried from shelter UI; high if a map-backed surrogate is proposed. **Core/expansion:** the shelter scene is core scale; a field-evidence objective belongs in an expansion and requires a separate content/selector audit.
+
+**Acceptance gate:** demonstrate that starting this quest changes no expedition candidates, reserved locations, map visibility, random draws, or expedition save state. Then prove that any later travel objective is guaranteed or explicitly delayed by current quest and selector owners. No selector implementation or map content is authorized here.
+## Pass 29 — Micro-location binding census, eligibility and map guarantees
+
+The Bible’s location-coverage prompt intersects two distinct selection stages that this plan must keep separate: selecting an expedition destination and selecting an encounter after a destination is known. The current static inventory is 179 location records and 28 micro encounter definitions. Three encounters require exact destination IDs and match records in locations.json; 25 are unbound. Micro definitions are loaded into NarrativeEncounterSystem’s common catalog. GetEffectiveWeight rejects a bound encounter unless the caller’s location ID exactly equals requiredLocationId, while an empty requirement has no site restriction. These facts do not prove that every catalog location is expedition-eligible or that each micro encounter is actually reachable in all runtime routes.
+
+### Two-stage selection contract
+
+**Stage A — destination selection.** The expedition/location authority chooses a valid destination, respecting active quest requirements, critical progression, faction/character needs, prior discoveries, theme, optional pool, rarity, exclusions, and fallback. Do not add an encounter record to this pool. If an active quest requires one of the three exact sites, only its canonical location ID can satisfy that objective; an alias or similarly named location is not equivalent without an audited mapping.
+
+**Stage B — encounter selection.** Once the host supplies the chosen location context, NarrativeEncounterSystem constructs eligible encounter candidates. Exact-site micro records require exact ID equality. Global micro records compete in the same weighted candidate set as other eligible definitions; they are not guaranteed because they have no requiredLocationId. Weather gates, stance multipliers, danger minimums, depletion, and available seeded RNG also affect selection. Do not promise an encounter merely because its definition exists in JSON.
+
+### Binding coverage matrix
+
+| Census class | Count in reviewed static files | Meaning | Action |
+|---|---:|---|---|
+| Exact binding to a known catalog location | 3 | Two-sided ID link exists in locations.json | Verify that location is expedition-reachable and selector can pass the exact ID |
+| Empty requiredLocationId | 25 | No exact-site restriction in EncounterDefinition | Treat as global candidate content, not location coverage |
+| Nonempty reference absent from location catalog | 0 among these 28 | No static dangling requiredLocationId in the reviewed set | Keep this as a validator invariant |
+| Destination without a narrative encounter | Not determined | Requires definition of “narrative encounter,” all-catalog join, route reachability, and consumer trace | Run a complete location × encounter consumer census before adding content |
+
+The last row is intentionally “not determined.” 179 minus 3 would be a false gap count because the 25 global encounters can be eligible at multiple sites, and other encounter catalogs may also bind to locations. Conversely, a global candidate does not establish thematic adequacy at a particular destination.
+
+### Guarantees, exclusions, rarity, and fallback
+
+A mandatory active-quest site is guaranteed only at Stage A, by the location owner, while an encounter at that site remains a separate question. If the quest requires a specific micro record rather than merely the site, the quest must reserve or guarantee the encounter through a verified mechanism; current JSON presence alone is insufficient. Prefer an equivalent evidence path when the site is unavailable. Otherwise delay visibly through the quest owner or provide a clue. Never silently declare the objective impossible.
+
+Exclude exact-bound encounters at every nonmatching site. Do not canonicalize case, aliases, or punctuation inside the weighting method unless the authoritative location resolver already does so and a focused API audit confirms that caller behavior. Empty-bound encounters remain eligible only under all other filters. A depleting choice removes the encounter according to current saved state; do not treat it as a rerollable rare item. If no eligible encounter remains, return the existing no-encounter outcome rather than force a micro definition that violates its location contract.
+
+To prevent global micro records from crowding destination-specific narrative, measure their selection frequency and per-location candidate counts in a deterministic replay. Only change weights or add a pool tier after evidence shows a quality or starvation problem. A “featured local micro encounter” selection tier would be a new arbitration policy and needs its own owner decision, fairness rule, seed stream, and migration assessment.
+
+### Replay examples
+
+1. **Hospital chapel:** Stage A selects the canonical abandoned_hospital record. Stage B may include micro_hospital_chapel_ledger because its required ID matches. At any other location its weight is zero.
+2. **Flooded depot:** location_flooded_subway_depot admits micro_depot_undertow_raft_line. Selection remains weighted; exact binding does not imply forced arrival.
+3. **Checkpoint Gamma:** loc_garrison_checkpoint_gamma admits micro_gamma_levy_board under exact matching.
+4. **Generic roadside expedition:** the three bound encounters are excluded. Up to 25 unbound micro records may be candidates, subject to their other weights and filters; do not report this as 25 guaranteed events.
+5. **Unknown location string:** bound records fail closed. Global records can still be eligible unless other conditions exclude them. Instrument the mismatch as a diagnostic in a future audit rather than silently correcting IDs.
+6. **Quest reservation with missing site:** choose a verified equivalent site only if it satisfies the same authored objective; else reveal an alternate clue or delay the quest. Preserve a deterministic selection order.
+
+**UX and cost:** show the destination marker only when Stage A selects or reserves that site. An encounter title should not appear as a map pin before selection. The low-cost first slice is a static join report; medium cost is a selector explanation panel and deterministic frequency telemetry; high cost is guaranteed encounter reservation. One location census belongs in core validation; additional encounter families can be expansion content after the census reveals authored need.
+## Pass 30 — Region-to-destination crosswalk before selection weights
+
+### Verified shapes
+
+The region catalog has eight named records and sixteen POI labels, two per region. The canonical travel map has 22 nodes and 68 routes; locations.json has 179 rows. Neither node definitions nor location rows carry a region field. The validator explicitly treats region POIs as catalog-local labels, so none may be passed to destination selection as a known node ID. The literal intersection between these labels and the reviewed node/location IDs is zero. This is not evidence of zero destinations per region; it means the current data contract has no proven join. Cartography UI projects WastelandMap knowledge, while the separate mutable region-survey API is not the host route found in this review.
+
+### Three selection stages, one canonical location owner
+
+**Stage 0 — authored regional context.** The region catalog supplies display name, terrain, hazard labels, scouting difficulty, and its own POI labels. These describe regional identity; they are not travel edges or expedition destinations.
+
+**Stage 1 — campaign map graph.** WastelandMap supplies canonical nodes, routes, fog/knowledge, discovery, and travel reachability. Route choice follows this graph and existing lock rules. A quest-required map destination needs a real node ID and reachable route or a quest-owned fallback.
+
+**Stage 2 — expedition destination and encounter.** Select a reachable node by active quest requirement, critical progression, character/faction need, recent discovery, theme, optional content, and rarity. Once dispatched, encounter selection receives the canonical node ID. Exact-bound encounters may appear only when IDs match; global encounters remain subject to their own weights and filters. The region catalog cannot bypass either stage.
+
+### Density report contract
+
+Until a crosswalk exists, publish distinct quantities:
+1. Region metadata: eight region records and sixteen authored labels.
+2. Travel graph: 22 nodes and 68 route records.
+3. Verified regional destination density: not computable from the current direct fields.
+4. Narrative coverage: computed only after matching encounter eligibility and location context across catalogs.
+5. Player-facing access: reachable destinations by campaign phase; a locked or unconnected node is not currently selectable.
+
+Do not count two labels per region as two reachable destinations. Do not claim 179 minus 22 is a regional gap. “Low density” thresholds require a design authority; equal-sized label lists do not justify a threshold.
+
+### Binding decision options
+
+**Option A — canonical travel-node region ID:** add a region_id to each WastelandMap node. The graph owns destination membership; map_regions remains the regional descriptor. Validate that region IDs resolve and that each travel node is assigned or explicitly global. This answers density for travel nodes, not all 179 location records.
+
+**Option B — location-catalog region ID:** add a region reference to locations.json and explicitly declare which records are expedition destinations. This risks duplicating membership for the 22 canonical travel nodes and falsely classifying off-map sites. Use only if locations.json is ratified as regional destination authority.
+
+**Option C — explicit relation catalog:** map region IDs to existing destination IDs. This avoids changing records but creates a second crosswalk authority that needs one owner and validator. It is not a default workaround.
+
+Keep these as unresolved alternatives until the foreman/architecture owner selects one and claims exact files. No weights, rarity, map pins, or region-required quest can proceed before that decision.
+
+### Guarantee and fallback
+
+Guarantee a quest location only after its canonical node ID is known and reachable. Replace it only with a node proven to satisfy the same objective; otherwise give a clue or delay visibly through the quest owner. “A POI in Ash Valley” is underspecified until the mapping identifies eligible nodes. A region name cannot serve as fallback node. Optional sites may be dropped when slots are full. Order candidates by stable ID before existing seeded selection.
+
+**Acceptance:** all membership IDs resolve; route connectivity checked from valid starts; regional quests cannot select unreachable nodes; map visibility agrees with selection; empty candidate sets recover explicitly; same-seed runs choose the same destinations. Build the join once at catalog load or in an offline report, not on every UI refresh. Static reporting is low cost; adding a single node-owned crosswalk is medium; broad ownership/topology changes and phase-aware rarity are high. No data or selector change is authorized here.
+### Pass 30B — Selector traces after a region crosswalk is approved
+
+These traces define expected behavior without pretending a crosswalk currently exists.
+
+**Trace A — no mapping yet:** an active quest asks about the Ash Valley chart. Stage 0 returns region metadata and local POI labels. Stage 1 has no node membership relation to query. The selector does not guess from the loc_ prefix, display-name similarity, hazard, or nearest coordinates. The quest remains an archive investigation; no route slot is reserved and no map pin is created.
+
+**Trace B — one approved node mapping:** after an explicit decision, one canonical node has region_id reg_ash_valley. Player fog state says unknown. The node is not offered as a guaranteed quest destination unless ordinary map discovery/access rules permit a clue or route. The selector may include a rumor clue under the existing authored information path; a hidden mandatory objective needs a deterministic discovery path or must remain delayed.
+
+**Trace C — reachable regional quest:** the mapped node is discovered and reachable from the active origin. The quest’s canonical node ID enters the mandatory quest tier. Selection reserves it before optional/theme candidates. If there are multiple valid nodes, use stable ordering and the current seeded substream to choose among equivalent nodes; never randomize between nodes that have different story evidence.
+
+**Trace D — invalidated route:** map knowledge, weather lock, or progression changes before expedition dispatch. Revalidate the reservation at dispatch. If invalid, choose another equivalent node if one exists; otherwise return a clue/delay to the quest owner. Do not silently substitute a location from a neighboring region.
+
+**Trace E — selection succeeds, encounter does not:** the destination is guaranteed, but the encounter remains subject to existing encounter filters. If the quest requires a specific encounter, destination selection alone cannot satisfy it. Add a verified encounter guarantee or redesign the objective to accept another canonical evidence source.
+
+**Trace F — region has zero reachable nodes:** report zero only after the crosswalk, graph reachability, and player-phase filters have run. Optional content may be withheld. A mandatory quest must be delayed or given an equivalent clue; no selector algorithm can manufacture a route that the map owner does not contain.
+
+### Explainability output
+
+For each candidate, an internal trace should include region relation source, canonical node ID, route reachability, fog/lock state, quest priority, exclusion reason, encounter requirement, and deterministic tie-break rank. The player sees only useful status (“not chart-linked,” “identified but unreachable,” “route available”), never internal scoring or pseudo-destinations. Trace storage belongs in bounded diagnostics or test output, not the save file. Performance must remain proportional to the bounded node set; precompute region membership on catalog load after validation and invalidate only when static catalogs change.
+
+**Rollback:** if the region relation is withdrawn, remove region-based ranking and restore ordinary map/quest candidate construction. Existing map nodes, fog, route state, and saves remain unchanged because the mapping is static content. This rollback is feasible only if no quest has written region IDs into durable player state.
+
+## Pass 31 — Arrival Windows, Stops, and Clue Substitutions (DRAFT)
+
+### Selector contract
+
+A caravan stop should not be modeled as an expedition destination merely because it is a location in a route catalog. The route network and expedition selector answer different questions. The route system owns scheduled movement, route risk, and arrivals; expedition location selection owns the set of places available to a player at expedition start. The proposed integration keeps this distinction. A quest may request a clue or visit opportunity, but the selector must return an eligible authored location through its existing contract or report that the quest is delayed. It must not fabricate a POI or make a route stop visible before the map owner says it is discovered.
+
+For a future quest-aware expedition offer, define these candidate classes as selection annotations, not new world pools: (1) hard-required active objective locations; (2) critical progression locations; (3) faction/character opportunities; (4) recently discovered locations; (5) thematic matches; (6) ordinary optional sites; and (7) rare surprise sites. Each class is evaluated against the current expedition's region, route availability, already visited/locked/expired state, player map knowledge, and any explicit quest constraints. Hard-required means “must be possible,” not necessarily “always visible.” The plan must preserve the user's unpredictability goal by fixing eligibility and guarantees while allowing seeded choice among eligible optional content.
+
+Priority and fairness:
+- Resolve hard requirements first. If several active quests compete, use authored criticality and stable quest/location IDs as tie-break inputs; never rely on dictionary enumeration order.
+- Reserve only locations that can be reached in the selected expedition envelope. Avoid showing mutually exclusive distant stops as simultaneous options if travel rules permit only one.
+- Add at most a bounded number of optional thematic and rare sites after guarantees. When the map has few valid candidates, return fewer options rather than duplicating a site or inserting an invalid substitute.
+- A location already visited may reappear only where its authored revisit policy allows it. Repeatable encounters require explicit cooldown/rotation data from their owner.
+- A quest-only location stays hidden until its discover condition; if discovered, visibility follows the canonical map knowledge rule rather than an expedition-local reveal cache.
+- Quest-specific place availability must be rechecked at expedition start and when the player commits, because the caravan may have departed or the relevant objective may have been resolved.
+
+Fallback matrix:
+1. Equivalent location: use only an authored replacement with matching objective capability, access constraints, and reward class. A textually similar place is not sufficient.
+2. Clue substitution: emit or expose an authored clue at a currently reachable scene, then advance the investigation to a supported alternate target.
+3. Delay: keep the quest active or blocked with an explicit reason and a retry condition tied to a later eligible arrival.
+4. Clean expiry: use only when the quest design promises a time-limited window and tells the player the consequence.
+Never mark a required step complete because selection failed. Never let a missing optional pool suppress the full expedition.
+
+Illustrative, non-canonical scenario: a route-bound trader is expected at a stop but the actual arrival has not been confirmed. The expedition selector must not place “caravan camp” on the map based only on rumor. It may offer a survey site containing an authored route clue if already eligible. After the route owner confirms an arrival and the map/quest owners expose a valid visit opportunity, a trade scene can appear. If no stop is reachable, the quest can wait for the next supported visit window; the player receives a truthful journal update.
+
+Rarity must be data-authored and bounded. A surprise encounter is a weighted option only after hard requirements, with a per-expedition cap and no repeated selection on a stable seed unless the encounter's repeatability contract explicitly allows it. Stable seed inputs should include campaign seed, expedition sequence, and canonical candidate IDs through the existing RNG contract. Do not seed from time, route traversal hash order, or a new private random stream.
+
+Visibility states: hidden, rumor/clue-known, map-discovered, available this expedition, unavailable with reason, visited. These are design labels; implement by projection from existing map and expedition state, not by adding a parallel discovery ledger. UI should distinguish “not known,” “known but not available,” and “available now.” Avoid exposing the exact rare pool through a probability readout.
+
+Minimum viable version: one active quest request, one required candidate, one equivalent or clue fallback, one optional candidate, deterministic tie breaking, and visible unavailability feedback. Defer multi-quest optimization, weighted pity timers, route-conditioned regional ecology, and player-configurable expedition decks. Dependencies: confirm the live selector API, the canonical map discovery owner, route-arrival event exposure, quest state representation, and save/replay contract before implementation. No code or data changes are authorized by this design pass.
+
+
+### Pass 31B — Candidate audit rows and selector output
+
+Before tuning rarity or adding candidates, produce one reviewable row per proposed place:
+- canonical location ID and owning catalog;
+- whether it is a route destination, expedition site, shelter encounter, or map rumor;
+- existing availability/discovery rule and revisit policy;
+- quest capability (which objective can actually be completed there);
+- route/region vocabulary required to reach it;
+- visibility state before and after discovery;
+- exclusion reason codes (unreachable, already resolved, expired, incompatible expedition, duplicate);
+- replacement candidate and proof of equivalent capability;
+- fallback when no substitute qualifies.
+
+This table prevents a common category error: a route's destination_region_id is not automatically an expedition location ID, and a label in a regional map catalog is not a canonical destination. Resolve the owning catalog and consumer before joining IDs. If the current data cannot express the relation, the selector plan should state the missing relation as an architecture decision rather than inventing a string convention.
+
+Recommended result contract for a future selector: return ordered visible candidates plus required objective coverage, exclusions with stable reason codes, and an unresolved-required list. It should be a pure projection from the active quest snapshot, map knowledge, route/expedition options, and seeded selector inputs. A caller can then show “The route is not available this trip” or delay a quest; it cannot quietly report success. Candidate ordering should be stable for identical inputs, while an existing seeded choice may vary optional content across expedition sequence numbers.
+
+Rarity policy must be validated against small-world cases. If the optional pool has one candidate, it can appear without being labeled rare. If no optional candidate is valid, return only the guaranteed set. If two quests require the same location, coalesce the location once and report both objective links; if they require mutually exclusive locations, expose both as an unresolved conflict and let quest policy determine whether one is delayed. Do not resolve conflict by silently dropping the lower-sort quest.
+
+A later expansion layer may add themes such as winter convoy, damaged wheel, river crossing, or market day, but themes filter candidates and select authored variants; they do not create a new simulation event. Likewise, quest-only places may become map-visible through canonical discovery, but the selector must not persist discovery as a side effect of merely listing a candidate.
+
+## Pass 32A — Maintenance Evidence Sites and Shelter/Expedition Boundaries
+
+### Location pools for a maintenance-story arc
+
+The source question concerns machine wear and its maintenance record corpus. Most maintenance work belongs inside the shelter and should not be forced into the expedition selector. The first selector decision is therefore “does this objective genuinely require a surface trip?” Default answer: no. The shelter service card, archive shelf, machine room, and shift handoff can be scene anchors or UI contexts without becoming map destinations. A required expedition destination is justified only by a specific clue or component already represented by a reachable canonical location and a real player action there.
+
+Use distinct candidate annotations over existing owners:
+- Shelter context: machine display, workbench, archive/codex, shift handoff. These are not expedition pool members unless the owning location catalog already represents them as expedition sites.
+- Historical evidence: a static maintenance or failure record. It is selectable as readable content only through its actual narrative discovery/codex owner; its filename alone is not a location.
+- On-site evidence: an authored encounter or POI tied to a canonical location ID, with confirmed availability and discovery rules.
+- Return evidence: a live machine reading after expedition return or a repair action. It is a fresh projection from its owner, not an expedition reward.
+- Optional memory: a rumor or conversation that can be reached from a current shelter/faction location only if that content owner exposes it.
+
+### Selection rule and anti-stranding behavior
+
+The expedition selector should never add “Maintenance Depot” as a substitute because the quest mentions a damaged pump. Instead, objective resolution asks the relevant domain owners whether the needed action is possible at shelter, whether a known surface location contains a required part/evidence, or whether a clue route is available. If the objective is shelter-solvable, keep it out of expedition selection. If travel is truly required, rank the exact authored location as quest-required only after proving location ID, availability, map knowledge, and action consumer. Then apply current selector guarantees: no silent loss of mandatory objectives, no duplicate location, no fabricated visibility.
+
+If a required service location cannot spawn:
+1. If an existing shelter action can satisfy the objective, offer that capability and report the substitution explicitly.
+2. If an authored clue at a reachable site can redirect to a different canonical location, surface the clue and keep the objective active.
+3. If the service is temporarily unavailable, set a truthful blocked/delayed state with a retry condition tied to the actual inventory, schedule, or location owner.
+4. If the design has a published time window, expire only that optional branch and preserve the investigation route.
+5. If no supported alternative exists, do not claim the quest is implementation-ready.
+
+Candidate precedence for this arc: active required surface evidence; critical progression site already valid; relevant faction/character location; already discovered clue site; theme-compatible optional site; ordinary exploration; rare surprise site. This ordering is an architecture proposal to reuse Plan 18's selector contract, not a new map authority. Required locations should guarantee possibility without guaranteeing the player will always see the same optional layout. Seeded selection can vary optional records only after all active requirements remain satisfiable.
+
+### Location examples and availability
+
+Example A, shelter-only: the live tell is seen on the machine panel; the player opens the maintenance archive in the journal. No map marker or expedition slot should appear. Example B, prior discovery: a known workshop site contains an authored failed part or work order. It can appear in an expedition only if the existing location and encounter consumers make that item/evidence available; the quest may not spawn it from dialogue. Example C, unknown site: a log mentions a “north service shed” but has no canonical location reference. The text can motivate a later authored clue, but it cannot create an expedition candidate at runtime. Example D, unavailable witness: no character can be found; the site selector should not compensate by choosing a random mechanic.
+
+Map visibility: “record known” does not mean “place discovered.” A codex entry can reveal a place only if a supported map-discovery action records that fact. Likewise, a site being in the candidate pool is not equivalent to player awareness. Keep selector outputs and UI labels separate: eligible this trip, known on map, rumor only, visited, and unavailable with reason. If the current map owner cannot express one of these distinctions, display only its real states and defer richer UI.
+
+### Minimum viable selector layer
+
+MVP needs no new regional density or machine-condition weighting. It only needs a quest requirement expressed against a currently valid site, stable exclusion reasons, one substitution route, and a no-candidate response that delays without breaking the quest. Optional expansion can later add trip themes (winter repair run, spare-parts search, inspection escort), but those themes filter authored locations and encounters; they cannot imply the repair happened. Dependencies to verify before implementation: current expedition candidate API, map discovery authority, encounter-to-location bindings, item source authority, quest status vocabulary, and which service actions are shelter-only. Production cost: low for a shelter-only quest; high if it needs new surface locations, map linkage, and persistence.
+
+
+### Pass 32B — Deterministic selection walk-throughs and scarcity cases
+
+The maintenance arc has a useful way to test selector guarantees because a quest writer may be tempted to turn every record into a site. Run these selection walk-throughs before any implementation:
+
+**Case 1: purely shelter evidence.** The quest needs a current tell and an already-discovered log. Expedition list remains unchanged; the quest card names shelter as the action context. Selector result reports no required surface candidate. This is a valid successful selection, not missing content.
+
+**Case 2: location-bound evidence exists and is undiscovered.** The active objective asks for one clue at a known canonical site. The selector may include it as a required candidate if it is in scope and reachable, but it may not mark it discovered merely by selecting it. If the required site is omitted by a pool cap, selector must report unresolved requirement and invoke a documented fallback before the expedition begins.
+
+**Case 3: two maintenance quests need the same site.** Include the site once and associate two objective references. Quest outcomes remain separate: collecting one report cannot silently complete both unless each objective explicitly accepts the same evidence ID.
+
+**Case 4: incompatible locations.** One quest requires an inaccessible clinic, another a factory beyond the selected travel envelope. Do not pretend both are guaranteed by showing a non-reachable card. Apply quest-level delay policy with per-quest reason codes; optionally select a clue location that is reachable and can advance one branch without erasing the other.
+
+**Case 5: location exists but its clue content was removed or invalid.** Fail closed with an authored “no current record at this site” result only if the encounter can return that outcome. Otherwise do not expose the location as a required resolution site. Log a validation defect for the content owner.
+
+**Case 6: same seed after save/load.** The required set, eligibility reasons, and optional ordering must reconstruct identically from canonical IDs and the existing RNG stream. If a repair or quest completion changes the required set, compute again from new source state; do not replay a stale candidate cache.
+
+Fallback quality is measured by retained player agency. Equivalent substitution must preserve objective capability, cost, and risk; clue substitution can defer diagnosis but cannot award the conclusion; delay must name the retry signal; expiry should affect only the branch whose window was disclosed. “No valid location” must be a first-class result, never an empty list that looks like a crash or silently strands a quest.
+
+A future themed selector can group winter repair, water-pump outage, or radio-transmitter service expeditions. It should filter by authored weather and destination compatibility through current systems. A thematic match does not override safety gates, active critical progression, or map knowledge. Re-run examples at low map knowledge, depleted supplies, absent witnesses, maximum active quest count, and all optional pools empty. This gives meaningful coverage without inventing a probabilistic content director.
+
+
+### Pass 32C — Selector output contract and scarcity cases
+
+A selector response for this arc should expose read-only: expedition sequence, eligible canonical location IDs, reserved objectives, map-derived visibility, exclusion reasons, optional selections, unresolved requirements, and fallback type. Do not persist the whole result when it can be recomputed from restored owners and seeded inputs.
+
+A maintenance quest should not displace critical progression when selector capacity is constrained. Delay the optional quest with a reason. If two maintenance leads compete and neither is critical, prefer the reachable supported location; stable tie-break by authored priority then ordinal quest ID. Do not use random selection to decide which quest becomes impossible. If both quests need one site, include that location once and preserve separate objective links. One clue may advance both only when each objective explicitly accepts that same clue ID.
+
+Distinguish no valid location cases: no expedition required because shelter action suffices; objective is shelter-based; temporary block has an owner-defined retry; or unresolved design defect. An empty location list alone cannot tell the caller which copy to show. Rare surprise locations are not fallbacks because their appearance is not guaranteed. Any equivalent replacement must preserve objective capability, cost, and risk.
+
+The audit must cover all-excluded and zero-pool scenarios, low map knowledge, depleted supplies, absent witnesses, maximum active quests, and optional pools empty. Same seed plus same source state must reconstruct required set and optional order; a quest genuinely resolved must change the selection. If current selector cannot report objective coverage, propose a bounded API improvement for the approved owner package rather than adding a second selector or cache.
+
+
+### Pass 32D — Expedition UX and operational diagnostics
+
+The expedition panel should show a required maintenance clue only when a real trip can make progress. If the objective is shelter-based, place it in the shelter/quest view and do not consume map space. When it is travel-bound, state the destination's known/rumored/available status and why it was selected. An unavailable site should show a retry or clue route, not an empty card.
+
+For implementation diagnostics, report counts of required candidates before filtering, after reachability filtering, and after visibility filtering; enumerate exclusion reasons by stable location ID. These diagnostics help distinguish a selector bug from a valid delay. Keep them in existing development diagnostics and do not expose hidden rarity weights to the player. UI acceptance includes keyboard/controller focus after the candidate list changes, accessible reason text, and back navigation that does not cancel or complete the quest.

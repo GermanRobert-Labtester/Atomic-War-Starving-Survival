@@ -736,6 +736,12 @@ namespace AtomicWar.GodotApp
                 if (_shelterGovernance == null) return null;
                 return _shelterGovernance.GetSurvivorBlocDisplayName(id);
             };
+            _survivorDetailPanel.AgeProfileProvider = id =>
+            {
+                if (_aging == null) return null;
+                int day = _campaignDay?.Calendar.CurrentDay ?? _simDay;
+                return _aging.EvaluateSurvivor(id, day);
+            };
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);
 

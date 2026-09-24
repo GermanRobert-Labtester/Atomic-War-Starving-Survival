@@ -231,6 +231,7 @@ namespace Ashfall.Core.Survivors
         {
             "nurse" => "medical",
             "machinist" => "mechanic",
+            "metallurgist" => "mechanic",
             "electrician" => "electronics",
             "teacher" => "research",
             "farmer" => "agriculture",
@@ -242,6 +243,7 @@ namespace Ashfall.Core.Survivors
         public static string ResolveTradeSpecialty(string profId, string phantomId)
         {
             if (profId == "machinist" || phantomId == "machinist") return "tools";
+            if (profId == "metallurgist") return "tools";
             if (profId == "nurse" || phantomId == "nurse") return "medical";
             if (profId == "electrician" || phantomId == "electrician") return "components";
             if (profId == "farmer") return "food";

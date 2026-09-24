@@ -13,6 +13,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | Kind | Producer(s) | Briefing handler | Route | Status |
 |---|---|---|---|---|
 | `aeroponics_ticked` | Main.Plans74_77.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `aging_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 176) |
 | `aquaponics_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `backstory_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 174) |
 | `ate` | InventoryHostSession.cs | yes | via briefing panel | HANDLED |

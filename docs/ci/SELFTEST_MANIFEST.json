@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 168,
-  "headless_test_count": 166,
+  "total_tests": 171,
+  "headless_test_count": 169,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1001,6 +1001,32 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "origin_mechanics_selftest",
+      "action": "OriginMechanicsSelfTest",
+      "category": "Survivors & Identity",
+      "primary_flag": "--origin-mechanics-selftest",
+      "aliases": [
+        "--mechanical-origin-selftest"
+      ],
+      "description": "C3-174 mechanical origin effects seam: enriched survivor skill, trade specialty, and keepsake resolution and host application",
+      "headless_compatible": true,
+      "expected_summary_id": "origin_mechanics_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "dynamic_quest_selftest",
+      "action": "DynamicQuestSelfTest",
+      "category": "Quests & Narrative",
+      "primary_flag": "--dynamic-quest-selftest",
+      "aliases": [
+        "--dynamic-quests-selftest"
+      ],
+      "description": "Plan 171 dynamic quest generation: authored templates, deterministic candidate generation, lifecycle, deadlines, and census",
+      "headless_compatible": true,
+      "expected_summary_id": "dynamic_quest_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "shelter_governance_selftest",
       "action": "ShelterGovernanceSelfTest",
       "category": "Expansions & Campaign Modules",
@@ -1011,6 +1037,19 @@
       "description": "Plan 159 shelter governance & political system: ideological blocs, policy consent, civil disputes, and shelter stability",
       "headless_compatible": true,
       "expected_summary_id": "shelter_governance_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "aging_selftest",
+      "action": "AgingSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--aging-selftest",
+      "aliases": [
+        "--elderly-survivor-selftest"
+      ],
+      "description": "Plan 176 aging & elderly survivor system: chronological age progression, life stages, retirement, elder mentorship, and milestones",
+      "headless_compatible": true,
+      "expected_summary_id": "aging_selftest",
       "timeout_seconds": 30
     },
     {

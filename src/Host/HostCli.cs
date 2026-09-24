@@ -233,7 +233,10 @@ namespace AtomicWar.GodotApp
         AudioAccessibilitySelfTest,
         ModSupportSelfTest,
         ShelterIdentitySelfTest,
-        ShelterGovernanceSelfTest
+        OriginMechanicsSelfTest,
+        DynamicQuestSelfTest,
+        ShelterGovernanceSelfTest,
+        AgingSelfTest
     }
 
     /// <summary>
@@ -692,8 +695,14 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ModSupportSelfTest;
             if (Has(args, "--shelter-identity-selftest") || Has(args, "--shelter-naming-selftest"))
                 return HostCliAction.ShelterIdentitySelfTest;
+            if (Has(args, "--origin-mechanics-selftest") || Has(args, "--mechanical-origin-selftest"))
+                return HostCliAction.OriginMechanicsSelfTest;
+            if (Has(args, "--dynamic-quest-selftest") || Has(args, "--dynamic-quests-selftest"))
+                return HostCliAction.DynamicQuestSelfTest;
             if (Has(args, "--shelter-governance-selftest") || Has(args, "--governance-selftest"))
                 return HostCliAction.ShelterGovernanceSelfTest;
+            if (Has(args, "--aging-selftest") || Has(args, "--elderly-survivor-selftest"))
+                return HostCliAction.AgingSelfTest;
             return HostCliAction.Interactive;
         }
 

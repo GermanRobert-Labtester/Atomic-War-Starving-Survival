@@ -2998,3 +2998,296 @@ The story may include hidden emotional states as performance direction—Mara ta
 The interaction panel can show a source badge: “read from file,” “heard from Iven,” or “player interpretation.” This is a presentation proposal and must reuse the current journal/source convention. It should not reveal the entire condition formula. After an accepted report choice, show a visible “Report saved” or “Draft left open” result only if the command confirms it. For a narrative-only draft, say “You leave the page on the desk”; do not display a persistence icon or completion receipt.
 
 Context query cost is bounded by using one scene context snapshot and a small number of direct owner reads. No timed loop should reevaluate conditions while the player is idle. A return callback uses an event or interaction boundary already supplied by the host; if none exists, the plan remains a content design and does not prescribe a polling system.
+
+## Pass 28 — Truthful gates for care-handoff dialogue
+
+A care scene needs precise knowledge gates because the simulation stores less than characters can say. This pass defines a conservative condition model for “The Cup on the Rail.” It prevents unknown data from becoming blame, avoids stale responses, and keeps authored emotion separate from canonical facts.
+
+### Gate classes and authoritative inputs
+
+**Pair gate:** current GetCaregiverForPatient(patientId) and GetPatientForCaregiver(caregiverId) agree. If no pair exists, the active-assignment scene is unavailable. A general request-for-help conversation may still exist, but it must not use active-pair copy.
+
+**Eligibility gate:** life, caregiver fitness, and patient need are queried through existing callbacks at preview/execution. Dialogue may show an action as provisional; it cannot cache eligibility as truth. Revalidate on click. If the command owner returns unavailable, report its result without translating generic failure into a character’s refusal.
+
+**Roster gate:** show a specific job only when the current duty-roster query returns it. Since care start vacates the existing roster role, a post-assignment snapshot may show no role. Absence of a role is not proof of which job was vacated. Do not infer historical work from a blank slot unless an independent supported source records it.
+
+**Bond/dialogue gate:** the current bond query is patient-keyed. Core fires an unlock event when a tick crosses the threshold; a content consumer must prove how that event becomes conversation availability. Do not recalculate the threshold in a second dialogue subsystem, and do not equate bond with consent, universal affection, or willingness to accept a replacement.
+
+**Fatigue gate:** CaregivingSystem applies a fatigue delta during a valid tick, but the reviewed public host getters do not expose accumulated care hours or a caregiving fatigue ledger. If the needs owner exposes current fatigue, use that owner and a reviewed threshold; otherwise omit numeric gates. A spoken request for relief can be authored without a number.
+
+### Unknown-safe truth table
+
+| Pair query | Patient alive/needs care | Candidate eligible | Roster fact | Dialogue behavior |
+|---|---|---|---|---|
+| Active pair | True | Unknown | Unknown | Show perspectives; offer inspection, not blind assignment |
+| Active pair | Changed since display | Any | Any | Refresh and withdraw outdated responses |
+| No active pair | Any | Any | Any | Use general shelter scene or mark this scene unavailable |
+| Active pair | True | False | Known role | Explain action unavailability using exact owner feedback; role is optional context |
+| Active pair | False | Any | Any | Do not imply neglect; close as changed circumstances or re-query quest |
+| Pair differs after reassignment | True | Any | Any | Bind to current IDs; never retain stale speaker references |
+| Bond event absent | Any | Any | Any | Do not claim dialogue was unlocked by bond |
+| Bond event observed | Any | Any | Any | Permit only mapped callback; no invented relationship effect |
+
+### Freshness and return behavior
+
+Create a read-only scene snapshot: survivor IDs, current pair, optional roster role, and any condition needed to offer an action. The snapshot supports display, not authority. On each consequential response, ask the owning host to preview/execute with its current state version. If versions differ, discard the stale result and present refreshed text such as “The board has changed since we spoke.” Do not save a second version counter in dialogue memory.
+
+After save/restore, rebuild context from owners. The quest may remember lifecycle only through its existing quest save owner. Do not restore old dialogue snapshots as facts. Reopened scenes re-read the pair. If a caregiver dies and Core removes the pair during a tick, no active assignment remains to display. If the patient no longer satisfies NeedsCare, replacement assignment may be unavailable; say the current care action is unavailable, not that the original story was false.
+
+### Relationship and emotional-state limits
+
+Hidden emotional subtext can be expressed through wording, pauses, and who begins a conversation. Labels such as resentment, gratitude, fear, exhaustion, or consent are authored interpretation unless an existing validated owner provides them. Do not turn repeat visits into persistent hidden-emotion variables. Cosmetic variants may rotate deterministically only if a current seeded selector exists; every variant preserves the same gate and consequence.
+
+Relationship changes are reported only when the canonical owner changes them. Care ticks already invoke affinity adjustment and maintain a care bond; dialogue must not issue a duplicate increment. Handoff is not a default penalty or reward. A line may adapt to current owner state but should not silently write relationship memory.
+
+### Reusable gate manifest
+
+For every dialogue node, record gate ID, owner queried, query timing, stale-state response, null/unknown behavior, privacy rule, and whether the gate changes text or command availability. Reuse the manifest for treatment discussions, duty transitions, companion callbacks, and faction mediation. A failed query produces an unavailable option or neutral wording, never an accusation.
+
+**Minimum viable:** active-pair gate, safe general fallback, command revalidation, and result-backed response text. **Optional:** role-aware context and post-threshold callback after event consumption is proven. **Deferred:** memory across multiple care scenes, procedural emotional tone, and any missed-care history; each requires an explicit owner and migration/design decision. No dialogue implementation or new gate registry is authorized here.
+## Pass 29 — Location truth, encounter memory, and unknown-safe context
+
+Location-specific dialogue and quests need a truth table that distinguishes “record authored for this destination,” “record eligible here,” “record selected,” and “record resolved.” These are different facts. The static catalog proves the first two conditions only in part; runtime selection and saved encounter history own the latter two. The player must never be told that they visited or understood a micro-location because its definition exists.
+
+### Context snapshot
+
+For a proposed follow-up, a read-only context snapshot may contain:
+- canonical destination ID supplied by the current expedition host;
+- selected encounter ID and source catalog;
+- selected choice ID and resolution result, when the current owner exposes them;
+- day/expedition identity only if a canonical owner provides stable values;
+- current quest stage from the quest owner, if one exists;
+- whether the exact-site requirement matched and whether the content is depleted.
+
+Do not persist this snapshot in the dialogue system. Rebuild it from the location, encounter, and quest owners when the conversation opens. A missing field is UNKNOWN, never false-by-default evidence of player choice. Revalidate before a consequential response.
+
+### Gate matrix
+
+| Evidence | Gate may unlock | Must not imply |
+|---|---|---|
+| Encounter ID micro_hospital_chapel_ledger selected at abandoned_hospital | Hospital-ledger observation callback | Who wrote the final entry or why it stopped |
+| Same encounter ID at another location | No exact-site callback; likely impossible under current exact filter | A hospital visit |
+| micro_depot_undertow_raft_line selected at location_flooded_subway_depot | Route-observation callback | Who owns the crates or where they travel |
+| micro_gamma_levy_board selected at loc_garrison_checkpoint_gamma | Levy-board interpretation | A universal faction policy or future enforcement |
+| Choice ID read_the_names / note_the_route / memorize_the_board resolved | Choice-specific authored callback if resolution consumer is verified | Knowledge stat, quest completion, or permanent map reveal |
+| Definition is present in catalog but not selected | None | Player discovery or visit |
+| Definition has empty requiredLocationId | General eligibility only | Guarantee, local fit, or player familiarity |
+| Encounter has a depleting choice | Revisit behavior follows owner state | A permanent location closure unless the saved owner says so |
+| Unknown choice or unresolved record | Neutral base prose | Inferred intent or consequence |
+
+The chosen ID strings above are current data evidence; callbacks remain proposals until consumer and save paths are proven.
+
+### Freshness, repeated visits, and memory
+
+An exact destination gate should compare the canonical IDs from both sides, not title strings. At the point a conversation is displayed, recheck the resolved encounter record rather than relying on map discovery. If an alias enters through the host, the host’s authoritative resolver must produce a canonical ID before dialogue unlocks. If IDs differ or resolver output is absent, withhold the callback and offer a neutral line.
+
+Repeated visits need distinct semantics. A not-yet-selected record may remain eligible on another run. A record resolved with a non-depleting choice may follow current NarrativeEncounterSystem behavior; a depleting choice uses the current saved depleted set. Do not introduce “seen site” or “memory freshness” flags in the dialogue layer. If the encounter owner has no public query for resolution history, treat callbacks as unavailable pending an API/consumer audit instead of mirroring the history.
+
+Knowledge gates should be specific to evidence acquisition, not inference. Reading names can unlock a line that the player read the names; it cannot unlock a claim about a person’s identity. Marking the route can unlock a note that a route was mapped; it cannot establish safe passage. Memorizing the board can unlock recall of its marks; it cannot certify payment, collection, or legal status. Use authored textual uncertainty to make that limit clear.
+
+### Accessibility and fallback behavior
+
+If the location ID, choice result, quest state, or dialogue route is unavailable, display the original encounter text and let the player continue. A missing callback is not a failed quest. Explain why a pinned objective is waiting only when the quest owner can present that state; avoid raw IDs in player-facing copy. Subtitle and journal versions should include the same uncertainty cues. Do not use color alone to distinguish exact-site evidence from general information.
+
+**Minimum viable:** static exact-ID validation plus no callback until the resolution consumer is proven. **Optional:** a read-only post-encounter scene with ID/choice gates and reconvergent prose. **Deferred:** cross-visit familiarity, inferred faction knowledge, rumor propagation, and generated place memory; each requires a canonical information owner and an explicit provenance contract. No new dialogue memory registry is proposed.
+## Pass 30 — Gate regional prose on canonical map knowledge
+
+The region chart is authored context; the travel map is canonical route knowledge. Dialogue must not conflate them. Current POI labels are explicitly local to map_regions.json. The travel map and locations catalog carry no region field. The live map panel projects WastelandMap state. Content may discuss the chart before a route exists, but only the canonical map owner can establish known, surveyed, visited, or reachable.
+
+### Knowledge state matrix for “Two Maps on the Table”
+
+| Chart entry | Canonical node | Route status | Player-safe wording |
+|---|---|---|---|
+| Region exists, no node resolved | None | None | “The shelter chart names a region; route not verified.” |
+| POI label only | Label is catalog-local | None | “The chart marks a point; the map cannot route there yet.” |
+| Candidate node matched by approved crosswalk | ID resolved | Locked/unreachable | “The place is identified, but the route is unavailable.” |
+| Candidate node resolved | ID resolved | Reachable | Offer ordinary map selection; do not force a quest destination |
+| Node surveyed | Canonical survey says surveyed | Recheck route | Say “surveyed,” not physically visited |
+| Node visited | Canonical knowledge says visited | Existing route | “Visited” may be shown, subject to source freshness |
+| Chart disagrees with map | No authoritative resolution | Any | Preserve both sources and identify them |
+| Missing/corrupt map context | Unknown | Unknown | Hide consequential option; retain neutral atlas text |
+
+A similar display name is not a canonical match. Prefix grammar is not evidence.
+
+### Conversation graph and commands
+
+The scene can open from an existing archive or map panel. The archivist explains the difference between regional description and route graph without requiring discovery. The expedition lead may name a route only when the map provides a node ID and current route state. The player’s “verify a mark” response invokes the existing map survey/route action; it does not create a node. If no approved mapping exists, disable the command and state that the mark cannot yet be matched.
+
+Main.RecordCartographySurvey requires a valid living survivor and canonical map node, delegates to WastelandMap, and awards existing scavenging XP. Use the returned canonical result, not a cached region survey. If the action fails, say no survey was recorded. Do not convert an ineligible survivor or missing node into a refusal scene.
+
+### Freshness and memory
+
+A dialogue instance may hold an ephemeral chart label and candidate ID for display. Before travel or quest advancement, re-read current node, fog, and route eligibility. A map/world change invalidates the action view. On save/restore, rebuild the display from canonical map and authored chart. Quest stage persists only through the existing quest owner; dialogue must not copy map discovery.
+
+Player information types remain distinct:
+- Read the chart: authored text opened.
+- Heard a rumor: only if a canonical rumor event/source exists.
+- Surveyed a map node: canonical survey status.
+- Visited a destination: canonical map says visited.
+- Verified regional membership: only after crosswalk approval and an action that actually verifies membership.
+
+A response cannot set these facts itself. Do not infer hazard knowledge merely because a player opened an atlas page unless the page was available to them.
+
+### Emotion and relationship gates
+
+Regional identity can color voice but does not imply faction attitude, local loyalty, fear, or trust. The archivist may be cautious because records are incomplete; that is authored tone. The expedition lead can disagree without changing relationship values. Any relationship consequence needs an explicit current-owner command and is outside this scene.
+
+**Minimum viable:** neutral archive scene and truthful availability copy. **Optional:** a canonical map survey branch after crosswalk validation. **Deferred:** regional reputation, generated dialogue from map density, dynamic site control, and memory of unvisited locations. Each needs one stable owner, explicit unknown behavior, privacy review, and save contract. No dialogue-memory registry is proposed.
+### Pass 30B — Regional knowledge state transitions and edge cases
+
+| Before action | Player action | Canonical result | Allowed update | Forbidden inference |
+|---|---|---|---|---|
+| Chart read; no node link | “Verify” | No command can resolve label | Keep quest at research step | Mark destination discovered |
+| Link exists; node unknown | Request route | Map owner reports unknown/locked | Show clue or ordinary map path | Force quest marker onto unknown node |
+| Node known; path unavailable | Survey request | Survey fails or route rejects | Explain unavailable; retain partial state if supported | Award survey XP or count objective |
+| Node reachable; living survivor selected | Survey | Main survey succeeds | Consume returned map result once | Add duplicate CartographySystem discovery |
+| Node surveyed but not visited | Discuss arrival | Map says surveyed | Say “surveyed” | Say player visited location |
+| Node visited | Discuss return | Map says visited | Use current map callback | Infer a second POI was also visited |
+| Chart and map disagree | Ask archivist | No accepted resolution | Keep both sources labeled | Overwrite either source from dialogue |
+| Node-link schema removed | Reopen quest | Relation absent | Return to archive-only path | Read stale relation from quest save |
+
+A survey result records canonical map knowledge; it does not certify that every regional POI label corresponds to a distinct node. If one node is later assigned to a region, the interface should still distinguish region membership from discovering a second point.
+
+**Predicate ordering:** first check that the archive surface and quest are available; then resolve region ID as authored context; then ask for an approved node relation; then query canonical node/fog/route; finally preview a player command. Stop at the first unavailable layer and preserve neutral text. Do not query later systems with an empty string and interpret a default answer as an affirmative result.
+
+**Staleness:** the route may lock between graph display and action. Revalidate immediately before map action. A stale result returns the player to the region card with current availability copy, not to a quest failure. If a region relation changes in a future catalog revision, rebuild from content on load; do not trust a serialized old relation.
+
+**Privacy:** chart contents may identify households, military infrastructure, or hazards. A public shelter board should not reveal a player’s exact map discoveries unless the existing map-sharing feature permits it. Dialogue text may discuss a region generally while withholding node details. No faction reputation or interpersonal trust gate should be derived from whether a character believes a chart.
+
+This truth table can later support map quests, radio-reported routes, faction maps, and expedition debriefs. It preserves distinct states for authored report, rumor, survey, visit, and verified regional assignment.
+
+## Pass 31 — Trade Context as Ephemeral Evidence, Not a New Memory Store
+
+### Context packet
+
+For caravan-related dialogue, context should be a read-only packet assembled at the point the scene opens. Candidate fields are: route ID and confirmed arrival status; current stop and day if exposed; trader/faction identity; observed inventory IDs and quantities; relevant authored route demands/surpluses; computed regional modifier for a requested good; current quest state; canonical player knowledge flags; existing trust/stance inputs; and the source/provenance of each fact. This packet is an interface proposal, not permission to create a second save store. Do not persist a second “caravan memory” just to remember a cargo list that the current caravan owner already owns.
+
+Gate categories:
+- Visit gate: require a confirmed current presence, not a planned or rumored arrival.
+- Cargo gate: require the good to be in the current visible inventory, not merely eligible under regionalSupply.
+- Price gate: query the current atlas/transaction projection; absent price entry means neutral modifier, not “unknown price.”
+- Route gate: distinguish the route catalog's authored planned demands/surpluses from observed cargo.
+- Knowledge gate: require a clue or journal fact the player actually acquired.
+- Trust gate: use existing trade stance/trust band selection; avoid duplicating numerical thresholds in dialogue JSON.
+- Faction gate: resolve current access/standing through its canonical owner, if that exact query exists.
+- Quest gate: check the supported state and prerequisite outcome, including expired/missed-window alternatives.
+
+If a requested fact is unavailable, gates fail closed into an explicit unknown or neutral branch. Never convert null into false evidence (“there is no route demand”) or true permission (“the caravan must be here”). The line should remain coherent in both states. A factual fallback can say “The route sheet is incomplete”; a neutral price fallback can show the computed standard amount. UI should communicate why an option is missing only where the player understands the reason without exposing hidden narrative variables.
+
+Memory levels for this topic should be owned by existing systems:
+- Session-local: selected line rotation may use the existing seeded RNG; it must not become a new campaign fact.
+- Current visit: presence and visible stock are read from the active caravan/trade surface.
+- Durable player knowledge: quest/journal/map owners record clues or discovered places when their contracts support it.
+- Relationship memory: canonical trust/relationship owner only.
+- Long-term route history: route owner or Chronicle only if an event fact is already emitted and consumed. No reconstruction by scanning UI dialogue.
+
+Repeated visits need disciplined callbacks. On the first visit, the trader can explain the manifest. On a later visit, dialogue may reference a previously completed agreement only if the quest/chronicle state supplies a stable fact. If no record exists, use a noncommittal greeting that does not imply memory. A changed cargo list can alter what is currently said without implying that the character remembers the player's last offer.
+
+State leakage safeguards:
+1. Build context fresh after save restoration and before presenting choices.
+2. Revalidate each gated option at selection/commit time.
+3. If context changed between render and commit, return an unavailable result and refresh the view; do not apply stale effects.
+4. Keep scene-local node visitation transient unless the existing dialogue owner owns it.
+5. Make save/load tests assert source-authority restoration rather than duplicate cached state.
+6. Ensure deterministic tell selection is stable for same inputs and RNG sequence; do not consume campaign RNG for cosmetic dialogue if it perturbs unrelated simulation streams.
+
+Test cases for future implementation: absent route fact; planned but not arrived; arrived with no regional specialty lot; specialty lot present but not in current inventory; missing regional price row; item-level price override winning over category; known rumor versus verified clue; active quest resolved while trade panel remains open; save/load before conversation; same seeded stance selecting the same tell. These are acceptance scenarios, not tests added by this documentation edit.
+
+
+### Pass 31B — Context validity and UI copy
+
+A conversation context packet should carry a freshness boundary. The trade UI can remain open while campaign day, caravan position, or inventory changes; every response therefore needs a validity rule. At presentation, record the canonical IDs and visible facts used to build the option list. At commit, query the owner again. If the current state differs, return a stale-context response and rebuild the dialogue without applying the response's durable effects.
+
+Suggested user-facing fallbacks:
+- “That cart has already moved on.” Use only when the route/caravan owner confirms departure.
+- “The list was copied before the load was counted.” Safe as a character report; it does not assert which goods are present.
+- “We have no current price difference recorded here.” This may be misleading if neutral base price is valid; prefer displaying the valid quote with a short “standard rate” label only after UI semantics confirm it.
+- “You have not heard that part of the story yet.” Use only when knowledge gating is intentional and the option is visibly locked.
+- “The goods changed while you were deciding. Check the table again.” Appropriate for stale inventory if the user has a refresh action.
+
+Hidden emotional states should affect phrasing only, not unlock a transaction or change the amount. Reputation gates should expose only the minimum truthful reason (“they will not negotiate with us today”) and must not leak secret faction thresholds. Skill gates may provide extra interpretation of a manifest, but the baseline route and cargo facts must remain understandable without a build-specific skill. A skill adds context; it must not be the sole way to discover a hard-required progression clue.
+
+The context owner must identify which values are snapshots and which are live queries. Snapshot fields are appropriate for a rendered line that has already been spoken; live fields govern a transaction. Save tests should establish that conversation node progression, if durable, restores from its authority, while visible stock and price are re-derived from the restored trade state. Do not serialize a copy of stock into the dialogue node save.
+
+## Pass 32A — Evidence Freshness, Human Memory, and Diagnostic Gates
+
+### Context contract
+
+A maintenance conversation combines facts with different lifetimes. The implementation design should label each context field as current query, dated authored source, player knowledge, or speaker report. Suggested read-only packet:
+- machine_id and authored display identity (if resolved);
+- condition_key plus current value/band only when the owner exposes it;
+- time/day of the reading and the query's freshness window;
+- current diagnostic tell IDs and whether an existing journal knowledge key says they have been noted;
+- maintenance record IDs, authored record dates, author/speaker, and discovery status;
+- current repair/service availability as returned by its owner;
+- quest instance and legal transitions;
+- relationship/access facts from their canonical owner only if required by a branch;
+- source attribution and uncertainty marker for each reported statement.
+
+The packet is not a save object. It is reconstructed when the scene opens and revalidated before any state-changing response. If the diagnostic API returns no reading, the gate produces “condition not available” rather than substituting 100, zero, or a remembered value. If an authored record has no machine identity, it remains searchable historical text, not a machine-specific fact.
+
+### Gate taxonomy for this story
+
+**Observation gate:** the current tell was actually shown or an existing journal knowledge fact proves that the player noted it. A threshold crossing alone does not prove exposure. **Historical-record gate:** the player has discovered the exact source record; catalog presence alone is not player knowledge. **Witness gate:** the speaker is available and their reported statement has not been mistaken for objective telemetry. **Skill interpretation gate:** a relevant skill may explain a reading, but the baseline clue remains legible without it. **Relationship gate:** only an existing durable relationship value can change tone; it cannot rewrite the underlying machine evidence. **Access gate:** a restricted record is hidden only if an existing access owner enforces it. **Action gate:** an inspection or repair response is enabled only when its command owner confirms a safe, eligible action and costs.
+
+Gate errors need four-valued handling: true, false, unknown, stale. Unknown means no source; false means a source was checked and condition did not hold; stale means a previously true snapshot is too old for the action; true means current evidence supports the branch. If current dialogue schema is boolean-only, use explicit fallback nodes and resolve gates at scene-building time. Never infer “safe to open” from a quiet sound or “failed machine” from a low-confidence tell.
+
+### Memory and time
+
+Transient conversation memory: which node the player has seen in this open scene. Persist only through an existing dialogue/quest owner if the player can leave and resume. Durable knowledge: JournalSystem's actual knowledge keys and quest facts; a glitch-noted key means “noted,” not “repaired.” Character memory: a verified relationship/chronicle fact if the owner exposes one. Machine memory: current owner state and its own save path. Authored record memory: fixed source document and date. These five must not be collapsed into one boolean such as maintenance_complete.
+
+Timeline design distributes pressure:
+- Same shift: a tell is observed and noted; no diagnosis necessarily follows.
+- Next shift: another witness reads the existing record, allowing an attributed callback.
+- Several days later: service can be attempted only through a real owner command, with an explicit availability check.
+- Seasonal or campaign-scale: a repeated maintenance motif can pay off in a chronicle only when canonical events were emitted and retained.
+Any in-world date shown in dialogue comes from the source record or canonical campaign day. Never derive a work date from wall clock or file modification time.
+
+### Context invalidation and privacy
+
+If the machine condition changes while the conversation is open, an action based on the old value must be disabled and the scene refreshed. If the only change is display wording, the already-heard line need not be retroactively rewritten. If a character leaves, do not keep their conversation option available. If a record is discovered through another interface, re-evaluate the knowledge gate rather than duplicating the record. If a player chooses not to disclose an observation publicly, make no privacy promise unless the journal/access owner can enforce it.
+
+Log the gate outcome for debugging only through existing diagnostics, not player-facing hidden-state dumps. Tests later should cover no reading, fresh reading, stale reading, tell displayed but not noted, record catalog-loaded but undiscovered, witness absent, unknown identity, and relationship change after scene open. These are design acceptance cases; no tests are added by this pass.
+
+
+### Pass 32B — Gate truth table, replay cases, and safe fallbacks
+
+| Context predicate | True path | False path | Unknown/stale path |
+|---|---|---|---|
+| Current machine reading exists | Show value, units, and source time if available | Do not display a diagnostic result | “Current reading unavailable”; disable service action |
+| Tell was presented or noted | Allow “investigate this tell” | Keep the machine usable; no quest claim | Rebuild context and ask the existing owner |
+| Static record discovered | Quote or summarize with author/date | Keep exact text hidden | Show only catalog-neutral description |
+| Witness available | Offer attributed conversation | Route to record or return later | Do not synthesize a replacement witness |
+| Service action currently permitted | Show cost and downtime before confirmation | Explain owner-returned reason | Refresh the schedule and re-evaluate |
+| Prior action committed | Show its exact result | Keep action available if still valid | Query receipt; never replay on assumption |
+| Same prior quest conclusion exists | Offer callback using recorded fact | Present first-visit wording | Use neutral greeting until source resolves |
+
+Replays should include a fixed campaign seed and identical source state, but dialogue selection should not consume unrelated simulation randomness merely to vary a phrase. If the existing tell provider consumes its supplied RNG, call it only through its established seam and record whether this is a cosmetic choice or a durable quest result. Same context plus same seed must not change eligibility. If output wording rotates by design, keep that rotation separate from selection, repair, or quest transition.
+
+Skill checks must not gate the only clue needed to preserve progression. A player with a diagnostic skill may see “the interval changed between two dated notes”; another player still sees both dates and can ask for a check. Faction or reputation gates can alter whether a character will share a private work note, but if the note is mandatory, an alternate discoverable copy must exist. A hidden emotional state may make Vale curt or hesitant; it cannot decide whether the machine is safe to service.
+
+Privacy branch contract: “Keep my report off the board” must be phrased as a request, not a guarantee, until an existing access or journal authority can store and enforce the visibility choice. Otherwise offer “Tell Vale you prefer a private conversation” as cosmetic scene content. A quest choice should never promise permanent redaction when a codex or save file has already stored the fact.
+
+Staleness thresholds are owner-specific. A machine reading taken earlier in the current frame/day may be acceptable only if that owner defines it; do not invent universal minutes or days in dialogue data. Authored dated logs never become stale in their historical meaning, though their interpretation can be superseded by later records. Character statements retain their speaker and time; a later statement does not erase the earlier one.
+
+Future focused verification should prove the truth table through public owner contracts: every gate's true, false, unknown, and stale path; scene close/reopen; save/load; another panel recording the tell; machine condition changing while dialogue is open; and command rejection due to stock or schedule. Until these APIs exist, acceptance criteria remain architectural test designs and not test files.
+
+
+### Pass 32C — Cross-surface memory and staleness contract
+
+The dashboard tell, journal, maintenance catalog, and quest card have different roles but should project the same underlying source facts. A tell is an immediate diagnostic projection; a journal entry is durable player knowledge; the catalog is authored evidence; the quest card is an action summary. Opening one surface must not mark the others read unless the existing discovery owner explicitly defines that behavior.
+
+Distinguish events: tell eligible, tell presented, tell noted, record discovered, record read, action requested, action accepted, action completed. Persist only distinctions the current owners actually support. A one-shot tell that has no presented/noted distinction cannot safely unlock a later dialogue branch by assuming the player saw it. A repair request is not a completed repair.
+
+Cross-surface case: the tell appears; player opens its journal entry; the display refreshes and no longer shows it; on returning to the quest scene, the existing noted fact remains usable. Conversely, if a log was read first and a tell later appears, say “this may relate” unless both exact source IDs are available for a precise callback. Re-rendering must never unlock a second reward.
+
+A context packet should be a read-only snapshot of stable IDs and observed facts. Revalidate at commit. Locale changes affect display labels, not identifier comparison. If a player requests privacy but no access policy enforces it, describe the request as conversational only and do not label the record confidential. Do not promise erasure when the fact is already saved.
+
+Verification should compare dashboard, journal, catalog, quest view, and restored save. Each should identify source and date when evidence conflicts. A mismatch is a content/system finding, not a reason for whichever panel loads last to overwrite the rest.
+
+
+### Pass 32D — Restore and interaction edge cases
+
+After loading a save, rehydrate machine owners, journal knowledge, and quest state before constructing the conversation packet. Never reuse an in-memory packet from the prior run or slot. If restoration reports a missing optional log catalog, preserve durable quest facts but remove choices that depend on that source; show neutral fallback copy. If the machine owner restores a different current state than the pre-save view, rebuild the scene and invalidate any pending action.
+
+A panel closed during a pending inspection must not commit it unless the command owner already accepted it. Reopening should query the receipt or service state, not submit again. A second UI surface that records a clue should become visible through its canonical knowledge owner, while retaining original source attribution.

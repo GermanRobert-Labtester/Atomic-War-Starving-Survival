@@ -1,6 +1,6 @@
-# Prose Wave 144 — Twenty Canon-Bounded Expansion Plans
+# Prose Wave 144 — Twenty Seven Canon-Bounded Expansion Plans
 
-Twenty fresh source anchors selected from local ASHFALL catalogs and rotated through the Master World Bible’s Part 35 writing-subject catalog. The wave spans shelter records, faction voices, survivor journals, medical documents, weather observation, trade, and personal objects.
+Twenty new plans are joined by seven already-present Wave 144 plans. The expanded batch rotates through the Master World Bible’s Part 35 subjects, with anchors in archival records, human relationships, quest choices, weather, trade, engineering, and field communication.
 
 **Charter:** prose planning only. No code, production JSON, schema, field consumer, trigger, route, runtime delivery, save behavior, state, or player-facing reachability is added or claimed. All content remains DRAFT / PROPOSAL. Packet forms are editorial lenses, not approved fields.
 
@@ -30,6 +30,13 @@ Twenty fresh source anchors selected from local ASHFALL catalogs and rotated thr
 | [The Drawing Taped Beside the Cot](cw144_18_the_drawing_taped_beside_the_cot_plan.md) | `found_28_sun_drawing` · `Assets/StreamingAssets/Data/narrative/found_objects_expansion.json` | found children’s artwork; Part 35 #33 personal effects; Part 35 #21 children’s folklore and artwork; Part 46 health and memory | 192 | 1,365,138 |
 | [The Intake Grille Fills Slowly](cw144_19_the_intake_grille_fills_slowly_plan.md) | `event_season_ash_filter_clog` · `Assets/StreamingAssets/Data/seasonal_events.json` | seasonal weather event text; Part 35 #26 almanac and weather folklore; Part 35 #39 world-state notifications; Part 46 ecology and shelter | 192 | 1,319,859 |
 | [The Checkpoint Takes Its Place on the Map](cw144_20_the_checkpoint_takes_its_place_on_the_map_plan.md) | `event_evolution_checkpoint_kilo` · `Assets/StreamingAssets/Data/world_evolution_events.json` | world-evolution event prose; Part 35 #38 history and world chronicle; Part 35 #39 cascade reports; Part 46 factions and the surface | 192 | 1,312,774 |
+| [Punched Tape Number 409](cw144_21_punched_tape_number_409_plan.md) | `doc_telegraph_strip_001` · `Assets/StreamingAssets/Data/narrative/documents_batch_1.json` | telegraph archive fragment; Part 35 #15 bureaucratic documents; Part 35 #38 history; Part 46 information and time | 192 | 1,301,839 |
+| [Bond 088 Comes Due on Paper](cw144_22_bond_088_comes_due_on_paper_plan.md) | `doc_syndicate_promissory_note` · `Assets/StreamingAssets/Data/narrative/documents_batch_2.json` | promissory bond; Part 35 #24 trade ledger; Part 35 #15 bureaucratic documents; Part 46 debt and scarcity | 192 | 1,318,001 |
+| [Straw Holds Until the Wall Dries](cw144_23_straw_holds_until_the_wall_dries_plan.md) | `mudbrick_assay_wheat_straw_tensile_reinforcement` · `Assets/StreamingAssets/Data/narrative/mudbrick_weathering_assays.json` | mudbrick assay note; Part 35 #17 craft assay; Part 35 #16 maintenance and engineering logs; Part 46 industry and craft | 192 | 1,334,237 |
+| [Pump Nine Has a Weekly Line to Fill](cw144_24_pump_nine_has_a_weekly_line_to_fill_plan.md) | `doc_maintenance_log_pump9` · `Assets/StreamingAssets/Data/narrative/plan17_discoverable_documents.json` | maintenance log; Part 35 #16 maintenance and engineering logs; Part 35 #15 bureaucratic records; Part 46 water and infrastructure | 192 | 1,359,807 |
+| [Responders on Kilo Band](cw144_25_responders_on_kilo_band_plan.md) | `fu_217_4_answered` · `Assets/StreamingAssets/Data/radio_distress_signals.json` | distress response transmission; Part 35 #8 distress and rescue; Part 35 #7 radio transcript; Part 46 expedition and information | 192 | 1,279,425 |
+| [The Sibling’s Cache Is Still a Question](cw144_26_the_sibling_s_cache_is_still_a_question_plan.md) | `pq_buried_cache` · `Assets/StreamingAssets/Data/personal_quests.json` | personal quest hook; Part 35 #10 quest hooks; Part 35 #13 survivor history; Part 46 relationships and expedition | 192 | 1,294,145 |
+| [Day 155, After the Ambush](cw144_27_day_155_after_the_ambush_plan.md) | `journal_day_155_raider_ambush` · `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` | survivor journal; Part 35 #4 journal; Part 35 #13 survivor history; Part 46 factions and trauma | 192 | 1,260,608 |
 
 ## Review boundaries
 
@@ -37,7 +44,7 @@ Every plan embeds the exact current object from its declared catalog. Each propo
 
 ## Batch audit
 
-- 20 selectors are distinct and were checked against previous prose-wave indexes.
+- 27 selectors are distinct; the 20 new additions were checked against all previous prose-wave indexes.
 - Every plan contains 192 editorial tasks, source excerpts, and review questions.
 - Each source object is copied verbatim from the declared JSON catalog.
 - Each saved plan is between 1,200,000 and 2,000,000 Unicode characters.

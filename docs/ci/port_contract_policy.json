@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 296,
+  "total_seams": 298,
   "ports": [
     {
       "class_name": "AeroponicsSystem",
@@ -2413,6 +2413,22 @@
       "file_path": "Assets/Ashfall.Core/Governance/ShelterGovernanceEngine.cs",
       "owner": "governance",
       "reason": "Integration seam in ShelterGovernanceEngine.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "DynamicQuestGenerator",
+      "method_name": "BindAuthoredTemplates",
+      "file_path": "Assets/Ashfall.Core/Quests/DynamicQuestGenerator.cs",
+      "owner": "quests",
+      "reason": "Integration seam in DynamicQuestGenerator.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "AgingSystem",
+      "method_name": "BindValidatedCatalog",
+      "file_path": "Assets/Ashfall.Core/Survivors/AgingSystem.cs",
+      "owner": "survivors",
+      "reason": "Integration seam in AgingSystem.",
       "classification": "HOST_REQUIRED"
     }
   ]

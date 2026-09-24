@@ -36,6 +36,7 @@ namespace Ashfall.Core.Campaign
         {
             // ── Heartbeats (Internal steady-state simulation ticks) ──
             { "aeroponics_ticked", SemanticKind.Heartbeat },
+            { "aging_ticked", SemanticKind.Heartbeat },
             { "aquaponics_ticked", SemanticKind.Heartbeat },
             { "backstory_ticked", SemanticKind.Heartbeat },
             { "campaign_legacy_ticked", SemanticKind.Heartbeat },

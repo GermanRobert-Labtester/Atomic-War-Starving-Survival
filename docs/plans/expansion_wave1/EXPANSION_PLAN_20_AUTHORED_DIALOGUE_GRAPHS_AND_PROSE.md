@@ -3457,3 +3457,359 @@ These details imply handling without proving which carton carried which test res
 **Character sheet: Iven Saar.** Surface: clinic store worker. Function: receives deliveries and tracks shelf condition. Contradiction: remembers the leak by the smell of damp cardboard but forgets dates unless they are on a tag. Under pressure: checks physical seals before answering. Material history: a folded inventory strip in a coat cuff. Hook: may disagree with Mara about what counts as a useful record. Mechanical hook: no medical diagnosis or supply quantity is inferred from memory.
 
 The full scene kit supports linear scene, hub-and-spoke, short branch/reconvergence, knowledge gate, and repeated visit without an extra dialogue authority. It is suitable for a data-driven implementation only after the actual narrative schema and consumer are confirmed.
+
+## Pass 28 — Three voices at the bedside: authored handoff scene
+
+This dialogue packet turns Part 46’s caregiving prompt into a restrained, implementable conversation. It is DRAFT copy. Names must be mapped to real survivors only after entity-level voice and canon review. It can use an existing shelter dialogue surface; it does not require a new bedside location, quest engine, or conversation database.
+
+### Scene card: The Cup on the Rail
+
+**Speakers:** a caregiver currently assigned through CaregivingSystem; the assigned patient; an optional roster keeper whose role is read from DutyRosterSystem. **Setting:** shelter/ward context already supported by the host. **Player goal:** understand the request before changing the assignment. **Graph shape:** hub-and-spoke opening, two optional spokes, reconvergent decision, three short endings. No choice is labeled good or bad.
+
+**Caregiver entry:**
+
+> “I can do the work. That is not the same thing as being able to be the only person who does it.”
+
+Responses:
+- “What would relief look like?” The caregiver asks for a second eligible survivor or an end to the assignment, while clarifying that no replacement is promised.
+- “Did the patient ask you to leave?” The caregiver answers honestly that the request is theirs; this avoids casting patient frustration as consent to end care.
+- “I need to check the roster first.” Open the existing roster interaction if available; no quest effect yet.
+
+**Patient entry:**
+
+> “I want help when I ask for it. I do not want my name to mean that someone else disappears from the rest of the shelter.”
+
+Responses:
+- “Would you accept another caregiver?” — “Maybe. Let me meet them before the board calls it settled.” This is authored preference, not a persisted consent flag. Assignment remains governed by current validation and the existing player command.
+- “Would you rather be alone?” — “No. I would rather be asked.” Do not translate this into an engine rule that automatically rejects assignment.
+- “I will speak with the person tending you.” Return to caregiver spoke.
+
+**Roster keeper entry (optional):**
+
+> “A name leaves one column and the blank does not stay blank for long. That is how the board is meant to work. The trouble is when we stop seeing the person whose name moved.”
+
+Use a specific previous role only if the current roster query or supported history confirms it. Otherwise keep this generic. The speaker does not issue a roster assignment for the player.
+
+**Reconvergent choice:**
+- “Look for an eligible replacement.” Hand off to the existing caregiving panel/command. Return with result-backed text only after the command result is known.
+- “End the assignment.” Use existing unassign behavior and say plainly that the patient may have no caregiver afterward. Keep bond-history semantics accurate: Core retains bond strength when assignment ends.
+- “Leave the assignment as it is for now.” Close with acknowledgement, not false success. The quest remains available only if its owner supports that state.
+
+### Result-backed endings
+
+**Assignment succeeds:**
+
+> “The board changes. No one calls it a cure. Iven watches the new name arrive, then looks back at Mara. ‘Ask me again after we have met,’ he says. Mara nods. The cup is still cold, but it is no longer the only thing either of them can see.”
+
+Names and pronouns come from mapped entities. This promises a meeting; if no scene can fulfill that promise, remove the sentence.
+
+**Assignment rejected or stale:**
+
+> “The board does not change. The request is still heard; the assignment is not.”
+
+Follow with a localized status reason supplied by the host when safe. Do not claim the selected survivor refused unless the failure code truly means that. Generic validation failure is not character rejection.
+
+**Unassignment succeeds:**
+
+> “Mara steps back from the rail. Iven keeps the blanket within reach. Neither calls the space between them a clean ending.”
+
+Do not imply improved fatigue or a new caregiver. The existing event records assignment end; relationship bond remains in the care owner.
+
+**Defer:**
+
+> “You do not move the name. You do not tell them the problem is solved. The request remains where both can see it.”
+
+Only use “remains” if the quest system truly retains availability. Otherwise say the conversation ends without a recorded resolution.
+
+### Voice and prose controls
+
+Caregiver speech is direct and specific, never saintly or resentful by default. Patient speech retains agency without turning dialogue into a medical prognosis. The roster keeper uses workboard metaphors and observes opportunity cost, not management jargon. Keep lines short for subtitles and allow reconvergence after one spoke, so hearing every optional line is not required to reach a valid command. Avoid repetitive “you are tired” declarations; fatigue may not be surfaced to dialogue and is not the same as emotional exhaustion.
+
+### Dialogue node shape
+
+A maintainable node references node ID, speaker ID, shelter location tag, eligibility conditions, authored text key, response IDs, owner command intent, result mapping, quest update contract, local callback tag, and next node. Text does not embed direct save mutations. A local tag such as caregiver_heard_request may exist only in the conversation instance if the current graph owner supports ephemeral state. Do not create durable memory solely to make the prose flow.
+
+**Branching potential:** add one short companion callback after the existing dialogue-threshold event only if an established listener consumes it; add a later visit where the caregiver reports an unrelated personal activity only if a real state fact supports it. **Reusability:** the opening/reconvergence structure suits other labor handbacks; voices and conflicts remain specific. **Production cost:** medium for three speakers and command-result returns; high if an event bridge or persistent dialogue memory must be invented. One scene is core-scale; a multi-character care anthology is expansion content after a roster/voice audit.
+## Pass 29 — Three local records, three voices of place
+
+The micro-location coverage prompt suggests a writing goal beyond increasing the count: make the exact-site records feel as if they belong where their location binding sends the player. The current three bound definitions provide a compact DRAFT prose portfolio. They are authored encounter records, not new dialogue nodes; any spoken follow-up requires a current consumer that can open dialogue after encounter resolution.
+
+### Hospital chapel ledger: “The Hand That Kept Writing”
+
+**Current authored anchor:** the visitors’ ledger stops after names and bed numbers, while one date repeats; the chapel candle box contains stubs and matches. The binding is abandoned_hospital. Preserve the restraint: no narrator declares why the writer stopped or who died. New follow-up prose can be delivered through a journal/quest surface only if that surface is already reachable.
+
+**Optional observation line:** “The dates are neatest where the ink begins to thin. The last line is not crossed out. It simply has no name beside it.”
+
+**Short branch, after reading:**
+Archivist: “Did the list tell you who stayed?”
+Player: “It tells me someone kept a place for visitors.”
+Archivist: “Then write that. Leave the rest to the blank.”
+
+**Choice tone:** reading is an act of attention, not proof of a cure or a memorial reward. Taking the lighter is an item action in the existing encounter. Do not restate it as “taking matches”: the live choice grants cigarette_lighter, a content detail worth preserving exactly. Do not add a third choice or alter morale/guilt values in a prose-only plan.
+
+### Flooded subway depot: “The Quiet Line”
+
+**Current authored anchor:** sealed crates move on a greased pulley along the flooded concourse; the line bears the Undertow’s tar-symbol. A player may map pulley anchors or cut a crate. Do not infer the current owner, route destination, legal status, or faction doctrine from this one mark.
+
+**Optional note after mapping:** “The anchors are spaced for a person who knows the water’s pull. The map records the line; it does not tell you who will come to collect what moves along it.”
+
+**Optional follow-up exchange:**
+Surveyor: “You drew the pulley, not the cargo.”
+Player: “The cargo changes hands.”
+Surveyor: “A route lasts longer than one crate.”
+
+**Choice tone:** mapping leaves the line alone; cutting a crate is theft within the authored scene. Do not reward map notes with a new cartography stat unless the existing cartography authority exposes one. Do not turn the faction-mark into a reputation effect without a supported consequence.
+
+### Checkpoint Gamma: “Square for Paid”
+
+**Current authored anchor:** the levy board shows household names, quotas, and square/circle marks for paid/owed; fresh chalk suggests someone still visits. Choices are to memorize the marks or take chalk and stamp. The second choice text explicitly frames forgery as a possibility. Do not convert this implication into a guaranteed disguise system or faction penalty without an owner.
+
+**Optional observation line:** “Someone rubbed out a circle and wrote it again darker. The board remembers only the second hand.”
+
+**Follow-up question for a records keeper:** “Does square mean paid?”
+Answer: “On this board. That is what the chalk says. Whether the collector believes it tomorrow is another matter.”
+
+The answer distinguishes authored board semantics from future enforcement. Keep it local, not a universal rule for every levy or faction.
+
+### Writing and graph constraints
+
+All prose variants must preserve the current authored choice IDs, rewards, depletion behavior, and local stakes unless a later data change is separately reviewed. For graph-based follow-up, use short branches that reconverge after one optional question. Provide an accessible no-dialogue fallback that leaves the original encounter complete. Never block expedition return or journal access on reading every line. Speaker IDs and location tags must be mapped to existing entities and host routes; the samples above use role labels until that audit is complete.
+
+**Reusability:** the three records form a micro-site writing rubric: physical detail, a careful claim, a second interpretation, and a consequence that the player can actually enact. Apply it to future sites without copying ledger/line/board imagery. Rotate registers: archival restraint, route-work pragmatism, and bureaucratic unease. **Production cost:** low for additive log copy; medium for three conditional follow-ups; high if new dialogue routing or persistent knowledge is required. Core content should keep current records stable. An expansion may add the optional lines after a duplicate/continuity audit.
+## Pass 30 — Eight regions, eight ways to be uncertain
+
+These DRAFT atlas passages use the eight authored region records without pretending their POI labels are canonical destinations. They may appear in an existing shelter archive/journal surface only if that surface already supports regional entries. Each frames hazards and landmarks as chart claims, not route availability or live forecasts.
+
+### Atlas prose seeds
+
+**Ash Valley Basin — wasteland.** The page draws a shallow basin in strokes that could be contour lines or old plow marks. It names a quarry and a radar station, then circles both in the same tired pencil. The note beside them says ash storms and radiation pockets. It does not say which comes first.
+
+**Dead Coast Estuary — water.** A tide gate is drawn as a square with a hinge on the wrong side. The port ruins have no depth marks. Whoever copied the chart left space for the water to move, then wrote “corrosive fog” where a distance should have been.
+
+**Ironspire Metropolis — urban.** The metro station and general hospital share one heavy underline. Structural collapse is written in block letters. “Sniper nest” appears smaller, in another hand, as if the second writer did not want the first to see.
+
+**Missile Silo Grounds — industrial.** A silo and command bunker sit apart on the sheet. EMP residue and toxic slurry are listed below them with no source note. The paper is folded so the two hazards meet at the crease.
+
+**Iron Ridge Escarpment — wasteland.** The mine shaft symbol is cut into the ridge line. The lookout is drawn on the other side, where the page thins. A note about rockslide and gale winds has been recopied until the letters look like rails.
+
+**Verdant Impact Basin — rural.** A farming commune is marked beside a spring, but the blue ink has spread into the basin border. The map names mutated flora and spore drift as observations; it does not promise either can be seen from a route.
+
+**Submerged Industrial Run — industrial.** The pump station and oil depot are inked below a waterline. Methane pocket and flash flooding are written as separate warnings. Someone added “listen before opening” in the margin, without saying what answered.
+
+**Frozen Highland Gap — rural.** The crossing mark sits where the route narrows to a pencil scratch. The repeater is drawn beyond it, reachable only in the copyist’s imagination. Black ice and hypothermia gale share one warning box.
+
+The prose is grounded in authored fields; none adds a route, hazard mechanic, faction, settlement, or destination. A specialist should review copy so catalog hazard labels are not shown as active forecasts.
+
+### Hub scene: “Two Maps on the Table”
+
+Archivist: “This one tells me what the land is called. That one tells me where a road has been walked.”
+Expedition lead: “A name is not a route.”
+
+Player responses:
+- “Keep both sheets separate.” The archivist labels them “region chart” and “travel map.”
+- “Find one mark we can verify.” The lead asks for a canonical route-node ID; the action remains unavailable until an approved crosswalk resolves it.
+- “Leave the margin open.” They preserve uncertainty and return to the existing map panel.
+
+Reconvergent line: “No one throws either sheet away. The table is wide enough for a known road and an honest blank.”
+
+This is not a faction argument and does not alter standing. If the host has no regional chart surface, keep it as an atlas-page proposal rather than fabricating a map screen.
+
+### Availability copy
+
+- “Region recorded in the shelter chart; expedition route not yet verified.”
+- “Travel node known; regional assignment not yet verified.”
+- “Survey recorded through the canonical map.”
+- “This note describes a chart label, not a guaranteed expedition destination.”
+
+Only the third line can reflect canonical WastelandMap knowledge. The first two describe authored-source status and are not player-earned discoveries.
+
+### Future regional scene template
+
+After a node-to-region relation is approved, a location scene can contain an entry description, one arrival variation, one environmental detail, one authored clue, one choice with owner-routed effects, and one return callback. Keep registers distinct: Ash Valley plainness; coast erosion; urban compression; industrial procedure; ridge caution; rural ecological ambiguity; submerged quiet; highland cold. Give each region a different story question—who maintains the route, whose measurement is trusted, which warning should be published, what should remain unmarked, how scarcity changes passage, how a shelter remembers the survey, what a community owes, and when a dangerous shortcut should stay secret. Avoid eight identical “visit two points” quest scripts.
+
+Localization and accessibility: use stable text keys, avoid critical information solely in colored map icons, keep readable contrast and subtitle length, and provide a written route-state equivalent. These are acceptance requirements for later work, not current UI claims.
+### Pass 30B — Cartographer voice signatures and regional branching
+
+The atlas should have a human voice without hiding data uncertainty. Three provisional shelter roles can carry the conversation, subject to an entity and dialogue-host audit.
+
+**Archivist:** patient, exact, unwilling to complete a line from wishful thinking. “The chart gives the basin a name. It does not give me the road.” When pressed to guess: “I can leave a blank. I cannot send someone into it.”
+
+**Expedition lead:** practical and accountable for returning people, not dismissive of scholarship. “A route is a promise made with mileage, weather, and whoever has to walk it.” If the chart lacks a node: “I’ll take the note. I won’t take the column there on a note alone.”
+
+**Junior surveyor:** eager, embarrassed by uncertainty, learns to label confidence. “I thought the two marks meant two stops.” After the explanation: “Then I’ll write what I saw and what the page said in separate lines.”
+
+These roles are not new canonical survivors or faction leaders. Bind them to existing people only after checking name, personality, availability, age, relationship, and voice. Otherwise use role labels in a non-dialogue archive page.
+
+**Short reconvergent exchange:**
+
+Archivist: “Which sheet should go on the wall?”
+Player: “Both. One shows names; one shows roads.”
+Expedition lead: “And the blank between them?”
+Player: “Leave it until someone comes back with a line we can verify.”
+Junior surveyor: “I can mark the margin as unknown.”
+
+The final line is a proposed text choice, not a command that writes a new cartography state. If the journal owner supports source annotations, the note can be recorded there; otherwise it stays dialogue.
+
+**Eight region-specific callbacks:** avoid repeating full descriptions on every visit. Ash Valley callback notices grit under a folded page; Dead Coast callback asks whether the tide mark has a date; Ironspire callback distinguishes a hospital label from a route; Missile Silo callback asks who wrote the hazard line; Iron Ridge callback folds the map along a contour; Verdant Basin callback separates a spring report from an ecological warning; Submerged Run callback leaves a silence after “listen”; Frozen Gap callback checks whether the repeater was heard or only drawn. Each callback is cosmetic unless a canonical owner provides new evidence.
+
+**Branching design:** open archive hub, select one region card, ask one source question, then reconverge at a three-way “verified / reported / unknown” close. The graph remains playable with only one branch selected. A later return scene unlocks only on canonical map state, not prior dialogue. Do not persist every text choice as player memory. Keep regional hazard words accessible through captions and journal text, not color-only overlays.
+
+## Pass 31 — The Trader's Manifest: Dialogue Corpus and Quest Scenes (DRAFT)
+
+### Scene design
+
+The prose layer should make differences in trade legible through people, not present a spreadsheet as a story. Existing TradeTellEngine already selects an original, data-defined line by trader stance and trust band; trade_tell_lines.json has terse posture pools, and the trade screen renders a selected stance tell. That owner is suited to short negotiation posture, not a complete branching quest dialogue graph. Keep the current tell plate intact and use the existing authored dialogue/quest graph contract for longer scenes if one is proven. Do not add per-caravan dialogue state to the panel.
+
+A small initial scene set can carry the theme:
+- Arrival: a guard unhooks a tarp, pauses over an empty lash point, then asks the shelter's quartermaster to count what is present rather than what was promised. This is an opening image, not proof of a specific cargo loss.
+- Manifest: the trader places a damp route sheet under a tin cup. The player can ask what was expected, what arrived, or who else has seen the list. Responses distinguish witnessed inventory from memory and rumor.
+- Specialty exchange: the trader explains a locally made good in terms of labor and repairability. The player may disclose a matching need, negotiate, or decline. Avoid claiming a “settlement specialty” until such a specialty is represented by a canonical field or explicit authored text with an owner.
+- Departure: if the player acted, the trader leaves a practical instruction or warning tied to the actual chosen branch. If the window was missed, the remaining line acknowledges the absence without inventing a promised return date.
+
+Sample draft lines:
+- Trader, neutral: “Count what made it here. The paper kept traveling after the crates stopped.”
+- Quartermaster, guarded: “A name on a route sheet isn't a sack in the storeroom.”
+- Guard, warm: “We still carry the tools that can be mended on the road. That is not the same as carrying enough.”
+- Trader after a failed window: “You came back to the same table. I came back with a different load.”
+These are new prose candidates, not canonical shipped lines. Their claims remain deliberately non-specific; route- and cargo-dependent dialogue needs a live data binding before it can be made exact.
+
+Dialogue structure: hub-and-spoke at the manifest, then short branches that reconverge at the offer; relationship tone can vary by existing trust/stance bands; knowledge gates reveal only clues already witnessed; faction-conditioned choices require an existing standing/access query. Repeated visits may change one greeting or reveal a callback only if the dialogue system has canonical visit memory. Quest effects belong to the quest owner; market transactions belong to the trade owner; relationship and faction consequences belong to their current authorities. Text nodes should not mutate inventory directly.
+
+Voice palette:
+- Trader: economical clauses, prices and routes as daily burdens, rarely claims certainty about distant stops.
+- Quartermaster: concrete nouns, exact quantities when visible, distrusts promises without a manifest.
+- Escort: sensory observation, wind, wheel noise, watch rotation; not an omniscient narrator.
+- Local producer: explains time and technique, pride tempered by scarcity, no heroic “chosen settlement” framing.
+- Player response options: readable intent labels (“Ask what was lost,” “Offer the stock we can spare,” “Keep the route private”) so the chosen consequence is legible.
+
+Corpus tiers:
+1. Reusable stance tells: existing posture pool.
+2. Scene entrance/exit copy: brief authored scene text with no state mutation.
+3. Quest nodes: conditions, responses, and consequence IDs governed by the chosen dialogue/quest schema.
+4. Observation text: manifest/cargo descriptions generated only from a confirmed visible inventory projection.
+5. Diegetic journal entry: written only after a canonical quest transition, with observed facts and attribution (“the trader says…”) clearly distinguished.
+
+Use a line matrix before authoring volume: speaker × scene × trust band × knowledge state × result. Write short but distinct cells; omit unsupported combinations and fall back to restrained neutral copy. Avoid mechanically substituting faction name, region name, or good ID into every line: grammatical and canon review should treat rendered variants as content, not template tokens. Do not copy a line from TradeTellEngine into a new quest corpus merely to increase volume.
+
+Production target: 1 opening scene, 1 manifest hub, 3 optional questions, 2 reconverging offer branches, 3 outcomes, 1 missed-window closeout, and no more than 20 reusable one-sentence posture/exit variants. Localization keys, speaker attribution, accessibility reading order, and dialogue graph validation are part of cost. Success is measured by branch clarity and factual safety, not count of words or variants.
+
+
+### Pass 31B — Extended sample with attribution-safe branches
+
+Trader: “You came to ask what the road kept.”
+Player response intents:
+- “Show me what the manifest says.” Opens the authored route-demand and export-surplus projection only if the current screen can show that source.
+- “Show me what arrived.” Reads current inventory; absent goods are not listed.
+- “What do you need from us?” Uses current demand/offer contract if available; otherwise opens a noncommittal conversation, not a fabricated shopping list.
+- “We have nothing to spare.” Ends the trade branch without penalty or forced disclosure.
+
+If the player asks about a missing lot, the trader can say, “It was on the paper when we left.” That is a reported claim. A follow-up may ask who handled the cargo, but should not branch into theft, sabotage, or faction blame until a narrative encounter or event supports that cause. If the cargo appears, a conditional line can acknowledge the visible item without claiming the origin beyond the catalog.
+
+On the local specialty branch, the producer demonstrates a repair method with an already authored tool. The camera/text focuses on the hands, the worn jaw of the wrench, and the relief of a part that fits. This beat can be reused as a short scene even when the player declines to trade. A craft unlock is separate content and must be omitted unless the recipe owner records it.
+
+After a guarded agreement: “No promise of a full load,” the trader says. “Only that I’ll ask before it leaves.” This is safe only if the durable agreement is no more than an in-scene intention; do not represent it as a future shipment obligation. The journal can record, “The trader agreed to ask about local stock before departure,” only after the selected branch was applied and the quest owner exposes that completion fact.
+
+Authoring and voice QA: each response label should predict player intent; each line must retain attribution when spoken information is uncertain; faction names use canonical IDs only at data boundaries and display names in prose; optional prose should not repeat the full inventory table; no outcome promises an unimplemented discount, destination, faction shift, or new recipe. Track which lines are original samples, which are conditional variants, and which are existing corpus text. This is important for both provenance and localization.
+
+## Pass 32A — Maintenance Voices, Record Fragments, and Scene Writing (DRAFT)
+
+### Creative direction
+
+Part 47's loop-closure requirement suggests a narrative sequence that begins with an audible physical detail, passes through conflicting records and human interpretation, and ends with a maintained or deliberately unresolved handoff. Tone remains grounded: no machine becomes a mystical oracle, no technician is a disposable exposition channel, and no log proves sabotage without a supporting event. Machine “personality” comes from behavior and the people who work beside it; diagnostics stay mechanically legible.
+
+Character palette:
+- Irena Vale, night mechanic: listens for rhythm and records intervals rather than diagnosing causes. Patient, economical speech; bristles when an unverified report is called carelessness. Draft role only until a real survivor/character ID is assigned.
+- Tomas Rill, day electrician: prefers measured readings and signed work orders; will admit a reading was taken after the sound stopped. He is methodical, not cold.
+- Nadiya Sorn, shift lead: tracks risk and staffing pressure, worries that a machine outage will be blamed on the person who reported it. She asks for a decision and a deadline, not a culprit.
+- The player-character: response labels should permit skepticism, care, urgency, and privacy, each with a visible conversational consequence. No hidden personality score is inferred from one option.
+
+Opening scene draft: “The third knock came after the belt stopped. Vale held one palm above the housing, feeling for the warmth that used to arrive a breath earlier. She did not touch it. On the board behind her, somebody had written RUNNING CLEAR in chalk and circled the word twice.”
+
+This opening conveys a sensory report but does not assert a failure or change a state. The scene can be presented only if the diagnostic/quest trigger exists; otherwise the sentence belongs in a static story sample and must not appear as a live incident.
+
+### Record fragments and competing interpretations
+
+Draft authored document A, technician note: “Night shift, two short knocks on start-up. Third knock after load settles. No visible belt slip. Waited for the housing to cool before checking the guard. Did not open the cover; the line was still carrying load.” Its purpose is to model safe observation and uncertainty, not to create a repair recipe.
+
+Draft authored document B, earlier log excerpt: “Housing warm at end of shift. Crew called it expected friction. No temperature written down.” This record lacks a numeric reading by design. It is an incomplete historical account, not proof of neglect.
+
+Draft dialogue:
+- Vale: “I wrote down when it happened. I couldn't tell you why.”
+- Rill: “The gauge was steady when I checked. That tells you about the minute I checked.”
+- Sorn: “If we stop it, write why. If we keep it running, write that too.”
+- Player (support): “Keep both notes. No name on the conclusion until we check.”
+- Player (urgent): “I want the inspection window now. Tell me what it will take offline.”
+- Player (skeptical): “The record and the reading disagree. Show me the dates.”
+- Player (privacy): “Keep the report in the service file, not on the public board.” This option only has a lasting privacy effect if an existing document/access authority supports it.
+
+Outcome prose must remain result-backed:
+- Corroborated concern: “The log was not a diagnosis. It was enough to earn a second look.”
+- No present anomaly: “The sound did not return during the check. Vale left the note where the next shift could find it.”
+- Deferred: “The inspection waited for a safe window. The reason was written beside the date.”
+These endings do not imply that the machine was repaired, that the sound has permanently stopped, or that staff trust changed mechanically.
+
+### Location and object description fields
+
+The machine-room description should orient the player: safe approach point, visible isolation control (if it exists), sound source, diagnostic display, and whether interaction is observational or mutating. Do not write that the player can open a guard, shut off a line, or replace a belt unless a current action exists. The maintenance archive description can identify a card index, page date, missing signature, and source catalog, but exact days should come from the authored entry. A room's flavor description should remain separate from dynamic machine status so it never shows “damaged” when the owner says normal.
+
+Branch writing uses short branches that reconverge. Hub: ask about timing, ask about prior work, choose whether to request inspection. Each side branch reveals one source with attribution, then returns to the decision. If the player refuses, the scene respects that choice and leaves the task in its actual supported active/blocked state. No loop of redundant dialogue nodes to simulate character depth.
+
+### Corpus expansion tiers
+
+Tier 1: reuse current diagnostic tells and machine identity descriptions; author nothing new.
+Tier 2: add one reusable handoff scene with three tone variants, all keyed to supported trust/relationship inputs.
+Tier 3: write a pair of maintenance notes for an exact machine family after verifying an unmatched corpus gap.
+Tier 4: add a quest graph with record provenance, fail-forward outcomes, and a visible result receipt.
+Tier 5: add recurring maintenance-story callbacks only after quest/Chronicle owners can supply a verified prior fact.
+
+Authoring review checks factual scope, tradeoffs, character voice, safe work procedures, temporal continuity, state-conditioned variants, localization readiness, and whether each line is diegetic report or omniscient narrator text. No copied sentences from current logs or source texts should be reused; sample prose above is original proposal copy. High-volume writing should follow a coverage matrix of actual machine families, not generate near-duplicate “rattle / hiss / hum” descriptions for the sake of count.
+
+
+### Pass 32B — Extended branch sample and implementable copy packet
+
+**Hub: Vale beside the service board**
+- Vale: “I put the time beside the sound. That's all I know.”
+- Player: “Show me the note.” Effect: opens the exact discovered record; no mutation.
+- Player: “What did the machine owner report?” Effect: requests a fresh, supported reading; if unavailable, the option returns a neutral unknown message.
+- Player: “Who last worked on it?” Effect: opens a witness branch only if a source record names that person or a current character availability query confirms it.
+- Player: “Leave this until the service window.” Effect: records a deferral only if the current quest owner accepts that transition.
+
+**Record panel description:** “The card is folded across the date. A pencil line marks the shift, then stops before the signature box. The handwriting changes on the second line.” It implies incompleteness without claiming falsification.
+
+**Fresh reading panel:** “The display shows the reading taken now. Vale's note belongs to another shift. The two marks can sit together without one erasing the other.” This copy is valid only if the display has a timestamp or the host can truthfully call the value current.
+
+**Inspection request:** “Rill checks the schedule before he answers. ‘I can look when the belt is cold. I won't open it under load.’” This is a character line; the player action still requires an actual supported schedule and safe command.
+
+**Outcome: no issue reproduced:** “The third knock did not return during the check. Vale signed the note as heard, not solved.” The result is an observation, not a permanent system improvement.
+**Outcome: follow-up accepted:** “Rill added a second line to the card. The space for a cause stayed blank.” This is safe if the actual owner records the action or the passage is clearly authored scene closure.
+**Outcome: deferred:** “The shift wrote down why it waited. The machine kept its own answer.” This avoids implying harm or repair.
+
+Potential side quest opener: a young apprentice asks why the older technician writes “heard” instead of “broken.” The player can explain evidence discipline, ask the mechanic to answer, or move on. It is educational character content and should not gate a required repair. Another optional thread follows a missing carbon copy from a maintenance ledger. It can be a quiet document search, not a theft plot; absence of a copy must not automatically imply sabotage.
+
+For high-volume prose, populate distinct registers rather than multiplying synonyms: (a) technician's measured note; (b) shift lead's concise task board; (c) apprentice's questions; (d) player journal's source-attributed summary; (e) maintenance-room environmental description. Limit each micro-record to one salient physical observation, one constraint, and one uncertainty. Require an editor to tag each sentence's state source and intended time. A reusable prose template can provide ordering but should not create variable interpolation that forms unreviewed sentences at runtime.
+
+Production cost matrix: opening scene low; two log fragments low; character relationship branches medium; dynamic fresh-reading line medium due snapshot API; repair result UI high because actual command receipts and accessibility states are required; multi-machine voice/canon review high. Core content should teach that a tell is evidence to inspect, while optional expansion can provide 3–5 related shift stories and a later chronicle callback. Localization, text-to-speech order, controller focus, and screen-reader attribution are included in UI writing cost.
+
+
+### Pass 32C — Reusable scene packet and writing cadence
+
+A maintainable scene packet contains a one-line setup, optional object/location description, two to four speaker lines, two to four player intent responses, result-backed outcomes, and an optional journal summary. Reuse four scene functions: report an observation, compare records, negotiate a service window, or hand off an unresolved task. Do not multiply adjective variants where a source or consumer is missing.
+
+Original copy seeds:
+- Workbench: “Two sockets are missing from the row. A wrench has been left in their place, its handle wrapped in cloth.”
+- Shift board: “Inspect after the line stops. Keep the west feed active. Write down why if either instruction changes.”
+- Apprentice: “If it stopped, why did you write heard instead of failed?”
+- Mechanic: “Because I heard it. Someone else has to decide what it means.”
+- Record footer: “Second reading requested. No replacement part entered on this sheet.”
+These are DRAFT and must appear only where the object or action exists. They do not assert an inventory shortage or a completed repair.
+
+Voice callbacks can deepen character without a new personality system: Vale records timing; Rill supplies the method and date; Sorn asks for the operational cost; the apprentice asks concrete evidence questions. A callback requires a supported relationship or quest fact; otherwise use a neutral greeting. Machine-room copy should describe safe approach, visible panel, sound, and interaction type. Never invent a button, isolation control, repair instruction, or status that the owner does not expose.
+
+For larger prose batches, choose distinct source registers—technician note, task board, apprentice question, player journal summary, environmental description. Each piece needs one observation, one constraint, and one uncertainty. Tag every sentence with source class and time. Core writing teaches “tell is evidence, not diagnosis”; optional expansion can add several shift stories and a later Chronicle callback when its owner accepts a durable fact.
+
+
+### Pass 32D — Prose lint and accessibility requirements
+
+Before a line enters a data catalog, tag speaker, source, tense, certainty, location, gate, consequence, and localization context. A line that says “the machine is failing” requires a live authoritative result; “Vale thinks the sound is changing” requires an attributed report; “the old log records a warm housing” requires a dated authored source. Reject lines that blur these categories. Keep response intent labels shorter than body copy and make costs visible before confirmation.
+
+Read order must introduce speaker and source before a long record excerpt. Avoid color-only diagnostic descriptions; pair status color with text and a meaningful icon/label. Controller focus should land on the first valid response and remain usable after a stale-context refresh. Accessibility review is part of dialogue production, not a polish-only expansion phase.

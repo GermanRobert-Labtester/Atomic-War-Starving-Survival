@@ -244,6 +244,13 @@ namespace AtomicWar.GodotApp
             SetupShelterIdentity();
             TickShelterIdentity(_simDay);
 
+            // C3-174 — apply each enriched survivor's mechanical origin through the
+            // canonical inventory and skill owners.
+            ApplySurvivorOriginModifiers();
+
+            // Plan 171 — bind the authored dynamic quest templates.
+            SetupDynamicQuestGeneration();
+
             // Plan 140 — Apply generational legacy starting context to New Game
             var legacyContext = PrepareStartingCampaignContext();
             if (legacyContext != null)
