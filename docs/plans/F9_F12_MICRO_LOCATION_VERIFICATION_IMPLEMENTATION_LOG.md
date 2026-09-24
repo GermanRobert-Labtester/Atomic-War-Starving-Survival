@@ -2579,3 +2579,132 @@ happened (T-6, §II.6).
 change is acknowledged, not to freeze content forever. When it fires (Scenario 1), updating it
 is one line; the alternative — an unpinned count — is never learning about catalog changes at
 all (Appendix C note, C-3 contrast).
+
+### Appendix J — Open Questions
+
+Carried forward honestly: each is stated, evidenced, and left open. None blocks the seal; all
+are candidates for a future verification pass or a foreman decision.
+
+**Q-1 — Trigger-ordering blind spot.** `RollEncounter`'s mutation order (location multiplier →
+clamp → stance halving) is load-bearing (§IV.2), but no wave test pins values near the clamp
+boundary. A reorder that swapped clamp and stance would pass every current test and still
+change results for chance values where clamping binds (post-multiplier values above 1 or the
+stealth halving of a 1.0 chance). Candidate fix: one sweep test over crafted
+`encounterChancePerTick` × stance × multiplier combinations asserting recorded trigger odds.
+Owner: any future determinism-adjacent wave.
+
+**Q-2 — `PeekState`/`SeekState` unused by any save codec.** The Flagship XI API exists
+precisely "for save codecs that must reproduce a continuous roll sequence across a save/load
+boundary" (doc comment, verified), yet no host save section consumes it (§II.3). Either a save
+codec is planned (in which case a wave should spec its interaction with the depletion/pending/
+history checkpoint — the F10.9 boundary finally closes) or the API is speculative and should be
+noted in debt. Owner: foreman decision + the save-owning stream.
+
+**Q-3 — Determinism doc §2 staleness.** `MICRO_LOCATION_DETERMINISM.md` §2 says the trunk
+exposes no state getter; it now does (under different names). Sealed reports are not casually
+edited, but a *dated erratum* paragraph is the honest reconciliation and is cheaper than letting
+the doc contradict source silently. Owner: next wave touching that file.
+
+**Q-4 — Source-scan file list is frozen at three files.** The INV-06 scan names
+`NarrativeEncounterSystem.cs`, `ExpeditionEncounterBridge.cs`, `ExpeditionSystem.cs`. The
+post-wave bridge merge means the effective selection path also includes the travel/patrol
+candidate enumeration (`TravelEncounterSystem`). If patrol weights ever consumed RNG during
+enumeration, the scan would not see it. Candidate fix: extend the scan's file set or convert it
+to an assembly-level pattern scan with an allowlist. Owner: next verification wave.
+
+**Q-5 — No dedicated post-merge bridge test.** INV-11 (one draw per surfacing across merged
+pools) is inherited from pre-merge tests plus source reading; no test constructs a
+narrative+patrol pool and asserts the exact draw count and walk order across the pool boundary
+(§IV.3's narrative-first tie-break and last-element patrol fallback are unpinned behaviors).
+This is the sharpest test gap this audit found. Owner: any wave touching the bridge.
+
+**Q-6 — Post-wave suite distribution drift (10 vs 9; 6 vs 7).** Recorded in §II.6 C-5/C-6 and
+Appendix E; the specific added/consolidated tests cannot be attributed from the files alone.
+Candidate fix: none needed for correctness (every log-named test exists), but future logs
+should append an addendum line when a wave file's test count changes post-seal, so the next
+audit does not have to write this paragraph again.
+
+**Q-7 — The ratio's thin sampling.** 100 sorties surface 8–12 micros; the 19.5% → 25.7%
+movement is within what pool composition and sampling explain. The farming-resistance gates
+make the *bound* robust, but the *band position* has wide error bars. Candidate improvement: a
+seed-swept ratio (e.g. 100 seeds × 100 sorties behind the same env gate) if a future balance
+decision ever needs the band edge precisely. Until then, measuring more would be precision
+theater (INV-10 discipline).
+
+**Q-8 — The two micro world flags gate nothing yet.** `micro_contamination_exposure` and
+`micro_generator_marked` are set on resolution and consumed by no authored content as of this
+audit (§VI.1). Either they are forward-compatibility hooks (fine, and worth a one-line comment
+in the catalog) or dead ends (fine, and worth knowing). Owner: content stream.
+
+**Q-9 — Catalog key casing.** Micro-location keys are camelCase while the house documentation
+describes the data layer as snake_case JSON (§II.5). Not this expansion's call; recorded so the
+next schema conversation starts from the observed fact rather than the doc sentence.
+
+**Q-10 — `expeditions.json` growth vs. the audit context space.** 53 → 75 destinations means
+the utilization matrix's context space grew 42% since the wave. The 1000-opportunity sample
+still covers every entry (the not-selected classification would catch a starved entry), but
+per-destination coverage thins as the catalog grows. If route count doubles again, consider
+scaling opportunities with destinations or sampling destinations deterministically rather than
+cycling. Owner: next utilization pass.
+
+### Appendix K — Worked Expected-Value Computations
+
+Three by-hand computations using only numbers verified in this expansion, demonstrating how the
+wave's artifacts compose into decision-grade arithmetic. These are *examples of method*, not new
+balance claims (INV-10: findings are data).
+
+**K-1 — Memorial face value per opportunity.** From the inventory (Appendix C): weight 0.8,
+stealth multiplier 1.0, dMin 0 → eligible in effectively all open-ground Stealth contexts;
+current sample: 1000 eligible, 8 selected ⇒ eligible-conditional rate 0.8%. `take_offering`
+grants cloth (trade value 1.2), depleting. Face item value per opportunity ≈ 0.008 × 1.2 =
+0.0096, plus −0.01 expected morale and +0.02 expected guilt per opportunity at the sample rate.
+Compare the primary baseline p95 of 40 per expedition (current balance report): a survivor
+loots the memorial for sentiment or cloth scarcity, never for value — which is the authored
+intent the F12 outlier review states qualitatively.
+
+**K-2 — Supply drop's P × V shape.** Weight 0.1 (the catalog's lowest), dMin 2 (halves its
+eligible contexts: 559 of 1000 in the current sample), grants 2 × medical_kit (face 20), one
+shot. Expected value per opportunity ≈ (1/559) × 20 ≈ 0.036 — and only on military-flavored
+routes given the review's route-affinity note. The F12 review's sentence "expected value is
+P(selected) × 20; one-shot, so face value is not per-expedition income" is exactly this
+computation, and the utilization table's `supply_drop s=1` row is its empirical counterpart.
+The two artifacts agree without either citing the other: that is what independent verification
+looks like.
+
+**K-3 — The ratio's component arithmetic (current generation).** Mean primary 6.69 and mean
+micro 1.72 per expedition over 100 sorties ⇒ ratio 1.72/6.69 = 25.7%. The micro mean
+decomposes, via the utilization rates, into roughly: a handful of mid-value hits (truck 24,
+bridge 28, greenhouse 12–14, generator 18, observation post 30 shapes from the ledger)
+multiplied by per-entry selection frequencies near 0.2–0.8%, plus the frequent cheap cloth
+grants. Sanity anchor: 12 micros surfaced, mean micro value 1.72 ⇒ total micro value ≈ 20.6
+over the run — consistent with one or two mid-value hits plus scrapings, not with any
+systematic extraction. The band's 10–30% is generous against this arithmetic, which is why the
+recommendation has been stable across three generations.
+
+### Appendix L — Sketch: The Next Verification Wave
+
+To make the framework concrete for its next user, the shape a hypothetical "F13 wave" would
+take if it verified, say, the patrol-encounter merge contract (the biggest post-wave change this
+audit found):
+
+1. **Wave A′ (recon).** Verify `TravelEncounterSystem.GetEligiblePatrolCandidates` purity (0
+   RNG), the bridge walk order, and the patrol presentation projection. Premise-audit every
+   bridge citation in this log (they will have drifted; §II.6's anchors are the starting
+   citations).
+2. **Wave B′ (persistence).** Pending patrol resolution across reload; faction-delta
+   idempotence; the `resolved_at_lead` distinction for patrol DTOs.
+3. **Wave C′ (determinism).** Same harness, extended to register a `TravelEngine`; sweep
+   asserts merged-pool parity; new zero-draw pin for patrol enumeration (closes half of Q-5);
+   new bridge draw-count test (closes the other half).
+4. **Wave D′ (utilization).** Extend the matrix with a patrol-rows section; the merged pool
+   means micro and patrol rates must be read *jointly* — a patrol-heavy season suppresses
+   micros (§VI.2 E-5); the classification gates extend unchanged.
+5. **Wave E′ (economy).** Patrol loot enters the primary denominator (it routes through
+   scavenging) — the ratio's definition must be re-stated before measurement, in the log, as a
+   divergence if it changes.
+6. **Seal′.** Same ladder, same report discipline, same drift table. The framework carries;
+   only the domain nouns change.
+
+The one structural lesson to import: this hypothetical wave modifies no production code either.
+If it ever must, it stops being a verification wave and becomes a feature wave with a new plan —
+the framework's value depends on that boundary staying hard.

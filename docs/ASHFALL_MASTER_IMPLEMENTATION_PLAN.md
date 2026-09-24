@@ -2418,3 +2418,251 @@ member names in the implementation; (c) per-frame polling — event-driven via t
 session's existing notification pattern.
 
 **Rollback.** Remove the indicator; state untouched.
+
+---
+
+### Task 21 — Foundry Crucible Blowout to Emergency Surgical Chain
+
+**Status re-baseline.** OPEN-STALE. Verified: `Foundry/SilentFoundrySystem.cs` and
+`Foundry/SilentFoundryConsequencePolicy.cs` (the sanctioned consequence-policy seam),
+plus `SilentFoundryCatalog.cs`; `Medical/MedicalWardSystem.cs` with
+`Admit(patientId, bedId, day)`, `Discharge(patientId, day)`, `Procedures`,
+`StaffingPreflight`, `OnWardChanged`, `OnPatientAdmitted`. No crucible/blowout
+vocabulary found in the foundry file — the accident generator is UNVERIFIED
+(historical plan text); the fallback first-aid rule is the design content to build.
+
+**Failure-mode analysis.**
+- *Accident without representation:* if the blowout exists only as an event log line,
+  the surgical chain has nothing to treat. The accident must produce real casualty
+  state (burns, trauma) through the existing injury authority so the ward, needs, and
+  morale systems all see the same truth.
+- *Ward admission cliff:* `StaffingPreflight` (verified) exists precisely to gate
+  admissions on staffing; the fallback rule must interact with it honestly —
+  unstaffed emergency stabilization is *worse* than staffed surgery, scaled by the
+  helper's Medical skill, not a free bypass.
+- *Punishment without counterplay:* a blowout that chains into a death with no
+  player-visible mitigation path (the first-aid option, consumables, the ward) reads
+  as unfair. The chain must be legible: accident event → casualty → choices.
+
+**Integration contract.** A foundry accident event (severity per consequence policy)
+creates casualties requiring treatment; if the clinic has no doctor
+(`StaffingPreflight` false), any assigned shelter member can attempt emergency
+stabilization with success scaling by their Medical skill; stabilized casualties
+admit to the ward for recovery; unstabilized casualties follow the normal
+deterioration path. The whole chain runs through verified events
+(`OnPatientAdmitted`, foundry consequences).
+
+**Exact seams (verified).**
+- `Assets/Ashfall.Core/Foundry/SilentFoundryConsequencePolicy.cs` — accident severity
+  and effect-tier decisions (the policy file exists for exactly this class of rule).
+- `Assets/Ashfall.Core/Foundry/SilentFoundrySystem.cs` — accident trigger in the
+  production path.
+- `Assets/Ashfall.Core/Medical/MedicalWardSystem.cs` — admission, procedures,
+  staffing gate; `Admit` is the entry point the stabilizer path lands in.
+- Injury authority — whichever health/injury state owner holds burns/trauma (read
+  before citing; the audit verified the ward, not the wound model).
+
+**Data schema.** Accident + fallback rules as data:
+
+```json
+{
+  "schema_version": 1,
+  "foundry_accidents": {
+    "crucible_blowout": {
+      "base_daily_chance": 0.01,
+      "casualty_count": [1, 2],
+      "injury_type": "burns_severe"
+    },
+    "emergency_stabilization": {
+      "requires_assigned_staff": false,
+      "skill_scaling": "medical",
+      "base_success": 0.3,
+      "success_per_skill_point": 0.05
+    }
+  }
+}
+```
+
+(chance constants illustrative pending balance signature.)
+
+**Save-section impact.** Casualties/conditions ride existing health state; the
+stabilization attempt is an event, not state; ward admissions are already persisted
+by the ward's save section.
+
+**Determinism notes.** Accident roll once per production day from the foundry's
+seeded RNG; stabilization success one draw at attempt time; skill scaling pure.
+
+**UI/panel contract.** The accident surfaces through the existing foundry/alert
+surfaces (`EmergencyResponseHud.cs` is the verified crisis-family surface); the
+stabilize action routes as a session command; ward state renders via the existing
+medical panel bindings.
+
+**Verification plan.** New focused test: seeded accident → casualties; unstaffed ward
+→ fallback available; success/failure branches under fixed seeds; stabilized →
+admitted (`OnPatientAdmitted` fires). Foundry + ward regional files after.
+
+**Risk register.** (a) Reusing `StaffingPreflight` wrongly (it gates, it does not
+block emergencies) — read its call sites; (b) double-treatment exploit
+(fallback + doctor) — fallback only offered when staffing gate fails; (c) balance of
+`base_daily_chance` — design authority sign-off required before shipping numbers.
+
+**Rollback.** Disable accidents via the policy/catalog (zero chance); chain code is
+inert; health state unaffected.
+
+---
+
+### Task 22 — Multi-Month Delayed Door Encounter Callbacks
+
+**Status re-baseline.** OPEN. Verified: `YearOfAsh/DoorEncounterSystem.cs` with
+`SurvivorOccupantSnapshot` (`survivorId`, `name`, `traits`, `guiltLevel`,
+`moralBranch` "humanist"/"ruthless"/"neutral", `hasRespiratoryDegeneration`,
+`hasChemicalDependency`, `radiationPhase`, `hasFrostbite`,
+`hasTraumaBondWithLeader`, `hasGrudgeAgainstLeader`); `door_encounters.json` with 80
+entries and the verified schema (quoted in Task 8). Delayed-callback mechanics and
+the memorial-reaction rule are unbuilt as far as the audit shows; no memorial-wall
+state was located in the audit (search for the carving/memorial owner before
+implementing — `Memorial/` exists as a Core directory and is the first place to
+look).
+
+**Failure-mode analysis.**
+- *Callback amnesia:* a returning visitor who does not remember the first visit is
+  worse than no callback. The callback record (original encounter, day, survivor,
+  choice) must persist in the encounter system's state with the same rigor as
+  outcomes.
+- *Dead-survivor dereference:* the plan's own memorial scenario is the adversarial
+  case: the referenced survivor may be dead, gone, or transformed (moral branch
+  shifted). Every callback must resolve the survivor through a snapshot, not a live
+  reference — the verified `SurvivorOccupantSnapshot` exists exactly for this.
+- *Tone violation by recombination:* stitching callback text from templates can
+  produce tonal whiplash (a grief scene with a joke tell-line). Callback lines are
+  authored content per encounter family, not free recombination.
+
+**Integration contract.** A resolved encounter may declare a callback (min/max delay
+days, conditions); when due, the system re-invokes the visitor with the original
+snapshot; if the survivor died, the visitor reacts to the memorial marker (if one
+exists for them) with authored grief lines; conditions (`guiltLevel` bands,
+`moralBranch`) select authored variants; callbacks fire once.
+
+**Exact seams (verified).**
+- `Assets/Ashfall.Core/YearOfAsh/DoorEncounterSystem.cs` — pending-callback queue on
+  encounter state; snapshot-based re-invocation.
+- `Assets/StreamingAssets/Data/door_encounters.json` — callback declarations on
+  entries (schema extension, `schema_version` already present and honored).
+- `Assets/Ashfall.Core/Memorial/` — memorial marker state (verify member API before
+  authoring reactions).
+- Survivor fate authority — `src/Main.SurvivorFate.cs` and `src/Main.SurvivorDeathLegacy.cs`
+  partial names (verified) indicate where death/fate is wired; the callback reads
+  fate through the session/Core query, never panel state.
+
+**Data schema.** Callback extension on an encounter entry (shape follows the
+verified entry schema):
+
+```json
+{
+  "encounterId": "door_encounter_garrison_deserter_family",
+  "callback": {
+    "min_delay_days": 90,
+    "max_delay_days": 140,
+    "encounter_id": "door_encounter_garrison_deserter_family_return",
+    "death_variant_encounter_id": "door_encounter_garrison_deserter_family_memorial",
+    "requires_survivor_alive": false
+  }
+}
+```
+
+**Save-section impact.** Pending-callback queue on the encounter state (version
+bump; old saves: no callbacks — default empty).
+
+**Determinism notes.** Delay drawn once at resolution from seeded RNG; due-date
+processing in day order then encounter ID ordinal; single-fire latch persisted.
+
+**UI/panel contract.** Callbacks use the standard door-encounter presentation
+verbatim; memorial reactions may add a line referencing the carving — authored only.
+
+**Verification plan.** Focused test: resolution schedules callback in range; fast-forward
+fires it once with correct variant by `moralBranch`; dead-survivor path resolves the
+memorial variant or degrades gracefully (no callback) when no marker exists; restore
+mid-pending fires correctly. Encounter regional file after.
+
+**Risk register.** (a) Snapshot drift (traits changed since capture) — the snapshot
+is frozen by design; document that callbacks reflect the *past* visit; (b) content
+burden (authored variants per family) — start with the deserter-family pair, expand
+by family priority; (c) memorial state ownership — locate and cite before authoring.
+
+**Rollback.** Callback declarations removed from JSON; queue defaults empty; no
+persistence residue.
+
+---
+
+### Task 23 — Mid-Winter Operational Slump Crisis Generator (Days 90–180)
+
+**Status re-baseline.** OPEN. Verified: `Campaign/CampaignDayCoordinator.cs` with
+`Register(ownerId, IDayAdvanceOwner, phase)`, `OnDayAdvanced`, `ICampaignCalendar`,
+`ICampaignRngManager`; `events.json` with 240 events keyed `id`, `title`, `bodyText`,
+`minDay`, `weight` — the event schema is deliberately minimal, so crisis *mechanics*
+cannot live in it; the crisis owner is a system. The 14-day cooldown is unbuilt as
+far as the audit shows.
+
+**Failure-mode analysis.**
+- *Compounding wipes:* the plan's cooldown exists because a slump crisis landing on
+  a storm + outbreak day is an unfair cascade. The cooldown must read the *global*
+  crisis history (major crises in the trailing window), not just its own.
+- *Weight-only pacing:* `events.json` rows have `weight` and `minDay` — a slump
+  generator that just adds rows inherits the existing weighted draw's variance and
+  cannot honor a cooldown. The generator must be a coordinator-phase system that
+  schedules events deliberately.
+- *Season blindness:* "mid-winter" must come from the campaign calendar
+  (`ICampaignCalendar`), not hardcoded day ranges; day 90–180 is the plan's example,
+  not a law — the calendar is the authority for season phase.
+
+**Integration contract.** Between calendar-defined season boundaries, the generator
+may schedule at most one major operational crisis per rolling 14-day window,
+choosing from slump-themed events by weight; the scheduling is a seeded draw at the
+window boundary; the crisis enters the normal event pipeline and shows no other
+observable difference.
+
+**Exact seams (verified).**
+- `Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs` — register the generator
+  as an `IDayAdvanceOwner` at a phase *before* the event-dispatch phase so its
+  scheduling affects the same day's pipeline.
+- `Assets/StreamingAssets/Data/events.json` — slump crisis rows follow the verified
+  minimal schema (`id`, `title`, `bodyText`, `minDay`, `weight`); mechanics stay in
+  the generator.
+- Season boundaries: `ICampaignCalendar` implementation (read the calendar owner for
+  the season API before citing members).
+
+**Data schema.** Crisis selection config as data (`campaign_slump_rules.json`):
+
+```json
+{
+  "schema_version": 1,
+  "slump_window": { "start_season_day": 90, "end_season_day": 180 },
+  "cooldown_days": 14,
+  "crisis_event_ids": ["event_furnace_shell_crack", "event_ration_apathy"],
+  "weight_scale": 1.0
+}
+```
+
+(referenced `event_*` IDs must exist in `events.json` — validator.)
+
+**Save-section impact.** Cooldown bookkeeping (last-major-crisis day) on the
+campaign/coordinator state (version bump; old saves default to "no recent crisis" —
+honest: the rule never applied to them).
+
+**Determinism notes.** One draw per window from `ICampaignRngManager`; deterministic
+given seed; history is state, not inference.
+
+**UI/panel contract.** Crises surface through the existing event/crisis presentation;
+the generator adds no UI.
+
+**Verification plan.** Focused test: two windows → at most one crisis each; crisis
+in window N+1 suppressed within 14 days of N's; outside the season window → never
+fires; restore mid-cooldown honored. Coordinator regional file after.
+
+**Risk register.** (a) Event ID drift — validator; (b) registering at the wrong
+phase (crisis arrives a day late) — phase documented in the spec and asserted in
+test; (c) interplay with Task 8's storm delays (two crisis sources) — Part VI matrix
+row; keep the cooldown global across both.
+
+**Rollback.** Generator unregistered; rules file inert; events.json rows remain as
+flavor-pool entries.

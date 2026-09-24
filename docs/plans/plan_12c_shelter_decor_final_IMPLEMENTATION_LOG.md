@@ -2694,3 +2694,156 @@ decides to consolidate decor into occupied rooms.
 What the scenario exercises: move semantics via remove+mount, trophy
 cards in the live path, the localized aggregation's sensitivity to
 occupancy, and the determinism of a mid-campaign reload.
+
+**VIII.5.3 Survivor death to plaque.**
+
+Setting: day 412. A long-serving survivor dies unattended on a water run.
+The death path runs its course — needs/radiation `OnDied`, the death
+pipeline, final-wish resolution, memorialization — and the ledger commits
+an entry: survivor id, cause, day 412, survived-days count, heirloom
+`item_personal_keepsake_<id>_carving`, death quality Unattended,
+outcome Burial, `MournedDay` still −1.
+
+1. **Commit-time projection.** The host's memorial-commit path calls
+   `TryMountMemorialPlaque`. The bridge reads the heirloom's trailing
+   segment — `carving` — checks the registry, finds
+   `item_decor_memorial_plaque_carving` registered from the live catalog,
+   and builds the placement: `room_memorial_wall`,
+   `plaque_<survivor id>`, day 412, `IsMemorialPlaque = true`,
+   provenance pair filled. `Assign` fires. No inventory call exists on
+   this entire path; the shelter's storage did not gain or lose a unit.
+2. **The panel, next open.** The picker's first-open rule scans rooms;
+   the wall now has a placement, so if the wall is the only decorated
+   coordinate it seeds there directly. The wall view shows one card:
+   `PLAQUE_<SURVIVOR ID> // MEMORIAL PLAQUE (CARVING)`, the delta line
+   "+1.8 morale per assigned occupant / day · mounted day 412", and the
+   provenance line "Memorial record · <survivor id> · heirloom:
+   item_personal_keepsake_<id>_carving". No button. The rail's plaque
+   card reads 1 with Caution criticality.
+3. **The morale nobody receives.** The plaque contributes 1.8 to
+   `room_memorial_wall`'s aggregate — a room with no assignments. The
+   daily pass never fetches that sum. The number exists for the future,
+   and for honesty: the wall is valued the way everything on it is
+   valued, and it still gives nothing to anyone, which is its own
+   restrained statement.
+4. **The grief goes its own way.** The ledger's grief sink routes
+   relations grief at the Unattended 1.25 scale through the
+   survivor-relations system — completely outside this lane. The vigil,
+   when the player holds it, flips `MournedDay` on the ledger and applies
+   its morale recovery through the attributed seam. The wall does not
+   change. The plaque is not a grief mechanism; it is the record that
+   grief has a place to stand.
+5. **Save and reload.** The plaque persists inside the checksummed
+   placements list. On the next boot the reconcile finds the ledger entry
+   and the plaque already matching the `plaque_<id>` key and skips.
+   Idempotence means the wall never doubles, across any number of boots.
+6. **A second loss, same winter.** Another survivor dies; their heirloom
+   tail is `default`. The bridge resolves the generic plaque (1.6). The
+   wall now shows two cards with different variants and the same
+   permanence. The player can remove neither. If the shelter's stock of
+   carving-kind heirlooms grows, future plaques with that tail will
+   resolve to the specific variant — the wall's specificity tracks the
+   ledger's, never the player's preference.
+
+What the scenario exercises: the one-way bridge end to end, kind
+resolution, provenance rendering, no-action plaque cards, the wall's
+zero-delivery property, grief decoupling, reconcile idempotence across
+restarts, and variant selection by heirloom tail.
+
+**VIII.5.4 Loading an old save.**
+
+Setting: a save from day 95, last written before the shelter-interior
+panel existed — the campaign predates the whole lane.
+
+1. **Boot.** `SetupShelterDecor` runs for the first time on this save.
+   `TryLoad` finds `shelter_decor_save.json` absent (the section was
+   never captured) → null → the registry boots empty. No error, no
+   warning: an absent section is a normal state, not a corrupt one.
+2. **Reconcile earns its keep.** The memorial ledger, however, has
+   entries — survivors lost on days 41 through 88, recorded by the death
+   pipeline long before any wall existed. The reconcile loop projects
+   each one: kind resolution per heirloom tail, generic for the ones
+   whose ids carry `_default`, specific where a tail matches, and — for
+   any entry whose heirloom tail matches nothing registered — generic
+   again. Each success mounts silently; any failure logs
+   "Memorial plaque reconcile skipped: <reason>" and moves on. The wall
+   assembles itself, oldest loss first in ledger order, each plaque's
+   `DayInstalled` stamped with its entry's death day — so the wall reads
+   as a chronology without anyone having placed it.
+3. **Modifiers arrive from the catalog, not the save.** Whatever item
+   catalog version the campaign started with, today's catalog registers
+   today's modifier set. Old placements (there are none in this
+   scenario) would contribute whatever today's catalog says their items
+   are worth — the lane's data authority is always current-truth.
+4. **First save under the lane.** The next `SaveAll` captures the
+   section for the first time: the reconciled plaques, checksummed. From
+   this save forward the section exists, and the reconcile becomes a
+   no-op guard rather than a builder.
+5. **The player's first view.** Opening the panel drops them on the wall
+   (first-open rule: only decorated coordinate), showing every loss the
+   campaign has taken, dated, named by id, cited by heirloom. The lane's
+   whole tone is in that first view: nothing asks to be felt; the record
+   is simply, finally, visible.
+
+What the scenario exercises: absent-section boot, ledger-to-wall
+backfill, variant fallback, per-entry day stamping, the silent-vs-logged
+failure split, and the section's birth on first save.
+
+### VIII.6 Open questions
+
+Unresolved items, each with owner guidance. None blocks the closeout
+record; all are recorded so they are decided, not discovered.
+
+**Q1 — Selftest exact-count pin vs. catalog growth.** Stage 4 asserts
+`LoadCatalogModifiers() == 12`; the live catalog carries 23
+`item_decor_*` rows. Options: update the pin, scope the registration
+filter to exclude the trophy sub-family, or move the assertion to a
+`>=` threshold matching the Core facts' forward-compatible style.
+Owner: the selftest's owning lane, with the trophy lane in the loop.
+This expansion only records the tension (V.4).
+
+**Q2 — Mess-hall gate scope.** The daily decor pass is suppressed when
+`room_common_mess_hall` is unpowered (III.6). Is that the intended
+shed-able-load grouping, or should decorated rooms' own power (or no
+power) gate it? The `?? true` fallback means no power grid ⇒ decor
+always applies. Owner: Plan 71's owner plus the shelter-operations lane;
+a decision here is a one-boolean call-site change plus a test note.
+
+**Q3 — Morale polarity reconciliation.** The Morale channel's documented
+reading is higher = worse (I.4); the decor lane, its tests, and its
+panel all treat positive authored deltas as the deliverable into that
+channel. If the channel's semantics are ever re-based (e.g., renamed or
+re-poled), this lane's authored deltas, test thresholds, panel
+formatting, and criticality flags all move in the same package. Owner:
+morale authority owners; this lane follows.
+
+**Q4 — Attributed morale.** The daily grant bypasses
+`ApplyAttributedDelta`, so the briefing's attribution window never sees
+decor contributions (III.5). If the day feed should attribute decor
+morale per survivor, the host's `Modify` call becomes an attributed call
+and `LastMoraleGranted` becomes derived. Owner: day-feed owner; the
+Core seam already exists.
+
+**Q5 — Orphaned placements.** A placement whose catalog row disappears
+is stuck (VII.5.3). Options: a host-side "return unknown decor" affordance
+using a synthetic definition, or a documented leave-in-place rule.
+Owner: inventory owner plus this lane; low priority at current catalog
+stability.
+
+**Q6 — Wall assignment.** The wall room is excluded from mounting and
+carries no assignments in this lane; nothing here prevents another lane
+from assigning occupants to `room_memorial_wall`, which would silently
+activate the plaques' aggregate (up to their authored deltas per
+occupant per day). Intentional or not, that activation would be that
+lane's decision. Owner: whoever proposes wall occupancy; this document
+records the dormant lever.
+
+**Q7 — `StackMultiplicatively`.** Dormant flag (VII.5.5). Either remove
+it at the next DTO review or specify its semantics with a test; an
+unread field in an authority DTO invites a future reader to assume
+behavior that does not exist. Owner: this lane's next builder.
+
+**Q8 — Save-section unknown-handler contract.** VII.6's full-retirement
+row assumes the save loader tolerates an unknown `shelter_decor`
+section gracefully. Verify against the save hub's loader before any
+shipping retirement. Owner: save-system owner.
