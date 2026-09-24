@@ -2820,3 +2820,128 @@ performer credits. The package's own new content — war ids, disease
 prose, letter notes — observes the fictional register; the archive
 predates the strictest reading of the rule and should be brought in
 line by its content owner.
+
+---
+
+## Part VII — Verification & Acceptance
+
+### VII.1 The Canonical Matrix, Expanded
+
+The closeout's verification matrix is preserved above (Section 3). This
+expansion re-issues it as a full gate ladder with the tier structure of
+`docs/CI.md` (blocking gates vs quality gates vs diagnostics), extended
+with the static-analysis rungs that ran *below* the closeout's matrix
+and the generated-artifact checks that came to surround it since.
+
+| Tier | Gate | Command (shape) | Runtime | Scope | Closeout-era result |
+|---|---|---|---|---|---|
+| 0 — static, per-commit | Focused xUnit selection | `bash scripts/run_test.sh <file-or-dir>` | dotnet test | the changed system only | the builder discipline |
+| 0 — static, per-commit | Scene lint | `python3 scripts/ci/scene-lint.py` | CPython | production `.tscn`/`.tres` allowlist | PASS, 26 scenes, 0 errors |
+| 1 — generated artifacts | Audio catalog drift | `python3 scripts/ci/generate-audio-catalog.py --check` | CPython | cue registry vs document | PASS, 74 cues in sync |
+| 1 — generated artifacts | Asset registry / CLI catalog / save-store matrix `--check` family | per-script | CPython | their generators | siblings of the audio gate |
+| 2 — engine, headless | Data integrity | `godot --headless --path . -- --data-integrity-selftest` | Godot | all catalogs + IDs | PASS, 138 catalogs / 5,563 IDs *(historical)* |
+| 2 — engine, headless | Content utilization | `godot --headless --path . -- --content-utilization-selftest` | Godot | reachability of authored content | PASS, 413 catalogs *(historical)* |
+| 2 — engine, headless | Scene binding | `godot --headless --path . -- --scene-binding-selftest` | Godot | UI panel contracts | PASS, 22/22 *(historical)* |
+| 2 — engine, headless | Bridge shim removal | `godot --headless --path . -- --bridge-selftest` | Godot | retired-architecture absence | PASS *(historical)* |
+| 2 — engine, headless | Accessibility | `godot --headless --path . -- --ui-accessibility-selftest` | Godot | focus/contrast/close behavior | PASS, 5/5 *(historical)* |
+| 2 — engine, headless | Onboarding journey | `godot --headless --path . -- --onboarding-journey-selftest` | Godot | first-session assertions | PASS, 20/20 *(historical)* |
+| 3 — full suite | Whole test project | `dotnet test Ashfall.Core.Tests` | dotnet | everything | PASS, 5,317 passed / 17 s *(historical; not re-run)* |
+
+Per `AGENTS.md` and `TEST_POLICY.md`, tier 3 is not a default — it ran
+once at closeout and its numbers are historical. Every routine change
+should stay at tier 0–2 for its own paths.
+
+### VII.2 Focused-Test Selection Philosophy
+
+The package's test files obey a readable selection doctrine:
+
+1. **One concern per file.** `RelicResearchUnlockContractTests`,
+   `LetterDeliverySystemTests`, `VinylMoraleSystemTests`,
+   `FactionWarChainRunnerTests` — the file name is the failure domain.
+   A red file names the broken subsystem before any output is read.
+2. **Contract before coverage.** The relic test asserts the *pairing
+   count* (16), not just resolvability — a magic number in a test is a
+   tripwire, and here it is a deliberate one (see V.A.8).
+3. **Save/load roundtrips are first-class facts**, not afterthoughts:
+   nearly every system file ends in a `CaptureRestoreState_…` fact.
+   Persistence bugs otherwise surface only in players' saves, the most
+   expensive possible discovery venue.
+4. **Migration tests use real old envelopes.** The codec ladder tests
+   deserialize actual v1/v3/v4 payloads rather than synthesizing
+   "approximately old" shapes; the frozen classes make lying
+   impossible.
+5. **Determinism is asserted, not assumed**
+   (`…EvaluatesHumanistVsRuthlessReactionsDeterministically`).
+6. **Command seams get their own files**
+   (`ChemicalDependencyCommandTests`) because concurrency-rejection is
+   a different failure class than the underlying rule.
+
+### VII.3 Per-Workstream Focused Selection (what to run, per change)
+
+| Touch… | Run (alone, via `scripts/run_test.sh`) |
+|---|---|
+| `relic_recipes.json` / `research_knowledge.json` / `ResearchSystem` / workshop | `Ashfall.Core.Tests/RelicResearchUnlockContractTests.cs` + research save-integration file |
+| `vinyl_record_archive.json` / `VinylMoraleSystem` / panel | `Ashfall.Core.Tests/VinylMoraleSystemTests.cs` (+ `VinylRecordCatalogTests` for loader changes) |
+| `LetterDeliverySystem` | `Ashfall.Core.Tests/LetterDeliverySystemTests.cs` |
+| `faction_war_*.json` / chain runner / codec | `FactionWarChainRunnerTests.cs` + `YearOfAshTests.cs` codec facts |
+| audio registry/controllers | `generate-audio-catalog.py --check` + the touched Audio test file |
+| scenes / panels | `scene-lint.py`, then `--scene-binding-selftest` if structure changed |
+| `disease_catalog.json` / medical systems | `DiseaseSystemTests` or `ChemicalDependencySystemTests` per touched side + the bridge tests for exposure changes |
+
+A Godot headless check is owed only when the change affects a
+`--*-selftest` surface (rule: the gate that knows about your change is
+the gate that must run).
+
+### VII.4 Acceptance Criteria (the package's own definition of done)
+
+Restated from the closeout and made testable:
+
+1. Every non-empty `research_unlock_id` in `relic_recipes.json`
+   resolves in the research catalog — and the count is 16 until a
+   foreman signs a change.
+2. All 30 archive records load with pairwise-distinct morale effects.
+3. Letter transitions obey the terminal-Delivered table (V.C.3) and
+   survive roundtrip with notes and deltas intact.
+4. A v3 payload decodes with an empty chain-runner section; a v4
+   payload round-trips chain progress; a future version is rejected.
+5. The audio catalog document matches the registry byte-for-byte under
+   `--check`.
+6. The production scene tree lints clean and binds at the selftest.
+7. The disease catalog parses schema-valid; every countermeasure id
+   names a real item; vector coverage is total.
+8. No Core file in any of the six chains references Godot or Unity
+   namespaces (enforced by the forbidden-API gate, verified by
+   inspection for the files this document read).
+
+### VII.5 Rollback Story
+
+The package was integrated as six disjoint streams over shared seams,
+which gives an unusually clean rollback topology:
+
+| Failure discovered in… | Roll back by… | Never touch… |
+|---|---|---|
+| Workstream A logic | the workshop/research partial + its two test files | `relic_recipes.json` (data is authority; a code revert does not revert data) |
+| Workstream B panel | the panel file only; system and archive are independent | archive JSON |
+| Workstream C chain runner | runner + its tests | `YearOfAshSave.cs` — codec changes are forward-only; roll back features by defaulting sections, never by removing rungs |
+| Save codec itself | *do not roll back*; add a rung or a default-tolerant field | frozen envelope classes |
+| Audio controllers | the controller file; registry is shared, treat as shared-seam change | generated catalog (regenerate, never hand-edit) |
+| Medical catalog data | the JSON + `DiseaseCatalogExpansionTests` expectations together | live saves (they already carry the old counts) |
+
+The codec's row is the important one: the frozen-envelope pattern means
+a *feature* rollback and a *format* rollback are different actions.
+Features roll back; formats only roll forward. Any hotfix that would
+need to "un-add" a save field must instead make reads tolerant and stop
+writing the field — the same discipline that got v1 through five
+versions.
+
+### VII.6 Verification of This Document Itself
+
+This expansion claims three things about itself, all checkable:
+
+1. It modified exactly one file — proven by
+   `git status --porcelain -- docs/plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md`
+   at the time of hand-off.
+2. It preserved the base closeout byte-for-byte above the separator —
+   checkable by diffing the first 62 lines against any prior revision.
+3. Its size is between the 200,000-character floor and the 250,000
+   soft cap — `wc -m` at hand-off, reported in the final message.

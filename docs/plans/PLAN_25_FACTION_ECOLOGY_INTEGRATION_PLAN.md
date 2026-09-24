@@ -1083,3 +1083,126 @@ The shipped set divides into the four ecology factions (2 each: `culture_marks_o
 **V.G.2 Pipeline.** JSON → `FactionCultureCatalogLoader` (Core, `FactionCultureCatalog.cs`) → `MusterHostSession.Culture` (loaded at `MusterHostSession.cs:114`) → two surfaces: the culture section inside `FactionActionPanel` (`BindCulture`, `src/Main.Muster.cs:98`) and the dedicated `src/UI/FactionCultureCodexPanel.cs` on route `faction_culture_codex` (DEC-99, wired from `FactionsPanel.cs`). The codex is the display-only tier of the political stack by design: no entry grants effects, and any future entry that tried to would be a schema violation, not an extension.
 
 **V.G.3 Authoring rules for new entries.** One custom per entry; named by its practice, not its moral ("The Assay Before the Sale", never "Why Honesty Matters"); body states the custom, its observance, and its cost; no entry references shelter mechanics as such (the shelter appears, if at all, as "the shelter" the way any district actor would); id `culture_<snake_case>`; `faction_id` must be an existing faction dossier id. Growth direction recorded in the closeout era: extend the district ring before deepening the four ecology factions — the ring is what makes the ecology factions legible as one society among many.
+
+### V.H — Camp scene variants (`muster_camp_scenes.json`)
+
+**V.H.1 Shape (verified, schema_version 1, 4 scenes / 18 variants).**
+
+```json
+{
+  "id": "camp_scene_old_enemies",
+  "scene": "old_enemies",
+  "min_day": 260,
+  "requires_flags": [],
+  "variants": [
+    { "variant_id": "blood_price", "requires_all_flags": [], "body": "..." }
+  ]
+}
+```
+
+Scene-level `min_day` and `requires_flags` gate whether the scene exists at all; variant-level `requires_all_flags` and the director's `musterPath` argument (matched with `PathMatches`, ordinal, empty `requiresPath` = any path) choose which version plays. Variant keys in shipped data are `{variant_id, body, requires_all_flags}`; path-specific variants express path context through flag state rather than a per-variant path key.
+
+**V.H.2 The four scenes (verified inventory).**
+
+| Scene | Variants | Director inputs | What the variants disagree about |
+|---|---|---|---|
+| `camp_scene_arrivals` | 3 | path | how the gathering opens: negotiated / victors / unsettled arrivals framing |
+| `camp_scene_old_enemies` | 5 | flags (blood_price, unpaid_toll, crossing_grudge) + path (negotiated_quiet, victors_order) | which grudge walks into the fire: the messenger's sale, the Toll's books, the crossing fight — or whether order/quiet covers them |
+| `camp_scene_shared_meal` | 5 | flags (peace_in_the_pot, war_rations via `flag_war_refugees_arrived` context) + path (negotiated_pot, victors_rations) | what the pot contains and who serves whom |
+| `camp_scene_confrontation` | 5 | flags (well_poisoning, chalked_doors, requisition_row via `flag_war_requisition_*`, retaliation families) + path (negotiated_fire, victors_verdict) | what the camp must judge when the shelter's ledger is read aloud |
+
+The scene set is the political ledger made spatial: old_enemies material keys on raider/escalation flags; shared_meal keys on refugee/peace flags; confrontation keys on requisition/retaliation flags. A shelter's three war-window choices (E-W2 met/refused, E-W4 wounded, E-W6 families) are each visible at the camp fire through which scene variant stages — that is the "traceable" property of the plan's spine, made playable.
+
+**V.H.3 Director algorithm (verified, `CampSceneCatalog.cs:155–191`).** `Select(scenes, sceneId, day, musterPath, isFlagSet, isSeen)`: day gate → scene flag gate → candidate variants filtered by `PathMatches(v.requiresPath, musterPath)` and `requires_all_flags` → first surviving variant in authored order → seen-scene suppression handled by the session (`CampScenesSeen` marks a staged scene; a seen scene does not restage). Empty catalog or no surviving variant returns null and the session renders nothing — scenes are decoration over truth, never obligations.
+
+**V.H.4 Authoring rules.** New scene: unique `scene` key, `min_day` ≥ 260, at least one ungated fallback variant (the `[F]` fallback rule). New variant on an existing scene: gate on whitelisted flags only; write against the current `musterPath` vocabulary; never require a path the evaluator cannot produce (the three constants are the full set). Tone: the camp is tired, practical, and watching; nobody orates.
+
+### V.I — Treaty host feed adapter (`RegionalTreatyFeed`)
+
+**V.I.1 Problem it closed.** The 2026-09-01 audit found `RegionalTreatySystem` constructed and restored by the host but never given a catalog in production — `Propose` always failed `unknown_treaty`, and the authored narrative corpora (`narrative/regional_treaty_protocols.json` 16 treaties, `foundry_accords.json` 12) spoke a different schema consumed by read-models only.
+
+**V.I.2 Shape (verified).** `Assets/Ashfall.Core/RegionalTreatyFeed.cs` — a static adapter mapping the narrative treaty schema onto `TreatyDefinition` for `RegionalTreatySystem.LoadCatalog`. Host load lives in `SetupRegionalTreaty` (`src/Main.ShelterSocial.cs:74`, catalog load at line 86 via `RegionalTreatyCatalogLoader`). The original plan's isolation-and-revert requirement is met by shape: the feed is one file, additive, and removing it restores the pre-feed behavior (empty catalog, `unknown_treaty` failures) without touching treaty mechanics.
+
+**V.I.3 What the feed deliberately does not do.**
+
+| Temptation | Decision |
+|---|---|
+| Translate narrative flavor into new mechanics | Refused — the feed maps identifiers, parties, and terms; prose stays prose |
+| Make `SilentFoundryCatalog` and `RegionalTreatySystem` share a schema | Refused — one narrative schema, one mechanical schema, one adapter between |
+| Wire `Suspended`/`Expired` statuses and `violation_penalty_affinity` | Out of scope (closeout limitation 6); the field exists (`RegionalTreatySystem.cs:30`), the lifecycle does not — pre-existing gap, owned by the treaty owner, not the feed |
+| Let Plan 25 write treaties | Refused — Plan 25 consumes treaty counts (`MusterPathInput.Active/ViolatedTreatyCount`); it proposes, breaks, and reads, never authors |
+
+**V.I.4 Consequences now live.** With a loaded catalog, treaty proposals can succeed in production; the DEC-96 record (`INTEGRATION_PLANS.md:263`) additionally notes treaty-breach consequences modifying raid pressure, which is the treaty system's own seam. For the political spine, the operational change is narrower and real: `MusterPathEvaluator`'s `negotiated` path became reachable in production the day the catalog load shipped, because `ActiveTreatyCount` stopped being structurally zero.
+
+**V.I.5 Fallback contract.** Feed load failure (missing narrative file, mapping miss) leaves the mechanical catalog empty; `Propose` fails `unknown_treaty` exactly as before the feed existed; the path evaluator reads zero active treaties and drifts toward `unsettled`/`victors` accordingly. No partial maps: a treaty row that fails mapping is skipped whole and counted, never half-imported.
+
+### V.J — Flag-vocabulary continuity matrix
+
+The bounded vocabulary, with producer → consumer → resolution for every id. Machine mirror: `whitelists/plan25_flags.json` (generated by `tools/plan25/generate_flag_whitelist.py`; 45 flags, 0 orphans at closeout). `resolution` names where the flag's story *ends* — a flag with no resolution row is a hook, not content.
+
+**V.J.1 `flag_grievance_*` (12).**
+
+| Flag | Producer | Consumer | Resolution |
+|---|---|---|---|
+| grievance_scavenger_claim_disputed | salvage-rights / arbitration dispute choices | E-P1 trigger | escalation marker (+ mediated exit) |
+| grievance_scavenger_arbitration_refused | arbitration `refuse_seat` | claimant testimony family | ledger context |
+| grievance_scavenger_registrar_defied | apprentice `back_free_hands` | guild band drop; testimony pressure | ledger context |
+| grievance_hydro_toll_defaulted | purification-toll `default` | E-P2 trigger | escalation marker |
+| grievance_hydro_appeal_refused | emergency-appeal `refuse` | E-P3 trigger | escalation marker (+ investigated exit) |
+| grievance_hydro_intake_disputed | intake `back_collectors` | E-P5 trigger | escalation marker (+ published exit) |
+| grievance_raider_parley_broken | parley `refuse` | E-P4 trigger | escalation marker |
+| grievance_raider_passage_evaded | levy `run_convoy` | levy-party-chief `complicated` | testimony nuance |
+| grievance_raider_passage_fought | levy `fight` | E-P6 trigger | escalation marker (+ truth_told exit) |
+| grievance_raider_code_widened | code `back_hardliners` | parley-survivor failed variant | testimony |
+| grievance_coalition_supply_refused | supply appeal refusal | camp-medic failed | testimony |
+| grievance_coalition_mediation_refused / _security_backed | mediation/rules refusals | camp-medic / camp-dissenter failed | testimony |
+
+**V.J.2 `flag_favor_*` (10).**
+
+| Flag | Producer | Consumer | Resolution |
+|---|---|---|---|
+| favor_scavenger_claim_recognized | salvage-rights honor/pay | guild band rise | band context |
+| favor_scavenger_arbitration_fair | arbitration fair rulings; good/allied salvage | `witness_scavenger_claimant` helped | testimony |
+| favor_scavenger_apprentice_backed | apprentice `back_registrars` | guild band rise | band context |
+| favor_hydro_toll_paid | toll paid (double/standard) | hydro-envoy helped (any-of) | testimony |
+| favor_hydro_water_accord_honored | credit terms; filter gift; queue relief | hydro-envoy helped | testimony |
+| favor_hydro_intake_audited | intake `back_technicians` | `witness_claimant_auditor` helped | testimony |
+| favor_raider_parley_honored | parley honored / brokered / code holders | `witness_raider_parley_survivor` helped | testimony |
+| favor_coalition_mediation_served | coalition `sit_mediator` | camp-medic helped (any-of) | testimony |
+| favor_coalition_supply_shared | supply appeal shared | camp-medic helped (any-of) | testimony |
+| favor_coalition_rules_first | camp rules dispute | camp-dissenter helped | testimony |
+
+**V.J.3 `flag_escalation_*` (10).**
+
+| Flag | Producer | Consumer | Resolution |
+|---|---|---|---|
+| escalation_marked_ruin (+_mediated) | E-P1 | summit-envoy context | testimony/scene |
+| escalation_stopped_convoy | E-P2 | summit-envoy failed (any-of) | testimony |
+| escalation_bitter_water (+_investigated) | E-P3 | summit-envoy both variants | testimony |
+| escalation_empty_chair | E-P4 | summit-envoy failed (any-of) | testimony |
+| escalation_cistern_blockade (+_published) | E-P5 | summit-envoy both variants | testimony |
+| escalation_prisoner_gate (+_truth_told) | E-P6 | summit-envoy both variants | testimony |
+
+**V.J.4 `flag_war_*` (6).**
+
+| Flag | Producer | Consumer | Resolution |
+|---|---|---|---|
+| war_refugees_arrived | E-W1 | E-R2 trigger; shared-meal; deserter-elder context | chain + scene |
+| war_requisition_demand | E-W2 stage | scene staging | scene |
+| war_requisition_met | E-W2 c1/c2 | overflow-medic failed | testimony |
+| war_requisition_refused | E-W2 c3 | deserter-elder failed; confrontation | testimony/scene |
+| war_shelter_took_wounded | E-W4 c1 | overflow-medic helped | testimony |
+| war_sheltered_retaliation_families | E-W6 c1 | confrontation variant | scene |
+
+**V.J.5 `flag_peace_*` (4).**
+
+| Flag | Producer | Consumer | Resolution |
+|---|---|---|---|
+| peace_volunteers_dry | E-R1 | queue-singer failed | testimony |
+| peace_bread_before_bullets | E-R2 | queue-singer helped; shared-meal | testimony/scene |
+| peace_faction_forms | E-R3 | E-R4 trigger; deserter-elder helped; `PeacePressure` | chain + path input |
+| peace_refusal_at_dawn | E-R4 | shared-meal context; coexists with ceasefire 588 | scene/canon |
+
+**V.J.6 Cross-plan flags consumed by Plan 25 (not produced by it).** `flag_messenger_kept`, `flag_become_warlord` (`MoralChoiceIds`, consumed by the messenger's keeper). Plan 25's whitelist records these as consumed-only with their external producers named — the dependency direction the `[H]/[O]/[X]` classification in the continuity matrix formalizes.
+
+**V.J.7 Lint contract.** The generator derives the whitelist from shipped data; a review diff that adds a flag without a producer row, or a consumer without a producer, fails review by inspection. `orphan_knocks` is the file's own empty-by-convention field for detected orphans. Any new prefix (the vocabulary is closed at five) is an architecture decision, not content.

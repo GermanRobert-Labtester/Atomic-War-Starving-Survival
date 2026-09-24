@@ -2610,3 +2610,87 @@ room-view hotspot showing mounted items.)
    the same validation and refund discipline — the registry accepts
    `Assign` from anyone, which is exactly why callers should not use it
    raw.
+
+### VIII.5 Scenario walkthroughs
+
+Concrete campaign-shaped stories traced through the verified mechanics,
+for QA rehearsal and for anyone who wants to feel the lane's shape before
+reading code.
+
+**VIII.5.1 First placement day.**
+
+Setting: day 30. The shelter has been bare-walled since the tutorial. A
+ration poster came back in someone's pack two weeks ago and has sat in
+Holdfast storage since. Two survivors are bunked; nobody has opened the
+interior panel before.
+
+Beat by beat:
+
+1. The player opens `shelter_decor` from the expanded shelter group. The
+   panel binds; the picker seeds to `room_bunks` (first room with
+   placements — there are none, so selection lands on index 0, which is
+   the corridor... actually the picker's first-open rule scans for
+   decorated rooms, finds none, and falls to index 0). The rail reads
+   mounted 0, rooms 0, +0.0, plaques 0. The event line: "The wall is
+   quiet. Nothing has been mounted in this session."
+2. The storage column shows exactly the decor the catalog knows, with
+   live held counts: the poster at 1 HELD, everything else 0 HELD and
+   disabled. The player selects the poster; the selection summary reads
+   "SELECTED · Ration Poster (R-12 Series) · 1 in storage · +1.5 morale /
+   assigned occupant / day."
+3. The player picks Bunks, types `north_wall`, mounts. The ladder runs:
+   room exists, slot free, modifier registered, count ≥ 1, consume,
+   assign. Event line: "Mounted Ration Poster (R-12 Series) at Bunks /
+   north_wall."
+4. The rail jumps to mounted 1, rooms 1, morale +3.0 (1.5 × 2 active bunk
+   occupants), plaques 0 — and the morale card shows Caution, because the
+   lane flags any positive cumulative exposure. No survivor scalar has
+   moved yet; the day's pass has already run.
+5. Next day's advance: the gate checks the mess hall (powered), the pass
+   walks assignments, finds the two bunks, adds +1.5 to each Morale
+   channel, emits `shelter_decor_morale` with payload 2, and the briefing
+   carries the day event. The panel's LastEvent, on next open, reads
+   "Room decor granted 3.0 morale across 2 assigned survivor(s)."
+6. Save. The envelope holds one placement row: room_bunks / north_wall /
+   item_decor_poster_ration / day 30 / no plaque fields. Checksummed,
+   filed under `shelter_decor`.
+
+What the scenario exercises: first-open selection rules, disabled
+zero-count storage buttons, the mount ladder's happy path, the
+aggregate-vs-scalar timing gap (panel ahead of the day), the day event
+threshold, and the minimal save payload.
+
+**VIII.5.2 Mid-game reconfiguration.**
+
+Setting: day 214. The shelter has grown: eleven placements across five
+rooms, including both canonical trophy mounts in the workshop holding a
+two-headed steppe wolf trophy (3.0) and mule deer antlers (2.0), a
+classroom chart in the bunks, the pressed flower and signal log in the
+corridor. A new survivor arrives and needs the fourth bunk; the shelter
+decides to consolidate decor into occupied rooms.
+
+1. The player opens the panel; the picker seeds to the first decorated
+   room. The rail shows the shelter's totals. The morale card sums every
+   room's delta × occupants — decor in empty rooms contributes nothing
+   to the card, which is the localized rule made visible.
+2. The player moves the signal log from the corridor's `main_panel` to
+   the bunks' `shelf_1`: RETURN TO STORAGE on the corridor card (capacity
+   check, add, registry remove), then select room_bunks, type `shelf_1`,
+   mount (consume, assign). Two operations, perfectly symmetric; storage
+   briefly holds the item between them, and the panel's held-count label
+   shows it.
+3. The trophy cards show their TROPHY MOUNT lines with species and delta;
+   their RETURN TO STORAGE buttons work like any mount's — trophies are
+   not plaques; the workshop wall is player property.
+4. On the next day tick the bunks' delta now includes the signal log's
+   1.0; the corridor's drops to the flower's 1.2; the total grant shifts
+   accordingly. No other system noticed: no events beyond the single
+   morale event, no journal lines, no relationship contact. Decor is
+   infrastructure of feeling, and its movement is deliberately
+   unremarkable.
+5. A mid-day load of the same save reproduces the exact wall: ordinal
+   slot order, same sums, same panel.
+
+What the scenario exercises: move semantics via remove+mount, trophy
+cards in the live path, the localized aggregation's sensitivity to
+occupancy, and the determinism of a mid-campaign reload.

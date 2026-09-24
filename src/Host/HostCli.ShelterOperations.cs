@@ -13,7 +13,7 @@ namespace AtomicWar.GodotApp
 {
     public static partial class HostCli
     {
-        public static int RunShelterOperationsBoardSelfTest(string dataDirectory)
+        public static bool RunShelterOperationsBoardSelfTest(string dataDirectory)
         {
             int pass = 0, fail = 0;
             void Check(string name, bool ok)
@@ -105,8 +105,8 @@ namespace AtomicWar.GodotApp
                 GD.PrintErr($"[FAIL] shelter-operations/exception — {ex.Message}");
             }
 
-            return EmitSummary("shelter_operations_board_selftest", fail == 0, fail,
-                details: $"{pass} passed, {fail} failed");
+            GD.Print($"[ShelterOperationsBoardSelfTest] {pass} passed, {fail} failed.");
+            return fail == 0;
         }
 
     }
