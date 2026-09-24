@@ -99,6 +99,11 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `radio_program_production_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `radio_transmission` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
 | `rail_track_maintenance_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 25) |
+| `wildlife_harvest_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 32) |
+| `broadsheet_press_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 30) |
+| `wildlife_harvest_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 32) |
+| `storm_forecast_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 33) |
+| `kilnworks_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 31) |
 | `research_ticked` | Main.Plans166_169.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `research_unlock_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 141) |
 | `resource_delta` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
@@ -118,6 +123,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `shelter_governance_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 159) |
 | `shelter_identity_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `shelter_maintenance_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 186) |
+| `storm_forecast_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 33) |
 | `shelter_hatch_unsealed` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `social_dispute_mediated` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
 | `social_dispute_unresolved` | Main.Plans46_49.cs | yes | via briefing panel | HANDLED |

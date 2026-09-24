@@ -300,6 +300,10 @@ namespace Ashfall.Core.Save
             new("difficulty_settings", "SaveDifficultySettings", "SetupDifficultySettings", "campaign", "Plan 181 — runtime difficulty settings: active preset, custom slider values, and the ironman lock. The campaign identity preset stays in the checksummed header.", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("rail_track_maintenance", "SaveRailTrackMaintenance", "SetupRailTrackMaintenance", "expeditions", "Expansion 25 — rail track gauge/wear/bridge maintenance ledger over the canonical RailwaySystem topology", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("glassworks", "SaveGlassworks", "SetupGlassworks", "shelter", "Expansion 29 — glass vitrification batches, vision prescriptions, and abrasive grit stock", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("broadsheet_press", "SaveBroadsheetPress", "SetupBroadsheetPress", "narrative", "Expansion 30 — movable type tray, ink and paper consumables, and the bound archive of printed publications. Rumor facts stay with RumorSystem; morale stays with the survivors' needs authority.", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("kilnworks", "SaveKilnworks", "SetupKilnworks", "shelter", "Expansion 31 — queued kiln batches, kiln fuel reserve, refractory lining wear, and drawn-output tallies. Metallurgy stays with CupolaFoundryEngine.", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("wildlife_harvest", "SaveWildlifeHarvest", "SetupWildlifeHarvest", "hunting", "Expansion 32 — per-species seasonal harvest ledger and sustainable quota", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("storm_forecast", "SaveStormForecast", "SetupStormForecast", "world", "Expansion 33 — observation-post forecast skill, storm-response drill recency, and issued warnings", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -568,6 +572,10 @@ namespace Ashfall.Core.Save
                 { "difficulty_settings", "difficulty_settings_save.json" },
                 { "rail_track_maintenance", "rail_track_maintenance_save.json" },
                 { "glassworks", "glassworks_save.json" },
+                { "broadsheet_press", "broadsheet_press_save.json" },
+                { "kilnworks", "kilnworks_save.json" },
+                { "wildlife_harvest", "wildlife_harvest_save.json" },
+                { "storm_forecast", "storm_forecast_save.json" },
             };
 
 

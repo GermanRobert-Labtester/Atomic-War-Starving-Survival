@@ -728,6 +728,18 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.GlassworksSelfTest:
                     GetTree().Quit(HostCliGlassworks.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.BroadsheetPressSelfTest:
+                    GetTree().Quit(HostCliBroadsheetPress.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.KilnworksSelfTest:
+                    GetTree().Quit(HostCliKilnworks.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.WildlifeHarvestSelfTest:
+                    GetTree().Quit(HostCliWildlifeHarvest.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.StormForecastSelfTest:
+                    GetTree().Quit(HostCliStormForecast.RunSelfTest(_dataDir));
+                    return;
                 case HostCliAction.ShelterMaintenanceSelfTest:
                     GetTree().Quit(HostCliShelterMaintenance.RunSelfTest(_dataDir));
                     return;

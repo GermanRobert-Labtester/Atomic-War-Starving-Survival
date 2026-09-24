@@ -65,14 +65,25 @@ if not entries:
     sys.exit(1)
 
 # 2. Extract methods from src/Main*.cs
+# Lifecycle visibility is not part of this gate's contract: the shipped Main partials
+# declare these as either `private` or `public` (e.g. the Expansion 25/29/30/31 series
+# expose them for the lifecycle participant). This gate checks *presence and registry
+# agreement*, matching MainTriadDriftGateTests, so the qualifier must stay agnostic.
+# Otherwise a correctly-wired section reads as missing purely because of its modifier.
 main_files = glob.glob("src/Main*.cs")
 all_main_code = "\n".join(pathlib.Path(f).read_text(encoding="utf-8") for f in main_files)
 
-found_saves = set(re.findall(r"private void (Save[A-Za-z0-9_]+)\(", all_main_code))
+method_qualifier = r"(?:private|public|protected|internal)"
+found_saves = set(re.findall(method_qualifier + r" void (Save[A-Za-z0-9_]+)\(", all_main_code))
 found_saves.discard("SaveAll")
 found_saves.discard("SaveAllExpandedShelterSystems")
+# Documented non-section flushes: these are read-model/lifecycle participants that
+# persist nothing because the canonical owners hold their own sections. Registering a
+# save section for one would manufacture an empty second authority, so they are
+# exempted here by name rather than silenced in the host.
+found_saves.discard("SavePresentation")  # Holdfast presentation slate: derived read model, persists nothing.
 
-found_setups = set(re.findall(r"private void (Setup[A-Za-z0-9_]+)\(", all_main_code))
+found_setups = set(re.findall(method_qualifier + r" void (Setup[A-Za-z0-9_]+)\(", all_main_code))
 
 registered_saves = {e["save"] for e in entries}
 registered_setups = {e["setup"] for e in entries if e["setup"]}

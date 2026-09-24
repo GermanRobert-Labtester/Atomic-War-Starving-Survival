@@ -156,6 +156,12 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("rail_track_maintenance", new RailTrackMaintenanceDayOwner(this), phase: 5);
             // Expansion 29 — glassworks kiln annealing stages.
             _campaignDay.Register("glassworks", new GlassworksDayOwner(this), phase: 5);
+            _campaignDay.Register("broadsheet_press", new BroadsheetPressDayOwner(this), phase: 5);
+            _campaignDay.Register("kilnworks", new KilnworksDayOwner(this), phase: 5);
+            // Expansion 32 — wildlife harvest quota ledger (season-scoped; quota evaluation is event-driven).
+            _campaignDay.Register("wildlife_harvest", new WildlifeHarvestDayOwner(this), phase: 5);
+            // Expansion 33 — storm forecast observation-post drift and drill recency.
+            _campaignDay.Register("storm_forecast", new StormForecastDayOwner(this), phase: 5);
             // Plan 186 — shelter maintenance & degradation: applies daily component wear and environmental stress.
             _campaignDay.Register("shelter_maintenance", new ShelterMaintenanceDayOwner(this), phase: 5);
             // Plan 188 — individual survivor daily routines: ticks satisfaction and detects schedule conflicts.
@@ -2276,6 +2282,126 @@ namespace AtomicWar.GodotApp
                 int annealed = _m._glassworks?.Census.AnnealedBatches ?? 0;
                 events.Add(new DayStateChangeEvent(
                     "glassworks_ticked", "glassworks", null, null, annealed));
+            }
+        }
+        /// <summary>Expansion 30 press day owner (ownerId <c>broadsheet_press</c>, phase 5).</summary>
+        /// <remarks>
+        /// The press never prints by itself: printing is a player command, because what
+        /// the shelter publishes is an editorial decision. This owner is therefore a
+        /// census-only heartbeat plus the pre-day snapshot, so a mid-advance rollback
+        /// still restores the type tray and the printed archive.
+        /// </remarks>
+        private sealed class BroadsheetPressDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Print.BroadsheetPressState? _snapshot;
+            public BroadsheetPressDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupBroadsheetPress();
+                _snapshot = _m._broadsheetPress?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._broadsheetPress?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupBroadsheetPress();
+                var census = _m.GetBroadsheetPressCensus();
+                events.Add(new DayStateChangeEvent(
+                    "broadsheet_press_ticked", "broadsheet_press", null, null, census.PublicationCount));
+            }
+        }
+
+        /// <summary>Expansion 31 kilnworks day owner (ownerId <c>kilnworks</c>, phase 5).</summary>
+        /// <remarks>
+        /// Advances the oldest queued batch by exactly one firing stage at the fixed
+        /// optimal temperature. Deterministic by construction: no RNG stream is read,
+        /// so replaying a day always fires the same batch the same way.
+        /// </remarks>
+        private sealed class KilnworksDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Shelter.KilnFiringState? _snapshot;
+            public KilnworksDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupKilnworks();
+                _snapshot = _m._kilnworks?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._kilnworks?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupKilnworks();
+                _m.TickKilnworksFiring();
+                int active = _m._kilnworks?.Census.ActiveBatches ?? 0;
+                events.Add(new DayStateChangeEvent(
+                    "kilnworks_ticked", "kilnworks", null, null, active));
+            }
+        }
+
+        /// <summary>Expansion 32 wildlife harvest ledger day owner (ownerId <c>wildlife_harvest</c>, phase 5).</summary>
+        private sealed class WildlifeHarvestDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.World.WildlifeHarvestState? _snapshot;
+            public WildlifeHarvestDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupWildlifeHarvest();
+                _snapshot = _m._wildlifeHarvest?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._wildlifeHarvest?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupWildlifeHarvest();
+                var census = _m.GetWildlifeHarvestCensus();
+                events.Add(new DayStateChangeEvent(
+                    "wildlife_harvest_ticked", "wildlife_harvest", null, null, census.SpeciesAtRisk));
+            }
+        }
+
+        /// <summary>Expansion 33 storm forecast day owner (ownerId <c>storm_forecast</c>, phase 5).</summary>
+        private sealed class StormForecastDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.World.StormForecastState? _snapshot;
+            public StormForecastDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupStormForecast();
+                _snapshot = _m._stormForecast?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._stormForecast?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupStormForecast();
+                _m.TickStormForecast(day);
+                int warnings = _m._stormForecast?.WarningsIssued ?? 0;
+                events.Add(new DayStateChangeEvent(
+                    "storm_forecast_ticked", "storm_forecast", null, null, warnings));
             }
         }
     }

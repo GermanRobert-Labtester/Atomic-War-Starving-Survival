@@ -3,9 +3,166 @@
   "generated_at": "2026-09-24",
   "method": "programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)",
   "verdict_counts": {
-    "INTEGRATED": 44
+    "INTEGRATED": 46
   },
   "plans": [
+    {
+      "plan": "30",
+      "title": "Expansion 30 \u2014 The Press",
+      "section": "broadsheet_press",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "BroadsheetPressLedger [Core], BroadsheetPressState [Core], BroadsheetPressCensus [Core], PublicBroadsheetPressEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "5/5 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`broadsheet_press`"
+        ],
+        "triad": [
+          true,
+          "SetupBroadsheetPress / SaveBroadsheetPress"
+        ],
+        "save_file": [
+          true,
+          "broadsheet_press_save.json"
+        ],
+        "save_store": [
+          true,
+          "BroadsheetPressSaveStore"
+        ],
+        "host_session": [
+          true,
+          "BroadsheetPressHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--broadsheet-press-selftest"
+        ],
+        "tests": [
+          true,
+          "BroadsheetPressLedgerTests, PublicBroadsheetPressEngineTests"
+        ]
+      },
+      "host_ref_files": {
+        "BroadsheetPressLedger": [
+          "src/Host/BroadsheetPressHostSession.cs",
+          "src/Host/HostCli.BroadsheetPress.cs"
+        ],
+        "BroadsheetPressState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/BroadsheetPressHostSession.cs",
+          "src/Host/HostCli.BroadsheetPress.cs"
+        ],
+        "BroadsheetPressCensus": [
+          "src/Main.BroadsheetPress.cs",
+          "src/Host/BroadsheetPressHostSession.cs"
+        ],
+        "PublicBroadsheetPressEngine": [
+          "src/Main.BroadsheetPress.cs",
+          "src/Host/BroadsheetPressHostSession.cs",
+          "src/Host/HostCli.BroadsheetPress.cs"
+        ],
+        "BroadsheetPressHostSession": [
+          "src/Main.BroadsheetPress.cs",
+          "src/Host/BroadsheetPressHostSession.cs"
+        ]
+      }
+    },
+    {
+      "plan": "31",
+      "title": "Expansion 31 \u2014 The Kiln",
+      "section": "kilnworks",
+      "persisted_inside": null,
+      "verdict": "INTEGRATED",
+      "uncommitted": false,
+      "checks": {
+        "authority": [
+          true,
+          "KilnFiringLedger [Core], KilnFiringState [Core], KilnFiringCensus [Core], KilnFiringEngine [Core]"
+        ],
+        "host_refs": [
+          true,
+          "5/5 identifiers referenced"
+        ],
+        "save_section": [
+          true,
+          "`kilnworks`"
+        ],
+        "triad": [
+          true,
+          "SetupKilnworks / SaveKilnworks"
+        ],
+        "save_file": [
+          true,
+          "kilnworks_save.json"
+        ],
+        "save_store": [
+          true,
+          "KilnworksSaveStore"
+        ],
+        "host_session": [
+          true,
+          "KilnworksHostSession"
+        ],
+        "ui_panel": [
+          null,
+          "no dedicated panel (read model / detail rows)"
+        ],
+        "route": [
+          null,
+          "\u2014"
+        ],
+        "cli_flag": [
+          true,
+          "--kilnworks-selftest"
+        ],
+        "tests": [
+          true,
+          "KilnFiringLedgerTests, KilnFiringEngineTests"
+        ]
+      },
+      "host_ref_files": {
+        "KilnFiringLedger": [
+          "src/Main.Kilnworks.cs",
+          "src/Host/KilnworksHostSession.cs",
+          "src/Host/HostCli.Kilnworks.cs"
+        ],
+        "KilnFiringState": [
+          "src/Main.CampaignOwners.cs",
+          "src/Host/KilnworksHostSession.cs",
+          "src/Host/HostCli.Kilnworks.cs"
+        ],
+        "KilnFiringCensus": [
+          "src/Main.Kilnworks.cs",
+          "src/Host/KilnworksHostSession.cs"
+        ],
+        "KilnFiringEngine": [
+          "src/Main.Kilnworks.cs",
+          "src/Host/KilnworksHostSession.cs",
+          "src/Host/HostCli.Kilnworks.cs"
+        ],
+        "KilnworksHostSession": [
+          "src/Main.Kilnworks.cs",
+          "src/Host/KilnworksHostSession.cs"
+        ]
+      }
+    },
     {
       "plan": "38",
       "title": "Commitments & Deadlines",
@@ -2556,8 +2713,10 @@
       "host_ref_files": {
         "RumorSystem": [
           "src/Main.RumorNetwork.cs",
+          "src/Main.BroadsheetPress.cs",
           "src/Host/RumorNetworkHostSession.cs",
-          "src/Host/RumorNetworkSelfTest.cs"
+          "src/Host/RumorNetworkSelfTest.cs",
+          "src/Host/BroadsheetPressHostSession.cs"
         ],
         "RumorNetworkHostSession": [
           "src/Main.RumorNetwork.cs",

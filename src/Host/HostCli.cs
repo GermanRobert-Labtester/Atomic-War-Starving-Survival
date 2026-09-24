@@ -242,8 +242,12 @@ namespace AtomicWar.GodotApp
         SurvivorRoutinesSelfTest,
         VisitorIntegrationSelfTest,
         PersonalBelongingsSelfTest,
+        WildlifeHarvestSelfTest,
+        StormForecastSelfTest,
         RailTrackMaintenanceSelfTest,
-        GlassworksSelfTest
+        GlassworksSelfTest,
+        BroadsheetPressSelfTest,
+        KilnworksSelfTest
     }
 
     /// <summary>
@@ -292,6 +296,10 @@ namespace AtomicWar.GodotApp
 
             if (args == null || args.Length == 0)
                 return HostCliAction.Interactive;
+            if (Has(args, "--wildlife-harvest-selftest") || Has(args, "--the-wild-selftest"))
+                return HostCliAction.WildlifeHarvestSelfTest;
+            if (Has(args, "--storm-forecast-selftest") || Has(args, "--the-weather-selftest"))
+                return HostCliAction.StormForecastSelfTest;
 
             if (Has(args, "--host-help") || Has(args, "--help"))
                 return HostCliAction.Help;
@@ -720,6 +728,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.RailTrackMaintenanceSelfTest;
             if (Has(args, "--glassworks-selftest") || Has(args, "--the-glass-selftest"))
                 return HostCliAction.GlassworksSelfTest;
+            if (Has(args, "--broadsheet-press-selftest") || Has(args, "--the-press-selftest"))
+                return HostCliAction.BroadsheetPressSelfTest;
+            if (Has(args, "--kilnworks-selftest") || Has(args, "--the-kiln-selftest"))
+                return HostCliAction.KilnworksSelfTest;
             if (Has(args, "--shelter-maintenance-selftest") || Has(args, "--maintenance-selftest"))
                 return HostCliAction.ShelterMaintenanceSelfTest;
             if (Has(args, "--survivor-routines-selftest") || Has(args, "--routines-selftest"))
@@ -758,6 +770,10 @@ namespace AtomicWar.GodotApp
             GD.Print("  --real-campaign-journey-selftest / --campaign-journey-selftest / --real-main-journey-selftest Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5)");
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
+            GD.Print("  --rail-track-maintenance-selftest / --iron-road-selftest  Expansion 25 Iron Road: gauge stability, track/bridge wear, dispatch feasibility advisory, workgang repair, and the per-segment maintenance ledger");
+            GD.Print("  --glassworks-selftest / --the-glass-selftest  Expansion 29 The Glass: vitrification batch annealing, purity tiers, corrective lens grinding, theodolite calibration, and vision prescriptions");
+            GD.Print("  --broadsheet-press-selftest / --the-press-selftest  Expansion 30 The Press: movable-type wear and reset, ink and paper consumables, print runs by publication kind, audience reach and morale stabilization, rumor debunk correction, and the bound archive of what the shelter printed");
+            GD.Print("  --kilnworks-selftest / --the-kiln-selftest  Expansion 31 The Kiln: batch firing stages, thermal shock, draw grades, lime calcination yield, refractory lining wear and reline, kiln fuel reserve, and fired-output tallies");
             GD.Print("  --agriculture-selftest   Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition");
             GD.Print("  --orphan-seal-wave1-selftest  ORPHAN-SEAL-PRIORITY-W1: ten priority orphan authorities — catalog, command, state round-trip");
             GD.Print("  --commitments-selftest   Plan 38 commitments & deadlines: catalog, warning ladder, exactly-once miss + consequence routing, met settlement, save round-trip");

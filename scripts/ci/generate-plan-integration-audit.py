@@ -40,6 +40,8 @@ EXCLUDED = ("/obj/", "/bin/", "/.git/", "/builds/", "/artifacts/", "/__pycache__
 
 # plan, title, section, inside (parent section), authorities (override), cli, tests
 RECENT_PLANS = [
+    ("30",  "Expansion 30 — The Press",                   "broadsheet_press",    None,                [], "--broadsheet-press-selftest", ["BroadsheetPressLedgerTests", "PublicBroadsheetPressEngineTests"]),
+    ("31",  "Expansion 31 — The Kiln",                   "kilnworks",           None,                [], "--kilnworks-selftest",        ["KilnFiringLedgerTests", "KilnFiringEngineTests"]),
     ("38",  "Commitments & Deadlines",              "commitment",           None,                [], "--commitments-selftest",        ["Plan38CommitmentHostIntegrationTests"]),
     ("39",  "Session Durability",                   "session_durability",   None,                [], "--session-durability-selftest",["Plan39SessionDurabilityHostIntegrationTests"]),
     ("42",  "Survivor Voice",                       "survivor_voice",       None,                [], "--survivor-voice-selftest",     ["Plan42SurvivorVoiceHostIntegrationTests"]),

@@ -307,9 +307,9 @@ namespace Ashfall.Core.Tests.Save
             // Plan 199 added human_migration (seasonal human migration schedule engine);
             // Plan 159 added shelter_governance (shelter governance & political system);
             // Plan 176 added aging (chronological age progression, life stages, retirement, elder mentorship).
-            Assert.Equal(245, SaveSectionRegistry.All.Count);
+            Assert.Equal(249, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(245, keys.Count);
+            Assert.Equal(249, keys.Count);
         }
 
     }

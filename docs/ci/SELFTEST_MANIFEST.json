@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 178,
-  "headless_test_count": 176,
+  "total_tests": 182,
+  "headless_test_count": 180,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1089,6 +1089,58 @@
       "description": "Expansion 29 The Glass vitrification: batch annealing, purity tiers, corrective lens grinding, theodolite calibration, and vision prescriptions",
       "headless_compatible": true,
       "expected_summary_id": "glassworks_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "broadsheet_press_selftest",
+      "action": "BroadsheetPressSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--broadsheet-press-selftest",
+      "aliases": [
+        "--the-press-selftest"
+      ],
+      "description": "Expansion 30 The Press: movable type wear and reset, ink/paper consumables, print runs by publication kind, reach and morale stabilization, rumor debunk correction, and the printed archive",
+      "headless_compatible": true,
+      "expected_summary_id": "broadsheet_press_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "kilnworks_selftest",
+      "action": "KilnworksSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--kilnworks-selftest",
+      "aliases": [
+        "--the-kiln-selftest"
+      ],
+      "description": "Expansion 31 The Kiln: batch firing stages, thermal shock, draw grades, lime calcination yield, refractory lining wear and reline, fuel reserve, and the fired-output tallies",
+      "headless_compatible": true,
+      "expected_summary_id": "kilnworks_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "wildlife_harvest_selftest",
+      "action": "WildlifeHarvestSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--wildlife-harvest-selftest",
+      "aliases": [
+        "--the-wild-selftest"
+      ],
+      "description": "Expansion 32 The Wild: sustainable harvest quota from reproduction surplus, overhunt collapse risk, predator conflict posture, and taming readiness",
+      "headless_compatible": true,
+      "expected_summary_id": "wildlife_harvest_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "storm_forecast_selftest",
+      "action": "StormForecastSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--storm-forecast-selftest",
+      "aliases": [
+        "--the-weather-selftest"
+      ],
+      "description": "Expansion 33 The Weather: forecast confidence vs lead time, warning issuance gate, seasonal readiness composite, and black-rain absorption",
+      "headless_compatible": true,
+      "expected_summary_id": "storm_forecast_selftest",
       "timeout_seconds": 30
     },
     {

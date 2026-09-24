@@ -565,6 +565,10 @@ namespace AtomicWar.GodotApp
             ResetDifficultySettings();
             ResetRailTrackMaintenance();
             ResetGlassworks();
+            ResetBroadsheetPress();
+            ResetKilnworks();
+            ResetWildlifeHarvest();
+            ResetStormForecast();
         }
 
         /// <summary>

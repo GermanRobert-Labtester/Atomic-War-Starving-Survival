@@ -4,7 +4,7 @@
 
 **Method:** programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)
 
-**Scope:** 44 recently integrated plans (UNBLOCK-OLDEST batches,
+**Scope:** 46 recently integrated plans (UNBLOCK-OLDEST batches,
 flagship integration commits, and the 2026-09-23 Plans 210/214 full-integration package).
 
 Every verdict below is re-measured from current source: Core type declarations,
@@ -15,12 +15,14 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 
 | Verdict | Plans |
 |---|---:|
-| **INTEGRATED** | 44 |
+| **INTEGRATED** | 46 |
 
 ## 2. Per-plan verification
 
 | Plan | Title | Save section | Host refs | Triad | CLI | UI | Tests | Verdict |
 |---|---|---|---|---|---|---|---|---|
+| 30 | Expansion 30 — The Press | `broadsheet_press` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 31 | Expansion 31 — The Kiln | `kilnworks` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 38 | Commitments & Deadlines | `commitment` | ✅ 2/2 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 39 | Session Durability | `session_durability` | ✅ 3/3 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 42 | Survivor Voice | `survivor_voice` | ✅ 3/3 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
@@ -67,6 +69,36 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 | 220 | Shelter Atmosphere | `shelter_atmosphere` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 
 ## 3. Evidence detail
+
+### Plan 30 — Expansion 30 — The Press — INTEGRATED
+
+- ✅ `authority`: BroadsheetPressLedger [Core], BroadsheetPressState [Core], BroadsheetPressCensus [Core], PublicBroadsheetPressEngine [Core]
+- ✅ `host_refs`: 5/5 identifiers referenced
+- ✅ `save_section`: `broadsheet_press`
+- ✅ `triad`: SetupBroadsheetPress / SaveBroadsheetPress
+- ✅ `save_file`: broadsheet_press_save.json
+- ✅ `save_store`: BroadsheetPressSaveStore
+- ✅ `host_session`: BroadsheetPressHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --broadsheet-press-selftest
+- ✅ `tests`: BroadsheetPressLedgerTests, PublicBroadsheetPressEngineTests
+- Host reference files (first authority, up to 8): `src/Host/BroadsheetPressHostSession.cs`, `src/Host/HostCli.BroadsheetPress.cs`
+
+### Plan 31 — Expansion 31 — The Kiln — INTEGRATED
+
+- ✅ `authority`: KilnFiringLedger [Core], KilnFiringState [Core], KilnFiringCensus [Core], KilnFiringEngine [Core]
+- ✅ `host_refs`: 5/5 identifiers referenced
+- ✅ `save_section`: `kilnworks`
+- ✅ `triad`: SetupKilnworks / SaveKilnworks
+- ✅ `save_file`: kilnworks_save.json
+- ✅ `save_store`: KilnworksSaveStore
+- ✅ `host_session`: KilnworksHostSession
+- — `ui_panel`: no dedicated panel (read model / detail rows)
+- — `route`: —
+- ✅ `cli_flag`: --kilnworks-selftest
+- ✅ `tests`: KilnFiringLedgerTests, KilnFiringEngineTests
+- Host reference files (first authority, up to 8): `src/Main.Kilnworks.cs`, `src/Host/KilnworksHostSession.cs`, `src/Host/HostCli.Kilnworks.cs`
 
 ### Plan 38 — Commitments & Deadlines — INTEGRATED
 
@@ -621,7 +653,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: rumors
 - ✅ `cli_flag`: --rumor-network-selftest
 - — `tests`: no named fixture (host selftest only)
-- Host reference files (first authority, up to 8): `src/Main.RumorNetwork.cs`, `src/Host/RumorNetworkHostSession.cs`, `src/Host/RumorNetworkSelfTest.cs`
+- Host reference files (first authority, up to 8): `src/Main.RumorNetwork.cs`, `src/Main.BroadsheetPress.cs`, `src/Host/RumorNetworkHostSession.cs`, `src/Host/RumorNetworkSelfTest.cs`, `src/Host/BroadsheetPressHostSession.cs`
 
 ### Plan 205 — Shelter Noise — INTEGRATED
 

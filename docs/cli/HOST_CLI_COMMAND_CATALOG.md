@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-23<br>
-**Total Registered Actions:** 188 entries / 264 flag tokens (aliases included)
+**Last Verified:** 2026-09-24<br>
+**Total Registered Actions:** 212 entries / 301 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -37,8 +37,24 @@
 | `--campaign-fuzz-selftest` | — | Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite |
 | `--composition-root-selftest` | — | Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131) |
 | `--real-campaign-journey-selftest` | `--campaign-journey-selftest`, `--real-main-journey-selftest` | Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5) |
+| `--rail-track-maintenance-selftest` | `--iron-road-selftest` | Expansion 25 Iron Road: gauge stability, track/bridge wear, dispatch feasibility advisory, workgang repair, and the per-segment maintenance ledger |
+| `--glassworks-selftest` | `--the-glass-selftest` | Expansion 29 The Glass: vitrification batch annealing, purity tiers, corrective lens grinding, theodolite calibration, and vision prescriptions |
+| `--broadsheet-press-selftest` | `--the-press-selftest` | Expansion 30 The Press: movable-type wear and reset, ink and paper consumables, print runs by publication kind, audience reach and morale stabilization, rumor debunk correction, and the bound archive of what the shelter printed |
+| `--kilnworks-selftest` | `--the-kiln-selftest` | Expansion 31 The Kiln: batch firing stages, thermal shock, draw grades, lime calcination yield, refractory lining wear and reline, kiln fuel reserve, and fired-output tallies |
 | `--agriculture-selftest` | — | Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition |
 | `--orphan-seal-wave1-selftest` | — | ORPHAN-SEAL-PRIORITY-W1: ten priority orphan authorities — catalog, command, state round-trip |
+| `--commitments-selftest` | — | Plan 38 commitments & deadlines: catalog, warning ladder, exactly-once miss + consequence routing, met settlement, save round-trip |
+| `--session-durability-selftest` | — | Plan 39 session durability: slot capacity/isolation, interrupted-write + backup recovery audit, soak stability verdicts, capture round-trip |
+| `--playable-metrics-selftest` | — | Plan 46 playable metrics: bounded recorder stream, first-hour funnel, aggregation grades, capture round-trip |
+| `--survivor-voice-selftest` | — | Plan 42 survivor voice: catalog selection, cooldowns, dispatch arbitration, barrel history, capture round-trip |
+| `--content-certification-selftest` | — | Plan 49 content orphan certification: family manifest, live-evidence rows, clean/dormant/orphan verdicts |
+| `--holdfast-presentation-selftest` | — | Plan 51 holdfast presentation slate: room/actor/map projections, hazard + crisis bands, motion profile |
+| `--scarcity-audio-selftest` | — | Plan 52 scarcity audio: weather->bed/cue authority mapping, silence states, ducking, geiger bands |
+| `--seven-day-slice-selftest` | — | Plan 54 seven-day slice: authored beats, frozen scenario hash, beat verification + scorecard |
+| `--retention-selftest` | — | Plan 55 retention & save budgeting: authored policy overlay, bounded canonical collections, protected obligations, capture round-trip |
+| `--outpost-settlement-selftest` | `--outposts-selftest` | Plan 58 outposts & second holdfast: authored catalog, establish/garrison/supply lifecycle, daily consume, capture round-trip |
+| `--territory-control-selftest` | `--territory-selftest` | Plan 134 faction territory & supply line control: contested nodes, fortification, garrison, supply line status, capture round-trip |
+| `--cooking-selftest` | `--cooking-test` | Plan 136 wildlife trapping food pipeline & cooking system: recipe loading, ingredient consumption, decontamination, skill progression, capture/restore |
 | `--aquaponics-selftest` | — | Plan B87 closed-loop aquaponics: catalog, growth, power/DO crash, harvest, nutrient export, save round-trip |
 | `--arbitration-selftest` | — | CrossingArbitrationHeadlessDemo |
 | `--black-flotilla-selftest` | `--maritime-selftest`, `--expansion-09-selftest` | The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip |
@@ -197,6 +213,14 @@
 | `--time-capsule-selftest` | — | Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding |
 | `--death-legacy-selftest` | — | Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding |
 | `--relationship-decay-selftest` | — | Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding |
+| `--visitor-integration-selftest` | — | Plan 214: admitted visitor stays, temporary housing, processing requirements, recruitment handoff, and UI binding |
+| `--personal-belongings-selftest` | — | Plan 210: survivor keepsake claims, favorites, gifts, loss reporting, inheritance, and UI binding |
+| `--research-unlock-selftest` | `--research-unlocks-selftest` | Plan 141 research unlock bridge: catalog load, downstream unlock queries, capability grants, recipe unlocks, and inventory awards |
+| `--unified-ending-selftest` | `--epilogue-selftest` | Plan 145 unified ending resolver: epilogue evaluation, personalized chronicle, survivor fates, legacy trait awards, and save round-trip |
+| `--npc-memory-selftest` | `--npc-memory-test` | Plan 147 per-NPC memory: trust, grudge, favors owed, forgiveness, dialogue tone, and trade pricing modifiers |
+| `--ideological-friction-selftest` | `--ideology-selftest` | Plan 148 ideological friction: confrontations, conversions, bunker factions, and mediation |
+| `--romance-family-selftest` | `--romance-selftest` | Plan 150 romance & family dynamics: courtship stages, partnership, bonded pairs, family units, adoption |
+| `--vehicle-customization-selftest` | `--vehicle-modules-selftest` | Plan 152 vehicle module slots, effective stats, bunk capacity, and base camps |
 | `--user-data-dir` | — | <path> Override user:// base directory for isolated test runs (or set ASHFALL_USER_DIR) |
 | `--log-dir` | — | <path> Configure log output directory for headless runs (or set ASHFALL_LOG_DIR) |
 | `--host-help` | `--help` | This list |

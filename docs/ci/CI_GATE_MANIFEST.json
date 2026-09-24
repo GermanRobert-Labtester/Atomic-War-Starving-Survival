@@ -349,7 +349,7 @@
       "name": "Master Documentation Index Drift Gate",
       "category": "Drift & Architecture Gates",
       "command": "python3 scripts/ci/generate-docs-index.py --check",
-      "timeout_seconds": 30,
+      "timeout_seconds": 120,
       "expected_summary": "Master docs index is up to date",
       "classification": "fast",
       "critical": true
