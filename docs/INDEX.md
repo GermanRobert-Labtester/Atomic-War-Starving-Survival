@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5411 | **Total Characters:** 1,692,094,185 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 1948 documents carrying 1,648,888,562 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5412 | **Total Characters:** 1,692,267,122 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 1948 documents carrying 1,648,912,520 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5361 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5362 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 48 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 1948 documents, 1,648,888,562 characters
+## Oversized Document Register (>= 100,000 characters) — 1948 documents, 1,648,912,520 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1084,7 +1084,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 386,984 | [`docs/expansions/prose_wave35/cw35_01_the_tower_that_holds_no_water_plan.md`](expansions/prose_wave35/cw35_01_the_tower_that_holds_no_water_plan.md) |
 | 386,369 | [`docs/expansions/prose_wave35/cw35_04_the_pass_returned_at_dawn_plan.md`](expansions/prose_wave35/cw35_04_the_pass_returned_at_dawn_plan.md) |
 | 382,352 | [`docs/expansions/prose_wave33/cw33_06_tags_tied_with_rotting_twine_plan.md`](expansions/prose_wave33/cw33_06_tags_tied_with_rotting_twine_plan.md) |
-| 381,249 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
+| 381,161 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 380,327 | [`docs/expansions/prose_wave35/cw35_03_the_room_above_the_datum_plan.md`](expansions/prose_wave35/cw35_03_the_room_above_the_datum_plan.md) |
 | 377,850 | [`docs/expansions/prose_wave34/cw34_06_the_benchmark_has_no_shelter_plan.md`](expansions/prose_wave34/cw34_06_the_benchmark_has_no_shelter_plan.md) |
 | 373,058 | [`docs/expansions/prose_wave33/cw33_02_a_gate_between_cycles_plan.md`](expansions/prose_wave33/cw33_02_a_gate_between_cycles_plan.md) |
@@ -1103,7 +1103,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 327,777 | [`docs/expansions/prose_wave102/cw102_01_audio_log_scavenger_meeting_day_65_shared_protection_plan.md`](expansions/prose_wave102/cw102_01_audio_log_scavenger_meeting_day_65_shared_protection_plan.md) |
 | 327,204 | [`docs/expansions/prose_wave85/cw85_07_procession_of_the_lead_reliquary_plan.md`](expansions/prose_wave85/cw85_07_procession_of_the_lead_reliquary_plan.md) |
 | 326,964 | [`docs/expansions/prose_wave103/cw103_08_superstition_intake_vent_nightmare_three_paces_plan.md`](expansions/prose_wave103/cw103_08_superstition_intake_vent_nightmare_three_paces_plan.md) |
-| 326,744 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
+| 326,924 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 326,342 | [`docs/expansions/prose_wave90/cw90_01_npc_dam_operator_plan.md`](expansions/prose_wave90/cw90_01_npc_dam_operator_plan.md) |
 | 326,268 | [`docs/expansions/prose_wave89/cw89_02_npc_electrician_plan.md`](expansions/prose_wave89/cw89_02_npc_electrician_plan.md) |
 | 325,761 | [`docs/expansions/wave10/expansion_59_the_bone_shop_plan.md`](expansions/wave10/expansion_59_the_bone_shop_plan.md) |
@@ -1827,6 +1827,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 205,958 | [`docs/plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md`](plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md) |
 | 203,478 | [`docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md`](plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md) |
 | 203,209 | [`docs/plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md`](plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md) |
+| 201,298 | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) |
 | 200,666 | [`docs/ASHFALL_MASTER_IMPLEMENTATION_PLAN.md`](ASHFALL_MASTER_IMPLEMENTATION_PLAN.md) |
 | 191,794 | [`docs/expansions/wave28/expansion_144_the_hiss_does_not_pause_plan.md`](expansions/wave28/expansion_144_the_hiss_does_not_pause_plan.md) |
 | 188,971 | [`piagentsplans/31-world-content-master-roadmap.md`](../piagentsplans/31-world-content-master-roadmap.md) |
@@ -1840,7 +1841,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 178,852 | [`docs/plans/wave3_integration/W3-03_PSYCHOLOGY_HEALTH_SOCIAL.md`](plans/wave3_integration/W3-03_PSYCHOLOGY_HEALTH_SOCIAL.md) |
 | 178,743 | [`docs/plans/wave3_integration/W3-05_CRAFTING_RESEARCH_INDUSTRY.md`](plans/wave3_integration/W3-05_CRAFTING_RESEARCH_INDUSTRY.md) |
 | 177,601 | [`docs/plans/wave3_integration/W3-04_COMBAT_DEFENSE_SECURITY.md`](plans/wave3_integration/W3-04_COMBAT_DEFENSE_SECURITY.md) |
-| 177,432 | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) |
 | 176,783 | [`docs/plans/wave4_integration/W4-03_SHELTER_INFRASTRUCTURE.md`](plans/wave4_integration/W4-03_SHELTER_INFRASTRUCTURE.md) |
 | 176,707 | [`docs/plans/wave4_integration/W4-02_WORLD_TRAVEL_EXPLORATION.md`](plans/wave4_integration/W4-02_WORLD_TRAVEL_EXPLORATION.md) |
 | 175,977 | [`docs/plans/wave3_integration/W3-06_UI_INPUT_ACCESSIBILITY.md`](plans/wave3_integration/W3-06_UI_INPUT_ACCESSIBILITY.md) |
@@ -2301,7 +2301,7 @@ The following documents share identical or near-identical filenames across root,
 | 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 62,160 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-24<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | 1,379 | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
-## 4. Expansions (01–10 Master Plans & Context) (2781 documents)
+## 4. Expansions (01–10 Master Plans & Context) (2782 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -5052,6 +5052,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SHELTER-CAPACITY-AUTHORITY-103.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SHELTER-CAPACITY-AUTHORITY-103.md) | 15,323 | **PLAN-SHELTER-CAPACITY-AUTHORITY-103 — Room Occupancy, Overcrowding & Sleep Quality** — **Wave 9 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SKILL-PROGRESSION-TRUTH-113.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SKILL-PROGRESSION-TRUTH-113.md) | 12,451 | **PLAN-SKILL-PROGRESSION-TRUTH-113 — Skill Growth, Atrophy & Display Consistency** — **Wave 9 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/README.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/README.md) | 4,610 | **ASHFALL Expansion & Integration Program — Wave 9 (2026-09-21)** — Fifteen new plans (101–115): **ten gap-sealing, three major expansion, two |
+| 🟢 `CURRENT` | [`docs/plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md`](plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md) | 22,234 | **Master Integration Framework & Code Architecture: The 5 Oldest Foundation Plans** — **Package:** `MASTER-EXPANSION-FIVE-OLDEST-PLANS` |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_133_139_142_146_149_155_178_179_180_183_EXPANSION_CLOSEOUT_2026-09-24.md`](plans/PLAN_133_139_142_146_149_155_178_179_180_183_EXPANSION_CLOSEOUT_2026-09-24.md) | 7,405 | **Ten-plan expansion closeout — 2026-09-24** — This closes the **documentation and integration architecture** pass requested for Plans 133, 139, 142, 146, 149, 155,... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_187_189_190_191_193_194_195_196_197_198_EXPANSION_CLOSEOUT_2026-09-24.md`](plans/PLAN_187_189_190_191_193_194_195_196_197_198_EXPANSION_CLOSEOUT_2026-09-24.md) | 6,256 | **Plans 187–198 documentation and integration architecture closeout** — **Date:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_204_206_207_211_213_215_217_218_219_XP04F6_EXPANSION_CLOSEOUT_2026-09-24.md`](plans/PLAN_204_206_207_211_213_215_217_218_219_XP04F6_EXPANSION_CLOSEOUT_2026-09-24.md) | 7,183 | **Plans 204–219 and XP-04-F6 integration architecture closeout** — **Date:** 2026-09-24 |
@@ -5554,7 +5555,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — name: ASHFALL Tactical UI |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 10,466 | **ASHFALL PROJECT — GEMINI Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 10,465 | **ASHFALL PROJECT — GOOSE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
-| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 326,744 | **ASHFALL Integration Plans** — This is the sole live integration ledger. It is not a backlog and must not |
+| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 326,924 | **ASHFALL Integration Plans** — This is the sole live integration ledger. It is not a backlog and must not |
 | 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 32,639 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 10,468 | **ASHFALL PROJECT — MIMOCODE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_131_Wasteland_Information_Rumor_Network.md`](../Next-steps-plans/Plan_131_Wasteland_Information_Rumor_Network.md) | 8,716 | **Plan 131 — Wasteland Information & Rumor Network** — Create a persistent information-flow system where news, rumors, and intelligence propagate between settlements, facti... |
@@ -5898,7 +5899,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 2,136 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 10,464 | **ASHFALL PROJECT — VIBE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`WAVE9_PART1_CLOSEOUT.md`](../WAVE9_PART1_CLOSEOUT.md) | 10,325 | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 381,249 | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 381,161 | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
 | 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | 94,305 | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
@@ -6782,7 +6783,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md) | 11,850 | **PLAN 22 — Greenhouse Runtime Consumption of Fertilizer / Pest / Repair Items** — Plan 91 shipped 16 greenhouse supplies that are valid, reachable, and |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md) | 18,174 | **PLAN 22 IMPLEMENTATION LOG — Greenhouse Runtime Item Consumption** — Plan: `docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md` |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_24_CLOSEOUT.md`](plans/PLAN_24_CLOSEOUT.md) | 9,755 | **Plan 24 — Survivor Fitness, Needs, Labor, and Medical Journey: CLOSEOUT** — **Status:** CLOSED — both signature items resolved 2026-09-18 |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) | 177,432 | **Plan 25 Integration Plan — Faction Ecology & the Muster** — Turn ASHFALL's political systems from isolated reputation surfaces into a traceable late-game spine: |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) | 201,298 | **Plan 25 Integration Plan — Faction Ecology & the Muster** — Turn ASHFALL's political systems from isolated reputation surfaces into a traceable late-game spine: |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`](plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md) | 75,237 | **Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality** — **Status:** FULLY IMPLEMENTED & INTEGRATED (2026-09-19). All phases P1–P7 delivered, |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) | 98,562 | **Plan 42 — A Voice for Each of Them: Survivor Voice Integration Plan** — **Package:** `C2[18]` / Plan 42 — Deterministic Survivor Voice, Delivery Contracts, and Social Speech |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) | 77,876 | **PLAN 46 — PLAYABLE METRICS INTEGRATION PLAN** — Deliver the measurement layer ASHFALL currently lacks, in three dependency-ordered deliveries, exactly as scoped by t... |
@@ -6810,7 +6811,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md`](plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md) | 14,039 | **SHELTER FAILURE EFFECTS & QUARANTINE WIRING — INTEGRATION PLAN (G6 + QUARANTINE CONSTRUCTION)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (G6); |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_IMPLEMENTATION_LOG.md`](plans/SHELTER_GRID_CATALOG_SEAL_IMPLEMENTATION_LOG.md) | 7,534 | **SHELTER GRID CATALOG SEAL — IMPLEMENTATION LOG** — Plan: `docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md` |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md`](plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md) | 17,663 | **SHELTER GRID CATALOG SEAL — INTEGRATION PLAN (G1–G3)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (2026-09-06) |
-| 🟢 `CURRENT` | [`docs/plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md`](plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md) | 3,236 | **Shelter Operations Board Integration** — **Status:** IMPLEMENTED; documentation-index check blocked by concurrent documentation edits |
+| 🟢 `CURRENT` | [`docs/plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md`](plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md) | 3,234 | **Shelter Operations Board Integration** — **Status:** IMPLEMENTED; documentation-index check blocked by concurrent documentation edits |
 | 🟢 `CURRENT` | [`docs/plans/TEN_CORE_ONLY_MEDICAL_RAIL_DEFENSE_TROPHY_INTEGRATION_CLOSEOUT_2026-09-24.md`](plans/TEN_CORE_ONLY_MEDICAL_RAIL_DEFENSE_TROPHY_INTEGRATION_CLOSEOUT_2026-09-24.md) | 10,079 | **Items 21–30 integration-plan closeout** — **Date:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/plans/TEN_ORPHAN_BRANCH_AND_WARD_INTEGRATION_PLANS_CLOSEOUT_2026-09-24.md`](plans/TEN_ORPHAN_BRANCH_AND_WARD_INTEGRATION_PLANS_CLOSEOUT_2026-09-24.md) | 8,725 | **Ten branch, transport, social, weather, labour, and Ward integration plans — documentation closeout** — **Date:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md`](plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md) | 15,906 | **ASHFALL — Unblocked Plans Audit (2026-09-19)** — **Auditor role:** read-only queue audit requested by the foreman (user). |
@@ -7425,10 +7426,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) | 2,304 | **Plan 03 — `schema_version` & Data-Authority Hygiene Sweep** — Bring every root-level JSON catalog in `Assets/StreamingAssets/Data/` up to the authority |
 | 🟢 `CURRENT` | [`piagentsplans/04-relic-blueprint-expansion.md`](../piagentsplans/04-relic-blueprint-expansion.md) | 2,471 | **Plan 04 — Workshop Relic Blueprint Expansion (6 → 30 relics)** — Exploit the fully-implemented, underused `WorkshopReverseEngineeringSystem` by expanding |
 | 🟢 `CURRENT` | [`piagentsplans/05-vinyl-record-catalog.md`](../piagentsplans/05-vinyl-record-catalog.md) | 2,513 | **Plan 05 — Vinyl Record Catalog Expansion (1 → 20 albums)** — Give the fully-wired `VinylMoraleSystem` (turntable playback, duration tracking, shelter-wide |
-| 🟢 `CURRENT` | [`piagentsplans/06-narrative-depth-trilogy.md`](../piagentsplans/06-narrative-depth-trilogy.md) | 21,881 | **Plan 06 — Narrative Depth Trilogy: Last Letters, Echoes & Faction War Arc** — **Package:** `PLAN-06-NARRATIVE-DEPTH-TRILOGY` |
+| 🟢 `CURRENT` | [`piagentsplans/06-narrative-depth-trilogy.md`](../piagentsplans/06-narrative-depth-trilogy.md) | 43,664 | **Plan 06 — Narrative Depth Trilogy: Last Letters, Echoes & Faction War Arc** — **Package:** `PLAN-06-NARRATIVE-DEPTH-TRILOGY` |
 | 🟢 `CURRENT` | [`piagentsplans/07-audio-production-wave.md`](../piagentsplans/07-audio-production-wave.md) | 5,449 | **Plan 07 — Audio Production Wave: Voice, Cues & Silence Mapping** — **Goal:** Before producing anything, build the authoritative map of *where sound should exist |
 | 🟢 `CURRENT` | [`piagentsplans/08-visual-art-completion.md`](../piagentsplans/08-visual-art-completion.md) | 5,617 | **Plan 08 — Visual Art Completion: Locations, Portraits & Icons** — **Goal:** Produce illustrations for the 40 most-visited wasteland locations, replacing |
-| 🟢 `CURRENT` | [`piagentsplans/09-medical-disease-depth.md`](../piagentsplans/09-medical-disease-depth.md) | 16,907 | **Plan 09 — Medical & Disease Depth: Diagnosis, Detox & Palliative Care** — **Package:** `PLAN-09-MEDICAL-DISEASE-DEPTH` |
+| 🟢 `CURRENT` | [`piagentsplans/09-medical-disease-depth.md`](../piagentsplans/09-medical-disease-depth.md) | 42,181 | **Plan 09 — Medical & Disease Depth: Diagnosis, Detox & Palliative Care** — **Package:** `PLAN-09-MEDICAL-DISEASE-DEPTH` |
 | 🟢 `CURRENT` | [`piagentsplans/10-combat-expedition-depth.md`](../piagentsplans/10-combat-expedition-depth.md) | 2,475 | **Plan 10 — Combat & Expedition Depth: Bestiary, Armory & the Fleet** — **Status:** COMPLETE & FULLY INTEGRATED |
 | 🟢 `CURRENT` | [`piagentsplans/100-dose-register-lifetime-booking.md`](../piagentsplans/100-dose-register-lifetime-booking.md) | 11,340 | **Plan 100 — Dose Register Lifetime Booking** — Make `DoseLedgerSystem` book lifetime-exposure increments (with the existing |
 | 🟢 `CURRENT` | [`piagentsplans/100-moral-choice-faction-reactions-expansion.md`](../piagentsplans/100-moral-choice-faction-reactions-expansion.md) | 5,151 | **Plan 100 — Moral Choice Faction Reactions Expansion (1 → 6 moral threshold events)** — Expand `moral_choice_faction_reactions.json` from 1 verified threshold |
@@ -7463,7 +7464,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/127-verdict-data-corpus-ladder-expansion.md`](../piagentsplans/127-verdict-data-corpus-ladder-expansion.md) | 5,881 | **Plan 127 — Verdict Data Corruption Corpus & World History Ladder Expansion (8 → 25 corpus, 6 → 12 ladder)** — Expand the `corruption_corpus` (8 → 25) and `world_history_ladder` (6 → 12) |
 | 🟢 `CURRENT` | [`piagentsplans/128-holdfast-flavor-factions-expansion.md`](../piagentsplans/128-holdfast-flavor-factions-expansion.md) | 4,649 | **Plan 128 — Holdfast Flavor Factions Expansion (3 → 8 factions)** — Expand the `factions` dict in `holdfast_flavor.json` from 3 factions to 8. |
 | 🟢 `CURRENT` | [`piagentsplans/129-foundry-production-expansion.md`](../piagentsplans/129-foundry-production-expansion.md) | 6,314 | **Plan 129 — Foundry Production Expansion (26 → 35 products)** — Expand the live `foundry_production.json` catalog from 26 products to 35. |
-| 🟢 `CURRENT` | [`piagentsplans/13-economy-survival-loop.md`](../piagentsplans/13-economy-survival-loop.md) | 17,097 | **Plan 13 — Economy & Survival Loop: Trade Flow, Trapping & Crisis Weather** — **Package:** `PLAN-13-ECONOMY-SURVIVAL-LOOP` |
+| 🟢 `CURRENT` | [`piagentsplans/13-economy-survival-loop.md`](../piagentsplans/13-economy-survival-loop.md) | 36,658 | **Plan 13 — Economy & Survival Loop: Trade Flow, Trapping & Crisis Weather** — **Package:** `PLAN-13-ECONOMY-SURVIVAL-LOOP` |
 | 🟢 `CURRENT` | [`piagentsplans/130-batch9-roadmap-faction-branches-crossing-foundry.md`](../piagentsplans/130-batch9-roadmap-faction-branches-crossing-foundry.md) | 14,451 | **Roadmap 130 — Batch 9: Faction Branches, Crossing Economy, War Overrides & Foundry Production (Plans 120–129)** — All target systems confirmed live in `Assets/Ashfall.Core/` or `src/` via |
 | 🟢 `CURRENT` | [`piagentsplans/14-ux-onboarding-accessibility.md`](../piagentsplans/14-ux-onboarding-accessibility.md) | 4,992 | **Plan 14 — UX, Onboarding & Accessibility: The First Hour and the Thousandth** — **Goal:** Audit and fix the first hour so a new player understands needs, radiation, and the |
 | 🟢 `CURRENT` | [`piagentsplans/15-endgame-meta.md`](../piagentsplans/15-endgame-meta.md) | 5,421 | **Plan 15 — Endgame & Meta: Epilogue Depth, Chronicle & New Game+** — **Goal:** Enrich the epilogue matrix so each of the 32 permutations reads as a distinct, |
@@ -7473,13 +7474,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/19-dynamic-world-systems.md`](../piagentsplans/19-dynamic-world-systems.md) | 5,520 | **Plan 19 — Dynamic World Systems: Weather Forecasting, Orbital Harrow & Seasons** — **Goal:** Make the `WeatherStationSystem` actually *predict* — give the player a readable |
 | 🟢 `CURRENT` | [`piagentsplans/20-wasteland-inhabitants.md`](../piagentsplans/20-wasteland-inhabitants.md) | 5,535 | **Plan 20 — Wasteland Inhabitants: Field Guide, Settlements & Random Encounters** — **Goal:** Author a discoverable field guide to the wasteland's mutated life — part lore, part |
 | 🟢 `CURRENT` | [`piagentsplans/21-phantom-memory-heirloom.md`](../piagentsplans/21-phantom-memory-heirloom.md) | 5,959 | **Plan 21 — Phantom Memory & Heirloom World Layer** — **Goal:** Expand the phantom-trigger catalog so scavenged objects routinely carry authored |
-| 🟢 `CURRENT` | [`piagentsplans/22-foundry-greenhouse-production.md`](../piagentsplans/22-foundry-greenhouse-production.md) | 2,068 | **Plan 22 — Production Decisions: Foundry, Food Preservation & Labor** — Turn existing Foundry and greenhouse content into difficult production decisions: choose |
+| 🟢 `CURRENT` | [`piagentsplans/22-foundry-greenhouse-production.md`](../piagentsplans/22-foundry-greenhouse-production.md) | 33,058 | **Plan 22 — Production Decisions: Foundry, Food Preservation & Labor** — **Package:** `PLAN-22-FOUNDRY-GREENHOUSE-PRODUCTION` |
 | 🟢 `CURRENT` | [`piagentsplans/23-maritime-black-flotilla.md`](../piagentsplans/23-maritime-black-flotilla.md) | 5,531 | **Plan 23 — Maritime & Black Flotilla: The Drowned Coast** — **Goal:** Flesh out the Black Flotilla as a faction (fleet culture, ranks, trade goods, codes) |
 | 🟢 `CURRENT` | [`piagentsplans/24-radio-signals-airwaves.md`](../piagentsplans/24-radio-signals-airwaves.md) | 2,168 | **Plan 24 — Radio, Signals & the Airwaves World** — Make radio a coherent world layer through a unified schedule, rescue-mission lifecycle, and |
 | 🟢 `CURRENT` | [`piagentsplans/25-faction-ecology-muster.md`](../piagentsplans/25-faction-ecology-muster.md) | 6,065 | **Plan 25 — Faction Ecology & the Muster: Politics, War & the Gathering** — **Goal:** Give the Muster's faction systems (`ScavengerGuild`, `HydroBarons`, `IronRaiders`, |
 | 🟢 `CURRENT` | [`piagentsplans/26-knowledge-research-skills.md`](../piagentsplans/26-knowledge-research-skills.md) | 2,332 | **Plan 26 — Latent Expertise & Adult Re-Specialization** — Make existing survivors' latent expertise visible, earned, and consequential through adult |
 | 🟢 `CURRENT` | [`piagentsplans/27-body-and-mind.md`](../piagentsplans/27-body-and-mind.md) | 2,250 | **Plan 27 — The Body & Mind: Dose Justice, Death Inquiry & Deep Dread** — Make the human consequences of radiation, death, and deep contamination playable through registry |
-| 🟢 `CURRENT` | [`piagentsplans/28-wildlife-ecology.md`](../piagentsplans/28-wildlife-ecology.md) | 1,982 | **Plan 28 — Wildlife Ecology: Observation, Blooms & Food-Web Consequences** — Make ecological change legible through animal signs and forecasts, localized infestations, and |
+| 🟢 `CURRENT` | [`piagentsplans/28-wildlife-ecology.md`](../piagentsplans/28-wildlife-ecology.md) | 30,972 | **Plan 28 — Wildlife Ecology: Observation, Blooms & Food-Web Consequences** — **Package:** `PLAN-28-WILDLIFE-ECOLOGY` |
 | 🟢 `CURRENT` | [`piagentsplans/29-shelter-as-character.md`](../piagentsplans/29-shelter-as-character.md) | 5,691 | **Plan 29 — The Shelter as a Character: Rooms, Machines & Decay** — **Goal:** Give each shelter room a name, a history, and a story so the bunker is a place with a |
 | 🟢 `CURRENT` | [`piagentsplans/30-ritual-faith-meaning.md`](../piagentsplans/30-ritual-faith-meaning.md) | 6,295 | **Plan 30 — Ritual, Faith & Meaning: The Spiritual World** — **Goal:** Expand `bunker_children_folklore.json` and author the rituals/superstitions that |
 | 🟢 `CURRENT` | [`piagentsplans/31-world-content-master-roadmap.md`](../piagentsplans/31-world-content-master-roadmap.md) | 188,971 | **ASHFALL — World Content Master Roadmap** — ASHFALL is **system-complete but content-thin at specific seams**. The migration to Godot is |
@@ -7551,7 +7552,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/97-batch6-roadmap-relics-confessions-endings.md`](../piagentsplans/97-batch6-roadmap-relics-confessions-endings.md) | 11,763 | **Roadmap 97 — Batch 6: Relics, Confessions, Endings & Voice (Plans 87–96)** — All target systems confirmed live in `Assets/Ashfall.Core/` via `find`/`grep`: |
 | 🟢 `CURRENT` | [`piagentsplans/98-standing-record-factions-expansion.md`](../piagentsplans/98-standing-record-factions-expansion.md) | 4,703 | **Plan 98 — Standing Record Factions Expansion (1 → 8 factions)** — Expand `standing_record_factions.json` from 1 verified faction to 8. The |
 | 🟢 `CURRENT` | [`piagentsplans/99-hardcore-economy-tuning-expansion.md`](../piagentsplans/99-hardcore-economy-tuning-expansion.md) | 5,327 | **Plan 99 — Hardcore Economy Tuning Expansion (2 tiers → 8 tiers, 1 faction pref → 8, 1 price shock → 6)** — Expand `hardcore_economy_tuning.json` from 2 scarcity tiers, 1 faction |
-| 🟢 `CURRENT` | [`piagentsplans/README.md`](../piagentsplans/README.md) | 11,226 | **piagentsplans — ASHFALL Evidence-Grounded Next-Steps Plans** — Generated by forensic repository analysis (see `docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`, |
+| 🟢 `CURRENT` | [`piagentsplans/README.md`](../piagentsplans/README.md) | 11,375 | **piagentsplans — ASHFALL Evidence-Grounded Next-Steps Plans** — Generated by forensic repository analysis (see `docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`, |
 | 🟢 `CURRENT` | [`scripts/README.md`](../scripts/README.md) | 9,405 | **ASHFALL — Script Catalog & Lifecycle Index** — This document catalogs all developer tools, CI gates, asset pipelines, and maintenance utilities under `scripts/`, cl... |
 | 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/invalid_category.md`](../scripts/ci/fixtures/plan_governance/invalid_category.md) | 103 | **Invalid category fixture** — PLAN_ID: FIXTURE-INVALID-CATEGORY |
 | 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/legacy_plan.md`](../scripts/ci/fixtures/plan_governance/legacy_plan.md) | 158 | **Legacy plan fixture** — This fixture intentionally has no front matter. It must remain visible with a |

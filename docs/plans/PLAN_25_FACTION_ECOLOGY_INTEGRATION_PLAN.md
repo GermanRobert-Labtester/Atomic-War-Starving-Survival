@@ -1551,3 +1551,303 @@ The stack's behavior under partial breakage, stated as the narratives a debugger
 3. **War arrives with grievances armed but chains un-fired** (player rushed the war window via 06C pacing): escalation chains' minDays (200–250) are long past; `FlagTrigger` semantics are "eligible when flag present and day ≥ minDay" — the runner stages them at the first eligible tick inside its own traversal order, so late-armed grievances surface as back-context, never as missed-forever content. (The exact staging-order rule is runner-owned 06C behavior; Plan 25 chains added no scheduling of their own.)
 4. **Standing applier absent** (host misconfiguration): choice deltas no-op, flags still produce; the selftest's "routed exactly once" check is the tripwire; the campaign remains coherent because flags, not standing, drive the spine.
 5. **Old save in new host** (the normal forward case): empty political fields restore as empty; the first day tick recomputes availability; the ledger accrues from there. The one-directional guarantee (new host reads old saves) is what makes every additive change safe to ship.
+
+### VII.6 — `--faction-ecology-selftest`: the 27-check walk, annotated
+
+The end-to-end gate runs `FactionEcologyHeadlessDemo.Run(dataDirectory, log)` (`src/Host/HostCli.SelfTests.cs:783`) against the real shipped data — no fixtures. Its checks, read in order, are the vertical slice of Part V executed as acceptance. Names below are quoted from the demo's check registry (verified at `Assets/Ashfall.Core/Muster/FactionEcologyHeadlessDemo.cs:60–173`); the annotations say what each proves about the framework.
+
+**Act 1 — S1 (board over real catalog).**
+1. "action catalog loads A1 (salvage rights offer)" — the shipped JSON parses and A1 exists.
+2. "A1 authors all five standing bands" — content completeness of the band vocabulary in data.
+3. A1 offered at day 60 in the neutral band — day-window and band derivation over real scalars.
+4. `Resolve("act_salvage_rights_offer", "dispute_claim", 60)` returns true — end-to-end resolution.
+5. grievance flag set on the board — the flag ledger received the choice's output.
+6. second resolve of A1 with a different choice is rejected — `once` idempotence over real history.
+
+**Act 2 — S4 (escalation over the real war runner).**
+7. `evt_p25_marked_ruin` present in the war catalog — authored content reachable by the runtime.
+8. the chain's stage surfaces for day 200 — `FlagTrigger` evaluation against the ledger produced in act 1.
+9–10. base and mediated escalation flags set after the mediated choice — stage- and choice-level `producesFlag` both write.
+11. "standing delta routed to the host applier exactly once" — the routing contract (one delta, one call), counted via the demo's applier.
+12. the chain no longer surfaces at day 300 — resolution is terminal; no restaging.
+
+**Act 3 — S2 (witnesses over the real roster).**
+13. claimant authored with three testimonies — helped/failed/absent structure in shipped data.
+14. claimant selected at day 300 with the grievance set — flag-consistent selection.
+15. selected variant is "failed" — first-match correctness against the ledger state acts 1–2 built.
+16. with a clean ledger the claimant's variant is "absent" — the fallback path proven, not assumed.
+
+**Act 4 — S3 and persistence.**
+17. arrivals scene present in the shipped scenes — 25F content loads.
+18. negotiated path evaluates and is accepted by `SetMusterPath` — evaluator over host-mapped input plus the enum gate.
+19. path survives engine capture/restore — the additive field persists.
+20–21. `RecordWitnessResult` first write true, second write false — ledger idempotence.
+22. witness results survive capture/restore with count and day intact — the epilogue-facing contract.
+23. arrivals selects the "negotiated" variant under the negotiated path — director path-matching.
+24. the same scene selects the "victors" variant when the path is victors — variant discrimination.
+25. "arrivals stay dark before the Muster opens" — `MusterOpeningDay` canon respected by scene gating.
+26. "board state checksum-stable across save/restore" — `CaptureState`/`RestoreState` round-trips bit-identically (`SaveChecksum` over the DTO).
+27. restored board still refuses a re-resolved action — idempotence across the restore boundary, which is the whole save contract in one check.
+
+Reading order for failure triage: acts are ordered S1 → S4 → S2 → S3/persistence, so the first failing act names the seam; a failure in act 4 with acts 1–3 green is almost always save/restore, not politics. The demo doubles as executable documentation of IV.6's four sequences — when this document and the demo disagree, the demo is what runs.
+
+---
+
+## Part VIII — Appendices
+
+### VIII.1 Glossary
+
+| Term | Meaning in this document |
+|---|---|
+| Action | An authored, choice-bearing diplomatic offer from one of the four ecology factions (`act_*`), available in a day window under standing bands |
+| Band | The five-step standing vocabulary (`hostile|poor|neutral|good|allied`) the board derives from each faction's own scalar |
+| Board | `FactionActionBoard` — availability, resolution, and flag ledger for faction actions |
+| Chain | A staged narrative sequence in `faction_war_events.json` with trigger-gated stages and choices |
+| Delivery | One witness's one-time testimony recording (`WitnessDelivery` → `WitnessResult`) |
+| Flag ledger | The board-owned set of political flags shared with war triggers, witness gates, and scene gates |
+| Grievance / favor | The two peacetime flag families produced by action choices |
+| Ledger (muster) | `MusterState.witnessResults` — the epilogue-facing testimony record |
+| Muster path | `negotiated` / `victors` / `unsettled` — derived political context of the gathering |
+| 06C | The authored war spine (22 chains, days 480–605, ceasefire at 588) — consumed, never modified, by Plan 25 |
+| Standing read | A faction system's own persisted scalar, the only standing value Plan 25 trusts |
+| Testimony variant | A flag-gated alternative body within one witness (`account|helped|failed|absent|complicated`) |
+| Trigger grammar | The closed trigger node set in `FactionWarChainRunner` plus the per-stage `FactionWarTriggerTable` |
+| Vertical slice | Batch 6's end-to-end proof: one action → one flag → one chain → two testimonies → one scene → one path → save/load |
+| Whitelist | `whitelists/plan25_flags.json` — the generated producer→consumer flag map |
+
+### VIII.2 ID vocabulary tables
+
+**Faction ids referenced by Plan 25 content.**
+
+| Id | Role in the stack | Standing read |
+|---|---|---|
+| `faction_scavenger_guild` | board band source; 3 actions; E-P1 counterparty; witnesses 4 | guild `trust` |
+| `faction_hydro_barons` | band source; 3 actions; E-P3/P5 counterparty; witnesses 6–7 | hydro `trust` |
+| `faction_iron_raiders` | band source; 3 actions; E-P4/P6 staging; witnesses 8, 15 | `aggressionLevel` |
+| `faction_deserter_coalition` | band source; 3 actions; camp; witnesses 9, 11 | `membersRallied` / lockout |
+| `faction_central_garrison` | war counterparty in 11 of 16 chains | war standing |
+| `faction_rebuilders` | war counterparty in 8 chains | war standing |
+| `faction_black_ops`, `faction_ash_sign`, `faction_forward_roster` | single-chain counterparties (E-P4, E-P5, E-W3/E-R3) | war/canon state |
+
+**Action ids:** `act_salvage_rights_offer`, `act_claim_arbitration`, `act_apprentice_rule_dispute`, `act_purification_toll`, `act_hydro_emergency_appeal`, `act_intake_dispute`, `act_raider_parley`, `act_raider_passage_levy`, `act_raider_code_dispute`, `act_coalition_mediation_request`, `act_coalition_supply_appeal`, `act_camp_rules_dispute`.
+
+**Chain ids:** `evt_p25_marked_ruin`, `evt_p25_stopped_convoy`, `evt_p25_bitter_water`, `evt_p25_empty_chair`, `evt_p25_cistern_toll_blockade`, `evt_p25_prisoner_at_the_gate`, `evt_p25_refugees_from_the_line`, `evt_p25_requisition`, `evt_p25_broken_route`, `evt_p25_field_hospital_overflow`, `evt_p25_deserter_column`, `evt_p25_retaliation`, `evt_p25_no_more_volunteers`, `evt_p25_bread_before_bullets`, `evt_p25_quiet_faction`, `evt_p25_refusal_at_dawn`. (Plan-25 plan-letter mapping: E-P1..P6, E-W1..W6, E-R1..R4 in the order listed; the letters also appear in each chain's authored `triggerCondition` prose.)
+
+**Flag families:** `flag_favor_*` (10), `flag_grievance_*` (12), `flag_escalation_*` (10 incl. quality suffixes `_mediated`, `_investigated`, `_published`, `_truth_told`), `flag_war_*` (6), `flag_peace_*` (4); consumed-external: `flag_messenger_kept`, `flag_become_warlord`.
+
+**Ending keys (canon, untouched):** `the_amnesty`, `the_open_muster`, `the_corridor`, `the_blood_price` — Approach A–D, consumed by `muster_epilogues.json` (25 entries).
+
+**Locations used by Plan 25 chains:** `loc_grain_silo`, `loc_garrison_checkpoint_gamma`, `loc_terrace_pumphouse`, `loc_d9_cache_bunker_delta`, `loc_iron_raiders_den`, `loc_st_brigids_almshouse`, `loc_shrine_switchback_waystation`, `loc_denial_cut_substation`, `loc_conscription_office`, `loc_forward_roster_camp`, `loc_railway_span_44_alpha`.
+
+### VIII.3 Timeline anchor table (expanded)
+
+| Day | Anchor | Owner | Verified anchor |
+|---|---|---|---|
+| 1–59 | Pre-politics; ecology catalogs load, no actions open | — | action `min_day` floors |
+| 60 | First action opens (salvage rights) | S1 | `act_salvage_rights_offer` |
+| 60–199 | Peacetime ecology: Guild 60/80/100, Hydro 70/100/110, Toll 90/120, grievances minted | S1 | V.A.3 |
+| 200 | E-P1 eligible; levy action opens; first faction witnesses eligible (day 200) | S4/S2 | V.C, V.B.2 |
+| 200–250 | Escalation band: 220, 230, 230, 240, 250 chains | S4 | V.C |
+| 240–250 | War-context witness ring begins (Kell 242 … Marit 250); messenger's keeper 250 | S2 | V.B.2 |
+| 241–261 | Founding Voss thread testimony window (241/243/261) | S2 | V.B.2 |
+| 260 | `MusterOpeningDay` — the gathering opens, unconditionally | canon | `MusterSystem.cs:333` |
+| 260–360 | Muster window: camp scenes (min_day 260), ecology verdicts 262–270, path evaluation, deliveries | S2/S3/25F | V.M |
+| 360 | Epilogue matrix view (play continues) | canon | calendar |
+| 480–498 | `cold_war` band (grain tally 480 …) | 06C | war catalog |
+| 503–528 | `open_conflict` (conscription 503, Span 44 clash 509) | 06C | war catalog |
+| 512–555 | War-context chains fire on 06C resolutions | S4 | V.C′ |
+| 533–560 | `the_offensive` (grain silo offensive 533, plaza strike 545, fracture 552) | 06C | war catalog |
+| 565–605 | `culmination` (leverage break 565, shrine strike 578) | 06C | war catalog |
+| 568–584 | Weariness band (volunteers 568, bread 572, quiet faction 578, refusal 584) | S4 | V.C″ |
+| 588 | Ceasefire by exhaustion — the war's only terminator | 06C canon | `evt_d588_ceasefire_by_exhaustion` |
+| 605 | 06C chain window closes | canon | war catalog |
+| 605+ | Post-ceasefire: testimony ledger and path await their consumer `[X]` | future | II.6 |
+
+### VIII.4 — A full campaign political arc, sketched (day 1 → 620)
+
+One coherent playthrough of the political spine, chosen to be *mixed* — neither a saint's run nor a pariah's — because that is the case the framework has to explain. Every beat below is a state the shipped data and code actually produce; day numbers are eligibility or firing days, not appointments.
+
+**Days 1–59 — before the district has opinions.** The catalogs load on boot; the board computes bands from starting scalars; no actions are open. The political state of the shelter is "unknown, unjudged." This is also the state every old save restores into truthfully.
+
+**Day 60 — salvage rights.** The Guild opens the first offer. The shelter takes recognized rights at the standard share (+3, `flag_favor_scavenger_claim_recognized`). The ledger's first line is a small one; that is the point. A pause of one choice here — `dispute_claim` instead — would have armed E-P1 for day 200, and nothing in the UI says so. The framework's honesty is that consequences are traceable after the fact, not advertised before.
+
+**Day 70 — the water bill.** Hydro opens the purification toll. Money is short; the shelter negotiates half in skid labor (+2, no flag). The action closes having been *used* without having been *recorded* — the one outcome the hydro set prices at zero ledger impact, by design.
+
+**Days 80–100 — jurisdiction and apprentices.** The Guild asks the shelter to sit arbitration; the ruling goes to first-mark (+3, `arbitration_fair`). The apprentice cap dispute follows; the shelter backs the registrars (+3, `apprentice_backed`). Guild trust is now banked high enough that the good-band variants of later offers will read as old custom, not flattery.
+
+**Day 90+ — the Toll's appointment.** The parley action opens. The shelter honors it (−0.20 aggression, `flag_favor_raider_parley_honored`) and again the next season. Two entries in the Toll's books; the parley-survivor now has a helped testimony loaded for the Muster.
+
+**Day 100 — the ask in the dry month.** Hydro's emergency appeal lands while the shelter's own filter stock is one. The filter goes (+5, accord flag, −1 `item_water_filter_advanced` — the inventory will feel it for weeks, the ledger forever). This is the arc's largest single political purchase and it was bought with materiel, not words.
+
+**Day 110 — the audit.** Intake dispute: the shelter backs the technicians (+4, `intake_audited`). Three hydro favors banked; no hydro grievance exists. E-P3 and E-P5 will never fire in this campaign — their triggers are unnurtured.
+
+**Day 120 — the Toll's law.** Code dispute: the shelter stands with the emissaries (−0.15, the parley flag reinforced). The Toll is now the cheapest faction to deal with in the district and the most expensive to betray; the shelter has done neither.
+
+**Days 200–259 — the quiet escalation season.** The levy action opens at 200; the shelter pays the receipted levy and diverts once, fighting nothing — `passage_fought` never mints, so E-P6 never fires. E-P1's trigger flag was never minted either. Of the six escalation chains, zero surface: not because the shelter bought peace uniformly, but because it never wrote the six specific receipts the chains read. The summit envoy, had the Muster asked, would have had no ledger of grievances to read from — which is itself a testimony outcome: the absent variant.
+
+**Day 260 — the gathering.** The Muster opens on canon schedule. Arrivals stage the `negotiated`-leaning variant once the path evaluates: the war is pre-tension (friction no-op until 240 has barely begun to accrue), no faction is dominant, treaties exist in the mechanical catalog, camp membership is healthy. `MusterState.musterPath` takes `negotiated` — provisional until the war, final in the ledger only as of its last evaluation.
+
+**Days 261–270 — the testimonies.** Deliveries run in priority order: the three Voss accounts (unconditional, thread anchors), then the ecology set. The claimant testifies helped (`arbitration_fair` — the day-80 ruling, answered on day 262 of the campaign's calendar). The hydro envoy testifies helped (any-of three favors). The parley survivor testifies helped. The camp medic testifies helped (`mediation_served`/`supply_shared` — the coalition actions of days 210–230, all taken). Twelve deliveries land across the window; `witnessResults` now holds a biography in which no grievance was ever read aloud, because none was written.
+
+**Days 512–555 — the war's paperwork.** Six 06C battles resolve; six war-context chains surface in sequence. The shelter opens the almshouse gate to refugees (morale +2, `flag_war_refugees_arrived`), meets the requisition in part (`flag_war_requisition_met`), takes the wounded (`flag_war_shelter_took_wounded`), lets the deserter column pass, shelters the retaliation families (`flag_war_sheltered_retaliation_families`). Three `flag_war_*` flags enter the ledger; the camp fires at the next gathering will read them.
+
+**Days 568–584 — weariness.** The leverage break empties the conscription roster (`peace_volunteers_dry`); the refugee camp's ovens bake first (`peace_bread_before_bullets` — E-R2 fired on the shelter's own day-512 choice); the quiet faction forms after the shrine strike (`peace_faction_forms` — now `PeacePressure` is true); a refusal at Span 44 at dawn (`peace_refusal_at_dawn`). The queue singer testifies helped — a testimony that exists only because the shelter opened a gate seventy days earlier.
+
+**Day 588 — ceasefire.** 06C canon ends the war. Nothing Plan 25 authored fired a shot or stayed one; everything Plan 25 authored decides what the war *meant* to the people who watched it from a gate, a kitchen, and a wire.
+
+**Day 605+ — the open ledger.** The campaign ends, or continues, with `musterPath` recorded, twenty-odd testimonies in the ledger, three war flags and eight favor flags in stores, and zero grievance flags — a `negotiated` world with receipts. When the Plan 15A/15B consumer arrives, this is the state it will read; this arc is the shape of the easiest case it must handle well. The hard cases — the shelter that fought the levy, defaulted the toll, and sat down at the Muster to hear it all read back — are the same framework with different choices, and the data is already written to receive them.
+
+### VIII.5 — Open questions
+
+Questions this expansion closes, and the ones it deliberately leaves open. Nothing in the second list is approval to build; each needs its own audit, claim, and (where noted) foreman signature.
+
+**Closed by this expansion.**
+- Implementation status of S1–S4: all shipped (§I.5); the original plan's `Status: ACTIVE` is superseded by the closeout plus §II.5's post-closeout waves.
+- Where each political decision lives (Part IV), what each catalog key does (Part V), what each flag does (V.J).
+- The schema-case deviation (camelCase in `faction_war_events.json`) is a decision, not an error (§II.1).
+- The roster's true count and provenance (15 at closeout, 27 after Plan 84; §II.5, V.B.2).
+
+**Open, owned, and cheap (candidates for a bounded follow-up wave).**
+- Populate `subject_id` on the ecology witness set from census ids; extend the selftest with a death-suppression check per binding (V.F.5).
+- A strike-gated variant for the foundry witness, if 22C's strike state is exposed as a flag at its producer (V.F.1).
+- Poor/good band variants for actions authored neutral-only (closeout limitation 4 — accepted, not assigned).
+
+**Open, decision-blocked (never start without the named signature).**
+- Epilogue/Verdict consumption of `musterPath` + `witnessResults` — Plan 15A/15B's seam; contract recorded in VI.3; needs its own plan and the standing decision ownership for the epilogue domain.
+- Ceasefire text referencing `flag_peace_refusal_at_dawn` — a 06C-canon change (V.C″ interface rule).
+- Any new flag prefix beyond the five — vocabulary closure is an architecture decision (V.J.7).
+- Treaty lifecycle (`Suspended`/`Expired`, `violation_penalty_affinity` wiring) — treaty owner's domain, pre-existing gap (II.6).
+
+**Open, unverifiable from the tree.**
+- Whether a telemetry playtest over the 15-step journey has run since closeout (II.6 item 5).
+- The exact current check count inside `--muster-selftest` (closeout recorded 25/25; the suite predates this expansion's audit and was not re-counted).
+- Whether builds under `builds/linux/` mirror the current data (the Plan 84 closeout lists a mirror path; mirror freshness was not audited here and the working tree's `Assets/StreamingAssets/Data/` is the authority this document cites).
+
+### VIII.6 — Relationship to other plans
+
+| Plan | Interface with Plan 25 | Status at expansion time |
+|---|---|---|
+| Plan 84 (witness expansion) | Grew the roster 15 → 27 with three investigation threads; preserved founding + ecology sets; added thread tests | Complete (`docs/muster/PLAN84_CLOSEOUT.md`) |
+| Plan 14 / DEC-99 (culture codex panel) | Dedicated codex panel, route, tests; culture corpus 6 → 25 | Complete (`INTEGRATION_PLANS.md:257`) |
+| Plan 15A/15B (epilogue/Verdict) | Future consumer of `musterPath` + `witnessResults` | Not started; contract recorded (VI.3) |
+| Plan 16C / DEC-96 (treaties) | Mechanical catalog feed shipped; breach→raid consequence live; lifecycle gaps owned by treaty domain | Feed complete; lifecycle open (II.6) |
+| 06C war spine | Consumed-only: chain resolutions gate E-W/E-R; grammar extended once (`FlagTrigger`); ceasefire untouched | Canon held |
+| 20B / 09 / 12A / 18A / 22C / 10A / 24B (witness pools) | Binding outcomes per V.F.1: two bound, one substituted, one substituted-away, rest deferred with reasons | Closed for this scope |
+| Census / survivor roster | `SubjectLivingResolver` binding (DEC-96) | Live at host level; per-witness ids deferred (V.F.5) |
+
+### VIII.7 — Expansion changelog and maintenance
+
+- This expansion (2026-09-25) is documentation-only: one file, `docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`. No code, data, save, or gate changes accompany it.
+- Maintenance rule for the file: when a political seam changes, update the owning section (Part IV/V) and the affected matrix (V.J) in the same change that updates code; when only content changes, the whitelist diff and the relevant V table are the doc's minimum update; when a future wave lands (consumer epilogue, census ids, new chains), add its row to §II.5's wave table and re-run the §VII.5 acceptance definition rather than rewriting history.
+- Evidence freshness: every path and count in this expansion was read from the working tree on 2026-09-25. The audit's half-life is one wave — the next builder should re-verify before building on any single row, per AGENTS.md rule 7 ("use current evidence").
+- Contradiction policy: where this expansion and the original 2026-09-01 text disagree (snake_case vs camelCase keys; "3 witnesses" vs 27; "no production caller" for `SetAggressionLevel`; treaty catalog unloaded), this expansion records both and names the current truth; the original text above is preserved byte-for-byte as the 2026-09-01 record and is not the current authority for those rows.
+
+### VIII.8 — The Plan 25 document corpus
+
+The integration plan promised eight companion documents in batch 1; the corpus as it exists, with roles and sizes as read on 2026-09-25:
+
+| Document | Size (chars) | Role | Owned decisions |
+|---|---|---|---|
+| `docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md` (this file) | ~200k after expansion | Seams, batches, contract, and (below the separator) the engineering framework | seam architecture, batch order, MUST PRESERVE/MUST NOT |
+| `docs/muster/PLAN_25_FACTION_ECOLOGY_MUSTER_CLOSEOUT.md` | 5,787 | Outcome record: delivered counts, gates, limitations | what "done" meant on 2026-09-01 |
+| `docs/muster/PLAN_25_LATE_GAME_CONTINUITY_MATRIX.md` | 6,019 | Producer→consumer rows for actions/chains/witnesses; `[H]/[O]/[F]/[X]` dependency classes | flag dependency truth |
+| `docs/muster/PLAN_25_POLITICAL_QA_MATRIX.md` | 4,734 | QA rows incl. accepted asymmetries and band-fallback policy | accepted content limitations |
+| `docs/muster/MUSTER_WITNESS_RUNTIME_CONTRACT.md` | 4,940 | Selection rules contract (day gate, ordering, ledger) | S2 runtime semantics |
+| `docs/muster/MUSTER_WITNESS_CANDIDATE_MATRIX.md` | 4,729 | Pool-by-pool candidate audit and deferral reasons | roster composition |
+| `docs/muster/MUSTER_TESTIMONY_STYLE_GUIDE.md` | 2,947 | Prose rules for testimony bodies | testimony voice |
+| `docs/factions/PLAN_25_POLITICAL_TIMELINE.md` | (not re-sized here) | Repo-pacing political calendar; deviation record for the war/Muster order | pacing canon |
+| `docs/muster/PLAN84_CLOSEOUT.md` | (post-closeout wave) | The 15 → 27 roster growth record | Plan 84 scope only |
+
+Rule of use confirmed by reading them: no two documents own the same decision. When this expansion summarizes a companion, the companion remains the authority for its rows; this expansion adds the code-level verification layer none of them carried.
+
+### VIII.9 — Reviewer's claim-to-evidence index
+
+The expansion's load-bearing claims, each with its fastest verification. A reviewer with twenty minutes can walk this table top to bottom and falsify anything this document got wrong.
+
+| Claim | Fastest check |
+|---|---|
+| S1 exists and is wired | `ls Assets/Ashfall.Core/Muster/FactionActionBoard.cs`; `grep -n "FactionActions" src/Host/MusterSaveStore.cs` |
+| 12 actions, schema 1 | `python3 -c "import json; a=json.load(open('Assets/StreamingAssets/Data/muster_faction_actions.json')); print(a['schema_version'], len(a['actions']))"` |
+| S2 schema v2, 27 witnesses | `python3 -c "import json; w=json.load(open('Assets/StreamingAssets/Data/muster_witnesses.json')); print(w['schema_version'], len(w['witnesses']))"` |
+| v1 fallback documented | read the doc comment above `WitnessCatalogLoader` in `Assets/Ashfall.Core/Muster/WitnessCatalog.cs` |
+| Resolver bound to roster | `sed -n '49p' src/Main.Muster.cs` |
+| S3 pure + additive | read `Assets/Ashfall.Core/Muster/MusterPathEvaluator.cs` head; `grep -n "musterPath" Assets/Ashfall.Core/Muster/MusterSystem.cs` |
+| `MusterOpeningDay = 260` preserved | `grep -n "MusterOpeningDay" Assets/Ashfall.Core/Muster/MusterSystem.cs` |
+| `FlagTrigger` added; 16 p25 trigger rows | `grep -n "FlagTrigger\|evt_p25" Assets/Ashfall.Core/YearOfAsh/FactionWarChainRunner.cs` |
+| 16 chains in data, three new bands | `grep -c "evt_p25" Assets/StreamingAssets/Data/faction_war_events.json`; band values in the chain list (§V.C table) |
+| Standing deltas routed, not self-applied | `grep -n "ModifyStanding" Assets/Ashfall.Core/YearOfAsh/FactionWarSystem.cs`; `StandingDeltaApplier` comment in `FactionWarContentCatalog.cs:192` |
+| Treaty feed live | `sed -n '74,90p' src/Main.ShelterSocial.cs`; `Assets/Ashfall.Core/RegionalTreatyFeed.cs` |
+| Whitelist generated, no orphans | `head Assets/StreamingAssets/Data/whitelists/plan25_flags.json`; `ls tools/plan25/` |
+| Selftest verb exists | `grep -n "FactionEcologyHeadlessDemo" src/Host/HostCli.SelfTests.cs` |
+| Ledger idempotent + persisted | `grep -n "RecordWitnessResult\|witnessResults" Assets/Ashfall.Core/Muster/MusterSystem.cs` |
+| Count pins softened | `sed -n '55p' Ashfall.Core.Tests/MusterContentCatalogTests.cs`; `sed -n '41p' src/Main.UiTests.Muster.cs` |
+| 06C canon intact | `grep -c "evt_d" Assets/StreamingAssets/Data/faction_war_events.json` (22 06C chain ids unchanged); ceasefire chain present |
+| Epilogue/Verdict not yet consuming | `grep -rn "musterPath" src/ --include="*.cs" | grep -iv uitest` — only session/scene uses, no epilogue reads |
+| Focused suites present | `grep -c "\[Fact\]\|\[Theory\]" Ashfall.Core.Tests/{FactionActionBoard,WitnessSelection,MusterPathEvaluator,FactionWarFlagExtension}Tests.cs` |
+| Culture corpus 25 + dedicated panel | `python3 -c "import json; print(len(json.load(open('Assets/StreamingAssets/Data/muster_faction_culture.json'))['entries']))"`; `ls src/UI/FactionCultureCodexPanel.cs` |
+| Camp scenes 4/18 | `python3 -c "import json; s=json.load(open('Assets/StreamingAssets/Data/muster_camp_scenes.json')); print(len(s['scenes']), sum(len(x['variants']) for x in s['scenes']))"` |
+
+Two habits this table encodes, worth keeping after the review: verify against the artifact, not the document (rule 7 of AGENTS.md), and prefer a one-line check whose output a second reviewer can reproduce byte-for-byte over a paragraph of reassurance.
+
+### VIII.10 — Per-faction political dossiers (consolidated reference)
+
+The whole stack re-indexed by faction — the access path a content author actually uses ("what does the Toll have?") rather than the by-concern path the specs use. Every cell cites its owning section.
+
+**faction_scavenger_guild — the Guild of Registered Hands**
+- Standing read: `trust` float, floor 0, no ceiling (`ScavengerGuildSystem.cs:16`); banded by `BandForTrust` (V.L).
+- Actions (3, all `once`): salvage rights (60), claim arbitration (80), apprentice rule dispute (100) (V.A.3, V.Q).
+- Flags produced: favors `claim_recognized`, `arbitration_fair`, `apprentice_backed`; grievances `claim_disputed`, `arbitration_refused`, `registrar_defied` (V.J.1–2).
+- Chains triggered by its grievances: E-P1 `evt_p25_marked_ruin` only — the Guild's disputes escalate once, then go to testimony (V.C).
+- Witnesses: `witness_scavenger_claimant` (helped/failed/absent, flags `arbitration_fair` / `claim_disputed`); culture entries "Marks on the Doorframe", "The Finder's Share" (V.G.1).
+- Profile: the Guild's political surface is procedural and permanent — every deed is a ledger line, favors and grudges compound on a floor-0 scalar with no ceiling, and its one escalation chain fires earliest (day 200). A campaign's Guild story is decided almost entirely by days 60–100.
+
+**faction_hydro_barons — the Barons of the Terrace Works**
+- Standing read: `trust` float, floor 0, same seam family as guild (V.L).
+- Actions (3, all `once`): purification toll (70), emergency appeal (100 — the one item-transfer action), intake dispute (110) (V.A.3, V.Q).
+- Flags produced: favors `toll_paid`, `water_accord_honored`, `intake_audited`; grievances `toll_defaulted`, `appeal_refused`, `intake_disputed` (V.J.1–2).
+- Chains: E-P3 `bitter_water` and E-P5 `cistern_toll_blockade` — two of six escalation chains, both at `loc_terrace_pumphouse`; hydro grievances are procedural and repeatable (V.C).
+- Witnesses: `witness_claimant_auditor`, `witness_hydro_envoy` (the widest any-of gates in the helped/failed families); culture "Water Is Counted Twice", "Empty Cups".
+- Profile: metered, contractual, litigable. The Barons own the only grievance pair that can both fire, the only choice that mints a flag for labor alone (skid labor, no flag), and the largest trust purchase in the catalog (the filter, +5). Their arc is the arc of debts: paid terms become accord; defaulted terms become a stopped convoy and a blockade.
+
+**faction_iron_raiders — the Toll**
+- Standing read: `aggressionLevel` 0..1 (clamp) + `visibility` floor 0.1 — no trust scalar by canon (V.L).
+- Actions (3, repeating where noted): parley (90, repeat), code dispute (120, repeat), passage levy (200, repeat, cooldown 20) (V.A.3, V.Q).
+- Flags produced: favor `parley_honored` (three actions converge on it); grievances `parley_broken`, `passage_evaded`, `passage_fought`, `code_widened` — the largest grievance family (V.J.1).
+- Chains: E-P4 `empty_chair` and E-P6 `prisoner_at_the_gate` (fought-flag-only trigger — evasion is deniable); plus the war's old-enemies scene material (V.C, V.H).
+- Witnesses: `witness_raider_parley_survivor` (helped/failed/absent), `witness_levy_party_chief` (the roster's only `complicated` variant); culture "What the Raiders Leave".
+- Profile: the Toll prices instead of trusting. Effects move aggression, never affection; the ledger remembers deeds the scalar decays past. The denied parley and the fought levy are the Toll's two public wars; the evaded levy and the widened code are its two quiet ones, answered at the Muster rather than on the road.
+
+**faction_deserter_coalition — the Camp**
+- Standing read: `membersRallied`, `garrisonLockoutRisk` 0..100 — attendance as standing (V.L).
+- Actions (3, repeating/cooling): mediation request (210, cd 25), supply appeal (220), camp rules dispute (230) — all post-escalation-opening, pre-Muster (V.A.3, V.Q).
+- Flags produced: favors `mediation_served`, `supply_shared`, `rules_first`; grievances `mediation_refused`, `supply_refused`, `security_backed` (V.J.1–2).
+- Chains: none trigger on coalition grievances — the camp's disputes do not escalate into events; they walk into the Muster as testimony (camp medic, dissenter, deserter elder) and as scene variants (V.H).
+- Witnesses: `witness_camp_medic`, `witness_camp_dissenter`, `witness_deserter_elder` — three of the Muster window's verdicts; culture "One Pot, Four Banners".
+- Profile: the youngest faction and the one whose whole political life happens inside the Muster window (actions 210–230, testimonies 262–268). Its design center is that service compounds: sitting mediation lowers lockout, shared supply feeds the medic's gratitude, and the rules dispute decides whose order the gathering keeps. The camp cannot be made an enemy of in the escalation grammar — only a disappointed one.
+
+**The wider cast (counterparties only).** `faction_central_garrison` (11 of 16 chains), `faction_rebuilders` (8), `faction_black_ops` (E-P4), `faction_ash_sign` (E-P5, E-W6), `faction_forward_roster` (E-W3, E-R3) — none banded by the board, all standing held by the war system, touched only through the 8 audited deltas (V.L, V.E). The culture corpus's district ring (17 more factions, V.G.1) makes the same argument in prose: the shelter's four tables sit inside a district of many more.
+
+### VIII.11 — Runtime operations quick reference
+
+One row per political operation a host tick, panel, or test may perform; the Core call, its cost class, and its persistence effect.
+
+| Operation | Core call | Cost | Persists |
+|---|---|---|---|
+| List today's offers | `FactionActionBoard.AvailableActions(day)` | O(actions) | none |
+| Take an offer | `Board.Resolve(actionId, choiceId, day, sink)` via session | O(1) + effects | resolution record + flags |
+| Read a band | `Board.ComputeBand(factionId)` / `BandForTrust(t)` | O(1) | none |
+| Ask "did we do X" | `Board.IsFlagSet(flagId)` | O(1) set lookup | none |
+| Deliver testimonies | `WitnessSelector.Select(roster, day, gate, cap)` via `DeliverWitnesses` | O(roster×variants) | `witnessResults` (idempotent) |
+| Stage a camp scene | `CampSceneDirector.Select(...)` via `StageCampScene` | O(scene variants) | seen-list entry |
+| Derive the path | `MusterPathEvaluator.Evaluate(MusterPathInput)` | O(1) | none until `SetMusterPath` |
+| Record the path | `MusterSystem.SetMusterPath(path)` | O(1), enum-validated | `musterPath` |
+| Stage a war chain stage | `FactionWarChainRunner` day traversal (06C-owned) | unchanged + 16 trigger checks | chain state + produced flags |
+| Apply a war standing delta | host applier → `FactionWarSystem.ModifyStanding` | O(1) | war standing (owner field) |
+| Load political catalogs | the five loaders (actions/witnesses/culture/scenes/chains) | startup only | none |
+| Round-trip the save | `MusterSaveStore` + engine capture/restore | O(ledger sizes) | whole DTO set (III.4) |
+
+Nothing on this list allocates per-frame, nothing randomizes, and nothing writes outside its own DTO. That sentence, plus the whitelist, is the political stack's whole operating discipline.
+
+---
+
+*End of the 2026-09-25 expansion. The 2026-09-01 plan text above the separator is preserved byte-for-byte and remains the historical record of intent; this expansion is the verified record of what that intent became. Total expansion: Parts I–VIII, evidence-dated 2026-09-25, documentation-only, one file.*
