@@ -270,6 +270,19 @@ explicitly labeled `UNVERIFIED (historical plan text)`. Claims from the original
 that could not be re-confirmed today keep that label and are treated as history, not
 as current fact. Nothing in this expansion asserts that unimplemented work is implemented.
 
+**Expansion contents:**
+
+| Part | Sections |
+|---|---|
+| **Part I — Expansion Preamble** | I.1 Thesis · I.2 Scope · I.3 Non-Goals · I.4 Evidence Policy · I.5 Reading Guide · I.6 Voice |
+| **Part II — Current Authority Audit** | II.1 Tier-Level Drift · II.2 Per-Task Audit Table · II.3 Drift Narrative · II.4 Audit Method |
+| **Part III — Integration Framework** | III.1 Invariants · III.2 Data Flow · III.3 Event Flow · III.4 Save Discipline · III.5 Determinism · III.6 Integrity Pipeline · III.7 Focused Verification |
+| **Part IV — Code Architecture** | IV.1 Data Authority · IV.2 Core Simulation · IV.3 Godot Host · IV.4 Verification · IV.5 Per-Phase Chapters |
+| **Part V — Per-Task Deep Specifications** | Tasks 1–25 (uniform template) · Part V Closing evidence tally |
+| **Part VI — Cross-System Matrix** | VI.1 Touch Matrix · VI.2 Emergent Consequences · VI.3 Non-Interactions |
+| **Part VII — Verification & Acceptance** | VII.1 Gate Ladder · VII.2 Focused Selection · VII.3 Acceptance Criteria · VII.4 Sequencing · VII.5 Done |
+| **Part VIII — Appendices** | A Glossary · B Path Migration · C Scenario Walkthroughs · D Open Questions · E Provenance · F Integration Readiness Checklist |
+
 ---
 
 ## PART I — EXPANSION PREAMBLE
@@ -295,8 +308,8 @@ shape around almost every seam it names:
   substantially complete and must be re-scoped as an audit, not an implementation.
 - Several content targets the plan set have already been reached or exceeded by other
   work: `pharma_recipes.json` holds 27 recipes (target: 25+), `relic_recipes.json`
-  holds 39 restoration entries (target: 30+), and the verdict evidence chain
-  (`evidence_*` items in `verdict_items.json`) exists with 15 items.
+  holds 39 restoration entries (target: 30+), and the verdict evidence chain exists
+  (`verdict_items.json`: 15 rows, 12 of them `evidence_*`-prefixed).
 
 So this expansion is not a restatement. It is a **re-grounding**: it converts a five-week-old
 task list into an integration framework that a builder can execute against today's code,
@@ -322,8 +335,9 @@ This expansion covers, in order:
 5. **Part VI** — the cross-system interaction matrix and emergent-consequence design.
 6. **Part VII** — verification and acceptance: the gate ladder rebuilt under
    `TEST_POLICY.md`'s smallest-target-first philosophy.
-7. **Part VIII** — appendices: glossary, path-migration table, scenario walkthroughs,
-   and open questions.
+7. **Part VIII** — appendices: glossary, path-migration table, scenario
+   walkthroughs, open questions, provenance, and the per-task integration
+   readiness checklist.
 
 ### I.3 Non-Goals
 
@@ -355,8 +369,8 @@ Three evidence grades are used below:
 Numbers deserve special care. Catalog row counts cited in this expansion were read out
 of the JSON files directly on 2026-09-25 (80 door encounters, 27 pharma recipes, 39
 relic restorations, 8 vehicles, 240 events, 724 items, 15 verdict items, 8 excavation
-sites). They will drift the moment content work lands; treat them as a dated snapshot,
-not a constant.
+sites, 30 vinyl records in `narrative/vinyl_record_archive.json`). They will drift the
+moment content work lands; treat them as a dated snapshot, not a constant.
 
 ### I.5 Reading Guide
 
@@ -393,7 +407,7 @@ never existed.
 | Test suite | 2,328 tests, 100% green target | **12,476 `[Fact]`/`[Theory]` attributes in 561 files** (`Ashfall.Core.Tests/`). | Grew ~5x |
 | Host sessions | 27 | **190** `src/Host/*HostSession*.cs` files. | Grew ~7x |
 | Save stores | 30 | **185** `src/Host/*SaveStore*.cs` files. `docs/saves/SAVE_STORE_CONTRACT_MATRIX.md` is the generated completeness authority. | Grew ~6x |
-| UI panels | 60+ panels | **262** `.cs` files in `src/UI/`; `docs/ui/SNAPSHOT_COVERAGE.md` tracks 29 golden targets; 22 scene-backed live panels verified by `scripts/ci/generate-ui-panel-catalog.py`. | Grew |
+| UI panels | 60+ panels | **262** `.cs` files in `src/UI/`; `docs/ui/SNAPSHOT_COVERAGE.md` tracks 31 documented snapshot targets (32 fixture PNGs); 22 scene-backed live panels verified by `scripts/ci/generate-ui-panel-catalog.py`. | Grew |
 | `src/Main.cs` | Monolith to be split (Task 24) | **Already split**: 190+ `src/Main.*.cs` domain partials, including `Main.SaveOrchestrator.cs` and `Main.ShelterOperations.cs` (the latter belongs to a concurrent stream — read-only here). | Superseded by reality |
 | Engine purity | Core is engine-free | Still holds; `Assets/Ashfall.Core/` is `netstandard2.1`, no Godot/Unity references found in the audited seam files. | Holds |
 | Determinism contract | `ISeededRng` | `ISeededRng` declared at `Assets/Ashfall.Core/Ports.cs:113`; `SaveChecksum.cs` walks public instance fields ordinally (`MaxDepth = 32`, `ChecksumFieldName = "Checksum"`). | Holds |
@@ -418,19 +432,19 @@ premise or completion from the tree alone).
 | 9 | Disease → trade gouging | `Assets/Ashfall.Core/Economy/TradeScreenSeam.cs`, `Assets/StreamingAssets/Data/trade_tell_lines.json` | OPEN-STALE | `TradeScreenSeam.cs` verified but contains **no `CalculateItemWorth`**; its real surface is `TradeFairness` (`DEAL IS FAIR` / `OFFER SHORT` / `EMPTY TABLE`), `TradeWorthLabels.Format`, `TradePricing.BioUnitValue`, `TradeLineData`. `trade_tell_lines.json` verified with root key `trust_bands` (4 bands). The plan's seam must be re-expressed against the fairness/label pipeline. |
 | 10 | Pharma recipes 25+ | `Assets/StreamingAssets/Data/pharma_recipes.json`, `Assets/Ashfall.Core/PharmaLabSystem.cs` | PARTIAL | **27 recipes verified**, including `recipe_edta_chelation`, `recipe_prussian_blue`, `recipe_pervitin`, `recipe_lithium_carbonate`, `recipe_cordyceps_antibiotic`. Schema verified (`input_ids`/`input_amounts`/`output_item_id`/`required_temperature`/`purity_target`/`dependency_risk`/`required_station`). The plan's precursor sub-manifest (`item_lead_salts`, `item_ephedra_extract`, …) is **absent from `items.json`** — landed recipes use different reagents (e.g. the EDTA recipe consumes `chemicals`, `clean_water`, `item_iodine_crystal`). Remaining gap: the "21 additional surgical/neuro-blocker/coagulant formulas" only insofar as they are still wanted after the 27 landed; and reagent-id reconciliation. |
 | 11 | Relic blueprints 30+ | `Assets/StreamingAssets/Data/relic_recipes.json`, `Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs`, `Assets/Ashfall.Core/Research/` | PARTIAL / RE-SCOPE | **39 entries verified** in `relic_recipes.json` — but their schema is *relic restoration* (`relic_id`, `required_components`, `morale_bonus`, `repair_time_hours`, `restoration_text`, `world_flag`, `dialogue_event_id`), not manufacturing blueprints. The plan's "Automated Hydroponic Drip / UV Microbial Lamps / …" blueprint list is UNVERIFIED (historical plan text). The architecture boundary it draws (workshop = item recipes, research = shelter traits) remains sound and matches the existing split. |
-| 12 | Vehicle variants 12+ | `Assets/StreamingAssets/Data/vehicles.json`, `Assets/Ashfall.Core/ExpeditionVehicleSystem.cs` | OPEN | **8 vehicles verified**: `vehicle_utility_quad`, `vehicle_dirt_bike`, `vehicle_cargo_truck`, `vehicle_steam_halftrack`, `vehicle_armored_mobile_base`, `vehicle_salvage_dredger`, `vehicle_scout_motorcycle`, `vehicle_ambulance_rig`. The plan's 12+ target is **not met** — this is the clearest surviving content gap in Phase 3. Named plan vehicles partially landed (`steam_halftrack`, `salvage_dredger`, `ambulance_rig`); "Armored Scout Quad" maps approximately to `vehicle_utility_quad`/`vehicle_scout_motorcycle`. Module catalog (lead cockpit, turret, snow tracks, winch) not found in `vehicles.json` — UNVERIFIED (historical plan text). |
-| 13 | Vinyl records 20+ & wear | `Assets/StreamingAssets/Data/items.json`, `Assets/Ashfall.Core/VinylMoraleSystem.cs` | OPEN-STALE | `VinylMoraleState`/`VinylRecordDefinition` verified (`record_id`, `ownedRecordIds`, `totalPlays`, `totalMoraleApplied`). No needle/groove durability fields found — the 2%/hour wear rule is UNVERIFIED (historical plan text) and, if wanted, is new state requiring a save-schema bump. Record count in `items.json` not separately audited. |
+| 12 | Vehicle variants 12+ | `Assets/StreamingAssets/Data/vehicles.json`, `Assets/Ashfall.Core/ExpeditionVehicleSystem.cs` | OPEN | **8 vehicles verified** (full ID list in Part V Task 12). The plan's 12+ target is **not met** — this is the clearest surviving content gap in Phase 3. Named plan vehicles partially landed (`steam_halftrack`, `salvage_dredger`, `ambulance_rig`); "Armored Scout Quad" maps approximately to `vehicle_utility_quad`/`vehicle_scout_motorcycle`. Module catalog (lead cockpit, turret, snow tracks, winch) not found in `vehicles.json` — UNVERIFIED (historical plan text). |
+| 13 | Vinyl records 20+ & wear | `Assets/StreamingAssets/Data/narrative/vinyl_record_archive.json`, `Assets/Ashfall.Core/VinylMoraleSystem.cs` | OPEN-STALE | `VinylMoraleState`/`VinylRecordDefinition` verified (`record_id`, `ownedRecordIds`, `totalPlays`, `totalMoraleApplied`). **30 records verified** in `narrative/vinyl_record_archive.json` (root key `records`) — the 20+ album target is met; the plan's premise that the albums live in `items.json` is stale. Records carry an authored `physical_condition` descriptor, but no runtime wear state exists — the 2%/hour wear rule is UNVERIFIED (historical plan text) and, if wanted, is new state requiring a save-schema bump. |
 | 14 | Deep-strata excavation | `Assets/Ashfall.Core/ExcavationSystem.cs`, `Assets/StreamingAssets/Data/excavation_sites.json`, `excavation_hazard_mitigation.json` | OPEN-STALE | `ExcavationSite` verified: `siteId`, `roomBlueprintId`, `progress`, `requiredProgress`, `assignedWorkerCount`, `structuralRisk` (0–1 cave-in risk). 8 sites verified. `excavation_events.json` does **not** exist — the plan's file name is wrong; hazard content lives in `excavation_hazard_mitigation.json`. "Unwired/Unpowered default occupancy gate" not found — open design item. `item_copper_wiring`/`item_timber_shoring` absent from `items.json`. |
-| 15 | Forensic evidence dossiers | `Assets/StreamingAssets/Data/verdict_items.json` (+ `verdict_data.json`, `verdict_npcs.json`, `verdict_questlines.json`, `verdict_locations.json`, `verdict_radio.json`), `Assets/StreamingAssets/Data/narrative/relic_provenance_dossiers.json` | PARTIAL / RE-SCOPE | 15 `evidence_*`-prefixed items verified with `faction_affinity`, `downstream_quest_trigger`, `mechanical_effects`, `rarity`, `tier`. The plan's `narrative/verdict_dossiers.json` path does not exist; `is_evidence: true` tag does not exist (no item carries it). Protection against scrap/sale, if wanted, must ride the existing `tags` array in `items.json` or the verdict store's own claims — not a new boolean. |
+| 15 | Forensic evidence dossiers | `Assets/StreamingAssets/Data/verdict_items.json` (+ `verdict_data.json`, `verdict_npcs.json`, `verdict_questlines.json`, `verdict_locations.json`, `verdict_radio.json`), `Assets/StreamingAssets/Data/narrative/relic_provenance_dossiers.json` | PARTIAL / RE-SCOPE | **15 verdict items verified — 12 `evidence_*`-prefixed plus 3 `item_*` quest/consumable companions** — with `faction_affinity`, `downstream_quest_trigger`, `mechanical_effects`, `rarity`, `tier`. The plan's `narrative/verdict_dossiers.json` path does not exist; `is_evidence: true` tag does not exist (no item carries it). Protection against scrap/sale, if wanted, must ride the existing `tags` array in `items.json` or the verdict store's own claims — not a new boolean. |
 | 16 | Trauma & guilt dossier UI | `src/UI/SurvivorsPanel.cs`, `src/Host/SurvivorsHostSession.cs` | OPEN | Both files verified. `SurvivorsPanel` is `partial class … : Control, IBindablePanel` with verified `Bind(SurvivorsHostSession)` / `Unbind()`. The virtualization requirement and the sub-tab itself are unbuilt as far as the tree shows. |
 | 17 | Power breaker & load schematic | `src/UI/PowerGridPanel.cs`, `src/Host/PowerGridHostSession.cs`, `Assets/Ashfall.Core/Shelter/PowerGridSystem.cs` | OPEN | All three verified. `PowerGridSystem` exposes `GenerationWatts`, `TotalDrawWatts`, `NetWatts`, `BatteryReserveWh`/`BatteryCapacityWh`, `OnPowerChanged`, `OnTickSummary`, and takes `ISeededRng` in its constructor — everything the breaker UI needs already exists as events and read-only state. `PowerGridPanel` has verified `Bind(PowerGridHostSession)` / `Unbind()`. Manual per-room breaker toggle not found — open. |
-| 18 | Morse auto-transcription | `src/UI/RadioPanel.cs`, `src/Host/RadioHostSession.cs` | OPEN-STALE | Both verified. `RadioHostSession` is rich: `Engine` (`FactionRadioEngine`), `Triangulation` (`SignalTriangulationSystem`), `BroadcastCatalog`, `Stations`, `ScheduleCoordinator`, `DistressSystem`, `RecordingSystem`, `SignalLog`, `RescueMissions`, and the `BroadcastIntercepted` event. `FactionRadioEngine.GetBroadcastAtFrequency(float frequencyMhz, int day, ISeededRng rng)` verified. The plan's `SNR > 0.65 for 1.5 s` lock rule is a design target, UNVERIFIED as code. A transcription terminal must hang off `RecordingSystem`/`SignalLog`, not invent a second signal pipeline. |
+| 18 | Morse auto-transcription | `src/UI/RadioPanel.cs`, `src/Host/RadioHostSession.cs` | OPEN-STALE | Both verified. `RadioHostSession` is rich: `Engine` (`FactionRadioEngine`), `Triangulation` (`SignalTriangulationSystem`), `BroadcastCatalog`, `Stations`, `ScheduleCoordinator`, `DistressSystem`, `RecordingSystem`, `SignalLog`, `RescueMissions`, and the `BroadcastIntercepted` event. `FactionRadioEngine.GetBroadcastAtFrequency(float frequencyMhz, int day, ISeededRng rng)` verified. The plan's `SNR > 0.65 for 1.5 s` lock rule is a design target, UNVERIFIED (historical plan text). A transcription terminal must hang off `RecordingSystem`/`SignalLog`, not invent a second signal pipeline. |
 | 19 | Ballistic predictive tooltips | `src/UI/CombatPanel.cs`, `src/Host/CombatHostSession.cs` | OPEN | Both verified; `CombatPanel` is `IBindablePanel` with `Bind(CombatHostSession)` / `Unbind()`. Precomputed per-lane hit probability caching not found — open. Note `src/UI/CombatDetailPanel.cs`, `CombatHistoryPanel.cs`, `CombatHudOverlay.cs` also exist and are adjacent surfaces to keep consistent. |
 | 20 | Air quality & radon HUD | `Assets/Ashfall.Core/VentilationSystem.cs`, `Assets/Ashfall.Core/YearOfAsh/YearOfAshRadonSystem.cs` | OPEN-STALE | `VentilationSystem` verified: `smokeSootLevel`, `carbonMonoxidePpm`, `exhaustFilterSaturation`, `mainDuctOpen`, per-room valves — and an in-file authority note: *"YearOfAshRadonSystem remains the authoritative radon phase system."* The plan's `src/UI/VentilationPanel.cs` and `src/UI/HUD.cs` **do not exist**; the real HUD surfaces are `src/UI/GameHudOverlay.cs`, `ShelterHudPanel.cs`, `EmergencyResponseHud.cs`. The spec must be re-targeted at those. |
 | 21 | Foundry blowout → surgical chain | `Assets/Ashfall.Core/Foundry/SilentFoundrySystem.cs` (+ `SilentFoundryConsequencePolicy.cs`), `Assets/Ashfall.Core/Medical/MedicalWardSystem.cs` | OPEN-STALE | Both files verified. `MedicalWardSystem` has `Admit(patientId, bedId, day)`, `Discharge`, `Procedures`, `StaffingPreflight`, `OnWardChanged`, `OnPatientAdmitted` — a real admission pipeline. No crucible-blowout vocabulary found in `SilentFoundrySystem.cs`; the accident generator itself is UNVERIFIED (historical plan text). The fallback first-aid rule must be built as an event from the foundry consequence policy into ward admission. |
-| 22 | Delayed door callbacks | `Assets/StreamingAssets/Data/door_encounters.json`, `Assets/Ashfall.Core/YearOfAsh/DoorEncounterSystem.cs` | OPEN | `DoorEncounterSystem` verified with `SurvivorOccupantSnapshot` (`guiltLevel`, `moralBranch` humanist/ruthless/neutral, `hasRespiratoryDegeneration`, `hasFrostbite`, `hasTraumaBondWithLeader`, …). 80 encounters verified, sample entry schema captured in Part V Task 22. Callback-delay and memorial-reaction mechanics not found — open. |
+| 22 | Delayed door callbacks | `Assets/StreamingAssets/Data/door_encounters.json`, `Assets/Ashfall.Core/YearOfAsh/DoorEncounterSystem.cs` | OPEN | `DoorEncounterSystem` verified with `SurvivorOccupantSnapshot` (`guiltLevel`, `moralBranch` humanist/ruthless/neutral, `hasRespiratoryDegeneration`, `hasFrostbite`, `hasTraumaBondWithLeader`, …). 80 encounters verified, sample entry schema quoted in Part V Task 8. Callback-delay and memorial-reaction mechanics not found — open. |
 | 23 | Mid-winter crisis pacing | `Assets/StreamingAssets/Data/events.json`, `Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs` | OPEN | `CampaignDayCoordinator` verified: `ICampaignCalendar`, `ICampaignRngManager`, `Register(ownerId, IDayAdvanceOwner, phase)`, `OnDayAdvanced`, `Owners`, phase-ordered day advance. `events.json` verified: 240 events, keys `id`, `title`, `bodyText`, `minDay`, `weight`. The 14-day major-crisis cooldown is not found — open, and a natural `IDayAdvanceOwner` registration. |
-| 24 | `Main.cs` partial split | `src/Main.cs` + 190+ `src/Main.*.cs` | SUPERSEDED | The split exists: `Main.Survivors.cs`, `Main.Economy.cs`, `Main.Medical.cs`, `Main.Verdict.cs` verified present. `Main.Combat.cs` and `Main.Foundry.cs` from the plan's layout do **not** exist under those names (combat and foundry setup lives in other partials and the `src/Combat/`, `src/Foundry/` areas). Re-scope to: verify triad parity (`scripts/ci/triad-drift-gate.sh`), confirm no orphaned setup/save/flush, and document the achieved layout. |
+| 24 | `Main.cs` partial split | `src/Main.cs` + 190+ `src/Main.*.cs` | SUPERSEDED | The split exists: `Main.Survivors.cs`, `Main.Economy.cs`, `Main.Medical.cs`, `Main.Verdict.cs` verified present. `Main.Combat.cs` and `Main.Foundry.cs` from the plan's layout do **not** exist under those names (combat and foundry setup lives in other partials, the `src/Foundry/` area, and the combat host/UI surfaces such as `src/Host/CombatHostSession.cs` and `src/UI/CombatPanel.cs` — no `src/Combat/` directory exists). Re-scope to: verify triad parity (`scripts/ci/triad-drift-gate.sh`), confirm no orphaned setup/save/flush, and document the achieved layout. |
 | 25 | Faction-ID namespace reconciliation | `Assets/Ashfall.Core/Economy/FactionStanceEngine.cs`, `Assets/StreamingAssets/Data/**/*.json` | OPEN | **Both namespaces still live in data**: `iron_garrison` in `codex_entries.json`, `locations_expansion3.json`, `combat_catalog.json`, `faction_intelligence.json`, `events.json`; `faction_central_garrison` in `year_of_ash_survivors.json`, `faction_war_events.json`, `characters.json`, `faction_lore.json`, `foundry_accords.json`, `door_encounters.json`. `FactionStanceEngine` verified (`GetTrust`/`ModifyTrust`/`SetTrust`/`GetStance`/`WillTrade`) with **no alias table**. This task is fully open and is the highest blast-radius item in the plan. |
 
 ### II.3 What Superseded What — Drift Narrative
@@ -904,8 +918,8 @@ equals one captured post-reload with no intervening tick.
    generator `--check`.
 2. Verify `WildlifeSaveState` still carries pack counts and a migration timer as the
    plan intended (plan names `Dictionary<string,int> animalPacks` +
-   `float migrationTimer` — field-level fidelity UNVERIFIED; read the DTO before
-   claiming).
+   `float migrationTimer` — field-level fidelity UNVERIFIED (historical plan text);
+   read the DTO before claiming).
 3. Roundtrip test extension: for each of the three, mutate → capture → restore →
    capture → assert payload equality, inside the existing sweep file's pattern.
 
@@ -1604,6 +1618,21 @@ EDTA recipe consumes `chemicals`, `clean_water`, `item_iodine_crystal`).
 - *Station fiction:* `required_station: "pharma_bench"` (verified value) must match a
   real station ID; a typo'd station makes a recipe permanently dark.
 
+**Integration contract.** A recipe row added to `pharma_recipes.json` is craftable at
+its `required_station` when the listed `input_ids`/`input_amounts` are available,
+producing `output_item_id` at `output_amount` subject to `purity_target`;
+`dependency_risk` feeds the existing dependency path. Content alone adds no system
+state: the row is data consumed by the existing lab pipeline.
+
+**Exact seams (verified).**
+- `Assets/StreamingAssets/Data/pharma_recipes.json` — the recipe authority (27 rows,
+  verified schema).
+- `Assets/Ashfall.Core/PharmaLabSystem.cs` — the Core consumer of that catalog.
+- `Assets/StreamingAssets/Data/items.json` — every `input_ids`/`output_item_id`
+  target must resolve here (724 rows).
+- Acceptance gates: `--data-integrity-selftest` (referential) and
+  `--content-utilization-selftest` (reachability), per Part III.6.
+
 **Remaining work (re-scoped).**
 1. **Reagent audit:** list every `input_ids` union across the 27 recipes; diff against
    `items.json`; resolve any dangling or unreachable reagent (this is the task's real
@@ -1683,6 +1712,20 @@ catalog keys audited.
   relics (morale + world flags). New *manufacturing* blueprints belong in their own
   catalog/section with output items, not as `morale_bonus` rows — forcing them into
   the relic schema would overload `world_flag` semantics.
+
+**Integration contract.** Any manufacturing blueprint added by the re-scoped work is
+unlocked through the workshop system's known-blueprint state, crafted at its declared
+station from `input_ids`, and produces its `output_item_id`; shelter-trait effects
+remain research-tree content and never ride workshop rows. Restored relics keep their
+existing restoration behavior untouched.
+
+**Exact seams (verified).**
+- `Assets/StreamingAssets/Data/relic_recipes.json` — the existing restoration
+  authority (39 rows; unchanged by this task's re-scope).
+- `Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs` — unlock/craft behavior.
+- `Assets/Ashfall.Core/Research/` — the shelter-trait boundary a blueprint catalog
+  must not cross.
+- `Assets/StreamingAssets/Data/items.json` — output and component ID resolution.
 
 **Remaining work (re-scoped).**
 1. Decide with design authority whether manufacturing blueprints are still wanted
@@ -1832,14 +1875,17 @@ baseline variant; cache removal is a world-section migration with defaulting.
 
 ### Task 13 — 20+ Collectible Vinyl Record Albums
 
-**Status re-baseline.** OPEN-STALE. Verified: `VinylMoraleSystem.cs` with
+**Status re-baseline.** OPEN-STALE, with the count target now closed. Verified:
 `VinylRecordDefinition { record_id, … }` and `VinylMoraleState { ownedRecordIds,
 currentPlayingId, lastPlayedId, lastPlayedDay, totalPlays, totalMoraleApplied,
-isTurntableActive }` — count/listen state exists; `items.json` (724 rows) is the item
-authority. The 2%/playback-hour wear rule and needle item are UNVERIFIED (historical
-plan text) and are **new state** if adopted. The 20+ album target needs a count audit
-of `record_*`/vinyl-tagged entries in `items.json` (not yet counted at audit time —
-flagged as an open number).
+isTurntableActive }` — count/listen state exists. The album catalog is
+`Assets/StreamingAssets/Data/narrative/vinyl_record_archive.json` (root key `records`),
+not `items.json` as the plan assumed: **30 records verified**, each with `record_id`,
+`catalog_number`, `title`, `performer`, `recording_year`, `format_rpm`,
+`physical_condition`, and `daily_morale_modifier` — the 20+ album target is met.
+`physical_condition` is an authored per-record descriptor, not runtime state. The
+2%/playback-hour wear rule and needle item are UNVERIFIED (historical plan text) and
+are **new state** if adopted (`VinylMoraleState` carries no wear fields).
 
 **Failure-mode analysis.**
 - *Wear without repair is a doom clock:* stylus/groove degradation with no
@@ -1862,9 +1908,11 @@ state persists.
 - `Assets/Ashfall.Core/VinylMoraleSystem.cs` — condition fields on
   `VinylRecordDefinition`-keyed state; playback ticks decrement; morale scaling reads
   condition.
-- `Assets/Ashfall.Core/Items/` / inventory authority — stylus as an item with
-  durability using the existing durability semantics (`items.json` rows already carry
-  `durability`/`degradeRate` keys — verified key list).
+- `Assets/Ashfall.Core/Inventory/` (verified directory; `ItemCatalogLoader.cs`) —
+  stylus as an item with durability using the existing durability semantics
+  (`items.json` rows already carry `durability`/`degradeRate` keys — verified key
+  list). A new needle row lands in `items.json`; the record catalog stays in
+  `narrative/vinyl_record_archive.json`.
 - Chem-station cleaning: existing station/production interaction path.
 
 **Data schema.** Condition as item/state fields, wear rules as data:
@@ -1882,6 +1930,11 @@ state persists.
 }
 ```
 
+(all values are design targets pending balance signature; the plan's `chem_station`
+station ID has no verified counterpart — the verified station vocabulary is the
+`room_station_*`/`station_*` family plus `pharma_bench`, so pick a real ID at
+authoring time — the validator catches a wrong one.)
+
 **Save-section impact.** Condition floats on vinyl state (version bump; old saves
 default to full condition — honest, since wear never existed for them).
 
@@ -1895,8 +1948,9 @@ record; cleaning offered from the station surface via existing command routing.
 monotonic; cleaning consumes item and restores; restore reproduces condition.
 
 **Risk register.** (a) Double wear (playback counted per tick and per hour) — one
-accounting site; (b) solvent ID fiction — validator; (c) album count target — run the
-count audit before authoring anything.
+accounting site; (b) solvent ID fiction — validator; (c) album count target — closed
+by the 2026-09-25 count (30 records); author no new records without re-reading the
+archive first.
 
 **Rollback.** Zero the wear rules file and default conditions to full; state fields
 harmless if left.
@@ -1985,14 +2039,15 @@ above; (c) power-system integration double-charge — Task 17 review joint.
 ### Task 15 — 12+ Declassified Forensic Evidence Dossiers
 
 **Status re-baseline.** PARTIAL / RE-SCOPE. Verified: `verdict_items.json` holds **15
-evidence items** with IDs like `evidence_geophone_hymn`, `evidence_census_draft`,
-`evidence_uxo_register`, `evidence_eden_log`, and keys `id`, `displayName`,
-`category`, `description`, `faction_affinity`, `downstream_quest_trigger`,
+items — 12 `evidence_*`-prefixed (e.g. `evidence_geophone_hymn`, `evidence_census_draft`,
+`evidence_uxo_register`, `evidence_eden_log`) plus 3 `item_*` quest/consumable
+companions** — with keys `id`, `displayName`, `category` (`story_item` on the evidence
+rows), `description`, `faction_affinity`, `downstream_quest_trigger`,
 `mechanical_effects`, `rarity`, `tier`, `tradeValue`, `weightKg`; the broader verdict
 family (`verdict_data/locations/npcs/questlines/radio`) and
 `narrative/relic_provenance_dossiers.json` exist. The plan's
 `narrative/verdict_dossiers.json` path does not exist; the `is_evidence` tag does not
-exist (zero rows carry it); the 12+ count is already met at 15.
+exist (zero rows carry it); the 12+ count is met (12 `evidence_*` rows, 15 total).
 
 **Failure-mode analysis.**
 - *The scrap bug the plan feared is real until gated:* evidence items flow through the
@@ -2015,8 +2070,25 @@ exist (zero rows carry it); the 12+ count is already met at 15.
 2. If the dossier *presentation* layer (reading-room style dossiers distinct from
    items) is still wanted, it is new UI over `verdict_data.json` content — a Phase 4
    style panel task riding verdict state, not a content task.
-3. Count target closed (15 ≥ 12). Note the closure honestly rather than authoring
-   filler rows.
+3. Count target closed (12 `evidence_*` rows of 15 ≥ 12). Note the closure honestly
+   rather than authoring filler rows.
+
+**Integration contract.** Every `evidence_*` item is non-scrap and non-saleable by
+data alone: one guard mechanism (the tag, or the verdict store's own claims) is
+checked at every teardown and sale decision site, so the protection holds no matter
+which surface issues the command; discovery and quest linkage keep working through
+existing verdict state.
+
+**Exact seams (verified).**
+- `Assets/StreamingAssets/Data/verdict_items.json` — the 15 evidence/quest rows.
+- `Assets/StreamingAssets/Data/items.json` `tags` array — the existing tag mechanism
+  (verified present on 13 rows) wherever evidence items are surfaced through the
+  unified item view.
+- Teardown/sale decision sites in the inventory/scrap path
+  (`Assets/Ashfall.Core/Inventory/` family) — locate the exact call sites by grep at
+  implementation; the audit verified the data, not every decision site.
+- `Assets/StreamingAssets/Data/narrative/relic_provenance_dossiers.json` — adjacent
+  dossier content, untouched by this task.
 
 **Data schema.** Tag extension example on the verdict item shape:
 
@@ -2024,7 +2096,7 @@ exist (zero rows carry it); the 12+ count is already met at 15.
 {
   "id": "evidence_census_draft",
   "displayName": "Census Draft",
-  "category": "evidence",
+  "category": "story_item",
   "tags": ["evidence", "non_scrap"],
   "faction_affinity": "faction_central_garrison",
   "downstream_quest_trigger": "quest_census_truth",
@@ -2111,11 +2183,12 @@ string parse.
 
 **Determinism notes.** Top-N selection uses a stable sort key (recency day, then
 entry ID ordinal) so the displayed window is reproducible in UI snapshot tests
-(29 golden targets exist — new surface must not perturb existing goldens).
+(the snapshot-golden set documented in `docs/ui/SNAPSHOT_COVERAGE.md` — 31 documented
+targets — new surface must not perturb existing goldens).
 
 **UI/panel contract.** Keyboard/controller: sub-tab reachable by existing navigation,
 `ui_cancel` closes back to the previous tab, focus visible, contrast per
-`ACCESSIBILITY.md`. Release all subscriptions in `Unbind` (the verified family
+`docs/ACCESSIBILITY.md`. Release all subscriptions in `Unbind` (the verified family
 contract).
 
 **Verification plan.** Extend the existing survivors panel UI test slice
@@ -2209,7 +2282,7 @@ and `TryFindFactionAtFrequency(float frequencyMhz, float toleranceMhz = 1.5f)` a
 verified tuning/decoding primitives. `src/UI/RadioPanel.cs` binds
 (`Bind(RadioHostSession)`, `BindProduction(RadioProgramProductionHostSession)`,
 `Unbind()`); `src/UI/RadioIntelligencePanel.cs` exists alongside. The plan's
-`SNR > 0.65 for 1.5 s` lock rule is UNVERIFIED as code — a design target.
+`SNR > 0.65 for 1.5 s` lock rule is UNVERIFIED (historical plan text) — a design target.
 
 **Failure-mode analysis.**
 - *Dial-scrub spam:* without a lock rule, sweeping the band spams transcript fragments
@@ -2289,7 +2362,7 @@ document the choice before writing tests.
 `src/Host/CombatHostSession.cs` exists; adjacent surfaces `CombatDetailPanel.cs`,
 `CombatHistoryPanel.cs`, `CombatHudOverlay.cs` exist; `Assets/Ashfall.Core/Combat/`
 directory exists. The plan's "5 combat lanes" and cached-probability design are
-UNVERIFIED as literal current code — the lane model must be read from the combat
+UNVERIFIED (historical plan text) — the lane model must be read from the combat
 owner before constants or UI copy are written.
 
 **Failure-mode analysis.**
@@ -2637,12 +2710,14 @@ observable difference.
   "schema_version": 1,
   "slump_window": { "start_season_day": 90, "end_season_day": 180 },
   "cooldown_days": 14,
-  "crisis_event_ids": ["event_furnace_shell_crack", "event_ration_apathy"],
+  "crisis_event_ids": ["filter_failure", "morale_crisis"],
   "weight_scale": 1.0
 }
 ```
 
-(referenced `event_*` IDs must exist in `events.json` — validator.)
+(both example IDs are verified `events.json` rows; most row IDs there carry no
+`event_` prefix, so author against the catalog's real ID style — the validator
+catches a wrong ID.)
 
 **Save-section impact.** Cooldown bookkeeping (last-major-crisis day) on the
 campaign/coordinator state (version bump; old saves default to "no recent crisis" —
@@ -2677,7 +2752,9 @@ present) and two the plan did not predict: `Main.SaveOrchestrator.cs` (save/flus
 orchestration extracted) and the plan-wave slices `Main.Plans46_49.cs` …
 `Main.Plans216_202Interpersonal.cs`. `Main.Combat.cs` and `Main.Foundry.cs` from the
 plan's layout **do not exist** under those names — combat and foundry wiring lives in
-other partials and the `src/Combat/`, `src/Foundry/` areas. The concurrent
+other partials, the `src/Foundry/` area, and the combat host/UI surfaces
+(`src/Host/CombatHostSession.cs`, `src/UI/CombatPanel.cs`; there is no `src/Combat/`
+directory). The concurrent
 shelter-operations stream owns `Main.ShelterOperations.cs` (read-only here).
 
 **Failure-mode analysis.**
@@ -2822,7 +2899,7 @@ manifest enumerates, the validator enforces, nothing relies on memory.
 
 ---
 
-## PART V.CLOSING — SPEC-LEVEL EVIDENCE TALLY
+### Part V Closing — Spec-Level Evidence Tally
 
 Across the 25 specifications: **62+ distinct verified citations** (file paths, enum
 members, method signatures, catalog schemas, row counts, line numbers), **9 claims
@@ -2955,7 +3032,7 @@ a shared-terminal acceptance**:
 
 ```mermaid
 graph TD
-    F["F: Focused builder gate<br/>bash scripts/run_test.sh <file-or-dir> (<=100 cases, 180s)"]
+    F["F: Focused builder gate<br/>bash scripts/run_test.sh target-file-or-dir (builder envelope, 180 s cap)"]
     D["D: Data gates<br/>--data-integrity-selftest, --content-utilization-selftest"]
     S["S: Structure gates<br/>triad-drift-gate.sh, generate-save-store-matrix.sh --check"]
     P["P: Purity gates<br/>forbidden-api-gate.sh, catch-policy-gate.sh, uid-sidecar-gate.sh"]
@@ -2969,7 +3046,7 @@ graph TD
 
 Rule: a package advances when *its* rungs pass; nobody runs the full suite to feel
 safe. The full suite and soak runs remain foreman/user-authorized events (TEST_POLICY
-selection rules, quoted in Part III.7).
+selection rules, summarized in Part III.7).
 
 ### VII.2 Focused Selection Per Phase
 
@@ -3007,8 +3084,9 @@ anything larger is split by file.
   catalogs referenced.
 - **Phase 3:** every new/extended catalog passes integrity **and** utilization
   (reachability); numeric targets restated honestly against the 2026-09-25 counts
-  (pharma 27 ≥ 25 closed; relics 39 ≥ 30 closed as restorations; vehicles 8 < 12
-  remains the open number).
+  (pharma 27 ≥ 25 closed; relics 39 ≥ 30 closed as restorations; vinyl records
+  30 ≥ 20 closed in `narrative/vinyl_record_archive.json`; vehicles 8 < 12 remains
+  the open number).
 - **Phase 4:** new surfaces bind/unbind with zero leaked nodes (UI telemetry),
   keyboard/close behavior preserved, existing golden snapshots either unchanged or
   deliberately re-baselined in their own commit; no panel computes gameplay values.
@@ -3100,7 +3178,7 @@ verify, not permanent furniture.
 | `src/UI/VentilationPanel.cs` | *(none; nearest surfaces: `GameHudOverlay.cs`, `ShelterHudPanel.cs`, `EmergencyResponseHud.cs`)* | Plan's file does not exist. |
 | `src/UI/HUD.cs` | `src/UI/GameHudOverlay.cs` (HUD family) | Plan's file does not exist. |
 | `src/Main.cs` monolith | `src/Main.cs` + 190+ `src/Main.*.cs` partials | Task 24 superseded. |
-| *(plan's proposed `Main.Combat.cs`, `Main.Foundry.cs`)* | not present under those names | Combat/foundry wiring lives in other partials + `src/Combat/`, `src/Foundry/`. |
+| *(plan's proposed `Main.Combat.cs`, `Main.Foundry.cs`)* | not present under those names | Combat/foundry wiring lives in other partials, `src/Foundry/`, and the combat host/UI surfaces (`src/Host/CombatHostSession.cs`, `src/UI/CombatPanel.cs`); no `src/Combat/` directory exists. |
 
 ### Appendix C — Scenario Walkthroughs (design-replay, not implemented features)
 
@@ -3162,7 +3240,8 @@ it runs through does.
    payloads unwired, is the fix integrator-owned (store seams) or builder-owned?
    Per `WORKTREE_OWNERSHIP.md` at execution time.
 7. **Snapshot goldens.** Tasks 16/17/18/20 add or alter visible surfaces; which join
-   the 29-target golden set, and who re-baselines?
+   the snapshot-golden set (`docs/ui/SNAPSHOT_COVERAGE.md`, 31 documented targets),
+   and who re-baselines?
 8. **This document's maintenance.** Parts II–V carry a 2026-09-25 evidence date;
    when the shelter-operations stream lands, Task 17/20 rows and the `items.json`
    counts may need a dated correction pass. Suggest the foreman assign that as a
@@ -3184,8 +3263,18 @@ it runs through does.
   `docs/cli/HOST_CLI_COMMAND_CATALOG.md`) — this expansion defers to all of them
   wherever they speak, and flags (Appendix D.8) where drift between them and the
   tree needs an owner's correction.
-
-*End of expansion.*
+- **Quality-polish pass (2026-09-25, same day):** a second adversarial audit of this
+  expansion corrected in place, with re-verification against the tree: the verdict
+  evidence count (15 rows, 12 `evidence_*`-prefixed — was stated as "15
+  `evidence_*` items"), the vinyl album authority and count (`narrative/
+  vinyl_record_archive.json`, 30 records — was "not yet counted" and mis-attributed
+  to `items.json`), the snapshot-golden count (31 documented targets per
+  `docs/ui/SNAPSHOT_COVERAGE.md` — was "29"), two example crisis event IDs (now
+  verified rows `filter_failure`, `morale_crisis`), three nonexistent cited paths
+  (`src/Combat/`, `Assets/Ashfall.Core/Items/`, bare `ACCESSIBILITY.md`), evidence
+  label wording unified to the three-grade taxonomy, and the readiness-tally counts
+  in Appendix F reconciled to its own table. No label was upgraded to VERIFIED
+  except against a cited path read on 2026-09-25.
 
 ### Appendix F — Integration Readiness Checklist (per task, execution gate)
 
@@ -3223,17 +3312,17 @@ before editing. Readiness classes: **READY** (spec is executable as written),
 | 24 | AUDIT-ONLY | doc/index targets only | triad gate output; index diff or filed doc task |
 | 25 | READY-AFTER-DECISION (D1) | stance engine, validator, enumerated data files (shared files via integrator) | canonicalization tests; old-save fixture; validator rule test |
 
-Three closing observations from the readiness pass:
+Three closing observations from the readiness pass (counts as tabulated above;
+13 READY + 7 READY-AFTER-DECISION + 5 AUDIT-ONLY = 25):
 
-1. **Nine tasks are executable today with no further decisions** (1, 3, 4, 6, 7, 14,
-   16, 17, 20, 22, 23 — eleven counting the audit-only 2/24 starts), which is the
-   honest measure of how much of the 2026-08-21 plan survived five weeks intact.
-2. **Five tasks are one decision away** (5, 8, 9, 18, 21, plus 12/13's module and
-   wear adoptions) — in every case the blocker is a numeric or clock-semantics
-   signature, not architecture. The architecture was never the hard part; the
-   evidence discipline was.
-3. **Four tasks are already closed or closing as audits** (2-wiring, 10, 11, 15,
-   24) — the tree ran ahead of the plan. Recording that honestly, rather than
-   re-implementing what exists, is this expansion's core deliverable.
+1. **Thirteen tasks are executable today with no further decisions** (1, 3, 4, 6, 7,
+   12, 14, 16, 17, 19, 20, 22, 23), which is the honest measure of how much of the
+   2026-08-21 plan survived five weeks intact.
+2. **Seven tasks are one decision away** (5, 8, 9, 13, 18, 21, 25) — in every case
+   the blocker is a numeric or clock-semantics signature, not architecture. The
+   architecture was never the hard part; the evidence discipline was.
+3. **Five tasks are audit-only as scoped** (2-wiring, 10, 11, 15, 24) — the tree ran
+   ahead of the plan. Recording that honestly, rather than re-implementing what
+   exists, is this expansion's core deliverable.
 
 *End of Appendix F. End of the 2026-09-25 expansion.*
