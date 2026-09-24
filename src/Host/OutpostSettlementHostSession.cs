@@ -86,31 +86,60 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Establish an outpost, consuming build cost through the provider.</summary>
         public bool Establish(string outpostId, Func<string, int, bool>? costConsumer = null)
-            => System.EstablishOutpost(outpostId, costConsumer);
+        {
+            bool established = System.EstablishOutpost(outpostId, costConsumer);
+            if (established) RaiseStateChanged();
+            return established;
+        }
 
         /// <summary>Establish an outpost against the atomic canonical inventory bill.</summary>
         public bool TryEstablish(string outpostId, IPlayerInventoryPort? inventory)
-            => System.TryEstablishOutpost(outpostId, inventory);
+        {
+            bool established = System.TryEstablishOutpost(outpostId, inventory);
+            if (established) RaiseStateChanged();
+            return established;
+        }
 
         /// <summary>Assign a roster survivor to an outpost garrison.</summary>
         public bool AssignGarrison(string outpostId, string survivorId, Func<string, bool>? fitnessCheck = null)
-            => System.AssignGarrison(outpostId, survivorId, fitnessCheck);
+        {
+            bool assigned = System.AssignGarrison(outpostId, survivorId, fitnessCheck);
+            if (assigned) RaiseStateChanged();
+            return assigned;
+        }
 
         /// <summary>Relieve a garrison survivor back to central holdfast duty.</summary>
         public bool RelieveGarrison(string outpostId, string survivorId)
-            => System.RelieveGarrison(outpostId, survivorId);
+        {
+            bool relieved = System.RelieveGarrison(outpostId, survivorId);
+            if (relieved) RaiseStateChanged();
+            return relieved;
+        }
 
         /// <summary>Deliver rations to an outpost reserve.</summary>
         public bool Supply(string outpostId, int rationsDelivered)
-            => System.SupplyOutpost(outpostId, rationsDelivered);
+        {
+            bool supplied = System.SupplyOutpost(outpostId, rationsDelivered);
+            if (supplied) RaiseStateChanged();
+            return supplied;
+        }
 
         /// <summary>Supply an established outpost from canonical inventory.</summary>
         public bool TrySupply(string outpostId, string rationItemId, int rationsDelivered,
             IPlayerInventoryPort? inventory)
-            => System.TrySupplyOutpost(outpostId, rationItemId, rationsDelivered, inventory);
+        {
+            bool supplied = System.TrySupplyOutpost(outpostId, rationItemId, rationsDelivered, inventory);
+            if (supplied) RaiseStateChanged();
+            return supplied;
+        }
 
         /// <summary>Abandon an established outpost.</summary>
-        public bool Abandon(string outpostId) => System.AbandonOutpost(outpostId ?? string.Empty);
+        public bool Abandon(string outpostId)
+        {
+            bool abandoned = System.AbandonOutpost(outpostId ?? string.Empty);
+            if (abandoned) RaiseStateChanged();
+            return abandoned;
+        }
 
         /// <summary>Advance the daily outpost lifecycle.</summary>
         public void TickDay(Func<string, int, int>? centralRationSupplyProvider = null)
