@@ -186,7 +186,8 @@ so the owning lanes — not a decor builder — settle it.
 | V | Deep dives: runtime walkthroughs, save round-trip, selftest anatomy, test anatomy, drift policy | Test writers, QA |
 | VI | Cross-system interaction matrix and emergent-consequence design | Design, writers |
 | VII | Verification and acceptance: test matrix, gate commands, rollback | Foreman, integrator |
-| VIII | Glossary, ID vocabulary, scenario walkthroughs, open questions | Everyone |
+| VIII | Reference sections: glossary, ID vocabulary, schema reference, builder's cookbook, scenario walkthroughs, open questions, string catalog, replay checklist | Everyone |
+| A–D | Standalone appendices: governance context, contract quick-reference cards, working questions and answers, source verification log | Integrators, reviewers |
 
 All quotes from source are verbatim. Mermaid diagrams sketch control flow;
 where a diagram simplifies, the surrounding prose states the exact
@@ -290,7 +291,7 @@ File: `Assets/Ashfall.Core/Survivors/NeedsSystem.cs`, 440 lines, namespace
 | `SurvivorNeedsState.Morale` | Scalar, default `50f`, clamped 0..100 |
 | `IsAliveState` | `!IsDead && IsAlive` — the recipient filter `ApplyDailyMorale` uses |
 | `Modify(survivorId, need, delta)` | The write seam decor uses; no-ops for dead survivors and zero deltas |
-| `ApplyAttributedDelta(...)` | The attributed one-shot seam decor deliberately does **not** use (see III.4) |
+| `ApplyAttributedDelta(...)` | The attributed one-shot seam decor deliberately does **not** use (see III.5) |
 | `SetExternalModifier / RemoveExternalModifier / ClearExternalModifiers` | Persistent per-hour modifier stack; decor uses none of these — decor morale is a per-day discrete grant, not a rate |
 | `OnNeedChanged`, `OnNeedCritical`, `OnDied` | Downstream presentation/death events; a decor write can push Morale across presentation thresholds but never raises a critical event (Morale has no critical gate in `ApplyNeedDelta`) |
 | `RegisteredCount`, `Registered` | Ghost-registration detection; relevant to any host restore that touches survivors while decor runs |
@@ -663,7 +664,7 @@ question.
 
 ### IV.1 Module map
 
-```
+```text
 Ashfall.Core (netstandard2.1 — no engine references)
 ├── Shelter/ShelterDecorSystem.cs ............ placement registry + DTOs + modifier DTO
 ├── Survivors/NeedsSystem.cs ................. morale authority (written to, never extended)
@@ -954,8 +955,9 @@ lane.
 `SaveShelterDecor` (line 460). The setup order dependency is explicit in
 `Main.ExpandedShelterSystems.cs` line 144's comment — decor setup "uses the
 final assignment map + inventory catalog", so it must run after assignment
-and inventory setup; line 657 is the load-path re-assert. `Main.
-CampaignOwners.cs` line 1342 asserts setup before the daily gate (III.6).
+and inventory setup; line 657 is the load-path re-assert.
+`Main.CampaignOwners.cs` line 1342 asserts setup before the daily gate
+(III.6).
 
 ### IV.5 `ShelterDecorPanel` — player surface contract
 
@@ -1045,7 +1047,8 @@ then one of:
   the host, then repainting.
 
 Rooms also render empty trophy-slot cards for unoccupied
-`GetTrophySlots(roomId)` entries — `[TROPHY MOUNT] // TROPHY_MOUNT_1` with
+`GetTrophySlots(roomId)` entries — `[TROPHY MOUNT]  //  TROPHY_MOUNT_1`
+(double-spaced around the slash, verbatim) with
 "Place a trophy here (craft at workbench from rare quarry)" and a
 quick-mount button that fills the slot input and invokes the normal mount
 path (no special-case write).
@@ -1088,7 +1091,12 @@ behavioral facts are verified against the registry and host code. Every
 chapter states the morale effect with the channel convention fixed in I.4:
 deltas are positive values written into a Morale channel documented as
 higher = worse; the lane's tests, panel formatting, and criticality all
-treat the positive authored delta as the delivered effect. Common
+treat the positive authored delta as the delivered effect. Each chapter
+follows the same seven-field template — identity, authored delta,
+provenance, placement rules, item binding, interactions, narrative note;
+the three plaque chapters fold kind resolution and ledger status into the
+placement and binding fields, because plaques are bridge-projected rather
+than player-mounted. Common
 properties shared by all twelve: `type: "Component"`, `stackMax: 1`,
 `empShielded: false`, a positive `decorLocalizedMoraleDelta`, host category
 derived by `CategoryFor`, mount/removal through the same `TryMount`/
@@ -1290,11 +1298,12 @@ derived by `CategoryFor`, mount/removal through the same `TryMount`/
   and undecorated" — the wall's fallback: "the kind the corridor uses when
   the only specific thing the corridor knows is the name. The plaque
   accepts the name."
-- **Resolution rules.** `ResolvePlaqueItemId` returns it when the
-  heirloom's kind segment is empty (including any `..._default` tail) or
-  when the kind-specific plaque is not registered. It is the codified
-  never-empty answer of the bridge.
-- **Ledger status.** In live play this id reaches the registry only via
+- **Placement rules.** Never player-mounted; the bridge places it.
+  `ResolvePlaqueItemId` returns it when the heirloom's kind segment is
+  empty (including any `..._default` tail) or when the kind-specific
+  plaque is not registered. It is the codified never-empty answer of the
+  bridge.
+- **Item binding.** In live play this id reaches the registry only via
   `TryMountMemorialPlaque` — mounted with `IsMemorialPlaque = true`,
   provenance fields set, and no inventory consumption. A unit held in
   storage would be an ordinary tradeable item; nothing in the lane
@@ -1316,12 +1325,13 @@ derived by `CategoryFor`, mount/removal through the same `TryMount`/
   the forge teacher for a survivor whose last trade was pewter" — the
   carving depicts the trade's tool, "carried out by the survivor once and
   twice and not again."
-- **Resolution rules.** Selected when the heirloom's trailing kind segment
+- **Placement rules.** Bridge-placed, never player-mounted. Selected when
+  the heirloom's trailing kind segment
   is `carving` and the modifier is registered — the exact path the
   selftest exercises with
   `item_personal_keepsake_probe_carving`, and the Core tests exercise with
   `item_personal_keepsake_eli_pewter_carving`.
-- **Ledger status.** Same as the generic plaque: projection-only mount,
+- **Item binding.** Same as the generic plaque: projection-only mount,
   provenance preserved, inventory untouched.
 - **Interactions.** The kind resolution is ordinal-exact on the trailing
   segment; a heirloom id ending `_carving` and a plaque id ending
@@ -1341,8 +1351,9 @@ derived by `CategoryFor`, mount/removal through the same `TryMount`/
   winter." The drawing is a chimney — the one the survivor rebuilt, "the
   chimney the children still see when they walk out toward the hatch" —
   drawn as the children remember it.
-- **Resolution rules.** Selected for trailing kind segment `drawing`.
-- **Ledger status.** Same projection-only mount as the other two
+- **Placement rules.** Bridge-placed, never player-mounted; selected for
+  trailing kind segment `drawing`.
+- **Item binding.** Same projection-only mount as the other two
   variants; exercised by the Core test
   `DecorSystem_ResolvePlaqueItemId_FindsKindSpecific_WhenRegistered`.
 - **Interactions.** Identical bridge behavior to IV.6.11.
@@ -1522,7 +1533,7 @@ produced the current golden (from the manifests and the closeout record):
    `baseline_bytes: 103917` and status "MATCH — DESIGN_INTENT (populated
    fixture)" in `snapshot_manifest.json`. The local run matched the
    103,917 B target; the global gate still failed on 29 unrelated
-   pre-existing drifts (Part V.5).
+   pre-existing drifts (Part V.6).
 4. `SNAPSHOT_COVERAGE.md` carries the row: `ShelterDecorPanel` /
    `shelter_decor_default` / "COVERED — populated real
    catalog/inventory/assignment/memorial fixture".
@@ -1570,7 +1581,7 @@ sequenceDiagram
 Failure branches at any rung return the verbatim reason strings of IV.3;
 the only branch that mutates two systems is rung 7, and it refunds. After
 the mount, the panel's aggregate cards change immediately (mounted +1,
-rooms +1, room delta +1.5, morale card resum) while no survivor's Morale
+rooms +1, room delta +1.5, morale card resumes) while no survivor's Morale
 scalar has moved — the wall is ahead of the day, and the daily pass is
 where the fiction catches up.
 
@@ -1615,9 +1626,10 @@ sequenceDiagram
 
 Step-traced:
 
-1. **Gate.** Mess hall powered → proceed. If unpowered: skip to event
-   emission with zero (which suppresses the event too) — the whole lane is
-   silent for the day, and the panel's LastEvent keeps its previous string.
+1. **Gate.** Mess hall powered → proceed. If unpowered:
+   `ApplyDailyMorale` is never called, recipients stay 0, and the `> 0`
+   guard suppresses the event too — the whole lane is silent for the day,
+   and the panel's `LastEvent` keeps its previous string.
 2. **Iteration.** Assignments come back in registry order. `room_bunks`
    assignment #1: delta 2.5 (poster 1.5 + drawing 1.0, ordinal slot order
    north_wall then shelf_1), survivor alive → `Modify(Morale, +2.5)`.
@@ -1694,9 +1706,10 @@ poster in this story; read order is never load-bearing because
 2. `RestoreState(saved.Capture())` replaces the placements list; one
    `OnStateChanged` fires.
 3. Session constructed; `SetCurrentDay(_simDay)`; `LoadCatalogModifiers()`
-   rebuilds the twelve-plus modifiers from the live catalog — a save from
-   before a catalog growth loads its old placements untouched and simply
-   gains the new modifiers' availability.
+   rebuilds the full current modifier set (23 `item_decor_*` rows on the
+   expansion date) from the live catalog — a save from before a catalog
+   growth loads its old placements untouched and simply gains the new
+   modifiers' availability.
 4. Memorial reconcile: the veteran's entry is already on the wall → the
    idempotence guard answers "already carries this survivor's plaque" and
    the loop moves on; any *ledger* entry predating the wall gets its
@@ -1970,7 +1983,7 @@ through the same registry.
 
 ---
 
-## Part VI — Cross-System Interaction Matrix & Emergent-Consequence Design
+## Part VI — Cross-System Interaction Matrix and Emergent-Consequence Design
 
 ### VI.1 Interaction matrix
 
@@ -2097,7 +2110,7 @@ uniqueness rule (one item per named surface) makes the shelter's walls a
 finite, competed-for space, which is where the caretaking pressure comes
 from: there are fewer good walls than meaningful objects.
 
-**The wall as record.** Plaques are permanent, player-unteouchable,
+**The wall as record.** Plaques are permanent, player-untouchable,
 ledger-backed, and identical in treatment regardless of death quality.
 The one-way bridge means the community cannot revise its dead — no
 removal, no re-mount, no storage round-trip. The emergent consequence is
@@ -2122,7 +2135,7 @@ each of them is a fact about the shelter, stated in material terms.
 
 ---
 
-## Part VII — Verification & Acceptance
+## Part VII — Verification and Acceptance
 
 ### VII.1 Verification philosophy for this lane
 
@@ -2259,7 +2272,7 @@ section; verify before retiring the lane in a shipping build).
 
 ---
 
-## Part VIII — Appendices
+## Part VIII — Reference Sections
 
 ### VIII.1 Glossary
 
@@ -2627,10 +2640,9 @@ interior panel before.
 Beat by beat:
 
 1. The player opens `shelter_decor` from the expanded shelter group. The
-   panel binds; the picker seeds to `room_bunks` (first room with
-   placements — there are none, so selection lands on index 0, which is
-   the corridor... actually the picker's first-open rule scans for
-   decorated rooms, finds none, and falls to index 0). The rail reads
+   panel binds; the picker's first-open rule scans for a decorated room,
+   finds none on this bare first day, and falls to index 0 — the corridor.
+   The rail reads
    mounted 0, rooms 0, +0.0, plaques 0. The event line: "The wall is
    quiet. Nothing has been mounted in this session."
 2. The storage column shows exactly the decor the catalog knows, with
@@ -2730,7 +2742,9 @@ outcome Burial, `MournedDay` still −1.
    relations grief at the Unattended 1.25 scale through the
    survivor-relations system — completely outside this lane. The vigil,
    when the player holds it, flips `MournedDay` on the ledger and applies
-   its morale recovery through the attributed seam. The wall does not
+   its morale adjustment through the attributed seam — a different lane's
+   write, not a decor write, so the I.4 convention statement does not
+   govern its sign. The wall does not
    change. The plaque is not a grief mechanism; it is the record that
    grief has a place to stand.
 5. **Save and reload.** The plaque persists inside the checksummed
@@ -2855,7 +2869,9 @@ and no Godot sessions. Its epistemic state, as of 2026-09-25:
 
 **Verified (read directly from working-tree source/data this expansion):**
 
-- 25 file paths with sizes/line counts (Part II.1 map) — all opened.
+- Every path in the Part II.1 ownership map — all 24 concern rows opened;
+  the sizes and line counts quoted in Parts II and V (339, 440, 398/19,
+  356, 103,917 B) were read from the cited files.
 - Full text of: `ShelterDecorSystem.cs` (339 lines),
   `ShelterDecorHostSession.cs` (326), `ShelterDecorSaveStore.cs` (107),
   `ShelterDecorSelfTest.cs` (118), `ShelterDecorPanel.cs` (443),
@@ -3184,7 +3200,8 @@ source, so a localization or QA pass can sweep them in one place.
 | Selftest summary | `EmitSummary("shelter_decor_selftest", ...)` → `"PASS"` or `"FAIL ({failures})"` |
 | Save decode errors | `ShelterDecor: empty checksum` / `ShelterDecor: checksum mismatch` |
 
-Count: 21 host strings, 18 panel strings, 6 campaign/log forms — all
+Count: 21 host strings, 16 panel rows (24 strings counting paired
+variants), 6 campaign/log forms — all
 restrained, all material, none editorializing.
 
 ### VIII.14 Design note vs. shipped bridge — a truthful comparison
@@ -3266,11 +3283,13 @@ plaque provenance model, the panel UX contract, the snapshot/QA
 lifecycle, runtime walkthroughs with sequence diagrams, the selftest and
 test-suite anatomies, the snapshot drift policy, the cross-system
 interaction matrix, the emergent-consequence design notes, verification
-matrices and gate records, a rollback plan, and the appendices
-(glossary, ID vocabulary, schema reference, builder's cookbook, scenario
-walkthroughs, open questions, evidence ledger, reading order, prose
-register, misconception list, string catalog, design-note comparison,
-replay checklist).
+matrices and gate records, a rollback plan, and the Part VIII reference
+sections (glossary, ID vocabulary, schema reference, builder's cookbook,
+scenario walkthroughs, open questions, evidence ledger, reading order,
+prose register, misconception list, string catalog, design-note
+comparison, replay checklist); four standalone appendices (A–D) add the
+governance map, contract quick-reference cards, working questions and
+answers, and the source verification log.
 
 **What it deliberately does not do.** Propose code, settle the open
 questions of VIII.6, re-run any gate, resolve the morale polarity
@@ -3284,12 +3303,6 @@ working tree on 2026-09-25. The next reader should treat this document
 the way the lane treats its own saves: stamped, checksummed against
 reality at write time, and re-verified before being trusted after the
 world has moved.
-
----
-
-*Expansion appended 2026-09-25. Original closeout record above preserved
-byte-for-byte. Documentation-only change; no code, data, or test files
-were modified.*
 
 ---
 
@@ -3371,7 +3384,7 @@ are what to check during review.
 
 **Card 1 — `ShelterDecorSystem` (Core registry).**
 
-```
+```text
 Owns:      (roomId, slotId) -> itemId + plaque provenance
 Writes:    Assign / Remove / RestoreState only
 Reads:     GetSlot / ListRoomPlacements (ordinal) / GetRoomMoraleDelta (sum)
@@ -3384,7 +3397,7 @@ Accepts:   any strings; rejects only empty roomId/slotId
 
 **Card 2 — `ShelterDecorHostSession` (host bridge).**
 
-```
+```text
 Deps:      ShelterDecorSystem + ShelterAssignmentSystem + NeedsSystem + InventoryHostSession (all non-null)
 Boot:      LoadCatalogModifiers (live catalog, item_decor_* prefix, upsert)
 Mount:     7-rung ladder -> consume 1 -> Assign; refund on Assign failure
@@ -3397,7 +3410,7 @@ Events:    System.OnStateChanged -> RaiseStateChanged; inventory -> presentation
 
 **Card 3 — `ShelterDecorSaveStore` (persistence).**
 
-```
+```text
 File:      shelter_decor_save.json   Section: shelter_decor
 Payload:   systemId + Checksum + Placements[]   (never modifiers, never day)
 Encode:    checksum stamped (twice-safe)
@@ -3407,7 +3420,7 @@ Direct:    TryCapture/TryRestore string round-trip for gates
 
 **Card 4 — `ShelterDecorPanel` (player surface).**
 
-```
+```text
 Route:     shelter_decor (Expanded group, interactive, snapshot-covered)
 Bind:      session only; StateChanged + PresentationRefreshRequested -> RefreshView
 Refresh:   re-derive everything; no cached rows; host owns all sentences
@@ -3419,7 +3432,7 @@ Special:   plaques render provenance, no actions; trophies get mounts + craft hi
 
 **Card 5 — Daily tick integration (call site).**
 
-```
+```text
 Order:     SetupShelterDecor -> power gate -> ApplyDailyMorale -> day event -> contagion
 Gate:      IsRoomPowered("room_common_mess_hall") ?? true
 Event:     shelter_decor_morale (payload recipients, only if > 0), SemanticKind.Shelter
@@ -3428,7 +3441,7 @@ Wall:      never contributes (no assignments)
 
 **Card 6 — Verification bundle.**
 
-```
+```text
 Core:      Plan12CDecorTests.cs — 21 facts (run_test.sh focused)
 Host:      --shelter-decor-selftest (+ 2 aliases) — 15 stages, real objects
 Visual:    shelter_decor_default golden — 1280x800, seed 12012, md5-fingerprinted
@@ -3450,8 +3463,7 @@ no code change. If the effect is not room-local (a carried charm, a base
 radio), this is the wrong lane: use the attributed external-modifier seam
 on `NeedsSystem` through its own owner, and leave this registry alone.
 
-**C.2 "The panel shows a morale number that disagrees with the briefing."
-**
+**C.2 "The panel shows a morale number that disagrees with the briefing."**
 Check the two computations' inputs first: the panel shows the instantaneous
 sum of `delta × active-alive occupants` per room; the briefing reports
 what the *daily pass actually wrote* for the day, behind the power gate
@@ -3470,27 +3482,24 @@ names.
 **C.4 "Can I mount two items on one slot?"**
 No — ordinal (roomId, slotId) uniqueness is the registry's core
 invariant. Assigning again replaces. If the design ever wants stacked
-wall items, that is a new slot-vocabulary decision (VIII.4.5), not a
+wall items, that is a new slot-vocabulary decision (VIII.4.4), not a
 relaxation of uniqueness.
 
-**C.5 "I deleted a decor item's catalog row and now a slot is stuck."
-**
+**C.5 "I deleted a decor item's catalog row and now a slot is stuck."**
 Known limitation VII.5.3. The placement contributes zero and cannot
 return to storage (remove needs the catalog row). Options: restore the
 row, or wait for the orphan-affordance decision (Q5). Do not hand-edit
 `shelter_decor_save.json` — the checksum will (correctly) reject the
 edit.
 
-**C.6 "Why does my plaque show the raw heirloom id on the card?"
-**
+**C.6 "Why does my plaque show the raw heirloom id on the card?"**
 The provenance line prints the ledger's strings verbatim — survivor id
 and heirloom id — because those are the two facts the wall stores.
 Display-name prettification would be a panel presentation change reading
 other authorities at render time; the current card is honest to its
 sources. If you add prettification, keep the raw ids in a tooltip.
 
-**C.7 "Should the daily pass use ApplyAttributedDelta?"
-**
+**C.7 "Should the daily pass use ApplyAttributedDelta?"**
 That is open question Q4. The facts to weigh: attribution would surface
 decor morale in the briefing's attribution window and persist as
 recorded contributions; the current design keeps the grant invisible to
@@ -3498,24 +3507,21 @@ attribution and remembers only session totals. Both are defensible;
 switching is a host-side, test-visible change — take it through the
 day-feed owner, not silently.
 
-**C.8 "The selftest fails at stage 4 with a count mismatch."
-**
+**C.8 "The selftest fails at stage 4 with a count mismatch."**
 That is the exact-count pin meeting the grown catalog (V.4, Q1). The
 failure is informative, not fatal: it says the registry registered
 today's full `item_decor_` family. Resolve per Q1's options — and until
 resolved, treat a stage-4-only failure as a known tension, documented
 here, not as a morale or storage regression.
 
-**C.9 "Where do I add a new user-facing sentence?"
-**
+**C.9 "Where do I add a new user-facing sentence?"**
 In the host session or the call site — the sources of every operational
 string (VIII.13). The panel renders `LastEvent` and fixed layout strings
 only. If the sentence describes an outcome, the host must be able to
 assert it in the selftest; if it cannot, the sentence is not yet true.
 
 **C.10 "Can another system write placements directly via
-ShelterDecorSystem.Assign?"
-**
+ShelterDecorSystem.Assign?"**
 Technically yes (it is public); by architecture no. Every shipped writer
 goes through a host-session method with validation and refund discipline.
 A new writer (say, an event that gifts a decoration) should add its own
@@ -3523,26 +3529,18 @@ host-session method following the ladder, not call `Assign` raw —
 otherwise inventory and registry can disagree, which is the one invariant
 the whole mount design protects.
 
-**C.11 "Does decor morale stack across rooms for one survivor?"
-**
+**C.11 "Does decor morale stack across rooms for one survivor?"**
 No. A survivor has at most one active room assignment, so they receive
 exactly one room's delta per day. The cumulative panel figure sums across
 rooms × occupants — it is a shelter-wide statistic, never one survivor's
 intake.
 
-**C.12 "How do I verify my change without running Godot?"
-**
+**C.12 "How do I verify my change without running Godot?"**
 If your change is Core-only (registry, DTOs, section rows, data): the
 focused Core file covers it (checklist VIII.15 item 2). If it touches
 inventory movement, morale arithmetic, plaque projection, or panel
 behavior: that is exactly what the selftest stages 5–14 exist for, and
 there is no Core substitute — the integration is the behavior.
-
----
-
-*End of expansion. Original 2026-08-31 closeout record preserved above,
-byte-for-byte. This expansion is documentation-only: one file changed,
-nothing executed, nothing committed.*
 
 ## Appendix D — Source Verification Log
 
@@ -3576,3 +3574,10 @@ VIII.7.
 
 The log ends where the writing began: every appended section cites this
 phase, and nothing outside this file was written.
+
+---
+
+*Expansion appended 2026-09-25; end of expansion. Original 2026-08-31
+closeout record preserved above, byte-for-byte. This expansion is
+documentation-only: one file changed, nothing executed, nothing
+committed.*

@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5412 | **Total Characters:** 1,694,953,234 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 1959 documents carrying 1,651,799,022 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5412 | **Total Characters:** 1,695,043,981 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 1959 documents carrying 1,651,872,211 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 1959 documents, 1,651,799,022 characters
+## Oversized Document Register (>= 100,000 characters) — 1959 documents, 1,651,872,211 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1647,6 +1647,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 256,758 | [`docs/factions/PATROL_TRIGGER_MATRIX.md`](factions/PATROL_TRIGGER_MATRIX.md) |
 | 256,363 | [`docs/standing_record/STANDING_RECORD_FACTION_WIRING_TRACER.md`](standing_record/STANDING_RECORD_FACTION_WIRING_TRACER.md) |
 | 256,181 | [`docs/expansions/CROSSING_DEPTH_AUDIT.md`](expansions/CROSSING_DEPTH_AUDIT.md) |
+| 256,078 | [`piagentsplans/01-needs-radiation-save-roundtrip-tests.md`](../piagentsplans/01-needs-radiation-save-roundtrip-tests.md) |
 | 256,061 | [`docs/bodymind/BODY_MIND_AUTHORITY_MAP.md`](bodymind/BODY_MIND_AUTHORITY_MAP.md) |
 | 256,004 | [`docs/maritime/PLAN23_SAVE_COMPATIBILITY.md`](maritime/PLAN23_SAVE_COMPATIBILITY.md) |
 | 255,903 | [`docs/radio/RADIO_RECORDING_CONTRACT.md`](radio/RADIO_RECORDING_CONTRACT.md) |
@@ -1843,7 +1844,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 188,971 | [`piagentsplans/31-world-content-master-roadmap.md`](../piagentsplans/31-world-content-master-roadmap.md) |
 | 187,462 | [`docs/expansions/wave28/expansion_145_the_answer_does_not_open_the_door_plan.md`](expansions/wave28/expansion_145_the_answer_does_not_open_the_door_plan.md) |
 | 186,706 | [`docs/expansions/wave28/expansion_146_the_label_is_not_the_seed_plan.md`](expansions/wave28/expansion_146_the_label_is_not_the_seed_plan.md) |
-| 182,889 | [`piagentsplans/01-needs-radiation-save-roundtrip-tests.md`](../piagentsplans/01-needs-radiation-save-roundtrip-tests.md) |
 | 181,937 | [`docs/expansions/wave28/expansion_147_the_mine_mouth_waits_plan.md`](expansions/wave28/expansion_147_the_mine_mouth_waits_plan.md) |
 | 181,295 | [`docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`](ASHFALL_IMPLEMENTED_CANON_REGISTRY.md) |
 | 179,405 | [`docs/plans/wave3_integration/W3-02_ECONOMY_LOGISTICS.md`](plans/wave3_integration/W3-02_ECONOMY_LOGISTICS.md) |
@@ -7431,9 +7431,9 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_STANDING_HANDOFF.md`](year_of_ash/YEAR_OF_ASH_STANDING_HANDOFF.md) | 576 | **Year of Ash Standing Handoff** — Standing remains owned by the existing faction-war system. The live host path reads |
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_TERMINAL_CONTRACT.md`](year_of_ash/YEAR_OF_ASH_TERMINAL_CONTRACT.md) | 443 | **Year of Ash Terminal Contract** — Terminal status is represented by `isTerminal` plus the existing `terminalOutcome` enum. The live |
 | 🟢 `CURRENT` | [`piagentsplans/00-master-roadmap.md`](../piagentsplans/00-master-roadmap.md) | 13,729 | **ASHFALL — Master Roadmap: 20 Evidence-Grounded Next Steps** — None block development outright — tests are green and migration is complete. The P0 list below |
-| 🟢 `CURRENT` | [`piagentsplans/01-needs-radiation-save-roundtrip-tests.md`](../piagentsplans/01-needs-radiation-save-roundtrip-tests.md) | 182,889 | **Plan 01 — NeedsSystem & RadiationSystem Save Round-Trip Integrity, Metabolic Simulation & Deterministic State Verification (closes H10)** — **Package:** `PLAN-01-NEEDS-RADIATION-SAVE-ROUNDTRIP-TESTS` |
+| 🟢 `CURRENT` | [`piagentsplans/01-needs-radiation-save-roundtrip-tests.md`](../piagentsplans/01-needs-radiation-save-roundtrip-tests.md) | 256,078 | **Plan 01 — NeedsSystem & RadiationSystem Save Round-Trip Integrity, Metabolic Simulation & Deterministic State Verification (closes H10)** — **Package:** `PLAN-01-NEEDS-RADIATION-SAVE-ROUNDTRIP-TESTS` |
 | 🟢 `CURRENT` | [`piagentsplans/02-09-consolidated-remaining-work.md`](../piagentsplans/02-09-consolidated-remaining-work.md) | 14,537 | **Plans 02–09 — Consolidated Remaining Work** — Finish only the verified gaps across catalog loading, data authority, relic research unlocks, |
-| 🟢 `CURRENT` | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) | 2,058 | **Plan 02 — Eliminate Bare `catch { }` in Catalog Loaders (closes H4)** — Close known issue H4: replace the 13 silent `catch { }` blocks in |
+| 🟢 `CURRENT` | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) | 19,616 | **Plan 02 — Comprehensive Catalog Ingestion Hardening, Diagnostic Telemetry & Zero Silent Failure Architecture (closes H4)** — **Package:** `PLAN-02-LOADER-BARE-CATCH-HARDENING` |
 | 🟢 `CURRENT` | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) | 2,304 | **Plan 03 — `schema_version` & Data-Authority Hygiene Sweep** — Bring every root-level JSON catalog in `Assets/StreamingAssets/Data/` up to the authority |
 | 🟢 `CURRENT` | [`piagentsplans/04-relic-blueprint-expansion.md`](../piagentsplans/04-relic-blueprint-expansion.md) | 2,471 | **Plan 04 — Workshop Relic Blueprint Expansion (6 → 30 relics)** — Exploit the fully-implemented, underused `WorkshopReverseEngineeringSystem` by expanding |
 | 🟢 `CURRENT` | [`piagentsplans/05-vinyl-record-catalog.md`](../piagentsplans/05-vinyl-record-catalog.md) | 2,513 | **Plan 05 — Vinyl Record Catalog Expansion (1 → 20 albums)** — Give the fully-wired `VinylMoraleSystem` (turntable playback, duration tracking, shelter-wide |
