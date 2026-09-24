@@ -74,6 +74,8 @@ namespace Ashfall.Core.Tests
                 "FitnessForDuty", // D1 2026-09-17: Plan 24A derived fitness verdicts over existing persisted survivor authorities; the model is intentionally not a save section or a second survivor ledger
                 "Difficulty", // XP-01 difficulty selection and persistence is stored in the campaign envelope manifest, not a standalone save section
                 "NeedsPerformance", // Plan 137: NeedsPerformanceBridge is a pure domain projection over the live survivor needs state; modifiers are calculated dynamically with zero persistent state, avoiding parallel needs stores per Rule 5
+                "AudioAccessibility", // Plan 169: Audio accessibility coordinator binds to live AudioManager and UserSettingsStore; persistent preferences belong to user settings, not campaign save slots
+                "TunnelNetwork", // Plan 167: TunnelNetworkSystem is owned and persisted through WastelandMapSystem.Tunnels inside the canonical world-map save section; no duplicate save store
             };
 
 

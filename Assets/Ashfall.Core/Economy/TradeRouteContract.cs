@@ -19,6 +19,14 @@ namespace Ashfall.Core.Economy
         Failed = 3
     }
 
+    public struct TradeRouteCensus
+    {
+        public int ActiveContracts;
+        public int TotalRunsCompleted;
+        public int TotalRunsFailed;
+        public int TotalTariffChitsPaid;
+    }
+
     [Serializable]
     public sealed class TradeRouteGoodLeg
     {

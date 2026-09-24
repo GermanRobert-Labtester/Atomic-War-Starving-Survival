@@ -157,6 +157,42 @@ namespace Ashfall.Core.Audio
             }
         }
 
+        public void BindCatalog(AudioAccessibilityCatalogData data)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            if (data.Cues != null && data.Cues.Count > 0)
+            {
+                _cues.Clear();
+                foreach (var cue in data.Cues)
+                {
+                    if (!string.IsNullOrEmpty(cue.CueId))
+                        _cues[cue.CueId] = cue;
+                }
+            }
+
+            if (data.MixPresets != null && data.MixPresets.Count > 0)
+            {
+                _presets.Clear();
+                foreach (var preset in data.MixPresets)
+                {
+                    if (!string.IsNullOrEmpty(preset.PresetId))
+                        _presets[preset.PresetId] = preset;
+                }
+            }
+        }
+
+        public AudioAccessibilityCensus GetCensus()
+        {
+            return new AudioAccessibilityCensus(
+                _cues.Count,
+                _presets.Count,
+                _activePresetId,
+                _activeDuckingDb,
+                _coalescedAlertCount,
+                _lastNotification != null);
+        }
+
         public bool TriggerCue(string cueId, double currentTimestampSeconds, out VisualAudioNotification? notification)
         {
             notification = null;
@@ -288,6 +324,36 @@ namespace Ashfall.Core.Audio
                 DialogueDuckingAttenuationDb = -14.0f,
                 HighFrequencyAttenuationDb = -4.0f
             };
+        }
+    }
+
+    /// <summary>
+    /// Read-only census of live audio-accessibility state (Plan 169). Exposed for
+    /// the architecture scanner and the host self-test probe.
+    /// </summary>
+    public struct AudioAccessibilityCensus
+    {
+        public int TotalCues { get; }
+        public int TotalMixPresets { get; }
+        public string ActivePresetId { get; }
+        public float ActiveDuckingDb { get; }
+        public int CoalescedAlertCount { get; }
+        public bool HasEmittedNotification { get; }
+
+        public AudioAccessibilityCensus(
+            int totalCues,
+            int totalMixPresets,
+            string activePresetId,
+            float activeDuckingDb,
+            int coalescedAlertCount,
+            bool hasEmittedNotification)
+        {
+            TotalCues = totalCues;
+            TotalMixPresets = totalMixPresets;
+            ActivePresetId = activePresetId;
+            ActiveDuckingDb = activeDuckingDb;
+            CoalescedAlertCount = coalescedAlertCount;
+            HasEmittedNotification = hasEmittedNotification;
         }
     }
 }

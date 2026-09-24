@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 161,
-  "headless_test_count": 159,
+  "total_tests": 165,
+  "headless_test_count": 163,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -920,6 +920,58 @@
       "description": "Plan 175 meta progression & cross-run profile store: prestige scoring, crests, and NG+ boons",
       "headless_compatible": true,
       "expected_summary_id": "meta_progression_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "trade_routes_selftest",
+      "action": "TradeRoutesSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--trade-routes-selftest",
+      "aliases": [
+        "--trade-route-selftest"
+      ],
+      "description": "Plan 192 scheduled trade route contracts: tariffs, reliability tiers, exclusive goods, and cancellation cooldown",
+      "headless_compatible": true,
+      "expected_summary_id": "trade_routes_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "human_migration_selftest",
+      "action": "HumanMigrationSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--human-migration-selftest",
+      "aliases": [
+        "--migration-selftest"
+      ],
+      "description": "Plan 199 seasonal human migration engine: regional population weights, seasonal dwell hysteresis, and transition scheduling",
+      "headless_compatible": true,
+      "expected_summary_id": "human_migration_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "tunnel_network_selftest",
+      "action": "TunnelNetworkSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--tunnel-network-selftest",
+      "aliases": [
+        "--tunnel-selftest"
+      ],
+      "description": "Plan 167 underground tunnel network: authored topology, discovery, integrity/hazards, daily wear, and census",
+      "headless_compatible": true,
+      "expected_summary_id": "tunnel_network_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "audio_accessibility_selftest",
+      "action": "AudioAccessibilitySelfTest",
+      "category": "Presentation & Accessibility",
+      "primary_flag": "--audio-accessibility-selftest",
+      "aliases": [
+        "--audio-access-selftest"
+      ],
+      "description": "Plan 169 audio accessibility & mix legibility: visual cue mapping, side-chain ducking, alert coalescing, and mix presets",
+      "headless_compatible": true,
+      "expected_summary_id": "audio_accessibility_selftest",
       "timeout_seconds": 30
     },
     {

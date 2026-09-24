@@ -235,6 +235,10 @@ namespace AtomicWar.GodotApp
             // survivor was ever assigned an origin).
             AssignMissingBackstories();
 
+            // Plan 169 — bind audio accessibility (catalog, ducking, presets) and
+            // the day-fact -> critical-cue bridge.
+            SetupAudioAccessibility();
+
             // Plan 140 — Apply generational legacy starting context to New Game
             var legacyContext = PrepareStartingCampaignContext();
             if (legacyContext != null)

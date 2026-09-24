@@ -48,6 +48,15 @@ namespace AtomicWar.GodotApp.UI
         /// <summary>Read-only backstory projection supplied by Main (Plan 174).</summary>
         public Func<string, Ashfall.Core.Survivors.SurvivorBackstory?>? BackstoryProvider { get; set; }
 
+        /// <summary>Read-only bunker faction projection supplied by Main (Plan 148).</summary>
+        public Func<string, string?>? IdeologicalFactionProvider { get; set; }
+
+        /// <summary>Read-only romantic relationship projection supplied by Main (Plan 150).</summary>
+        public Func<string, (string PartnerId, string Stage, bool IsSoulmate)?>? RomanceProvider { get; set; }
+
+        /// <summary>Read-only family unit projection supplied by Main (Plan 150).</summary>
+        public Func<string, string?>? FamilyProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
@@ -155,6 +164,29 @@ namespace AtomicWar.GodotApp.UI
             {
                 var (_, frictionLabel) = Ashfall.Core.Survivors.SurvivorEnrichmentService.ResolveFrictionBelief(view.BeliefProfileId);
                 AddRow(_survivorInfo, $"Ideological Tension: Opposes {frictionLabel}", Ashfall.Core.UI.Theme.Warm);
+                RenderedRowCount++;
+            }
+
+            var faction = IdeologicalFactionProvider?.Invoke(s.Id);
+            if (!string.IsNullOrEmpty(faction))
+            {
+                AddRow(_survivorInfo, $"Bunker Faction: {faction}", Ashfall.Core.UI.Theme.Warm);
+                RenderedRowCount++;
+            }
+
+            var romance = RomanceProvider?.Invoke(s.Id);
+            if (romance != null)
+            {
+                string partnerName = Name(romance.Value.PartnerId);
+                string soulmateTag = romance.Value.IsSoulmate ? " · Soulmate" : string.Empty;
+                AddRow(_survivorInfo, $"Relationship: {partnerName} ({romance.Value.Stage}{soulmateTag})", Ashfall.Core.UI.Theme.Warm);
+                RenderedRowCount++;
+            }
+
+            var family = FamilyProvider?.Invoke(s.Id);
+            if (!string.IsNullOrEmpty(family))
+            {
+                AddRow(_survivorInfo, $"Family Unit: {family}", Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
 

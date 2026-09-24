@@ -1,9 +1,9 @@
 # ASHFALL — Evidence-Derived Architecture & Verification Graph
 
-**Last Verified:** 2026-09-23<br>
-**Total Subsystems Mapped:** 234/234 (100.0%)<br>
-**Verified End-to-End Coverage:** 144/234 (61.5% across all 6 vertical layers)<br>
-**Status Breakdown:** Implemented: 234/234 | Constructed: 234/234 | Ticked: 234/234 | Persisted: 234/234 | Routed: 159/234 | Tested: 174/234<br>
+**Last Verified:** 2026-09-24<br>
+**Total Subsystems Mapped:** 236/236 (100.0%)<br>
+**Verified End-to-End Coverage:** 144/236 (61.0% across all 6 vertical layers)<br>
+**Status Breakdown:** Implemented: 236/236 | Constructed: 236/236 | Ticked: 236/236 | Persisted: 236/236 | Routed: 159/236 | Tested: 176/236<br>
 **Single Source of Truth:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` & `Assets/Ashfall.Core/HostCliRegistry.cs`
 
 > **GENERATED FILE — do not edit by hand.**
@@ -79,216 +79,218 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 22 | `sound_ranging` | Combat & Defense | `SoundRangingThreatEngine` | `sound_ranging_catalog.json` | `SoundRangingHostSession` | `SoundRangingSaveStore` | `SoundRangingPanel` | `--plans-122-125-selftest`, `Plan123SoundRangingThreatEngineTests` | ✅ 6/6 |
 | 23 | `time_capsules` | Communication & Heritage (Plan 212) | `TimeCapsuleSystem` | — *(Procedural)* | `TimeCapsuleHostSession` | `TimeCapsuleSaveStore` | `TimeCapsulePanel`, `GameDashboardPanel` | `--time-capsule-selftest`, `Plan212TimeCapsuleIntegrationTests`, `TimeCapsuleSystemTests` | ✅ 6/6 |
 | 24 | `chemical_synthesis` | Crafting & Chemistry | `ChemicalSynthesisSystem` | `chemical_syntheses.json` | `ChemicalSynthesisHostSession` | `ChemicalSynthesisSaveStore` | `ChemicalLabPanel` | `--save-store-checksum-selftest`,  | ❌ GAP |
-| 25 | `black_market` | Economy & Trade | `BlackMarketSystem`, `BlackMarketInventoryCatalog` | `black_market_inventory.json` | `BlackMarketHostSession` | `BlackMarketSaveStore` | *None (GAP)* | , `Plan211BlackMarketTests`, `Plan211BlackMarketHostWiringTests` | ❌ GAP |
-| 26 | `caravan` | Economy & Trade | `TravelingCaravanSystem` | `trade_texts.json` | `TravelingCaravanHostSession` | `CaravanSaveStore` | `TravelingCaravanPanel` | `--caravan-selftest`, `TradeCaravanCatalogTests` | ✅ 6/6 |
-| 27 | `caravan_trade_network` | Economy & Trade | `CaravanTradeNetworkSystem` | `caravan_trade_routes.json` | `Main` | `CaravanTradeSaveStore` | `TravelingCaravanPanel` | `--caravan-selftest`, `CaravanTradeNetworkTests` | ✅ 6/6 |
-| 28 | `economy` | Economy & Trade | `MarketSystem` | `economy_goods.json` | `EconomyHostSession` | `EconomySaveStore` | `EconomyMarketPanel`, `EconomyDetailPanel` | `--economy-selftest`, `--economy-uitest`, `DynamicEconomyCharacterizationTests` | ✅ 6/6 |
-| 29 | `regional_treaty` | Economy & Trade | `RegionalTreatySystem` | `faction_lore.json` | `RegionalTreatyHostSession` | `RegionalTreatySaveStore` | `RegionalTreatyPanel` | `--shelter-operations-selftest`, `RegionalTreatySaveChecksumTests` | ✅ 6/6 |
-| 30 | `meta_progression` | Endgame | `MetaProgressionSystem`, `MetaProgressionCensus`, `CrossRunProfileStore` | `meta_unlockables.json` | `Main`, `MetaProgressionHostSession` | `MetaProgressionSaveStore` | `EpiloguePanel`, `ChroniclePanel` | `--meta-progression-selftest`, `Plan175MetaProgressionHostIntegrationTests` | ✅ 6/6 |
-| 31 | `unified_ending` | Endgame | `UnifiedEndingResolver` | `epilogue_personalization.json` | `Main`, `UnifiedEndingHostSession` | `UnifiedEndingSaveStore` | `EpiloguePanel`, `ChroniclePanel` | `--unified-ending-selftest`, `Plan145UnifiedEndingIntegrationTests`, `Plan145UnifiedEndingHostIntegrationTests` | ✅ 6/6 |
-| 32 | `expansion_hub` | Expansion Framework | `ExpansionMasterSession` | — *(Procedural)* | `ExpansionHostSession` | `ExpansionHubSaveStore` | `ExpansionsHubPanel` | `--expansions-selftest`, `--expansion-hub-save-selftest`, `ExpansionHubSaveTests` | ✅ 6/6 |
-| 33 | `expansion_quest` | Expansion Framework | `ExpansionQuestSystem`, `ExpansionMasterSession` | `crossing_quests.json` | `ExpansionQuestHostSession` | `ExpansionQuestSaveStore` | `CrossingQuestPanel` | `--expansions-selftest`, `VersionReportContractTests` | ✅ 6/6 |
-| 34 | `holdfast` | Expansions (Exp 01) | `HoldfastQuestSystem`, `HoldfastSession` | `holdfast_quests.json`, `holdfast_items.json` | `HoldfastRuntimeSession` | `HoldfastSaveStore` | `HoldfastTerminalPanel`, `GameDashboardPanel` | `--holdfast-save-selftest`, `--holdfast-selftest`, `HoldfastSaveTests` | ✅ 6/6 |
-| 35 | `holdfast_trade` | Expansions (Exp 01) | `HoldfastTradeSession` | `items.json` | `HoldfastRuntimeSession` | `HoldfastTradeSaveStore` | `TradeScreenGodotPanel`, `HoldfastTerminalPanel` | `--holdfast-trade-save-selftest`, `HoldfastTradeSessionTests` | ✅ 6/6 |
-| 36 | `duty_roster` | Expansions (Exp 02) | `DutyRosterSystem` | `duty_roster_quests.json`, `survivors.json` | `DutyRosterHostSession` | `DutyRosterSaveStore` | `DutyRosterPanel`, `DutyRosterDetailPanel` | `--duty-roster-selftest`, `--duty-roster-save-selftest`, `DutyRosterSaveTests` | ✅ 6/6 |
-| 37 | `phantom_memory` | Expansions (Exp 03) | `PhantomMemoryEngine` | `phantom_triggers.json` | `PhantomMemoryHostSession` | `PhantomMemorySaveStore` | `StandingRecordPanel`, `PhantomMemoryPanel` | `--standing-record-selftest`, `PhantomMemoryEngineTests` | ✅ 6/6 |
-| 38 | `thirdonary` | Expansions (Exp 04) | `ThirdonaryQuestSystem` | `thirdonary_quests.json` | `ThirdonaryHostSession` | `ThirdonarySaveStore` | `CrossingQuestPanel` | `--crossing-selftest`, `--arbitration-selftest`, `ThirdonaryQuestSystemTests`, `CrossingArbitrationSystemTests` | ✅ 6/6 |
-| 39 | `year_of_ash` | Expansions (Exp 05) | `YearOfAshDeepFreezeSystem`, `YearOfAshRadonSystem` | `year_of_ash_events.json` | `YearOfAshHostSession` | `YearOfAshSaveStore` | `DoorEncounterModal` | `--year-of-ash-save-selftest`, `YearOfAshQuestProbe` | ✅ 6/6 |
-| 40 | `muster` | Expansions (Exp 06) | `MusterSystem` | `muster_witnesses.json` | `MusterHostSession` | `MusterSaveStore` | `MusterPanel` | `--muster-selftest`, `--muster-uitest`, `MusterSystemTests` | ✅ 6/6 |
-| 41 | `dose_ledger` | Expansions (Exp 07) | `DoseLedgerSystem`, `RadiationSystem` | `dose_items.json` | `DoseLedgerHostSession` | `DoseLedgerSaveStore` | `RadiationHistoryPanel`, `RadiationDetailPanel` | `--dose-ledger-selftest`, `--dose-uitest`, `NeedsRadiationSaveRoundTripTests` | ✅ 6/6 |
-| 42 | `verdict` | Expansions (Exp 08) | `ReckoningSystem`, `MachineLogSystem` | `verdict_data.json` | `VerdictHostSession` | `VerdictSaveStore` | `VerdictPanel`, `VerdictDashboardPanel` | `--verdict-selftest`, `--verdict-uitest`, `VerdictChainTests` | ✅ 6/6 |
-| 43 | `maritime` | Expansions (Exp 09) | `MaritimeDiveSystem` | `dive_sites.json` | `MaritimeHostSession` | `MaritimeSaveStore` | `MaritimePanel` | `--black-flotilla-selftest`, `BlackFlotillaTests` | ✅ 6/6 |
-| 44 | `silent_foundry` | Expansions (Exp 10) | `SilentFoundrySystem` | `foundry_items.json` | `SilentFoundryHostSession` | `SilentFoundrySaveStore` | `SilentFoundryPanel` | `--silent-foundry-selftest`, `--silent-foundry-uitest`, `SilentFoundryConsequenceTests` | ✅ 6/6 |
-| 45 | `chemical_recon` | Expeditions | `ChemicalReconEngine` | — *(Procedural)* | `ChemicalReconSaveStore` | `ChemicalReconSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 46 | `colony` | Expeditions | `ColonySystem` | `colony_blueprints.json` | `Main` | `ColonySaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan160ColonyIntegrationTests` | ❌ GAP |
-| 47 | `draisine_recovery` | Expeditions | `DraisineRerailingSystem` | — *(Procedural)* | `DraisineRerailingHostSession` | `DraisineRerailingSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 48 | `mine_clearing_flail` | Expeditions | `MineClearingFlailEngine` | `mine_flail_catalog.json` | `MineClearingFlailHostSession` | `MineClearingFlailSaveStore` | `MineFlailPanel` | `--mine-flail-uitest`, `MineClearingFlailEngineTests` | ✅ 6/6 |
-| 49 | `rail_grinding` | Expeditions | `RailGrindingEngine` | `rail_grinding_catalog.json` | `RailGrindingHostSession` | `RailGrindingSaveStore` | `RailGrindingPanel` | `--rail-grinding-uitest`, `RailGrindingEngineTests` | ✅ 6/6 |
-| 50 | `recon_telemetry` | Expeditions | `ReconTelemetrySystem` | — *(Procedural)* | `ReconTelemetrySaveStore` | `ReconTelemetrySaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 51 | `vehicle_garage` | Expeditions | `VehicleGarageSystem`, `VehicleArmorGradeCatalogLoader` | `vehicle_modifications.json`, `vehicle_armor_grades.json` | `Main` | `VehicleGarageSaveStore` | `VehicleGaragePanel` | `--vehicle-garage-selftest`, `VehicleGarageSystemTests`, `Plan50VehicleGarageIntegrationTests`, `Plan213VehicleArmorGradeTests` | ✅ 6/6 |
-| 52 | `counter_intelligence` | Factions | `CounterIntelligenceSystem` | — *(Procedural)* | `CounterIntelligenceSaveStore` | `CounterIntelligenceSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 53 | `diplomatic_summits` | Factions | `DiplomaticSummitSystem` | — *(Procedural)* | `Main` | `DiplomaticSummitSaveStore` | *None (GAP)* | , `DiplomaticSummitTests` | ❌ GAP |
-| 54 | `espionage` | Factions | `EspionageSystem` | `espionage_missions.json` | `EspionageHostSession` | `EspionageSaveStore` | *None (GAP)* | , `Plan167EspionageTests` | ❌ GAP |
-| 55 | `faction_covert_ops` | Factions | `FactionCovertOpsCoordinator` | `espionage_operations.json` | `Main` | `FactionCovertOpsSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan153FactionEspionageIntegrationTests` | ❌ GAP |
-| 56 | `faction_espionage` | Factions | `ShelterEspionageSystem` | `faction_intelligence.json` | `Main` | `ShelterEspionageSaveStore` | *None (GAP)* | , `ShelterEspionageSystemTests` | ❌ GAP |
-| 57 | `territory_control` | Factions | `TerritoryControlSystem`, `FactionTerritoryDef`, `SupplyLineDef`, `LocationTerritoryState`, `SupplyLineState`, `TerritoryControlSaveState` | `faction_territory.json`, `supply_lines.json` | `TerritoryControlHostSession`, `Main` | `TerritoryControlSaveStore` | *None (GAP)* | `--territory-control-selftest`, `Plan134TerritoryControlHostIntegrationTests`, `Plan134TerritoryControlIntegrationTests` | ❌ GAP |
-| 58 | `weight_of_choices` | Factions & Diplomacy | `FactionBranchCoordinator`, `MilitaryBranchSystem`, `RebelBranchSystem`, `IndependentBranchSystem`, `PrpfStandingSystem` | `military_faction_branch.json`, `rebel_faction_branch.json`, `independent_faction_branch.json` | `FactionBranchHostSession` | `WeightOfChoicesSaveStore` | `FactionsPanel`, `QuestsPanel` | `--expansions-selftest`, `FactionBranchCoordinatorTests`, `MilitaryBranchSystemTests`, `RebelBranchSystemTests`, `IndependentBranchSystemTests`, `PrpfStandingSystemTests`, `WeightOfChoicesSaveTests` | ✅ 6/6 |
-| 59 | `aeroponics` | Farming | `AeroponicsSystem` | `aeroponics_nutrient_catalog.json` | `Main` | `AeroponicsSaveStore` | `AeroponicsPanel` | , `Plans74To77SystemsTests` | ❌ GAP |
-| 60 | `agriculture` | Farming | `AgricultureSystem` | `crop_strains.json` | `Main` | `AgricultureSaveStore` | *None (GAP)* | , `AgricultureSystemTests` | ❌ GAP |
-| 61 | `aquaponics` | Farming | `AquaponicsSystem` | `aquaponics_system_catalog.json` | `Main` | `AquaponicsSaveStore` | *None (GAP)* | `--aquaponics-selftest`, `AquaponicsSystemTests`, `PlansB86ToB89ContinuityTests` | ❌ GAP |
-| 62 | `powder_metallurgy` | Foundry | `PowderMetallurgySystem` | — *(Procedural)* | `PowderMetallurgySaveStore` | `PowderMetallurgySaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 63 | `hydraulic_extrusion` | Foundry & Industry | `HydraulicExtrusionEngine` | `hydraulic_extrusion_catalog.json` | `HydraulicExtrusionHostSession` | `HydraulicExtrusionSaveStore` | `HydraulicExtrusionPanel` | `--plans-139-141-selftest`, `Plan140HydraulicExtrusionTests` | ✅ 6/6 |
-| 64 | `wildlife_ecosystem` | Hunting | `WildlifeEcosystemSystem` | `wildlife_ecosystem.json` | `WildlifeEcosystemHostSession` | `WildlifeEcosystemSaveStore` | `BestiaryPanel` | , `WildlifeEcosystemSystemTests` | ❌ GAP |
-| 65 | `shelter_barter` | Illicit Economy / Barter | `ShelterBarterSystem` | `merchant_caravans.json` | `Main` | `ShelterBarterSaveStore` | *None (GAP)* | `--contraband-stash-selftest`, `ShelterBarterSystemPlan54Tests`, `ContrabandBarterRouteTests` | ❌ GAP |
-| 66 | `grain_milling_archive` | Industrial Food-Processing Archive | `GrainMillingDiscoverySystem` | `burr_millstone_dressing_logs.json`, `bolting_silk_mesh_reports.json`, `grain_silo_weevil_audits.json`, `mill_dampener_tempering_assays.json` | `Main` | `GrainMillingArchiveSaveStore` | *None (GAP)* | , `GrainMillingDiscoveryTests`, `GrainMillingCatalogTests` | ❌ GAP |
-| 67 | `wasteland_rumors` | Information & Rumors (Plan 203) | `RumorSystem` | — *(Procedural)* | `RumorNetworkHostSession` | `RumorNetworkSaveStore` | `RumorBoardPanel`, `GameDashboardPanel` | `--rumor-network-selftest`, `Plan203RumorNetworkIntegrationTests` | ✅ 6/6 |
-| 68 | `cryogenic_air_separation` | Infrastructure | `CryogenicAirSeparationSystem` | — *(Procedural)* | `CryogenicAirSeparationSaveStore` | `CryogenicAirSeparationSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 69 | `fluid_logistics` | Infrastructure | `FluidLogisticsSystem` | `fluid_infrastructure.json` | `FluidLogisticsHostSession` | `FluidLogisticsSaveStore` | *None (GAP)* | , `Plan168FluidLogisticsTests` | ❌ GAP |
-| 70 | `pneumatic_dispatch` | Infrastructure | `PneumaticDispatchSystem` | `pneumatic_network_catalog.json` | `Main` | `PneumaticDispatchSaveStore` | `PneumaticDispatchPanel` | , `Plans74To77SystemsTests` | ❌ GAP |
-| 71 | `black_projects_archive` | Intelligence Archive | `BlackProjectsArchiveSystem` | `orbital_kinetic_telemetry.json`, `drone_carrier_blackboxes.json`, `cobalt_arming_directives.json`, `architect_vault_audits.json` | `Main` | `BlackProjectsArchiveSaveStore` | `BlackProjectsArchivePanel` | , `BlackProjectsArchiveTests`, `BlackProjectsCatalogTests`, `BlackProjectsArchivePanelRouteTests` | ❌ GAP |
-| 72 | `collectible_discovery` | Inventory & Lore | `CollectibleDiscoveryState` | `collectibles.json` | `Main` | `CollectibleDiscoverySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `CollectibleDiscoveryPersistenceTests` | ✅ 6/6 |
-| 73 | `unique_claims` | Inventory & Lore | `UniqueItemClaimRegistry` | `collectibles.json` | `Main` | `UniqueClaimSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `CollectibleDiscoveryPersistenceTests` | ✅ 6/6 |
-| 74 | `cultural_archives` | Knowledge | `CulturalArchiveVaultSystem` | — *(Procedural)* | `Main` | `CulturalArchiveSaveStore` | *None (GAP)* | , `CulturalArchiveVaultTests` | ❌ GAP |
-| 75 | `field_guide` | Knowledge | `FieldGuideCatalog` | — *(Procedural)* | `Main` | `FieldGuideSaveStore` | `GameDashboardPanel` | `--world-selftest`, `FieldGuidePersistenceTests` | ✅ 6/6 |
-| 76 | `prewar_archives` | Knowledge | `PrewarArchiveDecryptionSystem` | `prewar_archives.json` | `Main` | `PrewarArchiveSaveStore` | *None (GAP)* | , `PrewarArchiveDecryptionTests` | ❌ GAP |
-| 77 | `research` | Knowledge | `ResearchSystem` | `research_knowledge.json` | `Main` | `ResearchSaveStore` | `ResearchPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `MedicalPipelineArchitectureGateTests` | ✅ 6/6 |
-| 78 | `survivor_education` | Knowledge | `SurvivorEducationSystem` | `education_curriculum.json` | `Main` | `SurvivorEducationSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan154EducationIntegrationTests` | ❌ GAP |
-| 79 | `campaign_legacy` | Legacy | `CampaignLegacySystem`, `CampaignLegacy`, `CampaignLegacyCensus`, `CampaignLegacyState`, `StartingCampaignContext`, `LegacyTrait` | `legacy_traits.json` | `CampaignLegacyHostSession`, `Main` | `CampaignLegacySaveStore` | *None (GAP)* | `--campaign-legacy-selftest`, `Plan140CampaignLegacyHostIntegrationTests`, `Plan140GenerationalLegacyIntegrationTests` | ❌ GAP |
-| 80 | `leatherwork_archive` | Material Provenance Archive | `LeatherworkArchiveSystem` | `oak_bark_tanning_pit_logs.json`, `chrome_alum_tanning_assays.json`, `rawhide_bating_failure_reports.json`, `leather_harness_conditioning_audits.json` | `Main` | `LeatherworkArchiveSaveStore` | `InventoryDetailPanel` | , `LeatherworkArchiveTests`, `TanningLeatherCatalogTests` | ❌ GAP |
-| 81 | `lyophilization` | Medical | `LyophilizationSystem` | — *(Procedural)* | `LyophilizationSaveStore` | `LyophilizationSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 82 | `medical_pipeline` | Medical | `MedicalPipelineCoordinator` | `disease_catalog.json` | `Main` | `MedicalPipelineSaveStore` | `MedicalPanel`, `GameDashboardPanel` | `--save-load-ui-failure-selftest`, `MedicalPipelineArchitectureGateTests` | ✅ 6/6 |
-| 83 | `microfluidic_diagnostic` | Medical | `MicrofluidicDiagnosticEngine` | `microfluidic_diagnostic_catalog.json` | `MicrofluidicDiagnosticHostSession` | `MicrofluidicDiagnosticSaveStore` | `MicrofluidicDiagnosticPanel` | `--microfluidic-diagnostic-uitest`, `MicrofluidicDiagnosticEngineTests` | ✅ 6/6 |
-| 84 | `pathogen_strains` | Medical | `PathogenStrainSystem` | `pathogens.json` | `Main` | `PathogenStrainSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `DiseaseSystemTests` | ✅ 6/6 |
-| 85 | `psychological_sanatorium` | Medical | `PsychologicalSanatoriumSystem` | — *(Procedural)* | `Main` | `PsychologicalSanatoriumSaveStore` | *None (GAP)* | , `PsychologicalSanatoriumTests` | ❌ GAP |
-| 86 | `surgical_ward` | Medical | `AdvancedSurgicalWardSystem` | — *(Procedural)* | `Main` | `SurgicalWardSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`,  | ❌ GAP |
-| 87 | `propaganda_campaigns` | Morale & Influence (Plan 168) | `PropagandaSystem` | — *(Procedural)* | `PropagandaHostSession` | `PropagandaSaveStore` | `PropagandaPanel`, `GameDashboardPanel` | `--propaganda-selftest`, `Plan168PropagandaIntegrationTests` | ✅ 6/6 |
-| 88 | `confession_secret` | Narrative | `ConfessionSecretSystem` | `confession_secrets.json` | `Main` | `ConfessionSecretSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `ConfessionSecretSystemTests` | ❌ GAP |
-| 89 | `echoes` | Narrative | `EchoSystem`, `NarrativeContinuityEngine` | `echoes.json` | `EchoHostSession`, `EchoSaveStore` | `EchoSaveStore` | *None (GAP)* | , `EchoCatalogTests`, `EchoSystemTests` | ❌ GAP |
-| 90 | `npc_memory` | Narrative | `NpcMemorySystem`, `NpcMemoryEntry`, `NpcRelationship`, `NpcMemoryCensus` | `npc_memory_dialogue.json` | `Main`, `NpcMemoryHostSession` | `NpcMemorySaveStore` | *None (GAP)* | `--npc-memory-selftest`, `Plan147NpcMemoryHostIntegrationTests`, `NpcMemorySystemTests` | ❌ GAP |
-| 91 | `seasonal_celebration` | Narrative | `SeasonalCelebrationSystem` | `shelter_celebrations.json` | `Main` | `SeasonalCelebrationSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan170SeasonalCelebrationsIntegrationTests` | ❌ GAP |
-| 92 | `shelter_festival` | Narrative | `ShelterFestivalEngine` | — *(Procedural)* | `Main` | `ShelterFestivalSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan170SeasonalCelebrationsIntegrationTests` | ❌ GAP |
-| 93 | `oral_lore` | Narrative & Cultural Tradition | `OralLorePerformanceSystem` | `oral_lore_codex.json`, `oral_lore_batch_2.json` | `Main` | `OralLoreSaveStore` | *None (GAP)* | , `OralLorePlan155Tests`, `OralLoreCatalogTests` | ❌ GAP |
-| 94 | `moral_choice` | Narrative & Decisions | `MoralChoiceSystem`, `MoralChoiceState` | `moral_choice_quests.json` | `MoralChoiceSystem` | `MoralChoiceSaveStore` | `GameDashboardPanel` | `--moral-choice-selftest`, `MoralChoiceSystemTests` | ✅ 6/6 |
-| 95 | `contraband_stash` | Narrative & Illicit Economy | `ContrabandStashSystem` | `bunker_contraband_barter.json` | `Main` | `ContrabandSaveStore` | *None (GAP)* | `--contraband-stash-selftest`, `ContrabandPlan147Tests` | ❌ GAP |
-| 96 | `cooking` | Nutrition | `CookingSystem`, `CookingRecipe`, `CookingOperation`, `CookingState`, `CookingCensus`, `CookingRecipeCatalogLoader`, `InventoryCookingSource` | `recipes_cooking.json` | `CookingHostSession`, `Main` | `CookingSaveStore` | *None (GAP)* | `--cooking-selftest`, `Plan136CookingHostIntegrationTests`, `Plan136WildlifeCookingIntegrationTests` | ❌ GAP |
-| 97 | `grain_processing` | Nutrition | `GrainProcessingSystem` | — *(Procedural)* | `GrainProcessingSaveStore` | `GrainProcessingSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 98 | `companion_animals` | Plan 174 Companion Animals | `CompanionAnimalSystem` | `companion_animals.json` | `Main` | `CompanionSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `Plan174CompanionAnimalTests` | ✅ 6/6 |
-| 99 | `zealotry` | Plan 175 Ideological Pressure | `ZealotrySystem` | `wasteland_religions.json` | `Main` | `ZealotrySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `ZealotrySystemTests` | ✅ 6/6 |
-| 100 | `anomaly_hazard` | Plan 176 Anomaly Hazard Layer | `AnomalyHazardSystem` | `anomalies.json` | `Main` | `AnomalyHazardSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `Plan176AnomalyHazardTests`, `Plan176CrossSystemConsumerTests` | ✅ 6/6 |
-| 101 | `bionics` | Plan 177 Bionics & Prosthetics | `BionicsSystem` | `bionics.json` | `Main` | `BionicsSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `Plan177BionicsTests` | ✅ 6/6 |
-| 102 | `spiritual_meaning` | Plan 30 Spiritual Meaning | `SpiritualMeaningCoordinator` | `spiritual_rituals.json`, `memorial_rites.json`, `belief_movements.json` | `Main` | `SpiritualSaveStore` | `IronCenotaphMemorialPanel` | `--save-store-checksum-selftest`, `Plan30SpiritualWorldTests` | ✅ 6/6 |
-| 103 | `amputation` | Plans 178-201 Expansion Block | `AmputationSystem` | `surgical_procedures.json` | `Main` | `AmputationSaveStore` | `MedicalPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `AmputationSystemTests` | ✅ 6/6 |
-| 104 | `archaeology` | Plans 178-201 Expansion Block | `ArchaeologySystem` | `lore_archives.json` | `Main` | `ArchaeologySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `ArchaeologySystemTests` | ✅ 6/6 |
-| 105 | `aviation` | Plans 178-201 Expansion Block | `AviationSystem` | `aircraft_parts.json` | `Main` | `AviationSaveStore` | `AviationUI`, `GameDashboardPanel` | `--expedition-selftest`, `AviationSystemTests` | ✅ 6/6 |
-| 106 | `ceremony` | Plans 178-201 Expansion Block | `CeremonySystem` | `ceremonies.json` | `Main` | `CeremonySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `CeremonySystemTests` | ✅ 6/6 |
-| 107 | `chem_warfare` | Plans 178-201 Expansion Block | `ChemWarfareSystem` | `chemical_weapons.json` | `Main` | `ChemWarfareSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `ChemWarfareSystemTests` | ✅ 6/6 |
-| 108 | `child_development` | Plans 178-201 Expansion Block | `GenerationalSystem` | `development_traits.json` | `Main` | `GenerationalSaveStore` | `NurseryPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `GenerationalSystemTests`, `GenerationalLineageExtensionTests` | ✅ 6/6 |
-| 109 | `comms_array` | Plans 178-201 Expansion Block | `CommsArraySystem` | `comms_targets.json` | `Main` | `CommsArraySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `CommsArraySystemTests` | ✅ 6/6 |
-| 110 | `desperation` | Plans 178-201 Expansion Block | `DesperationSystem` | `desperation_events.json` | `Main` | `DesperationSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `DesperationSystemTests` | ✅ 6/6 |
-| 111 | `expedition_stealth` | Plans 178-201 Expansion Block | `StealthSystem` | `camouflage_gear.json` | `Main` | `StealthSaveStore` | `StealthReadoutPanel`, `GameDashboardPanel` | `--expedition-selftest`, `StealthSystemTests` | ✅ 6/6 |
-| 112 | `fallout` | Plans 178-201 Expansion Block | `FalloutSystem` | `fallout_patterns.json` | `Main` | `FalloutSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FalloutSystemTests` | ✅ 6/6 |
-| 113 | `forced_labor` | Plans 178-201 Expansion Block | `ForcedLaborSystem` | `labor_camps.json` | `Main` | `ForcedLaborSaveStore` | `LaborUI`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `ForcedLaborSystemTests` | ✅ 6/6 |
-| 114 | `fungi_cultivation` | Plans 178-201 Expansion Block | `FungiCultivationSystem` | `underground_flora.json` | `Main` | `FungiSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FungiCultivationSystemTests` | ✅ 6/6 |
-| 115 | `mercenary_bounties` | Plans 178-201 Expansion Block | `MercenarySystem` | `bounty_board.json` | `Main` | `MercenarySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `MercenarySystemTests` | ✅ 6/6 |
-| 116 | `mutation_tree` | Plans 178-201 Expansion Block | `MutationSystem` | `mutations.json` | `Main` | `MutationSaveStore` | `MutationTreePanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `MutationSystemTests` | ✅ 6/6 |
-| 117 | `narcotics` | Plans 178-201 Expansion Block | `NarcoticsSystem` | `narcotics.json` | `Main` | `NarcoticsSaveStore` | `ChemUI`, `PharmaLabPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `NarcoticsSystemTests` | ✅ 6/6 |
-| 118 | `prisoner_management` | Plans 178-201 Expansion Block | `PrisonerSystem` | `interrogation_tactics.json` | `Main` | `PrisonerSaveStore` | `PrisonerPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `PrisonerSystemTests` | ✅ 6/6 |
-| 119 | `railway` | Plans 178-201 Expansion Block | `RailwaySystem` | `rail_network.json` | `Main` | `RailwaySaveStore` | `GameDashboardPanel` | `--expedition-selftest`, `RailwaySystemTests` | ✅ 6/6 |
-| 120 | `recreation` | Plans 178-201 Expansion Block | `SurvivorDowntimeSystem` | `recreation.json` | `Main` | `RecreationSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `SurvivorDowntimeSystemTests` | ✅ 6/6 |
-| 121 | `robotics` | Plans 178-201 Expansion Block | `RoboticsSystem` | `robotics.json` | `Main` | `RoboticsSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `RoboticsSystemTests` | ✅ 6/6 |
-| 122 | `settlement_politics` | Plans 178-201 Expansion Block | `PoliticsSystem` | `political_policies.json` | `Main` | `PoliticsSaveStore` | `PoliticsUI`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `PoliticsSystemTests` | ✅ 6/6 |
-| 123 | `wasteland_justice` | Plans 178-201 Expansion Block | `JusticeSystem` | `wasteland_laws.json` | `Main` | `JusticeSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `JusticeSystemTests` | ✅ 6/6 |
-| 124 | `plastic_pyrolysis` | Plans 202-205 Flagship (Plan 202) | `PlasticPyrolysisSystem` | `plastic_pyrolysis_catalog.json` | `Main` | `PlasticPyrolysisSaveStore` | `PlasticPyrolysisPanel` | `--save-store-checksum-selftest`, `PlasticPyrolysisEngineTests` | ✅ 6/6 |
-| 125 | `cargo_airdrop` | Plans 202-205 Flagship (Plan 205) | `CargoAirdropSystem` | `cargo_airdrop_catalog.json` | `Main` | `CargoAirdropSaveStore` | `CargoAirdropPanel` | `--save-store-checksum-selftest`, `CargoAirdropEngineTests` | ✅ 6/6 |
-| 126 | `geothermal_orc` | Power | `GeothermalOrcSystem` | `geothermal_strata_catalog.json` | `Main` | `GeothermalOrcSaveStore` | `GeothermalOrcPanel` | , `Plans74To77SystemsTests` | ❌ GAP |
-| 127 | `kinetic_storage` | Power | `KineticStorageSystem` | — *(Procedural)* | `KineticStorageSaveStore` | `KineticStorageSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 128 | `solar_concentrator` | Power | `SolarConcentratorEngine` | — *(Procedural)* | `SolarConcentratorHostSession` | `SolarConcentratorSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 129 | `hobby` | Psychology | `HobbySystem` | `hobby_definitions.json` | `Main` | `HobbySaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan161HobbyIntegrationTests` | ❌ GAP |
-| 130 | `psychological_arcs` | Psychology | `PsychologicalArcSystem` | `mental_arcs.json` | `PsychologyArcHostSession` | `PsychologyArcSaveStore` | *None (GAP)* | , `PsychologicalArcSystemTests` | ❌ GAP |
-| 131 | `survivor_autonomy` | Psychology | `SurvivorAutonomySystem` | `autonomy_actions.json` | `Main` | `SurvivorAutonomySaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan144SurvivorAutonomyIntegrationTests` | ❌ GAP |
-| 132 | `survivor_mental_health` | Psychology | `SurvivorMentalHealthSystem` | `psychological_trauma.json` | `Main` | `SurvivorMentalHealthSaveStore` | *None (GAP)* | , `SurvivorMentalHealthTests` | ❌ GAP |
-| 133 | `procedural_narrative` | Quests | `ProceduralNarrativeSystem` | `quest_templates.json` | `ProceduralNarrativeHostSession` | `ProceduralNarrativeSaveStore` | *None (GAP)* | , `Plan169ProceduralNarrativeTests` | ❌ GAP |
-| 134 | `low_background_metrology` | Radiation & Metrology | `LowBackgroundLeadEngine` | `low_background_lead_catalog.json` | `LowBackgroundMetrologyHostSession` | `LowBackgroundMetrologySaveStore` | `LowBackgroundLeadPanel` | , `Plan138LowBackgroundLeadEngineTests` | ❌ GAP |
-| 135 | `communications` | Radio | `CommunicationsSystem` | `communications_networks.json` | `Main` | `CommunicationsSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan157CommunicationsIntegrationTests` | ❌ GAP |
-| 136 | `heliograph` | Radio | `HeliographSystem` | — *(Procedural)* | `HeliographSaveStore` | `HeliographSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 137 | `nvis_communications` | Radio | `NvisCommunicationsSystem` | — *(Procedural)* | `NvisCommunicationsSaveStore` | `NvisCommunicationsSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 138 | `psyops` | Radio | `PsyOpsSystem` | — *(Procedural)* | `PsyOpsHostSession` | `PsyOpsSaveStore` | *None (GAP)* | , `PsyOpsSystemTests` | ❌ GAP |
-| 139 | `radio_program_production` | Radio | `RadioProgramProductionSystem` | `radio_programs.json` | `RadioProgramProductionHostSession` | `RadioProgramProductionSaveStore` | `RadioPanel` | , `Plan173RadioProgramProductionTests` | ❌ GAP |
-| 140 | `retention` | Records | `RetentionPolicyCatalog`, `RetentionPolicyCatalogLoader`, `RollingLog` | `retention_policies.json` | `RetentionHostSession`, `Main` | `RetentionSaveStore` | *None (GAP)* | `--retention-selftest`, `Plan55RetentionHostIntegrationTests`, `RetentionPolicyCatalogLoaderTests`, `Plan55RetentionPolicyIntegrationTests` | ❌ GAP |
-| 141 | `research_unlock` | Research | `ResearchUnlockBridge` | `research_unlocks.json` | `Main`, `ResearchUnlockHostSession` | `ResearchUnlockSaveStore` | `ResearchPanel` | `--research-unlock-selftest`, `Plan141ResearchUnlockBridgeIntegrationTests`, `Plan141ResearchUnlockHostIntegrationTests` | ✅ 6/6 |
-| 142 | `playable_metrics` | Save | `PlaySessionRecorder`, `FirstHourFunnel`, `PlayableMetricsAggregationEngine` | — *(Procedural)* | `Main`, `PlayMetricsHostSession` | `PlayMetricsSaveStore` | *None (GAP)* | `--playable-metrics-selftest`, `Plan46PlayMetricsHostIntegrationTests`, `PlaySessionRecorderTests` | ❌ GAP |
-| 143 | `session_durability` | Save | `SessionDurabilityManager` | — *(Procedural)* | `Main`, `SessionDurabilityHostSession`, `SaveLoadHostSession` | `SessionDurabilitySaveStore` | *None (GAP)* | `--session-durability-selftest`, `Plan39SessionDurabilityHostIntegrationTests`, `SessionDurabilityManagerTests` | ❌ GAP |
-| 144 | `seven_day_slice` | Save | `SliceScenario`, `SliceScenarioCatalogLoader` | `slice_seven_days.json` | `SliceScenarioHostSession` | `SliceScenarioSaveStore` | *None (GAP)* | `--seven-day-slice-selftest`, `Plan54SevenDaySliceHostIntegrationTests` | ❌ GAP |
-| 145 | `outpost_settlement` | Settlements | `OutpostSettlementSystem`, `OutpostDef`, `OutpostInstance`, `OutpostSettlementState` | `outposts.json` | `OutpostSettlementHostSession`, `Main` | `OutpostSettlementSaveStore` | *None (GAP)* | `--outpost-settlement-selftest`, `Plan58OutpostHostIntegrationTests`, `Plan58OutpostSettlementIntegrationTests` | ❌ GAP |
-| 146 | `cryo_vault` | Shelter | `CryoVaultSystem` | `cryo_cultivars.json` | `Main` | `CryoVaultSaveStore` | *None (GAP)* | , `CryoVaultB69Tests` | ❌ GAP |
-| 147 | `disaster_response` | Shelter | `DisasterResponseSystem` | `disaster_templates.json` | `Main` | `DisasterResponseSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan158DisasterResponseIntegrationTests` | ❌ GAP |
-| 148 | `ebpvd_coating` | Shelter | `EbPvdCoatingEngine` | `ebpvd_coating_catalog.json` | `EbPvdCoatingHostSession` | `EbPvdCoatingSaveStore` | `EbPvdCoatingPanel` | `--ebpvd-coating-uitest`, `EbPvdCoatingEngineTests` | ✅ 6/6 |
-| 149 | `excavation_hazards` | Shelter | `ExcavationHazardSystem` | — *(Procedural)* | `Main` | `ExcavationHazardSaveStore` | `GameDashboardPanel` | `--shelter-hazard-selftest`, `ExcavationSystemTests` | ✅ 6/6 |
-| 150 | `food_preservation` | Shelter | `FoodPreservationSystem` | `food_preservation.json` | `Main` | `FoodPreservationSaveStore` | *None (GAP)* | , `FoodPreservationSystemTests` | ❌ GAP |
-| 151 | `geothermal_aquifer` | Shelter | `GeothermalAquiferSystem` | — *(Procedural)* | `GeothermalAquiferSaveStore` | `GeothermalAquiferSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 152 | `precision_metrology` | Shelter | `PrecisionMetrologySystem` | `metrology_standards_catalog.json` | `Main` | `PrecisionMetrologySaveStore` | *None (GAP)* | `--precision-metrology-selftest`, `PrecisionMetrologySystemTests` | ❌ GAP |
-| 153 | `precision_optics` | Shelter | `PrecisionOpticsEngine` | — *(Procedural)* | `PrecisionOpticsHostSession` | `PrecisionOpticsSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 154 | `radio_station` | Shelter | `ShelterRadioStationSystem` | — *(Procedural)* | `Main` | `RadioStationSaveStore` | `RadioPanel`, `GameDashboardPanel` | `--core-selftest`, `ShelterRadioStationTests` | ✅ 6/6 |
-| 155 | `seismic_dynamics` | Shelter | `SeismicDynamicsSystem` | `seismic_fault_catalog.json` | `Main` | `SeismicDynamicsSaveStore` | *None (GAP)* | , `ShelterSeismicDynamicsPlan56Tests`, `SeismicMonitoringB68Tests` | ❌ GAP |
-| 156 | `shelter_atmosphere` | Shelter | `ShelterAtmosphereSystem` | — *(Procedural)* | `ShelterAtmosphereHostSession` | `ShelterAtmosphereSaveStore` | `ShelterAtmospherePanel`, `GameDashboardPanel` | `--shelter-atmosphere-selftest`, `Plan220ShelterAtmosphereIntegrationTests` | ✅ 6/6 |
-| 157 | `shelter_decor` | Shelter | `ShelterDecorSystem` | — *(Procedural)* | `ShelterDecorHostSession` | `ShelterDecorSaveStore` | `GameDashboardPanel` | `--shelter-decor-selftest`, `Plan12CDecorTests` | ✅ 6/6 |
-| 158 | `shelter_expansion` | Shelter | `ShelterExpansionSystem` | `shelter_construction.json` | `Main` | `ShelterExpansionSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan156ShelterExpansionIntegrationTests` | ❌ GAP |
-| 159 | `shelter_noise` | Shelter | `ShelterNoiseSystem` | — *(Procedural)* | `ShelterAtmosphereHostSession` | `ShelterNoiseSaveStore` | `ShelterAtmospherePanel` | `--shelter-atmosphere-selftest`, `Plan220ShelterAtmosphereIntegrationTests` | ✅ 6/6 |
-| 160 | `shelter_social_dynamics` | Shelter | `ShelterSocialDynamicsSystem` | `shelter_social_events.json` | `Main` | `ShelterSocialSaveStore` | `GameDashboardPanel` | `--core-selftest`, `ShelterSocialDynamicsTests` | ✅ 6/6 |
-| 161 | `shelter_workshop` | Shelter | `ShelterWorkshopSystem` | — *(Procedural)* | `Main` | `ShelterWorkshopSaveStore` | `WorkshopPanel`, `GameDashboardPanel` | `--core-selftest`, `WorkshopReverseEngineeringSystemTests` | ✅ 6/6 |
-| 162 | `weather_hardening` | Shelter | `WeatherHardeningSystem` | — *(Procedural)* | `WeatherHardeningSaveStore` | `WeatherHardeningSaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 163 | `cvd_diamond` | Shelter & Facilities | `CvdDiamondSynthesisEngine` | `cvd_diamond_catalog.json` | `CvdDiamondHostSession` | `CvdDiamondSaveStore` | `CvdDiamondPanel` | `--plans-122-125-selftest`, `Plan124CvdDiamondSynthesisEngineTests` | ✅ 6/6 |
-| 164 | `sofc_power` | Shelter & Facilities | `SofcElectrochemistryEngine` | `sofc_power_catalog.json` | `SofcPowerHostSession` | `SofcPowerSaveStore` | `SolidOxideFuelCellPanel` | `--plans-122-125-selftest`, `Plan122SofcElectrochemistryEngineTests` | ✅ 6/6 |
-| 165 | `bio_fermentation` | Shelter & Farming | `BioFermentationEngine` | `bio_fermentation_catalog.json` | `BioFermentationHostSession` | `BioFermentationSaveStore` | `BioFermentationPanel` | , `BioFermentationEngineTests` | ❌ GAP |
-| 166 | `hydroponic_biomes` | Shelter & Farming | `HydroponicBiomeSystem` | `hydroponic_crops.json` | `Main` | `HydroponicBiomeSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `HydroponicBiomeTests` | ✅ 6/6 |
-| 167 | `airlock_security` | Shelter & Infrastructure | `AirlockSecuritySystem` | — *(Procedural)* | `AirlockSecurityHostSession` | `AirlockSecuritySaveStore` | `AirlockSecurityPanel` | `--shelter-operations-selftest`, `AirlockSecuritySystemTests` | ✅ 6/6 |
-| 168 | `decontamination` | Shelter & Infrastructure | `DecontaminationSystem` | — *(Procedural)* | `DecontaminationHostSession` | `DecontaminationSaveStore` | `DecontaminationPanel` | `--shelter-operations-selftest`, `DecontaminationSystemTests` | ✅ 6/6 |
-| 169 | `excavation` | Shelter & Infrastructure | `ExcavationSystem` | — *(Procedural)* | `ExcavationHostSession` | `ExcavationSaveStore` | `ExcavationPanel` | `--shelter-operations-selftest`, `ExcavationSystemTests` | ✅ 6/6 |
-| 170 | `greenhouse` | Shelter & Infrastructure | `GreenhouseSystem` | `greenhouse_items.json` | `GreenhouseHostSession` | `GreenhouseSaveStore` | `GreenhousePanel` | `--greenhouse-selftest`, `GreenhouseSystemTests` | ✅ 6/6 |
-| 171 | `nuclear_core_lifecycle` | Shelter & Infrastructure | `NuclearCoreLifecycleSystem` | `nuclear_core_profiles.json` | `Main` | `NuclearCoreSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `NuclearCorePowerGridPublishTests` | ✅ 6/6 |
-| 172 | `power_grid` | Shelter & Infrastructure | `PowerGridSystem` | `power_grid.json` | `PowerGridHostSession` | `PowerGridSaveStore` | `PowerGridPanel` | `--player-panels-uitest`, `PowerGridSystemTests` | ✅ 6/6 |
-| 173 | `power_subgrids` | Shelter & Infrastructure | `PowerDistributionSubgridSystem` | — *(Procedural)* | `Main` | `PowerDistributionSaveStore` | `PowerGridPanel` | `--save-store-checksum-selftest`,  | ❌ GAP |
-| 174 | `sanitation` | Shelter & Infrastructure | `SanitationSystem`, `SanitationFacilityCatalog` | `sanitation_facilities.json` | `SanitationHostSession` | `SanitationSaveStore` | *None (GAP)* | , `Plan210SanitationSystemTests`, `Plan210SanitationFacilityCatalogTests`, `Plan210SanitationHostWiringTests` | ❌ GAP |
-| 175 | `shelter_assignment` | Shelter & Infrastructure | `ShelterAssignmentSystem` | — *(Procedural)* | `ShelterAssignmentHostSession` | `ShelterAssignmentSaveStore` | `ShelterPanel` | `--shelter-operations-selftest`, `ShelterAssignmentSystemTests` | ✅ 6/6 |
-| 176 | `shelter_fire` | Shelter & Infrastructure | `ShelterFireHazardSystem` | — *(Procedural)* | `ShelterFireHostSession` | `ShelterFireSaveStore` | `FireIncidentPanel` | `--save-store-checksum-selftest`, `ShelterFireHazardSystemTests`, `FireIncidentJourneyTests` | ✅ 6/6 |
-| 177 | `shelter_schedule` | Shelter & Infrastructure | `ShelterScheduleSystem` | `shelter_schedules.json` | `ShelterScheduleHostSession` | `ShelterScheduleSaveStore` | `ShelterSchedulePanel` | `--shelter-operations-selftest`, `ShelterScheduleIntegrationTests` | ✅ 6/6 |
-| 178 | `shelter_thermal` | Shelter & Infrastructure | `ShelterThermalSystem` | — *(Procedural)* | `ShelterThermalHostSession` | `ShelterThermalSaveStore` | `ShelterThermalPanel` | `--shelter-operations-selftest`, `ShelterThermalSaveChecksumTests` | ✅ 6/6 |
-| 179 | `starting_level` | Shelter & Infrastructure | `StartingLevelSystem` | — *(Procedural)* | `StartingLevelHostSession` | `StartingLevelSaveStore` | `OpeningProtocolModal` | `--playable-shell-selftest`, `StartingLevelSystemTests` | ✅ 6/6 |
-| 180 | `sump_flooding` | Shelter & Infrastructure | `SumpFloodingSystem` | — *(Procedural)* | `SumpFloodingHostSession` | `SumpFloodingSaveStore` | `SumpFloodingPanel` | `--shelter-operations-selftest`, `SumpFloodingSaveChecksumTests` | ✅ 6/6 |
-| 181 | `survivor_social` | Shelter & Infrastructure | `SurvivorSocialCoordinator`, `LeadershipSystem`, `IdeologicalFrictionSystem`, `RationConflictSystem`, `TraumaBondSystem`, `SkillAtrophySystem` | — *(Procedural)* | `SurvivorSocialCoordinator` | `SurvivorSocialSaveStore` | `ShelterPanel` | `--shelter-operations-selftest`, `SurvivorSocialCoordinatorTests` | ✅ 6/6 |
-| 182 | `vinyl_morale` | Shelter & Infrastructure | `VinylMoraleSystem` | — *(Procedural)* | `VinylMoraleHostSession` | `VinylMoraleSaveStore` | `VinylMoralePanel` | `--shelter-operations-selftest`, `VinylMoraleSaveChecksumTests` | ✅ 6/6 |
-| 183 | `water_treatment` | Shelter & Infrastructure | `WaterTreatmentSystem` | — *(Procedural)* | `WaterTreatmentHostSession` | `WaterTreatmentSaveStore` | `WaterTreatmentPanel` | `--shelter-operations-selftest`, `WaterTreatmentSystemTests` | ✅ 6/6 |
-| 184 | `crafting` | Shelter & Logistics | `CraftingSystem` | `recipes.json` | `CraftingHostSession` | `CraftingSaveStore` | `CraftingPanel` | `--shelter-operations-selftest`, `CraftingSystemTests` | ✅ 6/6 |
-| 185 | `equipment_condition` | Shelter & Logistics | `EquipmentConditionSystem` | — *(Procedural)* | `EquipmentConditionHostSession` | `EquipmentConditionSaveStore` | `EquipmentConditionPanel` | `--shelter-operations-selftest`, `EquipmentConditionSystemTests` | ✅ 6/6 |
-| 186 | `inventory` | Shelter & Logistics | `Inventory` | `items.json` | `InventoryHostSession` | `InventorySaveStore` | `InventoryPanel`, `InventoryDetailPanel` | `--inventory-save-selftest`, `--inventory-uitest`, `InventorySystemTests` | ✅ 6/6 |
-| 187 | `kitchen_nutrition` | Shelter & Logistics | `KitchenNutritionSystem` | — *(Procedural)* | `KitchenNutritionHostSession` | `KitchenNutritionSaveStore` | `KitchenNutritionPanel` | `--shelter-operations-selftest`, `KitchenNutritionSystemTests` | ✅ 6/6 |
-| 188 | `radio` | Shelter & Logistics | `FactionRadioEngine`, `RadioStationCatalog`, `RadioStationCatalogLoader` | `radio.json`, `radio_stations.json` | `RadioHostSession` | `RadioSaveStore` | `RadioPanel`, `FactionRadioHudPanel` | `--radio-selftest`, `--radio-catalog-selftest`, `RadioSaveCodecTests`, `RadioStationCatalogTests`, `RadioStationParityTests` | ✅ 6/6 |
-| 189 | `shelter_reputation` | Shelter (Plan 207) | `ShelterReputationSystem` | — *(Procedural)* | `ShelterReputationHostSession` | `ShelterReputationSaveStore` | `ShelterReputationPanel`, `GameDashboardPanel` | `--shelter-reputation-selftest`, `Plan207ShelterReputationIntegrationTests` | ✅ 6/6 |
-| 190 | `shelter_security` | Shelter Defense (Plan 138) | `ShelterSecuritySystem` | — *(Procedural)* | `ShelterSecurityHostSession` | `ShelterSecuritySaveStore` | `ShelterSecurityPanel`, `GameDashboardPanel` | `--shelter-security-selftest`, `Plan138ShelterSecurityIntegrationTests` | ✅ 6/6 |
-| 191 | `relationship_decay` | Social Ecology & Drift (Plan 182) | `RelationshipDecaySystem` | — *(Procedural)* | `RelationshipDecayHostSession` | `RelationshipDecaySaveStore` | `RelationshipDecayPanel`, `GameDashboardPanel` | `--relationship-decay-selftest`, `Plan182RelationshipDecayIntegrationTests`, `RelationshipDecaySystemTests` | ✅ 6/6 |
-| 192 | `hydrogeology_archive` | Subterranean Science Archive | `HydroGeologyDiscoverySystem` | `artesian_well_contamination_logs.json`, `cave_aquatic_biota_logs.json`, `geothermal_steam_vent_diagnostics.json`, `stalactite_mineral_assay_reports.json` | `Main` | `HydroGeologyArchiveSaveStore` | *None (GAP)* | , `HydroGeologyDiscoveryTests`, `HydroGeologyCatalogTests` | ❌ GAP |
-| 193 | `apprenticeship` | Survival & Biology | `ApprenticeshipSystem` | — *(Procedural)* | `ApprenticeshipHostSession` | `ApprenticeshipSaveStore` | `ApprenticeshipPanel` | `--shelter-operations-selftest`, `ApprenticeshipSystemTests` | ✅ 6/6 |
-| 194 | `autopsy` | Survival & Biology | `AutopsySystem` | `autopsy_procedures.json` | `AutopsyHostSession` | `AutopsySaveStore` | `AutopsyReportPanel` | `--shelter-operations-selftest`, `AutopsySystemTests` | ✅ 6/6 |
-| 195 | `caregiving` | Survival & Biology | `CaregivingSystem` | — *(Procedural)* | `CaregivingHostSession` | `CaregivingSaveStore` | `CaregivingPanel` | `--shelter-operations-selftest`, `CaregivingSystemTests` | ✅ 6/6 |
-| 196 | `chemical_dependency` | Survival & Biology | `ChemicalDependencySystem` | `chemical_dependency_items.json` | `MentalHealthCrisisHostSession`, `ChemicalDependencyHostSession` | `ChemicalDependencySaveStore` | `ChemicalDependencyPanel` | `--chemical-dependency-save-selftest`, `ChemicalDependencySaveSealTests` | ✅ 6/6 |
-| 197 | `contractor_roster` | Survival & Biology | `ContractorRosterSystem` | — *(Procedural)* | `ContractorRosterHostSession` | `ContractorRosterSaveStore` | `ContractorRosterPanel` | `--shelter-operations-selftest`, `ContractorRosterSystemTests` | ✅ 6/6 |
-| 198 | `disease` | Survival & Biology | `DiseaseSystem` | `disease_catalog.json` | `DiseaseHostSession` | `DiseaseSaveStore` | `AfflictionsPanel` | `--disease-selftest`, `DiseaseSystemTests` | ✅ 6/6 |
-| 199 | `medical` | Survival & Biology | `MedicalWardSystem`, `SickListSystem` | `medical_texts.json` | `MedicalHostSession` | `MedicalSaveStore` | `MedicalPanel`, `AfflictionsPanel` | `--medical-selftest`, `DwellerMedicalCatalogTests` | ✅ 6/6 |
-| 200 | `medical_ward` | Survival & Biology | `MedicalWardSystem` | — *(Procedural)* | `MedicalWardHostSession` | `MedicalWardSaveStore` | `MedicalWardPanel` | `--medical-ward-save-selftest`, `MedicalWardSystemTests` | ✅ 6/6 |
-| 201 | `mental_health_crisis` | Survival & Biology | `MentalHealthCrisisSystem` | — *(Procedural)* | `MentalHealthCrisisHostSession` | `MentalHealthCrisisSaveStore` | `MentalHealthCrisisPanel` | `--shelter-operations-selftest`, `MentalHealthCrisisSystemTests` | ✅ 6/6 |
-| 202 | `morale_contagion` | Survival & Biology | `MoraleContagionSystem` | — *(Procedural)* | `MoraleContagionHostSession` | `MoraleContagionSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `MoraleContagionSystemTests` | ✅ 6/6 |
-| 203 | `survivor_relations` | Survival & Biology | `SurvivorRelationsSystem` | — *(Procedural)* | `SurvivorRelationsHostSession` | `SurvivorRelationsSaveStore` | `SurvivorRelationsPanel` | `--shelter-operations-selftest`, `SurvivorRelationsSaveChecksumTests` | ✅ 6/6 |
-| 204 | `survivors` | Survival & Biology | `NeedsSystem`, `SurvivorRosterSystem` | `survivors.json` | `SurvivorsHostSession` | `SurvivorsSaveStore` | `SurvivorsPanel`, `SurvivorDetailPanel`, `StatusPanel` | `--survivors-selftest`, `--survivors-uitest`, `--player-panels-uitest`, `NeedsSystemTests` | ✅ 6/6 |
-| 205 | `death_legacy` | Survivor Memorial & Wills (Plan 206) | `SurvivorDeathLegacySystem` | — *(Procedural)* | `SurvivorDeathLegacyHostSession` | `SurvivorDeathLegacySaveStore` | `SurvivorDeathLegacyPanel`, `GameDashboardPanel` | `--death-legacy-selftest`, `Plan206SurvivorDeathLegacyIntegrationTests`, `SurvivorDeathLegacySystemTests` | ✅ 6/6 |
-| 206 | `personal_quests` | Survivor Quests (Plan 200) | `PersonalQuestSystem` | `personal_quests.json` | `PersonalQuestHostSession` | `PersonalQuestSaveStore` | `PersonalQuestPanel`, `GameDashboardPanel` | `--personal-quests-selftest`, `Plan200PersonalQuestsIntegrationTests`, `PersonalQuestSystemTests` | ✅ 6/6 |
-| 207 | `backstory` | Survivors | `BackstorySystem`, `BackstoryCensus` | `backstory_templates.json` | `Main`, `BackstoryHostSession` | `BackstorySaveStore` | `SurvivorDetailPanel` | `--backstory-selftest`, `Plan174BackstoryHostIntegrationTests`, `Plan174SurvivorBackstoriesIntegrationTests` | ✅ 6/6 |
-| 208 | `ideological_friction` | Survivors | `IdeologicalFrictionEvents`, `IdeologicalFrictionSystem`, `IdeologicalEventInstance`, `IdeologicalFrictionCensus` | `ideological_events.json` | `Main`, `IdeologicalFrictionHostSession` | `IdeologicalFrictionSaveStore` | `SurvivorsPanel` | `--ideological-friction-selftest`, `Plan148IdeologicalFrictionHostIntegrationTests`, `Plan148IdeologicalFrictionIntegrationTests`, `IdeologicalFrictionSystemTests` | ✅ 6/6 |
-| 209 | `romance_family` | Survivors | `RomanceFamilySystem`, `RomanticRelationship`, `FamilyUnit`, `RomanceCourtshipCatalog`, `RomanceFamilyCensus`, `RomanceCourtshipCatalogLoader` | `romance_courtship.json` | `Main`, `RomanceFamilyHostSession` | `RomanceFamilySaveStore` | *None (GAP)* | `--romance-family-selftest`, `Plan150RomanceFamilyHostIntegrationTests`, `Plan150RomanceFamilyIntegrationTests`, `RomanceCourtshipCatalogLoaderTests` | ❌ GAP |
-| 210 | `survivor_voice` | Survivors | `SurvivorVoiceSystem`, `VoiceLineDispatchCoordinator` | `survivor_voice_lines.json` | `Main`, `SurvivorVoiceHostSession` | `SurvivorVoiceSaveStore` | *None (GAP)* | `--survivor-voice-selftest`, `Plan42SurvivorVoiceHostIntegrationTests`, `SurvivorVoiceSystemTests` | ❌ GAP |
-| 211 | `hidden_agenda` | Survivors (Plan 132) | `HiddenAgendaSystem` | — *(Procedural)* | `HiddenAgendaHostSession` | `HiddenAgendaSaveStore` | `HiddenAgendaPanel`, `GameDashboardPanel` | `--hidden-agenda-selftest`, `Plan132HiddenAgendaIntegrationTests`, `HiddenAgendaSystemTests` | ✅ 6/6 |
-| 212 | `combat` | Tactical Combat | `TacticalCombatSystem`, `CombatTraumaSystem` | `combat_catalog.json` | `CombatHostSession` | `CombatSaveStore` | `CombatPanel`, `CombatDetailPanel`, `CombatHistoryPanel` | `--combat-selftest`, `CombatBallisticsTests` | ✅ 6/6 |
-| 213 | `technical_material_archive` | Technical Material Archive | `TechnicalMaterialArchiveSystem` | `hemp_fiber_hackling_logs.json`, `wire_rope_stranding_assays.json`, `manila_hawser_breakage_reports.json`, `rope_transmission_splicing_audits.json`, `neoprene_gasket_degradation_logs.json`, `aramid_fiber_rot_reports.json`, `tire_retreading_compound_logs.json`, `celluloid_film_decomposition_records.json` | `Main` | `TechnicalMaterialArchiveSaveStore` | *None (GAP)* | , `TechnicalMaterialArchiveTests`, `CordageCableCatalogTests`, `PolymerTextileCatalogTests` | ❌ GAP |
-| 214 | `vehicle_customization` | Vehicles | `VehicleCustomizationSystem`, `VehicleCustomizationCatalog`, `VehicleModule`, `VehicleCustomizationCensus`, `VehicleModuleCatalogLoader` | `vehicle_modules.json` | `Main`, `VehicleCustomizationHostSession` | `VehicleCustomizationSaveStore` | *None (GAP)* | `--vehicle-customization-selftest`, `Plan152VehicleCustomizationHostIntegrationTests`, `Plan152VehicleCustomizationIntegrationTests`, `VehicleModuleCatalogLoaderTests` | ❌ GAP |
-| 215 | `deep_well` | Water & Infrastructure | `DeepWellSystem` | — *(Procedural)* | `DeepWellHostSession`, `DeepWellSaveStore` | `DeepWellSaveStore` | *None (GAP)* | , `DeepWellSystemTests` | ❌ GAP |
-| 216 | `piezometer_network` | Water & Infrastructure | `AquiferPiezometerEngine` | `piezometer_network_catalog.json` | `PiezometerHostSession` | `PiezometerSaveStore` | *None (GAP)* | , `Plan189IntakeAdvisoryBridgeTests` | ❌ GAP |
-| 217 | `water_condenser` | Water & Infrastructure | `AtmosphericCondenserSystem` | — *(Procedural)* | `WaterCondenserHostSession`, `WaterCondenserSaveStore` | `WaterCondenserSaveStore` | *None (GAP)* | , `AtmosphericCondenserSystemTests` | ❌ GAP |
-| 218 | `weather_cascade` | Weather | `WeatherCascadeSystem`, `WeatherGameplayCascadeEngine`, `WeatherCascadeSeverity`, `WeatherCascadeCatalogLoader` | `weather_gameplay_effects.json`, `weather_effects.json` | `WeatherCascadeHostSession`, `Main` | `WeatherCascadeSaveStore` | *None (GAP)* | `--weather-cascade-selftest`, `Plan135WeatherCascadeHostIntegrationTests`, `Plan135WeatherCascadeIntegrationTests` | ❌ GAP |
-| 219 | `ecological_infestation` | World | `EcologicalInfestationSystem` | `micro_locations.json` | `Main` | `EcologicalInfestationSaveStore` | `GameDashboardPanel` | `--faction-ecology-selftest`, `EcologicalInfestationSystemTests` | ✅ 6/6 |
-| 220 | `geodetic_survey` | World | `GeodeticSurveyEngine` | — *(Procedural)* | `GeodeticSurveySaveStore` | `GeodeticSurveySaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 221 | `nuclear_winter_progression` | World | `NuclearWinterProgressionSystem` | `nuclear_winter_phases.json` | `Main` | `NuclearWinterSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan164NuclearWinterIntegrationTests` | ❌ GAP |
-| 222 | `route_infrastructure` | World | `RouteInfrastructureSystem` | — *(Procedural)* | `RouteInfrastructureSaveStore` | `RouteInfrastructureSaveStore` | *None (GAP)* | , `RouteInfrastructureSystemTests` | ❌ GAP |
-| 223 | `subterranean` | World | `SubterraneanSystem` | `subterranean_zones.json` | `SubterraneanHostSession` | `SubterraneanSaveStore` | *None (GAP)* | , `SubterraneanSystemTests` | ❌ GAP |
-| 224 | `amphibious_draisine` | World & Expeditions | `AmphibiousDraisineEngine` | `amphibious_draisine_catalog.json` | `AmphibiousDraisineHostSession` | `AmphibiousDraisineSaveStore` | `AmphibiousDraisinePanel` | `--plans-122-125-selftest`, `Plan125AmphibiousDraisineEngineTests` | ✅ 6/6 |
-| 225 | `armored_crawlers` | World & Expeditions | `ArmoredCrawlerExpeditionSystem` | `armored_crawler_modules.json` | `Main` | `ArmoredCrawlerSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FlagshipIntegrationIxSmokeTests` | ✅ 6/6 |
-| 226 | `encounter_choice` | World & Expeditions | `EncounterChoiceResolver` | `door_encounters.json` | `EncounterChoiceState` | `EncounterChoiceSaveStore` | `DoorEncounterModal` | `--moral-choice-selftest`, `EncounterChoiceResolverTests` | ✅ 6/6 |
-| 227 | `expedition` | World & Expeditions | `ExpeditionSystem`, `ExpeditionEncounterBridge` | `locations.json` | `ExpeditionHostSession` | `ExpeditionSaveStore` | `ExpeditionPanel` | `--expedition-selftest`, `--expedition-panel-uitest`, `ExpeditionCampSystemTests` | ✅ 6/6 |
-| 228 | `insar_deformation` | World & Expeditions | `InSarDeformationEngine` | `insar_geodesy_catalog.json` | `InSarMappingHostSession` | `InSarMappingSaveStore` | `InSarMappingPanel` | `--plans-139-141-selftest`, `Plan139InSarDeformationTests` | ✅ 6/6 |
-| 229 | `runflat_tire` | World & Expeditions | `RunFlatTireEngine` | `runflat_tire_catalog.json` | `RunFlatTireHostSession` | `RunFlatTireSaveStore` | `RunFlatTirePanel` | `--plans-139-141-selftest`, `Plan141RunFlatTireTests` | ✅ 6/6 |
-| 230 | `travel_encounters` | World & Expeditions | `TravelEncounterSystem`, `TravelEncounterCatalog` | `travel_encounters.json` | `TravelEncounterSystem` | `TravelEncounterSaveStore` | `ExpeditionPanel` | `--expedition-encounter-bridge-selftest`, `TravelEncounterCooldownGroupTests`, `PatrolEncounterFullRegressionTests` | ✅ 6/6 |
-| 231 | `wasteland_map` | World & Expeditions | `WastelandMapSystem` | `wasteland_map_v1.json` | `WorldHostSession` | `WastelandMapSaveStore` | `MapPanel` | `--world-selftest`, `WastelandMapPersistenceTests` | ✅ 6/6 |
-| 232 | `waystation` | World & Expeditions | `WaystationSystem` | `locations.json` | `WaystationHostSession` | `WaystationSaveStore` | `WaystationNetworkPanel` | `--shelter-operations-selftest`, `WaystationSystemTests` | ✅ 6/6 |
-| 233 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
-| 234 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
+| 25 | `trade_routes` | Economy | `PlayerTradeRouteSystem`, `TradeRouteContract`, `TradeRouteCensus` | `caravan_trade_routes.json` | `Main`, `TradeRouteHostSession` | `TradeRouteSaveStore` | *None (GAP)* | `--trade-routes-selftest`, `Plan192TradeRouteHostIntegrationTests`, `TradeRouteContractTests` | ❌ GAP |
+| 26 | `black_market` | Economy & Trade | `BlackMarketSystem`, `BlackMarketInventoryCatalog` | `black_market_inventory.json` | `BlackMarketHostSession` | `BlackMarketSaveStore` | *None (GAP)* | , `Plan211BlackMarketTests`, `Plan211BlackMarketHostWiringTests` | ❌ GAP |
+| 27 | `caravan` | Economy & Trade | `TravelingCaravanSystem` | `trade_texts.json` | `TravelingCaravanHostSession` | `CaravanSaveStore` | `TravelingCaravanPanel` | `--caravan-selftest`, `TradeCaravanCatalogTests` | ✅ 6/6 |
+| 28 | `caravan_trade_network` | Economy & Trade | `CaravanTradeNetworkSystem` | `caravan_trade_routes.json` | `Main` | `CaravanTradeSaveStore` | `TravelingCaravanPanel` | `--caravan-selftest`, `CaravanTradeNetworkTests` | ✅ 6/6 |
+| 29 | `economy` | Economy & Trade | `MarketSystem` | `economy_goods.json` | `EconomyHostSession` | `EconomySaveStore` | `EconomyMarketPanel`, `EconomyDetailPanel` | `--economy-selftest`, `--economy-uitest`, `DynamicEconomyCharacterizationTests` | ✅ 6/6 |
+| 30 | `regional_treaty` | Economy & Trade | `RegionalTreatySystem` | `faction_lore.json` | `RegionalTreatyHostSession` | `RegionalTreatySaveStore` | `RegionalTreatyPanel` | `--shelter-operations-selftest`, `RegionalTreatySaveChecksumTests` | ✅ 6/6 |
+| 31 | `meta_progression` | Endgame | `MetaProgressionSystem`, `MetaProgressionCensus`, `CrossRunProfileStore` | `meta_unlockables.json` | `Main`, `MetaProgressionHostSession` | `MetaProgressionSaveStore` | `EpiloguePanel`, `ChroniclePanel` | `--meta-progression-selftest`, `Plan175MetaProgressionHostIntegrationTests` | ✅ 6/6 |
+| 32 | `unified_ending` | Endgame | `UnifiedEndingResolver` | `epilogue_personalization.json` | `Main`, `UnifiedEndingHostSession` | `UnifiedEndingSaveStore` | `EpiloguePanel`, `ChroniclePanel` | `--unified-ending-selftest`, `Plan145UnifiedEndingIntegrationTests`, `Plan145UnifiedEndingHostIntegrationTests` | ✅ 6/6 |
+| 33 | `expansion_hub` | Expansion Framework | `ExpansionMasterSession` | — *(Procedural)* | `ExpansionHostSession` | `ExpansionHubSaveStore` | `ExpansionsHubPanel` | `--expansions-selftest`, `--expansion-hub-save-selftest`, `ExpansionHubSaveTests` | ✅ 6/6 |
+| 34 | `expansion_quest` | Expansion Framework | `ExpansionQuestSystem`, `ExpansionMasterSession` | `crossing_quests.json` | `ExpansionQuestHostSession` | `ExpansionQuestSaveStore` | `CrossingQuestPanel` | `--expansions-selftest`, `VersionReportContractTests` | ✅ 6/6 |
+| 35 | `holdfast` | Expansions (Exp 01) | `HoldfastQuestSystem`, `HoldfastSession` | `holdfast_quests.json`, `holdfast_items.json` | `HoldfastRuntimeSession` | `HoldfastSaveStore` | `HoldfastTerminalPanel`, `GameDashboardPanel` | `--holdfast-save-selftest`, `--holdfast-selftest`, `HoldfastSaveTests` | ✅ 6/6 |
+| 36 | `holdfast_trade` | Expansions (Exp 01) | `HoldfastTradeSession` | `items.json` | `HoldfastRuntimeSession` | `HoldfastTradeSaveStore` | `TradeScreenGodotPanel`, `HoldfastTerminalPanel` | `--holdfast-trade-save-selftest`, `HoldfastTradeSessionTests` | ✅ 6/6 |
+| 37 | `duty_roster` | Expansions (Exp 02) | `DutyRosterSystem` | `duty_roster_quests.json`, `survivors.json` | `DutyRosterHostSession` | `DutyRosterSaveStore` | `DutyRosterPanel`, `DutyRosterDetailPanel` | `--duty-roster-selftest`, `--duty-roster-save-selftest`, `DutyRosterSaveTests` | ✅ 6/6 |
+| 38 | `phantom_memory` | Expansions (Exp 03) | `PhantomMemoryEngine` | `phantom_triggers.json` | `PhantomMemoryHostSession` | `PhantomMemorySaveStore` | `StandingRecordPanel`, `PhantomMemoryPanel` | `--standing-record-selftest`, `PhantomMemoryEngineTests` | ✅ 6/6 |
+| 39 | `thirdonary` | Expansions (Exp 04) | `ThirdonaryQuestSystem` | `thirdonary_quests.json` | `ThirdonaryHostSession` | `ThirdonarySaveStore` | `CrossingQuestPanel` | `--crossing-selftest`, `--arbitration-selftest`, `ThirdonaryQuestSystemTests`, `CrossingArbitrationSystemTests` | ✅ 6/6 |
+| 40 | `year_of_ash` | Expansions (Exp 05) | `YearOfAshDeepFreezeSystem`, `YearOfAshRadonSystem` | `year_of_ash_events.json` | `YearOfAshHostSession` | `YearOfAshSaveStore` | `DoorEncounterModal` | `--year-of-ash-save-selftest`, `YearOfAshQuestProbe` | ✅ 6/6 |
+| 41 | `muster` | Expansions (Exp 06) | `MusterSystem` | `muster_witnesses.json` | `MusterHostSession` | `MusterSaveStore` | `MusterPanel` | `--muster-selftest`, `--muster-uitest`, `MusterSystemTests` | ✅ 6/6 |
+| 42 | `dose_ledger` | Expansions (Exp 07) | `DoseLedgerSystem`, `RadiationSystem` | `dose_items.json` | `DoseLedgerHostSession` | `DoseLedgerSaveStore` | `RadiationHistoryPanel`, `RadiationDetailPanel` | `--dose-ledger-selftest`, `--dose-uitest`, `NeedsRadiationSaveRoundTripTests` | ✅ 6/6 |
+| 43 | `verdict` | Expansions (Exp 08) | `ReckoningSystem`, `MachineLogSystem` | `verdict_data.json` | `VerdictHostSession` | `VerdictSaveStore` | `VerdictPanel`, `VerdictDashboardPanel` | `--verdict-selftest`, `--verdict-uitest`, `VerdictChainTests` | ✅ 6/6 |
+| 44 | `maritime` | Expansions (Exp 09) | `MaritimeDiveSystem` | `dive_sites.json` | `MaritimeHostSession` | `MaritimeSaveStore` | `MaritimePanel` | `--black-flotilla-selftest`, `BlackFlotillaTests` | ✅ 6/6 |
+| 45 | `silent_foundry` | Expansions (Exp 10) | `SilentFoundrySystem` | `foundry_items.json` | `SilentFoundryHostSession` | `SilentFoundrySaveStore` | `SilentFoundryPanel` | `--silent-foundry-selftest`, `--silent-foundry-uitest`, `SilentFoundryConsequenceTests` | ✅ 6/6 |
+| 46 | `chemical_recon` | Expeditions | `ChemicalReconEngine` | — *(Procedural)* | `ChemicalReconSaveStore` | `ChemicalReconSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 47 | `colony` | Expeditions | `ColonySystem` | `colony_blueprints.json` | `Main` | `ColonySaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan160ColonyIntegrationTests` | ❌ GAP |
+| 48 | `draisine_recovery` | Expeditions | `DraisineRerailingSystem` | — *(Procedural)* | `DraisineRerailingHostSession` | `DraisineRerailingSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 49 | `mine_clearing_flail` | Expeditions | `MineClearingFlailEngine` | `mine_flail_catalog.json` | `MineClearingFlailHostSession` | `MineClearingFlailSaveStore` | `MineFlailPanel` | `--mine-flail-uitest`, `MineClearingFlailEngineTests` | ✅ 6/6 |
+| 50 | `rail_grinding` | Expeditions | `RailGrindingEngine` | `rail_grinding_catalog.json` | `RailGrindingHostSession` | `RailGrindingSaveStore` | `RailGrindingPanel` | `--rail-grinding-uitest`, `RailGrindingEngineTests` | ✅ 6/6 |
+| 51 | `recon_telemetry` | Expeditions | `ReconTelemetrySystem` | — *(Procedural)* | `ReconTelemetrySaveStore` | `ReconTelemetrySaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 52 | `vehicle_garage` | Expeditions | `VehicleGarageSystem`, `VehicleArmorGradeCatalogLoader` | `vehicle_modifications.json`, `vehicle_armor_grades.json` | `Main` | `VehicleGarageSaveStore` | `VehicleGaragePanel` | `--vehicle-garage-selftest`, `VehicleGarageSystemTests`, `Plan50VehicleGarageIntegrationTests`, `Plan213VehicleArmorGradeTests` | ✅ 6/6 |
+| 53 | `counter_intelligence` | Factions | `CounterIntelligenceSystem` | — *(Procedural)* | `CounterIntelligenceSaveStore` | `CounterIntelligenceSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 54 | `diplomatic_summits` | Factions | `DiplomaticSummitSystem` | — *(Procedural)* | `Main` | `DiplomaticSummitSaveStore` | *None (GAP)* | , `DiplomaticSummitTests` | ❌ GAP |
+| 55 | `espionage` | Factions | `EspionageSystem` | `espionage_missions.json` | `EspionageHostSession` | `EspionageSaveStore` | *None (GAP)* | , `Plan167EspionageTests` | ❌ GAP |
+| 56 | `faction_covert_ops` | Factions | `FactionCovertOpsCoordinator` | `espionage_operations.json` | `Main` | `FactionCovertOpsSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan153FactionEspionageIntegrationTests` | ❌ GAP |
+| 57 | `faction_espionage` | Factions | `ShelterEspionageSystem` | `faction_intelligence.json` | `Main` | `ShelterEspionageSaveStore` | *None (GAP)* | , `ShelterEspionageSystemTests` | ❌ GAP |
+| 58 | `territory_control` | Factions | `TerritoryControlSystem`, `FactionTerritoryDef`, `SupplyLineDef`, `LocationTerritoryState`, `SupplyLineState`, `TerritoryControlSaveState` | `faction_territory.json`, `supply_lines.json` | `TerritoryControlHostSession`, `Main` | `TerritoryControlSaveStore` | *None (GAP)* | `--territory-control-selftest`, `Plan134TerritoryControlHostIntegrationTests`, `Plan134TerritoryControlIntegrationTests` | ❌ GAP |
+| 59 | `weight_of_choices` | Factions & Diplomacy | `FactionBranchCoordinator`, `MilitaryBranchSystem`, `RebelBranchSystem`, `IndependentBranchSystem`, `PrpfStandingSystem` | `military_faction_branch.json`, `rebel_faction_branch.json`, `independent_faction_branch.json` | `FactionBranchHostSession` | `WeightOfChoicesSaveStore` | `FactionsPanel`, `QuestsPanel` | `--expansions-selftest`, `FactionBranchCoordinatorTests`, `MilitaryBranchSystemTests`, `RebelBranchSystemTests`, `IndependentBranchSystemTests`, `PrpfStandingSystemTests`, `WeightOfChoicesSaveTests` | ✅ 6/6 |
+| 60 | `aeroponics` | Farming | `AeroponicsSystem` | `aeroponics_nutrient_catalog.json` | `Main` | `AeroponicsSaveStore` | `AeroponicsPanel` | , `Plans74To77SystemsTests` | ❌ GAP |
+| 61 | `agriculture` | Farming | `AgricultureSystem` | `crop_strains.json` | `Main` | `AgricultureSaveStore` | *None (GAP)* | , `AgricultureSystemTests` | ❌ GAP |
+| 62 | `aquaponics` | Farming | `AquaponicsSystem` | `aquaponics_system_catalog.json` | `Main` | `AquaponicsSaveStore` | *None (GAP)* | `--aquaponics-selftest`, `AquaponicsSystemTests`, `PlansB86ToB89ContinuityTests` | ❌ GAP |
+| 63 | `powder_metallurgy` | Foundry | `PowderMetallurgySystem` | — *(Procedural)* | `PowderMetallurgySaveStore` | `PowderMetallurgySaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 64 | `hydraulic_extrusion` | Foundry & Industry | `HydraulicExtrusionEngine` | `hydraulic_extrusion_catalog.json` | `HydraulicExtrusionHostSession` | `HydraulicExtrusionSaveStore` | `HydraulicExtrusionPanel` | `--plans-139-141-selftest`, `Plan140HydraulicExtrusionTests` | ✅ 6/6 |
+| 65 | `wildlife_ecosystem` | Hunting | `WildlifeEcosystemSystem` | `wildlife_ecosystem.json` | `WildlifeEcosystemHostSession` | `WildlifeEcosystemSaveStore` | `BestiaryPanel` | , `WildlifeEcosystemSystemTests` | ❌ GAP |
+| 66 | `shelter_barter` | Illicit Economy / Barter | `ShelterBarterSystem` | `merchant_caravans.json` | `Main` | `ShelterBarterSaveStore` | *None (GAP)* | `--contraband-stash-selftest`, `ShelterBarterSystemPlan54Tests`, `ContrabandBarterRouteTests` | ❌ GAP |
+| 67 | `grain_milling_archive` | Industrial Food-Processing Archive | `GrainMillingDiscoverySystem` | `burr_millstone_dressing_logs.json`, `bolting_silk_mesh_reports.json`, `grain_silo_weevil_audits.json`, `mill_dampener_tempering_assays.json` | `Main` | `GrainMillingArchiveSaveStore` | *None (GAP)* | , `GrainMillingDiscoveryTests`, `GrainMillingCatalogTests` | ❌ GAP |
+| 68 | `wasteland_rumors` | Information & Rumors (Plan 203) | `RumorSystem` | — *(Procedural)* | `RumorNetworkHostSession` | `RumorNetworkSaveStore` | `RumorBoardPanel`, `GameDashboardPanel` | `--rumor-network-selftest`, `Plan203RumorNetworkIntegrationTests` | ✅ 6/6 |
+| 69 | `cryogenic_air_separation` | Infrastructure | `CryogenicAirSeparationSystem` | — *(Procedural)* | `CryogenicAirSeparationSaveStore` | `CryogenicAirSeparationSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 70 | `fluid_logistics` | Infrastructure | `FluidLogisticsSystem` | `fluid_infrastructure.json` | `FluidLogisticsHostSession` | `FluidLogisticsSaveStore` | *None (GAP)* | , `Plan168FluidLogisticsTests` | ❌ GAP |
+| 71 | `pneumatic_dispatch` | Infrastructure | `PneumaticDispatchSystem` | `pneumatic_network_catalog.json` | `Main` | `PneumaticDispatchSaveStore` | `PneumaticDispatchPanel` | , `Plans74To77SystemsTests` | ❌ GAP |
+| 72 | `black_projects_archive` | Intelligence Archive | `BlackProjectsArchiveSystem` | `orbital_kinetic_telemetry.json`, `drone_carrier_blackboxes.json`, `cobalt_arming_directives.json`, `architect_vault_audits.json` | `Main` | `BlackProjectsArchiveSaveStore` | `BlackProjectsArchivePanel` | , `BlackProjectsArchiveTests`, `BlackProjectsCatalogTests`, `BlackProjectsArchivePanelRouteTests` | ❌ GAP |
+| 73 | `collectible_discovery` | Inventory & Lore | `CollectibleDiscoveryState` | `collectibles.json` | `Main` | `CollectibleDiscoverySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `CollectibleDiscoveryPersistenceTests` | ✅ 6/6 |
+| 74 | `unique_claims` | Inventory & Lore | `UniqueItemClaimRegistry` | `collectibles.json` | `Main` | `UniqueClaimSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `CollectibleDiscoveryPersistenceTests` | ✅ 6/6 |
+| 75 | `cultural_archives` | Knowledge | `CulturalArchiveVaultSystem` | — *(Procedural)* | `Main` | `CulturalArchiveSaveStore` | *None (GAP)* | , `CulturalArchiveVaultTests` | ❌ GAP |
+| 76 | `field_guide` | Knowledge | `FieldGuideCatalog` | — *(Procedural)* | `Main` | `FieldGuideSaveStore` | `GameDashboardPanel` | `--world-selftest`, `FieldGuidePersistenceTests` | ✅ 6/6 |
+| 77 | `prewar_archives` | Knowledge | `PrewarArchiveDecryptionSystem` | `prewar_archives.json` | `Main` | `PrewarArchiveSaveStore` | *None (GAP)* | , `PrewarArchiveDecryptionTests` | ❌ GAP |
+| 78 | `research` | Knowledge | `ResearchSystem` | `research_knowledge.json` | `Main` | `ResearchSaveStore` | `ResearchPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `MedicalPipelineArchitectureGateTests` | ✅ 6/6 |
+| 79 | `survivor_education` | Knowledge | `SurvivorEducationSystem` | `education_curriculum.json` | `Main` | `SurvivorEducationSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan154EducationIntegrationTests` | ❌ GAP |
+| 80 | `campaign_legacy` | Legacy | `CampaignLegacySystem`, `CampaignLegacy`, `CampaignLegacyCensus`, `CampaignLegacyState`, `StartingCampaignContext`, `LegacyTrait` | `legacy_traits.json` | `CampaignLegacyHostSession`, `Main` | `CampaignLegacySaveStore` | *None (GAP)* | `--campaign-legacy-selftest`, `Plan140CampaignLegacyHostIntegrationTests`, `Plan140GenerationalLegacyIntegrationTests` | ❌ GAP |
+| 81 | `leatherwork_archive` | Material Provenance Archive | `LeatherworkArchiveSystem` | `oak_bark_tanning_pit_logs.json`, `chrome_alum_tanning_assays.json`, `rawhide_bating_failure_reports.json`, `leather_harness_conditioning_audits.json` | `Main` | `LeatherworkArchiveSaveStore` | `InventoryDetailPanel` | , `LeatherworkArchiveTests`, `TanningLeatherCatalogTests` | ❌ GAP |
+| 82 | `lyophilization` | Medical | `LyophilizationSystem` | — *(Procedural)* | `LyophilizationSaveStore` | `LyophilizationSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 83 | `medical_pipeline` | Medical | `MedicalPipelineCoordinator` | `disease_catalog.json` | `Main` | `MedicalPipelineSaveStore` | `MedicalPanel`, `GameDashboardPanel` | `--save-load-ui-failure-selftest`, `MedicalPipelineArchitectureGateTests` | ✅ 6/6 |
+| 84 | `microfluidic_diagnostic` | Medical | `MicrofluidicDiagnosticEngine` | `microfluidic_diagnostic_catalog.json` | `MicrofluidicDiagnosticHostSession` | `MicrofluidicDiagnosticSaveStore` | `MicrofluidicDiagnosticPanel` | `--microfluidic-diagnostic-uitest`, `MicrofluidicDiagnosticEngineTests` | ✅ 6/6 |
+| 85 | `pathogen_strains` | Medical | `PathogenStrainSystem` | `pathogens.json` | `Main` | `PathogenStrainSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `DiseaseSystemTests` | ✅ 6/6 |
+| 86 | `psychological_sanatorium` | Medical | `PsychologicalSanatoriumSystem` | — *(Procedural)* | `Main` | `PsychologicalSanatoriumSaveStore` | *None (GAP)* | , `PsychologicalSanatoriumTests` | ❌ GAP |
+| 87 | `surgical_ward` | Medical | `AdvancedSurgicalWardSystem` | — *(Procedural)* | `Main` | `SurgicalWardSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`,  | ❌ GAP |
+| 88 | `propaganda_campaigns` | Morale & Influence (Plan 168) | `PropagandaSystem` | — *(Procedural)* | `PropagandaHostSession` | `PropagandaSaveStore` | `PropagandaPanel`, `GameDashboardPanel` | `--propaganda-selftest`, `Plan168PropagandaIntegrationTests` | ✅ 6/6 |
+| 89 | `confession_secret` | Narrative | `ConfessionSecretSystem` | `confession_secrets.json` | `Main` | `ConfessionSecretSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `ConfessionSecretSystemTests` | ❌ GAP |
+| 90 | `echoes` | Narrative | `EchoSystem`, `NarrativeContinuityEngine` | `echoes.json` | `EchoHostSession`, `EchoSaveStore` | `EchoSaveStore` | *None (GAP)* | , `EchoCatalogTests`, `EchoSystemTests` | ❌ GAP |
+| 91 | `npc_memory` | Narrative | `NpcMemorySystem`, `NpcMemoryEntry`, `NpcRelationship`, `NpcMemoryCensus` | `npc_memory_dialogue.json` | `Main`, `NpcMemoryHostSession` | `NpcMemorySaveStore` | *None (GAP)* | `--npc-memory-selftest`, `Plan147NpcMemoryHostIntegrationTests`, `NpcMemorySystemTests` | ❌ GAP |
+| 92 | `seasonal_celebration` | Narrative | `SeasonalCelebrationSystem` | `shelter_celebrations.json` | `Main` | `SeasonalCelebrationSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan170SeasonalCelebrationsIntegrationTests` | ❌ GAP |
+| 93 | `shelter_festival` | Narrative | `ShelterFestivalEngine` | — *(Procedural)* | `Main` | `ShelterFestivalSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan170SeasonalCelebrationsIntegrationTests` | ❌ GAP |
+| 94 | `oral_lore` | Narrative & Cultural Tradition | `OralLorePerformanceSystem` | `oral_lore_codex.json`, `oral_lore_batch_2.json` | `Main` | `OralLoreSaveStore` | *None (GAP)* | , `OralLorePlan155Tests`, `OralLoreCatalogTests` | ❌ GAP |
+| 95 | `moral_choice` | Narrative & Decisions | `MoralChoiceSystem`, `MoralChoiceState` | `moral_choice_quests.json` | `MoralChoiceSystem` | `MoralChoiceSaveStore` | `GameDashboardPanel` | `--moral-choice-selftest`, `MoralChoiceSystemTests` | ✅ 6/6 |
+| 96 | `contraband_stash` | Narrative & Illicit Economy | `ContrabandStashSystem` | `bunker_contraband_barter.json` | `Main` | `ContrabandSaveStore` | *None (GAP)* | `--contraband-stash-selftest`, `ContrabandPlan147Tests` | ❌ GAP |
+| 97 | `cooking` | Nutrition | `CookingSystem`, `CookingRecipe`, `CookingOperation`, `CookingState`, `CookingCensus`, `CookingRecipeCatalogLoader`, `InventoryCookingSource` | `recipes_cooking.json` | `CookingHostSession`, `Main` | `CookingSaveStore` | *None (GAP)* | `--cooking-selftest`, `Plan136CookingHostIntegrationTests`, `Plan136WildlifeCookingIntegrationTests` | ❌ GAP |
+| 98 | `grain_processing` | Nutrition | `GrainProcessingSystem` | — *(Procedural)* | `GrainProcessingSaveStore` | `GrainProcessingSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 99 | `companion_animals` | Plan 174 Companion Animals | `CompanionAnimalSystem` | `companion_animals.json` | `Main` | `CompanionSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `Plan174CompanionAnimalTests` | ✅ 6/6 |
+| 100 | `zealotry` | Plan 175 Ideological Pressure | `ZealotrySystem` | `wasteland_religions.json` | `Main` | `ZealotrySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `ZealotrySystemTests` | ✅ 6/6 |
+| 101 | `anomaly_hazard` | Plan 176 Anomaly Hazard Layer | `AnomalyHazardSystem` | `anomalies.json` | `Main` | `AnomalyHazardSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `Plan176AnomalyHazardTests`, `Plan176CrossSystemConsumerTests` | ✅ 6/6 |
+| 102 | `bionics` | Plan 177 Bionics & Prosthetics | `BionicsSystem` | `bionics.json` | `Main` | `BionicsSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `Plan177BionicsTests` | ✅ 6/6 |
+| 103 | `spiritual_meaning` | Plan 30 Spiritual Meaning | `SpiritualMeaningCoordinator` | `spiritual_rituals.json`, `memorial_rites.json`, `belief_movements.json` | `Main` | `SpiritualSaveStore` | `IronCenotaphMemorialPanel` | `--save-store-checksum-selftest`, `Plan30SpiritualWorldTests` | ✅ 6/6 |
+| 104 | `amputation` | Plans 178-201 Expansion Block | `AmputationSystem` | `surgical_procedures.json` | `Main` | `AmputationSaveStore` | `MedicalPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `AmputationSystemTests` | ✅ 6/6 |
+| 105 | `archaeology` | Plans 178-201 Expansion Block | `ArchaeologySystem` | `lore_archives.json` | `Main` | `ArchaeologySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `ArchaeologySystemTests` | ✅ 6/6 |
+| 106 | `aviation` | Plans 178-201 Expansion Block | `AviationSystem` | `aircraft_parts.json` | `Main` | `AviationSaveStore` | `AviationUI`, `GameDashboardPanel` | `--expedition-selftest`, `AviationSystemTests` | ✅ 6/6 |
+| 107 | `ceremony` | Plans 178-201 Expansion Block | `CeremonySystem` | `ceremonies.json` | `Main` | `CeremonySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `CeremonySystemTests` | ✅ 6/6 |
+| 108 | `chem_warfare` | Plans 178-201 Expansion Block | `ChemWarfareSystem` | `chemical_weapons.json` | `Main` | `ChemWarfareSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `ChemWarfareSystemTests` | ✅ 6/6 |
+| 109 | `child_development` | Plans 178-201 Expansion Block | `GenerationalSystem` | `development_traits.json` | `Main` | `GenerationalSaveStore` | `NurseryPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `GenerationalSystemTests`, `GenerationalLineageExtensionTests` | ✅ 6/6 |
+| 110 | `comms_array` | Plans 178-201 Expansion Block | `CommsArraySystem` | `comms_targets.json` | `Main` | `CommsArraySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `CommsArraySystemTests` | ✅ 6/6 |
+| 111 | `desperation` | Plans 178-201 Expansion Block | `DesperationSystem` | `desperation_events.json` | `Main` | `DesperationSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `DesperationSystemTests` | ✅ 6/6 |
+| 112 | `expedition_stealth` | Plans 178-201 Expansion Block | `StealthSystem` | `camouflage_gear.json` | `Main` | `StealthSaveStore` | `StealthReadoutPanel`, `GameDashboardPanel` | `--expedition-selftest`, `StealthSystemTests` | ✅ 6/6 |
+| 113 | `fallout` | Plans 178-201 Expansion Block | `FalloutSystem` | `fallout_patterns.json` | `Main` | `FalloutSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FalloutSystemTests` | ✅ 6/6 |
+| 114 | `forced_labor` | Plans 178-201 Expansion Block | `ForcedLaborSystem` | `labor_camps.json` | `Main` | `ForcedLaborSaveStore` | `LaborUI`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `ForcedLaborSystemTests` | ✅ 6/6 |
+| 115 | `fungi_cultivation` | Plans 178-201 Expansion Block | `FungiCultivationSystem` | `underground_flora.json` | `Main` | `FungiSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FungiCultivationSystemTests` | ✅ 6/6 |
+| 116 | `mercenary_bounties` | Plans 178-201 Expansion Block | `MercenarySystem` | `bounty_board.json` | `Main` | `MercenarySaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `MercenarySystemTests` | ✅ 6/6 |
+| 117 | `mutation_tree` | Plans 178-201 Expansion Block | `MutationSystem` | `mutations.json` | `Main` | `MutationSaveStore` | `MutationTreePanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `MutationSystemTests` | ✅ 6/6 |
+| 118 | `narcotics` | Plans 178-201 Expansion Block | `NarcoticsSystem` | `narcotics.json` | `Main` | `NarcoticsSaveStore` | `ChemUI`, `PharmaLabPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `NarcoticsSystemTests` | ✅ 6/6 |
+| 119 | `prisoner_management` | Plans 178-201 Expansion Block | `PrisonerSystem` | `interrogation_tactics.json` | `Main` | `PrisonerSaveStore` | `PrisonerPanel`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `PrisonerSystemTests` | ✅ 6/6 |
+| 120 | `railway` | Plans 178-201 Expansion Block | `RailwaySystem` | `rail_network.json` | `Main` | `RailwaySaveStore` | `GameDashboardPanel` | `--expedition-selftest`, `RailwaySystemTests` | ✅ 6/6 |
+| 121 | `recreation` | Plans 178-201 Expansion Block | `SurvivorDowntimeSystem` | `recreation.json` | `Main` | `RecreationSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `SurvivorDowntimeSystemTests` | ✅ 6/6 |
+| 122 | `robotics` | Plans 178-201 Expansion Block | `RoboticsSystem` | `robotics.json` | `Main` | `RoboticsSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `RoboticsSystemTests` | ✅ 6/6 |
+| 123 | `settlement_politics` | Plans 178-201 Expansion Block | `PoliticsSystem` | `political_policies.json` | `Main` | `PoliticsSaveStore` | `PoliticsUI`, `GameDashboardPanel` | `--save-store-checksum-selftest`, `PoliticsSystemTests` | ✅ 6/6 |
+| 124 | `wasteland_justice` | Plans 178-201 Expansion Block | `JusticeSystem` | `wasteland_laws.json` | `Main` | `JusticeSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `JusticeSystemTests` | ✅ 6/6 |
+| 125 | `plastic_pyrolysis` | Plans 202-205 Flagship (Plan 202) | `PlasticPyrolysisSystem` | `plastic_pyrolysis_catalog.json` | `Main` | `PlasticPyrolysisSaveStore` | `PlasticPyrolysisPanel` | `--save-store-checksum-selftest`, `PlasticPyrolysisEngineTests` | ✅ 6/6 |
+| 126 | `cargo_airdrop` | Plans 202-205 Flagship (Plan 205) | `CargoAirdropSystem` | `cargo_airdrop_catalog.json` | `Main` | `CargoAirdropSaveStore` | `CargoAirdropPanel` | `--save-store-checksum-selftest`, `CargoAirdropEngineTests` | ✅ 6/6 |
+| 127 | `geothermal_orc` | Power | `GeothermalOrcSystem` | `geothermal_strata_catalog.json` | `Main` | `GeothermalOrcSaveStore` | `GeothermalOrcPanel` | , `Plans74To77SystemsTests` | ❌ GAP |
+| 128 | `kinetic_storage` | Power | `KineticStorageSystem` | — *(Procedural)* | `KineticStorageSaveStore` | `KineticStorageSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 129 | `solar_concentrator` | Power | `SolarConcentratorEngine` | — *(Procedural)* | `SolarConcentratorHostSession` | `SolarConcentratorSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 130 | `hobby` | Psychology | `HobbySystem` | `hobby_definitions.json` | `Main` | `HobbySaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan161HobbyIntegrationTests` | ❌ GAP |
+| 131 | `psychological_arcs` | Psychology | `PsychologicalArcSystem` | `mental_arcs.json` | `PsychologyArcHostSession` | `PsychologyArcSaveStore` | *None (GAP)* | , `PsychologicalArcSystemTests` | ❌ GAP |
+| 132 | `survivor_autonomy` | Psychology | `SurvivorAutonomySystem` | `autonomy_actions.json` | `Main` | `SurvivorAutonomySaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan144SurvivorAutonomyIntegrationTests` | ❌ GAP |
+| 133 | `survivor_mental_health` | Psychology | `SurvivorMentalHealthSystem` | `psychological_trauma.json` | `Main` | `SurvivorMentalHealthSaveStore` | *None (GAP)* | , `SurvivorMentalHealthTests` | ❌ GAP |
+| 134 | `procedural_narrative` | Quests | `ProceduralNarrativeSystem` | `quest_templates.json` | `ProceduralNarrativeHostSession` | `ProceduralNarrativeSaveStore` | *None (GAP)* | , `Plan169ProceduralNarrativeTests` | ❌ GAP |
+| 135 | `low_background_metrology` | Radiation & Metrology | `LowBackgroundLeadEngine` | `low_background_lead_catalog.json` | `LowBackgroundMetrologyHostSession` | `LowBackgroundMetrologySaveStore` | `LowBackgroundLeadPanel` | , `Plan138LowBackgroundLeadEngineTests` | ❌ GAP |
+| 136 | `communications` | Radio | `CommunicationsSystem` | `communications_networks.json` | `Main` | `CommunicationsSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan157CommunicationsIntegrationTests` | ❌ GAP |
+| 137 | `heliograph` | Radio | `HeliographSystem` | — *(Procedural)* | `HeliographSaveStore` | `HeliographSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 138 | `nvis_communications` | Radio | `NvisCommunicationsSystem` | — *(Procedural)* | `NvisCommunicationsSaveStore` | `NvisCommunicationsSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 139 | `psyops` | Radio | `PsyOpsSystem` | — *(Procedural)* | `PsyOpsHostSession` | `PsyOpsSaveStore` | *None (GAP)* | , `PsyOpsSystemTests` | ❌ GAP |
+| 140 | `radio_program_production` | Radio | `RadioProgramProductionSystem` | `radio_programs.json` | `RadioProgramProductionHostSession` | `RadioProgramProductionSaveStore` | `RadioPanel` | , `Plan173RadioProgramProductionTests` | ❌ GAP |
+| 141 | `retention` | Records | `RetentionPolicyCatalog`, `RetentionPolicyCatalogLoader`, `RollingLog` | `retention_policies.json` | `RetentionHostSession`, `Main` | `RetentionSaveStore` | *None (GAP)* | `--retention-selftest`, `Plan55RetentionHostIntegrationTests`, `RetentionPolicyCatalogLoaderTests`, `Plan55RetentionPolicyIntegrationTests` | ❌ GAP |
+| 142 | `research_unlock` | Research | `ResearchUnlockBridge` | `research_unlocks.json` | `Main`, `ResearchUnlockHostSession` | `ResearchUnlockSaveStore` | `ResearchPanel` | `--research-unlock-selftest`, `Plan141ResearchUnlockBridgeIntegrationTests`, `Plan141ResearchUnlockHostIntegrationTests` | ✅ 6/6 |
+| 143 | `playable_metrics` | Save | `PlaySessionRecorder`, `FirstHourFunnel`, `PlayableMetricsAggregationEngine` | — *(Procedural)* | `Main`, `PlayMetricsHostSession` | `PlayMetricsSaveStore` | *None (GAP)* | `--playable-metrics-selftest`, `Plan46PlayMetricsHostIntegrationTests`, `PlaySessionRecorderTests` | ❌ GAP |
+| 144 | `session_durability` | Save | `SessionDurabilityManager` | — *(Procedural)* | `Main`, `SessionDurabilityHostSession`, `SaveLoadHostSession` | `SessionDurabilitySaveStore` | *None (GAP)* | `--session-durability-selftest`, `Plan39SessionDurabilityHostIntegrationTests`, `SessionDurabilityManagerTests` | ❌ GAP |
+| 145 | `seven_day_slice` | Save | `SliceScenario`, `SliceScenarioCatalogLoader` | `slice_seven_days.json` | `SliceScenarioHostSession` | `SliceScenarioSaveStore` | *None (GAP)* | `--seven-day-slice-selftest`, `Plan54SevenDaySliceHostIntegrationTests` | ❌ GAP |
+| 146 | `outpost_settlement` | Settlements | `OutpostSettlementSystem`, `OutpostDef`, `OutpostInstance`, `OutpostSettlementState` | `outposts.json` | `OutpostSettlementHostSession`, `Main` | `OutpostSettlementSaveStore` | *None (GAP)* | `--outpost-settlement-selftest`, `Plan58OutpostHostIntegrationTests`, `Plan58OutpostSettlementIntegrationTests` | ❌ GAP |
+| 147 | `cryo_vault` | Shelter | `CryoVaultSystem` | `cryo_cultivars.json` | `Main` | `CryoVaultSaveStore` | *None (GAP)* | , `CryoVaultB69Tests` | ❌ GAP |
+| 148 | `disaster_response` | Shelter | `DisasterResponseSystem` | `disaster_templates.json` | `Main` | `DisasterResponseSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan158DisasterResponseIntegrationTests` | ❌ GAP |
+| 149 | `ebpvd_coating` | Shelter | `EbPvdCoatingEngine` | `ebpvd_coating_catalog.json` | `EbPvdCoatingHostSession` | `EbPvdCoatingSaveStore` | `EbPvdCoatingPanel` | `--ebpvd-coating-uitest`, `EbPvdCoatingEngineTests` | ✅ 6/6 |
+| 150 | `excavation_hazards` | Shelter | `ExcavationHazardSystem` | — *(Procedural)* | `Main` | `ExcavationHazardSaveStore` | `GameDashboardPanel` | `--shelter-hazard-selftest`, `ExcavationSystemTests` | ✅ 6/6 |
+| 151 | `food_preservation` | Shelter | `FoodPreservationSystem` | `food_preservation.json` | `Main` | `FoodPreservationSaveStore` | *None (GAP)* | , `FoodPreservationSystemTests` | ❌ GAP |
+| 152 | `geothermal_aquifer` | Shelter | `GeothermalAquiferSystem` | — *(Procedural)* | `GeothermalAquiferSaveStore` | `GeothermalAquiferSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 153 | `precision_metrology` | Shelter | `PrecisionMetrologySystem` | `metrology_standards_catalog.json` | `Main` | `PrecisionMetrologySaveStore` | *None (GAP)* | `--precision-metrology-selftest`, `PrecisionMetrologySystemTests` | ❌ GAP |
+| 154 | `precision_optics` | Shelter | `PrecisionOpticsEngine` | — *(Procedural)* | `PrecisionOpticsHostSession` | `PrecisionOpticsSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 155 | `radio_station` | Shelter | `ShelterRadioStationSystem` | — *(Procedural)* | `Main` | `RadioStationSaveStore` | `RadioPanel`, `GameDashboardPanel` | `--core-selftest`, `ShelterRadioStationTests` | ✅ 6/6 |
+| 156 | `seismic_dynamics` | Shelter | `SeismicDynamicsSystem` | `seismic_fault_catalog.json` | `Main` | `SeismicDynamicsSaveStore` | *None (GAP)* | , `ShelterSeismicDynamicsPlan56Tests`, `SeismicMonitoringB68Tests` | ❌ GAP |
+| 157 | `shelter_atmosphere` | Shelter | `ShelterAtmosphereSystem` | — *(Procedural)* | `ShelterAtmosphereHostSession` | `ShelterAtmosphereSaveStore` | `ShelterAtmospherePanel`, `GameDashboardPanel` | `--shelter-atmosphere-selftest`, `Plan220ShelterAtmosphereIntegrationTests` | ✅ 6/6 |
+| 158 | `shelter_decor` | Shelter | `ShelterDecorSystem` | — *(Procedural)* | `ShelterDecorHostSession` | `ShelterDecorSaveStore` | `GameDashboardPanel` | `--shelter-decor-selftest`, `Plan12CDecorTests` | ✅ 6/6 |
+| 159 | `shelter_expansion` | Shelter | `ShelterExpansionSystem` | `shelter_construction.json` | `Main` | `ShelterExpansionSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan156ShelterExpansionIntegrationTests` | ❌ GAP |
+| 160 | `shelter_noise` | Shelter | `ShelterNoiseSystem` | — *(Procedural)* | `ShelterAtmosphereHostSession` | `ShelterNoiseSaveStore` | `ShelterAtmospherePanel` | `--shelter-atmosphere-selftest`, `Plan220ShelterAtmosphereIntegrationTests` | ✅ 6/6 |
+| 161 | `shelter_social_dynamics` | Shelter | `ShelterSocialDynamicsSystem` | `shelter_social_events.json` | `Main` | `ShelterSocialSaveStore` | `GameDashboardPanel` | `--core-selftest`, `ShelterSocialDynamicsTests` | ✅ 6/6 |
+| 162 | `shelter_workshop` | Shelter | `ShelterWorkshopSystem` | — *(Procedural)* | `Main` | `ShelterWorkshopSaveStore` | `WorkshopPanel`, `GameDashboardPanel` | `--core-selftest`, `WorkshopReverseEngineeringSystemTests` | ✅ 6/6 |
+| 163 | `weather_hardening` | Shelter | `WeatherHardeningSystem` | — *(Procedural)* | `WeatherHardeningSaveStore` | `WeatherHardeningSaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 164 | `cvd_diamond` | Shelter & Facilities | `CvdDiamondSynthesisEngine` | `cvd_diamond_catalog.json` | `CvdDiamondHostSession` | `CvdDiamondSaveStore` | `CvdDiamondPanel` | `--plans-122-125-selftest`, `Plan124CvdDiamondSynthesisEngineTests` | ✅ 6/6 |
+| 165 | `sofc_power` | Shelter & Facilities | `SofcElectrochemistryEngine` | `sofc_power_catalog.json` | `SofcPowerHostSession` | `SofcPowerSaveStore` | `SolidOxideFuelCellPanel` | `--plans-122-125-selftest`, `Plan122SofcElectrochemistryEngineTests` | ✅ 6/6 |
+| 166 | `bio_fermentation` | Shelter & Farming | `BioFermentationEngine` | `bio_fermentation_catalog.json` | `BioFermentationHostSession` | `BioFermentationSaveStore` | `BioFermentationPanel` | , `BioFermentationEngineTests` | ❌ GAP |
+| 167 | `hydroponic_biomes` | Shelter & Farming | `HydroponicBiomeSystem` | `hydroponic_crops.json` | `Main` | `HydroponicBiomeSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `HydroponicBiomeTests` | ✅ 6/6 |
+| 168 | `airlock_security` | Shelter & Infrastructure | `AirlockSecuritySystem` | — *(Procedural)* | `AirlockSecurityHostSession` | `AirlockSecuritySaveStore` | `AirlockSecurityPanel` | `--shelter-operations-selftest`, `AirlockSecuritySystemTests` | ✅ 6/6 |
+| 169 | `decontamination` | Shelter & Infrastructure | `DecontaminationSystem` | — *(Procedural)* | `DecontaminationHostSession` | `DecontaminationSaveStore` | `DecontaminationPanel` | `--shelter-operations-selftest`, `DecontaminationSystemTests` | ✅ 6/6 |
+| 170 | `excavation` | Shelter & Infrastructure | `ExcavationSystem` | — *(Procedural)* | `ExcavationHostSession` | `ExcavationSaveStore` | `ExcavationPanel` | `--shelter-operations-selftest`, `ExcavationSystemTests` | ✅ 6/6 |
+| 171 | `greenhouse` | Shelter & Infrastructure | `GreenhouseSystem` | `greenhouse_items.json` | `GreenhouseHostSession` | `GreenhouseSaveStore` | `GreenhousePanel` | `--greenhouse-selftest`, `GreenhouseSystemTests` | ✅ 6/6 |
+| 172 | `nuclear_core_lifecycle` | Shelter & Infrastructure | `NuclearCoreLifecycleSystem` | `nuclear_core_profiles.json` | `Main` | `NuclearCoreSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `NuclearCorePowerGridPublishTests` | ✅ 6/6 |
+| 173 | `power_grid` | Shelter & Infrastructure | `PowerGridSystem` | `power_grid.json` | `PowerGridHostSession` | `PowerGridSaveStore` | `PowerGridPanel` | `--player-panels-uitest`, `PowerGridSystemTests` | ✅ 6/6 |
+| 174 | `power_subgrids` | Shelter & Infrastructure | `PowerDistributionSubgridSystem` | — *(Procedural)* | `Main` | `PowerDistributionSaveStore` | `PowerGridPanel` | `--save-store-checksum-selftest`,  | ❌ GAP |
+| 175 | `sanitation` | Shelter & Infrastructure | `SanitationSystem`, `SanitationFacilityCatalog` | `sanitation_facilities.json` | `SanitationHostSession` | `SanitationSaveStore` | *None (GAP)* | , `Plan210SanitationSystemTests`, `Plan210SanitationFacilityCatalogTests`, `Plan210SanitationHostWiringTests` | ❌ GAP |
+| 176 | `shelter_assignment` | Shelter & Infrastructure | `ShelterAssignmentSystem` | — *(Procedural)* | `ShelterAssignmentHostSession` | `ShelterAssignmentSaveStore` | `ShelterPanel` | `--shelter-operations-selftest`, `ShelterAssignmentSystemTests` | ✅ 6/6 |
+| 177 | `shelter_fire` | Shelter & Infrastructure | `ShelterFireHazardSystem` | — *(Procedural)* | `ShelterFireHostSession` | `ShelterFireSaveStore` | `FireIncidentPanel` | `--save-store-checksum-selftest`, `ShelterFireHazardSystemTests`, `FireIncidentJourneyTests` | ✅ 6/6 |
+| 178 | `shelter_schedule` | Shelter & Infrastructure | `ShelterScheduleSystem` | `shelter_schedules.json` | `ShelterScheduleHostSession` | `ShelterScheduleSaveStore` | `ShelterSchedulePanel` | `--shelter-operations-selftest`, `ShelterScheduleIntegrationTests` | ✅ 6/6 |
+| 179 | `shelter_thermal` | Shelter & Infrastructure | `ShelterThermalSystem` | — *(Procedural)* | `ShelterThermalHostSession` | `ShelterThermalSaveStore` | `ShelterThermalPanel` | `--shelter-operations-selftest`, `ShelterThermalSaveChecksumTests` | ✅ 6/6 |
+| 180 | `starting_level` | Shelter & Infrastructure | `StartingLevelSystem` | — *(Procedural)* | `StartingLevelHostSession` | `StartingLevelSaveStore` | `OpeningProtocolModal` | `--playable-shell-selftest`, `StartingLevelSystemTests` | ✅ 6/6 |
+| 181 | `sump_flooding` | Shelter & Infrastructure | `SumpFloodingSystem` | — *(Procedural)* | `SumpFloodingHostSession` | `SumpFloodingSaveStore` | `SumpFloodingPanel` | `--shelter-operations-selftest`, `SumpFloodingSaveChecksumTests` | ✅ 6/6 |
+| 182 | `survivor_social` | Shelter & Infrastructure | `SurvivorSocialCoordinator`, `LeadershipSystem`, `IdeologicalFrictionSystem`, `RationConflictSystem`, `TraumaBondSystem`, `SkillAtrophySystem` | — *(Procedural)* | `SurvivorSocialCoordinator` | `SurvivorSocialSaveStore` | `ShelterPanel` | `--shelter-operations-selftest`, `SurvivorSocialCoordinatorTests` | ✅ 6/6 |
+| 183 | `vinyl_morale` | Shelter & Infrastructure | `VinylMoraleSystem` | — *(Procedural)* | `VinylMoraleHostSession` | `VinylMoraleSaveStore` | `VinylMoralePanel` | `--shelter-operations-selftest`, `VinylMoraleSaveChecksumTests` | ✅ 6/6 |
+| 184 | `water_treatment` | Shelter & Infrastructure | `WaterTreatmentSystem` | — *(Procedural)* | `WaterTreatmentHostSession` | `WaterTreatmentSaveStore` | `WaterTreatmentPanel` | `--shelter-operations-selftest`, `WaterTreatmentSystemTests` | ✅ 6/6 |
+| 185 | `crafting` | Shelter & Logistics | `CraftingSystem` | `recipes.json` | `CraftingHostSession` | `CraftingSaveStore` | `CraftingPanel` | `--shelter-operations-selftest`, `CraftingSystemTests` | ✅ 6/6 |
+| 186 | `equipment_condition` | Shelter & Logistics | `EquipmentConditionSystem` | — *(Procedural)* | `EquipmentConditionHostSession` | `EquipmentConditionSaveStore` | `EquipmentConditionPanel` | `--shelter-operations-selftest`, `EquipmentConditionSystemTests` | ✅ 6/6 |
+| 187 | `inventory` | Shelter & Logistics | `Inventory` | `items.json` | `InventoryHostSession` | `InventorySaveStore` | `InventoryPanel`, `InventoryDetailPanel` | `--inventory-save-selftest`, `--inventory-uitest`, `InventorySystemTests` | ✅ 6/6 |
+| 188 | `kitchen_nutrition` | Shelter & Logistics | `KitchenNutritionSystem` | — *(Procedural)* | `KitchenNutritionHostSession` | `KitchenNutritionSaveStore` | `KitchenNutritionPanel` | `--shelter-operations-selftest`, `KitchenNutritionSystemTests` | ✅ 6/6 |
+| 189 | `radio` | Shelter & Logistics | `FactionRadioEngine`, `RadioStationCatalog`, `RadioStationCatalogLoader` | `radio.json`, `radio_stations.json` | `RadioHostSession` | `RadioSaveStore` | `RadioPanel`, `FactionRadioHudPanel` | `--radio-selftest`, `--radio-catalog-selftest`, `RadioSaveCodecTests`, `RadioStationCatalogTests`, `RadioStationParityTests` | ✅ 6/6 |
+| 190 | `shelter_reputation` | Shelter (Plan 207) | `ShelterReputationSystem` | — *(Procedural)* | `ShelterReputationHostSession` | `ShelterReputationSaveStore` | `ShelterReputationPanel`, `GameDashboardPanel` | `--shelter-reputation-selftest`, `Plan207ShelterReputationIntegrationTests` | ✅ 6/6 |
+| 191 | `shelter_security` | Shelter Defense (Plan 138) | `ShelterSecuritySystem` | — *(Procedural)* | `ShelterSecurityHostSession` | `ShelterSecuritySaveStore` | `ShelterSecurityPanel`, `GameDashboardPanel` | `--shelter-security-selftest`, `Plan138ShelterSecurityIntegrationTests` | ✅ 6/6 |
+| 192 | `relationship_decay` | Social Ecology & Drift (Plan 182) | `RelationshipDecaySystem` | — *(Procedural)* | `RelationshipDecayHostSession` | `RelationshipDecaySaveStore` | `RelationshipDecayPanel`, `GameDashboardPanel` | `--relationship-decay-selftest`, `Plan182RelationshipDecayIntegrationTests`, `RelationshipDecaySystemTests` | ✅ 6/6 |
+| 193 | `hydrogeology_archive` | Subterranean Science Archive | `HydroGeologyDiscoverySystem` | `artesian_well_contamination_logs.json`, `cave_aquatic_biota_logs.json`, `geothermal_steam_vent_diagnostics.json`, `stalactite_mineral_assay_reports.json` | `Main` | `HydroGeologyArchiveSaveStore` | *None (GAP)* | , `HydroGeologyDiscoveryTests`, `HydroGeologyCatalogTests` | ❌ GAP |
+| 194 | `apprenticeship` | Survival & Biology | `ApprenticeshipSystem` | — *(Procedural)* | `ApprenticeshipHostSession` | `ApprenticeshipSaveStore` | `ApprenticeshipPanel` | `--shelter-operations-selftest`, `ApprenticeshipSystemTests` | ✅ 6/6 |
+| 195 | `autopsy` | Survival & Biology | `AutopsySystem` | `autopsy_procedures.json` | `AutopsyHostSession` | `AutopsySaveStore` | `AutopsyReportPanel` | `--shelter-operations-selftest`, `AutopsySystemTests` | ✅ 6/6 |
+| 196 | `caregiving` | Survival & Biology | `CaregivingSystem` | — *(Procedural)* | `CaregivingHostSession` | `CaregivingSaveStore` | `CaregivingPanel` | `--shelter-operations-selftest`, `CaregivingSystemTests` | ✅ 6/6 |
+| 197 | `chemical_dependency` | Survival & Biology | `ChemicalDependencySystem` | `chemical_dependency_items.json` | `MentalHealthCrisisHostSession`, `ChemicalDependencyHostSession` | `ChemicalDependencySaveStore` | `ChemicalDependencyPanel` | `--chemical-dependency-save-selftest`, `ChemicalDependencySaveSealTests` | ✅ 6/6 |
+| 198 | `contractor_roster` | Survival & Biology | `ContractorRosterSystem` | — *(Procedural)* | `ContractorRosterHostSession` | `ContractorRosterSaveStore` | `ContractorRosterPanel` | `--shelter-operations-selftest`, `ContractorRosterSystemTests` | ✅ 6/6 |
+| 199 | `disease` | Survival & Biology | `DiseaseSystem` | `disease_catalog.json` | `DiseaseHostSession` | `DiseaseSaveStore` | `AfflictionsPanel` | `--disease-selftest`, `DiseaseSystemTests` | ✅ 6/6 |
+| 200 | `medical` | Survival & Biology | `MedicalWardSystem`, `SickListSystem` | `medical_texts.json` | `MedicalHostSession` | `MedicalSaveStore` | `MedicalPanel`, `AfflictionsPanel` | `--medical-selftest`, `DwellerMedicalCatalogTests` | ✅ 6/6 |
+| 201 | `medical_ward` | Survival & Biology | `MedicalWardSystem` | — *(Procedural)* | `MedicalWardHostSession` | `MedicalWardSaveStore` | `MedicalWardPanel` | `--medical-ward-save-selftest`, `MedicalWardSystemTests` | ✅ 6/6 |
+| 202 | `mental_health_crisis` | Survival & Biology | `MentalHealthCrisisSystem` | — *(Procedural)* | `MentalHealthCrisisHostSession` | `MentalHealthCrisisSaveStore` | `MentalHealthCrisisPanel` | `--shelter-operations-selftest`, `MentalHealthCrisisSystemTests` | ✅ 6/6 |
+| 203 | `morale_contagion` | Survival & Biology | `MoraleContagionSystem` | — *(Procedural)* | `MoraleContagionHostSession` | `MoraleContagionSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `MoraleContagionSystemTests` | ✅ 6/6 |
+| 204 | `survivor_relations` | Survival & Biology | `SurvivorRelationsSystem` | — *(Procedural)* | `SurvivorRelationsHostSession` | `SurvivorRelationsSaveStore` | `SurvivorRelationsPanel` | `--shelter-operations-selftest`, `SurvivorRelationsSaveChecksumTests` | ✅ 6/6 |
+| 205 | `survivors` | Survival & Biology | `NeedsSystem`, `SurvivorRosterSystem` | `survivors.json` | `SurvivorsHostSession` | `SurvivorsSaveStore` | `SurvivorsPanel`, `SurvivorDetailPanel`, `StatusPanel` | `--survivors-selftest`, `--survivors-uitest`, `--player-panels-uitest`, `NeedsSystemTests` | ✅ 6/6 |
+| 206 | `death_legacy` | Survivor Memorial & Wills (Plan 206) | `SurvivorDeathLegacySystem` | — *(Procedural)* | `SurvivorDeathLegacyHostSession` | `SurvivorDeathLegacySaveStore` | `SurvivorDeathLegacyPanel`, `GameDashboardPanel` | `--death-legacy-selftest`, `Plan206SurvivorDeathLegacyIntegrationTests`, `SurvivorDeathLegacySystemTests` | ✅ 6/6 |
+| 207 | `personal_quests` | Survivor Quests (Plan 200) | `PersonalQuestSystem` | `personal_quests.json` | `PersonalQuestHostSession` | `PersonalQuestSaveStore` | `PersonalQuestPanel`, `GameDashboardPanel` | `--personal-quests-selftest`, `Plan200PersonalQuestsIntegrationTests`, `PersonalQuestSystemTests` | ✅ 6/6 |
+| 208 | `backstory` | Survivors | `BackstorySystem`, `BackstoryCensus` | `backstory_templates.json` | `Main`, `BackstoryHostSession` | `BackstorySaveStore` | `SurvivorDetailPanel` | `--backstory-selftest`, `Plan174BackstoryHostIntegrationTests`, `Plan174SurvivorBackstoriesIntegrationTests` | ✅ 6/6 |
+| 209 | `ideological_friction` | Survivors | `IdeologicalFrictionEvents`, `IdeologicalFrictionSystem`, `IdeologicalEventInstance`, `IdeologicalFrictionCensus` | `ideological_events.json` | `Main`, `IdeologicalFrictionHostSession` | `IdeologicalFrictionSaveStore` | `SurvivorsPanel` | `--ideological-friction-selftest`, `Plan148IdeologicalFrictionHostIntegrationTests`, `Plan148IdeologicalFrictionIntegrationTests`, `IdeologicalFrictionSystemTests` | ✅ 6/6 |
+| 210 | `romance_family` | Survivors | `RomanceFamilySystem`, `RomanticRelationship`, `FamilyUnit`, `RomanceCourtshipCatalog`, `RomanceFamilyCensus`, `RomanceCourtshipCatalogLoader` | `romance_courtship.json` | `Main`, `RomanceFamilyHostSession` | `RomanceFamilySaveStore` | *None (GAP)* | `--romance-family-selftest`, `Plan150RomanceFamilyHostIntegrationTests`, `Plan150RomanceFamilyIntegrationTests`, `RomanceCourtshipCatalogLoaderTests` | ❌ GAP |
+| 211 | `survivor_voice` | Survivors | `SurvivorVoiceSystem`, `VoiceLineDispatchCoordinator` | `survivor_voice_lines.json` | `Main`, `SurvivorVoiceHostSession` | `SurvivorVoiceSaveStore` | *None (GAP)* | `--survivor-voice-selftest`, `Plan42SurvivorVoiceHostIntegrationTests`, `SurvivorVoiceSystemTests` | ❌ GAP |
+| 212 | `hidden_agenda` | Survivors (Plan 132) | `HiddenAgendaSystem` | — *(Procedural)* | `HiddenAgendaHostSession` | `HiddenAgendaSaveStore` | `HiddenAgendaPanel`, `GameDashboardPanel` | `--hidden-agenda-selftest`, `Plan132HiddenAgendaIntegrationTests`, `HiddenAgendaSystemTests` | ✅ 6/6 |
+| 213 | `combat` | Tactical Combat | `TacticalCombatSystem`, `CombatTraumaSystem` | `combat_catalog.json` | `CombatHostSession` | `CombatSaveStore` | `CombatPanel`, `CombatDetailPanel`, `CombatHistoryPanel` | `--combat-selftest`, `CombatBallisticsTests` | ✅ 6/6 |
+| 214 | `technical_material_archive` | Technical Material Archive | `TechnicalMaterialArchiveSystem` | `hemp_fiber_hackling_logs.json`, `wire_rope_stranding_assays.json`, `manila_hawser_breakage_reports.json`, `rope_transmission_splicing_audits.json`, `neoprene_gasket_degradation_logs.json`, `aramid_fiber_rot_reports.json`, `tire_retreading_compound_logs.json`, `celluloid_film_decomposition_records.json` | `Main` | `TechnicalMaterialArchiveSaveStore` | *None (GAP)* | , `TechnicalMaterialArchiveTests`, `CordageCableCatalogTests`, `PolymerTextileCatalogTests` | ❌ GAP |
+| 215 | `vehicle_customization` | Vehicles | `VehicleCustomizationSystem`, `VehicleCustomizationCatalog`, `VehicleModule`, `VehicleCustomizationCensus`, `VehicleModuleCatalogLoader` | `vehicle_modules.json` | `Main`, `VehicleCustomizationHostSession` | `VehicleCustomizationSaveStore` | *None (GAP)* | `--vehicle-customization-selftest`, `Plan152VehicleCustomizationHostIntegrationTests`, `Plan152VehicleCustomizationIntegrationTests`, `VehicleModuleCatalogLoaderTests` | ❌ GAP |
+| 216 | `deep_well` | Water & Infrastructure | `DeepWellSystem` | — *(Procedural)* | `DeepWellHostSession`, `DeepWellSaveStore` | `DeepWellSaveStore` | *None (GAP)* | , `DeepWellSystemTests` | ❌ GAP |
+| 217 | `piezometer_network` | Water & Infrastructure | `AquiferPiezometerEngine` | `piezometer_network_catalog.json` | `PiezometerHostSession` | `PiezometerSaveStore` | *None (GAP)* | , `Plan189IntakeAdvisoryBridgeTests` | ❌ GAP |
+| 218 | `water_condenser` | Water & Infrastructure | `AtmosphericCondenserSystem` | — *(Procedural)* | `WaterCondenserHostSession`, `WaterCondenserSaveStore` | `WaterCondenserSaveStore` | *None (GAP)* | , `AtmosphericCondenserSystemTests` | ❌ GAP |
+| 219 | `weather_cascade` | Weather | `WeatherCascadeSystem`, `WeatherGameplayCascadeEngine`, `WeatherCascadeSeverity`, `WeatherCascadeCatalogLoader` | `weather_gameplay_effects.json`, `weather_effects.json` | `WeatherCascadeHostSession`, `Main` | `WeatherCascadeSaveStore` | *None (GAP)* | `--weather-cascade-selftest`, `Plan135WeatherCascadeHostIntegrationTests`, `Plan135WeatherCascadeIntegrationTests` | ❌ GAP |
+| 220 | `ecological_infestation` | World | `EcologicalInfestationSystem` | `micro_locations.json` | `Main` | `EcologicalInfestationSaveStore` | `GameDashboardPanel` | `--faction-ecology-selftest`, `EcologicalInfestationSystemTests` | ✅ 6/6 |
+| 221 | `geodetic_survey` | World | `GeodeticSurveyEngine` | — *(Procedural)* | `GeodeticSurveySaveStore` | `GeodeticSurveySaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 222 | `human_migration` | World | `SeasonalHumanMigrationEngine`, `SeasonalMigrationCatalogLoader`, `HumanMigrationCensus` | `seasonal_human_migration.json` | `Main`, `HumanMigrationHostSession` | `HumanMigrationSaveStore` | *None (GAP)* | `--human-migration-selftest`, `Plan199HumanMigrationHostIntegrationTests`, `SeasonalHumanMigrationEngineTests` | ❌ GAP |
+| 223 | `nuclear_winter_progression` | World | `NuclearWinterProgressionSystem` | `nuclear_winter_phases.json` | `Main` | `NuclearWinterSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan164NuclearWinterIntegrationTests` | ❌ GAP |
+| 224 | `route_infrastructure` | World | `RouteInfrastructureSystem` | — *(Procedural)* | `RouteInfrastructureSaveStore` | `RouteInfrastructureSaveStore` | *None (GAP)* | , `RouteInfrastructureSystemTests` | ❌ GAP |
+| 225 | `subterranean` | World | `SubterraneanSystem` | `subterranean_zones.json` | `SubterraneanHostSession` | `SubterraneanSaveStore` | *None (GAP)* | , `SubterraneanSystemTests` | ❌ GAP |
+| 226 | `amphibious_draisine` | World & Expeditions | `AmphibiousDraisineEngine` | `amphibious_draisine_catalog.json` | `AmphibiousDraisineHostSession` | `AmphibiousDraisineSaveStore` | `AmphibiousDraisinePanel` | `--plans-122-125-selftest`, `Plan125AmphibiousDraisineEngineTests` | ✅ 6/6 |
+| 227 | `armored_crawlers` | World & Expeditions | `ArmoredCrawlerExpeditionSystem` | `armored_crawler_modules.json` | `Main` | `ArmoredCrawlerSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FlagshipIntegrationIxSmokeTests` | ✅ 6/6 |
+| 228 | `encounter_choice` | World & Expeditions | `EncounterChoiceResolver` | `door_encounters.json` | `EncounterChoiceState` | `EncounterChoiceSaveStore` | `DoorEncounterModal` | `--moral-choice-selftest`, `EncounterChoiceResolverTests` | ✅ 6/6 |
+| 229 | `expedition` | World & Expeditions | `ExpeditionSystem`, `ExpeditionEncounterBridge` | `locations.json` | `ExpeditionHostSession` | `ExpeditionSaveStore` | `ExpeditionPanel` | `--expedition-selftest`, `--expedition-panel-uitest`, `ExpeditionCampSystemTests` | ✅ 6/6 |
+| 230 | `insar_deformation` | World & Expeditions | `InSarDeformationEngine` | `insar_geodesy_catalog.json` | `InSarMappingHostSession` | `InSarMappingSaveStore` | `InSarMappingPanel` | `--plans-139-141-selftest`, `Plan139InSarDeformationTests` | ✅ 6/6 |
+| 231 | `runflat_tire` | World & Expeditions | `RunFlatTireEngine` | `runflat_tire_catalog.json` | `RunFlatTireHostSession` | `RunFlatTireSaveStore` | `RunFlatTirePanel` | `--plans-139-141-selftest`, `Plan141RunFlatTireTests` | ✅ 6/6 |
+| 232 | `travel_encounters` | World & Expeditions | `TravelEncounterSystem`, `TravelEncounterCatalog` | `travel_encounters.json` | `TravelEncounterSystem` | `TravelEncounterSaveStore` | `ExpeditionPanel` | `--expedition-encounter-bridge-selftest`, `TravelEncounterCooldownGroupTests`, `PatrolEncounterFullRegressionTests` | ✅ 6/6 |
+| 233 | `wasteland_map` | World & Expeditions | `WastelandMapSystem` | `wasteland_map_v1.json` | `WorldHostSession` | `WastelandMapSaveStore` | `MapPanel` | `--world-selftest`, `WastelandMapPersistenceTests` | ✅ 6/6 |
+| 234 | `waystation` | World & Expeditions | `WaystationSystem` | `locations.json` | `WaystationHostSession` | `WaystationSaveStore` | `WaystationNetworkPanel` | `--shelter-operations-selftest`, `WaystationSystemTests` | ✅ 6/6 |
+| 235 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
+| 236 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
 
 ---
 
@@ -565,7 +567,20 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/ChemicalSynthesisSaveStore.cs`](../../src/Host/ChemicalSynthesisSaveStore.cs)
   - UI Panel: [`src/UI/ChemicalLabPanel.cs`](../../src/UI/ChemicalLabPanel.cs)
 
-### 25. `black_market` — Plan 211 — underworld contacts, stock snapshots, debts, heat, and trust (Economy & Trade)
+### 25. `trade_routes` — Plan 192 — Scheduled trade route contracts, tariffs, reliability tiers, and exclusive goods (Economy)
+- **Owner Domain:** `economy`
+- **Setup Method:** `Main.SetupTradeRoutes()` | **Cadence:** `Daily Sim Tick`
+- **UI Routes:**
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Economy/PlayerTradeRouteSystem.cs`](../../Assets/Ashfall.Core/Economy/PlayerTradeRouteSystem.cs)
+  - Core System: [`Assets/Ashfall.Core/Economy/TradeRouteContract.cs`](../../Assets/Ashfall.Core/Economy/TradeRouteContract.cs)
+  - Host Session: [`src/Host/TradeRouteHostSession.cs`](../../src/Host/TradeRouteHostSession.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
+  - Save Store: [`src/Host/TradeRouteHostSession.cs`](../../src/Host/TradeRouteHostSession.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Economy/Plan192TradeRouteHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Economy/Plan192TradeRouteHostIntegrationTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Economy/TradeRouteContractTests.cs`](../../Ashfall.Core.Tests/Economy/TradeRouteContractTests.cs)
+
+### 26. `black_market` — Plan 211 — underworld contacts, stock snapshots, debts, heat, and trust (Economy & Trade)
 - **Owner Domain:** `economy`
 - **Setup Method:** `Main.SetupBlackMarket()` | **Cadence:** `Daily Underworld Tick`
 - **UI Routes:**
@@ -577,7 +592,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Economy/Plan211BlackMarketHostWiringTests.cs`](../../Ashfall.Core.Tests/Economy/Plan211BlackMarketHostWiringTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Economy/Plan211BlackMarketTests.cs`](../../Ashfall.Core.Tests/Economy/Plan211BlackMarketTests.cs)
 
-### 26. `caravan` — Trade caravans, routes, and arrivals (Economy & Trade)
+### 27. `caravan` — Trade caravans, routes, and arrivals (Economy & Trade)
 - **Owner Domain:** `caravans`
 - **Setup Method:** `Main.SetupCaravans()` | **Cadence:** `Daily Route Travel`
 - **UI Routes:** `traveling_caravan`
@@ -588,7 +603,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/TravelingCaravanPanel.cs`](../../src/UI/TravelingCaravanPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/TradeCaravanCatalogTests.cs`](../../Ashfall.Core.Tests/TradeCaravanCatalogTests.cs)
 
-### 27. `caravan_trade_network` — Faction caravan trade network routes and arrivals (Economy & Trade)
+### 28. `caravan_trade_network` — Faction caravan trade network routes and arrivals (Economy & Trade)
 - **Owner Domain:** `economy`
 - **Setup Method:** `Main.SetupCaravanTrade()` | **Cadence:** `Daily Route Arrival Tick`
 - **UI Routes:**
@@ -599,7 +614,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/TravelingCaravanPanel.cs`](../../src/UI/TravelingCaravanPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Economy/CaravanTradeNetworkTests.cs`](../../Ashfall.Core.Tests/Economy/CaravanTradeNetworkTests.cs)
 
-### 28. `economy` — Dynamic economy rates and market orders (Economy & Trade)
+### 29. `economy` — Dynamic economy rates and market orders (Economy & Trade)
 - **Owner Domain:** `economy`
 - **Setup Method:** `Main.SetupEconomy()` | **Cadence:** `Daily Market Rate Tick`
 - **UI Routes:** `trade`, `economy_detail`
@@ -611,7 +626,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/EconomyDetailPanel.cs`](../../src/UI/EconomyDetailPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/DynamicEconomyCharacterizationTests.cs`](../../Ashfall.Core.Tests/DynamicEconomyCharacterizationTests.cs)
 
-### 29. `regional_treaty` — Faction treaties and non-aggression pacts (Economy & Trade)
+### 30. `regional_treaty` — Faction treaties and non-aggression pacts (Economy & Trade)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupRegionalTreaty()` | **Cadence:** `Daily Non-Aggression Decay`
 - **UI Routes:** `regional_treaty`
@@ -622,7 +637,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/RegionalTreatyPanel.cs`](../../src/UI/RegionalTreatyPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExpandedShelterSaveChecksumTests.cs`](../../Ashfall.Core.Tests/ExpandedShelterSaveChecksumTests.cs)
 
-### 30. `meta_progression` — Plan 175 — Meta progression & cross-run profile store: prestige scoring, crests, and NG+ boons (Endgame)
+### 31. `meta_progression` — Plan 175 — Meta progression & cross-run profile store: prestige scoring, crests, and NG+ boons (Endgame)
 - **Owner Domain:** `endgame`
 - **Setup Method:** `Main.SetupMetaProgression()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `epilogue`, `chronicle`
@@ -636,7 +651,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/EpiloguePanel.cs`](../../src/UI/EpiloguePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Endgame/Plan175MetaProgressionHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Endgame/Plan175MetaProgressionHostIntegrationTests.cs)
 
-### 31. `unified_ending` — Plan 145 — Unified ending resolution & epilogue personalization: political, social, moral, personal, and expedition resolution (Endgame)
+### 32. `unified_ending` — Plan 145 — Unified ending resolution & epilogue personalization: political, social, moral, personal, and expedition resolution (Endgame)
 - **Owner Domain:** `endgame`
 - **Setup Method:** `Main.SetupUnifiedEnding()` | **Cadence:** `On-Demand (Campaign Sealed)`
 - **UI Routes:** `epilogue`, `chronicle`
@@ -650,7 +665,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Endgame/Plan145UnifiedEndingHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Endgame/Plan145UnifiedEndingHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Endgame/Plan145UnifiedEndingIntegrationTests.cs`](../../Ashfall.Core.Tests/Endgame/Plan145UnifiedEndingIntegrationTests.cs)
 
-### 32. `expansion_hub` — Expansion hub discovery state (Expansion Framework)
+### 33. `expansion_hub` — Expansion hub discovery state (Expansion Framework)
 - **Owner Domain:** `expansion_hub`
 - **Setup Method:** `Main.SetupExpansions()` | **Cadence:** `Daily Hub Tick`
 - **UI Routes:** `expansions`
@@ -661,7 +676,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ExpansionsHubPanel.cs`](../../src/UI/ExpansionsHubPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExpansionHubSaveTests.cs`](../../Ashfall.Core.Tests/ExpansionHubSaveTests.cs)
 
-### 33. `expansion_quest` — Expansion questline progression (Expansion Framework)
+### 34. `expansion_quest` — Expansion questline progression (Expansion Framework)
 - **Owner Domain:** `expansion_quest`
 - **Setup Method:** `Main.SetupExpansionQuests()` | **Cadence:** `On-Demand (Stage Milestone)`
 - **UI Routes:** `crossing_quests`
@@ -673,7 +688,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/CrossingQuestPanel.cs`](../../src/UI/CrossingQuestPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/VersionReportContractTests.cs`](../../Ashfall.Core.Tests/VersionReportContractTests.cs)
 
-### 34. `holdfast` — Holdfast S1 bunker state (Expansions (Exp 01))
+### 35. `holdfast` — Holdfast S1 bunker state (Expansions (Exp 01))
 - **Owner Domain:** `holdfast`
 - **Setup Method:** `Main.SetupHoldfastRuntime()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `holdfast`
@@ -686,7 +701,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/HoldfastSaveTests.cs`](../../Ashfall.Core.Tests/HoldfastSaveTests.cs)
 
-### 35. `holdfast_trade` — Holdfast trade session state (Expansions (Exp 01))
+### 36. `holdfast_trade` — Holdfast trade session state (Expansions (Exp 01))
 - **Owner Domain:** `holdfast`
 - **Setup Method:** `Main.SetupHoldfastRuntime()` | **Cadence:** `On-Demand (Barter)`
 - **UI Routes:** `trade`
@@ -698,7 +713,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/Host/HoldfastTerminalPanel.cs`](../../src/Host/HoldfastTerminalPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/HoldfastTradeSessionTests.cs`](../../Ashfall.Core.Tests/HoldfastTradeSessionTests.cs)
 
-### 36. `duty_roster` — Duty roster shifts and assignments (Expansions (Exp 02))
+### 37. `duty_roster` — Duty roster shifts and assignments (Expansions (Exp 02))
 - **Owner Domain:** `duty_roster`
 - **Setup Method:** `Main.SetupDutyRoster()` | **Cadence:** `Daily Shift Tick`
 - **UI Routes:** `duty_roster`, `duty_roster_detail`
@@ -710,7 +725,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/DutyRosterPanel.cs`](../../src/UI/DutyRosterPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/DutyRosterSaveTests.cs`](../../Ashfall.Core.Tests/DutyRosterSaveTests.cs)
 
-### 37. `phantom_memory` — Phantom memory lineages and echoes (Expansions (Exp 03))
+### 38. `phantom_memory` — Phantom memory lineages and echoes (Expansions (Exp 03))
 - **Owner Domain:** `phase0`
 - **Setup Method:** `Main.SetupPhantom()` | **Cadence:** `On-Demand (Scavenge Echo)`
 - **UI Routes:** `standing_record`, `phantom_memory`
@@ -722,7 +737,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/StandingRecordPanel.cs`](../../src/UI/StandingRecordPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/PhantomMemoryEngineTests.cs`](../../Ashfall.Core.Tests/PhantomMemoryEngineTests.cs)
 
-### 38. `thirdonary` — Thirdonary covenant & dispute states (Expansions (Exp 04))
+### 39. `thirdonary` — Thirdonary covenant & dispute states (Expansions (Exp 04))
 - **Owner Domain:** `thirdonary`
 - **Setup Method:** `Main.SetupThirdonary()` | **Cadence:** `On-Demand (Arbitration)`
 - **UI Routes:** `crossing_quests`
@@ -734,7 +749,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/CrossingArbitrationSystemTests.cs`](../../Ashfall.Core.Tests/CrossingArbitrationSystemTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ThirdonaryQuestSystemTests.cs`](../../Ashfall.Core.Tests/ThirdonaryQuestSystemTests.cs)
 
-### 39. `year_of_ash` — The Year of Ash harsh winter state (Expansions (Exp 05))
+### 40. `year_of_ash` — The Year of Ash harsh winter state (Expansions (Exp 05))
 - **Owner Domain:** `year_of_ash`
 - **Setup Method:** `Main.SetupYearOfAsh()` | **Cadence:** `Daily Deep-Freeze Tick`
 - **UI Routes:** `door_encounter`
@@ -746,7 +761,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/YearOfAsh/DoorEncounterModal.cs`](../../src/YearOfAsh/DoorEncounterModal.cs)
   - Test Fixture: [`Ashfall.Core.Tests/QuestlineMasterCatalogTests.cs`](../../Ashfall.Core.Tests/QuestlineMasterCatalogTests.cs)
 
-### 40. `muster` — The Muster military rally & conflict state (Expansions (Exp 06))
+### 41. `muster` — The Muster military rally & conflict state (Expansions (Exp 06))
 - **Owner Domain:** `muster`
 - **Setup Method:** `Main.SetupMuster()` | **Cadence:** `On-Demand (Rally Stance)`
 - **UI Routes:** `muster`
@@ -757,7 +772,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MusterPanel.cs`](../../src/UI/MusterPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/MusterSystemTests.cs`](../../Ashfall.Core.Tests/MusterSystemTests.cs)
 
-### 41. `dose_ledger` — Survivor radiation dose ledger & cohorts (Expansions (Exp 07))
+### 42. `dose_ledger` — Survivor radiation dose ledger & cohorts (Expansions (Exp 07))
 - **Owner Domain:** `dose_ledger`
 - **Setup Method:** `Main.SetupDoseLedger()` | **Cadence:** `On-Demand (Dose Log)`
 - **UI Routes:** `radiation_history`, `radiation_detail`
@@ -770,7 +785,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/RadiationHistoryPanel.cs`](../../src/UI/RadiationHistoryPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/NeedsRadiationSaveRoundTripTests.cs`](../../Ashfall.Core.Tests/NeedsRadiationSaveRoundTripTests.cs)
 
-### 42. `verdict` — The Verdict investigation and tribunal state (Expansions (Exp 08))
+### 43. `verdict` — The Verdict investigation and tribunal state (Expansions (Exp 08))
 - **Owner Domain:** `verdict`
 - **Setup Method:** `Main.SetupVerdict()` | **Cadence:** `Daily Machine Log Tick`
 - **UI Routes:** `verdict`
@@ -783,7 +798,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/VerdictPanel.cs`](../../src/VerdictPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/VerdictChainTests.cs`](../../Ashfall.Core.Tests/VerdictChainTests.cs)
 
-### 43. `maritime` — The Black Flotilla dives and naval wrecks (Expansions (Exp 09))
+### 44. `maritime` — The Black Flotilla dives and naval wrecks (Expansions (Exp 09))
 - **Owner Domain:** `maritime`
 - **Setup Method:** `Main.SetupMaritime()` | **Cadence:** `On-Demand (Dive Sortie)`
 - **UI Routes:** `maritime`
@@ -794,7 +809,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MaritimePanel.cs`](../../src/UI/MaritimePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/BlackFlotillaTests.cs`](../../Ashfall.Core.Tests/BlackFlotillaTests.cs)
 
-### 44. `silent_foundry` — Automated foundry machinery & smelters (Expansions (Exp 10))
+### 45. `silent_foundry` — Automated foundry machinery & smelters (Expansions (Exp 10))
 - **Owner Domain:** `foundry`
 - **Setup Method:** `Main.SetupSilentFoundry()` | **Cadence:** `Daily Smelter Cycle`
 - **UI Routes:** `silent_foundry`
@@ -805,7 +820,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/SilentFoundryPanel.cs`](../../src/UI/SilentFoundryPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/SilentFoundryConsequenceTests.cs`](../../Ashfall.Core.Tests/SilentFoundryConsequenceTests.cs)
 
-### 45. `chemical_recon` — Plans 78-81 — chemical hazard observations, samples, and safe corridors (Expeditions)
+### 46. `chemical_recon` — Plans 78-81 — chemical hazard observations, samples, and safe corridors (Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupChemicalRecon()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -814,7 +829,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/ChemicalReconSaveStore.cs`](../../src/Host/ChemicalReconSaveStore.cs)
   - Save Store: [`src/Host/ChemicalReconSaveStore.cs`](../../src/Host/ChemicalReconSaveStore.cs)
 
-### 46. `colony` — ORPHAN-SEAL-W1 — player-founded colonies, buildings, and supply lines (Expeditions)
+### 47. `colony` — ORPHAN-SEAL-W1 — player-founded colonies, buildings, and supply lines (Expeditions)
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupColony()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -824,7 +839,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/Plan160ColonyIntegrationTests.cs`](../../Ashfall.Core.Tests/Expeditions/Plan160ColonyIntegrationTests.cs)
 
-### 47. `draisine_recovery` — Plans 130-133 — armored draisine derailment recovery (Expeditions)
+### 48. `draisine_recovery` — Plans 130-133 — armored draisine derailment recovery (Expeditions)
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupDraisineRerailing()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -833,7 +848,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs)
   - Save Store: [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs)
 
-### 48. `mine_clearing_flail` — Plans 146-149 — mine-clearing flail vehicle modules and active breaches (Expeditions)
+### 49. `mine_clearing_flail` — Plans 146-149 — mine-clearing flail vehicle modules and active breaches (Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupMineClearingFlail()` | **Cadence:** `On-Demand`
 - **UI Routes:** `mine_flail`
@@ -844,7 +859,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MineFlailPanel.cs`](../../src/UI/MineFlailPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/MineClearingFlailEngineTests.cs`](../../Ashfall.Core.Tests/Expeditions/MineClearingFlailEngineTests.cs)
 
-### 49. `rail_grinding` — Plans 146-149 — rail grinding vehicle modules and active corridor jobs (Expeditions)
+### 50. `rail_grinding` — Plans 146-149 — rail grinding vehicle modules and active corridor jobs (Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupRailGrinding()` | **Cadence:** `On-Demand`
 - **UI Routes:** `rail_grinding`
@@ -855,7 +870,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/RailGrindingPanel.cs`](../../src/UI/RailGrindingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/RailGrindingEngineTests.cs`](../../Ashfall.Core.Tests/Expeditions/RailGrindingEngineTests.cs)
 
-### 50. `recon_telemetry` — Long-range recon drones & high-altitude mapping (Expeditions)
+### 51. `recon_telemetry` — Long-range recon drones & high-altitude mapping (Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupReconTelemetry()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -864,7 +879,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/ReconTelemetrySaveStore.cs`](../../src/Host/ReconTelemetrySaveStore.cs)
   - Save Store: [`src/Host/ReconTelemetrySaveStore.cs`](../../src/Host/ReconTelemetrySaveStore.cs)
 
-### 51. `vehicle_garage` — Plans 50-53 — expedition overland vehicle modifications and garage maintenance state (Expeditions)
+### 52. `vehicle_garage` — Plans 50-53 — expedition overland vehicle modifications and garage maintenance state (Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupVehicleGarage()` | **Cadence:** `On-Demand`
 - **UI Routes:** `vehicle_garage`
@@ -878,7 +893,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/Plan50VehicleGarageIntegrationTests.cs`](../../Ashfall.Core.Tests/Expeditions/Plan50VehicleGarageIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/VehicleGarageSystemTests.cs`](../../Ashfall.Core.Tests/Expeditions/VehicleGarageSystemTests.cs)
 
-### 52. `counter_intelligence` — Counter-intelligence, vetting, and defector management (Factions)
+### 53. `counter_intelligence` — Counter-intelligence, vetting, and defector management (Factions)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupCounterIntelligence()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -887,7 +902,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/CounterIntelligenceSaveStore.cs`](../../src/Host/CounterIntelligenceSaveStore.cs)
   - Save Store: [`src/Host/CounterIntelligenceSaveStore.cs`](../../src/Host/CounterIntelligenceSaveStore.cs)
 
-### 53. `diplomatic_summits` — Wasteland summits, treaty lifecycle, guarantees, DMZ rules, violations (Factions)
+### 54. `diplomatic_summits` — Wasteland summits, treaty lifecycle, guarantees, DMZ rules, violations (Factions)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupDiplomaticSummit()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -897,7 +912,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/DiplomaticSummitSaveStore.cs`](../../src/Host/DiplomaticSummitSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/DiplomaticSummitTests.cs`](../../Ashfall.Core.Tests/DiplomaticSummitTests.cs)
 
-### 54. `espionage` — Campaign intelligence networks, missions, and captured agents (Factions)
+### 55. `espionage` — Campaign intelligence networks, missions, and captured agents (Factions)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupPlans166To169()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -907,7 +922,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/EspionageSaveStore.cs`](../../src/Host/EspionageSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Plan167EspionageTests.cs`](../../Ashfall.Core.Tests/Plan167EspionageTests.cs)
 
-### 55. `faction_covert_ops` — ORPHAN-SEAL-W1 — rival-faction covert operations, suspicion ladder, and intelligence reports (Factions)
+### 56. `faction_covert_ops` — ORPHAN-SEAL-W1 — rival-faction covert operations, suspicion ladder, and intelligence reports (Factions)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupFactionCovertOps()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -917,7 +932,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Factions/Plan153FactionEspionageIntegrationTests.cs`](../../Ashfall.Core.Tests/Factions/Plan153FactionEspionageIntegrationTests.cs)
 
-### 56. `faction_espionage` — Plans 50-53 — shelter faction espionage, sleeper assets, counter-intel, and sabotage state (Factions)
+### 57. `faction_espionage` — Plans 50-53 — shelter faction espionage, sleeper assets, counter-intel, and sabotage state (Factions)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupShelterEspionage()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -927,7 +942,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/ShelterEspionageSaveStore.cs`](../../src/Host/ShelterEspionageSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Factions/ShelterEspionageSystemTests.cs`](../../Ashfall.Core.Tests/Factions/ShelterEspionageSystemTests.cs)
 
-### 57. `territory_control` — Plan 134 — dynamic faction territory & supply line control: contested locations, fortification, garrison, supply line status (Factions)
+### 58. `territory_control` — Plan 134 — dynamic faction territory & supply line control: contested locations, fortification, garrison, supply line status (Factions)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupTerritoryControl()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -939,7 +954,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Factions/Plan134TerritoryControlHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Factions/Plan134TerritoryControlHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Factions/Plan134TerritoryControlIntegrationTests.cs`](../../Ashfall.Core.Tests/Factions/Plan134TerritoryControlIntegrationTests.cs)
 
-### 58. `weight_of_choices` — Weight of choices faction branch progression and PoNR commitments (Factions & Diplomacy)
+### 59. `weight_of_choices` — Weight of choices faction branch progression and PoNR commitments (Factions & Diplomacy)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupFactionBranch()` | **Cadence:** `On-Demand (Branch Decisions)`
 - **UI Routes:** `factions`, `quests`
@@ -960,7 +975,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/RebelBranchSystemTests.cs`](../../Ashfall.Core.Tests/RebelBranchSystemTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WeightOfChoicesSaveTests.cs`](../../Ashfall.Core.Tests/WeightOfChoicesSaveTests.cs)
 
-### 59. `aeroponics` — Plan B76 — aeroponic chambers, nutrient chemistry, disease, lighting, and harvest (Farming)
+### 60. `aeroponics` — Plan B76 — aeroponic chambers, nutrient chemistry, disease, lighting, and harvest (Farming)
 - **Owner Domain:** `farming`
 - **Setup Method:** `Main.SetupAeroponics()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -971,7 +986,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/Plans74To77Panels.cs`](../../src/UI/Plans74To77Panels.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Plans74To77SystemsTests.cs`](../../Ashfall.Core.Tests/Plans74To77SystemsTests.cs)
 
-### 60. `agriculture` — Plans 162-165 — advanced crop strains, plot medium, pests, compost, and dietary diversity (Farming)
+### 61. `agriculture` — Plans 162-165 — advanced crop strains, plot medium, pests, compost, and dietary diversity (Farming)
 - **Owner Domain:** `farming`
 - **Setup Method:** `Main.SetupAgriculture()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -981,7 +996,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/AgricultureSaveStore.cs`](../../src/Host/AgricultureSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/AgricultureSystemTests.cs`](../../Ashfall.Core.Tests/AgricultureSystemTests.cs)
 
-### 61. `aquaponics` — Plan B87 — closed-loop aquaponics ecology, biofilter health, and harvest yields (Farming)
+### 62. `aquaponics` — Plan B87 — closed-loop aquaponics ecology, biofilter health, and harvest yields (Farming)
 - **Owner Domain:** `farming`
 - **Setup Method:** `Main.SetupAquaponics()` | **Cadence:** `Daily Ecology Tick`
 - **UI Routes:**
@@ -992,7 +1007,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/PlansB86ToB89ContinuityTests.cs`](../../Ashfall.Core.Tests/PlansB86ToB89ContinuityTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/AquaponicsSystemTests.cs`](../../Ashfall.Core.Tests/Shelter/AquaponicsSystemTests.cs)
 
-### 62. `powder_metallurgy` — Plans 130-133 — abstract advanced-material production quality and reliability (Foundry)
+### 63. `powder_metallurgy` — Plans 130-133 — abstract advanced-material production quality and reliability (Foundry)
 - **Owner Domain:** `foundry`
 - **Setup Method:** `Main.SetupPowderMetallurgy()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1001,7 +1016,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs)
   - Save Store: [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs)
 
-### 63. `hydraulic_extrusion` — Plan 140 — advanced hydraulic extrusion batches, tooling condition, quality grades (Foundry & Industry)
+### 64. `hydraulic_extrusion` — Plan 140 — advanced hydraulic extrusion batches, tooling condition, quality grades (Foundry & Industry)
 - **Owner Domain:** `foundry`
 - **Setup Method:** `Main.SetupHydraulicExtrusion()` | **Cadence:** `On-Demand (Batch Phase Commands)`
 - **UI Routes:** `hydraulic_extrusion`
@@ -1012,7 +1027,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/HydraulicExtrusionPanel.cs`](../../src/UI/HydraulicExtrusionPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Foundry/Plan140HydraulicExtrusionTests.cs`](../../Ashfall.Core.Tests/Foundry/Plan140HydraulicExtrusionTests.cs)
 
-### 64. `wildlife_ecosystem` — Plans 162-165 — ecology pressures, extinction flags, apex activity, taming, bestiary knowledge (Hunting)
+### 65. `wildlife_ecosystem` — Plans 162-165 — ecology pressures, extinction flags, apex activity, taming, bestiary knowledge (Hunting)
 - **Owner Domain:** `hunting`
 - **Setup Method:** `Main.SetupWildlifeEcosystem()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `bestiary`
@@ -1023,7 +1038,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/BestiaryPanel.cs`](../../src/UI/BestiaryPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WildlifeEcosystemSystemTests.cs`](../../Ashfall.Core.Tests/WildlifeEcosystemSystemTests.cs)
 
-### 65. `shelter_barter` — Plan 54/147 — shelter barter caravans, pinned stock, and the contraband broker counter (Illicit Economy / Barter)
+### 66. `shelter_barter` — Plan 54/147 — shelter barter caravans, pinned stock, and the contraband broker counter (Illicit Economy / Barter)
 - **Owner Domain:** `economy`
 - **Setup Method:** `Main.SetupShelterBarter()` | **Cadence:** `On-Demand (Barter)`
 - **UI Routes:**
@@ -1034,7 +1049,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Economy/ShelterBarterSystemPlan54Tests.cs`](../../Ashfall.Core.Tests/Economy/ShelterBarterSystemPlan54Tests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/ContrabandBarterRouteTests.cs`](../../Ashfall.Core.Tests/Narrative/ContrabandBarterRouteTests.cs)
 
-### 66. `grain_milling_archive` — Plan 157 — Grain milling, storage & food-processing knowledge archive: discovered-record ledger (IDs only) (Industrial Food-Processing Archive)
+### 67. `grain_milling_archive` — Plan 157 — Grain milling, storage & food-processing knowledge archive: discovered-record ledger (IDs only) (Industrial Food-Processing Archive)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupGrainMillingArchive()` | **Cadence:** `Event-Driven (Location Discovery & Shelter Room Inspection)`
 - **UI Routes:**
@@ -1045,7 +1060,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/GrainMillingCatalogTests.cs`](../../Ashfall.Core.Tests/GrainMillingCatalogTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/GrainMillingDiscoveryTests.cs`](../../Ashfall.Core.Tests/Narrative/GrainMillingDiscoveryTests.cs)
 
-### 67. `wasteland_rumors` — Plan 203 / 131 — wasteland rumors, information hubs, propagation, and intercepts (Information & Rumors (Plan 203))
+### 68. `wasteland_rumors` — Plan 203 / 131 — wasteland rumors, information hubs, propagation, and intercepts (Information & Rumors (Plan 203))
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupRumorNetwork()` | **Cadence:** `Daily (Decay & Propagation)`
 - **UI Routes:** `rumors`
@@ -1057,7 +1072,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/RumorBoardPanel.cs`](../../src/UI/RumorBoardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/InformationFlow/Plan203RumorNetworkIntegrationTests.cs`](../../Ashfall.Core.Tests/InformationFlow/Plan203RumorNetworkIntegrationTests.cs)
 
-### 68. `cryogenic_air_separation` — Abstract gas production and plant condition (Infrastructure)
+### 69. `cryogenic_air_separation` — Abstract gas production and plant condition (Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupCryogenicAirSeparation()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1066,7 +1081,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/CryogenicAirSeparationHostSession.cs`](../../src/Host/CryogenicAirSeparationHostSession.cs)
   - Save Store: [`src/Host/CryogenicAirSeparationHostSession.cs`](../../src/Host/CryogenicAirSeparationHostSession.cs)
 
-### 69. `fluid_logistics` — Shelter fluid topology, pressure, leaks, and distributed quality (Infrastructure)
+### 70. `fluid_logistics` — Shelter fluid topology, pressure, leaks, and distributed quality (Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupPlans166To169()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1076,7 +1091,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/FluidLogisticsSaveStore.cs`](../../src/Host/FluidLogisticsSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Plan168FluidLogisticsTests.cs`](../../Ashfall.Core.Tests/Plan168FluidLogisticsTests.cs)
 
-### 70. `pneumatic_dispatch` — Plan B77 — pneumatic stations, capsule routing, seals, jams, and blackout-safe dispatch (Infrastructure)
+### 71. `pneumatic_dispatch` — Plan B77 — pneumatic stations, capsule routing, seals, jams, and blackout-safe dispatch (Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupPneumaticDispatch()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1087,7 +1102,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/Plans74To77Panels.cs`](../../src/UI/Plans74To77Panels.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Plans74To77SystemsTests.cs`](../../Ashfall.Core.Tests/Plans74To77SystemsTests.cs)
 
-### 71. `black_projects_archive` — Plan 152 — Black Projects intelligence archive: discovered-record ledger (IDs only) (Intelligence Archive)
+### 72. `black_projects_archive` — Plan 152 — Black Projects intelligence archive: discovered-record ledger (IDs only) (Intelligence Archive)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupBlackProjectsArchive()` | **Cadence:** `On-Demand`
 - **UI Routes:** `black_projects_archive`
@@ -1100,7 +1115,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/BlackProjectsArchiveTests.cs`](../../Ashfall.Core.Tests/Narrative/BlackProjectsArchiveTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/UI/BlackProjectsArchivePanelRouteTests.cs`](../../Ashfall.Core.Tests/UI/BlackProjectsArchivePanelRouteTests.cs)
 
-### 72. `collectible_discovery` — One-time collectible discovery ledger (Inventory & Lore)
+### 73. `collectible_discovery` — One-time collectible discovery ledger (Inventory & Lore)
 - **Owner Domain:** `inventory`
 - **Setup Method:** `Main.SetupCollectibles()` | **Cadence:** `On-Demand (One-Time Discovery Ledger)`
 - **UI Routes:**
@@ -1111,7 +1126,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/CollectibleDiscoveryPersistenceTests.cs`](../../Ashfall.Core.Tests/CollectibleDiscoveryPersistenceTests.cs)
 
-### 73. `unique_claims` — Global unique-item claim ledger (Inventory & Lore)
+### 74. `unique_claims` — Global unique-item claim ledger (Inventory & Lore)
 - **Owner Domain:** `inventory`
 - **Setup Method:** `Main.SetupCollectibles()` | **Cadence:** `On-Demand (Global Unique Claim Ledger)`
 - **UI Routes:**
@@ -1122,7 +1137,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/CollectibleDiscoveryPersistenceTests.cs`](../../Ashfall.Core.Tests/CollectibleDiscoveryPersistenceTests.cs)
 
-### 74. `cultural_archives` — Deep-vault cultural archives: restoration, transcription, microfiche preservation, discs, salons, chronicles (Knowledge)
+### 75. `cultural_archives` — Deep-vault cultural archives: restoration, transcription, microfiche preservation, discs, salons, chronicles (Knowledge)
 - **Owner Domain:** `knowledge`
 - **Setup Method:** `Main.SetupCulturalArchive()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1132,7 +1147,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/CulturalArchiveSaveStore.cs`](../../src/Host/CulturalArchiveSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/CulturalArchiveVaultTests.cs`](../../Ashfall.Core.Tests/CulturalArchiveVaultTests.cs)
 
-### 75. `field_guide` — Plan 20A/28 — field-guide unlocked-entry ledger (reading-the-land knowledge) (Knowledge)
+### 76. `field_guide` — Plan 20A/28 — field-guide unlocked-entry ledger (reading-the-land knowledge) (Knowledge)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupFieldGuide()` | **Cadence:** `On-Demand (Study & Discovery)`
 - **UI Routes:**
@@ -1143,7 +1158,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/FieldGuidePersistenceTests.cs`](../../Ashfall.Core.Tests/FieldGuidePersistenceTests.cs)
 
-### 76. `prewar_archives` — Pre-war archive discovery and decryption (Knowledge)
+### 77. `prewar_archives` — Pre-war archive discovery and decryption (Knowledge)
 - **Owner Domain:** `knowledge`
 - **Setup Method:** `Main.SetupPlans62To65()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1153,7 +1168,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/PrewarArchiveSaveStore.cs`](../../src/Host/PrewarArchiveSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Research/PrewarArchiveDecryptionTests.cs`](../../Ashfall.Core.Tests/Research/PrewarArchiveDecryptionTests.cs)
 
-### 77. `research` — Research knowledge progress: unlocked, active, and completed nodes (Plan 34) (Knowledge)
+### 78. `research` — Research knowledge progress: unlocked, active, and completed nodes (Plan 34) (Knowledge)
 - **Owner Domain:** `knowledge`
 - **Setup Method:** `Main.None()` | **Cadence:** `On-Demand (Study Progress)`
 - **UI Routes:** `research`
@@ -1165,7 +1180,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ResearchPanel.cs`](../../src/UI/ResearchPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/MedicalPipelineArchitectureGateTests.cs`](../../Ashfall.Core.Tests/Medical/MedicalPipelineArchitectureGateTests.cs)
 
-### 78. `survivor_education` — ORPHAN-SEAL-W1 — learner records, subjects, teachers, and graduation (Knowledge)
+### 79. `survivor_education` — ORPHAN-SEAL-W1 — learner records, subjects, teachers, and graduation (Knowledge)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupSurvivorEducation()` | **Cadence:** `Session-Driven`
 - **UI Routes:**
@@ -1175,7 +1190,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Education/Plan154EducationIntegrationTests.cs`](../../Ashfall.Core.Tests/Education/Plan154EducationIntegrationTests.cs)
 
-### 79. `campaign_legacy` — Plan 140 — Generational legacy, heirlooms, campaign inheritance, and New Game+ multi-generational continuity (Legacy)
+### 80. `campaign_legacy` — Plan 140 — Generational legacy, heirlooms, campaign inheritance, and New Game+ multi-generational continuity (Legacy)
 - **Owner Domain:** `campaign`
 - **Setup Method:** `Main.SetupCampaignLegacy()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1187,7 +1202,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Legacy/Plan140CampaignLegacyHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Legacy/Plan140CampaignLegacyHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Legacy/Plan140GenerationalLegacyIntegrationTests.cs`](../../Ashfall.Core.Tests/Legacy/Plan140GenerationalLegacyIntegrationTests.cs)
 
-### 80. `leatherwork_archive` — Plan 159 — Tanning/leather material provenance & workshop knowledge archive: discovered-record ledger (IDs only) (Material Provenance Archive)
+### 81. `leatherwork_archive` — Plan 159 — Tanning/leather material provenance & workshop knowledge archive: discovered-record ledger (IDs only) (Material Provenance Archive)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupLeatherworkArchive()` | **Cadence:** `Event-Driven (Location Discovery & Item Inspection)`
 - **UI Routes:**
@@ -1199,7 +1214,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/LeatherworkArchiveTests.cs`](../../Ashfall.Core.Tests/Narrative/LeatherworkArchiveTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/TanningLeatherCatalogTests.cs`](../../Ashfall.Core.Tests/TanningLeatherCatalogTests.cs)
 
-### 81. `lyophilization` — Plans 130-133 — preserved-biologic batches and viability ledger (Medical)
+### 82. `lyophilization` — Plans 130-133 — preserved-biologic batches and viability ledger (Medical)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupLyophilization()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1208,7 +1223,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs)
   - Save Store: [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs)
 
-### 82. `medical_pipeline` — Diagnosis knowledge, treatment reservations, scheduled procedures (Task #133) (Medical)
+### 83. `medical_pipeline` — Diagnosis knowledge, treatment reservations, scheduled procedures (Task #133) (Medical)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMedical()` | **Cadence:** `On-Demand (Triage & Procedure Commands)`
 - **UI Routes:** `medical`
@@ -1220,7 +1235,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MedicalPanel.cs`](../../src/UI/MedicalPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/MedicalPipelineArchitectureGateTests.cs`](../../Ashfall.Core.Tests/Medical/MedicalPipelineArchitectureGateTests.cs)
 
-### 83. `microfluidic_diagnostic` — Plans 146-149 — microfluidic diagnostic cartridge manufacturing and run records (Medical)
+### 84. `microfluidic_diagnostic` — Plans 146-149 — microfluidic diagnostic cartridge manufacturing and run records (Medical)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMicrofluidicDiagnostic()` | **Cadence:** `On-Demand`
 - **UI Routes:** `microfluidic_diagnostic`
@@ -1231,7 +1246,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MicrofluidicDiagnosticPanel.cs`](../../src/UI/MicrofluidicDiagnosticPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/MicrofluidicDiagnosticEngineTests.cs`](../../Ashfall.Core.Tests/Medical/MicrofluidicDiagnosticEngineTests.cs)
 
-### 84. `pathogen_strains` — Flagship XI Plan 155 — fictional strain layer: cure projects and unlocked cures (Medical)
+### 85. `pathogen_strains` — Flagship XI Plan 155 — fictional strain layer: cure projects and unlocked cures (Medical)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupPathogenStrains()` | **Cadence:** `Daily Strain Progression Tick`
 - **UI Routes:**
@@ -1242,7 +1257,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/DiseaseSystemTests.cs`](../../Ashfall.Core.Tests/DiseaseSystemTests.cs)
 
-### 85. `psychological_sanatorium` — Trauma sanatorium: admissions, therapies, sedatives, relapse, discharge (Medical)
+### 86. `psychological_sanatorium` — Trauma sanatorium: admissions, therapies, sedatives, relapse, discharge (Medical)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupSanatorium()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1252,7 +1267,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/PsychologicalSanatoriumSaveStore.cs`](../../src/Host/PsychologicalSanatoriumSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/PsychologicalSanatoriumTests.cs`](../../Ashfall.Core.Tests/PsychologicalSanatoriumTests.cs)
 
-### 86. `surgical_ward` — Advanced surgical ward operations and sterile field (Medical)
+### 87. `surgical_ward` — Advanced surgical ward operations and sterile field (Medical)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupSurgicalWard()` | **Cadence:** `Daily Sterile Field Tick`
 - **UI Routes:**
@@ -1262,7 +1277,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/SurgicalWardSaveStore.cs`](../../src/Host/SurgicalWardSaveStore.cs)
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
 
-### 87. `propaganda_campaigns` — Plan 168 — propaganda messages, multi-day campaigns, detection, and morale warfare (Morale & Influence (Plan 168))
+### 88. `propaganda_campaigns` — Plan 168 — propaganda messages, multi-day campaigns, detection, and morale warfare (Morale & Influence (Plan 168))
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupPropaganda()` | **Cadence:** `Daily (Campaign Decay & Distribution)`
 - **UI Routes:** `propaganda`
@@ -1274,7 +1289,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/PropagandaPanel.cs`](../../src/UI/PropagandaPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Propaganda/Plan168PropagandaIntegrationTests.cs`](../../Ashfall.Core.Tests/Propaganda/Plan168PropagandaIntegrationTests.cs)
 
-### 88. `confession_secret` — ORPHAN-SEAL-W1 — discovered secrets, resolution choices, and leverage records (Narrative)
+### 89. `confession_secret` — ORPHAN-SEAL-W1 — discovered secrets, resolution choices, and leverage records (Narrative)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupConfessionSecrets()` | **Cadence:** `Discovery-Driven`
 - **UI Routes:**
@@ -1284,7 +1299,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ConfessionSecretSystemTests.cs`](../../Ashfall.Core.Tests/ConfessionSecretSystemTests.cs)
 
-### 89. `echoes` — Field echoes: surfaced and resolved one-time narrative state (Narrative)
+### 90. `echoes` — Field echoes: surfaced and resolved one-time narrative state (Narrative)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupEchoes()` | **Cadence:** `Narrative Echo Tick`
 - **UI Routes:**
@@ -1297,7 +1312,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/EchoCatalogTests.cs`](../../Ashfall.Core.Tests/Narrative/EchoCatalogTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/EchoSystemTests.cs`](../../Ashfall.Core.Tests/Narrative/EchoSystemTests.cs)
 
-### 90. `npc_memory` — Plan 147 — Per-NPC memory and relationship depth: trust, grudge, favors owed, forgiveness, and trade multipliers (Narrative)
+### 91. `npc_memory` — Plan 147 — Per-NPC memory and relationship depth: trust, grudge, favors owed, forgiveness, and trade multipliers (Narrative)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupNpcMemory()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1309,7 +1324,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/NpcMemorySystemTests.cs`](../../Ashfall.Core.Tests/Narrative/NpcMemorySystemTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/Plan147NpcMemoryHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Narrative/Plan147NpcMemoryHostIntegrationTests.cs)
 
-### 91. `seasonal_celebration` — ORPHAN-SEAL-W1 — holidays, anniversaries, scales, and celebration history (Narrative)
+### 92. `seasonal_celebration` — ORPHAN-SEAL-W1 — holidays, anniversaries, scales, and celebration history (Narrative)
 - **Owner Domain:** `events`
 - **Setup Method:** `Main.SetupSeasonalCelebration()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1319,7 +1334,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Events/Plan170SeasonalCelebrationsIntegrationTests.cs`](../../Ashfall.Core.Tests/Events/Plan170SeasonalCelebrationsIntegrationTests.cs)
 
-### 92. `shelter_festival` — ORPHAN-SEAL-W1 — player-scheduled festivals, commodity costs, and completion state (Narrative)
+### 93. `shelter_festival` — ORPHAN-SEAL-W1 — player-scheduled festivals, commodity costs, and completion state (Narrative)
 - **Owner Domain:** `events`
 - **Setup Method:** `Main.SetupShelterFestival()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1329,7 +1344,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Events/Plan170SeasonalCelebrationsIntegrationTests.cs`](../../Ashfall.Core.Tests/Events/Plan170SeasonalCelebrationsIntegrationTests.cs)
 
-### 93. `oral_lore` — Plan 155 — oral lore first-heard ledger (lore IDs only) (Narrative & Cultural Tradition)
+### 94. `oral_lore` — Plan 155 — oral lore first-heard ledger (lore IDs only) (Narrative & Cultural Tradition)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupOralLore()` | **Cadence:** `Event-Driven (Performance)`
 - **UI Routes:**
@@ -1340,7 +1355,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/OralLorePlan155Tests.cs`](../../Ashfall.Core.Tests/Narrative/OralLorePlan155Tests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/OralLoreCatalogTests.cs`](../../Ashfall.Core.Tests/OralLoreCatalogTests.cs)
 
-### 94. `moral_choice` — Moral choice ledger and community trust (Narrative & Decisions)
+### 95. `moral_choice` — Moral choice ledger and community trust (Narrative & Decisions)
 - **Owner Domain:** `events`
 - **Setup Method:** `Main.SetupMoralChoice()` | **Cadence:** `On-Demand (Branch Choice)`
 - **UI Routes:** `status`
@@ -1352,7 +1367,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/MoralChoiceSystemTests.cs`](../../Ashfall.Core.Tests/MoralChoiceSystemTests.cs)
 
-### 95. `contraband_stash` — Plan 147 — bunker contraband stash claim ledger (once-only discovery) (Narrative & Illicit Economy)
+### 96. `contraband_stash` — Plan 147 — bunker contraband stash claim ledger (once-only discovery) (Narrative & Illicit Economy)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupContrabandStash()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1362,7 +1377,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/ContrabandSaveStore.cs`](../../src/Host/ContrabandSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/ContrabandPlan147Tests.cs`](../../Ashfall.Core.Tests/Narrative/ContrabandPlan147Tests.cs)
 
-### 96. `cooking` — Plan 136 — wildlife trapping food pipeline & cooking system: recipes, active operations, meals prepared, and food decontamination (Nutrition)
+### 97. `cooking` — Plan 136 — wildlife trapping food pipeline & cooking system: recipes, active operations, meals prepared, and food decontamination (Nutrition)
 - **Owner Domain:** `cooking`
 - **Setup Method:** `Main.SetupCooking()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1375,7 +1390,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Cooking/Plan136CookingHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Cooking/Plan136CookingHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Cooking/Plan136WildlifeCookingIntegrationTests.cs`](../../Ashfall.Core.Tests/Cooking/Plan136WildlifeCookingIntegrationTests.cs)
 
-### 97. `grain_processing` — Grain milling, silo safety, and pest pressure (Nutrition)
+### 98. `grain_processing` — Grain milling, silo safety, and pest pressure (Nutrition)
 - **Owner Domain:** `nutrition`
 - **Setup Method:** `Main.SetupGrainProcessing()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1384,7 +1399,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/GrainProcessingHostSession.cs`](../../src/Host/GrainProcessingHostSession.cs)
   - Save Store: [`src/Host/GrainProcessingHostSession.cs`](../../src/Host/GrainProcessingHostSession.cs)
 
-### 98. `companion_animals` — Plan 174 — persistent companion animals: care, bond, training, roles, sickness, assignments (Plan 174 Companion Animals)
+### 99. `companion_animals` — Plan 174 — persistent companion animals: care, bond, training, roles, sickness, assignments (Plan 174 Companion Animals)
 - **Owner Domain:** `hunting`
 - **Setup Method:** `Main.SetupCompanionAnimals()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1395,7 +1410,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/Plan174CompanionAnimalTests.cs`](../../Ashfall.Core.Tests/World/Plan174CompanionAnimalTests.cs)
 
-### 99. `zealotry` — Plan 175 — fictional ideological pressure: belief state, fervor, dissent, shrines, escalation (Plan 175 Ideological Pressure)
+### 100. `zealotry` — Plan 175 — fictional ideological pressure: belief state, fervor, dissent, shrines, escalation (Plan 175 Ideological Pressure)
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupZealotry()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1406,7 +1421,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/ZealotrySystemTests.cs`](../../Ashfall.Core.Tests/Survivors/ZealotrySystemTests.cs)
 
-### 100. `anomaly_hazard` — Plan 176 — authored anomaly and storm-front hazard zones, movement, warnings, loot-site resolution (Plan 176 Anomaly Hazard Layer)
+### 101. `anomaly_hazard` — Plan 176 — authored anomaly and storm-front hazard zones, movement, warnings, loot-site resolution (Plan 176 Anomaly Hazard Layer)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupAnomalyHazard()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1418,7 +1433,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/World/Plan176AnomalyHazardTests.cs`](../../Ashfall.Core.Tests/World/Plan176AnomalyHazardTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/Plan176CrossSystemConsumerTests.cs`](../../Ashfall.Core.Tests/World/Plan176CrossSystemConsumerTests.cs)
 
-### 101. `bionics` — Plan 177 — bionic implant instances: condition, integration, power, maintenance, complications (Plan 177 Bionics & Prosthetics)
+### 102. `bionics` — Plan 177 — bionic implant instances: condition, integration, power, maintenance, complications (Plan 177 Bionics & Prosthetics)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupBionics()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1429,7 +1444,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/Plan177BionicsTests.cs`](../../Ashfall.Core.Tests/Medical/Plan177BionicsTests.cs)
 
-### 102. `spiritual_meaning` — Plan 30 — spiritual-meaning coordinator: mourning arcs, ritual cooldowns, memorial rites (Plan 30 Spiritual Meaning)
+### 103. `spiritual_meaning` — Plan 30 — spiritual-meaning coordinator: mourning arcs, ritual cooldowns, memorial rites (Plan 30 Spiritual Meaning)
 - **Owner Domain:** `spiritual`
 - **Setup Method:** `Main.SetupSpiritual()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `status`
@@ -1440,7 +1455,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/IronCenotaphMemorialPanel.cs`](../../src/UI/IronCenotaphMemorialPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Spiritual/Plan30SpiritualWorldTests.cs`](../../Ashfall.Core.Tests/Spiritual/Plan30SpiritualWorldTests.cs)
 
-### 103. `amputation` — Infection progression, amputations, prosthetics and bionics (Plans 178-201 Expansion Block)
+### 104. `amputation` — Infection progression, amputations, prosthetics and bionics (Plans 178-201 Expansion Block)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupAmputation()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `medical`
@@ -1452,7 +1467,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MedicalPanel.cs`](../../src/UI/MedicalPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/AmputationSystemTests.cs`](../../Ashfall.Core.Tests/Medical/AmputationSystemTests.cs)
 
-### 104. `archaeology` — Archaeology excavation ruins, archive decryption, and lore unlocks (Plans 178-201 Expansion Block)
+### 105. `archaeology` — Archaeology excavation ruins, archive decryption, and lore unlocks (Plans 178-201 Expansion Block)
 - **Owner Domain:** `knowledge`
 - **Setup Method:** `Main.SetupArchaeology()` | **Cadence:** `On-Demand (Excavation & Decryption)`
 - **UI Routes:**
@@ -1463,7 +1478,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Archaeology/ArchaeologySystemTests.cs`](../../Ashfall.Core.Tests/Archaeology/ArchaeologySystemTests.cs)
 
-### 105. `aviation` — Aviation airframes, flight plans, aerial mapping, and crash rescue (Plans 178-201 Expansion Block)
+### 106. `aviation` — Aviation airframes, flight plans, aerial mapping, and crash rescue (Plans 178-201 Expansion Block)
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupAviation()` | **Cadence:** `Daily Flight Tick`
 - **UI Routes:** `aviation`
@@ -1475,7 +1490,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/AviationSystemTests.cs`](../../Ashfall.Core.Tests/Expeditions/AviationSystemTests.cs)
 
-### 106. `ceremony` — Communal ceremonies, festivals, truces, and morale (Plans 178-201 Expansion Block)
+### 107. `ceremony` — Communal ceremonies, festivals, truces, and morale (Plans 178-201 Expansion Block)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupCeremony()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1486,7 +1501,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/CeremonySystemTests.cs`](../../Ashfall.Core.Tests/Narrative/CeremonySystemTests.cs)
 
-### 107. `chem_warfare` — CBRN hazard warfare and toxic contamination (Plans 178-201 Expansion Block)
+### 108. `chem_warfare` — CBRN hazard warfare and toxic contamination (Plans 178-201 Expansion Block)
 - **Owner Domain:** `combat`
 - **Setup Method:** `Main.SetupChemWarfare()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1497,7 +1512,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Combat/ChemWarfareSystemTests.cs`](../../Ashfall.Core.Tests/Combat/ChemWarfareSystemTests.cs)
 
-### 108. `child_development` — Child development phases, education, trauma, and adulthood (Plans 178-201 Expansion Block)
+### 109. `child_development` — Child development phases, education, trauma, and adulthood (Plans 178-201 Expansion Block)
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupGenerational()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `nursery`, `century_seed`
@@ -1510,7 +1525,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/GenerationalLineageExtensionTests.cs`](../../Ashfall.Core.Tests/GenerationalLineageExtensionTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/GenerationalSystemTests.cs`](../../Ashfall.Core.Tests/Survivors/GenerationalSystemTests.cs)
 
-### 109. `comms_array` — Long-range communications array and satellite telemetry (Plans 178-201 Expansion Block)
+### 110. `comms_array` — Long-range communications array and satellite telemetry (Plans 178-201 Expansion Block)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupCommsArray()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1521,7 +1536,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/CommsArraySystemTests.cs`](../../Ashfall.Core.Tests/World/CommsArraySystemTests.cs)
 
-### 110. `desperation` — Starvation crisis desperation acts and cannibalism history (Plans 178-201 Expansion Block)
+### 111. `desperation` — Starvation crisis desperation acts and cannibalism history (Plans 178-201 Expansion Block)
 - **Owner Domain:** `survival`
 - **Setup Method:** `Main.SetupDesperation()` | **Cadence:** `On-Demand (Crisis Command)`
 - **UI Routes:**
@@ -1532,7 +1547,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/DesperationSystemTests.cs`](../../Ashfall.Core.Tests/Survivors/DesperationSystemTests.cs)
 
-### 111. `expedition_stealth` — Expedition stealth, detection risk, camouflage, and night ops (Plans 178-201 Expansion Block)
+### 112. `expedition_stealth` — Expedition stealth, detection risk, camouflage, and night ops (Plans 178-201 Expansion Block)
 - **Owner Domain:** `combat`
 - **Setup Method:** `Main.SetupStealth()` | **Cadence:** `Event-Driven (Expedition Phases)`
 - **UI Routes:** `stealth`
@@ -1544,7 +1559,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/StealthReadoutPanel.cs`](../../src/UI/StealthReadoutPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Combat/StealthSystemTests.cs`](../../Ashfall.Core.Tests/Combat/StealthSystemTests.cs)
 
-### 112. `fallout` — Radioactive fallout clouds, dispersal, and shelter sealing (Plans 178-201 Expansion Block)
+### 113. `fallout` — Radioactive fallout clouds, dispersal, and shelter sealing (Plans 178-201 Expansion Block)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupFallout()` | **Cadence:** `Hourly Sim Tick`
 - **UI Routes:**
@@ -1555,7 +1570,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/FalloutSystemTests.cs`](../../Ashfall.Core.Tests/World/FalloutSystemTests.cs)
 
-### 113. `forced_labor` — Captive forced labor assignments, cruelty index, and rebellion risks (Plans 178-201 Expansion Block)
+### 114. `forced_labor` — Captive forced labor assignments, cruelty index, and rebellion risks (Plans 178-201 Expansion Block)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupForcedLabor()` | **Cadence:** `Daily Shift Tick`
 - **UI Routes:** `forced_labor`
@@ -1567,7 +1582,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/LaborUI.cs`](../../src/UI/LaborUI.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Factions/ForcedLaborSystemTests.cs`](../../Ashfall.Core.Tests/Factions/ForcedLaborSystemTests.cs)
 
-### 114. `fungi_cultivation` — Subterranean fungi beds, substrate, spores, and blooms (Plans 178-201 Expansion Block)
+### 115. `fungi_cultivation` — Subterranean fungi beds, substrate, spores, and blooms (Plans 178-201 Expansion Block)
 - **Owner Domain:** `farming`
 - **Setup Method:** `Main.SetupFungi()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1578,7 +1593,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Farming/FungiCultivationSystemTests.cs`](../../Ashfall.Core.Tests/Farming/FungiCultivationSystemTests.cs)
 
-### 115. `mercenary_bounties` — Mercenary bounty contracts, target intel, and rival tracking (Plans 178-201 Expansion Block)
+### 116. `mercenary_bounties` — Mercenary bounty contracts, target intel, and rival tracking (Plans 178-201 Expansion Block)
 - **Owner Domain:** `economy`
 - **Setup Method:** `Main.SetupMercenary()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1589,7 +1604,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Economy/MercenarySystemTests.cs`](../../Ashfall.Core.Tests/Economy/MercenarySystemTests.cs)
 
-### 116. `mutation_tree` — Radiation exposure, genetic instability, and mutation trees (Plans 178-201 Expansion Block)
+### 117. `mutation_tree` — Radiation exposure, genetic instability, and mutation trees (Plans 178-201 Expansion Block)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMutations()` | **Cadence:** `Event-Driven (Dose Thresholds)`
 - **UI Routes:** `mutation_tree`
@@ -1601,7 +1616,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MutationTreePanel.cs`](../../src/UI/MutationTreePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/MutationSystemTests.cs`](../../Ashfall.Core.Tests/Medical/MutationSystemTests.cs)
 
-### 117. `narcotics` — Chemical medicines, toxicity, tolerance, addiction, and rehab beds (Plans 178-201 Expansion Block)
+### 118. `narcotics` — Chemical medicines, toxicity, tolerance, addiction, and rehab beds (Plans 178-201 Expansion Block)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupNarcotics()` | **Cadence:** `24h Medical Tick`
 - **UI Routes:** `narcotics`, `pharma_lab`
@@ -1614,7 +1629,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/PharmaLabPanel.cs`](../../src/UI/PharmaLabPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/NarcoticsSystemTests.cs`](../../Ashfall.Core.Tests/Medical/NarcoticsSystemTests.cs)
 
-### 118. `prisoner_management` — Captive detention, upkeep, interrogation, escape, and recruitment (Plans 178-201 Expansion Block)
+### 119. `prisoner_management` — Captive detention, upkeep, interrogation, escape, and recruitment (Plans 178-201 Expansion Block)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupPrisoners()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `prisoners`
@@ -1626,7 +1641,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/PrisonerPanel.cs`](../../src/UI/PrisonerPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Factions/PrisonerSystemTests.cs`](../../Ashfall.Core.Tests/Factions/PrisonerSystemTests.cs)
 
-### 119. `railway` — Rail network, track repair, and armored train operations (Plans 178-201 Expansion Block)
+### 120. `railway` — Rail network, track repair, and armored train operations (Plans 178-201 Expansion Block)
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupRailway()` | **Cadence:** `On-Demand (Convoy Operations)`
 - **UI Routes:**
@@ -1637,7 +1652,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/RailwaySystemTests.cs`](../../Ashfall.Core.Tests/Expeditions/RailwaySystemTests.cs)
 
-### 120. `recreation` — Survivor hobbies, downtime, and recreation (Plans 178-201 Expansion Block)
+### 121. `recreation` — Survivor hobbies, downtime, and recreation (Plans 178-201 Expansion Block)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupRecreation()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1648,7 +1663,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Recreation/SurvivorDowntimeSystemTests.cs`](../../Ashfall.Core.Tests/Recreation/SurvivorDowntimeSystemTests.cs)
 
-### 121. `robotics` — Pre-war robotics, directives, and automation (Plans 178-201 Expansion Block)
+### 122. `robotics` — Pre-war robotics, directives, and automation (Plans 178-201 Expansion Block)
 - **Owner Domain:** `crafting`
 - **Setup Method:** `Main.SetupRobotics()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1659,7 +1674,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Crafting/RoboticsSystemTests.cs`](../../Ashfall.Core.Tests/Crafting/RoboticsSystemTests.cs)
 
-### 122. `settlement_politics` — Settlement elections, political policies, approval rating, and coups (Plans 178-201 Expansion Block)
+### 123. `settlement_politics` — Settlement elections, political policies, approval rating, and coups (Plans 178-201 Expansion Block)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupPolitics()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `politics`
@@ -1671,7 +1686,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/PoliticsUI.cs`](../../src/UI/PoliticsUI.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/PoliticsSystemTests.cs`](../../Ashfall.Core.Tests/Narrative/PoliticsSystemTests.cs)
 
-### 123. `wasteland_justice` — Crime incidents, trials, punishments, banishments, and grudges (Plans 178-201 Expansion Block)
+### 124. `wasteland_justice` — Crime incidents, trials, punishments, banishments, and grudges (Plans 178-201 Expansion Block)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupJustice()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1682,7 +1697,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/JusticeSystemTests.cs`](../../Ashfall.Core.Tests/Narrative/JusticeSystemTests.cs)
 
-### 124. `plastic_pyrolysis` — Retort bay — waste plastic to synthetic fuel fractions (Plan 202) (Plans 202-205 Flagship (Plan 202))
+### 125. `plastic_pyrolysis` — Retort bay — waste plastic to synthetic fuel fractions (Plan 202) (Plans 202-205 Flagship (Plan 202))
 - **Owner Domain:** `industry`
 - **Setup Method:** `Main.SetupPlasticPyrolysis()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `plastic_pyrolysis`
@@ -1693,7 +1708,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/PlasticPyrolysisPanel.cs`](../../src/UI/PlasticPyrolysisPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/PlasticPyrolysisEngineTests.cs`](../../Ashfall.Core.Tests/Shelter/PlasticPyrolysisEngineTests.cs)
 
-### 125. `cargo_airdrop` — Airdrop events, crate contents, beacons, and interception races (Plan 205) (Plans 202-205 Flagship (Plan 205))
+### 126. `cargo_airdrop` — Airdrop events, crate contents, beacons, and interception races (Plan 205) (Plans 202-205 Flagship (Plan 205))
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupCargoAirdrop()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `cargo_airdrop`
@@ -1704,7 +1719,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/CargoAirdropPanel.cs`](../../src/UI/CargoAirdropPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/CargoAirdropEngineTests.cs`](../../Ashfall.Core.Tests/World/CargoAirdropEngineTests.cs)
 
-### 126. `geothermal_orc` — Plan B74 — geothermal organic Rankine loop, heat reserve, fouling, and leakage (Power)
+### 127. `geothermal_orc` — Plan B74 — geothermal organic Rankine loop, heat reserve, fouling, and leakage (Power)
 - **Owner Domain:** `power_grid`
 - **Setup Method:** `Main.SetupGeothermalOrc()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1715,7 +1730,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/Plans74To77Panels.cs`](../../src/UI/Plans74To77Panels.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Plans74To77SystemsTests.cs`](../../Ashfall.Core.Tests/Plans74To77SystemsTests.cs)
 
-### 127. `kinetic_storage` — Plans 78-81 — flywheel rotor, vacuum, bearing, and containment state (Power)
+### 128. `kinetic_storage` — Plans 78-81 — flywheel rotor, vacuum, bearing, and containment state (Power)
 - **Owner Domain:** `power_grid`
 - **Setup Method:** `Main.SetupKineticStorage()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1724,7 +1739,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/KineticStorageSaveStore.cs`](../../src/Host/KineticStorageSaveStore.cs)
   - Save Store: [`src/Host/KineticStorageSaveStore.cs`](../../src/Host/KineticStorageSaveStore.cs)
 
-### 128. `solar_concentrator` — Plans 110-113 — parabolic solar concentrator, mirror condition, tracking mode, and thermal output (Power)
+### 129. `solar_concentrator` — Plans 110-113 — parabolic solar concentrator, mirror condition, tracking mode, and thermal output (Power)
 - **Owner Domain:** `power_grid`
 - **Setup Method:** `Main.SetupSolarConcentrator()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1733,7 +1748,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/SolarConcentratorHostSession.cs`](../../src/Host/SolarConcentratorHostSession.cs)
   - Save Store: [`src/Host/SolarConcentratorSaveStore.cs`](../../src/Host/SolarConcentratorSaveStore.cs)
 
-### 129. `hobby` — ORPHAN-SEAL-W1 — survivor hobby progress, mastery, and co-participation (Psychology)
+### 130. `hobby` — ORPHAN-SEAL-W1 — survivor hobby progress, mastery, and co-participation (Psychology)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupHobby()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1743,7 +1758,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan161HobbyIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan161HobbyIntegrationTests.cs)
 
-### 130. `psychological_arcs` — Plans 162-165 — breakdown arcs, exposure, treatment progress, private stashes, catharsis (Psychology)
+### 131. `psychological_arcs` — Plans 162-165 — breakdown arcs, exposure, treatment progress, private stashes, catharsis (Psychology)
 - **Owner Domain:** `psychology`
 - **Setup Method:** `Main.SetupPsychologyArcs()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1753,7 +1768,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/PsychologyArcSaveStore.cs`](../../src/Host/PsychologyArcSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/PsychologicalArcSystemTests.cs`](../../Ashfall.Core.Tests/PsychologicalArcSystemTests.cs)
 
-### 131. `survivor_autonomy` — ORPHAN-SEAL-W1 — daily survivor autonomy evaluations, cooldowns, and personal goals (Psychology)
+### 132. `survivor_autonomy` — ORPHAN-SEAL-W1 — daily survivor autonomy evaluations, cooldowns, and personal goals (Psychology)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupSurvivorAutonomy()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1763,7 +1778,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan144SurvivorAutonomyIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan144SurvivorAutonomyIntegrationTests.cs)
 
-### 132. `survivor_mental_health` — Plans 50-53 — survivor psychological trauma, stress levels, catharsis, and mental health crises (Psychology)
+### 133. `survivor_mental_health` — Plans 50-53 — survivor psychological trauma, stress levels, catharsis, and mental health crises (Psychology)
 - **Owner Domain:** `psychology`
 - **Setup Method:** `Main.SetupSurvivorMentalHealth()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1773,7 +1788,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/SurvivorMentalHealthSaveStore.cs`](../../src/Host/SurvivorMentalHealthSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Needs/SurvivorMentalHealthTests.cs`](../../Ashfall.Core.Tests/Needs/SurvivorMentalHealthTests.cs)
 
-### 133. `procedural_narrative` — Procedural narrative metadata and the shared quest runtime (Quests)
+### 134. `procedural_narrative` — Procedural narrative metadata and the shared quest runtime (Quests)
 - **Owner Domain:** `quests`
 - **Setup Method:** `Main.SetupPlans166To169()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1783,7 +1798,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/ProceduralNarrativeSaveStore.cs`](../../src/Host/ProceduralNarrativeSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Plan169ProceduralNarrativeTests.cs`](../../Ashfall.Core.Tests/Plan169ProceduralNarrativeTests.cs)
 
-### 134. `low_background_metrology` — Plan 138 — low-background shield install, detector calibration, smelting batches, bounded assay history (Radiation & Metrology)
+### 135. `low_background_metrology` — Plan 138 — low-background shield install, detector calibration, smelting batches, bounded assay history (Radiation & Metrology)
 - **Owner Domain:** `radiation`
 - **Setup Method:** `Main.SetupLowBackgroundMetrology()` | **Cadence:** `On-Demand (Assay & Smelting Commands)`
 - **UI Routes:** `low_background_metrology`
@@ -1794,7 +1809,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/LowBackgroundLeadPanel.cs`](../../src/UI/LowBackgroundLeadPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Radiation/Plan138LowBackgroundLeadEngineTests.cs`](../../Ashfall.Core.Tests/Radiation/Plan138LowBackgroundLeadEngineTests.cs)
 
-### 135. `communications` — ORPHAN-SEAL-W1 — antenna layer, intercepted messages, and outgoing broadcasts (Radio)
+### 136. `communications` — ORPHAN-SEAL-W1 — antenna layer, intercepted messages, and outgoing broadcasts (Radio)
 - **Owner Domain:** `radio`
 - **Setup Method:** `Main.SetupCommunications()` | **Cadence:** `Daily Wear Tick`
 - **UI Routes:**
@@ -1804,7 +1819,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Communications/Plan157CommunicationsIntegrationTests.cs`](../../Ashfall.Core.Tests/Communications/Plan157CommunicationsIntegrationTests.cs)
 
-### 136. `heliograph` — Optical heliograph stations and message delivery (Radio)
+### 137. `heliograph` — Optical heliograph stations and message delivery (Radio)
 - **Owner Domain:** `radio`
 - **Setup Method:** `Main.SetupHeliograph()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1813,7 +1828,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/HeliographHostSession.cs`](../../src/Host/HeliographHostSession.cs)
   - Save Store: [`src/Host/HeliographHostSession.cs`](../../src/Host/HeliographHostSession.cs)
 
-### 137. `nvis_communications` — Plans 130-133 — regional NVIS status communications and recall queue (Radio)
+### 138. `nvis_communications` — Plans 130-133 — regional NVIS status communications and recall queue (Radio)
 - **Owner Domain:** `radio`
 - **Setup Method:** `Main.SetupNvisCommunications()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1822,7 +1837,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs)
   - Save Store: [`src/Host/Plans130To133HostSessions.cs`](../../src/Host/Plans130To133HostSessions.cs)
 
-### 138. `psyops` — Flagship XI Plan 157 — broadcast campaigns, jamming, counter-propaganda, ideological pressure (Radio)
+### 139. `psyops` — Flagship XI Plan 157 — broadcast campaigns, jamming, counter-propaganda, ideological pressure (Radio)
 - **Owner Domain:** `radio`
 - **Setup Method:** `Main.SetupPsyOps()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1832,7 +1847,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/PsyOpsSaveStore.cs`](../../src/Host/PsyOpsSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Flagship11/PsyOpsSystemTests.cs`](../../Ashfall.Core.Tests/Flagship11/PsyOpsSystemTests.cs)
 
-### 139. `radio_program_production` — Plan 173 — player radio program prep/delivery jobs and follow-ups (Radio)
+### 140. `radio_program_production` — Plan 173 — player radio program prep/delivery jobs and follow-ups (Radio)
 - **Owner Domain:** `radio`
 - **Setup Method:** `Main.SetupRadioProgramProduction()` | **Cadence:** `Daily Program Tick`
 - **UI Routes:** `radio`
@@ -1843,7 +1858,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/RadioPanel.cs`](../../src/UI/RadioPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Radio/Plan173RadioProgramProductionTests.cs`](../../Ashfall.Core.Tests/Radio/Plan173RadioProgramProductionTests.cs)
 
-### 140. `retention` — Plan 55 — retention policy audit report: bounded collection bounds, pruned totals, and preserved obligations (Records)
+### 141. `retention` — Plan 55 — retention policy audit report: bounded collection bounds, pruned totals, and preserved obligations (Records)
 - **Owner Domain:** `records`
 - **Setup Method:** `Main.SetupRetention()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1857,7 +1872,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Records/Plan55RetentionPolicyIntegrationTests.cs`](../../Ashfall.Core.Tests/Records/Plan55RetentionPolicyIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Records/RetentionPolicyCatalogLoaderTests.cs`](../../Ashfall.Core.Tests/Records/RetentionPolicyCatalogLoaderTests.cs)
 
-### 141. `research_unlock` — Plan 141 — Research downstream unlocks bridge: items, recipes, shelter, expedition, combat, and medical capabilities (Research)
+### 142. `research_unlock` — Plan 141 — Research downstream unlocks bridge: items, recipes, shelter, expedition, combat, and medical capabilities (Research)
 - **Owner Domain:** `knowledge`
 - **Setup Method:** `Main.SetupResearchUnlockBridge()` | **Cadence:** `On-Demand (Research Node Completion)`
 - **UI Routes:** `research`
@@ -1870,7 +1885,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Research/Plan141ResearchUnlockBridgeIntegrationTests.cs`](../../Ashfall.Core.Tests/Research/Plan141ResearchUnlockBridgeIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Research/Plan141ResearchUnlockHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Research/Plan141ResearchUnlockHostIntegrationTests.cs)
 
-### 142. `playable_metrics` — Plan 46 — local session telemetry: aggregate readiness report and first-hour funnel completion (Save)
+### 143. `playable_metrics` — Plan 46 — local session telemetry: aggregate readiness report and first-hour funnel completion (Save)
 - **Owner Domain:** `save`
 - **Setup Method:** `Main.SetupPlayMetrics()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1883,7 +1898,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Campaign/Plan46PlayMetricsHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Campaign/Plan46PlayMetricsHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Telemetry/PlaySessionRecorderTests.cs`](../../Ashfall.Core.Tests/Telemetry/PlaySessionRecorderTests.cs)
 
-### 143. `session_durability` — Plan 39 — observed slot summaries, day-advance soak samples, and corruption/recovery audit (Save)
+### 144. `session_durability` — Plan 39 — observed slot summaries, day-advance soak samples, and corruption/recovery audit (Save)
 - **Owner Domain:** `save`
 - **Setup Method:** `Main.SetupSessionDurability()` | **Cadence:** `Session-Driven`
 - **UI Routes:**
@@ -1896,7 +1911,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Save/Plan39SessionDurabilityHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Save/Plan39SessionDurabilityHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Save/SessionDurabilityManagerTests.cs`](../../Ashfall.Core.Tests/Save/SessionDurabilityManagerTests.cs)
 
-### 144. `seven_day_slice` — Plan 54 — seven-day slice playtest scorecard: frozen scenario hash, beat verification evidence, retention counts (Save)
+### 145. `seven_day_slice` — Plan 54 — seven-day slice playtest scorecard: frozen scenario hash, beat verification evidence, retention counts (Save)
 - **Owner Domain:** `save`
 - **Setup Method:** `Main.SetupSevenDaySlice()` | **Cadence:** `Playtest-Driven`
 - **UI Routes:**
@@ -1907,7 +1922,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/SliceScenarioHostSession.cs`](../../src/Host/SliceScenarioHostSession.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Campaign/Plan54SevenDaySliceHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Campaign/Plan54SevenDaySliceHostIntegrationTests.cs)
 
-### 145. `outpost_settlement` — Plan 58 — authored outposts: establishment, condition, garrison assignments, and ration reserve (Settlements)
+### 146. `outpost_settlement` — Plan 58 — authored outposts: establishment, condition, garrison assignments, and ration reserve (Settlements)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupOutpostSettlement()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1919,7 +1934,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Settlements/Plan58OutpostHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Settlements/Plan58OutpostHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Settlements/Plan58OutpostSettlementIntegrationTests.cs`](../../Ashfall.Core.Tests/Settlements/Plan58OutpostSettlementIntegrationTests.cs)
 
-### 146. `cryo_vault` — Plan B69 — cryo canisters, viability, coolant reserve, insulation, breach state (Shelter)
+### 147. `cryo_vault` — Plan B69 — cryo canisters, viability, coolant reserve, insulation, breach state (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupCryoVault()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1929,7 +1944,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/CryoVaultSaveStore.cs`](../../src/Host/CryoVaultSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/CryoVaultB69Tests.cs`](../../Ashfall.Core.Tests/Shelter/CryoVaultB69Tests.cs)
 
-### 147. `disaster_response` — ORPHAN-SEAL-W1 — active disasters, protocols, mitigation, and resilience (Shelter)
+### 148. `disaster_response` — ORPHAN-SEAL-W1 — active disasters, protocols, mitigation, and resilience (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupDisasterResponse()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1939,7 +1954,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan158DisasterResponseIntegrationTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan158DisasterResponseIntegrationTests.cs)
 
-### 148. `ebpvd_coating` — Plans 146-149 — EB-PVD thermal barrier coating machinery, job state, and records (Shelter)
+### 149. `ebpvd_coating` — Plans 146-149 — EB-PVD thermal barrier coating machinery, job state, and records (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupEbPvdCoating()` | **Cadence:** `On-Demand`
 - **UI Routes:** `ebpvd_coating`
@@ -1950,7 +1965,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/EbPvdCoatingPanel.cs`](../../src/UI/EbPvdCoatingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/EbPvdCoatingEngineTests.cs`](../../Ashfall.Core.Tests/Shelter/EbPvdCoatingEngineTests.cs)
 
-### 149. `excavation_hazards` — Subterranean methane, flood, spore hazards, and cave-in rescue operations (Shelter)
+### 150. `excavation_hazards` — Subterranean methane, flood, spore hazards, and cave-in rescue operations (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupExcavationHazards()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1961,7 +1976,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExcavationSystemTests.cs`](../../Ashfall.Core.Tests/ExcavationSystemTests.cs)
 
-### 150. `food_preservation` — Food spoilage, curing, and cryogenic preservation (Shelter)
+### 151. `food_preservation` — Food spoilage, curing, and cryogenic preservation (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupPlans62To65()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -1971,7 +1986,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/FoodPreservationSaveStore.cs`](../../src/Host/FoodPreservationSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/FoodPreservationSystemTests.cs`](../../Ashfall.Core.Tests/Shelter/FoodPreservationSystemTests.cs)
 
-### 151. `geothermal_aquifer` — Deep geothermal boreholes & aquifer pumping (Shelter)
+### 152. `geothermal_aquifer` — Deep geothermal boreholes & aquifer pumping (Shelter)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupGeothermalAquifer()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1980,7 +1995,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/GeothermalAquiferSaveStore.cs`](../../src/Host/GeothermalAquiferSaveStore.cs)
   - Save Store: [`src/Host/GeothermalAquiferSaveStore.cs`](../../src/Host/GeothermalAquiferSaveStore.cs)
 
-### 152. `precision_metrology` — Plan B89 — precision metrology grades, certificates, and registered-consumer calibration (Shelter)
+### 153. `precision_metrology` — Plan B89 — precision metrology grades, certificates, and registered-consumer calibration (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupPrecisionMetrology()` | **Cadence:** `Daily Calibration Drift`
 - **UI Routes:**
@@ -1990,7 +2005,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/PrecisionMetrologySaveStore.cs`](../../src/Host/PrecisionMetrologySaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/PrecisionMetrologySystemTests.cs`](../../Ashfall.Core.Tests/Shelter/PrecisionMetrologySystemTests.cs)
 
-### 153. `precision_optics` — Plans 110-113 — precision optical blank grinding, figure testing, and telescope/shield viewports (Shelter)
+### 154. `precision_optics` — Plans 110-113 — precision optical blank grinding, figure testing, and telescope/shield viewports (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupPrecisionOptics()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -1999,7 +2014,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/PrecisionOpticsHostSession.cs`](../../src/Host/PrecisionOpticsHostSession.cs)
   - Save Store: [`src/Host/PrecisionOpticsSaveStore.cs`](../../src/Host/PrecisionOpticsSaveStore.cs)
 
-### 154. `radio_station` — Radio station frequency tuning, signal lock, and triangulation (Shelter)
+### 155. `radio_station` — Radio station frequency tuning, signal lock, and triangulation (Shelter)
 - **Owner Domain:** `radio`
 - **Setup Method:** `Main.SetupRadioStation()` | **Cadence:** `On-Demand (Tuning & Broadcasts)`
 - **UI Routes:** `radio`
@@ -2011,7 +2026,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/RadioPanel.cs`](../../src/UI/RadioPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Radio/ShelterRadioStationTests.cs`](../../Ashfall.Core.Tests/Radio/ShelterRadioStationTests.cs)
 
-### 155. `seismic_dynamics` — Plan B68 — fault tension, slips, geophone coverage, dampener integrity, quake history (Shelter)
+### 156. `seismic_dynamics` — Plan B68 — fault tension, slips, geophone coverage, dampener integrity, quake history (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupSeismicDynamics()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -2022,7 +2037,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/SeismicMonitoringB68Tests.cs`](../../Ashfall.Core.Tests/Shelter/SeismicMonitoringB68Tests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/ShelterSeismicDynamicsPlan56Tests.cs`](../../Ashfall.Core.Tests/Shelter/ShelterSeismicDynamicsPlan56Tests.cs)
 
-### 156. `shelter_atmosphere` — Plan 220 — shelter composite atmosphere, ambiance profile, and environmental facets (Shelter)
+### 157. `shelter_atmosphere` — Plan 220 — shelter composite atmosphere, ambiance profile, and environmental facets (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterAtmosphere()` | **Cadence:** `Daily (Day Coordinator)`
 - **UI Routes:** `shelter_atmosphere`
@@ -2034,7 +2049,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ShelterAtmospherePanel.cs`](../../src/UI/ShelterAtmospherePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan220ShelterAtmosphereIntegrationTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan220ShelterAtmosphereIntegrationTests.cs)
 
-### 157. `shelter_decor` — Room decor placements, memorial plaques, and localized morale items (Shelter)
+### 158. `shelter_decor` — Room decor placements, memorial plaques, and localized morale items (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterDecor()` | **Cadence:** `On-Demand (Decoration Placement)`
 - **UI Routes:**
@@ -2045,7 +2060,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Plan12CDecorTests.cs`](../../Ashfall.Core.Tests/Plan12CDecorTests.cs)
 
-### 158. `shelter_expansion` — ORPHAN-SEAL-W1 — expansion rooms, construction projects, and upgrade state (Shelter)
+### 159. `shelter_expansion` — ORPHAN-SEAL-W1 — expansion rooms, construction projects, and upgrade state (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterExpansion()` | **Cadence:** `Labor-Driven`
 - **UI Routes:**
@@ -2055,7 +2070,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan156ShelterExpansionIntegrationTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan156ShelterExpansionIntegrationTests.cs)
 
-### 159. `shelter_noise` — Plan 205 — shelter acoustic noise, room soundproofing, and quiet hours (Shelter)
+### 160. `shelter_noise` — Plan 205 — shelter acoustic noise, room soundproofing, and quiet hours (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterAtmosphere()` | **Cadence:** `Daily (Midday Acoustic Audit)`
 - **UI Routes:** `shelter_atmosphere`
@@ -2066,7 +2081,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ShelterAtmospherePanel.cs`](../../src/UI/ShelterAtmospherePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan220ShelterAtmosphereIntegrationTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan220ShelterAtmosphereIntegrationTests.cs)
 
-### 160. `shelter_social_dynamics` — Living quarters privacy pressure, communal mess hall, and disputes (Shelter)
+### 161. `shelter_social_dynamics` — Living quarters privacy pressure, communal mess hall, and disputes (Shelter)
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupShelterSocial()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -2077,7 +2092,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/ShelterSocialDynamicsTests.cs`](../../Ashfall.Core.Tests/Shelter/ShelterSocialDynamicsTests.cs)
 
-### 161. `shelter_workshop` — Precision workshop tooling, ammo press, and firearm refurbishment (Shelter)
+### 162. `shelter_workshop` — Precision workshop tooling, ammo press, and firearm refurbishment (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupWorkshop()` | **Cadence:** `On-Demand (Crafting & Refurbishment)`
 - **UI Routes:** `workshop`
@@ -2089,7 +2104,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/WorkshopPanel.cs`](../../src/UI/WorkshopPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WorkshopReverseEngineeringSystemTests.cs`](../../Ashfall.Core.Tests/WorkshopReverseEngineeringSystemTests.cs)
 
-### 162. `weather_hardening` — Cryo-ash weather hardening & thermal insulation (Shelter)
+### 163. `weather_hardening` — Cryo-ash weather hardening & thermal insulation (Shelter)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupWeatherHardening()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -2098,7 +2113,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/WeatherHardeningSaveStore.cs`](../../src/Host/WeatherHardeningSaveStore.cs)
   - Save Store: [`src/Host/WeatherHardeningSaveStore.cs`](../../src/Host/WeatherHardeningSaveStore.cs)
 
-### 163. `cvd_diamond` — Plan 124 — CVD diamond reactor condition, plasma stability, growth batches, faults (Shelter & Facilities)
+### 164. `cvd_diamond` — Plan 124 — CVD diamond reactor condition, plasma stability, growth batches, faults (Shelter & Facilities)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupCvdDiamond()` | **Cadence:** `Industrial Production Cadence (Batch Ticks)`
 - **UI Routes:** `cvd_diamond`
@@ -2109,7 +2124,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/CvdDiamondPanel.cs`](../../src/UI/CvdDiamondPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan124CvdDiamondSynthesisEngineTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan124CvdDiamondSynthesisEngineTests.cs)
 
-### 164. `sofc_power` — Plan 122 — SOFC plant operating mode, thermal level, stack health, seal integrity, degradation, faults (Shelter & Facilities)
+### 165. `sofc_power` — Plan 122 — SOFC plant operating mode, thermal level, stack health, seal integrity, degradation, faults (Shelter & Facilities)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupSofcPower()` | **Cadence:** `Shelter Power Cadence (TickDay)`
 - **UI Routes:** `sofc_power`
@@ -2120,7 +2135,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/SolidOxideFuelCellPanel.cs`](../../src/UI/SolidOxideFuelCellPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan122SofcElectrochemistryEngineTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan122SofcElectrochemistryEngineTests.cs)
 
-### 165. `bio_fermentation` — Plan 126 — fermentation reactor, process health, contamination, outputs (Shelter & Farming)
+### 166. `bio_fermentation` — Plan 126 — fermentation reactor, process health, contamination, outputs (Shelter & Farming)
 - **Owner Domain:** `farming`
 - **Setup Method:** `Main.SetupBioFermentation()` | **Cadence:** `Daily Reactor Tick`
 - **UI Routes:**
@@ -2131,7 +2146,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/BioFermentationPanel.cs`](../../src/UI/BioFermentationPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/BioFermentationEngineTests.cs`](../../Ashfall.Core.Tests/Shelter/BioFermentationEngineTests.cs)
 
-### 166. `hydroponic_biomes` — Hydroponic biome racks and crop state (Shelter & Farming)
+### 167. `hydroponic_biomes` — Hydroponic biome racks and crop state (Shelter & Farming)
 - **Owner Domain:** `farming`
 - **Setup Method:** `Main.SetupHydroponicBiomes()` | **Cadence:** `Daily Biome Rack Tick`
 - **UI Routes:**
@@ -2142,7 +2157,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/HydroponicBiomeTests.cs`](../../Ashfall.Core.Tests/Shelter/HydroponicBiomeTests.cs)
 
-### 167. `airlock_security` — Airlock decontamination and security (Shelter & Infrastructure)
+### 168. `airlock_security` — Airlock decontamination and security (Shelter & Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupAirlockSecurity()` | **Cadence:** `Daily Decon Interlock`
 - **UI Routes:** `airlock_security`
@@ -2153,7 +2168,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/AirlockSecurityPanel.cs`](../../src/UI/AirlockSecurityPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/AirlockSecuritySystemTests.cs`](../../Ashfall.Core.Tests/AirlockSecuritySystemTests.cs)
 
-### 168. `decontamination` — Rad-scrubbing showers and chambers (Shelter & Infrastructure)
+### 169. `decontamination` — Rad-scrubbing showers and chambers (Shelter & Infrastructure)
 - **Owner Domain:** `radiation`
 - **Setup Method:** `Main.SetupDecontamination()` | **Cadence:** `Daily Rad Scrub Shower Cycle`
 - **UI Routes:** `decontamination`
@@ -2164,7 +2179,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/DecontaminationPanel.cs`](../../src/UI/DecontaminationPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/DecontaminationSystemTests.cs`](../../Ashfall.Core.Tests/DecontaminationSystemTests.cs)
 
-### 169. `excavation` — Shelter expansion rubble clearing (Shelter & Infrastructure)
+### 170. `excavation` — Shelter expansion rubble clearing (Shelter & Infrastructure)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupExcavation()` | **Cadence:** `Daily Rubble Shoring Work`
 - **UI Routes:** `excavation`
@@ -2175,7 +2190,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ExcavationPanel.cs`](../../src/UI/ExcavationPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExcavationSystemTests.cs`](../../Ashfall.Core.Tests/ExcavationSystemTests.cs)
 
-### 170. `greenhouse` — Hydroponic crops and food production (Shelter & Infrastructure)
+### 171. `greenhouse` — Hydroponic crops and food production (Shelter & Infrastructure)
 - **Owner Domain:** `greenhouse`
 - **Setup Method:** `Main.SetupGreenhouse()` | **Cadence:** `Daily Hydroponic Growth`
 - **UI Routes:** `greenhouse`
@@ -2186,7 +2201,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GreenhousePanel.cs`](../../src/UI/GreenhousePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/GreenhouseSystemTests.cs`](../../Ashfall.Core.Tests/GreenhouseSystemTests.cs)
 
-### 171. `nuclear_core_lifecycle` — Nuclear core lifecycle and thermal state (Shelter & Infrastructure)
+### 172. `nuclear_core_lifecycle` — Nuclear core lifecycle and thermal state (Shelter & Infrastructure)
 - **Owner Domain:** `power_grid`
 - **Setup Method:** `Main.SetupNuclearCore()` | **Cadence:** `Daily Core Thermal Tick`
 - **UI Routes:**
@@ -2197,7 +2212,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/NuclearCorePowerGridPublishTests.cs`](../../Ashfall.Core.Tests/Shelter/NuclearCorePowerGridPublishTests.cs)
 
-### 172. `power_grid` — Shelter generator & power allocations (Shelter & Infrastructure)
+### 173. `power_grid` — Shelter generator & power allocations (Shelter & Infrastructure)
 - **Owner Domain:** `power_grid`
 - **Setup Method:** `Main.SetupPowerGrid()` | **Cadence:** `Daily Fuel Consumption & Wattage`
 - **UI Routes:** `power_grid`
@@ -2208,7 +2223,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/PowerGridPanel.cs`](../../src/UI/PowerGridPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/PowerGridSystemTests.cs`](../../Ashfall.Core.Tests/Shelter/PowerGridSystemTests.cs)
 
-### 173. `power_subgrids` — Power distribution sub-grid nodes and thermal state (Shelter & Infrastructure)
+### 174. `power_subgrids` — Power distribution sub-grid nodes and thermal state (Shelter & Infrastructure)
 - **Owner Domain:** `power_grid`
 - **Setup Method:** `Main.SetupPowerSubgrids()` | **Cadence:** `Daily Thermal Distribution Tick`
 - **UI Routes:** `power_grid`
@@ -2218,7 +2233,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/PowerDistributionSaveStore.cs`](../../src/Host/PowerDistributionSaveStore.cs)
   - UI Panel: [`src/UI/PowerGridPanel.cs`](../../src/UI/PowerGridPanel.cs)
 
-### 174. `sanitation` — Plan 210 — room waste, hygiene, compost queue, and spills (Shelter & Infrastructure)
+### 175. `sanitation` — Plan 210 — room waste, hygiene, compost queue, and spills (Shelter & Infrastructure)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupSanitation()` | **Cadence:** `Daily Sanitation Tick`
 - **UI Routes:**
@@ -2231,7 +2246,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan210SanitationHostWiringTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan210SanitationHostWiringTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan210SanitationSystemTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan210SanitationSystemTests.cs)
 
-### 175. `shelter_assignment` — Room assignments and living quarters (Shelter & Infrastructure)
+### 176. `shelter_assignment` — Room assignments and living quarters (Shelter & Infrastructure)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterAssignment()` | **Cadence:** `On-Demand (Bunk Reassignment)`
 - **UI Routes:** `shelter`
@@ -2242,7 +2257,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ShelterPanel.cs`](../../src/UI/ShelterPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/ShelterAssignmentSystemTests.cs`](../../Ashfall.Core.Tests/Shelter/ShelterAssignmentSystemTests.cs)
 
-### 176. `shelter_fire` — Shelter fire incidents, smoke, and brigade response (Shelter & Infrastructure)
+### 177. `shelter_fire` — Shelter fire incidents, smoke, and brigade response (Shelter & Infrastructure)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterFireHazard()` | **Cadence:** `Daily Fire Propagation Tick`
 - **UI Routes:** `fire_incident`
@@ -2254,7 +2269,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Journeys/FireIncidentJourneyTests.cs`](../../Ashfall.Core.Tests/Journeys/FireIncidentJourneyTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ShelterFireHazardSystemTests.cs`](../../Ashfall.Core.Tests/ShelterFireHazardSystemTests.cs)
 
-### 177. `shelter_schedule` — Shift rotations and curfews (Shelter & Infrastructure)
+### 178. `shelter_schedule` — Shift rotations and curfews (Shelter & Infrastructure)
 - **Owner Domain:** `schedule`
 - **Setup Method:** `Main.SetupShelterSchedule()` | **Cadence:** `Daily Curfew Rotation`
 - **UI Routes:** `shelter_schedule`
@@ -2265,7 +2280,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ShelterSchedulePanel.cs`](../../src/UI/ShelterSchedulePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ShelterScheduleIntegrationTests.cs`](../../Ashfall.Core.Tests/ShelterScheduleIntegrationTests.cs)
 
-### 178. `shelter_thermal` — Heating, insulation, and frost protection (Shelter & Infrastructure)
+### 179. `shelter_thermal` — Heating, insulation, and frost protection (Shelter & Infrastructure)
 - **Owner Domain:** `thermal`
 - **Setup Method:** `Main.SetupShelterThermal()` | **Cadence:** `Daily HVAC Frost Dissipation`
 - **UI Routes:** `shelter_thermal`
@@ -2276,7 +2291,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ShelterThermalPanel.cs`](../../src/UI/ShelterThermalPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExpandedShelterSaveChecksumTests.cs`](../../Ashfall.Core.Tests/ExpandedShelterSaveChecksumTests.cs)
 
-### 179. `starting_level` — Bunker initial configuration & tier (Shelter & Infrastructure)
+### 180. `starting_level` — Bunker initial configuration & tier (Shelter & Infrastructure)
 - **Owner Domain:** `starting_level`
 - **Setup Method:** `Main.SetupStartingLevel()` | **Cadence:** `On-Demand (Opening Protocol)`
 - **UI Routes:** `protocol`
@@ -2287,7 +2302,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/OpeningProtocolModal.cs`](../../src/UI/OpeningProtocolModal.cs)
   - Test Fixture: [`Ashfall.Core.Tests/StartingLevelSystemTests.cs`](../../Ashfall.Core.Tests/StartingLevelSystemTests.cs)
 
-### 180. `sump_flooding` — Bunker sump pump drainage & flood risk (Shelter & Infrastructure)
+### 181. `sump_flooding` — Bunker sump pump drainage & flood risk (Shelter & Infrastructure)
 - **Owner Domain:** `maintenance`
 - **Setup Method:** `Main.SetupSumpFlooding()` | **Cadence:** `Daily Drainage Pump Work`
 - **UI Routes:** `sump_flooding`
@@ -2298,7 +2313,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/SumpFloodingPanel.cs`](../../src/UI/SumpFloodingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/NewSaveStoreChecksumSweepTests.cs`](../../Ashfall.Core.Tests/NewSaveStoreChecksumSweepTests.cs)
 
-### 181. `survivor_social` — Leadership, friction, ration conflict, trauma bonds, skill atrophy (Shelter & Infrastructure)
+### 182. `survivor_social` — Leadership, friction, ration conflict, trauma bonds, skill atrophy (Shelter & Infrastructure)
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupSurvivorSocial()` | **Cadence:** `Daily Shelter Social Dynamics`
 - **UI Routes:** `shelter`
@@ -2314,7 +2329,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ShelterPanel.cs`](../../src/UI/ShelterPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/SurvivorSocialCoordinatorTests.cs`](../../Ashfall.Core.Tests/SurvivorSocialCoordinatorTests.cs)
 
-### 182. `vinyl_morale` — Gramophone records and music morale (Shelter & Infrastructure)
+### 183. `vinyl_morale` — Gramophone records and music morale (Shelter & Infrastructure)
 - **Owner Domain:** `morale`
 - **Setup Method:** `Main.SetupVinylMorale()` | **Cadence:** `Daily Turntable Morale Broadcast`
 - **UI Routes:** `vinyl_morale`
@@ -2325,7 +2340,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/VinylMoralePanel.cs`](../../src/UI/VinylMoralePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExpandedShelterSaveChecksumTests.cs`](../../Ashfall.Core.Tests/ExpandedShelterSaveChecksumTests.cs)
 
-### 183. `water_treatment` — Water filtration and purification (Shelter & Infrastructure)
+### 184. `water_treatment` — Water filtration and purification (Shelter & Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupWaterTreatment()` | **Cadence:** `Daily Filtration Cycle`
 - **UI Routes:** `water_treatment`
@@ -2336,7 +2351,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/WaterTreatmentPanel.cs`](../../src/UI/WaterTreatmentPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WaterTreatmentSystemTests.cs`](../../Ashfall.Core.Tests/WaterTreatmentSystemTests.cs)
 
-### 184. `crafting` — Known recipes and workbench queues (Shelter & Logistics)
+### 185. `crafting` — Known recipes and workbench queues (Shelter & Logistics)
 - **Owner Domain:** `crafting`
 - **Setup Method:** `Main.SetupCrafting()` | **Cadence:** `Daily Workbench Queue`
 - **UI Routes:** `crafting`
@@ -2347,7 +2362,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/CraftingPanel.cs`](../../src/UI/CraftingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/CraftingSystemTests.cs`](../../Ashfall.Core.Tests/CraftingSystemTests.cs)
 
-### 185. `equipment_condition` — Tool and weapon wear/repair (Shelter & Logistics)
+### 186. `equipment_condition` — Tool and weapon wear/repair (Shelter & Logistics)
 - **Owner Domain:** `equipment`
 - **Setup Method:** `Main.SetupEquipmentCondition()` | **Cadence:** `Daily Gear Wear & Maintenance`
 - **UI Routes:** `equipment_condition`
@@ -2358,7 +2373,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/EquipmentConditionPanel.cs`](../../src/UI/EquipmentConditionPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/EquipmentConditionSystemTests.cs`](../../Ashfall.Core.Tests/EquipmentConditionSystemTests.cs)
 
-### 186. `inventory` — Shelter warehouse & items storage (Shelter & Logistics)
+### 187. `inventory` — Shelter warehouse & items storage (Shelter & Logistics)
 - **Owner Domain:** `inventory`
 - **Setup Method:** `Main.SetupInventory()` | **Cadence:** `On-Demand (Item Use)`
 - **UI Routes:** `inventory`, `inventory_detail`
@@ -2370,7 +2385,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/InventoryPanel.cs`](../../src/UI/InventoryPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/InventorySystemTests.cs`](../../Ashfall.Core.Tests/InventorySystemTests.cs)
 
-### 187. `kitchen_nutrition` — Rationing recipes and caloric balance (Shelter & Logistics)
+### 188. `kitchen_nutrition` — Rationing recipes and caloric balance (Shelter & Logistics)
 - **Owner Domain:** `nutrition`
 - **Setup Method:** `Main.SetupKitchenNutrition()` | **Cadence:** `Daily Rationing Meal Prep`
 - **UI Routes:** `kitchen_nutrition`
@@ -2381,7 +2396,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/KitchenNutritionPanel.cs`](../../src/UI/KitchenNutritionPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/KitchenNutritionSystemTests.cs`](../../Ashfall.Core.Tests/KitchenNutritionSystemTests.cs)
 
-### 188. `radio` — Radio frequencies, logs, and distress signals (Shelter & Logistics)
+### 189. `radio` — Radio frequencies, logs, and distress signals (Shelter & Logistics)
 - **Owner Domain:** `radio`
 - **Setup Method:** `Main.SetupRadio()` | **Cadence:** `On-Demand (Frequency Scan)`
 - **UI Routes:** `radio`
@@ -2397,7 +2412,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Radio/RadioStationParityTests.cs`](../../Ashfall.Core.Tests/Radio/RadioStationParityTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/RadioSaveCodecTests.cs`](../../Ashfall.Core.Tests/RadioSaveCodecTests.cs)
 
-### 189. `shelter_reputation` — Plan 207 — shelter reputation, notoriety, public tags, and external perception (Shelter (Plan 207))
+### 190. `shelter_reputation` — Plan 207 — shelter reputation, notoriety, public tags, and external perception (Shelter (Plan 207))
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterReputation()` | **Cadence:** `Daily (Reputation Decay & Tag Evaluation)`
 - **UI Routes:** `shelter_reputation`
@@ -2409,7 +2424,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ShelterReputationPanel.cs`](../../src/UI/ShelterReputationPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Reputation/Plan207ShelterReputationIntegrationTests.cs`](../../Ashfall.Core.Tests/Reputation/Plan207ShelterReputationIntegrationTests.cs)
 
-### 190. `shelter_security` — Plan 138 — shelter security zones, clearances, locks, lockdowns, and breaches (Shelter Defense (Plan 138))
+### 191. `shelter_security` — Plan 138 — shelter security zones, clearances, locks, lockdowns, and breaches (Shelter Defense (Plan 138))
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterSecurity()` | **Cadence:** `Daily (Breach Decay & Alert Drift)`
 - **UI Routes:** `shelter_security`
@@ -2421,7 +2436,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ShelterSecurityPanel.cs`](../../src/UI/ShelterSecurityPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan138ShelterSecurityIntegrationTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan138ShelterSecurityIntegrationTests.cs)
 
-### 191. `relationship_decay` — Plan 182 — survivor pair bond decay, interaction tracking, and social drift (Social Ecology & Drift (Plan 182))
+### 192. `relationship_decay` — Plan 182 — survivor pair bond decay, interaction tracking, and social drift (Social Ecology & Drift (Plan 182))
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupRelationshipDecay()` | **Cadence:** `Daily (Pair Bond Decay & Social Drift)`
 - **UI Routes:** `relationship_decay`
@@ -2434,7 +2449,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan182RelationshipDecayIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan182RelationshipDecayIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/RelationshipDecaySystemTests.cs`](../../Ashfall.Core.Tests/Survivors/RelationshipDecaySystemTests.cs)
 
-### 192. `hydrogeology_archive` — Plan 154 — Hydrogeology science archive: discovered-record ledger (IDs only) (Subterranean Science Archive)
+### 193. `hydrogeology_archive` — Plan 154 — Hydrogeology science archive: discovered-record ledger (IDs only) (Subterranean Science Archive)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupHydroGeologyDiscovery()` | **Cadence:** `Event-Driven (Location Discovery)`
 - **UI Routes:**
@@ -2445,7 +2460,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/HydroGeologyCatalogTests.cs`](../../Ashfall.Core.Tests/HydroGeologyCatalogTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/HydroGeologyDiscoveryTests.cs`](../../Ashfall.Core.Tests/Narrative/HydroGeologyDiscoveryTests.cs)
 
-### 193. `apprenticeship` — Mentorship pairings and skill growth (Survival & Biology)
+### 194. `apprenticeship` — Mentorship pairings and skill growth (Survival & Biology)
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupApprenticeship()` | **Cadence:** `Daily Mentorship XP Transfer`
 - **UI Routes:** `apprenticeship`
@@ -2456,7 +2471,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ApprenticeshipPanel.cs`](../../src/UI/ApprenticeshipPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ApprenticeshipSystemTests.cs`](../../Ashfall.Core.Tests/ApprenticeshipSystemTests.cs)
 
-### 194. `autopsy` — Post-mortem forensic analysis (Survival & Biology)
+### 195. `autopsy` — Post-mortem forensic analysis (Survival & Biology)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupAutopsy()` | **Cadence:** `Daily Forensic Case Progress`
 - **UI Routes:** `autopsy_report`
@@ -2467,7 +2482,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/AutopsyReportPanel.cs`](../../src/UI/AutopsyReportPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/AutopsySystemTests.cs`](../../Ashfall.Core.Tests/AutopsySystemTests.cs)
 
-### 195. `caregiving` — Childcare, elderly care, and comfort (Survival & Biology)
+### 196. `caregiving` — Childcare, elderly care, and comfort (Survival & Biology)
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupCaregiving()` | **Cadence:** `Daily Nursery/Eldercare Comfort`
 - **UI Routes:** `caregiving`
@@ -2478,7 +2493,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/CaregivingPanel.cs`](../../src/UI/CaregivingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/CaregivingSystemTests.cs`](../../Ashfall.Core.Tests/CaregivingSystemTests.cs)
 
-### 196. `chemical_dependency` — Substance dependencies and withdrawal (Survival & Biology)
+### 197. `chemical_dependency` — Substance dependencies and withdrawal (Survival & Biology)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMentalHealthCrisis()` | **Cadence:** `Daily Tolerance & Withdrawal`
 - **UI Routes:** `chemical_dependency`
@@ -2490,7 +2505,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ChemicalDependencyPanel.cs`](../../src/UI/ChemicalDependencyPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/BareSaveStoreSealTests.cs`](../../Ashfall.Core.Tests/BareSaveStoreSealTests.cs)
 
-### 197. `contractor_roster` — Hired mercenaries and specialists (Survival & Biology)
+### 198. `contractor_roster` — Hired mercenaries and specialists (Survival & Biology)
 - **Owner Domain:** `personnel`
 - **Setup Method:** `Main.SetupContractorRoster()` | **Cadence:** `Daily Mercenary Wage Payroll`
 - **UI Routes:** `contractor_roster`
@@ -2501,7 +2516,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ContractorRosterPanel.cs`](../../src/UI/ContractorRosterPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ContractorRosterSystemTests.cs`](../../Ashfall.Core.Tests/ContractorRosterSystemTests.cs)
 
-### 198. `disease` — Epidemics, contagions, and pathogen spread (Survival & Biology)
+### 199. `disease` — Epidemics, contagions, and pathogen spread (Survival & Biology)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupDisease()` | **Cadence:** `Daily Pathogen Transmission`
 - **UI Routes:** `afflictions`
@@ -2512,7 +2527,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/AfflictionsPanel.cs`](../../src/UI/AfflictionsPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/DiseaseSystemTests.cs`](../../Ashfall.Core.Tests/DiseaseSystemTests.cs)
 
-### 199. `medical` — Triage, illnesses, and treatments (Survival & Biology)
+### 200. `medical` — Triage, illnesses, and treatments (Survival & Biology)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMedical()` | **Cadence:** `Daily Recovery / Affliction`
 - **UI Routes:** `medical`, `afflictions`
@@ -2525,7 +2540,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MedicalPanel.cs`](../../src/UI/MedicalPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/DwellerMedicalCatalogTests.cs`](../../Ashfall.Core.Tests/DwellerMedicalCatalogTests.cs)
 
-### 200. `medical_ward` — Hospital ward beds and inpatients (Survival & Biology)
+### 201. `medical_ward` — Hospital ward beds and inpatients (Survival & Biology)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMedicalWard()` | **Cadence:** `Daily Bed Inpatient Triage`
 - **UI Routes:** `medical_ward`
@@ -2536,7 +2551,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MedicalWardPanel.cs`](../../src/UI/MedicalWardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Medical/MedicalWardSystemTests.cs`](../../Ashfall.Core.Tests/Medical/MedicalWardSystemTests.cs)
 
-### 201. `mental_health_crisis` — Psychological trauma and psych ward (Survival & Biology)
+### 202. `mental_health_crisis` — Psychological trauma and psych ward (Survival & Biology)
 - **Owner Domain:** `psychology`
 - **Setup Method:** `Main.SetupMentalHealthCrisis()` | **Cadence:** `Daily Psych Ward Calming Ticks`
 - **UI Routes:** `mental_health_crisis`
@@ -2547,7 +2562,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MentalHealthCrisisPanel.cs`](../../src/UI/MentalHealthCrisisPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/MentalHealthCrisisSystemTests.cs`](../../Ashfall.Core.Tests/MentalHealthCrisisSystemTests.cs)
 
-### 202. `morale_contagion` — Flagship XI Plan 154 — morale contagion channels, breakdowns, social isolation, schism ledger, HopeBeacon installation (Survival & Biology)
+### 203. `morale_contagion` — Flagship XI Plan 154 — morale contagion channels, breakdowns, social isolation, schism ledger, HopeBeacon installation (Survival & Biology)
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupMoraleContagion()` | **Cadence:** `Daily Contagion / Isolation Tick`
 - **UI Routes:**
@@ -2558,7 +2573,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Flagship11/MoraleContagionSystemTests.cs`](../../Ashfall.Core.Tests/Flagship11/MoraleContagionSystemTests.cs)
 
-### 203. `survivor_relations` — Survivor affinities, feuds, and bonds (Survival & Biology)
+### 204. `survivor_relations` — Survivor affinities, feuds, and bonds (Survival & Biology)
 - **Owner Domain:** `social`
 - **Setup Method:** `Main.SetupSurvivorRelations()` | **Cadence:** `Daily Affinity & Feud Drift`
 - **UI Routes:** `survivor_relations`
@@ -2569,7 +2584,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/SurvivorRelationsPanel.cs`](../../src/UI/SurvivorRelationsPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExpandedShelterSaveChecksumTests.cs`](../../Ashfall.Core.Tests/ExpandedShelterSaveChecksumTests.cs)
 
-### 204. `survivors` — Living survivors, needs, and traits (Survival & Biology)
+### 205. `survivors` — Living survivors, needs, and traits (Survival & Biology)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupSurvivors()` | **Cadence:** `Daily Needs Decay`
 - **UI Routes:** `survivors`, `survivor_detail`, `status`
@@ -2583,7 +2598,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/SurvivorsPanel.cs`](../../src/UI/SurvivorsPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/NeedsRadiationSystemTests.cs`](../../Ashfall.Core.Tests/NeedsRadiationSystemTests.cs)
 
-### 205. `death_legacy` — Plan 206 — survivor death records, last wills, estate inheritance, and disputes (Survivor Memorial & Wills (Plan 206))
+### 206. `death_legacy` — Plan 206 — survivor death records, last wills, estate inheritance, and disputes (Survivor Memorial & Wills (Plan 206))
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupDeathLegacy()` | **Cadence:** `Event-Driven & Daily Flush`
 - **UI Routes:** `death_legacy`
@@ -2596,7 +2611,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan206SurvivorDeathLegacyIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan206SurvivorDeathLegacyIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/SurvivorDeathLegacySystemTests.cs`](../../Ashfall.Core.Tests/Survivors/SurvivorDeathLegacySystemTests.cs)
 
-### 206. `personal_quests` — Survivor personal quest progression (Survivor Quests (Plan 200))
+### 207. `personal_quests` — Survivor personal quest progression (Survivor Quests (Plan 200))
 - **Owner Domain:** `quests`
 - **Setup Method:** `Main.SetupPersonalQuests()` | **Cadence:** `Daily (Stage Progress & Life Stories)`
 - **UI Routes:** `personal_quests`
@@ -2609,7 +2624,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Quests/PersonalQuestSystemTests.cs`](../../Ashfall.Core.Tests/Quests/PersonalQuestSystemTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Quests/Plan200PersonalQuestsIntegrationTests.cs`](../../Ashfall.Core.Tests/Quests/Plan200PersonalQuestsIntegrationTests.cs)
 
-### 207. `backstory` — Plan 174 — Procedural survivor backstories & origin mechanics: occupations, experiences, and secrets (Survivors)
+### 208. `backstory` — Plan 174 — Procedural survivor backstories & origin mechanics: occupations, experiences, and secrets (Survivors)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupBackstory()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `survivor_detail`, `survivors`
@@ -2622,7 +2637,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan174BackstoryHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan174BackstoryHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan174SurvivorBackstoriesIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan174SurvivorBackstoriesIntegrationTests.cs)
 
-### 208. `ideological_friction` — Plan 148 — Ideological friction events and quests: confrontations, conversions, bunker factions, and mediation (Survivors)
+### 209. `ideological_friction` — Plan 148 — Ideological friction events and quests: confrontations, conversions, bunker factions, and mediation (Survivors)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupIdeologicalFriction()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:** `survivors`
@@ -2637,7 +2652,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan148IdeologicalFrictionHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan148IdeologicalFrictionHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan148IdeologicalFrictionIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan148IdeologicalFrictionIntegrationTests.cs)
 
-### 209. `romance_family` — Plan 150 — Romance & family dynamics: attraction, courtship, partnership, bonded pairs, family units, and adoption (Survivors)
+### 210. `romance_family` — Plan 150 — Romance & family dynamics: attraction, courtship, partnership, bonded pairs, family units, and adoption (Survivors)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupRomanceFamily()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -2652,7 +2667,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan150RomanceFamilyHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan150RomanceFamilyHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan150RomanceFamilyIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan150RomanceFamilyIntegrationTests.cs)
 
-### 210. `survivor_voice` — Plan 42 — survivor voice line catalog selection, cooldowns, utterance history, and playback dispatch (Survivors)
+### 211. `survivor_voice` — Plan 42 — survivor voice line catalog selection, cooldowns, utterance history, and playback dispatch (Survivors)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupSurvivorVoice()` | **Cadence:** `Event-Driven`
 - **UI Routes:**
@@ -2665,7 +2680,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Campaign/Plan42SurvivorVoiceHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Campaign/Plan42SurvivorVoiceHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Voice/SurvivorVoiceSystemTests.cs`](../../Ashfall.Core.Tests/Voice/SurvivorVoiceSystemTests.cs)
 
-### 211. `hidden_agenda` — Plan 132 — survivor hidden agendas, secret motivations, clue discovery, and confrontation arcs (Survivors (Plan 132))
+### 212. `hidden_agenda` — Plan 132 — survivor hidden agendas, secret motivations, clue discovery, and confrontation arcs (Survivors (Plan 132))
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupHiddenAgenda()` | **Cadence:** `Daily (Passive Slip-Up & Exposure Drift)`
 - **UI Routes:** `hidden_agenda`
@@ -2678,7 +2693,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/HiddenAgendaSystemTests.cs`](../../Ashfall.Core.Tests/Survivors/HiddenAgendaSystemTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan132HiddenAgendaIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan132HiddenAgendaIntegrationTests.cs)
 
-### 212. `combat` — Combat encounters and tactical trauma (Tactical Combat)
+### 213. `combat` — Combat encounters and tactical trauma (Tactical Combat)
 - **Owner Domain:** `combat`
 - **Setup Method:** `Main.SetupCombat()` | **Cadence:** `On-Demand (Turn-Based)`
 - **UI Routes:** `combat`, `combat_detail`
@@ -2692,7 +2707,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/CombatPanel.cs`](../../src/UI/CombatPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/CombatBallisticsTests.cs`](../../Ashfall.Core.Tests/CombatBallisticsTests.cs)
 
-### 213. `technical_material_archive` — Plan 158 — cordage/cable/polymer/textile technical material archive: discovered-record ledger (IDs only) (Technical Material Archive)
+### 214. `technical_material_archive` — Plan 158 — cordage/cable/polymer/textile technical material archive: discovered-record ledger (IDs only) (Technical Material Archive)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupTechnicalMaterialArchive()` | **Cadence:** `Event-Driven (Location Discovery)`
 - **UI Routes:**
@@ -2704,7 +2719,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/TechnicalMaterialArchiveTests.cs`](../../Ashfall.Core.Tests/Narrative/TechnicalMaterialArchiveTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/PolymerTextileCatalogTests.cs`](../../Ashfall.Core.Tests/PolymerTextileCatalogTests.cs)
 
-### 214. `vehicle_customization` — Plan 152 — Vehicle customization & mobile base: module installation, effective vehicle stats, and deployed base camps (Vehicles)
+### 215. `vehicle_customization` — Plan 152 — Vehicle customization & mobile base: module installation, effective vehicle stats, and deployed base camps (Vehicles)
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupVehicleCustomization()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -2718,7 +2733,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Vehicles/Plan152VehicleCustomizationHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Vehicles/Plan152VehicleCustomizationHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Vehicles/Plan152VehicleCustomizationIntegrationTests.cs`](../../Ashfall.Core.Tests/Vehicles/Plan152VehicleCustomizationIntegrationTests.cs)
 
-### 215. `deep_well` — B5–B8 Phase 6 — built deep-well pump: build state, condition, yield ledger (raw water into treatment via the Plan 189 intake seam) (Water & Infrastructure)
+### 216. `deep_well` — B5–B8 Phase 6 — built deep-well pump: build state, condition, yield ledger (raw water into treatment via the Plan 189 intake seam) (Water & Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupDeepWell()` | **Cadence:** `Daily Deep-Well Pump Tick`
 - **UI Routes:**
@@ -2729,7 +2744,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/DeepWellSaveStore.cs`](../../src/Host/DeepWellSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Water/DeepWellSystemTests.cs`](../../Ashfall.Core.Tests/Water/DeepWellSystemTests.cs)
 
-### 216. `piezometer_network` — Plan 189 — aquifer monitoring network state driving the water-treatment intake advisory gate (Water & Infrastructure)
+### 217. `piezometer_network` — Plan 189 — aquifer monitoring network state driving the water-treatment intake advisory gate (Water & Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupPiezometer()` | **Cadence:** `Daily Aquifer Advisory Tick`
 - **UI Routes:**
@@ -2739,7 +2754,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/PiezometerSaveStore.cs`](../../src/Host/PiezometerSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Water/Plan189IntakeAdvisoryBridgeTests.cs`](../../Ashfall.Core.Tests/Water/Plan189IntakeAdvisoryBridgeTests.cs)
 
-### 217. `water_condenser` — B5–B8 expansion — Peltier condensation array: build state, membrane integrity, weather-indexed yield ledger (Water & Infrastructure)
+### 218. `water_condenser` — B5–B8 expansion — Peltier condensation array: build state, membrane integrity, weather-indexed yield ledger (Water & Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupWaterCondenser()` | **Cadence:** `Daily Condensate Intake Tick`
 - **UI Routes:**
@@ -2750,7 +2765,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/WaterCondenserSaveStore.cs`](../../src/Host/WaterCondenserSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Water/AtmosphericCondenserSystemTests.cs`](../../Ashfall.Core.Tests/Water/AtmosphericCondenserSystemTests.cs)
 
-### 218. `weather_cascade` — Plan 135 — weather→gameplay cascade: active weather events, their effects, and the event history (Weather)
+### 219. `weather_cascade` — Plan 135 — weather→gameplay cascade: active weather events, their effects, and the event history (Weather)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupWeatherCascade()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -2765,7 +2780,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Weather/Plan135WeatherCascadeHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Weather/Plan135WeatherCascadeHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Weather/Plan135WeatherCascadeIntegrationTests.cs`](../../Ashfall.Core.Tests/Weather/Plan135WeatherCascadeIntegrationTests.cs)
 
-### 219. `ecological_infestation` — Plan 28 — location and shelter ecological infestations (trigger/clear/tolerate lifecycle) (World)
+### 220. `ecological_infestation` — Plan 28 — location and shelter ecological infestations (trigger/clear/tolerate lifecycle) (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupEcologicalInfestation()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -2776,7 +2791,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs`](../../Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs)
 
-### 220. `geodetic_survey` — Plans 78-81 — survey monuments, observations, resolved triangles, and network accuracy (World)
+### 221. `geodetic_survey` — Plans 78-81 — survey monuments, observations, resolved triangles, and network accuracy (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupGeodeticSurvey()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -2785,7 +2800,20 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/GeodeticSurveySaveStore.cs`](../../src/Host/GeodeticSurveySaveStore.cs)
   - Save Store: [`src/Host/GeodeticSurveySaveStore.cs`](../../src/Host/GeodeticSurveySaveStore.cs)
 
-### 221. `nuclear_winter_progression` — ORPHAN-SEAL-W1 — nuclear-winter phase/season progression and recorded climate events (World)
+### 222. `human_migration` — Plan 199 — Seasonal human migration engine, regional population weights, and dwell hysteresis (World)
+- **Owner Domain:** `world`
+- **Setup Method:** `Main.SetupHumanMigration()` | **Cadence:** `Daily Sim Tick`
+- **UI Routes:**
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Economy/SeasonalHumanMigrationEngine.cs`](../../Assets/Ashfall.Core/Economy/SeasonalHumanMigrationEngine.cs)
+  - Core System: [`Assets/Ashfall.Core/Economy/SeasonalMigrationCatalogLoader.cs`](../../Assets/Ashfall.Core/Economy/SeasonalMigrationCatalogLoader.cs)
+  - Host Session: [`src/Host/HumanMigrationHostSession.cs`](../../src/Host/HumanMigrationHostSession.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
+  - Save Store: [`src/Host/HumanMigrationHostSession.cs`](../../src/Host/HumanMigrationHostSession.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Economy/Plan199HumanMigrationHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Economy/Plan199HumanMigrationHostIntegrationTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Economy/SeasonalHumanMigrationEngineTests.cs`](../../Ashfall.Core.Tests/Economy/SeasonalHumanMigrationEngineTests.cs)
+
+### 223. `nuclear_winter_progression` — ORPHAN-SEAL-W1 — nuclear-winter phase/season progression and recorded climate events (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupNuclearWinter()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -2795,7 +2823,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Weather/Plan164NuclearWinterIntegrationTests.cs`](../../Ashfall.Core.Tests/Weather/Plan164NuclearWinterIntegrationTests.cs)
 
-### 222. `route_infrastructure` — Plans 146-149 — mutable route infrastructure, corridor maintenance, and minefield clearance (World)
+### 224. `route_infrastructure` — Plans 146-149 — mutable route infrastructure, corridor maintenance, and minefield clearance (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupRouteInfrastructure()` | **Cadence:** `On-Demand`
 - **UI Routes:**
@@ -2805,7 +2833,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/RouteInfrastructureSaveStore.cs`](../../src/Host/RouteInfrastructureSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/RouteInfrastructureSystemTests.cs`](../../Ashfall.Core.Tests/World/RouteInfrastructureSystemTests.cs)
 
-### 223. `subterranean` — Flagship XI Plan 156 — generated underground topology, oxygen/collapse/flood/shoring state, discovery (World)
+### 225. `subterranean` — Flagship XI Plan 156 — generated underground topology, oxygen/collapse/flood/shoring state, discovery (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupSubterranean()` | **Cadence:** `Daily Sim Tick`
 - **UI Routes:**
@@ -2815,7 +2843,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/SubterraneanSaveStore.cs`](../../src/Host/SubterraneanSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Flagship11/SubterraneanSystemTests.cs`](../../Ashfall.Core.Tests/Flagship11/SubterraneanSystemTests.cs)
 
-### 224. `amphibious_draisine` — Plan 125 — per-vehicle amphibious kit condition, pontoons, ingress, crossing state (World & Expeditions)
+### 226. `amphibious_draisine` — Plan 125 — per-vehicle amphibious kit condition, pontoons, ingress, crossing state (World & Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupAmphibiousDraisine()` | **Cadence:** `Expedition Travel/Action Cadence (Crossing Ticks)`
 - **UI Routes:** `amphibious_draisine`
@@ -2826,7 +2854,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/AmphibiousDraisinePanel.cs`](../../src/UI/AmphibiousDraisinePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/Plan125AmphibiousDraisineEngineTests.cs`](../../Ashfall.Core.Tests/Expeditions/Plan125AmphibiousDraisineEngineTests.cs)
 
-### 225. `armored_crawlers` — Armored crawler modules and forward camps (World & Expeditions)
+### 227. `armored_crawlers` — Armored crawler modules and forward camps (World & Expeditions)
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupArmoredCrawlers()` | **Cadence:** `Daily Crawler Module Tick`
 - **UI Routes:**
@@ -2837,7 +2865,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/FlagshipIntegrationIxSmokeTests.cs`](../../Ashfall.Core.Tests/FlagshipIntegrationIxSmokeTests.cs)
 
-### 226. `encounter_choice` — Encounter choice history & outcomes (World & Expeditions)
+### 228. `encounter_choice` — Encounter choice history & outcomes (World & Expeditions)
 - **Owner Domain:** `encounters`
 - **Setup Method:** `Main.SetupEncounterChoice()` | **Cadence:** `On-Demand (Door Event Resolution)`
 - **UI Routes:** `door_encounter`
@@ -2848,7 +2876,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/YearOfAsh/DoorEncounterModal.cs`](../../src/YearOfAsh/DoorEncounterModal.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/EncounterChoiceResolverTests.cs`](../../Ashfall.Core.Tests/Expeditions/EncounterChoiceResolverTests.cs)
 
-### 227. `expedition` — Wasteland expedition runs & status (World & Expeditions)
+### 229. `expedition` — Wasteland expedition runs & status (World & Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupExpeditions()` | **Cadence:** `Daily Sortie Travel`
 - **UI Routes:** `expeditions`
@@ -2860,7 +2888,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ExpeditionPanel.cs`](../../src/UI/ExpeditionPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExpeditionCampSystemTests.cs`](../../Ashfall.Core.Tests/ExpeditionCampSystemTests.cs)
 
-### 228. `insar_deformation` — Plan 139 — repeat-pass InSAR survey passes, coherence, deformation summaries, excavation/travel intelligence (World & Expeditions)
+### 230. `insar_deformation` — Plan 139 — repeat-pass InSAR survey passes, coherence, deformation summaries, excavation/travel intelligence (World & Expeditions)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupInSarMapping()` | **Cadence:** `On-Demand (Survey Pass & Repeat-Pass Process)`
 - **UI Routes:** `insar_mapping`
@@ -2871,7 +2899,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/InSarMappingPanel.cs`](../../src/UI/InSarMappingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/Plan139InSarDeformationTests.cs`](../../Ashfall.Core.Tests/World/Plan139InSarDeformationTests.cs)
 
-### 229. `runflat_tire` — Plan 141 — run-flat wheel profiles, integrity, heat, rim/bead, rolling-resistance cost (World & Expeditions)
+### 231. `runflat_tire` — Plan 141 — run-flat wheel profiles, integrity, heat, rim/bead, rolling-resistance cost (World & Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupRunFlatTire()` | **Cadence:** `On-Demand (Fit, Hazard & Heat Commands)`
 - **UI Routes:** `runflat_tire`
@@ -2882,7 +2910,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/RunFlatTirePanel.cs`](../../src/UI/RunFlatTirePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/Plan141RunFlatTireTests.cs`](../../Ashfall.Core.Tests/Expeditions/Plan141RunFlatTireTests.cs)
 
-### 230. `travel_encounters` — Travel encounters and cooldown states (World & Expeditions)
+### 232. `travel_encounters` — Travel encounters and cooldown states (World & Expeditions)
 - **Owner Domain:** `encounters`
 - **Setup Method:** `Main.SetupTravelEncounters()` | **Cadence:** `On-Demand (Travel Step)`
 - **UI Routes:** `expeditions`
@@ -2895,7 +2923,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/PatrolEncounterFullRegressionTests.cs`](../../Ashfall.Core.Tests/PatrolEncounterFullRegressionTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/TravelEncounterCooldownGroupTests.cs`](../../Ashfall.Core.Tests/TravelEncounterCooldownGroupTests.cs)
 
-### 231. `wasteland_map` — Wasteland map markers and fog-of-war (World & Expeditions)
+### 233. `wasteland_map` — Wasteland map markers and fog-of-war (World & Expeditions)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupWorld()` | **Cadence:** `On-Demand (Fog-of-War Discovery)`
 - **UI Routes:** `map`
@@ -2906,7 +2934,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MapPanel.cs`](../../src/UI/MapPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WastelandMapPersistenceTests.cs`](../../Ashfall.Core.Tests/WastelandMapPersistenceTests.cs)
 
-### 232. `waystation` — Wasteland outpost network & relay hubs (World & Expeditions)
+### 234. `waystation` — Wasteland outpost network & relay hubs (World & Expeditions)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupWaystation()` | **Cadence:** `Daily Outpost Relay Barter`
 - **UI Routes:** `waystation_network`
@@ -2917,7 +2945,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/WaystationNetworkPanel.cs`](../../src/UI/WaystationNetworkPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WaystationSystemTests.cs`](../../Ashfall.Core.Tests/WaystationSystemTests.cs)
 
-### 233. `wildlife_trapping` — Snares, game catches, and foraging (World & Expeditions)
+### 235. `wildlife_trapping` — Snares, game catches, and foraging (World & Expeditions)
 - **Owner Domain:** `hunting`
 - **Setup Method:** `Main.SetupWildlifeTrapping()` | **Cadence:** `Daily Snare Yield & Butchery`
 - **UI Routes:** `wildlife_trapping`
@@ -2928,7 +2956,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/WildlifeTrappingPanel.cs`](../../src/UI/WildlifeTrappingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WildlifeTrappingSystemTests.cs`](../../Ashfall.Core.Tests/WildlifeTrappingSystemTests.cs)
 
-### 234. `world` — World map nodes, sectors, and discovery (World & Expeditions)
+### 236. `world` — World map nodes, sectors, and discovery (World & Expeditions)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupWorld()` | **Cadence:** `Daily Weather & Hazard`
 - **UI Routes:** `map`, `weather`
@@ -3043,6 +3071,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `holdfast` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `holdfast_trade` | ✅ | ✅ | ⚡ `On-Demand (Barter)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `host_event` | ✅ | ✅ | ⚡ `On-Demand (Moral Dilemma)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `human_migration` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `hydraulic_extrusion` | ✅ | ✅ | ⚡ `On-Demand (Batch Phase Commands)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `hydrogeology_archive` | ✅ | ✅ | ⚡ `Event-Driven (Location Discovery)` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `hydroponic_biomes` | ✅ | ✅ | ✅ `Daily Biome Rack Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -3160,6 +3189,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `territory_control` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `thirdonary` | ✅ | ✅ | ⚡ `On-Demand (Arbitration)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `time_capsules` | ✅ | ✅ | ✅ `Daily (Scheduled Opening & Message Delivery)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `trade_routes` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `travel_encounters` | ✅ | ✅ | ⚡ `On-Demand (Travel Step)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `unified_ending` | ✅ | ✅ | ✅ `On-Demand (Campaign Sealed)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `unique_claims` | ✅ | ✅ | ⚡ `On-Demand (Global Unique Claim Ledger)` | ✅ | ✅ | ✅ | **PASS (6/6)** |

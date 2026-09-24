@@ -701,6 +701,36 @@ namespace AtomicWar.GodotApp
             _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id)
                 ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>();
             _survivorDetailPanel.DocumentationProvider = id => GetSurvivorDocumentation(id);
+            _survivorDetailPanel.BackstoryProvider = id => _backstory?.GetBackstory(id);
+            _survivorDetailPanel.IdeologicalFactionProvider = id =>
+            {
+                if (_ideologicalFriction == null) return null;
+                var factions = _ideologicalFriction.System.GetBunkerFactions();
+                for (int i = 0; i < factions.Count; i++)
+                {
+                    var f = factions[i];
+                    if (f != null && f.memberIds != null && f.memberIds.Contains(id))
+                    {
+                        string role = string.Equals(f.leaderId, id, StringComparison.OrdinalIgnoreCase) ? "Leader" : "Member";
+                        return $"{f.beliefId.Replace('_', ' ')} coalition ({role})";
+                    }
+                }
+                return null;
+            };
+            _survivorDetailPanel.RomanceProvider = id =>
+            {
+                if (_romanceFamily == null) return null;
+                var rel = _romanceFamily.System.GetRomanticPartner(id);
+                if (rel == null) return null;
+                string other = rel.GetOther(id);
+                return (other, rel.Stage.ToString(), rel.IsSoulmate);
+            };
+            _survivorDetailPanel.FamilyProvider = id =>
+            {
+                if (_romanceFamily == null) return null;
+                var fam = _romanceFamily.System.GetFamilyForSurvivor(id);
+                return fam != null ? $"{fam.FamilyName} ({fam.ParentIds.Count + fam.ChildIds.Count} members)" : null;
+            };
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);
 

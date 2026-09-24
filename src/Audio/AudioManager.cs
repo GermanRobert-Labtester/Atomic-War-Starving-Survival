@@ -606,6 +606,49 @@ namespace AtomicWar.GodotApp.Audio
 
         // ── Settings application ────────────────────────────────
 
+        private float _accessibilityDuckDb;
+        private float _accessibilityPresetMasterDb;
+        private string _accessibilityPresetId = "preset_full_dynamic";
+
+        private static readonly string[] DuckableBuses =
+        {
+            AudioBusNames.Music, AudioBusNames.Ambience, AudioBusNames.Sfx,
+            AudioBusNames.Generator, AudioBusNames.Ventilation, AudioBusNames.Surface,
+            AudioBusNames.Machinery, AudioBusNames.ShelterSocial, AudioBusNames.Subterranean,
+        };
+
+        /// <summary>
+        /// Plan 169 — applies the audio-accessibility side-chain duck offset to the
+        /// background buses so a critical cue stays legible. Alerts, voice, medical,
+        /// and radio are never ducked.
+        /// </summary>
+        public void ApplyAccessibilityDucking(float duckDb)
+        {
+            _accessibilityDuckDb = duckDb;
+            ApplySettings(AudioSettings.Instance);
+        }
+
+        /// <summary>
+        /// Plan 169 — applies an authored mix preset. The limiter / dialogue-duck
+        /// values are bounded to a master gain offset so the preset is audible
+        /// without a second mixer model; the high-frequency attenuation is named as
+        /// a bounded approximation and surfaced by the accessor below.
+        /// </summary>
+        public void ApplyAccessibilityMixPreset(string presetId)
+        {
+            _accessibilityPresetId = string.IsNullOrWhiteSpace(presetId) ? "preset_full_dynamic" : presetId;
+            _accessibilityPresetMasterDb = _accessibilityPresetId switch
+            {
+                "preset_compressed" => -1.5f,
+                "preset_reduced_stimulation" => -4.0f,
+                _ => 0f
+            };
+            ApplySettings(AudioSettings.Instance);
+        }
+
+        /// <summary>Current accessibility mix preset id (Plan 169).</summary>
+        public string AccessibilityMixPresetId => _accessibilityPresetId;
+
         public void ApplySettings(AudioSettings settings)
         {
             if (settings == null) return;
@@ -629,7 +672,11 @@ namespace AtomicWar.GodotApp.Audio
             int idx = AudioServer.GetBusIndex(bus);
             if (idx < 0) return;
             AudioServer.SetBusMute(idx, mute);
-            AudioServer.SetBusVolumeDb(idx, AudioSettings.PercentToDb(percent));
+
+            float extraDb = System.Array.IndexOf(DuckableBuses, bus) >= 0 ? _accessibilityDuckDb : 0f;
+            if (bus == AudioBusNames.Master) extraDb += _accessibilityPresetMasterDb;
+
+            AudioServer.SetBusVolumeDb(idx, AudioSettings.PercentToDb(percent) + extraDb);
         }
 
         private float GetBusVolumeOffset(string bus)

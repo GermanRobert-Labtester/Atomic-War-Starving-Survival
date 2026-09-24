@@ -1,29 +1,43 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Ashfall.Core.Economy
 {
     [Serializable]
     public sealed class SeasonalMigrationEntry
     {
+        [JsonPropertyName("phase")]
         public string Phase { get; set; } = string.Empty;
+
+        [JsonPropertyName("region_id")]
         public string RegionId { get; set; } = string.Empty;
+
+        [JsonPropertyName("population_delta")]
         public int PopulationDelta { get; set; }
     }
 
     [Serializable]
     public sealed class FactionMigrationSchedule
     {
+        [JsonPropertyName("faction_id")]
         public string FactionId { get; set; } = string.Empty;
+
+        [JsonPropertyName("schedule")]
         public List<SeasonalMigrationEntry> Schedule { get; set; } = new();
     }
 
     [Serializable]
     public sealed class SeasonalMigrationCatalog
     {
+        [JsonPropertyName("schema_version")]
         public int schema_version { get; set; } = 1;
+
+        [JsonPropertyName("dwell_days")]
         public int DwellDays { get; set; } = 10;
+
+        [JsonPropertyName("factions")]
         public List<FactionMigrationSchedule> Factions { get; set; } = new();
     }
 
@@ -35,6 +49,13 @@ namespace Ashfall.Core.Economy
         public string LastAppliedPhase { get; set; } = string.Empty;
         public int LastTransitionDay { get; set; }
         public HashSet<string> AppliedTransitionKeys { get; set; } = new();
+    }
+
+    public struct HumanMigrationCensus
+    {
+        public int TotalTrackedRegions;
+        public int TotalPopulationWeight;
+        public int LastTransitionDay;
     }
 
     /// <summary>
@@ -57,6 +78,22 @@ namespace Ashfall.Core.Economy
         public string LastAppliedPhase { get; private set; } = string.Empty;
         public int LastTransitionDay { get; private set; } = 0;
         public IReadOnlyDictionary<string, int> RegionWeights => _regionWeights;
+
+        public HumanMigrationCensus GetCensus()
+        {
+            int totalWeight = 0;
+            foreach (var w in _regionWeights.Values)
+            {
+                totalWeight += w;
+            }
+
+            return new HumanMigrationCensus
+            {
+                TotalTrackedRegions = _regionWeights.Count,
+                TotalPopulationWeight = totalWeight,
+                LastTransitionDay = LastTransitionDay
+            };
+        }
 
         public SeasonalHumanMigrationEngine(
             SeasonalMigrationCatalog? catalog = null,

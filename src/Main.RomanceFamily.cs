@@ -29,6 +29,24 @@ namespace AtomicWar.GodotApp
             }
 
             _romanceFamily.StateChanged += () => _romanceFamilyDirty = true;
+
+            if (_survivorDetailPanel != null)
+            {
+                _survivorDetailPanel.RomanceProvider = id =>
+                {
+                    if (_romanceFamily == null) return null;
+                    var rel = _romanceFamily.System.GetRomanticPartner(id);
+                    if (rel == null) return null;
+                    string other = rel.GetOther(id);
+                    return (other, rel.Stage.ToString(), rel.IsSoulmate);
+                };
+                _survivorDetailPanel.FamilyProvider = id =>
+                {
+                    if (_romanceFamily == null) return null;
+                    var fam = _romanceFamily.System.GetFamilyForSurvivor(id);
+                    return fam != null ? $"{fam.FamilyName} ({fam.ParentIds.Count + fam.ChildIds.Count} members)" : null;
+                };
+            }
         }
 
         public void SaveRomanceFamily()

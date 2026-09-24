@@ -66,6 +66,20 @@ namespace Ashfall.Core.Settings
         [JsonPropertyName("reduced_motion")]
         public bool ReducedMotion { get; set; } = false;
 
+        /// <summary>
+        /// Plan 169 — emit concise visual equivalents for critical audio cues.
+        /// Off leaves audio unaltered; only the visual alert layer is suppressed.
+        /// </summary>
+        [JsonPropertyName("visual_audio_alerts")]
+        public bool VisualAudioAlerts { get; set; } = true;
+
+        /// <summary>
+        /// Plan 169 — selected acoustic mix preset id (full_dynamic, compressed,
+        /// reduced_stimulation). Applied by AudioManager at startup and on change.
+        /// </summary>
+        [JsonPropertyName("audio_mix_preset")]
+        public string AudioMixPreset { get; set; } = "preset_full_dynamic";
+
         [JsonPropertyName("large_fonts")]
         public bool LargeFonts { get; set; } = false;
 
@@ -130,6 +144,8 @@ namespace Ashfall.Core.Settings
                 HighContrast = HighContrast,
                 HazardTextLabels = HazardTextLabels,
                 ReducedMotion = ReducedMotion,
+                VisualAudioAlerts = VisualAudioAlerts,
+                AudioMixPreset = AudioMixPreset ?? "preset_full_dynamic",
                 LargeFonts = LargeFonts,
                 ColorblindMode = ColorblindMode ?? ColorblindColorMapper.None,
                 TutorialMode = TutorialMode,

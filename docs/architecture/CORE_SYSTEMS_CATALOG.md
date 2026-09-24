@@ -1,6 +1,6 @@
 # ASHFALL Core Domain Subsystems & Host Seams Catalog
 
-**Authoritative Architecture Map** | **Generated:** 2026-09-23 | **Systems Documented:** 34
+**Authoritative Architecture Map** | **Generated:** 2026-09-24 | **Systems Documented:** 34
 
 > [!IMPORTANT]
 > **ARCHITECTURE INVARIANTS (Invariants 1 & 5):**

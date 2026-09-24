@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 4269 | **Total Characters:** 686,790,001 | **Last Verified:** 2026-09-23
-**Oversized (>= 100,000 characters):** 1022 documents carrying 644,132,856 characters — tracked in full, see the register below
+**Total Indexed Documents:** 4312 | **Total Characters:** 750,210,276 | **Last Verified:** 2026-09-24
+**Oversized (>= 100,000 characters):** 1062 documents carrying 707,529,604 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4219 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4262 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 48 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 1022 documents, 644,132,856 characters
+## Oversized Document Register (>= 100,000 characters) — 1062 documents, 707,529,604 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -55,18 +55,21 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,660,946 | [`docs/expansions/prose_wave131/cw131_09_the_road_stays_open_either_way_plan.md`](expansions/prose_wave131/cw131_09_the_road_stays_open_either_way_plan.md) |
 | 1,657,913 | [`docs/expansions/prose_wave130/cw130_04_the_missing_three_hundred_and_twenty_plan.md`](expansions/prose_wave130/cw130_04_the_missing_three_hundred_and_twenty_plan.md) |
 | 1,646,004 | [`docs/expansions/prose_wave128/cw128_08_both_sides_of_the_page_plan.md`](expansions/prose_wave128/cw128_08_both_sides_of_the_page_plan.md) |
+| 1,644,323 | [`docs/expansions/prose_wave136/cw136_01_the_bee_is_here_plan.md`](expansions/prose_wave136/cw136_01_the_bee_is_here_plan.md) |
 | 1,633,674 | [`docs/expansions/prose_wave133/cw133_15_the_figure_above_the_wolves_plan.md`](expansions/prose_wave133/cw133_15_the_figure_above_the_wolves_plan.md) |
 | 1,630,777 | [`docs/expansions/prose_wave132/cw132_13_six_one_two_plan.md`](expansions/prose_wave132/cw132_13_six_one_two_plan.md) |
 | 1,627,672 | [`docs/expansions/prose_wave128/cw128_19_log_thirty_nine_plan.md`](expansions/prose_wave128/cw128_19_log_thirty_nine_plan.md) |
 | 1,626,797 | [`docs/expansions/prose_wave128/cw128_03_04_12_in_the_glass_plan.md`](expansions/prose_wave128/cw128_03_04_12_in_the_glass_plan.md) |
 | 1,626,008 | [`docs/expansions/prose_wave133/cw133_16_the_schedule_does_not_go_past_the_generator_plan.md`](expansions/prose_wave133/cw133_16_the_schedule_does_not_go_past_the_generator_plan.md) |
 | 1,625,886 | [`docs/expansions/prose_wave132/cw132_15_the_order_in_which_we_fail_plan.md`](expansions/prose_wave132/cw132_15_the_order_in_which_we_fail_plan.md) |
+| 1,624,661 | [`docs/expansions/prose_wave137/cw137_10_justice_without_a_victory_speech_plan.md`](expansions/prose_wave137/cw137_10_justice_without_a_victory_speech_plan.md) |
 | 1,623,023 | [`docs/expansions/prose_wave133/cw133_13_seven_checks_of_the_key_plan.md`](expansions/prose_wave133/cw133_13_seven_checks_of_the_key_plan.md) |
 | 1,621,572 | [`docs/expansions/prose_wave133/cw133_10_the_signing_is_the_living_plan.md`](expansions/prose_wave133/cw133_10_the_signing_is_the_living_plan.md) |
 | 1,620,940 | [`docs/expansions/prose_wave131/cw131_07_quiet_tolls_are_still_tolls_plan.md`](expansions/prose_wave131/cw131_07_quiet_tolls_are_still_tolls_plan.md) |
 | 1,620,334 | [`docs/expansions/prose_wave128/cw128_16_the_line_left_open_plan.md`](expansions/prose_wave128/cw128_16_the_line_left_open_plan.md) |
 | 1,620,270 | [`docs/expansions/prose_wave132/cw132_17_the_list_on_the_couriers_hand_plan.md`](expansions/prose_wave132/cw132_17_the_list_on_the_couriers_hand_plan.md) |
 | 1,617,769 | [`docs/expansions/prose_wave131/cw131_08_six_hundred_days_no_name_plan.md`](expansions/prose_wave131/cw131_08_six_hundred_days_no_name_plan.md) |
+| 1,617,473 | [`docs/expansions/prose_wave137/cw137_12_a_lesson_in_what_moves_downhill_plan.md`](expansions/prose_wave137/cw137_12_a_lesson_in_what_moves_downhill_plan.md) |
 | 1,614,776 | [`docs/expansions/prose_wave133/cw133_07_the_most_movable_constraint_plan.md`](expansions/prose_wave133/cw133_07_the_most_movable_constraint_plan.md) |
 | 1,608,407 | [`docs/expansions/prose_wave133/cw133_03_a_bulb_is_not_a_metaphor_plan.md`](expansions/prose_wave133/cw133_03_a_bulb_is_not_a_metaphor_plan.md) |
 | 1,607,850 | [`docs/expansions/prose_wave132/cw132_18_hope_is_lighter_plan.md`](expansions/prose_wave132/cw132_18_hope_is_lighter_plan.md) |
@@ -76,6 +79,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,603,634 | [`docs/expansions/prose_wave131/cw131_20_three_paragraphs_of_non_recognition_plan.md`](expansions/prose_wave131/cw131_20_three_paragraphs_of_non_recognition_plan.md) |
 | 1,603,211 | [`docs/expansions/prose_wave132/cw132_03_forty_seven_arrivals_one_listener_plan.md`](expansions/prose_wave132/cw132_03_forty_seven_arrivals_one_listener_plan.md) |
 | 1,603,089 | [`docs/expansions/prose_wave134/cw134_09_the_slow_thing_plan.md`](expansions/prose_wave134/cw134_09_the_slow_thing_plan.md) |
+| 1,601,100 | [`docs/expansions/prose_wave137/cw137_04_a_circle_with_no_required_speech_plan.md`](expansions/prose_wave137/cw137_04_a_circle_with_no_required_speech_plan.md) |
 | 1,600,028 | [`docs/expansions/prose_wave131/cw131_03_no_verse_yet_plan.md`](expansions/prose_wave131/cw131_03_no_verse_yet_plan.md) |
 | 1,599,689 | [`docs/expansions/prose_wave133/cw133_20_the_count_goes_up_plan.md`](expansions/prose_wave133/cw133_20_the_count_goes_up_plan.md) |
 | 1,599,442 | [`docs/expansions/prose_wave134/cw134_06_towels_by_the_stove_plan.md`](expansions/prose_wave134/cw134_06_towels_by_the_stove_plan.md) |
@@ -88,44 +92,78 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,595,071 | [`docs/expansions/prose_wave128/cw128_11_the_deadline_after_the_end_plan.md`](expansions/prose_wave128/cw128_11_the_deadline_after_the_end_plan.md) |
 | 1,594,523 | [`docs/expansions/prose_wave134/cw134_12_the_book_is_the_ground_i_made_plan.md`](expansions/prose_wave134/cw134_12_the_book_is_the_ground_i_made_plan.md) |
 | 1,593,314 | [`docs/expansions/prose_wave131/cw131_14_which_slopes_whose_ledger_plan.md`](expansions/prose_wave131/cw131_14_which_slopes_whose_ledger_plan.md) |
+| 1,593,145 | [`docs/expansions/prose_wave137/cw137_02_the_last_leaflet_at_the_printworks_plan.md`](expansions/prose_wave137/cw137_02_the_last_leaflet_at_the_printworks_plan.md) |
 | 1,592,846 | [`docs/expansions/prose_wave133/cw133_18_filled_not_full_plan.md`](expansions/prose_wave133/cw133_18_filled_not_full_plan.md) |
 | 1,592,545 | [`docs/expansions/prose_wave132/cw132_10_nine_sets_of_tracks_plan.md`](expansions/prose_wave132/cw132_10_nine_sets_of_tracks_plan.md) |
+| 1,592,111 | [`docs/expansions/prose_wave137/cw137_20_the_battery_test_with_no_promise_plan.md`](expansions/prose_wave137/cw137_20_the_battery_test_with_no_promise_plan.md) |
+| 1,590,728 | [`docs/expansions/prose_wave137/cw137_16_a_monastic_order_of_recorded_media_plan.md`](expansions/prose_wave137/cw137_16_a_monastic_order_of_recorded_media_plan.md) |
+| 1,590,671 | [`docs/expansions/prose_wave137/cw137_13_an_evening_story_slot_without_a_lesson_plan.md`](expansions/prose_wave137/cw137_13_an_evening_story_slot_without_a_lesson_plan.md) |
+| 1,590,351 | [`docs/expansions/prose_wave137/cw137_05_the_rate_has_never_gone_down_plan.md`](expansions/prose_wave137/cw137_05_the_rate_has_never_gone_down_plan.md) |
 | 1,589,683 | [`docs/expansions/prose_wave131/cw131_17_a_clipboard_at_the_rope_plan.md`](expansions/prose_wave131/cw131_17_a_clipboard_at_the_rope_plan.md) |
+| 1,589,338 | [`docs/expansions/prose_wave137/cw137_11_two_witnesses_or_the_page_stays_blank_plan.md`](expansions/prose_wave137/cw137_11_two_witnesses_or_the_page_stays_blank_plan.md) |
+| 1,587,054 | [`docs/expansions/prose_wave137/cw137_17_the_ice_core_relay_does_not_finish_its_sentence_plan.md`](expansions/prose_wave137/cw137_17_the_ice_core_relay_does_not_finish_its_sentence_plan.md) |
+| 1,586,506 | [`docs/expansions/prose_wave137/cw137_09_the_name_page_is_torn_away_plan.md`](expansions/prose_wave137/cw137_09_the_name_page_is_torn_away_plan.md) |
 | 1,585,757 | [`docs/expansions/prose_wave133/cw133_19_three_hours_outside_the_bunker_plan.md`](expansions/prose_wave133/cw133_19_three_hours_outside_the_bunker_plan.md) |
 | 1,585,593 | [`docs/expansions/prose_wave128/cw128_13_fourteen_surnames_plan.md`](expansions/prose_wave128/cw128_13_fourteen_surnames_plan.md) |
 | 1,585,504 | [`docs/expansions/prose_wave134/cw134_20_the_bunker_is_a_home_plan.md`](expansions/prose_wave134/cw134_20_the_bunker_is_a_home_plan.md) |
+| 1,585,183 | [`docs/expansions/prose_wave137/cw137_06_pressure_drop_on_bank_three_plan.md`](expansions/prose_wave137/cw137_06_pressure_drop_on_bank_three_plan.md) |
+| 1,584,380 | [`docs/expansions/prose_wave136/cw136_11_what_the_marrow_record_knows_plan.md`](expansions/prose_wave136/cw136_11_what_the_marrow_record_knows_plan.md) |
+| 1,583,316 | [`docs/expansions/prose_wave137/cw137_19_the_clerk_who_keeps_trading_shifts_plan.md`](expansions/prose_wave137/cw137_19_the_clerk_who_keeps_trading_shifts_plan.md) |
 | 1,581,901 | [`docs/expansions/prose_wave132/cw132_01_five_point_one_seven_people_plan.md`](expansions/prose_wave132/cw132_01_five_point_one_seven_people_plan.md) |
+| 1,581,547 | [`docs/expansions/prose_wave137/cw137_08_the_vent_has_no_speaker_plan.md`](expansions/prose_wave137/cw137_08_the_vent_has_no_speaker_plan.md) |
+| 1,580,755 | [`docs/expansions/prose_wave136/cw136_09_the_red_circle_on_the_page_plan.md`](expansions/prose_wave136/cw136_09_the_red_circle_on_the_page_plan.md) |
 | 1,580,597 | [`docs/expansions/prose_wave128/cw128_02_the_hood_stayed_up_plan.md`](expansions/prose_wave128/cw128_02_the_hood_stayed_up_plan.md) |
+| 1,579,964 | [`docs/expansions/prose_wave136/cw136_16_the_tick_before_the_knock_plan.md`](expansions/prose_wave136/cw136_16_the_tick_before_the_knock_plan.md) |
+| 1,578,954 | [`docs/expansions/prose_wave137/cw137_03_barge_three_keeps_its_mooring_plan.md`](expansions/prose_wave137/cw137_03_barge_three_keeps_its_mooring_plan.md) |
 | 1,578,453 | [`docs/expansions/prose_wave133/cw133_17_four_empty_chairs_plan.md`](expansions/prose_wave133/cw133_17_four_empty_chairs_plan.md) |
 | 1,578,000 | [`docs/expansions/prose_wave130/cw130_20_ln74_repeat_three_six_plan.md`](expansions/prose_wave130/cw130_20_ln74_repeat_three_six_plan.md) |
 | 1,577,499 | [`docs/expansions/prose_wave128/cw128_17_the_folded_thermal_layer_plan.md`](expansions/prose_wave128/cw128_17_the_folded_thermal_layer_plan.md) |
+| 1,577,280 | [`docs/expansions/prose_wave137/cw137_14_the_mark_on_the_parking_structure_plan.md`](expansions/prose_wave137/cw137_14_the_mark_on_the_parking_structure_plan.md) |
+| 1,576,770 | [`docs/expansions/prose_wave137/cw137_07_the_canister_still_in_the_tube_plan.md`](expansions/prose_wave137/cw137_07_the_canister_still_in_the_tube_plan.md) |
 | 1,575,497 | [`docs/expansions/prose_wave132/cw132_08_one_channel_left_plan.md`](expansions/prose_wave132/cw132_08_one_channel_left_plan.md) |
+| 1,574,311 | [`docs/expansions/prose_wave136/cw136_03_pebbles_on_the_pressure_plate_plan.md`](expansions/prose_wave136/cw136_03_pebbles_on_the_pressure_plate_plan.md) |
 | 1,573,658 | [`docs/expansions/prose_wave128/cw128_15_the_other_place_at_the_table_plan.md`](expansions/prose_wave128/cw128_15_the_other_place_at_the_table_plan.md) |
 | 1,572,198 | [`docs/expansions/prose_wave132/cw132_07_the_yellow_pencil_plan.md`](expansions/prose_wave132/cw132_07_the_yellow_pencil_plan.md) |
 | 1,570,508 | [`docs/expansions/prose_wave134/cw134_01_the_seeds_are_the_crossing_plan.md`](expansions/prose_wave134/cw134_01_the_seeds_are_the_crossing_plan.md) |
+| 1,570,433 | [`docs/expansions/prose_wave136/cw136_04_a_morning_bulletin_for_the_holdfast_plan.md`](expansions/prose_wave136/cw136_04_a_morning_bulletin_for_the_holdfast_plan.md) |
 | 1,570,191 | [`docs/expansions/prose_wave132/cw132_11_the_words_were_there_the_second_time_plan.md`](expansions/prose_wave132/cw132_11_the_words_were_there_the_second_time_plan.md) |
 | 1,569,940 | [`docs/expansions/prose_wave128/cw128_20_six_lines_apart_plan.md`](expansions/prose_wave128/cw128_20_six_lines_apart_plan.md) |
 | 1,569,114 | [`docs/expansions/prose_wave128/cw128_05_forty_seven_seconds_plan.md`](expansions/prose_wave128/cw128_05_forty_seven_seconds_plan.md) |
+| 1,568,971 | [`docs/expansions/prose_wave136/cw136_14_the_stone_punches_forward_plan.md`](expansions/prose_wave136/cw136_14_the_stone_punches_forward_plan.md) |
 | 1,568,818 | [`docs/expansions/prose_wave134/cw134_16_the_chapel_went_outside_plan.md`](expansions/prose_wave134/cw134_16_the_chapel_went_outside_plan.md) |
 | 1,568,556 | [`docs/expansions/prose_wave129/cw129_03_beans_at_the_empty_end_plan.md`](expansions/prose_wave129/cw129_03_beans_at_the_empty_end_plan.md) |
+| 1,567,950 | [`docs/expansions/prose_wave136/cw136_12_the_valves_that_stay_in_hands_plan.md`](expansions/prose_wave136/cw136_12_the_valves_that_stay_in_hands_plan.md) |
 | 1,566,582 | [`docs/expansions/prose_wave132/cw132_14_we_went_plan.md`](expansions/prose_wave132/cw132_14_we_went_plan.md) |
 | 1,565,446 | [`docs/expansions/prose_wave132/cw132_12_thirty_one_grains_plan.md`](expansions/prose_wave132/cw132_12_thirty_one_grains_plan.md) |
+| 1,565,336 | [`docs/expansions/prose_wave136/cw136_15_two_ledgers_can_both_be_right_plan.md`](expansions/prose_wave136/cw136_15_two_ledgers_can_both_be_right_plan.md) |
 | 1,565,074 | [`docs/expansions/prose_wave132/cw132_04_what_the_crane_does_not_do_plan.md`](expansions/prose_wave132/cw132_04_what_the_crane_does_not_do_plan.md) |
 | 1,564,975 | [`docs/expansions/prose_wave130/cw130_01_the_loop_knows_no_day_plan.md`](expansions/prose_wave130/cw130_01_the_loop_knows_no_day_plan.md) |
+| 1,564,489 | [`docs/expansions/prose_wave136/cw136_07_two_marks_and_a_date_plan.md`](expansions/prose_wave136/cw136_07_two_marks_and_a_date_plan.md) |
+| 1,564,277 | [`docs/expansions/prose_wave136/cw136_08_weight_of_the_lead_shroud_plan.md`](expansions/prose_wave136/cw136_08_weight_of_the_lead_shroud_plan.md) |
 | 1,563,236 | [`docs/expansions/prose_wave128/cw128_09_wax_at_the_edge_plan.md`](expansions/prose_wave128/cw128_09_wax_at_the_edge_plan.md) |
+| 1,563,109 | [`docs/expansions/prose_wave136/cw136_02_forty_seven_names_at_grange_hall_plan.md`](expansions/prose_wave136/cw136_02_forty_seven_names_at_grange_hall_plan.md) |
 | 1,562,250 | [`docs/expansions/prose_wave133/cw133_08_the_reason_is_the_forty_seven_plan.md`](expansions/prose_wave133/cw133_08_the_reason_is_the_forty_seven_plan.md) |
+| 1,562,230 | [`docs/expansions/prose_wave136/cw136_05_a_stairwell_that_keeps_an_echo_plan.md`](expansions/prose_wave136/cw136_05_a_stairwell_that_keeps_an_echo_plan.md) |
 | 1,561,685 | [`docs/expansions/prose_wave132/cw132_16_a_breath_not_a_solution_plan.md`](expansions/prose_wave132/cw132_16_a_breath_not_a_solution_plan.md) |
 | 1,561,265 | [`docs/expansions/prose_wave131/cw131_15_the_rate_in_ink_plan.md`](expansions/prose_wave131/cw131_15_the_rate_in_ink_plan.md) |
+| 1,560,867 | [`docs/expansions/prose_wave137/cw137_18_a_clock_stopped_at_03_14_plan.md`](expansions/prose_wave137/cw137_18_a_clock_stopped_at_03_14_plan.md) |
 | 1,560,854 | [`docs/expansions/prose_wave132/cw132_19_the_water_cycle_does_not_know_plan.md`](expansions/prose_wave132/cw132_19_the_water_cycle_does_not_know_plan.md) |
 | 1,560,491 | [`docs/expansions/prose_wave128/cw128_18_four_kilometers_the_other_way_plan.md`](expansions/prose_wave128/cw128_18_four_kilometers_the_other_way_plan.md) |
+| 1,560,425 | [`docs/expansions/prose_wave136/cw136_18_forty_two_said_fourteen_written_plan.md`](expansions/prose_wave136/cw136_18_forty_two_said_fourteen_written_plan.md) |
 | 1,559,820 | [`docs/expansions/prose_wave134/cw134_19_the_third_season_record_plan.md`](expansions/prose_wave134/cw134_19_the_third_season_record_plan.md) |
 | 1,559,145 | [`docs/expansions/prose_wave133/cw133_05_the_reserve_is_mine_to_hold_plan.md`](expansions/prose_wave133/cw133_05_the_reserve_is_mine_to_hold_plan.md) |
+| 1,558,581 | [`docs/expansions/prose_wave137/cw137_01_the_harvest_that_fits_in_one_bowl_plan.md`](expansions/prose_wave137/cw137_01_the_harvest_that_fits_in_one_bowl_plan.md) |
 | 1,558,190 | [`docs/expansions/prose_wave134/cw134_08_the_tense_that_knows_plan.md`](expansions/prose_wave134/cw134_08_the_tense_that_knows_plan.md) |
 | 1,557,389 | [`docs/expansions/prose_wave131/cw131_16_what_we_no_longer_claim_plan.md`](expansions/prose_wave131/cw131_16_what_we_no_longer_claim_plan.md) |
+| 1,556,967 | [`docs/expansions/prose_wave136/cw136_20_someone_added_beneath_the_sign_plan.md`](expansions/prose_wave136/cw136_20_someone_added_beneath_the_sign_plan.md) |
+| 1,556,290 | [`docs/expansions/prose_wave136/cw136_19_the_button_left_in_the_letter_plan.md`](expansions/prose_wave136/cw136_19_the_button_left_in_the_letter_plan.md) |
 | 1,554,620 | [`docs/expansions/prose_wave128/cw128_06_still_here_on_plaster_plan.md`](expansions/prose_wave128/cw128_06_still_here_on_plaster_plan.md) |
 | 1,554,218 | [`docs/expansions/prose_wave131/cw131_05_continuity_not_peace_plan.md`](expansions/prose_wave131/cw131_05_continuity_not_peace_plan.md) |
 | 1,554,134 | [`docs/expansions/prose_wave134/cw134_11_the_wolf_is_the_watching_plan.md`](expansions/prose_wave134/cw134_11_the_wolf_is_the_watching_plan.md) |
 | 1,553,567 | [`docs/expansions/prose_wave134/cw134_03_three_settlements_still_unknown_plan.md`](expansions/prose_wave134/cw134_03_three_settlements_still_unknown_plan.md) |
+| 1,553,541 | [`docs/expansions/prose_wave137/cw137_15_a_scarf_that_kept_the_smell_of_smoke_plan.md`](expansions/prose_wave137/cw137_15_a_scarf_that_kept_the_smell_of_smoke_plan.md) |
+| 1,553,431 | [`docs/expansions/prose_wave136/cw136_10_the_handwriting_changes_on_day_twelve_plan.md`](expansions/prose_wave136/cw136_10_the_handwriting_changes_on_day_twelve_plan.md) |
+| 1,552,486 | [`docs/expansions/prose_wave136/cw136_13_span_fourteen_is_not_a_suggestion_plan.md`](expansions/prose_wave136/cw136_13_span_fourteen_is_not_a_suggestion_plan.md) |
 | 1,551,322 | [`docs/expansions/prose_wave133/cw133_02_the_list_on_a_borrowed_pencil_plan.md`](expansions/prose_wave133/cw133_02_the_list_on_a_borrowed_pencil_plan.md) |
 | 1,550,892 | [`docs/expansions/prose_wave133/cw133_09_the_word_holds_plan.md`](expansions/prose_wave133/cw133_09_the_word_holds_plan.md) |
 | 1,550,349 | [`docs/expansions/prose_wave134/cw134_10_the_general_of_a_place_plan.md`](expansions/prose_wave134/cw134_10_the_general_of_a_place_plan.md) |
@@ -135,12 +173,14 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,545,167 | [`docs/expansions/prose_wave132/cw132_05_folded_towels_plan.md`](expansions/prose_wave132/cw132_05_folded_towels_plan.md) |
 | 1,542,078 | [`docs/expansions/prose_wave131/cw131_18_ask_at_the_post_plan.md`](expansions/prose_wave131/cw131_18_ask_at_the_post_plan.md) |
 | 1,541,813 | [`docs/expansions/prose_wave134/cw134_14_the_gift_then_the_trade_plan.md`](expansions/prose_wave134/cw134_14_the_gift_then_the_trade_plan.md) |
+| 1,541,542 | [`docs/expansions/prose_wave136/cw136_17_the_schedule_says_it_is_time_plan.md`](expansions/prose_wave136/cw136_17_the_schedule_says_it_is_time_plan.md) |
 | 1,540,317 | [`docs/expansions/prose_wave128/cw128_07_a_name_in_brass_plan.md`](expansions/prose_wave128/cw128_07_a_name_in_brass_plan.md) |
 | 1,537,937 | [`docs/expansions/prose_wave132/cw132_20_the_clock_does_not_know_the_time_plan.md`](expansions/prose_wave132/cw132_20_the_clock_does_not_know_the_time_plan.md) |
 | 1,537,565 | [`docs/expansions/prose_wave134/cw134_04_the_source_holds_plan.md`](expansions/prose_wave134/cw134_04_the_source_holds_plan.md) |
 | 1,537,556 | [`docs/expansions/prose_wave133/cw133_11_i_went_under_the_sky_plan.md`](expansions/prose_wave133/cw133_11_i_went_under_the_sky_plan.md) |
 | 1,537,068 | [`docs/expansions/prose_wave133/cw133_06_a_rectangle_with_two_lines_plan.md`](expansions/prose_wave133/cw133_06_a_rectangle_with_two_lines_plan.md) |
 | 1,536,326 | [`docs/expansions/prose_wave129/cw129_07_numbers_before_the_clipboard_plan.md`](expansions/prose_wave129/cw129_07_numbers_before_the_clipboard_plan.md) |
+| 1,535,240 | [`docs/expansions/prose_wave136/cw136_06_a_request_for_other_coverage_plan.md`](expansions/prose_wave136/cw136_06_a_request_for_other_coverage_plan.md) |
 | 1,535,175 | [`docs/expansions/prose_wave132/cw132_06_the_tablet_that_needs_four_days_plan.md`](expansions/prose_wave132/cw132_06_the_tablet_that_needs_four_days_plan.md) |
 | 1,535,167 | [`docs/expansions/prose_wave131/cw131_01_the_question_the_toll_office_will_not_answer_plan.md`](expansions/prose_wave131/cw131_01_the_question_the_toll_office_will_not_answer_plan.md) |
 | 1,533,521 | [`docs/expansions/prose_wave131/cw131_19_hold_the_meaning_loosely_plan.md`](expansions/prose_wave131/cw131_19_hold_the_meaning_loosely_plan.md) |
@@ -340,9 +380,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 473,182 | [`docs/expansions/prose_wave118/cw118_02_the_first_death_plan.md`](expansions/prose_wave118/cw118_02_the_first_death_plan.md) |
 | 472,234 | [`docs/expansions/prose_wave118/cw118_07_the_last_game_plan.md`](expansions/prose_wave118/cw118_07_the_last_game_plan.md) |
 | 470,172 | [`docs/expansions/prose_wave118/cw118_01_the_sealing_plan.md`](expansions/prose_wave118/cw118_01_the_sealing_plan.md) |
+| 433,950 | [`docs/governance/DECISION_REGISTER.md`](governance/DECISION_REGISTER.md) |
 | 429,733 | [`docs/expansions/prose_wave36/cw36_06_bread_first_seed_by_rota_plan.md`](expansions/prose_wave36/cw36_06_bread_first_seed_by_rota_plan.md) |
 | 425,213 | [`docs/expansions/prose_wave36/cw36_01_the_ground_kept_its_whales_plan.md`](expansions/prose_wave36/cw36_01_the_ground_kept_its_whales_plan.md) |
-| 423,794 | [`docs/governance/DECISION_REGISTER.md`](governance/DECISION_REGISTER.md) |
 | 420,351 | [`docs/expansions/prose_wave33/cw33_01_the_queue_is_still_counted_plan.md`](expansions/prose_wave33/cw33_01_the_queue_is_still_counted_plan.md) |
 | 419,787 | [`docs/expansions/prose_wave35/cw35_02_the_mill_that_kept_its_tools_plan.md`](expansions/prose_wave35/cw35_02_the_mill_that_kept_its_tools_plan.md) |
 | 416,135 | [`docs/expansions/prose_wave114/cw114_05_room_fixture_main_generator_mount_three_hands_on_the_watch_plan.md`](expansions/prose_wave114/cw114_05_room_fixture_main_generator_mount_three_hands_on_the_watch_plan.md) |
@@ -368,13 +408,17 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 382,352 | [`docs/expansions/prose_wave33/cw33_06_tags_tied_with_rotting_twine_plan.md`](expansions/prose_wave33/cw33_06_tags_tied_with_rotting_twine_plan.md) |
 | 380,327 | [`docs/expansions/prose_wave35/cw35_03_the_room_above_the_datum_plan.md`](expansions/prose_wave35/cw35_03_the_room_above_the_datum_plan.md) |
 | 377,850 | [`docs/expansions/prose_wave34/cw34_06_the_benchmark_has_no_shelter_plan.md`](expansions/prose_wave34/cw34_06_the_benchmark_has_no_shelter_plan.md) |
+| 374,669 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md`](plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md) |
 | 373,058 | [`docs/expansions/prose_wave33/cw33_02_a_gate_between_cycles_plan.md`](expansions/prose_wave33/cw33_02_a_gate_between_cycles_plan.md) |
 | 372,870 | [`docs/expansions/prose_wave33/cw33_03_the_line_pavel_wont_explain_plan.md`](expansions/prose_wave33/cw33_03_the_line_pavel_wont_explain_plan.md) |
 | 363,520 | [`docs/expansions/prose_wave69/cw69_05_the_grey_rain_plan.md`](expansions/prose_wave69/cw69_05_the_grey_rain_plan.md) |
 | 358,993 | [`docs/expansions/prose_wave34/cw34_03_the_ledger_that_does_not_cross_plan.md`](expansions/prose_wave34/cw34_03_the_ledger_that_does_not_cross_plan.md) |
 | 357,520 | [`docs/expansions/prose_wave33/cw33_05_the_rota_at_the_salt_pans_plan.md`](expansions/prose_wave33/cw33_05_the_rota_at_the_salt_pans_plan.md) |
 | 352,699 | [`docs/expansions/prose_wave34/cw34_02_the_board_updated_for_nobody_plan.md`](expansions/prose_wave34/cw34_02_the_board_updated_for_nobody_plan.md) |
+| 352,317 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md`](plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md) |
 | 351,091 | [`docs/expansions/prose_wave34/cw34_04_an_account_at_lock_seven_plan.md`](expansions/prose_wave34/cw34_04_an_account_at_lock_seven_plan.md) |
+| 349,611 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md`](plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md) |
+| 343,368 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md`](plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md) |
 | 329,787 | [`docs/expansions/prose_wave92/cw92_03_room_history_the_first_filter_change_plan.md`](expansions/prose_wave92/cw92_03_room_history_the_first_filter_change_plan.md) |
 | 329,441 | [`docs/expansions/prose_wave102/cw102_06_audio_log_technology_breakthrough_day_230_water_purifier_celebration_plan.md`](expansions/prose_wave102/cw102_06_audio_log_technology_breakthrough_day_230_water_purifier_celebration_plan.md) |
 | 329,007 | [`docs/expansions/prose_wave33/cw33_04_the_fence_gets_paid_first_plan.md`](expansions/prose_wave33/cw33_04_the_fence_gets_paid_first_plan.md) |
@@ -464,6 +508,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 320,379 | [`docs/expansions/prose_wave92/cw92_05_ritual_departure_plate_touch_plan.md`](expansions/prose_wave92/cw92_05_ritual_departure_plate_touch_plan.md) |
 | 320,262 | [`docs/expansions/prose_wave95/cw95_02_journal_day_175_technology_dangers_plan.md`](expansions/prose_wave95/cw95_02_journal_day_175_technology_dangers_plan.md) |
 | 320,254 | [`docs/expansions/prose_wave89/cw89_06_npc_pianist_plan.md`](expansions/prose_wave89/cw89_06_npc_pianist_plan.md) |
+| 320,005 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md`](plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md) |
 | 319,998 | [`docs/expansions/prose_wave87/cw87_06_npc_petr_farmer_plan.md`](expansions/prose_wave87/cw87_06_npc_petr_farmer_plan.md) |
 | 319,893 | [`docs/expansions/prose_wave102/cw102_07_journal_day_292_power_restored_heat_returns_plan.md`](expansions/prose_wave102/cw102_07_journal_day_292_power_restored_heat_returns_plan.md) |
 | 319,754 | [`docs/expansions/prose_wave93/cw93_04_glitch_23_old_intercom_burst_plan.md`](expansions/prose_wave93/cw93_04_glitch_23_old_intercom_burst_plan.md) |
@@ -480,7 +525,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 319,436 | [`docs/expansions/prose_wave105/cw105_07_room_history_lathe_true_pencil_measurement_plan.md`](expansions/prose_wave105/cw105_07_room_history_lathe_true_pencil_measurement_plan.md) |
 | 319,374 | [`docs/expansions/prose_wave82/cw82_02_prussian_blue_sump_pigment_plan.md`](expansions/prose_wave82/cw82_02_prussian_blue_sump_pigment_plan.md) |
 | 319,364 | [`docs/expansions/prose_wave82/cw82_04_activated_charcoal_toast_biscuits_plan.md`](expansions/prose_wave82/cw82_04_activated_charcoal_toast_biscuits_plan.md) |
-| 319,354 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md`](plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md) |
 | 319,332 | [`docs/expansions/prose_wave77/cw77_02_seed_jar_memorial_plan.md`](expansions/prose_wave77/cw77_02_seed_jar_memorial_plan.md) |
 | 319,304 | [`docs/expansions/prose_wave87/cw87_07_npc_rima_child_plan.md`](expansions/prose_wave87/cw87_07_npc_rima_child_plan.md) |
 | 319,129 | [`docs/expansions/prose_wave106/cw106_02_audio_log_fuel_expedition_day_270_keep_fingers_crossed_plan.md`](expansions/prose_wave106/cw106_02_audio_log_fuel_expedition_day_270_keep_fingers_crossed_plan.md) |
@@ -573,6 +617,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 314,882 | [`docs/expansions/prose_wave97/cw97_01_audio_log_leadership_vote_day_105_plan.md`](expansions/prose_wave97/cw97_01_audio_log_leadership_vote_day_105_plan.md) |
 | 314,872 | [`docs/expansions/prose_wave97/cw97_06_ritual_exterior_door_tap_plan.md`](expansions/prose_wave97/cw97_06_ritual_exterior_door_tap_plan.md) |
 | 314,840 | [`docs/expansions/prose_wave108/cw108_01_room_fixture_workshop_tool_shadow_the_shape_of_absence_plan.md`](expansions/prose_wave108/cw108_01_room_fixture_workshop_tool_shadow_the_shape_of_absence_plan.md) |
+| 314,837 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md`](plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md) |
 | 314,758 | [`docs/expansions/prose_wave111/cw111_01_audio_log_medical_training_day_160_the_eight_am_invitation_plan.md`](expansions/prose_wave111/cw111_01_audio_log_medical_training_day_160_the_eight_am_invitation_plan.md) |
 | 314,665 | [`docs/expansions/prose_wave80/cw80_03_rebuilders_hydroponic_crop_failure_plan.md`](expansions/prose_wave80/cw80_03_rebuilders_hydroponic_crop_failure_plan.md) |
 | 314,661 | [`docs/expansions/prose_wave98/cw98_05_social_event_bunk_noise_friction_plan.md`](expansions/prose_wave98/cw98_05_social_event_bunk_noise_friction_plan.md) |
@@ -607,6 +652,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 312,501 | [`docs/expansions/prose_wave112/cw112_03_room_fixture_filtration_spare_belt_wrong_size_plan.md`](expansions/prose_wave112/cw112_03_room_fixture_filtration_spare_belt_wrong_size_plan.md) |
 | 312,495 | [`docs/expansions/prose_wave100/cw100_08_audio_log_winter_preparations_day_290_common_area_call_plan.md`](expansions/prose_wave100/cw100_08_audio_log_winter_preparations_day_290_common_area_call_plan.md) |
 | 312,420 | [`docs/expansions/prose_wave110/cw110_07_room_fixture_greenhouse_peat_troughs_the_prop_in_the_design_plan.md`](expansions/prose_wave110/cw110_07_room_fixture_greenhouse_peat_troughs_the_prop_in_the_design_plan.md) |
+| 312,323 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 312,262 | [`docs/expansions/prose_wave100/cw100_01_audio_log_scavenger_radio_day_42_highway_overpass_deal_plan.md`](expansions/prose_wave100/cw100_01_audio_log_scavenger_radio_day_42_highway_overpass_deal_plan.md) |
 | 312,238 | [`docs/expansions/prose_wave97/cw97_02_journal_day_102_victory_plan.md`](expansions/prose_wave97/cw97_02_journal_day_102_victory_plan.md) |
 | 312,152 | [`docs/expansions/prose_wave99/cw99_01_audio_log_radio_signal_day_72_automated_distress_ruins_plan.md`](expansions/prose_wave99/cw99_01_audio_log_radio_signal_day_72_automated_distress_ruins_plan.md) |
@@ -679,7 +725,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 307,167 | [`docs/expansions/prose_wave40/cw40_01_the_shelves_tell_you_everything_plan.md`](expansions/prose_wave40/cw40_01_the_shelves_tell_you_everything_plan.md) |
 | 306,996 | [`docs/expansions/prose_wave101/cw101_03_glitch_31_water_still_gurgle_one_bubble_plan.md`](expansions/prose_wave101/cw101_03_glitch_31_water_still_gurgle_one_bubble_plan.md) |
 | 306,993 | [`docs/expansions/prose_wave101/cw101_08_journal_day_285_power_crisis_winter_fear_plan.md`](expansions/prose_wave101/cw101_08_journal_day_285_power_crisis_winter_fear_plan.md) |
-| 306,973 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md`](plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md) |
 | 306,968 | [`docs/expansions/prose_wave53/cw53_06_the_machine_that_kept_command_plan.md`](expansions/prose_wave53/cw53_06_the_machine_that_kept_command_plan.md) |
 | 306,941 | [`docs/expansions/prose_wave50/cw50_02_the_sounder_in_the_river_mud_plan.md`](expansions/prose_wave50/cw50_02_the_sounder_in_the_river_mud_plan.md) |
 | 306,867 | [`docs/expansions/prose_wave39/cw39_05_the_coat_in_the_reflection_plan.md`](expansions/prose_wave39/cw39_05_the_coat_in_the_reflection_plan.md) |
@@ -794,7 +839,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 301,959 | [`docs/expansions/prose_wave58/cw58_01_the_note_at_eighty_eight_five_plan.md`](expansions/prose_wave58/cw58_01_the_note_at_eighty_eight_five_plan.md) |
 | 301,925 | [`docs/expansions/prose_wave67/cw67_01_crosses_to_remember_plan.md`](expansions/prose_wave67/cw67_01_crosses_to_remember_plan.md) |
 | 301,896 | [`docs/expansions/prose_wave71/cw71_02_the_gate_keeper_song_plan.md`](expansions/prose_wave71/cw71_02_the_gate_keeper_song_plan.md) |
-| 301,872 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 301,872 | [`docs/expansions/prose_wave67/cw67_02_the_bunker_as_seen_in_song_plan.md`](expansions/prose_wave67/cw67_02_the_bunker_as_seen_in_song_plan.md) |
 | 301,813 | [`docs/expansions/prose_wave71/cw71_04_the_lady_in_the_well_plan.md`](expansions/prose_wave71/cw71_04_the_lady_in_the_well_plan.md) |
 | 301,801 | [`docs/expansions/prose_wave65/cw65_02_the_childs_useful_map_plan.md`](expansions/prose_wave65/cw65_02_the_childs_useful_map_plan.md) |
@@ -874,29 +918,25 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 300,018 | [`docs/expansions/prose_wave43/cw43_05_the_ridge_that_kept_the_horizon_plan.md`](expansions/prose_wave43/cw43_05_the_ridge_that_kept_the_horizon_plan.md) |
 | 300,011 | [`docs/expansions/prose_wave63/cw63_05_the_last_window_glass_plan.md`](expansions/prose_wave63/cw63_05_the_last_window_glass_plan.md) |
 | 299,186 | [`docs/expansions/prose_wave39/cw39_03_the_building_is_deciding_plan.md`](expansions/prose_wave39/cw39_03_the_building_is_deciding_plan.md) |
-| 298,774 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md`](plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md) |
 | 298,586 | [`docs/expansions/prose_wave41/cw41_05_the_bunkers_below_the_bunkers_plan.md`](expansions/prose_wave41/cw41_05_the_bunkers_below_the_bunkers_plan.md) |
 | 297,485 | [`docs/expansions/prose_wave42/cw42_03_the_fire_break_beneath_the_calendar_plan.md`](expansions/prose_wave42/cw42_03_the_fire_break_beneath_the_calendar_plan.md) |
 | 297,427 | [`docs/expansions/prose_wave41/cw41_02_the_cache_under_the_tarp_plan.md`](expansions/prose_wave41/cw41_02_the_cache_under_the_tarp_plan.md) |
 | 297,282 | [`docs/expansions/prose_wave38/cw38_04_the_logic_that_usually_holds_plan.md`](expansions/prose_wave38/cw38_04_the_logic_that_usually_holds_plan.md) |
 | 294,597 | [`docs/expansions/prose_wave42/cw42_04_the_iron_that_was_not_scrap_plan.md`](expansions/prose_wave42/cw42_04_the_iron_that_was_not_scrap_plan.md) |
-| 292,621 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md`](plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md) |
 | 291,082 | [`docs/expansions/prose_wave42/cw42_06_the_cairn_between_the_gusts_plan.md`](expansions/prose_wave42/cw42_06_the_cairn_between_the_gusts_plan.md) |
 | 290,878 | [`docs/expansions/prose_wave32/cw32_05_the_button_kept_for_south_plan.md`](expansions/prose_wave32/cw32_05_the_button_kept_for_south_plan.md) |
+| 289,727 | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) |
 | 288,747 | [`docs/expansions/prose_wave32/cw32_01_the_name_page_stays_torn_plan.md`](expansions/prose_wave32/cw32_01_the_name_page_stays_torn_plan.md) |
 | 287,559 | [`docs/expansions/prose_wave31/cw31_06_the_roads_share_a_crater_plan.md`](expansions/prose_wave31/cw31_06_the_roads_share_a_crater_plan.md) |
 | 286,817 | [`docs/expansions/prose_wave32/cw32_04_the_key_without_an_owner_plan.md`](expansions/prose_wave32/cw32_04_the_key_without_an_owner_plan.md) |
-| 286,624 | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) |
 | 285,032 | [`docs/expansions/prose_wave32/cw32_06_the_names_called_by_another_office_plan.md`](expansions/prose_wave32/cw32_06_the_names_called_by_another_office_plan.md) |
 | 284,579 | [`docs/expansions/prose_wave32/cw32_02_file_open_past_the_return_date_plan.md`](expansions/prose_wave32/cw32_02_file_open_past_the_return_date_plan.md) |
 | 283,641 | [`docs/expansions/prose_wave31/cw31_04_the_timetable_beneath_the_ash_plan.md`](expansions/prose_wave31/cw31_04_the_timetable_beneath_the_ash_plan.md) |
 | 278,999 | [`docs/expansions/prose_wave31/cw31_05_the_plant_kept_its_hours_plan.md`](expansions/prose_wave31/cw31_05_the_plant_kept_its_hours_plan.md) |
 | 277,157 | [`docs/expansions/prose_wave32/cw32_03_the_ledger_wants_to_balance_plan.md`](expansions/prose_wave32/cw32_03_the_ledger_wants_to_balance_plan.md) |
 | 276,548 | [`docs/expansions/prose_wave37/cw37_01_the_transfer_slip_without_a_train_plan.md`](expansions/prose_wave37/cw37_01_the_transfer_slip_without_a_train_plan.md) |
-| 274,744 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md`](plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md) |
 | 272,951 | [`docs/expansions/prose_wave37/cw37_04_the_cars_were_first_in_line_plan.md`](expansions/prose_wave37/cw37_04_the_cars_were_first_in_line_plan.md) |
 | 271,164 | [`docs/expansions/prose_wave37/cw37_02_no_wages_in_the_ore_plan.md`](expansions/prose_wave37/cw37_02_no_wages_in_the_ore_plan.md) |
-| 270,753 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md`](plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md) |
 | 267,111 | [`docs/expansions/prose_wave37/cw37_05_at_the_far_end_of_their_jack_plan.md`](expansions/prose_wave37/cw37_05_at_the_far_end_of_their_jack_plan.md) |
 | 266,367 | [`docs/expansions/prose_wave37/cw37_03_the_sluice_kept_no_passenger_list_plan.md`](expansions/prose_wave37/cw37_03_the_sluice_kept_no_passenger_list_plan.md) |
 | 265,519 | [`docs/expansions/prose_wave37/cw37_06_the_bottom_is_still_a_promise_plan.md`](expansions/prose_wave37/cw37_06_the_bottom_is_still_a_promise_plan.md) |
@@ -911,9 +951,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 246,343 | [`docs/expansions/wave29/expansion_154_plot_114_stays_114_plan.md`](expansions/wave29/expansion_154_plot_114_stays_114_plan.md) |
 | 245,181 | [`docs/expansions/wave29/expansion_152_the_star_changes_hands_plan.md`](expansions/wave29/expansion_152_the_star_changes_hands_plan.md) |
 | 244,298 | [`docs/expansions/wave30/expansion_159_remain_in_shelter_plan.md`](expansions/wave30/expansion_159_remain_in_shelter_plan.md) |
+| 241,962 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 241,189 | [`docs/expansions/wave30/expansion_158_pairs_left_at_the_hairpins_plan.md`](expansions/wave30/expansion_158_pairs_left_at_the_hairpins_plan.md) |
 | 233,711 | [`docs/expansions/wave28/expansion_148_a_dry_gallery_is_not_a_promise_plan.md`](expansions/wave28/expansion_148_a_dry_gallery_is_not_a_promise_plan.md) |
-| 230,497 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 229,429 | [`docs/expansions/wave29/expansion_151_four_words_and_the_press_plan.md`](expansions/wave29/expansion_151_four_words_and_the_press_plan.md) |
 | 226,609 | [`docs/expansions/wave28/expansion_149_the_chart_stops_mid_sentence_plan.md`](expansions/wave28/expansion_149_the_chart_stops_mid_sentence_plan.md) |
 | 225,859 | [`docs/expansions/wave29/expansion_150_the_count_happens_in_the_open_plan.md`](expansions/wave29/expansion_150_the_count_happens_in_the_open_plan.md) |
@@ -1032,8 +1072,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 119,849 | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) |
 | 117,484 | [`C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md`](../C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md) |
 | 112,706 | [`docs/expansions/expansion_03_nobodys_charter_plan.md`](expansions/expansion_03_nobodys_charter_plan.md) |
+| 109,956 | [`docs/plans/expansion_wave1/README.md`](plans/expansion_wave1/README.md) |
 | 106,457 | [`docs/expansions/expansion_03_the_standing_record_creative_pack.md`](expansions/expansion_03_the_standing_record_creative_pack.md) |
-| 106,057 | [`docs/plans/expansion_wave1/README.md`](plans/expansion_wave1/README.md) |
 | 105,040 | [`docs/expansions/expansion_02_the_duty_roster_creative_pack.md`](expansions/expansion_02_the_duty_roster_creative_pack.md) |
 | 102,606 | [`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SILENT-FAILURE-35_APPENDIX-A_CATCH_INVENTORY.md`](plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SILENT-FAILURE-35_APPENDIX-A_CATCH_INVENTORY.md) |
 | 101,903 | [`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-EVENT-WIRING-21_APPENDIX-A_EVENT_INVENTORY.md`](plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-EVENT-WIRING-21_APPENDIX-A_EVENT_INVENTORY.md) |
@@ -1214,7 +1254,7 @@ The following documents share identical or near-identical filenames across root,
 |---|---|---|---|
 | 🟢 `CURRENT` | [`AGENTS.md`](../AGENTS.md) | 10,603 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`README.md`](../README.md) | 5,600 | **ASHFALL: Atomic War – Starving Survival** — 2D post-nuclear survival-management game. Godot 4.7 .NET (C#) is the only |
-| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | 286,624 | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-09-23<br> |
+| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | 289,727 | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-09-24<br> |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_AUTHORITY_MAP.md`](architecture/BUNKER_COURT_AUTHORITY_MAP.md) | 4,591 | **Bunker Court Authority & System Boundary Map** — **Document ID:** ARCH-BUNKER-COURT-AUTHORITY |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_CASE_MATRIX.md`](architecture/BUNKER_COURT_CASE_MATRIX.md) | 12,637 | **Bunker Court Case Matrix — Full 24-Case Census** — **Document ID:** ARCH-BUNKER-COURT-CASE-MATRIX |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_DISCOVERY_MATRIX.md`](architecture/BUNKER_COURT_DISCOVERY_MATRIX.md) | 6,032 | **Bunker Court Discovery Matrix & Manifest Registration** — **Document ID:** ARCH-BUNKER-COURT-DISCOVERY-MATRIX |
@@ -1223,7 +1263,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_GLITCH_20_ROW_MATRIX.md`](architecture/BUNKER_GLITCH_20_ROW_MATRIX.md) | 6,830 | **BUNKER GLITCH 20-ROW MATRIX** — Canonical mapping of the 20 Subterranean Engineering Emergencies from `Assets/StreamingAssets/Data/narrative/bunker_m... |
 | 🟢 `CURRENT` | [`docs/architecture/CAMPAIGN_CALENDAR_AUTHORITY.md`](architecture/CAMPAIGN_CALENDAR_AUTHORITY.md) | 5,295 | **ASHFALL Campaign Calendar Authority & Time Invariants** — This document specifies the authoritative campaign calendar hierarchy, time domains, clock projections, and reconcili... |
 | 🟢 `CURRENT` | [`docs/architecture/CLOCK_POLICY.md`](architecture/CLOCK_POLICY.md) | 4,694 | **ASHFALL Clock Governance & Simulation Policy** — **Status:** Canonical Architecture Policy |
-| 🟢 `CURRENT` | [`docs/architecture/CORE_SYSTEMS_CATALOG.md`](architecture/CORE_SYSTEMS_CATALOG.md) | 31,015 | **ASHFALL Core Domain Subsystems & Host Seams Catalog** — **Authoritative Architecture Map** \| **Generated:** 2026-09-23 \| **Systems Documented:** 34 |
+| 🟢 `CURRENT` | [`docs/architecture/CORE_SYSTEMS_CATALOG.md`](architecture/CORE_SYSTEMS_CATALOG.md) | 31,015 | **ASHFALL Core Domain Subsystems & Host Seams Catalog** — **Authoritative Architecture Map** \| **Generated:** 2026-09-24 \| **Systems Documented:** 34 |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_LOG_CORPUS_MATRIX.md`](architecture/ENGINEERING_LOG_CORPUS_MATRIX.md) | 3,848 | **ENGINEERING LOG CORPUS MATRIX** — Overview of ASHFALL's ambient engineering and maintenance log corpora and their relationship to the canonical 20 glit... |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_SAVE_COMPATIBILITY.md`](architecture/ENGINEERING_SAVE_COMPATIBILITY.md) | 1,972 | **ENGINEERING SAVE COMPATIBILITY** — Plan 148 activates the subterranean engineering emergencies and maintenance logs strictly as a read-only data catalog... |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_SUBSYSTEM_AUTHORITY_MAP.md`](architecture/ENGINEERING_SUBSYSTEM_AUTHORITY_MAP.md) | 4,207 | **ENGINEERING SUBSYSTEM AUTHORITY MAP** — In ASHFALL, the shelter simulation is strictly authoritative. Subterranean infrastructure and machinery states are co... |
@@ -1260,7 +1300,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/architecture/PLANS_80_84_AUTHORITY_MAP.md`](architecture/PLANS_80_84_AUTHORITY_MAP.md) | 5,064 | **PLANS 80–84 (TASKS B21–B25) AUTHORITY MAP** — **Wave Target:** Flagship Player Experience, Runtime Hardening & Campaign Closure |
 | 🟢 `CURRENT` | [`docs/architecture/PLANS_94_97_AUTHORITY_MAP.md`](architecture/PLANS_94_97_AUTHORITY_MAP.md) | 10,592 | **ASHFALL Plans 94–97 Authority and Reconnaissance Map** — **Scope:** Vehicle track gear, grain processing and silo safety, heliograph |
 | 🟢 `CURRENT` | [`docs/architecture/PLANS_CARAVAN_SURGERY_POWER_DEFENSE_AUTHORITY_MAP.md`](architecture/PLANS_CARAVAN_SURGERY_POWER_DEFENSE_AUTHORITY_MAP.md) | 7,227 | **ASHFALL Authority Reconnaissance Map** — **Document:** `docs/architecture/PLANS_CARAVAN_SURGERY_POWER_DEFENSE_AUTHORITY_MAP.md` |
-| 🟢 `CURRENT` | [`docs/architecture/PORT_CONTRACT.md`](architecture/PORT_CONTRACT.md) | 43,663 | **Core Port Contracts and Host Wiring Manifest** — - **Total integration seams:** 291 |
+| 🟢 `CURRENT` | [`docs/architecture/PORT_CONTRACT.md`](architecture/PORT_CONTRACT.md) | 43,941 | **Core Port Contracts and Host Wiring Manifest** — - **Total integration seams:** 293 |
 | 🟢 `CURRENT` | [`docs/architecture/REPAIR_KIT_IDENTITY_MATRIX.md`](architecture/REPAIR_KIT_IDENTITY_MATRIX.md) | 10,779 | **REPAIR KIT IDENTITY MATRIX** — Each of the 20 canonical glitches in `narrative/bunker_maintenance_glitches.json` specifies an array of `required_rep... |
 | 🟢 `CURRENT` | [`docs/architecture/SURVIVOR_SAVE_MIGRATION_MATRIX.md`](architecture/SURVIVOR_SAVE_MIGRATION_MATRIX.md) | 23,887 | **ASHFALL — Survivor Save Migration Matrix** — **Task:** #132 — host-independent survivor migration |
 | 🟢 `CURRENT` | [`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`](architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md) | 8,343 | **ASHFALL — Triad Drift Gate & Subsystem Save Ownership** — **Date:** 2026-09-10 |
@@ -1352,10 +1392,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/VERDICT_SAVE_CONTRACT.md`](verdict/VERDICT_SAVE_CONTRACT.md) | 1,392 | **Verdict Save Contract & Migration Policy** — The Verdict save section persists player investigation progress using the following canonical structure: |
 | 🟢 `CURRENT` | [`docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md`](world/DYNAMIC_WORLD_SAVE_CONTRACT.md) | 2,168 | **Dynamic World Save Contract & Migration Integrity** — "systemId": "world_weather_system", |
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md`](year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md) | 664 | **Year of Ash Save Contract** — No new save schema was introduced. `YearOfAshSave` remains version 5 and persists the existing |
-| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 55,416 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-23<br> |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 55,800 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-24<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | 1,379 | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
-## 4. Expansions (01–10 Master Plans & Context) (1686 documents)
+## 4. Expansions (01–10 Master Plans & Context) (1728 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -1365,7 +1405,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/expansions/CROSSING_DEPTH_AUDIT.md`](expansions/CROSSING_DEPTH_AUDIT.md) | 1,054 | **Crossing Depth Audit (Expansion 04)** — Nobody's Charter / The Crossing represents the legal, humanitarian, and political friction of border arbitration. |
 | 🟢 `CURRENT` | [`docs/expansions/CROSSING_STATE_FLOW.md`](expansions/CROSSING_STATE_FLOW.md) | 1,687 | **Crossing State Flow** — CrossingQuestSystem |
 | 🟢 `CURRENT` | [`docs/expansions/DEEP_LORE_MASTER_PLAN.md`](expansions/DEEP_LORE_MASTER_PLAN.md) | 24,313 | **ASHFALL — DEEP LORE & CHARACTER PROGRESSION: IMPLEMENTATION PLAN** — This expansion is **primarily data, not code**. The project already has all the narrative plumbing: |
-| 🟢 `CURRENT` | [`docs/expansions/EXPANSIONS_MASTER_CATALOG.md`](expansions/EXPANSIONS_MASTER_CATALOG.md) | 9,344 | **ASHFALL Expansions 01–11 Master Systems & Integration Atlas** — **Authoritative Expansion Catalog** \| **Generated:** 2026-09-23 \| **Total Expansions:** 11 |
+| 🟢 `CURRENT` | [`docs/expansions/EXPANSIONS_MASTER_CATALOG.md`](expansions/EXPANSIONS_MASTER_CATALOG.md) | 9,344 | **ASHFALL Expansions 01–11 Master Systems & Integration Atlas** — **Authoritative Expansion Catalog** \| **Generated:** 2026-09-24 \| **Total Expansions:** 11 |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_3_4_MASTER_PLAN.md`](expansions/EXPANSION_3_4_MASTER_PLAN.md) | 21,358 | **ASHFALL — EXPANSION 3 & 4: COMPREHENSIVE IMPLEMENTATION PLAN** — **Goal**: Add dynamic condition, contamination, and purity to all scavenged items. |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_CONTENT_MATRIX.md`](expansions/EXPANSION_CONTENT_MATRIX.md) | 1,592 | **Expansion Content Matrix — Four Charter Expansions** — All 82 quests/questlines across the four charter expansions cross-reference valid location IDs, item IDs, and faction... |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_CONTINUITY_AUDIT.md`](expansions/EXPANSION_CONTINUITY_AUDIT.md) | 1,387 | **Expansion Continuity & Chronology Audit** — All four expansions operate within a synchronized campaign chronology: |
@@ -1864,6 +1904,48 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave135/cw135_18_the_delta_is_a_measured_boundary_plan.md`](expansions/prose_wave135/cw135_18_the_delta_is_a_measured_boundary_plan.md) | 1,464,392 | **Plan CW135-18 — The Delta Is a Measured Boundary (Lane A: Narrative and prose)** — **VERIFIED:** `Assets/StreamingAssets/Data/narrative/surface_radiation_topo_sheets.json` contains `topo_sheet_alluvia... |
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave135/cw135_19_trade_food_for_protection_plan.md`](expansions/prose_wave135/cw135_19_trade_food_for_protection_plan.md) | 1,461,126 | **Plan CW135-19 — Trade Food for Protection (Lane A: Narrative and prose)** — **VERIFIED:** `Assets/StreamingAssets/Data/environmental_texts_expansion_05.json` contains `env_farmers_market_sign` ... |
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave135/cw135_20_initials_too_worn_to_read_plan.md`](expansions/prose_wave135/cw135_20_initials_too_worn_to_read_plan.md) | 1,445,191 | **Plan CW135-20 — Initials Too Worn to Read (Lane A: Narrative and prose)** — **VERIFIED:** `Assets/StreamingAssets/Data/narrative/found_objects_expansion.json` contains `found_01_tin_cup` at `it... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/PROSE_WAVE136_INDEX.md`](expansions/prose_wave136/PROSE_WAVE136_INDEX.md) | 8,335 | **Prose Wave 136 — Twenty Records, Twenty Bounded Voices** — Twenty new prose-first Lane A plans selected from fresh local source records and the Master World Bible's Part 35 wri... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_01_the_bee_is_here_plan.md`](expansions/prose_wave136/cw136_01_the_bee_is_here_plan.md) | 1,644,323 | **Plan CW136-01 — The Bee Is Here** — This is a prose-first Lane A plan grounded in the current authored record `journal_raw_b3_61_botanist_the_bee` at `As... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_02_forty_seven_names_at_grange_hall_plan.md`](expansions/prose_wave136/cw136_02_forty_seven_names_at_grange_hall_plan.md) | 1,563,109 | **Plan CW136-02 — Forty-Seven Names at Grange Hall** — This is a prose-first Lane A plan grounded in the current authored record `codex_locations_grange_hall` at `Assets/St... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_03_pebbles_on_the_pressure_plate_plan.md`](expansions/prose_wave136/cw136_03_pebbles_on_the_pressure_plate_plan.md) | 1,574,311 | **Plan CW136-03 — Pebbles on the Pressure Plate** — This is a prose-first Lane A plan grounded in the current authored record `field_fauna_ash_crow` at `Assets/Streaming... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_04_a_morning_bulletin_for_the_holdfast_plan.md`](expansions/prose_wave136/cw136_04_a_morning_bulletin_for_the_holdfast_plan.md) | 1,570,433 | **Plan CW136-04 — A Morning Bulletin for the Holdfast** — This is a prose-first Lane A plan grounded in the current authored record `radio_prog_shelter_morning_bulletin` at `A... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_05_a_stairwell_that_keeps_an_echo_plan.md`](expansions/prose_wave136/cw136_05_a_stairwell_that_keeps_an_echo_plan.md) | 1,562,230 | **Plan CW136-05 — A Stairwell That Keeps an Echo** — This is a prose-first Lane A plan grounded in the current authored record `atm_loc_arrival_flooded_subway` at `Assets... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_06_a_request_for_other_coverage_plan.md`](expansions/prose_wave136/cw136_06_a_request_for_other_coverage_plan.md) | 1,535,240 | **Plan CW136-06 — A Request for Other Coverage** — This is a prose-first Lane A plan grounded in the current authored record `comm_tpl_duty_shift_swap_request` at `Asse... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_07_two_marks_and_a_date_plan.md`](expansions/prose_wave136/cw136_07_two_marks_and_a_date_plan.md) | 1,564,489 | **Plan CW136-07 — Two Marks and a Date** — This is a prose-first Lane A plan grounded in the current authored record `culture_marks_on_the_doorframe` at `Assets... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_08_weight_of_the_lead_shroud_plan.md`](expansions/prose_wave136/cw136_08_weight_of_the_lead_shroud_plan.md) | 1,564,277 | **Plan CW136-08 — Weight of the Lead Shroud** — This is a prose-first Lane A plan grounded in the current authored record `liturgy_cobalt_rite_of_the_lead_shroud` at... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_09_the_red_circle_on_the_page_plan.md`](expansions/prose_wave136/cw136_09_the_red_circle_on_the_page_plan.md) | 1,580,755 | **Plan CW136-09 — The Red Circle on the Page** — This is a prose-first Lane A plan grounded in the current authored record `edu_record_007` at `Assets/StreamingAssets... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_10_the_handwriting_changes_on_day_twelve_plan.md`](expansions/prose_wave136/cw136_10_the_handwriting_changes_on_day_twelve_plan.md) | 1,553,431 | **Plan CW136-10 — The Handwriting Changes on Day Twelve** — This is a prose-first Lane A plan grounded in the current authored record `deep_lore_regional_blood_bank` at `Assets/... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_11_what_the_marrow_record_knows_plan.md`](expansions/prose_wave136/cw136_11_what_the_marrow_record_knows_plan.md) | 1,584,380 | **Plan CW136-11 — What the Marrow Record Knows** — This is a prose-first Lane A plan grounded in the current authored record `pathology_autopsy_bone_marrow_aplasia` at ... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_12_the_valves_that_stay_in_hands_plan.md`](expansions/prose_wave136/cw136_12_the_valves_that_stay_in_hands_plan.md) | 1,567,950 | **Plan CW136-12 — The Valves That Stay in Hands** — This is a prose-first Lane A plan grounded in the current authored record `epilogue_demographics_persevering` at `Ass... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_13_span_fourteen_is_not_a_suggestion_plan.md`](expansions/prose_wave136/cw136_13_span_fourteen_is_not_a_suggestion_plan.md) | 1,552,486 | **Plan CW136-13 — Span Fourteen Is Not a Suggestion** — This is a prose-first Lane A plan grounded in the current authored record `salt_mine_brine_spring_warning` at `Assets... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_14_the_stone_punches_forward_plan.md`](expansions/prose_wave136/cw136_14_the_stone_punches_forward_plan.md) | 1,568,971 | **Plan CW136-14 — The Stone Punches Forward** — This is a prose-first Lane A plan grounded in the current authored record `hymnal_geophone_dirge_of_the_p_wave` at `A... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_15_two_ledgers_can_both_be_right_plan.md`](expansions/prose_wave136/cw136_15_two_ledgers_can_both_be_right_plan.md) | 1,565,336 | **Plan CW136-15 — Two Ledgers Can Both Be Right** — This is a prose-first Lane A plan grounded in the current authored record `dlg_d482_checkpoint_quartermasters` at `As... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_16_the_tick_before_the_knock_plan.md`](expansions/prose_wave136/cw136_16_the_tick_before_the_knock_plan.md) | 1,579,964 | **Plan CW136-16 — The Tick Before the Knock** — This is a prose-first Lane A plan grounded in the current authored record `maint_gen_01_daily_check` at `Assets/Strea... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_17_the_schedule_says_it_is_time_plan.md`](expansions/prose_wave136/cw136_17_the_schedule_says_it_is_time_plan.md) | 1,541,542 | **Plan CW136-17 — The Schedule Says It Is Time** — This is a prose-first Lane A plan grounded in the current authored record `radio_verdict_fuse_serviced` at `Assets/St... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_18_forty_two_said_fourteen_written_plan.md`](expansions/prose_wave136/cw136_18_forty_two_said_fourteen_written_plan.md) | 1,560,425 | **Plan CW136-18 — Forty-Two Said, Fourteen Written** — This is a prose-first Lane A plan grounded in the current authored record `journal_qm_02_loma_arrival` at `Assets/Str... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_19_the_button_left_in_the_letter_plan.md`](expansions/prose_wave136/cw136_19_the_button_left_in_the_letter_plan.md) | 1,556,290 | **Plan CW136-19 — The Button Left in the Letter** — This is a prose-first Lane A plan grounded in the current authored record `doc_unsent_soldier_letter` at `Assets/Stre... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave136/cw136_20_someone_added_beneath_the_sign_plan.md`](expansions/prose_wave136/cw136_20_someone_added_beneath_the_sign_plan.md) | 1,556,967 | **Plan CW136-20 — Someone Added Beneath the Sign** — This is a prose-first Lane A plan grounded in the current authored record `loc_crossing_viaduct_gate` at `Assets/Stre... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/PROSE_WAVE137_INDEX.md`](expansions/prose_wave137/PROSE_WAVE137_INDEX.md) | 8,224 | **Prose Wave 137 — Twenty Canon-Bounded Expansion Plans** — Twenty fresh records selected from local ASHFALL catalogs and rotated through the Master World Bible’s Part 35 writin... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_01_the_harvest_that_fits_in_one_bowl_plan.md`](expansions/prose_wave137/cw137_01_the_harvest_that_fits_in_one_bowl_plan.md) | 1,558,581 | **Plan CW137-01 — The Harvest That Fits in One Bowl** — This is a prose-first Lane A plan grounded in the current authored record `ceremony_ashfall_harvest` at `ceremonies.j... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_02_the_last_leaflet_at_the_printworks_plan.md`](expansions/prose_wave137/cw137_02_the_last_leaflet_at_the_printworks_plan.md) | 1,593,145 | **Plan CW137-02 — The Last Leaflet at the Printworks** — This is a prose-first Lane A plan grounded in the current authored record `codex_locations_printworks` at `codex_entr... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_03_barge_three_keeps_its_mooring_plan.md`](expansions/prose_wave137/cw137_03_barge_three_keeps_its_mooring_plan.md) | 1,578,954 | **Plan CW137-03 — Barge Three Keeps Its Mooring** — This is a prose-first Lane A plan grounded in the current authored record `radio_intercept_flotilla_coastal_relay_07`... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_04_a_circle_with_no_required_speech_plan.md`](expansions/prose_wave137/cw137_04_a_circle_with_no_required_speech_plan.md) | 1,601,100 | **Plan CW137-04 — A Circle With No Required Speech** — This is a prose-first Lane A plan grounded in the current authored record `therapy_support_circle` at `psychological_... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_05_the_rate_has_never_gone_down_plan.md`](expansions/prose_wave137/cw137_05_the_rate_has_never_gone_down_plan.md) | 1,590,351 | **Plan CW137-05 — The Rate Has Never Gone Down** — This is a prose-first Lane A plan grounded in the current authored record `dlg_d493_weighbridge_toll_grumble` at `fac... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_06_pressure_drop_on_bank_three_plan.md`](expansions/prose_wave137/cw137_06_pressure_drop_on_bank_three_plan.md) | 1,585,183 | **Plan CW137-06 — Pressure Drop on Bank Three** — This is a prose-first Lane A plan grounded in the current authored record `maint_air_filter_pressure_drop` at `narrat... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_07_the_canister_still_in_the_tube_plan.md`](expansions/prose_wave137/cw137_07_the_canister_still_in_the_tube_plan.md) | 1,576,770 | **Plan CW137-07 — The Canister Still in the Tube** — This is a prose-first Lane A plan grounded in the current authored record `deep_lore_central_postal_hub` at `narrativ... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_08_the_vent_has_no_speaker_plan.md`](expansions/prose_wave137/cw137_08_the_vent_has_no_speaker_plan.md) | 1,581,547 | **Plan CW137-08 — The Vent Has No Speaker** — This is a prose-first Lane A plan grounded in the current authored record `watch_09_vent_voice` at `narrative/night_w... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_09_the_name_page_is_torn_away_plan.md`](expansions/prose_wave137/cw137_09_the_name_page_is_torn_away_plan.md) | 1,586,506 | **Plan CW137-09 — The Name Page Is Torn Away** — This is a prose-first Lane A plan grounded in the current authored record `doc_child_workbook_exercises` at `narrativ... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_10_justice_without_a_victory_speech_plan.md`](expansions/prose_wave137/cw137_10_justice_without_a_victory_speech_plan.md) | 1,624,661 | **Plan CW137-10 — Justice Without a Victory Speech** — This is a prose-first Lane A plan grounded in the current authored record `epilogue_governance_reconciliation` at `ca... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_11_two_witnesses_or_the_page_stays_blank_plan.md`](expansions/prose_wave137/cw137_11_two_witnesses_or_the_page_stays_blank_plan.md) | 1,589,338 | **Plan CW137-11 — Two Witnesses or the Page Stays Blank** — This is a prose-first Lane A plan grounded in the current authored record `culture_two_witnesses_or_blank` at `muster... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_12_a_lesson_in_what_moves_downhill_plan.md`](expansions/prose_wave137/cw137_12_a_lesson_in_what_moves_downhill_plan.md) | 1,617,473 | **Plan CW137-12 — A Lesson in What Moves Downhill** — This is a prose-first Lane A plan grounded in the current authored record `journal_raw_b3_65_teacher_the_first_lesson... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_13_an_evening_story_slot_without_a_lesson_plan.md`](expansions/prose_wave137/cw137_13_an_evening_story_slot_without_a_lesson_plan.md) | 1,590,671 | **Plan CW137-13 — An Evening Story Slot Without a Lesson** — This is a prose-first Lane A plan grounded in the current authored record `radio_prog_classroom_evening_story` at `ra... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_14_the_mark_on_the_parking_structure_plan.md`](expansions/prose_wave137/cw137_14_the_mark_on_the_parking_structure_plan.md) | 1,577,280 | **Plan CW137-14 — The Mark on the Parking Structure** — This is a prose-first Lane A plan grounded in the current authored record `act_claim_arbitration` at `muster_faction_... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_15_a_scarf_that_kept_the_smell_of_smoke_plan.md`](expansions/prose_wave137/cw137_15_a_scarf_that_kept_the_smell_of_smoke_plan.md) | 1,553,541 | **Plan CW137-15 — A Scarf That Kept the Smell of Smoke** — This is a prose-first Lane A plan grounded in the current authored record `found_02_wool_scarf` at `narrative/found_o... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_16_a_monastic_order_of_recorded_media_plan.md`](expansions/prose_wave137/cw137_16_a_monastic_order_of_recorded_media_plan.md) | 1,590,728 | **Plan CW137-16 — A Monastic Order of Recorded Media** — This is a prose-first Lane A plan grounded in the current authored record `codex_factions_archivists` at `codex_entri... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_17_the_ice_core_relay_does_not_finish_its_sentence_plan.md`](expansions/prose_wave137/cw137_17_the_ice_core_relay_does_not_finish_its_sentence_plan.md) | 1,587,054 | **Plan CW137-17 — The Ice Core Relay Does Not Finish Its Sentence** — This is a prose-first Lane A plan grounded in the current authored record `radio_intercept_scientific_ice_core_relay_... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_18_a_clock_stopped_at_03_14_plan.md`](expansions/prose_wave137/cw137_18_a_clock_stopped_at_03_14_plan.md) | 1,560,867 | **Plan CW137-18 — A Clock Stopped at 03:14** — This is a prose-first Lane A plan grounded in the current authored record `found_11_pocket_watch` at `narrative/found... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_19_the_clerk_who_keeps_trading_shifts_plan.md`](expansions/prose_wave137/cw137_19_the_clerk_who_keeps_trading_shifts_plan.md) | 1,583,316 | **Plan CW137-19 — The Clerk Who Keeps Trading Shifts** — This is a prose-first Lane A plan grounded in the current authored record `dlg_d505_conscription_office_clerks` at `f... |
+| 🟢 `CURRENT` | [`docs/expansions/prose_wave137/cw137_20_the_battery_test_with_no_promise_plan.md`](expansions/prose_wave137/cw137_20_the_battery_test_with_no_promise_plan.md) | 1,592,111 | **Plan CW137-20 — The Battery Test With No Promise** — This is a prose-first Lane A plan grounded in the current authored record `maint_emergency_lighting_battery` at `narr... |
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave31/PROSE_WAVE31_INDEX.md`](expansions/prose_wave31/PROSE_WAVE31_INDEX.md) | 1,801 | **Prose Wave 31 — Six Places, Six Kinds of Work** — This six-plan batch contains original prose-first game-content expansion plans grounded in current local data. The `C... |
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave31/cw31_01_the_axle_keeps_a_place_plan.md`](expansions/prose_wave31/cw31_01_the_axle_keeps_a_place_plan.md) | 265,101 | **CONTENT EXPANSION CW31-01 — The Axle Keeps a Place** — **Content type:** prose-first playable-content expansion plan with scene drafts, diegetic records, conversation fragm... |
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave31/cw31_02_clean_wire_through_the_hatch_plan.md`](expansions/prose_wave31/cw31_02_clean_wire_through_the_hatch_plan.md) | 261,753 | **CONTENT EXPANSION CW31-02 — Clean Wire Through the Hatch** — **Content type:** prose-first playable-content expansion plan with scene drafts, diegetic records, conversation fragm... |
@@ -3025,12 +3107,12 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SHELTER-CAPACITY-AUTHORITY-103.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SHELTER-CAPACITY-AUTHORITY-103.md) | 15,323 | **PLAN-SHELTER-CAPACITY-AUTHORITY-103 — Room Occupancy, Overcrowding & Sleep Quality** — **Wave 9 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SKILL-PROGRESSION-TRUTH-113.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SKILL-PROGRESSION-TRUTH-113.md) | 12,451 | **PLAN-SKILL-PROGRESSION-TRUTH-113 — Skill Growth, Atrophy & Display Consistency** — **Wave 9 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/README.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/README.md) | 4,610 | **ASHFALL Expansion & Integration Program — Wave 9 (2026-09-21)** — Fifteen new plans (101–115): **ten gap-sealing, three major expansion, two |
-| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md`](plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md) | 319,354 | **Expansion-series Plan 17 — Quest Content and Lifecycle Architecture** — **Status:** Design proposal; documentation only. No implementation ownership is claimed. |
-| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md`](plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md) | 298,774 | **Expansion-series Plan 18 — Expedition Location Selection** — **Status:** Architecture proposal; documentation only. |
-| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md`](plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md) | 292,621 | **Expansion-series Plan 19 — Authored and Generated World Content Boundaries** — **Status:** Architecture and content proposal; documentation only. |
-| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md`](plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md) | 274,744 | **Expansion-series Plan 20 — Authored Dialogue Graphs and Prose** — **Status:** Dialogue/content architecture proposal; documentation only. |
-| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md`](plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md) | 270,753 | **Expansion-series Plan 21 — Dialogue Context, Memory, and Gates** — **Status:** Design proposal; documentation only. |
-| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md`](plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md) | 306,973 | **Expansion-series Plan 22 — Dialogue Consequence Routing** — **Status:** Integration design proposal; documentation only. |
+| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md`](plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md) | 374,669 | **Expansion-series Plan 17 — Quest Content and Lifecycle Architecture** — **Status:** Design proposal; documentation only. No implementation ownership is claimed. |
+| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md`](plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md) | 349,611 | **Expansion-series Plan 18 — Expedition Location Selection** — **Status:** Architecture proposal; documentation only. |
+| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md`](plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md) | 343,368 | **Expansion-series Plan 19 — Authored and Generated World Content Boundaries** — **Status:** Architecture and content proposal; documentation only. |
+| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md`](plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md) | 320,005 | **Expansion-series Plan 20 — Authored Dialogue Graphs and Prose** — **Status:** Dialogue/content architecture proposal; documentation only. |
+| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md`](plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md) | 314,837 | **Expansion-series Plan 21 — Dialogue Context, Memory, and Gates** — **Status:** Design proposal; documentation only. |
+| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md`](plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md) | 352,317 | **Expansion-series Plan 22 — Dialogue Consequence Routing** — **Status:** Integration design proposal; documentation only. |
 | 🟢 `CURRENT` | [`docs/plans/flagship_b5_b8/EXPANSION1_WATER_CONDENSER.md`](plans/flagship_b5_b8/EXPANSION1_WATER_CONDENSER.md) | 3,907 | **§27 Follow-On Expansion 1 — Atmospheric Water Condenser (B5–B8 continuation)** — - **Build** (`Main.WaterCondenserTryBuild`): live |
 | 🟢 `CURRENT` | [`docs/plans/flagship_b5_b8/EXPANSION2_SOURCE_FAILURE_EVENTS.md`](plans/flagship_b5_b8/EXPANSION2_SOURCE_FAILURE_EVENTS.md) | 3,242 | **§27 Follow-On Expansion 2 — Source Maintenance/Failure Events (B5–B8 continuation)** — - Every edge fires **exactly once per degradation cycle**; service actions |
 | 🟢 `CURRENT` | [`docs/plans/flagship_b5_b8/EXPANSION3_CROP_ROTATION.md`](plans/flagship_b5_b8/EXPANSION3_CROP_ROTATION.md) | 3,082 | **§27 Follow-On Expansion 3 — Crop Rotation Ledger (B5–B8 continuation)** — - Additive `GreenhousePlotState.sameCropStreak` + `lastCropId` (the soil's |
@@ -3135,7 +3217,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_3.md`](ui/UI_PANELS_MASTER_VOLUME_3.md) | 36,779 | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_4.md`](ui/UI_PANELS_MASTER_VOLUME_4.md) | 36,873 | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_5.md`](ui/UI_PANELS_MASTER_VOLUME_5.md) | 41,257 | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
-| 🟢 `CURRENT` | [`docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md`](ui/UI_PANEL_ARCHITECTURE_GUIDE.md) | 20,205 | **ASHFALL Godot UI Panel Architecture & Node Binding Guide** — **Authoritative UI Contract Guide** \| **Generated:** 2026-09-23 \| **Scene-Backed Panels:** 22 |
+| 🟢 `CURRENT` | [`docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md`](ui/UI_PANEL_ARCHITECTURE_GUIDE.md) | 20,205 | **ASHFALL Godot UI Panel Architecture & Node Binding Guide** — **Authoritative UI Contract Guide** \| **Generated:** 2026-09-24 \| **Scene-Backed Panels:** 22 |
 | 🟢 `CURRENT` | [`docs/ui/UI_VISUAL_TEXT_SPEC.md`](ui/UI_VISUAL_TEXT_SPEC.md) | 6,679 | **ASHFALL — UI Visual Information (text spec)** — All authored in house voice: cold, exhausted, human, restrained; specificity |
 | 🟢 `CURRENT` | [`docs/ui/UX_REGRESSION_MATRIX.md`](ui/UX_REGRESSION_MATRIX.md) | 2,625 | **ASHFALL — UX, Accessibility & Onboarding Regression Matrix** — **Execution Date:** 2026-09-01 |
 | 🟢 `CURRENT` | [`docs/utility_ai/UTILITY_ACTION_REQUIREMENT_MATRIX.md`](utility_ai/UTILITY_ACTION_REQUIREMENT_MATRIX.md) | 2,810 | **Utility Action Requirement Matrix** — The current Utility AI Core (`UtilityActionDef`, `UtilityActionScorer`) does **not** have a built-in requirement/elig... |
@@ -3223,7 +3305,7 @@ The following documents share identical or near-identical filenames across root,
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
-| 🟢 `CURRENT` | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | 72,805 | **ASHFALL Data Authority & Master Catalog Registry** — **Authoritative Location:** `Assets/StreamingAssets/Data/` \| **Last Verified:** 2026-09-23 |
+| 🟢 `CURRENT` | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | 72,894 | **ASHFALL Data Authority & Master Catalog Registry** — **Authoritative Location:** `Assets/StreamingAssets/Data/` \| **Last Verified:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/data/DATA_AUTHORITY_NAMING_DRIFT.md`](data/DATA_AUTHORITY_NAMING_DRIFT.md) | 2,656 | **ASHFALL — Data Authority Naming Drift Inventory & Migration Notes** — **Date:** 2026-09-06 |
 | 🟢 `CURRENT` | [`docs/data/DATA_GAP_AUDIT.md`](data/DATA_GAP_AUDIT.md) | 11,916 | **ASHFALL Data Gap Audit** — Counted entries in every top-level JSON catalog, identified C# consumers per catalog, |
 | 🟢 `CURRENT` | [`docs/data/SNAKE_CASE_MIGRATION.md`](data/SNAKE_CASE_MIGRATION.md) | 6,317 | **ASHFALL — snake_case Migration Tracker (Plans 47+)** — **Policy:** spelling-only migration. ID values, schema versions and value |
@@ -3250,7 +3332,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2267 documents)
+## 9. General Project Guides & Archive Reference (2268 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -3511,8 +3593,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — name: ASHFALL Tactical UI |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 10,466 | **ASHFALL PROJECT — GEMINI Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 10,465 | **ASHFALL PROJECT — GOOSE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
-| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 230,497 | **ASHFALL Integration Plans** — This is the sole live integration ledger. It is not a backlog and must not |
-| 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 30,462 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
+| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 241,962 | **ASHFALL Integration Plans** — This is the sole live integration ledger. It is not a backlog and must not |
+| 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 31,022 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 10,468 | **ASHFALL PROJECT — MIMOCODE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_131_Wasteland_Information_Rumor_Network.md`](../Next-steps-plans/Plan_131_Wasteland_Information_Rumor_Network.md) | 8,716 | **Plan 131 — Wasteland Information & Rumor Network** — Create a persistent information-flow system where news, rumors, and intelligence propagate between settlements, facti... |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md`](../Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md) | 13,113 | **Plan 132 — Survivor Hidden Agendas & Betrayal Arc** — Create a persistent hidden-agenda system where survivors carry secret motivations, loyalties, and goals that unfold o... |
@@ -3835,7 +3917,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 2,136 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 10,464 | **ASHFALL PROJECT — VIBE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`WAVE9_PART1_CLOSEOUT.md`](../WAVE9_PART1_CLOSEOUT.md) | 10,325 | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 301,872 | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 312,323 | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
 | 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | 94,305 | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
@@ -3935,7 +4017,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/bodymind/PSYCHOLOGICAL_SYSTEM_OVERLAP_AUDIT.md`](bodymind/PSYCHOLOGICAL_SYSTEM_OVERLAP_AUDIT.md) | 2,807 | **Psychological System Overlap Audit & Non-Overlap Contract** — This audit ensures ASHFALL maintains clear boundaries between its psychological systems without duplicating mental he... |
 | 🟢 `CURRENT` | [`docs/campaign/DAILY_BRIEFING_SOURCE_TABLE.md`](campaign/DAILY_BRIEFING_SOURCE_TABLE.md) | 2,193 | **DAILY BRIEFING PRODUCER & SOURCE TABLE** — **Document Version:** 1.0.0 |
 | 🟢 `CURRENT` | [`docs/campaign/DAILY_BRIEFING_TAXONOMY.md`](campaign/DAILY_BRIEFING_TAXONOMY.md) | 2,510 | **DAILY BRIEFING TAXONOMY & CADENCE MODEL** — **Document Version:** 1.0.0 |
-| 🟢 `CURRENT` | [`docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md`](campaign/EVENT_SEMANTIC_PARITY_MATRIX.md) | 17,133 | **EVENT SEMANTIC PARITY MATRIX** — // SPDX-License-Identifier: MIT |
+| 🟢 `CURRENT` | [`docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md`](campaign/EVENT_SEMANTIC_PARITY_MATRIX.md) | 17,622 | **EVENT SEMANTIC PARITY MATRIX** — // SPDX-License-Identifier: MIT |
 | 🟢 `CURRENT` | [`docs/cartography/DAMAGED_MAP_AUTHORITY_MAP.md`](cartography/DAMAGED_MAP_AUTHORITY_MAP.md) | 3,922 | **Damaged-Map Authority Map (Plan 85)** — One authority per concern. Plan 85 added no parallel registries. |
 | 🟢 `CURRENT` | [`docs/cartography/DAMAGED_MAP_ZONE_MATRIX.md`](cartography/DAMAGED_MAP_ZONE_MATRIX.md) | 3,710 | **Damaged-Map Zone Matrix — 12 Zones (Plan 85)** — All data from the catalog as landed. Area types and reward identities are materially distinct; no two installations s... |
 | 🟢 `CURRENT` | [`docs/cartography/INSTALLATION_LOOT_PROVENANCE.md`](cartography/INSTALLATION_LOOT_PROVENANCE.md) | 4,097 | **Installation Loot Provenance (Plan 85)** — `revealed_items` is implemented as the installation expedition destination's **`lootCategories`** — the guaranteed-el... |
@@ -4433,7 +4515,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/gaps/logs/PLANS_150_153_NARRATIVE_ACTIVATION_SEAL_LOG.md`](gaps/logs/PLANS_150_153_NARRATIVE_ACTIVATION_SEAL_LOG.md) | 2,441 | **Plans 150–153 Narrative Activation Seal Log** — Date: 2026-09-12 |
 | 🟢 `CURRENT` | [`docs/gaps/plans/GAP-48-49_DESTINATION_SEAMS_SEALING_PLAN.md`](gaps/plans/GAP-48-49_DESTINATION_SEAMS_SEALING_PLAN.md) | 4,906 | **GAP-48/49 — Destination-Level Weather Gates & Micro-Location Bindings — Sealing Plan** — Sequel to `docs/expeditions/PLAN76_CLOSEOUT.md` (deferred items) and |
 | 🟢 `CURRENT` | [`docs/governance/DECISION_PACKET_2026-09-18.md`](governance/DECISION_PACKET_2026-09-18.md) | 44,263 | **ASHFALL — Foreman Decision Packet** — **Date:** 2026-09-18 · **Prepared for:** Foreman (user) · **Prepared by:** Integrator |
-| 🟢 `CURRENT` | [`docs/governance/DECISION_REGISTER.md`](governance/DECISION_REGISTER.md) | 423,794 | **ASHFALL Standing Decision Register** — **Authority:** Wave 10 Part 2 — Task E1\ |
+| 🟢 `CURRENT` | [`docs/governance/DECISION_REGISTER.md`](governance/DECISION_REGISTER.md) | 433,950 | **ASHFALL Standing Decision Register** — **Authority:** Wave 10 Part 2 — Task E1\ |
 | 🟢 `CURRENT` | [`docs/greenhouse/GREENHOUSE_CRAFTING_BINDINGS.md`](greenhouse/GREENHOUSE_CRAFTING_BINDINGS.md) | 2,228 | **GREENHOUSE CRAFTING BINDINGS (plan §37-38)** — Four new recipes appended to `Assets/StreamingAssets/Data/recipes.json` |
 | 🟢 `CURRENT` | [`docs/greenhouse/GREENHOUSE_ITEM_CATALOG_AUTHORITY.md`](greenhouse/GREENHOUSE_ITEM_CATALOG_AUTHORITY.md) | 2,720 | **GREENHOUSE ITEM CATALOG AUTHORITY (Plan 91)** — `ItemCatalogLoader.SecondaryItemFiles` (`Assets/Ashfall.Core/Inventory/ItemCatalogLoader.cs:67`) |
 | 🟢 `CURRENT` | [`docs/greenhouse/GREENHOUSE_ITEM_GLOBAL_ID_AUDIT.md`](greenhouse/GREENHOUSE_ITEM_GLOBAL_ID_AUDIT.md) | 3,890 | **GREENHOUSE ITEM GLOBAL ID AUDIT (Plan 91)** — Global item namespace at Plan 91 execution: **747 unique IDs** across 10 item |
@@ -4741,7 +4823,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md`](plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md) | 14,039 | **SHELTER FAILURE EFFECTS & QUARANTINE WIRING — INTEGRATION PLAN (G6 + QUARANTINE CONSTRUCTION)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (G6); |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_IMPLEMENTATION_LOG.md`](plans/SHELTER_GRID_CATALOG_SEAL_IMPLEMENTATION_LOG.md) | 7,534 | **SHELTER GRID CATALOG SEAL — IMPLEMENTATION LOG** — Plan: `docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md` |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md`](plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md) | 17,663 | **SHELTER GRID CATALOG SEAL — INTEGRATION PLAN (G1–G3)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (2026-09-06) |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md`](plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md) | 15,775 | **ASHFALL — Unblocked Plans Audit (2026-09-19)** — **Auditor role:** read-only queue audit requested by the foreman (user). |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md`](plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md) | 15,906 | **ASHFALL — Unblocked Plans Audit (2026-09-19)** — **Auditor role:** read-only queue audit requested by the foreman (user). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_C3_PLANS_174_175_INTEGRATION_PLAN.md`](plans/UNBLOCK_C3_PLANS_174_175_INTEGRATION_PLAN.md) | 5,333 | **UNBLOCK C3 PLANS 174 & 175 — FULL HOST INTEGRATION PLAN** — **Role:** Integrator (user-authorized 2026-09-23) |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md) | 5,580 | **ASHFALL Plan 141 & Plan 145 Full Host Integration Plan** — **Batch 10: Research → Downstream Unlocks Bridge (Plan 141) & Unified Ending Resolution & Epilogue Personalization (P... |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_BATCH11_PLANS_147_148_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH11_PLANS_147_148_INTEGRATION_PLAN.md) | 4,928 | **Batch 11 — Unblock Oldest Partial Plans: Plans 147 + 148** — **Package:** `UNBLOCK-OLDEST-BATCH11-PLANS` |
@@ -4751,6 +4833,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_BATCH7_PLANS_59_134_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH7_PLANS_59_134_INTEGRATION_PLAN.md) | 3,763 | **Batch 7 — Unblock Oldest Partial Plans: Plans 59 + 134** — **Package:** `UNBLOCK-OLDEST-BATCH7-PLANS` |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_BATCH8_PLANS_135_136_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH8_PLANS_135_136_INTEGRATION_PLAN.md) | 4,585 | **Batch 8 — Unblock Oldest Partial Plans: Plans 135 + 136** — **Package:** `UNBLOCK-OLDEST-BATCH8-PLANS` |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_BATCH9_PLANS_137_140_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH9_PLANS_137_140_INTEGRATION_PLAN.md) | 6,198 | **Batch 9 — Unblock Oldest Partial Plans: Plans 137 + 140** — **Package:** `UNBLOCK-OLDEST-BATCH9-PLANS` |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md) | 5,037 | **UNBLOCK — Plans 167 & 169: Underground Tunnel Network + Audio Accessibility** — **Status:** DONE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_RESIDUALS_PLANS_24_31_INTEGRATION_PLAN.md`](plans/UNBLOCK_RESIDUALS_PLANS_24_31_INTEGRATION_PLAN.md) | 6,112 | **Unblock Residuals — Plans 24 + 31 Integration Plan** — **Package:** `UNBLOCK-RESIDUALS-PLANS-24-31` |
 | 🟢 `CURRENT` | [`docs/plans/UNCLAIMED_CORPUS_CENSUS.md`](plans/UNCLAIMED_CORPUS_CENSUS.md) | 58,961 | **ASHFALL — Unclaimed Corpus Census (Wave 10 Part 1 / Task A1)** — Enumerated **131** files (each once). Source baseline + mandatory order extracted from each header. |
 | 🟢 `CURRENT` | [`docs/plans/VERDICT_HARDENING_IMPLEMENTATION_LOG.md`](plans/VERDICT_HARDENING_IMPLEMENTATION_LOG.md) | 1,002 | **Verdict Hardening Implementation Log** — - Added `VerdictEvidenceChain` in Core. |
@@ -4776,7 +4859,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/PLAN_14_UNDERPASS_SETTLEMENTS_HIDDEN_ROUTES_AND_INFRASTRUCTURE.md`](plans/expansion_wave1/PLAN_14_UNDERPASS_SETTLEMENTS_HIDDEN_ROUTES_AND_INFRASTRUCTURE.md) | 10,770,590 | **Plan 14: Underpass Settlements, Hidden Routes, and Wasteland Infrastructure** — **Status:** Starter expansion wave plus Continuation Wave 2; documentation-only, premise-gated, and not an implementa... |
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/PLAN_15_SURVIVOR_VOCATIONS_PERSONAL_ARCS_AND_SHELTER_CULTURE.md`](plans/expansion_wave1/PLAN_15_SURVIVOR_VOCATIONS_PERSONAL_ARCS_AND_SHELTER_CULTURE.md) | 10,719,296 | **Plan 15: Survivor Vocations, Personal Arcs, and Shelter Culture** — **Status:** Starter expansion wave plus Continuation Wave 2; documentation-only, premise-gated, and not an implementa... |
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/PLAN_16_ENDGAME_HORIZONS_FACTION_CONVERGENCE_AND_LEGACY_FRONTIERS.md`](plans/expansion_wave1/PLAN_16_ENDGAME_HORIZONS_FACTION_CONVERGENCE_AND_LEGACY_FRONTIERS.md) | 10,761,272 | **Plan 16: Endgame Horizons, Faction Convergence, and Legacy Frontiers** — **Status:** Starter expansion wave plus Continuation Wave 2; documentation-only, premise-gated, and not an implementa... |
-| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/README.md`](plans/expansion_wave1/README.md) | 106,057 | **Expansion Planning Wave 1** — **Status:** Plans 1–4 have an integration-closeout Wave 11 refresh; Plans 5–8 have completed their twenty-fourth boun... |
+| 🟢 `CURRENT` | [`docs/plans/expansion_wave1/README.md`](plans/expansion_wave1/README.md) | 109,956 | **Expansion Planning Wave 1** — **Status:** Plans 1–4 have an integration-closeout Wave 11 refresh; Plans 5–8 have completed their twenty-fourth boun... |
 | 🟢 `CURRENT` | [`docs/plans/flagship_b5_b8/B5_B8_AUTHORITY_MAP.md`](plans/flagship_b5_b8/B5_B8_AUTHORITY_MAP.md) | 4,207 | **B5–B8 Authority Map (frozen at Phase 0)** — 1. One authority per domain — no second counters anywhere. |
 | 🟢 `CURRENT` | [`docs/plans/flagship_b5_b8/B5_B8_BASELINE_RECONCILIATION.md`](plans/flagship_b5_b8/B5_B8_BASELINE_RECONCILIATION.md) | 18,448 | **B5–B8 Baseline Reconciliation — Plans 64–67** — **B5 net disposition:** keep ~80% of what the brief asks to "build". Real remaining work: blight **prevention** contr... |
 | 🟢 `CURRENT` | [`docs/plans/flagship_b5_b8/B5_B8_COMPLETION_REPORT.md`](plans/flagship_b5_b8/B5_B8_COMPLETION_REPORT.md) | 10,051 | **B5–B8 Flagship Completion Report — Plans 64–67 (Shelter Closed-Loop Survival Infrastructure)** — - Implemented against `87b199b2` (2026-09-13 HEAD) + uncommitted working tree. |

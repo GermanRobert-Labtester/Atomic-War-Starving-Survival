@@ -2545,3 +2545,338 @@ Example: generated dialogue chooses a more guarded greeting because of an existi
 The data review checklist is: schema version remains valid; IDs are unique; transcript and evidence references resolve; all speaker/location/faction relationships are either canonical references or explicitly plain text; all condition fields are consumed by a current loader; missing optional references degrade safely; and content-utilization status changes only when the real consumer is integrated. Update the registry and utilization evidence after implementation rather than manually claiming reachability here.
 
 The design passes review only if an implementer can trace each player-visible statement back to either authored text or a current state owner. No generated prose may supply a new fact that the record itself never stated. This contract makes future transcript batches re-usable without creating a mutable document shadow or an undocumented evidence API.
+
+
+## Pass 20A — Authored radio theater, scheduled delivery, and deterministic quest selection
+
+### Current ownership map
+
+This continuation takes Part 43, seed 19 from the master world bible: The Machine’s tribunal broadcasts as a procedural-case radio series. The current system boundaries are unusually important here. VerdictRadioSystem loads the authored verdict_radio.json corpus, gates firing on day and Reckoning phase, publishes radio.verdict.broadcast, and persists fired IDs. Ownership notes say Plan 94 already brought the corpus to 30 Machine-Register broadcasts. RadioProgramProductionSystem owns player program preparation jobs and follow-up hooks; its own comments leave scheduling, reception, and propaganda pressure outside that system. ProceduralNarrativeSystem is a seeded quest-template selector, not a broadcast-script generator. These contracts prohibit using “procedural” as a reason to synthesize unreviewed dialogue or create a second delivery scheduler.
+
+The content model therefore has three different things. Authored episode text is canonical, reviewed prose with a stable content ID and revision. Scheduled delivery is the existing radio owner’s decision that an entry becomes eligible and fires once. Generated quest variation is a deterministic selection among authored objective, clue, or location variants, if the current quest owner can support that selection. A generated choice may select a witness role, an eligible site, or an alternate clue; it may not paraphrase a testimony, invent an NPC motive, or change a line’s meaning at runtime.
+
+### Draft data contract
+
+First inspect VerdictCatalogLoader’s exact schema, validation, and consumer path. Do not add guessed fields to verdict_radio.json. If the loader has a compatible extension seam, episode metadata can be associated with existing entry IDs through a single authored reference. If not, the integration choice is to extend the canonical loader and its validation under a named claim, or defer episode linkage; do not add a second catalog that quietly competes for the same broadcasts. Candidate fields below are a design checklist, not approved JSON:
+
+- stable entry ID, series ID, episode index, and script revision;
+- authored message or dialogue reference, content-language key, and source classification;
+- prerequisite phase/day and optional referenced quest template;
+- expected delivery surface and explicit player-reception prerequisite;
+- optional location-role references, which must resolve to current canonical locations;
+- attribution label: dramatization, verified record, disputed account, or correction;
+- migration/default behavior for older rows that lack theater metadata.
+
+Store only facts whose owner is clear. The radio system owns whether a broadcast entry fired. The player-facing radio/archive owner, if proven, owns whether a player received or reviewed it. The quest system owns its accepted state and objective completion. The map owner owns discovery. The journal/chronicle may present a derived record, but cannot become a duplicate quest or evidence ledger. A theater transcript is not automatically VerdictEvidenceChain input; that chain’s eligibility and enrollment must be checked independently, and loading prose is never evidence enrollment.
+
+### Generated variation boundaries
+
+The seeded narrative selector may be useful for choosing among pre-authored variants when a quest instance is created. The candidate pool must be stable-sorted by authored ID, filtered by current conditions, and selected only through the existing seeded RNG contract. The chosen variant is then persisted by its proper quest owner so a reload does not redraw a different witness or alter the scene the player was promised. If ProceduralNarrativeSystem does not consume these templates or cannot persist the selected variant through its current owner, treat that as a blocked integration premise.
+
+Allowed selection: among two reviewed witness introductions, select one eligible authored version; choose one clue site from candidates that satisfy route and availability; choose a response recap that corresponds to a verified state. Disallowed: generating tribunal testimony from current inventory; changing faction attribution through a random line; selecting a site that is absent from the expedition; emitting novel prose from a prompt or model; drawing a supposedly random variant per frame or per menu open; allowing enumeration order to determine the winner.
+
+### Provenance and lifecycle
+
+Every public case assertion needs an origin marker in content authoring: authored fictional scene, player-observed event, NPC recollection, or independently verified record. The UI may translate those categories into natural prose rather than expose technical tags, but the authored record should preserve them. When two sources disagree, dialogue should say that the accounts diverge. It must not upgrade a dramatized broadcast into a verified historical fact simply because the scheduler fired it.
+
+A broadcast revision after release cannot rewrite what a save has already resolved. If scripts are content-only and their IDs remain stable, update the prose with reviewed changelog notes. If a field changes state semantics, use a schema migration owned by the responsible system and preserve the old resolved outcome. Removing an episode entry must not make its quest reference dangling; deprecate it, provide an explicit replacement reference, or keep a compatible legacy definition.
+
+## Pass 20B — Content-build gates and maintenance policy
+
+A theater content build should produce an audit table, not a second runtime registry. For each authored episode it reports: unique ID; current catalog consumer; schedule condition; player-visible delivery path; script source/revision; quest reference; dialogue nodes; referenced location roles; terminal routes; accessibility text; and unresolved canon or voice review. The same entry should not be copied into the archive, journal, and quest catalog as independently editable message text. Derived surfaces reference one authority and apply presentation-specific formatting.
+
+The linter should distinguish hard failures from editorial warnings. Hard failures: duplicate or blank IDs, invalid phase/day range, missing consumer for a required reference, quest reference to absent content, unsupported schema version, no player-facing discovery route for a mandatory quest, variant pool with no eligible fallback, and a terminal quest path with no resolved outcome. Warnings: length variance, very similar openings, repeated moral framing, missing alternate text, a series episode whose prior-part callback has no recap, or lore flagged for canon review. A warning cannot be promoted to a runtime blocker unless the policy owner defines that rule.
+
+The smallest implementation-compatible slice is a static authored episode that uses the current VerdictRadioSystem and is presented through a proven existing radio/log surface. It can carry an optional quest reference only after the receiver path is confirmed. Do not implement fresh scheduling, an episode sequencer, a script generator, a public-record ledger, or a new persistence section in this slice. If an existing surface can display only a terse message, keep the theater scene as a separate authored dialogue route and link it through a verified clue. A complete story is not justification for storing the same content in two places.
+
+Source drift review is mandatory immediately before promotion. At minimum inspect the current catalog schema and loader, radio event subscriber, radio UI/log consumer, quest catalog consumer, save owner for quest progress, map selection consumer, seeded RNG interface, and VerdictEvidenceChain enrollment gates. Record the exact source paths and tests in the implementation package. Current integration-ledger completion of Plan 94 and Plan 173 establishes the baseline contract; it does not authorize editing those owners or assume their behavior will remain unchanged.
+
+Cost model: low for adding four reviewed, static episodes to the existing authoring corpus if the current surface already supports them; medium for the reconvergent quest and dialogue references; high for voice performance, localization, and a second reception surface; very high for a new procedural script system, which is deliberately outside scope. The expansion layer may add optional variants and faction-specific interpretation after the base episode sequence works. The core-game slice remains a single static case and one interaction route, so the player can understand the feature without procedural variation.
+
+The release note must distinguish “authored and scheduled” from “player encountered,” “quest available” from “quest accepted,” and “case dramatization” from “evidence.” It should list what a new save does, what an old save does, whether previously fired broadcast IDs remain fired, how revised text affects resolved cases, and what happens if an optional quest template is absent. This vocabulary prevents content revision from accidentally changing state truth.
+
+
+
+## Pass 20C — Content provenance matrix and migration checklist
+
+### Boundary matrix
+
+| Content or fact | Permanent authored authority | Runtime/generated fact | Safe presentation |
+|---|---|---|---|
+| Tribunal episode text | Reviewed episode/broadcast entry | None; selection may decide whether an authored entry is eligible | Render the exact authored version through an existing consumer |
+| Delivery eligibility | Authored schedule condition | Existing scheduler evaluates day/phase and fired state | Say scheduled or transmitted only when that fact is true |
+| Player exposure | Authored surface/reference | Current receiver may record receipt if it owns that behavior | Say heard/read only when the receiver proves it |
+| Quest objective | Authored quest template and allowed transitions | Quest instance state and selected reviewed variant | Show objective state from quest owner |
+| Witness identity | Authored character content | No generated identity in the first slice | Use placeholder roles until canonical IDs are verified |
+| Location | Canonical location data | Expedition selector chooses among eligible instances | Render the selected location, never a guessed alias |
+| Testimony status | Source classification authored per line/evidence | Player observations and quest evidence facts | Distinguish staged case, recollection, and corroboration |
+| Outcome | Authored response options | Player’s committed choice and verified delivery outcome | Recap only the effect owned and applied |
+
+No generated fact may be serialized as if it were an authored canon fact. Conversely, a static authored broadcast must not be described as dynamically generated simply because the player hears it on a different day. The content pipeline should preserve both origin and current state; presentation can remain natural and unobtrusive.
+
+### Revision and migration examples
+
+If an editor corrects punctuation or a non-semantic wording issue while retaining the same entry identity, existing fired state can remain attached to the ID. If the episode’s source classification changes from dramatization to verified record, this is semantic and requires a content review plus a resolution for saves that already saw the old version. Options include preserving the prior text revision for existing saves, displaying a correction note, or keeping the quest outcome explicitly uncertain. Do not silently reinterpret a player’s earlier decision.
+
+If an episode is removed before it ever fired, the scheduler’s corpus should no longer offer it, and any quest reference must be made optional or remapped through reviewed content. If it has already fired in a save, retain a legacy ID definition or a safe recap so the save does not contain an orphaned event. If a generated location variant disappears from the catalog, the quest must use its authored fallback or remain visibly delayed. A migration must not invent a replacement clue that was never reviewed.
+
+### Content validation rules
+
+A catalog gate can verify unique IDs and version support, but it should also verify the cross-reference graph. Check that every episode-to-quest reference resolves; every quest-to-dialogue node resolves; every location role has at least one eligible canonical location or explicit fallback; every alternative path reaches a legal terminal or recoverable state; every line’s provenance classification is known; and every optional variant has a deterministic fallback. Check consumer reachability separately from schema validity. A valid row with no subscriber or panel is not playable.
+
+Stable sort before seeded selection. Persist the chosen authored variant through the proper owner. Do not derive the choice from current hash order, machine locale, frame count, or wall clock. Localization must not change IDs or eligibility. Strings can vary by language while effect references and node IDs remain stable. If the data pipeline uses translation keys, keep them in the existing localization authority and make missing-language fallback explicit.
+
+### Handoff evidence bundle
+
+The implementation ticket should attach a compact evidence bundle: current schema excerpt; loader path; event subscriber path; player-visible surface; existing save section and capture/restore path; seeded selector interface; location eligibility owner; quest and dialogue consumers; exact catalog IDs; proposed change list; focused test commands; and rollback plan. These references are required because the master world bible is a design authority, not proof that a current runtime path exists.
+
+The core content can ship without generated variants. Expansion options include selected authored variants for repeated playthroughs, alternate actor roles, and extra location callbacks. Each option requires a small allowed pool, a stable seed contract, and a content provenance tag. Do not broaden the feature into open-ended script synthesis or generalized event sourcing. The maintainable structure is a bounded graph of reviewed content plus deterministic selection of authored components.
+
+
+## Pass 20D — Provenance for competing audience interpretations
+
+The Second Margin adds a content type that must stay distinct from evidence: audience interpretation. The original theater script is an authored dramatization. The witness account is an authored character’s recollection of a lived event. A listener’s response is an authored fictional opinion about what the audience understood. The player’s action is a saved quest choice. None of those statements becomes a verified world fact merely because they appear in the same journal entry.
+
+Represent the distinction in the authoring source, even if the player-facing prose stays natural. A content record should identify the source class, speaker or role, parent episode ID, relevant parent outcome, scope of knowledge, allowed presentation surfaces, and whether the text is factual, interpretive, disputed, or a correction. These are review fields until the canonical schema is confirmed. Do not create an “audience truth” database or store raw listener interpretations as evidence items.
+
+If the player asks the listener why they took the scene as an accusation, the answer can explain their experience without overriding the authored case. If the player shows them a verified correction, the listener can acknowledge the wording while keeping a different opinion about its tone. This creates narrative change without requiring a boolean “convinced” state. If dialogue needs to remember that the player shared the correction, the parent quest/delivery owner supplies that fact; the optional follow-up does not own another copy.
+
+The follow-up’s generated variation, if approved later, is limited to selecting an authored interpretation compatible with parent outcome and available character. No procedural generation may change the script’s text, invent an extra witness, add a faction’s endorsement, or select a conclusion unsupported by the parent state. A save must retain the selected variant if variant identity affects later lines. When no variant is eligible, use the neutral authored response and keep the optional branch open or resolve it gracefully.
+
+A provenance review compares the original and corrective wording line by line. Public correction can quote only the approved excerpt and must not imply player-observed facts that the player did not observe. Private correction may mention the witness’s preference but cannot disclose identity without consent. Silence contains no public recap. A recap that compresses several sources should retain the distinction: “the program staged a case; the watch lead described an unrecorded task; the listener heard the performance as a broader accusation.” This sentence summarizes three sources without converting any into universal truth.
+
+Migration policy: if a resolved parent quest has no optional follow-up state, treat the follow-up as not started. If the parent outcome is missing or invalid, hide the optional prompt and report a content-state validation warning in developer tooling. Do not infer an outcome from a broadcast ID. If an interpretation line is revised after release, retain its stable reference where possible; if its meaning changes, author a correction or a new revision and ensure existing players see no false history. Optional content may be disabled on old saves without changing the parent’s terminal result.
+
+
+## Pass 20E — Authorship, runtime selection, and content versioning dossier
+
+### Three layers of authority
+
+**World facts** come from current simulation and canonical system state: a site is discovered, a character is present, a quest is resolved, a transmission fired, or a program was delivered. **Authored fiction** defines dialogue, performance scripts, role histories, descriptions, and allowed outcomes. **Presentation** selects a valid line and reports the facts. These layers can meet in a scene, but no layer should silently impersonate another. The fact that a character performs a scene does not mean the scene literally happened in the player’s world.
+
+A small runtime selection may choose among authored lines by stable conditions: whether the parent outcome was public, private, or silent; whether a scene can occur at the current location; and whether an optional knowledge gate is satisfied. The selected text and IDs remain authored. No runtime system writes new story prose, arbitrates historical truth, or invents a new faction response. If a later content tool uses generated drafts for author assistance, those drafts are reviewed and committed as static content before they enter the game data authority.
+
+### Content graph ownership
+
+The broadcast catalog owns broadcast identity and schedule metadata. The dialogue catalog owns nodes and line references. The quest catalog owns objective definitions and transitions. The canonical location data owns map-place identity. The current receiver, if any, owns exposure. These catalogs may refer to the same content ID, but only one owns the full text. A central episode identifier may be a stable foreign key; it must not duplicate scripts into every catalog. At load time, the integrity pipeline verifies each reference and the consumer report verifies the edge is reachable in a shipped path.
+
+If the project currently lacks a separate dialogue catalog, the plan should use the actual data path that hosts authored dialogue rather than create a speculative one. If the radio broadcast entry can contain only one short message, keep the longer scene in the existing conversation/content owner and expose it through a verified route. If no route exists, the episode can remain a DRAFT content packet; the missing consumer is a legitimate gap to assign, not grounds to create an ad hoc panel-only authority.
+
+### Version and localization rules
+
+Keep stable semantic IDs independent from display text and locale. A punctuation correction does not change outcome identity. A new translation does not change schedule or quest condition. A new branch or changed source meaning increments the appropriate content revision and receives a save compatibility plan. If translated text is missing, fall back through the existing localization policy and preserve response IDs. Never parse prose to infer a quest effect.
+
+Voice recording requires the approved text revision and speaker role. Recording replacement should not alter a node’s consequences. Captions and transcript share the same authored line source where possible. If audio contains meaningful information absent from subtitles, the content is incomplete. If the UI truncates the text, shorten through editorial review rather than silently hide the ending.
+
+### Content utilization and failure triage
+
+A row is integrated only when a real runtime path consumes it. The utilization audit should classify each new content item as directly loaded, referenced by an already-loaded owner, editor-only, or unused. An editor-only world bible note is not playable data. An unused DRAFT row should remain outside production catalogs. If a radio entry is loaded but has no event subscriber, distinguish loader success from surface reachability. If a quest references an optional dialogue branch that is not present in the current build, the graph’s safe fallback must be authored and tested.
+
+Triage errors by layer: schema/ID failure; broken cross-reference; owner unavailable; event not routed; player surface unreachable; save state missing; presentation inaccurate; or narrative contradiction. The fixer should update the authority responsible for that failure. Do not repair a missing location by adding a UI marker, a missing quest transition by appending a journal line, or a missing audience-delivery result by toggling a dialogue flag.
+
+The same rules apply when the series grows. New episodes may share a template for revision, locale, and accessibility metadata, but must have unique authored scenes and a narrative reason to exist. A content-size target does not justify duplicate callbacks or repeated descriptions. The master bible subject points to a lane; every new record still needs evidence of its consumer, canon, and purpose.
+
+
+## Pass 21A — Folklore provenance, cohort memory, and belief boundaries
+
+### What exists, what is absent
+
+The current children’s folklore records are authored prose with structured metadata: id, tradition_type, origin_sector, folk_theme, timestamp_relative, tags, and prose. The base and batch-2 records are loaded by DailySurvivalCatalog; JournalCodex renders their text and descriptive metadata. BeliefMovementDefinition is an authored doctrine template with creed, comfort themes, blind spots, practices, conflict profiles, and tags. IdeologicalFrictionSystem reads a survivor’s existing belief profile and calculates roommate compatibility; ZealotrySystem references belief movement definitions. PsychologicalArcSystem models authored breakdown/recovery arcs through stress and treatment, not cultural inheritance. These are separate authorities.
+
+CohortChild has parent IDs, birth day, dose bands, baseline-correction state, free-text moralityMemory, maturation state/day, and loss state. The reviewed DTO and capture/restore path contain no explicit folklore ID or origin-sector field. The maturity method is one-way and the work-eligibility comment defines its current meaning; it is not a complete adulthood or ideology transition. The data catalog’s presence in the JournalCodex proves a readable content route, not that an individual survivor heard or internalized a particular tale. No content association should be inferred from a matching tag or birthplace phrase.
+
+### Authored versus generated contract
+
+Authored truth includes the original folklore entry, its source sector/time/theme, each character’s specific recollection, and the available response text. Runtime state includes a verified cohort member’s current life-stage, quest outcome, relationship, active belief profile, and location availability. A generated variation may choose among reviewed dialogue variants only when its conditions are true and the selected variant is persisted by the correct owner. It may not generate a belief, infer a childhood source, or turn a story’s theme into a political position.
+
+If an individual folklore-origin link is approved, the first design choice is whether it belongs on CohortChild or in an already existing cultural-memory owner. Prefer the CohortSystem only if this fact is truly a cohort-member fact and the current save contract can migrate it; do not create a FolkloreOriginRegistry. Candidate field origin_folklore_ids should be a list only if multiple formative stories are necessary. A singular reference is smaller but should be selected only by authored birth/childhood content and not by unstable hash order. An empty legacy value means unknown, not “never heard folklore.” Do not reuse moralityMemory as a foreign key: it currently carries a different, string-based story concept and would lose meaning or compatibility.
+
+### Belief and psychology safety
+
+The quest may show a character questioning or reinterpreting a childhood story. That is narrative dialogue, not an automatic faction conversion. Any later belief assignment must call an approved existing belief/ideology owner, respect its current preconditions, and represent an intentional player or world action. The story’s three outcomes are interpretive text choices; none directly applies a profile ID. Political positions should emerge from actual authored dialogue and a reviewed social consequence, not from a single formative rhyme as deterministic personality.
+
+Do not route discomfort or disagreement into PsychologicalArcSystem breakdown triggers. That would medicalize a cultural disagreement and blur the system’s defined stress/therapy owner. If an existing ideological-friction event is used in a later optional layer, its evidence, conversion chance, save behavior, and current day owner must be verified first. A catalog entry alone cannot apply friction.
+
+### Core and expansion data paths
+
+Core can ship with a quest that references the existing folklore ID at the authored quest-template level, without a per-survivor origin field. Expansion can add a typed member-to-folklore link only after architecture approval, current save-owner review, and a migration plan. Keep source story text in its existing canonical catalog; the quest stores a reference and player outcome, not a duplicate prose copy. An adult callback can reference the entry but should not rewrite it. If an annotation is intended to be persistent or player-authored, its owner and moderation/version policy need separate review; MVP uses fixed authored annotations only.
+
+Before promotion, verify the exact consumer and utilization of each folklore source file. The reviewed loader handles bunker_children_folklore.json and bunker_children_folklore_batch_2.json. Do not assume similarly named expansion JSON is in use until a current consumer is found. Data lint should validate unique folklore IDs, quest references, known life-stage predicates, authored line provenance, and safe fallback when an optional origin link is absent. Reachability lint must separately prove the quest is reachable from an actual interface.
+### Pass 21B — Provenance implementation choices and review gates (DRAFT)
+
+The story needs to distinguish a catalog entry that exists from a person who heard it, remembers it, or associates it with a particular place. Those are separate facts. The first implementation should avoid a new universal folklore-memory subsystem.
+
+#### Candidate implementation levels
+
+**Level 0: authored reference only.** Quest and dialogue content refer to stable folklore IDs. The current codex remains a browsable catalog. Character dialogue states their relationship to the tradition in authored text, with no claim that the system tracks individual exposure. This is the smallest safe implementation and supports the arc without changing cohort saves.
+
+**Level 1: quest-local exposure facts.** If the current quest owner already supports durable step facts, store whether the player saw the clue and which authored account they heard. These facts belong to that quest instance and do not claim to represent the entire cohort's memory. This level is appropriate for branching dialogue when existing quest persistence is sufficient.
+
+**Level 2: typed per-person origin link.** Only after a signed architecture decision, consider a stable reference between a cohort member and one or more folklore entries, plus an exposure source and provenance. This would require schema evolution, capture/restore, migration defaults, deterministic serialization, validation against loaded folklore IDs, and a clear owner. Do not add it merely to support one quest. Determine whether the correct home is CohortSystem or a separately authorized narrative-memory owner before implementation.
+
+#### Data contract if Level 2 is approved
+
+The minimum concept is not “belief.” It is a provenance record: person ID, folklore entry ID, how the person encountered it, and whether the record is authored baseline or witnessed during play. Any recall strength, interpretation, or ideological position would be a separate domain fact and must not be inferred from exposure. A stable ID is preferable to copied prose. Missing legacy fields migrate to “no tracked provenance,” not an invented exposure. Unknown catalog references produce an integrity diagnostic and a safe content fallback.
+
+Avoid a generalized framework with arbitrary tag bags, event scripting, or procedurally generated childhood history. The case is narrow: a few authored accounts, a few known people, and player-observable consequences. Expansion to other folklore traditions should be justified by real content volume and repeated use.
+
+#### Boundary matrix
+
+| Concern | Existing authority to consult | This plan may request | It must not create |
+|---|---|---|---|
+| Folklore prose and IDs | DailySurvivalCatalog and narrative JSON loader | stable references and content validation | a duplicate folklore catalog |
+| Individual maturation/work eligibility | CohortSystem | explicit provenance only after approval | a replacement cohort registry |
+| Developmental stage | ChildDevelopmentSystem and education owner | one reviewed stage contract | dialogue-local age math |
+| Belief doctrine | belief-movement data and spiritual loader | a voluntary authored response | automatic belief assignment |
+| Ideological compatibility | IdeologicalFrictionSystem | no effect unless separately authored and approved | a story-side affinity ledger |
+| Psychological stress/recovery | PsychologicalArcSystem | ordinary dialogue tone | clinical consequences for disagreement |
+| Expedition occurrence | location selector | optional clue/site request | a quest-owned map generator |
+| Persistence | current save-section owners | migration plan for an approved field | a second save store |
+
+#### Data integrity and authorship gates
+
+Each authored link must use an existing stable ID, identify the consumer, and specify behavior for missing optional content. Validators should distinguish unknown required references from missing optional context. Content must not duplicate the codex prose into a second JSON file just to give a quest its own copy. Where a scene needs a short excerpt, use the established narrative content pattern or a canonical reference, subject to current schema support.
+
+Reviewers should ask: can a player understand why this person tells this version; can the story work when the optional expedition site is absent; can older saves load without inventing a remembered story; is each claim about a character supported by authored evidence; and can the mechanic be removed without corrupting unrelated cohort, belief, or psychology state? A “no” requires a smaller design or a new recorded decision.
+### Pass 22A — Expedition aftermath evidence and generated rumor boundary (DRAFT)
+
+The proposed survey story crosses several data layers. The plan must keep authored fact, expedition result, player observation, rumor, and faction interpretation separate. An empty cargo list is not evidence that nothing happened; a completed expedition is not proof that the objective succeeded; an event in a playtest artifact is not automatically campaign truth.
+
+#### Provenance ladder
+
+**Authored content:** destination descriptions, expected hazards, survey objective definitions, debrief lines, and any known faction interests. These records are static and stable. **Runtime result:** the canonical expedition outcome, phase, location ID, and available result facts. **Player-observed evidence:** a clue actually inspected, an encounter actually resolved, or an authored report actually heard. **Quest conclusion:** verified, disproved, or inconclusive, reached by a quest owner from explicit evidence. **Public account:** a rumor only if an existing information-flow owner accepts and stores it. **Faction reaction:** a standing or access consequence only when the faction owner has a rule that consumes the specific fact.
+
+Never collapse these levels into a single “world remembers” flag. A generated text variation cannot manufacture a factual observation. A chosen debrief line cannot retroactively make the party visit a site. A rumor’s truthfulness rating does not turn unverified report into verified campaign state.
+
+#### Existing-owner map and gap statement
+
+Current source exposes ExpeditionSystem completion and failure events, a retreat-to-inbound path, and a terminal Fail method. ExpeditionHostSession owns the expedition aggregate, including expedition state, vehicle state, known locations, and DiscoveryConsequenceSystem state. The host currently updates a display LastEvent for completed and failed outcomes. RumorSystem has its own rumor network, information hubs, propagation/interception events, and state. StandingRecordEngine tracks location-oriented record mutations. Faction standing has separate owners. These facts establish available neighboring authorities, not an existing bridge among them.
+
+The reviewed host does not prove that a completed-but-unsuccessful quest return automatically creates a rumor, changes standing, updates a location record, or advances a generic quest. The plans therefore propose an explicit adapter contract and leave its implementation gated. Do not add a parallel aftermath ledger, rumor queue, standing score, or discovery journal.
+
+#### Minimal permanent/generated split
+
+Permanent authored records should define: survey objective ID; valid destination IDs; what evidence satisfies each conclusion; authored debrief speaker/lines; and any valid fallback location/evidence pair. Generated runtime values may include the actual completed expedition ID, the party/character IDs already exposed by its owner, day from the campaign calendar, and result facts supplied by existing systems. Do not procedurally generate a survivor identity, a new faction, an unexplored location ID, or a rumor headline that asserts unobserved facts.
+
+If the rumor owner accepts a player-authorized report, the report should reference its source quest/result and preserve uncertainty in its wording. If that owner does not support source references or suitable verification classes, stop at local journal and dialogue output. Do not duplicate RumorSystem records inside quest state. Similar rule for location memory: pass a verified location mutation through its current owner, and do not write directly to the map catalog.
+
+#### Stable evidence packet proposal
+
+An adapter proposal may carry a deterministic correlation key and typed references such as quest ID, expedition ID, source location ID, observed-evidence IDs, conclusion class, and originating campaign day. This is not a proposed new persisted model yet. First determine whether existing quest facts and provenance records can already express the needed links. Any added state requires a named save owner, schema/migration decision, stable ordering, capture/restore path, and tests under the project’s test policy. Missing legacy references must resolve to “not tracked” or “unknown,” never to a fabricated negative claim.
+
+#### Review questions
+
+Does each player-facing sentence identify whether its source is a direct observation, a team report, a secondhand rumor, or a conclusion? Is the claimed destination visit backed by a visit event? Can the narrative function if rumor propagation is unavailable? Can old saves load with no aftermath record? Is a standing change causally tied to a named owner and a deliberate player choice? Can the bridge be disabled without changing ExpeditionSystem's terminal lifecycle? Any unresolved answer keeps the story proposal local and non-mutating.
+### Pass 22B — Authored survey records and runtime fact contract (DRAFT)
+
+An authored survey objective should identify the question it can answer, the location references it may use, and its evidence rules. It should not embed a route map, a current weather result, or a claim about who currently controls the region. Those belong to runtime authorities or authored world-state inputs.
+
+#### Candidate content record, subject to the live schema
+
+| Field concept | Meaning | Static or runtime | Validation |
+|---|---|---|---|
+| objective ID | stable authored survey objective | static | unique stable snake_case identifier |
+| destination IDs | existing legal location references | static | each reference resolves through current location authority |
+| evidence IDs | allowed authored observation types | static | known evidence vocabulary; no free-form effects |
+| success rule | predicate for a verified result | static | explainable from current event fields |
+| contradiction rule | evidence that disproves a claim | static | must not equate absence with contradiction |
+| fallback clue | authored clue for unavailable destination | static | clue references a real follow-up or remains narrative-only |
+| expedition result ID | the concrete run associated with the quest step | runtime | stable ID from existing owner, if exposed |
+| visit/observation facts | what the party actually encountered | runtime | emitted only by the owner of that interaction |
+| conclusion class | verified/disproved/inconclusive | runtime | produced by the quest owner from declared rules |
+
+This is a design table, not a request to add a new JSON schema. The existing quest catalog or event contract may already represent some or all of these concepts. Reuse supported fields; record any mismatch as a bounded premise finding.
+
+#### Authored variation versus generated text
+
+Safe generated variation may choose among authored phrasings that express the same known fact and uncertainty level. It may not select a more dramatic cause, invent a witness, infer intent, or change the conclusion class. For accessibility and localization, all alternatives must preserve the same player promise and use separate stable keys. A generated map note must reference an existing place and must not imply that an unselected location was visited.
+
+#### Data lifecycle and migration
+
+If the story remains stateless beyond the existing quest, no migration is needed. If a new durable cross-reference is proposed, first search existing quest-step, expedition ID, and campaign provenance fields. If a gap remains, document the owning save section, version bump, deterministic ordering, duplicate policy, checksum implications, and legacy fallback. Do not introduce a field that can be reconstructed from a canonical event unless the event itself is not persisted and the architecture decision explicitly assigns the new field as its durable owner.
+
+#### Content utilization gate
+
+Every survey objective and prose variant must have a runtime consumer. Codex visibility, catalog loading, or a world-bible mention is insufficient. The implementation packet should name the loader, runtime query, host route, observable player output, and disposition for a missing reference. An optional variant may be omitted safely; a mandatory missing destination must become a clue, delay, or explicit invalid-content diagnostic instead of a silent dead end.
+### Pass 23A — Source-free rumor provenance boundary (DRAFT)
+
+The world-bible prompt permits kernel-less ambient chatter only at explicitly noise-dominant stations. The current RumorSystem does not encode that distinction. WastelandRumor carries origin location/day, subject type/ID, headline/description, truthfulness, decay, propagation speed, interception state, and reached hub IDs. RumorSystem.GenerateRumor accepts those values and allocates a sequential ID. It does not accept a source event, provenance class, or hub policy. InformationHub stores credibility, bias, and location; the catalog schema additionally carries daily rumor capacity. No reviewed source marks an existing hub noise-dominant.
+
+#### Non-equivalent states
+
+“Source not yet found,” “source not recorded,” “source known but unverified,” “deliberate deception,” and “ambient-only noise” are different states. Do not encode all of them as low truthfulness. RumorSystem currently decays truthfulness by a configured amount and removes a rumor when truth reaches zero or its age exceeds thirty days. A low numeric value can therefore mean aging, not source quality. A high value can make CreateBriefingReport mark an item verified at the 0.80 threshold. Neither behavior by itself expresses epistemic provenance.
+
+Likewise, a rumor classified as Event or Faction is counted as a threat in the current briefing report. Source-free ambience must not accidentally appear as a threat/opportunity or as a verified event. Do not use an existing enum member or overload the `bias` string to hide a new semantic class; any schema change needs an explicit owner review.
+
+#### Candidate authored contract
+
+A future proposal may add a typed origin policy to an information hub, with carefully enumerated values such as event-backed only, attributed-report allowed, and ambient-only. A rumor record may then refer to a provenance class and optionally to a source event or testimony ID. Ambient-only means there is intentionally no event kernel; it does not mean the rumor is false, harmless, or low quality. Attribution remains “heard at hub X,” not “caused by event Y.”
+
+The exact field names, enum values, defaults, migration, and UI semantics are undecided. Legacy hubs must default to the current behavior or to a safely restrictive policy approved by the information-flow owner; they must never silently become noise-dominant. Legacy rumor entries with no source metadata must not be retroactively labeled ambient-only. Unknown values should fail validation and be omitted from the ambient-only consumer rather than guessed.
+
+#### Content versus runtime separation
+
+Authored permanent content defines the permissible hub policy, approved rumor text, and any optional investigative dialogue. Runtime content records whether a rumor was generated, heard, propagated, intercepted, investigated, or source-checked. Generated text may vary wording inside an approved semantic band, but may not invent an underlying event or increase confidence. A player’s investigation conclusion is another fact and should remain in the quest owner, not be duplicated in the rumor record unless the rumor system explicitly owns correction status.
+
+#### Save and integration questions
+
+RumorNetworkState already persists rumors and hubs through its current save path. Adding fields requires capture/restore parity, schema migration, checksum/serialization review, and deterministic behavior. Before implementation, inspect the current information-flow host and save registration; decide whether hub policy is immutable loaded content or part of save state. Prefer static catalog policy if it does not change during play. If a live hub policy can change, identify the owning command and persistence contract. Do not add a second rumor ledger or a sidecar source registry.
+
+#### Gate before any content batch
+
+First inventory current rumor consumers and report projection, then assign a hub only if the authority owner approves its mode. Validate that every ambient rumor belongs to such a hub, has no required event subject ID, cannot be presented as verified, and cannot produce threat/opportunity counts by accident. Content usage must be observable through the existing utilization pipeline. Until these gates pass, the Third Bell story remains prose and architecture DRAFT, not an eligible authored rumor record.
+### Pass 23B — Schema, migration, and briefing semantics (DRAFT)
+
+The ambient-only proposal crosses authored catalog data, runtime rumor records, saved RumorNetworkState, and the briefing read model. All four surfaces need a compatible interpretation. A catalog field alone cannot make source-free rumor behavior safe if runtime records and briefings still treat the rumor as an ordinary high-confidence event.
+
+#### Candidate semantics to decide before names
+
+The information-flow owner should decide whether ambient-only is a **hub policy**, a **rumor provenance value**, or both. Hub policy restricts where source-free content may originate. Rumor provenance describes the individual record. Using both is more expressive and safer but adds schema and save complexity. The owner must define how an ambient report is interpreted at a non-ambient hub, whether it may propagate, how briefing verifies it, and which story consumers may query it. Field names are intentionally not prescribed here.
+
+#### Compatibility matrix
+
+| Saved/catalog record | Proposed handling | Reason |
+|---|---|---|
+| Legacy hub without policy | remain current-mode, never ambient by default | prevents accidental hub reclassification |
+| Legacy rumor without provenance | preserve existing interpretation | avoids rewriting player history |
+| New ambient rumor at approved hub | classify as source-free ambient | explicit authorship and policy gate |
+| Ambient rumor referenced by unknown hub | reject or safely omit | unknown policy cannot authorize source-free entry |
+| Unknown provenance enum | validator error or safe non-display | do not guess semantics |
+| Missing event source on ordinary event rumor | retain current validation behavior or report integrity issue | do not relabel it ambient automatically |
+| Expired ambient rumor in old save | preserve existing expiry rules | the story does not override rumor lifecycle |
+
+#### Briefing contract
+
+The current briefing projection sets `IsVerified` based on a numeric threshold and classifies Faction/Event subjects as threats. A future ambient presentation must explicitly prevent these derived values from misleading the player. Possible designs include a typed confidence status with values such as unverified, source-unknown, corroborated, and verified; or a separate ambient information category that the briefing renders without threat/opportunity classification. This is a proposal only. Do not reinterpret `IsVerified` globally or change ordinary rumor behavior without a bounded migration and compatibility review.
+
+The briefing should show three separate facts: where the account was heard, whether it has a known source, and whether an investigation corroborated it. Hub credibility and rumor truthfulness remain independent data until the owner explicitly defines their relationship. A high-credibility hub can host honest uncertainty; a low-credibility hub can repeat a sourced report. Neither number alone is proof.
+
+#### Content schema and utilization
+
+Ambient rumor definitions should be validated against the approved hub policy and consumer path. Optional narrative text may be omitted if invalid, while a required production build should fail the content gate with the row and reason. No definition should use a synthetic location or event ID simply to satisfy the existing required fields. If current RumorSystem requires a subject type/ID, the owner must design a safe representation rather than passing a fake Event ID.
+
+The content-utilization scanner should distinguish intentional ambient records from dead data only if a real runtime consumer exists. A file on disk, codex row, or self-test fixture is not a player route. Each entry needs a consuming surface, a hearing/discovery path, and a disposition on expiry.
+### Pass 23C — Authoring validation and negative-claim discipline (DRAFT)
+
+The content gate for ambient rumors should validate both presence and absence claims. Presence is straightforward only when the source is actually observed. Absence requires a bounded search scope. A record saying “no source exists” is too strong unless the world model can prove global absence; this design assumes it cannot.
+
+#### Validation checks
+
+1. Every ambient record names an approved hub policy and a real hub ID.
+2. Its provenance says source-free/ambient using an approved typed value, not a free-text convention.
+3. It does not include a fabricated event subject ID to satisfy ordinary rumor requirements.
+4. Its text does not assert a faction action, location mutation, threat, trade opportunity, or route state.
+5. The rumor's truthfulness/verification behavior is defined by the owner and cannot be mistaken for evidence-backed verification.
+6. Its origin day and expiry behavior follow the existing rumor lifecycle or an approved migration.
+7. Every dialogue outcome references a supported quest/dialogue fact or is explicitly cosmetic.
+8. If a linked destination exists, it resolves against the current location catalog and is not inferred from prose.
+9. The consumer surface can label the item as source-unknown; otherwise the row is not eligible for that surface.
+10. Legacy records retain their old interpretation after schema evolution.
+
+#### Safe conclusion vocabulary
+
+Prefer: “No matching source was found in the checked log”; “One listener reports the sound”; “The report reached this hub”; “The signal was not captured”; “The origin remains unknown.” Avoid: “The sound never happened”; “The hub is lying”; “Nothing was there”; “The gate is safe”; “The report was false.” The first group encodes bounded knowledge; the second makes broad claims not supported by the proposal.
+
+#### Documentation and release notes
+
+Any implementation should update the rumor-system authority document, catalog schema reference, save migration record, and content-utilization mapping. The world bible seed remains a proposal until those owners sign off. Do not edit generated indexes by hand; use their owning generator. This plan itself may record the future acceptance contract but cannot confer implementation ownership.

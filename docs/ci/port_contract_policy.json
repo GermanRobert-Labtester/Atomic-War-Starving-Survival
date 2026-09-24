@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 291,
+  "total_seams": 293,
   "ports": [
     {
       "class_name": "AeroponicsSystem",
@@ -2374,6 +2374,22 @@
       "owner": "endgame",
       "reason": "Plan 175 profile-store late binding. Optional: the constructor already accepts a CrossRunProfileStore and defaults to a new one, so the system is functional without this seam and no caller exists yet. Same shape as WeatherCascadeSystem.BindWeatherSource.",
       "classification": "OPTIONAL_HOST"
+    },
+    {
+      "class_name": "AudioAccessibilityCoordinator",
+      "method_name": "BindCatalog",
+      "file_path": "Assets/Ashfall.Core/Audio/AudioAccessibilityCoordinator.cs",
+      "owner": "audio",
+      "reason": "Integration seam in AudioAccessibilityCoordinator.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "PlayerTradeRouteSystem",
+      "method_name": "RegisterContract",
+      "file_path": "Assets/Ashfall.Core/Economy/PlayerTradeRouteSystem.cs",
+      "owner": "economy",
+      "reason": "Integration seam in PlayerTradeRouteSystem.",
+      "classification": "HOST_REQUIRED"
     }
   ]
 }

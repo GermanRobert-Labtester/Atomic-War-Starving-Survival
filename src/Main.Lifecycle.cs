@@ -552,6 +552,7 @@ namespace AtomicWar.GodotApp
             ResetVehicleCustomization();
             ResetBackstory();
             ResetMetaProgression();
+            ResetAudioAccessibility();
         }
 
         /// <summary>

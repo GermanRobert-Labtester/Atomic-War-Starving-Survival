@@ -28,6 +28,25 @@ namespace AtomicWar.GodotApp
             }
 
             _ideologicalFriction.StateChanged += () => _ideologicalFrictionDirty = true;
+
+            if (_survivorDetailPanel != null)
+            {
+                _survivorDetailPanel.IdeologicalFactionProvider = id =>
+                {
+                    if (_ideologicalFriction == null) return null;
+                    var factions = _ideologicalFriction.System.GetBunkerFactions();
+                    for (int i = 0; i < factions.Count; i++)
+                    {
+                        var f = factions[i];
+                        if (f != null && f.memberIds != null && f.memberIds.Contains(id))
+                        {
+                            string role = string.Equals(f.leaderId, id, StringComparison.OrdinalIgnoreCase) ? "Leader" : "Member";
+                            return $"{f.beliefId.Replace('_', ' ')} coalition ({role})";
+                        }
+                    }
+                    return null;
+                };
+            }
         }
 
         public void SaveIdeologicalFriction()

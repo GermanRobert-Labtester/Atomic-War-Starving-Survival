@@ -38,7 +38,8 @@ namespace Ashfall.Core.World
 
         public WastelandMapSystem(WastelandMapState state,
             IEnumerable<MapNode> nodes, IEnumerable<MapRoute> routes,
-            IEnumerable<TrapSiteMapLocation>? trapSiteLocations = null)
+            IEnumerable<TrapSiteMapLocation>? trapSiteLocations = null,
+            TunnelNetworkCatalogData? tunnelCatalog = null)
         {
             _state = state ?? throw new ArgumentNullException(nameof(state));
             if (nodes == null) throw new ArgumentNullException(nameof(nodes));
@@ -71,6 +72,15 @@ namespace Ashfall.Core.World
             _state.NormalizeAndValidate(_nodes);
             _state.Tunnels ??= new TunnelNetworkState();
             Tunnels = new TunnelNetworkSystem(_state.Tunnels);
+            // Plan 167 — seed from the authored catalog when the host supplies
+            // it; otherwise fall back to the built-in canonical network. A
+            // restored campaign replaces this state via RestoreState() before
+            // any tick, so the player's discovered/repaired network survives.
+            if (tunnelCatalog != null)
+            {
+                Tunnels.Clear();
+                Tunnels.LoadCatalog(tunnelCatalog);
+            }
             EnsureCanonicalTunnels();
             if (trapSiteLocations != null)
             {

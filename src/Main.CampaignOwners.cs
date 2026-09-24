@@ -140,6 +140,12 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("backstory", new BackstoryDayOwner(this), phase: 5);
             // Plan 175 — meta progression: evaluates prestige and New Game+ boons.
             _campaignDay.Register("meta_progression", new MetaProgressionDayOwner(this), phase: 5);
+            // Plan 167 — underground tunnel network: applies daily structural wear and collapse risk.
+            _campaignDay.Register("tunnel_network", new TunnelNetworkDayOwner(this), phase: 5);
+            // Plan 192 — scheduled trade route contracts: advances run schedules and audits tariffs.
+            _campaignDay.Register("trade_routes", new TradeRouteDayOwner(this), phase: 5);
+            // Plan 199 — seasonal human migration: tracks regional population weight transitions.
+            _campaignDay.Register("human_migration", new HumanMigrationDayOwner(this), phase: 5);
             // Plan 55 — retention runs last of all: it bounds the campaign logs
             // every other owner just appended to for this day.
             _campaignDay.Register("retention", new RetentionDayOwner(this), phase: 5);
@@ -540,6 +546,92 @@ namespace AtomicWar.GodotApp
                 var census = _m._metaProgression?.Census;
                 events.Add(new DayStateChangeEvent(
                     "meta_progression_ticked", "meta_progression", null, null, census?.PrestigeScore ?? 0));
+            }
+        }
+
+
+
+        /// <summary>Plan 167 underground tunnel network day owner (ownerId <c>tunnel_network</c>, phase 5).</summary>
+        private sealed class TunnelNetworkDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Underground.TunnelNetworkState? _snapshot;
+            public TunnelNetworkDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupTunnelNetwork();
+                _snapshot = _m.TunnelNetwork?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.TunnelNetwork?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupTunnelNetwork();
+                _m.TickTunnelNetwork(day);
+                var census = _m.TunnelNetwork?.GetCensus();
+                events.Add(new DayStateChangeEvent(
+                    "tunnel_network_ticked", "tunnel_network", null, null, census?.TotalSegments ?? 0));
+            }
+        }
+
+        /// <summary>Plan 192 scheduled trade route contract day owner (ownerId <c>trade_routes</c>, phase 5).</summary>
+        private sealed class TradeRouteDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Economy.PlayerTradeRouteSaveState? _snapshot;
+            public TradeRouteDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupTradeRoutes();
+                _snapshot = _m._tradeRoutes?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._tradeRoutes?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupTradeRoutes();
+                _m.TickTradeRoutes(day);
+                var census = _m._tradeRoutes?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "trade_route_ticked", "trade_routes", null, null, census?.ActiveContracts ?? 0));
+            }
+        }
+
+        /// <summary>Plan 199 seasonal human migration day owner (ownerId <c>human_migration</c>, phase 5).</summary>
+        private sealed class HumanMigrationDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Economy.SeasonalMigrationSaveState? _snapshot;
+            public HumanMigrationDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupHumanMigration();
+                _snapshot = _m._humanMigration?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._humanMigration?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupHumanMigration();
+                _m.TickHumanMigration(day);
+                var census = _m._humanMigration?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "human_migration_ticked", "human_migration", null, null, census?.TotalTrackedRegions ?? 0));
             }
         }
 

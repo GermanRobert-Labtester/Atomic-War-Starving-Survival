@@ -2367,3 +2367,344 @@ Quest instances should store only stable references and owner-returned milestone
 The first release should include one case, three response routes, one optional corroboration step, and one correction scene. Adding a second transcript variant costs additional authored dialogue, source mapping, continuity review, and endgame-count review. Adding all three variants in one release also requires a reachable viewer and explicit legal/admissibility copy. The scalable plan is to prove one end-to-end case first, then add each other transcript as data-driven content using the same tested lifecycle.
 
 Reuse is high for state transitions and presentation rules, medium for dialogue nodes, and low for factual prose because each record has a distinct author and claim. The production owner must reject a template that copies an allegation from one transcript into another or applies one source's trust rating to an unrelated faction. The case matrix is accepted when every row has a verified catalog ID, one truthful completion state, one safe no-corroboration route, and a declared answer to whether it affects canonical Verdict evidence.
+
+
+## Pass 20A — Verdict Radio Theater as a failure-forward quest arc (DRAFT)
+
+### Purpose and evidence boundary
+
+This continuation uses Part 43, seed 19 of ashfall-master-world-bible-and-expansion-authority.md: the Machine tribunal’s radio theater and procedural case stories. It is a new planning lane beside the existing burial, calibration, and wiretap investigations. The existing VerdictRadioSystem is an authored, one-shot corpus scheduler: it checks day and Reckoning phase, publishes radio.verdict.broadcast, and persists fired entry IDs. Plan 94 has already expanded verdict_radio.json to 30 Machine-Register broadcasts. This proposal does not claim that a published event means a survivor heard it, that an episode starts a quest, or that any new story row is canon. Those are separate reachability premises to prove before implementation.
+
+The first candidate arc is The Quiet Hours, a four-part DRAFT about how a formally precise public hearing can erase unrecorded care. A tribunal’s staged case treats quiet hours as unused hours. A shelter’s night watch lead recognizes the omission; a relay performer wants to correct the script without making the next broadcast a political weapon; a young listener wants the correction to be heard because it honors people who were never entered in a roster. Character names, shelter identity, chronology, and affiliations remain placeholders until checked against the bible and current catalogs. The conflict is resolved through testimony, correction, or deliberate refusal to broadcast; it does not alter the Machine’s overall verdict or require a new faction.
+
+### Quest packet and lifecycle
+
+Classify the arc as an investigation with dialogue, environmental discovery, and optional community service beats. The broadcast is a lead, not a mandatory trigger. Discovery can also come from a printed program, an NPC describing the performance, or a previously accepted quest clue if those sources have reachable consumers. Acceptance is explicit. The first episode asks the player to find out whether the tribunal’s scenario is fictional shorthand or a distorted account of real shelter practice. The second gathers a witness account and checks it against an available authored record. The third offers a short response choice: correct the program, preserve the witness’s anonymity, or decline to intervene. The fourth resolves the local dispute through a follow-up scene whose wording reflects the chosen response.
+
+Map the existing lifecycle vocabulary precisely. Inactive means conditions have not opened the packet. Available means at least one valid entry route exists. Discovered records that the player has encountered a clue; it is not acceptance. Accepted creates the player’s commitment. In Progress tracks the current authored objective. Blocked is reserved for a temporary, named condition with a route to retry. Partially Completed records a completed optional branch while the main resolution remains open. Failed means the chosen route cannot be completed as intended; the alternative remains playable. Completed means the objective sequence was satisfied. Resolved records the authored ending and outcome. Expired applies only to a genuinely dated opportunity. Abandoned records a deliberate exit. Reopened is permitted only when a later authored event presents new information, not because a loader silently reset a terminal state.
+
+A broadcast must not advance the quest twice after save/restore. Use the existing event identity plus a quest-side objective identity at the existing quest owner; do not add a second radio-fired ledger. If the game exposes only scheduler-fired state and no user-facing reception state, the first release must keep the broadcast as optional atmosphere and open the quest through a verified clue or dialogue route. The quest must remain understandable without audio and without owning a specific radio program slot.
+
+### Failure-forward outcomes
+
+- The witness cannot be reached: accept an alternate route through an authored note, a second witness, or a later appointment. If none is supported by existing content, delay the quest and show why.
+- The record contradicts the witness: expose the contradiction as the investigation result. Do not label either account false automatically; let the player ask a follow-up question, preserve uncertainty, or close with a partial finding.
+- The player reveals the witness’s identity: route the local consequence only after an explicit confirmation. Keep a private correction available, mark anonymity lost, and remove the public-anonymity ending without deleting quest progress.
+- The player ignores the fourth episode window: mark the opportunity expired only if the authored schedule really closes. Otherwise leave it Available or Blocked with a visible next condition.
+- A critical location is absent: Plan 18’s substitute/clue/delay contract applies. Never let a hidden location requirement strand the main path.
+
+### Rewards, production cost, and release gate
+
+Rewards should be primarily informational and relational: a corrected public account, a witness relationship response, a journal entry, and a changed follow-up line. Any item, morale, reputation, or standing-reckoning effect needs an identified current owner and explicit approval. No reward is granted merely for hearing a transmission. The core-game candidate is a three-scene, one-ending-neutral investigation with one short reconvergent branch; the four-part radio theater is an expansion layer because it needs additional authored episodes and callback checks. Production cost is moderate: one quest packet, four broadcast or program references, three characters with distinct voices, one reused shelter interaction site, a small line matrix, and continuity review across the episode order.
+
+Acceptance requires: (1) one verified way to discover and start the quest without assuming scheduler event equals reception; (2) every nonterminal state has an observable next step; (3) save/load preserves the same state and does not replay a resolved stage; (4) the unavailable-witness and missing-location paths remain completable or visibly delayed; (5) all proposed rewards route through owners proven at implementation time; and (6) the storyline does not duplicate an existing Verdict broadcast, evidence chain, or already-authored quest after a catalog-level collision audit.
+
+## Pass 20B — Episode-to-quest beat sheet and implementation handoff
+
+| Beat | Player-facing event | Quest state effect | Alternate route | Closure evidence |
+|---|---|---|---|---|
+| I. The hearing calls a quiet hour empty | Player encounters a surfaced transmission, printed program, or a witness’s description | Available → Discovered only after a real player-facing clue | Another clue source can supply the premise | Player can state what is disputed without accepting the quest |
+| II. The roster has no box for it | Player meets the watch lead or reviews an available authored record | Accepted → In Progress; records a lead, not a verdict | If the primary contact is unavailable, use a second authored witness or return date | Journal wording distinguishes recollection from confirmed record |
+| III. The correction has a cost | Player chooses private clarification, public correction, or silence | Optional branch may become Partially Completed; main route remains open | Lost anonymity removes one ending but leaves correction possible | Confirmation prompt names audience and permanence |
+| IV. A later program carries the answer | Player hears or reads the follow-up through a verified surface | Completed → Resolved after the response is observed | If follow-up delivery is missed, an authored recap at the existing hub closes it | Outcome reflects the player’s selected disclosure level |
+
+Keep the state graph small and explicit. The final state is not inferred from a journal paragraph or a broadcast ID. The quest owner records objective completion; the radio owner records its own fired entries; presentation reports both without writing either state. If the player chooses silence, the scene still resolves: the witness’s private account is preserved if consent permits, and the public script remains unchanged. This is a valid resolution rather than a hidden failure.
+
+The packet should declare entry routes, prerequisites, expiry policy, location anchors, required evidence, response consequences, and fallback route per objective. Every requirement must point to a current data ID after a premise audit. Until that audit, use semantic placeholders such as existing relay-capable site rather than inventing a location ID. Mark any potentially stateful field as proposed and keep it out of production saves until the owning quest contract and migration path are approved.
+
+The first implementation slice should be the smallest demonstrable vertical path: one clue opens a quest; the player asks two questions; a single response choice is confirmed; a follow-up closes the objective; a reload between choice and callback preserves the selected route. Add the remaining episodes only after this path proves there is a truthful reception surface. Content lint must reject duplicate objective IDs, unresolved required references, a terminal state with an unhandled outgoing transition, a failure state with no recovery text, and a reward without a recipient owner.
+
+The story’s emotional center is recognition rather than adjudication. The player is not asked to prove that one person deserves more care than another. They decide whether an omitted form of work should be spoken publicly, corrected quietly, or left in the hands of those who did it. That distinction keeps the quest compatible with uncertain records and gives the three principal voices independent motives: the watch lead protects the crew from becoming a symbol; the relay performer wants the program to remain credible; the listener wants their work named. Their disagreement should persist after the objective resolves, so a later visit can acknowledge the player’s choice without pretending that one small broadcast repaired every social cost.
+
+Handoff contract: a narrative/data author may prepare a DRAFT packet; the foreman must identify the current quest data consumer, event-to-player reception route, save owner, and exact file claims before promoting it. The radio team validates broadcast IDs and schedule constraints. The quest integrator validates lifecycle persistence and failure recovery. Dialogue and consequence owners review response gates and effects. A compile-green catalog is insufficient if there is no reachable player route.
+
+
+
+## Pass 20C — Quest content authoring sheet and lifecycle test cases
+
+### Candidate packet record
+
+Use this as the authoring worksheet for The Quiet Hours, not as an approved production schema. The first field is a stable quest-template ID selected after checking the current catalog and naming policy. Record the content owner; short and long descriptions; quest class; core/expansion label; discovery routes; explicit acceptance action; prerequisites; objective sequence; evidence source type; location roles; dialogue references; expiration policy; completion conditions; failure-forward routes; reward references; save owner; accessibility recap; localization notes; and canon-review status. Every required reference needs one current consumer. A field without a consumer is either editorial metadata or a blocker; it must not be presented as a playable feature.
+
+The objective sequence should be minimal: establish that a staged case has been encountered; ask what the case leaves out; obtain or decline consent to repeat a witness account; choose a private correction, public correction, or silence; observe a valid follow-up; resolve. Optional details include how the roster was compiled, why the performer accepted the script, and what the younger listener wants from the audience. These deepen interpretation but do not decide whether the investigation is completable.
+
+### Explicit lifecycle transitions
+
+| From | To | Required event | Player feedback |
+|---|---|---|---|
+| Inactive | Available | At least one reviewed entry condition becomes true | A discoverable clue exists; no auto-accept |
+| Available | Discovered | Player observes a clue through a real surface | Identify the source as a staged case, not a verified fact |
+| Discovered | Accepted | Player confirms the investigation | State the first objective and any irreversible disclosure risk |
+| Accepted | In Progress | Quest owner begins the first objective | Show where to continue, or name the missing requirement |
+| In Progress | Blocked | A temporary route, character, or location condition prevents action | Name the condition and retry/fallback |
+| In Progress | Partially Completed | Optional evidence/branch is complete | Preserve the main objective and clarify what remains |
+| In Progress | Failed | Intended method became impossible | Offer another route or explain a recoverable delay |
+| In Progress | Completed | Required objectives are satisfied | Present the pending local outcome |
+| Completed | Resolved | The authored response is observed or deliberately closed | Summarize what changed and what did not |
+| Available/Discovered/Accepted | Abandoned | Player uses an explicit abandon action | Confirm whether progress is retained and whether re-entry exists |
+| Expired | Reopened | A named later event creates a new opportunity | Explain why the old window reopened; never clear history |
+
+The test harness should exercise each legal edge and reject each illegal edge. For example, Discovered cannot become Resolved merely because the scheduler fired; Blocked cannot be terminal unless the packet explicitly marks a closed failure; Reopened must point to a new authored opportunity; and a duplicate event cannot create two active instances if the quest design allows only one. Do not test invented service APIs: first identify the current public quest contract.
+
+### Production cost and branch budget
+
+Estimate content effort by delivered authored surfaces, not by abstract word count. Core slice: one staged-case clue, one hub conversation, two short spokes, one confirmed response, one truthful recap, and one fallback for an unavailable witness. Expansion slice: four episode callbacks, three personality cards, a repeated-visit set, a private/public/silence ending matrix, optional skill observations, and translated or voiced variants. The high-volume dialogue bank should be generated only after branch IDs and character voice are stable; otherwise late structure changes multiply rewrite work.
+
+Avoid branch explosion through convergence. A single early choice should produce one durable outcome flag or derivable quest state, then return to a common scene. The three final outcomes can have distinct closing text while sharing the same resolved quest contract. An optional archive clue may mark Partial Completion but cannot fork the main story into a parallel quest. This keeps save compatibility and authoring QA tractable.
+
+
+## Pass 20D — Optional listener-response storyline: The Second Margin (DRAFT)
+
+### Story purpose
+
+The Quiet Hours asks whether overlooked work should be named. The optional follow-up, The Second Margin, asks whether a public correction can be understood by people who heard the original case differently. A listener says the staged exchange sounded like an accusation against every person who ever relied on a schedule. The performer fears that retracting the whole episode would erase the witness’s point; the watch lead does not want the correction to become a speech written about them. This is a second story question, not a second verdict system or evidence ledger.
+
+Keep the listener anonymous in the authored core scene. Their identity can remain unknown; the player is not required to investigate it. The story starts from a verified follow-up surface—an in-person remark, program response, or other existing interaction the content audit confirms. Do not invent a mail system or treat a received message as a radio-reception fact. If no follow-up consumer exists, make the scene an optional conversation at a currently valid hub or defer it.
+
+### Quest shape
+
+Class: discovery/investigation with a social dialogue resolution. Availability: after the player has encountered the episode or the correction, plus one reachable prompt. Acceptance: explicit offer to compare what the scene said with what listeners understood. Objectives: hear the listener’s interpretation; compare it to the authored broadcast; ask the performer what was intentionally left ambiguous; choose a narrow correction, a broader explanation, or no further statement; resolve with a short response. Required locations: none beyond one valid existing conversation anchor. A second location is an optional content layer, not a completion dependency.
+
+Failure states: the listener’s appointment is missed; a scene version is unavailable; the correction window closes; or the player abandons. Recovery routes should be a later neutral conversation, an authored recap, or an explicit resolved-as-declined result. Do not make the listener wait indefinitely while the UI presents an impossible objective. Do not label a different interpretation as a false report. The player can resolve the quest without persuading anyone.
+
+Rewards: a clearer authored program note, one outcome-specific line from each role, and a journal recap separating the original staged case from the audience’s interpretations. There is no mandatory resource reward, reputation gain, or ending change. Reusability: high as a pattern for future broadcast stories where audiences infer different stakes, but each episode must supply its own misunderstanding and character motives. Production cost is low for a single reconvergent conversation and medium if three new surface-specific responses are voiced or localized. It belongs in an expansion because the base game can close The Quiet Hours without it.
+
+### Data and acceptance gates
+
+The optional packet records an explicit parent quest reference, allowed start states, objective IDs, dialogue node references, response choice IDs, resolution states, fallback route, and provenance tags for every disputed statement. It must never reopen the parent quest automatically. If the parent resolved through silence, the follow-up can ask about a later explanation but cannot pretend a public correction was made. If the parent resolved through public correction, the listener can react to the actual delivered text only when delivery is proven. If the parent resolved privately, the scene should not claim the public heard anything new.
+
+Acceptance requires three distinct starting histories, one for each parent resolution; an unavailable listener fallback; a save/restore after choosing a response; and a repeated visit after resolution. All histories must arrive at an accurate local ending. An omitted or invalid optional packet must not stop the parent arc. The content linter checks parent references, terminal states, localization, and a hard separation between staged script text and listener interpretation.
+
+
+## Pass 20E — Case portfolio, quest-type fit, and outcome coverage
+
+### Why this portfolio exists
+
+A radio-theater arc can accidentally become a chain of nearly identical “listen, ask, report” quests. The content portfolio below keeps the playable verbs distinct while sharing one readable lifecycle. Each row is a DRAFT content card; names and local details require canon and catalog collision review.
+
+| Packet | Primary type | Required play | Failure-forward route | Core or expansion |
+|---|---|---|---|---|
+| The Quiet Hours | Investigation / discovery | Compare a staged case with a witness account | Alternate record or visibly delayed witness visit | Expansion arc; its first clue is a small core-compatible slice |
+| The Second Margin | Character / dialogue | Hear an audience interpretation and decide whether to clarify | Close without consensus or return later | Optional expansion |
+| The Page Left Face Down | Environmental discovery | Find a program page in a valid location and infer whether it is a draft or delivered copy | Use a neutral recap if the location is absent | Optional discovery quest |
+| No Names on the Sheet | Protection / consent | Preserve a witness’s anonymity while discussing the case | If public identity was already revealed, offer a corrective response | Optional character branch |
+| A Reading for the Next Shift | Resource/crafting only if a current production recipe owner supports it | Prepare a copy or schedule a reading through a proven command | Resolve in person if preparation or delivery is unavailable | Expansion only; do not invent crafting or slot costs |
+
+The core game should not include an escort quest, timed quest, or repeatable quest merely to satisfy a checklist. The story does not naturally need those types. A timed window is appropriate only if an authored performance schedule exists and the player is told the closing day; an escort is appropriate only if the character physically travels under an existing expedition/companion owner; repeatability is inappropriate for a once-only disclosure choice. Faction quests belong only if a current faction actor has a meaningful role and a verified reputation/access contract. This restraint avoids attaching unsupported mechanics to a narrative subject.
+
+### Shared record and distinct objectives
+
+These packets may share an authored episode reference and character cards but cannot share one mutable “radio investigation” state if their outcomes differ. Each quest instance must be independently startable or explicitly dependent on its parent. The Page Left Face Down can reveal a clue but must not count as a player-heard broadcast. No Names on the Sheet can share the parent consent decision if that is already stored in the parent quest, but it cannot change the original decision by replaying a conversation. A Reading for the Next Shift may create a preparation intention only if the radio owner accepts such a job; otherwise it is a prose-only face-to-face closure.
+
+The story graph should define three common outcomes—resolved with privacy, resolved with public correction, and resolved without further action—and a status-aware recap for each optional packet. A branch can finish as Partially Completed when the player found the page but did not identify its version; it can resolve after the player chooses not to pursue the uncertainty. The design must avoid rewarding the player for exposing a witness or penalizing them for refusing to speak publicly.
+
+### Route and reliability matrix
+
+For each packet, the author lists one primary entry, one alternate clue or retry, one terminal condition, and one observable recap. If the primary location cannot spawn, a clue can satisfy discovery but not a visit-specific objective. If an NPC is absent, reschedule or resolve as unavailable only if the packet permits it. If a timed opportunity truly expires, the outcome uses Expired and offers the next authored route. If content was never surfaced, the quest cannot advance from a day tick alone.
+
+QA should test packet isolation: omitting any optional quest does not disable the parent; omitting the parent’s optional radio reception path does not lock the core story; failing one side quest does not reset another; duplicate clues do not create duplicate instances; abandonment remains distinguishable from failure; and Reopened requires an authored event. Production acceptance includes a narrative map, lifecycle table, data-reference audit, recovery text, and current owner evidence. The packet remains proposal until the existing quest loader, runtime, and save owner are named.
+
+
+## Pass 21A — Bunker folklore into adult voice: quest arc (DRAFT)
+
+### Premise verified against current content
+
+Part 43, seed 3 of ashfall-master-world-bible-and-expansion-authority.md proposes that bunker children’s folklore follows cohort members into adulthood and informs beliefs and political positions. Current authored folklore already includes entries with stable IDs, tradition type, origin sector, theme, relative timestamp, tags, and prose. DailySurvivalCatalog loads the base folklore catalog and batch 2, and JournalCodex renders entries as children’s folklore rows. This is a strong content foundation and must be referenced rather than re-authored. It does not show that a particular cohort child heard a particular story, and CohortChild currently has no explicit folklore-origin field. Its moralityMemory string is documented as the story told, not a typed folklore reference; do not silently repurpose it.
+
+The proposed arc is The Yellow Lamp Has a Shadow, centered on an adult cohort member revisiting a childhood verse that described the surface sun as a lamp. They have since encountered the surface and now disagree with the lesson the verse seems to teach. Their former teacher says the rhyme gave children a way to picture what they had never seen. A second cohort adult argues that keeping the verse unannotated now makes an old metaphor sound like an official fact. The player is asked to decide how the shelter should tell the story to the next group of children—not which adult has the correct inner belief.
+
+### Quest packet
+
+Class: environmental discovery plus character investigation, with optional follow-up dialogue. The quest may open from a codex story entry, a character conversation, or a location clue only if the current surface proves that route. Discovery does not imply acceptance. Acceptance explicitly asks the player to help compare the remembered verse, its authored folklore record, and the adult’s current account. The main objectives are: identify which authored story is being discussed; ask each adult how they understand it now; decide whether to preserve the verse unchanged, add a contextual note, or write a new response verse; and observe the accepted local resolution. The choice does not rewrite the original folklore entry or change a political movement automatically.
+
+Candidate entries include the existing sun/lamp folklore and, for an optional callback, the tree-growth hope legend. Both are known data themes, but their use in this particular quest remains DRAFT pending a line-level duplication and canon review. Do not quote the existing prose in the new dialogue. The quest can refer to the tale by stable catalog ID internally and use a short natural-language title in UI.
+
+Failure-forward routes: if the relevant story is not exposed through the codex in the player’s current build, a character can introduce the premise without pretending the player read it; if one adult is absent, the remaining account supports a partial resolution and a later return; if the expedition clue is unavailable, keep the quest In Progress or offer the authored dialogue route; if the player declines to author or approve a new text, preserve the tradition and resolve without penalty. Expired is valid only if a real lesson/session window closes. Reopened requires a later authored event and must not erase the earlier choice.
+
+Rewards are authored and local: an outcome-specific codex annotation if the current codex owner supports annotations, a character callback, or a new authored verse in an approved content catalog. Do not award faction standing, skill XP, morale, or political influence merely because the player selected an interpretation. Core candidate: one existing tale, two adult viewpoints, three reconvergent responses, one journal recap. Expansion layer: a cohort-specific callback, a second tale, teaching scene, and movement/faction response if current owners can support it. Production cost is moderate because the original lore exists; the expensive work lies in life-stage validation, cross-reference reachability, and ensuring that interpretation does not become a deterministic trait assignment.
+
+### Lifecycle acceptance
+
+Keep quest status distinct from life stage. The current CohortSystem’s matured flag gates work/duty eligibility; do not treat it as proof of legal or narrative adulthood. Before promotion, identify the current canonical life-stage source and decide whether the story uses adult, young-adult, or simply “matured cohort member” wording. The quest remains available to ordinary survivors as a general story if no cohort-linked protagonist can be proven, but it must not claim childhood experience that the character’s data does not record.
+
+Acceptance requires: a true, reachable entry route; explicit player confirmation; no automatic completion from reading a codex row; all three resolutions valid; no forced belief assignment; optional absence of a linked origin memory falls back to a general conversation; and saved quest status remains owned by the current quest authority. A short vertical slice should work without adding a new cohort field. Per-person folklore memory is a separate, decision-gated expansion phase.
+### Pass 21B — Optional quest cards and lifecycle routing (DRAFT)
+
+This section expands the authored arc into small, independently schedulable quest cards. The cards reuse the existing folklore catalog and cohort references. They do not create a second story journal, a second relationship ledger, or an alternate child/adult classifier. Their purpose is to make the central premise playable through different kinds of investigation while retaining a single resolution authority.
+
+#### Card A: The Teacher's Margin
+
+**Type:** discovery into investigation; core-game candidate if the journal and current quest authority can represent a catalog-linked lead. **Start:** the player sees an annotated verse during a normal shelter visit, or receives a contextual conversation from a teacher-role character. **Required location:** a currently available common room, classroom, or equivalent authored shelter scene. The scene must not demand a new room type. **Purpose:** establish that one remembered version of the lamp story differs from the public codex entry, without implying that either version is fraudulent.
+
+**Steps:** inspect the margin; ask the teacher whether the mark is theirs; compare the phrase with the codex entry; choose whether to leave the difference unlabelled, record it as a local variant, or ask the cohort to compose a reply. **Failure states:** the teacher becomes unavailable, the relevant cohort member leaves the shelter, or the player ends the expedition before returning. Each failure pauses the conversation step and records a recoverable lead. It does not erase the event or silently close the quest. **Rewards:** a codex annotation, a small relationship-neutral journal entry, or a new dialogue prompt. No scarce resource reward is required. **Reusability:** the card structure can support other traditions, but each tradition needs bespoke evidence and voice; do not randomize culturally specific prose from generic fragments.
+
+#### Card B: First Shadow, Second Account
+
+**Type:** character quest with an optional investigation trip. **Start:** after the player has learned that two accounts exist. **Purpose:** let one adult explain what the story helped them do as a child, while another explains what it obscured. The second account is not a villain reveal. **Required locations:** a safe conversation location; the source sector is optional unless current map and expedition authorities can guarantee access. **Failure states:** a speaker is absent, a route is unavailable, or the player chooses not to ask. The quest can resolve as “accounts retained separately” with no missing speaker fabricated. **Rewards:** a relationship response and a small world-chronicle observation if the current owner supports it. **Expansion cost:** medium, because voice continuity and branching responses must be reviewed against canon.
+
+#### Card C: A Place for the Old Verse
+
+**Type:** location-based discovery. **Start:** a clue points toward the tradition's remembered origin sector. **Purpose:** show a physical context that helps explain why a particular image endured. The site must not claim that folklore is a literal historical transcript. **Required location:** none for the core quest; an optional site can be scheduled through Plan 18. **Failure states:** no eligible expedition appears or the expedition ends early. Use a delayed clue or a shelter-based resolution. **Rewards:** a contextual codex note and an optional scene variation. **Reusability:** suitable for other origin-tagged traditions only where their authored location evidence is specific.
+
+#### Card D: The Reply Verse
+
+**Type:** short authored follow-up, available only after the player has heard at least two accounts or has explicitly declined to choose between them. **Purpose:** allow a character to answer the old verse in their own voice. The player may listen, help transcribe, or leave the page blank. The reply is an authored personal response, not an official correction. **Failure states:** the writer leaves or the player does not return. The scene remains a missed opportunity; no content is automatically generated as if the player had witnessed it. **Rewards:** a journal entry if witnessed, otherwise a future ambient reference only when supported by a real world-state fact.
+
+#### Lifecycle map
+
+| State | Entry evidence | Allowed next steps | Recovery rule |
+|---|---|---|---|
+| Available | parent quest or authored prerequisite is true | discover, accept, or remain available | retain availability until an explicit expiry rule applies |
+| Discovered | the player encountered a valid clue | accept, investigate, or postpone | preserve the clue and map knowledge |
+| Accepted | player chose to pursue the lead | in progress, blocked, abandoned | reopen only through an explicit authored trigger |
+| In progress | a required step has begun | complete step, pause, fail forward | retain completed step facts |
+| Blocked | a required actor or destination is unavailable | clue fallback, delayed return, alternate resolution | never mark complete merely to clear the queue |
+| Partially completed | at least one durable step fact exists | continue, resolve with limits, abandon | surface what remains possible |
+| Failed | a route or timed opportunity ended | alternate route, archive, or close | failure does not erase known information |
+| Resolved | authored outcome was acknowledged | completed or archived | do not reopen without a named replay rule |
+
+The present game may not expose every listed label as a persisted enum. Treat the table as a design vocabulary until the quest owner confirms the actual state contract. If it supports fewer states, map carefully and document information lost by the mapping. Do not add state values to a parallel system.
+
+#### Acceptance and production gate
+
+Before this becomes a content implementation task, verify that a quest can reference a folklore entry by stable ID, preserve step facts through save and restore, and expose blocked or alternate-route status to the journal. If those capabilities do not exist, this plan remains a content package proposal and must identify the smallest owner extension for a future approved integration. Acceptance requires: every card has a start condition, visible objective, non-silent blocked fallback, completion predicate, and authored effect list; none makes a belief, faction, psychological, or ending change by implication; and no unavailable expedition location is treated as evidence the player visited it.
+### Pass 22A — The map with a blank edge: unsuccessful return quest (DRAFT)
+
+**World-bible subject:** Part 46, Expedition and the surface: what does a failed-but-survived expedition leave behind in world state, rumors, and standing? **Working title:** The Map With a Blank Edge. **Status:** DRAFT proposal; this is a quest-layer scenario, not a new expedition phase or a change to terminal expedition semantics.
+
+#### Premise and source boundary
+
+An expedition is sent to confirm a route and return with evidence of a usable crossing. The team comes home alive but without the required proof: the crossing is impassable, the landmark could not be reached, or the survey record was damaged before it could be verified. The story is about how a shelter handles an incomplete report. It is not a story about the team being lost, dead, captured, or secretly successful.
+
+The observed source contract makes the distinction important. ExpeditionSystem Retreat moves a looting expedition to Inbound; a completed expedition later raises OnExpeditionCompleted. Its Fail method changes phase to Failed, sets outcomeText, raises OnExpeditionFailed, removes the active expedition, and raises state change. ExpeditionHostSession currently presents completion and failure as separate LastEvent summaries. A player who returned by retreat must therefore reach this quest through the completed-return path and objective evidence, not through OnExpeditionFailed. Never infer that a failed expedition survived, or that every completed expedition fulfilled its quest objective.
+
+#### Quest card
+
+**Type:** location-based investigation with a failure-forward continuation. **Core/expansion:** core-compatible if the existing quest owner can represent objective evidence and alternate resolution; any new expedition-to-quest event bridge is an integration dependency and requires an owner decision. **Start:** an accepted survey quest's relevant expedition completes, but the quest's required proof predicate remains false. **Required locations:** shelter debrief space; the surveyed destination is optional after the return. **Objective:** determine what can be truthfully reported and what would make a later attempt worthwhile.
+
+**Beat 1 — The empty hands report.** The returning party reports that it could not establish a safe route. The player can ask for the last confirmed landmark, mark the answer as uncertain, or end the debrief and leave the quest open. No report option claims the crossing was inspected if the team never reached it.
+
+**Beat 2 — Two traces.** A witness recalls a practical detail: a rope tied below the flood mark, a trail scoured by wind, or a line on a damaged survey sheet. Each detail is authored to match the selected location and expedition facts. The trace can become a lead only if it is present in the actual result or authored scene; it is never rolled into existence as proof.
+
+**Beat 3 — Choose a next route.** The player may archive the attempt as inconclusive, commission a lower-risk follow-up when the existing travel owner permits it, or ask a location-aware contact whether another approach exists. The player can also decline further risk. The debrief route is a legitimate resolution, not a punishment for choosing not to dispatch again.
+
+**Beat 4 — Close the ledger.** The quest resolves as verified, disproved, or inconclusive. The label describes evidence quality; it does not automatically mutate the world map, rumor network, faction standing, or route availability. A later owner may consume a verified route fact if that contract exists.
+
+#### Alternate outcomes and recovery
+
+1. **Verified:** the team returned with the configured proof. This is not the blank-edge path, but it closes the same quest family and prevents a false inconclusive state.
+2. **Disproved:** the expedition brought back evidence that the proposed route is not currently usable. The journal records the evidence and date; the destination is not deleted.
+3. **Inconclusive:** the team returned but could not verify the route. Keep the uncertainty explicit, preserve any actually witnessed observations, and allow a clue-driven follow-up.
+4. **Returned without reaching destination:** mark travel return accurately. Do not create a site visit, local discovery, or on-site dialogue.
+5. **Terminal expedition failure:** use the existing failure route. Do not show the survivor debrief to a character who did not return. A rescue, missing-person, or memorial follow-up would be a separate authored quest with its own evidence and owner.
+
+#### Lifecycle and player contract
+
+The quest should use the current quest-state authority and its actual persisted states. Proposed design labels are available, accepted, in progress, blocked, partially complete, resolved, and archived; do not add these enum values locally. The journal should state why progress is blocked, what evidence is already retained, and whether another attempt is optional or necessary. “Not verified” is a valid conclusion. Avoid an invisible mandatory rerun.
+
+#### Rewards and production cost
+
+Primary reward: a truthful journal and map briefing update if current projection owners can show one. Optional rewards include a small relationship-neutral recognition line and reduced uncertainty in an already-owned briefing. No loot, skill point, standing increase, or route unlock is required. Cost is medium: several result-conditioned lines, a location-specific evidence table, a fallback debrief, and integration review across quest and expedition owners. Reuse the lifecycle shape, not the factual traces or dialogue, for later surveys.
+
+#### Acceptance criteria
+
+The scenario distinguishes retreat-return from terminal failure; never claims a destination visit without the visit fact; preserves known evidence when the player declines the follow-up; does not force a second expedition; and has an explicit owner for every visible map, journal, rumor, or standing output. Until the existing quest contract and host bridge are inspected for these exact facts, this remains an implementation proposal rather than a claim about available fields.
+### Pass 22B — Quest variants, dependency slots, and content production (DRAFT)
+
+The base survey story can support three authored variants without duplicating its lifecycle. Keep its evidence grammar stable and rotate the human pressure: **weather window**, where the safe return matters more than the objective; **equipment disagreement**, where the party's readings conflict; **community demand**, where a shelter wants a route answer before the next ration shipment. These are scenario skins with specific evidence and dialogue, not random quest generators.
+
+#### Variant matrix
+
+| Variant | Evidence question | Failure-forward route | Additional production cost |
+|---|---|---|---|
+| Weather window | Was the route observed under conditions that make the reading usable? | record the weather limitation and wait for a suitable window | forecast-aware copy and matching condition display |
+| Equipment disagreement | Which instrument or observation is independently corroborated? | keep both measurements and request a second method | instrument-specific lore and conflict-neutral dialogue |
+| Community demand | What can be said before a caravan or work crew relies on the report? | deliver a cautious interim bulletin and preserve the incomplete objective | audience-specific consequence review |
+
+For each variant, authored content must state whether the expedition can complete the objective, what evidence is required, and which fallback is available if its special condition cannot be represented by current runtime facts. If weather or instrument provenance is absent from the relevant event payload, retain a generic inconclusive result rather than adding an invented condition.
+
+#### Dependency slots and scheduling
+
+The quest may expose one debrief and one follow-up slot. A second expedition is never auto-started. The player must choose it through the existing expedition command path, and the normal party/resource/route checks remain authoritative. If the quest queue is full or another conversation blocks the actor, the completed return is still saved; the debrief becomes available on the next valid interaction. Scheduling should avoid daily repeated alerts for an unchanged blocked condition.
+
+#### Content acceptance card
+
+Each variant package includes: stable quest and step IDs; destination reference; result predicate; minimum evidence; one success route; one inconclusive route; one unavailable-location fallback; debrief speaker IDs; response effect declaration; journal summary; and line-localization keys. Reviewers must be able to answer “what happened?” from saved facts without reading the original prose. Reject any line that describes a result absent from that fact set.
+
+#### Reusability rule
+
+Reuse the outer structure for route surveys, water-source checks, radio mast inspections, and salvage reconnaissance only where a returning report can truthfully resolve the parent objective. Do not reuse the blank-edge dialogue for unrelated combat retreats, terminal loss, rescue operations, diplomacy, or animal encounters. Those have different witnesses, evidence standards, and responsible owners.
+### Pass 23A — The Third Bell: ambient rumor investigation quest (DRAFT)
+
+**World-bible source:** Part 46, Information and knowledge: “What rumors circulate with no underlying event (kernel-less noise — allowed for noise-dominant stations only)?” **Working title:** The Third Bell. **Premise status:** DRAFT. Current sources do not identify any hub as noise-dominant, so this cannot be assigned to an existing location or rumor stream without a content-authority decision.
+
+#### Story premise
+
+A listener at an as-yet-unapproved signal room reports a third bell in a sequence that usually has two. The sound arrives on some nights and not others. People use it to tell stories: a gate is opening, a convoy is overdue, someone is tapping from below. The quest does not make those claims true. The player investigates the rumor as a social and listening problem, then decides whether to record it as ambient chatter, keep the source uncertain, or decline to spread it.
+
+The player can learn that machinery, weather, fatigue, and expectation can produce overlapping impressions. The quest is not a forensic proof that every listener was mistaken. Its strongest supported conclusion is bounded: no corroborating event or source was found in the places and time window actually checked. The story preserves room for later evidence without retroactively converting the rumor into a hidden canonical event.
+
+#### Quest packet
+
+**Type:** discovery, investigation, character dialogue. **Core/expansion:** expansion candidate because a noise-dominant hub classification and source-free rumor policy are not present in the reviewed data model. **Start:** a rumor record or authored one-shot cue is made available by an explicitly configured ambient-only hub. **Required locations:** the configured listening hub and one shelter debrief scene; any second location is optional. **Required evidence:** a heard rumor, an attempted source check, and a player resolution. **Reward:** a codex note or journal summary that explains the rumor’s status; no loot, standing, unlock, or route change is required.
+
+**Beat 1 — The statement.** A listener says, “Three bells, then nothing.” The first objective is to ask when and where they heard it, without declaring the source. If the clue is only an authored ambient vignette and no rumor record exists, the journal must not imply the rumor entered the propagated network.
+
+**Beat 2 — The listening interval.** The player reviews the interval with a host or operator. The interface states the actual search duration and the checks performed. A missing recording is “no recording found,” not proof of silence. If the player leaves early, the conclusion remains pending.
+
+**Beat 3 — Compare accounts.** A second listener describes two notes; a third declines to identify a sound at all. The player can preserve each as attributed testimony, write a cautious common summary, or stop collecting accounts. Do not collapse accounts into a numerical vote that manufactures truth.
+
+**Beat 4 — File or leave.** Outcomes are “ambient report, source unknown,” “no corroboration in this search,” “lead for later,” and “not recorded.” Only the first two complete the investigation, and neither changes campaign facts about a gate, convoy, faction, or location. The last two preserve the player's right not to amplify a claim.
+
+#### Lifecycle and failure-forward routes
+
+If the hub lacks ambient-only configuration, the quest is unavailable and the game continues normally. If the hub exists but the rumor expires before the player accepts, retain an archive clue only if the source owner preserves the text; otherwise expire the offer transparently. If the player cannot reach the hub, offer a shelter conversation that states the account is secondhand. If no recording system is available, the investigation can still resolve as “source not established” but must not promise audio analysis. If the player abandons the quest, already witnessed dialogue remains witnessed; no public report is created.
+
+#### Quest fit and exclusion
+
+This is a discovery/investigation/character quest. It is not a timed crisis, escort, survival supply task, crafting requirement, faction mission, or repeatable daily rumor grind. Do not add arbitrary failure for not investigating. Do not gate the main campaign or a critical destination on proving a negative. The content is reusable only as a structure for attributed, low-stakes uncertainty in a designated ambient-only hub; the sound motif, witnesses, and conclusion are authored per location.
+
+#### Production and acceptance
+
+Medium production cost: hub-specific sound description, three distinct listener voices, a bounded search procedure, localization review, and a journal summary. Acceptance requires that every line distinguishes a direct hearing, a remembered account, and a source-checked result; an absent event is never fabricated; and the quest cannot begin unless the hub configuration is explicit. Implementation remains gated on the rumor owner’s schema, save, UI, and consumer contracts.
+### Pass 23B — Quest states, optionality, and staged production (DRAFT)
+
+The Third Bell should be a small case that teaches the player how this world handles uncertainty. Its success condition is not “solve the mystery.” It is that the player can identify which statements are heard, which checks were performed, and which conclusions remain unavailable. This makes it suitable for a single case, not a daily quest loop.
+
+#### Quest status projection
+
+Use the existing quest state machine and add no state enum unless an approved premise audit proves the owner cannot represent the flow. Player-facing labels can be expressed as: **Available** when an ambient-enabled rumor is surfaced; **Discovered** after the player hears its attributed description; **Accepted** after they choose to investigate; **In Progress** after at least one check is requested; **Blocked** when the hub or evidence path is unavailable; **Partially Complete** after one check but before the player selects an outcome; **Resolved** after a bounded conclusion; **Abandoned** when the player explicitly leaves it. Expired rumors do not necessarily expire the quest: historical testimony may still be investigated if a preserved clue exists.
+
+The game should never convert an idle state into a timed failure. It should not reopen after resolution unless a new authored report arrives through the canonical rumor event. If no delivery/arrival event is available, the story remains closed after its first resolution.
+
+#### Side-quest and faction boundaries
+
+The default case is a local information quest. A faction-specific variation is a later expansion: it requires a real faction source, an explicit audience, and a standing/access owner. The ambient report alone cannot add or remove standing. An NPC may express disagreement in authored prose, but the dialogue must not imply a mechanical faction penalty. A character quest can reuse the listening scene only when a current character record supplies the speaker and the player's relationship gate; do not invent a named companion to fill a high-volume content slot.
+
+#### Production phases and cost
+
+**Phase A: content-only prototype.** Write the three listener voices, bounded search prompts, and four outcomes. The prototype may be displayed as a one-shot authored scene for review and does not load into the live rumor catalog. Cost: low. **Phase B: owner-contract review.** Determine hub policy, rumor provenance shape, briefing behavior, persistence/migration, and UI presentation. Cost: medium and architecture dependent. **Phase C: playable pilot.** Wire one approved ambient-only hub, one rumor entry, and the quest/debrief path. Cost: medium-high because content and owner integration must agree. **Phase D: content family.** Add further hub-specific entries only after utilization, accessibility, and continuity review. Cost: high if each site has distinct voices and acoustic context.
+
+#### Done when
+
+The case can resolve without declaring the rumor true or false beyond evidence; a player can decline to investigate or forward it without penalty; no event, threat, opportunity, discovery, or faction change is fabricated; unavailable provenance blocks the feature cleanly; and every resolved line can be reconstructed from canonical facts after load. Until these are met, the quest remains DRAFT.
+### Pass 23C — Ambient case bank and variation rules (DRAFT)
+
+These case seeds are a high-volume authoring backlog for a future approved hub. None is a live rumor row, and none asserts an underlying event. For each case, the author supplies the source-free policy, witness, bounded check, uncertainty language, and closeout.
+
+| Seed | Opening observation | Bounded check | Safe resolution |
+|---|---|---|---|
+| The Third Bell | listener recalls a third tone after two | compare a specific listening interval to the room log | source unknown in checked interval |
+| The Late Knock | a pattern sounds after the night pump stops | inspect only the available maintenance mark | no matching note located |
+| The Blue Window | a receiver indicator seems brighter once | ask whether anyone else saw the same instrument | single account retained, no signal claim |
+| The Borrowed Call | a call sign is repeated without a sender | check whether a sender ID was logged | no sender ID recorded |
+| The Southward Hum | low-frequency sound seems to travel with wind | record wind direction only if current weather history supports it | sound account remains unlocated |
+| The Empty Minute | one listener remembers a pause in the broadcast | inspect the actual saved transmission if available | playback absent, memory attributed |
+
+#### Variation rules
+
+Change one dimension at a time: witness count, source-check availability, rumor age, player consent, or hub audience. Preserve the same core epistemic outcome unless authored evidence differs. Do not vary a source-free account into an actual faction threat. Do not generate a new faction call sign or location from a random table. A variant may end with a line of prose and no reward; reward equality is not required for every narrative choice.
+
+#### Reuse and repetition limits
+
+Each seed is suitable for one authored vignette and at most one follow-up response. Do not turn all six into daily quests. A future seasonal return can reuse the hub only when a new authored stimulus or real source event exists. The ambient topic can remain unresolved across the campaign without producing an endlessly growing quest backlog.

@@ -683,6 +683,18 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.MetaProgressionSelfTest:
                     GetTree().Quit(HostCliMetaProgression.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.TradeRoutesSelfTest:
+                    GetTree().Quit(HostCliTradeRoutes.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.HumanMigrationSelfTest:
+                    GetTree().Quit(HostCliHumanMigration.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.TunnelNetworkSelfTest:
+                    GetTree().Quit(HostCliTunnelNetwork.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.AudioAccessibilitySelfTest:
+                    GetTree().Quit(HostCliAudioAccessibility.RunSelfTest(_dataDir));
+                    return;
             }
             }
             catch (System.Exception ex)

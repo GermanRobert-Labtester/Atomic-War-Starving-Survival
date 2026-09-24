@@ -312,6 +312,8 @@ namespace AtomicWar.GodotApp
             SetupVehicleCustomization();
             SetupBackstory();
             SetupMetaProgression();
+            SetupTradeRoutes();
+            SetupHumanMigration();
             // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
             // before any early SaveAll so Continue cannot drop resolved choices.
             SetupMoralChoice();
@@ -543,6 +545,8 @@ namespace AtomicWar.GodotApp
                 SaveVehicleCustomization();
                 SaveBackstory();
                 SaveMetaProgression();
+                SaveTradeRoutes();
+                SaveHumanMigration();
 
                 if (_sectionCaptureFailed)
                 {

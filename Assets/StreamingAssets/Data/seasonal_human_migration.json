@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "dwell_days": 10,
+  "factions": [
+    {
+      "faction_id": "faction_the_compact",
+      "schedule": [
+        {
+          "phase": "deep_winter",
+          "region_id": "settlement",
+          "population_delta": 25
+        },
+        {
+          "phase": "thaw",
+          "region_id": "iron_basin",
+          "population_delta": 20
+        },
+        {
+          "phase": "dry_heat",
+          "region_id": "settlement",
+          "population_delta": -15
+        },
+        {
+          "phase": "ash_winds",
+          "region_id": "industrial_belt",
+          "population_delta": 10
+        }
+      ]
+    },
+    {
+      "faction_id": "faction_the_scale",
+      "schedule": [
+        {
+          "phase": "thaw",
+          "region_id": "ash_flats",
+          "population_delta": 30
+        },
+        {
+          "phase": "dry_heat",
+          "region_id": "deep_coast",
+          "population_delta": 25
+        },
+        {
+          "phase": "ash_winds",
+          "region_id": "ash_flats",
+          "population_delta": -20
+        },
+        {
+          "phase": "deep_winter",
+          "region_id": "settlement",
+          "population_delta": 15
+        }
+      ]
+    },
+    {
+      "faction_id": "faction_black_flotilla",
+      "schedule": [
+        {
+          "phase": "dry_heat",
+          "region_id": "deep_coast",
+          "population_delta": 35
+        },
+        {
+          "phase": "ash_winds",
+          "region_id": "deep_coast",
+          "population_delta": -15
+        },
+        {
+          "phase": "deep_winter",
+          "region_id": "industrial_belt",
+          "population_delta": 20
+        },
+        {
+          "phase": "thaw",
+          "region_id": "deep_coast",
+          "population_delta": 15
+        }
+      ]
+    },
+    {
+      "faction_id": "faction_the_overlay",
+      "schedule": [
+        {
+          "phase": "deep_winter",
+          "region_id": "iron_basin",
+          "population_delta": 15
+        },
+        {
+          "phase": "thaw",
+          "region_id": "settlement",
+          "population_delta": 10
+        },
+        {
+          "phase": "dry_heat",
+          "region_id": "industrial_belt",
+          "population_delta": 20
+        },
+        {
+          "phase": "ash_winds",
+          "region_id": "iron_basin",
+          "population_delta": -10
+        }
+      ]
+    }
+  ]
+}

@@ -60,6 +60,7 @@ namespace Ashfall.Core.Campaign
             { "market_ticked", SemanticKind.Heartbeat },
             { "medical_disease_ticked", SemanticKind.Heartbeat },
             { "meta_progression_ticked", SemanticKind.Heartbeat },
+            { "tunnel_network_ticked", SemanticKind.Heartbeat },
             { "morale_contagion_ticked", SemanticKind.Heartbeat },
             { "narrative_ticked", SemanticKind.Heartbeat },
             { "needs_ticked", SemanticKind.Heartbeat },

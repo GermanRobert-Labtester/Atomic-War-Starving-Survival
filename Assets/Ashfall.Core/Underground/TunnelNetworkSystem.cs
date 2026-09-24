@@ -348,6 +348,53 @@ namespace Ashfall.Core.Underground
             return _state.Segments.Where(s => s.IsDiscovered).ToList();
         }
 
+        /// <summary>
+        /// Plan 167 — clears the live network so an authored catalog can be
+        /// seeded over the built-in canonical fallback. Never called on a
+        /// restored campaign, so a player's discovered/repaired network is
+        /// preserved.
+        /// </summary>
+        public void Clear()
+        {
+            _state.Segments.Clear();
+            _state.Junctions.Clear();
+            _state.NextSequence = 1;
+        }
+
+        /// <summary>
+        /// Read-only summary of live tunnel state (Plan 167). Exposed for the
+        /// architecture scanner, the map presentation, and the host probe.
+        /// </summary>
+        public TunnelNetworkCensus GetCensus()
+        {
+            int discovered = 0;
+            int collapsed = 0;
+            int impassable = 0;
+            int hazardous = 0;
+            float integritySum = 0f;
+
+            for (int i = 0; i < _state.Segments.Count; i++)
+            {
+                var segment = _state.Segments[i];
+                if (segment == null) continue;
+                if (segment.IsDiscovered) discovered++;
+                if (segment.Status == TunnelStatus.Collapsed) collapsed++;
+                else if (segment.Status == TunnelStatus.Impassable) impassable++;
+                if (segment.Hazards != null && segment.Hazards.Count > 0) hazardous++;
+                integritySum += segment.StructuralIntegrity;
+            }
+
+            float average = _state.Segments.Count > 0 ? integritySum / _state.Segments.Count : 0f;
+            return new TunnelNetworkCensus(
+                _state.Segments.Count,
+                discovered,
+                _state.Junctions.Count,
+                collapsed,
+                impassable,
+                hazardous,
+                average);
+        }
+
         public TunnelNetworkState CaptureState()
         {
             var state = new TunnelNetworkState
@@ -395,6 +442,14 @@ namespace Ashfall.Core.Underground
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
 
+            // Schema gate: a newer payload must not be silently down-cast; a
+            // payload that omits the field is the original v1 shape and loads.
+            if (state.SchemaVersion > 1)
+                throw new InvalidOperationException(
+                    $"TunnelNetworkState schema {state.SchemaVersion} is newer than supported (1).");
+            if (state.SchemaVersion < 1)
+                state.SchemaVersion = 1;
+
             _state.SchemaVersion = state.SchemaVersion;
             _state.NextSequence = state.NextSequence;
             _state.Segments.Clear();
@@ -435,6 +490,39 @@ namespace Ashfall.Core.Underground
                     });
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Read-only census of live tunnel-network state (Plan 167). Exposed for the
+    /// architecture scanner, the map panel, and the host self-test probe.
+    /// </summary>
+    public struct TunnelNetworkCensus
+    {
+        public int TotalSegments { get; }
+        public int DiscoveredSegments { get; }
+        public int TotalJunctions { get; }
+        public int CollapsedSegments { get; }
+        public int ImpassableSegments { get; }
+        public int HazardousSegments { get; }
+        public float AverageIntegrity { get; }
+
+        public TunnelNetworkCensus(
+            int totalSegments,
+            int discoveredSegments,
+            int totalJunctions,
+            int collapsedSegments,
+            int impassableSegments,
+            int hazardousSegments,
+            float averageIntegrity)
+        {
+            TotalSegments = totalSegments;
+            DiscoveredSegments = discoveredSegments;
+            TotalJunctions = totalJunctions;
+            CollapsedSegments = collapsedSegments;
+            ImpassableSegments = impassableSegments;
+            HazardousSegments = hazardousSegments;
+            AverageIntegrity = averageIntegrity;
         }
     }
 }

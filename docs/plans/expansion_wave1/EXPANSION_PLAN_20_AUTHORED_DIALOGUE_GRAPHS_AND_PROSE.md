@@ -2739,3 +2739,473 @@ This is a room dressing description, not a new world-map location ID. If no exis
 The record-desk description can be adapted for other documents, but the empty register image and exact dialogue belong to this case. A reusable template should supply source label, what is known, what is missing, and the player's next choices; it should not repeat the clerk's lines verbatim across unrelated factions.
 
 The dialogue review should include three readings: one as an isolated scene, one without any optional skill knowledge, and one with a previously read related record. At each reading, the player should be able to identify who authored the statement, what remains unverified, and whether a response will submit evidence or simply close the conversation.
+
+
+## Pass 20A — The Quiet Hours: authored radio-theater dialogue sample (DRAFT)
+
+### Dramatic design
+
+The master world bible’s Part 43, seed 19 proposes the Machine’s tribunal broadcasts as radio theater with procedural case content. Plan 94 already expanded the Machine-Register corpus to 30 broadcasts, so this pass develops a distinct staged-hearing story rather than writing replacement technical notices. The Quiet Hours is a provisional four-part arc about overlooked night work, public correction, and the limits of formal records. No character, place, faction, or episode title is canon until the content and name-collision audit is complete.
+
+Keep the radio text and the playable dialogue graph separate but linked by stable authored reference. Broadcast prose is short, scheduled, and legible when heard without context. The quest dialogue supplies choices, relationship texture, and the player’s opportunity to act. A broadcast can hint; it cannot silently select a dialogue response or record the player’s consent.
+
+### Voice roles
+
+- The relay performer is exact with words, uneasy with improvisation, and protective of the program’s credibility. Their humor is dry and used to defuse pressure, not to belittle the witness.
+- The night-watch lead remembers tasks by their consequences rather than by official titles. They will correct an error privately first, but object when privacy is used to erase the crew again.
+- The younger listener is observant and impatient with euphemism. They want the public to name the work, but can be surprised by the cost of naming an individual.
+
+Keep these as role/personality cards until names and established relationships are checked. Give each a distinct information boundary: the performer knows the script and production choices; the watch lead knows lived practice; the listener knows what the audience heard. None is a universal lore dispenser.
+
+### Scene graph: first conversation
+
+Scene entry is available only from a real clue or verified radio surface. Use a short branch that reconverges before the player accepts a quest:
+
+- Performer: “The hearing was written for a clean room. Our shelter has never had one.”
+- Player: “Was the case meant to describe your watch?”
+- Performer: “No name was printed. That is not the same as no one being described.”
+- Player: “Then let me ask the people who were there.”
+- Performer: “Ask first. Decide what to repeat later.”
+
+The alternative response may ask whether the broadcast can be withdrawn. The performer answers that delivery cannot be recalled from listeners who already received it; they can prepare a correction or decline to repeat it. Both branches reconverge at a clear offer: investigate the omission, leave the matter alone, or ask to return after speaking with the watch lead. Declining does not mark the quest failed. It leaves the lead available under its authored return rule.
+
+### Scene graph: witness conversation
+
+Start with one hub question and three optional spokes: what the watch actually did; why the roster omitted it; and whether the witness wants public identification. Use a knowledge gate only for the roster detail, a relationship-sensitive gate for the personal account, and no reputation gate for basic access to the main story. The player can ask questions in any order. Each spoke returns to the same hub with a compact memory flag owned by the quest/dialogue contract only if the current save owner supports it; otherwise derive the recap from objective facts.
+
+Sample exchange:
+
+- Watch lead: “We kept the west latch from freezing shut. There is no line for a door that does not fail.”
+- Player: “The hearing called the hour empty.”
+- Watch lead: “The hour was quiet. That was the work.”
+- Player: “May I tell the station?”
+- Watch lead: “Tell them what happened. Ask me before you tell them who did it.”
+
+If the player has already chosen public attribution, the final question changes to acknowledge the lost anonymity and offer a correction. If the player previously declined, the lead asks whether the player has returned with new information. Avoid a scolding line for a valid prior choice.
+
+### Production standard
+
+Each authored node has stable ID, speaker, scene/location role, conditions, text, response IDs, effects, quest updates, relationship changes, world-state changes, and next-node references, subject to the current dialogue schema and loader. Text stays in authored data. Effects are typed references reviewed under Plan 22. Conditions are reviewed under Plan 21. A node with no valid response path must have an explicit terminal marker and an accessible close/back route.
+
+Use captions for every spoken line, avoid color-only status, keep response meaning visible before commit, and preserve keyboard/controller focus when the branch reconverges. The scene should remain understandable with audio muted and at a slower reading pace. Production cost is modest for one hub and two reconvergent spokes; it rises with unique performance, voice acting, facial animation, and localization. Those presentation layers remain optional expansion work.
+
+## Pass 20B — Four-episode outline, repeated-visit lines, and prose guardrails
+
+**Episode I: The Quiet Hour.** A tribunal play presents a clerk reading an empty hour from a schedule. The player hears the scene through an available surface or learns of it from the performer. End on a question, not a claim that the tribunal has judged a real shelter. A one-sentence log explains that the player has heard a dramatization.
+
+**Episode II: The Door That Did Not Freeze.** The watch lead describes routine work that prevented a visible emergency. The setting description should carry the evidence: a latch with fresh oil, chalk marks on a shift board, and a thermos left on the safe side of a draft. Do not add a new permanent location; place the scene in an existing eligible shelter or relay space selected by the location authority. The player can ask for a private correction, public correction, or no intervention.
+
+**Episode III: Who Gets Named.** The performer explains that a public correction will reach more people but may turn a private crew into an emblem. The listener argues that unnamed labor remains easy to repeat and easy to forget. The conflict is not solved by a skill check. Skills can reveal production detail, omitted stage direction, or a clue about how the script was assembled; they do not make one character’s consent irrelevant.
+
+**Episode IV: The Revised Reading.** If the player chose a correction, present a short authored follow-up that distinguishes verified fact from theatrical framing. If the player chose privacy, the program corrects its general wording without identifying the crew. If the player chose silence, a private scene still resolves the witness’s request, but no public claim is made. Each ending uses the same factual basis and different disclosure scope. The recap can be read from a journal surface only if that surface is a verified consumer.
+
+Repeated-visit lines should reflect one durable fact at a time: before accepting, the performer notes that the script is still on the desk; after consent, the watch lead asks whether the player has decided what to share; after public correction, the listener refers to the revised reading; after privacy, the performer describes the wording change without naming the crew; after silence, the witness says the choice was honored. Do not rotate random variants on each visit or suggest a consequence that did not occur.
+
+Prose guardrails: the Machine’s voice may be formal, but the theater should not turn bureaucracy into cartoon villainy. Use procedure as dramatic pressure: a form can make a person legible, but it can also leave the wrong box blank. Keep descriptions concrete and restrained. Avoid exposition that explains the entire tribunal or its endgame; the local episode should function on its own while adding one small, compatible question to the larger story. Do not borrow phrasing from existing broadcast rows. A collision review must compare topic, image, repeated phrase, day trigger, and emotional turn against all current corpus entries and already-integrated radio content.
+
+A prose acceptance pass checks that each line can be attributed to its speaker, the scene does not overstate what evidence proves, the player sees the disclosure audience, and every ending is represented in the state graph. A story editor signs off on voice; the data owner signs off on references; accessibility review checks reading order and text length; continuity review checks episode order and existing canon. No author should infer that a dramatic sample is already wired.
+
+
+
+## Pass 20C — Script-ready scene pack: radio, common room, and follow-up
+
+The following lines are original DRAFT copy for voice and graph testing. They are not copied from the existing Verdict corpus, and they should not be inserted until the collision and continuity review passes. Keep node IDs stable even if line text changes. Use content-role references until canonical character and location IDs are verified.
+
+### Broadcast fragment: The Quiet Hours
+
+> CLERK: “The schedule records one hour without assigned work.”
+>
+> EXAMINER: “Was the shelter empty?”
+>
+> CLERK: “No. It was quiet.”
+>
+> EXAMINER: “Then why is the hour blank?”
+>
+> CLERK: “The form has no box for a door that did not freeze.”
+
+The final line is the episode hook, not a claim about a real game location. Keep this to a short staged exchange, followed by an unobtrusive label that the scene is an enacted case. Do not load the broadcast with explanatory lore or use it as a substitute for the player’s conversation with the watch lead.
+
+### Common-room hub
+
+Entry line depends on whether the player has encountered the staged case. If the case is only scheduled but not surfaced, use a general greeting. If it has actually been reviewed, the performer can ask: “Did the blank hour sound familiar?” The player may answer, “I want to know who wrote it,” “I want to ask the watch,” or “I do not want to turn a play into a charge.” These responses converge on the same objective offer but set different immediate tone. Only an explicit accept action starts the investigation.
+
+Description: A small lamp has been turned to face the program desk. Its shade is dented near the rim, and pencil marks on the table show where pages were rearranged. The performer keeps the last script sheet under a mug so the draft will not slide when the door opens. No map-specific feature is implied by this description; place it only in a verified existing interior.
+
+### Follow-up scene fragments
+
+**Private correction:** “We changed the wording. We did not name your crew. The hour is no longer called empty.” The watch lead replies: “That is enough for tonight. Ask again before you call it enough for everyone.”
+
+**Public correction:** “The earlier reading was a staged case. The work described here was real, and the people named it for themselves.” This line is available only after explicit consent and a confirmed delivery surface. If names are not consented to, use the anonymous version. The response is not a universal reputation bonus.
+
+**Silence:** The performer asks whether the player still wants the pages kept. The watch lead says, “Keep them. A page can stay private without pretending it never existed.” This resolves a deliberate choice without presenting silence as failure or moral weakness.
+
+### Reusability and cost
+
+The hub’s information spokes can be reused by later episode callbacks if each line references a real state and has a neutral fallback. Do not reuse the exact moral case with another cast just to increase quest count. A new case should introduce a different procedural tension, source type, and consequence surface. A radio theater wrapper can recur as a content pattern: short authored scene, clear enacted-case label, one concrete contradiction, optional player inquiry, and a reviewed closure. That format is reusable; its people and local stakes should remain specific.
+
+Minimum production package: one broadcast fragment, one hub description, up to six response labels, three response lines, one alternate line per final state, a brief recap, and short/long accessibility text. Expansion production adds actor-specific barks, localization variants, optional skill observations, and follow-up lines for revisits. Voice recording should wait until text IDs, consent language, and consequence routes are locked. The content author owns prose; the integration owner verifies node loading and reachability; the UI reviewer checks that a long line does not hide the response that commits an irreversible choice.
+
+### Graph lint checklist
+
+The graph must have one reachable entry for each supported exposure state; no invisible response may commit a public action; every branch has an explicit target or terminal marker; required variables have defaults; conditional responses are mutually ordered or explicitly non-overlapping; reconvergent nodes do not repeat already-seen exposition; and every high-impact response has a plain-language preview. A read-aloud pass should distinguish the performer, watch lead, and listener without relying on speaker labels. A transcript pass should preserve stage directions and tone for deaf and hard-of-hearing players. The script can be atmospheric, but the player’s next action remains obvious.
+
+
+## Pass 20D — Follow-up dialogue: The Second Margin (DRAFT)
+
+### Three-voice scene
+
+The optional conversation begins with the younger listener reading the correction slowly, then turning the page face down. “I understand the new sentence. I am not sure it changes what the first one sounded like.” This is an interpretation, not a puzzle answer. The player can ask what sounded accusatory, ask whether the listener wants a different explanation, or say the correction was not written for every listener. These short spokes reconverge at the performer, who can explain the production choice without claiming that the audience misunderstood.
+
+Sample hub:
+
+- Listener: “I heard the clerk say the hour was blank. It sounded like someone was being blamed for not filling it.”
+- Performer: “The clerk was blaming the form.”
+- Listener: “Then the form should have been named sooner.”
+- Player: “Would an explanation help, or would it only make the page longer?”
+- Listener: “Ask me after you decide who the explanation is for.”
+
+The watch lead joins only if the player’s parent outcome and consent make that meeting valid. They do not arrive as a universal arbiter. If the player chose public correction with consent, the lead can say: “I agreed to the work being named. I did not agree to speak for every person who keeps watch.” If the player chose private correction: “You changed the words without putting our names under them. That was the agreement.” If the player chose silence: “I asked you not to carry it. You listened.”
+
+### Branch outcome text
+
+**Narrow correction:** The performer prepares one additional sentence naming the limit of the dramatization. The listener may accept the clarification while keeping their interpretation. The graph reconverges to a local resolved state without implying unanimity.
+
+**Broader explanation:** The performer offers to explain the case format and why the script left the form unnamed. This can be a later authored program note only if the delivery consumer exists. Until delivery is confirmed, dialogue says “prepared,” not “aired.”
+
+**No further statement:** The player closes the subject. The listener’s view remains theirs; the parent outcome remains intact. The scene ends with a concrete activity—folding the page, returning the script, or leaving it on the table—rather than a moral score.
+
+### Location and atmosphere copy
+
+For a reused conversation hub: “The table has been cleared except for two versions of the same page. One is marked for performance. The other has a line pencilled into the margin, small enough to miss unless you lean close.” This can appear only if both authored page states actually exist in the current scene. Otherwise use the neutral hub description and do not conjure an object from prose.
+
+The second margin is a motif, not a collectible item. It can reappear in a later conversation as a remembered phrase if the canonical quest state supports it; it should not be added to inventory, archive, or map discovery. That keeps a literary image from accidentally becoming a new item system.
+
+### Accessibility and reusability
+
+Keep the listener’s uncertain response explicit in captions and avoid relying on a facial expression to communicate discomfort. Response labels should say whether the player is asking, clarifying, or closing the subject. The branch must work with audio muted, and the short scene summary must preserve that no consensus was forced. Production cost is one optional hub scene, three reconvergent questions, three outcome lines, and a small callback matrix. Reuse its structure for future audience-response stories, but not the same exact disagreement; future episodes need a different listener concern and a specific reason that concern matters.
+
+
+## Pass 20E — Character voice, shelter texture, and micro-quest prose bank
+
+### Character progression by behavior
+
+The relay performer begins by defending the script’s precision, not the Machine’s authority. After the player asks for a correction, the performer learns to name the limits of a dramatization before a listener has to complain. The watch lead begins with guarded, practical language and ends with the same caution but a clearer boundary about public attribution. The listener begins impatiently and ends able to distinguish a correction from agreement. None undergoes a sudden conversion. Their progress is a change in what they are willing to say and under which conditions.
+
+Avoid making one character the author’s moral mouthpiece. Give each an unanswered question: the performer wonders whether a careful correction can still be used as propaganda; the watch lead wonders who will be responsible if their crew becomes a symbol; the listener wonders how to ask for recognition without claiming to speak for others. Their motivations can overlap without resolving into unanimity.
+
+### Shelter-lore description bank
+
+Use these small details only in a verified suitable scene:
+
+- On the program board, yesterday’s schedule has been folded under today’s rather than erased. Someone wanted to keep the old handwriting visible.
+- A common-room lamp throws light across the table but not the doorway. People can read without making everyone entering feel observed.
+- The watch rota is marked in pencil. The names are kept short so a replacement can write one in quickly when the wind makes the latch stick.
+- A strip of cloth covers the microphone stand when no program is being recorded. It keeps dust out and signals that the room is not currently on air.
+- At the end of the hearing, someone has left one chair turned toward the wall. It is not a symbol unless a character tells the player why it matters.
+
+These descriptions are atmospheric, not new interactable props. If a line says a document can be picked up, moved, or inspected, that action requires a real interaction and save owner. Otherwise write it as static environmental prose.
+
+### Micro-quest: The Page Left Face Down
+
+A player finds two versions of the same short scene on a table in a valid location. The question is not which one is true; it is which was staged and which was revised. The player can compare a visible revision mark, ask the performer, or leave the pages untouched. If they ask, the performer explains that the first draft made a person’s labor sound like an administrative failure. If they leave, no state changes and the optional lead can remain undiscovered. Resolution grants a clear program-history recap, not a collectible or evidence item. Failure recovery is an alternate verbal clue or a later return, if supported by the location owner.
+
+**Sample exchange:**
+
+- Player: “Which page was read?”
+- Performer: “The one with the clean margin.”
+- Player: “And this one?”
+- Performer: “The one that says who had to live with the clean version.”
+- Player: “That is not a date.”
+- Performer: “No. It is the reason the date stayed.”
+
+This exchange is intentionally suggestive. Editorial review must decide whether the last two lines are clear enough for the scene; do not rely on mystery to conceal a missing objective.
+
+### Short quest descriptions
+
+Available: “A staged hearing has made an ordinary hour sound empty. Someone at the shelter says the wording does not match what happened.”
+
+Accepted: “Ask what the case leaves out. Before repeating anyone’s account, ask what may be shared.”
+
+Blocked: “The person you need is away. The inquiry can wait until their route returns.”
+
+Resolved, private: “The correction stayed private. The record now distinguishes a quiet hour from an unused one.”
+
+Resolved, public: “A correction was delivered with the witness’s consent. The broadcast names the limits of its staged case.”
+
+Resolved, silent: “You chose not to carry the account further. The witness’s request was respected.”
+
+These descriptions are provisional and must only be displayed when the corresponding owner state is true. A journal recap should not claim that every listener accepted the correction.
+
+
+## Pass 21A — The Yellow Lamp Has a Shadow: authored scene and character arc (DRAFT)
+
+### Voices and disagreement
+
+The central cohort character is a young adult by the current age/life-stage authority, if that authority confirms it; until then use “matured cohort member” or a neutral named role. They grew up hearing that the sun was a yellow lamp in a room too large to measure. Their curiosity is practical: if the story was wrong, which other useful lessons might be only metaphors? Their former teacher is warm and exact, willing to admit that a rhyme simplified reality but unwilling to call the children foolish for believing it. A second cohort adult, also from the cohort, sees the verse as a promise that helped them imagine a world beyond concrete. Their politics and spiritual beliefs are not preset by these roles.
+
+The scene begins in a verified archive/codex conversation surface, not automatically at the sector named in folklore metadata. Setting copy: “The page is thumb-soft at the fold. The old line has been read aloud often enough that the crease crosses the word lamp. In the margin, a newer hand has drawn a shadow with no lamp beneath it.” Use only if a real page and annotation are part of the scene. Otherwise keep the description to the existing codex entry and character dialogue.
+
+### Opening hub
+
+- Cohort member: “They taught us the sun was a lamp. I thought the important part was that it was yellow.”
+- Teacher: “The important part was that there could be light you did not make yourself.”
+- Second adult: “That is what you meant. It is not all that we heard.”
+- Player: “What should the next class hear?”
+
+The player can ask how the verse was used in childhood, what changed after the adult saw open sky, or whether the teacher meant the line literally. Each branch offers a distinct piece of context and reconverges before the resolution choice. Do not use an “insight” skill check to declare one memory more truthful. A skill can reveal an optional historical detail about the written entry’s date or origin only if the catalog supports it.
+
+### Three resolution responses
+
+**Keep the verse as written.** The teacher explains that a story can be comforting without being a lesson in astronomy. The adult character says the next generation deserves an honest explanation alongside it. The authored outcome preserves the text but adds a conversation recap; no profile is changed.
+
+**Add a context note.** The player asks for an annotation that says the verse is a child’s metaphor and not a literal description. The adults agree on wording after a short reconvergent exchange. Only expose this as an in-game codex feature if the Journal/Codex owner supports authored notes; otherwise record the choice in quest recap and dialogue only.
+
+**Write a reply verse.** The cohort member contributes a new line about the first shadow they saw. This is not a player-generated text system. The content team authors a fixed line and includes it as a quest outcome reference after provenance review. The teacher can choose to read it at a future education session only if the existing education/content route can present it.
+
+Sample response line: “A lamp can be carried. A shadow tells you the light is already here.” Treat this as provisional copy, not an objective fact or real-world saying. The other characters need not agree that it is the best line.
+
+### Branching and return lines
+
+Short hub-and-spoke nodes reconverge; only the final selection changes the outcome. Before resolution, return visits repeat the open question with a gentle state-aware variation. After the context note, the teacher says the original remains and the new note travels beside it. After preservation, the cohort member asks whether metaphor and fact can sit on one page. After the reply verse, the second adult asks whether children will be allowed to disagree with the new line too. Every ending honors the original story and the player’s chosen scope.
+
+The dialogue graph must not use the same node for the original codex prose and the new conversation; the existing entry remains canonical, and the scene references it. Captions and transcript include speaker roles and stage directions. No scene requires audio playback, and no response hides whether it changes the written record or merely the local conversation.
+### Pass 21B — Scene variants and restrained authored sample (DRAFT)
+
+The following sample is a design excerpt to demonstrate branching shape, not a final canon lock. It should be reviewed alongside the current character roster and shelter vocabulary before conversion into data. The scene keeps its branch short and convergent; consequences remain attached to a single quest fact or optional local annotation.
+
+#### Scene: under the yellow lamp
+
+**Place:** shared shelter room, after the evening meal. **Participants:** a teacher who preserved the old verse and two adults who remember different versions. **Entry:** the player has discovered the marked page. **Mood:** quiet disagreement, no accusation. **Exit:** all branches return to the next authored question.
+
+**Teacher:** “I left the line as it was. A child asked whether the lamp could cast a shadow, and I did not want the page to answer before they had.”
+
+**Player response A — Ask about the mark:** “Was the question yours first?”
+
+**Teacher:** “No. I wrote it down because I was afraid I would tidy it away by morning.”
+
+**Player response B — Ask what the verse protected:** “What did the old version help people endure?”
+
+**Adult one:** “It gave us a light we could carry in our heads when the corridor lamps failed.”
+
+**Adult two:** “And it taught us to call every dark corner harmless. Some corners were not.”
+
+Both answers can be true. The scene should not arbitrate which memory is objectively correct.
+
+**Player response C — Leave the question open:** “Then let the page keep the question.”
+
+**Teacher:** “That is a kind of answer. It is not the same as forgetting.”
+
+All responses reconverge. The player may choose one of three follow-up intents: preserve both accounts; add a note that the accounts differ; ask whether someone wants to write a reply. These are local narrative resolutions. They do not change faction reputation or force a doctrine.
+
+#### Optional location scene: the shuttered beacon
+
+If the expedition selector offers the authored origin-site equivalent, the player finds a lamp housing with a repaired shade and a strip of cloth tied to its handle. Environmental evidence is deliberately incomplete. A dated maintenance mark can place the object in a period, but not prove that a specific person told the verse there. A short interaction can reveal that the lamp was repaired more often than the official log suggests. This supports the theme of preservation through repeated practical acts.
+
+If the optional location does not appear, a character can describe the repair from memory. The player receives no “visited site” fact, map discovery, or field evidence. The fallback is a different scene with a different evidentiary status.
+
+#### Three optional dialogue modes
+
+**Classroom retelling:** the teacher asks the player to read the verse aloud, then pauses at a disputed line. The player may ask for a second voice or stop. Suitable for a short hub-and-spoke scene.
+
+**Private recollection:** one adult asks to speak away from the group. The player can listen, request permission to write, or defer. This is relationship-sensitive only if an existing relationship contract supplies the gate.
+
+**Field comparison:** after an optional site visit, the player can compare a physical mark to the remembered line. The scene must say “consistent with” or “does not settle,” not “proves,” unless the content authority has concrete evidence.
+
+#### Writing and accessibility constraints
+
+Keep the vocabulary concrete and the disagreement legible. Avoid making the player select a “correct” culture-wide interpretation. Provide captions and speaker labels through the normal dialogue UI; preserve complete keyboard and controller navigation; do not convey a branch solely through color. If the content framework supports localization keys, author stable keys rather than embedding UI-specific markup in prose. Every response should preview its actual tone and avoid misleading consequence promises.
+### Pass 22A — The Map With a Blank Edge: debrief scenes (DRAFT)
+
+This arc is a new authored scene family based on Part 46's expedition-aftermath question. Keep the people specific and the claims modest: a surviving team can be tired and disappointed without being blamed for a route that was not safe. The following dialogue is original proposal prose, not locked canon.
+
+#### Scene 1 — The return board
+
+**Place:** shelter debrief board. **Entry:** the expedition has returned through its normal inbound/completed path, and its linked quest objective remains unverified. **Speakers:** returning surveyor, route clerk, player. **Mood:** practical fatigue; no public tribunal.
+
+**Route clerk:** “The crate is empty.”
+
+**Surveyor:** “The crate is the part we brought home empty. That is not the same as bringing home nothing.”
+
+**Player response — Ask what they saw:** “Start with the last thing you can place on the map.”
+
+**Surveyor:** “The white cut in the ridge. After that, the marks on our sheet stopped agreeing with the ground.”
+
+**Player response — Ask whether the route is safe:** “Would you send another team tomorrow?”
+
+**Surveyor:** “No. I would send them with a better question. Tomorrow is a date. It is not a reason.”
+
+**Player response — Let them rest:** “We can write this down after you eat.”
+
+**Route clerk:** “Then I will leave the line blank until you are ready to call it something.”
+
+Branches reconverge on a factual choice: record the last confirmed landmark, mark the route conclusion inconclusive, or leave the record pending. The third option must preserve the witnessed return and objective state without falsely recording a conclusion.
+
+#### Scene 2 — The pencil line
+
+Later, the surveyor can bring a page where a route mark stops at the edge of a water stain. The page is not magical and the stain does not encode a secret. A second character recognizes the pencil used to mark the shelter's old flood boards. That detail can open a personal conversation about how people learn to trust a mark. It must not establish that the same flood reached the surveyed location.
+
+**Surveyor:** “I can redraw the line. I cannot redraw the ground to match it.”
+
+**Player:** “Then we keep the break visible.”
+
+**Surveyor:** “A break is useful. It tells the next hand where not to pretend.”
+
+#### Scene 3 — A route chosen with care
+
+The player may request a second expedition if the selector returns a valid candidate and the resource/party checks allow it. Dialogue previews that the new route answers a narrower question. If no valid destination is available, the same scene offers to file the attempt as inconclusive and close the local quest. No dialogue implies that the player can force a safer route by choosing optimistic wording.
+
+#### Optional secondhand account
+
+A caravan contact may report that another group uses a different ridge. Unless the information-flow owner confirms an actual rumor record or the quest has a valid authored contact source, present this only as an authored lead: “Someone mentioned another approach,” not as a verified route. The player can ask for the source, decline to act, or request that the contact bring a name next time. Do not write a generic, randomly named caravan survivor to fill the scene.
+
+#### Branch structure and production rules
+
+Use a short hub-and-spoke scene followed by a reconvergent report choice. The player can be curious, cautious, or kind; none is coded as the morally correct answer. Avoid a relationship delta unless an existing relationship contract is expressly selected. Speaker labels and captions remain visible. Each response should say what it changes: “Record as inconclusive” is precise; “Trust them” is too broad. Localized text should preserve uncertainty and avoid idioms that make an uncertain report sound like a joke.
+### Pass 22B — Location texture and character voice pairings (DRAFT)
+
+Use three recurring voices to carry the arc: **Mira**, a route clerk who distrusts unlabelled measurements but does not treat uncertainty as incompetence; **Oren**, a surveyor who remembers terrain by sound and resists having a bad weather day turned into a personal failure; **Tavi**, a junior map copyist who is eager to make the record useful and must learn that a clean line can be less honest than a visible gap. These are provisional roles. Before implementation, resolve each against the current character roster and reject or rename any collision.
+
+#### Short location descriptions
+
+**Survey desk, shelter:** “A steel ruler is chained to the board. Old route slips overlap at the corners; the newest one stops before the paper does.”
+
+**Wind-cut shelf, field lead:** “The ridge narrows to a strip of stone. Every loose mark has moved since the last rain. A cord remains tied to the lower post, its knot turned toward the lee.”
+
+**Map archive, return visit:** “The blank edge has not been filled. Someone has placed a cup on the page to keep it from curling.”
+
+These descriptions create texture without claiming an actual expedition visited a location. The field text is eligible only in an authored location encounter that the player truly enters. The archive text may be used as a shelter scene only after the quest's return fact.
+
+#### Character voice distinction
+
+Mira speaks in labels and checks: “Which mark is the last one you can stand behind?” Oren uses physical orientation and sound: “Past the cut, the wind came from under us.” Tavi asks for a usable instruction: “Can I copy the line if I leave the end open?” None speaks in abstract verdict language. The player is not required to mediate their disagreement; they can set the record down and return later.
+
+#### Small branch bank
+
+- **Care:** “Eat first. We can write after.” Oren accepts; no morale or medical effect is implied.
+- **Precision:** “Tell me the last confirmed point.” The result records only that fact if the quest owner supports it.
+- **Caution:** “Leave the route open, not approved.” The player chooses an inconclusive record label.
+- **Disagreement:** “Your two marks do not match.” The characters may explain the difference without one being declared dishonest.
+- **Refusal:** “I cannot authorize another attempt today.” The follow-up remains optional and may be revisited if its requirements remain true.
+
+#### Prose quality gate
+
+Every location line must pass an evidence audit: who could know this, when could they know it, and what gameplay fact does its phrasing imply? Replace “the route is blocked” with “the team could not confirm a route” when the team lacks proof of a blockage. Replace “the player found” with “the catalog contains” unless an actual discovery occurred. Avoid repeated atmospheric descriptions when the same location is reopened; use a changed line only if an authored state change supports it.
+### Pass 23A — The Third Bell: scene and voice packet (DRAFT)
+
+This is original proposal prose for an ambient-only rumor story. It is not a claim that any current hub is noise-dominant and must not be inserted into a live rumor catalog before the policy gate in Plan 19 is satisfied.
+
+#### Cast and voice goals
+
+**Sella, night listener:** records what reached the speaker, not what she thinks caused it. Her sentences are short and attentive. **Niko, relay mechanic:** recognizes machinery, but is careful not to claim that a familiar pattern has only one cause. **Aven, runner:** has repeated the rumor at two hubs and worries that people now treat it as a warning. The three characters have different interests; none exists to ridicule the others.
+
+#### Opening: the third tone
+
+The room is warm around the receiver and cold at the door. A pencil rests across the log at the hour mark.
+
+**Sella:** “It came after the pair. Not every night.”
+
+**Player:** “Did you record it?”
+
+**Sella:** “I recorded that I heard it. The machine did not keep the sound.”
+
+**Niko:** “A loose contact can leave an interval like that. So can a relay far down the line. I can name two ways to make the note. I cannot name which one was there.”
+
+**Player response A — Preserve the distinction:** “Write down what you heard, and leave the source open.”
+
+**Sella:** “That I can sign.”
+
+**Player response B — Request a check:** “Can we compare it with the relay clock and the room log?”
+
+**Niko:** “We can check both. If they agree, that still will not tell us what the sound meant.”
+
+**Player response C — Stop circulation:** “Let's not pass it on until we know more.”
+
+**Aven:** “I can tell the next person it is a story, not a warning. I cannot make them forget the warning they already heard.”
+
+#### Middle: attribution, not consensus
+
+The player may listen to one more account. The line “I heard it too” is presented as personal testimony, never as a system-level confirmation that the sound occurred in the world. A later interview can reveal that a second person remembers the same interval but not the same number of tones. The scene should allow both people to be sincere without resolving the discrepancy by authorial decree.
+
+**Aven:** “They ask whether the east gate will open.”
+
+**Sella:** “I did not say there was a gate.”
+
+**Niko:** “Then we write that down too. The question is traveling farther than the sound.”
+
+The player can mark the audience as “notified of uncertainty” only if the current rumor or dialogue owner has a real recipient/action contract. Otherwise this is a private conversation and no propagation effect occurs.
+
+#### Endings
+
+**Attributed note:** “Sella reports an intermittent third tone at the listening room. No source has been established.” This is a journal summary of testimony if the journal owner can render it; it does not assert a sound event in the world.
+
+**Bounded negative finding:** “The clock and room log do not corroborate the report during the checked interval.” The conclusion is scoped to those checks. It does not mark the witness unreliable or delete future possibilities.
+
+**Unresolved lead:** The player leaves without a conclusion. The story can reopen only through an explicit new account or evidence event, not a random daily prompt.
+
+**Do not circulate:** The player chooses not to repeat the claim. The characters acknowledge the choice; no faction standing or NPC trust is silently reduced.
+
+#### Diegetic description and presentation
+
+The log sheet has two columns: “heard” and “source.” The first contains a pencil mark; the second is blank. Use the blank as a visual metaphor, not an error state. Provide a text label (“source unknown”) so color or layout is not the only cue. Audio, if later produced, must not accidentally encode three literal bell strikes as proof; any sound playback is illustrative and should be labeled as reconstruction or ambience.
+### Pass 23B — Dialogue graph and prose variants (DRAFT)
+
+The scene graph should be intentionally small. Ambient rumors are not a reason to write a sprawling conspiracy tree. Their value is in contrasting testimony and careful language, then allowing the player to leave the source unresolved.
+
+#### Maintainable node sketch
+
+| Node | Entry condition | Response family | Effect ceiling |
+|---|---|---|---|
+| `third_bell_report` | approved ambient record surfaced | ask source / ask interval / leave | dialogue only |
+| `third_bell_check` | player requests available checks | compare log / compare clock / stop | quest fact if owner supports it |
+| `third_bell_accounts` | one or more separate accounts available | hear second account / preserve one / stop | witnessed-account facts only |
+| `third_bell_resolution` | investigation fact set complete or player chooses to stop | bounded finding / unresolved / do not circulate | quest result, no world effect |
+| `third_bell_forward` | explicit share action and real delivery route exist | send attributed note / keep private | rumor-system command only |
+
+Nodes reference stable IDs and canonical predicates. A `third_bell_forward` node is omitted entirely when the host cannot confirm a receiver. Never show a clickable choice that only changes prose while promising delivery.
+
+#### Prose variants by register
+
+**Log register:** “Report received after the second interval. Listener count: one confirmed, one remembered. Source: not established.” **Shelter conversation register:** “I heard it twice. The second time might have been the pump.” **Field note register:** “No corresponding change at the relay clock during the checked span.” **Private response register:** “You can keep the question without giving it a name.”
+
+These variants communicate different evidence scopes, not random tone. The content system should choose based on scene type and known facts. It must not randomly switch a personal memory into an official log entry.
+
+#### Side-scene: after the shift
+
+When the player returns later, Sella is wiping dust from the receiver dial. The pencil remains across the hour line.
+
+**Player:** “Did it happen again?”
+
+**Sella:** “I heard the pump. I wrote ‘pump.’ I did not write ‘bell.’”
+
+**Player:** “Are you sure?”
+
+**Sella:** “I am sure what I wrote. The sound can keep its own answer.”
+
+This short branch shows skill in reporting without turning the character into an infallible sensor. If the new visit lacks a fresh sound event, it is a fixed character line, not proof that the rumor recurred.
+
+#### Localization and accessibility
+
+Avoid sound-only distinctions between “two” and “three.” Text captions must describe any illustrative sound. The labels for “source unknown” and “not corroborated” must be localizable as separate states. Reading order should be speaker, utterance, evidence label, response. Do not use waveform color alone to indicate confidence. Provide the actual affected audience before the player forwards a note.
+### Pass 23C — Additional dialogue fragments and sensory restraint (DRAFT)
+
+Use these as alternate lines only after the scene's evidence gates are approved. They should not all be shown in one conversation.
+
+**At the receiver:** “The needle moved. The log did not.” — mechanic, when there is a real instrument discrepancy.
+
+**At the shelter table:** “I can repeat what I heard. I cannot lend it a sender.” — listener, when asked to name an origin.
+
+**After a bounded check:** “For this hour, the clock kept its own time.” — operator, when a real clock comparison was performed.
+
+**When a second account differs:** “You remember two. I remember a space between them.” — witness, preserving memory difference without accusing either person.
+
+**When the player declines to forward:** “Then it stays with the people who heard it.” — clerk, if no public delivery occurs.
+
+**At the close:** “We left the source column empty. That is still a record.” — listener, only if the authored interface genuinely preserves the entry.
+
+#### Sensory and tonal restraint
+
+Do not represent a source-free rumor through a supernatural sting, ominous camera treatment, or emergency interface color that tells the player a threat is real. If a sound asset is later authored, it is atmospheric and must not imply a canon event or location. Keep the acoustic description human-scale: a hum, a metallic interval, a relay tick, a memory of a tone. The scene may be eerie because people respond to uncertainty, not because the game secretly confirms an unseen force.
+
+#### Repeated-visit copy
+
+If nothing new happened, repeat no rumor prompt. Use ordinary room texture: “Sella has closed the logbook. The receiver keeps its low mechanical hiss.” If a new account was actually added, name the account as new and identify its source. Do not imply the sound itself recurred merely because the player revisited the hub.

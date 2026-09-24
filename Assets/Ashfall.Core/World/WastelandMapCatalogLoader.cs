@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Underground;
 
 namespace Ashfall.Core.World
 {
@@ -145,6 +146,9 @@ namespace Ashfall.Core.World
     public static class WastelandMapCatalogLoader
     {
         public const string DefaultFileName = "wasteland_map_v1.json";
+
+        /// <summary>Plan 167 — authored subterranean tunnel catalog.</summary>
+        public const string TunnelFileName = "underground_tunnels.json";
 
         public static List<MapRouteValidationError> ValidateRoutes(
             IReadOnlyList<MapNode> nodes,
@@ -336,7 +340,26 @@ namespace Ashfall.Core.World
                 });
             }
             var trapSites = LoadTrapSiteLocations(dataDir, fileIO, json);
-            return new WastelandMapSystem(state ?? new WastelandMapState(), nodes, routes, trapSites);
+            var tunnelCatalog = LoadTunnelCatalog(dataDir, fileIO);
+            return new WastelandMapSystem(state ?? new WastelandMapState(), nodes, routes, trapSites, tunnelCatalog);
+        }
+
+        /// <summary>
+        /// Plan 167 — loads the authored underground tunnel catalog through the
+        /// strict loader. Returns null when no catalog is authored, in which
+        /// case the map falls back to its built-in canonical network. A malformed
+        /// catalog throws: the data-integrity gate owns authoring errors, and a
+        /// silently dropped tunnel would be an unreachable-but-declared passage.
+        /// </summary>
+        public static TunnelNetworkCatalogData? LoadTunnelCatalog(string dataDir, IFileIO? fileIO = null)
+        {
+            fileIO ??= new FileSystemIO();
+            if (string.IsNullOrEmpty(dataDir)) return null;
+
+            string path = fileIO.Combine(dataDir, TunnelFileName);
+            if (!fileIO.FileExists(path)) return null;
+
+            return TunnelNetworkCatalogLoader.LoadFromJson(fileIO.ReadAllText(path));
         }
 
         public static List<TrapSiteMapLocation> LoadTrapSiteLocations(

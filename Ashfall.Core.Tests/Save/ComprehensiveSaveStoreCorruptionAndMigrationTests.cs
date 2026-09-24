@@ -302,10 +302,12 @@ namespace Ashfall.Core.Tests.Save
             // Plan 174 added backstory (survivor origin and backstory system);
             // Plan 175 added meta_progression (meta progression and prestige system);
             // Plan 150 added romance_family (romance & family dynamics: courtship, partnership, bonded pairs, family units);
-            // Plan 152 added vehicle_customization (vehicle modules, effective stats, and deployed base camps).
-            Assert.Equal(234, SaveSectionRegistry.All.Count);
+            // Plan 152 added vehicle_customization (vehicle modules, effective stats, and deployed base camps);
+            // Plan 192 added trade_routes (scheduled trade route contracts & reliability tiers);
+            // Plan 199 added human_migration (seasonal human migration schedule engine).
+            Assert.Equal(236, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(234, keys.Count);
+            Assert.Equal(236, keys.Count);
         }
 
     }

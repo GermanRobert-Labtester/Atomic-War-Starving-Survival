@@ -226,7 +226,11 @@ namespace AtomicWar.GodotApp
         RomanceFamilySelfTest,
         VehicleCustomizationSelfTest,
         BackstorySelfTest,
-        MetaProgressionSelfTest
+        MetaProgressionSelfTest,
+        TradeRoutesSelfTest,
+        HumanMigrationSelfTest,
+        TunnelNetworkSelfTest,
+        AudioAccessibilitySelfTest
     }
 
     /// <summary>
@@ -673,6 +677,14 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.BackstorySelfTest;
             if (Has(args, "--meta-progression-selftest") || Has(args, "--meta-selftest"))
                 return HostCliAction.MetaProgressionSelfTest;
+            if (Has(args, "--trade-routes-selftest") || Has(args, "--trade-route-selftest"))
+                return HostCliAction.TradeRoutesSelfTest;
+            if (Has(args, "--human-migration-selftest") || Has(args, "--migration-selftest"))
+                return HostCliAction.HumanMigrationSelfTest;
+            if (Has(args, "--tunnel-network-selftest") || Has(args, "--tunnel-selftest"))
+                return HostCliAction.TunnelNetworkSelfTest;
+            if (Has(args, "--audio-accessibility-selftest") || Has(args, "--audio-access-selftest"))
+                return HostCliAction.AudioAccessibilitySelfTest;
             return HostCliAction.Interactive;
         }
 

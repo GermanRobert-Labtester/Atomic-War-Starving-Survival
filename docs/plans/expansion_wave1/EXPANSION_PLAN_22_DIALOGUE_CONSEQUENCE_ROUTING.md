@@ -2667,3 +2667,362 @@ A later implementation should first run a focused rehearsal with one transcript 
 Rollback may remove a new presentation or admission affordance, but it must preserve already saved EvidenceLedger IDs and quest state. If the catalog reference is removed after release, provide an archived-source fallback that names the missing document without making the save invalid. No rollback can rewrite history by deleting an admitted fact.
 
 This protocol is a design proposal. Do not alter ending thresholds, EvidenceLedger semantics, or the Verdict save schema until current evidence, package ownership, and a narrow acceptance plan authorize that work.
+
+
+## Pass 20A — Consequence routing for authored radio-theater choices (DRAFT)
+
+### Boundary and player promise
+
+The new world-bible subject is a Machine tribunal radio-theater series, not permission to make every broadcast mutate the world. VerdictRadioSystem schedules authored corpus entries and publishes radio.verdict.broadcast. Plan 94 has already expanded that corpus to 30 broadcasts. RadioProgramProductionSystem owns program-preparation jobs and follow-up hooks; it explicitly leaves scheduling, reception, and propaganda pressure outside its authority. The theater’s story choices therefore need a confirmed player action and a reviewed effect route. A scheduled or merely surfaced broadcast produces no relationship, faction, morale, evidence, quest, or ending consequence by itself.
+
+The Quiet Hours arc offers three responses after the witness conversation: prepare a private correction, prepare a public correction with explicit consent, or decline intervention. The response click is not delivery. It records an intended quest outcome only through the current quest authority. A later program or scene may deliver that outcome if the existing radio owner reports successful delivery. If no current delivery surface can express the correction, the story should resolve in a face-to-face scene rather than pretend the radio program was aired.
+
+### Consequence tiers and owners
+
+- Cosmetic wording: dialogue changes a line’s tone or recap. It can be derived from the quest outcome and need not create a new persistent flag.
+- Local scene: the performer changes a script page or the witness acknowledges privacy. Route through the owning quest/dialogue transition; do not mutate location data from UI.
+- Quest: objective completion, delay, partial completion, failure-forward transition, or resolution. The existing quest owner validates allowed transitions and saves the canonical result.
+- Relationship: a character’s response changes only if the current relationship owner exposes a command for that consequence. Never write an affinity number from the response node.
+- Faction: no faction reputation change is required by the core arc. If later approved, use the existing faction authority and only after actual audience delivery and content review. A public correction is not equivalent to generic propaganda success.
+- World: do not create, remove, or restock locations based on this arc. Any future world change requires an explicit owner and replay-safe event contract.
+- Ending: this local story does not alter the campaign ending or Machine verdict. Keep major-resolution consequences outside the slice.
+
+### Command/effect order
+
+On response selection, revalidate the node’s conditions against current quest and consent state. Present a confirmation if the response publicly identifies a witness or otherwise has an irreversible audience. On confirm, issue one typed command to the owning quest host/session. That owner validates the transition and returns success or a specific blocker. Only after success should the UI show the updated line and refresh the journal/map projections from their owners. A cancellation leaves state unchanged. A blocker retains the current node and explains the reason; it must not optimistically display a choice as completed.
+
+A repeated click, double input, panel re-open, event retry, or save/load between command and presentation must not apply the same consequence twice. Prefer the existing objective or event identity as the idempotency key. Do not introduce a second effect ledger solely for the theater. If the current host contract cannot make a command idempotent, that is an integration blocker to resolve under the existing owner before authoring multiple consequence nodes.
+
+### Failure and rollback
+
+If an authored response references a missing objective or effect recipient, disable the response only when it is optional and display a valid alternative; a mandatory node with no valid response is a content-build failure. If public delivery fails because the station is unavailable, the quest remains pending with an explicit retry or face-to-face fallback. It must not award delivery, audience response, or reputation. If the player abandons after committing a private correction but before it is delivered, preserve the intent and offer a deliberate cancel or resume route; do not erase a witness’s disclosure choice through reset.
+
+## Pass 20B — Consequence table and integration acceptance
+
+| Player action | Immediate owner | Observable result | Persistence requirement | No-effect condition |
+|---|---|---|---|---|
+| Ask about the staged case | Dialogue presentation | Optional information line | None unless current dialogue owner already tracks exposure | The line is merely viewed; no quest auto-accept |
+| Accept the investigation | Current quest owner | Journal/objective appears as In Progress | Existing quest save/restore | Invalid or unavailable entry route |
+| Ask to identify the witness | Quest/consent contract | Player sees clear disclosure options | Persisted where current quest state is saved | Back/cancel returns without mutation |
+| Choose private correction | Current quest owner | Follow-up is pending with private scope | Stable selected outcome | No delivery or relationship gain yet |
+| Choose public correction | Quest owner, then verified radio delivery surface | Confirmation, then pending public delivery | Idempotent intent plus delivery outcome under existing owners | Consent absent; explicit confirmation canceled; delivery unavailable |
+| Decline | Current quest owner or authored dialogue exit | Quest stays available or resolves as declined according to packet | Only if the current quest model distinguishes this outcome | Dialogue window closed without selecting decline |
+| Follow-up actually delivered | Current radio/reception owner plus quest completion route | New authored line; objective completes/resolves | Persisted delivery/result through existing owners | Scheduler fired but no player-facing delivery occurred |
+
+The implementation package should prove the player-facing chain from content to observable result: authored response ID resolves; condition evaluation succeeds; command reaches one current owner; that owner reports accepted or blocked; save capture contains the intended canonical state; restore yields the same response availability; and a visible surface reflects the new state. A valid broadcast event alone is only one step in that chain.
+
+Build a focused consequence matrix for private correction, public correction, silence, lost anonymity, missing relay, interrupted interaction, duplicate response, old save, and absent optional episode. For each case, record the expected quest status, delivery status, character line, map marker, journal statement, and whether any relation/faction/world scalar changes. The default for an unapproved effect is no change. This is safer and easier to audit than a generic “apply effects” callback capable of mutating arbitrary game state.
+
+Performance should stay bounded: condition checks occur when entering or refreshing a dialogue node, never every frame; references are resolved at catalog load or through current indexed owners; response effects are small typed commands. Avoid scanning the full radio corpus during every dialogue refresh or copying all world state into a dialogue context object. The UI should request a narrow context snapshot through an existing adapter if one exists; if not, list that as a required architecture seam rather than fabricating a broad cache.
+
+The final acceptance decision belongs to the named integrator after current-source verification. Required receipts: exact owner paths, data/schema changes if any, migration behavior, direct consumer path, focused tests selected under TEST_POLICY, and a handoff using AI_AGENT_WORKFLOW. This document remains a design proposal; it does not claim implementation, save support, or path ownership.
+
+
+
+## Pass 20C — Integration sequence and consequence verification worksheet
+
+### Dependency sequence
+
+1. **Confirm source surfaces.** Verify the current Verdict catalog loader, its event subscribers, the radio panel/log surface, the quest host/session, the conversation loader, the location selector, and the save owners. The completion of Plans 94 and 173 is baseline evidence, not permission to assume every downstream UI path still exists.
+2. **Agree on meaning.** The narrative author defines exactly what counts as an episode being scheduled, surfaced, reviewed, corrected, and delivered. The radio and quest owners approve the terms they can truthfully report.
+3. **Lock the graph.** Dialogue nodes reference stable quest and effect IDs. Plan 21 owns condition semantics; this plan does not invent a second condition evaluator.
+4. **Route a vertical slice.** One response reaches the current quest owner, receives an accepted/blocked result, persists through its current path, and appears in the next scene. Add public delivery only after the existing radio interface can represent it honestly.
+5. **Expand outcomes.** Add private correction and silence, then public correction with consent. Do not implement arbitrary effects or faction consequences as generic strings.
+6. **Close handoff.** Record changed paths, migration, focused tests, limitations, and intentionally untouched shared owners through AI_AGENT_WORKFLOW.
+
+### Observable behavior table
+
+| Checkpoint | Expected truth | Player feedback | Persisted authority |
+|---|---|---|---|
+| Broadcast scheduled but not surfaced | Episode is eligible or fired in the radio owner only | No “you listened” statement | Verdict radio state |
+| Episode surfaced but not reviewed | A readable/listenable item is available | Offer review; no quest side effect on opening panel | Existing presentation/reception owner, if present |
+| Quest accepted | Player explicitly commits | New objective appears once | Existing quest owner |
+| Public option selected but canceled | No consequence applied | Return to dialogue with prior state | No mutation |
+| Public option confirmed, station unavailable | Intended outcome is pending or visibly blocked | Explain retry or offer authored face-to-face route | Quest owner stores intent only if supported |
+| Correction delivered | Delivery is confirmed by current radio/reception owner | Follow-up text appears and quest can resolve | Existing delivery owner plus quest owner |
+| Save restored after effect | Same selected outcome and no duplicate application | Follow-up line remains stable | Existing capture/restore owners |
+
+### Rollback and observability
+
+If dialogue content ships before the optional radio delivery path, preserve a face-to-face ending and keep the new broadcast reference dormant. If a referenced effect ID is removed, catalog validation should fail in development and the player-facing graph should use its approved fallback in a compatible content revision. Do not catch and discard unknown effects silently. If an old save contains a selected choice but no new delivery field, apply the documented migration default and show a truthful unresolved/closed recap; never infer public delivery from the selected choice alone.
+
+Operational logs should report content IDs and failure codes, not full personal testimony. Debug detail can identify an unresolved node reference, invalid transition, missing recipient, or duplicate command. Player-facing copy should say what is missing in plain language. Logs should not turn private narrative text into telemetry or invent a new analytics pipeline.
+
+### Focused acceptance list
+
+- A passive scheduler poll causes no quest, relationship, faction, or evidence change.
+- Opening and closing a dialogue panel causes no state mutation.
+- Each response is validated against current state at commit time.
+- Canceled confirmation produces no effect.
+- A duplicate command is ignored or safely rejected by the existing owner.
+- A blocked delivery does not count as delivered and has a visible recovery route.
+- Save/restore between choice and follow-up preserves exactly one selected outcome.
+- The journal, map, and dialogue recap agree with the canonical quest and location state.
+- No ending or Reckoning outcome changes from this local story without a separately approved design.
+
+These checks should reuse current focused test owners and stay within TEST_POLICY. This plan does not call for a full-suite run. If the feature has no current test that can observe the true command route, first verify the gap and ask the named foreman to assign a bounded integration package; do not create a parallel harness or revise the save architecture inside a narrative patch.
+
+
+## Pass 20D — Optional follow-up consequence map
+
+The Second Margin must not turn disagreement into a hidden success meter. Its valid outcomes are local and descriptive: the performer prepares an explanatory note; the listener understands the intended scope but keeps a different impression; the player declines to continue; or the optional conversation remains available for later. None automatically changes faction standing, morale, trust, Verdict evidence, or the campaign ending.
+
+| Choice | Route | Persisted fact | Resulting presentation |
+|---|---|---|---|
+| Ask what sounded accusatory | Dialogue read | None unless exposure is already owned | Listener explains their interpretation |
+| Ask performer to explain production context | Dialogue read | None | Performer explains intent without proving audience response |
+| Prepare an added note | Quest command to an approved owner, if one exists | Prepared-not-delivered outcome | UI says the note is ready; no audience response |
+| Confirm a valid delivery | Existing radio/reception owner, if it can perform this action | Delivery result from that owner | Follow-up reaction becomes available only after success |
+| Close the optional subject | Optional quest/dialogue transition | Declined or resolved status if supported | Neutral closure; parent ending unchanged |
+
+If no current radio program command can deliver a textual correction, the minimum implementation should end at “prepared” and stage the next scene in person. It must not repurpose RadioProgramProductionSystem as a script editor or assume a template ID can carry arbitrary episode prose. If a future package routes through program production, it must verify that the authored template, slot, delivery callback, and follow-up hook can represent this content without changing the existing scheduler contract.
+
+Failure rules: an absent listener hides the optional scene; an absent performer leaves a truthful prepared note or delays the conversation; an invalid parent outcome blocks the optional node; a failed delivery leaves the reaction unavailable; duplicate delivery results resolve idempotently; and abandoning the side quest does not reset the parent. Any unresolved mandatory reference is a content integration failure, not an invitation for a broad fallback effect.
+
+The scene’s implementation should use a typed response outcome owned by the quest/dialogue seam and a narrow optional delivery command only after the radio owner confirms its contract. Do not pass arbitrary effect strings such as “increase credibility” to a generic UI callback. If an event is emitted, it reports a fact like correction prepared/delivered; current observers decide their own effects. The radio theater remains an authored content feature, not a proxy for propaganda.
+
+Acceptance includes a negative assertion that resolving the optional scene leaves all unrelated ledgers unchanged. Specifically, a reviewed test should verify no change to evidence count, relationship value, faction standing, morale, ending flag, map-discovery bit, or resource inventory unless a distinct, approved owner contract says otherwise. Also verify the positive local behavior: the performer’s next line reflects the chosen explanation, the listener’s interpretation persists or is intentionally not persisted, and the parent quest’s terminal outcome remains unchanged. This explicit no-effect surface limits scope and makes integration safer.
+
+
+## Pass 20E — Consequence ordering, feedback states, and defect taxonomy
+
+### Command outcomes
+
+Every player response that mutates state should return one of four observable outcomes through its current owner: Accepted, Blocked with a retry condition, Rejected as invalid/stale, or NoChange for a deliberate close/read action. The dialogue presentation must map each outcome to truthful feedback. Accepted refreshes from canonical state. Blocked keeps the player at a useful node and states what must change. Rejected reports that the scene changed and refreshes valid options. NoChange closes or reconverges without implying a transaction. A generic success toast is insufficient when the player is deciding who may be named publicly.
+
+Avoid cross-owner partial application. Public correction should not update the quest to Resolved before a delivery owner confirms the correction reached its audience. If delivery and quest resolution are separate systems, use the existing event/host sequence and an idempotent result contract; do not implement a two-phase transaction manager for this one story. If no such contract exists, keep the ending local to the quest owner and use a face-to-face scene. This is an explicit scope choice, not a missing UI trick.
+
+### Event ordering and duplicate handling
+
+A radio scheduler event can be delivered before or after a player interaction in the same campaign day. The feature must define which facts are valid at response commit time. The player’s response should use the authoritative current snapshot; stale UI presentation triggers a refresh. A duplicate scheduler event remains suppressed by its existing fired-ID state. A duplicate player response is rejected or idempotently accepted by the quest owner. A duplicate delivery callback cannot create a second audience reaction or award a second outcome.
+
+If an event subscriber is absent, the developer diagnostic should identify the missing route. Do not add an implicit subscriber in a panel. If the radio event is observed by more than one legitimate listener, each listener owns only its own state: radio presentation can surface text, quest logic can offer a lead if the user-facing trigger is confirmed, and analytics or chronicle surfaces must not claim delivery from schedule eligibility.
+
+### Consequence defect taxonomy
+
+- **Ghost outcome:** UI says a correction aired while only a preparation job reached Ready. Fix: use the delivery owner’s confirmed result.
+- **Double outcome:** repeated click or callback applies relationship/reputation twice. Fix: existing command identity/idempotence.
+- **Silent lock:** an unavailable location leaves the response disabled with no explanation. Fix: visible delayed/fallback route.
+- **False memory:** dialogue says “you heard” because the system fired. Fix: use exposure owner or neutral wording.
+- **Evidence inflation:** staged text is enrolled as evidence on catalog load. Fix: preserve the VerdictEvidenceChain’s current eligibility/enrollment contract.
+- **Cross-story bleed:** optional audience response changes the parent ending. Fix: keep outcome scopes independent.
+- **Rollback loss:** correcting or removing a content row erases a resolved save fact. Fix: stable IDs and reviewed migration/legacy recap.
+- **Panel authority:** UI writes quest, map, or reputation fields directly. Fix: route through current host/command owner.
+
+### Final review checklist
+
+A reviewer should trace one outcome from authored response ID to condition, command, owning state mutation, save capture/restore, subsequent event, dialogue recap, map/journal projection, and focused test. Then trace a no-op and a failure route. Check that all side effects are explicit, no content-load event mutates gameplay state, passive polling is harmless, and the UI can report when the radio delivery path does not exist. Performance stays bounded by node-level context refresh and indexed catalog references; no per-frame world scan or new cache is justified.
+
+The release package should separate the core outcome from future layers: Core may ship the static staged case and one private resolution; Expansion may add public correction delivery, audience response, alternate site callbacks, voiced performances, and additional authored interpretations. Every added layer needs its own owner and acceptance evidence. The DRAFT content set is not complete merely because the lines are written; it is complete when every promised response has a truthful, reachable, persistent route or is explicitly labeled noninteractive prose.
+
+
+## Pass 21A — Folklore-to-belief consequence limits and owner map
+
+### Narrative choice is not automatic political conversion
+
+The player’s keep, annotate, or reply-verse decision changes how this local story is presented. It does not assign a belief profile, convert an adult into a movement, create a new faction, change roommate compatibility, or trigger a psychological breakdown arc. Current code has separate authorities for belief movement definitions, ideological friction, zealotry, and psychological arcs. The content pass must preserve those boundaries and use them only after a specific effect contract is reviewed.
+
+The belief movement catalog defines authored creeds, comfort and blind-spot themes, practices, conflict profiles, and tags. IdeologicalFrictionSystem reads existing belief profile IDs and affects roommate compatibility/affinity. ZealotrySystem references belief movement definitions. These existing mechanics show why a “political position” cannot be an untyped dialogue string: changing a profile can alter shelter relationships and rest outcomes. The MVP uses no such effect. Characters can explain their political view in authored dialogue while their current game profile remains unchanged.
+
+### Effect recipient matrix
+
+| Candidate effect | Current authority to verify | MVP decision | Required condition before expansion |
+|---|---|---|---|
+| Quest resolved with selected story treatment | Existing quest owner | Use after premise audit | Valid transition and save/restore path |
+| Codex annotation displayed | Existing journal/codex owner | Optional; omit if no authored-annotation contract | One canonical text source and old-save behavior |
+| New fixed verse available | Existing narrative/education consumer | DRAFT content only | Reachable surface and localization |
+| Adult dialogue callback | Dialogue/quest owner | Local outcome | Revisit resolves from canonical quest state |
+| Belief profile assignment | Belief/ideology owner | No automatic assignment | Explicit reviewed command, consent/player-world rationale, deterministic save path |
+| Faction membership or standing | Existing faction authority | No change | Approved eligibility and consequence contract |
+| Psychological arc | Psychology/treatment owners | No change | Independent clinical narrative premise and owner review |
+| Ending/legacy score | Endgame owner | No change | Signed endgame consequence scope and verified input contract |
+
+### Command sequence and negative assertions
+
+When a player confirms an outcome, the dialogue layer sends one typed result to the current quest owner. The owner validates that the quest is active, the selected response is allowed, and any required consent is true. On acceptance, the UI refreshes its projection. The codex or education surface receives only an approved content reference. A failed write leaves the current node and outcome unchanged. Repeated confirmation is idempotent under the existing quest command identity.
+
+A focused integration verification for any later implementation should assert that the dialogue choice does not mutate belief_profile_id, IdeologicalFriction affinities, Zealotry followers, psychological-arc state, cohort dose bands, maternity/health, or faction records. It should assert the intended quest outcome and line change. If an approved expansion later adds an ideological consequence, test that consequence independently and ensure it is not inferred from folklore exposure alone.
+
+This arc is a useful story about how political language inherits childhood images, but its point is not that every person exposed to the same rhyme shares one position. Dialogue should show disagreement among characters with similar histories and continuity among people whose interpretations change. The player gets to choose the shelter’s official teaching treatment, while each adult retains a perspective. That design makes new content possible without building a new political simulation or flattening existing belief systems into collectible traits.
+### Pass 21B — Effect ledger, failure route, and non-effects (DRAFT)
+
+Every branch in this arc should declare the effect category it intends to produce. Wording alone is not a gameplay effect. The content author should select the smallest effect category that makes the player's action observable and understandable.
+
+#### Proposed effect ledger
+
+| Player action | Category | Owning fact | Player-visible feedback |
+|---|---|---|---|
+| Inspect the margin | quest | clue-inspected step fact | journal records what was actually read |
+| Hear an adult's account | quest | witnessed-account fact | dialogue is available for later reference |
+| Preserve both accounts | local consequence | annotation choice, if supported | codex or journal shows both versions remain distinct |
+| Add a difference note | local consequence | authored annotation ID | visible note says accounts differ without naming a winner |
+| Invite a reply verse | quest | invitation accepted or declined | next scene availability is clear |
+| Visit optional lamp site | world/location fact | normal location visit fact | map/journal reflects actual visit |
+| Decline field trip | cosmetic or local only | none unless a durable choice is needed | conversation closes without penalty |
+
+No row implicitly changes relationship, faction, beliefs, ideology compatibility, stress, clinical status, cohort membership, shelter resources, or ending. If later authored content needs one of those outcomes, it must name its existing system owner and add a separate, reviewed effect contract. One dialogue choice should not fan out into unrelated consequences merely because several systems exist.
+
+#### Failure and alternate resolution
+
+**Unavailable teacher:** keep the marked page as a lead; a journal note may say the conversation is pending. A later shelter visit can resume it. If the character is permanently gone, offer an authored archive route only when a real archive interaction exists.
+
+**Only one adult account heard:** allow the player to preserve the single account with an explicit “one account heard” label. Do not fabricate consensus or fill the absent voice with generated dialogue.
+
+**Optional location absent:** resolve the core quest through the shelter scene. A site-specific branch remains unavailable and is not counted as failed or visited.
+
+**Expedition ends before clue inspection:** retain the discovered location if the player legitimately discovered it, but leave the clue uninspected. If the location was only selected and never entered, do not create discovery state.
+
+**Player abandons the quest:** keep already witnessed codex and dialogue facts. Do not roll them back. Resume only through the current quest owner's explicit reopen behavior.
+
+#### Consequence-category checklist
+
+Cosmetic wording can vary by tone or character voice. A local consequence changes the current scene or its annotation. A quest consequence advances or blocks an objective. Relationship consequences require the relationship owner. Faction consequences require the faction reputation/access owner. World consequences require a named location, resource, enemy, or event owner. Ending consequences require the campaign-ending authority and a stated prerequisite. The folklore arc's minimum viable version uses cosmetic and quest effects, with at most one local annotation. It has no ending consequence.
+
+#### Review questions for each authored response
+
+Does the response promise a specific effect? Is that effect owned by the named system? Can the player observe whether it happened? Does a failed availability condition have a truthful alternate line? Is the same consequence applied exactly once after restore or repeated interaction? Can the branch reconverge without erasing a durable choice? Does the response leave room for two characters to remember the same tradition differently? Any unowned effect is removed from the content proposal until an architecture decision assigns it.
+### Pass 22A — Consequence routing for the unsuccessful-return arc (DRAFT)
+
+The arc proposes a richer aftermath, but the first playable slice should route only facts that are already observable and owned. The master world bible's question about world state, rumors, and standing is a subject prompt; it is not authorization to mutate three systems on every unsuccessful expedition.
+
+#### Baseline routing table
+
+| Trigger | Proposed output | Authority | Required evidence | Default when unavailable |
+|---|---|---|---|---|
+| Completed return with unresolved objective | debrief becomes available | quest/dialogue owner after premise audit | canonical return plus linked active objective | keep existing expedition completion feedback only |
+| Player records last confirmed landmark | quest-local evidence fact | quest owner | player confirms a specific source fact | preserve the unresolved objective |
+| Player marks the route inconclusive | quest resolution class | quest owner | return fact; no proof predicate satisfied | leave pending if state cannot be saved |
+| Player visits an optional clue site | location discovery/visit | expedition/location owner | actual entry or discovery event | do not show site as visited |
+| Player authorizes a public account | rumor creation, if supported | RumorSystem adapter / information-flow owner | sourced report and approved rumor contract | keep the report private in the journal |
+| Faction receives a report | standing/access response, if supported | faction standing owner | explicit faction source, valid action, approved rule | no standing mutation |
+| Journal projects the outcome | read-only summary | current journal/codex projection | durable quest facts | no duplicate journal store |
+
+#### Minimum viable consequence set
+
+The minimum release slice has one quest result class (inconclusive), one witnessed debrief, an optional follow-up lead, and a journal summary generated from the quest's durable facts if the existing projection supports it. It does not create rumors or modify faction standing. A later expansion may add a player-confirmed rumor report and a faction-specific response as separate feature slices, each with its own owner, save path, feedback, and rollback behavior.
+
+#### Exactly-once and replay requirements
+
+The same completed expedition may trigger at most one debrief-availability transition for its linked quest. Reopening a panel cannot duplicate a journal entry or create repeated rumor records. If the player loads after choosing “record inconclusive,” the same conclusion remains and the response is not applied again. Idempotency keys should derive from stable quest/expedition/effect identifiers through an approved owner; do not use wall-clock timestamps, random IDs, or hash iteration order in Core. If no effect-dispatch contract supports this, keep the choice local and non-mutating.
+
+#### Failure, compensation, and rollback
+
+If the expedition completes but the quest owner is absent, do not discard the completed expedition; preserve current completion behavior and leave the quest unresolved for later reconciliation. If a rumor adapter rejects an authored report, keep the player's private journal choice and state that it was not sent. If standing or world-state mutation fails, do not claim it succeeded in dialogue. Roll back only the attempted effect through its owner; never roll back the expedition result or previously witnessed facts.
+
+#### Observable acceptance and integration order
+
+1. Reconfirm retreat/completion/failure semantics and the exact return fact.
+2. Confirm the current quest owner can correlate its active objective to the expedition ID without a new parallel registry.
+3. Define the result predicate for success, disproved, and inconclusive outcomes.
+4. Wire the smallest debrief event through the existing host seam, with unsubscribe/lifecycle behavior.
+5. Add journal projection only through its current read-model owner.
+6. Consider rumor publication only after source attribution and uncertainty classification are supported.
+7. Consider faction response only after an explicit standing rule and feedback path are approved.
+8. Verify save/restore, duplicate delivery, UI close/reopen, and deterministic replay under the package-specific test policy.
+
+The current source facts establish neighboring owners and host events, but do not prove steps 2–7 already exist. This section proposes a dependency order; it does not claim an integration gap is approved for implementation.
+### Pass 22B — Bridge lifecycle, performance, and rollback gates (DRAFT)
+
+Any event bridge from expedition return to quest debrief should have explicit subscription ownership. ExpeditionHostSession already subscribes to ExpeditionSystem completion/failure events for current presentation feedback. A future bridge must be attached through an owned host/session lifecycle, unsubscribe or be reconstructed safely on teardown, and avoid adding a second listener after save restore. It must not put narrative decisions in a panel callback.
+
+#### Integration seam checklist
+
+1. Identify the canonical quest runtime and the existing way it receives expedition/objective facts.
+2. Confirm whether the expedition completion payload contains a stable expedition ID, destination, actual visit facts, and objective-relevant evidence.
+3. If a payload lacks a needed fact, ask the source owner to expose a fact through its established event; do not read private mutable internals from a new adapter.
+4. Let the quest owner evaluate the objective predicate and create a debrief-available fact.
+5. Let the dialogue UI query this fact and emit a player command through its existing route.
+6. Let journal, rumor, map, and faction adapters consume their own approved events independently.
+7. On teardown/restore, ensure the event is neither lost nor delivered twice.
+
+#### Resource and performance limits
+
+The return bridge should process once per completed event, not poll every frame. It should avoid scanning all quest definitions and all rumors on each journal refresh. Resolve only active quest bindings through existing indexes. Keep diagnostic breadcrumbs compact and bounded; do not embed full prose in expedition state. Unknown or inactive quest references should no-op with a diagnostic or the project’s established integrity behavior, not throw during a normal return.
+
+#### Rollback and partial integration
+
+The bridge can be rolled back while preserving expedition completion. If the quest integration fails, the expedition remains completed under its existing owner. If journal rendering fails, the quest result remains queryable through the quest owner. If rumor propagation fails, no public report is claimed. If a faction adapter fails, no standing delta is claimed. The UI must never optimistically announce cross-system success before the owner confirms it.
+
+#### Handoff and bounded verification
+
+Implementation readiness requires a package owner, exact path claims, a premise note, focused verification target, save implications, and an acceptance handoff. Focused cases should distinguish retreat then inbound completion from terminal Failed; objective fulfilled from unresolved; destination selected from destination visited; one event from duplicate delivery; and restore-before-debrief from debrief-before-save. Do not run broad suites by default. The documentation addition itself needs only a whitespace check and measured index update.
+### Pass 23A — Ambient information effects and consequence firewall (DRAFT)
+
+The ambient-rumor idea must stay informational. Its purpose is to let a believable community discuss uncertain sounds without turning every utterance into a hidden quest, threat, or faction event. Because RumorSystem currently uses numeric truthfulness both for decay and report classification, ambient-only entries need a reviewed representation before they can safely share its generation and briefing paths.
+
+#### Consequence class map
+
+**Cosmetic:** alternate wording that does not alter facts. **Local:** a private note or current-scene annotation, if the dialogue/quest owner supports it. **Quest:** a bounded investigation result or player-selected “do not circulate” outcome. **Relationship:** none in the minimum slice. **Faction:** none. **World:** none. **Ending:** none. This hierarchy is intentional: the dramatic weight comes from testimony and uncertainty, not a hidden reputation multiplier.
+
+#### Proposed rumor creation contract
+
+Creation is a command, not a side effect of loading catalog data. It should require an explicitly ambient-enabled hub and an authored rumor definition whose provenance class says source-free ambient. It must reject a source-free rumor at a normal hub. The rumor should not point to an invented Event subject ID. Its confidence/verification presentation must be separate from truthfulness decay, or it must be excluded from the current report’s verified threshold. Exact implementation may require a schema/save decision; do not encode this as a negative truthfulness value or an undocumented sentinel.
+
+#### Propagation boundaries
+
+If ambient entries propagate, they should be permitted only among hubs whose approved policies allow that class. Propagation cannot transform ambient chatter into evidence-backed fact, increase its confidence, or mark a destination discovered. If an existing network cannot enforce class-aware propagation, the MVP should keep ambience local to its origin hub and present the quest through authored dialogue. A player-authored decision to forward a note should be a separate, explicit command with truthful delivery feedback.
+
+#### Briefing projection requirements
+
+The briefing should label the entry as ambient or source-unknown and show attribution. It must not say verified, threat, opportunity, actionable lead, or confirmed event merely because of the current numeric threshold or subject-type mapping. If the current BriefingItem shape cannot carry this distinction, a new projection contract must be approved before content is wired. Do not add a second briefing panel or rumor list.
+
+#### Persistence and exactly-once rules
+
+If a new provenance field is added to WastelandRumor, capture and restore must round-trip it and legacy rumor records need an explicit default. Stable rumor IDs continue to use the rumor owner’s sequence contract. Quest conclusion effects must be idempotent: repeated intercept, repeated briefing reads, save/restore, or scene reopen cannot create duplicate rumors or duplicate public reports. A generated ambient rumor should be authored or seeded deterministically through the established campaign RNG if runtime selection is introduced; never use wall clock or unordered collection traversal.
+
+#### Failure handling
+
+If hub policy is unknown, reject ambient creation with a visible authoring diagnostic and omit the feature in release content. If an ambient rumor reaches an unsupported receiver, do not relabel it as an event rumor. If the player forwards a report and delivery fails, preserve the source testimony and show “not sent.” If the rumor expires, preserve the quest’s historical conclusion but stop presenting it as currently circulating. If no source is found, preserve “not found in checked sources,” not “there is no event anywhere.”
+### Pass 23B — Consumer matrix, no-op behavior, and acceptance tests (DRAFT)
+
+Ambient-only information should reach only consumers that can preserve its epistemic class. This consumer matrix is a proposal for the RumorSystem owner and should be checked against the live host wiring before any implementation ticket is opened.
+
+| Consumer | Allowed ambient input | Required output | Prohibited output |
+|---|---|---|---|
+| Rumor origin hub | explicitly authored ambient record | attributed local entry | inferred event or faction action |
+| Rumor propagation | same class only if approved policy permits | attribution retained at recipient | ambient promoted to evidence-backed |
+| Intelligence briefing | typed source-unknown class | visible uncertainty and origin | verified, threat, or opportunity by numeric shortcut |
+| Quest runtime | player-heard/accepted fact | optional bounded investigation | quest from catalog load alone |
+| Expedition selector | no direct rumor input; only quest-owned valid site request | eligible existing location candidate | generated map node from headline |
+| Codex/journal | witnessed or resolved quest facts | historical summary | duplicate mutable rumor store |
+| Faction standing | no default ambient input | none | automatic reputation delta |
+| World evolution | no default ambient input | none | world mutation from unsourced chatter |
+
+#### No-op and error behavior
+
+When the hub policy is unset or invalid, ambient creation returns an explicit rejected result or follows the existing content-integrity failure contract. It must not silently fall through to ordinary rumor generation. When the consumer cannot represent provenance, suppress that consumer projection and keep the source record intact only if its owner considers the save valid. A UI failure to render an ambient badge cannot be worked around by marking the rumor verified.
+
+#### Acceptance scenarios for a future owned package
+
+1. Ambient record at a non-designated hub is rejected.
+2. A designated hub can surface the ambient item but cannot turn it into a threat/opportunity automatically.
+3. A high numeric confidence does not produce “verified” for source-free material.
+4. Ordinary event-backed rumors retain their existing behavior.
+5. Expiry removes live circulation while witnessed quest history remains.
+6. Propagation, if approved, retains provenance and does not manufacture an event source.
+7. Dialogue opening and closing do not create duplicate rumor records.
+8. Save/restore preserves provenance and legacy saves preserve existing meanings.
+9. Missing hub or subject reference follows the documented integrity/fallback policy.
+10. Equal state and seed yield equal ambient selection where seeded selection is used.
+
+These are candidate acceptance cases, not a direction to add tests in this planning pass. Any implementation still requires exact path ownership, current-ledger queue placement, focused tests, migration review, and handoff. No architecture decision is made by the plan itself.
+### Pass 23C — Consequence audit worksheet (DRAFT)
+
+Before implementing any ambient rumor response, fill a row for the exact action. The table prevents ambient narrative from leaking into unrelated systems simply because a bridge happens to exist.
+
+| Action | Source fact | Command owner | Event/result | Save owner | User feedback | Rollback |
+|---|---|---|---|---|---|---|
+| surface authored ambient entry | approved hub + valid rumor definition | RumorSystem host | generated/surfaced record | rumor save section | attributed “source unknown” | remove feature row; preserve legacy rumors |
+| read the report | reachable hub + report exists | briefing projection | read only | no new save unless current owner tracks it | display origin and epistemic class | no state change |
+| begin investigation | player accepts and quest supports it | quest runtime | accepted/started fact | quest save owner | objective visible | abandon through quest owner |
+| inspect real source log | actual log asset/record exists | log owner | observation fact | owning log/quest section | report checked scope | preserve source, reverse only mistaken conclusion |
+| forward account | player confirms recipient | rumor host | propagation command result | rumor save owner | delivered/not sent | owner-specific withdrawal if available |
+| alter faction standing | no default source fact | none in MVP | none | none | no message | not applicable |
+
+#### Fault-injection questions for review
+
+What if the hub policy loads but the rumor row does not? What if the row loads but the quest definition is missing? What if the quest resolves but the briefing projection refreshes late? What if a delivery command succeeds but UI feedback is interrupted? What if the save is captured between the local report and explicit forwarding? The implementation must preserve truthful partial progress and never replay a completed outward effect on restore.
+
+#### Observability and metrics
+
+If maintainers need to know whether ambient rows are used, record bounded content-utilization facts through the existing instrumentation authority. Do not record player belief, emotional reaction, or conversation text as analytics. A runtime metric can count surfaced/read/accepted outcomes by stable authored ID if that data policy already exists. Metrics do not grant new rumor persistence or make a narrative claim true.
