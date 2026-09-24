@@ -1979,3 +1979,217 @@ before authoring; (b) gate locking existing saves' half-dug sites — defaulting
 above; (c) power-system integration double-charge — Task 17 review joint.
 
 **Rollback.** Remove gate config + flags; sites behave as pre-gate; item rows inert.
+
+---
+
+### Task 15 — 12+ Declassified Forensic Evidence Dossiers
+
+**Status re-baseline.** PARTIAL / RE-SCOPE. Verified: `verdict_items.json` holds **15
+evidence items** with IDs like `evidence_geophone_hymn`, `evidence_census_draft`,
+`evidence_uxo_register`, `evidence_eden_log`, and keys `id`, `displayName`,
+`category`, `description`, `faction_affinity`, `downstream_quest_trigger`,
+`mechanical_effects`, `rarity`, `tier`, `tradeValue`, `weightKg`; the broader verdict
+family (`verdict_data/locations/npcs/questlines/radio`) and
+`narrative/relic_provenance_dossiers.json` exist. The plan's
+`narrative/verdict_dossiers.json` path does not exist; the `is_evidence` tag does not
+exist (zero rows carry it); the 12+ count is already met at 15.
+
+**Failure-mode analysis.**
+- *The scrap bug the plan feared is real until gated:* evidence items flow through the
+  same `items`-adjacent economy as scrap; without a teardown/sale guard, a player
+  dissolves a quest-critical dossier for parts. The guard must ride the existing
+  item-tag mechanics (`items.json` `tags` array, verified) or the verdict store's own
+  claims — one mechanism, applied everywhere teardown and sale decisions are made.
+- *`is_evidence` as a third boolean authority:* adding a new top-level boolean when a
+  `tags` array exists creates two ways to say the same thing; future content will use
+  one and check the other. Tag-based is the repo's existing convention.
+- *Dossier unlock drift:* `downstream_quest_trigger` ties evidence to quests; a
+  dossier unlocked by the wrong faction affinity (`faction_affinity` exists) can
+  contradict the verdict line. Affinity must be validated against faction IDs that
+  exist (Task 25 alias rules apply).
+
+**Remaining work (re-scoped).**
+1. Tag audit: ensure all 15 `evidence_*` rows carry a `evidence` tag (in their own
+   store's schema or the unified item view), and that teardown/sale/consumption paths
+   check it.
+2. If the dossier *presentation* layer (reading-room style dossiers distinct from
+   items) is still wanted, it is new UI over `verdict_data.json` content — a Phase 4
+   style panel task riding verdict state, not a content task.
+3. Count target closed (15 ≥ 12). Note the closure honestly rather than authoring
+   filler rows.
+
+**Data schema.** Tag extension example on the verdict item shape:
+
+```json
+{
+  "id": "evidence_census_draft",
+  "displayName": "Census Draft",
+  "category": "evidence",
+  "tags": ["evidence", "non_scrap"],
+  "faction_affinity": "faction_central_garrison",
+  "downstream_quest_trigger": "quest_census_truth",
+  "mechanical_effects": [],
+  "rarity": "rare",
+  "tier": 2,
+  "tradeValue": 0,
+  "weightKg": 0.2
+}
+```
+
+(`tradeValue: 0` plus the `non_scrap` tag is the belt-and-suspenders form: the tag
+gates teardown, the zero value removes the sale incentive. Faction/quest IDs must
+resolve — validator.)
+
+**Save-section impact.** None beyond the verdict store's existing item/flag state;
+tags are data.
+
+**Determinism notes.** Evidence discovery order irrelevant (set semantics); verdict
+reactions read snapshots.
+
+**UI/panel contract.** The verdict/archive surfaces render evidence through existing
+binds; a teardown offer on a tagged item must be suppressed at the data layer so the
+UI cannot offer what the rules forbid.
+
+**Verification plan.** Aggregated catalog check: every `evidence_*` row carries the
+tag and `tradeValue` 0, per-row failure output; focused test: teardown command on a
+tagged item is rejected; sale path skips it.
+
+**Risk register.** (a) Other zero-sale items relying on `tradeValue: 0` semantics
+getting caught in a "saleable" refactor — scope the check to evidence rows; (b)
+quest-trigger IDs drifting — validator; (c) verdict store ownership — integrator
+paths; check claims.
+
+**Rollback.** Tag removal is data-only; guards compile out.
+
+---
+
+### Task 16 — Psychological Trauma & Guilt Dossier UI Sub-Tab
+
+**Status re-baseline.** OPEN. Verified: `src/UI/SurvivorsPanel.cs` is
+`partial class SurvivorsPanel : Control, IBindablePanel` with `Bind(SurvivorsHostSession)`
+/ `Unbind()`; `src/Host/SurvivorsHostSession.cs` exists; Core-side psychological state
+exists in depth (`Psychology/`, `MentalHealthCrisisSystem.cs`,
+`PhantomMemoryEngine.cs`, `Phantoms/`, `MoralChoice/` — verified names at Core root or
+as directories). The virtualized top-10 memory cache is unbuilt as far as the audit
+shows.
+
+**Failure-mode analysis.**
+- *Panel becomes authority:* the most likely failure is the panel computing an
+  aggregate guilt score from raw memories because the session exposes memories but
+  not the aggregate. The aggregate must be a Core/session-provided value; the panel
+  formats it.
+- *Unbounded node growth:* trauma histories grow for the whole campaign; a plain
+  scroll container re-instantiating labels per memory leaks frames and eventually
+  seconds. Virtualization (fixed window of top-N rows, recycled nodes) is the
+  performance contract, per `docs/ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md`
+  practices.
+- *Stale bind after death/restore:* memories of a dead survivor, or a restore
+  mid-open, must rebind cleanly; `Unbind` discipline is verified as the family
+  pattern.
+
+**Integration contract.** The survivors panel gains a dossier sub-tab rendering the
+top-N most recent trauma memories plus an aggregate guilt score, virtualized,
+keyboard-navigable, closing/back behaving per the UI rules, rebinding on session
+events.
+
+**Exact seams (verified).**
+- `src/UI/SurvivorsPanel.cs` — sub-tab as a child view inside the existing bind
+  lifecycle (`Bind`/`Unbind`, event subscription and release).
+- `src/Host/SurvivorsHostSession.cs` — exposes the memory window + aggregate from
+  Core state; no computation in the panel.
+- Core sources for the data: the psychological/trauma state owner (audited names
+  above; read the actual owner file before citing fields — the snapshot needs real
+  member names).
+- Node-hygiene telemetry: the UI diagnostics tooling referenced by
+  `docs/ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md`.
+
+**Data schema.** None required (presentation over existing state). If memory
+entries need display categorization, it is a Core-provided enum, not a panel-side
+string parse.
+
+**Save-section impact.** None (read-only view).
+
+**Determinism notes.** Top-N selection uses a stable sort key (recency day, then
+entry ID ordinal) so the displayed window is reproducible in UI snapshot tests
+(29 golden targets exist — new surface must not perturb existing goldens).
+
+**UI/panel contract.** Keyboard/controller: sub-tab reachable by existing navigation,
+`ui_cancel` closes back to the previous tab, focus visible, contrast per
+`ACCESSIBILITY.md`. Release all subscriptions in `Unbind` (the verified family
+contract).
+
+**Verification plan.** Extend the existing survivors panel UI test slice
+(`Main.UiTests.Survivors.cs` naming convention, verified family) for
+bind→render→unbind with no leaked nodes; snapshot review if the surface joins the
+golden set. Core-side: none (no behavior change).
+
+**Risk register.** (a) Sub-tab duplicating an existing trauma view elsewhere
+(audit `src/UI/` psychological surfaces first); (b) aggregate value computed
+panel-side (contract forbids); (c) golden-set perturbation — coordinate the snapshot
+baseline update as its own commit.
+
+**Rollback.** Remove the sub-tab view; no state or data touched.
+
+---
+
+### Task 17 — Interactive Power Circuit Breaker & Line Load Schematic
+
+**Status re-baseline.** OPEN. Verified: `Shelter/PowerGridSystem.cs` —
+`GenerationWatts`, `BaseGenerationWatts`, `GenerationContributions`,
+`FuelUnits`, `BatteryReserveWh`/`BatteryCapacityWh`, `TotalDrawWatts`,
+`NetWatts`, `OnPowerChanged`, `OnTickSummary`, constructor
+`(PowerGridState, IEnumerable<PowerGridRoom>, ISeededRng)`;
+`src/UI/PowerGridPanel.cs` with `Bind(PowerGridHostSession)`/`Unbind()`;
+`src/Host/PowerGridHostSession.cs` exists. Manual per-room breaker state and the
+schematic are unbuilt as far as the audit shows.
+
+**Failure-mode analysis.**
+- *Panel-side load shedding:* the tempting failure is the panel telling the session
+  to "turn off room X" by mutating a session field. Breaker state is Core state on
+  `PowerGridState`/rooms; the panel issues a command; `OnPowerChanged` comes back and
+  *that* re-renders the schematic.
+- *Breaker lies after brownout:* if an automatic brownout sheds loads but breaker
+  toggles don't reflect it (or vice versa), the schematic shows fiction. One truth:
+  breaker position (player intent) and energized state (physical fact) are distinct
+  fields; the schematic shows both.
+- *Tick-order surges:* manual toggles mid-day must not bypass the tick summary;
+  effects land at the next `OnTickSummary` (or immediately via the same recompute
+  path the tick uses — one path).
+
+**Integration contract.** Each room renders its draw; a breaker toggle sheds that
+room's load immediately through the Core recompute, reflected in `TotalDrawWatts` /
+`NetWatts`; brownout behavior may auto-trip breakers (state, not effect);
+battery/generation telemetry unchanged; all breaker positions persist.
+
+**Exact seams (verified).**
+- `Assets/Ashfall.Core/Shelter/PowerGridSystem.cs` — add breaker flags to room state
+  + a command method that recompute-sheds; events already exist.
+- `src/Host/PowerGridHostSession.cs` — command relay + event fan-out.
+- `src/UI/PowerGridPanel.cs` — schematic rendering + toggle controls inside the
+  existing bind.
+
+**Data schema.** None required (rooms come from state); if breaker defaults vary per
+room blueprint, they are fields on the room source data, validated by the integrity
+gate.
+
+**Save-section impact.** Breaker flags on `PowerGridState`/rooms (version bump; old
+saves default all-closed = today's behavior).
+
+**Determinism notes.** Shed recompute is deterministic arithmetic; auto-trip order
+during a surge is ordinal by room ID — this must be tested, since arbitrary
+dictionary order here would be a checksum-relevant nondeterminism.
+
+**UI/panel contract.** Toggles keyboard-operable, state visible (open/closed both
+textually and by color that passes contrast), feedback immediate via
+`OnPowerChanged`; `ui_cancel` closes the panel per family rules.
+
+**Verification plan.** Focused Core test: toggle → `TotalDrawWatts` drops by exactly
+the room contribution; surge → auto-trip ordinal order; restore preserves positions.
+Panel UI test slice for bind/unbind. Run alone first.
+
+**Risk register.** (a) Shedding a "critical" room (medical) into a death spiral —
+design question: critical rooms may be non-breakable; decide in data with a
+`critical` flag; (b) event storms from rapid toggling — coalesce recompute per
+frame host-side; (c) ownership overlap with shelter stream — read claims first.
+
+**Rollback.** Flags default closed; panel toggle removal is additive-reverse.

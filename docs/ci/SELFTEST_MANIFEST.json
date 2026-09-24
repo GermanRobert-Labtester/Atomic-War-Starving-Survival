@@ -2304,7 +2304,7 @@
         "--shelter-ops-selftest",
         "--operations-selftest"
       ],
-      "description": "Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification",
+      "description": "Medical triage, expedition sorties, radio network, crafting, respiratory afflictions, and the routed shelter operations board",
       "headless_compatible": true,
       "expected_summary_id": "shelter_operations_selftest",
       "timeout_seconds": 30

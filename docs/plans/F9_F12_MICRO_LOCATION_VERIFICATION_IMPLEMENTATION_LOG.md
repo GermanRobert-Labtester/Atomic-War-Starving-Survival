@@ -2198,3 +2198,258 @@ Statement: test classes that load expedition definitions through
 the static registry is shared state.
 Pins: Wave F's revalidation note; the family-run contract.
 Evidence: log record (wave observation); not re-verified by execution in this expansion.
+
+### Appendix C — Micro-Location Catalog Inventory (28 entries, verified 2026-09-25)
+
+Data read directly from `Assets/StreamingAssets/Data/micro_locations.json`; the **Sel** column
+is the selection count from the current generated utilization report
+(`docs/discovery/MICRO_LOCATION_UTILIZATION.md`, 1000-opportunity simulation, triggered=78).
+
+| # | Entry | Category | Weight | Stl× | Spd× | dMin | Required location | Ch (dep) | Grants | Journal | Special | Sel |
+|---:|---|---|---:|---:|---:|---:|---|---|---|---|---|---:|
+| 1 | micro_roadside_memorial | Discovery | 0.8 | 1.0 | 0.5 | 0 | — | 2 (1) | cloth | — | — | 8 |
+| 2 | micro_crashed_truck | Discovery | 0.6 | 1.0 | 0.8 | 1 | — | 3 (2) | canned_food, sealed_government_document | — | — | 3 |
+| 3 | micro_frozen_bus | Discovery | 0.5 | 1.0 | 0.5 | 0 | — | 3 (1) | bandage | 1 | — | 4 |
+| 4 | micro_improvised_grave | Discovery | 0.7 | 1.0 | 0.5 | 0 | — | 3 (1) | wedding_ring | 1 | — | 2 |
+| 5 | micro_collapsed_bridge | Hazard | 0.4 | 0.8 | 0.5 | 2 | — | 3 (2) | fuel, scrap_metal | — | — | 1 |
+| 6 | micro_drainage_pipe | Discovery | 0.7 | 1.0 | 0.8 | 0 | — | 3 (1) | cloth | 1 | — | 4 |
+| 7 | micro_rail_siding | Discovery | 0.5 | 1.0 | 0.6 | 1 | — | 3 (1) | mechanical_parts | 1 | — | 3 |
+| 8 | micro_dead_livestock | Hazard | 0.6 | 1.0 | 0.5 | 1 | — | 3 (1) | cloth | 1 | flag micro_contamination_exposure | 5 |
+| 9 | micro_ruined_greenhouse | Discovery | 0.5 | 1.0 | 0.6 | 0 | — | 3 (2) | seed_packets, crop_medicinal_herb | — | — | 4 |
+| 10 | micro_shell_crater | Hazard | 0.4 | 0.8 | 0.5 | 2 | — | 3 (2) | scrap_metal, mechanical_parts | — | — | 2 |
+| 11 | micro_field_kitchen | Discovery | 0.6 | 1.0 | 0.6 | 0 | — | 3 (2) | canned_food, soldering_kit | 1 | — | 2 |
+| 12 | micro_abandoned_generator | Discovery | 0.4 | 1.0 | 0.5 | 1 | — | 3 (1) | electronic_scrap | 1 | flag micro_generator_marked | 2 |
+| 13 | micro_shrine | Social | 0.7 | 1.0 | 0.5 | 0 | — | 3 (1) | jewelry, canned_food | — | — | 5 |
+| 14 | micro_emergency_cache | Discovery | 0.2 | 1.0 | 0.5 | 1 | — | 2 (1) | medical_kit | — | — | 1 |
+| 15 | micro_observation_post | Discovery | 0.3 | 1.0 | 0.5 | 2 | — | 3 (1) | dosimeter | 1 | discovers rural_gas_station | 2 |
+| 16 | micro_abandoned_barricade | Discovery | 0.7 | 1.0 | 0.6 | 1 | — | 3 (1) | bandage | 1 | — | 7 |
+| 17 | micro_hunting_blind | Discovery | 0.5 | 1.0 | 0.6 | 0 | — | 3 (1) | dried_rations | 1 | — | 3 |
+| 18 | micro_radio_tower | Discovery | 0.3 | 1.0 | 0.5 | 1 | — | 3 (1) | antenna_coil | 1 | — | 2 |
+| 19 | micro_destroyed_checkpoint | Discovery | 0.5 | 1.0 | 0.6 | 1 | — | 3 (1) | canned_food | 1 | — | 3 |
+| 20 | micro_abandoned_tent | Social | 0.7 | 1.0 | 0.5 | 0 | — | 3 (2) | cloth, childs_drawing | — | — | 6 |
+| 21 | micro_makeshift_clinic | Discovery | 0.4 | 1.0 | 0.5 | 1 | — | 3 (1) | bandage | 1 | — | 3 |
+| 22 | micro_crashed_drone | Discovery | 0.2 | 1.0 | 0.5 | 2 | — | 3 (1) | electronic_scrap | 1 | — | 0 |
+| 23 | micro_fuel_cache | Discovery | 0.2 | 1.0 | 0.5 | 1 | — | 3 (1) | fuel | 1 | — | 2 |
+| 24 | micro_water_source | Discovery | 0.5 | 1.0 | 0.8 | 0 | — | 3 (2) | clean_water ×2 | — | — | 3 |
+| 25 | micro_supply_drop | Discovery | 0.1 | 1.0 | 0.5 | 2 | — | 3 (1) | medical_kit | 1 | discovers government_bunker | 1 |
+| 26 | micro_hospital_chapel_ledger | Discovery | 0.9 | 1.1 | 0.5 | 0 | abandoned_hospital | 2 (1) | cigarette_lighter | — | — | 0 |
+| 27 | micro_depot_undertow_raft_line | Discovery | 0.7 | 1.3 | 0.5 | 0 | location_flooded_subway_depot | 2 (1) | cloth | — | — | 0 |
+| 28 | micro_gamma_levy_board | Discovery | 0.8 | 1.0 | 0.6 | 0 | loc_garrison_checkpoint_gamma | 2 (1) | cloth | — | — | 0 |
+
+Reading notes on the inventory:
+
+- **The three stealth-expert entries** (stl× 0.8: collapsed bridge, shell crater) and the two
+  required-location stealth-favored entries (stl× 1.1/1.3: chapel ledger, undertow raft line)
+  are the only entries whose stealth multiplier deviates from 1.0. The undertow line's 1.3 is
+  the catalog's strongest stealth reward — consistent with a flooded-depot raft rescue being
+  exactly what a careful survivor finds.
+- **Speed is punished almost universally** (spd× 0.5–0.8): micro-locations are the careful
+  traveler's content. The truck, pipe, and water source (0.8) are the most speed-tolerant.
+- **Grant values trace to the F12 outliers**: `wedding_ring` (25) only on the grave;
+  `medical_kit` (10) on the emergency cache and the supply drop; `cloth` (1.2) as the common
+  low-grade grant (5 entries). `fuel` (14) appears on the collapsed bridge and the fuel cache;
+  `clean_water` (15) twice on the water source — the two hydration grants in the catalog.
+- **The water source is the only entry granting the same item from two different depleting
+  choices** — and it depletes per encounter, so its two choices compete for one visit.
+- **The shrine's second grant-bearing choice is its non-depleting offering** (`add_shrine_offering`,
+  net −12 after consuming `canned_food`): the one place "grant-bearing but net-negative"
+  appears, exactly the shape the farming-resistance bound (IV.4 of the E-chapter) allows.
+- **Entry 26's weight (0.9) is the catalog's highest**, but it is reachability-bound: only
+  sorties to `abandoned_hospital` can ever roll it (8 opportunities in the current sample,
+  0 selections). Weight and access are independent levers — the matrix in §V.D makes both
+  visible per entry.
+- **All 3 Hazard entries are minDanger 1–2**; no Social entry gates on danger (both at 0).
+  Discovery spans the full range.
+
+### Appendix D — Seed and Constants Register
+
+Every deterministic constant the wave and its artifacts rely on, with provenance and what each
+proves.
+
+| Seed / constant | Where used | What it proves / does | Status |
+|---|---|---|---|
+| 42 | C-1 named repeat: allotments destination, 8 ticks | Repeat-exactness on the canonical first seed | Test present (verified) |
+| 99 | C-2 named repeat: gas-station destination | Repeat-exactness, different destination shape | Test present |
+| 7 | C-3 named repeat: denial-cut destination | Repeat-exactness, third destination shape | Test present |
+| 100 sweep seeds | C-10 `HundredSeedHarness_HasZeroDivergences` | Continuation parity across the seed space, 100/100 at wave time (log record) | Test present |
+| 9000+i (i in 0..999) | F11 utilization opportunities | Per-opportunity independence; reproducible by construction | Test present; report regenerated |
+| 4000+i (i in 0..99) | F12 economy sorties | Deterministic 100-expedition run | Test present; report regenerated |
+| 64 seeds × grant entries | F12 farming resistance, production selector | One-shot behavior for every depleting grant | Test present |
+| DemoSeed = 7071 | `ExpeditionHostSession.cs:26` | The demo/default session stream seed; post-reload restart point (documented boundary) | Verified in source |
+| `surv_harness` | `MicroLocationDeterminismHarness.SurvivorId` | Fixed survivor identity in harness worlds | Verified in source |
+| Draw counts (dynamic) | Continuation checkpoints | Stream position; reported per-tick as `RngDrawsAfter` in traces | Verified mechanism |
+| 10–30% band | F12 acceptance band for the micro/primary ratio | The sealed "no tuning" decision boundary | Log + report |
+| 1000 opportunities / 100 expeditions / 64 seeds / 100 sweep seeds | Simulation scales | Evidence breadth inside single tests (focused-run budget discipline) | Tests present |
+
+Named-destination note: the three C-1..C-3 destinations are read from the test method names
+(`Seed42_Allotments…`, `Seed99_GasStation…`, `Seed7_DenialCut…`). Their exact destination ids
+in `expeditions.json` were not cross-checked character-for-character in this expansion; the
+tests are the authority for their own fixtures.
+
+### Appendix E — The Wave Suite: Complete Test Register
+
+All 31 tests across the four wave files, as they exist today (verified 2026-09-25 by attribute
+count and method listing). The log's wave-time distribution was 8+9+7+7; today's files hold
+8+10+7+6 (offsetting drift, §II.6 C-5/C-6). This register is the "what exactly would break if
+this domain regressed" index.
+
+**`MicroLocationPersistenceWaveTests.cs` — 8 tests (F9)**
+
+| # | Test | Pins |
+|---|---|---|
+| 1 | `ResolveDepletingMicroLocation_WireRoundTrip_RemainsDepleted` | INV-01/02 through the real wire format |
+| 2 | `CaptureState_RepeatedCaptures_InsertionOrderIndependent_Ordinal` | INV-01/05 order independence |
+| 3 | `CaptureState_PreviouslyCapturedDto_UnaffectedByLaterRuntimeMutation` | INV-05 snapshot immutability |
+| 4 | `RestoreState_DuplicateDepletionIds_CollapsesSafely` | Restore totality over malformed input |
+| 5 | `PendingMicroLocation_WireRoundTrip_RestoresExactly_ResolvesOnceAfterReload` | Pending persistence + exactly-once resolution |
+| 6 | `GrantedItemRemovedAfterResolve_SaveReload_EncounterStaysDepleted` | INV-03 negative direction |
+| 7 | `LegacyWireSave_WithoutDepletionField_RestoresFromHistory_NoRefill` | D-2 legacy reconstruction, INV-13 |
+| 8 | `WorldFlag_SetSaveReload_ReappliedSet_DoesNotDuplicate` | Consequence idempotence on reload |
+
+**`MicroLocationDeterminismTests.cs` — 10 `[Fact]`s (F10; log recorded 9)**
+
+| # | Test | Pins |
+|---|---|---|
+| 1 | `Seed42_Allotments_EightTicks_RepeatsExactly` | INV-06 baseline repeat, seed 42 |
+| 2 | `Seed99_GasStation_EightTicks_RepeatsExactly` | INV-06 baseline repeat, seed 99 |
+| 3 | `Seed7_DenialCut_EightTicks_RepeatsExactly` | INV-06 baseline repeat, seed 7 |
+| 4 | `SaveAtTick4_Continuation_EqualsUninterruptedEightTicks` | INV-09 continuation parity |
+| 5 | `EligibilityMetadata_ConsumesZeroRngDraws` | R-3 metadata zero-draw |
+| 6 | `SelectEncounter_ZeroEligibleContext_ConsumesZeroDraws` | R-3 empty-set zero-draw |
+| 7 | `SelectionPath_IntroducesNoIndependentRng` | INV-06 static scan |
+| 8 | `SameStreamState_ReplaysIdenticalSelection` | INV-06 behavioral replay |
+| 9 | `DepletedCandidate_Filtering_IsDeterministic` | INV-02 filter-before-weight |
+| 10 | `HundredSeedHarness_HasZeroDivergences` | INV-09 across 100 seeds |
+
+**`MicroLocationUtilizationAuditTests.cs` — 7 tests (F11)**
+
+| # | Test | Pins |
+|---|---|---|
+| 1 | `MicroLocationCatalog_UniqueIds_AndValidRequiredFields` | INV-08 structural base, 28-count pin |
+| 2 | `AllItemReferences_ResolveAgainstItemsCatalog` | INV-08 item references |
+| 3 | `AllDiscoveryAndRequiredLocations_ResolveAndAreStructurallyReachable` | INV-08 location reachability |
+| 4 | `JournalUnlockKeys_StayInMicroNamespace_AndAreUniquePerEncounter` | INV-08 namespace discipline |
+| 5 | `EveryMicroLocation_HasAtLeastOneEligibleContext` | Eligibility-context gate, 28/28 |
+| 6 | `UtilizationSimulation_1000Opportunities_IsReproducible_AndClassifies` | INV-10 gates + reproducibility |
+| 7 | `RedundancyScan_ProducesReviewedCandidatePairs` | Redundancy review instrument |
+
+**`MicroLocationEconomyAuditTests.cs` — 6 `[Fact]`s (F12; log recorded 7)**
+
+| # | Test | Pins |
+|---|---|---|
+| 1 | `RewardLedger_AllGrantedItemsResolve_QuantitiesPositive_ValuesFinite` | INV-08 economic references + outlier pinning |
+| 2 | `EconomySimulation_100Expeditions_IsDeterministic_AndProducesFiniteValues` | Ratio instrument, determinism |
+| 3 | `FarmingResistance_DepletingGrantEncounters_AreOneShot_InProductionSelector` | Anti-farm selector gate, 64 seeds |
+| 4 | `FarmingResistance_NonDepletingItemChoices_AreNetNonPositive_OrDocumented` | Anti-farm non-depleting bound |
+| 5 | `NamedOutliers_ArePresentWithPlanDocumentedShape` | Outlier shape pinning |
+| 6 | `WriteBalanceReport` | INV-15 report generation (env-gated) |
+
+Provenance note for the distribution drift: this expansion cannot determine from the files
+alone which specific test was added to the determinism file or which was consolidated out of
+the economy file after the wave — the log's counts (9 and 7) and today's (10 and 6) are both
+recorded, the suite total of 31 is unchanged, and every test the log names by title is present
+today. The most likely reading is post-wave family growth and consolidation by later
+micro-location streams (the family now has a dozen more integration files beyond the wave's
+four); Q-6 in Appendix I records the open question without speculation in either direction.
+
+### Appendix F — Scenario Walkthroughs
+
+Four end-to-end scenarios, written as operator drills. Each names the exact artifacts touched
+and the invariants exercised.
+
+**Scenario 1 — A content author adds a 29th micro-location.**
+
+1. Author adds `micro_old_signal_bunker` to `micro_locations.json`: weight 0.35, dMin 1,
+   two choices — `scan_frequencies` (journal `micro_signal_bunker_log`, no items) and
+   `crack_ammo_box` (grant `scrap_metal` ×3, depleting).
+2. Run the F11 structural suite. `MicroLocationCatalog_UniqueIds_AndValidRequiredFields` now
+   **fails**: count pinned at 28. This is the pin working as designed (D1 policy): a catalog
+   change must be *acknowledged* by updating the pin, never absorbed silently.
+3. Update the pin to 29. Re-run: reference tests check `scrap_metal` and the journal key resolve
+   and are namespaced; the eligibility matrix recomputes — the new entry has eligible contexts
+   (dMin 1 is satisfied by most destinations).
+4. Run the utilization simulation: the new entry participates in the 1000-opportunity run;
+   the report regenerates under the env gate (INV-15) with 29 rows.
+5. Run the F12 ledger suite: the new grant resolves; if `crack_ammo_box`'s value pushed the
+   ratio out of band, the simulation reports it — the author reads the band verdict before
+   committing.
+6. Run the determinism suite: nothing changed (content joined the pool, but determinism is
+   content-agnostic); the sweep stays green.
+7. Commit order per doctrine: catalog + pin update + regenerated reports in one pathspec
+   commit, log divergence note if any audit number moved materially.
+
+**Scenario 2 — Someone breaks the single-stream rule.**
+
+Suppose a contributor "optimizes" the bridge by caching a `SeededRng` at construction:
+
+1. `SelectionPath_IntroducesNoIndependentRng` fails immediately: the scan finds
+   `new SeededRng(` in `ExpeditionEncounterBridge.cs` (E-3 tripwire).
+2. Even if the scan were relaxed, `SameStreamState_ReplaysIdenticalSelection` fails: a cached
+   stream no longer follows the host's `SetRng` per tick, so a fresh world with the same stream
+   selects differently (E-1 behavioral).
+3. The 100-seed sweep fails with seed + tick + segment: the canonical trace shows draw counts
+   diverging the first tick after any `SetRng` call that the cached stream ignored.
+4. Diagnosis path: the failure is *construction-order dependent* — exactly the class the
+   host's per-tick `SetRng` call exists to prevent (§IV.3). Fix: remove the cache, restore the
+   reference flow. Total exposure: three tests, one root cause, no ambiguity about ownership
+   of the bug.
+
+**Scenario 3 — A save from a mid-wave campaign meets the current catalog.**
+
+1. A campaign saved on 2026-09-05 (wave-era trunk) restores on today's trunk. Its save carries
+   a present `depletedEncounterIds` list — INV-01 path, no migration.
+2. Any ids in the list that the current catalog still defines re-add cleanly; if an entry was
+   *removed* from the catalog since, its id still re-adds to the set (the set is strings; the
+   membership gate `IsDepleted` simply never matches a candidate) — harmless, bounded by save
+   size, and never guessed away.
+3. A genuinely pre-F1 save (null list) takes the reconstruction branch: every recorded
+   depleting resolution re-marks; unknown history entries skip (INV-13).
+4. The F9 suite is the regression net for both paths: B-1 (present list), B-7 (null list),
+   B-4 (malformed list). A future save-format change must keep all three green.
+
+**Scenario 4 — Reconciling the reports after a balance-affecting catalog edit.**
+
+1. Edit lands (say, `wedding_ring` 25 → 18 in `items.json`).
+2. Regenerate: `ASHFALL_GEN_MICRO_REPORTS=1` over the F11/F12 audit tests, twice (G-7). Both
+   generations must be bit-identical on the fixed tree.
+3. Read the reconciliation surface: the ledger's grave row shows net 18; the outlier review
+   text for `micro_improvised_grave` regenerates from its review template; the ratio recomputes.
+   If the ratio left the 10–30% band, the recommendation line changes and *that* is a foreman
+   decision (INV-10) — the test does not fail, the report speaks.
+4. Commit the regenerated reports with the value change; the log records the ratio transition
+   the way Finding 2 recorded 19.5% → 25.7%: movement documented, gates intact, decision
+   explicit.
+
+### Appendix G — Operator Manual: Re-running the Wave Evidence Today
+
+Everything the wave produced can be re-derived on the current trunk without touching production
+code. Commands in repository conventions; none were executed for this expansion.
+
+1. **Wave B (persistence).**
+   `bash scripts/run_test.sh Ashfall.Core.Tests/MicroLocationPersistenceWaveTests.cs`
+   — 8 tests, no environment variables, no fixtures beyond the repo's own serializer.
+2. **Wave C (determinism).**
+   `bash scripts/run_test.sh Ashfall.Core.Tests/MicroLocationDeterminismTests.cs`
+   — 10 tests; the harness builds its worlds from the live catalogs in
+   `Assets/StreamingAssets/Data/` (resolved via the catalog locator's walk-up to the data
+   root), so run from a checkout where that tree is intact.
+3. **Wave D (utilization).**
+   `bash scripts/run_test.sh Ashfall.Core.Tests/MicroLocationUtilizationAuditTests.cs`
+   — 7 tests. The structural five run always; the simulation test is self-reproducing in-process.
+4. **Wave E (economy).**
+   `bash scripts/run_test.sh Ashfall.Core.Tests/MicroLocationEconomyAuditTests.cs`
+   — 6 tests.
+5. **Reports.** Set `ASHFALL_GEN_MICRO_REPORTS=1` and re-run the D/E files to regenerate
+   `docs/discovery/MICRO_LOCATION_UTILIZATION.md` and `docs/discovery/MICRO_LOCATION_BALANCE.md`.
+   Run twice; require identical output (G-7) before committing any regeneration.
+6. **Family check (G-10).** The micro-location family inside the main project — post-seal
+   baseline was 87/87 including the wave's 31; the family has grown since (a dozen further
+   integration files exist under the `MicroLocation*` and `Expeditions/MicroLocation*` names),
+   so today's expected count is higher; the invariant to check is *isolated count == project
+   count* for the wave files.
+7. **Serial discipline.** Run the audit classes serially (or under the repo's
+   DisableTestParallelization contract) — the static `ExpeditionDefinitionRegistry` makes
+   parallel runs unreliable (§V.F).
+8. **What not to run.** No production build or data-integrity gate is needed for test-only
+   work beyond the standard baseline; the full suite is not a verification tool here (G-11
+   requires a hypothesis and a reason).

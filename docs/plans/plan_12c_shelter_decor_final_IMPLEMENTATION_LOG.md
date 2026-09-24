@@ -2119,3 +2119,328 @@ None of these mechanisms instruct emotion. The lane's only editorial
 instruments are the authored descriptions, the small scalar range, the
 permanence rule, and one `Caution` criticality on the morale card — and
 each of them is a fact about the shelter, stated in material terms.
+
+---
+
+## Part VII — Verification & Acceptance
+
+### VII.1 Verification philosophy for this lane
+
+The lane's verification follows the repository's focused-testing rule:
+Core contracts are pinned by one xUnit file runnable in seconds; the
+engine-integrated path is pinned by one production selftest runnable
+headless in a few seconds; the visual contract is pinned by one golden
+snapshot; and the canonical full gate sweep runs once at closeout, not per
+change. Nothing in the lane requires the full suite to reach a confident
+verdict, and nothing in the lane can be verified by Core tests alone
+(panel rendering, catalog boot, save-file IO, and Godot node lifecycle
+live only in the host).
+
+### VII.2 Focused test matrix
+
+| Layer | Target | Command | Covers | Expected |
+|---|---|---|---|---|
+| Core registry + data + section | `Ashfall.Core.Tests/Plan12CDecorTests.cs` (21 facts) | `bash scripts/run_test.sh Ashfall.Core.Tests/Plan12CDecorTests.cs` | Assign/remove/read, aggregation sums, plaque resolution, capture isolation, restore provenance, section registry rows, items.json existence + positive-delta rule, loader field preservation, surface manifest contract | All green; any red pins a specific broken contract |
+| Production integration | `src/Host/ShelterDecorSelfTest.cs` | `godot --headless --path . -- --shelter-decor-selftest` (aliases: `--shelter-interior-selftest`, `--memorial-wall-selftest`) | Live catalog boot, modifier registration, real inventory consume/return, NeedsSystem morale arithmetic, plaque projection + provenance, save façade round-trip, real panel construct/bind/render/teardown | `[PASS]` lines, summary `PASS`, exit 0 |
+| Visual contract | `shelter_decor_default` | `godot --rendering-method forward_plus -- --ui-snapshot-uitest` | Populated panel pixels vs. `snapshots/shelter_decor_default.png` (md5 `2ed66f53700b1456094587bf3ae23f13`, 103,917 B) | Local target MATCH; global gate verdict inherits the repo's unrelated drift state |
+| Data integrity (shared) | all catalogs | `godot --headless --path . -- --data-integrity-selftest` | Catalog schema/reference validity incl. decor rows (138 catalogs, 0 findings at closeout) | 0 findings |
+| Canonical build | Core tests + host | `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` and `dotnet build Ashfall.csproj` | Compile cleanliness incl. the lane's four host files | 0 warnings, 0 errors at closeout |
+| Full suite (closeout only) | everything | `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | Whole-contract sweep | 5,303/5,303 at closeout |
+
+### VII.3 Gate command records (2026-08-31 closeout)
+
+The preserved record above lists the seven canonical gates. Annotated, for
+the reader deciding what to re-run:
+
+| Gate | Closeout result | What it would catch if it failed today |
+|---|---|---|
+| `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS — 0 warnings, 0 errors | Core contract drift; test compile breaks from registry signature changes |
+| `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` | PASS — 5,303 / 5,303 | Any Core contract in the repo, incl. the 21 lane facts |
+| `dotnet build Ashfall.csproj` | PASS — 0 warnings, 0 errors | Host-side drift: panel, session, selftest, Main wiring |
+| `godot --headless -- --data-integrity-selftest` | PASS — 138 catalogs, 0 findings | A decor row losing schema validity or references |
+| `godot --headless -- --bridge-selftest` | PASS — shim-removal contract | Reintroduction of retired bridge shims |
+| `godot --headless -- --shelter-decor-selftest` | PASS — catalog, storage, morale, plaque, save, and panel path | Any break in the integrated pipeline IV.1 draws |
+| `godot --rendering-method forward_plus -- --ui-snapshot-uitest` | Local target MATCH (103,917 B); global FAIL from 29 unrelated existing drifts, 0 capture failures | A visual regression in the populated panel; capture infrastructure failure |
+
+Post-closeout source drift this expansion verified and this matrix must
+therefore treat carefully: the exact-count selftest assertion vs. the
+grown catalog (V.4), and the trophy rows now subject to the
+`CarryDecorModifierField` per-row rule (they carry positive deltas, so
+the rule holds in source as of the expansion date). Neither observation
+has been executed as a test run on 2026-09-25.
+
+### VII.4 Acceptance criteria for any future lane work
+
+A change to this domain is accepted when all of the following hold —
+these are the checks an integrator should apply before folding the work:
+
+1. **Authority preserved.** No new morale writer, no new death record
+   writer, no parallel registry, no decor JSON outside `items.json`, no
+   Godot reference under `Assets/Ashfall.Core/`.
+2. **Modifier hygiene.** Decor values stay authored in `items.json`;
+   modifiers still never enter a save payload; registration still flows
+   only through `LoadCatalogModifiers`.
+3. **Inventory symmetry.** Every mount path consumes exactly one unit;
+   every remove path returns exactly one; every failure path leaves
+   storage and registry consistent (the refund rule).
+4. **Plaque integrity.** Plaque mounts still carry all three provenance
+   fields; still refuse removal; still mint no inventory; still
+   short-circuit idempotently per survivor.
+5. **Persistence.** New state (if any) joins `ShelterDecorState` behind
+   the checksummed envelope, with a round-trip fact in
+   `Plan12CDecorTests` and a stage in the selftest if it is
+   behavior-visible.
+6. **Panel truth.** Any new card, line, or button renders state derived
+   from the host at refresh time; user-facing sentences remain the
+   host's; close/back and unbind/dispose lifecycle still verified by the
+   selftest's teardown stage.
+7. **Verification proportion.** Core facts added for Core changes;
+   selftest stages added only for integrated-behavior changes; no
+   speculative tests, no full-suite runs for focused work.
+8. **Snapshot discipline.** If the panel's rendered contract changes,
+   the golden is re-captured, inspected, promoted, and re-fingerprinted
+   in both manifests with a written reason — never bulk-refreshed.
+
+### VII.5 Known limitations and residual risks
+
+Recorded honestly, each with its blast radius:
+
+1. **Exact-count selftest pin vs. grown catalog** (V.4, Part VIII open
+   question Q1). Blast radius: the `--shelter-decor-selftest` stage-4
+   assertion only. Core data facts are forward-compatible. Resolution
+   belongs to the selftest's owning lane.
+2. **Mess-hall gate semantics** (III.6). The daily decor pass is gated on
+   `room_common_mess_hall` power, not on decorated rooms' power. Shipped
+   behavior, recorded as such; a design clarification would change one
+   boolean at the call site. Blast radius: daily morale delivery during
+   power loss.
+3. **Orphaned-item placements.** A placement whose item vanishes from the
+   catalog contributes zero and cannot be returned to storage (the remove
+   ladder needs the catalog row). Blast radius: one stuck slot per
+   occurrence, cosmetic plus one lost unit. A future "return unknown item"
+   affordance would be host-side.
+4. **Session tallies are last-call values.** `LastMoraleGranted`,
+   `LastMoraleRecipientCount`, `LastEvent` describe the most recent
+   operation, not a durable log. Blast radius: none in gameplay;
+   presentation only.
+5. **`StackMultiplicatively` is dormant.** The modifier flag exists but
+   no shipped code reads it. Blast radius: none; activating it would be a
+   tuned, tested change, not a flag flip.
+6. **Slot vocabulary is unbounded.** Player-typed slot ids are accepted
+   verbatim (trimmed). A typo'd slot mounts a real item on a fictional
+   surface. Blast radius: cosmetics plus one consumed unit, fully
+   reversible via RETURN TO STORAGE.
+7. **Panel focus policy ownership.** The panel ships the shell's header
+   close and standard control focus; the repo-wide keyboard/controller
+   parity programme (C2[15]/Plan 37 in the active queue) owns the broader
+   focus-neighbor and gamepad contract. Blast radius: none for this
+   lane's logic; the parity lane may add focus work to this panel later.
+
+### VII.6 Rollback plan
+
+The lane is one cohesive feature with clean edges, so rollback is
+layer-ordered, least-invasive first:
+
+| Scenario | Action | Consequence |
+|---|---|---|
+| Panel misbehaves visually | Revert `src/UI/ShelterDecorPanel.cs` only; keep session/save/selftest | Route still opens through game flow only if the panel type survives compile — realistically revert panel + its harness fixture row together |
+| Daily morale misbehaves | Comment out the `ApplyDailyMorale` call + event emission at the `Main.CampaignOwners.cs` call site (lines ~1347–1350) | Wall, mounting, persistence all keep working; only the daily pass stops. Cleanest single-seam rollback in the lane |
+| Plaque projection misbehaves | Remove the reconcile loop in `SetupShelterDecor` and the commit-time `TryMountMemorialPlaque` call | Existing plaques persist via the save section (they are already placements); only *new* projections stop. Death ledger unaffected |
+| Save section corrupts campaigns | Drop the `shelter_decor` capture call in `SaveShelterDecor` | Existing `shelter_decor_save.json` payloads still restore if `SetupShelterDecor` runs; decor becomes session-local if both sides are disabled |
+| Full lane retirement | Revert the four host files + the two Main methods + the registry rows + the catalog slice; Core registry can remain (it is inert unregistered) | `SaveSectionRegistry` rows must go together with the Main methods to keep the triad gate's Setup/Save/Flush parity green |
+
+Rules that hold in every row: the Core registry is harmless when
+unregistered (no host constructs it), so Core reverts are never urgent;
+the memorial ledger is never touched by any rollback; and saves written
+with a `shelter_decor` section load safely into a build where the lane is
+disabled only if the loader treats an unknown/absent handler as a skip —
+which is the save system's general contract (`UNVERIFIED` for this exact
+section; verify before retiring the lane in a shipping build).
+
+---
+
+## Part VIII — Appendices
+
+### VIII.1 Glossary
+
+Terms as this lane uses them. Where a term has a repository-wide meaning,
+the definition here is the lane's reading of it.
+
+**Aggregation pass** — the daily loop in `ApplyDailyMorale` that walks
+active assignments, sums each room's decor modifiers, and writes the sum
+into each active, alive occupant's Morale channel. The lane's only
+gameplay write.
+
+**Assign** — `ShelterDecorSystem.Assign`, the registry's sole placement
+writer. Ordinal (roomId, slotId) uniqueness; replacement semantics; fires
+`OnDecorChanged` and `OnStateChanged`.
+
+**Attribution** — the `NeedsModifierStack` mechanism that records *which*
+source caused a need change. The decor lane does not attribute; its daily
+grant is a plain `Modify`. Contrast `ApplyAttributedDelta`.
+
+**Bridge (memorial)** — the one-way path from a committed `MemorialEntry`
+to a plaque placement: `TryMountMemorialPlaque` → `ResolvePlaqueSlot` →
+`Assign`. Idempotent per survivor; mints no inventory.
+
+**Capture / Restore** — the registry's persistence pair.
+`CaptureState()` deep-copies placements into a `ShelterDecorStateCapture`;
+`RestoreState(cap)` replaces the live list and fires `OnStateChanged`.
+
+**Catalog modifier** — the `ShelterDecorItemModifier` the host registers
+per `item_decor_*` catalog row at boot: item id, authored
+`LocalizedMoraleDelta`, host-derived `Category`. Runtime-only; never
+persisted.
+
+**CategoryFor** — the host's id-substring classifier
+(`trophy` → `memorial plaque` → `poster` → `drawing` → `keepsake`), used
+for UI sorting only. Gameplay never reads it.
+
+**Checksum envelope** — the save wire format's protection:
+`SaveChecksum.Compute` stamped at encode, verified at decode, mismatch
+throws. Placements cannot load corrupted.
+
+**Closeout record** — the preserved 2026-08-31 document at the top of
+this file: scope, seams, verification record, and the seven-gate table.
+
+**Cold fallback** — `ResolvePlaqueItemId` returning empty when neither a
+kind-specific nor the generic plaque is registered; exists so the host
+surfaces a missing-plaque affordance instead of inventing an item.
+
+**Decor slot** — a player-named surface inside a room
+(`north_wall`, `shelf_1`, `entry_hook`, ...). Free-text in Core; the
+uniqueness key's second half; no shipped vocabulary outside the trophy
+mounts.
+
+**Drift (snapshot)** — a render whose bytes differ from the golden
+fingerprint. Handled per-target: inspect, fix or accept, re-baseline with
+a written reason. The closeout run left 29 pre-existing drifts untouched.
+
+**Fixture (snapshot)** — `ShelterDecorSnapshotFixture.Bind`: the
+deterministic production-seam graph (catalog → inventory → assignment →
+needs → session → plaque) whose fixed inputs make the golden reproducible.
+
+**Golden** — `snapshots/shelter_decor_default.png` plus its two manifest
+rows: the visual contract of the populated panel.
+
+**Heirloom** — a deceased survivor's keepsake as recorded on the ledger
+(`HeirloomItemId`). The wall cites it; it never holds it.
+
+**Holdfast storage** — the inventory container the panel calls Holdfast
+storage (mounts consume from it, removes return to it). Name from the
+host's user-facing sentences.
+
+**Idempotence (plaque)** — the guarantee that one ledger entry yields at
+most one plaque regardless of how many times either projection path runs,
+keyed on `"plaque_" + SurvivorId` at `room_memorial_wall`.
+
+**Kind (heirloom)** — the trailing `'_'`-delimited segment of an heirloom
+id, with `default` meaning none. Selects the plaque variant.
+
+**Ledger** — `MemorialSystem`'s entry list: the single death-record
+authority. The wall is its projection, never its peer.
+
+**Localized morale** — morale effect that applies only to occupants of
+the room holding the decor, via the room's summed delta. The lane's whole
+mechanical idea.
+
+**Memorial wall** — `room_memorial_wall`: a registry coordinate, a panel
+view, and the permanent home of plaques. Not mountable by players, not
+assignable in this lane, grants nothing passively.
+
+**Modifier registry** — the system's `ItemModifiers` dictionary:
+ordinal item id → modifier. Upserted at boot; read by aggregation and
+plaque resolution.
+
+**Mount** — the player action of installing a decor item at a slot:
+host validation ladder → consume → `Assign`. Reversible by remove.
+
+**Plaque** — a placement with `IsMemorialPlaque = true` plus survivor and
+heirloom provenance. Permanent; non-storage; rendered with provenance and
+no actions.
+
+**Projection** — any representation of another authority's truth that
+stores references instead of facts. The wall is the lane's only one.
+
+**Reconcile** — the boot loop projecting any ledger entry whose plaque is
+missing. What makes legacy saves grow their walls deterministically.
+
+**Refund rule** — if `Assign` fails after the mount consumed an item, the
+host produces the item back before reporting failure. The one place the
+lane touches two authorities in one operation.
+
+**Selftest** — `--shelter-decor-selftest`: the production gate that runs
+the real pipeline headless and emits a pass/fail summary.
+
+**Session tallies** — `LastMoraleRecipientCount`, `LastMoraleGranted`,
+`LastEvent`, `CatalogModifierCount`, `CurrentDay`: presentation context
+on the host session, reset/overwritten per operation, never persisted.
+
+**Stacking** — combining multiple decor modifiers in one room. Shipped
+behavior is additive summation in ordinal slot order;
+`StackMultiplicatively` is authored but dormant.
+
+**Trophy lane** — the Plan 14E/C1.6 feature that added
+`item_decor_trophy_*` rows and the trophy-slot accessors on top of this
+registry without altering its contracts.
+
+**Wall room id** — `ShelterDecorHostSession.MemorialWallRoomId`, the
+constant `"room_memorial_wall"`.
+
+### VIII.2 ID vocabulary tables
+
+**Section and store identifiers.**
+
+| Identifier | Value | Lives in |
+|---|---|---|
+| System/section id | `shelter_decor` | `ShelterDecorState.SystemId`, `ShelterDecorSystem.SystemId`, `SaveSectionRegistry` key, `CaptureSection` argument, day event source |
+| Save file | `shelter_decor_save.json` | `ShelterDecorSaveStore.FileName`, registry file map |
+| Store section constant | `shelter_decor` | `ShelterDecorSaveStore.SectionName` |
+| Panel route id | `shelter_decor` | `PanelRegistryBootstrap`, `PlayerSurfaceManifest`, `Main.GameFlow` case, `Main.PlayerSurfaces` list |
+| Snapshot stable id | `shelter_decor_default` | `SnapshotHarness` target, both manifests, golden file stem |
+| Day event key | `shelter_decor_morale` | `Main.CampaignOwners`, `DayEventVocabulary` |
+| Memorial wall room | `room_memorial_wall` | `ShelterDecorHostSession.MemorialWallRoomId` |
+| Memorial plaque prefix | `item_decor_memorial_plaque` | `ShelterDecorSystem.MemorialPlaquePrefix` |
+| Decor item prefix | `item_decor_` | `LoadCatalogModifiers` filter, data-pinning tests |
+| Plaque slot key | `plaque_{SurvivorId}` | `TryMountMemorialPlaque` |
+| Trophy mount slots | `trophy_mount_1`, `trophy_mount_2` | `GetTrophySlots` |
+| Selftest id | `shelter_decor_selftest` | `HostCli.EmitSummary` argument |
+| CLI flags | `--shelter-decor-selftest`, `--shelter-interior-selftest`, `--memorial-wall-selftest` | `HostCli` dispatch |
+
+**Room ids (assignment fallback set, verified in
+`ShelterAssignmentHostSession.CreateDefault`; the live catalog
+`shelter_rooms.json` may add more, e.g. `room_bunks_crowded` was observed
+in the data file).**
+
+| Room id | Display name | Capacity | Required skill |
+|---|---|---|---|
+| `room_bunker_corridor` | Central Access Corridor | 0 | — |
+| `room_bunks` | Bunks | 4 | — |
+| `room_kitchen` | Kitchen | 2 | `skill_cooking` |
+| `room_clinic` | Clinic | 2 | `skill_medic` |
+| `room_workshop` | Workshop | 2 | `skill_crafting` |
+| `room_filtration` | Filtration Stack | 1 | `skill_technician` |
+
+**Survivor and fixture ids used by tests and fixtures (demo roster).**
+
+| Id | Role |
+|---|---|
+| `survivor_gunner_mikhail` | Selftest mount/morale recipient; fixture bunk occupant |
+| `survivor_dr_sarah_chen` | Fixture's second bunk occupant |
+| `survivor_memorial_probe` | Selftest plaque recipient |
+| `survivor_memorial_fixture` | Snapshot plaque recipient |
+| `sv_eli_p`, `sv_jenny_t` | Core-test plaque commemorations |
+| `item_personal_keepsake_probe_carving` | Selftest heirloom (kind `carving`) |
+| `item_personal_keepsake_fixture_carving` | Snapshot heirloom (kind `carving`) |
+| `item_personal_keepsake_eli_pewter_carving`, `item_personal_keepsake_eli_pewter_default`, `item_personal_keepsake_eli_drawing`, `item_personal_keepsake_jenny_default` | Core-test heirloom shapes covering kind, `default` tail, and generic resolution |
+
+**Seeds and constants.**
+
+| Constant | Value | Where |
+|---|---|---|
+| Fixture/selftest RNG seed | `12012` | `SeededRng(12012)` in both harnesses |
+| Golden size / md5 | 103,917 B / `2ed66f53700b1456094587bf3ae23f13` | baseline manifest |
+| Snapshot viewport | 1280×800, scale 1.0, seed 12012, locale en_US | registry manifest |
+| Morale default | `50f` | `SurvivorNeedsState.Morale` |
+| Delta skip threshold | `0.0001` absolute | `ApplyDailyMorale` |
+| Panel minimum size | 1160×700 | `AshfallDashboardShell` ctor |

@@ -2543,3 +2543,280 @@ capturable mid-vigil, so a save/load does not replay the names or skip
 the knock. The event names are the tone: nothing here is called
 `DeathAnimationController`. The system models attendance — who sat by
 the bed and said the names — and leaves death itself to other systems.
+
+#### V.F.6 Host Wiring and the Medical Pipeline
+
+`MedicalPipelineCoordinator` composes the three authorities for the host,
+with `MedicalPipelineSave` as its persistence face and siblings
+(`ClinicalWardTriageEngine`, `ClinicalWardLedger`,
+`MedicalProcedureSchedule`, `MedicalReservationLedger`,
+`HealthHistorySystem`, `MedicalRecordLog`) carrying the ward-scale
+machinery. The host's obligations under the event contract:
+
+- consume `OnMoraleDrainRequested` and apply it through the morale
+  authority;
+- consume `OnCraftingPenaltyChanged` / `OnCombatPenaltyChanged` and apply
+  factor changes to crafting and combat;
+- surface `OnDependencyFormed` / `OnWithdrawalStarted` /
+  `OnDetoxCompleted` / `OnDetoxFailed` as status and narrative;
+- drive the vigil scene from the state machine's events and render
+  recitation as it arrives;
+- drive `TickHours` from game-hours (staffed bench time), not wall-clock.
+
+The disease side runs on the day tick through `DiseaseSystem`, with
+`IDiseaseOutbreakSource` letting other systems (wildlife trapping,
+autopsy, micro-hazards) report exposure without the disease system
+importing them — the same inversion the chain runner uses for flags.
+
+#### V.F.7 Save and Persistence
+
+Three capture/restore shapes, one discipline:
+
+| Authority | State DTO | Notes |
+|---|---|---|
+| `ChemicalDependencySystem` | `ChemicalDependencyLedgerState` → `SurvivorDependencyList` → `ChemicalDependencyState` | nested per survivor; `inColdTurkey` kept as an explicit flag with the Unity-era migration note in source |
+| `VigilStateMachine` | `VigilSaveState` | mid-vigil capture preserves elapsed seconds and recited count |
+| Disease/pipeline | `MedicalPipelineSave` + per-system sections | rides the pipeline coordinator |
+
+All are default-tolerant additive DTOs (lists and scalars), consistent
+with the repository's nested-section approach; none carries its own
+envelope version, because none has yet needed a non-additive change. The
+wildlife-disease bridge tests
+(`WildlifeDiseaseBridgeTests`, `WildlifeDiseaseFallbackTests`,
+`WildlifeTrappingDiseaseMappingTests`) pin the exposure path from
+trapping through to infection, including the fallback when a mapping is
+missing.
+
+#### V.F.8 Determinism
+
+- Disease spread advances on integer day ticks with authored
+  probabilities consumed by the seeded-RNG contract — no wall-clock, no
+  `System.Random` in Core behavior.
+- Dependency math is fixed-point-in-float but order-stable: one survivor
+  ticked at a time, `TickHours(survivorId, …)`, so concurrent-seeming
+  updates are serialized by construction.
+- Vigil scheduling is elapsed-time arithmetic; identical inputs produce
+  identical recitation schedules at 15 FPS or 60.
+- Exposure rolls route through the repository's seeded RNG contract so
+  replays reproduce outbreaks; the `base_probability` values in
+  `exposure_sources` are data, and the mitigating-trait check is a pure
+  predicate.
+
+#### V.F.9 Focused Test Anatomy
+
+Verified test files and what they pin *(files present 2026-09-25; named
+tests from file listing and closeout claims)*:
+
+| File | Pins |
+|---|---|
+| `DiseaseSystemTests` | outbreak simulation behavior through current public APIs |
+| `DiseaseCatalogExpansionTests` | catalog growth stays schema-valid; the file's existence tracks the 15→20 expansion this document measured |
+| `ChemicalDependencySystemTests` | tolerance loop, regimen durations, thresholds |
+| `ChemicalDependencyCommandTests` | preview/execute contract incl. state-version rejection |
+| `WildlifeDiseaseBridgeTests` / `FallbackTests` / `MappingTests` | exposure mapping from trapping, fallback safety |
+| `MedicalHeadlessDemo` | headless smoke of the pipeline |
+
+Per `TEST_POLICY.md` the dependency command tests deserve their own file
+(separate from behavior tests) because they exercise the command seam's
+concurrency contract — a different failure class than the tolerance math.
+
+#### V.F.10 Evolution Since Closeout (verified)
+
+| Area | 2026-09-01 | 2026-09-25 |
+|---|---|---|
+| Disease count | 15 validated | 20 (measured), same schema family |
+| Catalog sections | diseases + countermeasures | + `vector_protocols`, `exposure_sources`, per-disease `phases`, immunity fields |
+| Dependency commands | system validated | preview/execute with state-version concurrency |
+| Ward scale | not in closeout | `ClinicalWard*`, reservation ledger, procedure schedule siblings present |
+
+#### V.F.11 Failure Modes and Mitigations
+
+| Failure | Mitigation |
+|---|---|
+| Double detox start (UI race) | command preview/execute with expected state version |
+| Penalty applied twice | penalties are events with factor values; consumers set-or-clear, never accumulate blindly |
+| Save mid-withdrawal | `detoxProgressHours` is state; restore resumes the clock |
+| Vigil replayed names after load | recited count captured; schedule derived from elapsed time |
+| Missing countermeasure item in inventory data | countermeasure ids are catalog references — integrity pipeline territory; presence in JSON is not reachability |
+| Stress relapse storm | `ReportStress` returns accumulated count; sources are named so the host can throttle repeat stressors |
+
+#### V.F.12 Risks
+
+1. **Countermeasure scarcity coupling.** `clean_water` as both survival
+   baseline and anti-water-vector countermeasure means a water-economy
+   regression is also a plague. Balance changes there need the
+   medical/water owners in the same package.
+2. **Lethality spread vs. care depth.** Lethalities range 0.15–0.85;
+   the prion tremor at 0.85 with `medical_kit` countermeasure implies
+   late-game care reliance. If treatments stay flat, high-lethality
+   diseases are pure attrition — a design tension for the balance owner,
+   not a defect.
+3. **Vigil pacing at 15 FPS diagnostics.** The 240 s duration is real
+   time in game terms; diagnostics sessions at the 15 FPS house rule
+   must use the same `Tick(deltaSeconds)` semantics, never frame count,
+   or vigils stretch. The frame-rate independence noted in IV.2.11 only
+   holds if callers honor the contract.
+
+#### V.F.13 Expansion Hooks (not approvals)
+
+- **Vigil attendance consequences** — `OnVigilCompleted(wasSkipped)` is
+  ready to feed relationship/memory systems; skipping in front of the
+  shelter is a story the memory systems could keep.
+- **Dependency-kind-specific withdrawal tells** — `KindBaseSeverity`
+  already differentiates curves; authored tell text per kind would give
+  diagnosis prose the same treatment diseases got.
+- **Quarantine integration with door encounters** —
+  `DiseaseQuarantineCoordinator` + `ContainmentCapability` against the
+  Year-of-Ash door encounter flow is the obvious composition point for
+  "turn someone away during an outbreak" decisions.
+
+---
+
+## Part VI — Cross-Workstream Interaction Matrix & Emergent-Consequence Design
+
+The six workstreams were integrated as one package precisely so their
+edges would touch. This part maps the edges, then examines the four
+design pillars the package argues for.
+
+### VI.1 The Interaction Matrix
+
+Rows act on columns. Each cell names the concrete mechanism (verified
+where the code path exists; labeled *potential* where the seam exists
+but no consumer yet does).
+
+| From \ To | A — Research | B — Vinyl | C — Letters & war | D — Audio | E — Scenes | F — Medical |
+|---|---|---|---|---|---|---|
+| **A — Research** | — | Blueprint knowledge enables advanced craft that yields items; *potential*: audio-visual research breakthrough cues | Breakthrough items feed expedition/war capability; *potential*: war chains gating on blueprint world flags via `ExternalFlagProbe` | *Potential*: research-complete cue on `Music` bus | Panels rendering research state are lint/binding targets | Medical-category blueprints (4 of 16) produce clinical capability items (`item_surgical_kit`, `item_reagent_clean`) |
+| **B — Vinyl** | *Potential*: acquisition via scavenge routes unlocked by knowledge | — | Morale deltas buffer war-chain `moraleDelta` costs; records heard on radio before found = narrative foreshadowing | `audio_cue_id` + needle texture need playback (D); `broadcast_frequency_mhz` keys the radio bridge | `VinylMoralePanel` is a scene-lint and binding-selftest target | `flashback_suppression` implies trauma/flashback mechanics adjacent to psychological care |
+| **C — Letters & war** | *Potential*: war flags gate research eligibility | Radio broadcasts of records (B→C) and war chatter share the radio surface | — | Runner and `FactionWarSystem` events project to radio/journal/sound-ranging; *potential*: `WarTension` ambience layer | `FactionWarMapWidget` scene contract | *Potential*: siege decrees stressing shelters → `ReportStress` → relapse events |
+| **D — Audio** | Reaction target only | Reaction target; record playback is the missing performance half | Reaction target (war projections audible) | — | Controllers live in lint-validated scenes | *Potential*: vigil recitation and phantom-knock cues on `Medical` bus |
+| **E — Scenes** | n/a — observes | n/a | n/a | n/a | — | n/a |
+| **F — Medical** | *Potential*: diagnosis knowledge nodes as prerequisites | *Potential*: morale as withdrawal buffer input | Quarantine-vs-door-encounter decisions; siege stress feeding relapse | Withdrawal and vigil are unconsumed audio sources | Vigil/diagnosis UI scenes | — |
+
+Reading notes:
+
+- **E observes everyone** and is observed by no one — the substrate row.
+  That asymmetry is why it could be integrated alongside five gameplay
+  streams without a single save-section negotiation.
+- **D is a universal sink, never a source** — every gameplay→audio edge
+  exists, no audio→gameplay edge does. This is the "projection, never
+  authority" rule made structural.
+- The strongest *verified* cross-stream edges today are **B→D** (cue
+  registry + frequencies), **C→D/C→journal** (consequence routing),
+  **F→economy** (`clean_water` as countermeasure), and **A→F** (medical
+  blueprint items). The *potential* edges are seams whose two sides both
+  exist; none requires new state, only consumers.
+
+### VI.2 Pillar 1 — Specificity
+
+The package's content refuses abstractions. Sixteen relic pairings name
+exact breakthrough items; thirty records carry catalog numbers, wear
+prose, and resonance notes; twenty diseases carry tells, timing clues,
+and field-manual guidance; letters carry recipient, day, and applied
+morale in the save itself. The design rule this encodes: **a system may
+be generic, its content may not.** `LetterDeliverySystem` is a generic
+five-state machine; the letter that matters is a specific authored
+object addressed to a specific survivor on a specific day. Generic
+machinery with specific content is what lets the content grow (74→196
+cues, 15→20 diseases) without re-architecture, and lets the machinery be
+tested without content (the letter tests use bare ids).
+
+The failure mode this pillar guards against is the "generic reward"
+— +5 morale from a nameless object — which players discount instantly.
+Specificity is why the vinyl archive records *which* disc and *what*
+condition it is in; the morale modifier is the least of its data.
+
+### VI.3 Pillar 2 — Systemic Consequence
+
+Consequences travel through mechanics, not scripted cutscenes. Verified
+chains in the current tree:
+
+```mermaid
+flowchart LR
+    subgraph Chain1["Relic → Capability"]
+        R1["Repair relic<br/>(workshop, hours + parts)"] --> R2["research_unlock_id<br/>awarded"] --> R3["Blueprint node<br/>unlocked"] --> R4["Breakthrough item<br/>manufacturable"]
+    end
+    subgraph Chain2["War → World"]
+        W1["Chain stage resolves<br/>(player choice)"] --> W2["standingDelta via host"] --> W3["Decrees / clashes"] --> W4["Radio + journal +<br/>sound-ranging intake"]
+    end
+    subgraph Chain3["Water → Grief"]
+        V1["Water economy slips<br/>(clean_water scarcity)"] --> V2["Water-vector diseases<br/>spread (5 of 20)"] --> V3["Diagnosis via tells<br/>care via treatments"] --> V4["Death possible →<br/>bedside vigil arc"]
+    end
+```
+
+Chain 3 is the package's deepest statement: the medical catalog's most
+common countermeasure is the survival economy's baseline resource, so a
+player who skimps on the water rota meets the disease system weeks
+later and cannot tell whether the outbreak was bad luck or deferred
+maintenance — because it was both. Nothing in the code says "teach the
+player about water"; the vector table says `clean_water` five times, and
+the consequence arrives on its own schedule.
+
+The war chains add the counter-pressure: consequences the player did
+not choose (clashes, decrees) arrive as radio intercepts and journal
+entries regardless of attention, and chain choices accumulate
+`cumulativeMoraleDelta` — the war taxes a resource (morale) that the
+vinyl workstream and letter outcomes replenish. Three currencies
+(parts, morale, clean water) connect all six streams.
+
+### VI.4 Pillar 3 — Player Agency
+
+The agency pattern across the package is **informed, bounded, late to
+reverse**:
+
+- The letter machine allows Withheld → Unanswered → Addressed →
+  Delivered: an avoided letter haunts but is recoverable; a delivered
+  one is final. The state machine *is* the agency model.
+- War choices gate availability (`requiresFlag`) but the runner refuses
+  speculative resolution — the player chooses from what is truly
+  offered, and the system cannot be talked into a state it did not
+  surface.
+- Detox offers a real trade (120 h slow vs 72 h brutal) with previewed
+  outcomes (`CommandPreview`) — agency through honest numbers, not
+  hidden rolls.
+- The vigil can be skipped, and the skip is recorded
+  (`WasSkipped` in the save). The game does not punish skipping; it
+  *remembers* it.
+
+Agency also means the option to disengage: zero-choice war stages
+auto-advance, ambience plays whether or not the player opens a panel,
+and the record archive is entirely optional. Nothing in the package
+requires engagement to keep the shelter alive; everything in it rewards
+attention without gating survival on sentimentality — with the
+deliberate exception of disease care, where inattention is measurably
+lethal.
+
+### VI.5 Pillar 4 — Long-Term Memory
+
+The package persists the *record* of play, not just its outcome:
+
+| System | What the save remembers |
+|---|---|
+| Letters | every record with `foundDay`, `resolvedDay`, recipient, notes, applied delta |
+| War | per-chain stage resolutions with the day each resolved; `cumulativeMoraleDelta`; produced flags |
+| Vinyl | acquisition order, play counts, totals, last broadcast |
+| Dependency | full ledger incl. `inColdTurkey` flags and detox progress |
+| Vigil | completion, skip, names recited, knock fired |
+| Research | points, unlocks, completions, per-blueprint sources (`sourceTechIds`) |
+
+`Journal` entries are day-keyed and permanent (the war-routing code
+writes `war_clash_{day}_{f1}_{f2}` keys), so the save doubles as a
+chronicle. This is the quiet answer to "why persist `moraleDeltaApplied`
+per letter?" — because six months of play later, the difference between
+"a letter" and "the letter I withheld on day 212 and answered on day
+230, worth +6" is the difference between a save file and a history.
+
+### VI.6 Tone Discipline Across the Edges
+
+The cross-workstream surfaces most at risk of tone failure are the
+war projections (radio intercepts, journal entries) and the vigil. The
+verified host code keeps both restrained: intercepts are clinical
+("artillery exchange logged between X and Y" — faction ids, no
+real-world belligerents), journal lines are observational ("Regional
+surveillance confirms…"), and the vigil's vocabulary is attendance
+(names, sitting, a knock). The one tone risk found in current content
+is recorded honestly in V.B.11: the vinyl archive's real-world
+performer credits. The package's own new content — war ids, disease
+prose, letter notes — observes the fictional register; the archive
+predates the strictest reading of the rule and should be brought in
+line by its content owner.

@@ -937,3 +937,149 @@ The six war-context chains run inside the 06C hot-war window and are gated — p
 | Standing deltas | 3 total (+4, −4, +3) — war politics touches war standing only where the shelter touched the war (requisition, deserters) |
 | Flag vocabulary | `flag_war_*` only |
 | Relationship to ceasefire | none; E-W chains cannot influence `evt_d588_ceasefire_by_exhaustion` |
+
+### V.C″ — S4 authored content III: weariness chains E-R1..R4 (band `weariness`, days 568–584)
+
+The weariness set is the war's interior weather. It cannot end the war — the ceasefire at 588 is 06C canon and its only terminator — but it is what makes the ceasefire legible as exhaustion rather than strategy, and it is the direct feed into the Muster path's `PeacePressure` input.
+
+**E-R1 — `evt_p25_no_more_volunteers` (minDay 568)**
+- Gate: `ChainResolvedTrigger("evt_d565_hydro_leverage_break")`; location `loc_conscription_office`; faction garrison.
+- Produces `flag_peace_volunteers_dry`; choices: c1 record the empty roster honestly (morale +1), c2 let the office fudge it (morale 0).
+- Text direction: the conscription office after the leverage break; the recruiting ledger with nothing new written in it. Two choices, both quiet — weariness content is deliberately low-temperature.
+
+**E-R2 — `evt_p25_bread_before_bullets` (minDay 572)**
+- Gate: `FlagTrigger("flag_war_refugees_arrived")` — the only weariness chain triggered by a Plan 25 flag rather than a 06C resolution, making E-W1 → E-R2 the longest flag-caused causal run in the set (512 → 572).
+- Produces `flag_peace_bread_before_bullets`; location `loc_grain_silo`; factions rebuilders + garrison.
+- Choices: c1 bake for the line first (morale +2), c2 split the ovens' time (morale +1).
+- Downstream: `witness_queue_singer` helped-variant — the singer's testimony is about a queue that got bread, and it exists only if the shelter's refugees were received in the first place.
+
+**E-R3 — `evt_p25_quiet_faction` (minDay 578)**
+- Gate: `ChainResolvedTrigger("evt_d578_shrine_strike_anomaly")`; location `loc_forward_roster_camp`; factions rebuilders + garrison.
+- Produces `flag_peace_faction_forms` — the load-bearing flag of the weariness set: it is E-R4's trigger, `witness_deserter_elder` helped-variant's gate, and `MusterPathInput.PeacePressure`'s principal producer.
+- Choices: c1 give the quiet list a name (morale +2), c2 know and say nothing (morale +1), c3 report it up the chain (morale −1).
+- Text direction: after the shrine strike, soldiers and civilians keep a list of names nobody will officially write; the shelter's choice is whether the list gets an existence above ground.
+
+**E-R4 — `evt_p25_refusal_at_dawn` (minDay 584)**
+- Gate: `FlagTrigger("flag_peace_faction_forms")`; location `loc_railway_span_44_alpha`; faction garrison.
+- Produces `flag_peace_refusal_at_dawn`; choices: c1 stand with the refusal (morale +2), c2 witness it only (morale 0).
+- Timing: minDay 584 is four days before the ceasefire (588). The chain is authored to be the *reason* the ceasefire reads as exhaustion: a refusal at Span 44 — where the war's first clash ran — is the arc closing its own circle.
+- Downstream: shared-meal scene material; the path evaluator's peace pressure.
+
+**The ceasefire interface.** The relationship between Plan 25 weariness and `evt_d588_ceasefire_by_exhaustion` is one-directional by construction: E-R chains produce context that the ceasefire's own stage text can coexist with, and nothing in `faction_war_events.json` lets a Plan 25 flag gate, accelerate, or block the ceasefire. If a future wave ever wants the ceasefire to *reference* `flag_peace_refusal_at_dawn`, that is a 06C-canon change requiring its own plan, foreman sign-off, and a re-audit of `evt_d588` stage text — not an edit to the weariness band.
+
+**Full 16-chain trigger/flag summary (verified).**
+
+| Chain | Band | Trigger | Produces (stage) | Choice flags | Standing |
+|---|---|---|---|---|---|
+| evt_p25_marked_ruin | escalation | Flag grievance_scavenger_claim_disputed | escalation_marked_ruin | mediated | −3 / +4 |
+| evt_p25_stopped_convoy | escalation | Flag grievance_hydro_toll_defaulted | escalation_stopped_convoy | – | +4 |
+| evt_p25_bitter_water | escalation | Flag grievance_hydro_appeal_refused | escalation_bitter_water | investigated | – |
+| evt_p25_empty_chair | escalation | Flag grievance_raider_parley_broken | escalation_empty_chair | – | +3 |
+| evt_p25_cistern_toll_blockade | escalation | Flag grievance_hydro_intake_disputed | escalation_cistern_blockade | published | – |
+| evt_p25_prisoner_at_the_gate | escalation | Flag grievance_raider_passage_fought | escalation_prisoner_gate | truth_told | +3 |
+| evt_p25_refugees_from_the_line | war_context | ChainResolved d509 | war_refugees_arrived | – | – |
+| evt_p25_requisition | war_context | ChainResolved d503 | war_requisition_demand | met ×2 / refused | +4 / −4 |
+| evt_p25_broken_route | war_context | ChainResolved d522 | – | – | – |
+| evt_p25_field_hospital_overflow | war_context | ChainResolved d533 | – | shelter_took_wounded | – |
+| evt_p25_deserter_column | war_context | ChainResolved d545 | – | – | +3 |
+| evt_p25_retaliation | war_context | ChainResolved d552 | – | sheltered_retaliation_families | – |
+| evt_p25_no_more_volunteers | weariness | ChainResolved d565 | peace_volunteers_dry | – | – |
+| evt_p25_bread_before_bullets | weariness | Flag war_refugees_arrived | peace_bread_before_bullets | – | – |
+| evt_p25_quiet_faction | weariness | ChainResolved d578 | peace_faction_forms | – | – |
+| evt_p25_refusal_at_dawn | weariness | Flag peace_faction_forms | peace_refusal_at_dawn | – | – |
+
+(Stage-level `producesFlag` count: 14 of 16 chains produce exactly one stage flag; E-W3 and E-W5 produce none by design. Choice-level `producesFlag` count: 8. Stage `requiresFlag` count: 8 — six escalation gates plus the two weariness flag chains. All 8 `standingDelta` occurrences shown.)
+
+### V.D — S3 engineering specification: path input mapping
+
+The evaluator is small; the engineering risk is entirely in the host's input mapping. The mapping table below is the contract the host implements and the selftest walks.
+
+| `MusterPathInput` field | Host source | Verified anchor |
+|---|---|---|
+| `DominantFactionId` | `FactionWarSystem` dominant-faction read (highest standing in the war window, empty pre-war) | war system state |
+| `WarTension` | `FactionWarSystem.WarTension` (0–100; friction no-op ≤ day 240, +1/day after; clashes every 15 days) | 06C canon, unchanged |
+| `HostileFactionCount` / `AlliedFactionCount` | war standings at the −50 / +50 thresholds | `FactionWarSystem` |
+| `SurvivingMajorFactions` | majors not eliminated by war state | war system |
+| `ActiveTreatyCount` / `ViolatedTreatyCount` | `RegionalTreatySystem` read-model counts (the now-loaded catalog; see V.H) | `Main.ShelterSocial.cs:86` |
+| `GrievanceUnresolved` | board ledger contains any `flag_grievance_*` still attached to a hostile-or-worse band | `FactionActionBoard` |
+| `PeacePressure` | presence of `flag_peace_faction_forms` / `flag_peace_refusal_at_dawn` family | board ledger |
+| `CampFormed` / `CampMembers` | `CoalitionCampSystem` formed state and `membersRallied` | camp system |
+
+Precedence (from the evaluator doc comment, restated): `victors` requires dominance **and** breadth of hostility — a dominant faction with no enemies is not a victor's peace; `negotiated` requires plurality **and** at least one working diplomatic thread — two survivors and no treaties is not negotiation; everything else is `unsettled`, including the degenerate late-campaign cases (all majors gone → `unsettled`, not a crash or a fabricated victor).
+
+`DominanceTensionThreshold = 60` is the code-owned floor for calling tension "dominant"; it is deliberately not in JSON (mechanics, not content) and deliberately not exported (no panel may preview the path before it is set — the path is a record of what happened, not a UI meter).
+
+**Re-evaluation policy.** The host evaluates when war state changes (chain resolved, standing crossing a threshold, ceasefire) and at Muster resolution. `SetMusterPath` overwrites — last evaluation wins, and because evaluation is pure, ordering of two same-day evaluations cannot produce different outcomes. Old saves that never evaluated keep the empty field; camp scenes treat it as "no path" and match ungated variants.
+
+### V.E — S4 data dictionary and review contract
+
+**Stage-level extension fields (verified, `FactionWarContentCatalog.cs:169–173`).**
+
+| Field | Type | Semantics |
+|---|---|---|
+| `requiresFlag` | string (empty = none) | Stage will not present while the ledger lacks this flag |
+| `producesFlag` | string (empty = none) | Flag written to the ledger when the stage resolves |
+
+**Choice-level extension fields (`FactionWarContentCatalog.cs:186–194`).**
+
+| Field | Type | Semantics |
+|---|---|---|
+| `requiresFlag` | string | Choice visible only when the flag is set (unused in shipped Plan 25 data — available grammar) |
+| `producesFlag` | string | Flag written when the choice is taken (8 uses shipped) |
+| `standingDelta` | int | Signed standing correction routed through the host `StandingDeltaApplier` to `FactionWarSystem.ModifyStanding`; empty faction = no-op; 8 uses shipped, range −4..+4 |
+
+**Persistence.** Runner-produced flags persist with the runner's existing chain-state persistence; the ledger they land in is the board's flag store, which persists via the muster save section. A reload after E-W1 replays nothing: chain resolution is recorded by the runner, the produced flag is recorded by the ledger, and witness/scene gates read the combination.
+
+**Content review checklist for any new Plan 25 chain.**
+
+1. Band is one of the three Plan 25 bands; never a 06C band (those belong to 06C review).
+2. Trigger uses the closed grammar; `FlagTrigger` only on whitelisted flags; `ChainResolvedTrigger` only on 06C stage-resolved chain ids (consume-only).
+3. One explicit `FactionWarTriggerTable` entry per stage; the totality test stays green.
+4. Produced flags are `flag_escalation_*`, `flag_war_*`, or `flag_peace_*`, whitelisted, and have a named consumer before the chain ships.
+5. Standing deltas bounded ±5, morally attached (never on the neutral choice), faction named.
+6. `minDay` inside the band's calendar window (escalation ≤ 259; war_context 503–560; weariness 565–587).
+7. No choice ends or extends the war; no chain touches `evt_d588_ceasefire_by_exhaustion`.
+8. Stage text passes the testimony/journal tone rules (restrained, physical, no emotional instruction).
+
+### V.F — Witness pool design: cross-plan binding and the substitute rule
+
+The original §2.3 pool table and plan rule G.12 ("every witness binds real flags; archetypes without stable flags get substituted or flag-authored at their producer, never left as dead content") were the roster's binding law. This section records how the law was applied, pool by pool, and what the 27-entry roster actually binds.
+
+**V.F.1 Pool-to-roster mapping (final).**
+
+| Pool | Roster outcome | Binding channel | Rule applied |
+|---|---|---|---|
+| 20B named NPCs | Structural channel shipped: `subject_id` + `SubjectLivingResolver` (bound to roster in `src/Main.Muster.cs:49`); the Plan 84 ring uses named, roster-flavored survivors | census resolver port | flag-authored where needed, npc-id binding deferred per candidate matrix |
+| 09 palliative | No palliative-bound witness | — | deferred, not fabricated (no stable palliative flag exists at witness granularity) |
+| 12A raised children | No lineage-bound witness | — | deferred (no "raised" boolean exists; `LineageRecord` remains parent/adopted/mentor childIds) |
+| 18A claimants | `witness_scavenger_claimant`, `witness_claimant_auditor` | faction flags `favor_scavenger_arbitration_fair`, `favor_hydro_intake_audited` (and grievance mirrors) | bound to real action-produced flags |
+| 22C foundry labor | `witness_foundry_molder_hask` (Plan 84 thread voice) | investigation thread, unconditional | partial: a strike-gated variant remains unauthored and unclaimed |
+| 10A spared warlord | `witness_messengers_keeper` | `flag_messenger_kept` (helped) / `flag_become_warlord` (failed) | **substituted** — the archetype became the messenger's keeper, whose two moral flags both exist as `MoralChoiceIds` producers |
+| 24B rescuees | No rescuee witness | — | substituted away: slots spent on the camp set (`camp_medic`, `camp_dissenter`, `overflow_medic`) whose flags exist |
+
+**V.F.2 The bind-or-substitute ledger.** Every one of the 27 witnesses resolves to exactly one of four binding states:
+
+| State | Count | Entries |
+|---|---|---|
+| Flag-bound, conditional (helped/failed families) | 12 | roster entries 4–15 in the V.B.2 table |
+| Unconditional account (thread content) | 15 | founding 3 + Plan 84 ring 12 |
+| Census-bound (subject_id populated today) | 0 | resolver live; per-witness binding deferred |
+| Dead content (no producer for some gate) | 0 | whitelist `orphan_knocks: []` at closeout; every gate flag has a producer |
+
+The zero-orphan property is the roster's real guarantee. A conditional testimony whose gate can never fire is worse than absent — it is a promise the ledger keeps silently breaking. The whitelist generator turns that failure mode into a build-time diff.
+
+**V.F.3 Priority architecture.** The 40/35/30/25/20 priorities encode testimony economics, not importance-of-theme: 40 = thread anchors that must survive truncation (founding + investigation ring); 35 = the single strongest cross-plan moral echo (messenger's keeper); 30 = faction ecology verdicts (the witnesses the political spine exists to produce); 20–25 = texture that fills remaining delivery slots. With `maxCount` unset the host delivers everything eligible; truncation only matters if a future consumer caps deliveries, and then the cap eats upward from 20.
+
+**V.F.4 Faction-diversity rule.** The selector's optional cap is diversity-aware: filling greedily by priority alone could produce an all-garrison panel when the garrison is the loudest faction. The shipped cap logic (selector-side) keeps the delivery panel from becoming single-faction when candidates from ≥2 factions are eligible. Unaffiliated witnesses (19 of 27) are treated as their own "faction" for this rule — they are the camp's own voice, and the camp outnumbers every faction.
+
+**V.F.5 Future census binding (open, owned, cheap).** Populating `subject_id` on the ecology set requires only data edits (ids that exist in the survivor census) plus one selftest extension proving each binding kills its witness when the subject dies. No schema, loader, selector, or save change. This is the correct first ticket of any follow-up wave and is recorded as such — not as approved work.
+
+### V.G — Culture codex content architecture (`muster_faction_culture.json`)
+
+**V.G.1 Shape and inventory (verified, schema_version 1, 25 entries).** Entries are `{id, faction_id, title, body}` — deliberately the simplest schema in the political stack, because culture is read-model content: it has no runtime state, no save presence, and no effects. It exists to make factions legible as societies rather than as standing numbers.
+
+The shipped set divides into the four ecology factions (2 each: `culture_marks_on_the_doorframe` + `culture_finders_share` for the Guild; `culture_water_counted_twice` + `culture_empty_cups` for the Barons; `culture_what_the_raiders_leave` for the Toll; `culture_one_pot_four_banners` for the Coalition) and a district ring of 17 further factions (`faction_archivists` "Two Witnesses, or the Page Stays Blank"; `faction_lamplighters` "The Eleven Days"; `faction_quiet_house` "Written Exactly as Given"; `faction_grain_exchange` "Nobody Guards the Board"; `faction_sun_seekers` "Nine Days, Then Nothing"; `faction_osteophages` "The Bell, Not the Door"; `faction_the_tally` "The Second Reading"; `faction_undertow` "Rope First, Terms After"; `faction_cold_count` "Four Names, One Roster"; `faction_the_provisioned` "The Inventory Tour"; `faction_long_walk` "The Odds Are Posted, Never Collected"; `faction_the_tempest` "Somebody Has to Read the Meter"; `faction_black_flotilla` "Counted in Front of a Third Party"; `faction_silent_foundry` "The Queue, Not the Side"; `faction_the_office` "The Same Drawer"; `faction_the_cutters` "The Assay Before the Sale"; `faction_the_compact` "The Second Signature") plus the count's remaining entries. Every entry is a custom, not a history: a rule the faction keeps that reveals what it fears.
+
+**V.G.2 Pipeline.** JSON → `FactionCultureCatalogLoader` (Core, `FactionCultureCatalog.cs`) → `MusterHostSession.Culture` (loaded at `MusterHostSession.cs:114`) → two surfaces: the culture section inside `FactionActionPanel` (`BindCulture`, `src/Main.Muster.cs:98`) and the dedicated `src/UI/FactionCultureCodexPanel.cs` on route `faction_culture_codex` (DEC-99, wired from `FactionsPanel.cs`). The codex is the display-only tier of the political stack by design: no entry grants effects, and any future entry that tried to would be a schema violation, not an extension.
+
+**V.G.3 Authoring rules for new entries.** One custom per entry; named by its practice, not its moral ("The Assay Before the Sale", never "Why Honesty Matters"); body states the custom, its observance, and its cost; no entry references shelter mechanics as such (the shelter appears, if at all, as "the shelter" the way any district actor would); id `culture_<snake_case>`; `faction_id` must be an existing faction dossier id. Growth direction recorded in the closeout era: extend the district ring before deepening the four ecology factions — the ring is what makes the ecology factions legible as one society among many.
