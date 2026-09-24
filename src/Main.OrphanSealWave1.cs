@@ -120,8 +120,34 @@ namespace AtomicWar.GodotApp
             if (catalog != null) system.LoadCatalog(catalog);
             var saved = SeasonalCelebrationSaveStore.TryLoad();
             if (saved != null) system.RestoreState(saved);
+            system.OnCelebrationHeldSeam += record =>
+            {
+                ApplyShelterWideMoraleDelta(record.MoraleGained);
+                _journal?.TryAddRawEntry(
+                    "seasonal_celebration_held",
+                    record.Summary,
+                    null!, record.Day);
+                _orphanSealWave1Dirty = true;
+            };
+            system.OnHolidaySkippedSeam += (holidayId, day) =>
+            {
+                ApplyShelterWideMoraleDelta(-2f);
+                _journal?.TryAddRawEntry(
+                    "seasonal_celebration_skipped",
+                    $"The shelter let {holidayId} pass without a gathering. Morale fell slightly.",
+                    null!, day);
+                _orphanSealWave1Dirty = true;
+            };
             _seasonalCelebration = new SeasonalCelebrationHostSession(system);
             _seasonalCelebration.StateChanged += () => _orphanSealWave1Dirty = true;
+        }
+
+        private void ApplyShelterWideMoraleDelta(float delta)
+        {
+            if (_survivors?.RosterState == null) return;
+            foreach (var survivor in _survivors.RosterState)
+                if (survivor != null && survivor.IsAlive)
+                    _survivors.Needs.Modify(survivor, NeedKind.Morale, delta);
         }
 
         private void SetupDisasterResponse()
@@ -349,6 +375,7 @@ namespace AtomicWar.GodotApp
             SetupDisasterResponse();
             SetupCommunications();
             SetupColony();
+            SetupShelterExpansion();
 
             TickNuclearWinter(day);
             TickDisasterResponse(day);

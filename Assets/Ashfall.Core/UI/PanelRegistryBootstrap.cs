@@ -129,6 +129,8 @@ namespace Ashfall.Core.UI
             R("beliefs_panel",       "Beliefs // Doctrinal Climate",     PanelGroup.Expanded);
             R("anomaly_watch",       "Anomaly Watch // Moving Hazards",  PanelGroup.Expanded);
             R("cybernetics",         "Cybernetics // Prosthetic Care",   PanelGroup.Expanded);
+            R("shelter_operations", "Shelter Operations Board",         PanelGroup.Expanded,
+                new[] { "survivors", "inventory", "shelter_assignment", "shelter_expansion", "outpost_settlement", "seasonal_celebration" });
 
             // ── Standalone & Subsystem Consoles ──────────────────────────────
             R("brine_extraction",    "Brine Extraction",              PanelGroup.Expanded,   new[] { "silent_foundry" });

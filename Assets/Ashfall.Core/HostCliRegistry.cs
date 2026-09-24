@@ -1480,7 +1480,7 @@ namespace Ashfall.Core
                     "UI Tests, Layout & Gameplay Smoke",
                     "--shelter-operations-selftest",
                     new[] { "--shelter-ops-selftest", "--operations-selftest" },
-                    "Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification"),
+                    "Medical triage, expedition sorties, radio network, crafting, respiratory afflictions, and the routed shelter operations board"),
                 new HostCliActionDescriptor(
                     HostCliAction.ShelterDecorSelfTest,
                     "UI Tests, Layout & Gameplay Smoke",

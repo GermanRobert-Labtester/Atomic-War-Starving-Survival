@@ -496,6 +496,11 @@ namespace Ashfall.Core.Narrative
         /// base catalog (duplicate ids are dropped by RegisterEncounter).</summary>
         public const string ArcFileName = "narrative_encounters_npc_arcs.json";
 
+        /// <summary>Authored expansion pass — generic wasteland encounters that
+        /// load under the same schema; duplicate ids are dropped by
+        /// RegisterEncounter (the primary catalog wins).</summary>
+        public const string ExpansionFileName = "narrative_encounters_expansion.json";
+
         /// <summary>GAP-49B — destination-bound approach micro-locations
         /// (Plan 76 §35) load last through the same schema; their
         /// `requiredLocationId` makes them weight-zero off-destination.</summary>
@@ -509,8 +514,26 @@ namespace Ashfall.Core.Narrative
 
             result.AddRange(LoadFile(dataDir, FileName, fileIO, json));
             result.AddRange(LoadFile(dataDir, ArcFileName, fileIO, json));
+            result.AddRange(LoadFile(dataDir, ExpansionFileName, fileIO, json));
             result.AddRange(LoadFile(dataDir, MicroLocationsFileName, fileIO, json));
-            return result;
+            return DeduplicateById(result);
+        }
+
+        /// <summary>Primary-wins dedupe: the first occurrence of an id is kept
+        /// (base before arc before expansion before micro) so every consumer sees
+        /// a unique catalog. RegisterEncounter applies the same rule defensively.</summary>
+        private static List<EncounterDefinition> DeduplicateById(List<EncounterDefinition> defs)
+        {
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            var unique = new List<EncounterDefinition>(defs.Count);
+            for (int i = 0; i < defs.Count; i++)
+            {
+                var def = defs[i];
+                if (def == null) continue;
+                if (!string.IsNullOrEmpty(def.id) && !seen.Add(def.id)) continue;
+                unique.Add(def);
+            }
+            return unique;
         }
 
         private static List<EncounterDefinition> LoadFile(
@@ -544,6 +567,11 @@ namespace Ashfall.Core.Narrative
                     {
                         parsed[i].isMicroLocation = true;
                         parsed[i].sourceFile = MicroLocationsFileName;
+                    }
+                    else if (fileName == ExpansionFileName)
+                    {
+                        // Diagnostic attribution only — selection never reads it.
+                        parsed[i].sourceFile = ExpansionFileName;
                     }
                     result.Add(parsed[i]);
                 }

@@ -547,6 +547,9 @@ namespace AtomicWar.GodotApp
                 case "night_watch":
                     ShowNightWatchPanel();
                     break;
+                case "shelter_operations":
+                    ShowShelterOperationsPanel();
+                    break;
                 case "cvd_diamond":
                     OpenCvdDiamondPanel();
                     break;
@@ -814,6 +817,7 @@ namespace AtomicWar.GodotApp
             _counterIntelligence?.Dispose(); _counterIntelligence = null!;
             _factionBranchDirty = false;
             _counterIntelligenceDirty = false;
+            ResetShelterOperations();
             ResetOrphanSealWave1();
             ResetCommitments();
             ResetSessionDurability();

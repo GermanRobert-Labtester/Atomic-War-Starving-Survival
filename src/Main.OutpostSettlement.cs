@@ -261,10 +261,21 @@ namespace AtomicWar.GodotApp
             return string.Empty;
         }
 
+        private string ResolveCanonicalFuelItemId()
+        {
+            var catalog = _inventory?.Catalog;
+            if (catalog == null) return string.Empty;
+            foreach (var candidate in FuelItemCandidates)
+                if (catalog.Get(candidate) != null) return candidate;
+            return string.Empty;
+        }
+
         // Authored ration candidates, most-specific first. Resolved against the
         // live item catalog so an id that is not authored never draws food.
         private static readonly string[] RationItemCandidates =
             { "military_rations", "dried_rations", "item_travel_ration", "rations" };
+        private static readonly string[] FuelItemCandidates =
+            { "fuel", "fuel_canister" };
 
         private int WorldDangerRatingForDay(int day)
         {

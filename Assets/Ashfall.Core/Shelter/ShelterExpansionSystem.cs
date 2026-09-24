@@ -657,15 +657,10 @@ namespace Ashfall.Core.Shelter
             ConstructionProjectDto project,
             IPlayerInventoryPort inventory)
         {
-            bool inserted = false;
-            bool paid = inventory.TryConsumeBill(project.ResourceCosts, () =>
-            {
-                _projects.Add(project.ProjectId, project);
-                inserted = true;
-            });
-            if (!paid || !inserted)
+            if (!inventory.TryConsumeBill(project.ResourceCosts))
                 return Failed(ConstructionStartCode.InsufficientResources);
 
+            _projects.Add(project.ProjectId, project);
             OnProjectStartedSeam?.Invoke(project);
             return new ConstructionStartResult(true, ConstructionStartCode.Started, project);
         }

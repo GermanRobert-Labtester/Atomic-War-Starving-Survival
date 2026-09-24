@@ -716,6 +716,7 @@ namespace AtomicWar.GodotApp
                 case "sofc_power":
                 case "sound_ranging":
                 case "night_watch":
+                case "shelter_operations":
                 case "cvd_diamond":
                 case "amphibious_draisine":
                 case "sanitation":

@@ -541,6 +541,24 @@ namespace AtomicWar.GodotApp
                     if (encounters[i]?.id != null)
                         instr.RecordDefinitionQueried("narrative_encounters.json", encounters[i].id, "NarrativeEncounterCatalogLoader.Load", "NarrativeEncounterSystem", 1);
 
+                // Expansion pass — attributed to its own catalog file so runtime
+                // evidence shows the loader opened and registered it.
+                string expansionPath = Path.Combine(dataDir, NarrativeEncounterCatalogLoader.ExpansionFileName);
+                if (files.FileExists(expansionPath))
+                {
+                    instr.RecordCatalogOpened(NarrativeEncounterCatalogLoader.ExpansionFileName, "NarrativeEncounterCatalogLoader");
+                    int expansionCount = 0;
+                    for (int i = 0; i < encounters.Count; i++)
+                    {
+                        if (encounters[i]?.sourceFile != NarrativeEncounterCatalogLoader.ExpansionFileName) continue;
+                        if (expansionCount == 0 && encounters[i]!.id != null)
+                            instr.RecordDefinitionQueried(NarrativeEncounterCatalogLoader.ExpansionFileName, encounters[i]!.id, "NarrativeEncounterCatalogLoader.Load", "NarrativeEncounterSystem", 1);
+                        expansionCount++;
+                    }
+                    instr.RecordCatalogDeserialized(NarrativeEncounterCatalogLoader.ExpansionFileName, expansionCount);
+                    instr.RecordDefinitionsRegistered(NarrativeEncounterCatalogLoader.ExpansionFileName, "NarrativeEncounterSystem.Catalog", expansionCount);
+                }
+
                 // Real SELECTED/EFFECT_PRODUCED evidence: drive the actual
                 // production weighted-selection + resolution methods instead
                 // of hand-authoring a fake result. NarrativeEncounterSystem

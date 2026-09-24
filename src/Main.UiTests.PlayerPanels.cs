@@ -102,6 +102,16 @@ namespace AtomicWar.GodotApp
             CloseAllOverlayPanels();
             UiNodeDiagnostics.Report(this, "shelter");
 
+            SetupOrphanSealWave1();
+            UiNodeDiagnostics.Mark(this, "shelter_operations");
+            ShowShelterOperationsPanel();
+            bool shelterOperations = _shelterOperationsPanel != null
+                && _shelterOperationsPanel.IsBound
+                && _shelterOperationsPanel.Visible
+                && _shelterOperationsPanel.GetChildCount() > 0;
+            UiNodeDiagnostics.Report(this, "shelter_operations");
+            ResetShelterOperations();
+
             _statusPanel.Bind(_survivors, _world.Weather, _powerGrid, _inventory, _simDay);
             UiNodeDiagnostics.Mark(this, "status");
             _statusPanel.Open();
@@ -197,9 +207,10 @@ namespace AtomicWar.GodotApp
             bool nodeCallbackLifecycle = PanelBindLifecycleSelfTest.Run(_dataDir) == 0;
             bool lifecyclePass = researchLifecycle && journalLifecycle && weatherLifecycle && expeditionLifecycle && nodeCallbackLifecycle;
 
-            bool pass = survivors && medical && weather && radio && shelter && status && tutorial && afflictions && radiation && researchLifecycle && lifecyclePass;
+            bool pass = survivors && medical && weather && radio && shelter && shelterOperations
+                && status && tutorial && afflictions && radiation && researchLifecycle && lifecyclePass;
             GD.Print($"[PlayerPanelsUiTest] survivors={survivors} medical={medical} weather={weather} " +
-                     $"radio={radio} shelter={shelter} status={status} tutorial={tutorial} " +
+                     $"radio={radio} shelter={shelter} shelter_operations={shelterOperations} status={status} tutorial={tutorial} " +
                      $"afflictions={afflictions} radiation={radiation} " +
                      $"lifecycle=(res={researchLifecycle}, jrn={journalLifecycle}, wtr={weatherLifecycle}, exp={expeditionLifecycle}, callbacks={nodeCallbackLifecycle})");
             HostCli.EmitSummary("player_panels_uitest", pass, pass ? 0 : 1);

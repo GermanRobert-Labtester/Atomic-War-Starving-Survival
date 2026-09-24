@@ -4115,6 +4115,8 @@ namespace AtomicWar.GodotApp
                 failures++;
             }
 
+            if (RunShelterOperationsBoardSelfTest(dataDirectory) != 0)
+                failures++;
             return EmitSummary("shelter_operations_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
 

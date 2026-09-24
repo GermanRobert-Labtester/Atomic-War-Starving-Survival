@@ -213,18 +213,13 @@ namespace Ashfall.Core.Settlements
                 || inventory == null)
                 return false;
 
-            bool established = false;
-            bool paid = inventory.TryConsumeBill(def.BuildCost, () =>
-            {
-                inst.IsEstablished = true;
-                inst.ConditionPermille = 1000;
-                inst.DaysSinceSupply = 0;
-                inst.IsStarving = false;
-                inst.IsOverrun = false;
-                inst.RationReserve = 0;
-                established = true;
-            });
-            if (!paid || !established) return false;
+            if (!inventory.TryConsumeBill(def.BuildCost)) return false;
+            inst.IsEstablished = true;
+            inst.ConditionPermille = 1000;
+            inst.DaysSinceSupply = 0;
+            inst.IsStarving = false;
+            inst.IsOverrun = false;
+            inst.RationReserve = 0;
             OnOutpostEstablishedSeam?.Invoke(outpostId, def.GraphNodeId);
             return true;
         }
@@ -303,22 +298,18 @@ namespace Ashfall.Core.Settlements
                 || inventory == null
                 || !_instances.TryGetValue(outpostId, out var inst)
                 || !inst.IsEstablished
-                || inst.IsOverrun)
+                || inst.IsOverrun
+                || inst.RationReserve > int.MaxValue - rationsDelivered)
                 return false;
 
             var bill = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
             {
                 [rationItemId] = rationsDelivered
             };
-            bool supplied = false;
-            bool paid = inventory.TryConsumeBill(bill, () =>
-            {
-                inst.RationReserve = checked(inst.RationReserve + rationsDelivered);
-                inst.DaysSinceSupply = 0;
-                inst.IsStarving = false;
-                supplied = true;
-            });
-            if (!paid || !supplied) return false;
+            if (!inventory.TryConsumeBill(bill)) return false;
+            inst.RationReserve = checked(inst.RationReserve + rationsDelivered);
+            inst.DaysSinceSupply = 0;
+            inst.IsStarving = false;
             OnOutpostSuppliedSeam?.Invoke(outpostId, rationsDelivered);
             return true;
         }

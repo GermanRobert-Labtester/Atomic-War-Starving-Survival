@@ -21,6 +21,9 @@ namespace AtomicWar.GodotApp
         private readonly SurvivorsHostSession? _survivors;
         private readonly Func<int> _currentDay;
         private readonly Func<string, bool>? _garrisonFitnessCheck;
+        private readonly Func<int, ISeededRng?>? _holidayRngResolver;
+        private readonly Func<string>? _rationItemResolver;
+        private readonly Func<string>? _fuelItemResolver;
 
         public ShelterExpansionHostSession Construction { get; }
         public OutpostSettlementHostSession Outposts { get; }
@@ -33,7 +36,10 @@ namespace AtomicWar.GodotApp
             IPlayerInventoryPort? inventory,
             SurvivorsHostSession? survivors,
             Func<int> currentDay,
-            Func<string, bool>? garrisonFitnessCheck = null)
+            Func<string, bool>? garrisonFitnessCheck = null,
+            Func<int, ISeededRng?>? holidayRngResolver = null,
+            Func<string>? rationItemResolver = null,
+            Func<string>? fuelItemResolver = null)
         {
             Construction = construction ?? throw new ArgumentNullException(nameof(construction));
             Outposts = outposts ?? throw new ArgumentNullException(nameof(outposts));
@@ -42,6 +48,9 @@ namespace AtomicWar.GodotApp
             _survivors = survivors;
             _currentDay = currentDay ?? throw new ArgumentNullException(nameof(currentDay));
             _garrisonFitnessCheck = garrisonFitnessCheck;
+            _holidayRngResolver = holidayRngResolver;
+            _rationItemResolver = rationItemResolver;
+            _fuelItemResolver = fuelItemResolver;
 
             Construction.StateChanged += ForwardStateChanged;
             Outposts.StateChanged += ForwardStateChanged;
@@ -101,8 +110,11 @@ namespace AtomicWar.GodotApp
         public bool RelieveGarrison(string outpostId, string survivorId)
             => Outposts.RelieveGarrison(outpostId, survivorId);
 
-        public bool SupplyOutpost(string outpostId, string rationItemId, int rations)
-            => Outposts.TrySupply(outpostId, rationItemId, rations, _inventory);
+        public bool SupplyOutpost(string outpostId, int rations)
+        {
+            string rationItemId = _rationItemResolver?.Invoke() ?? string.Empty;
+            return Outposts.TrySupply(outpostId, rationItemId, rations, _inventory);
+        }
 
         public bool AbandonOutpost(string outpostId)
             => Outposts.Abandon(outpostId);
@@ -111,9 +123,15 @@ namespace AtomicWar.GodotApp
             => Celebrations.CheckHoliday(CurrentDay);
 
         public bool HoldHoliday(string holidayId, string scaleId, int participants,
-            string foodItemId, string fuelItemId, ISeededRng? rng, out CelebrationRecord? record)
+            string foodItemId, string fuelItemId, out CelebrationRecord? record)
             => Celebrations.TryHoldCelebration(holidayId, scaleId, participants, CurrentDay,
-                foodItemId, fuelItemId, _inventory, rng, out record);
+                _rationItemResolver?.Invoke() ?? foodItemId,
+                _fuelItemResolver?.Invoke() ?? fuelItemId,
+                _inventory, _holidayRngResolver?.Invoke(CurrentDay), out record);
+
+        public bool HoldHoliday(string holidayId, string scaleId, int participants,
+            out CelebrationRecord? record)
+            => HoldHoliday(holidayId, scaleId, participants, string.Empty, string.Empty, out record);
 
         public bool SkipHoliday(string holidayId, out float moralePenalty)
             => Celebrations.TrySkipHoliday(holidayId, CurrentDay, out moralePenalty);

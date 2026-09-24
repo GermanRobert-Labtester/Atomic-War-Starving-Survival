@@ -246,14 +246,10 @@ namespace Ashfall.Core.Events
             AddCost(bill, foodItemId, (int)Math.Ceiling(holiday.FoodCost * scale.CostMultiplier));
             AddCost(bill, fuelItemId, (int)Math.Ceiling(holiday.FuelCost * scale.CostMultiplier));
             string occurrence = OccurrenceKey(holidayId, day);
-            CelebrationRecord? committedRecord = null;
-            bool committed = inventory.TryConsumeBill(bill, () =>
-            {
-                _currentDay = day;
-                committedRecord = CreateCelebrationRecord(holidayId, holiday, scale, participantCount, rng);
-                _heldHolidayOccurrences.Add(occurrence);
-            });
-            if (!committed || committedRecord == null) return false;
+            if (!inventory.TryConsumeBill(bill)) return false;
+            _currentDay = day;
+            CelebrationRecord committedRecord = CreateCelebrationRecord(holidayId, holiday, scale, participantCount, rng);
+            _heldHolidayOccurrences.Add(occurrence);
 
             record = committedRecord;
             OnCelebrationHeldSeam?.Invoke(committedRecord);

@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
 **Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-24
-**Total Catalogs:** 708 | **Total Definitions:** 14376 | **Domain Families:** 32
+**Total Catalogs:** 708 | **Total Definitions:** 14391 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -69,7 +69,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 78 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (228 Catalogs, 3559 Definitions)
+### Core / Miscellaneous (228 Catalogs, 3574 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -201,7 +201,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `narcotics.json` | 7 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `narrative_discovery_manifest.json` | 243 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `narrative_encounters.json` | 16 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterCatalogLoader` |
-| `narrative_encounters_expansion.json` | 29 | `1.0.0` | `ORPHANED` | `NarrativeEncounterSystem` |
+| `narrative_encounters_expansion.json` | 29 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterSystem` |
 | `narrative_encounters_npc_arcs.json` | 31 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `narrative_progression.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `NarrativeEncounterSystem` |
 | `naval_vessels.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
@@ -262,8 +262,8 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `seasonal_human_migration.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `seismic_fault_catalog.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SeismicDynamicsSystem` |
 | `settlements.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `skill_certifications.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
-| `skills.json` | 160 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SkillCatalogLoader` |
+| `skill_certifications.json` | 14 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `skills.json` | 161 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SkillCatalogLoader` |
 | `sky_defense_ordnance.json` | 6 | `1.0.0` | `GAMEPLAY_CONSUMED` | `SkyDefenseOrdnanceCatalogLoader` |
 | `sky_layer_armor_catalog.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `slice_seven_days.json` | 7 | `1.0.0` | `UNRESOLVED` | `Core default` |

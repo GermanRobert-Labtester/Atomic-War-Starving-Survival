@@ -1,9 +1,9 @@
 # ASHFALL — Evidence-Derived Architecture & Verification Graph
 
-**Last Verified:** 2026-09-24<br>
+**Last Verified:** 2026-09-25<br>
 **Total Subsystems Mapped:** 266/266 (100.0%)<br>
-**Verified End-to-End Coverage:** 152/266 (57.1% across all 6 vertical layers)<br>
-**Status Breakdown:** Implemented: 266/266 | Constructed: 266/266 | Ticked: 266/266 | Persisted: 266/266 | Routed: 167/266 | Tested: 206/266<br>
+**Verified End-to-End Coverage:** 155/266 (58.3% across all 6 vertical layers)<br>
+**Status Breakdown:** Implemented: 266/266 | Constructed: 266/266 | Ticked: 266/266 | Persisted: 266/266 | Routed: 170/266 | Tested: 206/266<br>
 **Single Source of Truth:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` & `Assets/Ashfall.Core/HostCliRegistry.cs`
 
 > **GENERATED FILE — do not edit by hand.**
@@ -158,7 +158,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 101 | `confession_secret` | Narrative | `ConfessionSecretSystem` | `confession_secrets.json` | `Main` | `ConfessionSecretSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `ConfessionSecretSystemTests` | ❌ GAP |
 | 102 | `echoes` | Narrative | `EchoSystem`, `NarrativeContinuityEngine` | `echoes.json` | `EchoHostSession`, `EchoSaveStore` | `EchoSaveStore` | *None (GAP)* | , `EchoCatalogTests`, `EchoSystemTests` | ❌ GAP |
 | 103 | `npc_memory` | Narrative | `NpcMemorySystem`, `NpcMemoryEntry`, `NpcRelationship`, `NpcMemoryCensus` | `npc_memory_dialogue.json` | `Main`, `NpcMemoryHostSession` | `NpcMemorySaveStore` | *None (GAP)* | `--npc-memory-selftest`, `Plan147NpcMemoryHostIntegrationTests`, `NpcMemorySystemTests` | ❌ GAP |
-| 104 | `seasonal_celebration` | Narrative | `SeasonalCelebrationSystem` | `shelter_celebrations.json` | `Main` | `SeasonalCelebrationSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan170SeasonalCelebrationsIntegrationTests` | ❌ GAP |
+| 104 | `seasonal_celebration` | Narrative | `SeasonalCelebrationSystem` | `shelter_celebrations.json` | `Main`, `ShelterOperationsHostSession` | `SeasonalCelebrationSaveStore` | `ShelterOperationsPanel` | `--shelter-operations-selftest`, `Plan170SeasonalCelebrationsIntegrationTests`, `SeasonalCelebrationCycleTests`, `ShelterOperationsBoardWiringTests` | ✅ 6/6 |
 | 105 | `shelter_festival` | Narrative | `ShelterFestivalEngine` | — *(Procedural)* | `Main` | `ShelterFestivalSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan170SeasonalCelebrationsIntegrationTests` | ❌ GAP |
 | 106 | `oral_lore` | Narrative & Cultural Tradition | `OralLorePerformanceSystem` | `oral_lore_codex.json`, `oral_lore_batch_2.json` | `Main` | `OralLoreSaveStore` | *None (GAP)* | , `OralLorePlan155Tests`, `OralLoreCatalogTests` | ❌ GAP |
 | 107 | `moral_choice` | Narrative & Decisions | `MoralChoiceSystem`, `MoralChoiceState` | `moral_choice_quests.json` | `MoralChoiceSystem` | `MoralChoiceSaveStore` | `GameDashboardPanel` | `--moral-choice-selftest`, `MoralChoiceSystemTests` | ✅ 6/6 |
@@ -216,7 +216,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 159 | `session_durability` | Save | `SessionDurabilityManager` | — *(Procedural)* | `Main`, `SessionDurabilityHostSession`, `SaveLoadHostSession` | `SessionDurabilitySaveStore` | *None (GAP)* | `--session-durability-selftest`, `Plan39SessionDurabilityHostIntegrationTests`, `SessionDurabilityManagerTests` | ❌ GAP |
 | 160 | `seven_day_slice` | Save | `SliceScenario`, `SliceScenarioCatalogLoader` | `slice_seven_days.json` | `SliceScenarioHostSession` | `SliceScenarioSaveStore` | *None (GAP)* | `--seven-day-slice-selftest`, `Plan54SevenDaySliceHostIntegrationTests` | ❌ GAP |
 | 161 | `accessibility_settings` | Settings | `AccessibilitySettingsSystem`, `AccessibilitySettingsState`, `AccessibilityCensus` | `accessibility_profiles.json` | `Main`, `AccessibilitySettingsHostSession` | `AccessibilitySettingsSaveStore` | *None (GAP)* | `--accessibility-settings-selftest`, `Plan184AccessibilitySettingsIntegrationTests` | ❌ GAP |
-| 162 | `outpost_settlement` | Settlements | `OutpostSettlementSystem`, `OutpostDef`, `OutpostInstance`, `OutpostSettlementState` | `outposts.json` | `OutpostSettlementHostSession`, `Main` | `OutpostSettlementSaveStore` | *None (GAP)* | `--outpost-settlement-selftest`, `Plan58OutpostHostIntegrationTests`, `Plan58OutpostSettlementIntegrationTests` | ❌ GAP |
+| 162 | `outpost_settlement` | Settlements | `OutpostSettlementSystem`, `OutpostDef`, `OutpostInstance`, `OutpostSettlementState` | `outposts.json` | `OutpostSettlementHostSession`, `ShelterOperationsHostSession`, `Main` | `OutpostSettlementSaveStore` | `ShelterOperationsPanel` | `--shelter-operations-selftest`, `Plan58OutpostHostIntegrationTests`, `Plan58OutpostSettlementIntegrationTests`, `OutpostAtomicBillTests`, `ShelterOperationsBoardWiringTests` | ✅ 6/6 |
 | 163 | `chemical_reagent_synthesis` | Shelter | `ChemicalReagentLedger`, `ChemicalReagentSynthesisState`, `ChemicalReagentCensus`, `ChemicalReagentSynthesisEngine` | — *(Procedural)* | `Main`, `ChemicalReagentSynthesisHostSession` | `ChemicalReagentSynthesisSaveStore` | *None (GAP)* | `--chemical-reagent-selftest`, `ChemicalReagentSynthesisEngineTests`, `ChemicalReagentLedgerTests` | ❌ GAP |
 | 164 | `cryo_vault` | Shelter | `CryoVaultSystem` | `cryo_cultivars.json` | `Main` | `CryoVaultSaveStore` | *None (GAP)* | , `CryoVaultB69Tests` | ❌ GAP |
 | 165 | `disaster_response` | Shelter | `DisasterResponseSystem` | `disaster_templates.json` | `Main` | `DisasterResponseSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan158DisasterResponseIntegrationTests` | ❌ GAP |
@@ -234,7 +234,7 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 177 | `shelter_archive` | Shelter | `ShelterArchiveSystem`, `ShelterArchiveState`, `ShelterArchiveCensus` | `archive_categories.json` | `Main`, `ShelterArchiveHostSession` | `ShelterArchiveSaveStore` | *None (GAP)* | `--shelter-archive-selftest`, `Plan162ArchiveIntegrationTests`, `ShelterArchiveSystemTests` | ❌ GAP |
 | 178 | `shelter_atmosphere` | Shelter | `ShelterAtmosphereSystem` | — *(Procedural)* | `ShelterAtmosphereHostSession` | `ShelterAtmosphereSaveStore` | `ShelterAtmospherePanel`, `GameDashboardPanel` | `--shelter-atmosphere-selftest`, `Plan220ShelterAtmosphereIntegrationTests` | ✅ 6/6 |
 | 179 | `shelter_decor` | Shelter | `ShelterDecorSystem` | — *(Procedural)* | `ShelterDecorHostSession` | `ShelterDecorSaveStore` | `GameDashboardPanel` | `--shelter-decor-selftest`, `Plan12CDecorTests` | ✅ 6/6 |
-| 180 | `shelter_expansion` | Shelter | `ShelterExpansionSystem` | `shelter_construction.json` | `Main` | `ShelterExpansionSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan156ShelterExpansionIntegrationTests` | ❌ GAP |
+| 180 | `shelter_expansion` | Shelter | `ShelterExpansionSystem` | `shelter_construction.json` | `Main`, `ShelterOperationsHostSession` | `ShelterExpansionSaveStore` | `ShelterOperationsPanel` | `--shelter-operations-selftest`, `Plan156ShelterExpansionIntegrationTests`, `ShelterOperationsBoardCoreTests`, `ShelterOperationsBoardWiringTests` | ✅ 6/6 |
 | 181 | `shelter_maintenance` | Shelter | `ShelterMaintenanceSystem`, `ShelterComponentCatalogLoader`, `ShelterMaintenanceCensus` | `shelter_components.json` | `Main`, `ShelterMaintenanceHostSession` | `ShelterMaintenanceSaveStore` | `SurvivorDetailPanel` | `--shelter-maintenance-selftest`, `Plan186ShelterMaintenanceIntegrationTests` | ✅ 6/6 |
 | 182 | `shelter_noise` | Shelter | `ShelterNoiseSystem` | — *(Procedural)* | `ShelterAtmosphereHostSession` | `ShelterNoiseSaveStore` | `ShelterAtmospherePanel` | `--shelter-atmosphere-selftest`, `Plan220ShelterAtmosphereIntegrationTests` | ✅ 6/6 |
 | 183 | `shelter_social_dynamics` | Shelter | `ShelterSocialDynamicsSystem` | `shelter_social_events.json` | `Main` | `ShelterSocialSaveStore` | `GameDashboardPanel` | `--core-selftest`, `ShelterSocialDynamicsTests` | ✅ 6/6 |
@@ -1518,12 +1518,16 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 104. `seasonal_celebration` — ORPHAN-SEAL-W1 — holidays, anniversaries, scales, and celebration history (Narrative)
 - **Owner Domain:** `events`
 - **Setup Method:** `Main.SetupSeasonalCelebration()` | **Cadence:** `Daily Sim Tick`
-- **UI Routes:**
+- **UI Routes:** `shelter_operations`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Events/SeasonalCelebrationSystem.cs`](../../Assets/Ashfall.Core/Events/SeasonalCelebrationSystem.cs)
+  - Host Session: [`src/Host/ShelterOperationsHostSession.cs`](../../src/Host/ShelterOperationsHostSession.cs)
   - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
+  - UI Panel: [`src/UI/ShelterOperationsPanel.cs`](../../src/UI/ShelterOperationsPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Events/Plan170SeasonalCelebrationsIntegrationTests.cs`](../../Ashfall.Core.Tests/Events/Plan170SeasonalCelebrationsIntegrationTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Events/SeasonalCelebrationCycleTests.cs`](../../Ashfall.Core.Tests/Events/SeasonalCelebrationCycleTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Integration/ShelterOperationsBoardWiringTests.cs`](../../Ashfall.Core.Tests/Integration/ShelterOperationsBoardWiringTests.cs)
 
 ### 105. `shelter_festival` — ORPHAN-SEAL-W1 — player-scheduled festivals, commodity costs, and completion state (Narrative)
 - **Owner Domain:** `events`
@@ -2167,12 +2171,16 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 162. `outpost_settlement` — Plan 58 — authored outposts: establishment, condition, garrison assignments, and ration reserve (Settlements)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupOutpostSettlement()` | **Cadence:** `Daily Sim Tick`
-- **UI Routes:**
+- **UI Routes:** `shelter_operations`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Settlements/OutpostSettlementSystem.cs`](../../Assets/Ashfall.Core/Settlements/OutpostSettlementSystem.cs)
   - Host Session: [`src/Host/OutpostSettlementHostSession.cs`](../../src/Host/OutpostSettlementHostSession.cs)
+  - Host Session: [`src/Host/ShelterOperationsHostSession.cs`](../../src/Host/ShelterOperationsHostSession.cs)
   - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/OutpostSettlementHostSession.cs`](../../src/Host/OutpostSettlementHostSession.cs)
+  - UI Panel: [`src/UI/ShelterOperationsPanel.cs`](../../src/UI/ShelterOperationsPanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Integration/ShelterOperationsBoardWiringTests.cs`](../../Ashfall.Core.Tests/Integration/ShelterOperationsBoardWiringTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Settlements/OutpostAtomicBillTests.cs`](../../Ashfall.Core.Tests/Settlements/OutpostAtomicBillTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Settlements/Plan58OutpostHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Settlements/Plan58OutpostHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Settlements/Plan58OutpostSettlementIntegrationTests.cs`](../../Ashfall.Core.Tests/Settlements/Plan58OutpostSettlementIntegrationTests.cs)
 
@@ -2369,12 +2377,16 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 180. `shelter_expansion` — ORPHAN-SEAL-W1 — expansion rooms, construction projects, and upgrade state (Shelter)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterExpansion()` | **Cadence:** `Labor-Driven`
-- **UI Routes:**
+- **UI Routes:** `shelter_operations`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Shelter/ShelterExpansionSystem.cs`](../../Assets/Ashfall.Core/Shelter/ShelterExpansionSystem.cs)
+  - Host Session: [`src/Host/ShelterOperationsHostSession.cs`](../../src/Host/ShelterOperationsHostSession.cs)
   - Host Session: [`src/Main.cs`](../../src/Main.cs)
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
+  - UI Panel: [`src/UI/ShelterOperationsPanel.cs`](../../src/UI/ShelterOperationsPanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Integration/ShelterOperationsBoardWiringTests.cs`](../../Ashfall.Core.Tests/Integration/ShelterOperationsBoardWiringTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Shelter/Plan156ShelterExpansionIntegrationTests.cs`](../../Ashfall.Core.Tests/Shelter/Plan156ShelterExpansionIntegrationTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Shelter/ShelterOperationsBoardCoreTests.cs`](../../Ashfall.Core.Tests/Shelter/ShelterOperationsBoardCoreTests.cs)
 
 ### 181. `shelter_maintenance` — Plan 186 — Shelter maintenance & degradation: component condition, environmental stress, maintenance actions, and alert states (Shelter)
 - **Owner Domain:** `shelter`
@@ -3548,7 +3560,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `nvis_communications` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `onboarding` | ✅ | ✅ | ⚡ `On-Demand (Player Sigil Recording)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `oral_lore` | ✅ | ✅ | ⚡ `Event-Driven (Performance)` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
-| `outpost_settlement` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
+| `outpost_settlement` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `pathogen_strains` | ✅ | ✅ | ✅ `Daily Strain Progression Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `perimeter_defense` | ✅ | ✅ | ✅ `Daily Emplacement + Watch Readiness Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `personal_quests` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -3589,7 +3601,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `route_infrastructure` | ✅ | ✅ | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `runflat_tire` | ✅ | ✅ | ⚡ `On-Demand (Fit, Hazard & Heat Commands)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `sanitation` | ✅ | ✅ | ✅ `Daily Sanitation Tick` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
-| `seasonal_celebration` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
+| `seasonal_celebration` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `seismic_dynamics` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `session_durability` | ✅ | ✅ | ⚡ `Session-Driven` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `settlement_defenses` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
@@ -3600,7 +3612,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `shelter_atmosphere` | ✅ | ✅ | ✅ `Daily (Day Coordinator)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_barter` | ✅ | ✅ | ⚡ `On-Demand (Barter)` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `shelter_decor` | ✅ | ✅ | ⚡ `On-Demand (Decoration Placement)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `shelter_expansion` | ✅ | ✅ | ⚡ `Labor-Driven` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
+| `shelter_expansion` | ✅ | ✅ | ⚡ `Labor-Driven` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_festival` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `shelter_fire` | ✅ | ✅ | ✅ `Daily Fire Propagation Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_governance` | ✅ | ✅ | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |

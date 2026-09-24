@@ -805,6 +805,7 @@ namespace AtomicWar.GodotApp
                 "farming", "defense_grid", "psychology_arcs", "bestiary",
                 "low_background_metrology", "insar_mapping", "hydraulic_extrusion", "runflat_tire",
                 "sofc_power", "sound_ranging", "night_watch", "cvd_diamond", "amphibious_draisine",
+                "shelter_operations",
                 "sanitation", "black_market",
                 "companion_kennel", "beliefs_panel", "anomaly_watch", "cybernetics",
                 "sky_defense_battery",
