@@ -110,6 +110,21 @@ namespace Ashfall.Core.Shelter
             _origins[def.origin_id] = def;
         }
 
+        /// <summary>
+        /// Plan 166 — replaces the built-in origins with an already-validated
+        /// authored catalog. The host uses the strict
+        /// <see cref="ShelterOriginCatalogLoader"/> and this seam, so the default
+        /// set cannot mask an authored typo.
+        /// </summary>
+        public void BindOrigins(ShelterOriginsCatalogJson catalog)
+        {
+            if (catalog?.origins == null) return;
+
+            _origins.Clear();
+            foreach (var origin in catalog.origins)
+                RegisterOrigin(origin);
+        }
+
         private void RegisterDefaultOrigins()
         {
             RegisterOrigin(new ShelterOriginDef
@@ -347,6 +362,28 @@ namespace Ashfall.Core.Shelter
 
         // ── Save / Load ───────────────────────────────────────────
 
+        /// <summary>
+        /// Read-only summary of live shelter identity (Plan 166). Exposed for the
+        /// architecture scanner, the shelter panel, and the host probe.
+        /// </summary>
+        public ShelterIdentityCensus GetCensus()
+        {
+            int communityPoints =
+                _state.reputation_points_trade +
+                _state.reputation_points_raid +
+                _state.reputation_points_medical +
+                _state.reputation_points_isolation;
+
+            return new ShelterIdentityCensus(
+                _origins.Count,
+                _state.origin_id,
+                ShelterName,
+                _state.infamy_score,
+                GetKnownForTags().Count,
+                _state.reputation_by_faction.Count,
+                communityPoints);
+        }
+
         public ShelterIdentityState CaptureState()
         {
             var copy = new ShelterIdentityState
@@ -373,6 +410,14 @@ namespace Ashfall.Core.Shelter
         {
             if (saved == null) return;
 
+            // Schema gate: a newer payload must not be silently down-cast; a
+            // payload that omits the field is the original v1 shape and loads.
+            if (saved.schema_version > 1)
+                throw new InvalidOperationException(
+                    $"ShelterIdentityState schema {saved.schema_version} is newer than supported (1).");
+            if (saved.schema_version < 1)
+                saved.schema_version = 1;
+
             _state.schema_version = saved.schema_version;
             _state.shelter_name = string.IsNullOrWhiteSpace(saved.shelter_name) ? DefaultShelterName : saved.shelter_name;
             _state.origin_id = saved.origin_id ?? string.Empty;
@@ -395,6 +440,39 @@ namespace Ashfall.Core.Shelter
                     _state.reputation_by_faction[kvp.Key] = kvp.Value;
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Read-only census of live shelter identity (Plan 166). Exposed for the
+    /// architecture scanner, the shelter panel, and the host self-test probe.
+    /// </summary>
+    public struct ShelterIdentityCensus
+    {
+        public int OriginCount { get; }
+        public string OriginId { get; }
+        public string ShelterName { get; }
+        public int Infamy { get; }
+        public int KnownForTagCount { get; }
+        public int FactionReputationCount { get; }
+        public int CommunityActionPoints { get; }
+
+        public ShelterIdentityCensus(
+            int originCount,
+            string originId,
+            string shelterName,
+            int infamy,
+            int knownForTagCount,
+            int factionReputationCount,
+            int communityActionPoints)
+        {
+            OriginCount = originCount;
+            OriginId = originId;
+            ShelterName = shelterName;
+            Infamy = infamy;
+            KnownForTagCount = knownForTagCount;
+            FactionReputationCount = factionReputationCount;
+            CommunityActionPoints = communityActionPoints;
         }
     }
 }

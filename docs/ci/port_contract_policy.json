@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 293,
+  "total_seams": 296,
   "ports": [
     {
       "class_name": "AeroponicsSystem",
@@ -2389,6 +2389,30 @@
       "file_path": "Assets/Ashfall.Core/Economy/PlayerTradeRouteSystem.cs",
       "owner": "economy",
       "reason": "Integration seam in PlayerTradeRouteSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "ShelterIdentitySystem",
+      "method_name": "BindOrigins",
+      "file_path": "Assets/Ashfall.Core/Shelter/ShelterIdentitySystem.cs",
+      "owner": "holdfast",
+      "reason": "Integration seam in ShelterIdentitySystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "ModSupportSystem",
+      "method_name": "BindSpecification",
+      "file_path": "Assets/Ashfall.Core/Mods/ModDataContract.cs",
+      "owner": "mods",
+      "reason": "Integration seam in ModSupportSystem.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "ShelterGovernanceEngine",
+      "method_name": "BindValidatedBlocs",
+      "file_path": "Assets/Ashfall.Core/Governance/ShelterGovernanceEngine.cs",
+      "owner": "governance",
+      "reason": "Integration seam in ShelterGovernanceEngine.",
       "classification": "HOST_REQUIRED"
     }
   ]

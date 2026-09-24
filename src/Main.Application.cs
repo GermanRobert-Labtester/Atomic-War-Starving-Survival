@@ -695,6 +695,15 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.AudioAccessibilitySelfTest:
                     GetTree().Quit(HostCliAudioAccessibility.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.ModSupportSelfTest:
+                    GetTree().Quit(HostCliModSupport.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ShelterIdentitySelfTest:
+                    GetTree().Quit(HostCliShelterIdentity.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ShelterGovernanceSelfTest:
+                    GetTree().Quit(HostCliShelterGovernance.RunSelfTest(_dataDir));
+                    return;
             }
             }
             catch (System.Exception ex)
@@ -821,6 +830,7 @@ namespace AtomicWar.GodotApp
             FlushCookingIfDirty();
             FlushRetentionIfDirty();
             FlushCampaignLegacyIfDirty();
+            FlushShelterGovernanceIfDirty();
 
             // ── Sleep / End Day countdown timer (Phase 2 continuation)
             if (_advanceTimerRemaining > 0 && !_advanceCancelled)

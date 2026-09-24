@@ -2708,3 +2708,220 @@ Change one dimension at a time: witness count, source-check availability, rumor 
 #### Reuse and repetition limits
 
 Each seed is suitable for one authored vignette and at most one follow-up response. Do not turn all six into daily quests. A future seasonal return can reuse the hub only when a new authored stimulus or real source event exists. The ambient topic can remain unresolved across the campaign without producing an endlessly growing quest backlog.
+
+## Pass 24A — Field-guide discovery as an optional quest thread (DRAFT)
+
+### Source premise and boundary
+
+The world-bible Part 46 prompt asks which field-guide entries never trigger. Current source landmarks narrow that question to a content-to-consumer audit, not a proposal for a second bestiary: `FieldGuideCatalog` owns the catalog and unlocked state; `Main.EcologicalInfestations.cs` owns observation unlock and journal feedback; `WildlifeSeasonalCalendar.FieldGuideEntryFor` maps six observed species to the existing “reading the land” entries; `FieldGuideSaveStore` owns persistence. `TravelEncounterChoice` and its resolver carry `UnlocksFieldGuideId`, while the reviewed `ExpeditionEncounterBridge` patrol branch maps the travel result into a narrative result containing morale and guilt only. That branch therefore warrants a premise recheck for the omitted unlock. The direct combat-resolution host method also resolves through an overload and discards the returned field-guide ID. This is evidence for a bounded integration candidate, not proof that every choice or all 32 entries are unreachable.
+
+Do not create a quest registry, discovery ledger, field-guide save section, or a new universal event bus. Plan20's 32-entry catalog, Plan20A's save ownership, and Plan28's six ecology observation mappings remain authoritative. Before implementation, inventory each authored `unlock_trigger`, all choice-level `unlocks_field_guide_id` references, and every resolution entry point; distinguish an intentionally unavailable entry from an unresolved integration seam.
+
+### Quest packet: “A Mark Worth Keeping”
+
+**Purpose:** teach the player that a field-guide entry records an observation with a source, not a guarantee that every rumor is true. This is a small optional thread that can begin when a travel encounter explicitly grants a valid entry or when the player completes a supported ecological observation. It must not gate campaign survival, location access, or the main story.
+
+**Typical structure:** environmental cue at an expedition start; optional inspection; a short hub conversation with a knowledgeable survivor; return to the Codex; one follow-up choice about sharing, keeping private, or marking the observation uncertain. Each route reconverges on the guide entry being readable, with distinct journal wording and optional relationship/faction consequences only if an existing owner supports them.
+
+**Required locations:** an already eligible expedition location that contains the triggering authored encounter, plus the existing shelter/codex surface for follow-up. Do not add a map node solely for this quest. A clue or a later expedition may substitute when the original site is absent.
+
+**Possible failure states:** encounter choice unavailable, entry ID invalid, player leaves before examining the clue, or no eligible encounter in the current expedition. Leaving should postpone rather than silently fail. Invalid content must report an authoring diagnostic and never unlock a different entry by fallback. The thread can resolve as “not enough evidence” and remain available later.
+
+**Rewards:** a useful Codex entry, a journal record with source and confidence, and optional modest relationship feedback. No resource grant, permanent faction change, or hidden skill bonus is required. Rewards must not imply that a descriptive entry changed the underlying species simulation.
+
+**Branching/reuse:** reuse the packet pattern for existing entries only after source-event validation. Each authored instance supplies an entry ID, trigger event, location predicate, speaker voice, and one factual observation. Keep common state transitions reusable while writing distinct copy per entry. The six ecology observations retain their current observation route; this proposal does not restage them as quests.
+
+**Production cost/core-vs-expansion:** core game if the existing travel choice and catalog data are enough to demonstrate the bridge; expansion only if the content requires new locations, characters, or a larger investigation chain. Estimate from validated IDs, dialogue nodes, localization, UI feedback, and focused tests, not from raw prose count.
+
+### Lifecycle and acceptance contract
+
+Use the existing quest lifecycle states only where a quest object already owns them: inactive → discovered → accepted → in progress → completed/resolved, with blocked/postponed where current quest semantics permit. Do not introduce a parallel “guide quest status” in `FieldGuideState`. Every state transition should be caused by a concrete observation, validated player action, or supported owner event. Completing the thread requires both a valid entry ID and an observable guide update. Replaying the same resolution must be idempotent, and declining the optional conversation must preserve the unlocked entry.
+
+Acceptance evidence for a future implementation package: (1) a catalog audit table maps all authored trigger strings to actual producer events; (2) a travel choice with a valid unlock ID reaches the existing field-guide owner exactly once through each supported host path; (3) unknown IDs and empty IDs do not grant anything; (4) save/reload preserves the unlocked entry through the existing field-guide save owner; (5) journal and Codex feedback agree; and (6) no campaign-critical quest becomes impossible when an optional encounter is absent. The package remains DRAFT until queue authority, exact path claims, and focused verification are established.
+
+## Pass 24B — Quest acceptance cases and failure-forward review (DRAFT)
+
+Use three authoring cases before expanding this into a multi-entry quest suite. **Case A, direct observation:** the player sees a currently supported species event; the six existing ecology mappings are exercised through their present owner, without a duplicate scripted reward. **Case B, travel encounter:** a choice grants a field-guide entry through `TravelEncounterSystem`; acceptance requires the bridge to preserve the returned ID and the host to call the existing unlock owner. **Case C, unsupported trigger:** the data contains a recognized entry but its `unlock_trigger` has no verified event producer; the quest must not manufacture an unlock. It either remains discoverable later or resolves with an “unverified report” note, subject to narrative review.
+
+A branch can alter only the claim’s provenance and tone: “I saw it,” “someone reported it,” or “the mark is uncertain.” Do not make player response text silently rewrite ecology facts. A failed or skipped examination can continue through a second source if an authored fallback exists; if none exists, it should remain dormant and explain nothing until valid evidence becomes available. Never use a generic “any encounter” fallback because that would make the field guide inaccurate.
+
+The map may show a destination only when the expedition selector has already selected the underlying location. Quest discovery cannot fabricate a travel location or force a deterministic spawn. If the authored encounter is not selected, preserve quest possibility through a later valid selection, a clue at an existing destination, or a postponed objective. Distinguish “quest is active” from “the triggering content is available this expedition.”
+
+Production checklist for content authors: stable entry ID; canonical trigger token; producer/event owner; expected location tags; optional quest IDs; exact journal key; one factual sentence; uncertainty label; source-type label; repeat-resolution behavior; and proof that the matching Codex row exists. A missing speaker or location string must not be inferred from free text. This case set intentionally avoids adding new species, new ecology cadence, or a second Codex index. It is an integration and content-truth tranche, not an approval to implement.
+
+## Pass 25A — Storm-window sortie arc: “The Measure Between Gusts” (DRAFT)
+
+### Thesis and canon fit
+
+The World Bible Part 46 prompt asks what happens when an expedition is caught by a storm window mid-route. ASHFALL already has a dispatch-time weather projection, a day-ranged Year of Ash storm catalog, weather gates with force costs, and seeded active-sortie ticks. This story extension should make the forecast legible as a decision with imperfect information. It must not imply that current code already reevaluates every active sortie against a new front. First verify that lifecycle seam; until then this is a content-and-architecture proposal, not a route interrupt that can be wired by dialogue alone.
+
+**Central experience:** the player sends a small team with a weather estimate. The forecast changes after they have committed. Their next report is partial: a broken chalk mark, an unreturned tool, or a time-stamped radio call that ends before the answer. The player must decide whether to preserve the original objective, authorize a delay/hold if supported, or accept a costly forced crossing at a known weather gate. The story remains material: wet canvas, a clogged filter, a map folded to hide a tear. There is no miraculous rescue and no mandatory combat.
+
+### Main quest packet
+
+**Working title:** The Measure Between Gusts. **Type:** survival + investigation, with optional character/faction follow-ups. **Start:** a forecast indicates a storm window overlaps the projected sortie duration, or the player has already received a verified active-front warning. Do not launch a quest merely because a world event catalog row was loaded. **Stages:** (1) compare dispatch estimate to forecast interval; (2) pack or refuse a physical weather countermeasure already supported by inventory; (3) commit to the expedition; (4) receive a mid-route condition only if a real host event exists; (5) decide whether to hold, return, proceed, or use an authored gate-force option; (6) reconcile the result on return with the team’s actual state and objective evidence.
+
+**Required locations:** an existing dispatch surface; the already-authored target and route/gate represented by current data; optional shelter debrief. A new storm shelter node is not required. If the selected route has no weather gate or the current source cannot represent a hold, dialogue should only describe uncertainty and the next supported action.
+
+**Failure states:** forecast absent or stale; the storm begins after dispatch with no in-route decision hook; no route gate exists; radio contact is unavailable; the team returns without objective proof; forced passage exhausts stamina or applies the existing acute dose; a vehicle has already broken down; or the sortie reaches a terminal state before the player can answer. These are distinct outcomes. A missing host hook is a development blocker, not an in-world failure. A quest can postpone its response beat until debrief rather than silently mark the player negligent.
+
+**Rewards:** retain the recovered item/evidence under its owning expedition result; unlock a truthful weather note only if an existing record owner can store it; optionally improve a survivor relationship through an already-authorized relationship event. Do not grant a generic storm-resistance buff. A prepared team might preserve time, condition, or information only where an extant mechanic supports that cost/reward.
+
+### Branches and reuse
+
+The meaningful branch concerns *what the team protects*: people, cargo, schedule, or evidence. It should not collapse into a morality score. A team that returns early may save a survivor but lose the target opportunity; proceeding may secure the evidence but wear gear or create a delayed return. A forced gate remains a visible, consentful dispatch/route decision with its data-defined cost; it is not a free escape. Reuse this structure for black blizzard, ash fallout, and ice fog only after each event type’s active-route producer is verified. Do not reuse a single consequence table if event severity or eligible route differs.
+
+**Core vs expansion:** the forecast/dispatch decision is core quality work if it closes a live readability gap. Additional characters, a new route, and the three-stage faction aftermath belong to an expansion. The arc remains DRAFT until current host behavior proves when a storm transition can reach an active expedition.
+
+## Pass 25B — Failure-forward beats, arcs, and acceptance contract (DRAFT)
+
+A return without proof is not equivalent to a failed expedition. The survivor can return with a credible description, a partial tool, an exposure problem, or evidence that the route itself changed. The main quest should have a post-return continuation for each result and never assume that an interrupted radio line means death. If a sortie ends in a terminal failure state, preserve the existing owner’s meaning and let the quest resolve through a documented loss or uncertainty path. No dialogue branch may resurrect or reclassify the sortie.
+
+**Character hooks:** a route surveyor marks time by the condensation line inside a mask; a radio operator refuses to say “clear” until a second station answers; a quartermaster keeps returning damaged filters in a separate tin because the serial labels matter. Each is a writing role until an existing survivor/NPC can own the state. Do not create three new persistent character subsystems. A delayed callback can occur when a later expedition finds the same shelter door repaired from the inside, but it must be authored against a real location and availability contract.
+
+**Quest-only location option:** none in the minimum viable version. The team can encounter an existing route feature, weather gate, or selected destination. A quest-only shelter should be considered only if a validated location catalog already supports an alternate encounter within a parent location. Its map identity, visibility, returnability, and fog rules must be explicit. It must never appear retroactively just to satisfy the quest.
+
+**Failure-forward map:** if the player cannot take an in-route action, the objective becomes “reconstruct the route from what returned,” not “choose the missing action.” That branch can use an existing journal/debrief surface and later expedition access. If evidence is lost, the story continues as an incomplete survey; no silent re-roll, automatic clue spawn, or unearned faction trust. If the target location is blocked for the rest of the current window, postpone it with an explicit date/condition only if the calendar owner can support that forecast.
+
+Future integration acceptance should answer: Which exact event changes while the sortie is active? Who owns its time basis? How does the active expedition learn about it? Can the player intervene before the next deterministic tick? Which active fields are sampled at dispatch versus recalculated? What does save/restore do between warning and choice? How is a duplicate warning suppressed? Which result owner records the final route? Content is not accepted until every branch resolves to an observable state and a retry or no-retry rule.
+
+## Pass 25C — Side-story portfolio and timeline callbacks (DRAFT)
+
+The main storm arc should support three smaller stories that can stand alone and later converge in a debrief. These are content packets, not three new systems.
+
+**Side quest: “A Filter for the Return Call.”** A maintenance survivor notices that the expedition team signed out a filter model that is present in inventory but listed as worn in an existing gear-condition owner. The player can replace it if the inventory transaction is possible, dispatch without the replacement, or postpone the sortie. The quest succeeds by documenting the actual equipment state; it does not guarantee safety. Failure states include the item being unavailable, the team already dispatched, or the UI report being stale. A later callback can show a clean filter returned unused or a damaged one returned without assigning blame. Production cost: one equipment-state predicate, one short choice scene, no new map destination. Core candidate because it reinforces a real dispatch decision.
+
+**Side quest: “The Last Board.”** A route marker was repainted after a storm, and two sources disagree about when. The player can compare the dispatch note, a survivor’s account, and an existing location record. It can complete as verified, plausible, or unresolved. The clue is not a universal storm forecast and cannot unlock hidden geography without the map owner’s normal discovery route. It is suitable for an expansion if a returning location visit is needed.
+
+**Character quest: “No One Calls It Clear.”** An operator has a practical rule: do not mark a line clear until a second station answers. The player may preserve the rule, suspend it to send one urgent message, or ask for a different operator. The consequence belongs to current radio/relationship owners only if each has a genuine supported command. Otherwise this remains dialogue and a journal callback, with no invented reliability stat.
+
+### Long-run callback calendar
+
+- **Before first storm window:** introduce the operator’s handwritten “last clear” time on an ordinary day. It is texture, not a quest marker.
+- **First overlap with a sortie estimate:** let the player inspect the forecast and decide whether to dispatch, if the existing interface supports the decision.
+- **After a changed condition:** use a report only when an actual owner event confirms it; otherwise defer all outcome-specific content until return.
+- **One or more expeditions later:** revisit the route marker or hear a different survivor use the same time notation. The callback must depend on a stored quest/event fact, not a guessed day count.
+- **Late game:** the player may compare several historical forecasts against outcomes to decide whether the network was mistaken, delayed, or withholding data. Each explanation remains evidence-based and incomplete; no single character becomes an omniscient narrator.
+
+### Reuse, expansion, and exclusion tests
+
+The grounded version uses one existing location, one existing weather gate, and two scenes. The systemic version connects equipment condition, forecast visibility, expedition phase, and debrief state. The wildcard remains physical and plausible: multiple groups share a chalk notation, but each means a different time reference; a faded correction exposes the mismatch. Exclude any branch that depends on magical prediction, guaranteed rescue, a global trust number, instant radio contact, or automatic casualty selection. Core scope ends when the player can understand current estimate/gate feedback; persistent character arcs and multiple storm-season callbacks are expansion content.
+
+## Pass 25D — Integration readiness and scope close (DRAFT)
+
+### Production plan and stop conditions
+
+The narrative package can be reviewed independently from implementation. Phase 1 is a source census of weather-window, active-front, gate, expedition tick, save, journal, and forecast consumers. Phase 2 chooses the minimum truthful player-facing seam: clearer dispatch forecast, post-return debrief, or an actual dynamic event bridge. Phase 3 writes one playable slice with one storm type and one supported route; only after that slice is reachable should the portfolio expand to more seasons, factions, or locations. Phase 4 records unimplemented branches as explicitly deferred instead of writing them as if live.
+
+Stop if the proposed response requires a parallel expedition state, a second weather clock, a new faction-stats owner, unapproved save fields, or unsourced route/location IDs. Stop if one path changes an active expedition while another route can bypass the consequence. Stop if tests would require broad simulations before the minimum rule is agreed. The current plan itself does not claim that any storm transition reaches an active sortie.
+
+The release-quality story is modest by design: the player can distinguish a forecast from a result, understand a gate’s cost before choosing, see what actually returned, and continue after incomplete evidence. Stronger content—multi-character distrust arc, cross-faction blame, storm-window convoy, new quest-only route—belongs to a later approved expansion after the live seam is proven. This keeps the feature playable without making the world sound more certain than its systems are.
+
+## Pass 26A — Completeness matrix: five-chapter “Measure Between Gusts” spine (DRAFT)
+
+Apply the World Bible Part 47 loop-closure and time-spread matrices to the Part 25 story. The objective is to leave a trace of the decision at every stage without writing five disconnected errands. Each chapter ends with a state that later content can truthfully consume.
+
+| Chapter / story function | Player action | State fact required | Failure-forward exit | Later return |
+| --- | --- | --- | --- | --- |
+| 1. Disturbance | Compare route conditions with the dispatch estimate | Forecast availability and current gate status from their owners | No forecast: delay the chain or use neutral dispatch copy | Remember what was available at the time |
+| 2. Discovery | Inspect a route record or hear a report | A concrete source record; no inferred witness | Source absent: keep the lead unresolved | Revisit after a verified observation |
+| 3. Interpretation | Decide whether two times refer to the same observation | Player response plus available evidence IDs | Choose “unresolved” without quest penalty | A later record can challenge either reading |
+| 4. Complication | Decide what should be protected on the next eligible outing | Valid inventory/dispatch command, if any | If the command is unavailable, postpone the action | Character response follows actual choice |
+| 5. Aftermath | Close, reopen, or leave the report incomplete | Expedition result and explicit quest resolution | Incomplete evidence is a terminal narrative answer, not a soft-lock | Chronicle callback at a later supported milestone |
+
+This spine supports a main quest, a character quest, and an optional faction-facing report without sharing one ambiguous completion flag. Each instance needs its own stable quest ID and transition contract. Shared scenes may read the same forecast or return facts, but they cannot complete a sibling quest by proximity. A branch that closes the investigation should state what the player accepts as unknown; it should not unlock a perfect answer behind repeat visits.
+
+### Loop closure by state, not checklist
+
+The disturbance closes when the player can tell whether a forecast existed and whether it was visible. Discovery closes when a source is actually read/heard. Interpretation closes when the player chooses a claim or leaves it open. Complication closes only when a real command commits or the objective is postponed. Aftermath closes when the quest owner records resolved, completed, failed-forward, or abandoned state. If any close condition relies on a future integration seam, mark that chapter DRAFT and keep it outside a release-ready quest packet.
+
+### Severity and reward ladder
+
+Use four consequence levels: cosmetic wording; local expedition/report state; quest/character relationship; campaign-wide faction/endgame. The first playable slice should stay within the first two levels. Relationship and faction changes require evidence and an approved owner. Ending consequences are expansion scope and must not make an unresolved report secretly determine a major ending. Rewards scale similarly: information and a trustworthy report first; access or resources only when a real transaction owner and authored scarcity justify them. No blanket “storm skill” reward.
+
+### Reuse and production cost
+
+The generic reusable asset is a five-chapter lifecycle template and outcome checklist; authored scenes, speaker voices, evidence IDs, and location availability remain specific. A single storm type plus a single route is the core slice. Adding alternate storm types multiplies review across access, effect, UI language, and save state, not merely prose. Each additional type needs its own factual effect owner and failure-forward route before it is counted as content-complete.
+
+## Pass 26B — Quest packet acceptance contract and authored examples (DRAFT)
+
+A quest packet is a bounded unit that can be reviewed by narrative, design, engineering, and QA without requiring any one reviewer to infer hidden behavior from prose. Its header identifies the quest ID, quest type, intended campaign phase, core/expansion classification, prerequisites, owner systems, required catalog references, estimated content volume, and unresolved premise checks. The packet then provides its lifecycle graph, objective text, location availability rules, success and failure-forward outcomes, rewards, state effects, replay/re-entry rules, and acceptance examples. Every referenced ID is provisional until checked against the current catalog. A prose name is not a runtime identifier.
+
+The first storm-investigation slice should demonstrate how the contract works at modest scope. The main quest asks the player to reconcile an estimate with the report from a returned expedition. The character quest asks why the surveyor stopped signing route cards. The optional faction quest asks whether the player will certify a delivery window. These three arcs may reuse the same record and debrief location, but they do not share completion state or imply that one faction owns the underlying weather truth. Their packets each specify which facts they may read and which effect owners, if any, can accept an action.
+
+### Required packet fields
+
+- **Entry:** exact event, prerequisite, or environmental observation that permits discovery; repeat-entry behavior; and behavior when the entry surface is unavailable.
+- **Availability:** the expedition, campaign, character, faction, and location constraints. Use positive conditions with an explanation for hidden or delayed availability.
+- **Objective:** a player-understandable verb and an observable completion signal. “Learn the truth” is not testable; “compare the two recorded times and choose a report status” is.
+- **Required assets:** existing location IDs, dialogue node IDs, evidence IDs, and reward IDs. New IDs must be explicitly labeled proposed.
+- **State transitions:** each legal transition, its actor, its triggering action, and whether it can be repeated, resumed, or reversed.
+- **Failure-forward:** what the player can still do after a source, companion, route, or deadline is lost. Record whether the quest stays open, resolves with uncertainty, or is abandoned.
+- **Reward and cost:** exact owner and transaction, bounds, and whether the response is information, access, material, relationship, faction, or ending level.
+- **Acceptance examples:** at least one ordinary completion, one unavailable dependency, one repeated interaction, one abandonment or failure-forward outcome, and one save/restore boundary if state persists.
+
+### Outcome taxonomy
+
+`Completed` means the declared objective was fulfilled. `Resolved` means the story has an authored terminal interpretation, including an explicit unresolved conclusion. `Failed` records that a required objective can no longer be achieved; it must still provide a clear forward route where the story promises one. `Expired` is appropriate only when a real time window exists and the player has been told about it. `Abandoned` is player-initiated and must not be silently substituted for failure. `Blocked` is a temporary state with a named dependency and a recovery path. `Reopened` requires a new fact or action that justifies new work; it is not a default response to a repeated visit.
+
+### Content acceptance sample
+
+For “Measure Between Gusts,” the report scene accepts three answers: confirm the schedule was missed, mark the cause unknown, or refuse to certify. All three close the delivery-certification branch. Only the first uses language asserting a missed schedule; none claims that weather caused it. The investigation branch remains open if a second evidence source is a real prerequisite. If no second source can be selected for an expedition, the quest selector must either provide a clue route or delay the relevant objective with a visible explanation. It may not leave an accepted quest pointing at an impossible location.
+
+### Review and production cost
+
+Narrative review checks voice, ambiguity, and whether the scene respects what each speaker could know. Design review checks affordance clarity, reversibility, and reward fit. Technical review checks owner APIs, stable IDs, persistence need, and save migration scope. QA review checks transition coverage and an observable UI route. A packet is not ready merely because its dialogue reads well. The first slice stays core only if it works with existing weather, expedition, journal, and dialogue surfaces; any new save-bearing quest ledger, active-sortie mutation, or faction transaction needs its own approved integration premise. Multiple location variants, voiced scenes, and major ending consequences remain expansion candidates with explicit cost estimates.
+
+## Pass 27 — “The Last Dry Strike”: match-manufacture assay quest architecture (DRAFT)
+
+This pass adapts the World Bible Part 43 assay-culture seed to an under-covered production subject: match manufacture. Current data contains a scavenged matchbook and prose that references a match, while the narrative directory has several craft-assay families and no filename-level match-manufacture family in the reviewed inventory. This does not prove the game lacks every match recipe or consumer. No new consumable, recipe, workshop station, quality statistic, or trade specialty is proposed here. The content story can ship as records and choices only if the existing discovery and quest owners can expose them; any material effect needs a separate consumer audit.
+
+### Quest thesis and story spine
+
+“The Last Dry Strike” starts when the player finds a rejected notebook tucked inside a reused match carton. The first page records a batch as good because every test stick ignited. A later page records the same batch as failed because half the box went dead after a damp night. The disagreement is not fraud: one worker tested immediately after drying, another after ordinary storage. The player investigates how an assay becomes a promise to someone who needs a reliable flame.
+
+The main quest has six stages: discover the paired records; locate the second test sheet; learn why the two workers used different storage intervals; compare one household’s complaint with the batch note; decide whether to publish a corrected description, preserve the original entry with an uncertainty note, or decline to certify; and receive a delayed acknowledgement from a character who uses the correction. No stage claims that match quality changes gameplay. The essential outcome is whether future readers inherit an honest record.
+
+### State contract
+
+The quest requires one stable instance ID, entry predicate, explicit accepted/discovered distinction, evidence IDs, response ID, outcome, and callback eligibility. Reading a catalog entry is not proof that a player saw it; use the existing discovery or chronicle fact if a supported consumer exists. Otherwise the packet remains unintegrated and does not create a parallel seen-assay save list. Completed means the player made a report decision. Resolved can represent a deliberate refusal to certify. Blocked is reserved for a named missing record with a clue/fallback route. Failed is reserved for an irrecoverably unavailable required artifact, not for declining to publish. The quest must not auto-complete when a record is loaded.
+
+### Branch portfolio
+
+1. **Publish the corrected interval.** The player preserves the earlier worker’s name and changes the public interpretation to “passed when dry; storage test incomplete.” A later character line recognizes accuracy, not bravery.
+2. **Preserve both records.** The player refuses to flatten conflicting evidence. The archive keeps the original and adds a neutral note that the tests used different conditions.
+3. **Withhold certification.** The player declines to turn a narrow test into a general safety promise. The quest resolves with an explicit unknown and no hidden punishment.
+4. **Lose the second sheet.** If a route or expedition cannot surface it, the story can conclude from the conflicting surviving documents; the missing sheet is a declared limitation, never a permanently blocking objective.
+
+### Companion and side content
+
+The notebook’s author, Mara Venn, speaks in test intervals and dislikes the word reliable without a duration. Iven, who kept the carton in the clinic store, remembers that the order arrived after a leak but cannot identify the batch. A kitchen worker remembers the drawer being moved twice, not who moved it. Their testimonies differ in scope, not moral worth. Optional character quest “One Box for the Walk” asks whether the player will leave a small sealed carton with an outbound team. It must not consume a match item unless the canonical inventory transaction supports that item and the interaction displays the exact cost. Otherwise it is a conversation and report choice only.
+
+### Failure-forward and acceptance cases
+
+The quest is playable if only one record survives: the player can preserve uncertainty. If the author is absent, their signed note remains evidence but cannot unlock a relationship response. If the location is not available, the selector supplies an alternative clue or delays the visit. If a save is restored after the report decision, the callback must not award or mutate anything twice. A repeat visit can deliver concise acknowledgement; it cannot reroll the narrator or rewrite the conclusion. Acceptance includes all three report outcomes, absent source, repeat visit, refusal, and a saved/resumed instance wherever the current quest owner persists state.
+
+The core candidate is a small environmental investigation with an authored evidence pair, one conversation, and a report decision. Expansion scale adds four to six assay records, an optional household side story, a workshop inspection scene, and a late-game archive callback. It does not add production simulation. Integration classification is DATA ONLY if the current narrative discovery and quest consumers reach the records; DATA + WIRING if an existing event route can expose them; CORE EXTENSION only if a needed quest transition has no current owner seam. Any change to item use or recipe outputs is outside this plan’s present authorization.
+
+### Pass 27B — Side-quest portfolio and release boundaries (DRAFT)
+
+The side-quest portfolio rotates types around one small evidence problem so every branch does not become “find another paper.” Names and locations below are proposed story labels until matched to current data IDs.
+
+| Quest seed | Type and typical length | Required player action | Failure-forward route | Reward class | Scope / cost |
+| --- | --- | --- | --- | --- | --- |
+| “The Back of the Card” | Discovery, 1 scene | Inspect the reverse of the original test card | If illegible, record a missing condition and continue | Information | Core candidate; low |
+| “A Box Left Open” | Investigation, 2 scenes | Reconcile a storage note with a witness memory | Close with chain-of-custody unresolved | Quest knowledge | Core if both sources exist; low |
+| “The Walker’s Lamp” | Protection, 1 choice plus callback | Decide whether to delay a departing worker until an existing supply check is made | Let the person leave without a promise; the need remains a note | Character acknowledgement only unless inventory owner supplies a real handoff | Optional; medium |
+| “Dry Paper, Wet Hands” | Resource/crafting, 1 planning scene | Ask the existing workshop owner whether any current recipe can produce a suitable package | If there is no such recipe, convert to information and do not imply production | Existing recipe output only, if verified | Expansion; medium and premise-gated |
+| “Who Copied the Heading?” | Character, 2 scenes | Ask the junior clerk about copying “passed” without reading the second page | Accept their explanation without forced confession | Relationship only through an existing command; otherwise prose | Optional; medium |
+| “For the Route Board” | Delivery/report, 1 return | Carry the corrected statement through an already supported journal or report action | If no report command exists, resolve as an unposted draft | Archive acknowledgement | Expansion; low to medium |
+| “The Storekeeper’s Count” | Faction/institution, 2 scenes | Ask the clinic and kitchen to state how they define a usable carton | Keep the definitions separate if they disagree | Local trust only when a real owner supports it | Expansion; medium |
+| “Keep the Old Word” | Hidden, 1 short scene | Notice that “passed” was underlined twice on the original page | Missed clue changes no required outcome | One optional line | Expansion; low |
+
+No seed is repeatable by default. A recurring shipment audit is appropriate only if an existing system emits repeated batches and offers an observable result. The portfolio’s “repeatable” candidate is therefore explicitly deferred rather than written as a daily quest loop. A timed quest is also excluded from the core: the story has elapsed days in its record, but no player-facing deadline. If an authored edition later adds a genuine deadline, it must identify the clock owner, tell the player the limit, and preserve a non-timed completion path for accessibility and campaign recovery.
+
+### Reuse and production-cost controls
+
+Reusable pieces are the evidence-pair contract, report choice, missing-source fallback, and callback format. The workers, batch facts, voices, and item references are authored per story. Reuse does not mean reskinning one exact dialogue exchange across every technical trade. A second assay arc must use a materially different decision, source conflict, and consequence. The first release slice needs two source records, a discoverable path, three report labels, a journal acknowledgement, and one return line. A small team can author and validate it without new art if an existing archive surface can present records. New voiced cast, workshop animation, physical match-production interaction, and multiple seasons are not in the minimum scope.
+
+The packet is complete only when the content reviewer can answer: which claim is supported by each record; which missing fact remains unknown; what the player can refuse; what each terminal state means; whether any reward has an actual owner; and how an unavailable clue still reaches an honest conclusion. If any answer requires a new item quantity, location route, or reputation rule, the proposal returns to premise review instead of adding a convenient flag.

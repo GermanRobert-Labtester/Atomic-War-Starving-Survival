@@ -87,6 +87,32 @@ namespace Ashfall.Core.Governance
     }
 
     /// <summary>
+    /// Read-only snapshot census for Plan 159 shelter governance diagnostics.
+    /// </summary>
+    public struct ShelterGovernanceCensus
+    {
+        public int TotalBlocs { get; }
+        public int TotalMembers { get; }
+        public int OpenDisputes { get; }
+        public int ResolvedDisputes { get; }
+        public int StabilityRating { get; }
+
+        public ShelterGovernanceCensus(
+            int totalBlocs,
+            int totalMembers,
+            int openDisputes,
+            int resolvedDisputes,
+            int stabilityRating)
+        {
+            TotalBlocs = totalBlocs;
+            TotalMembers = totalMembers;
+            OpenDisputes = openDisputes;
+            ResolvedDisputes = resolvedDisputes;
+            StabilityRating = stabilityRating;
+        }
+    }
+
+    /// <summary>
     /// Plan 159 / C1[27] / DEC-107: Shelter Governance & Political System.
     /// Manages ideological blocs, policy consent evaluations, survivor grievance tracking,
     /// civil dispute resolution, and shelter stability scoring.
@@ -157,6 +183,15 @@ namespace Ashfall.Core.Governance
             {
                 // Fallback to defaults if catalog parse fails
                 RegisterDefaultBlocs();
+            }
+        }
+
+        public void BindValidatedBlocs(IEnumerable<IdeologicalBlocDef> blocs)
+        {
+            if (blocs == null) return;
+            foreach (var b in blocs)
+            {
+                RegisterBlocDefinition(b);
             }
         }
 
@@ -264,7 +299,17 @@ namespace Ashfall.Core.Governance
             return null;
         }
 
-        private void RecalculateBlocWeights()
+        public string? GetSurvivorBlocDisplayName(string survivorId)
+        {
+            string? blocId = GetSurvivorBloc(survivorId);
+            if (blocId != null && _defs.TryGetValue(blocId, out var def) && !string.IsNullOrEmpty(def.display_name))
+            {
+                return def.display_name;
+            }
+            return blocId;
+        }
+
+        public void RecalculateBlocWeights()
         {
             int totalMembers = 0;
             foreach (var b in _state.blocs.Values)
@@ -364,6 +409,9 @@ namespace Ashfall.Core.Governance
         {
             ApplyPolicyEffects(scope, optionId);
         }
+
+        public void RecordPolicyEnactmentGrievance(string scope, string optionId) =>
+            ApplyPolicyEffects(scope, optionId);
 
         public void ApplyPolicyEffects(string scope, string optionId)
         {
@@ -546,6 +594,32 @@ namespace Ashfall.Core.Governance
             }
 
             return Math.Max(0, Math.Min(100, stability));
+        }
+
+        public ShelterGovernanceCensus GetCensus()
+        {
+            int totalMembers = 0;
+            foreach (var b in _state.blocs.Values)
+            {
+                totalMembers += b.member_survivor_ids?.Count ?? 0;
+            }
+
+            int openDisputes = 0;
+            int resolvedDisputes = 0;
+            for (int i = 0; i < _state.disputes.Count; i++)
+            {
+                if (_state.disputes[i].is_resolved) resolvedDisputes++;
+                else openDisputes++;
+            }
+
+            int stability = CalculateStabilityRating();
+
+            return new ShelterGovernanceCensus(
+                _defs.Count,
+                totalMembers,
+                openDisputes,
+                resolvedDisputes,
+                stability);
         }
 
         // ── Time Step & Simulation ────────────────────────────────

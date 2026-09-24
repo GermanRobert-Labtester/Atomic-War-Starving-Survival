@@ -2880,3 +2880,214 @@ Prefer: “No matching source was found in the checked log”; “One listener r
 #### Documentation and release notes
 
 Any implementation should update the rumor-system authority document, catalog schema reference, save migration record, and content-utilization mapping. The world bible seed remains a proposal until those owners sign off. Do not edit generated indexes by hand; use their owning generator. This plan itself may record the future acceptance contract but cannot confer implementation ownership.
+
+## Pass 24A — Authored trigger identifiers and generated observation provenance (DRAFT)
+
+### Content authority
+
+The fresh world-bible question is whether field-guide entries have usable triggers. The source separates at least three things that content must not collapse: authored catalog definitions in `field_guide.json`; authored choice rewards in `travel_encounters.json`; and mutable unlocked state held by `FieldGuideCatalog` and persisted through `FieldGuideSaveStore`. Runtime observation has a fourth source: Plan28's wildlife signal mapping. A field-guide entry is authored content; whether a given expedition generated or surfaced its triggering encounter is runtime context. Do not copy mutable unlocks into JSON, panels, a new generated-content registry, or a parallel save owner.
+
+The current Core model exposes `unlock_trigger` and choice resolution exposes `UnlocksFieldGuideId`. The reviewed host bridge appears to drop the latter when mapping a patrol result, while the combat host overload discards its returned ID. This is a producer-consumer seam to verify, not an invitation to add a generic string-trigger interpreter. The current ecology observation path calls the existing unlock function with a stable ID. Preserve that direct ownership unless an approved architecture decision makes a typed event contract necessary.
+
+### Provenance record contract
+
+For content design and future diagnostics, describe each unlock source with a provenance tuple: stable field-guide ID; trigger token as authored; producer owner and event; source location if known; source category (direct observation, travel encounter, crafted/greenhouse activity, or other validated source); day/context supplied by the existing caller; and whether the grant is first-time or a repeated observation. This is a planning/audit tuple, not a proposed new save schema. Store provenance only if an existing owner already supports it or a bounded data/architecture decision approves the cost.
+
+Do not fabricate “generated” species sightings from a catalog row. Do not turn `unlock_trigger` prose into executable behavior without a closed, validated mapping. Unknown tokens should be reported as authoring/integrity gaps; they must not silently map to “any observation.” If an entry is intentionally obtainable only through future content, mark that status in planning/content inventory, not in mutable player state.
+
+### Audit table shape
+
+Before implementation, build one row per field-guide entry with: `entry_id`, `unlock_trigger`, catalog-validity result, referenced encounter choices, observed runtime producer(s), host route, persistence owner, Codex presentation consumer, and disposition. Dispositions are `wired`, `intentionally future`, `data-only`, `duplicate producer`, `invalid reference`, and `needs premise check`. The table must distinguish “not found by the scoped source search” from “proven absent.” Review every producer before changing data because six entries already have the explicit Plan28 observation bridge.
+
+### Separation cases
+
+- Static content load may populate definitions but may not unlock entries.
+- Save restore may restore unlocked IDs but may not replay the original reward or emit a new observation.
+- Encounter generation may create an eligible encounter but may not unlock the entry before player resolution.
+- Choice resolution may return a grant ID but only the existing field-guide owner changes unlock state.
+- Journal display may report an unlock but may not own it.
+- Codex filtering may render discovered entries but may not infer them from an NPC, rumor, or map marker.
+
+## Pass 24B — Migration and authoring safeguards (DRAFT)
+
+If a future audit renames trigger tokens or entry IDs, preserve existing saves through the current field-guide save migration path. Prefer an explicit alias table owned by the field-guide authority over case-folding guesses, display-name matching, or inferred species aliases. A retired identifier should either migrate deterministically to one canonical ID or remain an unresolved historical record with a diagnostic; never map two distinct entries to one result without a content decision.
+
+A data validator should check that every nonempty `unlocks_field_guide_id` references a real catalog ID and that trigger tokens belong to an enumerated, owner-backed vocabulary. Validator placement must be confirmed against current integrity pipeline ownership. This plan does not create a new JSON schema version, universal trigger registry, runtime reflection, or generated-content API. Static reference validation is lower risk than a new execution engine and should be evaluated first.
+
+For localization, keep trigger tokens and stable IDs language-neutral; localize entry title/body and feedback strings using the existing localization direction. Avoid putting a localized display name in save state or event identity. Content review should compare the claim and its source: direct sighting permits “observed”; a travel report permits “reported”; conflicting clues permit “uncertain.” This gives generated expedition context varied presentation while keeping the factual authored record consistent.
+
+Premise gates: inspect all 32 entries and their actual sources; inspect every host route to `TravelEncounterSystem.ResolveChoice`; determine whether any alternate adapter already applies `UnlocksFieldGuideId`; confirm the current save compatibility policy; and confirm the validator's integration queue and claimed paths. Until those checks are complete, this remains a DRAFT boundary specification.
+
+## Pass 25A — Authored storm windows versus runtime route conditions (DRAFT)
+
+### World-bible subject and authority split
+
+This pass follows Part 46’s question about a storm that catches an expedition mid-route. `year_of_ash_storm_windows.json` is authored, day-ranged data with storm type, intensity, caloric penalty, radon spike, faction morale penalty, and description. `StormWindowQuery` supplies deterministic day queries. `ExpeditionWeatherInputs` contains speed and encounter multipliers used at dispatch, and `ExpeditionState` stores applied weather multipliers. The host also has weather-gate blocks and active-front cascade projection. Those sources describe overlapping context but do not, by themselves, prove an authored storm-window row is propagated to each in-progress sortie.
+
+Keep these categories separate:
+
+- **Authored forecast:** a day range and description in the storm-window catalog.
+- **Current world weather:** the weather authority’s present condition and effects table.
+- **Active cascade front:** a runtime front with region and current encounter multiplier.
+- **Route condition:** destination/gate/route information under expedition/weather-gate owners.
+- **Player observation:** forecast, radio warning, visual description, or returned testimony.
+- **Applied result:** a deterministic effect committed to an active expedition.
+
+A forecast is not an applied hazard. A description is not proof that an expedition encountered it. A player’s testimony may be incomplete without changing canonical storm data.
+
+### Provenance and content fields
+
+For each authored storm encounter candidate, inventory: stable storm-window ID; event type; inclusive active days; affected route/destination IDs or tags; eligible expedition phases; warning source and lead time; effect owner; whether choice is possible; effect magnitudes and bounds; map visibility; narrative source; and persistence identity. These are audit columns, not an approved schema extension. Use existing IDs, weather event classes, location references, and result payloads where possible. Do not store a duplicate day, active front, or derived exposure total inside quest JSON.
+
+Generated content may vary the angle of observation—ash dust on the return route, a radio operator repeating the last clear time, a tool found wrapped in filter cloth—but cannot change authored storm severity, create weather types, or choose an arbitrary survivor casualty. If procedural text is ever introduced, its inputs must be finite and deterministic; choose from authored fragments using current seeded selection, not freeform generation at runtime.
+
+### Integrity audit states
+
+Assign each world-evolution/weather item one status: `authored-and-consumed`, `forecast-only`, `consumer-unverified`, `intentionally-shelter-only`, `blocked-by-route-contract`, or `invalid-reference`. Verify current data and all consumers before selecting. The status is not player-facing. A row without an active-expedition consumer may still be valid as shelter-only weather; do not call it dead content merely because it does not alter a sortie.
+
+## Pass 25B — Data migration, idempotence, and narrative attribution (DRAFT)
+
+Do not expand storm-window schema by adding a list of guessed map IDs or per-expedition mutable conditions before confirming ownership. If route associations are needed, first decide whether the appropriate owner is a current `weather_route_gates.json` rule, route infrastructure catalog, weather effects table, or a typed event contract. One source should define the relationship. Duplicating route IDs into every storm narrative row creates drift and ambiguous precedence.
+
+If an authored event later needs a saved application marker, key it by stable storm-window and expedition identity using the existing save owner that owns the affected expedition. Avoid wall-clock time, localized description text, dictionary order, or generated IDs as identity. Legacy saves with no marker should follow a documented default that does not retroactively apply past storms. A migration must preserve completed/failed sort states and avoid resampling their prior exposure.
+
+Narrative attribution should state what the character can actually know: “the road was closed at the mile board” is local observation; “the storm moved west” requires a radio or forecast source; “the route was safe when we left” records timing, not culpability. If a player chose a forced weather gate, the journal can report that choice and its recorded acute dose without inventing a second severity calculation. Generated debrief prose should derive from the actual committed result, not a planned or projected risk. Any dialogue or quest flag that claims the warning arrived before impact must use a verified timestamp/order source.
+
+Premise checks before promotion: trace how storm-window data enters current weather; locate whether active fronts are advanced on the same campaign clock as expedition ticks; identify any adapter that changes `ExpeditionState` after dispatch; confirm save section ownership; and compare dispatch estimate’s forecast snapshot to runtime. Until then no authored row should claim mid-route delivery, rerouting, camp, or storm damage.
+
+## Pass 25C — Authored field packet and event identity examples (DRAFT)
+
+Use a content packet to distinguish authored facts from runtime results. Example packet (illustrative fields only; not schema approval):
+
+```text
+content_id: storm_report_last_clear
+storm_window_ref: <validated authored storm-window ID or none>
+source_kind: dispatch_forecast | active_front_warning | return_testimony
+source_owner: <verified weather, expedition, radio, or journal owner>
+route_ref: <existing route/gate/location ID>
+eligible_phase: outbound | looting | inbound | debrief
+player_command_ref: <existing command or none>
+result_ref: <committed expedition outcome or none>
+text_variant: <localized authored key>
+```
+
+The packet’s IDs should be canonical data IDs, not translated display text. `none` is a meaningful statement that the scene is not event-driven; it must not be replaced with an inferred source. Narrative eligibility and mechanical effect eligibility are separate: a report can be authored for a return debrief while no mid-route mechanic exists. Generated placement can choose among compatible authored lines, but the line must render the source kind accurately.
+
+A stable application identity, if later required, should represent the actual event instance rather than content placement: same storm window, same expedition, same transition sequence. It should be deterministic and owned with expedition state. Do not use “storm-window ID + day” if multiple route phases within the day can legitimately create distinct events, unless the owner guarantees one transition. Do not use random GUIDs, localized labels, hash iteration order, or a free-text radio transcript as a deduplication key.
+
+### Ownership collision register
+
+- Weather window says when an authored weather class is active; it does not own expedition stage.
+- Weather effects table says what a current weather condition does to supported consumers; it does not own every Year of Ash narrative event.
+- Weather gate says whether a location/route can be dispatched, and any configured force costs; it is not a general mid-route choice engine.
+- Active cascade front can affect an expedition path only where the verified adapter routes its result to the expedition owner.
+- Expedition owns trip state and travel progression; it should not invent forecast truth.
+- Narrative/quest content consumes a committed fact; it should not independently apply dose, delay, or map mutation.
+
+If two owners claim the same output, pause for architecture decision rather than adding another cross-reference table. Content may be authored while the seam remains unimplemented, but it must carry a DRAFT label and a dependency note.
+
+## Pass 26A — Content coverage, register rotation, and proof requirements (DRAFT)
+
+The World Bible Part 47 completeness matrices can be applied without expanding a catalog prematurely. For every proposed storm-related content row, record four coverage dimensions: **loop closure** (what state resolves the beat), **register rotation** (which distinct voice or document form carries it), **severity** (cosmetic, local, quest, faction/endgame), and **time spread** (when the callback can occur and what proves it). A row is incomplete if it supplies only evocative prose while its source, consumer, or terminal state is blank.
+
+### Small authored manifest (planning shape)
+
+A future content inventory may use these columns in an existing quest/encounter review artifact: `content_id`; `source_fact`; `source_owner`; `consumer_owner`; `storm_class`; `route_or_location_id`; `phase`; `register`; `severity_tier`; `quest_id`; `required_state`; `terminal_state`; `callback_window`; `save_owner`; `provenance_confidence`; and `validation_status`. This is a review shape, not a proposal for a new JSON authority. Before converting it to data, confirm which existing schema can express each field and omit the rest.
+
+### Authored versus generated boundaries
+
+Authored: storm-class facts and legal route rules; forecast wording; exact choice labels; recurring character voice; quest transitions; consequences explicitly declared by owners. Generated from current state: whether the scene is available, which phase is active, current weather/route result, returned cargo/condition, and whether a callback is eligible. Randomized: optional line order or minor sensory variation only through existing seeded selection. Forbidden: generated casualties, arbitrary permanent closures, invented forecast accuracy, free-text NPC names, or an inferred story cause for an observed hazard.
+
+A narrative callback can be authored in advance and remain unavailable until its state predicates are true. That does not authorize the system to generate the factual event. Each preview line should carry an internal review note indicating whether it is a diegetic claim, a character’s inference, or an editorial possibility. Internal notes never appear to players.
+
+### Citation and content tests
+
+For any row referring to a location or faction, verify the canonical ID in its owning catalog. For any resource, check the item authority and transaction route. For any disease/exposure, check the actual medical/radiation consumer. For any map appearance, check current map visibility. For any ending callback, check the endgame consumer and approved consequence level. A content row with an unresolved owner remains prose-only proposal and cannot be described as playable, mandatory, reachable, or integrated.
+
+Negative cases matter: catalog load alone does not surface an event; forecast presence alone does not mark “warned”; an active weather interval alone does not claim a sortie was affected; save restore does not create a second callback; and text availability does not imply a new map marker. All these protections use existing owners and authoring review before any new generic framework is considered.
+
+## Pass 26B — Provenance, variation, and content validation boundary (DRAFT)
+
+Authored content owns facts that must remain stable across runs: named people, canonical locations, quest outcomes, faction positions, authored evidence, and callbacks that depend on prior choices. Generated content may vary presentation within a constrained envelope: non-canonical salvage dressing, ambient phrasing, a validated set of generic encounter details, or a rotating optional destination. Generated variation must never invent a named historical event, a required quest answer, a faction treaty, or a permanent character relationship. If a generated result changes progression, it is no longer a cosmetic variation and needs an authored contract, deterministic inputs, and the owning system’s persistence rules.
+
+### Content provenance manifest
+
+For each authored or generated element, track: stable ID; source file/catalog; content type; canonical or variable classification; authoring owner; consuming system; locale/source-language policy; required flags; optional tags; allowed randomization dimensions; persistence lifetime; replacement/fallback; and last premise review. Generated candidates additionally declare their template ID, allowed token sources, variation seed inputs, output bounds, and prohibited fields. The manifest is a review aid, not a duplicate runtime catalog. Where an existing schema already represents these fields, extend that schema through its accepted migration route instead of creating a shadow manifest that gameplay must read.
+
+A clue can be authored while its ordering is variable. For instance, three distinct records may be selected in different sequences, but each record’s writer, location, and factual claims are fixed. The final conclusion depends on the player’s explicit interpretation and observed evidence IDs, not on the order in which a randomizer happened to present a sentence. This allows replay variation while preserving narrative accountability.
+
+### Validation layers
+
+1. **Shape:** valid syntax, stable unique IDs, supported schema version, no empty required fields, and valid enum values.
+2. **References:** every speaker, quest, location, faction, item, clue, flag, and fallback points to an existing authority or is explicitly labeled proposed.
+3. **Graph:** all dialogue and quest references resolve; intended terminals are reachable; unreachable nodes are reported; loops require an exit; required objectives have a recovery route.
+4. **Semantic envelope:** generated output uses only declared slots, respects length limits, and does not write canonical facts or consequence values.
+5. **Consumer reachability:** authored data is loaded by the actual consumer and can reach an observable player route. Catalog presence alone does not prove integration.
+6. **Localization and accessibility:** placeholders are safe under expansion, meaning survives translation, non-color cues identify state, and long text wraps/truncates accessibly.
+
+### Variation budget
+
+Every reusable template names its axes and their bounds. A weather debrief may vary speaker, evidence order, and one optional line. It may not vary the consequence category or claim an unsupported expedition outcome. A generic discovery note may vary material and handwriting, but not its claimed author unless the source authority supplies that author. Content review samples minimum, maximum, repeated, missing-token, and translated-length cases. If two templates create indistinguishable player decisions, consolidate their authoring responsibility instead of multiplying near-duplicates.
+
+### Update and compatibility behavior
+
+Content IDs are durable references. Copy edits preserve IDs; replacing meaning creates a reviewed revision or migration. Removal requires a consumer audit and a fallback for saves that reference the old ID. Generated result replay records must use the current deterministic seed contract and persist only when the existing owner needs the result after reload. A reload may not reroll a clue already presented in the same expedition. If generated material is intentionally ephemeral, state that it disappears at expedition end and ensure no quest transition depends on it.
+
+### Acceptance examples
+
+A fixed faction conversation with several tone variants remains authored because it conveys political facts. A random selection among pre-authored ambient lines is generated presentation, provided all lines have equivalent gameplay meaning. A site selected from an authored eligible pool is procedural selection, while the site’s topology, quest clue, and persistent discovery fact remain authored. A generated “lost message” that can fulfill a quest requirement is unacceptable without stable provenance, uniqueness rules, replay behavior, and a deterministic authoring contract. Reviewers should be able to label every persistent player-visible claim with its data source and every variable choice with its permitted source of randomness.
+
+## Pass 27 — Assay records, runtime claims, and controlled variation (DRAFT)
+
+The match-manufacturing seed is an authored-content extension to an existing craft and evidence landscape. It is not permission to make assay records a new simulation authority. The narrative inventory already contains distinct technical record families—including metallurgical, textile, water, and tallow processes—so new material must add a specific missing register, not repackage those families under new names. Current item prose includes a diner matchbook and an MRE reference to a match; existence of those strings does not prove a player-facing manufacturing recipe, count, durability, or quality effect.
+
+### Canonical versus variable claims
+
+Canonical authored facts: who wrote each assay; the date and test condition stated on the page; which batch the page names; the player’s chosen report; and the later character callback. Variable facts, if an existing seeded selector supports them: which optional ambient record appears first, whether a generic workbench is dressed with chalk marks or a folded cloth, and which nonessential worker supplies a short observation. Generated text must not change a test result, invent a batch ID, alter a date, identify a culprit, or decide which survivor was harmed.
+
+An authored record can include deliberate incompleteness. The first test’s immediate ignition result is not equivalent to durability after storage. The second note’s failure does not disprove the first. A witness can know that a shelf leaked without knowing the batch. These limits belong in the source content itself so that even a generated line permutation cannot upgrade recollection to proof.
+
+### Data contract proposal
+
+Before drafting data, compare the target format with existing narrative schemas and their discovery manifest. Reuse an accepted collection shape if one supports stable record IDs, writer, date, subject, severity or test status, body text, follow-up, and cross-references. Do not add top-level assay_quality or match_reliability fields to make the records feel systemic. Content references should use validated quest/evidence IDs only after the owning quest consumer has been selected. Proposed IDs use a temporary planning namespace until the catalog integrity validator and current naming convention confirm them.
+
+### Revision and provenance
+
+Copy-editing does not change a record’s historical claim. Revising a test interpretation requires a second dated note, retaining the earlier wording. The player’s archive response is a new report fact, not an edit to the immutable source. If a future integration supports discovery state, persist the identity of a presented record through the existing discovery owner; do not save the rendered text or random dressing as a second copy. If no consumer exists, records remain a prose packet with no false gameplay reachability claim.
+
+### Validation and variation acceptance
+
+Shape validation checks supported schema, stable unique IDs, source IDs, locale fields, bounded text, and cross-references. Graph validation checks that each required clue and fallback can lead to one of the declared terminal outcomes. Provenance review identifies which claims are direct observation, hearsay, inference, or player interpretation. Localization review preserves conditional language (“after drying,” “not retested,” “cannot identify the carton”). Generated or selected versions are compared to confirm they do not change choice affordances. A narrative corpus may be present in JSON yet still fail consumer reachability; the plan records that as pending until discovery, map, or quest route evidence exists.
+
+### Anti-duplication rules
+
+Do not repeat tallow, candle-dipping, beeswax, or existing metallurgical assay subjects under a match label. Do not duplicate foundry quality math or the workshop recipe authority. Do not add a new artisan profession or a hidden skill tier. Do not convert existing “uses a match” descriptive prose into a consumable transaction. Do not use a generated outcome to decide whether a character’s testimony is credible. The design contribution is a grounded disagreement about evidence standards and an authorable log family with a route and choice, not a new item simulation.
+
+### Pass 27B — Proposed evidence mini-corpus and immutable claim ledger (DRAFT)
+
+A release candidate should begin with four short authored entries rather than a large batch. The examples below define content roles and claims; they are not production JSON.
+
+| Record role | Voice / form | Supported claim | Deliberate limit |
+| --- | --- | --- | --- |
+| Immediate test card | Shop tally, clipped notation | Every sampled stick lit at the moment of the test | No storage duration or outside-weather condition |
+| Storage retest | Dated technician note | A stated fraction failed after a named storage interval | Does not identify who moved the carton |
+| Transfer notation | Receiving mark and initials | One carton entered a store room on a date | Does not prove this was the tested batch |
+| Household note | Short personal entry | A box found in a damp drawer was unreliable when needed | Does not identify a manufacturing lot |
+
+A fifth optional note can document why the old form asked a yes/no question. It must not contain a secret “correct answer.” Each record has one provenance class: direct observation, copied source, personal recollection, or interpretation. If a record quotes another source, the quoted source ID is explicit. A copy is not counted as independent corroboration.
+
+### Source-claim matrix
+
+The content manifest should link every player-facing proposition to its source record and confidence wording. “The test passed” maps to the first card. “The later storage test failed” maps to the retest. “The household received this batch” remains unsupported unless a matching lot or delivery mark is found. “The clerk falsified the form” is not an authored fact and must not appear as a hidden branch. The player can infer carelessness, pressure, or an honest mismatch, but those are interpretations unless later evidence supports them.
+
+This matrix prevents a common narrative defect: the quest starts from ambiguity but its reward text quietly announces a culprit. Callbacks also stay within the chosen report. A future character can say “You left the missing interval in the public note”; they cannot say “Your work proved the entire supply chain safe.”
+
+### Localization, content cadence, and batch reuse
+
+The record body should remain concise enough for a single scroll surface and carry its own date, author, condition, and status. Technical abbreviations require a glossary entry if they recur. Localized dates cannot change ordering; use stable numeric day facts beneath the display label. The design uses institutional and intimate registers: one administrative form, one technical note, one domestic note. A later continuation can rotate into cartographic or media presentation, but should not repeat three technical reports in a row without adding a different decision.
+
+High-volume expansions must use a batch manifest with expected row count, unique-ID range, voice assignment, reference validation, and duplicate-claim review. Existing technical corpora are extension references, not copy templates. Each new entry needs a distinct operation and consequence. The corpus should not be expanded merely to reach a word count. Stop when the player has enough evidence for the declared choice and the remaining records only restate the same uncertainty.
+
+### Generated-content red-team
+
+Try to generate a variant that says the carton was “stored for two months,” assigns it to a named person, or claims the failure caused a medical emergency. Each must fail validation unless an authored source supports the value. Try an absent writer, a repeated ID, a missing record, a mistranslated uncertainty term, and a save containing a response ID from an obsolete version. The expected behavior is a safe neutral line, an explicit unresolved state, or a reviewed migration—not confident invention or silent completion.

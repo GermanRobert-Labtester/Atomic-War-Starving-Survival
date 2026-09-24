@@ -3026,3 +3026,210 @@ What if the hub policy loads but the rumor row does not? What if the row loads b
 #### Observability and metrics
 
 If maintainers need to know whether ambient rows are used, record bounded content-utilization facts through the existing instrumentation authority. Do not record player belief, emotional reaction, or conversation text as analytics. A runtime metric can count surfaced/read/accepted outcomes by stable authored ID if that data policy already exists. Metrics do not grant new rumor persistence or make a narrative claim true.
+
+## Pass 24A — Preserve travel-choice guide rewards across consequence owners (DRAFT)
+
+### Verified seam
+
+Part 46 asks which field-guide entries never trigger. The inspected Core resolver returns `TravelEncounterResolutionResult.UnlocksFieldGuideId`; the legacy overload also returns the identifier separately. `ExpeditionEncounterBridge.ResolveChoice` recognizes patrol encounters and creates `NarrativeEncounterResolutionResult` from the travel result, copying morale and guilt but not the field-guide ID. The normal host path then applies narrative encounter consequences. Separately, `ExpeditionHostSession.ResolveTravelChoiceWithCombat` calls a discard-output overload (`out _, out _, out _`) before applying combat. These two reviewed routes therefore warrant a loss-of-effect audit. The evidence does not establish that no other adapter consumes the field-guide ID, so the first integration task is a full call-site census.
+
+### Owner-routed sequence
+
+1. Core validates and resolves the authored encounter choice under its existing transaction and returns the stable guide ID as part of the resolution result.
+2. The adapter that owns field-guide integration validates that the returned ID exists in the already-loaded `FieldGuideCatalog`.
+3. That adapter calls the existing unlock operation once. It does not write a new ledger, save section, or UI-owned counter.
+4. Existing journal/Codex feedback reports whether the unlock was newly applied. Repeated unlocks remain no-ops and must not replay reward text.
+5. Existing `FieldGuideSaveStore` capture/restore persists the state under its current owner. The resolver must not directly persist or mutate a panel.
+6. Encounter and combat consequences continue through their current owners exactly once; guide failure must not roll back a fully valid unrelated choice unless the owner contract explicitly requires atomicity.
+
+This sequence is a design target only. Before choosing the adapter, verify whether `ExpeditionEncounterBridge`, `ExpeditionHostSession`, a campaign host, or a separate result consumer is the correct integration owner. Preserve a single route for both standard and combat-added resolution; avoid creating one special field-guide grant path per caller.
+
+### Effect and failure table
+
+| Condition | Guide effect | Other encounter effect | Required observability |
+| --- | --- | --- | --- |
+| Valid ID, first unlock | Unlock existing entry | Apply once | Codex/journal confirms new entry |
+| Valid ID, already unlocked | Idempotent no-op | Apply once | No duplicate reward |
+| Empty ID | None | Apply ordinary valid choice | No false guide message |
+| Unknown ID | Reject guide grant | Preserve valid non-guide outcome per approved contract | Diagnostic identifies encounter/choice/ID |
+| Bridge maps result | Preserve ID to owner | Preserve morale/guilt | Integration outcome is visible |
+| Combat wrapper resolves same choice | Share same result routing | Combat runs once | No duplicate choice resolution |
+| Save restored | No new grant event | No replayed encounter | Entry remains readable |
+
+### Ordering and atomicity
+
+Choice costs and requirements are validated by Core before resolution. The guide effect occurs only after a successful resolution result, never on offer, selection preview, encounter surfacing, or map spawn. If the guide ID is invalid, the resolver's ordinary transaction result remains governed by existing Core semantics; host code must not pretend a failed guide grant reversed consumed inventory. Whether the field-guide grant belongs inside Core transaction atomicity is an architecture decision only if current evidence shows partial commit risk. The minimal likely route is a typed effect carried in the existing resolution payload and applied at the existing host consequence seam.
+
+## Pass 24B — Exactly-once and integration acceptance plan (DRAFT)
+
+Audit every caller of both `TravelEncounterSystem.ResolveChoice` overloads and every adapter that handles `TravelEncounterResolutionResult`. For each caller, record whether it is a production route, CLI/sample path, self-test, or unused helper; whether the ID is preserved; and which existing field-guide owner is available. The direct combat route deserves special scrutiny because it currently discards the output values. Do not infer that a demo CLI proves Godot runtime integration.
+
+A minimal integration package should change only the chosen shared seam and, if necessary, the smallest host adapter. It should not touch ecology observation code, add a new save section, move Codex catalog ownership, revise all 32 entries, or expand the world bible. The owner must deduplicate by stable entry ID and route feedback through existing journal/UI conventions. Ensure both `ResolveTravelChoiceWithCombat` and the standard surfaced-encounter route cannot apply the same choice twice. If Core allows legitimate direct re-resolution, the host acknowledgement boundary must still prevent duplicate player-facing effects according to the existing queue contract.
+
+Acceptance criteria: every supported route carries the returned ID; a valid ID unlocks via one canonical owner; already-unlocked state is idempotent; invalid IDs are contained and diagnosable; save/load retains the result without replaying it; ordinary morale/guilt/cost/combat behavior remains unchanged; and source-specific dialogue never claims a grant before the owner confirms it. The call-site audit must then inventory `unlock_trigger` strings and identify which are wired, intentionally future, or unresolved. That broader content census is a follow-up package, not a prerequisite to the narrow bridge repair.
+
+**Governance:** DRAFT, documentation-only. Before execution, confirm queue availability in `INTEGRATION_PLANS.md`, claim exact paths in `WORKTREE_OWNERSHIP.md`, recheck all premises against current source, choose focused targets under `TEST_POLICY.md`, and report save/determinism implications in the handoff. No implementation or test is authorized by this plan tranche.
+
+## Pass 25A — Mid-route weather transition as a typed effect contract (DRAFT)
+
+### Existing owners and unresolved seam
+
+The World Bible Part 46 prompt asks how an expedition behaves when a storm window overlaps a trip already underway. Current Core `ExpeditionSystem.TickHours` processes stamina drain, encounter roll, vehicle breakdown, and phase advance; the state also retains dispatch-time weather multipliers. Host dispatch pulls weather inputs from the current weather effects table. Separately, `YearOfAshStormCatalog` queries day-range windows, `WeatherGateBlock` describes a dispatch gate and force costs, and `WeatherCascadeHostSession.RouteExpedition` changes active-front encounter multipliers. The reviewed evidence does not prove a single event routes a newly active storm window into an existing expedition state. This is the central premise gate.
+
+### Candidate consequence envelope
+
+If current architecture permits a dynamic route effect, represent it as an explicit owner-produced fact with bounded data: `event_id`, `expedition_id`, `storm_window_id` or active-front identity, campaign day/tick, applicable route/phase, effect kind, magnitude, and whether the player was offered an action before commit. This is a design checklist, not a new DTO approval. The expedition owner validates eligibility and applies any travel/encounter consequence. Host presentation renders a truthful warning/debrief. Journal records only accepted facts. Weather authority remains owner of storm windows and current weather; UI cannot apply the effect.
+
+No new effect category should be added until reviewing the current expedition and weather event vocabularies. A delay could alter remaining route ticks; a hazard could alter encounter risk; exposure could reach radiation/gear wear; a blocked route might require a supported return/detour choice. These require different consumer owners. Avoid a generic “storm severity” that simultaneously changes speed, encounter risk, radiation, vehicle condition, and quest state without explicit balance design.
+
+### Exactly-once ordering
+
+1. Weather owner reports a genuine transition with stable identity.
+2. Host/session determines whether the affected expedition is active and its phase is eligible.
+3. Expedition owner accepts the event once and captures the application marker through its existing state owner.
+4. If a player command is available, the UI presents it before irreversible effect application; command validation rechecks state version and costs.
+5. Existing medical/radiation/vehicle owners receive typed consequences as applicable, never duplicated in the expedition panel.
+6. Quest/narrative adapters consume the committed result, not the forecast or warning attempt.
+7. Save capture preserves pending/committed distinction; restore neither drops a pending choice nor replays a committed effect.
+
+If no event can reach an active expedition, the correct scope may be dispatch forecast clarity plus after-return debrief, not a new dynamic effect system.
+
+## Pass 25B — Duplicate, rollback, and failure contracts (DRAFT)
+
+**Duplicate event:** same front/window identity on consecutive day ticks must not apply repeated one-time route delay. Repeating continuous exposure is valid only if the existing exposure clock owns it; do not add a second per-storm dose counter.
+
+**Stale player command:** if the sortie phase changed since its warning panel opened, reject with current truthful state and do not consume stamina, equipment, or cargo. Existing state-version/command-result contracts should determine this behavior.
+
+**Missing expedition:** log or discard the weather-to-expedition projection according to the source owner; never create a ghost sortie. **Unknown route:** apply only a general effect if authored data explicitly permits a global route effect; otherwise block and diagnose. **Already completed/failed sortie:** do not mutate past results. **Save between warning and choice:** preserve exactly the state needed to resume or cancel the offered command. **Clock disagreement:** campaign day and expedition hour ordering must be resolved before any deadline or warning claims to occur before impact.
+
+An implementation plan must name the single integration seam, affected state owner, current save capture/restore route, deterministic ID generation, journal or UI observer, and smallest focused test target. The contract must preserve current dispatch forced-gate acute-dose path and ordinary travel tick order. No parallel weather ledger, expedition event registry, route manager, or player-facing dialog state is proposed.
+
+Acceptance review should include a negative assertion that a storm-window catalog row alone cannot alter an expedition, plus positive examples for each supported route-phase effect. It should compare the dispatch estimate to the saved active-sortie inputs, verify one application through restore, and confirm that debrief prose derives from the committed result. Future tests require package approval and the current test policy; this documentation tranche adds no tests or production changes.
+
+## Pass 25C — Cross-system result matrix and observability checklist (DRAFT)
+
+| Outcome fact | Canonical owner to verify | Narrative consumer | Persistence question | Duplicate-effect risk |
+| --- | --- | --- | --- | --- |
+| Forecast interval shown | Weather/forecast host | Dispatch conversation | Is exposure/view state saved? | Claiming player saw an unseen panel |
+| Dispatch weather estimate | Expedition host/Core | Quest gate and debrief | Are sampled multipliers retained? | Recomputing from different weather later |
+| Gate force cost | Weather gate + dispatch result | Journal/debrief | Is forced choice captured with sortie? | Applying stamina or acute dose twice |
+| Active front changes | Weather cascade | Expedition adapter, if any | Is front identity stable on restore? | Same front raising risk repeatedly |
+| Expedition phase result | Expedition Core | Quest and dialogue | Existing expedition save path | Rewriting terminal states |
+| Returned testimony | Narrative/journal owner | Investigation branch | Is source/timing persisted? | Treating display text as evidence |
+| Equipment damage | Gear/vehicle condition owner | Repair/dispatch decision | Existing item durability save | Duplicating wear in quest flags |
+| Faction delivery | Inventory/trade/faction owners | Courier branch | Existing transaction/reputation path | Awarding standing on dialogue alone |
+
+Each outcome should be observable in at least one player-facing surface, but not every fact requires a new modal. Dispatch details belong in the existing estimate/route UI; forced gate cost belongs in pre-commit feedback; active expedition changes need an in-context warning only if a timely command exists; post-return consequences can appear in the existing report/journal surface. A log entry must identify the actual committed outcome and use stable, deduplicated identity.
+
+### Integration cost tiers
+
+- **Tier 0, prose-only debrief:** source event already exists and supplies a truthful result. Content/localization/UI fit only.
+- **Tier 1, presentation bridge:** current owner emits a verified result but host does not surface it. Small adapter work, no new state.
+- **Tier 2, saved choice:** player can intervene and resume after save; requires current state owner and capture/restore extension, deterministic command identity, and focused save coverage.
+- **Tier 3, dynamic route simulation:** storm transition changes active expedition timing/phase/effects. Requires explicit architecture decision, ordering contract, balance review, UI, persistence, and cross-system verification. Do not conceal Tier 3 cost inside a “quest content” ticket.
+
+The preferred first implementation, if approved, should select the lowest tier that produces a truthful player outcome. If no route transition bridge exists, ship forecast readability and post-return source-aware writing first, then separately decide whether dynamic interruption belongs in core or an expansion. Do not conflate a narrative gap with evidence that a new simulation system is necessary.
+
+## Pass 26B — Consequence declarations, idempotency, and cross-plan routing (DRAFT)
+
+Dialogue choices should declare consequences at the level the player can reasonably anticipate. A choice may affect wording only; close a local scene; advance or resolve its quest; update a character relationship; alter faction access; change a world/location fact; or contribute to an ending. These levels are not interchangeable. A line that sounds like a promise to aid a faction cannot be routed as cosmetic flavor if the player expects access or resources to change. Conversely, a small tone choice should not unexpectedly alter a major ending.
+
+### Consequence envelope
+
+Each response declaration includes response ID, consequence class, command or event owner, input parameters, preconditions, success feedback, rejection feedback, repeat policy, and whether the effect is immediate or deferred until an existing commit point. A consequence can request an owner action, but dialogue itself does not directly mutate the owner. If the owner rejects the request—for example, because the item is not available—the response must remain coherent and explain the failure. Do not show a success line before the authoritative result is known.
+
+The implementation order is: validate scene and response eligibility; submit the declared command once; receive an accepted/rejected outcome; update the owning quest or relationship through its supported contract; display truthful feedback; refresh dependent UI at the next safe boundary. An event may notify a journal or character response after commit, but subscribers must not replay the original cost. Save restoration must restore the owner’s committed fact and not rerun dialogue consequences.
+
+### Idempotency and transactional outcomes
+
+One-time costs and rewards need a stable action identity or owner-provided deduplication rule. Reopening a conversation, clicking twice, reloading after a committed save, or reconstructing the scene must not charge or grant twice. If one response requires multiple owner actions, define partial failure behavior: either the operations form a supported transaction, or the player receives an explicit partial result and a safe recovery route. Do not emulate atomicity by holding duplicate state inside a dialogue manager.
+
+A failure response is not a successful consequence. Rejected transactions preserve current state, identify a recovery condition, and keep the conversation navigable. Deferred effects name the event that will apply them, such as expedition return or the next daily owner tick; they may not depend on an undocumented callback order. If a change must survive restart, the existing owner’s save capture/restore path is part of the acceptance evidence.
+
+### Cross-plan routing example
+
+A player chooses “I’ll deliver what returned” in the courier scene. The dialogue submits the existing inventory/contract command using the exact eligible returned items. If accepted, the contract owner records delivery, the quest owner advances its own objective, and the next scene acknowledges the confirmed quantity. The faction owner may update standing only if an explicit supported rule maps this delivery to standing. If the command is rejected for insufficient quantity, no quest or faction effect fires; the player sees the missing amount and may choose another response. A storm report alone never grants faction standing.
+
+### Consequence review grid
+
+| Class | Minimum evidence | Expected player feedback | Persistence owner |
+| --- | --- | --- | --- |
+| Cosmetic | same scene, no state mutation | wording or tone changes | none beyond scene lifetime |
+| Local | supported scene/session state | visible local outcome | current scene/host owner |
+| Quest | valid quest transition | objective/status updates | quest authority |
+| Relationship | supported character command/event | character response or displayed state | relationship authority |
+| Faction | supported faction transaction | access/standing feedback | faction authority |
+| World | supported location/resource/event owner | observable world/map/result change | world owner |
+| Ending | approved ending-resolution contract | clear preview where possible and ending evidence | campaign/endings authority |
+
+### Scope limits
+
+Minimum viable dialogue consequence routing supports cosmetic/local responses and one validated quest update through the current owner. Relationship, faction, campaign, and ending effects are optional layers requiring integration premises, save review, and distinct player feedback. The storm investigation’s initial branch should stop at information, local report status, and a quest transition. This produces meaningful choice while avoiding a large, unsupported web of hidden faction and ending mutations.
+
+## Pass 27 — Owner-routed outcomes for “The Last Dry Strike” (DRAFT)
+
+The player’s report choice is meaningful because it changes how the archive describes its own evidence, not because every conversation needs a reward meter. Consequences remain proportional to the action and explicit about their owner. The baseline implementation has one quest-level outcome and an optional chronicle/journal acknowledgement if the current owners expose the needed route. It does not add a match reliability stat, recipe bonus, inventory stack, market price modifier, trade specialty, or faction reputation change.
+
+### Response-to-owner map
+
+| Player intent | Consequence class | Request/owner | Observable result | Repeat rule |
+| --- | --- | --- | --- | --- |
+| Publish corrected interval | Quest | Existing quest/report transition | Journal says immediate test passed; storage unknown | One transition per quest instance |
+| Preserve both records | Quest/local archive | Quest owner; archive display only if a current surface supports it | Both source notes remain cited | Idempotent on reload |
+| Decline certification | Quest | Resolve as uncertainty through quest owner | No pass/fail claim is made | Terminal response; no hidden penalty |
+| Ask for available supplies | Resource inquiry | Inventory/quartermaster owner, read only until confirmed | Actual stock or unavailable state | Query has no cost |
+| Commit a supply handoff | Resource/quest | Existing inventory transaction first, then quest update | Exact accepted quantity shown | Transaction key or owner deduplication |
+| Change caravan price or standing | Faction/economy | Not part of the core slice | No such output | Requires separately approved mechanics |
+| Change map access or route risk | World | Not part of the core slice | No such output | Requires map owner and new decision |
+
+The owner sequence is validate response eligibility; submit one existing command if needed; wait for accepted/rejected result; record the quest transition; refresh journal/dialogue at the next safe boundary. A rejected inventory transaction does not advance delivery or alter standing. A report can still close as “not certified” if the player has no item, because certification is based on evidence rather than possession.
+
+### Consequence severity and scale
+
+- **Level 0, wording:** a character uses “test slip” instead of “quality card.” No stored fact.
+- **Level 1, local quest state:** the archive report selection changes. Core slice.
+- **Level 2, system state:** an existing discovery or chronicle owner displays the corrected note. Only if the current API supports the action.
+- **Level 3, cross-system cascade:** a future authored delivery objective reads the report when it chooses supplies. Expansion and requires a source census.
+- **Level 4, world state:** new markets, routes, or settlement prices change. Not recommended for this content seed; requires market/faction owner review.
+- **Level 5, saga:** a late-game ending treats the archive choice as evidence of institutional honesty. This is expansion-only and must use the existing ending input contract; it cannot be implied from one small report without authored weight and review.
+
+### Transaction and save boundaries
+
+Dialogue reconstruction, panel refresh, repeated clicks, and save/load cannot repeat a cost or award. A supply request that is only a query is side-effect free. If an existing command consumes an item, the UI must show the actual item ID translated to a player-facing name and exact quantity before submission. The narrative result is emitted only after acceptance. If quest state persists, its existing save owner must capture and restore the selected report outcome; this plan adds no save store. A restored outcome cannot rerun the callback transaction.
+
+### Failure and recovery behavior
+
+If the report owner is unavailable, choices can remain prose only if the scene clearly describes the decision as an in-world conversation with no archived state change. Prefer delaying the scene over fake functionality. If a character is absent, their relationship consequence is dropped, while the evidence quest remains resolvable. If the location cannot spawn, use the Plan 18 clue fallback. If the player chooses an incomplete record set, the terminal state remains uncertain and can still be a successful completion of the stated objective. If the player abandons the investigation, record abandonment distinctly from a failed assay.
+
+### Production recommendation
+
+Core scope: authored evidence, three report responses, one local quest transition, and a concise callback. Expansion scope: multiple workshop reports, cross-season recurrence, a character arc for Mara, and a faction-facing supply contract. Exclude new economic effects until market demand and ownership are verified. The strongest recommended content is the unresolved report: a player can protect future readers without receiving a bonus, and the late callback can show the cost of precision when another group would prefer certainty.
+
+### Pass 27B — Action contract, negative cases, and implementation staircase (DRAFT)
+
+**Choice 1: publish a narrower statement.** Preconditions: both reports are discovered or the player explicitly chooses to publish a single-source limitation. Request: existing quest/report owner stores the selected outcome. Success: the journal presents the chosen wording and citations. Rejection: if the report route is not available, keep the conversation open and offer preserve/refuse. Repeat: identical response is a no-op.
+
+**Choice 2: keep both papers side by side.** Preconditions: at least one record is available. Request: quest owner resolves to “evidence preserved, interpretation open,” if supported. Success: a later archive visit can show the pair. Rejection: if no persistent archive surface exists, show a local acknowledgment and do not promise a durable file. Repeat: no duplicate entry.
+
+**Choice 3: do not certify.** Preconditions: none beyond reaching the choice. Request: quest owner resolves with uncertainty or records refusal. Success: a clear terminal status that does not count as a failed assay. Rejection: the scene remains navigable and explains that the decision could not be recorded. Repeat: no cost.
+
+**Choice 4: ask for a carton.** Preconditions: an existing item definition and inventory query. Request: read-only stock check. Success: present the actual number or “not available.” Rejection: display the source’s unavailable state. No quest transition occurs until the player explicitly confirms a supported transfer command.
+
+**Choice 5: confirm transfer.** Preconditions: visible quantity, current inventory, and a command that accepts the transfer. Request: owner transaction, then quest update. Success: display actual accepted quantity and new quest objective. Rejection: no payment, inventory mutation, or relationship effect; let the player retry or decline. If the existing game has no such command, this choice remains excluded.
+
+### Integration staircase
+
+1. **Content review:** verify the record family does not duplicate existing assay content and the prose’s claims are internally consistent.
+2. **Consumer audit:** find the actual catalog loader, discovery route, quest instance owner, journal surface, and save owner. Catalog presence is insufficient.
+3. **Minimum integration:** connect two records and one local report decision through a single current owner; no new resource system.
+4. **Outcome wiring:** prove accepted and rejected commands, callback timing, and no duplicate effects on repeated input.
+5. **Optional expansion:** only after the slice is live, add a second small craft corpus or a supply-delivery side quest that uses current item APIs.
+6. **Cross-system expansion:** market, faction, ending, or route consequences need a new premise review and a source-backed causal rule.
+
+Stop the integration if the only way to remember the response is a new dialogue-only ledger, if the public wording would be generated by an unowned flag, or if a later report needs to mutate historical source text. Keep one responsible owner for each durable fact. The dialogue layer requests commands and displays outcomes; it is not a second quest system, journal, inventory, or social simulation.
+
+### QA handoff cases
+
+The reviewer should be able to demonstrate: first test read with no second source; both records read in either order; a mismatch between same batch and same carton; player refusal; unavailable speaker; unavailable location; invalid response ID; inventory query without mutation; transfer rejection; transfer accepted exactly once; panel reopen; campaign save and reload; and localized long labels. Each case records expected quest state, visible text, and owner mutation. Any unverified case remains a named blocker rather than a guessed pass.
+
+The core slice’s measurable outcome is modest but complete: the player can read two different tests, identify their limits, choose a report treatment, see whether that choice was recorded, and encounter no false material promise. Expansion work can make the archive echo through future craft content, but only by adding another authored source and an actual consumer, not by making the first report silently control the economy.

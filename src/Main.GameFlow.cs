@@ -239,6 +239,11 @@ namespace AtomicWar.GodotApp
             // the day-fact -> critical-cue bridge.
             SetupAudioAccessibility();
 
+            // Plan 166 — bind shelter identity (origins, naming) and select the
+            // deterministic founding origin for a fresh campaign.
+            SetupShelterIdentity();
+            TickShelterIdentity(_simDay);
+
             // Plan 140 — Apply generational legacy starting context to New Game
             var legacyContext = PrepareStartingCampaignContext();
             if (legacyContext != null)

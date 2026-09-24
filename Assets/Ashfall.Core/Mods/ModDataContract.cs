@@ -148,6 +148,47 @@ namespace Ashfall.Core.Mods
             }
         }
 
+        /// <summary>
+        /// Plan 165 — binds an already-validated specification (the host uses the
+        /// strict <see cref="ModManifestSpecificationLoader"/> and this seam), so
+        /// the lenient fallback whitelist is unreachable from the host.
+        /// </summary>
+        public void BindSpecification(ModManifestSpecificationDef spec)
+        {
+            _specification = spec ?? throw new ArgumentNullException(nameof(spec));
+        }
+
+        /// <summary>
+        /// Read-only census of live mod-support state (Plan 165). Exposed for the
+        /// architecture scanner and the host self-test probe.
+        /// </summary>
+        public ModSupportCensus GetCensus()
+        {
+            int enabled = 0, disabled = 0, invalid = 0, missing = 0, cyclic = 0, incompatible = 0;
+            foreach (var reg in _registeredMods.Values)
+            {
+                switch (reg.Status)
+                {
+                    case ModStatus.Enabled: enabled++; break;
+                    case ModStatus.Disabled: disabled++; break;
+                    case ModStatus.InvalidManifest: invalid++; break;
+                    case ModStatus.MissingDependency: missing++; break;
+                    case ModStatus.CyclicDependency: cyclic++; break;
+                    case ModStatus.Incompatible: incompatible++; break;
+                }
+            }
+
+            return new ModSupportCensus(
+                _registeredMods.Count,
+                enabled,
+                disabled,
+                invalid,
+                missing,
+                cyclic,
+                incompatible,
+                _specification.AllowedCatalogs?.Count ?? 0);
+        }
+
         public ModContractValidationResult ValidateManifest(ModManifest? manifest)
         {
             var result = new ModContractValidationResult();
@@ -450,6 +491,13 @@ namespace Ashfall.Core.Mods
             if (state == null)
                 return;
 
+            // Schema gate: a newer payload must not be silently down-cast.
+            if (state.SchemaVersion > 1)
+                throw new InvalidOperationException(
+                    $"ModSaveState schema {state.SchemaVersion} is newer than supported (1).");
+            if (state.SchemaVersion < 1)
+                state.SchemaVersion = 1;
+
             if (state.DisabledModIds != null)
             {
                 foreach (var id in state.DisabledModIds)
@@ -500,6 +548,42 @@ namespace Ashfall.Core.Mods
                     "nuclear_winter_phases.json"
                 }
             };
+        }
+    }
+
+    /// <summary>
+    /// Read-only census of live mod-support state (Plan 165). Exposed for the
+    /// architecture scanner and the host self-test probe.
+    /// </summary>
+    public struct ModSupportCensus
+    {
+        public int TotalMods { get; }
+        public int EnabledMods { get; }
+        public int DisabledMods { get; }
+        public int InvalidMods { get; }
+        public int MissingDependencyMods { get; }
+        public int CyclicMods { get; }
+        public int IncompatibleMods { get; }
+        public int AllowedCatalogCount { get; }
+
+        public ModSupportCensus(
+            int totalMods,
+            int enabledMods,
+            int disabledMods,
+            int invalidMods,
+            int missingDependencyMods,
+            int cyclicMods,
+            int incompatibleMods,
+            int allowedCatalogCount)
+        {
+            TotalMods = totalMods;
+            EnabledMods = enabledMods;
+            DisabledMods = disabledMods;
+            InvalidMods = invalidMods;
+            MissingDependencyMods = missingDependencyMods;
+            CyclicMods = cyclicMods;
+            IncompatibleMods = incompatibleMods;
+            AllowedCatalogCount = allowedCatalogCount;
         }
     }
 }

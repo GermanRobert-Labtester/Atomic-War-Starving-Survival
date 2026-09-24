@@ -57,6 +57,9 @@ namespace AtomicWar.GodotApp.UI
         /// <summary>Read-only family unit projection supplied by Main (Plan 150).</summary>
         public Func<string, string?>? FamilyProvider { get; set; }
 
+        /// <summary>Read-only political bloc projection supplied by Main (Plan 159).</summary>
+        public Func<string, string?>? PoliticalBlocProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
@@ -187,6 +190,13 @@ namespace AtomicWar.GodotApp.UI
             if (!string.IsNullOrEmpty(family))
             {
                 AddRow(_survivorInfo, $"Family Unit: {family}", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+
+            var politicalBloc = PoliticalBlocProvider?.Invoke(s.Id);
+            if (!string.IsNullOrEmpty(politicalBloc))
+            {
+                AddRow(_survivorInfo, $"Political Bloc: {politicalBloc}", Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 

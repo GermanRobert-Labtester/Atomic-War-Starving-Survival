@@ -553,6 +553,10 @@ namespace AtomicWar.GodotApp
             ResetBackstory();
             ResetMetaProgression();
             ResetAudioAccessibility();
+            ResetShelterIdentity();
+            ResetTradeRoutes();
+            ResetHumanMigration();
+            ResetShelterGovernance();
         }
 
         /// <summary>

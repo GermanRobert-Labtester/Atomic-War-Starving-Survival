@@ -142,10 +142,14 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("meta_progression", new MetaProgressionDayOwner(this), phase: 5);
             // Plan 167 — underground tunnel network: applies daily structural wear and collapse risk.
             _campaignDay.Register("tunnel_network", new TunnelNetworkDayOwner(this), phase: 5);
+            // Plan 166 — shelter identity: selects the founding origin on a fresh campaign.
+            _campaignDay.Register("shelter_identity", new ShelterIdentityDayOwner(this), phase: 5);
             // Plan 192 — scheduled trade route contracts: advances run schedules and audits tariffs.
             _campaignDay.Register("trade_routes", new TradeRouteDayOwner(this), phase: 5);
             // Plan 199 — seasonal human migration: tracks regional population weight transitions.
             _campaignDay.Register("human_migration", new HumanMigrationDayOwner(this), phase: 5);
+            // Plan 159 — shelter governance: evaluates policy consent, disputes, and shelter stability.
+            _campaignDay.Register("shelter_governance", new ShelterGovernanceDayOwner(this), phase: 5);
             // Plan 55 — retention runs last of all: it bounds the campaign logs
             // every other owner just appended to for this day.
             _campaignDay.Register("retention", new RetentionDayOwner(this), phase: 5);
@@ -579,6 +583,34 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        /// <summary>Plan 166 shelter identity day owner (ownerId <c>shelter_identity</c>, phase 5).</summary>
+        private sealed class ShelterIdentityDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Shelter.ShelterIdentityState? _snapshot;
+            public ShelterIdentityDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupShelterIdentity();
+                _snapshot = _m.ShelterIdentity?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.ShelterIdentity?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupShelterIdentity();
+                _m.TickShelterIdentity(day);
+                var census = _m.ShelterIdentity?.Census;
+                events.Add(new DayStateChangeEvent(
+                    "shelter_identity_ticked", "shelter_identity", null, null, census?.Infamy ?? 0));
+            }
+        }
+
         /// <summary>Plan 192 scheduled trade route contract day owner (ownerId <c>trade_routes</c>, phase 5).</summary>
         private sealed class TradeRouteDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
@@ -632,6 +664,34 @@ namespace AtomicWar.GodotApp
                 var census = _m._humanMigration?.Census;
                 events.Add(new DayStateChangeEvent(
                     "human_migration_ticked", "human_migration", null, null, census?.TotalTrackedRegions ?? 0));
+            }
+        }
+
+        /// <summary>Plan 159 shelter governance day owner (ownerId <c>shelter_governance</c>, phase 5).</summary>
+        private sealed class ShelterGovernanceDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Governance.ShelterGovernanceSaveState? _snapshot;
+            public ShelterGovernanceDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupShelterGovernance();
+                _snapshot = _m._shelterGovernance?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._shelterGovernance?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupShelterGovernance();
+                _m.TickShelterGovernance(day);
+                int stability = _m._shelterGovernance?.StabilityRating ?? 100;
+                events.Add(new DayStateChangeEvent(
+                    "shelter_governance_ticked", "shelter_governance", null, null, stability));
             }
         }
 

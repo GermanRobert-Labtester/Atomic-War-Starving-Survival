@@ -34,7 +34,7 @@ namespace AtomicWar.GodotApp
                 _survivorDetailPanel.IdeologicalFactionProvider = id =>
                 {
                     if (_ideologicalFriction == null) return null;
-                    var factions = _ideologicalFriction.System.GetBunkerFactions();
+                    var factions = _ideologicalFriction.ActiveFactions;
                     for (int i = 0; i < factions.Count; i++)
                     {
                         var f = factions[i];

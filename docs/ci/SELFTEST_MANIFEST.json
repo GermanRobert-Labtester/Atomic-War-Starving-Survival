@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 165,
-  "headless_test_count": 163,
+  "total_tests": 168,
+  "headless_test_count": 166,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -972,6 +972,45 @@
       "description": "Plan 169 audio accessibility & mix legibility: visual cue mapping, side-chain ducking, alert coalescing, and mix presets",
       "headless_compatible": true,
       "expected_summary_id": "audio_accessibility_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "mod_support_selftest",
+      "action": "ModSupportSelfTest",
+      "category": "Content & Modding",
+      "primary_flag": "--mod-support-selftest",
+      "aliases": [
+        "--mod-contract-selftest"
+      ],
+      "description": "Plan 165 modding support & mod data contract: manifest specification, version ranges, dependency DAG, conflicts, and load order",
+      "headless_compatible": true,
+      "expected_summary_id": "mod_support_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_identity_selftest",
+      "action": "ShelterIdentitySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--shelter-identity-selftest",
+      "aliases": [
+        "--shelter-naming-selftest"
+      ],
+      "description": "Plan 166 shelter identity & naming: authored origins, name/motto/emblem validation, infamy, community legacy tags, and persistence",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_identity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "shelter_governance_selftest",
+      "action": "ShelterGovernanceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--shelter-governance-selftest",
+      "aliases": [
+        "--governance-selftest"
+      ],
+      "description": "Plan 159 shelter governance & political system: ideological blocs, policy consent, civil disputes, and shelter stability",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_governance_selftest",
       "timeout_seconds": 30
     },
     {

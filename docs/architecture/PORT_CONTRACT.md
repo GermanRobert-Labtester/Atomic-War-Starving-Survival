@@ -4,8 +4,8 @@
 
 ## Summary Metrics
 
-- **Total integration seams:** 293
-- **Host-required (`HOST_REQUIRED`):** 188 (all verified called from `src/`)
+- **Total integration seams:** 296
+- **Host-required (`HOST_REQUIRED`):** 191 (all verified called from `src/`)
 - **Optional host ports (`OPTIONAL_HOST`):** 7
 - **Live via Core (`LIVE_VIA_CORE`):** 54
 - **Test/Diagnostic only (`TEST_ONLY`):** 44
@@ -307,7 +307,7 @@
 | `AssetManifestCatalog.RegisterEntry` | assets | `TEST_ONLY` | 0 | 🧪 TEST | Plan 50 asset manifest registration exercised by tests; host resolution uses the catalog loader. |
 | `MaritimeExplorationSystem.RegisterDiveSite` | maritime | `TEST_ONLY` | 0 | 🧪 TEST | Island system (no host/save/panel); catalog registration covered by tests only. |
 | `MaritimeExplorationSystem.RegisterEquipment` | maritime | `TEST_ONLY` | 0 | 🧪 TEST | Island system (no host/save/panel); catalog registration covered by tests only. |
-| `ModSupportSystem.RegisterMod` | mods | `TEST_ONLY` | 0 | 🧪 TEST | Plan 165 mod registry is Core-only; seam covered by mod contract tests. |
+| `ModSupportSystem.RegisterMod` | mods | `TEST_ONLY` | 1 | ✅ BOUND | Plan 165 mod registry is Core-only; seam covered by mod contract tests. |
 | `PersonalBelongingsSystem.RegisterFromTemplate` | survivors | `TEST_ONLY` | 0 | 🧪 TEST | Plan 210 island system; template registration covered by tests only. |
 | `ResearchUnlockBridge.BindResearchSystem` | research | `TEST_ONLY` | 3 | ✅ BOUND | Host binding seam is not yet wired (bridge is Core-only); covered by tests. |
 | `SessionDurabilityManager.RegisterOrUpdateSlot` | save | `TEST_ONLY` | 2 | ✅ BOUND | Plan 39 durability manager is Core-only; slot registration covered by tests. |
@@ -321,3 +321,6 @@
 | `MetaProgressionSystem.BindProfileStore` | endgame | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Plan 175 profile-store late binding. Optional: the constructor already accepts a CrossRunProfileStore and defaults to a new one, so the system is functional without this seam and no caller exists yet. Same shape as WeatherCascadeSystem.BindWeatherSource. |
 | `AudioAccessibilityCoordinator.BindCatalog` | audio | `HOST_REQUIRED` | 22 | ✅ BOUND | Integration seam in AudioAccessibilityCoordinator. |
 | `PlayerTradeRouteSystem.RegisterContract` | economy | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in PlayerTradeRouteSystem. |
+| `ShelterIdentitySystem.BindOrigins` | holdfast | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in ShelterIdentitySystem. |
+| `ModSupportSystem.BindSpecification` | mods | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in ModSupportSystem. |
+| `ShelterGovernanceEngine.BindValidatedBlocs` | governance | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in ShelterGovernanceEngine. |

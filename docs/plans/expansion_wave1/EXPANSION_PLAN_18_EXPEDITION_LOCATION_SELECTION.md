@@ -2772,3 +2772,218 @@ This case bank protects the distinction among hearing an ambient account, select
 | two quests reference same hub, separate evidence IDs | limited capacity | share only if encounter supports both | objectives remain separately tracked |
 
 If any existing selector lacks typed reasons, document the smallest adapter contract needed. Do not have the dialogue panel infer pool pressure. Do not expose the full hidden candidate list through map UI merely to explain why a site was omitted. A concise reason can be shown for a player-known candidate; undiscovered content remains undisclosed.
+
+## Pass 24A — Expedition eligibility for authored field-guide triggers (DRAFT)
+
+### Decision frame
+
+The world-bible Part 46 field-guide question intersects expedition selection only when an authored travel encounter can award a guide entry. Current Core resolution returns `UnlocksFieldGuideId`; the inspected `ExpeditionEncounterBridge` patrol branch constructs a narrative resolution with morale and guilt but not that ID, and the combat host overload discards the ID output. Treat this as a candidate loss at the consequence boundary. Do not respond by adding field-guide locations to the selector or by forcing an encounter to appear every expedition. Plan28's ecology signal and the current expedition pools remain separate authorities.
+
+### Pool and priority rules
+
+Retain the existing expedition selection order and guarantee rules. A field-guide reward does not create a new mandatory pool. First satisfy active critical quest destinations and other established selector obligations; then satisfy character/faction and thematic content under current rules; then optional and rare entries. A field-guide encounter belongs to its existing authored location pool and its existing rarity. It can be selected only if the parent location and encounter pass their current eligibility checks. A quest that mentions an entry may reserve the authored encounter only if the quest already owns a valid reservation contract; this proposal does not add one.
+
+**Exclusion rules:** exclude malformed choice data, unknown field-guide IDs, encounters whose parent location is not selected, and content blocked by campaign state. A previously unlocked entry may still allow the encounter when narratively appropriate, but repeated selection must not repeatedly grant a reward. If authored content is one-shot, its current resolved-state owner decides whether it can recur. Do not use field-guide completion as a hidden eligibility predicate unless explicit design and data say so.
+
+### Scenario matrix
+
+1. Valid optional encounter selected; resolution grants a valid locked entry: route the identifier to the existing field-guide owner, show local feedback, and record provenance through existing available channels.
+2. Same encounter selected after entry is already unlocked: preserve encounter consequences; guide update is an idempotent no-op and does not duplicate the journal reward.
+3. Encounter exists in data but parent location is not selected: do not mark it as failed or discovered; it remains unavailable this expedition.
+4. Encounter choice grants an unknown ID: resolve ordinary valid choice costs/effects according to current Core contract, but reject only the guide grant and emit a content-integrity diagnostic. Whether invalid content should block the choice is a separate contract decision requiring owner review.
+5. A quest requires a guide clue but no eligible location exists: keep the quest active and postpone the objective, provide a clue to an already selected equivalent only if an authored equivalent is validated, or report an explicit blocker. Never silently strand the quest.
+6. A required location cannot spawn: follow the existing equivalent-location/delay/clue fallback contract; never replace with an arbitrary encounter solely to satisfy a Codex counter.
+
+### Visibility and discovery
+
+A map marker represents a selected and discoverable location, not an unlock ID. An entry’s Codex availability is a separate view over `FieldGuideCatalog`. The expedition map should not reveal a hidden destination because a travel choice references a guide reward. When the location is already visible, ordinary location naming and fog rules apply. Discovery should occur through the authored event, not from catalog load, expedition selection, or a save restore.
+
+### Selection acceptance
+
+A future implementation must trace the same valid choice through direct travel resolution, the bridge's patrol path, and the combat-added path. All paths should preserve the choice’s guide ID and call one existing owner once. For each path record: chosen encounter, selected location, quest constraints, resulting guide state, map state, and journal output. Seeded replay must produce the same selected content and outcome. The focused test plan should cover idempotence, invalid-ID rejection, location-not-selected behavior, and save/reload; select only the target owner tests under `TEST_POLICY.md`. No test is run by this planning edit.
+
+## Pass 24B — Fallback behavior and unpredictability constraints (DRAFT)
+
+Field-guide availability must not make expedition selection predictable. Do not promote all entries with outstanding unlocks into the mandatory pool. Instead, guarantee only content that an active critical quest explicitly depends on and that already has an eligible location contract. An optional Codex entry stays optional. Where content is rare, retries should be bounded by existing selector policy; deterministic fallback should preserve theme and difficulty, not simply inject the same encounter at every expedition start.
+
+When no valid location remains, selection should: (a) verify whether an active critical objective actually requires the content; (b) use a data-authored equivalent location only when its tags and encounter are compatible; (c) otherwise delay the objective and surface a truthful journal/map state; (d) preserve any separate quest clue path; and (e) log the unmet content contract for authoring review. It must never award a field-guide entry because a location failed to spawn.
+
+Review rarity at the encounter definition level, not through a second guide-specific weight table. A source event can be observed in more than one context only if all contexts reference the same stable entry ID and are narratively truthful. Add a per-entry trigger audit column to the existing catalog-integrity workflow only after verifying the current validator owner; do not create an independent validator in Plan18. The proposal's release gate is that each active quest objective has at least one reachable valid producer under its location and campaign constraints, while optional entries may legitimately have no producer until a later content wave.
+
+## Pass 25A — Route eligibility through a changing storm window (DRAFT)
+
+### Separate dispatch closure from in-progress risk
+
+Part 46’s mid-route storm prompt intersects two distinct contracts already visible in source: dispatch can be blocked or forced through a `WeatherGateBlock`, and dispatch weather inputs provide speed/encounter multipliers to the estimate and expedition start. Separately, Year of Ash windows are queried by day, while the host’s weather-cascade route can adjust an active front’s encounter multiplier. A future audit must determine whether and how those authorities meet an already-active `ExpeditionState`. Do not reinterpret a destination gate as an in-route gate; do not silently retime an active sortie based on a newly loaded forecast.
+
+### Selection and commitment model
+
+At dispatch, keep the current candidate-location pools and priorities. Before allowing a weather-sensitive expedition, show the player: selected destination, route/gate status, forecast interval used, whether the estimate sampled weather for the whole sortie or only departure, and the currently supported response if conditions worsen. Do not promise a hold, camp, reroute, or abort action until an owner and UI command exist. A forecast-based warning is explanatory; it must not secretly alter destination weighting.
+
+At an in-progress weather transition, if a current event seam is verified, evaluate only active expeditions whose route and travel phase satisfy an authored predicate. Affects-outbound, affects-looting, and affects-inbound are separate authoring choices. A target storm may delay one route, increase encounter hazard, close a gate to future dispatch, or merely expose the team; these are not interchangeable effects. The same transition should not both close a gate and force an unchosen detour unless the data explicitly describes both.
+
+### Pool and fallback scenarios
+
+1. **Storm forecast overlaps route, but dispatch remains legal:** show estimate and uncertainty; do not remove the location from selection.
+2. **Gate blocks before dispatch:** preserve the existing reason-carrying block and force-cost decision. An equivalent location is valid only when it has an authored equivalence and supports the same quest requirement.
+3. **Weather changes after dispatch:** keep the sortie’s current state under its existing owner until an approved dynamic update contract exists. A new encounter or route option cannot be injected from UI code.
+4. **Quest objective requires a blocked destination:** delay it, reveal an authored clue to a currently selected/known alternate, or use the current plan’s equivalent-location contract; never mark it impossible without notice.
+5. **Storm closes a destination while an expedition is already looting:** do not erase the target or force an instant return unless the owner defines a mid-route transition. Preserve player-visible objective state and record the blocked/changed condition at the correct time.
+6. **No safe alternate is eligible:** keep the main expedition selector unpredictable and let the quest wait; do not spawn a free safehouse, deterministic rescue, or an unbounded retry loop.
+
+### Map visibility and timing
+
+A route or location can be selected only through current destination/map authorities. Weather projection may add an authored “expected conditions” annotation to an already visible destination; it must not reveal unknown nodes. If a storm causes a gate to close, future-dispatch visibility and in-progress sortie information must be separately represented. A marker should not imply the player can dispatch through a gate that the command owner will reject. Any temporary location requires a stable selection seed, explicit visibility state, expiry, and save contract before it becomes a quest dependency.
+
+## Pass 25B — Deterministic interruption and resume cases (DRAFT)
+
+If a future architecture introduces a mid-route storm checkpoint, it must not roll on every frame or on an unordered active-expedition dictionary. Use a stable campaign event identity and existing seeded RNG stream only if the current campaign RNG owner authorizes it. A resumed save must not reroll whether the team received the warning or whether the storm effect applied. One storm window can affect multiple sorties, but each affected expedition needs a stable per-window application identity to prevent duplicate effect on repeated day ticks.
+
+The current hourly expedition tick advances stamina, rolls an encounter, handles vehicle breakdown, and advances route phase. Any intervention must define ordering relative to those operations. Example ordering for review—not a committed order—is: campaign day/weather transition; determine eligible active routes; record one warning; accept player command at a safe input boundary; apply effect through expedition owner; then process ordinary travel tick. If the event reaches the host after that tick, the warning text must not claim the player could have prevented an already committed outcome.
+
+Selector acceptance requires paired cases: same seed/same initial state yields same affected routes and warning IDs; different route/phase eligibility does not receive the effect; gate force remains distinct from storm consequence; an already-surfaced encounter stays associated with its existing location; no valid alternate triggers the documented delay; save/restore between storm trigger and player response applies the transition exactly once. This proposal does not add implementation/tests yet and remains gated on a source-level integration map.
+
+## Pass 25C — Phase eligibility matrix and no-stranding outcomes (DRAFT)
+
+| Active phase at transition | Candidate handling | Player-facing truth | Do not do |
+| --- | --- | --- | --- |
+| Not dispatched | Gate/forecast can affect availability under current dispatch owner | “Blocked,” “forceable,” or current forecast wording | Treat a blocked target as selected already |
+| Outbound | Only apply a validated active-route effect; keep destination identity | “The route condition changed” if the owner records it | Replace the destination behind the player’s back |
+| Looting | Preserve current objective/result; present only supported continuation choices | State whether the team has secured anything | Despawn the location or erase loot after entry |
+| Inbound | Apply only effects that the return route is authored to receive | Give truthful return ETA/state if current owner has it | Send the team back outbound automatically |
+| Camp | Use the existing camp owner and its own rules | Show current camp condition | Treat `Camp` as ordinary travel ticking |
+| Completed/failed | No new route effect; report stored outcome | Existing terminal feedback | Rewrite the result after the fact |
+
+A storm transition must not strand a quest that can only be completed at a location the system now blocks. Before reserving a required location, the quest contract needs one recovery route: (a) a compatible alternate destination already present in authored data; (b) delay until the current block expires; or (c) a clue/reconstruction route that uses a location the player can still reach. The selector must not repeatedly retry the same invalid destination every expedition start. If the delay is the selected fallback, expose when the player can reconsider only if the weather owner can compute that fact; otherwise say the route is currently closed and let ordinary status refresh handle it.
+
+The expedition remains unpredictable because storm warnings do not grant the player a deterministic safe location. Optional locations retain ordinary weighted selection. Critical active-quest guarantees stay first, but a guaranteed destination can be satisfied by a verified alternate only when the quest’s required evidence is equivalent. Recent discoveries and thematic choices continue under existing weights once hard obligations are met.
+
+For a storm-related hidden location, discovery may be triggered by a genuine environmental clue or returning report. A storm alone cannot reveal it. A quest-only encounter inside a known parent location should not create an additional map icon unless the content contract explicitly makes it a separate destination. Its expiry must be based on a real campaign clock and deterministic save state. If it cannot be selected because another mandatory objective consumes the slot, preserve a later opportunity instead of flagging the clue as consumed.
+
+### Selection review checklist
+
+For every candidate storm scene, reviewers answer: Is the parent location selectable now? Which phase permits it? Is the content optional or critical? Is a gate closed, forceable, or simply hazardous? Can a surviving team return to the same route? Does a successful quest choice consume the only available location slot? Is a fallback truly equivalent? Does the map disclose more than the player knows? Can save/load reproduce the selection? Any “no” answer must have an explicit postponement, alternate clue, or accepted optional miss.
+
+## Pass 26A — Severity-aware destination availability and retry matrix (DRAFT)
+
+The World Bible Part 47 severity ladder gives the selector a disciplined way to separate narrative intensity from route eligibility. A storm message may be ominous while the target remains dispatchable; a closed weather gate is a mechanical denial even if the prose is calm. Never use dramatic wording to imply a stronger block than the route owner returns.
+
+| Severity / source result | Selector response | Player option | Fallback eligibility |
+| --- | --- | --- | --- |
+| Forecast only; route open | Keep destination in its ordinary pool and show estimate context | Dispatch or decline | No alternate needed |
+| Encounter hazard projected | Keep route available; estimate may warn | Choose ordinary stance/gear | Alternative route only if current catalog supports it |
+| Gate blocks dispatch | Exclude from currently dispatchable pool | Wait, choose a real alternate, or force through at authored cost | Only a validated equivalent destination satisfies an active objective |
+| Active sortie receives a verified delay effect | Keep original target reserved; update ETA only through its owner | Respond only if an active command exists | Do not silently substitute target |
+| Route result becomes terminal | Remove the sortie from active pool | Resolve/debrief | A later quest retry follows current cooldown/window rules |
+| No consumer confirms a storm effect | Do not alter availability | Preserve standard route behavior | Report as a premise gap, not a player-facing blocker |
+
+### Retry and guarantee budget
+
+For a critical active quest, guarantee one reachable way to continue the objective across the content window, but do not guarantee that the original destination appears in every expedition. A valid alternate must preserve the objective’s semantic requirement: a return report can substitute for a site visit only if the quest is about testimony; it cannot substitute for a physical sample or repair. When a route is closed, retries should be scheduled by the actual gate/weather owner, not a hard-coded quest counter. If the selector cannot know when a closure ends, it should keep the quest blocked with an explicit reason and leave the rest of the expedition pool intact.
+
+Optional, secret, faction-specific, and thematic pools retain their existing priorities after mandatory progression checks. Storm scenes draw only from selected parent locations. A hidden encounter on a known node does not become a new map icon. An unavailable scene remains unconsumed, so the next eligible expedition can surface it. Add no special storm weight that makes all players encounter the same scene on Day N.
+
+### Route type and authored storm class
+
+- **Black blizzard:** a visibility report may matter only at a location with an authored landmark/marker; no global map loss is implied.
+- **Ash fallout:** dose consequences require the existing radiation/exposure route; do not infer gear damage from a storm label alone.
+- **Ice fog / thaw flood:** access restriction follows a real gate or ice-road owner. Future dispatch and already-active sorties are separate eligibility checks.
+- **Thermal inversion:** shelter radon or expedition exposure is applied only by the verified atmospheric consumer; the selector does not add a separate hazard.
+- **Faction dust / siege weather:** danger and faction presence use existing territory and encounter predicates; no new faction is spawned to fill a location slot.
+
+These are content audit prompts, not a claim that every weather class currently reaches every subsystem. Before each location can be called a storm destination, verify its route, owner, data ID, map state, and persistence source.
+
+## Pass 26B — Selector arbitration, determinism, and map contract (DRAFT)
+
+The expedition selector is a content-planning boundary, not a second world simulation. It receives an immutable request containing campaign identity, expedition sequence or seed, relevant quest requirements, current eligibility facts, and the requested location budget. It returns a selection result with chosen locations, visibility classes, exclusion reasons, and unmet requirements. The existing campaign and expedition owners remain authoritative for time, resources, character state, and quest progress. If those owners cannot supply a fact, the selector treats it as unknown and does not synthesize it.
+
+### Priority is policy, not a numeric lottery
+
+Priority tiers are evaluated in order: mandatory active-quest locations; critical progression requirements; character and faction obligations; recently discovered locations with a still-valid follow-up; thematic locations; optional exploration; rare surprise locations. Within a tier, eligible candidates can be selected by the established deterministic RNG contract using a stable candidate ordering. A weighted draw must not allow a lower tier to displace an eligible mandatory item. A tier may yield fewer items than its budget, allowing the next tier to fill the remaining capacity. The result records why each candidate entered or was skipped so that QA can distinguish legitimate absence from selector drift.
+
+The user-facing request specifies the expedition start as the map-refresh point. The selector therefore produces one coherent map snapshot at dispatch; it does not reshuffle every time the panel is opened, after a save is loaded, or when an unrelated dialogue is read. A reroll is a new expedition request and consumes only the approved seed/sequence input. Repeated calls for the same request must return the same selection and visibility result. Candidate enumeration is ordinal and independent of hash iteration order.
+
+### Eligibility and exclusion contract
+
+A candidate is eligible only if its campaign phase, prerequisites, location type, faction context, temporary lifetime, and content availability all agree. Exclusions include duplicate location IDs; locations already consumed by a one-time quest; mutually exclusive chapter variants; inaccessible map edges; unmet safety requirements that are explicitly mandatory; and temporary locations whose expiry has passed. Optional hazards may make an eligible location risky, but must not be misrepresented as a hard exclusion. Quest-required content cannot be excluded by a novelty cap or thematic preference.
+
+The plan distinguishes four map states. **Visible** locations appear as named destinations. **Rumored** entries surface as a clue, not a navigable pin. **Discovered** entries have been encountered but may not currently be selected. **Hidden** content has no map marker until its declared discovery condition is satisfied. A location may be available but hidden; map visibility never proves accessibility. The journal and expedition map must use the same returned selection snapshot.
+
+### Requirement repair and fallback
+
+If a mandatory candidate fails validation, emit a structured requirement failure before finalizing the selection. Repair follows a declared fallback chain: choose a semantically equivalent location from the same quest packet; select a clue location that can reveal a supported alternative; or postpone that quest objective and make the delay visible. Equivalent means it can satisfy the same authored objective and downstream facts, not merely that it has similar art or biome tags. If no fallback is authored, preserve the rest of the expedition and report the objective as delayed/blocked with a recovery condition. Never silently mark the quest complete, drop it from the map, or substitute an unrelated site.
+
+### Capacity and conflict example
+
+Suppose three active objectives require two named sites and one clue site, while the optional map budget is four. Both named sites reserve capacity first; the clue site is included if its fallback is needed or the clue itself is the only legal continuation. A recently discovered shelter may fill one remaining slot. The thematic pool then fills any remaining capacity, followed by optional and rare candidates. If the total distinct eligible set is smaller than the requested budget, return fewer locations and a reason. Do not repeat a site under a different label to make the map look full.
+
+### Data and diagnostic requirements
+
+Each candidate definition needs a stable ID, pool membership, availability predicate, map visibility policy, rarity band if applicable, repeat policy, quest/faction links, and fallback references. Diagnostics should expose request seed/sequence, ordered candidate IDs, exclusions with reasons, requirement repairs, chosen IDs, and final visibility. Logs must avoid dumping unnecessary player text. These fields are design requirements until matched against the actual catalog schema; this plan does not authorize a parallel location registry or new persistent selection store.
+
+## Pass 27 — Evidence-site selection for “The Last Dry Strike” (DRAFT)
+
+This extension converts the match-manufacturing story into a routeable content packet without claiming that an assay clue deserves a new map system. It contributes at most two required evidence roles—an original work record and a later storage-test record—and one optional domestic witness. Each role must be bound to a valid current destination or an approved in-shelter interaction before it can become a quest requirement. New location names below are role labels, not catalog IDs.
+
+### Location roles and physical logic
+
+| Role label | Narrative use | Access class | Required evidence | Fallback |
+| --- | --- | --- | --- | --- |
+| Batch-room archive | First assay card and author attribution | Existing shelter/workshop surface if verified | Original dated test record | Discover through existing archive or journal route |
+| Dry-store or printroom annex | Storage-condition comparison, not a recipe | Optional expedition destination only after a real map reference is found | Second sheet or a traceable copy | Witness statement that narrows what can be known |
+| Clinic transfer shelf | Optional consequence: where the carton was held | Character/shelter visit; never a mandatory expedition | Delivery notation or remembered date | Keep the delivery chain unresolved |
+| Route-side notice board | Late callback showing the report is being used | Existing map destination only if verified | Published correction ID | A journal acknowledgement at return |
+
+The name “dry-store” must not create a navigable site by itself. The map owner supplies stable nodes, the expedition owner supplies eligibility and route cost, and the quest owner supplies required roles. If no available destination hosts the second record, keep the objective local or use the clue fallback. Do not add an invented temporary node, duplicate an existing workshop, or turn a shelter room into a surface expedition destination.
+
+### Candidate-pool rules
+
+An active mandatory evidence role is selected before optional exploration only if an eligible destination is confirmed. A canonical site does not become newly available merely because the quest is active. Character/faction variants follow their own valid prerequisites. Recently discovered sites may provide a clue only when their authored content contains the relevant record. Thematic industrial sites and optional exploration sites fill remaining map capacity after required roles are safe. Surprise selection may add texture but never remove a mandatory clue.
+
+Rarity is not an appropriate control for required evidence. Use authored eligibility and objective state. If the second evidence destination competes with another mandatory quest, the result either includes both under the existing capacity contract, selects a declared alternative, or reports a visible delay. It must not silently replace the assay site with a visually similar but semantically empty building.
+
+### Expedition timing and repeat behavior
+
+The assay mystery does not require a storm modifier, a new travel clock, or an expedition-only item. A standard route result may expose the document if the existing scavenging/narrative bridge can do so; otherwise the record is a fixed location interaction, not an invented loot roll. A failed-but-survived sortie cannot secretly destroy a required record without a declared quest transition. Reopening the map during one expedition returns the same selected sites. Reload resumes the same record availability and does not reroll the evidence to hide it.
+
+### Visibility and player expectations
+
+The map can show a visible named destination, a rumor with a clue, or nothing until discovery. A journal objective must use the same visibility contract: “find the dry-store note” is misleading if the player only has a rumor and no pin. If the location is known but not eligible, say it is unavailable and identify a recovery condition only when the owner provides one. The surface map and shelter/archive panel must not disagree about whether the site was found.
+
+### Acceptance scenarios
+
+- The required first record has a valid in-shelter route; no expedition is forced just to begin the story.
+- The second record has exactly one eligible destination; it is reserved for this objective if the existing map capacity permits.
+- The second record has zero valid destinations; the player receives a witness/clue fallback and a visible unresolved conclusion.
+- Another quest reserves the same location; both requirements remain possible, or one is transparently delayed.
+- A destination is discovered before the quest; the content can be read or reread without duplicating progress.
+- A location is already consumed by a one-time encounter; selector returns its authored substitute or clue route.
+- The player refuses the expedition; the quest remains resumable or resolves with uncertainty according to the packet.
+
+The production estimate is low for a fixed in-shelter evidence scene and moderate for a new expedition destination because it entails map, danger, route, art, and discovery validation. This plan recommends the local-first candidate. Adding a dedicated industrial map node belongs to an expansion only after the existing map census finds a real density gap and an exact canonical ID can be registered.
+
+### Pass 27B — Selection traces, reservations, and post-return copy (DRAFT)
+
+These deterministic traces exercise the earlier role matrix. They are selector specifications, not current guarantees that these sites or hooks exist.
+
+**Trace A — Local-first opening.** The player accepts the investigation at the shelter archive. The archive record is available immediately. An optional expedition candidate would lead to the printroom annex, but that location has not been verified in the map catalog. Result: no expedition destination is reserved or fabricated; the quest remains in progress and gives a clue to check the transfer ledger during the next shelter visit.
+
+**Trace B — Eligible second record.** A premise audit finds a canonical workshop location that contains the dated storage sheet and is already expedition-eligible. An active quest now requires this evidence. The selector places it in the mandatory tier, records the quest reservation, and fills remaining slots from eligible thematic and optional tiers. The map shows the real location name and objective hint. A rarity roll cannot displace it.
+
+**Trace C — Shared destination.** Two quests require the same actual depot but different documents. The selector chooses the site once, attaches both objective references, and prevents duplicate map pins. If both documents are physically available in one visit under existing interaction rules, both objectives can progress. If the second document requires a distinct encounter instance, the selector requests another legal slot or delays that objective visibly; it does not treat one document as both.
+
+**Trace D — Destination unavailable.** The site is already consumed, the route is blocked by a verified hard gate, or its content is no longer eligible. The selector first tries the exact authored equivalent. If none exists, it adds the declared clue alternative or returns a delayed requirement with recovery criteria. The quest journal reports the reason at the player’s next safe interaction. A lower-tier surprise site is not a substitute.
+
+**Trace E — Save/resume.** The expedition map has already been generated and saved by the current owner. Loading and reopening the map reuses that selection. If the save schema has no selected-site snapshot, the plan cannot assume replay safety; the integration must first determine whether the existing seed/sequence reproduces the same result without consuming unrelated RNG.
+
+### Output contract and diagnostics
+
+A selector result for this story should include request identity, ordered candidate IDs, eligible/ineligible status, each exclusion reason, quest requirement reservations, fallback chain taken, map visibility class, and any unresolved requirement. Do not write a new save file or selector registry to hold these fields; they are design diagnostics until an existing route exposes the needed data. UI copy is generated from the result’s facts: “Archive copy available here,” “The transfer shelf is not accessible today,” or “No second record is currently located.” Avoid “location missing” language for a hidden site the player has not discovered.
+
+### Content-density and budget rules
+
+Do not reserve more than one mandatory expedition site for the first quest chapter. Keep one location role local so a low-resource campaign can begin the story without a costly trip. If the authored world has no appropriate map destination, prefer a shelter scene plus a witness clue over a new node. A later expansion can create a dedicated annex if a location census shows a real gap and its route, danger, resource yield, encounter structure, and visual identity are distinct. The quest must not inflate destination count with a room that has no independent gameplay purpose.
+
+### Reuse, replay, and exclusion examples
+
+The selector can reuse the evidence-pair packet for other craft mysteries, but only those with a real location and distinct evidence roles. It cannot reuse this story’s “storage failure” label for every industrial record. Exclude sites that merely contain generic workshop props, already-consumed once-only evidence, or a contradicted map identity. Optional ambient tools may vary; evidence-bearing object placement and wording remain authored and stable. On repeat campaigns, the same deterministic request may produce another optional location, but required records and their fallback do not disappear randomly.

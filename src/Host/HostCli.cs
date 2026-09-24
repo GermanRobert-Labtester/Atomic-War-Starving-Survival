@@ -230,7 +230,10 @@ namespace AtomicWar.GodotApp
         TradeRoutesSelfTest,
         HumanMigrationSelfTest,
         TunnelNetworkSelfTest,
-        AudioAccessibilitySelfTest
+        AudioAccessibilitySelfTest,
+        ModSupportSelfTest,
+        ShelterIdentitySelfTest,
+        ShelterGovernanceSelfTest
     }
 
     /// <summary>
@@ -685,6 +688,12 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.TunnelNetworkSelfTest;
             if (Has(args, "--audio-accessibility-selftest") || Has(args, "--audio-access-selftest"))
                 return HostCliAction.AudioAccessibilitySelfTest;
+            if (Has(args, "--mod-support-selftest") || Has(args, "--mod-contract-selftest"))
+                return HostCliAction.ModSupportSelfTest;
+            if (Has(args, "--shelter-identity-selftest") || Has(args, "--shelter-naming-selftest"))
+                return HostCliAction.ShelterIdentitySelfTest;
+            if (Has(args, "--shelter-governance-selftest") || Has(args, "--governance-selftest"))
+                return HostCliAction.ShelterGovernanceSelfTest;
             return HostCliAction.Interactive;
         }
 

@@ -304,10 +304,11 @@ namespace Ashfall.Core.Tests.Save
             // Plan 150 added romance_family (romance & family dynamics: courtship, partnership, bonded pairs, family units);
             // Plan 152 added vehicle_customization (vehicle modules, effective stats, and deployed base camps);
             // Plan 192 added trade_routes (scheduled trade route contracts & reliability tiers);
-            // Plan 199 added human_migration (seasonal human migration schedule engine).
-            Assert.Equal(236, SaveSectionRegistry.All.Count);
+            // Plan 199 added human_migration (seasonal human migration schedule engine);
+            // Plan 159 added shelter_governance (shelter governance & political system).
+            Assert.Equal(238, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(236, keys.Count);
+            Assert.Equal(238, keys.Count);
         }
 
     }

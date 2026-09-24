@@ -289,8 +289,10 @@ namespace Ashfall.Core.Save
             new("vehicle_customization", "SaveVehicleCustomization", "SetupVehicleCustomization", "expedition", "Plan 152 — Vehicle customization & mobile base: module installation, effective vehicle stats, and deployed base camps", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("backstory", "SaveBackstory", "SetupBackstory", "survivors", "Plan 174 — Procedural survivor backstories & origin mechanics: occupations, experiences, and secrets", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("meta_progression", "SaveMetaProgression", "SetupMetaProgression", "endgame", "Plan 175 — Meta progression & cross-run profile store: prestige scoring, crests, and NG+ boons", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_identity", "SaveShelterIdentity", "SetupShelterIdentity", "holdfast", "Plan 166 — Shelter identity, naming, origin projection, emblems, mottos, infamy, and community legacy tags", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("trade_routes", "SaveTradeRoutes", "SetupTradeRoutes", "economy", "Plan 192 — Scheduled trade route contracts, tariffs, reliability tiers, and exclusive goods", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("human_migration", "SaveHumanMigration", "SetupHumanMigration", "world", "Plan 199 — Seasonal human migration engine, regional population weights, and dwell hysteresis", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("shelter_governance", "SaveShelterGovernance", "SetupShelterGovernance", "governance", "Plan 159 — Shelter governance & political system: ideological blocs, policy consent, civil disputes, and shelter stability", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -548,8 +550,10 @@ namespace Ashfall.Core.Save
                 { "vehicle_customization", "vehicle_customization_save.json" },
                 { "backstory", "backstory_save.json" },
                 { "meta_progression", "meta_progression_save.json" },
+                { "shelter_identity", "shelter_identity_save.json" },
                 { "trade_routes", "trade_routes_save.json" },
                 { "human_migration", "human_migration_save.json" },
+                { "shelter_governance", "shelter_governance_save.json" },
             };
 
 

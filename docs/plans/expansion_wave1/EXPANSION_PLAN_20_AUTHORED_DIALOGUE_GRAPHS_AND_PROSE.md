@@ -3209,3 +3209,251 @@ Do not represent a source-free rumor through a supernatural sting, ominous camer
 #### Repeated-visit copy
 
 If nothing new happened, repeat no rumor prompt. Use ordinary room texture: “Sella has closed the logbook. The receiver keeps its low mechanical hiss.” If a new account was actually added, name the account as new and identify its source. Do not imply the sound itself recurred merely because the player revisited the hub.
+
+## Pass 24A — Field observation dialogue and original Codex-facing prose (DRAFT)
+
+### Scene intent
+
+Use the world-bible Part 46 question as a human-scale content test: when a field guide entry appears, who actually saw the evidence, and what does the survivor believe it proves? The scene is optional, short, and attached to existing shelter/codex interaction. It does not add a new location or replace the existing Codex panel. The player can choose to share a verified observation, keep a sensitive location private, or mark a second-hand report as uncertain. Each response reconverges on a readable entry while preserving the distinction between an authored description and a player-specific event.
+
+### Sample hub-and-spoke scene (DRAFT copy)
+
+**Speaker: Mara, trail medic. Condition:** valid field-guide entry has just been unlocked through a verified source. **Location:** existing shelter codex interaction.
+
+Mara: “You marked the ash-white tracks. Did you see the animal, or only the print?”
+
+- **I saw it cross the cut.** “Then write what it did. Leave the rest blank.” Effect: local wording records direct observation, if an existing journal field can represent it.
+- **I found the tracks.** “A track is a direction, not a face.” Effect: present the entry as sign-based evidence; do not claim a sighting.
+- **Someone told me.** “Keep the name. Mark the source.” Effect: use reported wording, not direct observation.
+- **Keep this place private.** “Fair. Some marks are safer without an address.” Effect: cosmetic/local privacy choice unless an existing location-discovery owner supports a real access consequence.
+
+Mara: “The guide is a tool. It is not a promise.” End node: return to Codex. If the entry was already unlocked, use a brief repeated-visit line acknowledging the old mark without issuing another reward. If the source is second-hand, Mara should not falsely celebrate a verified unlock.
+
+### Location and description fragments
+
+**Codex empty state:** “No entry yet. A blank page means the record has not been earned; it does not mean the land is empty.”
+
+**Field station description:** “A map weight pins the paper against the draft. Beside it, someone has drawn a track twice: once as it was found, once as they hoped it would lead.”
+
+**Journal feedback, direct observation:** “You added a field note from what you saw. The guide records the mark; the animal keeps its own counsel.”
+
+**Journal feedback, travel report:** “A traveler’s account was added with its source still attached. The report is useful. It is not a sighting.”
+
+These are content candidates, not committed strings; review against established character voices and localization conventions. Keep the lines concise enough for UI and do not encode effects in prose. If current UI cannot show source distinctions, do not imply it can: first establish the data and presentation contract in the integration plan.
+
+### Reusability and production cost
+
+The reusable unit is a scene template with explicit condition, speaker, source kind, node IDs, response IDs, effects, quest updates, relationship changes, and world-state changes. Most instances should use a two-to-four response hub-and-spoke that reconverges. Reserve a deeper branch for a genuinely different quest or faction consequence. Cost is chiefly source audit, narrative pass, UI fit/localization, and one integration review per new condition; do not multiply scenes for every catalog entry when one source-aware scene can serve a family.
+
+## Pass 24B — Dialogue variants, accessibility, and content guardrails (DRAFT)
+
+Repeated visits should acknowledge state without nagging. First visit teaches how to read provenance; later visits can show one short contextual line keyed to an actual state such as first unlock, prior report, or an already-known entry. Do not use random dialogue variation for facts about what the player did. If deterministic variation is desired, use the existing seeded content choice only after its owner is verified.
+
+Knowledge-gated lines should explain their basis in natural language (“the tracks stop at the fence”) and remain skippable. Reputation gates should not prevent the player from reading an entry already earned. Faction-specific versions may change trust and terminology but must not mutate the underlying species fact. Failed-quest dialogue should acknowledge a real failed or postponed state and give a truthful next step; it must not imply a new location has spawned. Skill-reactive dialogue can change interpretation only when that skill is already an authoritative capability and the text does not grant a hidden mechanical bonus.
+
+Accessibility requirements for a future UI implementation: keyboard/controller navigation reaches all response choices; focus remains visible after returning from the Codex; text does not rely on color alone to distinguish observed/reported/uncertain; the source is readable at supported scaling; and a repeated visit does not trap the player in an unskippable scene. The plan adds no new panel or modal. Use the existing surface and lifecycle.
+
+Review checklist: voice distinction; evidence accuracy; no accidental claim of map discovery; no undisclosed resource/faction effect; no duplicate quest acceptance; no repeated unlock reward; string-key ownership; branch reconvergence; subtitle/localization length; and a graceful response for empty/missing source metadata. This remains DRAFT until the catalog audit establishes which scenes are reachable.
+
+## Pass 25A — Mid-route storm story beats and grounded voice samples (DRAFT)
+
+### Scene package: “Last Clear Time”
+
+This content develops the World Bible’s storm-window question as an optional expedition story, not a new weather simulator. It depends on a verified active-sortie warning/result seam. Until then, the scenes are debrief-only and may be triggered solely by an actual expedition outcome that current owners expose.
+
+**Opening report, radio room (DRAFT):**
+
+Operator: “I have their last clear time. I don’t have a position after it.”
+Quartermaster: “Do we know if the filter was changed?”
+Operator: “We know what they signed out. That isn’t the same thing.”
+
+Response options: **Read the dispatch estimate aloud** (reconstructs the forecast; no accusation), **Ask for the raw time mark** (opens the evidence line only if a current journal/record owner supports it), **Send another call** (only if a real radio command exists; otherwise unavailable), **Stop the replay** (cosmetic/consent choice). The scene reconverges on a practical question: which team member needs treatment, repair, or a second interview? Do not allow dialogue to apply medical treatment, change route risk, or resolve a missing sortie.
+
+**Debrief, returned team:**
+
+Surveyor: “The board had a white edge when we went out.”
+Medic: “You said the mark was dry.”
+Surveyor: “It was. Then it wasn’t.”
+
+The disagreement is about observation time, not a scripted liar. A skill/knowledge-gated line may distinguish precipitation from accumulated dust only if the game already has an authoritative skill consumer. Otherwise present the disagreement without a faux expert check.
+
+### Three response paths
+
+1. **Protect the witness:** treat exposure or fatigue through existing medical/needs owners; let the objective remain incomplete. Delayed callback: the same character refuses a second departure until equipment inspection is logged, only if such an inspection command exists.
+2. **Preserve the route record:** compare the player-visible forecast and actual report. If an existing journal can keep both, retain disagreement; otherwise keep the difference in scene text without promising persistent evidence.
+3. **Prioritize faction delivery:** send only recovered material through existing expedition cargo/trade/faction pathways. Standing changes require an authorized faction effect; the dialogue itself cannot grant it.
+
+### Environmental copy and location detail
+
+**Route marker:** “The painted arrow is still visible under a skin of gray. Its lower half points into the ditch where the signpost has settled.”
+
+**Temporary shelter, if an existing location permits the scene:** “A strip of filter cloth is tucked under the door. Someone used it to stop the draft and left the serial number facing out.”
+
+**Debrief journal:** “The last clear call and the return report do not describe the same weather. The team had no position record after the marker.”
+
+These lines report evidence without declaring who made the wrong call. Do not label an encounter as a “storm shelter” if no catalog location backs it. Keep station, route marker, and destination terminology consistent with existing IDs and UI labels.
+
+## Pass 25B — Branch matrix, replayability, and production scope (DRAFT)
+
+| Branch | Player intent | Mechanical prerequisite | Immediate result | Delayed callback |
+| --- | --- | --- | --- | --- |
+| Return early | Preserve people/time | Existing return command or a terminal result that already returns | Objective may remain incomplete | A later expedition revisits the route if available |
+| Force the weather gate | Accept known cost to keep schedule | Current `WeatherGateBlock` with authored force cost | Existing stamina/radiation owner applies cost | Debrief records the choice only if journal contract supports it |
+| Wait/hold | Avoid worsening exposure | Requires a verified in-progress wait/camp command; otherwise omit | No invented pause state | A future route check uses only real elapsed time |
+| Continue without new signal | Maintain objective | Current route tick continues; warning must not pretend to be actionable | Existing encounter/exposure resolution applies | Team may return with partial proof |
+| Abort evidence collection | Protect source/privacy | Existing quest response supports abandonment/postponement | Quest marks according to its owner | Future dialogue acknowledges the chosen limit |
+
+Reusability should be template-first but voice-specific. Each instance references an actual warning source, an actual expedition result, one responsible location label, and an observable next action. Do not write one dramatic storm scene for every weather type. Black blizzard can obscure route markers; ash fallout can affect filters and dose; flood/thaw changes access; thermal inversion affects shelter and radon. These distinct outcomes need separate factual grounding and may be deferred until owners are verified.
+
+Minimum viable content is one forecast scene, one debrief scene, and three short outcomes that require no new location. Expansion scale adds survivor arcs, optional faction testimony, and a return visit to an existing map location. Production cost includes route/source audit, dialogue implementation, localization, UI truncation checks, and branch regression. A unique CG or full cinematic is not justified by the current evidence.
+
+The scene must be skippable, keyboard/controller navigable, and accessible through the existing journal/debrief surfaces. Source disagreement should not rely on color, tiny map symbols, or audio-only cues. Avoid a forced modal at a lethal moment. If no actionable in-route command exists, the story belongs in a post-result scene and must not fake a player decision.
+
+## Pass 25C — Additional quest scenes, voices, and diegetic copy (DRAFT)
+
+### Scene: before dispatch
+
+Quartermaster: “The estimate is for this weather.”
+Surveyor: “How long is ‘this’?”
+Quartermaster: “Long enough to get the gate. Not long enough to promise the return.”
+
+Responses: **Take the short route** (only when an eligible route exists); **Wait for the next forecast** (only if current day/forecast system supports waiting); **Send no one** (must remain a valid refusal). The dialogue describes the estimate’s limits but never calculates a new risk. If the player declines, no hidden quest penalty should be applied.
+
+### Scene: returned gear inspection
+
+Mechanic: “This buckle was opened under load.”
+Surveyor: “It held.”
+Mechanic: “That is not what I asked.”
+
+Responses: **Record the damage**; **Repair it before the next trip** (only through an existing repair command); **Keep the team off the route** (only if a real assignment/dispatch gate supports it). The mechanic’s concern is functional: the next trip estimate can only use current gear state if its owner already feeds the condition into estimate math. If not, write the line as advice rather than a mechanical guarantee.
+
+### Scene: faction courier after a lost window
+
+Courier: “The crate was due before the road changed.”
+Player: **Show the dispatch note**, **Offer what returned**, or **Refuse to certify the route**. Faction consequences require an existing faction command and explicit cost/reward. “Show” does not automatically prove weather causation; the note proves the schedule the player saw. “Offer what returned” consumes only items actually in inventory. “Refuse” can close the conversation without punitive hidden standing.
+
+### Environmental fragments
+
+- A shelter log has three columns—departed, expected, returned. The last column is blank for one row, then completed in a different hand.
+- A vehicle tarp is patched with a route map whose ink dissolved along the fold; the destination remains legible while the return mark does not.
+- A radio headset has a strip of tape bearing two times, one crossed out and one written over it. There is no explanation until a second source arrives.
+
+These details are optional authored props/text, not proof of an event or a new procedural asset system. Place them only at existing accessible locations with a real event predicate. Ensure codex/journal copy does not duplicate every environmental clue verbatim.
+
+### Register and variation
+
+The surveyor speaks in distances and visible marks; the quartermaster speaks in quantities and condition; the operator speaks in times and gaps; the faction courier speaks in delivery windows and signatures. None narrates the theme. Repeated-visit lines should shorten after the player has read the record. Translation must preserve uncertainty terms (“expected,” “last known,” “reported”) and not upgrade them into certainty. Each scene returns to a useful player action or a clear end; no branch ends in a decorative dead node.
+
+## Pass 26B — Dialogue packet schema, graph linting, and scene kit (DRAFT)
+
+A dialogue packet separates what a speaker says from what the game is allowed to do. The node owns stable identity, speaker, optional location, eligibility conditions, localized text key or authored text field, player responses, outgoing edges, and presentation hints. Responses name a visible action and point to a consequence declaration; they do not embed imperative code or mutate world state by themselves. Conditions read canonical facts supplied by quest, relationship, faction, expedition, skill, or location owners. If a fact has no owner or API, it remains an authoring question rather than an invented flag.
+
+### Node authoring contract
+
+Each node has a unique stable ID and one clear scene purpose: introduce a fact, invite a decision, acknowledge a prior action, or close a conversation. A response states the player’s intent in language that matches its effect. “I’ll take responsibility” must not secretly mean “spend supplies and lose faction standing.” Text carries speaker voice and uncertainty. It should avoid narrating internal variables or promising a system outcome that the current game cannot produce. A response with no gameplay effect can still be valuable, but should be presented as tone or information rather than a false mechanical choice.
+
+The schema should support `conditions`, `text`, `player_responses`, `effects`, `quest_updates`, `relationship_changes`, `world_state_changes`, and `next_node` as declarative fields. This list is conceptual until compared with the actual dialogue data authority. Reuse the current parser and catalog integrity validator where available. Do not introduce executable expressions, arbitrary scripting in JSON, or a second dialogue router merely to satisfy the document shape.
+
+### Graph lint rules
+
+- Every response edge resolves to a node or explicit terminal.
+- Every gated node declares why it can be unavailable and has a reachable alternative where the scene is mandatory.
+- A graph has a start condition and at least one legitimate terminal.
+- Loops are allowed for hub-and-spoke conversations but require a stable exit and must not repeat one-time effects.
+- A reconvergent branch preserves the selected response in a fact only when later content needs to remember it.
+- Choice labels are distinct after localization and do not imply mutually exclusive outcomes when both lead to the same scene.
+- One-time effects are idempotent or transition guarded; returning to the hub cannot award the same resource twice.
+- Text lengths, missing substitutions, speaker fallbacks, and keyboard/controller focus order are checked in the final rendered surface.
+
+### Reusable scene kit
+
+**Linear scene:** one entry and one path, for a short warning, tutorial reminder, or fixed disclosure. **Hub-and-spoke:** one topic menu, several self-contained topics, and a clear leave option; topic visits do not silently commit. **Short branch and reconverge:** a meaningful local tone or evidence choice followed by a common next beat. **Knowledge-gated:** a player skill or discovered clue opens a precise additional question. **Relationship/faction gated:** a truthful alternative response becomes available from the relevant owner’s state; do not infer access from dialogue history. **Repeated-visit scene:** first visit introduces the issue, later visits acknowledge the actual prior choice or give a concise no-change response. **Quest-start scene:** the quest update is visible and commits only when the player accepts or performs the declared trigger.
+
+### Example: return-room exchange
+
+Entry condition: an expedition result has been committed by the existing owner and the debrief scene is available. The mechanic says, “The clasp is bent where it meets the load ring. I can tell you what I found; I can’t tell you when it happened.” Responses: **Ask what was inspected** (knowledge request; no state change), **Record the damage** (only if an existing report/journal command supports it), **Leave the report open** (navigates to a terminal that preserves uncertainty). The character may have a different line if the player previously chose not to certify the route. That line acknowledges the choice without upgrading it into a relationship score.
+
+### Prose review and production
+
+Review voice separately from state behavior: a speaker sheet gives vocabulary, sentence rhythm, what they know, what they avoid, and a short sample. Scene writers receive the facts available at that scene, not an omniscient campaign summary. The editor checks that variable insertions do not create false grammatical or factual claims. The implementation review maps each accepted action to a supported command or labels it a non-operative narrative response. QA checks one route per node kind, a gated branch, a return visit, and a localized long-label case. The core slice uses existing dialogue surfaces; portraits, voiced performance, cinematic blocking, and large companion arcs are expansion scope until production capacity and data wiring are verified.
+
+## Pass 27 — Dialogue and diegetic packet for “The Last Dry Strike” (DRAFT)
+
+This content packet turns the assay-culture seed into a short, playable scene set. The mystery is procedural rather than criminal: two workers called a batch by different standards. Each voice shows what that person handled and what they cannot know. No speaker explains the full theme, invents manufacturing expertise, or claims the game’s item-quality mechanics changed.
+
+### Primary scene: the paired test slips
+
+**Mara Venn, record keeper:** “This line says it lit. It does not say how long the box sat beside the intake.”
+
+**Player responses:**
+- **Read the second slip.** Opens the next node if its record is available.
+- **Ask why ‘passed’ was written.** Mara explains that a single successful strike was the shop’s old acceptance test.
+- **Ask whether the writer lied.** Mara corrects the premise: “No. They answered the question on the card.”
+- **Leave the report open.** Exit without choosing an interpretation.
+
+The node presents an explicit source citation or record title in the journal surface. It does not mark a hidden truth-discovered state merely because the scene opened. If the second slip is absent, the second response is removed and replaced by a clue route or a clear statement that the storage interval is unknown.
+
+### Secondary scene: the clinic transfer shelf
+
+**Iven, store worker:** “It came in with the tins. I remember the wet edge of the carton, not which box was inside it.”
+
+**Player responses:** Ask what was wet; ask who signed the delivery; stop asking. The first answer can establish a leak, not batch identity. The second is knowledge-gated only if a real delivery mark is present. The third ends cleanly. None changes clinical inventory or certifies that a patient received a failed product.
+
+### Report scene: the public card
+
+The player chooses one of three concise labels: **Passed under the first test; storage result incomplete**, **Records disagree; keep both**, or **No certification from this evidence**. The line below the choices previews the scope: it applies to the written report, not to market stock, inventory, recipe outcome, or faction standing. The character can object, but cannot veto the player’s archive choice unless a current owner explicitly provides that command.
+
+### Voice and physical setting
+
+Mara uses condition words and dates. Iven remembers shelf position, water marks, and delivery handling. A young worker speaks in box counts but admits they copied the word “passed” before checking the back page. A later investigator uses careful administrative language and is willing to file a blank. Do not give each survivor a polished metaphor. Let the scene show a gum line on the paper, a carton softened at one corner, and pencil pressure darker on the word “passed.”
+
+The proposed local anchor is a workbench or archive surface already present in the canon. A separate location such as “Dry Store Annex” is a proposed content role, not an authorized location ID. An interior description may include a slate of daily jobs, waxed paper stacked beside absorbent cloth, and a small jar holding rejected match heads, but the jar remains set dressing unless an existing item authority makes it interactive.
+
+### Optional character thread: “One Box for the Walk”
+
+A departing surveyor requests a sealed carton because the route has no safe way to relight a lamp. The player may ask the quartermaster to check current supply, decline, or propose a return trip with a different plan. If no canonical match supply exists, the dialogue must make this a request to record an unresolved need; it cannot consume a fictional item. If an existing owner exposes the item and a command, the prompt states the quantity and commits through inventory. The later line reflects the real result: supplied, unavailable, or refused.
+
+### Editorial and implementation gates
+
+All response labels survive localization at the minimum UI width. The report scene remains keyboard/controller navigable and closes without trapping the player. Text distinguishes immediate ignition from storage testing. Dialogue history does not reroll each time the panel is refreshed. Each response either maps to an existing command, navigates, or is clearly an information request. The first release slice is two speakers and four nodes; optional performances, new location art, and a wide character arc remain expansion cost. None of the scene copy should be inserted into production data until IDs, consumer routes, localization fields, and continuity references are verified.
+
+### Pass 27B — Full hub, branch, and callback sample (DRAFT)
+
+**Hub entry: workshop archive.** The player can choose: **Read the first test**, **Ask who kept the box**, **Compare the storage sheet**, or **Leave**. Topics are not ordered as a puzzle lock; the player can leave after one. The hub shows a small source label above each excerpt. If a record has not been discovered, the unavailable topic is either omitted or given a truthful “No second sheet is filed here” explanation.
+
+**Node: read the first test.**
+
+Mara: “One sample from each end of the carton. Both caught. That is the whole sentence the card asked for.”
+
+Player: **So it passed?**
+
+Mara: “For the card’s question. The card did not ask about a wet drawer.”
+
+Player: **Who wrote the card?**
+
+Mara: “Eda wrote the form. I filled this row. Those are not the same job.”
+
+Player: **Leave it as written.**
+
+Mara: “It can stay. The back is blank because the back was for corrections.”
+
+This scene reveals facts but commits no report choice.
+
+**Node: compare the storage sheet.** If available, Mara points out that the second writer waited longer and counted failures. If unavailable, the hub does not claim the player has seen it. The player can answer: **The tests asked different questions**, **The later sheet is more useful**, or **Neither one settles the delivery**. These response IDs only become persistent if the report decision later reads them.
+
+**Short branch and reconvergence.** If the player asks whether Mara is protecting the earlier worker, she answers, “I am protecting the words on the card. You can decide what to do with them.” If the player asks whether she is avoiding blame, she says, “I am avoiding a name I cannot prove.” Both paths reconverge at the public report menu. They change local tone, not faction standing or relationship score.
+
+**Return callback, one expedition later.** If the player published the correction, Mara says: “Someone copied the interval onto the new sheet. They kept the word incomplete.” If the player preserved both records, she says: “The two cards are still together. They are easier to argue with that way.” If the player declined certification, she says: “The blank stayed blank. Somebody has to leave it blank.” If quest persistence cannot support those exact branches, use one generic acknowledgement rather than inventing memory.
+
+**Diegetic descriptions.**
+- A carton corner is soft enough to bend without tearing. Someone pressed a ruler against the water tide mark and wrote its height in the margin.
+- The first card has two pencil ticks. The second has a number written over a smudge, with no initials beside the correction.
+- The shelf has a dry side and a wall side. Dust lies evenly on the dry side; the wall side shows a pale outline where a box was moved.
+
+These details imply handling without proving which carton carried which test result. Do not add an interactive inspect choice unless the current location UI can route it.
+
+**Character sheet: Mara Venn.** Surface: patient archive clerk, quick with forms. Function: keeps source documents sorted. Contradiction: she dislikes official classifications but uses them precisely. Material history: sharpened pencil kept in a prescription tube. Under pressure: stops speaking and writes the exact question on a blank line. Hook: respects the player who retains an unknown; resents being asked to invent intent. Mechanical hook: none assumed; use only existing quest/dialogue facts.
+
+**Character sheet: Iven Saar.** Surface: clinic store worker. Function: receives deliveries and tracks shelf condition. Contradiction: remembers the leak by the smell of damp cardboard but forgets dates unless they are on a tag. Under pressure: checks physical seals before answering. Material history: a folded inventory strip in a coat cuff. Hook: may disagree with Mara about what counts as a useful record. Mechanical hook: no medical diagnosis or supply quantity is inferred from memory.
+
+The full scene kit supports linear scene, hub-and-spoke, short branch/reconvergence, knowledge gate, and repeated visit without an extra dialogue authority. It is suitable for a data-driven implementation only after the actual narrative schema and consumer are confirmed.

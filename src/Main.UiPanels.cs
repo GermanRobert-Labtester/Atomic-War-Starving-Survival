@@ -705,7 +705,7 @@ namespace AtomicWar.GodotApp
             _survivorDetailPanel.IdeologicalFactionProvider = id =>
             {
                 if (_ideologicalFriction == null) return null;
-                var factions = _ideologicalFriction.System.GetBunkerFactions();
+                var factions = _ideologicalFriction.ActiveFactions;
                 for (int i = 0; i < factions.Count; i++)
                 {
                     var f = factions[i];
@@ -730,6 +730,11 @@ namespace AtomicWar.GodotApp
                 if (_romanceFamily == null) return null;
                 var fam = _romanceFamily.System.GetFamilyForSurvivor(id);
                 return fam != null ? $"{fam.FamilyName} ({fam.ParentIds.Count + fam.ChildIds.Count} members)" : null;
+            };
+            _survivorDetailPanel.PoliticalBlocProvider = id =>
+            {
+                if (_shelterGovernance == null) return null;
+                return _shelterGovernance.GetSurvivorBlocDisplayName(id);
             };
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
             AddChild(_survivorDetailPanel);

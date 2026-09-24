@@ -112,6 +112,8 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `shelter_facilities_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `shelter_filter_degraded` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `shelter_fire_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `shelter_governance_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 159) |
+| `shelter_identity_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `shelter_hatch_unsealed` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `social_dispute_mediated` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
 | `social_dispute_unresolved` | Main.Plans46_49.cs | yes | via briefing panel | HANDLED |
