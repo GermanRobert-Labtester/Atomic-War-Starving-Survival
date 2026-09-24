@@ -2444,3 +2444,169 @@ in the data file).**
 | Morale default | `50f` | `SurvivorNeedsState.Morale` |
 | Delta skip threshold | `0.0001` absolute | `ApplyDailyMorale` |
 | Panel minimum size | 1160×700 | `AshfallDashboardShell` ctor |
+
+### VIII.3 Data schema reference
+
+**VIII.3.1 `items.json` decor row — full field contract.** Every
+`item_decor_*` row is a standard item row plus one lane field. Verified
+against all twelve 12C rows and the eleven trophy rows:
+
+```json
+{
+  "id": "item_decor_<name>",
+  "displayName": "<human name>",
+  "description": "<restrained material prose>",
+  "type": "Component",              // 12C rows; trophy rows use "Decor"
+  "stackMax": 1,                    // all decor rows
+  "weight": <float>,                // 0.1..3.0 across the family
+  "tradeValue": <int>,              // 3..35 across the family
+  "empShielded": false,
+  "decorLocalizedMoraleDelta": <float>   // REQUIRED by test rule; > 0
+  // trophy rows also carry: "isEquipable": false, "moraleEffect": <float>
+}
+```
+
+Rules the test suite enforces over the whole prefix family: the field
+must exist and be strictly positive on every `item_decor_*` row
+(`Items_Plan12CDecor_CarryDecorModifierField`); at least twelve such rows
+must exist; the loader must preserve the value through
+`ItemDefinition.decorLocalizedMoraleDelta`. The `moraleEffect` duplicate
+on trophy rows is unread by this lane. The `type` difference
+(`Component` vs `Decor`) is unread by this lane.
+
+**VIII.3.2 `ShelterDecorPlacement` — persistence field contract.**
+
+| Field | Type | Author | Constraints observed in shipped data |
+|---|---|---|---|
+| `RoomId` | string | host on mount/plaque | non-empty; matches a live room id at mount time; plaque room always `room_memorial_wall` |
+| `SlotId` | string | host on mount; `plaque_{id}` for plaques | non-empty, trimmed at mount; ordinal-unique per room |
+| `ItemId` | string | host | non-empty in shipped data; empty is the Core-level unassign sentinel the host never sends |
+| `DayInstalled` | int | host (`CurrentDay` / entry `Day`) | campaign day; rendered on cards |
+| `IsMemorialPlaque` | bool | host | true only for bridge projections |
+| `MemorialSurvivorId` | string | host | canonical survivor id when plaque; empty otherwise |
+| `PlaqueSourceHeirloomId` | string | host | ledger heirloom string when plaque; empty otherwise |
+
+**VIII.3.3 Save envelope.**
+
+```json
+{
+  "systemId": "shelter_decor",
+  "Checksum": "<SaveChecksum.Compute over the capture>",
+  "Placements": [ /* ShelterDecorPlacement rows */ ]
+}
+```
+
+Decode contract: missing checksum → `InvalidOperationException("ShelterDecor:
+empty checksum")`; mismatched → `"ShelterDecor: checksum mismatch"`. On
+any throw the section fails as a whole; the registry boots empty and the
+memorial reconcile rebuilds plaques from the ledger on the same setup
+pass — which is why a corrupted decor section loses posters, not people.
+
+**VIII.3.4 Category vocabulary.**
+
+| Category | Id test | Rows (12C window) |
+|---|---|---|
+| `poster` | contains `poster` | ration, warning |
+| `drawing` | contains `drawing` | chalk drawing |
+| `memorial plaque` | contains `plaque` | generic, carving, drawing |
+| `keepsake` | otherwise | nameplate, carved memorial, pressed flower, medal, chart, signal log |
+| `trophy` | contains `trophy` | (post-closeout: eleven trophy rows) |
+
+### VIII.4 Builder's cookbook
+
+Verified recipes for the five most likely future changes. Each states the
+exact files, the exact seam, and the verification to run. None of them
+require new authorities.
+
+**VIII.4.1 Add a new decor item.**
+
+1. Author one row in `Assets/StreamingAssets/Data/items.json` with the
+   `item_decor_` prefix, `stackMax: 1`, a positive
+   `decorLocalizedMoraleDelta`, and a description in the lane's material
+   register (a specific object with checkable details; no sentiment
+   instruction).
+2. Decide acquisition out of lane (loot/trade/craft owners feed storage;
+   this lane only mounts from storage).
+3. Verification: `bash scripts/run_test.sh
+   Ashfall.Core.Tests/Plan12CDecorTests.cs` — the per-row positive-delta
+   rule picks the new row up automatically; the existence list only
+   grows if the item is canonical enough to pin.
+4. If the item should appear in the golden's storage column, extend
+   `ShelterDecorSnapshotFixture` and re-promote the snapshot with both
+   manifests re-fingerprinted (reason written in the closeout note).
+
+Nothing else changes: `LoadCatalogModifiers` registers any
+`item_decor_`-prefixed row on the next boot, `ListAvailableDecor` sorts
+it into the storage column, and aggregation includes it wherever mounted.
+
+**VIII.4.2 Add a new plaque kind.**
+
+1. Author the plaque row: id must be exactly
+   `item_decor_memorial_plaque_<kind>` so `ResolvePlaqueItemId`'s
+   string build matches, with a positive delta.
+2. Confirm the enrollment/final-wish systems mint heirloom ids whose
+   trailing segment equals `<kind>` — the kind extraction is
+   ordinal-exact on the last segment (IV.7.4). If heirloom ids cannot be
+   shaped that way, the kind will never resolve and every plaque for it
+   lands on the generic row instead.
+3. Verification: extend the plaque-bridge facts in `Plan12CDecorTests`
+   with the new kind (mirror
+   `ResolvePlaqueItemId_FindsKindSpecific_WhenRegistered`), and add a
+   selftest-style projection if the kind carries provenance behavior.
+4. Do not add a parallel kind map anywhere; the string-build + registry
+   lookup is the whole mechanism.
+
+**VIII.4.3 Change the daily rule.** (Example: exempt the room a survivor
+sleeps in, or scale deltas by something.)
+
+1. All changes live in `ShelterDecorHostSession.ApplyDailyMorale` — the
+   Core registry stays a sum, the panel's arithmetic mirrors whatever the
+   host does (update `RefreshView`'s aggregate in the same change or the
+   two displays diverge).
+2. Keep the recipient filter order (active → non-trivial delta → known →
+   alive) unless the change *is* the filter; keep writing only through
+   `NeedsSystem.Modify`.
+3. Update the selftest's arithmetic stage if the delta semantics change,
+   and add a Core fact only if a pure-function piece emerges worth
+   pinning.
+4. If the change interacts with the mess-hall gate, resolve the gate
+   question (VIII.6, Q2) first — do not silently re-scope someone else's
+   shed-able-load decision.
+
+**VIII.4.4 Add a canonical slot vocabulary.** The lane accepts free-text
+slots; a curated vocabulary would be a *presentation* addition:
+
+1. Add the suggestion list to the panel (placeholder text or a picker),
+   never a Core-side enum — Core's looseness is the contract.
+2. Keep `Assign`'s acceptance width unchanged; validation stays
+   host-side so old saves with odd slots still load.
+3. Verify by selftest (mount through the new suggestion path) and by one
+   Core fact only if a pure validation function emerges.
+
+**VIII.4.5 Extend the panel.** (New card, new column, new filter.)
+
+1. Derive everything from `_host` inside `RefreshView`; no cached rows,
+   no second read model.
+2. New state-changing actions go through new host-session methods with
+   the same ladder discipline (validate → mutate inventory → mutate
+   registry → refund on Core rejection), never direct system calls from
+   the panel.
+3. New sentences come from the host (`LastEvent` / summaries) so the
+   selftest can assert them headlessly.
+4. If the change alters the rendered contract, re-promote the golden
+   (inspect → fingerprint → both manifests → reason).
+5. Preserve the teardown chain: any new subscription pairs with an
+   unsubscription, and `_ExitTree` still ends unbound.
+
+**VIII.4.6 Wire a new host-side consumer of decor state.** (Example: a
+room-view hotspot showing mounted items.)
+
+1. Read through `ShelterDecorSystem` (`GetSlot`, `ListRoomPlacements`,
+   `GetRoomMoraleDelta`) — never through the panel, never through a save
+   file.
+2. Subscribe `OnDecorChanged`/`OnStateChanged` for dirty paint; detach on
+   dispose.
+3. If the consumer writes, it must go through a host-session method with
+   the same validation and refund discipline — the registry accepts
+   `Assign` from anyone, which is exactly why callers should not use it
+   raw.

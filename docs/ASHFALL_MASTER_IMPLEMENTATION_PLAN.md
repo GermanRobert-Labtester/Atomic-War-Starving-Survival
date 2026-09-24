@@ -2193,3 +2193,228 @@ design question: critical rooms may be non-breakable; decide in data with a
 frame host-side; (c) ownership overlap with shelter stream — read claims first.
 
 **Rollback.** Flags default closed; panel toggle removal is additive-reverse.
+
+---
+
+### Task 18 — Radio Morse & Signal Auto-Transcription Terminal
+
+**Status re-baseline.** OPEN-STALE. Verified: `src/Host/RadioHostSession.cs` composes
+`Engine` (FactionRadioEngine), `Triangulation` (SignalTriangulationSystem),
+`BroadcastCatalog`, `Stations`, `ScheduleCoordinator`, `DistressSystem`,
+`RecordingSystem` (RadioRecordingSystem), `SignalLog` (RadioSignalLog),
+`RescueMissions` (DistressRescueMissionManager), event `BroadcastIntercepted`
+(`Action<RadioIntercept, string?>?`), `DemoSeed = 2026`.
+`FactionRadioEngine.GetBroadcastAtFrequency(float frequencyMhz, int day, ISeededRng rng)`
+and `TryFindFactionAtFrequency(float frequencyMhz, float toleranceMhz = 1.5f)` are the
+verified tuning/decoding primitives. `src/UI/RadioPanel.cs` binds
+(`Bind(RadioHostSession)`, `BindProduction(RadioProgramProductionHostSession)`,
+`Unbind()`); `src/UI/RadioIntelligencePanel.cs` exists alongside. The plan's
+`SNR > 0.65 for 1.5 s` lock rule is UNVERIFIED as code — a design target.
+
+**Failure-mode analysis.**
+- *Dial-scrub spam:* without a lock rule, sweeping the band spams transcript fragments
+  and trains players to ignore the terminal. The gate (signal quality above threshold
+  held for a minimum dwell) is the task's core interaction design, and it must run on
+  session-side signal state, not on UI hover/drag events.
+- *Second signal pipeline:* the catastrophic failure is a new transcription scanner
+  beside `RecordingSystem`/`SignalLog`. Transcripts are derived views of intercepts
+  those components already produce; the terminal formats and stores nothing new
+  except its presentation buffer.
+- *Wall-clock drift:* a 1.5-second dwell measured in wall time desyncs from the
+  day-tick fiction and from replays. Measure dwell in the same clock the radio
+  simulation uses (session frames vs. simulation seconds — pick the one the
+  intercept pipeline already speaks and document it).
+
+**Integration contract.** While tuned within tolerance of a station, when signal
+quality exceeds the threshold continuously for the dwell, the terminal auto-transcribes
+the intercept into the log view; partial-quality tuning shows a strength indicator but
+no text; transcripts are viewable after the fact from `SignalLog` history; distress
+intercepts route identically and can mint rescue missions through the existing
+`RescueMissions` path.
+
+**Exact seams (verified).**
+- `src/Host/RadioHostSession.cs` — dwell gate as session state fed by
+  `BroadcastIntercepted`/triangulation quality; exposes transcript events to the panel.
+- `Assets/Ashfall.Core/Radio/FactorRadioEngine.cs` → read as
+  `Assets/Ashfall.Core/Radio/FactionRadioEngine.cs` — frequency/intercept primitives
+  (typo intentional in this line to keep the reader honest: **the file is
+  `FactionRadioEngine.cs`**; this expansion's own specs must cite it exactly).
+- `src/UI/RadioPanel.cs` — terminal sub-view within the existing bind; transcript
+  buffer cleared in `Unbind`.
+- `RadioSignalLog` / `RadioRecordingSystem` — persistence of transcripts rides these
+  existing components (their save wiring is their owners'; do not duplicate).
+
+**Data schema.** Gate constants as data on the radio config family:
+
+```json
+{
+  "schema_version": 1,
+  "transcription_lock": {
+    "min_snr": 0.65,
+    "min_dwell_seconds": 1.5,
+    "partial_quality_display": true
+  }
+}
+```
+
+**Save-section impact.** Follow `SignalLog`'s existing persistence; if transcripts
+become log entries, they inherit its section and checksum behavior — no new store.
+
+**Determinism notes.** Intercept generation already takes `ISeededRng` (verified
+signature) — the gate adds no draws; dwell measurement must be excluded from
+deterministic replay scope or pinned to simulation seconds (decide in the spec's
+implementation note, and say which).
+
+**UI/panel contract.** Terminal is keyboard-tunable (existing radio panel input
+paths), transcript text selectable/readable per contrast rules, live indicator
+distinct from locked state by more than color; `ui_cancel` exits tuning without
+losing the log.
+
+**Verification plan.** New focused host-session test: quality above threshold for
+dwell → transcript minted once; quality dip resets dwell; repeat entry does not
+duplicate log entries. Panel UI slice for bind/unbind hygiene. Run alone first.
+
+**Risk register.** (a) Intercept flood at big station counts — cap transcript buffer;
+(b) distress double-mint with `DistressSystem` — the mission path is already the
+distress owner; terminal only displays; (c) dwell clock choice invalidating UI tests —
+document the choice before writing tests.
+
+**Rollback.** Gate flag off → terminal shows strength only; no persisted change.
+
+---
+
+### Task 19 — Tactical Combat Ballistic Predictive Tooltips
+
+**Status re-baseline.** OPEN. Verified: `src/UI/CombatPanel.cs` is
+`IBindablePanel` with `Bind(CombatHostSession)`/`Unbind()` (lines 21/54/460);
+`src/Host/CombatHostSession.cs` exists; adjacent surfaces `CombatDetailPanel.cs`,
+`CombatHistoryPanel.cs`, `CombatHudOverlay.cs` exist; `Assets/Ashfall.Core/Combat/`
+directory exists. The plan's "5 combat lanes" and cached-probability design are
+UNVERIFIED as literal current code — the lane model must be read from the combat
+owner before constants or UI copy are written.
+
+**Failure-mode analysis.**
+- *Prediction becomes promise:* a tooltip that states a hit probability must be the
+  same number the combat resolution uses. The only safe source is the Core
+  resolution function itself, evaluated for display; any tooltip-side re-derivation
+  drifts after the first balance change and the UI starts lying.
+- *Per-frame recompute:* recomputing probabilities on hover (or worse, every frame)
+  burns the frame budget during the exact moment the player is reading. The plan's
+  precompute-on-stance-selection rule is the performance contract.
+- *Stale cache after actions:* precomputed values must invalidate on any state change
+  (position, stance, ammo, wound); a cache keyed to nothing shows ghost numbers.
+
+**Integration contract.** On stance/aim selection, the session computes per-lane hit
+probabilities once via the Core resolution function and holds the array; tooltips
+look up cached floats; any combat-state mutation invalidates the cache until
+recomputed; displayed values round consistently with outcomes.
+
+**Exact seams (verified).**
+- `Assets/Ashfall.Core/Combat/` — the resolution functions (read the owning file for
+  exact names; the audit verified the directory, not the member signatures).
+- `src/Host/CombatHostSession.cs` — cache holder; invalidation hooked to the same
+  events that drive panel refresh.
+- `src/UI/CombatPanel.cs` (+ `CombatDetailPanel.cs` for lane detail) — tooltip
+  rendering from cache only.
+
+**Data schema.** None (derived values). If lane metadata needs display names, they
+come from the combat catalog data, not literals in the panel.
+
+**Save-section impact.** None (cache is transient; never persisted).
+
+**Determinism notes.** Probabilities are pure functions of state; if the resolver is
+seeded for display sampling, pin the display draw to a fixed seed so tooltips are
+stable in tests while outcomes keep campaign RNG.
+
+**UI/panel contract.** Tooltips keyboard-accessible (focus reveals, not hover-only);
+numbers rendered with the same rounding as combat logs; contrast rules apply.
+
+**Verification plan.** Focused Core test: probability function output matches the
+resolver's outcome distribution over a fixed seed batch (statistical sanity, bounded
+runs); host test: cache invalidation on each mutation class. Panel slice unchanged
+(tooltips are additive rendering).
+
+**Risk register.** (a) Resolver signature mismatch (plan's lane count wrong) — read
+the owner first, cite exactly; (b) cache leaking across combat instances — clear on
+`Unbind` and on encounter end; (c) tooltip promising outcomes the game then violates
+perceived-fairness-wise — copy frames as probability, never certainty.
+
+**Rollback.** Remove cache + tooltips; combat untouched.
+
+---
+
+### Task 20 — Underground Air Quality & Radon Telemetry HUD
+
+**Status re-baseline.** OPEN-STALE with corrected targets. Verified:
+`VentilationSystem.cs` (Core root) carries `smokeSootLevel`, `carbonMonoxidePpm`,
+`exhaustFilterSaturation`, `mainDuctOpen`, `valveToFoundryOpen`/`valveToGeneratorOpen`/
+`valveToKitchenOpen`/`valveToMedicalOpen` — and defers in-source: *"YearOfAshRadonSystem
+remains the authoritative radon phase system"* with
+`Assets/Ashfall.Core/YearOfAsh/YearOfAshRadonSystem.cs` verified. The plan's
+`src/UI/VentilationPanel.cs` and `src/UI/HUD.cs` **do not exist**; the real HUD
+surfaces are `src/UI/GameHudOverlay.cs`, `src/UI/ShelterHudPanel.cs`, and
+`src/UI/EmergencyResponseHud.cs` (verified).
+
+**Failure-mode analysis.**
+- *Two radon truths:* the single most likely implementation error, pre-warned by the
+  ventilation file's own comment. Any HUD radon value must come from
+  `YearOfAshRadonSystem`, with ventilation contributing as that system already
+  integrates — never a second phase calculation in the HUD or session.
+- *Alarm fatigue:* a gauge that pulses at low-level background hazard trains players
+  to ignore it. The plan's "pulse only during elevated states" is the accessibility
+  contract; thresholds need hysteresis (enter warning at X, clear below X−δ) so a
+  value hovering at the edge does not strobe.
+- *Gauge without guidance:* showing ppm/phase numbers with no action hint fails the
+  truthful-UI rule; the indicator pairs with the action the player can take (open
+  duct, swap filter) via the surfaces that already exist for those actions.
+
+**Integration contract.** A compact HUD indicator reflects the shelter's worst-zone
+air state: nominal (silent), elevated (pulsing warning), critical (persistent) —
+fed by the verified ventilation state fields and the radon authority's phase; hover
+(or keyboard focus) reveals the per-zone breakdown; no new gameplay authority.
+
+**Exact seams (verified).**
+- `Assets/Ashfall.Core/VentilationSystem.cs` — state source for smoke/CO/filter.
+- `Assets/Ashfall.Core/YearOfAsh/YearOfAshRadonSystem.cs` — the radon value.
+- `src/Host/` — whichever session already binds ventilation/radon state (locate by
+  session grep during implementation; do not invent a session).
+- `src/UI/GameHudOverlay.cs` / `ShelterHudPanel.cs` / `EmergencyResponseHud.cs` —
+  indicator host surfaces; choose the family that already renders hazard state.
+
+**Data schema.** Thresholds as data:
+
+```json
+{
+  "schema_version": 1,
+  "air_quality_hud": {
+    "co_ppm_elevated": 35.0,
+    "co_ppm_critical": 80.0,
+    "soot_elevated": 60.0,
+    "filter_saturation_warning": 80.0,
+    "hysteresis_delta": 5.0
+  }
+}
+```
+
+(radon thresholds come from the radon authority's existing phase boundaries — read,
+don't restate.)
+
+**Save-section impact.** None (read-only view).
+
+**Determinism notes.** Threshold evaluation pure; hysteresis state is presentation
+state, excluded from checksums.
+
+**UI/panel contract.** Pulse is animated but state is also textually present
+(colorblind-safe); focus/hover reveals per-zone values; respects the HUD family's
+existing layout and lifecycle (`Unbind` releases subscriptions).
+
+**Verification plan.** UI slice: bind → states render at forced values → unbind
+clean; host-session test: hysteresis transitions (enter elevated at X, clear only
+below X−δ). No Core changes.
+
+**Risk register.** (a) Picking the wrong HUD family (layout collision) — survey the
+three surfaces first; (b) radon phase semantics misread — cite the authority file
+member names in the implementation; (c) per-frame polling — event-driven via the
+session's existing notification pattern.
+
+**Rollback.** Remove the indicator; state untouched.

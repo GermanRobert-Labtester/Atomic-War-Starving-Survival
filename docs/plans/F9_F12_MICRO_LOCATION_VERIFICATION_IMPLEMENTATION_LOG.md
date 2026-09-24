@@ -2453,3 +2453,129 @@ code. Commands in repository conventions; none were executed for this expansion.
 8. **What not to run.** No production build or data-integrity gate is needed for test-only
    work beyond the standard baseline; the full suite is not a verification tool here (G-11
    requires a hypothesis and a reason).
+
+### Appendix H — Commit, Artifact, and Line-Archaeology Register
+
+**H.1 Wave commits** (both verified in git history, 2026-09-25):
+
+| Hash | Subject (verbatim) | Contents |
+|---|---|---|
+| 45307130 | "Plan F9 wave: micro-location depletion/pending persistence evidence tests (8) + flagship implementation log" | `MicroLocationPersistenceWaveTests.cs`; the original log |
+| 620381bd | "Seal: unquarantine F9-F12 wave tests + reconcile reports against current trunk" | csproj unquarantine; regenerated reports; seal findings |
+
+Deliberately *not* committed by the wave (disclosed for their owners): the CropStrainCatalog
+one-token fix (subsequently shipped by the Farming stream), the GeothermalAquiferSystemTests
+hang fix (subsequently shipped and relocated to `Ashfall.Core.Tests/Shelter/` by the Flagship XI
+stream), the AGENTS.md UI-21 annotation (subsequently rotated out of `AGENTS.md` entirely).
+
+**H.2 Wave artifacts, current state** (all verified present, 2026-09-25):
+
+| Artifact | Path | Today |
+|---|---|---|
+| Persistence tests | `Ashfall.Core.Tests/MicroLocationPersistenceWaveTests.cs` | 8 `[Fact]`s, names unchanged |
+| Determinism harness | `Ashfall.Core.Tests/MicroLocationDeterminismHarness.cs` | Header + fixture + `CountingRng` as specced in §IV.7 |
+| Determinism tests | `Ashfall.Core.Tests/MicroLocationDeterminismTests.cs` | 10 `[Fact]`s (log: 9) |
+| Utilization audits | `Ashfall.Core.Tests/MicroLocationUtilizationAuditTests.cs` | 7 tests, names unchanged |
+| Economy audits | `Ashfall.Core.Tests/MicroLocationEconomyAuditTests.cs` | 6 `[Fact]`s (log: 7) |
+| Determinism contract doc | `docs/discovery/MICRO_LOCATION_DETERMINISM.md` | 139 lines; §1 verified verbatim; §2 carries the stale no-state-getter sentence |
+| Utilization report | `docs/discovery/MICRO_LOCATION_UTILIZATION.md` | 65 lines; triggered=78; 4 not-selected; canonical trace embedded |
+| Balance report | `docs/discovery/MICRO_LOCATION_BALANCE.md` | 123 lines; ratio 25.7%; full 79-choice ledger |
+| Scaffold | `.f9f12_scaffold/` | Removed after the wave (**UNVERIFIED (log text)**) |
+
+Post-wave family growth worth knowing when counting: the repository now also carries
+`MicroLocationCatalogFixtureTests`, `MicroLocationCatalogLoaderTests`,
+`MicroLocationEthicsIntegrationTests`, `MicroLocationGreenhouseIntegrationTests`,
+`MicroLocationHazardIntegrationTests`, `MicroLocationIntegrationDeterminismTests`,
+`MicroLocationRadioIntegrationTests`, `MicroLocationStorytellingIntegrityTests`,
+`MicroLocationWaterIntegrationTests`, `MicroLocationWorldFlagTests`, plus
+`Expeditions/MicroLocationExportParityTests`, `Expeditions/MicroLocationLifecycleSmokeTests`,
+`Expeditions/MicroLocationRegressionMatrixTests`, and
+`Localization/MicroLocationLocalizationTests` — later streams built directly on the wave's
+foundation, which is the strongest retrospective endorsement of the wave's contracts.
+
+**H.3 Line-number archaeology.** Line numbers cited by the log vs. today, with the stable
+anchor to use instead of a line number:
+
+| Log citation | Today | Stable anchor |
+|---|---|---|
+| `ExpeditionSystem.cs:1160` (RollEncounter) | :1266 | `private void RollEncounter(ExpeditionState exp, ISeededRng rng)` |
+| `ExpeditionHostSession.cs:206` (bridge surface) | bridge surface now flows through the host's `TickHours` at :1056 and subscription block around :432 | `public string TickHours(float hours)` / `_bridge.OnSurfaced +=` |
+| `ExpeditionEncounterBridge.cs:91` (Surface) | :139 | `public void Surface(ExpeditionState state)` |
+| `EncounterCatalog.cs:151` (depletedEncounterIds) | :131 | `public List<string>? depletedEncounterIds = new List<string>();` inside `NarrativeEncounterState` |
+| `HostDefaults.cs:121` (SeededRng) | class at :122 | `public sealed class SeededRng : ISeededRng` |
+| `CropStrainCatalog.cs:140` (the disclosed fix) | `FileExists` call inside `Load` | `if (!files.FileExists(path))` |
+
+Doctrine: every future log should cite *signature + line*, never line alone — the signature
+survives reformatting, the line number does not.
+
+**H.4 Numbers the wave left behind** (for anyone reconstructing its evidence chain):
+
+- 4 production test files, 31 tests, 3 generated/committed discovery documents.
+- 28 catalog entries; 79 choices (35 depleting / 44 not); 16 journal keys; 2 discoveries;
+  2 world flags; 3 required-location entries.
+- Scales: 8 ticks × 3 named seeds; 100 sweep seeds × ~dozens of draws each; 1000 opportunities;
+  100 expeditions; 64 seeds × every grant entry.
+- Ratios and counts at the three measurement points (wave, seal, today): 19.5% (7.69/1.50,
+  8 micros) → 25.7% (—/—, —) → 25.7% (6.69/1.72, 12 micros); triggered 64 → 78 → 78.
+- The full-suite verdict at seal: 8328 total / 8315 passed / 13 failed / 69 s / no hang
+  (log record).
+
+### Appendix I — Lessons Register
+
+Numbered, generalizable, each traceable to a concrete wave event.
+
+**L-1. Verification is integration work.** A wave that proves a system inherits the feature
+wave's obligations: ownership, focused tests, divergences, seal. The F9–F12 log reads like a
+feature log because the discipline is identical (§III.1).
+
+**L-2. Pin to intersections, not to snapshots.** The 3-arg/4-arg pin survived a mid-wave
+overload removal without a rewrite. Convenience overloads are the least stable API surface in
+a multi-stream tree; the smallest common signature is the most stable (T-1, §IV.5).
+
+**L-3. Design continuations against contracts you own.** The counting wrapper outlived the
+production state getter it replaced, and outlived its re-introduction under new names (V.C).
+
+**L-4. Zero-draw boundaries are load-bearing.** Metadata that silently consumes randomness
+invalidates every draw-count checkpoint built on top of it. Pin the boundary, not just the
+stream (R-3).
+
+**L-5. Breadth belongs inside tests, not across them.** 31 tests, tens of thousands of
+simulated decisions. The focused-run budget is a case budget, not an evidence budget (§VII.2).
+
+**L-6. Statistical findings must be reproducible before they are interpretable.** The dual-run
+requirement converts "the audit moved" from a mystery into either a tree-state fact or a test
+bug (V.D, G-6).
+
+**L-7. Reports are derived artifacts.** They must regenerate bit-stably from live data and
+never carry acceptance. When they move, the movement is a finding about the tree — recorded,
+not argued (Finding 2, INV-15).
+
+**L-8. Gates fail; findings inform.** DEAD/ORPHAN fail the build. A rare entry with expected
+selections below one is arithmetic. Blurring this line either ships broken content (gates too
+soft) or converts honest rarity into false alarms (gates too hard). INV-10 is the balance
+point (V.D).
+
+**L-9. A quarantine mechanism is a test-removal mechanism.** Any wave adding test files must
+assert project membership in the same change. Family counts are the detector; the manifest gate
+is the new backstop (Finding 1, C-14, G-10).
+
+**L-10. A stall is a hypothesis, not a weather condition.** The blame-hang pass turned "full
+suite hangs sometimes" into "this test loops when its precondition is missing," which is a
+fixable sentence (Finding 3, G-11).
+
+**L-11. Fix what blocks everyone; commit nothing you do not own.** The two foreign-file fixes
+and the AGENTS.md annotation all ended correctly because they were disclosed precisely and left
+to their owners (T-4, V.G).
+
+**L-12. Reconcile at seal.** Continuous re-measurement of a moving trunk burns the budget;
+seal-time reconciliation with double reproduction turns the movement into documented history
+(T-5).
+
+**L-13. The divergence ledger is the expansion API.** This entire Part II audit was possible
+because D1–D3, the overload removals, and the RNG removal were ledgered with reasons as they
+happened (T-6, §II.6).
+
+**L-14. Scale pins should pin exactly what they protect.** The 28-entry pin exists so a catalog
+change is acknowledged, not to freeze content forever. When it fires (Scenario 1), updating it
+is one line; the alternative — an unpinned count — is never learning about catalog changes at
+all (Appendix C note, C-3 contrast).

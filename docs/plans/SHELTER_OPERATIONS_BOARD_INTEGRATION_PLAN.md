@@ -20,7 +20,8 @@
 - `--shelter-operations-selftest`: legacy smoke passed; board probe passed 12/12.
 - `--player-panels-uitest`: passed, including the board bind/open/visible smoke and 21/21 panel lifecycle gates.
 - `--data-integrity-selftest`: 0 errors across 424 catalogs; 5 documented primary-wins warnings.
-- Architecture map generator/check passed at 266 subsystems.
+- `MainTriadDriftGateTests` 7/7 and `SaveSectionRegistryTests` 5/5; no new save section was introduced.
+- Architecture map generator/check passed at 266 subsystems; self-test manifest check passed at 206 tests; catalog registry check passed at 708 catalogs / 14,391 definitions.
 
 ## Authority and Persistence Boundaries
 
