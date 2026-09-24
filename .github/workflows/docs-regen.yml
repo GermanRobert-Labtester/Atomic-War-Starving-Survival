@@ -39,6 +39,8 @@ jobs:
           python3 scripts/ci/generate-agent-skills-catalog.py
           python3 scripts/ci/generate-core-systems-catalog.py
           python3 scripts/ci/generate-ui-panel-catalog.py
+          python3 scripts/ci/generate-ui-design-map.py
+          python3 scripts/ci/generate-plan-integration-audit.py
           python3 scripts/ci/generate-expansions-catalog.py
           bash scripts/ci/generate-save-store-matrix.sh
           # docs/INDEX.md must be regenerated LAST: it embeds the header lines
@@ -53,6 +55,8 @@ jobs:
             agent_skills_catalog_drift \
             core_systems_catalog_drift \
             ui_panel_catalog_drift \
+            ui_design_map_drift \
+            plan_integration_audit_drift \
             expansions_catalog_drift \
             save_store_matrix_drift \
             docs_index_drift; do

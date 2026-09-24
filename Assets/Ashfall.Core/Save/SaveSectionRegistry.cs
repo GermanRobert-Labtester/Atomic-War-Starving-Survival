@@ -298,6 +298,8 @@ namespace Ashfall.Core.Save
             new("shelter_maintenance", "SaveShelterMaintenance", "SetupShelterMaintenance", "shelter", "Plan 186 — Shelter maintenance & degradation: component condition, environmental stress, maintenance actions, and alert states", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("survivor_routines", "SaveSurvivorRoutines", "SetupSurvivorRoutines", "survivors", "Plan 188 — Individual survivor daily routines: activity time blocks, chronotypes, satisfaction evaluation, and interpersonal conflicts", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("difficulty_settings", "SaveDifficultySettings", "SetupDifficultySettings", "campaign", "Plan 181 — runtime difficulty settings: active preset, custom slider values, and the ironman lock. The campaign identity preset stays in the checksummed header.", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("rail_track_maintenance", "SaveRailTrackMaintenance", "SetupRailTrackMaintenance", "expeditions", "Expansion 25 — rail track gauge/wear/bridge maintenance ledger over the canonical RailwaySystem topology", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("glassworks", "SaveGlassworks", "SetupGlassworks", "shelter", "Expansion 29 — glass vitrification batches, vision prescriptions, and abrasive grit stock", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -564,6 +566,8 @@ namespace Ashfall.Core.Save
                 { "shelter_maintenance", "shelter_maintenance_save.json" },
                 { "survivor_routines", "survivor_routines_save.json" },
                 { "difficulty_settings", "difficulty_settings_save.json" },
+                { "rail_track_maintenance", "rail_track_maintenance_save.json" },
+                { "glassworks", "glassworks_save.json" },
             };
 
 

@@ -321,6 +321,8 @@ namespace AtomicWar.GodotApp
             SetupShelterMaintenance();
             SetupSurvivorRoutines();
             SetupDifficultySettings();
+            SetupRailTrackMaintenance();
+            SetupGlassworks();
             // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
             // before any early SaveAll so Continue cannot drop resolved choices.
             SetupMoralChoice();
@@ -560,6 +562,8 @@ namespace AtomicWar.GodotApp
                 SaveShelterMaintenance();
                 SaveSurvivorRoutines();
                 SaveDifficultySettings();
+                SaveRailTrackMaintenance();
+                SaveGlassworks();
 
                 if (_sectionCaptureFailed)
                 {

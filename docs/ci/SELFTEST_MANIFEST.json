@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 176,
-  "headless_test_count": 174,
+  "total_tests": 178,
+  "headless_test_count": 176,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1063,6 +1063,32 @@
       "description": "Plan 181 difficulty settings system: preset selection, custom slider lanes, clamp bounds, ironman lock enforcement, and save/restore",
       "headless_compatible": true,
       "expected_summary_id": "difficulty_settings_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "rail_track_maintenance_selftest",
+      "action": "RailTrackMaintenanceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--rail-track-maintenance-selftest",
+      "aliases": [
+        "--iron-road-selftest"
+      ],
+      "description": "Expansion 25 Iron Road rail track maintenance: gauge stability, wear, bridge load feasibility, workgang repair, and the segment ledger",
+      "headless_compatible": true,
+      "expected_summary_id": "rail_track_maintenance_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "glassworks_selftest",
+      "action": "GlassworksSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--glassworks-selftest",
+      "aliases": [
+        "--the-glass-selftest"
+      ],
+      "description": "Expansion 29 The Glass vitrification: batch annealing, purity tiers, corrective lens grinding, theodolite calibration, and vision prescriptions",
+      "headless_compatible": true,
+      "expected_summary_id": "glassworks_selftest",
       "timeout_seconds": 30
     },
     {

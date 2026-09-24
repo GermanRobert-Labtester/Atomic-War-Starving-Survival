@@ -152,6 +152,10 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("shelter_governance", new ShelterGovernanceDayOwner(this), phase: 5);
             // Plan 176 — aging & elderly survivor system: advances chronological age and evaluates milestones/retirement.
             _campaignDay.Register("aging", new AgingDayOwner(this), phase: 5);
+            // Expansion 25 — rail track maintenance ledger (event-driven wear; no daily baseline).
+            _campaignDay.Register("rail_track_maintenance", new RailTrackMaintenanceDayOwner(this), phase: 5);
+            // Expansion 29 — glassworks kiln annealing stages.
+            _campaignDay.Register("glassworks", new GlassworksDayOwner(this), phase: 5);
             // Plan 186 — shelter maintenance & degradation: applies daily component wear and environmental stress.
             _campaignDay.Register("shelter_maintenance", new ShelterMaintenanceDayOwner(this), phase: 5);
             // Plan 188 — individual survivor daily routines: ticks satisfaction and detects schedule conflicts.
@@ -2217,6 +2221,61 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.TickShelterRoomHistoryMilestones(day);
+            }
+        }
+
+        /// <summary>Expansion 25 rail track maintenance day owner (ownerId <c>rail_track_maintenance</c>, phase 5).</summary>
+        private sealed class RailTrackMaintenanceDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Rail.RailMaintenanceState? _snapshot;
+            public RailTrackMaintenanceDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupRailTrackMaintenance();
+                _snapshot = _m._railTrackMaintenance?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._railTrackMaintenance?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupRailTrackMaintenance();
+                var census = _m.GetRailTrackMaintenanceCensus();
+                events.Add(new DayStateChangeEvent(
+                    "rail_track_maintenance_ticked", "rail_track_maintenance", null, null, census.DegradedSegments));
+            }
+        }
+
+        /// <summary>Expansion 29 glassworks day owner (ownerId <c>glassworks</c>, phase 5).</summary>
+        private sealed class GlassworksDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Optics.GlassworksState? _snapshot;
+            public GlassworksDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupGlassworks();
+                _snapshot = _m._glassworks?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._glassworks?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupGlassworks();
+                _m.TickGlassworks(day);
+                int annealed = _m._glassworks?.Census.AnnealedBatches ?? 0;
+                events.Add(new DayStateChangeEvent(
+                    "glassworks_ticked", "glassworks", null, null, annealed));
             }
         }
     }

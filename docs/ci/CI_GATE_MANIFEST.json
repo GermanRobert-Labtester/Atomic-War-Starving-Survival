@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.1.0",
-  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate)",
+  "schema_version": "1.1.1",
+  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 — Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates).",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 57,
-  "fast_tier_count": 53,
+  "total_gates": 59,
+  "fast_tier_count": 55,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -311,6 +311,26 @@
       "command": "bash scripts/ci/generate-architecture-map.sh --check",
       "timeout_seconds": 30,
       "expected_summary": "Architecture map is up to date",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "plan_integration_audit_drift",
+      "name": "Recent Plan Integrations Audit Drift Gate",
+      "category": "Drift & Architecture Gates",
+      "command": "python3 scripts/ci/generate-plan-integration-audit.py --check",
+      "timeout_seconds": 60,
+      "expected_summary": "RECENT_PLAN_INTEGRATIONS_AUDIT.md in sync",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "ui_design_map_drift",
+      "name": "UI Design Map Drift Gate",
+      "category": "Drift & Architecture Gates",
+      "command": "python3 scripts/ci/generate-ui-design-map.py --check",
+      "timeout_seconds": 30,
+      "expected_summary": "UI_DESIGN_MAP.md in sync",
       "classification": "fast",
       "critical": true
     },

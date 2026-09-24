@@ -46,6 +46,8 @@ namespace Ashfall.Core.Campaign
             { "duty_roster_ticked", SemanticKind.Heartbeat },
             { "espionage_ticked", SemanticKind.Heartbeat },
             { "events_evaluated", SemanticKind.Heartbeat },
+            { "glassworks_ticked", SemanticKind.Heartbeat },
+            { "rail_track_maintenance_ticked", SemanticKind.Heartbeat },
             { "expedition_ticked", SemanticKind.Heartbeat },
             { "expeditions_ticked", SemanticKind.Heartbeat },
             { "flagship_institutions_ticked", SemanticKind.Heartbeat },

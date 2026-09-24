@@ -92,3 +92,42 @@ What was added:
   SurvivorSocialCoordinator aggregate owns belongings persistence; the death
   orchestrator owns inheritance. Visitor monitoring remains a bounded
   administrative reference, not a second suspicion system.
+
+## Post-integration programmatic audit + UI design system (2026-09-24)
+
+Two new source-derived generators were added and gated in CI:
+
+- `scripts/ci/generate-plan-integration-audit.py` →
+  `docs/plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md` + `recent_plan_integration_audit.json`.
+  Programmatically re-verifies 44 recently integrated plans against live source
+  (Core type declarations, `src/` reachability, `SaveSectionRegistry` triad,
+  save stores, UI panels, routes, `HostCli` + `SELFTEST_MANIFEST.json`, test
+  fixtures). Verdict: **44/44 INTEGRATED**, including both plans in this log.
+- `scripts/ci/generate-ui-design-map.py` →
+  `docs/ui/UI_DESIGN_MAP.md` + `ui_design_map.json`. Derives the UI design
+  system from source: Theme tokens (23 colors, 5-step spacing, 6-step type
+  scale), 241 panels (110 dashboard shells, 114 bindable, 22 scene-backed),
+  dashboard IA, 135 PanelRegistry bindings, 61 expanded-surface ids, and four
+  measured design invariants.
+
+Findings surfaced by the design map (reported, not repaired here):
+
+1. **Unbind lifecycle asymmetry (low severity):** 8 bindable panels
+   (`DutyRosterDetailPanel`, `EpiloguePanel`, `EventsLogPanel`,
+   `FactionDetailPanel`, `MaritimeAtlasPanel`, `OnboardingHintPanel`,
+   `OpeningProtocolModal`, `WeatherSondePanel`) expose `Bind` without `Unbind`.
+   Spot-check shows all are snapshot-store-and-refresh binds; the only panel
+   with a live event subscription (`WeatherSondePanel`) unsubscribes before
+   rebinding and detaches at teardown, so no active leak was found — this is a
+   naming/lifecycle-consistency gap for a future sweep, not a runtime defect.
+2. **Concurrency drift guard value:** during the audit, the
+   `visitor_integration` graph entry was found concurrently normalized to
+   inaccurate values by another in-flight agent and was corrected with an
+   assert-guarded patch (see earlier section); the new drift gates make such
+   drift fail CI instead of passing silently.
+
+CI wiring: `plan_integration_audit_drift` and `ui_design_map_drift` added to
+`docs/ci/CI_GATE_MANIFEST.json` (schema 1.1.1, 59 gates / 55 fast), both
+verified through `scripts/ci/run-gates.py --gate` (16.7s / 0.09s);
+`docs-regen.yml` regenerates both docs; `docs/INDEX.md` regenerated (5041
+documents); `CiGateManifestDriftTests` 7/7 passing.

@@ -563,6 +563,8 @@ namespace AtomicWar.GodotApp
             ResetShelterMaintenance();
             ResetSurvivorRoutines();
             ResetDifficultySettings();
+            ResetRailTrackMaintenance();
+            ResetGlassworks();
         }
 
         /// <summary>

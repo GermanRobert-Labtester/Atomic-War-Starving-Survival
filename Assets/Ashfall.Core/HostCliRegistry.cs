@@ -124,6 +124,8 @@ namespace Ashfall.Core
         ShelterGovernanceSelfTest,
         AgingSelfTest,
         DifficultySettingsSelfTest,
+        RailTrackMaintenanceSelfTest,
+        GlassworksSelfTest,
         ShelterMaintenanceSelfTest,
         SurvivorRoutinesSelfTest,
         OrphanSealWave1SelfTest,
@@ -835,6 +837,18 @@ namespace Ashfall.Core
                     "--difficulty-settings-selftest",
                     new[] { "--difficulty-sliders-selftest" },
                     "Plan 181 difficulty settings system: preset selection, custom slider lanes, clamp bounds, ironman lock enforcement, and save/restore"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RailTrackMaintenanceSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--rail-track-maintenance-selftest",
+                    new[] { "--iron-road-selftest" },
+                    "Expansion 25 Iron Road rail track maintenance: gauge stability, wear, bridge load feasibility, workgang repair, and the segment ledger"),
+                new HostCliActionDescriptor(
+                    HostCliAction.GlassworksSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--glassworks-selftest",
+                    new[] { "--the-glass-selftest" },
+                    "Expansion 29 The Glass vitrification: batch annealing, purity tiers, corrective lens grinding, theodolite calibration, and vision prescriptions"),
                 new HostCliActionDescriptor(
                     HostCliAction.ShelterMaintenanceSelfTest,
                     "Expansions & Campaign Modules",

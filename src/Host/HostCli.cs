@@ -241,7 +241,9 @@ namespace AtomicWar.GodotApp
         ShelterMaintenanceSelfTest,
         SurvivorRoutinesSelfTest,
         VisitorIntegrationSelfTest,
-        PersonalBelongingsSelfTest
+        PersonalBelongingsSelfTest,
+        RailTrackMaintenanceSelfTest,
+        GlassworksSelfTest
     }
 
     /// <summary>
@@ -714,6 +716,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.AgingSelfTest;
             if (Has(args, "--difficulty-settings-selftest") || Has(args, "--difficulty-sliders-selftest"))
                 return HostCliAction.DifficultySettingsSelfTest;
+            if (Has(args, "--rail-track-maintenance-selftest") || Has(args, "--iron-road-selftest"))
+                return HostCliAction.RailTrackMaintenanceSelfTest;
+            if (Has(args, "--glassworks-selftest") || Has(args, "--the-glass-selftest"))
+                return HostCliAction.GlassworksSelfTest;
             if (Has(args, "--shelter-maintenance-selftest") || Has(args, "--maintenance-selftest"))
                 return HostCliAction.ShelterMaintenanceSelfTest;
             if (Has(args, "--survivor-routines-selftest") || Has(args, "--routines-selftest"))

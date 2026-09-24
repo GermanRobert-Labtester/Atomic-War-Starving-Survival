@@ -46,6 +46,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `fluid_logistics_ticked` | Main.Plans166_169.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `geothermal_orc_ticked` | Main.Plans74_77.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `generation_advanced` | — (Plan 19B) | yes | via briefing panel | HANDLED |
+| `glassworks_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 29) |
 | `greenhouse_foundry_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `hazard_warning` | HostCli.WorldPlaytest.cs, Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `holdfast_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
@@ -97,6 +98,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `radio_program_production_active_delta` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible) |
 | `radio_program_production_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `radio_transmission` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |
+| `rail_track_maintenance_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 25) |
 | `research_ticked` | Main.Plans166_169.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `research_unlock_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 141) |
 | `resource_delta` | — (no current emitter — Plan 31 scope) | yes | via briefing panel | HANDLED |

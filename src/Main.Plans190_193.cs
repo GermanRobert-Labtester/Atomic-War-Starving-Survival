@@ -161,6 +161,7 @@ namespace AtomicWar.GodotApp
             _railway.OnTrainDispatched += (trainId, segmentId) =>
             {
                 _journal?.TryAddRawEntry("train_dispatched", $"Armored train {trainId} departed onto rail segment {segmentId}.", null!, _simDay);
+                RecordRailRunFromTrain(_railway, trainId, segmentId);
             };
 
             _railway.OnDerailment += (trainId, segmentId) =>

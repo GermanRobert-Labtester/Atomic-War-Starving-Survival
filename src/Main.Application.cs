@@ -722,6 +722,12 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.DifficultySettingsSelfTest:
                     GetTree().Quit(HostCliDifficultySettings.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.RailTrackMaintenanceSelfTest:
+                    GetTree().Quit(HostCliRailTrackMaintenance.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.GlassworksSelfTest:
+                    GetTree().Quit(HostCliGlassworks.RunSelfTest(_dataDir));
+                    return;
                 case HostCliAction.ShelterMaintenanceSelfTest:
                     GetTree().Quit(HostCliShelterMaintenance.RunSelfTest(_dataDir));
                     return;
