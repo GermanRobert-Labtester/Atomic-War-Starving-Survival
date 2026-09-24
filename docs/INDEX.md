@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5412 | **Total Characters:** 1,695,528,906 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 1961 documents carrying 1,652,379,056 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5412 | **Total Characters:** 1,695,578,720 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 1961 documents carrying 1,652,428,870 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 1961 documents, 1,652,379,056 characters
+## Oversized Document Register (>= 100,000 characters) — 1961 documents, 1,652,428,870 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1617,6 +1617,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 272,951 | [`docs/expansions/prose_wave37/cw37_04_the_cars_were_first_in_line_plan.md`](expansions/prose_wave37/cw37_04_the_cars_were_first_in_line_plan.md) |
 | 272,313 | [`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-YEAR-OF-ASH-TRUTH-146.md`](plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-YEAR-OF-ASH-TRUTH-146.md) |
 | 271,164 | [`docs/expansions/prose_wave37/cw37_02_no_wages_in_the_ore_plan.md`](expansions/prose_wave37/cw37_02_no_wages_in_the_ore_plan.md) |
+| 271,146 | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) |
 | 268,077 | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-SURGICAL-WARD-TRUTH-213.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-SURGICAL-WARD-TRUTH-213.md) |
 | 267,111 | [`docs/expansions/prose_wave37/cw37_05_at_the_far_end_of_their_jack_plan.md`](expansions/prose_wave37/cw37_05_at_the_far_end_of_their_jack_plan.md) |
 | 266,367 | [`docs/expansions/prose_wave37/cw37_03_the_sluice_kept_no_passenger_list_plan.md`](expansions/prose_wave37/cw37_03_the_sluice_kept_no_passenger_list_plan.md) |
@@ -1790,7 +1791,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 229,429 | [`docs/expansions/wave29/expansion_151_four_words_and_the_press_plan.md`](expansions/wave29/expansion_151_four_words_and_the_press_plan.md) |
 | 226,609 | [`docs/expansions/wave28/expansion_149_the_chart_stops_mid_sentence_plan.md`](expansions/wave28/expansion_149_the_chart_stops_mid_sentence_plan.md) |
 | 225,859 | [`docs/expansions/wave29/expansion_150_the_count_happens_in_the_open_plan.md`](expansions/wave29/expansion_150_the_count_happens_in_the_open_plan.md) |
-| 221,332 | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) |
 | 220,499 | [`Next-steps-plans/shipped_to_chat/Plan_191_Item_Identification_Appraisal_System.md`](../Next-steps-plans/shipped_to_chat/Plan_191_Item_Identification_Appraisal_System.md) |
 | 220,413 | [`Next-steps-plans/shipped_to_chat/Plan_204_Survivor_Recruitment_Defection_System.md`](../Next-steps-plans/shipped_to_chat/Plan_204_Survivor_Recruitment_Defection_System.md) |
 | 219,908 | [`Next-steps-plans/shipped_to_chat/Plan_197_Faction_Diplomacy_Treaty_System.md`](../Next-steps-plans/shipped_to_chat/Plan_197_Faction_Diplomacy_Treaty_System.md) |
@@ -7436,7 +7436,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/01-needs-radiation-save-roundtrip-tests.md`](../piagentsplans/01-needs-radiation-save-roundtrip-tests.md) | 256,078 | **Plan 01 — NeedsSystem & RadiationSystem Save Round-Trip Integrity, Metabolic Simulation & Deterministic State Verification (closes H10)** — **Package:** `PLAN-01-NEEDS-RADIATION-SAVE-ROUNDTRIP-TESTS` |
 | 🟢 `CURRENT` | [`piagentsplans/02-09-consolidated-remaining-work.md`](../piagentsplans/02-09-consolidated-remaining-work.md) | 14,537 | **Plans 02–09 — Consolidated Remaining Work** — Finish only the verified gaps across catalog loading, data authority, relic research unlocks, |
 | 🟢 `CURRENT` | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) | 285,513 | **Plan 02 — Comprehensive Catalog Ingestion Hardening, Diagnostic Telemetry & Zero Silent Failure Architecture (closes H4)** — **Package:** `PLAN-02-LOADER-BARE-CATCH-HARDENING` |
-| 🟢 `CURRENT` | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) | 221,332 | **Plan 03 — `schema_version` & Data-Authority Hygiene Sweep, Migration Envelopes & Automated Integrity Gating** — **Package:** `PLAN-03-SCHEMA-VERSION-DATA-SWEEP` |
+| 🟢 `CURRENT` | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) | 271,146 | **Plan 03 — `schema_version` & Data-Authority Hygiene Sweep, Migration Envelopes & Automated Integrity Gating** — **Package:** `PLAN-03-SCHEMA-VERSION-DATA-SWEEP` |
 | 🟢 `CURRENT` | [`piagentsplans/04-relic-blueprint-expansion.md`](../piagentsplans/04-relic-blueprint-expansion.md) | 2,471 | **Plan 04 — Workshop Relic Blueprint Expansion (6 → 30 relics)** — Exploit the fully-implemented, underused `WorkshopReverseEngineeringSystem` by expanding |
 | 🟢 `CURRENT` | [`piagentsplans/05-vinyl-record-catalog.md`](../piagentsplans/05-vinyl-record-catalog.md) | 2,513 | **Plan 05 — Vinyl Record Catalog Expansion (1 → 20 albums)** — Give the fully-wired `VinylMoraleSystem` (turntable playback, duration tracking, shelter-wide |
 | 🟢 `CURRENT` | [`piagentsplans/06-narrative-depth-trilogy.md`](../piagentsplans/06-narrative-depth-trilogy.md) | 251,731 | **Plan 06 — Narrative Depth Trilogy: Last Letters, Echoes & Faction War Arc** — **Package:** `PLAN-06-NARRATIVE-DEPTH-TRILOGY` |

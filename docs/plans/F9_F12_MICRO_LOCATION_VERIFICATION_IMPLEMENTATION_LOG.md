@@ -346,8 +346,12 @@ consolidated in §II.6.
   cross-cutting drift-management tactics chapter, each with per-test anatomy.
 - **Part VI** — cross-system interaction matrix and emergent-behavior surfacing.
 - **Part VII** — the gate ladder for future verification waves and the rollback plan.
-- **Part VIII** — appendices: glossary, invariant register, catalog inventory, seed tables,
-  scenario walkthroughs, open questions.
+- **Part VIII** — appendices A–R: glossary, invariant register, catalog inventory, seed and
+  constants register, the complete 31-test register, scenario walkthroughs, operator manual,
+  commit/artifact/line-archaeology registers, lessons, open questions, worked expected-value
+  computations, the next-wave sketch, audit internals, the wire format, a failure-triage
+  index, the expansion's provenance statement, the wave as an operational sequence, and a
+  cross-reference index.
 
 Readers who only need "what changed since the wave" can read §II.6 and stop. Readers building
 the next verification wave should read Parts III, V, and VII in that order.
@@ -379,7 +383,7 @@ as of that read and will drift; the *owners* and *contracts* are stable.
 
 The verified production chain (verified 2026-09-25):
 
-```
+```text
 ExpeditionHostSession.TickHours(hours)                 src/Host/ExpeditionHostSession.cs:1056
   rng  = ActiveRng                                     (one SeededRng for the whole session)
   _bridge.SetRng(rng)                                  (bridge shares the same stream)
@@ -440,20 +444,21 @@ Two structural facts differ from the wave-time chain printed at the top of this 
   no-op and seed stays the identity. The only constructor is still `SeededRng(int seed)`.
   Consequences for the wave's artifacts: the draw-count continuation tests remain valid (they
   never depended on state access), and a *stronger* save-boundary continuation test is now
-  possible via peek/seek. Nothing in the wave needs rewriting; §VIII.8 lists the possible
+  possible via peek/seek. Nothing in the wave needs rewriting; Appendix J (Q-2) lists the possible
   follow-up.
 - The known architectural boundary recorded by the wave still holds: the demo/default host
   session constructs `SeededRng(DemoSeed)` (7071) at startup and does not persist the draw
   position; depletion, pending queue, and history persist. A post-reload encounter stream
-  restarts from the seed. Peek/seek now makes closing that boundary *possible*, but no host save
-  codec consumes it yet (verified 2026-09-25 — no `PeekState` callers in `src/` beyond the
-  definition).
+  restarts from the seed. Peek/seek makes closing that boundary *possible*, and the first host
+  consumer has landed: the expedition playtest CLI's save captures and restores the raw stream
+  position (`src/Host/HostCli.ExpeditionPlaytest.cs:460` capture, `:478` restore — verified
+  2026-09-25). The demo session's campaign save path still restarts from the seed.
 
 ### II.4 Save path today
 
 `NarrativeEncounterState` (all field names verified against `EncounterCatalog.cs`):
 
-```
+```text
 systemId              — string, constant NarrativeEncounterSystem.SystemId
 totalResolved         — int
 cumulativeMorale      — int
@@ -504,7 +509,7 @@ reconstruction), not the envelope, which has its own save-store contract matrix
   house "snake_case JSON" description in `AGENTS.md`. Reported as observed.
 
 A full 28-row inventory table with weights, dangers, choice counts, and grant counts is in
-§VIII.3.
+Appendix C.
 
 ### II.6 Drift table: log vs current trunk
 
@@ -516,17 +521,17 @@ Everything the log pinned, and where it stands now:
 | C-2 | Production chain: bridge → `NarrativeEncounterSystem.SelectEncounter` (5-arg at wave start, 4-arg after drift) | Bridge rolls its own merged narrative+patrol single draw; `SelectEncounter` 4-arg remains public for other callers | Structural change post-wave |
 | C-3 | 53 authored expedition destinations | `expeditions.json` holds 75 entries | Content growth; audit tests that count destinations were written count-agnostic (they iterate, not pin, that count) |
 | C-4 | `RollEncounter` at `ExpeditionSystem.cs:1160`; bridge `Surface` at :91; `depletedEncounterIds` at `EncounterCatalog.cs:151` | :1266, :139, :131 respectively | Line drift only; bodies verified equivalent in contract |
-| C-5 | Determinism file: 9 tests | 10 `[Fact]` methods in `MicroLocationDeterminismTests.cs` | Test-count growth after the wave (offsetting drift with E-1) |
+| C-5 | Determinism file: 9 tests | 10 `[Fact]` methods in `MicroLocationDeterminismTests.cs` | Test-count growth after the wave (offsetting drift with C-6) |
 | C-6 | Economy file: 7 tests | 6 `[Fact]` methods in `MicroLocationEconomyAuditTests.cs` | Test-count change after the wave (offsetting drift with C-5) |
 | C-7 | Wave suite total 31 | 8 + 10 + 7 + 6 = 31 | Total coincidentally preserved by offsetting C-5/C-6 |
-| C-8 | Utilization findings: 3 entries not selected in the 1000-opportunity sample (supply_drop, chapel ledger, levy board) | Current generated report: 4 not selected — `micro_crashed_drone` joined; `micro_supply_drop` selected once | Sample-luck movement across generations; dead/orphan gates still 0/0 |
+| C-8 | Utilization findings: 3 entries not selected in the 1000-opportunity sample (supply_drop, chapel ledger, levy board) | Current generated report: 4 not selected — `micro_supply_drop` left the set (selected once) while `micro_crashed_drone` and `micro_depot_undertow_raft_line` joined; chapel ledger and levy board stayed | Sample-luck movement across generations; dead/orphan gates still 0/0 (report findings re-verified 2026-09-25) |
 | C-9 | Economy headline 19.5% (7.69 primary / 1.50 micro, 8 micros surfaced) | Current generated report: 25.7% (6.69 / 1.72, 12 micros surfaced, morale −1, guilt +7) | Matches log's own Finding 2 reconciliation; both inside the 10–30% band |
 | C-10 | `GeothermalAquiferSystemTests` fixed in place (untracked, Flagship XI owns the commit) | Files now live at `Ashfall.Core.Tests/Shelter/GeothermalAquiferSystemTests.cs` and `GeothermalAquiferIntegrationTests.cs` | Owner shipped and relocated the file |
 | C-11 | `CropStrainCatalog.cs:140` `files.Exists(path)` disclosed fix left uncommitted for its owner | Current source reads `if (!files.FileExists(path))` | The owning stream adopted the fix |
 | C-12 | `Plans146_149IntegrationTests.cs` oscillated broken/compiling during closeout | File no longer exists under that name | Owning stream reshaped or removed it |
 | C-13 | AGENTS.md UI-21 verification row annotated with the stall root cause | Today's `AGENTS.md` contains no `UI-21` reference | Register text rotated out in later AGENTS.md revisions; the root cause lives on in this log and in the fixed test |
 | C-14 | csproj quarantine block had swept the four wave files via Compile Remove | Current `Ashfall.Core.Tests.csproj` quarantine region states explicit Compile Remove entries must target a real file and are "enforced by QuarantineManifestGateTests" | Post-wave hardening — the exact Finding 1 class is now gated |
-| C-15 | `godot --headless --path . -- --data-integrity-selftest`: 0 errors across 262 catalogs / 10,837 ids | Not re-run (documentation-only expansion). `docs/CURRENT_AUTHORITY.md` (dated 2026-08-26) quotes "129 catalogs and 4,793 authored IDs" — a stale or differently-scoped snapshot vs. the log's seal-time selftest | **UNVERIFIED (both figures)** — treat the live selftest as the only counter |
+| C-15 | `godot --headless --path . -- --data-integrity-selftest`: 0 errors across 262 catalogs / 10,837 ids | Not re-run (documentation-only expansion). `docs/CURRENT_AUTHORITY.md` (dated 2026-08-26 — eleven days *before* the wave's seal-time selftest) quotes "129 catalogs and 4,793 authored IDs"; the gap is catalog growth between the two dates, not a contradiction, but neither figure describes today's count | **UNVERIFIED (log text)** — the seal figure stands as a log record and the current-trunk count is unknown; treat the live selftest as the only counter |
 
 ### II.7 What this means for a future wave
 
@@ -808,7 +813,7 @@ Specification notes a verification wave needs:
   load-bearing for reproducing exact trigger odds; a future edit that reorders clamp and stance
   halves changes results for clamp-adjacent values and would show up as a determinism-sweep
   divergence only if the harness exercised those values — a known blind spot, listed in
-  §VIII.8.
+  Appendix J (Q-1).
 - Default `encounterChancePerTick` is `0.12f` on both the definition and the runtime state
   (:201/:235); definitions from `expeditions.json` override per destination
   (`encounterChancePerTick` is one of the 12 fields each of the 75 entries carries).
@@ -1359,11 +1364,12 @@ Cost: replaying k draws is O(k). At harness scales (tens of draws per run) this 
 
 Per-test anatomy (file verified at 10 `[Fact]`s today; the log records 9 at wave time — the
 offsetting economy-file drift is §II.6 C-5/C-6, and the tenth test's presence does not weaken
-any wave claim):
+any wave claim). Labels DT-1..DT-10 (determinism test *n*) keep this anatomy distinct from the
+§II.6 drift rows C-1..C-15:
 
-**C-1 — `Seed42_Allotments_EightTicks_RepeatsExactly`** (and siblings
-**C-2 — `Seed99_GasStation_EightTicks_RepeatsExactly`**,
-**C-3 — `Seed7_DenialCut_EightTicks_RepeatsExactly`**).
+**DT-1 — `Seed42_Allotments_EightTicks_RepeatsExactly`** (and siblings
+**DT-2 — `Seed99_GasStation_EightTicks_RepeatsExactly`**,
+**DT-3 — `Seed7_DenialCut_EightTicks_RepeatsExactly`**).
 - Claim: identical seed + schedule ⇒ byte-identical run (INV-06 behavioral baseline).
 - Wiring: `Run(seed, expeditionId, 8)` on three named seed/destination pairs (42/allotments,
   99/gas station, 7/denial cut per the test names); compare `RunResult.Canonical()`.
@@ -1374,31 +1380,40 @@ any wave claim):
   any unstable sort — the canonical string surfaces all three as a tick-indexed diff.
 - Status: all three present.
 
-**C-4 — `SaveAtTick4_Continuation_EqualsUninterruptedEightTicks`.**
+**DT-4 — `SaveAtTick4_Continuation_EqualsUninterruptedEightTicks`.**
 - Claim: INV-09. Checkpoint continuation is indistinguishable from uninterrupted execution.
+- Wiring: the harness `Run`/`CreateFixture` pair (§IV.7); the checkpoint is the tick-4 pair
+  `CountingRng.Draws` + `CaptureDepletedSorted()`, restored into a fresh world through
+  `RestoreState`'s present-list branch.
 - Mechanism: §IV.9's four-step walkthrough, asserted via `AssertTracesEqual`.
 - Failure mode: any hidden per-world state outside the checkpoint pair — e.g. a cached eligible
   list surviving "restore," or draw counts reset but depletion not.
 - Status: present.
 
-**C-5 — `EligibilityMetadata_ConsumesZeroRngDraws`.**
+**DT-5 — `EligibilityMetadata_ConsumesZeroRngDraws`.**
 - Claim: R-3. Metadata/eligibility queries are free.
+- Wiring: the harness fixture driving `GetEligibleCandidates` and the def-level
+  `GetEffectiveWeight` against the live catalog, with `CountingRng.Draws` read on both sides.
 - Mechanism: `Draws` before and after `GetEligibleCandidates` / weight queries — equal.
 - Failure mode: lazily-computed weights that roll tie-breakers, or telemetry that samples the
   stream. Either would shift every subsequent selection silently.
 - Status: present.
 
-**C-6 — `SelectEncounter_ZeroEligibleContext_ConsumesZeroDraws`.**
+**DT-6 — `SelectEncounter_ZeroEligibleContext_ConsumesZeroDraws`.**
 - Claim: R-3 at the selection boundary. An empty eligible set returns null *before* the roll.
+- Wiring: the harness fixture with every candidate made ineligible (depleted or below the
+  danger floor), calling the 4-arg `SelectEncounter` on the empty set.
 - Mechanism: select in a context where everything is depleted/below danger floor; draws
   unchanged.
 - Failure mode: an implementation that rolls first and maps the roll to "nothing" would consume
   a draw and desynchronize every later tick. The early-return ordering is the contract.
 - Status: present.
 
-**C-7 — `SelectionPath_IntroducesNoIndependentRng`.**
+**DT-7 — `SelectionPath_IntroducesNoIndependentRng`.**
 - Claim: INV-06 static half. No stream construction, `Random`, `Guid.NewGuid`, or wall-clock
   entropy in `NarrativeEncounterSystem.cs`, `ExpeditionEncounterBridge.cs`, `ExpeditionSystem.cs`.
+- Wiring: no production instance is built; the test itself is the instrument, reading the three
+  named files and asserting the pattern gate.
 - Mechanism: source scan of the three files, asserted as a gate.
 - Failure mode: a future contributor adding a "shuffle for variety" call — caught at test time,
   not in a playthrough.
@@ -1408,17 +1423,21 @@ any wave claim):
 - Caveat recorded by this expansion: a source scan is E-3 tier — it pins the files it names, and
   new files in the path require extending the list. Part VII's gate ladder makes that explicit.
 
-**C-8 — `SameStreamState_ReplaysIdenticalSelection`.**
+**DT-8 — `SameStreamState_ReplaysIdenticalSelection`.**
 - Claim: R-1 behavioral half. Two consumers on one stream select identically; the stream, not
   the consumer instance, is the source of truth.
+- Wiring: two harness worlds on one seed; the second replays the first's draw count through
+  `CountingRng.ReplayDraws` before ticking.
 - Mechanism: fresh world replays a draw count into the same seed and reproduces the same
   selection sequence.
 - Failure mode: consumer-local RNG caching, or a bridge holding a stale stream across
   `SetRng` — the exact bug class the host's per-tick `SetRng` call exists to prevent.
 - Status: present.
 
-**C-9 — `DepletedCandidate_Filtering_IsDeterministic`.**
+**DT-9 — `DepletedCandidate_Filtering_IsDeterministic`.**
 - Claim: R-4. Filtering happens before weighting; filtered candidates consume nothing.
+- Wiring: paired harness worlds; depletion injected mid-run through `TryResolve` in one, the
+  same entries never eligible in its twin.
 - Mechanism: deplete entries mid-run; verify subsequent selections and draw counts match a world
   where those entries were never eligible in the first place — the two worlds must agree from
   the depletion point forward.
@@ -1426,8 +1445,10 @@ any wave claim):
   parity), or post-weight filtering (changes the roll mapping mid-walk).
 - Status: present.
 
-**C-10 — `HundredSeedHarness_HasZeroDivergences`.**
+**DT-10 — `HundredSeedHarness_HasZeroDivergences`.**
 - Claim: the contract holds across the seed space, not just three named seeds.
+- Wiring: the harness `Run` path across 100 seeds, each seed contributing one uninterrupted leg
+  and one continuation leg through a mid-run checkpoint.
 - Mechanism: 100 seeds; for each, uninterrupted run vs. continuation run through a mid-run
   checkpoint; zero divergences required. Any failure reports seed + tick + first divergent
   segment.
@@ -1460,6 +1481,49 @@ opportunity count or a required-location context). Three entries are single-cont
 the required-location trio of §II.5 — and their contexts number in the single digits out of 1000
 opportunities, which is expected, not pathological.
 
+Per-test anatomy for the structural four (Appendix E register rows 1–4; labels DU-1..DU-4,
+kept distinct from the §III.3 save disciplines D-1..D-4):
+
+**DU-1 — `MicroLocationCatalog_UniqueIds_AndValidRequiredFields`.**
+- Claim: INV-08's structural base plus the D1 pin — 28 unique ids with required fields present,
+  and a count change acknowledged loudly rather than absorbed.
+- Wiring: the production loader's merged catalog filtered to `micro_` (M.1); no fixtures.
+- Mechanism: uniqueness and field-presence assertions over the 28 rows; a 29th entry fails the
+  count pin by design (Scenario 1).
+- Failure mode: a duplicate id arriving through a new expansion pass, or a silent count change
+  recalibrating every downstream rate unnoticed.
+- Status: present (verified 2026-09-25).
+
+**DU-2 — `AllItemReferences_ResolveAgainstItemsCatalog`.**
+- Claim: INV-08's item half — every `grantItemId`, `requiredItemId`, and `costItems` entry
+  resolves in `items.json`.
+- Wiring: the live 724-item catalog read directly; no embedded item list.
+- Mechanism: per-reference lookup, with the failing id named in the assertion output so the fix
+  is a one-line catalog edit.
+- Failure mode: an `items.json` rename orphaning a grant — loot would silently vanish at grant
+  time; the test turns that into a named failure at test time.
+- Status: present.
+
+**DU-3 — `AllDiscoveryAndRequiredLocations_ResolveAndAreStructurallyReachable`.**
+- Claim: INV-08's location half — the two `discoverLocationId` values and the three
+  `requiredLocationId` values resolve and are structurally reachable.
+- Wiring: the merged destination catalog (M.2) plus the location registries the loader
+  consults.
+- Mechanism: id resolution plus a reachability check in the destination graph — structural, not
+  anecdotal.
+- Failure mode: a location id renamed out from under a micro-location, walling the entry off
+  permanently while the game otherwise runs clean.
+- Status: present.
+
+**DU-4 — `JournalUnlockKeys_StayInMicroNamespace_AndAreUniquePerEncounter`.**
+- Claim: INV-08's namespace discipline — the 16 journal keys stay micro-prefixed and unique per
+  encounter.
+- Wiring: the catalog's choice rows only.
+- Mechanism: prefix and per-encounter uniqueness assertions over every `journalUnlockId`.
+- Failure mode: a key colliding with an arc or story unlock would let one resolution silently
+  consume the other's knowledge entry.
+- Status: present.
+
 **The 1000-opportunity simulation methodology.**
 
 - One persistent campaign system: depletion accumulates across opportunities, exactly as a real
@@ -1482,7 +1546,7 @@ are gates):
 |---|---|---|---|
 | DEAD | zero eligible contexts in the entire matrix | 0 | 0 |
 | ORPHAN | references (items, locations, journals) that do not resolve | 0 | 0 |
-| NOT_SELECTED_IN_SAMPLE | eligible but zero selections in the 1000-opportunity sample, with expected selections < 1 | 3 (supply_drop, chapel ledger, levy board) | 4 (`micro_crashed_drone` joined; `micro_supply_drop` selected once — §II.6 C-8) |
+| NOT_SELECTED_IN_SAMPLE | eligible but zero selections in the 1000-opportunity sample, with expected selections < 1 | 3 (supply_drop, chapel ledger, levy board) | 4 (`micro_crashed_drone` and `micro_depot_undertow_raft_line` joined; `micro_supply_drop` selected once — §II.6 C-8) |
 | LOW_YIELD | positive grant area but bottom-tier expected value | 4 (reported, not gated) | reported, not gated |
 | REDUNDANT | candidate pair above the weight/context similarity threshold | 0 pairs | 0 pairs |
 
@@ -1573,9 +1637,9 @@ band finding survives thin sampling:
    exists — a searched site stays searched.
 4. *Non-depleting bound* (`FarmingResistance_NonDepletingItemChoices_AreNetNonPositive_OrDocumented`):
    choices that do NOT deplete must be net non-positive in item terms (offerings that cost, or
-   no items at all) or carry a documented exception. Today's non-depleting item interactions are
-   exactly the shrine offering (−12 net) and the memorial's leave choice (0) — sinks and
-   textures, never sources.
+   no items at all) or carry a documented exception. Today every non-depleting choice's net item
+   value in the ledger is either the shrine offering's −12 or plain 0 — sinks and textures,
+   never sources (verified against the committed report, 2026-09-25).
 
 Together: the *only* unbounded income path would be a repeatable positive grant, and the four
 gates partition that possibility away. This is why the wave could write "no balance tuning"
@@ -1765,21 +1829,24 @@ the verified interaction channel and the verification instrument that pins it.
 |---|---|---|---|---|---|---|
 | **Encounters** | destination `dangerLevel`/`encounterChancePerTick`/stance gate the trigger; `requiredLocationId` gates eligibility | grant/cost items ride the surfaced DTO into the inventory authority | `journalUnlockId` → `TryDiscoverKnowledge` (16 keys) | `setWorldFlag` → `Flags.IsSet` (2 flags) | depletion removes candidates before weighting (INV-02) | — |
 | **Expedition routing** | — | loot capacity (`maxLootCapacityKg`) rejects grants without un-depleting the site | route choice determines which journals are *reachable* | route choice determines which flags are *reachable* | route repetition vs. depleting pool = the farm-pressure channel | 75 destinations × Stealth/Speed/Balanced = the eligibility context space |
-| **Items economy** | scavenging tables per destination produce primary loot (the ratio denominator) | — | some journals unlock knowledge with economic value (out of F12 scope by design) | flags can gate later content (none authored on the 2 micro flags yet) | one-shot grants cap supply: the anti-farm property | micro grants (1.2–50 value) vs. primary p95 40 (current report) |
+| **Items economy** | scavenging tables per destination produce primary loot (the ratio denominator) | — | some journals unlock knowledge with economic value (out of F12 scope by design) | flags can gate later content (none authored on the 2 micro flags yet) | one-shot grants cap supply: the anti-farm property | micro grants (1.2–56 value) vs. primary p95 40 (current report) |
 | **Journal/knowledge** | — | — | — | — | resolution history is the migration source; journals are NOT (INV-03) | 16 unique keys, one per authored unlock — no collisions (F11 namespace test) |
 | **World flags** | — | — | — | — | flags never imply depletion; depletion never implies flags (B-6/B-8 pair) | 2 flags: `micro_contamination_exposure`, `micro_generator_marked` |
 | **Depletion** | repeat visits to a drained route yield proportionally less — emergent, unauthored | removes the supply curve's elasticity | — | — | — | ordinal set; save-persistent; selection-gating |
 
 ### VI.2 Emergent behavior the verification design surfaces
 
-**E-1 — Route exhaustion economics.** Because depleting micros close permanently and routes
+Numbered EB-1 through EB-5 to keep this register distinct from the evidence-hierarchy tiers
+E-1..E-6 of §III.2; every reference to an emergent behavior carries the `EB-` prefix.
+
+**EB-1 — Route exhaustion economics.** Because depleting micros close permanently and routes
 repeat, a survivor who walks the same circuit sees micro income decay toward the non-depleting
 residue (morale/guilt/journal-only choices). Nothing authors this decay; it falls out of INV-02.
 The 1000-opportunity simulation observes it (persistent system, accumulation by design), and the
 farming-resistance gates constrain its floor. A future "over-explored regions feel dead" report
 would trace to exactly this interaction — by design, not by bug.
 
-**E-2 — The ethics economy prices guilt against need.** The memorial pair (+1 morale for
+**EB-2 — The ethics economy prices guilt against need.** The memorial pair (+1 morale for
 leaving, 1.2 value + 2 guilt for taking), the grave (+25 ring, −3 morale, +4 guilt), the bus
 (20 value, −2 morale, +3 guilt vs. +2 morale for leaving): high-value micros are systematically
 guilt-priced. The F12 ledger makes the pattern visible in one table — that visibility is the
@@ -1787,14 +1854,14 @@ point of reporting morale/guilt without an exchange rate. The wave's recommendat
 *because* the pattern is stable under the band finding; a band violation would have forced the
 ethics pricing into the open as a tuning question.
 
-**E-3 — Discovery chains route knowledge into geography.** The observation post's
+**EB-3 — Discovery chains route knowledge into geography.** The observation post's
 `read_grid_references` unlocks `rural_gas_station` (the balance report's location column) — a
 micro-location whose reward is *access to a primary location*. This is the one place the
 micro/primary separation in the F12 ratio genuinely touches: the ratio counts items, while the
 discovery reward is structural mobility. The ledger's no-exchange-rate rule keeps this honest —
 the discovery is reported as a discovery, not converted to travel-value fiction.
 
-**E-4 — Depletion as a deterministic seed event.** Because depletion filters *before* weighting
+**EB-4 — Depletion as a deterministic seed event.** Because depletion filters *before* weighting
 (R-4), resolving one site changes the conditional distribution of every subsequent selection —
 including other sites' rates, and including the draw-position arithmetic (depleted candidates
 consume no roll, so the stream position advances identically whether content exists or not).
@@ -1804,7 +1871,7 @@ this by comparing worlds with identical state; anyone comparing *across* diverge
 must not expect trace equality — a common misuse the determinism doc's continuation section
 preempts.
 
-**E-5 — Patrol coexistence.** The post-wave bridge merge (§II.2) puts narrative micros and
+**EB-5 — Patrol coexistence.** The post-wave bridge merge (§II.2) puts narrative micros and
 patrol encounters in one draw. Interaction consequences a future wave must verify: micro
 selection rates are now conditioned on the patrol pool's weights (a heavy patrol season
 suppresses micros proportionally, exactly as INV-02 filtering does for depletion); the
@@ -1837,7 +1904,7 @@ stops there and reports — it does not skip forward and back-fill.
 | G-2 | Ownership claim | `WORKTREE_OWNERSHIP.md` entries for every path the wave will touch | Every path claimed or read-only-justified | Ownership block in the log | Stop. Overlapping claims are a foreman decision, not a negotiation |
 | G-3 | Focused suite green | `bash scripts/run_test.sh Ashfall.Core.Tests/<wave file>` per new file, run alone first | 100% of the new file's tests pass in isolation | Per-file run records | Fix the test or record a divergence; never commit red |
 | G-4 | Wire-fidelity check | Reviewer confirms every save-shaped test drives the production serializer path | No hand-built JSON, no substituted serializer options in the payload tests | Review note in the log | Rewrite the test at E-2 tier before proceeding |
-| G-5 | Determinism sweep | The wave's sweep test (wave C-10 pattern: 100 seeds, zero divergences) | Zero divergences; failures report seed + tick + segment | Sweep summary in the log | Bisect with the canonical trace; a sweep failure is a diagnosis session, not a retry |
+| G-5 | Determinism sweep | The wave's sweep test (wave DT-10 pattern: 100 seeds, zero divergences) | Zero divergences; failures report seed + tick + segment | Sweep summary in the log | Bisect with the canonical trace; a sweep failure is a diagnosis session, not a retry |
 | G-6 | Statistical reproducibility | Dual in-process runs of each simulation audit (wave D/E pattern) | Identical classification and counts across runs | Reproducibility statement in the log | The audit is haunted; fix the audit before trusting its numbers |
 | G-7 | Report regeneration | `ASHFALL_GEN_MICRO_REPORTS=1` generation, twice, on a fixed tree | Bit-stable output; committed report matches | Generated docs/discovery files | A report that cannot reproduce is deleted, not argued with |
 | G-8 | Revalidation on trunk | Re-run the whole wave suite serially on latest trunk before closeout | All wave tests green | Revalidation entry (Wave F shape) | Attribute each failure: wave's or trunk's. Trunk failures get Wave-F-style forensics, not waivers |
@@ -2083,7 +2150,7 @@ Evidence: verified in source (capture/restore region, `NarrativeEncounterSystem.
 **INV-02 — Depletion gates selection, before weighting.**
 Statement: a depleted encounter is excluded from the eligible candidate set before weights are
 summed; it can neither be selected nor consume a draw.
-Pins: C-9 (`DepletedCandidate_Filtering_IsDeterministic`), B-1 (post-restore ineligibility);
+Pins: DT-9 (`DepletedCandidate_Filtering_IsDeterministic`), B-1 (post-restore ineligibility);
 behaviorally by the farming-resistance production-selector gate (64 seeds × grants).
 Evidence: verified — the exclusion is the first filter in `GetEligibleCandidates`, and the
 bridge consumes that enumeration for its merged roll.
@@ -2114,11 +2181,11 @@ Evidence: verified — defensive copy + ordinal sort in `CaptureDepletedIds`.
 **INV-06 — Single-stream determinism.**
 Statement: one authoritative `ISeededRng` per session reaches every consumer by reference;
 the selection path contains no stream construction, no framework RNG, no GUID/time entropy.
-Pins: C-7 (static scan), C-8 (behavioral replay).
+Pins: DT-7 (static scan), DT-8 (behavioral replay).
 Evidence: verified — host `TickHours` resolves `ActiveRng` once and hands the same instance to
 `SetRng` and `Engine.TickHours`.
 Expansion note: the scan's file list is frozen at three files; if patrol/bridge evolution adds
-selection-bearing files, the list must be extended deliberately (see §VIII.8, Q-4).
+selection-bearing files, the list must be extended deliberately (see Appendix J, Q-4).
 
 **INV-07 — The harness is observationally transparent.**
 Statement: test instrumentation never draws from the simulation stream beyond the simulation's
@@ -2142,7 +2209,7 @@ resolving in a 724-item `items.json`.
 Statement: a checkpoint (draw count + ordinal depletion snapshot + pending context) resumed in
 a fresh same-seed world is indistinguishable from uninterrupted execution, at tick granularity,
 across the seed space.
-Pins: C-4 (named seed), C-10 (100-seed sweep).
+Pins: DT-4 (named seed), DT-10 (100-seed sweep).
 Evidence: log record at wave time (100/100); design verified in source — the harness and
 wrapper are unchanged since.
 
@@ -2159,7 +2226,7 @@ orphan gates remain the only hard failures.
 Statement: `ExpeditionEncounterBridge.Surface` consumes exactly one `NextDouble()` whenever the
 merged weight total is positive — regardless of pool composition — and zero when it is not;
 the walk that maps roll to candidate is ordinal and content-stable.
-Pins: inherits C-7/C-8 (the bridge is inside the scanned files and the replayed path); the
+Pins: inherits DT-7/DT-8 (the bridge is inside the scanned files and the replayed path); the
 zero-total bare-notice branch is visible in source.
 Evidence: verified 2026-09-25 (bridge body, §IV.3). Not pinned by a dedicated post-merge test —
 see Q-5.
@@ -2238,7 +2305,7 @@ is the selection count from the current generated utilization report
 
 Reading notes on the inventory:
 
-- **The three stealth-expert entries** (stl× 0.8: collapsed bridge, shell crater) and the two
+- **The two stealth-expert entries** (stl× 0.8: collapsed bridge, shell crater) and the two
   required-location stealth-favored entries (stl× 1.1/1.3: chapel ledger, undertow raft line)
   are the only entries whose stealth multiplier deviates from 1.0. The undertow line's 1.3 is
   the catalog's strongest stealth reward — consistent with a flooded-depot raft rescue being
@@ -2247,13 +2314,14 @@ Reading notes on the inventory:
   traveler's content. The truck, pipe, and water source (0.8) are the most speed-tolerant.
 - **Grant values trace to the F12 outliers**: `wedding_ring` (25) only on the grave;
   `medical_kit` (10) on the emergency cache and the supply drop; `cloth` (1.2) as the common
-  low-grade grant (5 entries). `fuel` (14) appears on the collapsed bridge and the fuel cache;
+  low-grade grant (6 entries — memorial, pipe, livestock, tent, undertow line, levy board).
+  `fuel` (14) appears on the collapsed bridge and the fuel cache;
   `clean_water` (15) twice on the water source — the two hydration grants in the catalog.
 - **The water source is the only entry granting the same item from two different depleting
   choices** — and it depletes per encounter, so its two choices compete for one visit.
 - **The shrine's second grant-bearing choice is its non-depleting offering** (`add_shrine_offering`,
   net −12 after consuming `canned_food`): the one place "grant-bearing but net-negative"
-  appears, exactly the shape the farming-resistance bound (IV.4 of the E-chapter) allows.
+  appears, exactly the shape the farming-resistance bound (V.E, gate 4) allows.
 - **Entry 26's weight (0.9) is the catalog's highest**, but it is reachability-bound: only
   sorties to `abandoned_hospital` can ever roll it (8 opportunities in the current sample,
   0 selections). Weight and access are independent levers — the matrix in §V.D makes both
@@ -2268,10 +2336,10 @@ proves.
 
 | Seed / constant | Where used | What it proves / does | Status |
 |---|---|---|---|
-| 42 | C-1 named repeat: allotments destination, 8 ticks | Repeat-exactness on the canonical first seed | Test present (verified) |
-| 99 | C-2 named repeat: gas-station destination | Repeat-exactness, different destination shape | Test present |
-| 7 | C-3 named repeat: denial-cut destination | Repeat-exactness, third destination shape | Test present |
-| 100 sweep seeds | C-10 `HundredSeedHarness_HasZeroDivergences` | Continuation parity across the seed space, 100/100 at wave time (log record) | Test present |
+| 42 | DT-1 named repeat: allotments destination, 8 ticks | Repeat-exactness on the canonical first seed | Test present (verified) |
+| 99 | DT-2 named repeat: gas-station destination | Repeat-exactness, different destination shape | Test present |
+| 7 | DT-3 named repeat: denial-cut destination | Repeat-exactness, third destination shape | Test present |
+| 100 sweep seeds | DT-10 `HundredSeedHarness_HasZeroDivergences` | Continuation parity across the seed space, 100/100 at wave time (log record) | Test present |
 | 9000+i (i in 0..999) | F11 utilization opportunities | Per-opportunity independence; reproducible by construction | Test present; report regenerated |
 | 4000+i (i in 0..99) | F12 economy sorties | Deterministic 100-expedition run | Test present; report regenerated |
 | 64 seeds × grant entries | F12 farming resistance, production selector | One-shot behavior for every depleting grant | Test present |
@@ -2281,7 +2349,7 @@ proves.
 | 10–30% band | F12 acceptance band for the micro/primary ratio | The sealed "no tuning" decision boundary | Log + report |
 | 1000 opportunities / 100 expeditions / 64 seeds / 100 sweep seeds | Simulation scales | Evidence breadth inside single tests (focused-run budget discipline) | Tests present |
 
-Named-destination note: the three C-1..C-3 destinations are read from the test method names
+Named-destination note: the three DT-1..DT-3 destinations are read from the test method names
 (`Seed42_Allotments…`, `Seed99_GasStation…`, `Seed7_DenialCut…`). Their exact destination ids
 in `expeditions.json` were not cross-checked character-for-character in this expansion; the
 tests are the authority for their own fixtures.
@@ -2350,7 +2418,7 @@ the economy file after the wave — the log's counts (9 and 7) and today's (10 a
 recorded, the suite total of 31 is unchanged, and every test the log names by title is present
 today. The most likely reading is post-wave family growth and consolidation by later
 micro-location streams (the family now has a dozen more integration files beyond the wave's
-four); Q-6 in Appendix I records the open question without speculation in either direction.
+four); Q-6 in Appendix J records the open question without speculation in either direction.
 
 ### Appendix F — Scenario Walkthroughs
 
@@ -2593,12 +2661,16 @@ stealth halving of a 1.0 chance). Candidate fix: one sweep test over crafted
 `encounterChancePerTick` × stance × multiplier combinations asserting recorded trigger odds.
 Owner: any future determinism-adjacent wave.
 
-**Q-2 — `PeekState`/`SeekState` unused by any save codec.** The Flagship XI API exists
-precisely "for save codecs that must reproduce a continuous roll sequence across a save/load
-boundary" (doc comment, verified), yet no host save section consumes it (§II.3). Either a save
-codec is planned (in which case a wave should spec its interaction with the depletion/pending/
-history checkpoint — the F10.9 boundary finally closes) or the API is speculative and should be
-noted in debt. Owner: foreman decision + the save-owning stream.
+**Q-2 — `PeekState`/`SeekState`: first consumer landed, campaign boundary still open.** The
+Flagship XI API exists precisely "for save codecs that must reproduce a continuous roll sequence
+across a save/load boundary" (doc comment, verified). At this expansion's first read no host
+code consumed it; current source now shows one — the expedition playtest CLI's
+`ExpeditionPlaytestSave` captures and restores the raw stream position
+(`src/Host/HostCli.ExpeditionPlaytest.cs:460/:478`, verified 2026-09-25). What remains open is
+the campaign-session boundary the wave recorded: the demo/default `ExpeditionHostSession` save
+still restarts the encounter stream from `DemoSeed`. A wave adopting peek/seek there should spec
+its interaction with the depletion/pending/history checkpoint — the F10.9 boundary finally
+closes. Owner: foreman decision + the save-owning stream.
 
 **Q-3 — Determinism doc §2 staleness.** `MICRO_LOCATION_DETERMINISM.md` §2 says the trunk
 exposes no state getter; it now does (under different names). Sealed reports are not casually
@@ -2698,7 +2770,7 @@ audit found):
    new bridge draw-count test (closes the other half).
 4. **Wave D′ (utilization).** Extend the matrix with a patrol-rows section; the merged pool
    means micro and patrol rates must be read *jointly* — a patrol-heavy season suppresses
-   micros (§VI.2 E-5); the classification gates extend unchanged.
+   micros (§VI.2 EB-5); the classification gates extend unchanged.
 5. **Wave E′ (economy).** Patrol loot enters the primary denominator (it routes through
    scavenging) — the ratio's definition must be re-stated before measurement, in the log, as a
    divergence if it changes.
@@ -2761,7 +2833,7 @@ Two methodological facts worth stating explicitly:
    merged roll.** The pool is micros-only by construction — the F11/F12 numbers are therefore
    *micro-conditional* rates (given a narrative micro pool, what gets picked), which is the
    right denominator for the questions those waves asked. The post-wave bridge merge
-   (§II.2) adds patrol competition that these simulations deliberately exclude; §VI.2 E-5
+   (§II.2) adds patrol competition that these simulations deliberately exclude; §VI.2 EB-5
    discusses the consequences, and Appendix L's Wave-D′ sketch extends the matrix to the joint
    pool.
 2. **No location chance-multiplier is installed in the harness** — the parity formula is the
@@ -2821,8 +2893,8 @@ command that discriminates.
 | A looted site can be looted again after reload | Restore path dropped the list (D-1 broken); legacy migration misfiring on a present list (INV-13) | B-1 (wire round-trip), B-7 (legacy null path); check the saved payload for a present vs null `depletedEncounterIds` |
 | A site becomes one-shot after a "leave it" choice | Depletes flag authored on the wrong choice (INV-04 violation in content) or `TryResolve` marking unconditionally | F11 structural suite + the memorial pair; inspect the entry's `depletesOnResolve` flags |
 | Rewards duplicated after reload | Consequence authorities reapplied without their idempotence gates | B-8 (world flag), B-5 (pending resolves once); check resolution-id composition |
-| Two runs with the same seed diverge mid-expedition | Stream sharing broken (INV-06); a zero-draw boundary now draws (R-3); insertion-order dependence in eligibility | C-7 (static scan), C-5/C-6 (zero-draw), then the sweep (C-10) with its seed+tick+segment report |
-| Determinism green but encounters differ from an older save | Expected: content or pool edits change selection identity while per-world determinism holds (§VI.2 E-4). Not a bug unless continuation parity also fails | C-4/C-10 for parity; catalog diff for the explanation |
+| Two runs with the same seed diverge mid-expedition | Stream sharing broken (INV-06); a zero-draw boundary now draws (R-3); insertion-order dependence in eligibility | DT-7 (static scan), DT-5/DT-6 (zero-draw), then the sweep (DT-10) with its seed+tick+segment report |
+| Determinism green but encounters differ from an older save | Expected: content or pool edits change selection identity while per-world determinism holds (§VI.2 EB-4). Not a bug unless continuation parity also fails | DT-4/DT-10 for parity; catalog diff for the explanation |
 | Full suite hangs | An unbounded loop over a missing precondition (the Finding 3 pattern) | `--blame-hang`; look for `while` loops guarding on data a catalog load provides |
 | Wave/feature tests pass alone but vanish from project runs | Quarantine sweep (Finding 1 pattern) | Family count inside the project vs isolated count (G-10); read the csproj Compile Remove block |
 | Utilization report numbers moved | Destination catalog growth (M.5) or genuine content change | Re-run twice on fixed tree (G-7); diff the merged destination count; check dead/orphan gates stayed 0/0 |
@@ -2830,7 +2902,7 @@ command that discriminates.
 | An item grant silently yields nothing | Grant id orphaned by an items.json rename | F11 reference test (#2) and F12 ledger test (#1) both name it |
 | A journal key never unlocks in play | Key not in the micro namespace or colliding; knowledge gate refusing | F11 namespace test (#4); `TryDiscoverKnowledge` dedup gate |
 | New micro entry absent from the pool | Count pin fired and was ignored; or dMin/requiredLocation excludes every context | F11 test #1 (count) and #5 (eligibility matrix); check the pin was updated with the content change |
-| Selections stop entirely on a route | Every eligible candidate depleted (E-1 route exhaustion — emergent, by design) or total pool weight zero → bare-notice DTO | The bare-notice branch (§IV.3); utilization report's per-destination context |
+| Selections stop entirely on a route | Every eligible candidate depleted (EB-1 route exhaustion — emergent, by design) or total pool weight zero → bare-notice DTO | The bare-notice branch (§IV.3); utilization report's per-destination context |
 | A required-location micro never appears | Its destination id changed (matrix matches on destination id, M.3) | F11 eligibility matrix row; cross-check the id against `expeditions.json`/location files |
 
 Two meta-rules the table encodes: **content symptoms go to F11/F12 tests; behavior symptoms go
@@ -2877,51 +2949,15 @@ the Godot selftest 262-catalog figure, the 25-minute stall and 69-second final v
 wave-time API state of `SeededRng`, the wave-time 53-destination count, and the scaffold
 project's existence and removal.
 
-**UNVERIFIED (log text only)**: `.f9f12_scaffold/` (removed; nothing to inspect); the exact
+**UNVERIFIED (log text)**: `.f9f12_scaffold/` (removed; nothing to inspect); the exact
 upstream commit that removed the RNG state API (hash never recorded); the precise serializer
 options configuration (Appendix N's stated boundary); the exact destination ids behind the
-C-1..C-3 named seeds (test fixtures are their own authority).
+DT-1..DT-3 named seeds (test fixtures are their own authority).
 
 **Superseded-but-recorded**: determinism doc §2's no-state-getter sentence (superseded by
 `PeekState`/`SeekState`, Q-3); the log's 9/7 test-count distribution (superseded by 10/6,
 C-5/C-6); the log's production chain through `SelectEncounter` (superseded by the bridge's
 merged roll, C-2); AGENTS.md's UI-21 row (rotated out, C-13).
-
----
-
-## Expansion Closeout (2026-09-25)
-
-**What this expansion is.** A documentation-only deepening of the F9–F12 verification wave's
-log: the current-authority audit (Part II), the reusable integration framework (Part III), the
-code architecture as it stands (Part IV), the per-wave methodology with per-test anatomy
-(Part V), the interaction matrix (Part VI), the acceptance ladder (Part VII), and the
-appendices. The original log above it is preserved byte-for-byte; nothing in it was edited.
-
-**What this expansion is not.** It is not a re-run of anything. No test, build, or Godot
-session was executed. It changes no production file, catalog, test, or other document. Its
- factual currency is the working tree as read on 2026-09-25; its historical currency is the
-wave log, which remains the authority for everything that happened during 2026-09-04 through
-2026-09-06.
-
-**The one-paragraph state of the domain, for someone who reads nothing else.** The
-micro-location pipeline is healthy and its evidence layer is intact: 28 authored entries, all
-reachable, none redundant, none dead; depletion, pending, and history persist through a
-checksummed envelope with a legacy migration that never guesses; the encounter stream is
-single-stream deterministic with draw-count continuation proven across 100 seeds; the reward
-economy sits at 25.7% of primary loot value, inside the 10–30% band, with the anti-farm
-property enforced by four independent gates. Since the wave, the surface path gained a merged
-narrative+patrol roll (the wave's selection tests still pin both layers), the RNG regained
-state access under new names (the draw-count design needs none), and the destination catalog
-nearly doubled (the audits iterate it, so they did not notice; the reports' generation stamps
-did). The open items are cataloged in Appendix J; none blocks anything.
-
-**Handoff.** Future verification waves should start from Part VII's ladder and Appendix L's
-sketch, claim paths per `WORKTREE_OWNERSHIP.md`, keep the divergence ledger current (T-6), and
-append — never rewrite — to this log. The framework's one hard rule bears repeating as the
-final sentence: a verification wave verifies; the moment it must change production behavior, it
-stops and becomes a plan.
-
-— End of expansion. —
 
 ### Appendix Q — The Wave as an Operational Sequence
 
@@ -2975,19 +3011,6 @@ revalidation 1; forensics 0–1 (only if the trunk cooperates by breaking); seal
 seven to eight focused days, of which the framework in this expansion — ladder, templates,
 invariants, triage table — is intended to save two.
 
----
-
-— Final end of expansion. —
-
-```text
-EXPANSION METADATA
-document : docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md
-expansion: 2026-09-25, documentation-only, append-after-original
-basis    : original log (2026-09-04..2026-09-06) preserved byte-for-byte above
-evidence : current source + data + committed docs read 2026-09-25; wave outcomes as log records
-touches  : this file only
-```
-
 ### Appendix R — Cross-Reference Index
 
 Navigation aid: every major claim family in the document, mapped to where it is stated and
@@ -2999,9 +3022,9 @@ header; part/appendix numbers = this expansion.
 | Verified production call chain (wave time) | Log, Phase 0 | Recon record; superseded structurally by Part II §II.2 |
 | Verified production call chain (today) | §II.2 | Source read 2026-09-25; module map §IV.1 |
 | Save contract (DTO, capture, restore, migration) | Log, Phase 0 F9 block; §II.4; §III.3 | Source (EncounterCatalog/NarrativeEncounterSystem); tests B-1..B-8 (Appendix E) |
-| RNG contract and continuation | Log, Phase 0 F10 + Phase 2; §II.3; §III.4; V.C | HostDefaults source; harness source; tests C-1..C-10 |
+| RNG contract and continuation | Log, Phase 0 F10 + Phase 2; §II.3; §III.4; V.C | HostDefaults source; harness source; tests DT-1..DT-10 |
 | SeededRng API drift and PeekState/SeekState | Log, Phase 2 divergence; §II.6 C-1; V.C aftermath; Q-2/Q-3 | Current HostDefaults source vs determinism doc §2 |
-| Bridge merged narrative+patrol roll | §II.2; §IV.3; §VI.2 E-5; Q-5 | Current bridge source (Surface body) |
+| Bridge merged narrative+patrol roll | §II.2; §IV.3; §VI.2 EB-5; Q-5 | Current bridge source (Surface body) |
 | Catalog shape: 28 entries, categories, choices, keys | Log, Phase 0 (D1/D2); §II.5; Appendix C | micro_locations.json read 2026-09-25 |
 | Named outlier trade values | Log, Phase 0; V.E; Appendix K | items.json read 2026-09-25 (all six exact) |
 | Persistence tests, per-test anatomy | V.B | Test file; Appendix E register |
@@ -3026,3 +3049,49 @@ header; part/appendix numbers = this expansion.
 §II.6. "How do I run the evidence?" → Appendix G. "How do I run the next wave?" → Part VII +
 Appendix L. "Where is invariant X?" → Appendix B. "Why does the report disagree with the log?"
 → §II.6 C-8/C-9 and Appendix M.5.
+
+---
+
+## Expansion Closeout (2026-09-25)
+
+**What this expansion is.** A documentation-only deepening of the F9–F12 verification wave's
+log: the current-authority audit (Part II), the reusable integration framework (Part III), the
+code architecture as it stands (Part IV), the per-wave methodology with per-test anatomy
+(Part V), the interaction matrix (Part VI), the acceptance ladder (Part VII), and the
+appendices A–R. The original log above the expansion header is preserved byte-for-byte;
+nothing in it was edited.
+
+**What this expansion is not.** It is not a re-run of anything. No test, build, or Godot
+session was executed. It changes no production file, catalog, test, or other document. Its
+factual currency is the working tree as read on 2026-09-25; its historical currency is the
+wave log, which remains the authority for everything that happened during 2026-09-04 through
+2026-09-06.
+
+**The one-paragraph state of the domain, for someone who reads nothing else.** The
+micro-location pipeline is healthy and its evidence layer is intact: 28 authored entries, all
+reachable, none redundant, none dead; depletion, pending, and history persist through a
+checksummed envelope with a legacy migration that never guesses; the encounter stream is
+single-stream deterministic with draw-count continuation proven across 100 seeds; the reward
+economy sits at 25.7% of primary loot value, inside the 10–30% band, with the anti-farm
+property enforced by four independent gates. Since the wave, the surface path gained a merged
+narrative+patrol roll (the wave's selection tests still pin both layers), the RNG regained
+state access under new names (the draw-count design needs none), and the destination catalog
+nearly doubled (the audits iterate it, so they did not notice; the reports' generation stamps
+did). The open items are cataloged in Appendix J; none blocks anything.
+
+**Handoff.** Future verification waves should start from Part VII's ladder and Appendix L's
+sketch, claim paths per `WORKTREE_OWNERSHIP.md`, keep the divergence ledger current (T-6), and
+append — never rewrite — to this log. The framework's one hard rule bears repeating as the
+final sentence: a verification wave verifies; the moment it must change production behavior, it
+stops and becomes a plan.
+
+— End of expansion. —
+
+```text
+EXPANSION METADATA
+document : docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md
+expansion: 2026-09-25, documentation-only, append-after-original
+basis    : original log (2026-09-04..2026-09-06) preserved byte-for-byte above
+evidence : current source + data + committed docs read 2026-09-25; wave outcomes as log records
+touches  : this file only
+```
