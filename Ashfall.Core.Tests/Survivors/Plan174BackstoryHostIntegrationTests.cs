@@ -220,5 +220,25 @@ namespace Ashfall.Core.Tests.Survivors
             string detailPanel = ReadRepoFile("src", "UI", "SurvivorDetailPanel.cs");
             Assert.Contains("BackstoryProvider", detailPanel);
         }
+
+        [Fact]
+        public void Backstory_LiveAssignmentAndLifecycleReset_PresentInSource()
+        {
+            // Plan 174 live wiring: the catalog must be applied to the real roster,
+            // deterministically, and the session must participate in the campaign
+            // lifecycle reset so a new campaign cannot inherit the previous run.
+            string mainBackstory = ReadRepoFile("src", "Main.Backstory.cs");
+            Assert.Contains("AssignMissingBackstories", mainBackstory);
+            Assert.Contains("StableHash.Of", mainBackstory);
+
+            string gameFlow = ReadRepoFile("src", "Main.GameFlow.cs");
+            Assert.Contains("AssignMissingBackstories()", gameFlow);
+
+            string lifecycle = ReadRepoFile("src", "Main.Lifecycle.cs");
+            Assert.Contains("late_wave_integrations", lifecycle);
+            Assert.Contains("ResetLateWaveIntegrationSessions", lifecycle);
+            Assert.Contains("ResetBackstory()", lifecycle);
+            Assert.Contains("ResetMetaProgression()", lifecycle);
+        }
     }
 }

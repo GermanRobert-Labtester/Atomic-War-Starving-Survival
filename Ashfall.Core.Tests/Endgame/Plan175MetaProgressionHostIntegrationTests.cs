@@ -243,5 +243,62 @@ namespace Ashfall.Core.Tests.Endgame
             Assert.Contains("SetupMetaProgression()", mainEndgame);
             Assert.Contains("RecordCampaignCompletion", mainEndgame);
         }
+
+        [Fact]
+        public void MetaProgression_NgPlusBoons_CarryAuthoredStartingGrants()
+        {
+            var system = CreateSystemWithCatalog();
+
+            var rations = system.GetGrantsForBoon("meta_emergency_rations_boon");
+            Assert.Contains(rations, g => g.item_id == "dried_rations" && g.quantity == 15);
+
+            var medic = system.GetGrantsForBoon("meta_field_medic_boon");
+            Assert.Contains(medic, g => g.item_id == "bandage" && g.quantity == 5);
+            Assert.Contains(medic, g => g.item_id == "antiseptic_1l_of_1l" && g.quantity == 2);
+
+            // Crests / insignias are rewards, not starting grants.
+            Assert.Empty(system.GetGrantsForBoon("meta_dawn_horizon_crest"));
+            Assert.Empty(system.GetGrantsForBoon("does_not_exist"));
+        }
+
+        [Fact]
+        public void MetaProgression_ActiveNgPlusGrants_UnionOnlyActiveBoons()
+        {
+            var profileStore = new CrossRunProfileStore();
+            var history = new CampaignCompletionHistory();
+            AppendRecord(history, "Run_grants", "ending_dawn_of_thaw", 360, 12);
+            profileStore.Record(history);
+
+            var system = CreateSystemWithCatalog(profileStore);
+            system.EvaluateProgress(completedAchievementIds: new[] { "first_week_survivor", "two_week_endurance" });
+
+            Assert.True(system.SetNgPlusBoonActive("meta_emergency_rations_boon", true));
+            Assert.True(system.SetNgPlusBoonActive("meta_field_medic_boon", true));
+
+            var grants = system.GetActiveNgPlusGrants();
+            Assert.Contains(grants, g => g.item_id == "dried_rations" && g.quantity == 15);
+            Assert.Contains(grants, g => g.item_id == "bandage" && g.quantity == 5);
+            Assert.Contains(grants, g => g.item_id == "antiseptic_1l_of_1l" && g.quantity == 2);
+
+            Assert.True(system.SetNgPlusBoonActive("meta_emergency_rations_boon", false));
+            Assert.DoesNotContain(system.GetActiveNgPlusGrants(), g => g.item_id == "dried_rations");
+        }
+
+        [Fact]
+        public void MetaProgression_CrossRunSeedAndLifecycle_PresentInSource()
+        {
+            // Plan 175 live wiring: prestige/unlocks are derived from the user-level
+            // completion history (so they carry across campaigns), boon activation
+            // applies authored grants through the inventory host, and the session is
+            // reset with the campaign lifecycle.
+            string mainMeta = ReadRepoFile("src", "Main.MetaProgression.cs");
+            Assert.Contains("SeedMetaProgressionFromProfile", mainMeta);
+            Assert.Contains("ApplyBoonGrants", mainMeta);
+            Assert.Contains("SetNgPlusBoonActive", mainMeta);
+
+            string lifecycle = ReadRepoFile("src", "Main.Lifecycle.cs");
+            Assert.Contains("late_wave_integrations", lifecycle);
+            Assert.Contains("ResetMetaProgression()", lifecycle);
+        }
     }
 }

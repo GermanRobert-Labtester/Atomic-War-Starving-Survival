@@ -45,28 +45,23 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Check 3: Profile run recording
-                var history = new CampaignCompletionHistory
+                var history = new CampaignCompletionHistory();
+                var completionContext = new EpilogueContextInputs(
+                    Days: 360,
+                    LivingDwellers: 12,
+                    DeathsRecorded: 0,
+                    GrandTreatySigned: true,
+                    TempestDecommissioned: true,
+                    DebtLedgersBurned: true,
+                    ChildrenSurvived: true,
+                    VelSecretExposed: true);
+                var completionObservation = new CampaignCompletionObservation(
+                    "Run Alpha", "ending_dawn_of_thaw", completionContext, "difficulty_hardened");
+                var appendResult = CampaignCompletionHistoryService.Append(history, completionObservation, out _);
+                if (appendResult != CompletionHistoryAppendResult.Appended)
                 {
-                    schemaVersion = 1,
-                    records = new List<CampaignCompletionRecord>
-                    {
-                        new()
-                        {
-                            completionId = "comp_test_run_01",
-                            runIdentity = "Run Alpha",
-                            endingId = "ending_dawn_of_thaw",
-                            difficultyPresetId = "difficulty_hardened",
-                            daysSurvived = 360,
-                            livingDwellers = 12,
-                            deathsRecorded = 0,
-                            grandTreatySigned = true,
-                            tempestDecommissioned = true,
-                            debtLedgersBurned = true,
-                            childrenSurvived = true,
-                            velSecretExposed = true
-                        }
-                    }
-                };
+                    GD.PrintErr($"[FAIL] Check 3: Campaign completion record append failed: {appendResult}.");
+                }
 
                 host.RecordCampaignCompletion(history, achievements: new[] { "first_week_survivor", "two_week_endurance", "month_of_ash", "no_casualties" }, endings: new[] { "ending_dawn_of_thaw" });
                 if (host.System.ProfileStore.TotalRunsCompleted == 1)
@@ -135,11 +130,13 @@ namespace AtomicWar.GodotApp
                     GD.PrintErr("[FAIL] Check 8: Unearned ending items were improperly unlocked.");
                 }
 
-                // Check 9: New Game+ boon toggle
+                // Check 9: New Game+ boon toggle + authored starting grants
                 bool activated = host.SetNgPlusBoonActive("meta_emergency_rations_boon", true);
-                if (activated && host.IsBoonActive("meta_emergency_rations_boon"))
+                var rationsGrants = host.GetGrantsForBoon("meta_emergency_rations_boon");
+                bool grantOk = rationsGrants.Any(g => g.item_id == "dried_rations" && g.quantity == 15);
+                if (activated && host.IsBoonActive("meta_emergency_rations_boon") && grantOk)
                 {
-                    GD.Print("[PASS] Check 9: NG+ emergency rations boon successfully activated.");
+                    GD.Print("[PASS] Check 9: NG+ emergency rations boon activated with authored dried_rations x15 grant.");
                     passed++;
                 }
                 else

@@ -62,7 +62,8 @@
       "description": "New Game+ starting boon: Grants an initial reserve of 15 shelf-stable vacuum-sealed survival rations in storage.",
       "required_prestige": 100,
       "required_ending_id": "",
-      "required_achievement_id": "first_week_survivor"
+      "required_achievement_id": "first_week_survivor",
+      "grants": [{ "item_id": "dried_rations", "quantity": 15 }]
     },
     {
       "id": "meta_field_medic_boon",
@@ -71,7 +72,11 @@
       "description": "New Game+ starting boon: Pre-provisions the medical station with clean bandages and antiseptic washes.",
       "required_prestige": 120,
       "required_ending_id": "",
-      "required_achievement_id": "two_week_endurance"
+      "required_achievement_id": "two_week_endurance",
+      "grants": [
+        { "item_id": "bandage", "quantity": 5 },
+        { "item_id": "antiseptic_1l_of_1l", "quantity": 2 }
+      ]
     },
     {
       "id": "meta_forged_toolkit_boon",
@@ -80,7 +85,8 @@
       "description": "New Game+ starting boon: Equips the shelter workshop with durable cast-iron repair implements.",
       "required_prestige": 160,
       "required_ending_id": "",
-      "required_achievement_id": ""
+      "required_achievement_id": "",
+      "grants": [{ "item_id": "calibration_kit", "quantity": 1 }]
     },
     {
       "id": "meta_geodetic_survey_boon",
@@ -89,7 +95,8 @@
       "description": "New Game+ starting boon: Inherits pre-calibrated baseline survey maps, revealing adjacent wasteland sectors.",
       "required_prestige": 200,
       "required_ending_id": "ending_dawn_of_thaw",
-      "required_achievement_id": ""
+      "required_achievement_id": "",
+      "grants": [{ "item_id": "item_surveyor_stadia_rod", "quantity": 1 }]
     }
   ]
 }

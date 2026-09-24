@@ -16,6 +16,20 @@ namespace Ashfall.Core.Endgame
         public int required_prestige { get; set; }
         public string? required_ending_id { get; set; }
         public string? required_achievement_id { get; set; }
+
+        /// <summary>
+        /// Authored New Game+ starting grants for an <c>ng_plus_boon</c> item.
+        /// The system owns the unlock decision; the host applies each grant
+        /// through the canonical inventory authority at campaign bootstrap.
+        /// </summary>
+        public List<MetaGrantDef> grants { get; set; } = new();
+    }
+
+    [Serializable]
+    public sealed class MetaGrantDef
+    {
+        public string item_id { get; set; } = string.Empty;
+        public int quantity { get; set; }
     }
 
     [Serializable]
@@ -111,6 +125,37 @@ namespace Ashfall.Core.Endgame
         {
             if (string.IsNullOrWhiteSpace(id)) return false;
             return _activeNgPlusBoons.Contains(id);
+        }
+
+        /// <summary>
+        /// Authored starting grants for one item id, or an empty list when the
+        /// item is unknown, is not an NG+ boon, or declares no grants. The host
+        /// applies these through the canonical inventory authority.
+        /// </summary>
+        public IReadOnlyList<MetaGrantDef> GetGrantsForBoon(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return Array.Empty<MetaGrantDef>();
+            if (!_catalog.TryGetValue(id, out var def) || def.grants == null) return Array.Empty<MetaGrantDef>();
+
+            var list = new List<MetaGrantDef>();
+            foreach (var grant in def.grants)
+            {
+                if (grant != null && !string.IsNullOrWhiteSpace(grant.item_id) && grant.quantity > 0)
+                    list.Add(grant);
+            }
+            return list;
+        }
+
+        /// <summary>Union of the authored grants of every currently active NG+ boon.</summary>
+        public IReadOnlyList<MetaGrantDef> GetActiveNgPlusGrants()
+        {
+            var list = new List<MetaGrantDef>();
+            foreach (var boonId in _activeNgPlusBoons)
+            {
+                foreach (var grant in GetGrantsForBoon(boonId))
+                    list.Add(grant);
+            }
+            return list;
         }
 
         public bool SetNgPlusBoonActive(string id, bool active)

@@ -113,7 +113,7 @@ as the census refresh requires for any head selection.
   wave) but they remain unauthorized.
 - **C1[16]/Plan 49** — `DECIDED-DEFERRED` pending C2[18]/Plan 42 and
   C2[20]/Plan 46 premise audits.
-- **C3 HOLDs** 174/175/192/199 (D20) — recheck conditions unmet.
+- **C3 HOLDs** 192/199 (D20) — recheck conditions unmet. **174/175 LIFTED & SEALED 2026-09-23** (this 2026-09-19 audit predates the lift; see `KNOWN_DEBT.md` / `DEC-313` / `DEC-314` / `DEC-317`).
 - Remaining decision-packet items: D3 (water_sample_contaminated), D4 (ratify
   DEC-15), D13 (Plans 126–129 header — stale header verified still present at
   `src/Main.Plans126_129.cs:3-6`), D16 (flooded-route tags — premise now

@@ -374,6 +374,18 @@ namespace AtomicWar.GodotApp
                 dependsOn: new[] { "survivors", "inventory", "journal" },
                 onReset: ResetEnrolledFlagshipSessions));
 
+            // Late-wave host integrations that are created lazily on their first
+            // day tick or save (Plan 135 weather cascade, Plan 147 NPC memory,
+            // Plan 148 ideological friction, Plan 150 romance/family,
+            // Plan 152 vehicle customization, Plan 174 backstory, Plan 175 meta
+            // progression). Their Setup* methods are null-guarded, so without
+            // this reset a new campaign or slot switch would keep the previous
+            // run's live instance and never rebuild from the new slot.
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "late_wave_integrations",
+                dependsOn: new[] { "survivors", "inventory", "world_weather" },
+                onReset: ResetLateWaveIntegrationSessions));
+
             // First-Hour Onboarding Journey (Task 120)
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "onboarding",
@@ -523,6 +535,23 @@ namespace AtomicWar.GodotApp
             _silentFoundry = null!;
             _sharedSkillProgression = null;
             _sharedFactionStance = null;
+        }
+
+        /// <summary>
+        /// Drops the late-wave integration sessions (Plans 135/147/148/150/152/174/175)
+        /// so the next Setup* reconstructs from the selected slot's disk state instead
+        /// of reusing the previous campaign's live instance. These sessions hold no
+        /// Godot resources, so no removal from the scene tree is required.
+        /// </summary>
+        private void ResetLateWaveIntegrationSessions()
+        {
+            ResetWeatherCascade();
+            ResetNpcMemory();
+            ResetIdeologicalFriction();
+            ResetRomanceFamily();
+            ResetVehicleCustomization();
+            ResetBackstory();
+            ResetMetaProgression();
         }
 
         /// <summary>

@@ -229,6 +229,12 @@ namespace AtomicWar.GodotApp
             ComposeCampaign();
             GrantDifficultyStartingBonusesOnce();
 
+            // Plan 174 — assign a deterministic procedural origin to every
+            // starting survivor so the survivor-inspection panel shows a real
+            // backstory from day 1 (previously the catalog was loaded but no
+            // survivor was ever assigned an origin).
+            AssignMissingBackstories();
+
             // Plan 140 — Apply generational legacy starting context to New Game
             var legacyContext = PrepareStartingCampaignContext();
             if (legacyContext != null)

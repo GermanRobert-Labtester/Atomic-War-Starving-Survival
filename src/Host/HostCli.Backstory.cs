@@ -48,7 +48,7 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Check 3: Template assignment
-                var backstory = host.AssignFromTemplate("survivor_elena", "template_combat_medic", day: 1);
+                var backstory = host.AssignFromTemplate("survivor_elena", "bst_military_medic", day: 1);
                 if (backstory != null && backstory.SurvivorId == "survivor_elena" && backstory.OccupationId == "occ_doctor" && backstory.Secrets.Count > 0)
                 {
                     GD.Print($"[PASS] Check 3: Template assignment succeeded for {backstory.SurvivorId} with occ={backstory.OccupationId}.");
@@ -85,7 +85,7 @@ namespace AtomicWar.GodotApp
                 // Check 6: Secret revelation
                 string secretToReveal = (backstory?.Secrets != null && backstory.Secrets.Count > 0)
                     ? backstory.Secrets[0]
-                    : "secret_field_loss";
+                    : "carries_guilt_over_one_loss";
                 bool revealed = host.RevealSecret("survivor_elena", secretToReveal);
                 var reloadedBackstory = host.GetBackstory("survivor_elena");
                 if (revealed && reloadedBackstory != null && reloadedBackstory.RevealedSecrets.Contains(secretToReveal))
@@ -114,7 +114,7 @@ namespace AtomicWar.GodotApp
                 var custom = host.AssignCustom(
                     "survivor_marcus",
                     "occ_engineer",
-                    new[] { "exp_scavenger_ruins" },
+                    new[] { "exp_wilderness_survivor" },
                     "Worked in a machine shop",
                     "Repaired the bunker blast valve under fire",
                     "Wants to build a new workshop",

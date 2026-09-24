@@ -51,6 +51,12 @@ namespace AtomicWar.GodotApp
         public IReadOnlyCollection<string> UnlockedIds => _system.UnlockedIds;
         public IReadOnlyCollection<string> ActiveNgPlusBoons => _system.ActiveNgPlusBoons;
 
+        /// <summary>Authored starting grants for every active NG+ boon.</summary>
+        public IReadOnlyList<MetaGrantDef> GetActiveNgPlusGrants() => _system.GetActiveNgPlusGrants();
+
+        /// <summary>Authored starting grants for one boon id.</summary>
+        public IReadOnlyList<MetaGrantDef> GetGrantsForBoon(string id) => _system.GetGrantsForBoon(id);
+
         public MetaProgressionHostSession(string? dataDir = null, MetaProgressionSystem? system = null)
         {
             _system = system ?? new MetaProgressionSystem();
