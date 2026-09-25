@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5420 | **Total Characters:** 1,785,256,179 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 2283 documents carrying 1,743,564,841 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5420 | **Total Characters:** 1,785,250,815 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 2283 documents carrying 1,743,559,477 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 2283 documents, 1,743,564,841 characters
+## Oversized Document Register (>= 100,000 characters) — 2283 documents, 1,743,559,477 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -2182,28 +2182,27 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 161,005 | [`docs/expansions/wave27/expansion_138_the_reading_stays_outside_plan.md`](expansions/wave27/expansion_138_the_reading_stays_outside_plan.md) |
 | 160,945 | [`docs/expansions/wave23/expansion_117_the_basin_that_did_not_green_plan.md`](expansions/wave23/expansion_117_the_basin_that_did_not_green_plan.md) |
 | 157,853 | [`docs/expansions/wave23/expansion_118_the_mark_beneath_the_bend_plan.md`](expansions/wave23/expansion_118_the_mark_beneath_the_bend_plan.md) |
+| 157,632 | [`piagentsplans/76-expedition-destinations-expansion.md`](../piagentsplans/76-expedition-destinations-expansion.md) |
 | 157,203 | [`piagentsplans/04-relic-blueprint-expansion.md`](../piagentsplans/04-relic-blueprint-expansion.md) |
 | 156,727 | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) |
 | 155,712 | [`docs/expansions/wave23/expansion_120_the_name_the_crew_stopped_saying_plan.md`](expansions/wave23/expansion_120_the_name_the_crew_stopped_saying_plan.md) |
-| 155,363 | [`piagentsplans/28-wildlife-ecology.md`](../piagentsplans/28-wildlife-ecology.md) |
 | 155,354 | [`piagentsplans/09-medical-disease-depth.md`](../piagentsplans/09-medical-disease-depth.md) |
 | 155,198 | [`docs/expansions/wave20/expansion_104_the_meeting_kept_its_hour_plan.md`](expansions/wave20/expansion_104_the_meeting_kept_its_hour_plan.md) |
 | 155,141 | [`docs/expansions/wave20/expansion_99_the_meeting_kept_its_hour_plan.md`](expansions/wave20/expansion_99_the_meeting_kept_its_hour_plan.md) |
 | 155,119 | [`docs/expansions/wave23/expansion_119_truer_than_solid_ground_plan.md`](expansions/wave23/expansion_119_truer_than_solid_ground_plan.md) |
 | 154,982 | [`docs/expansions/wave27/expansion_140_a_page_for_the_next_walker_plan.md`](expansions/wave27/expansion_140_a_page_for_the_next_walker_plan.md) |
-| 154,817 | [`piagentsplans/22-foundry-greenhouse-production.md`](../piagentsplans/22-foundry-greenhouse-production.md) |
-| 154,695 | [`piagentsplans/06-narrative-depth-trilogy.md`](../piagentsplans/06-narrative-depth-trilogy.md) |
 | 154,668 | [`piagentsplans/27-body-and-mind.md`](../piagentsplans/27-body-and-mind.md) |
 | 154,616 | [`docs/expansions/wave27/expansion_139_the_last_entry_was_a_week_ago_plan.md`](expansions/wave27/expansion_139_the_last_entry_was_a_week_ago_plan.md) |
-| 154,587 | [`piagentsplans/26-knowledge-research-skills.md`](../piagentsplans/26-knowledge-research-skills.md) |
 | 154,582 | [`piagentsplans/13-economy-survival-loop.md`](../piagentsplans/13-economy-survival-loop.md) |
 | 154,371 | [`piagentsplans/87-relic-recipes-expansion.md`](../piagentsplans/87-relic-recipes-expansion.md) |
-| 154,229 | [`piagentsplans/76-expedition-destinations-expansion.md`](../piagentsplans/76-expedition-destinations-expansion.md) |
 | 153,791 | [`docs/expansions/wave27/expansion_143_the_ledger_has_no_decorative_columns_plan.md`](expansions/wave27/expansion_143_the_ledger_has_no_decorative_columns_plan.md) |
-| 153,779 | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) |
+| 153,692 | [`piagentsplans/28-wildlife-ecology.md`](../piagentsplans/28-wildlife-ecology.md) |
+| 153,685 | [`piagentsplans/26-knowledge-research-skills.md`](../piagentsplans/26-knowledge-research-skills.md) |
+| 153,591 | [`piagentsplans/22-foundry-greenhouse-production.md`](../piagentsplans/22-foundry-greenhouse-production.md) |
 | 153,553 | [`piagentsplans/01-needs-radiation-save-roundtrip-tests.md`](../piagentsplans/01-needs-radiation-save-roundtrip-tests.md) |
 | 153,445 | [`piagentsplans/10-combat-expedition-depth.md`](../piagentsplans/10-combat-expedition-depth.md) |
 | 153,315 | [`docs/expansions/wave20/expansion_102_what_the_route_charges_back_plan.md`](expansions/wave20/expansion_102_what_the_route_charges_back_plan.md) |
+| 153,289 | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) |
 | 153,258 | [`docs/expansions/wave20/expansion_97_what_the_route_charges_back_plan.md`](expansions/wave20/expansion_97_what_the_route_charges_back_plan.md) |
 | 153,183 | [`piagentsplans/24-radio-signals-airwaves.md`](../piagentsplans/24-radio-signals-airwaves.md) |
 | 152,215 | [`docs/expansions/wave23/expansion_121_the_cap_holds_the_instrument_plan.md`](expansions/wave23/expansion_121_the_cap_holds_the_instrument_plan.md) |
@@ -2214,6 +2213,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 151,293 | [`docs/expansions/wave20/expansion_101_not_a_pool_plan.md`](expansions/wave20/expansion_101_not_a_pool_plan.md) |
 | 150,527 | [`docs/expansions/wave20/expansion_105_counting_at_dawn_plan.md`](expansions/wave20/expansion_105_counting_at_dawn_plan.md) |
 | 150,471 | [`docs/expansions/wave20/expansion_100_counting_at_dawn_plan.md`](expansions/wave20/expansion_100_counting_at_dawn_plan.md) |
+| 150,217 | [`piagentsplans/06-narrative-depth-trilogy.md`](../piagentsplans/06-narrative-depth-trilogy.md) |
 | 149,477 | [`docs/expansions/wave27/expansion_142_the_chord_that_stops_mid_phrase_plan.md`](expansions/wave27/expansion_142_the_chord_that_stops_mid_phrase_plan.md) |
 | 148,021 | [`Seal-steps/482913_ASHFALL_REPOSITORY_AUDIT_AND_CODEX_EXECUTION_PLAN_2026-09-19.md`](../Seal-steps/482913_ASHFALL_REPOSITORY_AUDIT_AND_CODEX_EXECUTION_PLAN_2026-09-19.md) |
 | 142,986 | [`Next-steps-plans/Plan_179_Unified_Psychology_Phobia_System.md`](../Next-steps-plans/Plan_179_Unified_Psychology_Phobia_System.md) |
@@ -7765,11 +7765,11 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/00-master-roadmap.md`](../piagentsplans/00-master-roadmap.md) | 269,699 | **Plan 00 — Master Roadmap & Architectural Constitution: Engine-Free Core Mandates, Deterministic Simulation Loops & Master Expansion Authority** — Plan 00 serves as the supreme architectural constitution and master roadmap for the entire ASHFALL simulation environ... |
 | 🟢 `CURRENT` | [`piagentsplans/01-needs-radiation-save-roundtrip-tests.md`](../piagentsplans/01-needs-radiation-save-roundtrip-tests.md) | 153,553 | **Plan 01 — NeedsSystem & RadiationSystem Save Round-Trip Assurance** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/02-09-consolidated-remaining-work.md`](../piagentsplans/02-09-consolidated-remaining-work.md) | 327,491 | **PLANS 02–09 — CONSOLIDATED REMAINING WORK & TECHNICAL INTEGRATION FRAMEWORK** — **Canonical Tracking ID:** `PLAN-02-09-CONSOLIDATED-INTEGRATION` |
-| 🟢 `CURRENT` | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) | 153,779 | **Plan 02 — Catalog Loader Failure Observability and Silent-Fallback Governance** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
+| 🟢 `CURRENT` | [`piagentsplans/02-loader-bare-catch-hardening.md`](../piagentsplans/02-loader-bare-catch-hardening.md) | 153,289 | **Plan 02 — Catalog Loader Failure Observability and Silent-Fallback Governance** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/03-schema-version-data-sweep.md`](../piagentsplans/03-schema-version-data-sweep.md) | 156,727 | **Plan 03 — Data-Authority Schema Version and JSON Policy Governance** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/04-relic-blueprint-expansion.md`](../piagentsplans/04-relic-blueprint-expansion.md) | 157,203 | **Plan 04 — Workshop Relic Blueprint Catalog and Reverse-Engineering Contract** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/05-vinyl-record-catalog.md`](../piagentsplans/05-vinyl-record-catalog.md) | 270,632 | **Plan 05 — Vinyl Record Catalog Expansion, Acoustic Phonograph Physics & Diegetic Cultural Morale Architecture** — **Package:** `PLAN-05-VINYL-RECORD-CATALOG` |
-| 🟢 `CURRENT` | [`piagentsplans/06-narrative-depth-trilogy.md`](../piagentsplans/06-narrative-depth-trilogy.md) | 154,695 | **Plan 06 — Narrative Depth: Letters, Echo/Cassettes, and the Year-of-Ash War Arc** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
+| 🟢 `CURRENT` | [`piagentsplans/06-narrative-depth-trilogy.md`](../piagentsplans/06-narrative-depth-trilogy.md) | 150,217 | **Plan 06 — Narrative Depth: Letters, Echo/Cassettes, and the Year-of-Ash War Arc** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/07-audio-production-wave.md`](../piagentsplans/07-audio-production-wave.md) | 312,636 | **Plan 07 — Audio Production Wave: Reactive Soundscapes, Voice Dispatch, Dynamic Ambience & Acoustic Hierarchy** — **Package:** `PLAN-07-AUDIO-PRODUCTION-WAVE` |
 | 🟢 `CURRENT` | [`piagentsplans/08-visual-art-completion.md`](../piagentsplans/08-visual-art-completion.md) | 278,562 | **Plan 08 — Visual Art Completion: Locations, Character Portraits, Diegetic Iconography & Aesthetic Constitution** — **Package:** `PLAN-08-VISUAL-ART-COMPLETION` |
 | 🟢 `CURRENT` | [`piagentsplans/09-medical-disease-depth.md`](../piagentsplans/09-medical-disease-depth.md) | 155,354 | **Plan 09 — Medical Disease, Detox, Triage, and Palliative-Care Integration** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
@@ -7817,13 +7817,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/19-dynamic-world-systems.md`](../piagentsplans/19-dynamic-world-systems.md) | 274,411 | **Plan 19 — Dynamic World Systems: Weather Forecasting, Orbital Harrow & Seasons** — **Goal:** Make the `WeatherStationSystem` actually *predict* — give the player a readable |
 | 🟢 `CURRENT` | [`piagentsplans/20-wasteland-inhabitants.md`](../piagentsplans/20-wasteland-inhabitants.md) | 258,591 | **Plan 20 — Wasteland Inhabitants: Field Guide, Settlements & Random Encounters** — **Goal:** Author a discoverable field guide to the wasteland's mutated life — part lore, part |
 | 🟢 `CURRENT` | [`piagentsplans/21-phantom-memory-heirloom.md`](../piagentsplans/21-phantom-memory-heirloom.md) | 258,890 | **Plan 21 — Phantom Memory & Heirloom World Layer** — **Goal:** Expand the phantom-trigger catalog so scavenged objects routinely carry authored |
-| 🟢 `CURRENT` | [`piagentsplans/22-foundry-greenhouse-production.md`](../piagentsplans/22-foundry-greenhouse-production.md) | 154,817 | **Plan 22 — Foundry, Greenhouse, Preservation, and Labor Decision Integration** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
+| 🟢 `CURRENT` | [`piagentsplans/22-foundry-greenhouse-production.md`](../piagentsplans/22-foundry-greenhouse-production.md) | 153,591 | **Plan 22 — Foundry, Greenhouse, Preservation, and Labor Decision Integration** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/23-maritime-black-flotilla.md`](../piagentsplans/23-maritime-black-flotilla.md) | 250,660 | **Plan 23 — Maritime & Black Flotilla: The Drowned Coast** — **Goal:** Flesh out the Black Flotilla as a faction (fleet culture, ranks, trade goods, codes) |
 | 🟢 `CURRENT` | [`piagentsplans/24-radio-signals-airwaves.md`](../piagentsplans/24-radio-signals-airwaves.md) | 153,183 | **Plan 24 — Radio Schedule, Distress Rescue, and Signal-Intelligence Architecture** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/25-faction-ecology-muster.md`](../piagentsplans/25-faction-ecology-muster.md) | 250,159 | **Plan 25 — Faction Ecology & the Muster: Politics, War & the Gathering** — **Goal:** Give the Muster's faction systems (`ScavengerGuild`, `HydroBarons`, `IronRaiders`, |
-| 🟢 `CURRENT` | [`piagentsplans/26-knowledge-research-skills.md`](../piagentsplans/26-knowledge-research-skills.md) | 154,587 | **Plan 26 — Latent Expertise Awakening and Adult Re-Specialization** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
+| 🟢 `CURRENT` | [`piagentsplans/26-knowledge-research-skills.md`](../piagentsplans/26-knowledge-research-skills.md) | 153,685 | **Plan 26 — Latent Expertise Awakening and Adult Re-Specialization** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/27-body-and-mind.md`](../piagentsplans/27-body-and-mind.md) | 154,668 | **Plan 27 — Dose Justice, Death Inquiry, and Psychological Contamination** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
-| 🟢 `CURRENT` | [`piagentsplans/28-wildlife-ecology.md`](../piagentsplans/28-wildlife-ecology.md) | 155,363 | **Plan 28 — Wildlife Observation, Infestations, and Food-Web Integration** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
+| 🟢 `CURRENT` | [`piagentsplans/28-wildlife-ecology.md`](../piagentsplans/28-wildlife-ecology.md) | 153,692 | **Plan 28 — Wildlife Observation, Infestations, and Food-Web Integration** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/29-shelter-as-character.md`](../piagentsplans/29-shelter-as-character.md) | 250,020 | **Plan 29 — The Shelter as a Character: Rooms, Machines & Decay** — **Goal:** Give each shelter room a name, a history, and a story so the bunker is a place with a |
 | 🟢 `CURRENT` | [`piagentsplans/30-ritual-faith-meaning.md`](../piagentsplans/30-ritual-faith-meaning.md) | 251,883 | **Plan 30 — Ritual, Faith & Meaning: The Spiritual World in Subterranean Survival** — In the catastrophic aftermath of the thermobaric exchange and subsequent radiolytic winter, biological survival alone... |
 | 🟢 `CURRENT` | [`piagentsplans/31-world-content-master-roadmap.md`](../piagentsplans/31-world-content-master-roadmap.md) | 694,763 | **ASHFALL — World Content Master Roadmap** — ASHFALL is **system-complete but content-thin at specific seams**. The migration to Godot is |
@@ -7871,7 +7871,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/73-faction-radio-corpus-expansion.md`](../piagentsplans/73-faction-radio-corpus-expansion.md) | 253,050 | **Plan 73 — Faction Radio Corpus Expansion: Shortwave Signals, Tactical Intercepts & Airwave Geopolitics Architecture** — In the vast, radio-quiet wastes of post-exchange ASHFALL, shortwave radio is the nervous system of wasteland geopolit... |
 | 🟢 `CURRENT` | [`piagentsplans/74-narrative-progression-chapters.md`](../piagentsplans/74-narrative-progression-chapters.md) | 253,133 | **Plan 74 — Narrative Progression Chapters Expansion: Campaign Arc Architecture, World-State Escalation & Epilogue Legacies** — Survival games often collapse into an endless, shapeless mechanical loop where day 200 feels identical to day 20. In ... |
 | 🟢 `CURRENT` | [`piagentsplans/75-batch4-roadmap-narrative-depth.md`](../piagentsplans/75-batch4-roadmap-narrative-depth.md) | 287,222 | **Plan 75 — Batch 4: Narrative Depth Catalogs: Echoes, Relic Blueprints, Confessions & Memorial Inscriptions** — Plan 75 resolves the narrative fragmentation and vignette shallowness across ASHFALL through the **Unified Narrative ... |
-| 🟢 `CURRENT` | [`piagentsplans/76-expedition-destinations-expansion.md`](../piagentsplans/76-expedition-destinations-expansion.md) | 154,229 | **Plan 76 — Expedition Destination Dossiers and Pre-Departure Readiness** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
+| 🟢 `CURRENT` | [`piagentsplans/76-expedition-destinations-expansion.md`](../piagentsplans/76-expedition-destinations-expansion.md) | 157,632 | **Plan 76 — Expedition Destination Dossiers and Pre-Departure Readiness** — This file replaces unclaimed generated sections that mixed current evidence, fictional APIs, and unsupported save cla... |
 | 🟢 `CURRENT` | [`piagentsplans/77-duty-roster-seasons-expansion.md`](../piagentsplans/77-duty-roster-seasons-expansion.md) | 252,774 | **Plan 77 — Duty Roster Seasons & Temporal Rhythms: Campaign Phase Modulation, Encounter Weights & Expedition Readiness Kinetics** — In ASHFALL, life in the underground complex does not maintain a static, homogeneous equilibrium. The shelter is a liv... |
 | 🟢 `CURRENT` | [`piagentsplans/78-archive-inks-expansion.md`](../piagentsplans/78-archive-inks-expansion.md) | 253,431 | **Plan 78 — Archive Inks & Scribe Chemistry: Document Preservation, Chemical Formulations & Archival Longevity Kinetics** — In ASHFALL, civilization does not collapse merely when walls crumble or generators run out of diesel; it collapses wh... |
 | 🟢 `CURRENT` | [`piagentsplans/79-autopsy-procedures-expansion.md`](../piagentsplans/79-autopsy-procedures-expansion.md) | 252,612 | **Plan 79 — Autopsy Procedures & Forensic Pathology: Post-Mortem Diagnostics, Pathogen Risk Mitigation & Bio-Research Discovery Architecture** — In ASHFALL, death is an inevitable consequence of survival in a harsh, irradiated wasteland. When a survivor dies wit... |
