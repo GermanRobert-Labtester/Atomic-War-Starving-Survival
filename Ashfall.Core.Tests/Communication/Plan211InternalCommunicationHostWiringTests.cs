@@ -86,6 +86,7 @@ namespace Ashfall.Core.Tests.Communication
             Assert.Contains("SetupInternalCommunication", main, StringComparison.Ordinal);
             Assert.Contains("SetupInternalCommunication", campaign, StringComparison.Ordinal);
             Assert.Contains("SaveInternalCommunication", main, StringComparison.Ordinal);
+            Assert.Contains("CaptureSection(InternalCommunicationSaveStore.SectionName, string.Empty)", main, StringComparison.Ordinal);
             Assert.Contains("OnMessagePosted", main, StringComparison.Ordinal);
             Assert.Contains("TickInternalCommunication", plans, StringComparison.Ordinal);
             Assert.Contains("SaveInternalCommunication();", plans, StringComparison.Ordinal);

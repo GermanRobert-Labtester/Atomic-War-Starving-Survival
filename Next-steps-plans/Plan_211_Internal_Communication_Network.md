@@ -698,7 +698,8 @@ board creation is roster-checked and leadership-only board creation is
 leader-authorized; private mail remains recipient-scoped and is never projected
 into the public board; messages expire at their authored day; and the full state
 survives checksummed save/load. Legacy state receives an empty/default baseline
-and a future schema is rejected.
+and a future schema is rejected; a blocked corrupt restore aborts both
+standalone and aggregate capture rather than dropping the prior section.
 
 **Files and owners:** `InternalCommunicationSystem.cs` remains the sole Core
 state owner; `InternalCommunicationHostSession.cs` and

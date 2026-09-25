@@ -29,8 +29,9 @@ The reachable slice is deliberately narrow and truthful:
   downgraded;
 - a successful catalog reload replaces removed template definitions instead of
   leaving stale rows reachable;
-- a corrupt existing section is preserved and save capture is blocked until
-  repaired, rather than overwriting the only durable copy with an empty state.
+- a corrupt existing section is preserved and both standalone and aggregate save
+  capture are blocked until repaired, rather than overwriting the only durable
+  copy with an empty state.
 
 The external `communications` section remains the antenna/radio authority. No
 message was copied into it and no second radio or notification authority was
@@ -46,7 +47,7 @@ refusals and fresh-composition leadership binding.
 | Registry | `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` | Added `internal_communication` → `internal_communication_save.json`, under the expanded-shelter lifecycle group. |
 | Host | `src/Host/InternalCommunicationSaveStore.cs` | Checksummed/slot-root-aware store using the existing `SaveStoreHub`. |
 | Host | `src/Host/InternalCommunicationHostSession.cs` | Strict catalog validation, roster/leadership identity refusals, public/private projections, commands, day tick, and capture/restore adapter. |
-| Main | `src/Main.InternalCommunication.cs` | Canonical setup, journal fact for accepted public posts, save/flush/reset, actor resolution, and panel binding. |
+| Main | `src/Main.InternalCommunication.cs` | Canonical setup, leadership binding, journal fact for accepted public posts, save/flush/reset (including aggregate abort on blocked restore), actor resolution, and panel binding. |
 | Main seam | `src/Main.CampaignServices.cs`, `src/Main.Plans46_49.cs` | Fresh composition plus setup/save composition and one canonical day tick without editing the active PFGL/C1 campaign-owner files. |
 | Lifecycle | `src/Main.ExpandedShelterSystems.cs` | In-memory reset/dispose of the communication host. |
 | UI | `src/UI/ShelterSocialPanel.cs` | Existing route now shows public notices, read/ack actions, leader-only water advisory action, and truthful blockers; no private inbox is rendered publicly. |

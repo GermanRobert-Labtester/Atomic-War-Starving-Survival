@@ -104,6 +104,12 @@ namespace AtomicWar.GodotApp
             if (_internalCommunication == null) return;
             if (_internalCommunicationSaveBlocked)
             {
+                // Mark the aggregate transaction failed as well as refusing
+                // the standalone mirror. Otherwise SaveAll could clear the
+                // prior payload map, omit this section, and overwrite the
+                // campaign envelope while the only readable copy remains
+                // blocked on disk.
+                CaptureSection(InternalCommunicationSaveStore.SectionName, string.Empty);
                 GD.PrintErr("[InternalCommunication] Save refused because the existing section could not be restored safely.");
                 return;
             }
