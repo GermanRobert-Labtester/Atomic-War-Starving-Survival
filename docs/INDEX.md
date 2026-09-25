@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5420 | **Total Characters:** 1,785,251,307 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 2283 documents carrying 1,743,559,969 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5420 | **Total Characters:** 1,785,252,915 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 2283 documents carrying 1,743,561,577 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 2283 documents, 1,743,559,969 characters
+## Oversized Document Register (>= 100,000 characters) — 2283 documents, 1,743,561,577 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1090,7 +1090,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 409,938 | [`docs/expansions/prose_wave114/cw114_09_room_fixture_pump_leather_cup_the_leather_cup_plan.md`](expansions/prose_wave114/cw114_09_room_fixture_pump_leather_cup_the_leather_cup_plan.md) |
 | 409,153 | [`docs/expansions/prose_wave36/cw36_05_the_protocol_without_an_ending_plan.md`](expansions/prose_wave36/cw36_05_the_protocol_without_an_ending_plan.md) |
 | 407,545 | [`docs/expansions/prose_wave114/cw114_06_room_fixture_main_inverter_panel_not_load_plan.md`](expansions/prose_wave114/cw114_06_room_fixture_main_inverter_panel_not_load_plan.md) |
-| 401,516 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
+| 402,913 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 395,742 | [`docs/memorials/WASTELAND_EPITAPH_FINAL_WISH_HANDOFF.md`](memorials/WASTELAND_EPITAPH_FINAL_WISH_HANDOFF.md) |
 | 393,611 | [`docs/expansions/prose_wave35/cw35_05_the_whiteboard_is_not_neutral_plan.md`](expansions/prose_wave35/cw35_05_the_whiteboard_is_not_neutral_plan.md) |
 | 392,999 | [`docs/bodymind/DOSE_ITEM_MATRIX.md`](bodymind/DOSE_ITEM_MATRIX.md) |
@@ -1142,8 +1142,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 333,796 | [`docs/moral_choice/MORAL_FLAG_PONR_HANDOFF.md`](moral_choice/MORAL_FLAG_PONR_HANDOFF.md) |
 | 333,653 | [`docs/year_of_ash/YEAR_OF_ASH_FOUNDRY_HANDOFF.md`](year_of_ash/YEAR_OF_ASH_FOUNDRY_HANDOFF.md) |
 | 330,983 | [`docs/world/SETTLEMENT_CARAVAN_MATRIX.md`](world/SETTLEMENT_CARAVAN_MATRIX.md) |
+| 329,876 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 329,787 | [`docs/expansions/prose_wave92/cw92_03_room_history_the_first_filter_change_plan.md`](expansions/prose_wave92/cw92_03_room_history_the_first_filter_change_plan.md) |
-| 329,665 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 329,441 | [`docs/expansions/prose_wave102/cw102_06_audio_log_technology_breakthrough_day_230_water_purifier_celebration_plan.md`](expansions/prose_wave102/cw102_06_audio_log_technology_breakthrough_day_230_water_purifier_celebration_plan.md) |
 | 329,216 | [`docs/shelter/ROOM_DECOR_MEMORY_INTEGRATION.md`](shelter/ROOM_DECOR_MEMORY_INTEGRATION.md) |
 | 329,007 | [`docs/expansions/prose_wave33/cw33_04_the_fence_gets_paid_first_plan.md`](expansions/prose_wave33/cw33_04_the_fence_gets_paid_first_plan.md) |
@@ -5892,7 +5892,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — name: ASHFALL Tactical UI |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 10,466 | **ASHFALL PROJECT — GEMINI Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 10,465 | **ASHFALL PROJECT — GOOSE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
-| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 329,665 | **ASHFALL Integration Plans** — This is the sole live integration ledger. It is not a backlog and must not |
+| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 329,876 | **ASHFALL Integration Plans** — This is the sole live integration ledger. It is not a backlog and must not |
 | 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 32,827 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 10,468 | **ASHFALL PROJECT — MIMOCODE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_131_Wasteland_Information_Rumor_Network.md`](../Next-steps-plans/Plan_131_Wasteland_Information_Rumor_Network.md) | 8,716 | **Plan 131 — Wasteland Information & Rumor Network** — Create a persistent information-flow system where news, rumors, and intelligence propagate between settlements, facti... |
@@ -6236,7 +6236,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 2,136 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 10,464 | **ASHFALL PROJECT — VIBE Instructions** — 1. **Godot is authoritative; Unity is retired.** Never invoke Unity or add a |
 | 🟢 `CURRENT` | [`WAVE9_PART1_CLOSEOUT.md`](../WAVE9_PART1_CLOSEOUT.md) | 10,325 | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 401,516 | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 402,913 | **ASHFALL Worktree Ownership** — The foreman is the sole writer of this ledger. Builders and reviewers must read |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
 | 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | 94,305 | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
