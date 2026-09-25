@@ -1,7 +1,7 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5413 | **Total Characters:** 1,710,041,637 | **Last Verified:** 2026-09-25
+**Total Indexed Documents:** 5413 | **Total Characters:** 1,710,041,702 | **Last Verified:** 2026-09-25
 **Oversized (>= 100,000 characters):** 2018 documents carrying 1,667,157,996 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
@@ -6874,7 +6874,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md`](plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md) | 6,238 | **PLAN F21 — Discovery Selection-Context Extension (Season / Drought / Skill Weights)** — **Class:** P2 follow-up from the F17–F20 flagship integration (flagship plan §8.10, §9.10, §10.10 — all three documen... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_IV_LEDGER_DEBT_INTEGRATION_IMPLEMENTATION_LOG.md`](plans/PLAN_IV_LEDGER_DEBT_INTEGRATION_IMPLEMENTATION_LOG.md) | 202,360 | **Plan IV — Ledger Debt Consequences, Trade Credit & Headless Integration — Implementation Log** — **Plan:** ASHFALL Flagship Integration Plan IV (F1/F2/F3) |
 | 🟢 `CURRENT` | [`docs/plans/PRODUCTION_ISLANDS_WIRING_LOG.md`](plans/PRODUCTION_ISLANDS_WIRING_LOG.md) | 8,584 | **Production-island wiring log** — **Date:** 2026-09-19 |
-| 🟢 `CURRENT` | [`docs/plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md`](plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md) | 61,314 | **Recent Plan Integrations — Programmatic Audit** — **Generated:** 2026-09-24 |
+| 🟢 `CURRENT` | [`docs/plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md`](plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md) | 61,379 | **Recent Plan Integrations — Programmatic Audit** — **Generated:** 2026-09-25 |
 | 🟢 `CURRENT` | [`docs/plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md`](plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md) | 25,624 | **ASHFALL Release Stability Remediation Plan — 65 Bugs** — Make the Godot campaign **honest and safe**: |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_IMPLEMENTATION_LOG.md`](plans/SHELTER_EMP_MEDICAL_POWER_IMPLEMENTATION_LOG.md) | 10,172 | **SHELTER EMP & MEDICAL POWER — IMPLEMENTATION LOG** — Plan: `docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md` |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`](plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md) | 23,384 | **SHELTER EMP & MEDICAL POWER — INTEGRATION PLAN (G4–G5)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (G4/G5/G6 findings) |
