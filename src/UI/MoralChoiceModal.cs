@@ -287,15 +287,17 @@ namespace AtomicWar.GodotApp.UI
         {
             if (!Visible) return;
 
+            // Close/cancel is action-driven (Esc, pad B, rebound keys) and must
+            // not sit behind the key cast below, or joypad events cannot reach it.
+            if (AshfallInputActions.IsCloseOrCancel(@event))
+            {
+                CloseModal();
+                GetViewport().SetInputAsHandled();
+                return;
+            }
+
             if (@event is InputEventKey key && key.Pressed)
             {
-                if (AshfallInputActions.IsCloseOrCancel(@event))
-                {
-                    CloseModal();
-                    GetViewport().SetInputAsHandled();
-                    return;
-                }
-
                 // Keyboard quick-selection for options 1-9 if unresolved
                 if (_currentQuest != null && (_moralChoiceSystem == null || !_moralChoiceSystem.IsResolved(_currentQuest.Id)))
                 {

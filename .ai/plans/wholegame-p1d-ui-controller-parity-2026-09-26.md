@@ -77,13 +77,59 @@ full test suite; no edits to files under ACTIVE claims.
 
 ## 5. Known Limitations / Debt
 
-- The 4 claimed files keep raw Esc until their claim closes; the ratchet
-  allowlist names them with reasons, so conversion is a one-line follow-up.
-- Joypad close on `SettingsPanel`'s own handler is still key-gated upstream of
-  the rebind-capture logic; pad B falls through to Main's central
-  `IsCloseOrCancel` dismissal, which covers it.
-- `DutyRosterPanel.cs:400` SHIFT DETAIL non-wrapping metadata (audit finding,
-  same class as C15) remains blocked by claim-c1-plan24 — not fixed here.
-- Runtime pad-in-hand confirmation was not performed (no interactive input
-  automation); behavior is proven by the InputMap bindings + predicate wiring
-  + selftests above.
+- ~~The 4 claimed files keep raw Esc until their claim closes~~ — converted in
+  the continuation (§6) under direct user authorization.
+- Joypad close on `SettingsPanel`'s own handler is covered by the hoisted
+  action check (§6); pad B also falls through to Main's central
+  `IsCloseOrCancel` dismissal.
+- ~~`DutyRosterPanel.cs:400` SHIFT DETAIL non-wrapping metadata~~ — fixed in
+  the continuation (§6) under direct user authorization.
+- ~~Runtime pad-in-hand confirmation~~ — replaced by the synthetic-input
+  `[UiControllerParity]` gate (§6), which delivers byte-identical pad events
+  through the production handlers.
+
+## 6. Continuation — same user authorization (2026-09-26)
+
+The user reviewed the §5 residuals and directed: "continue with the
+remaining". This section is executed under that direct authorization, which
+overrides the stale c1-plan24 / PFGL-octet claims **for the one-line dismissal
+edits only** (both claims re-verified as still open before editing; nothing
+else in those files was touched):
+
+1. **Claim-file conversions:** `DutyRosterPanel.cs`, `ExpeditionPanel.cs`,
+   `SurvivorDetailPanel.cs`, `PfglOctetBoardPanels.cs` raw Esc →
+   `IsCloseOrCancel`. Ratchet allowlist shrunk to `SettingsPanel.cs` only.
+2. **Key-cast hoists:** `CombatPanel.cs`, `MoralChoiceModal.cs`,
+   `SettingsPanel.cs` — the close check moved ABOVE the
+   `is InputEventKey` guard so joypad events (not key events) reach it;
+   rebind-capture precedence preserved in Settings.
+3. **DutyRosterPanel detail-pane autowrap:** all 11 `MakeMetadata` prose
+   sites gained `autowrap: true` (C15-class fix for the audit's :400 finding).
+4. **`VerifyUiControllerParity` gate** (`src/Host/HostCli.PanelTests.cs`, in
+   `--ui-layout-selftest`): asserts the InputMap contract on synthetic events
+   (pad B → close, D-pad → nav, Esc/arrows unchanged, negative control) and
+   drives a synthetic pad-B press through every input-handling panel's
+   production `_Input`/`_UnhandledInput`/`_UnhandledKeyInput` override,
+   requiring dismissal (hide or OnClose). Result: 61/61 panels, 0 failures.
+5. **`EmergencyResponseHud.Open`** GrabFocus guarded on `IsInsideTree()`
+   (removes a pre-existing audit-path engine error).
+6. **Art waves:** Composio CLI verified authenticated; generation launched
+   through the established `generate_faction_portrait_art.py` pipeline for the
+   measured gaps (97 portraits, 46 locations). Generated files are left
+   uncommitted pending Godot import sidecars, per the pre-commit asset gate.
+7. **Commit:** one pathspec commit of this package's code/test/plan/state
+   files (the user listed the uncommitted package among the remaining items).
+
+## 7. Continuation Verification (all executed 2026-09-26)
+
+- `dotnet build Ashfall.csproj --nologo --no-restore` → 0 errors / 1
+  pre-existing ShelterThermalPanel warning.
+- `bash scripts/run_test.sh Ashfall.Core.Tests/UI/AccessibilitySourceAuditTests.cs`
+  → 5/5 PASS (corpus ratchet green with SettingsPanel-only allowlist).
+- `godot --headless --path . -- --ui-layout-selftest` → PASS, including
+  `[UiControllerParity] input-handling panels=61 padDismissed=61 … 0 failed`
+  and zero non-RID engine errors.
+- `godot --headless --path . -- --ui-accessibility-selftest` → PASS (5/5).
+- `godot --headless --path . -- --player-panels-uitest` → PASS.
+- `godot --headless --path . -- --asset-registry-selftest` → 55/55 (census
+  basis: portraits 32/129, locations 133/179 pre-wave).

@@ -406,14 +406,17 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
+            // Close/cancel is action-driven (Esc, pad B, rebound keys) and must
+            // not sit behind the key cast below, or joypad events cannot reach it.
+            if (AshfallInputActions.IsCloseOrCancel(@event))
+            {
+                OnClose?.Invoke();
+                GetViewport().SetInputAsHandled();
+                return;
+            }
             if (@event is InputEventKey key && key.Pressed)
             {
-                if (AshfallInputActions.IsCloseOrCancel(@event))
-                {
-                    OnClose?.Invoke();
-                    GetViewport().SetInputAsHandled();
-                }
-                else if (AshfallInputActions.IsNextTab(@event))
+                if (AshfallInputActions.IsNextTab(@event))
                 {
                     if (_targetSelect.ItemCount > 0)
                     {

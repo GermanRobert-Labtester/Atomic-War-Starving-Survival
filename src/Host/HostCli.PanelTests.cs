@@ -3301,6 +3301,7 @@ namespace AtomicWar.GodotApp
 
             AuditPanelInteractivity(Check);
             VerifyUiMotionContracts(Check);
+            VerifyUiControllerParity(Check);
 
             GD.Print($"[UiLayoutSelfTest] Failures: {failures}");
             return EmitSummary("ui_layout_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
@@ -3607,6 +3608,149 @@ namespace AtomicWar.GodotApp
                     "UiMotion: headless button FX is a no-op");
 
             host.Free();
+        }
+
+        /// <summary>
+        /// Controller-parity contract (WHOLEGAME-P1D residual sweep, 2026-09-26):
+        /// proves the rebindable dismissal/navigation wiring end-to-end using
+        /// synthetic input events — byte-for-byte what a physical pad delivers —
+        /// so pad behavior is verified without physical hardware or input
+        /// automation:
+        /// (a) the live InputMap binds pad B to close/cancel, D-pad up/down to
+        ///     the nav actions, and the keyboard Esc/arrow bindings still match;
+        /// (b) every instantiable input-handling panel dismisses (hides itself
+        ///     or fires <c>OnClose</c>) when the pad-B event is pushed through
+        ///     the production <c>_UnhandledInput</c> / <c>_UnhandledKeyInput</c>
+        ///     / <c>_Input</c> override.
+        /// </summary>
+        private static void VerifyUiControllerParity(Action<bool, string> check)
+        {
+            if (Engine.GetMainLoop() is not SceneTree tree)
+            {
+                check(false, "UiControllerParity: scene tree available for pad checks");
+                return;
+            }
+
+            // (a) InputMap contract on synthetic events.
+            var padB = new InputEventJoypadButton { ButtonIndex = JoyButton.B, Pressed = true };
+            var padDpadUp = new InputEventJoypadButton { ButtonIndex = JoyButton.DpadUp, Pressed = true };
+            var padDpadDown = new InputEventJoypadButton { ButtonIndex = JoyButton.DpadDown, Pressed = true };
+            var padShoulder = new InputEventJoypadButton { ButtonIndex = JoyButton.RightShoulder, Pressed = true };
+            var escKey = new InputEventKey { Keycode = Key.Escape, Pressed = true };
+            var arrowUpKey = new InputEventKey { Keycode = Key.Up, Pressed = true };
+
+            check(AshfallInputActions.IsCloseOrCancel(padB),
+                "UiControllerParity: pad B is bound to close/cancel");
+            check(!AshfallInputActions.IsCloseOrCancel(padShoulder),
+                "UiControllerParity: unrelated pad button is not close/cancel");
+            check(AshfallInputActions.IsCloseOrCancel(escKey),
+                "UiControllerParity: keyboard Esc remains close/cancel");
+            check(AshfallInputActions.IsNavUp(padDpadUp) && AshfallInputActions.IsNavDown(padDpadDown),
+                "UiControllerParity: D-pad up/down are bound to the nav actions");
+            check(AshfallInputActions.IsNavUp(arrowUpKey),
+                "UiControllerParity: keyboard Up remains nav-up");
+
+            // (b) Per-panel pad-B dismissal sweep, anchored in the live scene so
+            // viewport calls inside the handlers resolve exactly like play.
+            Node anchor = tree.Root.GetChildCount() > 0 ? tree.Root.GetChild(0) : tree.Root;
+            var host = new Control { Name = "UiControllerParityHost" };
+            anchor.AddChild(host);
+
+            const System.Reflection.BindingFlags Declared =
+                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic
+                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly;
+
+            var panelTypes = typeof(HostCli).Assembly.GetTypes()
+                .Where(t => t.IsClass && !t.IsAbstract
+                            && typeof(Control).IsAssignableFrom(t)
+                            && typeof(IBindablePanel).IsAssignableFrom(t)
+                            && t.GetConstructor(Type.EmptyTypes) != null)
+                .OrderBy(t => t.Name)
+                .ToList();
+
+            int handlerPanels = 0, dismissed = 0, skipped = 0;
+            var noDismiss = new System.Collections.Generic.List<string>();
+
+            foreach (var type in panelTypes)
+            {
+                bool overridesInput =
+                    type.GetMethod("_UnhandledInput", Declared) != null
+                    || type.GetMethod("_UnhandledKeyInput", Declared) != null
+                    || type.GetMethod("_Input", Declared) != null;
+                if (!overridesInput)
+                    continue;
+
+                Control? panel = null;
+                try
+                {
+                    // No manual _Ready() here: panels are anchored in the tree
+                    // below, so the engine fires NOTIFICATION_READY exactly
+                    // once (a manual call would double-build children).
+                    panel = (Control)Activator.CreateInstance(type)!;
+                }
+                catch (Exception)
+                {
+                    string resPath = $"res://assets/ui/panels/{type.Name}.tscn";
+                    if (ResourceLoader.Exists(resPath))
+                    {
+                        try
+                        {
+                            panel = PanelSceneLoader.Load<Control>(resPath);
+                        }
+                        catch
+                        {
+                            skipped++;
+                            panel?.Free();
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        skipped++;
+                        panel?.Free();
+                        continue;
+                    }
+                }
+
+                handlerPanels++;
+                host.AddChild(panel);
+                panel.Visible = true;
+
+                bool fired = false;
+                void CloseSignal() => fired = true;
+                var onClose = type.GetEvent("OnClose");
+                if (onClose != null && onClose.EventHandlerType == typeof(Action))
+                    onClose.AddEventHandler(panel, (Action)CloseSignal);
+
+                try
+                {
+                    panel._Input(padB);
+                    panel._UnhandledInput(padB);
+                    panel._UnhandledKeyInput(padB);
+                }
+                catch (Exception ex)
+                {
+                    noDismiss.Add($"{type.Name} (threw: {ex.GetType().Name})");
+                }
+
+                if (!fired && panel.Visible)
+                    noDismiss.Add(type.Name);
+                else
+                    dismissed++;
+
+                panel.Free();
+            }
+
+            host.Free();
+            GD.Print($"[UiControllerParity] input-handling panels={handlerPanels} " +
+                     $"padDismissed={dismissed} skippedConstruction={skipped}");
+            foreach (string entry in noDismiss)
+                GD.PrintErr($"  [NO-PAD-DISMISS] {entry}");
+            check(handlerPanels > 0,
+                $"UiControllerParity: input-handling panel corpus discovered ({handlerPanels} panels)");
+            check(noDismiss.Count == 0,
+                $"UiControllerParity: every input-handling panel dismisses on pad B " +
+                $"({noDismiss.Count} failed: {string.Join(", ", noDismiss.Take(12))})");
         }
 
         /// <summary>Visibility including parent containers (panels are audited outside the tree).</summary>

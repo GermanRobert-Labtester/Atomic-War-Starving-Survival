@@ -269,7 +269,10 @@ namespace AtomicWar.GodotApp.UI
                     _crisisSummary.Text = "No crisis is bound. This console populates when a crisis is detected.";
             }
 
-            _acknowledgeButton?.GrabFocus();
+            // Focus only when anchored: the panel audits construct this HUD
+            // outside the scene tree, where GrabFocus would push an engine error.
+            if (_acknowledgeButton != null && _acknowledgeButton.IsInsideTree())
+                _acknowledgeButton.GrabFocus();
             if (IsBound)
             {
                 AudioManager.Instance?.SetSnapshot(AudioSnapshot.ShelterCrisis);

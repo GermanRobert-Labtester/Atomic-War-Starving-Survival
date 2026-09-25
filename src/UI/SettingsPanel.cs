@@ -113,6 +113,16 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledKeyInput(InputEvent @event)
         {
             if (!Visible) return;
+            // Close/cancel is action-driven (Esc, pad B, rebound keys) and must
+            // not sit behind the key cast below, or joypad events cannot reach
+            // it. Rebinding keeps precedence: while a capture is active, every
+            // event belongs to the capture instead.
+            if (string.IsNullOrEmpty(_rebindAction) && AshfallInputActions.IsCloseOrCancel(@event))
+            {
+                CancelAndClose();
+                GetViewport().SetInputAsHandled();
+                return;
+            }
             if (@event is InputEventKey key && key.Pressed && !key.Echo)
             {
                 if (!string.IsNullOrEmpty(_rebindAction))
@@ -146,16 +156,10 @@ namespace AtomicWar.GodotApp.UI
                     GetViewport().SetInputAsHandled();
                     return;
                 }
-
-                // Rebindable close: honours ashfall_close / ui_cancel (Esc, pad B).
-                // The raw-Esc branch above stays raw on purpose — it cancels an
-                // in-progress binding capture, so a pad button being bound to
-                // Close must not cancel its own capture.
-                if (AshfallInputActions.IsCloseOrCancel(@event))
-                {
-                    CancelAndClose();
-                    GetViewport().SetInputAsHandled();
-                }
+                // Close is handled at the top of this override; the raw-Esc
+                // branch above stays raw on purpose — it cancels an in-progress
+                // binding capture, so a pad button being bound to Close cannot
+                // cancel its own capture.
             }
         }
 

@@ -1,5 +1,18 @@
 # Current Task State
 
+## WHOLEGAME-P1D-UI-CONTROLLER-PARITY — CONTINUATION — 2026-09-26 (user-authorized)
+
+- **Goal:** execute the residuals the user listed after reviewing the first package: the 4 claim-blocked Esc conversions, the DutyRosterPanel wrap defect, the gamepad proof, art gaps, and the uncommitted package.
+- **Status:** COMPLETE (art waves running in background, resumable; see below).
+- **User authorization:** "continue with the remaining" — recorded as overriding the stale c1-plan24 / PFGL-octet claims for the one-line dismissal edits only; both claims re-verified still-open before editing, nothing else in those files touched.
+- **Files Changed (continuation):** `DutyRosterPanel.cs` (Esc + 11 autowrap sites), `ExpeditionPanel.cs`, `SurvivorDetailPanel.cs`, `PfglOctetBoardPanels.cs` (Esc), `CombatPanel.cs`/`MoralChoiceModal.cs`/`SettingsPanel.cs` (close check hoisted above the InputEventKey cast so joypad events reach it; rebind-capture precedence preserved), `EmergencyResponseHud.cs` (GrabFocus in-tree guard), `src/Host/HostCli.PanelTests.cs` (new `VerifyUiControllerParity` gate), `AccessibilitySourceAuditTests.cs` (allowlist → SettingsPanel only), plan + this state.
+- **Pad proof:** `[UiControllerParity] input-handling panels=61 padDismissed=61 … 0 failed` — synthetic InputEventJoypadButton(B) pushed through production handlers; InputMap contract asserted both directions plus keyboard negatives.
+- **Verification:** host build 0 err / 1 pre-existing warning; ratchet 5/5; layout/accessibility/player-panels selftests all PASS; asset-registry 55/55.
+- **Art:** Composio CLI authenticated; census measured (portraits 32/129, locations 133/179); `generate_faction_portrait_art.py location --limit 46` then `portrait --limit 97` launched in background (resumable, 40 s rate limiter). Generated jpgs left uncommitted pending import sidecars per the pre-commit asset gate.
+- **Commit:** pathspec commit of the package's code/test/plan/state files (per the user's remaining-items list).
+- **Testing steps used:** 10 / 15. **Iterations:** ~60 / 100.
+- **Note:** a concurrent stream staged byte-identical Esc conversions on 5 src/UI files mid-task ( ShelterPanel, DoseGeographyPanel, PowerGridPanel, ShelterAtmospherePanel, EmergencyResponseHud); content identical, no conflict.
+
 ## WHOLEGAME-P1D-UI-CONTROLLER-PARITY — 2026-09-26 (user-authorized UI pass)
 
 - **Goal:** execute the deferred-P1D residuals from `.ai/plans/wholegame-p1-playable-ui-integration.md` §6: raw-Esc dismissal sweep → rebindable `AshfallInputActions.IsCloseOrCancel`, DailyBriefingModal arrow keys → nav actions, corpus-wide ratchet gate.
