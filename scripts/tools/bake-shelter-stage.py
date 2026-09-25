@@ -85,7 +85,7 @@ HEX = {
     "wood":        (0x4A, 0x3A, 0x2C),
     "wood_dark":   (0x39, 0x2C, 0x22),
     "hazard":      (0x8F, 0x72, 0x2C),
-    "paper":       (0xA8, 0xA2, 0x90),
+    "paper":       (0x9C, 0x96, 0x86),
     "lamp_glow":   (0xC7, 0xDC, 0xD0),
     "stain":       (0x17, 0x19, 0x1E),
 }
@@ -227,7 +227,7 @@ def build_stage():
     mat_hazard = make_mat("ash_hazard", rgb("hazard"), rough=0.9)
     mat_paper = make_mat("ash_paper", rgb("paper"), rough=1.0)
     mat_stain = make_mat("ash_stain", rgb("stain"))
-    mat_bulb = make_mat("ash_bulb", rgb("lamp_glow"), emission=rgb("lamp_glow"), emit_strength=6.0)
+    mat_bulb = make_mat("ash_bulb", rgb("lamp_glow"), emission=rgb("lamp_glow"), emit_strength=28.0)
 
     # Back wall (corners wound to face the camera at -Y)
     mesh_from_corners("wall", [wall_point(0, H), wall_point(W, H),
@@ -255,7 +255,7 @@ def build_stage():
             (7, 2.4, FLOOR_PY - CEIL_PY - 10), mat_wall_rib)
 
     # Ceiling conduits (py 16..40) — steel + one rust run
-    for py, r, m in ((16, 3.2, mat_steel), (24, 4.0, mat_rust), (34, 2.6, mat_steel_dark)):
+    for py, r, m in ((16, 3.2, mat_steel), (24, 4.0, mat_rust_l), (34, 2.6, mat_steel_dark)):
         cylinder(f"conduit_{py}", (W / 2, -8, H - py), r, W, m, axis="Y")
 
     # Vertical pipe drops (kept off hotspot x columns)
@@ -268,10 +268,11 @@ def build_stage():
         cylinder(f"lamp_stem_{px}", (px, -26, H - 49), 1.6, 24, mat_steel)
         sphere(f"lamp_bulb_{px}", (px, -26, H - 72), 5.0, mat_bulb)
 
-    # Notice board (py 96..136, x 316..372) — above the calm band
-    box("board", (344, -1.8, H - 116), (56, 1.2, 40), mat_wood)
+    # Notice board (py 96..136) — mounted BETWEEN lamps (x~280) so papers
+    # stay readable instead of blowing out under a nearby bulb
+    box("board", (280, -1.8, H - 116), (56, 1.2, 40), mat_wood)
     for dx, dy, wdt, hgt in ((-18, 4, 16, 20), (2, 0, 14, 24), (19, 6, 12, 16)):
-        box(f"paper_{dx}", (344 + dx, -2.6, H - 116 + dy), (wdt, 0.6, hgt), mat_paper)
+        box(f"paper_{dx}", (280 + dx, -2.6, H - 116 + dy), (wdt, 0.6, hgt), mat_paper)
 
     # Vent grilles (py ~118, flanking) with slats
     for vx in (136, 596):
@@ -355,24 +356,26 @@ RUSTD = (0.82, 0.62, 0.46)    # rust dusk
 COOLB = (0.55, 0.62, 0.74)    # blue-grey night
 
 PHASES = {
-    "day1_7": dict(world=(0.42, 0.44, 0.47), world_str=0.55,
-                   lamps=70.0, lamp_col=GLOW,
-                   key=("left_cool", (-300, -120, 420), 700, 260, (0.72, 0.76, 0.82))),
-    "dawn":   dict(world=(0.47, 0.38, 0.29), world_str=0.30,
-                   lamps=85.0, lamp_col=GLOW,
-                   key=("dawn_key", (-420, -60, 200), 620, 420, WARM)),
-    "dusk":   dict(world=(0.36, 0.30, 0.26), world_str=0.28,
-                   lamps=110.0, lamp_col=GLOW,
-                   key=("dusk_key", (1080, -80, 240), 560, 320, RUSTD)),
-    "night":  dict(world=(0.10, 0.12, 0.16), world_str=0.20,
-                   lamps=160.0, lamp_col=(0.80, 0.88, 0.84),
-                   key=("night_fill", (380, -500, 520), 1200, 60, COOLB)),
+    "day1_7": dict(world=(0.42, 0.44, 0.47), world_str=0.40,
+                   lamps=60.0, lamp_col=GLOW, bounce=24.0,
+                   key=("left_cool", (-300, -120, 420), 700, 200, (0.72, 0.76, 0.82))),
+    "dawn":   dict(world=(0.47, 0.38, 0.29), world_str=0.22,
+                   lamps=75.0, lamp_col=GLOW, bounce=18.0,
+                   key=("dawn_key", (-420, -60, 200), 620, 380, WARM)),
+    "dusk":   dict(world=(0.36, 0.30, 0.26), world_str=0.20,
+                   lamps=95.0, lamp_col=GLOW, bounce=15.0,
+                   key=("dusk_key", (1080, -80, 240), 560, 260, RUSTD)),
+    "night":  dict(world=(0.10, 0.12, 0.16), world_str=0.12,
+                   lamps=150.0, lamp_col=(0.80, 0.88, 0.84),
+                   key=("night_fill", (380, -500, 520), 1200, 60, COOLB), bounce=8.0),
 }
+
+BOUNCE = (0.85, 0.82, 0.78)  # warm neutral ceiling bounce (wall reflection)
 
 
 def apply_phase(name):
     cfg = PHASES[name]
-    clear_lights()
+    lights = ensure_lights()
     world = bpy.data.worlds["StageWorld"]
     import os
     if os.environ.get("BAKE_WORLD_OFF"):
@@ -381,9 +384,25 @@ def apply_phase(name):
     else:
         world.node_tree.nodes["Background"].inputs[0].default_value = (*cfg["world"], 1.0)
         world.node_tree.nodes["Background"].inputs[1].default_value = cfg["world_str"]
-    lamp_lights(cfg["lamps"], cfg["lamp_col"])
+    for px in LAMP_X:
+        ld = lights[px].data
+        ld.energy = cfg["lamps"]
+        ld.color = cfg["lamp_col"]
     kn, kloc, ksize, kenergy, kcol = cfg["key"]
-    area_light(kn, kloc, ksize, kenergy, kcol, (math.radians(90), 0, 0))
+    key = lights["phase_key"]
+    key.location = sc3(kloc)
+    key.rotation_euler = (math.radians(90), 0, 0)
+    key.data.size = sc(ksize)
+    key.data.energy = kenergy
+    key.data.color = kcol
+    # soft bounce off the floor toward the ceiling band so conduits/lamps
+    # read against the dark fascia without adding a second visible source
+    bounce = lights["ceil_bounce"]
+    bounce.location = sc3((W / 2, -200, 40))
+    bounce.rotation_euler = (math.radians(180), 0, 0)
+    bounce.data.size = sc(400)
+    bounce.data.energy = cfg.get("bounce", 40.0)
+    bounce.data.color = BOUNCE
 
 
 # ── render setup ──────────────────────────────────────────────────────────
@@ -422,6 +441,36 @@ def new_scene():
     world = bpy.data.worlds.new("StageWorld")
     world.use_nodes = True
     scene.world = world
+    _LIGHTS.clear()
+
+
+_LIGHTS = {}
+
+
+def ensure_lights():
+    """Create the five stage lights ONCE; phases mutate energy/color/position.
+
+    Deleting and re-creating light objects between renders does not reliably
+    propagate to the renderer in one background session, so the rig is built
+    once and only its parameters change per phase.
+    """
+    if _LIGHTS:
+        return _LIGHTS
+    for px in LAMP_X:
+        ld = bpy.data.lights.new(f"lamp_light_{px}", "POINT")
+        ld.shadow_soft_size = sc(3.0)
+        ob = bpy.data.objects.new(f"lamplight_{px}", ld)
+        # hang BELOW the bulb surface, on the camera side of the wall
+        ob.location = sc3((px, -26, H - 86))
+        link(ob)
+        _LIGHTS[px] = ob
+    for nm in ("phase_key", "ceil_bounce"):
+        ld = bpy.data.lights.new(nm, "AREA")
+        ld.shape = "SQUARE"
+        ob = bpy.data.objects.new(nm, ld)
+        link(ob)
+        _LIGHTS[nm] = ob
+    return _LIGHTS
 
 
 # ── prop bakes ────────────────────────────────────────────────────────────
@@ -438,12 +487,14 @@ def build_props():
     mesh_from_corners("prop_floor",
                       [(-80, -110, -70), (80, -110, -70), (80, 0, 0), (-80, 0, 0)], mat_floor)
 
-    # supply crate: two stacked wooden crates, strap bands
+    # supply crate: two stacked wooden crates (top crate lighter so the
+    # silhouette separates at 64px) + wide rust strap
+    mat_wood_l = make_mat("ash_wood_light", (0x5A, 0x48, 0x36))
     box("crate_lo", (0, -14, 14), (40, 30, 27), mat_wood)
     box("crate_lo_edge1", (0, -14, 14), (41, 31, 3), mat_wood_dark)
-    box("crate_hi", (4, -10, 40), (32, 24, 22), mat_wood)
+    box("crate_hi", (4, -10, 40), (32, 24, 22), mat_wood_l)
     box("crate_hi_edge1", (4, -10, 40), (33, 25, 2.6), mat_wood_dark)
-    box("crate_strap", (4, -10, 27), (33.4, 25.4, 2.4), mat_rust)
+    box("crate_strap", (4, -10, 27), (33.6, 25.6, 4.5), mat_rust_l)
 
     # water barrel: rust-banded drum, top rim
     cylinder("barrel", (0, -12, 27), 16, 54, mat_steel, axis="Z", verts=28)
@@ -452,13 +503,12 @@ def build_props():
     cylinder("barrel_band_hi", (0, -12, 42), 16.8, 4, mat_rust_l)
     cylinder("barrel_cap", (0, -12, 55.4), 6, 1.6, mat_steel_dark)
 
-    # hatch door: wall-mounted circular steel plate + wheel + hinge boxes
+    # hatch door: wall-mounted circular steel plate + wheel; the rim is a
+    # bold ring (no small bolts — they read as artifacts at game scale) and
+    # an inner darker disc gives the plate slight depth
     cylinder("hatch_plate", (0, 0, 0), 34, 7, mat_steel, axis="Y", verts=32)
-    cylinder("hatch_rim", (0, -3.8, 0), 35.2, 2.4, mat_steel_dark, axis="Y", verts=32)
-    for ang in range(0, 360, 45):
-        a = math.radians(ang)
-        cylinder(f"hatch_bolt_{ang}", (34 * math.cos(a), -4.6, 34 * math.sin(a)),
-                 1.8, 2.4, mat_steel_dark, axis="Y")
+    cylinder("hatch_rim", (0, -3.8, 0), 35.2, 3.6, mat_steel_dark, axis="Y", verts=32)
+    cylinder("hatch_inner", (0, -3.7, 0), 29, 1.2, mat_steel_dark, axis="Y", verts=32)
     bpy.ops.mesh.primitive_torus_add(location=sc3((0, -6.5, 0)), major_radius=sc(12),
                                      minor_radius=sc(1.7), major_segments=28, minor_segments=10)
     wheel = bpy.context.active_object
@@ -487,9 +537,9 @@ def bake_props(out_dir):
     setup_render(transparent=True)
     # prop lighting: neutral stage light + soft fill, day-authoritative
     clear_lights()
-    area_light("prop_key", (-160, -140, 220), 180, 160, (0.80, 0.83, 0.87),
+    area_light("prop_key", (-160, -140, 220), 180, 110, (0.80, 0.83, 0.87),
                (math.radians(50), math.radians(18), 0))
-    area_light("prop_fill", (220, -60, 160), 140, 45, (0.60, 0.66, 0.72),
+    area_light("prop_fill", (220, -60, 160), 140, 30, (0.60, 0.66, 0.72),
                (math.radians(80), 0, 0))
     world = bpy.data.worlds["StageWorld"]
     world.node_tree.nodes["Background"].inputs[0].default_value = (0.05, 0.05, 0.06, 1.0)
@@ -522,6 +572,12 @@ def bake_backdrops(out_dir, phases):
     setup_render(transparent=False)
     for phase in phases:
         apply_phase(phase)
+        if bpy.app.debug_value == 1:
+            bg = bpy.data.worlds["StageWorld"].node_tree.nodes["Background"]
+            tot = sum(o.data.energy for o in CTX.scene.objects if o.type == "LIGHT")
+            print(f"[phase] {phase}: world_str={bg.inputs[1].default_value} "
+                  f"world_col={tuple(round(c,3) for c in bg.inputs[0].default_value[:3])} "
+                  f"lights={sum(1 for o in CTX.scene.objects if o.type == 'LIGHT')} total_energy={tot}")
         if bpy.app.debug_value == 1:
             for ob in CTX.scene.objects:
                 if ob.type == "MESH" and ob.name in ("wall", "floor_flat", "lamp_bulb_380", "door_leaf"):

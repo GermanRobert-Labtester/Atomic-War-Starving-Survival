@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "collection": "holdfast_shelter_placeholders",
-  "status": "PLACEHOLDER \u2014 NOT FINAL ART",
+  "status": "FINAL \u2014 interior backdrops, all five props, all 23 room pictograms, and tiles are baked final 2D art; no placeholders remain in this collection",
   "scope": "Intact Holdfast shelter, days 1-7 (never bombed/damaged)",
   "generator": "scripts/tools/generate-shelter-placeholders.py",
   "generated_by": "Pillow, programmatic line art",
@@ -10,178 +10,179 @@
   "files": [
     {
       "file": "shelter_interior_day1_7.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-25: scripts/tools/bake-shelter-stage.py + scripts/tools/post-shelter-bake.py (deterministic, seed 20260925)"
     },
     {
       "file": "shelter_interior_dawn.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-25: scripts/tools/bake-shelter-stage.py + scripts/tools/post-shelter-bake.py (deterministic, seed 20260925)"
     },
     {
       "file": "shelter_interior_dusk.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-25: scripts/tools/bake-shelter-stage.py + scripts/tools/post-shelter-bake.py (deterministic, seed 20260925)"
     },
     {
       "file": "shelter_interior_night.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-25: scripts/tools/bake-shelter-stage.py + scripts/tools/post-shelter-bake.py (deterministic, seed 20260925)"
     },
     {
       "file": "room_bunker_corridor.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_bunks_crowded.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_bunks.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_quarters_private.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_workshop.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_workshop_heavy.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_workshop_precision.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_clinic.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_ward_clinical.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_ward_quarantine.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_kitchen.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_storage_bay.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_storage_secure.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_greenhouse_shelter.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_radio_tuner.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_armory_munitions.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_laboratory_research.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_common_mess_hall.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_reading_quiet_room.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_airlock.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_generator.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_filtration.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "room_hope_beacon.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "prop_supply_crate.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-25: scripts/tools/bake-shelter-stage.py + scripts/tools/post-shelter-bake.py (deterministic, seed 20260925)"
     },
     {
       "file": "prop_water_barrel.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-25: scripts/tools/bake-shelter-stage.py + scripts/tools/post-shelter-bake.py (deterministic, seed 20260925)"
     },
     {
       "file": "prop_ceiling_lamp.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "prop_pipe_bundle.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-26: scripts/tools/bake-shelter-rooms.py + scripts/tools/post-shelter-rooms-bake.py (deterministic, Cycles seed 20260925)"
     },
     {
       "file": "prop_hatch_door.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake 2026-09-25: scripts/tools/bake-shelter-stage.py + scripts/tools/post-shelter-bake.py (deterministic, seed 20260925)"
     },
     {
       "file": "tile_wall_concrete.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Deterministic Pillow bake 2026-09-26: scripts/tools/post-shelter-rooms-bake.py (seamless by construction, seed 20260926)"
     },
     {
       "file": "tile_floor_concrete.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Deterministic Pillow bake 2026-09-26: scripts/tools/post-shelter-rooms-bake.py (seamless by construction, seed 20260926)"
     },
     {
       "file": "tile_floor_grate.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Deterministic Pillow bake 2026-09-26: scripts/tools/post-shelter-rooms-bake.py (seamless by construction, seed 20260926)"
     }
-  ]
+  ],
+  "notes": "Backdrops are 760x420 phase variants (day1_7/dawn/dusk/night) consumed by HoldfastInteriorView via BackdropArt; props are 128x128 RGBA with baked contact shadows consumed by HoldfastInteriorView.BuildBackground at fixed anchors; room pictograms are 128x128 RGBA consumed by RoomHotspotView.UpdateIcon at 0.5 scale above each room badge (room id truth: Assets/StreamingAssets/Data/shelter_rooms.json); tiles are 128x128 RGB, seam-safe, with no runtime consumer yet. Regeneration: backdrops+3 props via blender --background --python scripts/tools/bake-shelter-stage.py -- --only backdrops,props --phases all, then python3 scripts/tools/post-shelter-bake.py; room pictograms+2 props via blender --background --python scripts/tools/bake-shelter-rooms.py, then python3 scripts/tools/post-shelter-rooms-bake.py (also generates the tiles). Verify with each post script's --check. Regenerating placeholders via generate-shelter-placeholders.py would overwrite ALL final art \u2014 do not re-run it."
 }

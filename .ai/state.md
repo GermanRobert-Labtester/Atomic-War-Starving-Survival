@@ -1,5 +1,35 @@
 # Current Task State
 
+## PLACEHOLDER-ART-SHELTER-ROOMS — 2026-09-26 (user-authorized lane; COMPLETE)
+
+- **Claim:** `claim-placeholder-art-shelter-rooms-2026-09-26`; plan `.ai/plans/placeholder-art-shelter-rooms-2026-09-26.md` (STATUS: APPROVED BY USER).
+- **Outcome:** all 28 remaining placeholders in `assets/sprites/Shelter/` replaced with final art at identical paths/sizes — 23 `room_*.png` pictograms (runtime-consumed by `RoomHotspotView.UpdateIcon`, displayed 64×64 above each room badge; room-id truth = `shelter_rooms.json`, exactly 23, verified), `prop_ceiling_lamp.png` + `prop_pipe_bundle.png` (manifest-tracked, not yet runtime-wired — wiring out of scope), 3 seam-safe `tile_*.png` (no runtime consumer; periodic-by-construction).
+- **Pipeline:** new `scripts/tools/bake-shelter-rooms.py` (Blender 5.2.2 headless; 25 vignettes, stage palette/rig/camera conventions, Cycles seed 20260925) + new `scripts/tools/post-shelter-rooms-bake.py` (crop/fit 128 RGBA; deterministic tiles seed 20260926; `--check`). Two engineering notes baked into the scripts' comments: the ortho camera must carry the stage `(90°,0,0)` rotation or every render is blank; the grate's jitter is derived from in-cell offsets only so periodicity is exact.
+- **Iteration:** vision QA pass 1 = USABLE with 6 composition fixes requested → applied (mess-hall pot rack, ward verticals, radio hero chassis, cage closure, anvil hero, dark quarantine drape) + thin-element bumps → pass 2 = 8/8 PASS.
+- **Verification:** `post-shelter-rooms-bake.py --check` 28/28; prior 09-25 finals intact 7/7 before work; Godot headless `--import` clean, `--quit-after 2` boot clean, `--player-panels-uitest` Errors: 0; `PLACEHOLDER_MANIFEST.json` now 0 placeholders with full regeneration recipes.
+- **Docs:** `docs/visual/SHELTER_ROOM_PICTOGRAM_BAKE_2026-09-26.md` (provenance + iteration record); manifest notes carry the "generate-shelter-placeholders.py overwrites finals" warning.
+- **Not in scope / untouched:** runtime wiring of the 2 props + tiles (PFGL-claimed host seams), `assets/art/placeholders-512/`, foreign `loc_*` lane, `src/**`, Core, data.
+
+## GODOT-MCP BRIDGE (ZCode + Antigravity) — 2026-09-26 (user-authorized)
+
+- **Goal:** connect ZCode and Antigravity directly to the Godot engine via MCP.
+- **Status:** COMPLETE and E2E-verified twice.
+- **Implementation:** KeeVeeG/godot-mcp v1.1.0 (MIT, tested with Godot 4.7): `addons/godot_mcp/` editor plugin (54 files + 52 `.gd.uid`) + `npx -y @keeveeg/godot-mcp` stdio server; WebSocket on localhost 6505–6514; 385 editor tools.
+- **Client configs:** repo `.zcode/config.json` → `mcp.servers.godot` (workspace-scoped, auto-connects at next ZCode session start); `~/.gemini/config/mcp_config.json` → `mcpServers.godot` for Antigravity (backup at `mcp_config.json.bak-pre-godot-mcp`).
+- **project.godot:** `[editor_plugins] godot_mcp` enabled + plugin-registered `MCPRuntime` autoload (file-IPC runtime bridge; inert unless `user://mcp_runtime_request.json` exists). The plugin's first save MANGLED the file (swallowed `window/size/mode=4` + `resizable` into a comment, dropped `scale_mode`/`Compatibility` feature/2 rendering settings, misplaced `allow_hidpi`); fully repaired — final diff vs HEAD is exactly the two intended sections (plus Godot's cosmetic re-wrap of input-event arrays). **Hazard:** any process that deletes the `[autoload]` entry will make the plugin re-save in its mangling style again — re-check the diff after editor sessions that touch project settings.
+- **Verification:** stdio initialize OK (server `godot-mcp 1.1.0-a`); `tools/list` = 386; `tools/call get_project_info` returned live editor state (`4.7.1-stable`, project name/path/main scene/autoloads) through driver → stdio → WS 6505 → editor plugin, twice, including after the project.godot repair; `--ui-accessibility-selftest` 5/5 PASS ×3 with the autoload present; editor runs headless (`--headless --editor`) without the historical mono crash.
+- **Not committed:** addon + config changes left in the worktree for foreman disposition (adds a new third-party addon + autoload; the server cwd must be the project root or it refuses to start).
+- **Kill-switch:** risky tools (`delete_scene`, `reload_project`, `execute_editor_script`, …) can be disabled via a `godot_mcp_config.json` in the project root if governance wants a narrower toolset.
+- **Testing steps used:** 6 / 15. **Iterations:** ~55 / 100.
+
+## VISUAL-STAGE-2D-BAKE — 2026-09-25 (visual asset specialist pass)
+
+- **Goal:** replace the live Plan 139 placeholder art on the holdfast interior stage with Blender-baked 2D art (no runtime code change), plus verified image-integrity repairs.
+- **Status:** COMPLETE. 4 phase backdrops (760x420) + 3 prop sprites (128x128 RGBA) baked, graded, vision-QA'd (mockup PASS); marker_safe.png regenerated (was truncated base64 text); 2 JPEG-as-PNG files in assets/ui/Screens re-encoded; PLACEHOLDER_MANIFEST.json updated (7 final / 28 placeholder).
+- **Files:** assets/sprites/Shelter/{shelter_interior_*,prop_*}.png + manifest; assets/sprites/Map/marker_safe.png; 2x assets/ui/Screens/*.png; scripts/tools/bake-shelter-stage.py (new, note: foreign stream staged it mid-session — index left untouched); scripts/tools/post-shelter-bake.py (new); docs/visual/SHELTER_STAGE_2D_BAKE_2026-09-25.md (new); artifacts/shelter-bake/qa_*.png (evidence).
+- **Verification:** godot --import clean; --quit-after 2 boot 36/36; --player-panels-uitest Errors:0; post-shelter-bake.py --check all OK. No tests touched (asset-only change).
+- **Untouched by design:** room_*.png pictograms + tiles (still placeholders); loc_* lane in assets/art (untracked foreign wave); all claimed src/UI panels.
+
 ## WHOLEGAME-P1D-UI-CONTROLLER-PARITY — CONTINUATION — 2026-09-26 (user-authorized)
 
 - **Goal:** execute the residuals the user listed after reviewing the first package: the 4 claim-blocked Esc conversions, the DutyRosterPanel wrap defect, the gamepad proof, art gaps, and the uncommitted package.
