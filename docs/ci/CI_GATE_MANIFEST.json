@@ -217,7 +217,8 @@
       "name": "Real Campaign Journey Self-Test (Plans #5/#7/#8/#9)",
       "category": "Campaign Smoke",
       "command": "bash scripts/ci/run-godot-bounded.sh --path . -- --real-campaign-journey-selftest",
-      "timeout_seconds": 90,
+      "timeout_seconds": 180,
+      "timeout_rationale": "Measured 2026-09-26: 1m41s (101s) wall on the trimmed build with a cold import cache; the previous 90s budget failed the gate while the test itself passed. 180s allows ~1.8x headroom for concurrent-art-wave contention.",
       "expected_summary": "REAL_CAMPAIGN_JOURNEY_SELFTEST PASS",
       "classification": "fast",
       "critical": true

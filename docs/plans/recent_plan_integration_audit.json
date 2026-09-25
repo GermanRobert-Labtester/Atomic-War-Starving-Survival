@@ -4438,7 +4438,8 @@
           "src/Main.ShelterAtmosphere.cs",
           "src/Host/ShelterAtmosphereHostSession.cs",
           "src/Host/ShelterAtmosphereSelfTest.cs",
-          "src/Host/SleepAcousticRestHostSession.cs"
+          "src/Host/SleepAcousticRestHostSession.cs",
+          "src/UI/ShelterAtmospherePanel.cs"
         ],
         "ShelterAtmosphereHostSession": [
           "src/Main.ShelterAtmosphere.cs",

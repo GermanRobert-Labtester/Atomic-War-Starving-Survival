@@ -1,0 +1,482 @@
+[
+  {
+    "id": "PLAN-B116-01-CW11003ROOMFIXT",
+    "path": "docs/expansions/prose_wave110/cw110_03_room_fixture_filtration_canister_notches_days_in_metal_plan.md",
+    "domain": "Cw110 03 Room Fixture Filtration Canister Notches Days In Metal Plan",
+    "coord": "Cw11003RoomFixtureCoord",
+    "data": "cw110_03_room_fixture_fi.json",
+    "ns": "Ashfall.Core.Cw11003Room"
+  },
+  {
+    "id": "PLAN-B116-02-CW9803GLITCH28B",
+    "path": "docs/expansions/prose_wave98/cw98_03_glitch_28_boiler_cutout_plan.md",
+    "domain": "Cw98 03 Glitch 28 Boiler Cutout Plan",
+    "coord": "Cw9803Glitch28Coord",
+    "data": "cw98_03_glitch_28_boiler.json",
+    "ns": "Ashfall.Core.Cw9803Glitch"
+  },
+  {
+    "id": "PLAN-B116-03-CW11002ROOMFIXT",
+    "path": "docs/expansions/prose_wave110/cw110_02_room_fixture_bunks_stencil_gaps_the_two_missing_numbers_plan.md",
+    "domain": "Cw110 02 Room Fixture Bunks Stencil Gaps The Two Missing Numbers Plan",
+    "coord": "Cw11002RoomFixtureCoord",
+    "data": "cw110_02_room_fixture_bu.json",
+    "ns": "Ashfall.Core.Cw11002Room"
+  },
+  {
+    "id": "PLAN-B116-04-CW9602JOURNALDA",
+    "path": "docs/expansions/prose_wave96/cw96_02_journal_day_195_memory_loss_plan.md",
+    "domain": "Cw96 02 Journal Day 195 Memory Loss Plan",
+    "coord": "Cw9602JournalDayCoord",
+    "data": "cw96_02_journal_day_195_.json",
+    "ns": "Ashfall.Core.Cw9602Journal"
+  },
+  {
+    "id": "PLAN-B116-05-CW11105ROOMFIXT",
+    "path": "docs/expansions/prose_wave111/cw111_05_room_fixture_kitchen_flue_damper_welded_open_plan.md",
+    "domain": "Cw111 05 Room Fixture Kitchen Flue Damper Welded Open Plan",
+    "coord": "Cw11105RoomFixtureCoord",
+    "data": "cw111_05_room_fixture_ki.json",
+    "ns": "Ashfall.Core.Cw11105Room"
+  },
+  {
+    "id": "PLAN-B116-06-CW11301ROOMFIXT",
+    "path": "docs/expansions/prose_wave113/cw113_01_room_fixture_filtration_hazmat_hook_the_apron_too_large_plan.md",
+    "domain": "Cw113 01 Room Fixture Filtration Hazmat Hook The Apron Too Large Plan",
+    "coord": "Cw11301RoomFixtureCoord",
+    "data": "cw113_01_room_fixture_fi.json",
+    "ns": "Ashfall.Core.Cw11301Room"
+  },
+  {
+    "id": "PLAN-B116-07-CW11307ROOMFIXT",
+    "path": "docs/expansions/prose_wave113/cw113_07_room_fixture_stores_humidity_gauge_the_red_line_below_plan.md",
+    "domain": "Cw113 07 Room Fixture Stores Humidity Gauge The Red Line Below Plan",
+    "coord": "Cw11307RoomFixtureCoord",
+    "data": "cw113_07_room_fixture_st.json",
+    "ns": "Ashfall.Core.Cw11307Room"
+  },
+  {
+    "id": "PLAN-B116-08-CW11004ROOMFIXT",
+    "path": "docs/expansions/prose_wave110/cw110_04_room_fixture_kitchen_portion_rings_the_bowls_that_waited_plan.md",
+    "domain": "Cw110 04 Room Fixture Kitchen Portion Rings The Bowls That Waited Plan",
+    "coord": "Cw11004RoomFixtureCoord",
+    "data": "cw110_04_room_fixture_ki.json",
+    "ns": "Ashfall.Core.Cw11004Room"
+  },
+  {
+    "id": "PLAN-B116-09-CW8306CARDDECKP",
+    "path": "docs/expansions/prose_wave83/cw83_06_card_deck_pinned_kings_plan.md",
+    "domain": "Cw83 06 Card Deck Pinned Kings Plan",
+    "coord": "Cw8306CardDeckCoord",
+    "data": "cw83_06_card_deck_pinned.json",
+    "ns": "Ashfall.Core.Cw8306Card"
+  },
+  {
+    "id": "PLAN-B116-10-CW3901THESTARSA",
+    "path": "docs/expansions/prose_wave39/cw39_01_the_stars_are_fewer_than_the_books_promised_plan.md",
+    "domain": "Cw39 01 The Stars Are Fewer Than The Books Promised Plan",
+    "coord": "Cw3901TheStarsCoord",
+    "data": "cw39_01_the_stars_are_fe.json",
+    "ns": "Ashfall.Core.Cw3901The"
+  },
+  {
+    "id": "PLAN-B116-11-CW8001OFFICECAR",
+    "path": "docs/expansions/prose_wave80/cw80_01_office_cartridge_allocation_quarrel_plan.md",
+    "domain": "Cw80 01 Office Cartridge Allocation Quarrel Plan",
+    "coord": "Cw8001OfficeCartridgeCoord",
+    "data": "cw80_01_office_cartridge.json",
+    "ns": "Ashfall.Core.Cw8001Office"
+  },
+  {
+    "id": "PLAN-B116-12-CW11206ROOMFIXT",
+    "path": "docs/expansions/prose_wave112/cw112_06_room_fixture_airlock_boot_crate_tape_uncut_plan.md",
+    "domain": "Cw112 06 Room Fixture Airlock Boot Crate Tape Uncut Plan",
+    "coord": "Cw11206RoomFixtureCoord",
+    "data": "cw112_06_room_fixture_ai.json",
+    "ns": "Ashfall.Core.Cw11206Room"
+  },
+  {
+    "id": "PLAN-B116-13-CW11106ROOMFIXT",
+    "path": "docs/expansions/prose_wave111/cw111_06_room_fixture_clinic_curtain_wire_the_partition_we_have_plan.md",
+    "domain": "Cw111 06 Room Fixture Clinic Curtain Wire The Partition We Have Plan",
+    "coord": "Cw11106RoomFixtureCoord",
+    "data": "cw111_06_room_fixture_cl.json",
+    "ns": "Ashfall.Core.Cw11106Room"
+  },
+  {
+    "id": "PLAN-B116-14-CW11107ROOMFIXT",
+    "path": "docs/expansions/prose_wave111/cw111_07_room_fixture_radio_mesh_panel_the_screen_that_was_plan.md",
+    "domain": "Cw111 07 Room Fixture Radio Mesh Panel The Screen That Was Plan",
+    "coord": "Cw11107RoomFixtureCoord",
+    "data": "cw111_07_room_fixture_ra.json",
+    "ns": "Ashfall.Core.Cw11107Room"
+  },
+  {
+    "id": "PLAN-B116-15-CW4401THEPLEATH",
+    "path": "docs/expansions/prose_wave44/cw44_01_the_plea_that_kept_repeating_plan.md",
+    "domain": "Cw44 01 The Plea That Kept Repeating Plan",
+    "coord": "Cw4401ThePleaCoord",
+    "data": "cw44_01_the_plea_that_ke.json",
+    "ns": "Ashfall.Core.Cw4401The"
+  },
+  {
+    "id": "PLAN-B116-16-CW8404FORGEDMUS",
+    "path": "docs/expansions/prose_wave84/cw84_04_forged_muster_stamp_plan.md",
+    "domain": "Cw84 04 Forged Muster Stamp Plan",
+    "coord": "Cw8404ForgedMusterCoord",
+    "data": "cw84_04_forged_muster_st.json",
+    "ns": "Ashfall.Core.Cw8404Forged"
+  },
+  {
+    "id": "PLAN-B116-17-CW8002TEMPESTSC",
+    "path": "docs/expansions/prose_wave80/cw80_02_tempest_scavenger_ambush_orders_plan.md",
+    "domain": "Cw80 02 Tempest Scavenger Ambush Orders Plan",
+    "coord": "Cw8002TempestScavengerCoord",
+    "data": "cw80_02_tempest_scavenge.json",
+    "ns": "Ashfall.Core.Cw8002Tempest"
+  },
+  {
+    "id": "PLAN-B116-18-CW10505JOURNALD",
+    "path": "docs/expansions/prose_wave105/cw105_05_journal_day_268_fuel_crisis_dangerous_territory_plan.md",
+    "domain": "Cw105 05 Journal Day 268 Fuel Crisis Dangerous Territory Plan",
+    "coord": "Cw10505JournalDayCoord",
+    "data": "cw105_05_journal_day_268.json",
+    "ns": "Ashfall.Core.Cw10505Journal"
+  },
+  {
+    "id": "PLAN-B116-19-CW11006ROOMFIXT",
+    "path": "docs/expansions/prose_wave110/cw110_06_room_fixture_workshop_swarf_grate_two_rewelds_plan.md",
+    "domain": "Cw110 06 Room Fixture Workshop Swarf Grate Two Rewelds Plan",
+    "coord": "Cw11006RoomFixtureCoord",
+    "data": "cw110_06_room_fixture_wo.json",
+    "ns": "Ashfall.Core.Cw11006Room"
+  },
+  {
+    "id": "PLAN-B116-20-CW10906ROOMFIXT",
+    "path": "docs/expansions/prose_wave109/cw109_06_room_fixture_radio_load_bulb_grease_pencil_limit_plan.md",
+    "domain": "Cw109 06 Room Fixture Radio Load Bulb Grease Pencil Limit Plan",
+    "coord": "Cw10906RoomFixtureCoord",
+    "data": "cw109_06_room_fixture_ra.json",
+    "ns": "Ashfall.Core.Cw10906Room"
+  },
+  {
+    "id": "PLAN-B116-21-CW10807FOLKLORE",
+    "path": "docs/expansions/prose_wave108/cw108_07_folklore_comfort_scout_return_count_name_in_the_hatch_plan.md",
+    "domain": "Cw108 07 Folklore Comfort Scout Return Count Name In The Hatch Plan",
+    "coord": "Cw10807FolkloreComfortCoord",
+    "data": "cw108_07_folklore_comfor.json",
+    "ns": "Ashfall.Core.Cw10807Folklore"
+  },
+  {
+    "id": "PLAN-B116-22-CW8102ILLICITTR",
+    "path": "docs/expansions/prose_wave81/cw81_02_illicit_triode_tube_plan.md",
+    "domain": "Cw81 02 Illicit Triode Tube Plan",
+    "coord": "Cw8102IllicitTriodeCoord",
+    "data": "cw81_02_illicit_triode_t.json",
+    "ns": "Ashfall.Core.Cw8102Illicit"
+  },
+  {
+    "id": "PLAN-B116-23-CW8301PRISONTAT",
+    "path": "docs/expansions/prose_wave83/cw83_01_prison_tattoo_needle_rig_plan.md",
+    "domain": "Cw83 01 Prison Tattoo Needle Rig Plan",
+    "coord": "Cw8301PrisonTattooCoord",
+    "data": "cw83_01_prison_tattoo_ne.json",
+    "ns": "Ashfall.Core.Cw8301Prison"
+  },
+  {
+    "id": "PLAN-B116-24-CW9603GLITCH26S",
+    "path": "docs/expansions/prose_wave96/cw96_03_glitch_26_stuck_damper_plan.md",
+    "domain": "Cw96 03 Glitch 26 Stuck Damper Plan",
+    "coord": "Cw9603Glitch26Coord",
+    "data": "cw96_03_glitch_26_stuck_.json",
+    "ns": "Ashfall.Core.Cw9603Glitch"
+  },
+  {
+    "id": "PLAN-B116-25-CW8401UNINSPECT",
+    "path": "docs/expansions/prose_wave84/cw84_01_uninspected_lard_tin_plan.md",
+    "domain": "Cw84 01 Uninspected Lard Tin Plan",
+    "coord": "Cw8401UninspectedLardCoord",
+    "data": "cw84_01_uninspected_lard.json",
+    "ns": "Ashfall.Core.Cw8401Uninspected"
+  },
+  {
+    "id": "PLAN-B116-26-CW8101COPPERCON",
+    "path": "docs/expansions/prose_wave81/cw81_01_copper_condenser_coil_plan.md",
+    "domain": "Cw81 01 Copper Condenser Coil Plan",
+    "coord": "Cw8101CopperCondenserCoord",
+    "data": "cw81_01_copper_condenser.json",
+    "ns": "Ashfall.Core.Cw8101Copper"
+  },
+  {
+    "id": "PLAN-B116-27-CW9606RITUALFIR",
+    "path": "docs/expansions/prose_wave96/cw96_06_ritual_first_clean_sip_pause_plan.md",
+    "domain": "Cw96 06 Ritual First Clean Sip Pause Plan",
+    "coord": "Cw9606RitualFirstCoord",
+    "data": "cw96_06_ritual_first_cle.json",
+    "ns": "Ashfall.Core.Cw9606Ritual"
+  },
+  {
+    "id": "PLAN-B116-28-CW9805SOCIALEVE",
+    "path": "docs/expansions/prose_wave98/cw98_05_social_event_bunk_noise_friction_plan.md",
+    "domain": "Cw98 05 Social Event Bunk Noise Friction Plan",
+    "coord": "Cw9805SocialEventCoord",
+    "data": "cw98_05_social_event_bun.json",
+    "ns": "Ashfall.Core.Cw9805Social"
+  },
+  {
+    "id": "PLAN-B116-29-CW8003REBUILDER",
+    "path": "docs/expansions/prose_wave80/cw80_03_rebuilders_hydroponic_crop_failure_plan.md",
+    "domain": "Cw80 03 Rebuilders Hydroponic Crop Failure Plan",
+    "coord": "Cw8003RebuildersHydroponicCoord",
+    "data": "cw80_03_rebuilders_hydro.json",
+    "ns": "Ashfall.Core.Cw8003Rebuilders"
+  },
+  {
+    "id": "PLAN-B116-30-CW11101AUDIOLOG",
+    "path": "docs/expansions/prose_wave111/cw111_01_audio_log_medical_training_day_160_the_eight_am_invitation_plan.md",
+    "domain": "Cw111 01 Audio Log Medical Training Day 160 The Eight Am Invitation Plan",
+    "coord": "Cw11101AudioLogCoord",
+    "data": "cw111_01_audio_log_medic.json",
+    "ns": "Ashfall.Core.Cw11101Audio"
+  },
+  {
+    "id": "PLAN-B116-31-CW10801ROOMFIXT",
+    "path": "docs/expansions/prose_wave108/cw108_01_room_fixture_workshop_tool_shadow_the_shape_of_absence_plan.md",
+    "domain": "Cw108 01 Room Fixture Workshop Tool Shadow The Shape Of Absence Plan",
+    "coord": "Cw10801RoomFixtureCoord",
+    "data": "cw108_01_room_fixture_wo.json",
+    "ns": "Ashfall.Core.Cw10801Room"
+  },
+  {
+    "id": "PLAN-B116-32-CW9706RITUALEXT",
+    "path": "docs/expansions/prose_wave97/cw97_06_ritual_exterior_door_tap_plan.md",
+    "domain": "Cw97 06 Ritual Exterior Door Tap Plan",
+    "coord": "Cw9706RitualExteriorCoord",
+    "data": "cw97_06_ritual_exterior_.json",
+    "ns": "Ashfall.Core.Cw9706Ritual"
+  },
+  {
+    "id": "PLAN-B116-33-CW9701AUDIOLOGL",
+    "path": "docs/expansions/prose_wave97/cw97_01_audio_log_leadership_vote_day_105_plan.md",
+    "domain": "Cw97 01 Audio Log Leadership Vote Day 105 Plan",
+    "coord": "Cw9701AudioLogCoord",
+    "data": "cw97_01_audio_log_leader.json",
+    "ns": "Ashfall.Core.Cw9701Audio"
+  },
+  {
+    "id": "PLAN-B116-34-EXPANSION08THEV",
+    "path": "docs/expansions/expansion_08_the_verdict_plan.md",
+    "domain": "Expansion 08 The Verdict Plan",
+    "coord": "Expansion08TheVerdictCoord",
+    "data": "expansion_08_the_verdict.json",
+    "ns": "Ashfall.Core.Expansion08The"
+  },
+  {
+    "id": "PLAN-B116-35-CW7704WATERPIPE",
+    "path": "docs/expansions/prose_wave77/cw77_04_water_pipe_cross_plan.md",
+    "domain": "Cw77 04 Water Pipe Cross Plan",
+    "coord": "Cw7704WaterPipeCoord",
+    "data": "cw77_04_water_pipe_cross.json",
+    "ns": "Ashfall.Core.Cw7704Water"
+  },
+  {
+    "id": "PLAN-B116-36-CW9604ROOMHISTO",
+    "path": "docs/expansions/prose_wave96/cw96_04_room_history_a_chair_from_the_row_plan.md",
+    "domain": "Cw96 04 Room History A Chair From The Row Plan",
+    "coord": "Cw9604RoomHistoryCoord",
+    "data": "cw96_04_room_history_a_c.json",
+    "ns": "Ashfall.Core.Cw9604Room"
+  },
+  {
+    "id": "PLAN-B116-37-EXPANSION02THED",
+    "path": "docs/expansions/expansion_02_the_duty_roster_plan.md",
+    "domain": "Expansion 02 The Duty Roster Plan",
+    "coord": "Expansion02TheDutyCoord",
+    "data": "expansion_02_the_duty_ro.json",
+    "ns": "Ashfall.Core.Expansion02The"
+  },
+  {
+    "id": "PLAN-B116-38-CW11305ROOMFIXT",
+    "path": "docs/expansions/prose_wave113/cw113_05_room_fixture_greenhouse_ballast_shield_the_spare_radiator_note_plan.md",
+    "domain": "Cw113 05 Room Fixture Greenhouse Ballast Shield The Spare Radiator Note Plan",
+    "coord": "Cw11305RoomFixtureCoord",
+    "data": "cw113_05_room_fixture_gr.json",
+    "ns": "Ashfall.Core.Cw11305Room"
+  },
+  {
+    "id": "PLAN-B116-39-CW8403DISTILLER",
+    "path": "docs/expansions/prose_wave84/cw84_03_distillery_hydrometer_glass_plan.md",
+    "domain": "Cw84 03 Distillery Hydrometer Glass Plan",
+    "coord": "Cw8403DistilleryHydrometerCoord",
+    "data": "cw84_03_distillery_hydro.json",
+    "ns": "Ashfall.Core.Cw8403Distillery"
+  },
+  {
+    "id": "PLAN-B116-40-CW10802ROOMFIXT",
+    "path": "docs/expansions/prose_wave108/cw108_02_room_fixture_airlock_handprints_hatch_height_plan.md",
+    "domain": "Cw108 02 Room Fixture Airlock Handprints Hatch Height Plan",
+    "coord": "Cw10802RoomFixtureCoord",
+    "data": "cw108_02_room_fixture_ai.json",
+    "ns": "Ashfall.Core.Cw10802Room"
+  },
+  {
+    "id": "PLAN-B116-41-CW9806MEMORIALR",
+    "path": "docs/expansions/prose_wave98/cw98_06_memorial_rite_work_gang_farewell_plan.md",
+    "domain": "Cw98 06 Memorial Rite Work Gang Farewell Plan",
+    "coord": "Cw9806MemorialRiteCoord",
+    "data": "cw98_06_memorial_rite_wo.json",
+    "ns": "Ashfall.Core.Cw9806Memorial"
+  },
+  {
+    "id": "PLAN-B116-42-CW10703JOURNALD",
+    "path": "docs/expansions/prose_wave107/cw107_03_journal_day_215_art_project_livelier_than_before_plan.md",
+    "domain": "Cw107 03 Journal Day 215 Art Project Livelier Than Before Plan",
+    "coord": "Cw10703JournalDayCoord",
+    "data": "cw107_03_journal_day_215.json",
+    "ns": "Ashfall.Core.Cw10703Journal"
+  },
+  {
+    "id": "PLAN-B116-43-CW10704JOURNALD",
+    "path": "docs/expansions/prose_wave107/cw107_04_journal_day_305_winter_preparations_the_worry_under_work_plan.md",
+    "domain": "Cw107 04 Journal Day 305 Winter Preparations The Worry Under Work Plan",
+    "coord": "Cw10704JournalDayCoord",
+    "data": "cw107_04_journal_day_305.json",
+    "ns": "Ashfall.Core.Cw10704Journal"
+  },
+  {
+    "id": "PLAN-B116-44-CW10808RITUALPA",
+    "path": "docs/expansions/prose_wave108/cw108_08_ritual_participation_in_hot_zones_ash_before_the_zone_plan.md",
+    "domain": "Cw108 08 Ritual Participation In Hot Zones Ash Before The Zone Plan",
+    "coord": "Cw10808RitualParticipationCoord",
+    "data": "cw108_08_ritual_particip.json",
+    "ns": "Ashfall.Core.Cw10808Ritual"
+  },
+  {
+    "id": "PLAN-B116-45-CW10903ROOMFIXT",
+    "path": "docs/expansions/prose_wave109/cw109_03_room_fixture_clinic_basin_rim_kneeling_height_plan.md",
+    "domain": "Cw109 03 Room Fixture Clinic Basin Rim Kneeling Height Plan",
+    "coord": "Cw10903RoomFixtureCoord",
+    "data": "cw109_03_room_fixture_cl.json",
+    "ns": "Ashfall.Core.Cw10903Room"
+  },
+  {
+    "id": "PLAN-B116-46-CW10404JOURNALD",
+    "path": "docs/expansions/prose_wave104/cw104_04_journal_day_182_survivor_exile_sick_child_and_guilt_plan.md",
+    "domain": "Cw104 04 Journal Day 182 Survivor Exile Sick Child And Guilt Plan",
+    "coord": "Cw10404JournalDayCoord",
+    "data": "cw104_04_journal_day_182.json",
+    "ns": "Ashfall.Core.Cw10404Journal"
+  },
+  {
+    "id": "PLAN-B116-47-CW10908ROOMFIXT",
+    "path": "docs/expansions/prose_wave109/cw109_08_room_fixture_pump_pressure_gauge_needle_at_zero_plan.md",
+    "domain": "Cw109 08 Room Fixture Pump Pressure Gauge Needle At Zero Plan",
+    "coord": "Cw10908RoomFixtureCoord",
+    "data": "cw109_08_room_fixture_pu.json",
+    "ns": "Ashfall.Core.Cw10908Room"
+  },
+  {
+    "id": "PLAN-B116-48-CW10403AUDIOLOG",
+    "path": "docs/expansions/prose_wave104/cw104_03_audio_log_raider_attack_day_170_tribute_refused_plan.md",
+    "domain": "Cw104 03 Audio Log Raider Attack Day 170 Tribute Refused Plan",
+    "coord": "Cw10403AudioLogCoord",
+    "data": "cw104_03_audio_log_raide.json",
+    "ns": "Ashfall.Core.Cw10403Audio"
+  },
+  {
+    "id": "PLAN-B116-49-CW7802FLUORESCE",
+    "path": "docs/expansions/prose_wave78/cw78_02_fluorescent_shadow_creep_plan.md",
+    "domain": "Cw78 02 Fluorescent Shadow Creep Plan",
+    "coord": "Cw7802FluorescentShadowCoord",
+    "data": "cw78_02_fluorescent_shad.json",
+    "ns": "Ashfall.Core.Cw7802Fluorescent"
+  },
+  {
+    "id": "PLAN-B116-50-CW10806FOLKLORE",
+    "path": "docs/expansions/prose_wave108/cw108_06_folklore_comfort_bereaved_child_bunk_mark_the_small_circle_plan.md",
+    "domain": "Cw108 06 Folklore Comfort Bereaved Child Bunk Mark The Small Circle Plan",
+    "coord": "Cw10806FolkloreComfortCoord",
+    "data": "cw108_06_folklore_comfor.json",
+    "ns": "Ashfall.Core.Cw10806Folklore"
+  },
+  {
+    "id": "PLAN-B116-51-CW8006COURIERGU",
+    "path": "docs/expansions/prose_wave80/cw80_06_courier_guild_route_collapse_briefing_plan.md",
+    "domain": "Cw80 06 Courier Guild Route Collapse Briefing Plan",
+    "coord": "Cw8006CourierGuildCoord",
+    "data": "cw80_06_courier_guild_ro.json",
+    "ns": "Ashfall.Core.Cw8006Courier"
+  },
+  {
+    "id": "PLAN-B116-52-CW10004ROOMHIST",
+    "path": "docs/expansions/prose_wave100/cw100_04_room_history_shelf_unit_d_eleven_year_discrepancy_plan.md",
+    "domain": "Cw100 04 Room History Shelf Unit D Eleven Year Discrepancy Plan",
+    "coord": "Cw10004RoomHistoryCoord",
+    "data": "cw100_04_room_history_sh.json",
+    "ns": "Ashfall.Core.Cw10004Room"
+  },
+  {
+    "id": "PLAN-B116-53-CW9703GLITCH27P",
+    "path": "docs/expansions/prose_wave97/cw97_03_glitch_27_pressure_flutter_plan.md",
+    "domain": "Cw97 03 Glitch 27 Pressure Flutter Plan",
+    "coord": "Cw9703Glitch27Coord",
+    "data": "cw97_03_glitch_27_pressu.json",
+    "ns": "Ashfall.Core.Cw9703Glitch"
+  },
+  {
+    "id": "PLAN-B116-54-CW7806MIRRORSHA",
+    "path": "docs/expansions/prose_wave78/cw78_06_mirror_shaving_disconnect_plan.md",
+    "domain": "Cw78 06 Mirror Shaving Disconnect Plan",
+    "coord": "Cw7806MirrorShavingCoord",
+    "data": "cw78_06_mirror_shaving_d.json",
+    "ns": "Ashfall.Core.Cw7806Mirror"
+  },
+  {
+    "id": "PLAN-B116-55-CW8105PARAFFINC",
+    "path": "docs/expansions/prose_wave81/cw81_05_paraffin_candle_hoard_plan.md",
+    "domain": "Cw81 05 Paraffin Candle Hoard Plan",
+    "coord": "Cw8105ParaffinCandleCoord",
+    "data": "cw81_05_paraffin_candle_.json",
+    "ns": "Ashfall.Core.Cw8105Paraffin"
+  },
+  {
+    "id": "PLAN-B116-56-CW8304BOOTLEGMO",
+    "path": "docs/expansions/prose_wave83/cw83_04_bootleg_morphine_ampoules_plan.md",
+    "domain": "Cw83 04 Bootleg Morphine Ampoules Plan",
+    "coord": "Cw8304BootlegMorphineCoord",
+    "data": "cw83_04_bootleg_morphine.json",
+    "ns": "Ashfall.Core.Cw8304Bootleg"
+  },
+  {
+    "id": "PLAN-B116-57-CW7804TEETHGRIN",
+    "path": "docs/expansions/prose_wave78/cw78_04_teeth_grinding_dorm_audit_plan.md",
+    "domain": "Cw78 04 Teeth Grinding Dorm Audit Plan",
+    "coord": "Cw7804TeethGrindingCoord",
+    "data": "cw78_04_teeth_grinding_d.json",
+    "ns": "Ashfall.Core.Cw7804Teeth"
+  },
+  {
+    "id": "PLAN-B116-58-CW10803ROOMFIXT",
+    "path": "docs/expansions/prose_wave108/cw108_03_room_fixture_greenhouse_seed_tins_the_names_no_one_knows_plan.md",
+    "domain": "Cw108 03 Room Fixture Greenhouse Seed Tins The Names No One Knows Plan",
+    "coord": "Cw10803RoomFixtureCoord",
+    "data": "cw108_03_room_fixture_gr.json",
+    "ns": "Ashfall.Core.Cw10803Room"
+  },
+  {
+    "id": "PLAN-B116-59-CW6902THEQUIETG",
+    "path": "docs/expansions/prose_wave69/cw69_02_the_quiet_game_chant_plan.md",
+    "domain": "Cw69 02 The Quiet Game Chant Plan",
+    "coord": "Cw6902TheQuietCoord",
+    "data": "cw69_02_the_quiet_game_c.json",
+    "ns": "Ashfall.Core.Cw6902The"
+  },
+  {
+    "id": "PLAN-B116-60-CW9705SOCIALEVE",
+    "path": "docs/expansions/prose_wave97/cw97_05_social_event_memorial_plaque_vigil_plan.md",
+    "domain": "Cw97 05 Social Event Memorial Plaque Vigil Plan",
+    "coord": "Cw9705SocialEventCoord",
+    "data": "cw97_05_social_event_mem.json",
+    "ns": "Ashfall.Core.Cw9705Social"
+  }
+]

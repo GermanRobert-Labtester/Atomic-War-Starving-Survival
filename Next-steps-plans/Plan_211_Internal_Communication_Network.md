@@ -715,7 +715,7 @@ in `docs/plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md`.
 **Verification completed:** Core Plan 211 9/9; host-wiring 5/5; save registry
 5/5; version report 11/11; comprehensive save/migration 1604/1604; host build
 0/0; headless internal-communication probe 19/19; player-panel/lifecycle gate
-21/21; real campaign journey PASS; data integrity 426 catalogs with 0 errors;
+21/21; real campaign journey PASS; data integrity 427 catalogs with 0 errors;
 architecture map, save-store matrix, and self-test manifest checks all pass.
 
 **Residual boundary:** automatic water/ration event production, intercom/private

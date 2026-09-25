@@ -1,0 +1,742 @@
+[
+  {
+    "chars": 637428,
+    "path": "docs/duty_roster/PLAN77_SAVE_COMPATIBILITY.md"
+  },
+  {
+    "chars": 637434,
+    "path": "docs/plans/wave10_part2/C2_PLAN28_ORCHESTRATION_SPINE.md"
+  },
+  {
+    "chars": 637447,
+    "path": "docs/expansions/prose_wave76/cw76_05_ration_tin_memorial_plan.md"
+  },
+  {
+    "chars": 637451,
+    "path": "docs/discovery/PLAN49_BASELINE.md"
+  },
+  {
+    "chars": 637482,
+    "path": "docs/plans/PLAN_B68_SEISMIC_MONITORING_CLOSEOUT.md"
+  },
+  {
+    "chars": 637490,
+    "path": "docs/expansions/prose_wave74/cw74_01_the_clicking_beetle_rhyme_plan.md"
+  },
+  {
+    "chars": 637496,
+    "path": "docs/expansions/prose_wave112/cw112_07_room_fixture_radio_log_book_call_signs_before_us_plan.md"
+  },
+  {
+    "chars": 637508,
+    "path": "docs/expansions/prose_wave58/cw58_04_the_pencil_on_the_duty_board_plan.md"
+  },
+  {
+    "chars": 637508,
+    "path": "docs/expansions/prose_wave75/cw75_06_the_missing_subfloor_plan.md"
+  },
+  {
+    "chars": 637517,
+    "path": "docs/radio/PLAN107_CLOSEOUT.md"
+  },
+  {
+    "chars": 637526,
+    "path": "docs/expansions/prose_wave92/cw92_05_ritual_departure_plate_touch_plan.md"
+  },
+  {
+    "chars": 637527,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SCIENCE-EDUCATION-38_APPENDIX-A_ORPHAN_DOSSIERS.md"
+  },
+  {
+    "chars": 637534,
+    "path": "docs/expansions/prose_wave53/cw53_02_the_vote_on_the_south_slope_plan.md"
+  },
+  {
+    "chars": 637537,
+    "path": "docs/expansions/prose_wave85/cw85_04_vespers_of_the_settling_dust_plan.md"
+  },
+  {
+    "chars": 637555,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-CORE-ONLY-REGISTRY-11.md"
+  },
+  {
+    "chars": 637570,
+    "path": "docs/expansions/prose_wave105/cw105_05_journal_day_268_fuel_crisis_dangerous_territory_plan.md"
+  },
+  {
+    "chars": 637573,
+    "path": "docs/expansions/prose_wave57/cw57_04_the_service_tunnel_six_plan.md"
+  },
+  {
+    "chars": 637585,
+    "path": "docs/expansions/prose_wave85/cw85_01_rite_of_the_fading_needle_plan.md"
+  },
+  {
+    "chars": 637596,
+    "path": "docs/verdict/PLAN_93_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 637598,
+    "path": "docs/progression/PLAN33_BASELINE.md"
+  },
+  {
+    "chars": 637622,
+    "path": "docs/narrative/PLAN_58_ENCOUNTER_COVERAGE_MATRIX.md"
+  },
+  {
+    "chars": 637636,
+    "path": "docs/expansions/prose_wave85/cw85_02_hymn_of_the_invisible_fire_plan.md"
+  },
+  {
+    "chars": 637641,
+    "path": "docs/ui/PLAN140_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 637654,
+    "path": "docs/radiation/PLAN81_BASELINE.md"
+  },
+  {
+    "chars": 637681,
+    "path": "docs/medical/PLAN106_CLOSEOUT.md"
+  },
+  {
+    "chars": 637720,
+    "path": "docs/expansions/prose_wave68/cw68_06_the_siren_is_hide_and_seek_plan.md"
+  },
+  {
+    "chars": 637721,
+    "path": "docs/expansions/prose_wave75/cw75_04_the_three_mask_rule_song_plan.md"
+  },
+  {
+    "chars": 637730,
+    "path": "docs/content/plan133/PLAN133_BASELINE.md"
+  },
+  {
+    "chars": 637734,
+    "path": "docs/implementation/PLAN141_MEDICAL_ACCURACY_AUDIT.md"
+  },
+  {
+    "chars": 637737,
+    "path": "docs/crafting/PLAN55_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 637755,
+    "path": "docs/expansions/prose_wave91/cw91_01_npc_whiteout_traveler_plan.md"
+  },
+  {
+    "chars": 637768,
+    "path": "docs/survivors/PLAN65_BASELINE.md"
+  },
+  {
+    "chars": 637772,
+    "path": "docs/expansions/prose_wave76/cw76_03_welding_rod_cross_plan.md"
+  },
+  {
+    "chars": 637793,
+    "path": "docs/ashfall-master-expansion-authority-v2-0-the-plan-factory-subject-plan-expansion-engine.md"
+  },
+  {
+    "chars": 637819,
+    "path": "docs/expansions/prose_wave113/cw113_04_room_fixture_airlock_rag_nail_the_cloth_instrument_plan.md"
+  },
+  {
+    "chars": 637821,
+    "path": "docs/expansions/prose_wave53/cw53_01_the_queue_before_sunrise_plan.md"
+  },
+  {
+    "chars": 637825,
+    "path": "docs/content/PLAN136_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 637865,
+    "path": "docs/expansions/prose_wave57/cw57_02_the_chemical_works_breathes_plan.md"
+  },
+  {
+    "chars": 637880,
+    "path": "docs/narrative/PLAN_74_NARRATIVE_PROGRESSION_CHAPTERS_CLOSEOUT.md"
+  },
+  {
+    "chars": 637911,
+    "path": "docs/expansions/prose_wave56/cw56_06_the_frozen_reeds_keep_walking_plan.md"
+  },
+  {
+    "chars": 637921,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-UV-CORONA-DETECTION-TRUTH-250.md"
+  },
+  {
+    "chars": 637938,
+    "path": "docs/verdict/PLAN_82_VERDICT_LOCATIONS_EXPANSION_CLOSEOUT.md"
+  },
+  {
+    "chars": 637946,
+    "path": "docs/medical/PLAN112_BALANCE_REPORT.md"
+  },
+  {
+    "chars": 637985,
+    "path": "docs/expansions/prose_wave63/cw63_04_the_quiet_radio_whisper_plan.md"
+  },
+  {
+    "chars": 637988,
+    "path": "docs/expansions/prose_wave89/cw89_02_npc_electrician_plan.md"
+  },
+  {
+    "chars": 638000,
+    "path": "docs/expansions/prose_wave74/cw74_02_the_grey_man_of_the_vents_plan.md"
+  },
+  {
+    "chars": 638047,
+    "path": "docs/shelter/PLAN_204_MUSHROOM_CULTIVATION_CLOSEOUT.md"
+  },
+  {
+    "chars": 638048,
+    "path": "docs/implementation/PLAN143_ATOMICITY_POLICY.md"
+  },
+  {
+    "chars": 638051,
+    "path": "docs/plans/flagship_b5_b8/PHASE8_SCENARIOS_BALANCE.md"
+  },
+  {
+    "chars": 638052,
+    "path": "docs/expansions/wave10/expansion_59_the_bone_shop_plan.md"
+  },
+  {
+    "chars": 638075,
+    "path": "docs/expansions/prose_wave42/cw42_05_the_tower_that_only_measured_plan.md"
+  },
+  {
+    "chars": 638086,
+    "path": "docs/expansions/prose_wave37/cw37_01_the_transfer_slip_without_a_train_plan.md"
+  },
+  {
+    "chars": 638088,
+    "path": "docs/expansions/prose_wave63/cw63_02_the_tree_that_ate_light_plan.md"
+  },
+  {
+    "chars": 638092,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SHELTER-ARCHITECTURE-40_APPENDIX-A_ORPHAN_DOSSIERS.md"
+  },
+  {
+    "chars": 638097,
+    "path": "docs/plans/wave10_part2/B3_PLAN31_RECONCILIATION.md"
+  },
+  {
+    "chars": 638115,
+    "path": "docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md"
+  },
+  {
+    "chars": 638120,
+    "path": "docs/expansions/prose_wave52/cw52_01_the_salted_tube_plan.md"
+  },
+  {
+    "chars": 638137,
+    "path": "docs/expansions/prose_wave95/cw95_06_memorial_rite_wall_tally_engraving_plan.md"
+  },
+  {
+    "chars": 638141,
+    "path": "docs/gaps/PARTIAL_PLANS_VERIFIED_AUDIT.md"
+  },
+  {
+    "chars": 638146,
+    "path": "docs/expansions/prose_wave92/cw92_04_glitch_22_repeating_relay_click_plan.md"
+  },
+  {
+    "chars": 638154,
+    "path": "docs/plans/PLAN_24_CLOSEOUT.md"
+  },
+  {
+    "chars": 638161,
+    "path": "docs/expansions/prose_wave45/cw45_04_the_interval_between_tones_plan.md"
+  },
+  {
+    "chars": 638170,
+    "path": "docs/expansions/prose_wave99/cw99_05_social_event_ideology_ration_dispute_tin_cup_reckoning_plan.md"
+  },
+  {
+    "chars": 638175,
+    "path": "docs/cartography/PLAN85_BALANCE_MATRIX.md"
+  },
+  {
+    "chars": 638180,
+    "path": "docs/expansions/prose_wave95/cw95_02_journal_day_175_technology_dangers_plan.md"
+  },
+  {
+    "chars": 638187,
+    "path": "docs/expansions/expansion_03_the_standing_record_plan.md"
+  },
+  {
+    "chars": 638192,
+    "path": "docs/expansions/prose_wave109/cw109_04_room_fixture_kitchen_table_scratches_counts_in_fives_plan.md"
+  },
+  {
+    "chars": 638198,
+    "path": "docs/medical/PLAN112_COUNTERMEASURE_MATRIX.md"
+  },
+  {
+    "chars": 638207,
+    "path": "docs/plans/C1_planintegration[5]_IMPLEMENTATION_LOG.md"
+  },
+  {
+    "chars": 638214,
+    "path": "docs/plans/ORPHAN_SEAL_PRIORITY_W1_BOUNDARIES.md"
+  },
+  {
+    "chars": 638224,
+    "path": "docs/plans/wave8_part2/C1_ACCEPTANCE.md"
+  },
+  {
+    "chars": 638230,
+    "path": "docs/content/PLAN160_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 638230,
+    "path": "docs/expansions/prose_wave108/cw108_02_room_fixture_airlock_handprints_hatch_height_plan.md"
+  },
+  {
+    "chars": 638231,
+    "path": "docs/expansions/prose_wave68/cw68_01_the_bunker_as_body_story_plan.md"
+  },
+  {
+    "chars": 638237,
+    "path": "docs/verdict/PLAN113_CLOSEOUT.md"
+  },
+  {
+    "chars": 638239,
+    "path": "docs/plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md"
+  },
+  {
+    "chars": 638248,
+    "path": "docs/verdict/PLAN_93_VERDICT_NPC_MATRIX.md"
+  },
+  {
+    "chars": 638258,
+    "path": "docs/content/plan133/FACTION_WAR_COMMUNIQUE_VOICE_BIBLE.md"
+  },
+  {
+    "chars": 638283,
+    "path": "docs/plans/wave11_part2/B5_PLAN35_DUPLICATE_RECONCILIATION.md"
+  },
+  {
+    "chars": 638287,
+    "path": "docs/expansions/prose_wave109/cw109_06_room_fixture_radio_load_bulb_grease_pencil_limit_plan.md"
+  },
+  {
+    "chars": 638301,
+    "path": "docs/content/plan132/WORLD_EVOLUTION_SECTOR_GRAPH.md"
+  },
+  {
+    "chars": 638330,
+    "path": "docs/expansions/prose_wave99/cw99_01_audio_log_radio_signal_day_72_automated_distress_ruins_plan.md"
+  },
+  {
+    "chars": 638339,
+    "path": "docs/endgame/PLAN96_BASELINE.md"
+  },
+  {
+    "chars": 638352,
+    "path": "docs/expansions/prose_wave43/cw43_05_the_ridge_that_kept_the_horizon_plan.md"
+  },
+  {
+    "chars": 638368,
+    "path": "docs/expansions/prose_wave102/cw102_06_audio_log_technology_breakthrough_day_230_water_purifier_celebration_plan.md"
+  },
+  {
+    "chars": 638396,
+    "path": "docs/expansions/DEEP_LORE_MASTER_PLAN.md"
+  },
+  {
+    "chars": 638401,
+    "path": "docs/economy/PLAN40_BASELINE.md"
+  },
+  {
+    "chars": 638410,
+    "path": "docs/expansions/prose_wave60/cw60_01_the_two_chalk_knuckles_plan.md"
+  },
+  {
+    "chars": 638425,
+    "path": "docs/expansions/prose_wave67/cw67_02_the_bunker_as_seen_in_song_plan.md"
+  },
+  {
+    "chars": 638428,
+    "path": "docs/implementation/PLAN142_BASELINE.md"
+  },
+  {
+    "chars": 638436,
+    "path": "docs/expansions/prose_wave111/cw111_07_room_fixture_radio_mesh_panel_the_screen_that_was_plan.md"
+  },
+  {
+    "chars": 638436,
+    "path": "docs/expansions/wave22/expansion_116_the_fence_is_not_the_whole_law_plan.md"
+  },
+  {
+    "chars": 638443,
+    "path": "docs/plans/UNBLOCK_RESIDUALS_PLANS_24_31_INTEGRATION_PLAN.md"
+  },
+  {
+    "chars": 638445,
+    "path": "docs/expansions/prose_wave60/cw60_03_the_three_brass_knees_plan.md"
+  },
+  {
+    "chars": 638447,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-SANATORIUM-TRUTH-144.md"
+  },
+  {
+    "chars": 638465,
+    "path": "docs/expansions/prose_wave94/cw94_02_journal_day_45_scavenger_meeting_plan.md"
+  },
+  {
+    "chars": 638502,
+    "path": "docs/expansions/prose_wave59/cw59_05_the_lead_ledger_answers_plan.md"
+  },
+  {
+    "chars": 638510,
+    "path": "docs/expansions/prose_wave96/cw96_01_audio_log_technology_sharing_day_220_plan.md"
+  },
+  {
+    "chars": 638521,
+    "path": "docs/expeditions/PLAN76_DESTINATION_ROSTER.md"
+  },
+  {
+    "chars": 638524,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-MUSTER-FACTIONS-TRUTH-254.md"
+  },
+  {
+    "chars": 638537,
+    "path": "docs/plans/PLAN147_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 638543,
+    "path": "docs/content/PLAN137_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 638554,
+    "path": "docs/moral/PLAN100_BASELINE.md"
+  },
+  {
+    "chars": 638562,
+    "path": "docs/expansions/prose_wave109/cw109_05_room_fixture_airlock_bolted_chair_facing_inner_door_plan.md"
+  },
+  {
+    "chars": 638577,
+    "path": "docs/plans/PARTIAL_2_FOLLOWUP_IMPLEMENTATION_LOG.md"
+  },
+  {
+    "chars": 638584,
+    "path": "docs/medical/PLAN112_LOCATION_WEATHER_INTEGRATION.md"
+  },
+  {
+    "chars": 638603,
+    "path": "docs/content/PLAN153_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 638606,
+    "path": "docs/research/PLAN26A_PLAN34_RECONCILIATION.md"
+  },
+  {
+    "chars": 638610,
+    "path": "docs/power/PLAN71_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 638614,
+    "path": "docs/medical/PLAN112_SAVE_COMPATIBILITY.md"
+  },
+  {
+    "chars": 638618,
+    "path": "docs/expansions/prose_wave36/cw36_06_bread_first_seed_by_rota_plan.md"
+  },
+  {
+    "chars": 638651,
+    "path": "docs/shelter/PLAN_120_COMPOSITES_AUTHORITY_MAP.md"
+  },
+  {
+    "chars": 638656,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-ESPIONAGE-COUNTERINTEL-41_APPENDIX-A_ORPHAN_DOSSIERS.md"
+  },
+  {
+    "chars": 638667,
+    "path": "docs/expansions/prose_wave104/cw104_03_audio_log_raider_attack_day_170_tribute_refused_plan.md"
+  },
+  {
+    "chars": 638712,
+    "path": "docs/expansions/prose_wave74/cw74_04_the_cabbage_soup_counting_song_plan.md"
+  },
+  {
+    "chars": 638715,
+    "path": "docs/expansions/prose_wave47/cw47_03_the_three_knocks_in_the_clinic_plan.md"
+  },
+  {
+    "chars": 638735,
+    "path": "docs/expansions/prose_wave94/cw94_04_room_history_the_discrepancy_plan.md"
+  },
+  {
+    "chars": 638736,
+    "path": "docs/expansions/prose_wave109/cw109_03_room_fixture_clinic_basin_rim_kneeling_height_plan.md"
+  },
+  {
+    "chars": 638753,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-PRECISION-OPTICS-TRUTH-220.md"
+  },
+  {
+    "chars": 638769,
+    "path": "docs/expansions/expansion_03_nobodys_charter_plan.md"
+  },
+  {
+    "chars": 638776,
+    "path": "docs/plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md"
+  },
+  {
+    "chars": 638783,
+    "path": "docs/bodymind/PLAN23_PLAN27_CONTAMINATION_RECONCILIATION.md"
+  },
+  {
+    "chars": 638826,
+    "path": "docs/expansions/prose_wave82/cw82_07_penicillium_bread_crust_compress_plan.md"
+  },
+  {
+    "chars": 638845,
+    "path": "docs/plans/CONTRABAND_ITEM_IDENTITY_MATRIX.md"
+  },
+  {
+    "chars": 638876,
+    "path": "docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-CULTURE-04_APPENDIX-A_ORPHAN_DOSSIERS.md"
+  },
+  {
+    "chars": 638889,
+    "path": "docs/expansions/prose_wave57/cw57_01_the_station_with_no_questions_plan.md"
+  },
+  {
+    "chars": 638897,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-WARLORDS-DIPLOMACY-29_APPENDIX-A_ORPHAN_DOSSIERS.md"
+  },
+  {
+    "chars": 638909,
+    "path": "docs/implementation/PLAN142_JOURNAL_SCHEMA_MAP.md"
+  },
+  {
+    "chars": 638910,
+    "path": "docs/PLANS_118_121_AUTHORITY_MAP.md"
+  },
+  {
+    "chars": 638928,
+    "path": "docs/expansions/prose_wave35/cw35_01_the_tower_that_holds_no_water_plan.md"
+  },
+  {
+    "chars": 638933,
+    "path": "docs/verdict/PLAN_127_CORRUPTION_CORPUS_BASELINE.md"
+  },
+  {
+    "chars": 638952,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-SPATIAL-SIM-AUTHORITY-95_APPENDIX-A_SCAFFOLD.md"
+  },
+  {
+    "chars": 638957,
+    "path": "docs/remediation/plans/ASHFALL_UNIFIED_MASTER_EXECUTION_PLAN.md"
+  },
+  {
+    "chars": 638967,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-SHELTER-POLITICS-69_APPENDIX-A_ORPHAN_DOSSIERS.md"
+  },
+  {
+    "chars": 638973,
+    "path": "docs/archive/forensics/2026-09-12/PLANS_142_145_WAVE0_FORENSIC_REPORT.md"
+  },
+  {
+    "chars": 638973,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-WORLD-EVOLUTION-TRUTH-227.md"
+  },
+  {
+    "chars": 638976,
+    "path": "docs/expansions/wave26/expansion_137_no_name_beside_turned_back_plan.md"
+  },
+  {
+    "chars": 638987,
+    "path": "docs/maritime/PLAN23_BASELINE.md"
+  },
+  {
+    "chars": 639021,
+    "path": "docs/expansions/prose_wave52/cw52_03_the_long_toll_in_the_gate_plan.md"
+  },
+  {
+    "chars": 639021,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-PHARMACEUTICAL-TRUTH-167.md"
+  },
+  {
+    "chars": 639051,
+    "path": "docs/expansions/wave28/expansion_148_a_dry_gallery_is_not_a_promise_plan.md"
+  },
+  {
+    "chars": 639071,
+    "path": "docs/plans/flagship_b5_b8/WATER_FLOW_BASELINE.md"
+  },
+  {
+    "chars": 639085,
+    "path": "docs/expansions/prose_wave58/cw58_01_the_note_at_eighty_eight_five_plan.md"
+  },
+  {
+    "chars": 639087,
+    "path": "docs/power/PLAN71_BALANCE_REPORT.md"
+  },
+  {
+    "chars": 639096,
+    "path": "docs/expansions/wave20/expansion_105_counting_at_dawn_plan.md"
+  },
+  {
+    "chars": 639107,
+    "path": "docs/foundry/PLAN102_REGRESSION_MATRIX.md"
+  },
+  {
+    "chars": 639120,
+    "path": "docs/plans/PLANS_86_89_IMPLEMENTATION_LOG.md"
+  },
+  {
+    "chars": 639123,
+    "path": "docs/expansions/prose_wave96/cw96_05_social_event_scout_expedition_reconciliation_plan.md"
+  },
+  {
+    "chars": 639128,
+    "path": "docs/crafting/PLAN_87_QA_REVIEW.md"
+  },
+  {
+    "chars": 639134,
+    "path": "docs/expansions/prose_wave82/cw82_04_activated_charcoal_toast_biscuits_plan.md"
+  },
+  {
+    "chars": 639149,
+    "path": "docs/expansions/prose_wave58/cw58_06_the_morning_list_without_hands_plan.md"
+  },
+  {
+    "chars": 639172,
+    "path": "docs/plans/PARTIAL_3_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md"
+  },
+  {
+    "chars": 639173,
+    "path": "docs/expansions/prose_wave100/cw100_01_audio_log_scavenger_radio_day_42_highway_overpass_deal_plan.md"
+  },
+  {
+    "chars": 639177,
+    "path": "docs/faction_war/PLAN92_SELECTOR_AUDIT.md"
+  },
+  {
+    "chars": 639180,
+    "path": "docs/plans/wave9_part2/C2_DECISION.md"
+  },
+  {
+    "chars": 639204,
+    "path": "docs/plans/wave10_part2/C1_PLAN26_SHIP_GATE_RECONCILIATION.md"
+  },
+  {
+    "chars": 639212,
+    "path": "docs/plans/wave11_part1/A4_PLAN45_IMPLEMENTATION_LOG.md"
+  },
+  {
+    "chars": 639212,
+    "path": "docs/shelter/PLAN_122_SOFC_BALANCE_REPORT.md"
+  },
+  {
+    "chars": 639235,
+    "path": "docs/expansions/prose_wave60/cw60_05_the_radio_alcove_roster_plan.md"
+  },
+  {
+    "chars": 639236,
+    "path": "docs/expansions/prose_wave108/cw108_05_folklore_comfort_intake_tremor_the_deep_cold_song_plan.md"
+  },
+  {
+    "chars": 639237,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-TUNNEL-NETWORK-TRUTH-194.md"
+  },
+  {
+    "chars": 639244,
+    "path": "docs/expansions/prose_wave105/cw105_01_audio_log_food_storage_theft_day_150_speak_up_plan.md"
+  },
+  {
+    "chars": 639250,
+    "path": "docs/expansions/prose_wave113/cw113_07_room_fixture_stores_humidity_gauge_the_red_line_below_plan.md"
+  },
+  {
+    "chars": 639250,
+    "path": "docs/plans/PLANS_86_89_INTEGRATION_PLAN.md"
+  },
+  {
+    "chars": 639282,
+    "path": "docs/expansions/prose_wave105/cw105_02_audio_log_raider_siege_day_240_negotiated_time_plan.md"
+  },
+  {
+    "chars": 639293,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-CRIME-SYNDICATES-44_APPENDIX-A_ORPHAN_DOSSIERS.md"
+  },
+  {
+    "chars": 639294,
+    "path": "docs/medical/PLAN112_COMPLETION_REPORT.md"
+  },
+  {
+    "chars": 639331,
+    "path": "docs/implementation/PLAN144_REFERENCE_GRAPH.md"
+  },
+  {
+    "chars": 639336,
+    "path": "docs/journal/PLAN_95_JOURNAL_VOICE_KEY_MATRIX.md"
+  },
+  {
+    "chars": 639343,
+    "path": "docs/duty_roster/PLAN77_BALANCE_MATRIX.md"
+  },
+  {
+    "chars": 639346,
+    "path": "docs/expansions/prose_wave34/cw34_01_the_room_that_kept_the_test_plan.md"
+  },
+  {
+    "chars": 639351,
+    "path": "docs/plans/C2_planintegration[7].md"
+  },
+  {
+    "chars": 639352,
+    "path": "docs/implementation/PLAN143_BASELINE.md"
+  },
+  {
+    "chars": 639360,
+    "path": "docs/expansions/prose_wave69/cw69_06_the_generator_heart_story_plan.md"
+  },
+  {
+    "chars": 639362,
+    "path": "docs/radio/PLAN_173_RADIO_PROGRAM_ADAPTER_MAP.md"
+  },
+  {
+    "chars": 639365,
+    "path": "docs/verdict/PLAN_93_BASELINE.md"
+  },
+  {
+    "chars": 639383,
+    "path": "docs/expansions/prose_wave110/cw110_03_room_fixture_filtration_canister_notches_days_in_metal_plan.md"
+  },
+  {
+    "chars": 639385,
+    "path": "docs/expansions/prose_wave62/cw62_01_request_of_the_graveyard_shift_plan.md"
+  },
+  {
+    "chars": 639391,
+    "path": "docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md"
+  },
+  {
+    "chars": 639395,
+    "path": "docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-D_SAVE_OWNERSHIP.md"
+  },
+  {
+    "chars": 639406,
+    "path": "docs/expansions/prose_wave100/cw100_08_audio_log_winter_preparations_day_290_common_area_call_plan.md"
+  },
+  {
+    "chars": 639422,
+    "path": "docs/moral_choice/PLAN125_BASELINE.md"
+  },
+  {
+    "chars": 639425,
+    "path": "docs/expansions/prose_wave47/cw47_04_the_patrol_that_held_quietly_plan.md"
+  },
+  {
+    "chars": 639425,
+    "path": "docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-CAMPAIGN-EPILOGUE-TRUTH-259.md"
+  },
+  {
+    "chars": 639439,
+    "path": "docs/expansions/prose_wave103/cw103_06_audio_log_memory_loss_day_200_name_fading_plan.md"
+  }
+]

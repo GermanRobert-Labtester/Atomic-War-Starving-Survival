@@ -103,7 +103,33 @@ else
   say "SKIP windows export — windows_release_x86_64.exe template not installed for $GODOT_VERSION"
 fi
 
-# ── 6. Regression row + summary ──────────────────────────────────────
+# ── 6. macOS export (ASTC toggle scoped to this step) ────────────────
+# The macOS preset (universal) refuses to export while ETC2 ASTC is off, and
+# enabling it globally grows the Linux/Windows PCK. So the toggle is applied
+# here only. NOTE: toggling back does not evict the ASTC variants already in
+# .godot/imported; to restore the 128 MB-class PCK, clear the cache and run
+# `godot --headless --path . --import` after a macOS export (see
+# docs/builds/MACOS_EXPORT.md).
+if [ -f "$HOME/.local/share/godot/export_templates/$GODOT_VERSION/macos.zip" ]; then
+  say "exporting macOS (bundle target: .zip packaging is broken on Linux hosts)"
+  sed -i 's#import_etc2_astc=false#import_etc2_astc=true#' project.godot
+  if timeout 1800 godot --headless --path . --export-release "macOS" "$ROOT/builds/macos/ashfall.app" >"$LOG_DIR/export-macos.log" 2>&1; then
+    say "  macOS bundle exported"
+    MAC_PCK=$(stat -c%s "$ROOT/builds/macos/ashfall.app/Contents/Resources/"*.pck 2>/dev/null || echo 0)
+    if [ "$MAC_PCK" != 0 ]; then
+      say "  macOS PCK $(numfmt --to=iec "$MAC_PCK" 2>/dev/null || echo "$MAC_PCK B") (unsigned; sign+notarize on a Mac)"
+    else
+      echo "[package] FAIL macOS PCK missing inside bundle"; FAILURES=$((FAILURES + 1))
+    fi
+  else
+    echo "[package] FAIL macOS export (see $LOG_DIR/export-macos.log)"; FAILURES=$((FAILURES + 1))
+  fi
+  sed -i 's#import_etc2_astc=true#import_etc2_astc=false#' project.godot
+else
+  say "SKIP macOS export — macos.zip template not installed for $GODOT_VERSION"
+fi
+
+# ── 7. Regression row + summary ──────────────────────────────────────
 BIN_SIZE=$(stat -c%s "$OUT/ashfall.x86_64" 2>/dev/null || echo 0)
 PCK_SIZE=$(stat -c%s "$OUT/ashfall.pck" 2>/dev/null || echo 0)
 WIN_BIN=$(stat -c%s "$ROOT/builds/windows/ashfall.exe" 2>/dev/null || echo 0)
@@ -114,6 +140,9 @@ echo "[package] BUILD_SIZES.md row:"
 echo "| $(date +%F) | Linux/X11 | $BIN_SIZE | $PCK_SIZE | — | — | package-verify ${CATALOGS:-?} PCK-only PASS |"
 if [ "$WIN_BIN" != 0 ]; then
   echo "| $(date +%F) | Windows Desktop | $WIN_BIN | $WIN_PCK | — | — | package-verify wine smoke PASS |"
+fi
+if [ "${MAC_PCK:-0}" != 0 ]; then
+  echo "| $(date +%F) | macOS (universal) | — | $MAC_PCK | — | — | package-verify bundle export PASS (unsigned) |"
 fi
 echo
 if [ "$FAILURES" = 0 ]; then

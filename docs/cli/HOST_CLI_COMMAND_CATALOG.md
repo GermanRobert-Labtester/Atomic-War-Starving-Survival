@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-09-25<br>
-**Total Registered Actions:** 271 entries / 415 flag tokens (aliases included)
+**Total Registered Actions:** 272 entries / 417 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -164,6 +164,7 @@
 | `--shelter-hazard-loop-selftest` | `--shelter-hazard-selftest`, `--duty-roster-loop-selftest` | Shelter hazard loop and duty roster assignment verification |
 | `--shelter-decor-selftest` | `--shelter-interior-selftest`, `--memorial-wall-selftest` | Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification |
 | `--shelter-operations-selftest` | `--shelter-ops-selftest`, `--operations-selftest` | Medical triage, expedition sorties, radio network, crafting, respiratory afflictions, and the routed shelter operations board |
+| `--water-sources-selftest` | — | Deep well, atmospheric condenser, aquifer piezometer, and water-treatment commands plus their snapshots (water sources surface gate) |
 | `--silent-foundry-uitest` | — | Silent Foundry trade panel UI construction, binding, and trade loop |
 | `--plans198-201-uitest` | `--plans198-201-selftest` | CBRN/comms/ceremony/robotics panels: route, bind, command, state delta, feedback |
 | `--decon-airlock-uitest` | — | Decon Airlock UI data grid panel bindings |
@@ -211,7 +212,7 @@
 | `--shelter-security-selftest` | — | Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding |
 | `--personal-quests-selftest` | — | Plan 200: Survivor personal quests, character arcs, stage progression, save persistence, and UI binding |
 | `--time-capsule-selftest` | — | Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding |
-| `--internal-communication-selftest` | — | Plan 211: Internal shelter notices, identity refusals, expiry, save persistence, and Shelter Social UI binding |
+| `--internal-communication-selftest` | `--shelter-communications-selftest` | Plan 211: Internal shelter notices, identity refusals, expiry, save persistence, and Shelter Social UI binding |
 | `--death-legacy-selftest` | — | Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding |
 | `--relationship-decay-selftest` | — | Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding |
 | `--visitor-integration-selftest` | — | Plan 214: admitted visitor stays, temporary housing, processing requirements, recruitment handoff, and UI binding |

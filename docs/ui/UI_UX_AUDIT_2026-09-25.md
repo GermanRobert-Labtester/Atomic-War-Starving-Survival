@@ -129,6 +129,44 @@ Ship-readiness deltas from the same wave:
 - **Windows windowed parity (task 5):** wine windowed snapshot harness — 32 targets, 27 match, 5 drift traced to wine font rasterization (reproduced on a fresh export, not a defect); addendum in `docs/builds/WINDOWS_PARITY_2026-09-25.md`.
 - **Release dry run (task 6):** `docs/releases/RELEASE_DRY_RUN_2026-09-25.md`. `version-gate` PASS, `prepare-release.sh --dry-run` correctly refuses on a dirty tree; `release-gate.sh` 54/55 gates PASS — the one failure is `whitespace_hygiene` (118 pre-existing files outside this wave). Verdict **NO-GO** pending integrator commit + whitespace sweep.
 
+## Feature depth wave 2 (G1–G5, 2026-09-26)
+
+| # | Feature | Integration |
+|---|---|---|
+| G1 | **Salvage yield preview** — `SalvageHostSession.PreviewLine()` resolves real component names + tool + wear from the canonical item catalog; InventoryPanel SALVAGE tooltip is now a promise, not a guess. | `SalvageTeardownSystemTests` **9/9** (new shipped-catalog premise test) |
+| G2 | **Door barter counter-offer** — 5 authored counter-offers in `door_encounters.json`: strictly larger requirement for a strictly larger grant on the same item, higher faction standing, through the existing consume/grant pipeline. | `DoorEncounterBarterTests` **4/4** (new pair invariant test) |
+| G3 | **Storm forecast window** — `src/Host/StormWatch.cs` reads the weather authority; `ShelterThermalPanel` gains a STORM WINDOW rail card (active/imminent/clear); `RetrofitStormSealing(inventory, stormActive)` **blocks sealing during a storm** (no cost consumed). | build clean, `--player-panels-uitest` PASS |
+| G4 | **Dosimeter route cross-check** — `RouteDoseCheckService` + `RouteDoseCheck` Core projection; DoseGeographyPanel ROUTE CHECK card names worst band + safest alternative for the filtered sectors. | `RouteDoseCheckTests` **3/3** |
+| G5 | **Quiet-hours tradeoff readout** — `ShelterNoiseSystem` exposes published floor/risk constants + `WouldViolateQuietHours`/`QuietHoursViolationCount`/`LatestQuietHoursViolation`; panel states cost, breach state and last breach from the system's own numbers. | `QuietHoursTradeoffTests` **3/3** |
+
+Ship-readiness deltas recorded elsewhere this wave:
+
+- **macOS export RESOLVED** — root cause was the `.zip` target, not the pack writer; `.app` bundle export succeeds on Linux (recipe + ASTC toggle scoping in `docs/builds/MACOS_EXPORT.md`; macOS step added to `scripts/tools/ashfall-package-verify.sh`).
+- **Perf re-baseline** on the trimmed build — `docs/health/PERF_BUDGET_2026-09-25.md` addendum (avg 57.7 FPS / RSS 945 MB, no regression).
+- **Content reachability** — `docs/ui/CONTENT_REACHABILITY_2026-09-26.md`: **0 orphan ids** across all 1,746 loaded art ids.
+- **Release unblock** — whitespace gate scoped (`WHITESPACE_SCOPE`), journey-gate timeout corrected with a 101 s measurement, architecture map regenerated; one external blocker left: the `consequence_ledger` triad owned by the in-flight `claim-wholegame-p1a-core-loop-feedback-2026-09-25`.
+
+## UI/UX wave + game-feature wave (2026-09-26)
+
+- **New infrastructure:** `src/UI/UiPanelFlow.cs` — `TransitionSwap` (in-panel
+  swaps animate: 60 ms out / 100 ms in, reduced-motion aware), `AttachDrag` +
+  `UiLayoutStore` (movable windows persisted to `user://ui_layout.json`),
+  `Pulse` (value-change feedback).
+- **Coverage:** metric-card value changes pulse across all 169 panels;
+  `AshfallDashboardShell` gained a header accent rule (inherited chrome);
+  `InventoryPanel` + `DoseGeographyPanel` filter swaps now animate;
+  `ConfirmationModal` and `NarrativeArcModal` are draggable with persisted
+  positions; `AshfallDashboardShell.EnableWindowDrag(key)` is available for
+  windowed panels.
+- **Features:** heat zoning (per-room radiator valve control in
+  `ShelterThermalPanel`) and the load-shed drill
+  (`PowerGridHostSession.RunLoadShedDrill` + `PowerGridPanel` action).
+- **Verification:** build 0 errors, `--player-panels-uitest` PASS,
+  `--ui-layout-selftest` PASS, `--ui-accessibility-selftest` PASS,
+  snapshots rebaselined **32/32**, localization ratchet test
+  (`LocalizationRatchetTests`) green at the recorded baseline.
+- Full wave report: `docs/audits/FORWARD_LEAP_WAVE_2026-09-26.md`.
+
 ## Known limitations
 
 - Keyboard traversal *reachability* of grid rows is enabled statically

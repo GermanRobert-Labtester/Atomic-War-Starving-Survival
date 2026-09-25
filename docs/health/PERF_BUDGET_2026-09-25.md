@@ -42,3 +42,10 @@ sample; worst simulation cost is a 14 ms year). The only growth vectors to watch
 
 Re-run command for the next checkpoint: `godot --headless --path . -- --runtime-scale-selftest`
 (refreshes `artifacts/runtime-scale-results.json`).
+
+## 2026-09-26 — trimmed-build re-baseline (task 5)
+
+- Live session on the lossy-texture build: `--print-fps` 36 samples, **avg 57.7 / median 60 / p5 26 / min 14** (startup frames only), V-Sync 60 cap.
+- RSS settled **945 MB** at play (baseline window 918–1104 MB) — no memory regression from `compress/mode=1` art or the 128.4 MB PCK.
+- PCK **128,358,532 B** (was 294,172,544 B); boot window unchanged in feel (3.5 s baseline).
+- Verdict: **no perf fix required**; texture-memory cost tracked as acceptable for alpha.

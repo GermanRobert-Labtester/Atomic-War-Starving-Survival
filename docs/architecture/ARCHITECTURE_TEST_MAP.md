@@ -2785,7 +2785,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 199. `shelter_fire` — Shelter fire incidents, smoke, and brigade response (Shelter & Infrastructure)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterFireHazard()` | **Invoked:** yes | **Cadence:** `Daily Fire Propagation Tick`
-- **Setup Invocation Sites:** `src/Main.Application.cs:869`, `src/Main.CampaignOwners.cs:1282`, `src/Main.CampaignOwners.cs:1290`, `src/Main.CampaignOwners.cs:1297`, `src/Main.PlayerSurfaces.cs:518`, `src/Main.SaveOrchestrator.cs:298`, `src/Main.ShelterInfrastructure.cs:642`, `src/Main.UiHandlers.cs:249`
+- **Setup Invocation Sites:** `src/Main.Application.cs:869`, `src/Main.CampaignOwners.cs:1282`, `src/Main.CampaignOwners.cs:1290`, `src/Main.CampaignOwners.cs:1297`, `src/Main.PlayerSurfaces.cs:518`, `src/Main.SaveOrchestrator.cs:298`, `src/Main.ShelterInfrastructure.cs:643`, `src/Main.UiHandlers.cs:249`
 - **UI Routes:** `fire_incident`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Shelter/ShelterFireHazardSystem.cs`](../../Assets/Ashfall.Core/Shelter/ShelterFireHazardSystem.cs)

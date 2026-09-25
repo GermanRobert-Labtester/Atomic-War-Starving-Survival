@@ -1038,7 +1038,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: shelter_atmosphere
 - ✅ `cli_flag`: --shelter-atmosphere-selftest
 - — `tests`: no named fixture (host selftest only)
-- Host reference files (first authority, up to 8): `src/Main.ShelterAtmosphere.cs`, `src/Host/ShelterAtmosphereHostSession.cs`, `src/Host/ShelterAtmosphereSelfTest.cs`, `src/Host/SleepAcousticRestHostSession.cs`
+- Host reference files (first authority, up to 8): `src/Main.ShelterAtmosphere.cs`, `src/Host/ShelterAtmosphereHostSession.cs`, `src/Host/ShelterAtmosphereSelfTest.cs`, `src/Host/SleepAcousticRestHostSession.cs`, `src/UI/ShelterAtmospherePanel.cs`
 
 ### Plan 206 — Death & Legacy — INTEGRATED
 

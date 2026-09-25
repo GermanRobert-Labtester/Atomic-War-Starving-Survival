@@ -1,19 +1,19 @@
 # ASHFALL First-Hour Funnel Report
 
-## Session `probe_session`
+## Session `local_session`
 
-- Events: 2000 · Max day: 405
-- **Live first-hour progress: 7/7 (100%)**
+- Events: 149 · Max day: 4
+- **Live first-hour progress: 1/7 (14%)**
 
 | # | Step | Reached | Day |
 |---|------|---------|-----|
-| 1 | Water treatment started | yes | 1 |
-| 2 | Breaker toggled | yes | 1 |
-| 3 | Food ration consumed | yes | 1 |
-| 4 | Duty assigned | yes | 1 |
-| 5 | Dose reading opened | yes | 1 |
-| 6 | Research started | yes | 1 |
+| 1 | Water treatment started | no | — |
+| 2 | Breaker toggled | no | — |
+| 3 | Food ration consumed | no | — |
+| 4 | Duty assigned | no | — |
+| 5 | Dose reading opened | no | — |
+| 6 | Research started | no | — |
 | 7 | Expedition dispatched | yes | 2 |
 
-- Canonical funnel: 11/13 steps
-- Top actions: `panel_opened`×1986, `sigil`×10, `day_advanced`×3, `expedition.returned`×1
+- Canonical funnel: 3/13 steps
+- Top actions: `session_start`×94, `day_advanced`×39, `sigil`×16
