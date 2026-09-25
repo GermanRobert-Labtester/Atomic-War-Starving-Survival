@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5413 | **Total Characters:** 1,709,792,364 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 2017 documents carrying 1,666,904,058 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5413 | **Total Characters:** 1,710,041,637 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 2018 documents carrying 1,667,157,996 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 2017 documents, 1,666,904,058 characters
+## Oversized Document Register (>= 100,000 characters) — 2018 documents, 1,667,157,996 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1692,6 +1692,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 253,998 | [`piagentsplans/65-final-wishes-expansion.md`](../piagentsplans/65-final-wishes-expansion.md) |
 | 253,974 | [`docs/survivors/PLAN_182_RELATIONSHIP_DRIFT_AUTHORITY_MAP.md`](survivors/PLAN_182_RELATIONSHIP_DRIFT_AUTHORITY_MAP.md) |
 | 253,962 | [`Next-steps-plans/Plan_204_Survivor_Recruitment_Defection_System.md`](../Next-steps-plans/Plan_204_Survivor_Recruitment_Defection_System.md) |
+| 253,940 | [`piagentsplans/69-grave-epitaphs-expansion.md`](../piagentsplans/69-grave-epitaphs-expansion.md) |
 | 253,865 | [`docs/expansions/wave6/expansion_38_the_ward_plan.md`](expansions/wave6/expansion_38_the_ward_plan.md) |
 | 253,819 | [`piagentsplans/66-guilt-sources-expansion.md`](../piagentsplans/66-guilt-sources-expansion.md) |
 | 253,745 | [`piagentsplans/57-incident-expansion.md`](../piagentsplans/57-incident-expansion.md) |
@@ -1892,7 +1893,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 208,058 | [`docs/plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md`](plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md) |
 | 207,379 | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) |
 | 207,301 | [`docs/ASHFALL_MASTER_IMPLEMENTATION_PLAN.md`](ASHFALL_MASTER_IMPLEMENTATION_PLAN.md) |
-| 206,639 | [`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md`](plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md) |
+| 206,637 | [`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md`](plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md) |
 | 204,297 | [`docs/plans/HOLDFAST_HARDENING_IMPLEMENTATION_LOG.md`](plans/HOLDFAST_HARDENING_IMPLEMENTATION_LOG.md) |
 | 204,275 | [`docs/plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md`](plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md) |
 | 203,921 | [`docs/plans/VERDICT_HARDENING_IMPLEMENTATION_LOG.md`](plans/VERDICT_HARDENING_IMPLEMENTATION_LOG.md) |
@@ -6789,7 +6790,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_STASH_LOCATION_MATRIX.md`](plans/CONTRABAND_STASH_LOCATION_MATRIX.md) | 3,700 | **CONTRABAND STASH LOCATION MATRIX — Plan 147 Task A.7 / Task B.7** — Every `hidden_stash_location` value is classified **DESCRIPTIVE — no location |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md`](plans/CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md) | 4,685 | **CONTRABAND TRADE AND ARBITRAGE AUDIT — Plan 147 Task A.7 (prices) / Task C.2–C.3** — **Finding:** the repo has **no scrip currency runtime**. "Scrip" appears in |
 | 🟢 `CURRENT` | [`docs/plans/CROP_ROSTER_INTEGRATION_PLAN.md`](plans/CROP_ROSTER_INTEGRATION_PLAN.md) | 11,228 | **Crop Roster Integration Plan** — **Date:** 2026-09-19 |
-| 🟢 `CURRENT` | [`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md`](plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md) | 206,639 | **Crossing Hardening Implementation Log** — - Added an optional projection from Crossing choices to the existing campaign |
+| 🟢 `CURRENT` | [`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md`](plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md) | 206,637 | **Crossing Hardening Implementation Log** — - Added an optional projection from Crossing choices to the existing campaign |
 | 🟢 `CURRENT` | [`docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md`](plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md) | 208,646 | **F9–F12 Micro-Location Verification Wave — Implementation Log** — Plan: Flagship Micro-Location Persistence, Determinism, Utilization & Reward-Economy Verification (Tasks F9–F12). |
 | 🟢 `CURRENT` | [`docs/plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md`](plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md) | 30,944 | **Faction War Communiqué Player-Facing Surface — Integration Plan** — Built from `docs/forensics/FACTION_WAR_COMMUNIQUE_SURFACE_FORENSIC_REPORT.md` (read-only |
 | 🟢 `CURRENT` | [`docs/plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_16_30_CLOSEOUT_2026-09-24.md`](plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_16_30_CLOSEOUT_2026-09-24.md) | 8,435 | **Fifteen partial-authority integration plans, items 16–30 — planning closeout** — **Date:** 2026-09-24. **Scope:** prose, source audit, integration framework, editorial polishing, and architecture ha... |
@@ -7591,7 +7592,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/66-guilt-sources-expansion.md`](../piagentsplans/66-guilt-sources-expansion.md) | 253,819 | **Plan 66 — Guilt Sources Expansion: Conscience Mechanics, Moral Trauma & Somatic Scarring Architecture** — Survival games frequently treat moral choices as shallow bifurcated dialogue prompts with cosmetic karma points. In A... |
 | 🟢 `CURRENT` | [`piagentsplans/67-cassette-sets-expansion.md`](../piagentsplans/67-cassette-sets-expansion.md) | 253,693 | **Plan 67 — Cassette Sets Expansion: Magnetic Audio Logs, Multi-Part Wasteland Narratives & Diegetic Morale Architecture** — In the desolate ruins of ASHFALL, pre-war magnetic audio tapes are precious acoustic relics. In a world where digital... |
 | 🟢 `CURRENT` | [`piagentsplans/68-wall-carving-templates-expansion.md`](../piagentsplans/68-wall-carving-templates-expansion.md) | 253,028 | **Plan 68 — Wall Carving Templates Expansion: Diegetic Shelter Graffiti, Morale Reflection & Masonry Memory Architecture** — In ASHFALL, a fallout shelter is not an inert 2D grid of functional production rooms; it is a psychological pressure ... |
-| 🟢 `CURRENT` | [`piagentsplans/69-grave-epitaphs-expansion.md`](../piagentsplans/69-grave-epitaphs-expansion.md) | 4,665 | **Plan 69 — Wasteland Grave Epitaphs Expansion (8 → 30 epitaphs)** — Expand `wasteland_grave_epitaphs.json` from 8 verified entries to 30. Grave epitaphs are |
+| 🟢 `CURRENT` | [`piagentsplans/69-grave-epitaphs-expansion.md`](../piagentsplans/69-grave-epitaphs-expansion.md) | 253,940 | **Plan 69 — Wasteland Grave Epitaphs Expansion: Death Causes, Memorial Markers & Cemetery Architecture** — In ASHFALL's harsh nuclear winter, the dead do not disappear into abstract casualty statistics. Across the frozen exp... |
 | 🟢 `CURRENT` | [`piagentsplans/70-shelter-schedules-expansion.md`](../piagentsplans/70-shelter-schedules-expansion.md) | 4,536 | **Plan 70 — Shelter Schedules Expansion (3 → 12 duty schedules)** — Expand `shelter_schedules.json` from 3 verified entries to 12 duty schedules. The shelter |
 | 🟢 `CURRENT` | [`piagentsplans/71-power-grid-rooms-expansion.md`](../piagentsplans/71-power-grid-rooms-expansion.md) | 4,833 | **Plan 71 — Power Grid Rooms Expansion (6 → 18 powered rooms)** — Expand `power_grid.json` from 6 verified room entries to 18. The `PowerGridSystem` is |
 | 🟢 `CURRENT` | [`piagentsplans/72-utility-ai-actions-expansion.md`](../piagentsplans/72-utility-ai-actions-expansion.md) | 4,880 | **Plan 72 — Utility AI Actions Expansion (6 → 20 actions)** — Expand `utility_actions.json` from 6 verified entries to 20. The utility AI system |
