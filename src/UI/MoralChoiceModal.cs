@@ -289,7 +289,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (@event is InputEventKey key && key.Pressed)
             {
-                if (key.Keycode == Key.Escape)
+                if (AshfallInputActions.IsCloseOrCancel(@event))
                 {
                     CloseModal();
                     GetViewport().SetInputAsHandled();

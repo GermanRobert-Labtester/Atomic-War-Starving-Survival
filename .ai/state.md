@@ -1,5 +1,15 @@
 # Current Task State
 
+## WHOLEGAME-P1D-UI-CONTROLLER-PARITY — 2026-09-26 (user-authorized UI pass)
+
+- **Goal:** execute the deferred-P1D residuals from `.ai/plans/wholegame-p1-playable-ui-integration.md` §6: raw-Esc dismissal sweep → rebindable `AshfallInputActions.IsCloseOrCancel`, DailyBriefingModal arrow keys → nav actions, corpus-wide ratchet gate.
+- **Status:** COMPLETE. Plan: `.ai/plans/wholegame-p1d-ui-controller-parity-2026-09-26.md` (STATUS: APPROVED BY USER).
+- **Files Changed:** 92 swept `src/UI/*.cs` (mechanical `Key.Escape` → `IsCloseOrCancel`), manual `SettingsPanel.cs` (close branch; rebind-capture stays raw, reason inline), `CombatPanel.cs` (Esc + Tab→`IsNextTab`), `MoralChoiceModal.cs`, `EmergencyResponseHud.cs` (`ui_cancel` string → predicate), `Plans74To77Panels.cs` (handler + dead `CloseOnEscape` body), `DailyBriefingModal.cs` (arrows → `IsNavUp`/`IsNavDown`, D-pad scroll); new corpus gate in `Ashfall.Core.Tests/UI/AccessibilitySourceAuditTests.cs`.
+- **Excluded (ACTIVE claims):** DutyRosterPanel/ExpeditionPanel/SurvivorDetailPanel (c1-plan24), PfglOctetBoardPanels (PFGL octet). Post-sweep residue = 4 claimed + 1 intentional.
+- **Verification:** host build 0 err / 1 pre-existing ShelterThermalPanel warning; tests build 0/0; `AccessibilitySourceAuditTests` 5/5; headless `--ui-layout-selftest`, `--ui-accessibility-selftest`, `--player-panels-uitest` all PASS. Diff audited: sweep files are symmetric 1-line swaps; no unrelated changes touched.
+- **Testing steps used:** 6 / 15. **Iterations:** ~35 / 100.
+- **Remaining (reported, not fixed):** DutyRosterPanel.cs:400 SHIFT DETAIL autowrap blocked by c1-plan24 claim; joypad-in-hand confirmation needs an interactive session.
+
 ## FULL-TREE-INTEGRATION — 2026-09-25 (user-mandated)
 
 - **Goal:** land every uncommitted deliverable on `integration/all-latest-2026-09-24` fully (not partial), unblocking any blockade encountered, and verify.

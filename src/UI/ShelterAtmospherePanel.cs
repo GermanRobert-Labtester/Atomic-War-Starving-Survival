@@ -221,7 +221,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _UnhandledInput(InputEvent @event)
         {
-            if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape)
+            if (AshfallInputActions.IsCloseOrCancel(@event))
             {
                 Visible = false;
                 OnClose?.Invoke();

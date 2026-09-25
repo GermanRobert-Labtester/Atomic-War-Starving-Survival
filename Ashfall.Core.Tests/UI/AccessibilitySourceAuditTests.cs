@@ -4,6 +4,7 @@
 // in migrated top dashboard and overlay panels.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Xunit;
@@ -112,6 +113,50 @@ namespace Ashfall.Core.Tests.UI
                 string content = StripComments(File.ReadAllText(path));
                 Assert.DoesNotContain("Key.Escape", content);
             }
+        }
+
+        /// <summary>
+        /// Controller-parity ratchet (WHOLEGAME-P1D residual sweep, 2026-09-26):
+        /// panel dismissal must route through the rebindable
+        /// <c>AshfallInputActions.IsCloseOrCancel</c> contract (Esc, pad B,
+        /// rebound keys) instead of raw <c>Key.Escape</c>, which silently drops
+        /// controller and rebound-key users. The allowlist is exhaustive and
+        /// each entry must keep a live reason:
+        /// - SettingsPanel.cs — the rebind-capture cancel gesture must observe
+        ///   the raw Esc key so a pad button being bound to Close cannot cancel
+        ///   its own capture.
+        /// The previously allowlisted claim-blocked files (DutyRosterPanel,
+        /// ExpeditionPanel, SurvivorDetailPanel, PfglOctetBoardPanels) were
+        /// converted 2026-09-26 under direct user authorization overriding the
+        /// stale c1-plan24 / PFGL-octet claims for these one-line dismissals.
+        /// </summary>
+        [Fact]
+        public void UiPanels_DismissThroughCloseAction_NotRawEscape()
+        {
+            string root = FindRepoRoot();
+            string uiDir = Path.Combine(root, "src", "UI");
+            Assert.True(Directory.Exists(uiDir), $"UI directory {uiDir} must exist");
+
+            var allowedRawEscape = new HashSet<string>(StringComparer.Ordinal)
+            {
+                "SettingsPanel.cs",
+            };
+
+            var offenders = new List<string>();
+            foreach (var file in Directory.GetFiles(uiDir, "*.cs", SearchOption.AllDirectories))
+            {
+                if (allowedRawEscape.Contains(Path.GetFileName(file)))
+                    continue;
+
+                string content = StripComments(File.ReadAllText(file));
+                if (content.Contains("Key.Escape"))
+                    offenders.Add(Path.GetFileName(file));
+            }
+
+            Assert.True(
+                offenders.Count == 0,
+                $"Panels must dismiss via AshfallInputActions.IsCloseOrCancel (rebindable, controller parity), " +
+                $"not raw Key.Escape. Offenders: {string.Join(", ", offenders)}");
         }
 
         [Fact]

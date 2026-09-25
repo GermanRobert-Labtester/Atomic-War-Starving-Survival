@@ -408,12 +408,12 @@ namespace AtomicWar.GodotApp.UI
             if (!Visible) return;
             if (@event is InputEventKey key && key.Pressed)
             {
-                if (key.Keycode == Key.Escape)
+                if (AshfallInputActions.IsCloseOrCancel(@event))
                 {
                     OnClose?.Invoke();
                     GetViewport().SetInputAsHandled();
                 }
-                else if (key.Keycode == Key.Tab)
+                else if (AshfallInputActions.IsNextTab(@event))
                 {
                     if (_targetSelect.ItemCount > 0)
                     {

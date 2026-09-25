@@ -355,7 +355,7 @@ public partial class WeatherForecastPanel : Control
     public override void _UnhandledInput(InputEvent @event)
     {
         if (!Visible) return;
-        if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+        if (AshfallInputActions.IsCloseOrCancel(@event))
         {
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();

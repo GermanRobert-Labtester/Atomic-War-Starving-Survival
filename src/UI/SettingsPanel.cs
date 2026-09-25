@@ -147,7 +147,11 @@ namespace AtomicWar.GodotApp.UI
                     return;
                 }
 
-                if (key.Keycode == Key.Escape)
+                // Rebindable close: honours ashfall_close / ui_cancel (Esc, pad B).
+                // The raw-Esc branch above stays raw on purpose — it cancels an
+                // in-progress binding capture, so a pad button being bound to
+                // Close must not cancel its own capture.
+                if (AshfallInputActions.IsCloseOrCancel(@event))
                 {
                     CancelAndClose();
                     GetViewport().SetInputAsHandled();

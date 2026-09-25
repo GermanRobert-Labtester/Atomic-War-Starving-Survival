@@ -98,7 +98,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _UnhandledKeyInput(InputEvent @event)
         {
-            if (Visible && @event is InputEventKey key && key.Pressed && !key.Echo && key.Keycode == Key.Escape)
+            if (Visible && AshfallInputActions.IsCloseOrCancel(@event))
             {
                 Close();
                 GetViewport().SetInputAsHandled();

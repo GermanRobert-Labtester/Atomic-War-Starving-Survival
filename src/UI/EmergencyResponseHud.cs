@@ -290,7 +290,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Input(InputEvent @event)
         {
-            if (Visible && @event.IsActionPressed("ui_cancel"))
+            if (Visible && AshfallInputActions.IsCloseOrCancel(@event))
             {
                 Close();
                 GetViewport()?.SetInputAsHandled();

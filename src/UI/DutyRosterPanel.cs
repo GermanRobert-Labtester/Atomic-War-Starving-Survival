@@ -162,7 +162,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         _detailContent.SizeFlagsVertical = SizeFlags.ExpandFill;
         _detailBox.AddChild(_detailContent);
         _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Select a row to view role, survivor, occupation, and last-slept day."));
+            "Select a row to view role, survivor, occupation, and last-slept day.", autowrap: true));
 
         _shell.SetContent(body);
         RefreshView();
@@ -397,21 +397,21 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         {
             _detailTitle.Text = "SHIFT DETAIL";
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Duty Roster engine offline. Bind a DutyRosterHostSession to see live shift assignments."));
+                "Duty Roster engine offline. Bind a DutyRosterHostSession to see live shift assignments.", autowrap: true));
             return;
         }
         if (_selectedIndex < 0)
         {
             _detailTitle.Text = "SHIFT DETAIL";
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Select a roster row to view role, survivor, occupation, and last-slept day."));
+                "Select a roster row to view role, survivor, occupation, and last-slept day.", autowrap: true));
             return;
         }
         var (roleId, survivorId) = ResolveVisibleRow(_selectedIndex);
         if (string.IsNullOrEmpty(roleId) && string.IsNullOrEmpty(survivorId))
         {
             _detailTitle.Text = "SHIFT DETAIL";
-            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope."));
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope.", autowrap: true));
             return;
         }
 
@@ -451,7 +451,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
                     : string.Join(", ", fitness.WarningReasons);
                 if (!string.IsNullOrEmpty(reasons))
                     _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-                        "Why: " + reasons.Replace('_', ' ') + $" · max {fitness.RecommendedMaxHours:0}h"));
+                        "Why: " + reasons.Replace('_', ' ') + $" · max {fitness.RecommendedMaxHours:0}h", autowrap: true));
             }
 
             // Plan 24B A2 — measured duty hours: the committed shift load vs
@@ -489,10 +489,10 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         {
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                 "IMPAIRED ASSIGNMENT — " + FormatSurvivorName(_pendingAssignSurvivorId)
-                + " is not fully fit for " + RoleTitle(roleId) + ":"));
+                + " is not fully fit for " + RoleTitle(roleId) + ":", autowrap: true));
             for (int i = 0; i < _pendingWarningReasons.Count; i++)
                 _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-                    "  • " + _pendingWarningReasons[i].Replace('_', ' ')));
+                    "  • " + _pendingWarningReasons[i].Replace('_', ' '), autowrap: true));
 
             var confirmRow = new HBoxContainer();
             confirmRow.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -512,7 +512,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         if (_survivors == null)
         {
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Assignments require a bound survivor session."));
+                "Assignments require a bound survivor session.", autowrap: true));
             return;
         }
         var candidates = _survivors.RosterState;
@@ -551,7 +551,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         }
         if (offered == 0 && string.IsNullOrEmpty(currentSurvivorId))
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-                "No living candidates available for this shift."));
+                "No living candidates available for this shift.", autowrap: true));
     }
 
     private void TryAssign(string roleId, string survivorId)
@@ -580,7 +580,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         // Other blocks (dead/quarantined/busy) — show truthful feedback, no dialog.
         CancelPendingAssignment();
         _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Assignment blocked: " + (result.MessageKey ?? result.FailureCode ?? "unknown")));
+            "Assignment blocked: " + (result.MessageKey ?? result.FailureCode ?? "unknown"), autowrap: true));
     }
 
     private void ConfirmPendingAssignment(string roleId, string survivorId)
@@ -593,7 +593,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         if (!result.IsSuccess)
         {
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Assignment failed at commit: " + (result.MessageKey ?? result.FailureCode ?? "unknown")));
+                "Assignment failed at commit: " + (result.MessageKey ?? result.FailureCode ?? "unknown"), autowrap: true));
         }
         RefreshView();
     }
@@ -708,7 +708,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
     public override void _UnhandledInput(InputEvent @event)
     {
         if (!Visible) return;
-        if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+        if (AshfallInputActions.IsCloseOrCancel(@event))
         {
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();

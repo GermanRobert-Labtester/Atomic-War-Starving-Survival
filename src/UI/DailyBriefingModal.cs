@@ -163,20 +163,22 @@ namespace AtomicWar.GodotApp.UI
                 GetViewport()?.SetInputAsHandled();
                 return;
             }
-            if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+            // Rebindable navigation: arrows and controller D-pad arrive through
+            // the ashfall_nav_* actions. PageUp/PageDown stay raw secondary
+            // scroll accelerators (no action binding exists for them).
+            bool pageUp = @event is InputEventKey keyUp && keyUp.Pressed && keyUp.Keycode == Key.Pageup;
+            bool pageDown = @event is InputEventKey keyDown && keyDown.Pressed && keyDown.Keycode == Key.Pagedown;
+            if (AshfallInputActions.IsNavUp(@event) || pageUp)
             {
-                if (keyEvent.Keycode == Key.Up || keyEvent.Keycode == Key.Pageup)
-                {
-                    _scroll.ScrollVertical = Math.Max(0, _scroll.ScrollVertical - 50);
-                    GetViewport()?.SetInputAsHandled();
-                    return;
-                }
-                if (keyEvent.Keycode == Key.Down || keyEvent.Keycode == Key.Pagedown)
-                {
-                    _scroll.ScrollVertical += 50;
-                    GetViewport()?.SetInputAsHandled();
-                    return;
-                }
+                _scroll.ScrollVertical = Math.Max(0, _scroll.ScrollVertical - 50);
+                GetViewport()?.SetInputAsHandled();
+                return;
+            }
+            if (AshfallInputActions.IsNavDown(@event) || pageDown)
+            {
+                _scroll.ScrollVertical += 50;
+                GetViewport()?.SetInputAsHandled();
+                return;
             }
         }
 
