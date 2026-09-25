@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5413 | **Total Characters:** 1,709,543,947 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 2016 documents carrying 1,666,651,030 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5413 | **Total Characters:** 1,709,792,364 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 2017 documents carrying 1,666,904,058 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 2016 documents, 1,666,651,030 characters
+## Oversized Document Register (>= 100,000 characters) — 2017 documents, 1,666,904,058 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1721,6 +1721,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 253,117 | [`piagentsplans/56-economy-goods-expansion.md`](../piagentsplans/56-economy-goods-expansion.md) |
 | 253,109 | [`piagentsplans/55-crafting-recipe-expansion.md`](../piagentsplans/55-crafting-recipe-expansion.md) |
 | 253,046 | [`piagentsplans/60-vehicle-expansion.md`](../piagentsplans/60-vehicle-expansion.md) |
+| 253,028 | [`piagentsplans/68-wall-carving-templates-expansion.md`](../piagentsplans/68-wall-carving-templates-expansion.md) |
 | 253,011 | [`piagentsplans/48-weather-route-gates.md`](../piagentsplans/48-weather-route-gates.md) |
 | 253,005 | [`Next-steps-plans/shipped_to_chat/Plan_180_Skill_Certification_Tier_System.md`](../Next-steps-plans/shipped_to_chat/Plan_180_Skill_Certification_Tier_System.md) |
 | 253,003 | [`Next-steps-plans/Plan_191_Item_Identification_Appraisal_System.md`](../Next-steps-plans/Plan_191_Item_Identification_Appraisal_System.md) |
@@ -7589,7 +7590,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/65-final-wishes-expansion.md`](../piagentsplans/65-final-wishes-expansion.md) | 253,998 | **Plan 65 — Final Wishes Expansion: Dying Survivor Quests, Legacy Rites & Emotional Closure Architecture** — In ASHFALL, mortality is not an abrupt subtraction of hit points resulting in a generic ragdoll and a floating item d... |
 | 🟢 `CURRENT` | [`piagentsplans/66-guilt-sources-expansion.md`](../piagentsplans/66-guilt-sources-expansion.md) | 253,819 | **Plan 66 — Guilt Sources Expansion: Conscience Mechanics, Moral Trauma & Somatic Scarring Architecture** — Survival games frequently treat moral choices as shallow bifurcated dialogue prompts with cosmetic karma points. In A... |
 | 🟢 `CURRENT` | [`piagentsplans/67-cassette-sets-expansion.md`](../piagentsplans/67-cassette-sets-expansion.md) | 253,693 | **Plan 67 — Cassette Sets Expansion: Magnetic Audio Logs, Multi-Part Wasteland Narratives & Diegetic Morale Architecture** — In the desolate ruins of ASHFALL, pre-war magnetic audio tapes are precious acoustic relics. In a world where digital... |
-| 🟢 `CURRENT` | [`piagentsplans/68-wall-carving-templates-expansion.md`](../piagentsplans/68-wall-carving-templates-expansion.md) | 4,611 | **Plan 68 — Wall Carving Templates Expansion (3 bands → 60 templates)** — Expand `wall_carving_templates.json` from 3 morale bands with few templates to 3 bands |
+| 🟢 `CURRENT` | [`piagentsplans/68-wall-carving-templates-expansion.md`](../piagentsplans/68-wall-carving-templates-expansion.md) | 253,028 | **Plan 68 — Wall Carving Templates Expansion: Diegetic Shelter Graffiti, Morale Reflection & Masonry Memory Architecture** — In ASHFALL, a fallout shelter is not an inert 2D grid of functional production rooms; it is a psychological pressure ... |
 | 🟢 `CURRENT` | [`piagentsplans/69-grave-epitaphs-expansion.md`](../piagentsplans/69-grave-epitaphs-expansion.md) | 4,665 | **Plan 69 — Wasteland Grave Epitaphs Expansion (8 → 30 epitaphs)** — Expand `wasteland_grave_epitaphs.json` from 8 verified entries to 30. Grave epitaphs are |
 | 🟢 `CURRENT` | [`piagentsplans/70-shelter-schedules-expansion.md`](../piagentsplans/70-shelter-schedules-expansion.md) | 4,536 | **Plan 70 — Shelter Schedules Expansion (3 → 12 duty schedules)** — Expand `shelter_schedules.json` from 3 verified entries to 12 duty schedules. The shelter |
 | 🟢 `CURRENT` | [`piagentsplans/71-power-grid-rooms-expansion.md`](../piagentsplans/71-power-grid-rooms-expansion.md) | 4,833 | **Plan 71 — Power Grid Rooms Expansion (6 → 18 powered rooms)** — Expand `power_grid.json` from 6 verified room entries to 18. The `PowerGridSystem` is |
