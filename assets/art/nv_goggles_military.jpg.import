@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/nv_goggles_military.jpg-d32f8efb2f406b8b1e91a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

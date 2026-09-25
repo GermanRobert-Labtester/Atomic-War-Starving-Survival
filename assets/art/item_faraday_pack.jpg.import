@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_faraday_pack.jpg-c7f1354a357bf693a758ff9
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

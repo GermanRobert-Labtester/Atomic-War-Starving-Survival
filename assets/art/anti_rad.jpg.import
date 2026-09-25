@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/anti_rad.jpg-3518a9800e035b2cf95ee889e02cf10c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

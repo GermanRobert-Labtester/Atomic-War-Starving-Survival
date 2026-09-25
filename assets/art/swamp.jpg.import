@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/swamp.jpg-e6d906c3d2539f0d91ec39bdffab6a4a.ct
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

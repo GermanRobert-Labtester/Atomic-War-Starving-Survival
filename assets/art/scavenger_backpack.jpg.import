@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/scavenger_backpack.jpg-3e216d51b18d790ab9cbb4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

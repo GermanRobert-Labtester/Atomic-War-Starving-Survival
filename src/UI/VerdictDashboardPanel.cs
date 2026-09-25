@@ -34,12 +34,29 @@ public partial class VerdictDashboardPanel : Control
 
     public void Bind(VerdictPanel verdict, VerdictHostSession session)
     {
+        // Live refresh: reckoning phase and verdict resolution move the board
+        // while it is open (silent-failure sweep, 2026-09-25).
+        if (_session != null)
+        {
+            _session.Reckoning.OnPhaseChanged -= OnReckoningPhaseChanged;
+            _session.Reckoning.OnVerdictResolved -= OnVerdictResolved;
+        }
+
         _verdictInner = verdict;
         _session = session;
+
+        if (_session != null)
+        {
+            _session.Reckoning.OnPhaseChanged += OnReckoningPhaseChanged;
+            _session.Reckoning.OnVerdictResolved += OnVerdictResolved;
+        }
         _verdictInner.Bind(session);
         MountInner();
         RefreshView();
     }
+
+    private void OnReckoningPhaseChanged(Ashfall.Core.Verdict.ReckoningPhase _) => RefreshView();
+    private void OnVerdictResolved(string _) => RefreshView();
 
     public override void _Ready()
     {
@@ -143,11 +160,11 @@ public partial class VerdictDashboardPanel : Control
         RefreshView();
     }
 
-    public void Close()
-    {
-        Visible = false;
-        OnClose?.Invoke();
-    }
+    public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
 
     public override void _UnhandledInput(InputEvent @event)
     {

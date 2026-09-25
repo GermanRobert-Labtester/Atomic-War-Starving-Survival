@@ -146,7 +146,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("risk", "Detection Risk", "—", AshfallMetricCard.Criticality.Normal, minWidth: 140);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 14);
+            _contentStack.AddThemeConstantOverride("separation", DesignTheme.SpacingLg);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -173,7 +173,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_noiseSourcesText);
 
             var actionRow = new HBoxContainer();
-            actionRow.AddThemeConstantOverride("separation", 10);
+            actionRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
 
             _toggleQuietHoursBtn = new Button { Text = "Toggle Quiet Hours" };
             _toggleQuietHoursBtn.Pressed += OnToggleQuietHoursPressed;

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/disability_kind.jpg-65b806a20ba6abb1c28977f71
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

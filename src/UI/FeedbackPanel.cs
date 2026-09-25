@@ -38,7 +38,14 @@ namespace AtomicWar.GodotApp.UI
         {
             // Position toast stack at top-right, just below the top HUD
             SetAnchorsPreset(LayoutPreset.TopRight);
-            Position = new Vector2(-420, 56);
+            // Explicit offsets — deterministic top-right placement independent of
+            // the parent's laid-out size at _Ready time. Setting `Position` under
+            // right-hand anchors is parent-size-dependent and could resolve to an
+            // off-screen x when the parent is already laid out (UI/UX audit 2026-09-25).
+            OffsetLeft = -420;
+            OffsetTop = 56;
+            OffsetRight = -20;
+            OffsetBottom = 456;
             CustomMinimumSize = new Vector2(400, 400);
             MouseFilter = MouseFilterEnum.Ignore;
 

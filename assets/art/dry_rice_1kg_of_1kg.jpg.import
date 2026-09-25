@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/dry_rice_1kg_of_1kg.jpg-89b72a69e5ce57b6d14ad
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

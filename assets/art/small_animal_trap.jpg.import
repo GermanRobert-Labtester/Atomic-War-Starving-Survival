@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/small_animal_trap.jpg-cbba54e5c09a6302d90f8c5
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

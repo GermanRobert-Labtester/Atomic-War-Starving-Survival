@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/energy_drink.jpg-7ccced00398a6d3f6366756ca054
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

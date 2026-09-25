@@ -225,6 +225,20 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--time-capsule-selftest"],
         "tests": ["Plan212TimeCapsuleIntegrationTests", "TimeCapsuleSystemTests"]
     },
+    "internal_communication": {
+        "domain": "Shelter Communication (Plan 211)",
+        "core": ["InternalCommunicationSystem"],
+        "catalog": ["communication_templates.json"],
+        "host": ["InternalCommunicationHostSession"],
+        "setup": "SetupInternalCommunication",
+        "ticked": True,
+        "tick_type": "Daily (Message Expiry)",
+        "store": ["InternalCommunicationSaveStore"],
+        "ui": ["ShelterSocialPanel"],
+        "routes": ["shelter_social"],
+        "cli": ["--internal-communication-selftest"],
+        "tests": ["Plan211InternalCommunicationIntegrationTests", "Plan211InternalCommunicationHostWiringTests"]
+    },
     "death_legacy": {
         "domain": "Survivor Memorial & Wills (Plan 206)",
         "core": ["SurvivorDeathLegacySystem"],
@@ -892,9 +906,9 @@ ARCHITECTURE_GRAPH = {
         "ticked": True,
         "tick_type": "Daily Sanitation Tick",
         "store": ["SanitationSaveStore"],
-        "ui": [],
-        "routes": [],
-        "cli": [],
+        "ui": ["SanitationPanel"],
+        "routes": ["sanitation"],
+        "cli": ["--player-panels-uitest"],
         "tests": ["Plan210SanitationSystemTests", "Plan210SanitationFacilityCatalogTests", "Plan210SanitationHostWiringTests"]
     },
     "echoes": {
@@ -1293,15 +1307,15 @@ ARCHITECTURE_GRAPH = {
         "domain": "Shelter & Infrastructure",
         "core": ["WaterTreatmentSystem"],
         "catalog": [],
-        "host": ["WaterTreatmentHostSession"],
+        "host": ["WaterTreatmentHostSession", "WaterSourcesHostSession"],
         "setup": "SetupWaterTreatment",
         "ticked": True,
         "tick_type": "Daily Filtration Cycle",
         "store": ["WaterTreatmentSaveStore"],
         "ui": ["WaterTreatmentPanel"],
         "routes": ["water_treatment"],
-        "cli": ["--shelter-operations-selftest"],
-        "tests": ["WaterTreatmentSystemTests"]
+        "cli": ["--shelter-operations-selftest", "--water-sources-selftest"],
+        "tests": ["WaterTreatmentSystemTests", "WaterSourcesSurfaceWiringTests"]
     },
     "airlock_security": {
         "domain": "Shelter & Infrastructure",
@@ -1942,10 +1956,10 @@ ARCHITECTURE_GRAPH = {
         "ticked": True,
         "tick_type": "Daily Deep-Well Pump Tick",
         "store": ["DeepWellSaveStore"],
-        "ui": [],
-        "routes": [],
-        "cli": [],
-        "tests": ["DeepWellSystemTests"]
+        "ui": ["WaterTreatmentPanel"],
+        "routes": ["water_treatment"],
+        "cli": ["--water-sources-selftest"],
+        "tests": ["DeepWellSystemTests", "WaterSourcesSurfaceWiringTests"]
     },
     "water_condenser": {
         "domain": "Water & Infrastructure",
@@ -1956,10 +1970,10 @@ ARCHITECTURE_GRAPH = {
         "ticked": True,
         "tick_type": "Daily Condensate Intake Tick",
         "store": ["WaterCondenserSaveStore"],
-        "ui": [],
-        "routes": [],
-        "cli": [],
-        "tests": ["AtmosphericCondenserSystemTests"]
+        "ui": ["WaterTreatmentPanel"],
+        "routes": ["water_treatment"],
+        "cli": ["--water-sources-selftest"],
+        "tests": ["AtmosphericCondenserSystemTests", "WaterSourcesSurfaceWiringTests"]
     },
     "piezometer_network": {
         "domain": "Water & Infrastructure",
@@ -1970,10 +1984,10 @@ ARCHITECTURE_GRAPH = {
         "ticked": True,
         "tick_type": "Daily Aquifer Advisory Tick",
         "store": ["PiezometerSaveStore"],
-        "ui": [],
-        "routes": [],
-        "cli": [],
-        "tests": ["Plan189IntakeAdvisoryBridgeTests"]
+        "ui": ["WaterTreatmentPanel"],
+        "routes": ["water_treatment"],
+        "cli": ["--water-sources-selftest"],
+        "tests": ["Plan189IntakeAdvisoryBridgeTests", "WaterSourcesSurfaceWiringTests"]
     },
     "bio_fermentation": {
         "domain": "Shelter & Farming",
@@ -2288,6 +2302,37 @@ def scan_codebase_symbols():
             key=lambda pth: (not pth.endswith(exact), pth)
         )
 
+    # A setup declaration is not construction evidence. Scan Main's production
+    # partials for actual invocation expressions and retain their source line.
+    setup_calls = {}
+    setup_methods = {node["setup"] for node in ARCHITECTURE_GRAPH.values() if node["setup"]}
+    main_sources = sorted(
+        p for p in (REPO_ROOT / "src").glob("Main*.cs")
+        if ".UiTests." not in p.name
+        and "SelfTest" not in p.name
+        and "Tests" not in p.name)
+    for p in main_sources:
+        content = p.read_text(encoding="utf-8", errors="ignore")
+        content = re.sub(r"/\*.*?\*/|//[^\n]*", "", content, flags=re.DOTALL)
+        content = re.sub(
+            r'@"(?:""|[^"])*"|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'',
+            lambda m: "\n" * m.group(0).count("\n"),
+            content)
+        rel_path = p.relative_to(REPO_ROOT).as_posix()
+        for setup_method in setup_methods:
+            declaration = re.compile(
+                rf"(?m)^[ \t]*(?:(?:public|protected|private|internal|static|virtual|override|async|sealed|partial|new|extern|unsafe)\s+)+"
+                rf"[\w.<>,?\[\]]+\s+{re.escape(setup_method)}\s*\([^;\n]*"
+            )
+            source_without_declaration = declaration.sub("", content)
+            call_pattern = re.compile(rf"\b{re.escape(setup_method)}\s*\(")
+            for match in call_pattern.finditer(source_without_declaration):
+                line_number = source_without_declaration.count("\n", 0, match.start()) + 1
+                setup_calls.setdefault(setup_method, []).append({
+                    "file": rel_path,
+                    "line": line_number
+                })
+
     data_files = set()
     data_dir = REPO_ROOT / "Assets" / "StreamingAssets" / "Data"
     for p in data_dir.rglob("*.json"):
@@ -2313,9 +2358,9 @@ def scan_codebase_symbols():
         "requires_setup": (m.group(6) != "false") if m.group(6) else (m.group(3) != "null")
     } for m in sec_pattern.finditer(reg_text)}
 
-    return cs_types, data_files, cli_flags, reg_sections
+    return cs_types, data_files, cli_flags, reg_sections, setup_calls
 
-def validate_and_compute_statuses(cs_types, data_files, cli_flags, reg_sections):
+def validate_and_compute_statuses(cs_types, data_files, cli_flags, reg_sections, setup_calls):
     """Mechanically validates every node and edge in the architecture graph and computes 6-status metrics."""
     errors = []
     evaluated_graph = {}
@@ -2356,6 +2401,10 @@ def validate_and_compute_statuses(cs_types, data_files, cli_flags, reg_sections)
         setup_method = node["setup"]
         if reg_info["requires_setup"] and reg_info["setup_method"] != setup_method:
             errors.append(f"[{sec_key}] Setup method mismatch: Registry specifies '{reg_info['setup_method']}', graph specifies '{setup_method}'.")
+        setup_sites = setup_calls.get(setup_method, []) if setup_method else []
+        setup_invoked = bool(setup_sites) or not reg_info["requires_setup"]
+        if not setup_invoked:
+            host_valid = False
 
         # Status 3: Ticked (Simulation loop or documented on-demand cadence)
         tick_valid = bool(node.get("tick_type"))
@@ -2415,6 +2464,8 @@ def validate_and_compute_statuses(cs_types, data_files, cli_flags, reg_sections)
             "host": node["host"],
             "host_files": sorted(list(set(host_files))),
             "setup": setup_method,
+            "setup_invoked": setup_invoked,
+            "setup_call_sites": setup_sites,
             "ticked": node["ticked"],
             "tick_type": node["tick_type"],
             "store": node["store"],
@@ -2461,7 +2512,7 @@ def generate_markdown(evaluated_graph, verified_date=None):
         "**Single Source of Truth:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` & `Assets/Ashfall.Core/HostCliRegistry.cs`",
         "",
         "> **GENERATED FILE — do not edit by hand.**",
-        "> Derived mechanically from real C# type definitions, catalog JSON files, host wiring, and test fixtures.",
+        "> Derived mechanically from real C# types, catalog JSON, host wiring, setup invocation sites, and test fixtures.",
         "> Generated via: `bash scripts/ci/generate-architecture-map.sh`",
         "> CI Completeness Gate: `bash scripts/ci/generate-architecture-map.sh --check`",
         "",
@@ -2538,7 +2589,12 @@ def generate_markdown(evaluated_graph, verified_date=None):
     for i, (key, data) in enumerate(sorted(evaluated_graph.items(), key=lambda x: (x[1]["domain"], x[0])), 1):
         lines.append(f"### {i}. `{key}` — {data['desc']} ({data['domain']})")
         lines.append(f"- **Owner Domain:** `{data['owner']}`")
-        lines.append(f"- **Setup Method:** `Main.{data['setup']}()` | **Cadence:** `{data['tick_type']}`")
+        lines.append(f"- **Setup Method:** `Main.{data['setup']}()` | **Invoked:** {'yes' if data['setup_invoked'] else 'no'} | **Cadence:** `{data['tick_type']}`")
+        if data["setup_call_sites"]:
+            call_sites = ", ".join(
+                f"`{site['file']}:{site['line']}`"
+                for site in data["setup_call_sites"])
+            lines.append(f"- **Setup Invocation Sites:** {call_sites}")
         route_txt = ', '.join(f'`{r}`' for r in data['routes'])
         lines.append(f"- **UI Routes:** {route_txt}".rstrip())
 
@@ -2566,8 +2622,8 @@ def generate_markdown(evaluated_graph, verified_date=None):
         "",
         "## 4. Lifecycle Status & Reachability Proof Matrix",
         "",
-        "| Section Key | Implemented | Constructed | Ticked / Cadence | Persisted | Player-Routed | Tested | E2E Status |",
-        "|---|:---:|:---:|---|:---:|:---:|:---:|:---:|"
+        "| Section Key | Implemented | Constructed | Setup Invocation | Ticked / Cadence | Persisted | Player-Routed | Tested | E2E Status |",
+        "|---|:---:|:---:|---|---|:---:|:---:|:---:|:---:|"
     ])
 
     for key, data in sorted(evaluated_graph.items(), key=lambda x: x[0]):
@@ -2578,13 +2634,38 @@ def generate_markdown(evaluated_graph, verified_date=None):
         route_icon = "✅" if st["player_routed"] else "❌"
         test_icon = "✅" if st["tested"] else "❌"
         e2e_icon = "**PASS (6/6)**" if st["e2e_complete"] else "**FAIL (GAP)**"
+        setup_icon = "✅" if data["setup_invoked"] else "❌"
+        setup_site = data["setup_call_sites"][0] if data["setup_call_sites"] else None
+        setup_text = f"{setup_icon} `Main.{data['setup']}()`"
+        if setup_site:
+            rel_f = os.path.relpath(REPO_ROOT / setup_site["file"], DOC_PATH.parent).replace('\\', '/')
+            setup_text += f" ([{setup_site['file']}:{setup_site['line']}]({rel_f}#L{setup_site['line']}))"
         tick_str = f"✅ `{data['tick_type']}`" if data["ticked"] else f"⚡ `{data['tick_type']}`"
 
         lines.append(
-            f"| `{key}` | {imp_icon} | {con_icon} | {tick_str} | {pers_icon} | {route_icon} | {test_icon} | {e2e_icon} |"
+            f"| `{key}` | {imp_icon} | {con_icon} | {setup_text} | {tick_str} | {pers_icon} | {route_icon} | {test_icon} | {e2e_icon} |"
         )
 
     lines.extend([
+        "",
+        "### Never-Invoked Setup Methods",
+        "",
+        "These registry setup methods have no invocation expression in a `Main*.cs` production partial. They do not count as constructed.",
+        ""
+    ])
+    never_invoked = [
+        (key, data) for key, data in sorted(evaluated_graph.items())
+        if not data["setup_invoked"]
+    ]
+    if never_invoked:
+        for key, data in never_invoked:
+            lines.append(f"- `{key}` — `Main.{data['setup']}()`")
+    else:
+        lines.append("- None.")
+
+    lines.extend([
+        "",
+        "This source-level call-site check is not proof that every runtime branch executes in every session.",
         "",
         "---",
         "",
@@ -2604,8 +2685,9 @@ def main():
     check_mode = "--check" in sys.argv
     json_mode = "--json" in sys.argv
 
-    cs_types, data_files, cli_flags, reg_sections = scan_codebase_symbols()
-    evaluated_graph, errors = validate_and_compute_statuses(cs_types, data_files, cli_flags, reg_sections)
+    cs_types, data_files, cli_flags, reg_sections, setup_calls = scan_codebase_symbols()
+    evaluated_graph, errors = validate_and_compute_statuses(
+        cs_types, data_files, cli_flags, reg_sections, setup_calls)
 
     if errors:
         print("ARCHITECTURE GRAPH VALIDATION FAILED:", file=sys.stderr)
@@ -2637,7 +2719,11 @@ def main():
             print("Run: python3 scripts/ci/generate-architecture-map.py && git add docs/architecture/ARCHITECTURE_TEST_MAP.md", file=sys.stderr)
             sys.exit(1)
         else:
-            print(f"OK: Architecture map is up to date and verified ({len(evaluated_graph)} subsystems, 100% end-to-end verified).")
+            total_e2e = sum(1 for section in evaluated_graph.values() if section["status"]["e2e_complete"])
+            print(
+                f"OK: Architecture map is up to date "
+                f"({len(evaluated_graph)} subsystems; {total_e2e}/{len(evaluated_graph)} "
+                "pass all six lifecycle statuses).")
             sys.exit(0)
     else:
         DOC_PATH.parent.mkdir(parents=True, exist_ok=True)

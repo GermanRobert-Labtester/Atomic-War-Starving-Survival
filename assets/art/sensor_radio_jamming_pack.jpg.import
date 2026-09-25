@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/sensor_radio_jamming_pack.jpg-de7b0166016c2fd
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

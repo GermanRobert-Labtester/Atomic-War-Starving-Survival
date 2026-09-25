@@ -92,7 +92,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_detailText);
 
             var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            buttonRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
 
             _setTrapBtn = new Button { Text = "Set Snare at Perimeter", CustomMinimumSize = new Vector2(180, 36) };
             _setTrapBtn.Pressed += () =>

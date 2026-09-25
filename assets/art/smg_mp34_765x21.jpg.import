@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/smg_mp34_765x21.jpg-cf1cc3883b16c4acdc47f64d4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

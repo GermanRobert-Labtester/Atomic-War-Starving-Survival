@@ -130,7 +130,8 @@ namespace Ashfall.Core.Tests
 
             Assert.True(missingFlags.Count == 0,
                 $"Architecture Test Map references {missingFlags.Count} CLI flags not registered in HostCliRegistry:\n  " +
-                string.Join("\n  ", missingFlags));
+                string.Join("\n  ", missingFlags) +
+                $"\nRegistry water descriptors: {string.Join(", ", HostCliRegistry.AllDescriptors.Where(d => d.PrimaryFlag.Contains("water", StringComparison.OrdinalIgnoreCase)).Select(d => d.PrimaryFlag))}");
         }
 
         [Fact]
@@ -141,9 +142,27 @@ namespace Ashfall.Core.Tests
             string text = File.ReadAllText(docPath);
 
             Assert.Contains("## 4. Lifecycle Status & Reachability Proof Matrix", text);
-            Assert.Contains("| Section Key | Implemented | Constructed | Ticked / Cadence | Persisted | Player-Routed | Tested | E2E Status |", text);
+            Assert.Contains("| Section Key | Implemented | Constructed | Setup Invocation | Ticked / Cadence | Persisted | Player-Routed | Tested | E2E Status |", text);
             Assert.Contains("**PASS (6/6)**", text);
             Assert.Contains("(100.0%)", text);
+        }
+
+        [Fact]
+        public void ArchitectureTestMap_ConstructedStatusIncludesSetupInvocationEvidence()
+        {
+            string root = RepoRoot();
+            string docPath = Path.Combine(root, "docs", "architecture", "ARCHITECTURE_TEST_MAP.md");
+            string text = File.ReadAllText(docPath);
+            string row = text.Split('\n')
+                .FirstOrDefault(line => line.StartsWith("| `water_treatment` |", StringComparison.Ordinal))
+                ?? string.Empty;
+
+            Assert.Contains("### Never-Invoked Setup Methods", text);
+            Assert.Contains("| Section Key | Implemented | Constructed | Setup Invocation |", text);
+            Assert.Contains("| `water_treatment` | ✅ | ✅ | ✅ `Main.SetupWaterTreatment()`", row);
+            Assert.Contains("Main.SetupShelterEspionage()", text);
+            Assert.Contains("Setup Invocation Sites:", text);
+            Assert.Contains("src/Main.WaterSources.cs:", text);
         }
 
         [Fact]

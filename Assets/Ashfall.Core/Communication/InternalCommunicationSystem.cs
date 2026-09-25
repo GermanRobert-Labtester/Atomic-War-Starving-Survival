@@ -139,6 +139,8 @@ namespace Ashfall.Core.Communication
     /// </summary>
     public sealed class InternalCommunicationSystem
     {
+        public const int CurrentSchemaVersion = 1;
+
         private readonly InternalCommunicationState _state;
         private readonly Dictionary<string, CommunicationTemplateDefinition> _templates =
             new Dictionary<string, CommunicationTemplateDefinition>(StringComparer.OrdinalIgnoreCase);
@@ -157,17 +159,20 @@ namespace Ashfall.Core.Communication
         public InternalCommunicationSystem(InternalCommunicationState? state = null)
         {
             _state = state ?? new InternalCommunicationState();
-            if (_state.Boards.Count == 0)
+            EnsureDefaultBoard();
+        }
+
+        private void EnsureDefaultBoard()
+        {
+            if (_state.Boards.Count != 0) return;
+            _state.Boards.Add(new BulletinBoard
             {
-                _state.Boards.Add(new BulletinBoard
-                {
-                    BoardId = "board_main_commons",
-                    Name = "Common Room Notice Board",
-                    RoomId = "room_mess_hall",
-                    Capacity = 25,
-                    IsLeadershipOnly = false
-                });
-            }
+                BoardId = "board_main_commons",
+                Name = "Common Room Notice Board",
+                RoomId = "room_mess_hall",
+                Capacity = 25,
+                IsLeadershipOnly = false
+            });
         }
 
         public void LoadCatalog(string json)
@@ -184,12 +189,16 @@ namespace Ashfall.Core.Communication
         public void LoadCatalog(CommunicationCatalogData catalog)
         {
             if (catalog?.Templates == null) return;
+
+            // The authored file is the catalog authority. A successful reload
+            // replaces the prior definition set instead of leaving removed
+            // templates reachable through a stale in-memory merge.
+            _templates.Clear();
             foreach (var t in catalog.Templates)
             {
-                if (!string.IsNullOrWhiteSpace(t.Id))
-                {
-                    _templates[t.Id] = t;
-                }
+                if (t == null || string.IsNullOrWhiteSpace(t.Id)) continue;
+                t.Id = t.Id.Trim();
+                _templates[t.Id] = t;
             }
         }
 
@@ -432,7 +441,7 @@ namespace Ashfall.Core.Communication
                     Message = a.Message,
                     Priority = a.Priority,
                     BroadcastDay = a.BroadcastDay,
-                    AcknowledgedSurvivors = new List<string>(a.AcknowledgedSurvivors)
+                    AcknowledgedSurvivors = new List<string>(a.AcknowledgedSurvivors ?? new List<string>())
                 });
             }
 
@@ -442,9 +451,13 @@ namespace Ashfall.Core.Communication
         public void RestoreState(InternalCommunicationState state)
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
+            if (state.SchemaVersion > CurrentSchemaVersion)
+                throw new InvalidOperationException($"Unsupported internal communication state schema {state.SchemaVersion}.");
 
-            _state.SchemaVersion = state.SchemaVersion;
-            _state.NextSequence = state.NextSequence;
+            // A missing schema field is a legacy v1 payload, not a reason to
+            // reject an otherwise readable campaign. Future versions fail
+            // explicitly above rather than being silently downgraded.
+            _state.SchemaVersion = state.SchemaVersion <= 0 ? CurrentSchemaVersion : state.SchemaVersion;
             _state.Messages.Clear();
             _state.Boards.Clear();
             _state.IntercomBroadcasts.Clear();
@@ -502,7 +515,27 @@ namespace Ashfall.Core.Communication
                 }
             }
 
+            int nextSequence = Math.Max(1, state.NextSequence);
+            foreach (var message in _state.Messages)
+                nextSequence = Math.Max(nextSequence, NextSequenceAfter(message.MessageId));
+            foreach (var board in _state.Boards)
+                nextSequence = Math.Max(nextSequence, NextSequenceAfter(board.BoardId));
+            foreach (var broadcast in _state.IntercomBroadcasts)
+                nextSequence = Math.Max(nextSequence, NextSequenceAfter(broadcast.AnnouncementId));
+            _state.NextSequence = nextSequence;
+
+            EnsureDefaultBoard();
             OnStateChanged?.Invoke();
+        }
+
+        private static int NextSequenceAfter(string? id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return 1;
+            int separator = id.LastIndexOf('_');
+            if (separator < 0 || separator >= id.Length - 1) return 1;
+            return int.TryParse(id.AsSpan(separator + 1), out int value) && value >= 0
+                ? value + 1
+                : 1;
         }
     }
 }

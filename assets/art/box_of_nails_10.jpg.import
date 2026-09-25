@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/box_of_nails_10.jpg-0c43a5a300e4966d56bd54d1a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

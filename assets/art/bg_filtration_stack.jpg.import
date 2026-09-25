@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bg_filtration_stack.jpg-4c0dfba080e5d0a8fe9e1
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

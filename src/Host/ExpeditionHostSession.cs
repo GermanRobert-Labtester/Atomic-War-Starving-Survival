@@ -836,11 +836,19 @@ namespace AtomicWar.GodotApp
             };
 
         /// <summary>
+        /// <summary>
+        /// CORE-MECH W4 — crew-consequence sink for vehicle breakdowns. Wired by
+        /// Main to the medical, dose, and disease owners; unbound means the
+        /// breakdown still aborts the sortie (pre-W4 behavior preserved).
+        /// </summary>
+        public Action<VehicleBreakdownOutcome>? BreakdownConsequenceSink { get; set; }
+
+        /// <summary>
         /// Dispatch preparation through the garage: exact fuel need check, the
         /// consuming PrepareForExpedition (fuel burn, wear, prep-breakdown
         /// roll). Returns null when ready to roll, otherwise a refusal message.
         /// </summary>
-        private string? PrepareVehicleForDispatch(ExpeditionDefinition def, string vehicleId)
+        private string? PrepareVehicleForDispatch(ExpeditionDefinition def, string vehicleId, string survivorId = "")
         {
             var inst = Vehicles.GetVehicle(vehicleId);
             if (inst == null) return $"No such vehicle in the garage: {vehicleId}.";
@@ -855,9 +863,17 @@ namespace AtomicWar.GodotApp
             if (inst.fuel < fuelNeeded)
                 return $"{vehicleId} needs {fuelNeeded:F1} fuel for this run — tank holds {inst.fuel:F1}. Refuel first.";
 
-            var (_, _, prepBreakdown) = Vehicles.PrepareForExpedition(vehicleId, distanceKm);
-            if (prepBreakdown)
+            // CORE-MECH W4: one consuming preparation call. A breakdown now
+            // resolves a typed crew consequence exactly once (the repair gate
+            // above, inst.isBrokenDown, is the idempotency guard); an unbound
+            // sink preserves the pre-W4 behavior (sortie aborted, crew unharmed).
+            var outcome = Vehicles.ResolvePrepBreakdown(vehicleId, distanceKm);
+            if (outcome.BrokeDown)
+            {
+                outcome.SurvivorId = survivorId;
+                BreakdownConsequenceSink?.Invoke(outcome);
                 return $"{vehicleId} threw a breakdown during preparation — the sortie is aborted and the vehicle needs repair.";
+            }
 
             // Plan 50 — the same travelled distance feeds the garage's component
             // wear ledger. Catastrophic wear strands the vehicle and opens a

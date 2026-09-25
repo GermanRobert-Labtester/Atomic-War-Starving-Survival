@@ -72,7 +72,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _panel.AddChild(margin);
 
             var rootBox = new VBoxContainer();
-            rootBox.AddThemeConstantOverride("separation", 14);
+            rootBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingLg);
             margin.AddChild(rootBox);
 
             _titleLabel = new Label { Text = "QUESTLINES" };

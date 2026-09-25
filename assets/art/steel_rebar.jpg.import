@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/steel_rebar.jpg-d7258ae4c20df6fe61c8f50f261d4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

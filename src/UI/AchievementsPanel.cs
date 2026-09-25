@@ -36,9 +36,13 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(SurvivorsHostSession? survivors, int simDay = 1, Ashfall.Core.Achievements.AchievementSystem? achievementSystem = null)
         {
+            if (_survivors != null) _survivors.StateChanged -= RefreshView;
+
             _survivors = survivors;
             _simDay = simDay;
             _achievementSystem = achievementSystem;
+
+            if (_survivors != null) _survivors.StateChanged += RefreshView;
             RefreshView();
         }
 

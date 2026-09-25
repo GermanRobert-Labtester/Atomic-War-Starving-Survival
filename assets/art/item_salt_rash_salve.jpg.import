@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_salt_rash_salve.jpg-fc416c89e0e06d3c7d36
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

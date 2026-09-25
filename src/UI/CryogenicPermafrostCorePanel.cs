@@ -1,27 +1,51 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Linq;
 using Godot;
+using Ashfall.Core.Shelter;
 using Ashfall.Core.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
+    /// <summary>
+    /// Cryogenic permafrost core surface (UI/UX audit 2026-09-25 — converted
+    /// from a static prototype shell into a truthful read-only projection).
+    ///
+    /// Authority: <see cref="CryoVaultSystem"/> (Plan B69) — canister
+    /// viability/phase, coolant reserve, insulation tier, breach state, and the
+    /// released-sample log. No local state: values are refreshed from the
+    /// system on every bind and open.
+    /// </summary>
     public partial class CryogenicPermafrostCorePanel : Control, IBindablePanel
     {
         public event Action? OnClose;
 
-        private Label? _headerTitleLabel;
-        private Label? _statusBadgeLabel;
-        private Button? _closeButton;
-        private VBoxContainer? _telemetryContainer;
-        private VBoxContainer? _buttonContainer;
-        private VBoxContainer? _dataContainer;
-        private Label? _logOutputLabel;
+        private Label _status = null!;
+        private VBoxContainer _vault = null!;
+        private VBoxContainer _canisters = null!;
+        private CryoVaultSystem? _cryo;
+
+        public bool IsBound { get; private set; }
 
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
             BuildInterface();
+        }
+
+        /// <summary>Binds the live cryo vault system.</summary>
+        public void Bind(CryoVaultSystem? cryo)
+        {
+            _cryo = cryo;
+            IsBound = cryo != null;
+            RefreshView();
+        }
+
+        public void Unbind()
+        {
+            _cryo = null;
+            IsBound = false;
         }
 
         public void Open()
@@ -30,71 +54,112 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
-        public bool IsBound { get; private set; } = true;
-
-        public void Bind(object? session)
-        {
-            IsBound = true;
-            RefreshView();
-        }
-
-        public void Unbind()
-        {
-            IsBound = false;
-        }
-
-        public void RefreshView()
-        {
-            if (_statusBadgeLabel != null)
-            {
-                _statusBadgeLabel.Text = "STATUS: DEEP FREEZE ALERT - PERMAFROST: -450M / CORE TEMP: -62.4C";
-            }
-        }
-
         private void BuildInterface()
         {
             var chrome = ThreePanePanelScaffold.BuildChrome(
                 this,
-                "SHELTER THERMAL DYNAMICS // CRYOGENIC PERMAFROST CORE [CRYO-02]",
-                "STATUS: DEEP FREEZE ALERT - PERMAFROST: -450M / CORE TEMP: -62.4C",
-                AshfallUiHelpers.ToColor(DesignTheme.Critical),
+                "CRYOGENIC PERMAFROST CORE // SAMPLE PRESERVATION VAULT",
+                "[WAITING FOR SESSION]",
+                AshfallUiHelpers.ToColor(DesignTheme.Dim),
                 "[X] CLOSE CONSOLE",
-                "[CRYO-02] Permafrost creep penetrating sub-level 4 perimeter bulkhead.\n[CRYO-02] Resistive coils engaged in residential sector.",
+                "Vault telemetry reads from the live CryoVaultSystem; values refresh on open.",
                 () => OnClose?.Invoke());
-            _headerTitleLabel = chrome.Title;
-            _statusBadgeLabel = chrome.Status;
-            _closeButton = chrome.Close;
-            _logOutputLabel = chrome.Log;
-            var bodyHBox = chrome.Body;
+            _status = chrome.Status;
+            var body = chrome.Body;
 
-            // Left Column (Telemetry)
-            var leftPanel = ThreePanePanelScaffold.CreatePanelFrame("PERMAFROST STRATA & SECONDARY CRYO LOOPS");
-            bodyHBox.AddChild(leftPanel);
-            _telemetryContainer = ThreePanePanelScaffold.CreateColumn(leftPanel, 8);
-            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("PERMAFROST ADVANCE DEPTH", "-450.2 METERS", AshfallUiHelpers.ToColor(DesignTheme.Critical)));
-            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("FROST LINE CREEP VELOCITY", "+0.42 M/DAY", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
-            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("LOOP A (LIQUID N2 / GLYCOL)", "14.2 BAR @ -62.4C", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("LOOP B (GEOTHERMAL SINK)", "18.0 BAR @ -74.1C", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _telemetryContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("GEOTHERMAL SINK FLUX", "142 kW / DEPLETION: 68%", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+            var left = ThreePanePanelScaffold.CreatePanelFrame("VAULT CONDITION");
+            body.AddChild(left);
+            _vault = ThreePanePanelScaffold.CreateColumn(left, DesignTheme.SpacingSm);
 
-            // Center Column (Interactive Controls)
-            var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("CRYOGENIC MANIFOLD & THERMAL INJECTION");
-            bodyHBox.AddChild(centerPanel);
-            _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
-            _buttonContainer.AddChild(new Button { Text = "[PULSE GEOTHERMAL THERMAL INJECTION]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[THROTTLE GLYCOL CHILLER PUMPS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[ENGAGE EMERGENCY RESISTIVE HEATING COILS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[VENT CRYOGENIC NITROGEN OVERPRESSURE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            var right = ThreePanePanelScaffold.CreatePanelFrame("STABLED CANISTERS");
+            body.AddChild(right);
+            _canisters = ThreePanePanelScaffold.CreateColumn(right, DesignTheme.SpacingSm);
 
-            // Right Column (Data & Logistics)
-            var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("THERMAL BALLAST & ATTRITION RISKS");
-            bodyHBox.AddChild(rightPanel);
-            _dataContainer = ThreePanePanelScaffold.CreateColumn(rightPanel, 8);
-            _dataContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("DIESEL BALLAST RESERVES", "1,240 LITERS (120 L/DAY)", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-            _dataContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("COAL SLURRY STOCKPILE", "4,200 KG (450 KG/DAY)", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-            _dataContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("SECTOR 04 HYPOTHERMIA RISK", "42.5% [CRITICAL EXPOSURE]", AshfallUiHelpers.ToColor(DesignTheme.Hot)));
-            _dataContainer.AddChild(ThreePanePanelScaffold.CreateTelemetryRow("RESISTIVE HEATER DRAW", "34.5 kW [ACTIVE]", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            RefreshView();
+        }
 
+        public void RefreshView()
+        {
+            ClearChildren(_vault);
+            ClearChildren(_canisters);
+            if (_cryo == null)
+            {
+                _status.Text = "[NOT CONNECTED — CRYO VAULT NOT INITIALIZED]";
+                _status.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
+                _canisters.AddChild(AshfallUiHelpers.MakeBody(
+                    "Cryo authority unavailable — start or load a campaign to read live vault state."));
+                return;
+            }
+
+            var state = _cryo.State;
+            int canisterCount = state.canisters?.Count ?? 0;
+            float coolantPct = state.coolant_reserve / CryoVaultSystem.MaxCoolant * 100f;
+
+            _status.Text = state.breach_active
+                ? $"BREACH ACTIVE — {state.breach_reason}"
+                : $"VAULT SEALED — {canisterCount} CANISTER(S) STABLED";
+            _status.AddThemeColorOverride("font_color",
+                state.breach_active
+                    ? AshfallUiHelpers.ToColor(DesignTheme.Critical)
+                    : AshfallUiHelpers.ToColor(DesignTheme.Success));
+
+            _vault.AddChild(ThreePanePanelScaffold.CreateTelemetryRow(
+                "COOLANT RESERVE", $"{state.coolant_reserve:0.#} / {CryoVaultSystem.MaxCoolant:0} ({coolantPct:0}%)",
+                coolantPct < 25f
+                    ? AshfallUiHelpers.ToColor(DesignTheme.Critical)
+                    : coolantPct < 50f
+                        ? AshfallUiHelpers.ToColor(DesignTheme.Warning)
+                        : AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+            _vault.AddChild(ThreePanePanelScaffold.CreateTelemetryRow(
+                "INSULATION TIER", $"{state.insulation_level} / {CryoVaultSystem.MaxInsulationLevel}",
+                AshfallUiHelpers.ToColor(DesignTheme.Muted)));
+            _vault.AddChild(ThreePanePanelScaffold.CreateTelemetryRow(
+                "BREACH STATUS",
+                state.breach_active ? $"ACTIVE SINCE DAY {state.breach_started_day}" : "NONE",
+                state.breach_active
+                    ? AshfallUiHelpers.ToColor(DesignTheme.Critical)
+                    : AshfallUiHelpers.ToColor(DesignTheme.Success)));
+            _vault.AddChild(ThreePanePanelScaffold.CreateTelemetryRow(
+                "SAMPLES RELEASED", $"{state.released_log?.Count ?? 0}",
+                AshfallUiHelpers.ToColor(DesignTheme.Muted)));
+
+            if (canisterCount == 0)
+            {
+                _canisters.AddChild(AshfallUiHelpers.MakeBody("No samples stabled in this vault."));
+                return;
+            }
+
+            foreach (var canister in state.canisters!.Take(8))
+            {
+                float viabilityPct = canister.viability_permille / 10f;
+                string phase = ((CryoCanisterPhase)canister.phase).ToString().ToUpperInvariant();
+                string protectedTag = canister.triage_protected ? " · TRIAGE-PROTECTED" : "";
+                _canisters.AddChild(ThreePanePanelScaffold.CreateTelemetryRow(
+                    $"{canister.cultivar_id} [{phase}]",
+                    $"{viabilityPct:0.#}% VIABLE{protectedTag}",
+                    viabilityPct < 40f
+                        ? AshfallUiHelpers.ToColor(DesignTheme.Critical)
+                        : viabilityPct < 70f
+                            ? AshfallUiHelpers.ToColor(DesignTheme.Warning)
+                            : AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+            }
+
+            if (canisterCount > 8)
+            {
+                _canisters.AddChild(ThreePanePanelScaffold.CreateTelemetryRow(
+                    "…", $"+{canisterCount - 8} MORE CANISTER(S)",
+                    AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+            }
+        }
+
+        private static void ClearChildren(Node parent)
+        {
+            for (int i = parent.GetChildCount() - 1; i >= 0; i--)
+            {
+                var child = parent.GetChild(i);
+                parent.RemoveChild(child);
+                child.Free();
+            }
         }
     }
 }

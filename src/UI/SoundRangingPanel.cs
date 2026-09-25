@@ -115,7 +115,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("ARRAY COMMANDS"));
             var row = new HBoxContainer();
-            row.AddThemeConstantOverride("separation", 10);
+            row.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _deployBtn = AshfallUiHelpers.MakeButton("Deploy Array", () => { });
             _deployBtn.Pressed += () => _host?.Deploy("sound_array_mk1", partsAvailable: true);
             _recalibrateBtn = AshfallUiHelpers.MakeButton("Recalibrate Array", () => { });

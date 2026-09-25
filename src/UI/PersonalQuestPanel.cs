@@ -58,7 +58,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("catalog_count", "Available Arcs", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 

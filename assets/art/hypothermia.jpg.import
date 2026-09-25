@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/hypothermia.jpg-5af1e230f25d39f792fde7b816be2
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -1,5 +1,15 @@
 # Plan 41 — Memory That Acts: Heirlooms, Eulogies, and Generations — Heirloom Catalogs, Procedural Eulogies, Wall Carvings, Confessions, Echoes, and Memorial Acts
 
+## PFGL Codex Luna 6 execution revision — heirlooms slice only — 2026-09-25
+
+**Scope correction:** this package covers the Plan 41 heirloom host/save/player projection only. Plan 41's memorial, eulogy, place-memory, and cohort-maturation work is already sealed under DEC-229 and its implementation log; do not reopen it here. Several paths named by the older draft are stale: the live authored catalog is `Assets/StreamingAssets/Data/phantom_heirlooms.json`, the runtime authority is `Assets/Ashfall.Core/Phantoms/HeirloomSystem.cs` + `HeirloomCatalog.cs`, and there is no `src/UI/MemorialTombstonePanel.cs`.
+
+**Verified boundary:** `HeirloomSystem` already owns provenance, holder assignment/inheritance, bounded holder effects, and capture/restore, but no production `src/` consumer constructs it. DEC-229 leaves physical stacks with Inventory; changing a Core holder record does not move an inventory stack. `campaign_legacy` is not currently bound to this system, so it cannot be assumed to persist heirloom state.
+
+**Bounded implementation:** host the existing catalog/system, persist the existing state under an explicit heirloom save owner, and expose holder/provenance through the existing survivor/memorial route after verifying its bind contract. Manual reassignment must not claim to transfer an inventory stack. Death inheritance remains one operation coordinated with the existing death/lineage/relationship authorities; communal fallback remains visible and reload-safe.
+
+**Acceptance:** catalog IDs resolve to authored definitions; holder and provenance state survive save/restore; survivor death transfers each held heirloom once to the current eligible successor or communal fallback; the UI is observational and does not mutate inheritance; no memorial/eulogy/cohort path is reimplemented.
+
 ## 1. Objective and bounded outcome
 
 Deliver the canonical, authoritative implementation and integration architecture for **Plan 41 (Memory That Acts: Heirlooms, Eulogies, and Generations)**. This specification establishes the immutable system contracts, host wiring, data schemas, persistence boundaries, deterministic day semantics, failure handling, UI adapters, and verification protocols required to operate within the ASHFALL runtime without introducing parallel authority, architectural fragmentation, or save corruption.

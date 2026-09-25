@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/cassette_tape.jpg-9d7a1d52d17c3826128b17da55e
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

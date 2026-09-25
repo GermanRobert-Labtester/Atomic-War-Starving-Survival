@@ -675,9 +675,9 @@ namespace AtomicWar.GodotApp.UI
             QueueRedraw();
         }
 
-        public void Close()
-        {
-            Visible = false;
+        public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
             OnClose?.Invoke();
         }
 

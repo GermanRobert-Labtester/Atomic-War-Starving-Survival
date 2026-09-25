@@ -105,7 +105,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_sectorSelector);
 
             var row = new HBoxContainer();
-            row.AddThemeConstantOverride("separation", 10);
+            row.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _recordBtn = new Button { Text = "Record Survey Pass", CustomMinimumSize = new Vector2(210, 36) };
             _recordBtn.Pressed += () =>
             {

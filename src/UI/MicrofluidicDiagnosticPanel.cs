@@ -162,7 +162,7 @@ namespace AtomicWar.GodotApp.UI
             _detailBox = new VBoxContainer();
             _detailBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _detailBox.SizeFlagsVertical = SizeFlags.ExpandFill;
-            _detailBox.AddThemeConstantOverride("separation", 10);
+            _detailBox.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             detailMargin.AddChild(_detailBox);
 
             var detailHeader = new Label { Text = "ASSAY PROTOCOL & DIAGNOSTICS" };

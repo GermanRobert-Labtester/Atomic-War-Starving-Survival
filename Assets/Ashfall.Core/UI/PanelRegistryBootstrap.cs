@@ -73,6 +73,9 @@ namespace Ashfall.Core.UI
             R("workshop",            "Relic Workshop",                PanelGroup.Dashboard,  new[] { "crafting", "inventory", "survivors" });
             R("pharma_lab",          "Pharma Lab",                    PanelGroup.Dashboard,  new[] { "crafting", "inventory", "survivors" });
             R("pharma",              "Pharma Lab (alias)",            PanelGroup.Dashboard,  new[] { "crafting", "inventory", "survivors" });
+            R("romance_family_board", "Romance & Family Board",       PanelGroup.Dashboard,  new[] { "survivors", "survivor_detail" });
+            R("colony_operations",     "Colony Operations Board",      PanelGroup.Dashboard,  new[] { "expeditions" });
+            R("ideological_mediation_desk", "Ideological Mediation Desk", PanelGroup.Dashboard, new[] { "survivor_relations" });
 
             // ── Main Menu panels ─────────────────────────────────────────────
             // "codex" is requested from the main menu and resolved to the
@@ -164,45 +167,89 @@ namespace Ashfall.Core.UI
             R("emergency_response",  "Emergency Response",            PanelGroup.Secondary,  new[] { "survivors", "world", "inventory", "medical", "phase0", "power_grid", "events" });
 
             // ── Advanced Survival Consoles (Shelved Prototypes) ───────────────
-            R("biogas_digester",     "Anaerobic Biogas Digester",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("cartography_gis",     "3D Cavity GIS Cartography",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("printing_press",      "Clandestine Printing Press",    PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("silicon_slicing",     "Silicon Ingot Slicing",         PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("geothermal_turbine",  "Geothermal Steam Turbine",      PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("war_dog_kennel",      "War Dog Kennel & Bio-Monitor",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("isotope_separator",   "Isotope Separator & Calutron",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("plasma_smelting",     "Plasma Arc Smelting",           PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("borehole_seismograph","Deep Borehole Seismograph",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("logistics_airlock",   "Heavy Logistics Airlock",       PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("biogas_digester",     "Anaerobic Biogas Digester",     PanelGroup.Expanded);
+            R("cartography_gis",     "3D Cavity GIS Cartography",     PanelGroup.Expanded);
+            R("printing_press",      "Clandestine Printing Press",    PanelGroup.Expanded);
+            // RETIRED 2026-09-25 (missingness debt closure): silicon_slicing,
+            // isotope_separator, sonic_rupture_drill and tropospheric_radio_relay
+            // were registered Prototype-only shells with no Core system, item or
+            // data authority. A registered non-navigable surface is still a fake
+            // route surface in the manifest, so they are now fully retired (no
+            // registration). Promotion condition: author a real host authority,
+            // then re-register with actions and navigability (see C46 in
+            // docs/ui/UI_UX_AUDIT_2026-09-25.md).
+            R("geothermal_turbine",  "Geothermal Steam Turbine",      PanelGroup.Expanded);
+            R("war_dog_kennel",      "War Dog Kennel & Bio-Monitor",  PanelGroup.Expanded);
+            R("plasma_smelting",     "Plasma Arc Smelting",           PanelGroup.Expanded);
+            R("borehole_seismograph","Deep Borehole Seismograph",     PanelGroup.Expanded);
+            R("logistics_airlock",   "Heavy Logistics Airlock",       PanelGroup.Expanded);
 
             // ── Subsystem Consoles (Batch 16 & 17 - Shelved Prototypes) ────────
-            R("cryo_permafrost_core", "Cryogenic Permafrost Core",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("basal_radon_migration","Basal Radon Migration",        PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("trauma_bonding_cohort","Trauma Bonding & Cohort",       PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("clandestine_insurgency","Clandestine Insurgency",      PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("subterranean_debt_ledger","Subterranean Debt Ledger",   PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("surface_shrapnel_aegis","Surface Shrapnel Aegis",       PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("long_walk_expedition", "Long Walk Expedition",          PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("sonic_rupture_drill",  "Sonic Rupture Drill",           PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("vault_door_breaching", "Vault Door Breaching",          PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("iron_cenotaph_memorial","Iron Cenotaph Memorial",       PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("cryo_permafrost_core", "Cryogenic Permafrost Core",     PanelGroup.Expanded);
+            R("basal_radon_migration","Basal Radon Migration",        PanelGroup.Expanded);
+            R("trauma_bonding_cohort","Trauma Bonding & Cohort",       PanelGroup.Expanded);
+            R("clandestine_insurgency","Clandestine Insurgency",      PanelGroup.Expanded);
+            R("subterranean_debt_ledger","Subterranean Debt Ledger",   PanelGroup.Expanded);
+            R("surface_shrapnel_aegis","Surface Shrapnel Aegis",       PanelGroup.Expanded);
+            R("long_walk_expedition", "Long Walk Expedition",          PanelGroup.Expanded);
+            R("vault_door_breaching", "Vault Door Breaching",          PanelGroup.Expanded);
+            R("iron_cenotaph_memorial","Iron Cenotaph Memorial",       PanelGroup.Expanded);
+
+            // ── Plans 178-201 Expansion Surfaces ───────────────────────────
+            // UI/UX audit 2026-09-25 (panel-missingness seal): these ten routes
+            // already had fully-wired bind/open/close ConfigureActions in
+            // Main.PlayerSurfaces.cs and real constructed panel fields, but
+            // were never registered here — ConfigureActions on an unknown id
+            // silently returns false, so every action attach failed and the
+            // dashboard nav buttons (POLITICS, PRISONERS, FORCED LABOR,
+            // NARCOTICS, MUTATIONS, NURSERY, AVIATION, STEALTH, FALLOUT,
+            // NARRATIVE ARCS) were dead routes.
+            R("aviation",          "Aviation // Airfield & Reconnaissance",        PanelGroup.Expanded);
+            R("narcotics",         "Pharmacy // Chemical Engineering & Narcotics", PanelGroup.Expanded);
+            R("forced_labor",      "Forced Labor // Captivity & Work Details",     PanelGroup.Expanded);
+            R("politics",          "Council Chamber // Settlement Politics & Law", PanelGroup.Expanded);
+            R("prisoners",         "Detention // Prisoner Management & Intel",     PanelGroup.Expanded);
+            R("stealth",           "Stealth // Camouflage & Detection Readout",    PanelGroup.Expanded);
+            R("mutation_tree",     "Genetics // Mutation Trees & Instability",     PanelGroup.Expanded);
+            R("nursery",           "Nursery // Childhood & Schoolhouse",           PanelGroup.Expanded);
+            R("fallout_detail",    "Atmospheric Hazard // Fallout Tracking & Dispersal", PanelGroup.Expanded);
+            R("narrative_arc",     "Narrative Arc",                                PanelGroup.Secondary, new[] { "world", "expansions" });
+
+            // UI/UX audit 2026-09-25 (second missingness batch — root-cause gate
+            // AllConfiguredActionTargets_AreRegistered): these eleven routes had
+            // fully session-bound ConfigureActions (Bind(EnsureXxx())) but were
+            // never registered, so ConfigureActions silently failed and their
+            // panels were unreachable by route.
+            R("fungi_cultivation",      "Dark Beds // Subterranean Fungi Cultivation",  PanelGroup.Expanded);
+            R("plastic_pyrolysis",      "Retort Bay // Waste Plastic Reclamation",      PanelGroup.Expanded);
+            R("cargo_airdrop",          "Airdrop Watch // Cargo Recovery",              PanelGroup.Expanded);
+            R("ebpvd_coating",          "EB-PVD Coater // Thermal Barrier Deposition",  PanelGroup.Expanded);
+            R("microfluidic_diagnostic","Microfluidic Diagnostics // Immunochip Analyzer", PanelGroup.Expanded);
+            R("mine_clearing_flail",    "Mine Clearing // Flail Route Preparation",     PanelGroup.Expanded);
+            R("rail_grinding",          "Rail Grinding // Strategic Rail Corridor",     PanelGroup.Expanded);
+            R("radio_intelligence",     "Radio Intelligence",                           PanelGroup.Expanded);
+            R("shelter_social",         "Shelter Social",                               PanelGroup.Expanded);
+            R("subterranean_operations","Subterranean Operations",                     PanelGroup.Expanded);
+            R("electrostatic_scrubber", "Electrostatic Scrubber // Air Handling",       PanelGroup.Expanded);
+            // UI/UX audit 2026-09-25 (third missingness batch): geothermal aquifer had
+            // a bound host session + panel + handler but no registry entry and no route.
+            R("geothermal_aquifer",     "Geothermal Aquifer // Deep Loop Concession",    PanelGroup.Expanded);
 
             // ── Subsystem Consoles (Batch 18 - Shelved Prototypes) ─────────────
-            R("aquifer_treaty_concession", "Aquifer Treaty Concession",   PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("crossing_safe_conduct_vouch","Crossing Safe Conduct Vouch",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("mechanical_prosthetics_lathe","Mechanical Prosthetics Lathe",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("fungal_protein_fermenter", "Fungal Protein Fermenter",     PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("ultrasonic_decontam_airlock","Ultrasonic Decontam Airlock",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("aquifer_treaty_concession", "Aquifer Treaty Concession",   PanelGroup.Expanded);
+            R("crossing_safe_conduct_vouch","Crossing Safe Conduct Vouch",PanelGroup.Expanded);
+            R("mechanical_prosthetics_lathe","Mechanical Prosthetics Lathe",PanelGroup.Expanded);
+            R("fungal_protein_fermenter", "Fungal Protein Fermenter",     PanelGroup.Expanded);
+            R("ultrasonic_decontam_airlock","Ultrasonic Decontam Airlock",PanelGroup.Expanded);
 
             // ── Subsystem Consoles (Batch 19) ────────────────────────────────
-            R("tropospheric_radio_relay",  "Tropospheric Radio Relay",    PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("induction_cupola_furnace",  "Induction Cupola Furnace",    PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
-            R("heavy_marine_diesel_gen",   "Heavy Marine Turbodiesel Gen",PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("induction_cupola_furnace",  "Induction Cupola Furnace",    PanelGroup.Expanded);
+            R("heavy_marine_diesel_gen",   "Heavy Marine Turbodiesel Gen",PanelGroup.Expanded);
             R("slurry_dewatering_sump",    "Slurry Dewatering Sump",      PanelGroup.Expanded); // LIVE: bound to SumpFloodingHostSession
             R("plans_94_97",               "Plans 94–97 Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "world", "radio" });
             R("plans_110_113",              "Plans 110–113 Industrial Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "world" });
             R("plans_130_133",              "Plans 130–133 Operations Console", PanelGroup.Expanded, new[] { "inventory", "power_grid", "radio", "medical", "expedition" });
-            R("magnetic_drum_archive",     "Magnetic Drum & Microfiche",  PanelGroup.Expanded, maturity: PanelMaturity.Prototype);
+            R("magnetic_drum_archive",     "Magnetic Drum & Microfiche",  PanelGroup.Expanded);
             // Plans 162-165 — advanced agriculture over the canonical greenhouse
             // (strains, medium, water bands, pests, compost, dietary diversity).
             R("farming",                   "Advanced Agriculture",        PanelGroup.Expanded, new[] { "inventory", "power_grid", "world" });

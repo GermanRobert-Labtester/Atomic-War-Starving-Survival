@@ -78,7 +78,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("PRESS & PRODUCT"));
 
             var machineRow = new HBoxContainer();
-            machineRow.AddThemeConstantOverride("separation", 10);
+            machineRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             machineRow.AddChild(AshfallUiHelpers.MakeBody("Press:"));
             _machineSelector = new OptionButton { CustomMinimumSize = new Vector2(340, 36) };
             _machineSelector.ItemSelected += idx =>
@@ -90,7 +90,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(machineRow);
 
             var productRow = new HBoxContainer();
-            productRow.AddThemeConstantOverride("separation", 10);
+            productRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             productRow.AddChild(AshfallUiHelpers.MakeBody("Product:"));
             _productSelector = new OptionButton { CustomMinimumSize = new Vector2(440, 36) };
             _productSelector.ItemSelected += idx =>
@@ -105,7 +105,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(productRow);
 
             var btnRow = new HBoxContainer();
-            btnRow.AddThemeConstantOverride("separation", 10);
+            btnRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _startBtn = new Button { Text = "Start Batch", CustomMinimumSize = new Vector2(150, 36) };
             _startBtn.Pressed += () =>
             {

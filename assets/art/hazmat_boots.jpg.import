@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/hazmat_boots.jpg-9a81182ca91c33745508a1876e18
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

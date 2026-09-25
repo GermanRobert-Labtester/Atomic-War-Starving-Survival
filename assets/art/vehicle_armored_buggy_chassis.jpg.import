@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/vehicle_armored_buggy_chassis.jpg-9cdec9b3d59
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

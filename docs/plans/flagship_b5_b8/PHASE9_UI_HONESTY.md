@@ -12,9 +12,9 @@
 | **GreenhousePanel** | New **Blight risk** row: the risk *band* (none-prevented / low / elevated / high) plus the current contributors (`contam P · drought ×S · fed −r`) from the Phase 4 `GetBlightRiskProfile` — the exact daily-roll inputs, never a forecast of the roll (§17.3 no false precision); an unfed crop hints that dosing lowers risk |
 | **SumpFloodingPanel** | Pump status is now three-state truth: **RUNNING** (toggle + served load), **ENGAGED — LOAD SHED (no grid power)** (warn), **POWER OFF** — the panel can no longer claim RUNNING while the Phase 3 load is shed (`IsPumpEffectivelyPowered` on the host session) |
 
-All changes are read-only projections over landed Core state; the panel-lifecycle
-(16 gates) and UI-accessibility (98 controls / 345 labels, zero focus blockers)
-selftests pass unchanged.
+The three panels above remain read-only projections over landed Core state.
+The Water Sources follow-up below is a command surface over the existing Core
+systems, with atomic inventory billing and no new state or save owner.
 
 ## §16.4 research-description audit (11 nodes)
 
@@ -27,7 +27,7 @@ selftests pass unchanged.
 | fortified_chokepoints | OK — Phase 7 gates barricade + outer gate |
 | automated_sentry_doctrine / turret_controller_blueprint | OK — Phase 7 gates both turrets; the chip is a real cost |
 | **defensive_tripwire_arrays** | **FIXED** — the description promised early-warning rigs; `def_tripwire_flare_line` (the Plan 203 alert device) was ungated. Now gated on the node; pinned by test |
-| **water_condenser_blueprint** | **FLAGGED (documented Phase 6)** — condenser build deferred; the desal-still recipe bug (`resultAmount: 0`) needs the content stream first |
+| **water_condenser_blueprint** | **UPDATED (2026-09-25)** — the atmospheric condenser now has a player-routed build/enable/disable/membrane-replacement path gated by this knowledge and an atomic material bill; the older desal-still recipe note is separate and was not revalidated in this follow-up |
 | **iff_transponder_blueprint** | **PARTIAL (documented Phase 7)** — beacon crafts into comms gear; the automated-defense-grid encounter does not exist; bypass consumer deferred, never wired to human raids |
 
 ## Files changed
@@ -41,6 +41,20 @@ selftests pass unchanged.
 - `Ashfall.Core.Tests/Defense/PerimeterDefensePhase7Tests.cs` (+1 gate test)
 - `docs/plans/flagship_b5_b8/PHASE9_UI_HONESTY.md` (this file)
 
+## Water Sources follow-up (2026-09-25)
+
+`WaterTreatmentPanel` now exposes deep-well build/enable/disable/service,
+atmospheric-condenser build/enable/disable/membrane replacement, and
+piezometer installation. Button availability and status come from the live
+research capability, inventory, power, and Core state projections. The
+piezometer bill is derived from its authored catalog. The aggregate host
+session captures the existing well, condenser, and piezometer save envelopes;
+it adds no parallel gameplay state or save section.
+
+This closes the old “condenser build deferred” statement. It does not establish
+that a desalination recipe is currently valid or invalid; that distinct
+content-path finding needs its own current-data audit.
+
 ## Verification
 
 | Command | Result |
@@ -52,3 +66,8 @@ selftests pass unchanged.
 | `godot --headless --path . -- --data-integrity-selftest` | PASS — 0 findings, 325 catalogs |
 | `godot --headless --path . -- --content-utilization-selftest` | PASS — 0 hard failures |
 | `dotnet build Ashfall.csproj` | 0 warnings, 0 errors |
+| `bash scripts/run_test.sh Ashfall.Core.Tests/Integration/WaterSourcesSurfaceWiringTests.cs` | 4/4 PASS |
+| `bash scripts/run_test.sh Ashfall.Core.Tests/Tooling/ArchitectureTestMapGateTests.cs` | 6/6 PASS |
+| `godot --headless --path . -- --water-sources-selftest` | 11/11 PASS |
+| `godot --headless --path . -- --player-panels-uitest` | PASS — `water_sources=True`, panel lifecycle 21/21 |
+| `python3 scripts/ci/generate-architecture-map.py --check` | PASS — 266 subsystems |

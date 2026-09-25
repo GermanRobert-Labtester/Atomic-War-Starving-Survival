@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/cooked_meal.jpg-2ed6130cc72567ccec51891d58abb
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

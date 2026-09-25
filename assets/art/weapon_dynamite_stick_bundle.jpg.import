@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/weapon_dynamite_stick_bundle.jpg-ae9ec5c7fd3e
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

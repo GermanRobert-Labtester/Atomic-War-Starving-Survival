@@ -69,7 +69,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("templates", "Authored Keepsakes", "0", AshfallMetricCard.Criticality.Normal, minWidth: 140);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -253,7 +253,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 var card = new PanelContainer();
                 var box = new VBoxContainer();
-                box.AddThemeConstantOverride("separation", 3);
+                box.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
                 box.AddChild(new Label { Text = $"{belonging.ItemName} ({belonging.ItemId})" });
                 box.AddChild(new Label
                 {
@@ -262,7 +262,7 @@ namespace AtomicWar.GodotApp.UI
                 box.AddChild(new Label { Text = belonging.IsFavorite ? "FAVORITE" : (belonging.IsInherited ? "inherited" : "not favorite") });
 
                 var actions = new HBoxContainer();
-                actions.AddThemeConstantOverride("separation", 6);
+                actions.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
                 var captured = belonging;
 
                 var favorite = new Button { Text = belonging.IsFavorite ? "Unfavorite" : "Favorite" };

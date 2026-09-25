@@ -50,6 +50,10 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_layoutsContainer);
             AshfallUiHelpers.EmptyChildren(_salvageContainer);
 
+            // ── 0. Location establishing art (only when the art wave shipped one) ──
+            var sectorArt = AshfallUiHelpers.MakeLocationArt(locationId, 140);
+            if (sectorArt != null) _infoContainer.AddChild(sectorArt);
+
             // ── 1. Sector Geography & Description ──
             var infoCard = AshfallUiHelpers.MakeCardFrame("SECTOR OVERVIEW", locationId);
             var infoBox = infoCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);

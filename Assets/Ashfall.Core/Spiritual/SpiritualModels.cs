@@ -102,6 +102,15 @@ namespace Ashfall.Core.Spiritual
 
         [JsonPropertyName("tags")]
         public List<string> Tags { get; set; } = new List<string>();
+
+        /// <summary>
+        /// CORE-MECH W9 — authored political affinity: how a community's visible
+        /// adherence to this belief reads to each faction (signed trust delta).
+        /// Additive and optional — older catalogs read empty, and an old save is
+        /// unaffected because this is definition data, not player state.
+        /// </summary>
+        [JsonPropertyName("faction_leaning")]
+        public Dictionary<string, float> FactionLeaning { get; set; } = new Dictionary<string, float>(StringComparer.Ordinal);
     }
 
     // ── Staged Mourning Record ───────────────────────────────────

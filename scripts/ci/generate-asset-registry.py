@@ -88,6 +88,7 @@ CATEGORY_SEARCH_PATHS = {
         "assets/sprites/locations/{0}.png",
     ],
     "faction": [
+        "assets/ui/Icons/faction_icon_{0}.png",
         "assets/art/{0}.jpg",
         "assets/art/{0}.png",
         "assets/sprites/Factions/{0}.png",
@@ -147,6 +148,18 @@ def resolve_asset(id_str: str, category: str) -> tuple[str | None, str, bool]:
     for cat, prefix in PREFIX_ADD_RULES:
         if cat == category and not id_str.startswith(prefix):
             stems.append(prefix + id_str)
+
+    # 3b. Faction emblems use the icon stem (id without the faction_ prefix).
+    if category == "faction" and id_str.startswith("faction_"):
+        emblem_stem = id_str[len("faction_"):]
+        if emblem_stem not in stems:
+            stems.append(emblem_stem)
+        # Runtime catalog aliases drop the article (faction_the_lamplighters ->
+        # faction_icon_lamplighters.png), so mirror that rule.
+        if emblem_stem.startswith("the_"):
+            article_stem = emblem_stem[len("the_"):]
+            if article_stem not in stems:
+                stems.append(article_stem)
 
     search_templates = CATEGORY_SEARCH_PATHS.get(category, [])
     for stem in stems:

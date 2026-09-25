@@ -412,7 +412,7 @@ namespace AtomicWar.GodotApp.UI
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("SYNDICATE STOCK"));
             _stockRows = new VBoxContainer();
-            _stockRows.AddThemeConstantOverride("separation", 10);
+            _stockRows.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _contentStack.AddChild(_stockRows);
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());

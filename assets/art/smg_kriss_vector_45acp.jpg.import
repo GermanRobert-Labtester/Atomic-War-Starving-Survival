@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/smg_kriss_vector_45acp.jpg-6b3c015d1cfce6fb8a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

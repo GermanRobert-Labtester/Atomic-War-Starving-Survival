@@ -59,7 +59,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("avg_truth", "Avg Credibility", "0%", AshfallMetricCard.Criticality.Normal, minWidth: 140);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -70,7 +70,7 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Left Column: Rumors List ────────────────────────────────
             _leftColumn = new VBoxContainer();
-            _leftColumn.AddThemeConstantOverride("separation", 10);
+            _leftColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _leftColumn.CustomMinimumSize = new Vector2(500, 400);
             _leftColumn.SizeFlagsHorizontal = SizeFlags.Fill;
             _leftColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -93,7 +93,7 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Right Column: Information Hubs ──────────────────────────
             _rightColumn = new VBoxContainer();
-            _rightColumn.AddThemeConstantOverride("separation", 10);
+            _rightColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _rightColumn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _rightColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -216,7 +216,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     var hubCard = new PanelContainer();
                     var hubBox = new VBoxContainer();
-                    hubBox.AddThemeConstantOverride("separation", 2);
+                    hubBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                     var hubName = new Label();
                     hubName.Text = $"{hub.HubName} [{hub.Bias.ToUpperInvariant()}]";

@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "collection_id": "salvage_teardown_alpha1",
+  "description": "Bench teardown: break one surplus item into serviceable parts. Authored gameplay values only; every id resolves in items.json.",
+  "recipes": [
+    {
+      "id": "teardown_weapon_pipe_shotgun",
+      "source_item_id": "weapon_pipe_shotgun",
+      "display_name": "Pipe-Shot Shellgun",
+      "components": [
+        {
+          "item_id": "metal_pipe",
+          "amount": 2
+        },
+        {
+          "item_id": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "item_id": "spring_mechanism",
+          "amount": 1
+        }
+      ],
+      "required_tool_id": "item_hydraulic_wire_cutter",
+      "tool_wear": 8
+    },
+    {
+      "id": "teardown_weapon_nail_driver",
+      "source_item_id": "weapon_nail_driver",
+      "display_name": "Nail-Driver Spike Rifle",
+      "components": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "item_id": "spring_mechanism",
+          "amount": 2
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "amount": 1
+        }
+      ],
+      "required_tool_id": "item_hydraulic_wire_cutter",
+      "tool_wear": 6
+    },
+    {
+      "id": "teardown_weapon_rebar_spear",
+      "source_item_id": "weapon_rebar_spear",
+      "display_name": "Rebar Spear & Pipe Launcher",
+      "components": [
+        {
+          "item_id": "metal_pipe",
+          "amount": 3
+        },
+        {
+          "item_id": "scrap_metal",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "teardown_weapon_molotov_thrower",
+      "source_item_id": "weapon_molotov_thrower",
+      "display_name": "Fuel-Sling Molotov Rig",
+      "components": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 1
+        },
+        {
+          "item_id": "trap_improvised_wire",
+          "amount": 2
+        },
+        {
+          "item_id": "cloth",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "teardown_pistol_cz75_9x19",
+      "source_item_id": "pistol_cz75_9x19",
+      "display_name": "CZ 75 Pistol",
+      "components": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 3
+        },
+        {
+          "item_id": "spring_mechanism",
+          "amount": 2
+        },
+        {
+          "item_id": "metal_pipe",
+          "amount": 1
+        }
+      ],
+      "required_tool_id": "item_rotor_balancing_kit",
+      "tool_wear": 10
+    },
+    {
+      "id": "teardown_weapon_service_rifle",
+      "source_item_id": "weapon_service_rifle",
+      "display_name": "M-Spec Service Rifle",
+      "components": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "item_id": "spring_mechanism",
+          "amount": 2
+        },
+        {
+          "item_id": "item_metallurgy_solder_stock",
+          "amount": 1
+        }
+      ],
+      "required_tool_id": "item_rotor_balancing_kit",
+      "tool_wear": 12
+    },
+    {
+      "id": "teardown_item_magnetic_bearing_coil",
+      "source_item_id": "item_magnetic_bearing_coil",
+      "display_name": "Magnetic Bearing Coil Assembly",
+      "components": [
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "amount": 2
+        },
+        {
+          "item_id": "scrap_electronic",
+          "amount": 2
+        },
+        {
+          "item_id": "antenna_coil",
+          "amount": 1
+        }
+      ],
+      "required_tool_id": "calibration_kit",
+      "tool_wear": 6
+    },
+    {
+      "id": "teardown_item_high_vacuum_pump",
+      "source_item_id": "item_high_vacuum_pump",
+      "display_name": "High-Vacuum Turbomolecular Pump",
+      "components": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 3
+        },
+        {
+          "item_id": "vacuum_tube",
+          "amount": 2
+        },
+        {
+          "item_id": "spring_mechanism",
+          "amount": 1
+        }
+      ],
+      "required_tool_id": "item_rotor_balancing_kit",
+      "tool_wear": 8
+    },
+    {
+      "id": "teardown_item_detector_sensor_module",
+      "source_item_id": "item_detector_sensor_module",
+      "display_name": "Detector Sensor Module",
+      "components": [
+        {
+          "item_id": "scrap_electronic",
+          "amount": 3
+        },
+        {
+          "item_id": "vacuum_tube",
+          "amount": 1
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "amount": 1
+        }
+      ],
+      "required_tool_id": "calibration_kit",
+      "tool_wear": 5
+    },
+    {
+      "id": "teardown_item_seismic_damper_pad",
+      "source_item_id": "item_seismic_damper_pad",
+      "display_name": "Seismic Damper Pad",
+      "components": [
+        {
+          "item_id": "scrap_mechanical",
+          "amount": 2
+        },
+        {
+          "item_id": "metal_pipe",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "teardown_item_lead_lined_effluent_filter",
+      "source_item_id": "item_lead_lined_effluent_filter",
+      "display_name": "Lead-Lined Effluent Filter",
+      "components": [
+        {
+          "item_id": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "item_id": "cloth",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "teardown_item_theodolite_brass_precision",
+      "source_item_id": "item_theodolite_brass_precision",
+      "display_name": "Brass Precision Theodolite",
+      "components": [
+        {
+          "item_id": "item_cast_borosilicate_glass_blank",
+          "amount": 1
+        },
+        {
+          "item_id": "scrap_metal",
+          "amount": 2
+        },
+        {
+          "item_id": "spring_mechanism",
+          "amount": 1
+        }
+      ],
+      "required_tool_id": "calibration_kit",
+      "tool_wear": 4
+    }
+  ]
+}

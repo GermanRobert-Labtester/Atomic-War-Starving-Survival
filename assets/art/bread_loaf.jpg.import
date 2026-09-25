@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bread_loaf.jpg-d7149476f45d258e20320748eb2e07
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

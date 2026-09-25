@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/backpack.jpg-5e9e7648eac5d255a60cf46c808f4080
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

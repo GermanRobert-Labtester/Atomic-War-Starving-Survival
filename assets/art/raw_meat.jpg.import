@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/raw_meat.jpg-f579ce297d31625b7a184d5e11f08124
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

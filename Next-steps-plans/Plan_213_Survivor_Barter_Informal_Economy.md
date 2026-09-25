@@ -1,5 +1,13 @@
 # Plan 213 — Informal Barter Economy — Transactional Personal Trade Integration
 
+## PFGL Codex Luna 6 execution revision — 2026-09-25
+
+**Verified boundary:** DEC-198 and the pure `SurvivorBarterSystem`, `barter_rules.json`, and seven focused tests exist. No production host constructs the system. This concern is survivor-to-survivor informal trade; `ShelterBarterSystem` remains a separate caravan/airlock trade authority. `AcceptOffer` currently validates through optional `HasPersonalItem` and calls a `void TransferPersonalItem` hook, so it cannot prove inventory settlement succeeded atomically. `PersonalBelongingsSystem` stores one-per-item-definition claim metadata and expressly does not own stack quantity or physical item transfer.
+
+**Bounded implementation:** host the existing offer/favor/reputation authority and add a transaction-safe settlement seam that delegates stack movement to the canonical inventory transaction API. An offer can settle only after the complete reciprocal bill is quoted and committed; failed/partial commits leave offer status, pair reputation, personal claim metadata, and inventory unchanged. Do not treat item-definition IDs as unique physical instance IDs. Do not expose offer acceptance before this contract is verified. Persist barter negotiation separately from external trade traffic.
+
+**Acceptance:** offers, rejects, favors, disputes, day expiry, and pair reputation survive capture/restore; one successful exchange moves both sides' stacks once; insufficient stock, stale inventory, duplicate item lines, and failed commit do not create a settled trade; no UI callback mutates reputation or creates items. The route may be added after the host settlement API passes focused tests.
+
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.
 
 ## 1. Objective and bounded outcome

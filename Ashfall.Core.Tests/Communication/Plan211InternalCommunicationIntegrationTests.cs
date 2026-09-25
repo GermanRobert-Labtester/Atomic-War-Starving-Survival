@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Ashfall.Core.Communication;
@@ -33,6 +34,57 @@ namespace Ashfall.Core.Tests.Communication
             var harvest = comms.GetTemplate("comm_tpl_shelter_harvest_celebration");
             Assert.NotNull(harvest);
             Assert.Equal(CommunicationCategory.Celebration, harvest.ParseCategory());
+        }
+
+        [Fact]
+        public void LoadCatalog_ReplacesPreviousTemplateSet()
+        {
+            var comms = new InternalCommunicationSystem();
+            comms.LoadCatalog(new CommunicationCatalogData
+            {
+                SchemaVersion = 1,
+                Templates = new List<CommunicationTemplateDefinition>
+                {
+                    new() { Id = " comm_tpl_old ", Title = "Old", Category = "notice", Description = "Old row" }
+                }
+            });
+            Assert.Single(comms.Templates);
+            Assert.NotNull(comms.GetTemplate("comm_tpl_old"));
+
+            comms.LoadCatalog(new CommunicationCatalogData
+            {
+                SchemaVersion = 1,
+                Templates = new List<CommunicationTemplateDefinition>
+                {
+                    new() { Id = "comm_tpl_new", Title = "New", Category = "notice", Description = "New row" }
+                }
+            });
+
+            Assert.Single(comms.Templates);
+            Assert.Null(comms.GetTemplate("comm_tpl_old"));
+            Assert.NotNull(comms.GetTemplate("comm_tpl_new"));
+        }
+
+        [Fact]
+        public void RestoreState_AdvancesNextSequencePastPersistedIds()
+        {
+            var state = new InternalCommunicationState
+            {
+                SchemaVersion = 1,
+                NextSequence = 1,
+                Messages = new List<CommunicationMessage>
+                {
+                    new() { MessageId = "msg_42", Subject = "Legacy", Content = "Legacy" }
+                },
+                Boards = new List<BulletinBoard>(),
+                IntercomBroadcasts = new List<IntercomAnnouncement>()
+            };
+
+            var system = new InternalCommunicationSystem();
+            system.RestoreState(state);
+            var next = system.PostMessage("author", CommunicationCategory.Notice, "Next", "Body");
+
+            Assert.Equal("msg_43", next.MessageId);
         }
 
         [Fact]

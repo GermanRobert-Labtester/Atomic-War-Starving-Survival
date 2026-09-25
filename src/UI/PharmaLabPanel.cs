@@ -103,7 +103,7 @@ namespace AtomicWar.GodotApp.UI
             var statusCard = new PanelContainer();
             statusCard.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             var statusBox = new VBoxContainer();
-            statusBox.AddThemeConstantOverride("separation", 6);
+            statusBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             statusCard.AddChild(statusBox);
 
             _labStatusHeader = new Label();
@@ -133,7 +133,7 @@ namespace AtomicWar.GodotApp.UI
 
             // Categories bar
             var filterHBox = new HBoxContainer();
-            filterHBox.AddThemeConstantOverride("separation", 6);
+            filterHBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
 
             string[] categories = { "all", "chelator", "psychotropic", "stimulant", "emergency", "anesthetic", "antibiotic", "antiseptic" };
             foreach (var cat in categories)

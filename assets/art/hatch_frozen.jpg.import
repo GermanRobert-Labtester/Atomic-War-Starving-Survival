@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/hatch_frozen.jpg-5e876d58523e8bf96b7bf3781c69
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

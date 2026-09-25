@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/advanced_tool_workshop.jpg-3d009a856edf7d1a4a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

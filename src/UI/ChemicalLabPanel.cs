@@ -75,9 +75,9 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
-        public void Close()
-        {
-            Visible = false;
+        public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
             OnClose?.Invoke();
         }
 
@@ -320,7 +320,7 @@ namespace AtomicWar.GodotApp.UI
             // Dossier Metrics Grid
             var grid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
             grid.AddThemeConstantOverride("h_separation", 16);
-            grid.AddThemeConstantOverride("v_separation", 6);
+            grid.AddThemeConstantOverride("v_separation", DesignTheme.SpacingSm);
             _dossierContainer.AddChild(grid);
 
             grid.AddChild(AshfallUiHelpers.MakeSmall("Chamber Seal:"));

@@ -140,6 +140,7 @@ namespace AtomicWar.GodotApp
         PlayableShellSelfTest,
         ShelterHazardLoopSelfTest,
         ShelterOperationsSelfTest,
+        WaterSourcesSelfTest,
         ShelterDecorSelfTest,
         ShelterAtmosphereSelfTest,
         ShelterPhysicsSelfTest,
@@ -217,6 +218,7 @@ namespace AtomicWar.GodotApp
         ShelterSecuritySelfTest,
         PersonalQuestSelfTest,
         TimeCapsuleSelfTest,
+        InternalCommunicationSelfTest,
         DeathLegacySelfTest,
         RelationshipDecaySelfTest,
         ResearchUnlockSelfTest,
@@ -341,6 +343,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ShelterPhysicsSelfTest;
             if (Has(args, "--shelter-operations-selftest") || Has(args, "--operations-selftest") || Has(args, "--shelter-ops-selftest"))
                 return HostCliAction.ShelterOperationsSelfTest;
+            if (Has(args, "--water-sources-selftest"))
+                return HostCliAction.WaterSourcesSelfTest;
             if (Has(args, "--shelter-hazard-loop-selftest") || Has(args, "--shelter-hazard-selftest") || Has(args, "--duty-roster-loop-selftest"))
                 return HostCliAction.ShelterHazardLoopSelfTest;
             if (Has(args, "--ui-layout-selftest") || Has(args, "--layout-selftest"))
@@ -702,6 +706,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.PersonalQuestSelfTest;
             if (Has(args, "--time-capsule-selftest") || Has(args, "--time-capsules-selftest"))
                 return HostCliAction.TimeCapsuleSelfTest;
+            if (Has(args, "--internal-communication-selftest") || Has(args, "--shelter-communications-selftest"))
+                return HostCliAction.InternalCommunicationSelfTest;
             if (Has(args, "--death-legacy-selftest") || Has(args, "--wills-selftest") || Has(args, "--survivor-death-selftest"))
                 return HostCliAction.DeathLegacySelfTest;
             if (Has(args, "--relationship-decay-selftest") || Has(args, "--social-drift-selftest"))
@@ -1022,6 +1028,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --shelter-security-selftest Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding");
             GD.Print("  --personal-quests-selftest Plan 200: Survivor personal quests, character arcs, stage progression, save persistence, and UI binding");
             GD.Print("  --time-capsule-selftest  Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding");
+            GD.Print("  --internal-communication-selftest  Plan 211: Internal shelter notices, identity refusals, expiry, save persistence, and Shelter Social UI binding");
             GD.Print("  --death-legacy-selftest  Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding");
             GD.Print("  --relationship-decay-selftest Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding");
             GD.Print("  --visitor-integration-selftest Plan 214: admitted visitor stays, temporary housing, processing requirements, recruitment handoff, and UI binding");

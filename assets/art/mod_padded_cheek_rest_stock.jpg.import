@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/mod_padded_cheek_rest_stock.jpg-b82c8ae873fe4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

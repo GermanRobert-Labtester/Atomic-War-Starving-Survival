@@ -202,13 +202,70 @@ namespace AtomicWar.GodotApp
             var def = _moralChoiceDefs.FirstOrDefault(
                 d => string.Equals(d.Id, questId, StringComparison.Ordinal));
             if (def == null) return false;
-            if (!_moralChoice.TryResolve(questId, choiceIndex, def.LocationId, _simDay, out _))
+            if (!_moralChoice.TryResolve(questId, choiceIndex, def.LocationId, _simDay, out var resolveResult))
                 return false;
+
+            // CORE-MECH W8: a choice with a public footprint seeds the canonical
+            // rumor network. RumorSystem stays the only rumor authority; the seed
+            // builder is pure; the one-shot trigger guarantees one seed per choice.
+            SeedMoralChoiceGossip(resolveResult?.Resolution);
 
             _moralChoiceDirty = true;
             AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiConfirm);
             return true;
         }
+
+        /// <summary>
+        /// CORE-MECH W8 — turn a resolved choice into a rumor seed and hand it to
+        /// the existing RumorSystem. Uses the authored <c>propagatesOnDay</c> hook
+        /// (gossip leaves the witnessing circle on resolvedDay + 1..3). Fails closed
+        /// when the info owner is not set up: the choice still resolves.
+        /// </summary>
+        private void SeedMoralChoiceGossip(Ashfall.Core.MoralChoice.MoralChoiceResolution? resolution)
+        {
+            if (resolution == null || string.IsNullOrEmpty(resolution.questId)) return;
+
+            float impact = Math.Clamp(Math.Abs(resolution.moralDelta) / 20f, 0f, 1f);
+            if (resolution.empathyDelta > 0) impact = Math.Clamp(impact + 0.15f, 0f, 1f);
+
+            var seed = Ashfall.Core.MoralChoice.MoralChoiceGossipSeed.Build(
+                resolution.questId,
+                resolution.locationId,
+                resolution.propagatesOnDay > 0 ? resolution.propagatesOnDay : resolution.resolvedDay,
+                resolution.epitaph,
+                impact,
+                isPrivate: false);
+            if (seed == null) return;
+
+            SetupRumorNetwork();
+            if (_rumorNetwork == null) return;
+
+            // One seed per choice, ever — the W11 primitive rebuilt inline to clear
+            // the W8→W11 ordering dependency.
+            var triggers = GossipTriggers();
+            if (!triggers.TryFire("moral." + seed.SubjectId, Math.Max(1, seed.OriginDay)))
+                return;
+
+            var rumor = _rumorNetwork.System.GenerateRumor(
+                seed.OriginLocationId,
+                Ashfall.Core.InformationFlow.RumorSubjectType.Faction,
+                seed.SubjectId,
+                seed.Headline,
+                seed.Description,
+                seed.Truthfulness,
+                seed.OriginDay);
+            rumor.DecayRate = seed.DecayRate;
+            rumor.PropagationSpeed = seed.PropagationSpeed;
+            // The rumor host raises its own StateChanged on generation (Main binds
+            // that to the dirty flag), so the seed needs no extra bookkeeping.
+            _rumorNetworkDirty = true;
+        }
+
+        /// <summary>W8/W11 shared trigger ledger over the campaign consequence ledger.</summary>
+        private Ashfall.Core.Flags.OneShotTriggerLedger GossipTriggers()
+            => _gossipTriggers ??= new Ashfall.Core.Flags.OneShotTriggerLedger(_consequenceLedger);
+
+        private Ashfall.Core.Flags.OneShotTriggerLedger? _gossipTriggers;
 
         /// <summary>Journal integration: one entry per resolution, arrow only — never the number.</summary>
         private void WriteMoralChoiceJournalEntry(MoralChoiceResolution resolution)

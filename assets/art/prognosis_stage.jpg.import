@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/prognosis_stage.jpg-c9a6b70fd3d0b25f0c5b5f115
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

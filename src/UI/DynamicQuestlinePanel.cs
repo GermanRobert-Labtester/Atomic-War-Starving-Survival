@@ -72,7 +72,7 @@ namespace AtomicWar.GodotApp.UI
                 SizeFlagsHorizontal = SizeFlags.ExpandFill
             };
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             scroll.AddChild(_contentStack);
 

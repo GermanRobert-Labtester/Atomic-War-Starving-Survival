@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/antiseptic_1l_of_1l.jpg-074e1e48683aa0d9b963a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

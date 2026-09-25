@@ -89,6 +89,14 @@ namespace Ashfall.Core
         private readonly ILog _log;
         private int _currentDay;
 
+        /// <summary>
+        /// CORE-MECH W3 — optional winter-pressure read (day → filter-load multiplier).
+        /// Read exactly once per completed treatment, at the single degradation site.
+        /// Unwired (null) or a neutral 1.0 means unchanged behavior; this is a
+        /// read-only view of the Year-of-Ash season, never a second authority.
+        /// </summary>
+        public Func<int, float>? SeasonalFilterLoadMultiplier { get; set; }
+
         /// <summary>Runtime-only: last grid-derived power fraction (not persisted;
         /// re-derived each day from the power grid by the host).</summary>
         private float _lastPowerAvailability01 = 1f;
@@ -421,7 +429,6 @@ namespace Ashfall.Core
 
                 case TreatmentMode.ReverseOsmosis:
                     filterDegradation = FilterDegradePerUnit * inputAmount;
-                    _state.filterIntegrity = Math.Max(0, _state.filterIntegrity - filterDegradation);
                     contaminationRemoved = 0.6f;
                     break;
 
@@ -432,6 +439,19 @@ namespace Ashfall.Core
                     contaminationRemoved = 0.8f; // heavy rad removal
                     break;
             }
+
+            // CORE-MECH W3: winter pressure. One multiplication, at the single
+            // filter-degradation site, after the per-mode switch (so ReverseOsmosis
+            // is no longer charged twice — the switch used to subtract and this line
+            // subtracted again). The provider is a day → multiplier read; unwired
+            // or neutral means exactly 1.0, i.e. unchanged behavior.
+            float seasonalLoad = SeasonalFilterLoadMultiplier != null
+                ? SeasonalFilterLoadMultiplier(_currentDay)
+                : 1f;
+            if (float.IsNaN(seasonalLoad) || float.IsInfinity(seasonalLoad) || seasonalLoad < 0f)
+                seasonalLoad = 1f;
+            if (seasonalLoad > 4f) seasonalLoad = 4f; // authored sanity clamp
+            if (filterDegradation > 0f) filterDegradation *= seasonalLoad;
 
             _state.filterIntegrity = Math.Max(0, _state.filterIntegrity - filterDegradation);
             _state.cleanWater += cleanOutput;

@@ -1,6 +1,6 @@
 # ASHFALL PROJECT — OPENSETUP Instructions
 # AUTO-GENERATED from AGENTS.md (canonical source). Run sync-agent-rulebooks.py to regenerate.
-# Last generated: 2026-09-23
+# Last generated: 2026-09-25
 
 ---
 
@@ -53,15 +53,46 @@ agents remain read-only; one integrator owns shared seams and acceptance. Do
 not create speculative tests, revive deprecated APIs, or start a competing
 fix. A compile-green result is not proof of runtime integration.
 
-## TARGETED TESTING ONLY
+## TARGETED TESTING ONLY — DO NOT RUN EVERY TEST EVERY EDIT
 
-- Run the smallest test file or directly affected region for the change; a
-  builder normally stays below 100 cases.
+Run only tests directly related to files changed during the current task. Run the full suite only after a completed feature, before a commit, or in CI. Never create duplicate tests that assert the same behavior through slightly different wording. If an agent creates thousands of tests and executes all of them after each small edit, that is inefficient regardless of language.
+
+### Test Execution Hierarchy
+
+- **Fast (< 30 seconds):** Changed-module tests only; run on each edit.
+- **Medium (< 5 minutes):** Subsystem tests before feature commit.
+- **Full (10–60+ min):** All tests before merge / release / nightly CI.
+- **Stress (long-running):** Fuzzing, simulations, soak tests overnight.
+
+### 10 Testing Policy Rules
+
+1. Prefer 3–10 high-signal tests per behavior over dozens of near-duplicate tests.
+2. Reuse parameterized tests instead of generating one test file per input.
+3. Do not test third-party library internals, trivial getters/setters, or framework behavior.
+4. Mark tests as `fast`, `integration`, `slow`, or `e2e` (`pyproject.toml` markers / xUnit traits).
+5. Do not run the full test suite after every edit.
+6. Run only tests affected by changed files, then report the exact command and result.
+7. Use deterministic seeds; never use arbitrary `sleep()` calls.
+8. Mock network, disk-heavy assets, time, and external processes in fast tests.
+9. Check for an existing equivalent test before adding a new test.
+10. Delete or merge redundant generated tests when found.
+
+### Explicit Ban on Full Test Suite
+
+- **NEVER run the full test suite unless the user types exactly: `RUN FULL TESTS`.**
+- If you feel the need to run the full suite, instead:
+  1. List which additional tests you think are relevant.
+  2. Ask: "Should I run these extra tests now, or only the scoped ones?"
+- **Use `bin/run-scoped-tests` for all test runs by default.**
+- **Do not invoke `pytest`, `dotnet test`, etc. directly unless explicitly told.**
+- **Testing Step Limit & Auto-Flagging:** Maximum 10–15 testing steps per task. If the AI model cannot resolve failing tests within 10–15 steps, it must auto-flag the issue in `.ai/state.md` for a bug validator to fix rather than repeatedly continuing to hit tests with endless micro-edits.
+
+### Execution Rules
+
+- Run only targeted tests via `bin/run-scoped-tests` (or the smallest test file; < 30 seconds).
 - Prefer static inspection for sweeps. A larger diagnostic run requires a new
   hypothesis and explicit foreman/user reason; it must remain bounded and not
   compete with active builders.
-- Run `bash scripts/run_test.sh <test-file-or-focused-directory>` for xUnit
-  targets. New test files run alone first.
 - Aggregate only homogeneous static mappings, labels, thresholds, and catalog
   tables with useful per-row failure output. Preserve independent save/load,
   determinism, lifecycle, mutation, fuzzing, state-transition, and
@@ -188,6 +219,18 @@ Wave 5 details: `docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.
 
 ## TOOLS AND CHANGE HYGIENE
 
+- **Strict Go-Only Tool Creation Policy (8 Core Types):** Of the following 8 tool types, **ONLY `.go` implementations (integrated into `tools/gotools` / `bin/ashfall-dev`) can be created or modified by AI agents**. AI agents must NEVER create Python or shell scripts for these 8 concerns:
+  1. Repository file indexer
+  2. Changed-file / changed-test selector
+  3. Test-result parser
+  4. Fast JSON/YAML validator
+  5. Save-file scanner
+  6. Asset manifest builder
+  7. Parallel subprocess/task runner
+  8. LLM API proxy/router
+- **Tooling Language Policy:** For persistent or repeatedly invoked development tools, prefer Go (`bin/ashfall-dev`). Use Python only when a required Python-only AI, data, or testing library provides a clear benefit. Use Rust for CPU-heavy, memory-sensitive simulation, validation, parsing, or fuzzing.
+- **Process Spawning Rule:** Do not launch a Python process for trivial filesystem, JSON, process-management, or test-selection tasks when an existing Go/Rust utility can do the job.
+- **Performance Verification:** Measure peak RSS and total elapsed time before rewriting a working tool.
 - Prefer repository scripts and current APIs over ad-hoc replacement tooling.
 - Do not modify generated outputs by hand; run the owning generator and its
   `--check` mode when one exists.
@@ -196,3 +239,37 @@ Wave 5 details: `docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.
 - Do not invent MCP connections, external accounts, capabilities, or tool
   results. Use only configured tools and their documented scope.
 - Keep changes reviewable: one owned system or governance package at a time.
+
+## AGENT OPERATIONAL DISCIPLINE & EXECUTION LIMITS
+
+1. **No repeated tool calls with identical inputs:** If the same tool + arguments appear more than twice in one task, the agent must immediately stop and request guidance. Never loop blindly on identical operations.
+2. **Hard iteration and time limits:**
+   - Maximum 60–100 steps per task.
+   - Maximum 10–20 minutes wall-clock time per task.
+   - On limit hit: stop immediately, record what was attempted in `.ai/state.md`, and surface the failure/blocker explicitly to the user/foreman.
+3. **Explicit termination criteria:**
+   - Define what "done" means before executing (e.g., "all tests in changed files pass", "no new compile errors", "schema validation passes").
+   - If the agent cannot meet the criteria within the iteration/time limits, it must stop instead of retrying blindly.
+4. **Progress tracking state file:**
+   - Maintain a small state file per task in `.ai/state.md` (recording changed files, tests run, and remaining errors).
+   - Agents must read this state before acting to avoid re-doing work or repeating failed attempts.
+5. **Subagents / role isolation:**
+   - Instead of one agent doing everything in a single bloated context, split responsibilities across specialized roles:
+     - **Planner:** reads high-level brief, writes a short plan in `.ai/plan.md`.
+     - **Coder:** given the plan and a small set of target files, writes/edits code.
+     - **Tester:** runs tests only for changed areas, summarizes results.
+     - **Auditor:** checks consistency with schemas, world bible, and architecture docs.
+   - Each subagent gets only the context it needs (plan + relevant files + last summary), preventing context contamination.
+6. **Conflict resolution rule:**
+   - If narrative and systems conflict, **Systems win** unless explicitly overridden by the foreman/user.
+   - The agent must log all conflicts in `.ai/state.md` instead of silently picking an arbitrary resolution.
+7. **Pre-generation and pre-edit checks:**
+   - **Check existing tests and schemas:** Run Go config/save validators (`bin/validate-config` or `bin/ashfall-dev validate-config`) and existing tests. If validation fails, fix root cause instead of generating more content on top of broken data.
+   - **Check for existing equivalent content:** Before creating a new quest, system, or test, search for similar IDs/concepts in data and code. Prefer extending or refining an existing system rather than adding a parallel one.
+8. **Plan Approval Requirement (Pre-commit / CI Guard):**
+   - Every commit with code changes MUST have a corresponding plan file in `.ai/plans/` (or `.ai/plan.md`) with `STATUS: APPROVED BY USER`.
+   - If missing, pre-commit and CI will fail: `No approved plan found for changed files. Create/update a plan in .ai/plans/ and set STATUS: APPROVED BY USER.`
+9. **Testing Budget & Scoped Runner:**
+   - Always run tests via `bin/run-scoped-tests`. Do not invoke `pytest`, `dotnet test`, etc. directly unless explicitly told.
+   - NEVER run the full test suite unless the user types exactly: `RUN FULL TESTS`.
+   - Maximum 10–15 testing steps per task: if failing tests cannot be fixed within 10–15 steps, auto-flag the issue in `.ai/state.md` for a bug validator to fix. Do not loop on micro-edits.

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/tactical_scrap.jpg-2e24ffdc9b0e2dd0ad9b33ed5c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

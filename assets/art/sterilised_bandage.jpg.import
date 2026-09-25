@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/sterilised_bandage.jpg-65af5fdf0a47c1ec587651
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/salvaged_tech_trash.jpg-5e6a2015cee2bf20e6013
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

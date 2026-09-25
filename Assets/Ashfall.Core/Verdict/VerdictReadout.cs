@@ -45,6 +45,29 @@ namespace Ashfall.Core.Verdict
             "[shelter instruments] — a quarterly invoice has been printed. On paper, everything is in order."
         };
 
+        private static readonly IReadOnlyList<string> RiteTraceLines = new[]
+        {
+            "[memorial register] — one act recorded. The shelter remembers who it carried.",
+            "[memorial register] — the register of the dead is not empty. It is kept by hand.",
+            "[memorial register] — names, kept. The instruments do not count these; someone does."
+        };
+
+        /// <summary>
+        /// CORE-MECH W10 — the memorial register line. Additive and separate from
+        /// <see cref="LineFor"/>: the machine readout reports what the instruments
+        /// can see, and a rite is something the shelter chose to remember, not
+        /// something the instruments detected. Returns an empty string when no
+        /// memorial act has been recorded, so callers can append unconditionally.
+        /// </summary>
+        public static string RiteTraceLine(int riteTraceTotal, int enrolledEvidence = 0)
+        {
+            if (riteTraceTotal <= 0) return string.Empty;
+            int idx = StableHash.NonNegativeRemainder(
+                unchecked(riteTraceTotal * 31 + enrolledEvidence),
+                RiteTraceLines.Count);
+            return RiteTraceLines[idx % RiteTraceLines.Count];
+        }
+
         /// <summary>Deterministic index from state, avoiding per-frame RNG.</summary>
         public static string LineFor(ReckoningState state, int enrolledEvidence, int readCount)
         {

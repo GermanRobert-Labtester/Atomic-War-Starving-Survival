@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ballistic_goggles.jpg-1c6adf921ce9137df39d1a8
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

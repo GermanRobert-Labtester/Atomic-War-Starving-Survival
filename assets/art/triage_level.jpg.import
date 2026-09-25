@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/triage_level.jpg-29f4abb0b04d4030d4db8f4b180b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

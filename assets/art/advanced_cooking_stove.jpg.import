@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/advanced_cooking_stove.jpg-a0b52117a17f5b0e75
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

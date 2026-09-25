@@ -148,3 +148,37 @@ High confidence in the cited exclusions because they have current source and int
 ## 27. Handoff
 
 Continue with the ashfall-scan passes on Core and Godot in bounded domain groups. First classify each empty catch, then trace construction/registration and save ownership for the four candidates. Re-run the plan-index collision scan after excluding all over-cutoff and fresh plan bodies. Update this report only when evidence changes; do not implement production code under this audit.
+
+## 28. Focused follow-up — Water Sources reachability and setup evidence (2026-09-25)
+
+This is a bounded follow-up to the static audit above, not a replacement for its
+broader incomplete scope. It closes the specific player-reachability lead for
+the existing well, condenser, and piezometer systems:
+
+- `water_treatment` now binds a Water Sources section in `WaterTreatmentPanel`.
+  The existing route exposes deep-well build/enable/disable/service, condenser
+  build/enable/disable/membrane replacement, and piezometer installation.
+- `WaterSourcesHostSession` delegates to the existing Core systems and
+  save-envelope stores. Construction and service bills use atomic inventory
+  transactions; piezometer costs come from its authored catalog. Research,
+  power, material, and equipment state remain projections of their current
+  owners. No Core gameplay authority or save section was added.
+- The architecture-map generator now scans production `Main*.cs` partials for
+  setup invocation expressions, excludes comments, string literals, and
+  UI-test/self-test partials, and reports invocation sites separately from the
+  setup declaration. `Constructed` is not marked complete when a required
+  setup method has no invocation evidence. This is source-level evidence, not
+  a compiler/runtime proof; focused wiring tests and the Godot smoke test
+  cover the relevant route.
+- `SetupPlans50To53()` explicitly invokes
+  `SetupShelterEspionage()` and `SetupSurvivorMentalHealth()`.
+
+**Verification:** `WaterSourcesSurfaceWiringTests` 4/4; architecture-map gate
+tests 6/6; host build 0 warnings/errors; `--water-sources-selftest` 11/11;
+`--player-panels-uitest` PASS with `water_sources=True` and panel lifecycle
+21/21; architecture-map generation and `--check` PASS for 266 subsystems.
+
+The Phase 9 note that condenser construction was deferred is superseded by
+this route. The older desalination-recipe concern is separate and was not
+revalidated here. No claim is made that this follow-up exhaustively audits the
+other candidate gaps or closes the original portfolio audit.

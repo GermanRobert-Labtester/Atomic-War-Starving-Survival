@@ -6,6 +6,55 @@ using Ashfall.Core.Expeditions;
 
 namespace Ashfall.Core
 {
+    /// <summary>CORE-MECH W4 — what a vehicle breakdown costs the crew.</summary>
+    public enum VehicleBreakdownKind
+    {
+        None = 0,
+        Injury = 1,
+        RadiationExposure = 2,
+        Contamination = 3
+    }
+
+    /// <summary>
+    /// CORE-MECH W4 — typed breakdown consequence. Pure data: the owner computes
+    /// the band and raises it; the host routes it into the medical, dose, and
+    /// disease owners (AA.2/AA.4 receiver contracts). Nothing here is persisted
+    /// beyond the vehicle's own isBrokenDown / breakdownCause state.
+    /// </summary>
+    public sealed class VehicleBreakdownOutcome
+    {
+        /// <summary>True when the vehicle actually broke (independent of crew band).</summary>
+        public bool BrokeDown { get; }
+
+        public VehicleBreakdownKind Kind { get; }
+        public float Severity01 { get; }
+        public float NominalMsV { get; }
+        public string Cause { get; }
+        public string VehicleId { get; }
+
+        /// <summary>
+        /// CORE-MECH W4 — survivor the crew consequence applies to; filled by the
+        /// host at dispatch (empty when the caller supplied no survivor).
+        /// </summary>
+        public string SurvivorId { get; set; } = string.Empty;
+
+        public VehicleBreakdownOutcome(
+            VehicleBreakdownKind kind, float severity01, float nominalMsV, string cause, string vehicleId,
+            bool brokeDown = false)
+        {
+            Kind = kind;
+            Severity01 = severity01;
+            NominalMsV = nominalMsV;
+            Cause = cause ?? string.Empty;
+            VehicleId = vehicleId ?? string.Empty;
+            BrokeDown = brokeDown;
+        }
+
+        /// <summary>No breakdown occurred (unknown vehicle, already broken, clean dispatch).</summary>
+        public static VehicleBreakdownOutcome None(string vehicleId, string reason)
+            => new VehicleBreakdownOutcome(VehicleBreakdownKind.None, 0f, 0f, reason, vehicleId);
+    }
+
     [Serializable]
     public sealed class ExpeditionVehicleState
     {
@@ -302,6 +351,19 @@ namespace Ashfall.Core
 
         public (float fuelCost, float travelTimeMod, bool breakdown) PrepareForExpedition(string vehicleId, float distanceKm)
         {
+            return PrepareForExpeditionCore(vehicleId, distanceKm, null);
+        }
+
+        /// <summary>
+        /// CORE-MECH W4 — the consuming preparation travel, with an optional rng for
+        /// the breakdown roll. Null keeps the legacy path (the system's own stream)
+        /// byte-for-byte; the outcome-aware caller passes a seed so the whole
+        /// resolution (breakdown + crew band) is one deterministic draw sequence.
+        /// </summary>
+        private (float fuelCost, float travelTimeMod, bool breakdown) PrepareForExpeditionCore(
+            string vehicleId, float distanceKm, ISeededRng? rng)
+        {
+
             if (!_state.ownedVehicles.TryGetValue(vehicleId, out var v))
                 return (0, 1f, false);
 
@@ -318,7 +380,7 @@ namespace Ashfall.Core
                 v.trackGear.condition = Math.Max(0f, v.trackGear.condition - distanceKm * 0.25f);
 
             bool breakdown = false;
-            if (v.condition < 20f && _rng.NextDouble() < 0.3f)
+            if (v.condition < 20f && (rng ?? _rng).NextDouble() < 0.3f)
             {
                 breakdown = true;
                 v.isBrokenDown = true;
@@ -327,6 +389,60 @@ namespace Ashfall.Core
 
             OnVehicleStateChanged?.Invoke();
             return (fuelNeeded, v.speedMultiplier, breakdown);
+        }
+
+        /// <summary>
+        /// CORE-MECH W4 — a prep breakdown now names what it costs the crew.
+        /// Raised once per breakdown resolution; not raised for clean dispatches
+        /// or when the vehicle is already broken (the repair gate is the
+        /// exactly-once guard, AC.3).
+        /// </summary>
+        public event Action<VehicleBreakdownOutcome>? OnBreakdownResolved;
+
+        /// <summary>
+        /// CORE-MECH W4 — consume the same preparation travel as
+        /// <see cref="PrepareForExpedition"/> and, when the vehicle breaks down,
+        /// resolve a typed crew consequence (injury / exposure / contamination).
+        /// Deterministic: the band is a pure function of the vehicle's condition
+        /// and the injected rng. The existing tuple API is untouched; this is the
+        /// consequence-aware call the host uses.
+        /// </summary>
+        public VehicleBreakdownOutcome ResolvePrepBreakdown(string vehicleId, float distanceKm, ISeededRng? rng = null)
+        {
+            if (!_state.ownedVehicles.TryGetValue(vehicleId, out var v))
+                return VehicleBreakdownOutcome.None(vehicleId, "unknown_vehicle");
+
+            if (v.isBrokenDown)
+                return VehicleBreakdownOutcome.None(vehicleId, "already_broken");
+
+            var (_, _, broke) = PrepareForExpeditionCore(vehicleId, distanceKm, rng);
+            if (!broke)
+                return VehicleBreakdownOutcome.None(vehicleId, "clean_dispatch");
+
+            // Severity rises as the vehicle is closer to failure; the band is a
+            // pure function so the same seed always yields the same outcome.
+            float severity = Math.Clamp(1f - v.condition / 100f, 0.05f, 1f);
+            double roll = (rng ?? _rng).NextDouble();
+
+            VehicleBreakdownKind kind;
+            if (roll < 0.55) kind = VehicleBreakdownKind.None;
+            else if (roll < 0.80) kind = VehicleBreakdownKind.Injury;
+            else if (roll < 0.92) kind = VehicleBreakdownKind.RadiationExposure;
+            else kind = VehicleBreakdownKind.Contamination;
+
+            // Nominal exposure scales with severity and stays inside the ledger's
+            // own band discipline; magnitude is authored data pending W12 (BE.2).
+            float nominalMsV = kind == VehicleBreakdownKind.RadiationExposure
+                ? 0.15f + severity * 0.85f
+                : 0f;
+
+            var outcome = new VehicleBreakdownOutcome(
+                kind, severity, nominalMsV,
+                v.breakdownCause ?? string.Empty, vehicleId, brokeDown: true);
+
+            OnBreakdownResolved?.Invoke(outcome);
+            OnVehicleStateChanged?.Invoke();
+            return outcome;
         }
 
         public ExpeditionVehicleState CaptureState() => CloneState(_state);

@@ -25,6 +25,30 @@ namespace AtomicWar.GodotApp
         /// alarms, weather wear). Attached by Main once both sessions exist.</summary>
         public PerimeterDefenseSystem? Perimeter { get; private set; }
 
+        /// <summary>
+        /// CORE-MECH W5 — whether an emplacement is actually powered. Wired by
+        /// Main from the grid/armory circuit so the defense panel's strength
+        /// projection is the same truth the raid resolver uses (it previously
+        /// projected with no perimeter at all, under-reporting what the player
+        /// built). Unbound = every emplacement treated as unpowered/neutral,
+        /// which is the fail-closed reading.
+        /// </summary>
+        public Func<string, bool>? EmplacementPoweredProvider { get; set; }
+
+        /// <summary>
+        /// CORE-MECH W5 — the most recent pre-combat engagement, so the panel can
+        /// report what the defenses actually did (repelled / breached, raiders
+        /// neutralized, captured) instead of only a static score.
+        /// </summary>
+        public DefenseEngagementResult? LastEngagement { get; private set; }
+
+        /// <summary>Record an engagement resolved elsewhere (Main owns the call).</summary>
+        public void RecordEngagement(DefenseEngagementResult engagement)
+        {
+            LastEngagement = engagement;
+            RaiseStateChanged();
+        }
+
         public void AttachPerimeter(PerimeterDefenseSystem? perimeter)
         {
             if (Perimeter != null) Perimeter.OnEventRaised -= _ => RaiseStateChanged();

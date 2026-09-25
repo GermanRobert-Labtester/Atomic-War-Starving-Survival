@@ -26,7 +26,7 @@ namespace AtomicWar.GodotApp.Muster
             CustomMinimumSize = new Vector2(380, 150);
 
             var rootVbox = new VBoxContainer();
-            rootVbox.AddThemeConstantOverride("separation", 6);
+            rootVbox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             AddChild(rootVbox);
 
             var title = new Label

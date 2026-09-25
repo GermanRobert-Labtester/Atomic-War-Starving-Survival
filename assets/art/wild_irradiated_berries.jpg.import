@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/wild_irradiated_berries.jpg-3ad2afa4b46f25f49
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

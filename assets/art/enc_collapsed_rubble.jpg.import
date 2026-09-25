@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/enc_collapsed_rubble.jpg-104d015290e4272a8df1
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

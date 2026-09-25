@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/affliction_phase.jpg-ab30f75e72562cd0ad36b695
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

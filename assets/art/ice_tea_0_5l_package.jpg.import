@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ice_tea_0_5l_package.jpg-2e6a0d0ce3fe3689a97e
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

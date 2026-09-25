@@ -17,6 +17,9 @@ import pathlib
 import sys
 import tempfile
 import unittest
+import pytest
+
+pytestmark = pytest.mark.fast
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "tools"))

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/lockpick.jpg-5e868062e80cb7fa057d333df57490cb
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

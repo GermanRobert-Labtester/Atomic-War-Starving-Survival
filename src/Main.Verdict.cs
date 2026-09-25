@@ -145,8 +145,21 @@ namespace AtomicWar.GodotApp
         private void RefreshVerdictReadout()
         {
             if (_verdict == null || _verdictReadoutLabel == null) return;
-            _verdictReadoutLabel.Text = Ashfall.Core.Verdict.VerdictReadout.LineFor(
-                _verdict.Reckoning.State, _verdict.Evidence.Count, _verdict.MachineLog.ReadCount());
+            _verdictReadoutLabel.Text = VerdictReadoutText();
+        }
+
+        /// <summary>
+        /// CORE-MECH W10 — the instrument line plus the memorial register line.
+        /// Appended only when a rite has actually been recorded, so a campaign
+        /// that never held a vigil sees exactly the text it saw before.
+        /// </summary>
+        private string VerdictReadoutText()
+        {
+            string line = Ashfall.Core.Verdict.VerdictReadout.LineFor(
+                _verdict!.Reckoning.State, _verdict.Evidence.Count, _verdict.MachineLog.ReadCount());
+            string rite = Ashfall.Core.Verdict.VerdictReadout.RiteTraceLine(
+                _verdict.Reckoning.RiteTraceCount, _verdict.Evidence.Count);
+            return string.IsNullOrEmpty(rite) ? line : line + "\n" + rite;
         }
 
         private void SaveVerdict()
@@ -167,9 +180,7 @@ namespace AtomicWar.GodotApp
         private void OnVerdictOpenClicked()
         {
             SetupVerdict();
-            _statusLabel.Text = _verdict.StatusLine() + "\n" +
-                Ashfall.Core.Verdict.VerdictReadout.LineFor(
-                    _verdict.Reckoning.State, _verdict.Evidence.Count, _verdict.MachineLog.ReadCount());
+            _statusLabel.Text = _verdict.StatusLine() + "\n" + VerdictReadoutText();
         }
 
         private void OnVerdictTickClicked()

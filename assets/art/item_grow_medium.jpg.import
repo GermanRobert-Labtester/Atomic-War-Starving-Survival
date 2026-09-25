@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_grow_medium.jpg-571ca03ae84b339c6a37fe13
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

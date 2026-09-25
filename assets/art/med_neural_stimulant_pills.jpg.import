@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/med_neural_stimulant_pills.jpg-9e5c3b7eb3a42f
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

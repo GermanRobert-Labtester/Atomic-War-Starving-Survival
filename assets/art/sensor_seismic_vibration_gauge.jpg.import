@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/sensor_seismic_vibration_gauge.jpg-27a7b77113
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

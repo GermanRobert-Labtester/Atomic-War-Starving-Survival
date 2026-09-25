@@ -194,7 +194,15 @@ namespace AtomicWar.GodotApp
 
         public ShelterSocialDynamicsSystem EnsureShelterSocialDynamics()
         {
-            if (_shelterSocialDynamics != null) return _shelterSocialDynamics;
+            if (_shelterSocialDynamics != null)
+            {
+                // The panel route can call Ensure after the session was first
+                // composed. Re-bind the communications seam without rebuilding
+                // the social authority or creating a second session.
+                SetupInternalCommunication();
+                BindInternalCommunicationPanel();
+                return _shelterSocialDynamics;
+            }
 
             var rng = _campaignDay != null ? _campaignDay.Rng.Fork("shelter_social") : new SeededRng(48);
             var relations = _survivorRelations?.System;
@@ -225,12 +233,16 @@ namespace AtomicWar.GodotApp
             };
 
             _shelterSocialDynamics.OnSocialStateChanged += () => _shelterSocialDirty = true;
+            SetupInternalCommunication();
+            BindInternalCommunicationPanel();
             return _shelterSocialDynamics;
         }
 
         private void SetupShelterSocial()
         {
             EnsureShelterSocialDynamics();
+            SetupInternalCommunication();
+            BindInternalCommunicationPanel();
         }
 
         private void SaveShelterSocial()
@@ -240,6 +252,11 @@ namespace AtomicWar.GodotApp
                 CaptureSection("shelter_social_dynamics", ShelterSocialSaveStore.TryCapturePersisted(_shelterSocialDynamics.CaptureState()));
                 _shelterSocialDirty = false;
             }
+
+            // Plan 211 has a distinct authority/section; capture it from the
+            // same existing shelter-social save composition seam without
+            // teaching the social Core system about communications.
+            SaveInternalCommunication();
         }
 
         // ── Plan 49: Subterranean Hazard Operations ─────────────────────
@@ -357,6 +374,11 @@ namespace AtomicWar.GodotApp
 
         private void TickPlans46_49(int day, List<DayStateChangeEvent> events)
         {
+            // Canonical campaign day drives internal notice expiry. This is
+            // deliberately called once from the existing world/day seam; no
+            // second day owner or wall-clock timer is introduced.
+            TickInternalCommunication(day);
+
             if (_shelterWorkshop != null)
             {
                 _shelterWorkshop.TickDay(day);

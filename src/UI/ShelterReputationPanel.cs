@@ -61,7 +61,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("evidence", "Evidence Events", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -90,14 +90,14 @@ namespace AtomicWar.GodotApp.UI
             _leftColumn.AddChild(tagTitle);
 
             _tagsContainer = new VBoxContainer();
-            _tagsContainer.AddThemeConstantOverride("separation", 6);
+            _tagsContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _leftColumn.AddChild(_tagsContainer);
 
             _splitBody.AddChild(_leftColumn);
 
             // ── Right Column: Perception Summary & Evidence Log ────────
             _rightColumn = new VBoxContainer();
-            _rightColumn.AddThemeConstantOverride("separation", 10);
+            _rightColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _rightColumn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _rightColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -119,7 +119,7 @@ namespace AtomicWar.GodotApp.UI
             rightScroll.SizeFlagsVertical = SizeFlags.ExpandFill;
 
             _evidenceListContainer = new VBoxContainer();
-            _evidenceListContainer.AddThemeConstantOverride("separation", 6);
+            _evidenceListContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _evidenceListContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             rightScroll.AddChild(_evidenceListContainer);
             _rightColumn.AddChild(rightScroll);
@@ -186,7 +186,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 float val = _host.GetScore(dim);
                 var row = new HBoxContainer();
-                row.AddThemeConstantOverride("separation", 10);
+                row.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
 
                 var lbl = new Label();
                 lbl.CustomMinimumSize = new Vector2(130, 24);
@@ -227,7 +227,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     var tagCard = new PanelContainer();
                     var tagVBox = new VBoxContainer();
-                    tagVBox.AddThemeConstantOverride("separation", 2);
+                    tagVBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                     var tagLabel = new Label();
                     tagLabel.Text = $"[{tag.ToString().ToUpperInvariant()}]";
@@ -289,7 +289,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     var evRow = new PanelContainer();
                     var evBox = new VBoxContainer();
-                    evBox.AddThemeConstantOverride("separation", 2);
+                    evBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                     var hdr = new Label();
                     hdr.Text = $"Day {ev.DayRecorded} | {ev.Medium} | {ev.Dimension} ({ev.Delta:+0.0;-0.0;0.0})";

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/jet_fuel.jpg-80028f0984f6b84a238cb1325eaabcb6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

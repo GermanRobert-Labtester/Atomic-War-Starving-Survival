@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_ammonia.jpg-6bd4ea07aaf921ba1e9f8957d194
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

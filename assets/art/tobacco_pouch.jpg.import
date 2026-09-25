@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/tobacco_pouch.jpg-44e8559453dbeb80eb25249a919
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

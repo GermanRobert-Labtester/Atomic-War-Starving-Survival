@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/protective_childs_coat.jpg-c332d65498aa0d3309
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

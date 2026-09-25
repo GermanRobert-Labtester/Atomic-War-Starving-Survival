@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/trap_poison_gas_canister_trap.jpg-7fee08e4dd2
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

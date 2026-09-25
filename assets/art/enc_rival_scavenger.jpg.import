@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/enc_rival_scavenger.jpg-fa020e9ef6fb1e9676bc3
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

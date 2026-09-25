@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/wall_material.jpg-165d63a59d3f31b7751a2559617
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

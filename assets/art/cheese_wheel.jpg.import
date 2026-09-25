@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/cheese_wheel.jpg-b515347dd33e6bc4d2abb15f07de
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/dry_yeast_powder.jpg-71a1fec3116512dd02c69695
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

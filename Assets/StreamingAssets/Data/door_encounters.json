@@ -20,7 +20,9 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_central_garrison",
           "factionStandingDelta": -5,
-          "outcomeDescription": "He leaves the filter crate in the airlock without being asked. By morning, he has found a mop and started cleaning the intake corridor."
+          "outcomeDescription": "He leaves the filter crate in the airlock without being asked. By morning, he has found a mop and started cleaning the intake corridor.",
+          "grantItemId": "item_lead_lined_effluent_filter",
+          "grantItemQuantity": 1
         },
         {
           "choiceId": "choice_trade_at_threshold",
@@ -32,7 +34,9 @@
           "baseGuiltDelta": 5,
           "targetFaction": "",
           "factionStandingDelta": 0,
-          "outcomeDescription": "He takes the blocks, leaves the filter, and zips the child into his coat. He walks back into the ash fall without looking at the camera again."
+          "outcomeDescription": "He takes the blocks, leaves the filter, and zips the child into his coat. He walks back into the ash fall without looking at the camera again.",
+          "grantItemId": "thermal_blanket",
+          "grantItemQuantity": 1
         },
         {
           "choiceId": "choice_strip_and_repel",
@@ -277,7 +281,9 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_rebuilders",
           "factionStandingDelta": 20,
-          "outcomeDescription": "He takes the scrap, leaves the foam case, and drives away. The first thing your radio operator hears is a coastal monitoring station broadcasting weather telemetry in clear, unencrypted English."
+          "outcomeDescription": "He takes the scrap, leaves the foam case, and drives away. The first thing your radio operator hears is a coastal monitoring station broadcasting weather telemetry in clear, unencrypted English.",
+          "grantItemId": "copper_wire_10m_of_10m",
+          "grantItemQuantity": 1
         },
         {
           "choiceId": "choice_decline_resonator",
@@ -465,7 +471,9 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_scavengers",
           "factionStandingDelta": 15,
-          "outcomeDescription": "She does not grin, but her shoulders drop two inches. She leaves the entire canvas roll on the sill and walks away faster than she arrived."
+          "outcomeDescription": "She does not grin, but her shoulders drop two inches. She leaves the entire canvas roll on the sill and walks away faster than she arrived.",
+          "grantItemId": "ammo_12g",
+          "grantItemQuantity": 6
         }
       ]
     },
@@ -473,7 +481,7 @@
       "encounterId": "door_encounter_black_ops_asset_extraction",
       "visitorName": "Handler Voss (Black Ops Field Agent)",
       "visitorFaction": "faction_black_ops",
-      "description": "A Black Ops field handler requests emergency shelter for a compromised deep-cover asset — someone whose cover identity has been burned. The asset is wounded and cannot travel. You are not told their real name.",
+      "description": "A Black Ops field handler requests emergency shelter for a compromised deep-cover asset \u2014 someone whose cover identity has been burned. The asset is wounded and cannot travel. You are not told their real name.",
       "minDay": 260,
       "maxDay": 330,
       "threatLevel": 2,
@@ -910,7 +918,9 @@
           "baseGuiltDelta": 3,
           "targetFaction": "faction_scavengers",
           "factionStandingDelta": 10,
-          "outcomeDescription": "He holds the blister packs up to the pale light, verifying the foil seals. He passes the map through. The intel is good, but you've traded critical infection control for it."
+          "outcomeDescription": "He holds the blister packs up to the pale light, verifying the foil seals. He passes the map through. The intel is good, but you've traded critical infection control for it.",
+          "grantItemId": "item_collectible_topo_map",
+          "grantItemQuantity": 1
         },
         {
           "choiceId": "choice_decline_map_purchase",
@@ -1214,7 +1224,9 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_scavengers",
           "factionStandingDelta": 12,
-          "outcomeDescription": "She strips the dosimeters down to the circuitry. They haven't worked this well since the bombs dropped. She sleeps curled under the workbench."
+          "outcomeDescription": "She strips the dosimeters down to the circuitry. They haven't worked this well since the bombs dropped. She sleeps curled under the workbench.",
+          "grantItemId": "item_dosimeter_pen",
+          "grantItemQuantity": 1
         },
         {
           "choiceId": "choice_hire_nox_dosimeters_only",
@@ -1226,7 +1238,9 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_scavengers",
           "factionStandingDelta": 6,
-          "outcomeDescription": "She works in the airlock with a headlamp. The badges read cleanly, but her hands shake from the cold the entire time."
+          "outcomeDescription": "She works in the airlock with a headlamp. The badges read cleanly, but her hands shake from the cold the entire time.",
+          "grantItemId": "item_dosimeter_pen",
+          "grantItemQuantity": 1
         }
       ]
     },
@@ -1296,7 +1310,9 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_hydro_barons",
           "factionStandingDelta": 15,
-          "outcomeDescription": "You get a tourniquet on him just in time. He sleeps on the floor for twenty-four hours, then limps away. Three days later, a crate of purification tablets is left at your door with a Baron's wax seal."
+          "outcomeDescription": "You get a tourniquet on him just in time. He sleeps on the floor for twenty-four hours, then limps away. Three days later, a crate of purification tablets is left at your door with a Baron's wax seal.",
+          "grantItemId": "water_purification_tablets",
+          "grantItemQuantity": 4
         },
         {
           "choiceId": "choice_give_basic_first_aid_only",
@@ -1413,7 +1429,9 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_scavengers",
           "factionStandingDelta": 8,
-          "outcomeDescription": "She takes the food and leaves the case in the airlock. Your medic tests a tablet. 'Efficacy is down to maybe sixty percent,' he notes. It's better than nothing."
+          "outcomeDescription": "She takes the food and leaves the case in the airlock. Your medic tests a tablet. 'Efficacy is down to maybe sixty percent,' he notes. It's better than nothing.",
+          "grantItemId": "antibiotics",
+          "grantItemQuantity": 2
         },
         {
           "choiceId": "choice_decline_expired_medicine",
@@ -1452,7 +1470,7 @@
         },
         {
           "choiceId": "choice_admit_three_only",
-          "text": "Admit three—only the able-bodied.",
+          "text": "Admit three\u2014only the able-bodied.",
           "requiredTrait": "",
           "requiredItemId": "",
           "requiredItemQuantity": 0,
@@ -1624,7 +1642,9 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_ordnance_foundry",
           "factionStandingDelta": 15,
-          "outcomeDescription": "He tips the wheelbarrow over, sending the heavy brass cylinders clattering onto the concrete step. He takes the tins, nods once, and leaves the cart behind."
+          "outcomeDescription": "He tips the wheelbarrow over, sending the heavy brass cylinders clattering onto the concrete step. He takes the tins, nods once, and leaves the cart behind.",
+          "grantItemId": "empty_brass_shell",
+          "grantItemQuantity": 8
         },
         {
           "choiceId": "choice_refuse_arsenal_brass",
@@ -1854,7 +1874,7 @@
       "encounterId": "door_encounter_vitrified_crater_glass_trader",
       "visitorName": "Crater Ascetic",
       "visitorFaction": "faction_ash_sign",
-      "description": "An Ash Sign ascetic stands barefoot in the toxic slush, clutching a lead-lined wicker basket. He holds up a chunk of smooth, green vitrified glass from a detonation crater. 'The fire that cleansed the world left us a piece of its heart,' he murmurs. The external dosimeter spikes hard to 150 µSv/h.",
+      "description": "An Ash Sign ascetic stands barefoot in the toxic slush, clutching a lead-lined wicker basket. He holds up a chunk of smooth, green vitrified glass from a detonation crater. 'The fire that cleansed the world left us a piece of its heart,' he murmurs. The external dosimeter spikes hard to 150 \u00b5Sv/h.",
       "minDay": 260,
       "maxDay": 320,
       "threatLevel": 3,
@@ -2621,7 +2641,7 @@
         },
         {
           "choiceId": "choice_feed_him_false_numbers",
-          "text": "Give him ninety seconds — of the old intake, the collapsed one, two hundred meters east.",
+          "text": "Give him ninety seconds \u2014 of the old intake, the collapsed one, two hundred meters east.",
           "requiredTrait": "",
           "requiredItemId": "",
           "requiredItemQuantity": 0,
@@ -2687,7 +2707,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_railway_guild",
           "factionStandingDelta": 20,
-          "outcomeDescription": "The splint holds. The boy sleeps two days and wakes asking about the crate before he asks about his leg. When they leave, Holl sets a Guild chit on your rail spike — good for one passage, one crate, one favor, in that order of your choosing. Nobody from the Garrison ever comes asking about a filed-down eagle. This time."
+          "outcomeDescription": "The splint holds. The boy sleeps two days and wakes asking about the crate before he asks about his leg. When they leave, Holl sets a Guild chit on your rail spike \u2014 good for one passage, one crate, one favor, in that order of your choosing. Nobody from the Garrison ever comes asking about a filed-down eagle. This time."
         },
         {
           "choiceId": "choice_turn_them_to_the_road",
@@ -2703,7 +2723,7 @@
         },
         {
           "choiceId": "choice_report_the_crate",
-          "text": "Treat the boy — and send word of the crate to the Garrison relay.",
+          "text": "Treat the boy \u2014 and send word of the crate to the Garrison relay.",
           "requiredTrait": "",
           "requiredItemId": "medkit",
           "requiredItemQuantity": 1,
@@ -2719,7 +2739,7 @@
       "encounterId": "door_encounter_scavenger_child_courier",
       "visitorName": "A child, unaccompanied (Scavengers)",
       "visitorFaction": "faction_scavengers",
-      "description": "Small, filthy, composed. The child has walked four kilometers alone to deliver a dead man's map: Picker Tallow died at the rail cut last week, and his last haul is marked on the oiled paper in the child's fist. Tallow once bunked here, one winter, before the roads took him back. The child wants the map's value paid in one thing only — a name cut proper, on a stone, where the bunker's dead are kept.",
+      "description": "Small, filthy, composed. The child has walked four kilometers alone to deliver a dead man's map: Picker Tallow died at the rail cut last week, and his last haul is marked on the oiled paper in the child's fist. Tallow once bunked here, one winter, before the roads took him back. The child wants the map's value paid in one thing only \u2014 a name cut proper, on a stone, where the bunker's dead are kept.",
       "minDay": 185,
       "maxDay": 250,
       "threatLevel": 0,
@@ -2734,7 +2754,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_scavengers",
           "factionStandingDelta": 10,
-          "outcomeDescription": "The stone takes TALLOW, PICKER. WINTER GUEST. The child watches every stroke, then eats two bowls and falls asleep upright against the pump housing. The map's mark turns out to be a flooded pharmacy basement — picked over by now, but the shelves below the waterline still hold. Word reaches the rail cut that your door pays in names. Doors that pay in names get told things."
+          "outcomeDescription": "The stone takes TALLOW, PICKER. WINTER GUEST. The child watches every stroke, then eats two bowls and falls asleep upright against the pump housing. The map's mark turns out to be a flooded pharmacy basement \u2014 picked over by now, but the shelves below the waterline still hold. Word reaches the rail cut that your door pays in names. Doors that pay in names get told things."
         },
         {
           "choiceId": "choice_send_the_child_away",
@@ -2746,7 +2766,7 @@
           "baseGuiltDelta": 15,
           "targetFaction": "faction_scavengers",
           "factionStandingDelta": -5,
-          "outcomeDescription": "The child takes the tin without arguing — that is the part that stays with the watch. The map goes back into the small fist and out to the cut, where Tallow will stay a coordinate instead of a name. For a week, the corridor near the hatch is quieter than usual, and not because anyone decided it should be."
+          "outcomeDescription": "The child takes the tin without arguing \u2014 that is the part that stays with the watch. The map goes back into the small fist and out to the cut, where Tallow will stay a coordinate instead of a name. For a week, the corridor near the hatch is quieter than usual, and not because anyone decided it should be."
         }
       ]
     },
@@ -2754,7 +2774,7 @@
       "encounterId": "door_encounter_ash_sign_door_witness",
       "visitorName": "The Door Witness (Cult of the Ash Sign)",
       "visitorFaction": "faction_ash_sign",
-      "description": "Grey robe, chalk bag, no weapon anyone can find. The Witness counts doors. That is the whole office: after every storm they walk the sector and tally which doors still answer. Yours is number eleven today — they say it out loud, to nobody, and chalk a small sign at the corner of your hatch frame. They claim the storm spoke, and that what it said is being written down, door by door.",
+      "description": "Grey robe, chalk bag, no weapon anyone can find. The Witness counts doors. That is the whole office: after every storm they walk the sector and tally which doors still answer. Yours is number eleven today \u2014 they say it out loud, to nobody, and chalk a small sign at the corner of your hatch frame. They claim the storm spoke, and that what it said is being written down, door by door.",
       "minDay": 250,
       "maxDay": 330,
       "threatLevel": 1,
@@ -2793,7 +2813,7 @@
           "baseGuiltDelta": 10,
           "targetFaction": "faction_ash_sign",
           "factionStandingDelta": 5,
-          "outcomeDescription": "The Witness considers this the way a ledger-keeper considers a forged line: not morally, professionally. Then they write it. Somewhere in the Sign's tallies, your door is now a door nobody answered. Raiders who buy that book will skip you. So will caravans. So will, one day, rescuers — and the entry will outlive everyone who knows it is a lie."
+          "outcomeDescription": "The Witness considers this the way a ledger-keeper considers a forged line: not morally, professionally. Then they write it. Somewhere in the Sign's tallies, your door is now a door nobody answered. Raiders who buy that book will skip you. So will caravans. So will, one day, rescuers \u2014 and the entry will outlive everyone who knows it is a lie."
         }
       ]
     },
@@ -2801,7 +2821,7 @@
       "encounterId": "door_encounter_foundry_bell_caster",
       "visitorName": "Caster Mabe Ilk (Ordnance Foundry)",
       "visitorFaction": "faction_ordnance_foundry",
-      "description": "Her cart is a crucible on wheels and her pitch is nearly sane: the Foundry wants to cast a bell from melted shell casings, one per shelter that trades, and hang them along the road. A rung bell means the door is open for business. A silent bell means the shelter is gone. She is asking for your casings — twenty of them — and offering, in return, to be a neighbor you can hear coming.",
+      "description": "Her cart is a crucible on wheels and her pitch is nearly sane: the Foundry wants to cast a bell from melted shell casings, one per shelter that trades, and hang them along the road. A rung bell means the door is open for business. A silent bell means the shelter is gone. She is asking for your casings \u2014 twenty of them \u2014 and offering, in return, to be a neighbor you can hear coming.",
       "minDay": 230,
       "maxDay": 310,
       "threatLevel": 0,
@@ -2816,7 +2836,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_ordnance_foundry",
           "factionStandingDelta": 15,
-          "outcomeDescription": "The bell is hung in spring on a frame your own survivors help raise. It sounds wrong at first — casings make a bright, thin note, like a coin dropped in a bucket — and then it sounds like the road. The first time it rings for a trade party, three people in your bunker stand still in the corridor and just listen to it."
+          "outcomeDescription": "The bell is hung in spring on a frame your own survivors help raise. It sounds wrong at first \u2014 casings make a bright, thin note, like a coin dropped in a bucket \u2014 and then it sounds like the road. The first time it rings for a trade party, three people in your bunker stand still in the corridor and just listen to it."
         },
         {
           "choiceId": "choice_refuse_the_meltdown",
@@ -2828,7 +2848,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_ordnance_foundry",
           "factionStandingDelta": -10,
-          "outcomeDescription": "Mabe shrugs — a smith's shrug, all shoulders, no offense — and wheels the crucible on. The next shelter down the road gives casings and gets a bell. Trade parties start timing their route by it. Your door stays quiet in a landscape that is learning to ring, and quiet, lately, has started to mean gone."
+          "outcomeDescription": "Mabe shrugs \u2014 a smith's shrug, all shoulders, no offense \u2014 and wheels the crucible on. The next shelter down the road gives casings and gets a bell. Trade parties start timing their route by it. Your door stays quiet in a landscape that is learning to ring, and quiet, lately, has started to mean gone."
         }
       ]
     },
@@ -2851,11 +2871,11 @@
           "baseGuiltDelta": 15,
           "targetFaction": "faction_hydro_barons",
           "factionStandingDelta": 10,
-          "outcomeDescription": "The tithe notice arrives next season eleven liters lighter. Pell never returns. The favor, when it comes, will come as a man at your door who already knows your meter is a lie, and that man will not be negotiating — he will be collecting. You have bought water with a door you cannot close."
+          "outcomeDescription": "The tithe notice arrives next season eleven liters lighter. Pell never returns. The favor, when it comes, will come as a man at your door who already knows your meter is a lie, and that man will not be negotiating \u2014 he will be collecting. You have bought water with a door you cannot close."
         },
         {
           "choiceId": "choice_refuse_and_report",
-          "text": "Refuse — and send the Barons' own audit office the offer, unsigned.",
+          "text": "Refuse \u2014 and send the Barons' own audit office the offer, unsigned.",
           "requiredTrait": "",
           "requiredItemId": "",
           "requiredItemQuantity": 0,
@@ -2875,7 +2895,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_hydro_barons",
           "factionStandingDelta": 5,
-          "outcomeDescription": "Pell looks at the canteen like a man shown a language he studied once. He takes it, drinks half on your steps — deliberately, so both of you know there is no evidence — and registers your meter exactly as read. No favor is owed in either direction. This is, somehow, the most expensive five liters you have ever spent, and the only transaction this season that lets everyone sleep."
+          "outcomeDescription": "Pell looks at the canteen like a man shown a language he studied once. He takes it, drinks half on your steps \u2014 deliberately, so both of you know there is no evidence \u2014 and registers your meter exactly as read. No favor is owed in either direction. This is, somehow, the most expensive five liters you have ever spent, and the only transaction this season that lets everyone sleep."
         }
       ]
     },
@@ -2883,7 +2903,7 @@
       "encounterId": "door_encounter_unaligned_well_diviner",
       "visitorName": "Old Ferrow (unaligned)",
       "visitorFaction": "faction_unaligned",
-      "description": "A fork of bent rebar, two wire handles, and a claim: there is water under your floor. Not the well you drilled — another, deeper, running where the old municipal line used to run. Ferrow has divined four wells in three settlements and been wrong exactly once, a record repeated at every door on request. The price for a night's bunk and a hot tin is that you let him walk your corridors with the fork and mark where it pulls.",
+      "description": "A fork of bent rebar, two wire handles, and a claim: there is water under your floor. Not the well you drilled \u2014 another, deeper, running where the old municipal line used to run. Ferrow has divined four wells in three settlements and been wrong exactly once, a record repeated at every door on request. The price for a night's bunk and a hot tin is that you let him walk your corridors with the fork and mark where it pulls.",
       "minDay": 200,
       "maxDay": 270,
       "threatLevel": 0,
@@ -2898,7 +2918,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "",
           "factionStandingDelta": 0,
-          "outcomeDescription": "The fork pulls hard under the pump room — hard enough that Ferrow marks the concrete with a nail and sits down on the mark like a man who has arrived. Whether there is water down there will cost a drill rig to find out. What the night costs is less measurable: three survivors slept better hearing an old man snore in the spare bunk, and one of them says so out loud, which nobody expected."
+          "outcomeDescription": "The fork pulls hard under the pump room \u2014 hard enough that Ferrow marks the concrete with a nail and sits down on the mark like a man who has arrived. Whether there is water down there will cost a drill rig to find out. What the night costs is less measurable: three survivors slept better hearing an old man snore in the spare bunk, and one of them says so out loud, which nobody expected."
         },
         {
           "choiceId": "choice_turn_the_diviner_out",
@@ -2910,7 +2930,7 @@
           "baseGuiltDelta": 5,
           "targetFaction": "",
           "factionStandingDelta": 0,
-          "outcomeDescription": "He goes without a word, fork shouldered like a yoke. In the morning there is a small chalk mark on your hatch frame anyway — not the Ash Sign's, just an old man's habit, a line with a dot under it. The cook says it means water. The cook also says she doesn't believe it. She keeps looking at it anyway."
+          "outcomeDescription": "He goes without a word, fork shouldered like a yoke. In the morning there is a small chalk mark on your hatch frame anyway \u2014 not the Ash Sign's, just an old man's habit, a line with a dot under it. The cook says it means water. The cook also says she doesn't believe it. She keeps looking at it anyway."
         }
       ]
     },
@@ -2965,7 +2985,7 @@
       "encounterId": "door_encounter_supply_corps_filter_requisition",
       "visitorName": "Quartermaster Adale Grist (Supply Corps)",
       "visitorFaction": "faction_supply_corps",
-      "description": "The requisition is stamped, numbered, and correct in every way that makes it monstrous: the Corps' field hospital two valleys over is running its ventilator room on filters past service, and the nearest serviceable spares are yours. Grist offers medical stores against the exchange — real ones, not promises — and a signed line in the Corps' book, which is the only currency that has never devalued. Your own filtration is at eighty percent and falling on its own schedule.",
+      "description": "The requisition is stamped, numbered, and correct in every way that makes it monstrous: the Corps' field hospital two valleys over is running its ventilator room on filters past service, and the nearest serviceable spares are yours. Grist offers medical stores against the exchange \u2014 real ones, not promises \u2014 and a signed line in the Corps' book, which is the only currency that has never devalued. Your own filtration is at eighty percent and falling on its own schedule.",
       "minDay": 260,
       "maxDay": 340,
       "threatLevel": 2,
@@ -2980,7 +3000,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_supply_corps",
           "factionStandingDelta": 20,
-          "outcomeDescription": "The medkit stores come off the truck first — Grist insists on it, so nobody can say the Corps took and left. Your intake fans pull harder that night against filters running at the edge of service, and the sound is a small rasp everybody hears and nobody mentions. Two valleys over, a ventilator room runs clean. You will never meet the lungs it runs for. That is the whole shape of the trade."
+          "outcomeDescription": "The medkit stores come off the truck first \u2014 Grist insists on it, so nobody can say the Corps took and left. Your intake fans pull harder that night against filters running at the edge of service, and the sound is a small rasp everybody hears and nobody mentions. Two valleys over, a ventilator room runs clean. You will never meet the lungs it runs for. That is the whole shape of the trade."
         },
         {
           "choiceId": "choice_refuse_the_requisition",
@@ -2992,7 +3012,7 @@
           "baseGuiltDelta": 10,
           "targetFaction": "faction_supply_corps",
           "factionStandingDelta": -20,
-          "outcomeDescription": "Grist files the denial on your hatch step, in writing, per regulation — a small mercy or a small threat, the form does not distinguish. Your air stays yours. The Corps' book closes around your shelter's name with the quiet finality of a ledger that will be consulted, someday, by someone deciding whether your door is worth walking to."
+          "outcomeDescription": "Grist files the denial on your hatch step, in writing, per regulation \u2014 a small mercy or a small threat, the form does not distinguish. Your air stays yours. The Corps' book closes around your shelter's name with the quiet finality of a ledger that will be consulted, someday, by someone deciding whether your door is worth walking to."
         },
         {
           "choiceId": "choice_split_the_difference",
@@ -3047,7 +3067,7 @@
       "encounterId": "door_encounter_penal_battalion_escapee",
       "visitorName": "A deserter in stolen boots (Penal Battalion)",
       "visitorFaction": "faction_penal_battalion",
-      "description": "He arrives after dark, which is either cunning or all the luck he had left. Garrison-issue boots two sizes wrong, wrist branded with the Battalion's chain-and-number, eyes that keep measuring the distance back to the treeline. He is not asking to stay. He is asking, very carefully, what your door does with people like him — and watching your hands while you answer.",
+      "description": "He arrives after dark, which is either cunning or all the luck he had left. Garrison-issue boots two sizes wrong, wrist branded with the Battalion's chain-and-number, eyes that keep measuring the distance back to the treeline. He is not asking to stay. He is asking, very carefully, what your door does with people like him \u2014 and watching your hands while you answer.",
       "minDay": 310,
       "maxDay": 360,
       "threatLevel": 3,
@@ -3062,7 +3082,7 @@
           "baseGuiltDelta": 0,
           "targetFaction": "faction_penal_battalion",
           "factionStandingDelta": -10,
-          "outcomeDescription": "He works the pump shift for a month before anyone learns his name, and two months before anyone learns the brand. What the bunker learns first is that he checks the hatch seals every night, twice, without being asked. If the Battalion ever comes reading brands, your door becomes a door that hid one — and everyone in it will already have decided, privately, what they'd say."
+          "outcomeDescription": "He works the pump shift for a month before anyone learns his name, and two months before anyone learns the brand. What the bunker learns first is that he checks the hatch seals every night, twice, without being asked. If the Battalion ever comes reading brands, your door becomes a door that hid one \u2014 and everyone in it will already have decided, privately, what they'd say."
         },
         {
           "choiceId": "choice_turn_him_over",

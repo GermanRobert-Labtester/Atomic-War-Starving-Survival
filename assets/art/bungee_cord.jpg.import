@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bungee_cord.jpg-0c231b9cc60319df7f20f7f5c0688
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

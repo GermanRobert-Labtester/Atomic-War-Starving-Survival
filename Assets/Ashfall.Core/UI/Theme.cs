@@ -49,17 +49,24 @@ namespace Ashfall.Core.UI
         public const string HotHex = "#F4C875";
         public static readonly (float r, float g, float b, float a) Hot = (0.957f, 0.784f, 0.459f, 1f);
 
-        /// <summary>Primary text — pale bone. #e6e0d2.</summary>
-        public const string PaleHex = "#C7DCD0"; // Flagship Phosphor Green
+        /// <summary>Primary text — pale bone. Matches Theme.Pale and MainMenu.uss --pale.</summary>
+        public const string PaleHex = "#E6E0D2";
         public static readonly (float r, float g, float b, float a) Pale = (0.902f, 0.878f, 0.824f, 1f);
 
         /// <summary>Secondary text — muted grey. #938f84.</summary>
         public const string MutedHex = "#938F84";
         public static readonly (float r, float g, float b, float a) Muted = (0.576f, 0.561f, 0.518f, 1f);
 
-        /// <summary>Tertiary / disabled text — dim grey. #66675f.</summary>
-        public const string DimHex = "#66675F";
-        public static readonly (float r, float g, float b, float a) Dim = (0.400f, 0.404f, 0.373f, 1f);
+        /// <summary>
+        /// Tertiary / disabled text — warm grey. #8E8F82.
+        /// Contrast fix 2026-09-25 (UI/UX audit): the previous #66675F measured
+        /// 3.45:1 on Ink and 2.73:1 on SelectedBg (WCAG AA body-text floor is
+        /// 4.5:1). The replacement passes AA on every consumed surface —
+        /// Ink 6.01, SurfaceCard 5.39, HoverBg 4.88, SelectedBg 4.76 — while
+        /// remaining strictly dimmer than <see cref="Muted"/> on each.
+        /// </summary>
+        public const string DimHex = "#8E8F82";
+        public static readonly (float r, float g, float b, float a) Dim = (0.557f, 0.561f, 0.510f, 1f);
 
         /// <summary>Military exclusive — copper rust. #c4785a.</summary>
         public const string ExclusiveHex = "#C4785A";
@@ -70,10 +77,10 @@ namespace Ashfall.Core.UI
         public static readonly (float r, float g, float b, float a) Critical = (0.902f, 0.200f, 0.200f, 1f);
 
         // ── Semantic Design Tokens ───────────────────────────────────────
-        public const string SurfaceHex = "#050709"; // Deep Black
+        public const string SurfaceHex = "#0E1114"; // Deep Black (matches tuple)
         public static readonly (float r, float g, float b, float a) Surface = (0.055f, 0.067f, 0.078f, 1f);
 
-        public const string SurfaceCardHex = "#090B0D"; // Deep Black Card
+        public const string SurfaceCardHex = "#14191E"; // Deep Black Card (matches tuple)
         public static readonly (float r, float g, float b, float a) SurfaceCard = (0.078f, 0.098f, 0.118f, 1f);
 
         public static readonly (float r, float g, float b, float a) BackdropOverlay = (0.031f, 0.039f, 0.047f, 0.94f);
@@ -87,7 +94,7 @@ namespace Ashfall.Core.UI
         public const string SuccessHex = "#5CD670";
         public static readonly (float r, float g, float b, float a) Success = (0.361f, 0.839f, 0.439f, 1f);
 
-        public const string WarningHex = "#FF6B35"; // Flagship Hazard Orange
+        public const string WarningHex = "#C97B3A"; // Rendered hazard amber (matches tuple; #FF6B35 was never consumed)
         public static readonly (float r, float g, float b, float a) Warning = (0.788f, 0.482f, 0.227f, 1f);
 
         public const string RadiationHex = "#D9A026";

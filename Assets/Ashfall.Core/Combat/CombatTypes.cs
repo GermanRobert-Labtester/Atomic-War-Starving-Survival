@@ -15,7 +15,21 @@ namespace Ashfall.Core.Combat
         Resolved = 3,
         Won = 4,
         Lost = 5,
-        Retreated = 6
+        Retreated = 6,
+        /// <summary>DEC-358 fixed-tick realtime fight clock (replaces PlayerTurn/EnemyTurn as primary cadence).</summary>
+        ActiveRealtime = 7
+    }
+
+    /// <summary>Realtime locomotion mode for a combatant (DEC-358 / PFGL-RT-W1).</summary>
+    public enum CombatMotionMode
+    {
+        Idle = 0,
+        Walk = 1,
+        Run = 2,
+        Climb = 3,
+        Cover = 4,
+        Flee = 5,
+        Downed = 6
     }
 
     /// <summary>Left/center/right combat lanes. Index 0/1/2.</summary>
@@ -113,6 +127,23 @@ namespace Ashfall.Core.Combat
         public float SurrenderThreshold = -1f;           // -1 = never; 0..1 = open path
         public float FleeThreshold = -1f;                // -1 = never; 0..1 = open path
         public string CatalogId = string.Empty;          // combatant_* id when spawned via factory; "" for legacy rows
+
+        // ── Realtime pose fields (DEC-358). Defaults keep legacy lane-only rows valid.
+        public float PosX;
+        public float PosY;
+        public float VelX;
+        public float VelY;
+        public float FacingRad;
+        public float AimRad;
+        public int MotionMode = (int)CombatMotionMode.Idle;
+        public float Stamina01 = 1f;
+        public float FireCooldown;
+        public float AiThinkCooldown;
+        public string AiBehaviorPhase = string.Empty;
+        /// <summary>Seconds remaining in the current <see cref="AiBehaviorPhase"/> (DEC-358 W3).</summary>
+        public float AiPhaseTimer;
+        public float ExtractProgress01;
+        public bool PoseSeeded;
     }
 
     /// <summary>Per-lane barrier (sandbags, barricade) blocking fire.</summary>
@@ -274,7 +305,7 @@ namespace Ashfall.Core.Combat
     [Serializable]
     public class CombatState
     {
-        public const int CurrentSaveVersion = 4;
+        public const int CurrentSaveVersion = 5;
 
         public string SystemId = TacticalCombatSystem.SystemId;
         public int SaveVersion = CurrentSaveVersion;
@@ -301,6 +332,12 @@ namespace Ashfall.Core.Combat
         public List<BarrierState> Barriers = new List<BarrierState>();
         public List<CombatEvent> Events = new List<CombatEvent>();
         public List<CombatLootEntry> Loot = new List<CombatLootEntry>();
+
+        // DEC-358 realtime clock (additive; legacy saves default RealtimeActive=false).
+        public bool RealtimeActive;
+        public float SimTime;
+        public int SimTick;
+        public string ArenaId = string.Empty;
 
         public float GetBoundWeaponStartCondition(string instanceId, float defaultVal = 1f)
         {
@@ -331,6 +368,27 @@ namespace Ashfall.Core.Combat
                 conditionPct = condition
             });
         }
+    }
+
+    /// <summary>Host→Core input sample for one realtime tick (not persisted).</summary>
+    [Serializable]
+    public class CombatInputFrame
+    {
+        public string SubjectId = string.Empty;
+        public float MoveX;
+        public float MoveY;
+        public bool Sprint;
+        public bool Climb;
+        public bool Brace;
+        public bool FireHeld;
+        public bool FirePressed;
+        public bool Reload;
+        public bool Suppress;
+        public bool Flee;
+        public float AimRad;
+        public string AimTargetId = string.Empty;
+
+        public static CombatInputFrame Empty => new CombatInputFrame();
     }
 
     /// <summary>Result of a player action — success + message + appended events.</summary>

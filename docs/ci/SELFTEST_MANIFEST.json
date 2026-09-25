@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 206,
-  "headless_test_count": 204,
+  "total_tests": 208,
+  "headless_test_count": 206,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1870,6 +1870,19 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "internal_communication_selftest",
+      "action": "InternalCommunicationSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--internal-communication-selftest",
+      "aliases": [
+        "--shelter-communications-selftest"
+      ],
+      "description": "Plan 211: Internal shelter notices, identity refusals, private-mail privacy, canonical expiry, save/restore, and Shelter Social UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "internal_communication_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "death_legacy_selftest",
       "action": "DeathLegacySelfTest",
       "category": "Host Domains & Save Stores",
@@ -2307,6 +2320,17 @@
       "description": "Medical triage, expedition sorties, radio network, crafting, respiratory afflictions, and the routed shelter operations board",
       "headless_compatible": true,
       "expected_summary_id": "shelter_operations_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "water_sources_selftest",
+      "action": "WaterSourcesSelfTest",
+      "category": "Water & Infrastructure",
+      "primary_flag": "--water-sources-selftest",
+      "aliases": [],
+      "description": "Atomic well, condenser, and piezometer commands with existing save snapshots",
+      "headless_compatible": true,
+      "expected_summary_id": "water_sources_selftest",
       "timeout_seconds": 30
     },
     {

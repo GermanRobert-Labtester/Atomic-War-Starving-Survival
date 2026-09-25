@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/radio_headset.jpg-d68e0ab64b68c54b2b2fa011e44
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

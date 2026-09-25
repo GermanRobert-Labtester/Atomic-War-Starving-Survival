@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/basic_heater.jpg-731d45f3ef91f5c3b8d621d32804
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

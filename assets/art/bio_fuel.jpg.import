@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bio_fuel.jpg-c64638ca1324ba021b153b8ed40f5d76
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

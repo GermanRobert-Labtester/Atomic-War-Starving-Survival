@@ -214,7 +214,7 @@ public partial class MaritimeAtlasPanel : Control
         _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("DIVE DETAIL"));
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
         _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Bind a MaritimeHostSession to see live dive-site state."));
+            "Bind a MaritimeHostSession to see live dive-site state.", autowrap: true));
         actionRow.AddChild(_detailBox);
 
         body.AddChild(actionRow);
@@ -331,13 +331,13 @@ public partial class MaritimeAtlasPanel : Control
         if (_host == null || _sites.Count == 0)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Maritime atlas offline. Bind a MaritimeHostSession to see live dive-site state."));
+                "Maritime atlas offline. Bind a MaritimeHostSession to see live dive-site state.", autowrap: true));
             return;
         }
         if (_selectedIndex < 0)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Dive site state surfaces here when the dive begins."));
+                "Dive site state surfaces here when the dive begins.", autowrap: true));
             return;
         }
         var (siteId, name, oxygen, noiseFloor, keeper, rooms, tideWindow) = _sites[_selectedIndex];

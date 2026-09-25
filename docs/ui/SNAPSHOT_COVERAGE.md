@@ -17,7 +17,7 @@ For full audit reasoning, see
 ## State header
 
 ```
-COVERED:           28 surfaces (31 documented targets)   ← +1 Wave 8 C1 (Black Market)
+COVERED:           28 surfaces (32 documented targets)   ← +1 Wave 8 C1 (Black Market), + Plan 56 market_default
 PARTIAL:            1 surface  (TradeScreen, INTENTIONAL_CHILD)
 REGRESSION_ONLY:    1 surface  (CraftingPanel drill-down)
 MISSING:            0 surfaces  (ALL SURFACES COVERED)
@@ -26,9 +26,9 @@ Total tracked:     30 player-facing runtime surfaces (ALL COVERED)
 ```
 
 **Snapshot fixtures on disk:** 32 target PNGs (+ 5 gallery baselines = 37 total).
-The harness includes the later Plan 56 `market_default` target, which remains a
-pre-existing manifest/coverage reconciliation item. The 31 documented targets are
-tracked below.
+The harness and manifest agree (reconciled 2026-09-25): Plan 56 `market_default`
+is documented and all 32 targets are canonical 1920×1080. The 32 documented
+targets are tracked below.
 0 duplicate MD5 groups, 0 blank captures — verified by direct RGBA8 pixel-decode check
 after the Phase 26 SubViewport pipeline fix.
 

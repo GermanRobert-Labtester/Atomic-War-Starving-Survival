@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/food_can.jpg-295af32f5d548ca3af16f0fba4056913
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

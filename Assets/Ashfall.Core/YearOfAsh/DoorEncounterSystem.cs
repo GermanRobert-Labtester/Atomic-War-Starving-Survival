@@ -29,6 +29,11 @@ namespace Ashfall.Core.YearOfAsh
         public string requiredTrait = string.Empty;
         public string requiredItemId = string.Empty;
         public int requiredItemQuantity = 0;
+        /// <summary>Optional barter grant: item the visitor leaves behind when
+        /// this choice resolves. Core reports the fact; the host applies it to
+        /// the canonical inventory.</summary>
+        public string grantItemId = string.Empty;
+        public int grantItemQuantity = 0;
         public int baseMoraleDelta = 0;
         public int baseGuiltDelta = 0;
         public string targetFaction = string.Empty;
@@ -57,6 +62,10 @@ namespace Ashfall.Core.YearOfAsh
         public int netGuiltDelta = 0;
         public string outcomeText = string.Empty;
         public List<IndividualSurvivorReaction> survivorReactions = new List<IndividualSurvivorReaction>();
+        /// <summary>Barter grant carried through from the resolved choice
+        /// (empty when the choice grants nothing).</summary>
+        public string grantItemId = string.Empty;
+        public int grantItemQuantity = 0;
     }
 
     [Serializable]
@@ -151,6 +160,8 @@ namespace Ashfall.Core.YearOfAsh
 
             result.netMoraleDelta = netMorale;
             result.netGuiltDelta = netGuilt;
+            result.grantItemId = choice.grantItemId ?? string.Empty;
+            result.grantItemQuantity = choice.grantItemQuantity > 0 ? choice.grantItemQuantity : 0;
 
             _state.totalEncountersResolved++;
             _state.resolvedEncounterIds.Add(encounter.encounterId);

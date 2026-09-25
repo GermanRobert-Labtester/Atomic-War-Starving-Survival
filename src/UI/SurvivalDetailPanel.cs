@@ -34,7 +34,11 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(SurvivorsHostSession? survivors)
         {
+            if (_survivors != null) _survivors.StateChanged -= RefreshView;
+
             _survivors = survivors;
+
+            if (_survivors != null) _survivors.StateChanged += RefreshView;
             RefreshView();
         }
 

@@ -436,6 +436,9 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "VERDICT", "verdict");
             AddNavButton(content, "MARITIME", "maritime");
             AddNavButton(content, "DUTY ROSTER", "duty_roster");
+            AddNavButton(content, "ROMANCE / FAMILY", "romance_family_board");
+            AddNavButton(content, "COLONY OPERATIONS", "colony_operations");
+            AddNavButton(content, "MEDIATION DESK", "ideological_mediation_desk");
             AddNavButton(content, "QUESTS", "quests");
             AddNavButton(content, "EVENTS", "event_detail");
             AddNavButton(content, "NARRATIVE ARCS", "narrative_arc");
@@ -479,6 +482,53 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "WILLS & LEGACY", "death_legacy");
             AddNavButton(content, "SOCIAL BONDS", "relationship_decay");
 
+            // UI/UX audit 2026-09-25: promoted subsystem consoles. 20 of the 29
+            // prototype ids are now Live in PanelRegistryBootstrap; each route
+            // resolves to the live surface that owns its domain (see
+            // RedirectPrototypeRoute in Main.PlayerSurfaces.cs).
+            content.AddChild(AshfallUiHelpers.MakeSeparator());
+            content.AddChild(AshfallUiHelpers.MakeSectionHeader("SUBSYSTEM CONSOLES"));
+            content.AddChild(AshfallUiHelpers.MakeMetadata("ROUTED TO LIVE SURFACES"));
+            AddNavButton(content, "MEMORIAL CENOTAPH", "iron_cenotaph_memorial");
+            AddNavButton(content, "BIOGAS DIGESTER", "biogas_digester");
+            AddNavButton(content, "FUNGAL FERMENTER", "fungal_protein_fermenter");
+            AddNavButton(content, "GEOTHERMAL TURBINE", "geothermal_turbine");
+            AddNavButton(content, "DIESEL GENERATOR", "heavy_marine_diesel_gen");
+            AddNavButton(content, "CUPOLA FURNACE", "induction_cupola_furnace");
+            AddNavButton(content, "PLASMA SMELTING", "plasma_smelting");
+            AddNavButton(content, "LOGISTICS AIRLOCK", "logistics_airlock");
+            AddNavButton(content, "LONG WALK", "long_walk_expedition");
+            AddNavButton(content, "PROSTHETICS LATHE", "mechanical_prosthetics_lathe");
+            AddNavButton(content, "PRINTING PRESS", "printing_press");
+            AddNavButton(content, "DEBT LEDGER", "subterranean_debt_ledger");
+            AddNavButton(content, "WAR KENNEL", "war_dog_kennel");
+            AddNavButton(content, "ULTRASONIC AIRLOCK", "ultrasonic_decontam_airlock");
+            AddNavButton(content, "TRAUMA BONDS", "trauma_bonding_cohort");
+            AddNavButton(content, "CONDUCT VOUCH", "crossing_safe_conduct_vouch");
+            AddNavButton(content, "CARTOGRAPHY", "cartography_gis");
+            AddNavButton(content, "DRUM ARCHIVE", "magnetic_drum_archive");
+            AddNavButton(content, "SHRAPNEL AEGIS", "surface_shrapnel_aegis");
+            AddNavButton(content, "INSURGENCY", "clandestine_insurgency");
+            // Second missingness batch (root-cause gate): session-bound panels
+            // whose routes were silently unregistered.
+            AddNavButton(content, "FUNGI BEDS", "fungi_cultivation");
+            AddNavButton(content, "PLASTIC PYROLYSIS", "plastic_pyrolysis");
+            AddNavButton(content, "CARGO AIRDROP", "cargo_airdrop");
+            AddNavButton(content, "EB-PVD COATER", "ebpvd_coating");
+            AddNavButton(content, "MICROFLUIDIC LAB", "microfluidic_diagnostic");
+            AddNavButton(content, "MINE FLAIL", "mine_clearing_flail");
+            AddNavButton(content, "RAIL GRINDING", "rail_grinding");
+            AddNavButton(content, "RADIO INTEL", "radio_intelligence");
+            AddNavButton(content, "SHELTER SOCIAL", "shelter_social");
+            AddNavButton(content, "SUBTERRANEAN OPS", "subterranean_operations");
+            AddNavButton(content, "SCRUBBER STAGE", "electrostatic_scrubber");
+            // Third batch: geothermal aquifer route seal + converted consoles.
+            AddNavButton(content, "GEOTHERMAL AQUIFER", "geothermal_aquifer");
+            AddNavButton(content, "RADON MIGRATION", "basal_radon_migration");
+            AddNavButton(content, "SEISMOGRAPH", "borehole_seismograph");
+            AddNavButton(content, "CRYO VAULT", "cryo_permafrost_core");
+            AddNavButton(content, "BREACHING OPS", "vault_door_breaching");
+
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());
 
@@ -490,7 +540,18 @@ namespace AtomicWar.GodotApp.UI
             developer.CustomMinimumSize = new Vector2(0, 34);
             content.AddChild(developer);
 
-            return WrapSurface(content, new Vector2(196, 0), DesignTheme.SpacingMd);
+            // UI/UX audit 2026-09-25: 60+ nav entries exceed the fixed 1080px
+            // canvas inside a plain VBox. Contain the rail in a vertical scroll
+            // surface so every entry stays reachable at the supported resolution;
+            // keyboard focus still traverses the buttons inside the scroll region.
+            var railScroll = new ScrollContainer();
+            railScroll.SizeFlagsVertical = SizeFlags.ExpandFill;
+            railScroll.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            railScroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
+            content.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            railScroll.AddChild(content);
+
+            return WrapSurface(railScroll, new Vector2(196, 0), DesignTheme.SpacingMd);
         }
 
         private Control BuildOverviewColumn()

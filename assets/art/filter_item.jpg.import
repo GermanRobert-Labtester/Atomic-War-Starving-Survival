@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/filter_item.jpg-8a6ab568d800cf3dea247148458d5
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

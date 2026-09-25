@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/medkit.jpg-f8fb04bfc0bd4ceab19d97ad44d6447d.c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

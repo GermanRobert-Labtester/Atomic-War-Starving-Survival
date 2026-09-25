@@ -361,15 +361,7 @@ namespace AtomicWar.GodotApp
                 return;
             }
 
-            if (!descriptor.IsPlayerNavigable)
-            {
-                string msg = "[PanelRegistry] PROTOTYPE ROUTE: '" + panelId + "' is a shelved prototype and not player-navigable.";
-                GD.PrintErr(msg);
-                if (_statusLabel != null)
-                    _statusLabel.Text = msg;
-                return;
-            }
-
+            _lastVisibilityGranted = null;
             CloseAllOverlayPanels();
             AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.UiConfirm);
 
@@ -377,6 +369,16 @@ namespace AtomicWar.GodotApp
             {
                 descriptor.Bind();
                 descriptor.Open();
+
+                // Learn the control for this route the first time it becomes
+                // visible, then use the map to cancel an in-flight close when a
+                // route is re-invoked while its panel is still fading out
+                // (same-route re-open, rapid switching).
+                if (_lastVisibilityGranted != null)
+                    _openControlById[panelId] = _lastVisibilityGranted;
+                if (_openControlById.TryGetValue(panelId, out var reopened) &&
+                    AtomicWar.GodotApp.UI.UiMotion.IsClosing(reopened))
+                    AtomicWar.GodotApp.UI.UiMotion.CancelClose(reopened);
                 return;
             }
 
@@ -910,40 +912,17 @@ namespace AtomicWar.GodotApp
 
         private bool AnyOverlayPanelOpen()
         {
-            if (_journalBook != null && _journalBook.IsOpen) return true;
-            Control[] panels =
+            // Single authority shared with CloseAllOverlayPanels
+            // (UI/UX audit 2026-09-25 — detection previously covered only 64 of
+            // 131 overlay panels, letting Esc return to menu with overlays open).
+            // Panels fading out are logically closed (UiMotion close transition)
+            // and must not keep the overlay state "open" for input routing.
+            foreach (Control panel in OverlayPanelCatalog())
             {
-                _settingsPanel, _inventoryOverlay, _survivorsOverlay, _craftingPanel,
-                _radioPanel, _medicalPanel, _dutyRosterPanel,
-                _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
-                _factionsPanel, _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
-                _silentFoundryPanel,
-                _tradePanel,
-                _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel,
-                _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
-                _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
-                _combatDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
-                _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
-                _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
-                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal,
-                _geothermalOrcPanel, _ballisticsWorkbenchPanel, _aeroponicsPanel,
-                _pneumaticDispatchPanel,
-                _doseGeographyPanel,
-                _dailyBriefingModal, _narrativeArcModal,
-                _chemWarfareDefensePanel, _commsArrayTransceiverPanel,
-                _ceremonyFestivalPanel, _roboticsWorkshopPanel,
-                _survivorDowntimePanel, _winterFreezePanel,
-                _amputationTriagePanel, _justiceTribunalPanel,
-                _railwayTerminalPanel, _archaeologyExcavationPanel,
-                _desperationCrisisPanel, _mercenaryBountyBoardPanel,
-                _falloutPlumePanel
-            };
-
-            foreach (Control panel in panels)
-            {
-                if (panel != null && panel.Visible)
+                if (panel != null && panel.Visible && !AtomicWar.GodotApp.UI.UiMotion.IsClosing(panel))
                     return true;
             }
+            if (_journalBook != null && _journalBook.IsOpen) return true;
             if (_briefingPending && _dailyBriefingModal != null && _dailyBriefingModal.IsOpen)
                 return true;
             return false;

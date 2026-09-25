@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/danger_ring.jpg-aa1254571dd165fa96f9487ff764c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -38,6 +38,7 @@ namespace AtomicWar.GodotApp.UI
         private Button _btnFire = null!;
         private Button _btnSuppress = null!;
         private Button _btnTrap = null!;
+        private Button _btnReload = null!;
         private Button _btnClearJam = null!;
         private Button _btnRepair = null!;
         private Button _btnDecon = null!;
@@ -178,11 +179,15 @@ namespace AtomicWar.GodotApp.UI
             _btnTrap.Disabled = !active;
             _btnTrap.TooltipText = active ? "Deploy an obstacle trap in active lanes" : "Encounter not active";
 
-            var jamPf = _combat.EvaluateClearJam("survivor_yuki");
+            var reloadPf = _combat.EvaluateReload(_combat.DefaultPlayerSubjectId());
+            _btnReload.Disabled = !reloadPf.CanExecute;
+            _btnReload.TooltipText = reloadPf.CanExecute ? "Reload magazine from carried ammo [R]" : reloadPf.Reason;
+
+            var jamPf = _combat.EvaluateClearJam(_combat.DefaultPlayerSubjectId());
             _btnClearJam.Disabled = !jamPf.CanExecute;
             _btnClearJam.TooltipText = jamPf.CanExecute ? "Clear jammed weapon action [3]" : jamPf.Reason;
 
-            var repPf = _combat.EvaluateRepair("survivor_yuki");
+            var repPf = _combat.EvaluateRepair(_combat.DefaultPlayerSubjectId());
             _btnRepair.Disabled = !repPf.CanExecute;
             _btnRepair.TooltipText = repPf.CanExecute ? "Field repair weapon condition with scrap [4]" : repPf.Reason;
 
@@ -198,7 +203,9 @@ namespace AtomicWar.GodotApp.UI
 
             var retPf = _combat.EvaluateRetreat();
             _btnRetreat.Disabled = !retPf.CanExecute;
-            _btnRetreat.TooltipText = retPf.CanExecute ? "Attempt tactical disengagement and retreat" : retPf.Reason;
+            _btnRetreat.TooltipText = retPf.CanExecute
+                ? "Break for extract under fire — you can still be shot while running"
+                : retPf.Reason;
 
             var endPf = _combat.EvaluateEndTurn();
             _btnEndTurn.Disabled = !endPf.CanExecute;
@@ -307,13 +314,15 @@ namespace AtomicWar.GodotApp.UI
             vbox.AddChild(row1);
 
             var row2 = Row();
-            _btnClearJam = Btn("CLEAR JAM [3]", () => DoAction(() => _combat.ActionClearJam("survivor_yuki")));
+            _btnReload = Btn("RELOAD [R]", () => DoAction(() => _combat.ActionReload(_combat.DefaultPlayerSubjectId())));
+            row2.AddChild(_btnReload);
+            _btnClearJam = Btn("CLEAR JAM [3]", () => DoAction(() => _combat.ActionClearJam(_combat.DefaultPlayerSubjectId())));
             row2.AddChild(_btnClearJam);
-            _btnRepair = Btn("REPAIR [4]", () => DoAction(() => _combat.ActionRepair("survivor_yuki").MessageKey));
+            _btnRepair = Btn("REPAIR [4]", () => DoAction(() => _combat.ActionRepair(_combat.DefaultPlayerSubjectId()).MessageKey));
             row2.AddChild(_btnRepair);
             _btnDecon = Btn("DECON FLUSH", () => DoAction(_combat.ActionDecontaminate));
             row2.AddChild(_btnDecon);
-            _btnLastStand = Btn("LAST STAND", () => DoAction(() => _combat.ActionLastStand("survivor_yuki")));
+            _btnLastStand = Btn("LAST STAND", () => DoAction(() => _combat.ActionLastStand(_combat.DefaultPlayerSubjectId())));
             row2.AddChild(_btnLastStand);
             vbox.AddChild(row2);
 
@@ -430,11 +439,19 @@ namespace AtomicWar.GodotApp.UI
                         GetViewport().SetInputAsHandled();
                     }
                 }
+                else if (key.Keycode == Key.R)
+                {
+                    if (!_btnReload.Disabled)
+                    {
+                        DoAction(() => _combat.ActionReload(_combat.DefaultPlayerSubjectId()));
+                        GetViewport().SetInputAsHandled();
+                    }
+                }
                 else if (key.Keycode == Key.Key3 || key.Keycode == Key.Kp3)
                 {
                     if (!_btnClearJam.Disabled)
                     {
-                        DoAction(() => _combat.ActionClearJam("survivor_yuki"));
+                        DoAction(() => _combat.ActionClearJam(_combat.DefaultPlayerSubjectId()));
                         GetViewport().SetInputAsHandled();
                     }
                 }
@@ -442,7 +459,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     if (!_btnRepair.Disabled)
                     {
-                        DoAction(() => _combat.ActionRepair("survivor_yuki").MessageKey);
+                        DoAction(() => _combat.ActionRepair(_combat.DefaultPlayerSubjectId()).MessageKey);
                         GetViewport().SetInputAsHandled();
                     }
                 }

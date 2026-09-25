@@ -33,7 +33,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             AddThemeStyleboxOverride("panel", AtomicWar.GodotApp.UI.AshfallUiHelpers.MakePanelFrameStyleBox());
 
             var rootVbox = new VBoxContainer();
-            rootVbox.AddThemeConstantOverride("separation", 6);
+            rootVbox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             AddChild(rootVbox);
 
             var title = new Label

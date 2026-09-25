@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ruin.jpg-5fde9d757614ba30efafe87574c7f02a.cte
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

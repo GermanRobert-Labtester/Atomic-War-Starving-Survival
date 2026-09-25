@@ -105,7 +105,11 @@ namespace Ashfall.Core.Combat
                 OutcomeText = _state.OutcomeText,
                 ResolutionId = _state.ResolutionId,
                 IsSelfDefense = _state.IsSelfDefense,
-                Aftermath = CloneAftermath(_state.Aftermath)
+                Aftermath = CloneAftermath(_state.Aftermath),
+                RealtimeActive = _state.RealtimeActive,
+                SimTime = _state.SimTime,
+                SimTick = _state.SimTick,
+                ArenaId = _state.ArenaId ?? string.Empty
             };
             copy.AppliedFactionConsequenceIds = CloneIncidentIds(_state.AppliedFactionConsequenceIds);
             copy.FactionConsequences = CloneFactionConsequences(_state.FactionConsequences);
@@ -144,14 +148,18 @@ namespace Ashfall.Core.Combat
                 Day = s.Day,
                 Seed = s.Seed,
                 Turn = Math.Max(1, s.Turn),
-                Phase = MathfCompat.Clamp(s.Phase, (int)CombatPhase.Setup, (int)CombatPhase.Retreated),
+                Phase = MathfCompat.Clamp(s.Phase, (int)CombatPhase.Setup, (int)CombatPhase.ActiveRealtime),
                 PlayerStance = string.IsNullOrEmpty(s.PlayerStance) ? StanceId(TacticalStance.HoldPosition) : s.PlayerStance,
                 RoundNumber = s.RoundNumber,
                 Resolved = s.Resolved,
                 OutcomeText = s.OutcomeText ?? string.Empty,
                 ResolutionId = s.ResolutionId ?? string.Empty,
                 IsSelfDefense = s.IsSelfDefense,
-                Aftermath = CloneAftermath(s.Aftermath)
+                Aftermath = CloneAftermath(s.Aftermath),
+                RealtimeActive = s.RealtimeActive,
+                SimTime = s.SimTime,
+                SimTick = s.SimTick,
+                ArenaId = s.ArenaId ?? string.Empty
             };
             m.AppliedFactionConsequenceIds = CloneIncidentIds(s.AppliedFactionConsequenceIds);
             m.FactionConsequences = CloneFactionConsequences(s.FactionConsequences);
@@ -161,6 +169,18 @@ namespace Ashfall.Core.Combat
             m.Barriers = CloneBarriers(s.Barriers);
             m.Events = CloneEvents(s.Events);
             if (s.Loot != null) m.Loot.AddRange(s.Loot);
+
+            // Old saves mid PlayerTurn/EnemyTurn with realtime intent: keep legacy phases unless
+            // RealtimeActive was already set. Pose defaults remain zero until EnableRealtime.
+            if (m.RealtimeActive && m.Phase != (int)CombatPhase.ActiveRealtime
+                && m.Phase != (int)CombatPhase.Won
+                && m.Phase != (int)CombatPhase.Lost
+                && m.Phase != (int)CombatPhase.Retreated
+                && !m.Resolved)
+            {
+                m.Phase = (int)CombatPhase.ActiveRealtime;
+            }
+
             return m;
         }
 
@@ -322,7 +342,21 @@ namespace Ashfall.Core.Combat
                 AiDamageMod = c.AiDamageMod <= 0f ? 1f : c.AiDamageMod,
                 SurrenderThreshold = c.SurrenderThreshold,
                 FleeThreshold = c.FleeThreshold,
-                CatalogId = c.CatalogId ?? string.Empty
+                CatalogId = c.CatalogId ?? string.Empty,
+                PosX = c.PosX,
+                PosY = c.PosY,
+                VelX = c.VelX,
+                VelY = c.VelY,
+                FacingRad = c.FacingRad,
+                AimRad = c.AimRad,
+                MotionMode = c.MotionMode,
+                Stamina01 = MathfCompat.Clamp01(c.Stamina01 <= 0f && !c.PoseSeeded ? 1f : c.Stamina01),
+                FireCooldown = Math.Max(0f, c.FireCooldown),
+                AiThinkCooldown = Math.Max(0f, c.AiThinkCooldown),
+                AiBehaviorPhase = c.AiBehaviorPhase ?? string.Empty,
+                AiPhaseTimer = Math.Max(0f, c.AiPhaseTimer),
+                ExtractProgress01 = MathfCompat.Clamp01(c.ExtractProgress01),
+                PoseSeeded = c.PoseSeeded
             };
         }
 

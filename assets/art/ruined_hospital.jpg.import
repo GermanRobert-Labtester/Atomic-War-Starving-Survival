@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ruined_hospital.jpg-091401f9ceb0abf413b4fcc22
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

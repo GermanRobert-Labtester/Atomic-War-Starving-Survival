@@ -32,6 +32,7 @@ namespace AtomicWar.GodotApp
     {
         // ── Inventory fields (GAP-ARCH-01 Phase 1) ──
         private InventoryHostSession _inventory = null!;
+        private SalvageHostSession? _salvageBench;
         private string _startingSuppliesProfileId = StartingSuppliesCatalog.StandardProfileId;
         private string? _cliStartingSuppliesProfileId;
         private StartingSuppliesCatalog _startingSuppliesCatalog = null!;
@@ -132,6 +133,18 @@ namespace AtomicWar.GodotApp
             if (_inventoryPanel != null)
             {
                 _inventoryPanel.Bind(_inventory);
+                if (_salvageBench == null)
+                {
+                    try
+                    {
+                        _salvageBench = SalvageHostSession.Load(_dataDir, new AtomicWar.GodotApp.Host.GodotFileIO(), _inventory);
+                    }
+                    catch (Exception ex)
+                    {
+                        GD.PushWarning($"[Inventory] salvage bench unavailable: {ex.Message}");
+                    }
+                }
+                if (_salvageBench != null) _inventoryPanel.BindSalvage(_salvageBench);
                 _inventoryPanel.OnItemSelected -= OnInventoryItemSelected;
                 _inventoryPanel.OnItemSelected += OnInventoryItemSelected;
                 _inventoryPanel.RefreshView();

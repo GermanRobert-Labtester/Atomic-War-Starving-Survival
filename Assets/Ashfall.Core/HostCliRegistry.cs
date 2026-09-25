@@ -195,6 +195,7 @@ namespace Ashfall.Core
         PlayerPanelsUiTest,
         ShelterHazardLoopSelfTest,
         ShelterOperationsSelfTest,
+        WaterSourcesSelfTest,
         ShelterDecorSelfTest,
         ShelterPhysicsSelfTest,
         ShelterAtmosphereSelfTest,
@@ -217,6 +218,7 @@ namespace Ashfall.Core
         ShelterSecuritySelfTest,
         PersonalQuestSelfTest,
         TimeCapsuleSelfTest,
+        InternalCommunicationSelfTest,
         DeathLegacySelfTest,
         RelationshipDecaySelfTest,
         VisitorIntegrationSelfTest,
@@ -1273,6 +1275,12 @@ namespace Ashfall.Core
                     new[] { "--time-capsules-selftest" },
                     "Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding"),
                 new HostCliActionDescriptor(
+                    HostCliAction.InternalCommunicationSelfTest,
+                    "Host Domains & Save Stores",
+                    "--internal-communication-selftest",
+                    new[] { "--shelter-communications-selftest" },
+                    "Plan 211: Internal shelter notices, identity refusals, private-mail privacy, canonical expiry, save/restore, and Shelter Social UI binding"),
+                new HostCliActionDescriptor(
                     HostCliAction.DeathLegacySelfTest,
                     "Host Domains & Save Stores",
                     "--death-legacy-selftest",
@@ -1481,6 +1489,12 @@ namespace Ashfall.Core
                     "--shelter-operations-selftest",
                     new[] { "--shelter-ops-selftest", "--operations-selftest" },
                     "Medical triage, expedition sorties, radio network, crafting, respiratory afflictions, and the routed shelter operations board"),
+                new HostCliActionDescriptor(
+                    HostCliAction.WaterSourcesSelfTest,
+                    "Water & Infrastructure",
+                    "--water-sources-selftest",
+                    Array.Empty<string>(),
+                    "Atomic well, condenser, and piezometer commands with existing save snapshots"),
                 new HostCliActionDescriptor(
                     HostCliAction.ShelterDecorSelfTest,
                     "UI Tests, Layout & Gameplay Smoke",

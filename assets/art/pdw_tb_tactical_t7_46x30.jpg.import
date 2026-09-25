@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/pdw_tb_tactical_t7_46x30.jpg-26769868ade9f90d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

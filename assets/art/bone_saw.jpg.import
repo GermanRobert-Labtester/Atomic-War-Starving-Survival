@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bone_saw.jpg-3d7c6993e603aed0af36eb93cfb7927e
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

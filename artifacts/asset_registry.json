@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-22T19:58:58.099008+00:00",
-  "strict_mode": true,
+  "generated_at": "2026-09-25T05:29:18.435351+00:00",
+  "strict_mode": false,
   "summary": {
     "total_ids": 1746,
-    "loaded": 509,
-    "fallback": 1237,
+    "loaded": 738,
+    "fallback": 1008,
     "missing": 0,
-    "coverage_pct": 29.15,
+    "coverage_pct": 42.27,
     "by_category": {
       "item": {
         "total": 996,
@@ -17,8 +17,8 @@
       },
       "portrait": {
         "total": 267,
-        "loaded": 110,
-        "fallback": 157,
+        "loaded": 242,
+        "fallback": 25,
         "missing": 0
       },
       "location": {
@@ -29,8 +29,8 @@
       },
       "faction": {
         "total": 98,
-        "loaded": 1,
-        "fallback": 97,
+        "loaded": 98,
+        "fallback": 0,
         "missing": 0
       }
     }
@@ -8816,209 +8816,209 @@
       "id": "survivor_family_child",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_family_child.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "alex_raymond",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/alex_raymond.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "jamie_chen",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/jamie_chen.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "taylor_morgan",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/taylor_morgan.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "riley_cooper",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/riley_cooper.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "jordan_kim",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/jordan_kim.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "casey_garcia",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/casey_garcia.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "morgan_lee",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/morgan_lee.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "drew_paterson",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/drew_paterson.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "cam_nguyen",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/cam_nguyen.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "reese_flores",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/reese_flores.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "skylar_walker",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/skylar_walker.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "hayden_reyes",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/hayden_reyes.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "ariana_cruz",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/ariana_cruz.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "blake_sullivan",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/blake_sullivan.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "quinn_taylor",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/quinn_taylor.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "dylan_park",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/dylan_park.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "emerson_wu",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/emerson_wu.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "logan_white",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/logan_white.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "rowan_king",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/rowan_king.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "sage_green",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/sage_green.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "finley_clark",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/finley_clark.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "elliot_bennett",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/elliot_bennett.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "jude_ramirez",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/jude_ramirez.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "asher_cole",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/asher_cole.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "ren_murphy",
       "category": "portrait",
       "source_catalog": "survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/ren_murphy.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_dr_sarah_chen",
@@ -9040,33 +9040,33 @@
       "id": "survivor_ottilie_frayne",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_ottilie_frayne.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_anneke_ruhl",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_anneke_ruhl.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_corporal_felix_vane",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_corporal_felix_vane.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_sister_martha",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_sister_martha.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_dr_sarah_chen",
@@ -9080,17 +9080,17 @@
       "id": "survivor_tomas_lind",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_tomas_lind.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_valeria_koss",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_valeria_koss.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_gunner_mikhail",
@@ -9104,225 +9104,225 @@
       "id": "survivor_naomi_strand",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_naomi_strand.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_pavel_volkov",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_pavel_volkov.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_zoya_reid",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_zoya_reid.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_captain_alder",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_captain_alder.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_lydia_hart",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_lydia_hart.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_dr_erik_dahl",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_dr_erik_dahl.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_igor_morozov",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_igor_morozov.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_clara_sloan",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_clara_sloan.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_vera_sokolov",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_vera_sokolov.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_marcus_vane",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_marcus_vane.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_first_officer_lindqvist",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_first_officer_lindqvist.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_colonel_brand",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_colonel_brand.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_ansel_duth",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_ansel_duth.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_hadi_morrow",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_hadi_morrow.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_kess_adler",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_kess_adler.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_len_quill",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_len_quill.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_markov_arsenal_assayer",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_markov_arsenal_assayer.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_talia_upland_commander",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_talia_upland_commander.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_provost_kroll",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_provost_kroll.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_hierophant_malachi",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_hierophant_malachi.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_sapper_vance",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_sapper_vance.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_elena_vasquez_rail",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_elena_vasquez_rail.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_gregor_salt_miner",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_gregor_salt_miner.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_marina_supply_driver",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_marina_supply_driver.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_yuri_foundry_caster",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_yuri_foundry_caster.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_nadia_militia_scout",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_nadia_militia_scout.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_boris_penal_medic",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_boris_penal_medic.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "survivor_anton_salt_trader",
       "category": "portrait",
       "source_catalog": "year_of_ash_survivors.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/survivor_anton_salt_trader.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_bram_ostrowski",
@@ -9336,81 +9336,81 @@
       "id": "npc_sergeant_pell",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_sergeant_pell.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_doctor_ianov",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_doctor_ianov.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_wren",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_wren.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_kestrel",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_kestrel.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_nomi_fisk",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_nomi_fisk.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_ivor_lasko",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_ivor_lasko.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_the_cartwright_sisters",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_the_cartwright_sisters.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_edor_vale",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_edor_vale.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_yara_holm",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_yara_holm.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_leva_quist",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_leva_quist.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_cael_ormund",
@@ -9424,9 +9424,9 @@
       "id": "npc_halden_mire",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_halden_mire.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_cluster_teacher",
@@ -9440,57 +9440,57 @@
       "id": "npc_osran_kell",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_osran_kell.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_mattis_cray",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_mattis_cray.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_wyn_sabler",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_wyn_sabler.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_dessa_vane",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_dessa_vane.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_perrin_ashby",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_perrin_ashby.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_ivo_fenn",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_ivo_fenn.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_kess_adler",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_kess_adler.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_ansel_duth",
@@ -9504,49 +9504,49 @@
       "id": "npc_tamsin_rook",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_tamsin_rook.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_len_quill",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_len_quill.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_hadi_morrow",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_hadi_morrow.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_nila_brant",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_nila_brant.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_maren_holt",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_maren_holt.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_ira_vell",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_ira_vell.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_benno_kade",
@@ -9560,329 +9560,329 @@
       "id": "npc_quil_esser",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_quil_esser.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_osric_tann",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_osric_tann.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_dara_mewn",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_dara_mewn.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_dr_irina_vel",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_dr_irina_vel.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_wyn_omah",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_wyn_omah.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_piet_abar",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_piet_abar.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_saria_voss",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_saria_voss.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_salt_marshal_varn",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_salt_marshal_varn.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_salt_trader_elena",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_salt_trader_elena.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_salt_boiler_petyr",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_salt_boiler_petyr.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_switch_master_korov",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_switch_master_korov.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_rail_chandler_bess",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_rail_chandler_bess.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_rivet_smith_milos",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_rivet_smith_milos.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_beacon_keeper_maren",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_beacon_keeper_maren.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_coastal_chandler_orlov",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_coastal_chandler_orlov.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_net_mender_kira",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_net_mender_kira.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_quarry_steward_darek",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_quarry_steward_darek.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_stone_cutter_valya",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_stone_cutter_valya.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_driller_jarek",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_driller_jarek.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_prior_silas",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_prior_silas.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_almoner_hanna",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_almoner_hanna.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_wayfarer_tobias",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_wayfarer_tobias.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_market_warden_grimm",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_market_warden_grimm.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_junk_broker_solomon",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_junk_broker_solomon.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_grease_monkey_tess",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_grease_monkey_tess.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_odile_vanter",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_odile_vanter.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_cass_polder",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_cass_polder.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_jorin_hael",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_jorin_hael.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_uma_tarran",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_uma_tarran.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_halloran_vesk",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_halloran_vesk.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_lotte_verrill",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_lotte_verrill.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_mara_veln",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_mara_veln.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_oskar_ruut",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_oskar_ruut.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_tomas_geret",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_tomas_geret.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_joren_malk",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_joren_malk.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_pavel_eren",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_pavel_eren.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_sena_aris",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_sena_aris.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_dalia_marun",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_dalia_marun.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_anton_renn",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_anton_renn.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_emil_soren",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_emil_soren.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_nadia_lem",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_nadia_lem.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_arvo_tamm",
@@ -9904,57 +9904,57 @@
       "id": "npc_mira_vos",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_mira_vos.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_janek_orel",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_janek_orel.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_veda_ro",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_veda_ro.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_mirael_tesk",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_mirael_tesk.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_niko",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_niko.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_ilze_kaar",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_ilze_kaar.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_marek_voln",
       "category": "portrait",
       "source_catalog": "characters.json",
-      "resolved_path": "res://assets/sprites/Characters/placeholder_survivor.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/art/npc_marek_voln.jpg",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "npc_lina",
@@ -13224,463 +13224,463 @@
       "id": "faction_archivists",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_archivists.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_lamplighters",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_lamplighters.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_quiet_house",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_quiet_house.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_grain_exchange",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_grain_exchange.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_sun_seekers",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_sun_seekers.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_osteophages",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_osteophages.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_tally",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_tally.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_undertow",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_undertow.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_cold_count",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_cold_count.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_deserter_coalition",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_deserter_coalition.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_provisioned",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_provisioned.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_long_walk",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_long_walk.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_scavenger_guild",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_scavenger_guild.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_iron_raiders",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_iron_raiders.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_hydro_barons",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_hydro_barons.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_tempest",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_tempest.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_blank_rows",
       "category": "faction",
       "source_catalog": "currents.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_blank_rows.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_scale",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_scale.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_underwrite",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_underwrite.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_compact",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_compact.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_lamplighters",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_lamplighters.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_granary_wardens",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_granary_wardens.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_water_committee",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_water_committee.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_quarantine_post",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_quarantine_post.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_smugglers_court",
       "category": "faction",
       "source_catalog": "crossing_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_smugglers_court.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_office",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_office.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_cutters",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_cutters.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_fleet",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_fleet.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_black_flotilla",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_black_flotilla.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_supply_corps",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_supply_corps.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_railway_guild",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_railway_guild.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_hydro_barons",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_hydro_barons.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_ordnance_foundry",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_ordnance_foundry.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_scavengers",
       "category": "faction",
       "source_catalog": "holdfast_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_scavengers.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_overlay",
       "category": "faction",
       "source_catalog": "standing_record_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_overlay.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_scale",
       "category": "faction",
       "source_catalog": "standing_record_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_scale.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_compact",
       "category": "faction",
       "source_catalog": "standing_record_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_compact.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_underwrite",
       "category": "faction",
       "source_catalog": "standing_record_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_underwrite.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_cutters",
       "category": "faction",
       "source_catalog": "standing_record_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_cutters.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_fleet",
       "category": "faction",
       "source_catalog": "standing_record_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_fleet.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_rebuilders",
       "category": "faction",
       "source_catalog": "standing_record_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_rebuilders.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_garrison",
       "category": "faction",
       "source_catalog": "standing_record_factions.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_garrison.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_silent_foundry",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_silent_foundry.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_office",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_office.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_cutters",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_cutters.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_fleet",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_fleet.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_archivists",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_archivists.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_grain_exchange",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_grain_exchange.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_hydro_barons",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_hydro_barons.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_scavenger_guild",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_scavenger_guild.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_iron_raiders",
       "category": "faction",
       "source_catalog": "foundry_faction.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_iron_raiders.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "iron_garrison",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_iron_garrison.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "ash_militia",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_ash_militia.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "cult_of_ash_sign",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_cult_of_ash_sign.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "warlords_sector_4",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_warlords_sector_4.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_rebuilders",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_rebuilders.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_black_ops",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_black_ops.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_central_garrison",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/art/faction_central_garrison.jpg",
+      "resolved_path": "res://assets/ui/Icons/faction_icon_central_garrison.png",
       "status": "LOADED",
       "is_fallback": false
     },
@@ -13688,321 +13688,321 @@
       "id": "faction_ash_sign",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_ash_sign.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_scavengers",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_scavengers.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_hydro_barons",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_hydro_barons.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_unaligned",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_unaligned.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_salt_freeholders",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_salt_freeholders.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_railway_guild",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_railway_guild.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_ordnance_foundry",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_ordnance_foundry.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_penal_battalion",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_penal_battalion.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_ash_militia",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_ash_militia.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_supply_corps",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_supply_corps.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "raiders",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_raiders.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_forward_roster",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_forward_roster.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_doctrine_archetype_besiege",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_doctrine_archetype_besiege.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_doctrine_archetype_traffic",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_doctrine_archetype_traffic.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_doctrine_archetype_ashprophet",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_doctrine_archetype_ashprophet.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_doctrine_archetype_procedure",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_doctrine_archetype_procedure.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_archivists",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_archivists.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_lamplighters",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_lamplighters.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_quiet_house",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_quiet_house.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_grain_exchange",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_grain_exchange.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_sun_seekers",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_sun_seekers.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_osteophages",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_osteophages.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_tally",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_tally.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_undertow",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_undertow.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_cold_count",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_cold_count.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_deserter_coalition",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_deserter_coalition.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_provisioned",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_provisioned.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_long_walk",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_long_walk.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_scavenger_guild",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_scavenger_guild.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_iron_raiders",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_iron_raiders.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_tempest",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_tempest.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_black_flotilla",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_black_flotilla.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_silent_foundry",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_silent_foundry.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_office",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_office.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_cutters",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_cutters.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_compact",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_compact.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_fleet",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_fleet.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_the_scale",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_the_scale.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_ash_market_brokers",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_ash_market_brokers.png",
+      "status": "LOADED",
+      "is_fallback": false
     },
     {
       "id": "faction_cold_ledger",
       "category": "faction",
       "source_catalog": "faction_lore.json",
-      "resolved_path": "res://assets/ui/Icons/icon_placeholder.png",
-      "status": "FALLBACK",
-      "is_fallback": true
+      "resolved_path": "res://assets/ui/Icons/faction_icon_cold_ledger.png",
+      "status": "LOADED",
+      "is_fallback": false
     }
   ]
 }

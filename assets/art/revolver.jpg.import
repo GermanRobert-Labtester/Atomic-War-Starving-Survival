@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/revolver.jpg-f8aed380be9986ed58e3dfd6ce41adc8
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

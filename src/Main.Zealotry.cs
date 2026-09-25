@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Spiritual;
 using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
@@ -19,6 +20,54 @@ namespace AtomicWar.GodotApp
     public partial class Main
     {
         private ZealotrySystem? _zealotry;
+        private BeliefStanceBridge? _beliefStance;
+
+        // ── CORE-MECH W9 — belief → faction standing (sole write: ModifyTrust) ──
+        /// <summary>
+        /// Lazily built from the LOADED spiritual catalog (never re-read from disk)
+        /// and reset per day so the per-day trust budget rolls over with the sim
+        /// day. Fails closed to an empty bridge when the catalog is not loaded.
+        /// </summary>
+        private BeliefStanceBridge BeliefStanceFor(string beliefId, int day)
+        {
+            if (_beliefStance == null)
+            {
+                SetupSpiritual();
+                _beliefStance = new BeliefStanceBridge(SpiritualCatalogRef ?? new SpiritualCatalog());
+            }
+            _beliefStance.BeginDay(day);
+            return _beliefStance;
+        }
+
+        /// <summary>
+        /// Apply proposed standing shifts through the campaign's single faction
+        /// stance authority. Unregistered factions are skipped (no phantom rows),
+        /// the engine clamps to its own thresholds, and each applied move is
+        /// journaled as a fact. A missing stance authority fails closed — faith
+        /// still functions, only its political echo is absent.
+        /// </summary>
+        private void ApplyBeliefStanceShifts(IReadOnlyList<BeliefStanceShift> shifts, string reason)
+        {
+            if (shifts == null || shifts.Count == 0) return;
+            Ashfall.Core.Economy.FactionStanceEngine? stance;
+            try { stance = EnsureSharedFactionStance(); }
+            catch (InvalidOperationException) { return; }
+            if (stance == null) return;
+
+            foreach (var shift in shifts)
+            {
+                if (shift == null || string.IsNullOrEmpty(shift.FactionId)) continue;
+                if (!stance.IsFactionActive(shift.FactionId)) continue; // unregistered → no phantom faction
+                float before = stance.GetTrust(shift.FactionId);
+                float after = stance.ModifyTrust(shift.FactionId, shift.Delta);
+                if (Math.Abs(after - before) < 0.0001f) continue;
+                SetupJournal();
+                _journal?.TryAddRawEntry(
+                    $"belief_stance_{shift.FactionId}_{_simDay}",
+                    $"{reason}: {shift.FactionId} weighs it {after - before:+0.0;-0.0;0.0} ({after:0}).",
+                    null!, _simDay);
+            }
+        }
 
         // ── Plan 175: Fictional Ideological Pressure ────────────────────
 
@@ -72,6 +121,11 @@ namespace AtomicWar.GodotApp
                 _journal?.TryAddRawEntry($"zealotry_converted_{b.survivor_id}",
                     $"{b.survivor_id} has come to hold with {beliefId.Replace("belief_", "").Replace('_', ' ')}.",
                     null!, _simDay);
+                // CORE-MECH W9 — interiority becomes political: an authored
+                // conversion shifts faction standing through the sole write path.
+                ApplyBeliefStanceShifts(
+                    BeliefStanceFor(beliefId, _simDay).OnBeliefAdhered(beliefId, b.conviction, _simDay),
+                    $"belief shift ({beliefId})");
             };
             _zealotry.OnConversionResisted += b =>
             {
@@ -84,6 +138,11 @@ namespace AtomicWar.GodotApp
                 _journal?.TryAddRawEntry($"zealotry_crisis_{b.survivor_id}",
                     $"{b.survivor_id}'s faith in {b.belief_id.Replace("belief_", "").Replace('_', ' ')} has shattered.",
                     null!, _simDay);
+                // CORE-MECH W9 — a shattered faith costs standing with the factions
+                // that leaned on it; outreach and rites can win it back.
+                ApplyBeliefStanceShifts(
+                    BeliefStanceFor(b.belief_id, _simDay).OnFaithCrisis(b.belief_id, b.conviction, _simDay),
+                    $"faith crisis ({b.belief_id})");
                 // §7.8 — shattered belief causes BOUNDED morale damage through
                 // the canonical morale authority (negative delta = damage).
                 var needs = _survivors?.Needs;

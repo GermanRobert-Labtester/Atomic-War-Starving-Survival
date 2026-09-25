@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_prussian_blue.jpg-5829c6d8c2e28425fc0c50
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

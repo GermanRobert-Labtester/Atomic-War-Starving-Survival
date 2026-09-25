@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/wheat_flour.jpg-e1bdf03ecd981a0f00a1e519ca4ea
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

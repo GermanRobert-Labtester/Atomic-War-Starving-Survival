@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/confined_space.jpg-c4379ee3e75806729bc954ce02
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

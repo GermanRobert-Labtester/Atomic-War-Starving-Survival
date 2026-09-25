@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/sedative_vial.jpg-5b8f2276009221cebb4ba30ab33
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

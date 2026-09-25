@@ -172,9 +172,9 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
-        public void Close()
-        {
-            Visible = false;
+        public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
             OnClose?.Invoke();
         }
 
@@ -287,7 +287,7 @@ namespace AtomicWar.GodotApp.UI
 
             // 2. Title & Taxonomy
             var titleBox = new VBoxContainer();
-            titleBox.AddThemeConstantOverride("separation", 2);
+            titleBox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
             _recordTitleLabel = AshfallUiHelpers.MakeTitle("RECORD DESIGNATION", DesignTheme.FontSizeH2);
             _recordTitleLabel.HorizontalAlignment = HorizontalAlignment.Left;
             _recordSubtitleLabel = AshfallUiHelpers.MakeSectionHeader("TRUTH TAXONOMY: INSTRUMENT TELEMETRY");
@@ -337,7 +337,7 @@ namespace AtomicWar.GodotApp.UI
             panel.AddChild(margin);
 
             var vbox = new VBoxContainer();
-            vbox.AddThemeConstantOverride("separation", 2);
+            vbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
             margin.AddChild(vbox);
 
             var topBanner = AshfallUiHelpers.MakeLabel("[ TOP SECRET // RESTRICTED ARCHIVAL REPOSIT // EYES ONLY ]", DesignTheme.FontSizeH3, AshfallUiHelpers.ColorWarning);
@@ -382,7 +382,7 @@ namespace AtomicWar.GodotApp.UI
             panel.AddChild(margin);
 
             var vbox = new VBoxContainer();
-            vbox.AddThemeConstantOverride("separation", 2);
+            vbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
             margin.AddChild(vbox);
 
             var hdr = AshfallUiHelpers.MakeLabel(headerText, DesignTheme.FontSizeSmall, AshfallUiHelpers.ToColor(DesignTheme.Dim));
@@ -745,7 +745,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 SizeFlagsHorizontal = SizeFlags.ExpandFill
             };
-            vbox.AddThemeConstantOverride("separation", 2);
+            vbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
             hbox.AddChild(vbox);
 
             var badgeRow = new HBoxContainer();

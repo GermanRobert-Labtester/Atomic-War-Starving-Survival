@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/geiger_counter_v3_digital.jpg-8201498ee1d9bf2
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

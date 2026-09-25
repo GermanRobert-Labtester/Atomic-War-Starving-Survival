@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/shelter_door_barricade.jpg-f93fa991fb9f57c656
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

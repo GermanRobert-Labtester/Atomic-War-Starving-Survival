@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/gear_cog.jpg-c787d18d895669df4a08d8bd3025a317
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

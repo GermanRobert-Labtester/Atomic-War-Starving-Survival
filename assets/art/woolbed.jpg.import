@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/woolbed.jpg-c61741719d0093bd08a503d2504637c0.
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

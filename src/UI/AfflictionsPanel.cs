@@ -45,12 +45,19 @@ namespace AtomicWar.GodotApp.UI
             RespiratoryDegenerationSystem? respiratory = null,
             MedicalTextCatalog? medicalTexts = null)
         {
+            // Live refresh: affliction rows track survivor state while open.
+            if (_survivors != null) _survivors.StateChanged -= RefreshView;
+            if (_inventory != null) _inventory.StateChanged -= RefreshView;
+
             _medical = medical;
             _survivors = survivors;
             _inventory = inventory;
             _respiratory = respiratory;
             _medicalTexts = medicalTexts ?? LoadDefaultMedicalTexts();
             IsBound = _medical != null || _survivors != null;
+
+            if (_survivors != null) _survivors.StateChanged += RefreshView;
+            if (_inventory != null) _inventory.StateChanged += RefreshView;
             RefreshView();
         }
 

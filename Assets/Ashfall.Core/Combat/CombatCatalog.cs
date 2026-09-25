@@ -25,6 +25,10 @@ namespace Ashfall.Core.Combat
         public float jamBase = 0.04f;        // base jam chance at pristine condition
         public int scrapRepairCost = 3;      // scrap metal to field-repair to full
         public float conditionThreshold = 0.25f; // below this, jam risk rises steeply
+        /// <summary>Optional DEC-358 ROF. When &lt;= 0, cadence derives from burst.</summary>
+        public float roundsPerMinute;
+        /// <summary>Optional braced-aim accuracy bonus (additive to motion scale).</summary>
+        public float aimBraceBonus;
     }
 
     /// <summary>Data-driven ammunition definition.</summary>
@@ -338,6 +342,8 @@ namespace Ashfall.Core.Combat
         public float jam_base;
         public int scrap_repair_cost;
         public float condition_threshold;
+        public float rounds_per_minute;
+        public float aim_brace_bonus;
     }
 
     [Serializable]
@@ -445,7 +451,9 @@ namespace Ashfall.Core.Combat
                         degradePerShot = w.degrade_per_shot,
                         jamBase = w.jam_base,
                         scrapRepairCost = w.scrap_repair_cost,
-                        conditionThreshold = w.condition_threshold
+                        conditionThreshold = w.condition_threshold,
+                        roundsPerMinute = w.rounds_per_minute,
+                        aimBraceBonus = w.aim_brace_bonus
                     });
                 }
             }

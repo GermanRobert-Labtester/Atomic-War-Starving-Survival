@@ -8,7 +8,8 @@
       "title": "Stratospheric Ash Layer Peaks (-35°C)",
       "description": "Dense high-altitude particulate blankets the sun. Ambient surface temperatures fall to -35°C. Unheated surface pipes freeze solid across the valley.",
       "temperatureDeltaC": -18.0,
-      "hazardType": "extreme_cold"
+      "hazardType": "extreme_cold",
+      "pressureMultiplier": 1.6
     },
     {
       "id": "event_conduit_brittle_fracture",
@@ -26,7 +27,9 @@
       "title": "The Black Blizzard of Day 205",
       "description": "A 50-knot gale blows pulverized radioactive snow from the strike crater. Exterior periscopes are scoured opaque by blown grit.",
       "temperatureDeltaC": -8.0,
-      "hazardType": "black_blizzard"
+      "hazardType": "black_blizzard",
+      "exposureMultiplier": 1.15,
+      "pressureMultiplier": 1.35
     },
     {
       "id": "event_allotment_cold_frame_collapse",
@@ -44,7 +47,8 @@
       "title": "Diesel Wax Crystallization",
       "description": "Uncut summer diesel in the surface reserve tank gels into cloudy paraffin wax. Generators sputter and die unless cut with kerosene or glycol.",
       "temperatureDeltaC": -3.0,
-      "hazardType": "fuel_crisis"
+      "hazardType": "fuel_crisis",
+      "pressureMultiplier": 1.25
     },
     {
       "id": "event_exhaust_flue_rime_choke",
@@ -53,7 +57,8 @@
       "title": "Exhaust Chimney Rime Ice Choke",
       "description": "Moist generator exhaust freezes instantly upon hitting -38°C outside air, building an ice collar that restricts exhaust backpressure.",
       "temperatureDeltaC": -2.0,
-      "hazardType": "ventilation_choke"
+      "hazardType": "ventilation_choke",
+      "pressureMultiplier": 1.3
     },
     {
       "id": "event_periscope_hoarfrost_blindness",
@@ -107,7 +112,8 @@
       "title": "Artillery Barrage on Kilometre 19",
       "description": "Garrison 152mm howitzers fire three hundred high-explosive rounds into the Toll Warlord fortifications. Shockwaves rattle bunker light fixtures.",
       "temperatureDeltaC": 1.0,
-      "hazardType": "artillery_strike"
+      "hazardType": "artillery_strike",
+      "exposureMultiplier": 1.25
     },
     {
       "id": "event_ash_sign_penitent_siege",
@@ -188,7 +194,8 @@
       "title": "The Great Thaw Begins (+4°C)",
       "description": "A sudden warm maritime front sweeps the valley. Ten months of radioactive snow melts into toxic black mud, swamping shelter sumps.",
       "temperatureDeltaC": 12.0,
-      "hazardType": "radioactive_flood"
+      "hazardType": "radioactive_flood",
+      "exposureMultiplier": 1.8
     },
     {
       "id": "event_radon_gas_fissure_breach",
@@ -197,7 +204,8 @@
       "title": "Foundation Bedrock Radon Seepage",
       "description": "Thawing subsoil permafrost causes bedrock settling. Radon-222 gas vents through foundation micro-fissures at 850 Bq/m³.",
       "temperatureDeltaC": 2.0,
-      "hazardType": "radon_hazard"
+      "hazardType": "radon_hazard",
+      "exposureMultiplier": 1.6
     },
     {
       "id": "event_radio_142_carrier_intercept",
@@ -206,7 +214,8 @@
       "title": "142.850 MHz Continental Transponder Lock",
       "description": "A rhythmic carrier wave tone crackles across the emergency frequency. The icebreaker Aurora Borealis is broadcasting teletype manifests.",
       "temperatureDeltaC": 1.0,
-      "hazardType": "radio_transmission"
+      "hazardType": "radio_transmission",
+      "exposureMultiplier": 1.15
     },
     {
       "id": "event_sump_pump_overrun",
@@ -278,7 +287,9 @@
       "title": "Permafrost Slumping Shear Stress",
       "description": "Deep mudslides on the western ridge tilt the radio mast three degrees and compress the secondary escape tunnel.",
       "temperatureDeltaC": 2.0,
-      "hazardType": "geological_collapse"
+      "hazardType": "geological_collapse",
+      "exposureMultiplier": 1.1,
+      "pressureMultiplier": 1.1
     },
     {
       "id": "event_geothermal_meltwater_flashing",
@@ -287,7 +298,9 @@
       "title": "Geothermal Well Superheated Flash",
       "description": "Cold surface meltwater drains directly into the volcanic fracture at Well Alpha, creating violent steam hammer in district heat mains.",
       "temperatureDeltaC": 3.0,
-      "hazardType": "steam_hammer"
+      "hazardType": "steam_hammer",
+      "exposureMultiplier": 1.35,
+      "pressureMultiplier": 1.1
     },
     {
       "id": "event_first_green_sprout_sightings",
@@ -377,7 +390,8 @@
       "title": "Subterranean Insulation Smolder",
       "description": "An overloaded heating coil ignites polyurethane pipe insulation in the lower ducting, releasing dense hydrogen cyanide and carbon monoxide.",
       "temperatureDeltaC": 1.0,
-      "hazardType": "toxic_combustion"
+      "hazardType": "toxic_combustion",
+      "exposureMultiplier": 1.2
     },
     {
       "id": "event_mustard_gas_pocket_release",
@@ -404,7 +418,9 @@
       "title": "Barometric Plunge to 940 hPa",
       "description": "The mercury column in the command post drops thirty millimeters in two hours, presaging the most violent stratospheric ash tempest of the winter.",
       "temperatureDeltaC": -6.0,
-      "hazardType": "meteorological_warning"
+      "hazardType": "meteorological_warning",
+      "exposureMultiplier": 1.1,
+      "pressureMultiplier": 1.15
     },
     {
       "id": "event_telegraph_wire_snipping_spree",
@@ -431,7 +447,8 @@
       "title": "Direct Concussion on Auxiliary Shaft 2",
       "description": "A 152mm artillery round detonates on the concrete apron of the auxiliary escape hatch, cracking the blast header and raining spalled concrete.",
       "temperatureDeltaC": 0.0,
-      "hazardType": "direct_shelling"
+      "hazardType": "direct_shelling",
+      "exposureMultiplier": 1.5
     },
     {
       "id": "event_the_thin_margin_disclosure",
@@ -449,7 +466,8 @@
       "title": "The Thirsty Season",
       "description": "Seizing Desalination Unit 4 destroys the queue system in the process: a temporary sector-wide water shortfall with an elevated danger rating for two weeks, from which the player's own shelter is not exempt.",
       "temperatureDeltaC": 0.0,
-      "hazardType": "water_shortage"
+      "hazardType": "water_shortage",
+      "pressureMultiplier": 1.2
     },
     {
       "id": "event_osteophage_explanation",

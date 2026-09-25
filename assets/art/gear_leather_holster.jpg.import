@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/gear_leather_holster.jpg-172836d3af65f64a00ad
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

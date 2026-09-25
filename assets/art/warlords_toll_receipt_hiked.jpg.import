@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/warlords_toll_receipt_hiked.jpg-71906a2749692
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

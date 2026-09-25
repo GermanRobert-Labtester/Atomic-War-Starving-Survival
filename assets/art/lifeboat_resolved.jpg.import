@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/lifeboat_resolved.jpg-9c5767bb8ac0148aa2f9922
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

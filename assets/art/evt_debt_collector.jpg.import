@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/evt_debt_collector.jpg-e8dab2697e0d576f0125bc
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

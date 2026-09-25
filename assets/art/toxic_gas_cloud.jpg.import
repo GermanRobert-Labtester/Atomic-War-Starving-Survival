@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/toxic_gas_cloud.jpg-46079da7e735546ebca3c3bba
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

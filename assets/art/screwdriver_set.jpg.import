@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/screwdriver_set.jpg-a82e20e31393cc975bfb0f258
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

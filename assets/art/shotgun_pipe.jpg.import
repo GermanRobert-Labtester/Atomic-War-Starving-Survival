@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/shotgun_pipe.jpg-a3307f4c8da34cc6b8aed1549786
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

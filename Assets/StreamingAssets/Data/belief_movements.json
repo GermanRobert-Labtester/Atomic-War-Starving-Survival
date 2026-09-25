@@ -32,7 +32,12 @@
         "memory",
         "grief",
         "penance"
-      ]
+      ],
+      "faction_leaning": {
+        "faction_ash_militia": 2.0,
+        "faction_archivists": 4.0,
+        "faction_black_ops": -3.0
+      }
     },
     {
       "id": "belief_rebuilders",
@@ -65,7 +70,12 @@
         "labor",
         "craft",
         "agency"
-      ]
+      ],
+      "faction_leaning": {
+        "faction_ash_market_brokers": 4.0,
+        "custodians": 3.0,
+        "faction_black_ops": -2.0
+      }
     },
     {
       "id": "belief_listeners",
@@ -98,7 +108,12 @@
         "radio",
         "signals",
         "hope"
-      ]
+      ],
+      "faction_leaning": {
+        "faction_black_cross": 4.0,
+        "faction_children_of_dawn": 3.0,
+        "faction_ash_militia": -2.0
+      }
     }
   ]
 }

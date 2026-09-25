@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_scrap_metal.jpg-c16dee26550cd67ac5423e3c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

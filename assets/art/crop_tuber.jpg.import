@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/crop_tuber.jpg-53c63c9b593fc7c48cd297f24c41fd
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

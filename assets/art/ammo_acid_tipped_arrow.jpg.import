@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ammo_acid_tipped_arrow.jpg-70fd08586950aac2e3
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

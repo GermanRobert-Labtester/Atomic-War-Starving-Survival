@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ammo_762x51_fmj.jpg-fafdbc9da8a4c36717a2cf1e1
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

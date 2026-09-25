@@ -3299,8 +3299,327 @@ namespace AtomicWar.GodotApp
                 }
             }
 
+            AuditPanelInteractivity(Check);
+            VerifyUiMotionContracts(Check);
+
             GD.Print($"[UiLayoutSelfTest] Failures: {failures}");
             return EmitSummary("ui_layout_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
+        }
+
+        /// <summary>
+        /// UI clickability audit (UI/UX audit follow-up): every panel type is
+        /// instantiated unbound and every interactive button is checked for at
+        /// least one wired click route. Buttons that are intentionally toggles,
+        /// check controls, option selectors, or disabled are excluded. A panel
+        /// that cannot be constructed without a host is reported as skipped, not
+        /// failed — unbound panels must still render their empty states.
+        /// </summary>
+        /// <summary>
+        /// Panels exempt from the inert-click-target gate, each with a reason:
+        /// shelved prototype shells are unreachable (their registry console id
+        /// is redirected to a live surface, UI/UX audit 2026-09-25 C10), so their
+        /// fixture-only action buttons are intentionally inert. The Plan 24
+        /// memorial panel's fixture actions are now disabled with explicit
+        /// reasons (C33), so it no longer needs an exemption.
+        /// </summary>
+        private static readonly System.Collections.Generic.HashSet<string> ClickabilityExemptPanels = new()
+        {
+            "AquiferTreatyConcessionPanel",
+            "ClandestineInsurgencyPanel",
+            "CrossingSafeConductVouchPanel",
+            "FungalProteinFermenterPanel",
+            "HeavyMarineDieselGeneratorPanel",
+            "InductionCupolaFurnacePanel",
+            "LongWalkExpeditionPanel",
+            "MagneticDrumArchivePanel",
+            "MechanicalProstheticsLathePanel",
+            "SonicRuptureDrillPanel",
+            "SubterraneanDebtLedgerPanel",
+            "SurfaceShrapnelAegisPanel",
+            "TraumaBondingCohortPanel",
+            "TroposphericRadioRelayPanel",
+            "UltrasonicDecontaminationAirlockPanel",
+            "VaultDoorBreachingPanel",
+        };
+
+        /// <summary>
+        /// UI interactivity audit (UI/UX audit follow-up): every panel type is
+        /// instantiated unbound and checked for (a) buttons with no wired click
+        /// route and (b) interactive controls that keyboard/controller players
+        /// cannot reach (FocusMode None) or panels with no focusable control at
+        /// all. Toggles, check controls, option selectors, disabled and
+        /// effectively hidden controls are excluded from the click check.
+        /// </summary>
+        private static void AuditPanelInteractivity(Action<bool, string> check)
+        {
+            var panelTypes = typeof(HostCli).Assembly.GetTypes()
+                .Where(t => t.IsClass && !t.IsAbstract
+                            && typeof(Control).IsAssignableFrom(t)
+                            && typeof(IBindablePanel).IsAssignableFrom(t)
+                            && t.GetConstructor(Type.EmptyTypes) != null)
+                .OrderBy(t => t.Name)
+                .ToList();
+
+            int audited = 0, skipped = 0, buttonsTotal = 0, inertTotal = 0;
+            int interactiveTotal = 0, unreachableTotal = 0, panelsWithNoFocus = 0;
+            int blankPanels = 0;
+            var inert = new System.Collections.Generic.List<string>();
+            var inertByPanel = new System.Collections.Generic.Dictionary<string, int>();
+            var unreachable = new System.Collections.Generic.List<string>();
+            var noFocus = new System.Collections.Generic.List<string>();
+            var blank = new System.Collections.Generic.List<string>();
+
+            foreach (var type in panelTypes)
+            {
+                Control? panel = null;
+                try
+                {
+                    panel = (Control)Activator.CreateInstance(type)!;
+                    panel._Ready();
+                    try { panel.Call("Open"); } catch { /* host-bound panels may refuse */ }
+                }
+                catch (Exception ex)
+                {
+                    // Scene-backed panels (Ticket #125) require their designer
+                    // scene: instantiate exactly like production does instead of
+                    // skipping the audit for them.
+                    string resPath = $"res://assets/ui/panels/{type.Name}.tscn";
+                    if (ResourceLoader.Exists(resPath))
+                    {
+                        try
+                        {
+                            panel = PanelSceneLoader.Load<Control>(resPath);
+                            panel._Ready();
+                            try { panel.Call("Open"); } catch { /* host-bound panels may refuse */ }
+                        }
+                        catch (Exception sceneEx)
+                        {
+                            skipped++;
+                            GD.Print($"  [CLICKABILITY-SKIP] {type.Name}: scene-path failed — {sceneEx.Message}");
+                            panel?.Free();
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        skipped++;
+                        GD.Print($"  [CLICKABILITY-SKIP] {type.Name}: {ex.GetType().Name} {ex.Message}");
+                        panel?.Free();
+                        continue;
+                    }
+                }
+
+                audited++;
+
+                // Scene-hosted widgets (production loads them from .tscn): a
+                // directly-constructed shell has no children and would be judged
+                // blank. Upgrade to the real scene so interactivity and
+                // truthfulness are audited against the widget tree players see.
+                if (panel.GetChildCount() == 0)
+                {
+                    string scenePath = $"res://assets/ui/panels/{type.Name}.tscn";
+                    if (ResourceLoader.Exists(scenePath))
+                    {
+                        try
+                        {
+                            panel.Free();
+                            panel = PanelSceneLoader.Load<Control>(scenePath);
+                            panel._Ready();
+                            try { panel.Call("Open"); } catch { /* host-bound panels may refuse */ }
+                        }
+                        catch
+                        {
+                            // Keep the shell; the truthfulness check will report it.
+                        }
+                    }
+                }
+
+                bool exempt = ClickabilityExemptPanels.Contains(type.Name);
+                foreach (var node in panel.FindChildren("*", "Button", true, false))
+                {
+                    if (node is not Button button)
+                        continue;
+                    buttonsTotal++;
+                    if (button.Disabled || button.ToggleMode || !IsEffectivelyVisible(button) ||
+                        button is CheckBox || button is CheckButton || button is OptionButton)
+                        continue;
+
+                    bool wired = button.GetSignalConnectionList("pressed").Count > 0
+                              || button.GetSignalConnectionList("button_down").Count > 0
+                              || button.GetSignalConnectionList("button_up").Count > 0
+                              || button.GetSignalConnectionList("gui_input").Count > 0
+                              || button.GetSignalConnectionList("toggled").Count > 0;
+                    if (!wired && !exempt)
+                    {
+                        inertTotal++;
+                        inertByPanel.TryGetValue(type.Name, out int seen);
+                        inertByPanel[type.Name] = seen + 1;
+                        if (inert.Count < 200)
+                            inert.Add($"{type.Name}:'{button.Text}'");
+                    }
+                    else if (!wired && exempt)
+                    {
+                        GD.Print($"  [INERT-EXEMPT] {type.Name}:'{button.Text}'");
+                    }
+                }
+
+                // Focus reachability: every effectively visible interactive
+                // control must be reachable by keyboard/controller, and any panel
+                // exposing interactivity must offer at least one focusable entry.
+                int panelInteractive = 0;
+                foreach (var node in panel.FindChildren("*", "Control", true, false))
+                {
+                    if (node is not Control control || !IsEffectivelyVisible(control))
+                        continue;
+                    bool interactive = control is Button || control is LineEdit || control is TextEdit
+                                    || control is ItemList || control is Slider;
+                    if (!interactive)
+                        continue;
+                    if (control is Button b2 && b2.Disabled)
+                        continue;
+                    panelInteractive++;
+                    interactiveTotal++;
+                    if (control.FocusMode == Control.FocusModeEnum.None)
+                    {
+                        unreachableTotal++;
+                        if (unreachable.Count < 100)
+                            unreachable.Add($"{type.Name}:{control.GetType().Name}:{control.Name}");
+                    }
+                }
+                if (panelInteractive > 0 && AshfallFocusPolicy.FindFocusableControls(panel).Count == 0)
+                {
+                    panelsWithNoFocus++;
+                    if (noFocus.Count < 60)
+                        noFocus.Add(type.Name);
+                }
+
+                // Truthful-state sweep (silent-failure audit): an unbound panel
+                // must render readable state (empty-state copy, labels, values),
+                // never a blank shell that looks broken to a player.
+                int visibleTextBlocks = 0;
+                foreach (var node in panel.FindChildren("*", "Control", true, false))
+                {
+                    if (node is not Control textControl || !IsEffectivelyVisible(textControl))
+                        continue;
+                    string? text = textControl switch
+                    {
+                        Label label => label.Text,
+                        RichTextLabel rich => rich.Text,
+                        _ => null,
+                    };
+                    if (!string.IsNullOrWhiteSpace(text))
+                        visibleTextBlocks++;
+                }
+                if (visibleTextBlocks == 0)
+                {
+                    blankPanels++;
+                    if (blank.Count < 80)
+                        blank.Add(type.Name);
+                }
+                panel.Free();
+            }
+
+            GD.Print($"[UiClickability] panels audited={audited} skipped={skipped} " +
+                     $"buttons={buttonsTotal} inert={inertTotal}");
+            GD.Print($"[UiFocusability] panels audited={audited} interactive={interactiveTotal} " +
+                     $"unreachable={unreachableTotal} panelsWithNoFocus={panelsWithNoFocus}");
+            GD.Print($"[UiTruthfulness] panels audited={audited} blankUnboundPanels={blankPanels}");
+            foreach (var pair in inertByPanel.OrderByDescending(p => p.Value))
+                GD.Print($"  [INERT-PANEL] {pair.Key} = {pair.Value}");
+            foreach (string entry in inert)
+                GD.PrintErr($"  [INERT] {entry}");
+            foreach (string entry in unreachable)
+                GD.PrintErr($"  [UNREACHABLE] {entry}");
+            foreach (string entry in noFocus)
+                GD.PrintErr($"  [NO-FOCUS] {entry}");
+            foreach (string entry in blank)
+                GD.PrintErr($"  [BLANK] {entry}");
+
+            check(buttonsTotal > 0,
+                $"UiClickability: button corpus discovered ({buttonsTotal} buttons across {audited} panels)");
+            check(inertTotal == 0,
+                $"UiClickability: no inert click targets ({inertTotal} found in {audited} panels)");
+            check(unreachableTotal == 0,
+                $"UiFocusability: every interactive control is keyboard/controller reachable ({unreachableTotal} unreachable)");
+            check(panelsWithNoFocus == 0,
+                $"UiFocusability: every interactive panel offers a focus entry ({panelsWithNoFocus} without focus)");
+            check(blankPanels == 0,
+                $"UiTruthfulness: every unbound panel renders readable state ({blankPanels} blank)");
+        }
+
+        /// <summary>
+        /// Motion-layer contract verification (UI/UX audit task 5): proves the
+        /// entrance/exit animation actually engages on a renderer-capable session
+        /// (initial fade/rise/scale state applied) and is a strict no-op under
+        /// headless/suppression, plus button-FX attach idempotence. Human visual
+        /// confirmation of the finished motion remains a renderer-session item;
+        /// this check guarantees the wiring cannot silently regress.
+        /// </summary>
+        private static void VerifyUiMotionContracts(Action<bool, string> check)
+        {
+            if (Engine.GetMainLoop() is not SceneTree tree)
+            {
+                check(false, "UiMotion: scene tree available for motion checks");
+                return;
+            }
+
+            bool display = DisplayServer.GetName() != "headless";
+            // Anchor to the live scene node when one exists: adding directly to
+            // the window root from this static selftest context does not register
+            // the subtree as in-tree, which would make motion checks unverifiable.
+            Node anchor = tree.Root.GetChildCount() > 0 ? tree.Root.GetChild(0) : tree.Root;
+            var host = new Control { Name = "UiMotionProbeHost" };
+            anchor.AddChild(host);
+            var panel = new Control { Name = "UiMotionProbePanel", Position = new Vector2(30f, 40f) };
+            host.AddChild(panel);
+
+            if (display && UiMotion.CanAnimate)
+            {
+                UiMotion.AnimateOpen(panel);
+                check(Mathf.IsEqualApprox(panel.Modulate.A, 0f),
+                    "UiMotion: open fade starts transparent (display path)");
+                check(panel.Position.Y > 40f,
+                    "UiMotion: open rise offset applied (display path)");
+                check(panel.Scale.X > 0f && panel.Scale.X < 1f,
+                    "UiMotion: open scale starts below rest (display path)");
+            }
+            else
+            {
+                var before = panel.Modulate;
+                UiMotion.AnimateOpen(panel);
+                check(panel.Modulate.A == before.A
+                      && Mathf.IsEqualApprox(panel.Position.Y, 40f)
+                      && panel.Scale == Vector2.One,
+                    "UiMotion: headless/suppressed open is a strict no-op");
+                check(!UiMotion.AnimateClose(panel),
+                    "UiMotion: headless/suppressed close defers to the caller");
+            }
+
+            var button = new Button { Text = "MOTION PROBE" };
+            host.AddChild(button);
+            UiMotion.AttachButtonFx(button);
+            UiMotion.AttachButtonFx(button);
+            check(button.HasMeta("ashfall_button_fx"),
+                "UiMotion: button FX attaches idempotently");
+            button.EmitSignal(BaseButton.SignalName.MouseEntered);
+            if (!display)
+                check(button.Scale == Vector2.One,
+                    "UiMotion: headless button FX is a no-op");
+
+            host.Free();
+        }
+
+        /// <summary>Visibility including parent containers (panels are audited outside the tree).</summary>
+        private static bool IsEffectivelyVisible(Control control)
+        {
+            Control? node = control;
+            while (node != null)
+            {
+                if (!node.Visible)
+                    return false;
+                node = node.GetParent() as Control;
+            }
+            return true;
         }
 
         public static int RunSettingsSelfTest(string dataDirectory)

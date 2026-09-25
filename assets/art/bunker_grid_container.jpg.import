@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bunker_grid_container.jpg-e17f441a670134b2ae4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
-**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-24
-**Total Catalogs:** 708 | **Total Definitions:** 14391 | **Domain Families:** 32
+**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-25
+**Total Catalogs:** 711 | **Total Definitions:** 14407 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -61,15 +61,16 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `audio_logs_expansion_05.json` | 30 | `1.0.0` | `ORPHANED` | `AudioConditionSystem` |
 | `cassette_sets.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VinylMoraleSystem` |
 
-### Combat & Warlords (3 Catalogs, 136 Definitions)
+### Combat & Warlords (4 Catalogs, 140 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `chemical_weapons.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ChemWarfareSystem` |
+| `combat_arenas.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 78 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (228 Catalogs, 3574 Definitions)
+### Core / Miscellaneous (230 Catalogs, 3586 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -235,6 +236,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `psychological_trauma.json` | 14 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PsychologicalTraumaCatalogLoader, SurvivorMentalHealthSystem` |
 | `psychology_profiles.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `radar_ecm_catalog.json` | 2 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `radiation_hotspot_policy.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `rail_grinding_catalog.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RailGrindingCatalogLoader, RailGrindingEngine` |
 | `rail_logistics_catalog.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RailLogisticsCatalogLoader, RailwaySystem` |
 | `rail_network.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
@@ -257,6 +259,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `routine_templates.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `rumor_hubs.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `runflat_tire_catalog.json` | 3 | `1.0.0` | `UNRESOLVED` | `Core default` |
+| `salvage_teardown.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `sanitation_facilities.json` | 9 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `scavenging_tables.json` | 54 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `seasonal_human_migration.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |

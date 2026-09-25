@@ -1,5 +1,13 @@
 # Plan 160 — Expedition Colony & Outpost System
 
+## PFGL Codex Luna 6 execution revision — Colony Operations Board only — 2026-09-25
+
+**Verified boundary:** DEC-155 is signed. `ColonySystem`, `colony_blueprints.json`, `ColonyHostSession`, the `colony` save section, and the daily tick already exist and are called from the production host. The older proposal below to create a new colony system/catalog is superseded. Current architecture evidence shows no dedicated player UI route.
+
+**Bounded implementation:** add a Colony Operations Board bound to the existing colony host. It shows current outposts, population, supplies, defense, constructed buildings, and supply-line status; the establishment selector uses the current authored colony type definitions. Commands route to existing colony APIs. It must not create a second outpost owner, reimplement supply flow, infer a route that is not present in `ColonySystem`, or claim inventory/material costs that the current command does not enforce. A read of the board never advances a day or mutates a colony.
+
+**Acceptance:** every displayed value comes from current Core state/catalog; each exposed action calls one existing Core command; invalid selection and duplicate routes are rejected; save/reload and the existing day tick retain colony state; route is player-navigable and closed through the dashboard shell.
+
 ## Goal
 
 Create an expedition colony and outpost system where players can establish permanent settlements at expedition destinations, maintain supply lines, defend outposts, and expand their influence across the wasteland. Currently expeditions are in-and-out affairs — players travel to a location, scavenge, and return. There is no option to stay, build, or maintain a presence. This plan adds persistent expedition presence and territorial expansion.

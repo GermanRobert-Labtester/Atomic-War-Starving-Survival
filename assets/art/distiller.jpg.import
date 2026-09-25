@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/distiller.jpg-1cfd473d598f700a2e03b9687758b37
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/looted_pharmacy.jpg-3dcd6faa75a00f3a6f4f80cc5
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

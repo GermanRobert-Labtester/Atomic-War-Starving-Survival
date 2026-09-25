@@ -47,7 +47,7 @@ namespace AtomicWar.GodotApp.UI
             AddChild(margin);
 
             var root = new VBoxContainer();
-            root.AddThemeConstantOverride("separation", 10);
+            root.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             margin.AddChild(root);
 
             _headerLabel = AshfallUiHelpers.MakeLabel("SHELTER BIO-ENERGY // ANAEROBIC BIOGAS DIGESTER (PWR-06)", 20, true);

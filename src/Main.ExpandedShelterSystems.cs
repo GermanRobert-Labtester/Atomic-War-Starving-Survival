@@ -512,6 +512,8 @@ namespace AtomicWar.GodotApp
             switch (panelKey)
             {
                 case "water_treatment":
+                    SetupWaterTreatment();
+                    BindWaterSourcesPanel();
                     if (_waterTreatmentPanel != null) { _waterTreatmentPanel.Visible = true; _waterTreatmentPanel.RefreshView(); }
                     break;
                 case "airlock_security":
@@ -729,6 +731,7 @@ namespace AtomicWar.GodotApp
                     RemoveChild(panel);
             }
 
+            _waterTreatmentPanel?.UnbindWaterSources();
             RemovePanel(_waterTreatmentPanel); _waterTreatmentPanel = null!;
             RemovePanel(_airlockSecurityPanel); _airlockSecurityPanel = null!;
             RemovePanel(_shelterThermalPanel); _shelterThermalPanel = null!;
@@ -770,6 +773,10 @@ namespace AtomicWar.GodotApp
             ResetPlans130To133Panel();
 
             // Dispose / null host sessions
+            _waterSources?.Dispose(); _waterSources = null;
+            _deepWell = null;
+            _waterCondenser = null;
+            _piezometer = null;
             _waterTreatment?.Dispose(); _waterTreatment = null!;
             _airlockSecurity?.Dispose(); _airlockSecurity = null!;
             _shelterThermal?.Dispose(); _shelterThermal = null!;
@@ -876,6 +883,7 @@ namespace AtomicWar.GodotApp
             _personalQuestsDirty = false;
             _timeCapsule = null!;
             _timeCapsuleDirty = false;
+            ResetInternalCommunication();
             _deathLegacy = null!;
             _deathLegacyDirty = false;
             _relationshipDecay = null!;

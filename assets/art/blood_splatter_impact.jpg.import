@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/blood_splatter_impact.jpg-bd61f38fdba6a05d682
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

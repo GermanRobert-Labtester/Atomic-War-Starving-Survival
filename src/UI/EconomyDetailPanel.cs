@@ -265,7 +265,7 @@ namespace AtomicWar.GodotApp.UI
             }
 
             _heatMapDetail = new VBoxContainer();
-            _heatMapDetail.AddThemeConstantOverride("separation", 2);
+            _heatMapDetail.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
             _heatMapContainer.AddChild(_heatMapDetail);
             RenderHeatMapDetail();
         }
@@ -393,11 +393,11 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer BuildInsertedSection(string beforeNodeName, string headerText)
         {
             var section = new VBoxContainer();
-            section.AddThemeConstantOverride("separation", 2);
+            section.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
             section.AddChild(AshfallUiHelpers.MakeSeparator());
             section.AddChild(AshfallUiHelpers.MakeSectionHeader(headerText));
             var list = new VBoxContainer();
-            list.AddThemeConstantOverride("separation", 2);
+            list.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
             section.AddChild(list);
             _contentVBox.AddChild(section);
             var before = _contentVBox.GetNodeOrNull(beforeNodeName);

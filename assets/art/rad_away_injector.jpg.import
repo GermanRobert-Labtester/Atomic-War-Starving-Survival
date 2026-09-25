@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/rad_away_injector.jpg-1451ba9a5617332588382a3
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

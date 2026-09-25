@@ -41,6 +41,13 @@ if [ -x "$json_schema_gate" ]; then
     "$json_schema_gate" --staged
 fi
 
+# --- Approved plan gate (blocks code commits without STATUS: APPROVED BY USER in .ai/plans/) ---
+if [ -x "bin/check-approved-plan" ]; then
+    bin/check-approved-plan --staged
+elif [ -x "bin/ashfall-dev" ]; then
+    bin/ashfall-dev check-plan --staged
+fi
+
 # --- Docs index guard (staged markdown must not land a stale index) ---
 staged_md=$(git diff --cached --name-only --diff-filter=ACMR -- '*.md' || true)
 if [ -n "$staged_md" ] && [ -f scripts/ci/generate-docs-index.py ]; then

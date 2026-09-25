@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ladle_spoon.jpg-5d1d3b0f03c7deeb6687494d38f0d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

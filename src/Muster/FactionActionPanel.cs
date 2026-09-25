@@ -31,7 +31,7 @@ namespace AtomicWar.GodotApp.Muster
             CustomMinimumSize = new Vector2(400, 220);
 
             var rootVbox = new VBoxContainer();
-            rootVbox.AddThemeConstantOverride("separation", 6);
+            rootVbox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             AddChild(rootVbox);
 
             var title = new Label
@@ -97,7 +97,7 @@ namespace AtomicWar.GodotApp.Muster
             {
                 var offer = offers[i];
                 var card = new VBoxContainer();
-                card.AddThemeConstantOverride("separation", 2);
+                card.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                 var header = new Label
                 {
@@ -153,7 +153,7 @@ namespace AtomicWar.GodotApp.Muster
             {
                 var entry = _culture[i];
                 var card = new VBoxContainer();
-                card.AddThemeConstantOverride("separation", 2);
+                card.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                 var header = new Label
                 {

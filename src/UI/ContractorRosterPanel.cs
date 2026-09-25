@@ -212,7 +212,7 @@ namespace AtomicWar.GodotApp.UI
                     var cardMargin = AshfallUiHelpers.MakeMargins(DesignTheme.SpacingXs);
                     card.AddChild(cardMargin);
                     var cardVbox = new VBoxContainer();
-                    cardVbox.AddThemeConstantOverride("separation", 3);
+                    cardVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
                     cardMargin.AddChild(cardVbox);
 
                     var headerRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
@@ -244,7 +244,7 @@ namespace AtomicWar.GodotApp.UI
                     var cardMargin = AshfallUiHelpers.MakeMargins(DesignTheme.SpacingXs);
                     card.AddChild(cardMargin);
                     var cardVbox = new VBoxContainer();
-                    cardVbox.AddThemeConstantOverride("separation", 3);
+                    cardVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
                     cardMargin.AddChild(cardVbox);
 
                     var headerRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);

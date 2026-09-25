@@ -235,8 +235,8 @@ namespace AtomicWar.GodotApp
         public void SetupPlans50To53()
         {
             EnsureVehicleGarage();
-            EnsureShelterEspionage();
-            EnsureSurvivorMentalHealth();
+            SetupShelterEspionage();
+            SetupSurvivorMentalHealth();
             EnsureShelterAcoustics();
         }
 

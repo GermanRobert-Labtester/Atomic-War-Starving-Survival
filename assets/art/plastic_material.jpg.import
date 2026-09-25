@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/plastic_material.jpg-bfb2afd5f7d63468cf66f3df
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

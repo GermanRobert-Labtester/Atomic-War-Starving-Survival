@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_uv_lamp_ballast.jpg-426fd85bbe1dcc60b9c6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

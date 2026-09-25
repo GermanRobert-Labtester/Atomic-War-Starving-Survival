@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/hazard_id.jpg-50b3ce68a371e8ac28a1afa404d5873
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

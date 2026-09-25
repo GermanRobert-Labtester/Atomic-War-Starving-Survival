@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_geiger_m3.jpg-b78a0ce9af86ee54a1601b4323
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/survivor_male_1.jpg-c07d7065b1ccbd3e73a78f81b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

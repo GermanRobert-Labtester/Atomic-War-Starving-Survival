@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_ice_spike_bar.jpg-d8b02029360ff8f5181df1
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

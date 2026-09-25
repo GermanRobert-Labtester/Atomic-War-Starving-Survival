@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/vacuum_tube.jpg-d91befcec5f004b71ceaffb3c4156
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ruhl_archive_tag.jpg-1793aeb917354dee275d3fff
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

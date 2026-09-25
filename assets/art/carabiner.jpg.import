@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/carabiner.jpg-d58bb0cea492d03a3119d3d659bbac3
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

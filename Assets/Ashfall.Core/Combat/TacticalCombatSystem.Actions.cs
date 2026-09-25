@@ -34,13 +34,18 @@ namespace Ashfall.Core.Combat
             return res;
         }
 
-        public CombatActionResult PlayerFire(string targetId, ISeededRng rng)
+        public CombatActionResult PlayerFire(string targetId, ISeededRng rng, string? subjectId = null, float motionAccuracyScale = 1f)
         {
             var res = new CombatActionResult();
             if (_state.Resolved) { res.Message = "Encounter is over."; return res; }
 
-            var shooter = PickActiveShooter();
+            CombatantState? shooter = null;
+            if (!string.IsNullOrEmpty(subjectId))
+                shooter = FindPlayerCombatant(subjectId);
+            if (shooter == null)
+                shooter = PickActiveShooter();
             if (shooter == null) { res.Message = "No armed standing survivor to fire."; return res; }
+            if (motionAccuracyScale <= 0f) motionAccuracyScale = 1f;
 
             var weapon = WeaponOf(shooter);
             if (weapon == null) { res.Message = shooter.Name + " has no weapon."; return res; }
@@ -49,6 +54,11 @@ namespace Ashfall.Core.Combat
             if (target == null || target.IsPlayer || target.HasFled)
             {
                 res.Message = "Invalid target: " + targetId;
+                return res;
+            }
+            if (IsBurrowHidden(target))
+            {
+                res.Message = target.Name + " is burrowed — wait for them to surface.";
                 return res;
             }
 
@@ -146,7 +156,8 @@ namespace Ashfall.Core.Combat
                 StanceDamageMod = mods.Damage,
                 ExternalAccuracyMod = (PerformanceLookup != null && !string.IsNullOrEmpty(shooter.SurvivorId) ? Math.Max(0.1f, PerformanceLookup(shooter.SurvivorId).accuracy) : 1f) *
                     (1f - (weapon.IsJammed ? 1f : 0f)) *
-                    (weapon.BallisticsAccuracyMultiplier <= 0f ? 1f : weapon.BallisticsAccuracyMultiplier),
+                    (weapon.BallisticsAccuracyMultiplier <= 0f ? 1f : weapon.BallisticsAccuracyMultiplier) *
+                    motionAccuracyScale,
                 ExternalDamageMod = (PerformanceLookup != null && !string.IsNullOrEmpty(shooter.SurvivorId) ? Math.Max(0.1f, PerformanceLookup(shooter.SurvivorId).damage) : 1f) *
                     FlankMultiplier(shooter) * GetCloseQuartersBonus(shooter) *
                     (weapon.BallisticsPenetrationMultiplier <= 0f ? 1f : weapon.BallisticsPenetrationMultiplier),
@@ -288,11 +299,21 @@ namespace Ashfall.Core.Combat
                 res.Message = weapon.WeaponId + " is already fully loaded.";
                 return res;
             }
-            int granted = _ports?.ConsumeAmmo != null ? _ports.ConsumeAmmo(ammoId, needed) : 0;
-            if (granted <= 0)
+            int granted;
+            if (_ports?.ConsumeAmmo != null)
             {
-                res.Message = "No " + ammoId + " available to reload.";
-                return res;
+                granted = _ports.ConsumeAmmo(ammoId, needed);
+                if (granted <= 0)
+                {
+                    res.Message = "No " + ammoId + " available to reload.";
+                    return res;
+                }
+            }
+            else
+            {
+                // Local magazine refill when no inventory adapter (tests / headless),
+                // mirroring PlayerFire's local ammo decrement fallback.
+                granted = needed;
             }
             weapon.AmmoRemaining += granted;
             AddEvent("reload", c.Id,

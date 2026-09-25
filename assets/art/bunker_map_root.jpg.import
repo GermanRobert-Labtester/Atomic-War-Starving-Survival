@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bunker_map_root.jpg-195c00065e1f0790639937b83
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

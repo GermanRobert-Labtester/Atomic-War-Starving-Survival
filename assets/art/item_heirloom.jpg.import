@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_heirloom.jpg-7a6bde7e27d7982149eb985d415
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

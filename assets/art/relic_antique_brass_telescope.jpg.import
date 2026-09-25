@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/relic_antique_brass_telescope.jpg-afc7f61af65
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

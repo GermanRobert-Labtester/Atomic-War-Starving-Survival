@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ui_event_ghost_radio.jpg-e020ad3b8e1b20553c1d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

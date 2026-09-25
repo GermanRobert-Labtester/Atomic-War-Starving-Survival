@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/hazard_cook_off.jpg-4c866a151578f4987fc5cf00c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

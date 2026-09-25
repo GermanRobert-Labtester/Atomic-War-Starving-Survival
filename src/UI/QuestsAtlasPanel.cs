@@ -122,7 +122,7 @@ public partial class QuestsAtlasPanel : Control, IBindablePanel
         _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("QUEST DETAIL"));
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
         _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Bind a HoldfastQuestSystem to see live quest progression across all protocols."));
+            "Bind a HoldfastQuestSystem to see live quest progression across all protocols.", autowrap: true));
         actionRow.AddChild(_detailBox);
 
         body.AddChild(actionRow);
@@ -277,13 +277,13 @@ public partial class QuestsAtlasPanel : Control, IBindablePanel
         if (!IsBound)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Quest engine offline. Bind a HoldfastQuestSystem to see live quest progression."));
+                "Quest engine offline. Bind a HoldfastQuestSystem to see live quest progression.", autowrap: true));
             return;
         }
         if (_selectedIndex < 0)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Select a quest row to view stage text, status, and timeline narrator."));
+                "Select a quest row to view stage text, status, and timeline narrator.", autowrap: true));
             return;
         }
         var (questId, title, stage, status, narrator) = _questRows[_selectedIndex];

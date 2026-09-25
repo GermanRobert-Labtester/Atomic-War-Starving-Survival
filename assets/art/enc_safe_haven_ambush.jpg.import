@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/enc_safe_haven_ambush.jpg-7c1fc06a4724360fa6a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

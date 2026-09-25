@@ -7,8 +7,10 @@
 //                moves, or purifies water.
 // ============================================================================
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Shelter;
 
 namespace AtomicWar.GodotApp
@@ -39,13 +41,65 @@ namespace AtomicWar.GodotApp
                 System.BindCatalog(catalog);
         }
 
-        public string ConstructNetwork()
+        public string ConstructNetwork(Inventory inventory)
         {
-            var result = System.ConstructNetwork();
-            RaiseStateChanged();
-            LastEvent = result.Status == ActionResult.StatusKind.Success
-                ? "Aquifer monitoring network installed."
-                : $"Cannot install monitoring network ({result.FailureCode}).";
+            if (inventory == null)
+                return LastEvent = "Piezometer network unavailable: inventory is not connected.";
+
+            var costs = new Dictionary<string, int>(StringComparer.Ordinal);
+            var strata = System.Catalog.strata;
+            if (strata == null || strata.Count == 0)
+                return LastEvent = "Cannot install monitoring network (piez.no_strata).";
+
+            foreach (var zone in strata)
+            {
+                if (zone?.sensor_install_cost == null) continue;
+                foreach (var cost in zone.sensor_install_cost)
+                {
+                    if (string.IsNullOrWhiteSpace(cost.Key) || cost.Value <= 0) continue;
+                    costs[cost.Key] = costs.TryGetValue(cost.Key, out int amount)
+                        ? checked(amount + cost.Value)
+                        : cost.Value;
+                }
+            }
+
+            try
+            {
+                bool committed = inventory.TryConsumeBill(costs, () =>
+                {
+                    // Core owns the construction rules and cost verification.
+                    // Inventory has already staged the bill, so expose the
+                    // pre-transaction count and make its internal consume port
+                    // a no-op. The inventory transaction rolls back if Core
+                    // refuses construction.
+                    System.BindInventory(
+                        itemId => inventory.CountById(itemId)
+                            + (costs.TryGetValue(itemId, out int prepaid) ? prepaid : 0),
+                        (_, _) => { });
+                    var result = System.ConstructNetwork();
+                    if (result.Status != ActionResult.StatusKind.Success)
+                        throw new InvalidOperationException(
+                            $"Cannot install monitoring network ({result.FailureCode}).");
+                });
+
+                if (!committed)
+                    LastEvent = "Cannot install monitoring network (piez.materials_missing).";
+                else
+                {
+                    LastEvent = "Aquifer monitoring network installed.";
+                    RaiseStateChanged();
+                }
+            }
+            catch (Exception ex)
+            {
+                LastEvent = ex.Message;
+            }
+            finally
+            {
+                System.BindInventory(
+                    itemId => inventory.CountById(itemId),
+                    (itemId, count) => inventory.TryConsumeById(itemId, count));
+            }
             return LastEvent;
         }
 

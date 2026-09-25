@@ -61,7 +61,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("clearances", "Clearances", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -72,7 +72,7 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Left Column: Security Zones ─────────────────────────────
             _leftColumn = new VBoxContainer();
-            _leftColumn.AddThemeConstantOverride("separation", 10);
+            _leftColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _leftColumn.CustomMinimumSize = new Vector2(480, 400);
             _leftColumn.SizeFlagsHorizontal = SizeFlags.Fill;
             _leftColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -95,7 +95,7 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Right Column: Lockdown, Breaches & Clearances ───────────
             _rightColumn = new VBoxContainer();
-            _rightColumn.AddThemeConstantOverride("separation", 10);
+            _rightColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _rightColumn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _rightColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -109,7 +109,7 @@ namespace AtomicWar.GodotApp.UI
             _rightColumn.AddChild(breachHdr);
 
             _breachesContainer = new VBoxContainer();
-            _breachesContainer.AddThemeConstantOverride("separation", 6);
+            _breachesContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _rightColumn.AddChild(_breachesContainer);
 
             var clearHdr = new Label();
@@ -121,7 +121,7 @@ namespace AtomicWar.GodotApp.UI
             clearScroll.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
             _clearancesContainer = new VBoxContainer();
-            _clearancesContainer.AddThemeConstantOverride("separation", 6);
+            _clearancesContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _clearancesContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             clearScroll.AddChild(_clearancesContainer);
             _rightColumn.AddChild(clearScroll);
@@ -189,7 +189,7 @@ namespace AtomicWar.GodotApp.UI
                 details.Text = $"Level: {zone.Level} | Lock: {zone.LockState} | Room: {zone.RoomId}";
 
                 var btnRow = new HBoxContainer();
-                btnRow.AddThemeConstantOverride("separation", 6);
+                btnRow.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
 
                 var unlockBtn = new Button { Text = "Unlock" };
                 unlockBtn.Pressed += () =>
@@ -242,7 +242,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     var breachCard = new PanelContainer();
                     var bBox = new VBoxContainer();
-                    bBox.AddThemeConstantOverride("separation", 2);
+                    bBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                     var bTitle = new Label();
                     bTitle.Text = $"[ALARM] {b.BreachType.ToUpperInvariant()} in {b.ZoneId}";
@@ -284,7 +284,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     var clCard = new PanelContainer();
                     var clBox = new VBoxContainer();
-                    clBox.AddThemeConstantOverride("separation", 2);
+                    clBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                     var clLbl = new Label();
                     clLbl.Text = $"{cl.SurvivorId} -> [{cl.Level}] (Day {cl.GrantedDay})";

@@ -36,6 +36,14 @@ jobs:
           use-dotnet: true
           include-templates: true
 
+      - name: Verify Approved Plan for Code Changes
+        run: |
+          if [ -x "bin/check-approved-plan" ]; then
+            bin/check-approved-plan
+          else
+            go run tools/gotools/cmd/check-approved-plan/main.go
+          fi
+
       - name: Execute Canonical Verification Suite (Fast Tier)
         run: |
           python3 scripts/ci/run-gates.py --tier fast --report-json build/reports/gate-results.json --fail-artifact build/reports/CI_GATE_FAILURE_REPORT.md

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/padlock_key.jpg-d8fe3d3f24b33c2edc1fb605a9211
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/5_factions.jpg-9746e785a091c59a30c07d12a159ba
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

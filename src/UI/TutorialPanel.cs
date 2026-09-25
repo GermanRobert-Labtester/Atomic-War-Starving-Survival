@@ -151,6 +151,10 @@ namespace AtomicWar.GodotApp.UI
                     "Traps wear as they work. A broken trap stops catching but stays on the map. Repair it or replace it.",
                 WildlifeTrappingLocalization.BycatchTutorialId =>
                     "A trap can catch something unintended. Inspect catches before processing: bycatch may help, hurt, or carry disease or contamination.",
+                Ashfall.Core.Localization.OnboardingLessonLocalization.ProtectionBeforeDispatchId =>
+                    "Radiation does not announce itself. Check the party's protection and dose \u2014 gear, anti-rad, or a shorter route.",
+                Ashfall.Core.Localization.OnboardingLessonLocalization.SevereWeatherPrepId =>
+                    "Weather carries the dose with it. A severe day raises exposure and cuts travel; read the forecast before you commit people or supplies.",
                 _ => "A new lesson is ready. Check the related shelter panel before you continue."
             };
             _contextualDialog.Title = title;

@@ -12,6 +12,18 @@
     <Deterministic>true</Deterministic>
     <VersionPrefix>1.1.0</VersionPrefix>
 
+    <!-- Disable Roslyn compiler server (VBCSCompiler) -->
+    <UseSharedCompilation>false</UseSharedCompilation>
+
+    <!-- Disable Razor build server -->
+    <UseRazorBuildServer>false</UseRazorBuildServer>
+
+    <!-- Disable analyzers during build -->
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+
+    <!-- Disable MSBuild node reuse -->
+    <NodeReuse>false</NodeReuse>
+
     <!--
       Shared Warning Policy:
       CS0108/CS0114  — NOT suppressed: resolved member hiding across all host sessions

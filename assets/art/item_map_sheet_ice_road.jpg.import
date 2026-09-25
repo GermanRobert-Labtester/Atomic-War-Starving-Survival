@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_map_sheet_ice_road.jpg-6e21135f38c95682d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

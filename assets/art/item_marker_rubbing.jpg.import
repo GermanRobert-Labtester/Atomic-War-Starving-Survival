@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_marker_rubbing.jpg-8c587d7c5f8555cd6e648
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

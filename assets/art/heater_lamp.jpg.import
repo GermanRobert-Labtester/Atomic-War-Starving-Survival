@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/heater_lamp.jpg-bb4febda4e58f256fb5ec0869349f
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

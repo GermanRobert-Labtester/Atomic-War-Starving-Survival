@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/water_bottle_1_5l_of_2l.jpg-97c597524a2bd21fc
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

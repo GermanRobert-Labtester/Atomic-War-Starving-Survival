@@ -101,7 +101,7 @@ namespace AtomicWar.GodotApp.UI
                 SizeFlagsHorizontal = SizeFlags.ExpandFill
             };
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
             scroll.AddChild(_contentStack);
@@ -112,7 +112,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("VEHICLE"));
 
             var vehicleRow = new HBoxContainer();
-            vehicleRow.AddThemeConstantOverride("separation", 10);
+            vehicleRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             vehicleRow.AddChild(AshfallUiHelpers.MakeBody("Select:"));
             _vehicleSelector = new OptionButton { CustomMinimumSize = new Vector2(320, 34) };
             _vehicleSelector.ItemSelected += OnVehicleSelected;
@@ -124,7 +124,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("MODIFICATION CATALOG"));
 
             var modRow = new HBoxContainer();
-            modRow.AddThemeConstantOverride("separation", 10);
+            modRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             modRow.AddChild(AshfallUiHelpers.MakeBody("Modification:"));
             _modSelector = new OptionButton { CustomMinimumSize = new Vector2(420, 34) };
             _modSelector.ItemSelected += OnModSelected;

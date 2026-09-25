@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/frozen_river.jpg-230aa3415d080f7ea62f28b1c286
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

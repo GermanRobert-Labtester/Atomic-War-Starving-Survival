@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/painkillers.jpg-b5e5fc0e3c73a1f43fab3aa50a9da
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

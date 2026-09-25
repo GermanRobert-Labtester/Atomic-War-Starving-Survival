@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/rifle_hk_g3_762x51.jpg-56bf79222cc71c3470e48b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

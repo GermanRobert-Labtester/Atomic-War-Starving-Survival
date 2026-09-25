@@ -156,6 +156,9 @@ public partial class ResearchAtlasPanel : Control, IBindablePanel
         var detailScroll = new ScrollContainer();
         detailScroll.CustomMinimumSize = new Vector2(360, 400);
         detailScroll.SizeFlagsVertical = SizeFlags.ExpandFill;
+        // UI/UX audit 2026-09-25: contain the detail pane to vertical scrolling;
+        // wrapped metadata labels no longer force a horizontal scrollbar.
+        detailScroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
 
         _detailBox = new VBoxContainer();
         _detailBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -343,14 +346,16 @@ public partial class ResearchAtlasPanel : Control, IBindablePanel
         if (_host == null)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Research engine offline. Bind a ResearchHostSession to see live knowledge nodes and breakthroughs."));
+                "Research engine offline. Bind a ResearchHostSession to see live knowledge nodes and breakthroughs.",
+                autowrap: true));
             return;
         }
 
         if (_selectedIndex < 0 || _selectedIndex >= _visibleNodes.Count)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Select a knowledge node from the catalog to inspect requirements, rewards, and dependents."));
+                "Select a knowledge node from the catalog to inspect requirements, rewards, and dependents.",
+                autowrap: true));
             return;
         }
 
@@ -379,7 +384,7 @@ public partial class ResearchAtlasPanel : Control, IBindablePanel
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
             _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("DESCRIPTION"));
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(node.description));
+            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(node.description, autowrap: true));
         }
 
         if (!string.IsNullOrEmpty(node.breakthroughItem))

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-24",
+  "generated_at": "2026-09-25",
   "method": "programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)",
   "verdict_counts": {
     "INTEGRATED": 71
@@ -825,9 +825,9 @@
         "SaveLoadHostSession": [
           "src/Main.cs",
           "src/Main.UiTests.StartingCohortLifecycle.cs",
-          "src/Main.Application.cs",
           "src/Main.UiTests.RealCampaignJourney.cs",
           "src/Main.SessionDurability.cs",
+          "src/Main.Application.cs",
           "src/Host/PanelBindLifecycleSelfTest.cs",
           "src/Host/SaveLoadUiFailureSelfTest.cs",
           "src/Host/SaveLoadHostSession.cs"
@@ -963,7 +963,8 @@
       "host_ref_files": {
         "PlaySessionRecorder": [
           "src/Host/PlayMetricsHostSession.cs",
-          "src/Host/HostCli.PlayMetrics.cs"
+          "src/Host/HostCli.PlayMetrics.cs",
+          "src/Host/PlayMetricJsonlSink.cs"
         ],
         "FirstHourFunnel": [
           "src/Host/PlayMetricsHostSession.cs"
@@ -1314,7 +1315,7 @@
         ],
         "host_refs": [
           true,
-          "3/5 identifiers referenced"
+          "6/6 identifiers referenced"
         ],
         "save_section": [
           true,
@@ -1334,15 +1335,15 @@
         ],
         "host_session": [
           true,
-          "OutpostSettlementHostSession"
+          "OutpostSettlementHostSession, ShelterOperationsHostSession"
         ],
         "ui_panel": [
-          null,
-          "no dedicated panel (read model / detail rows)"
+          true,
+          "ShelterOperationsPanel"
         ],
         "route": [
-          null,
-          "\u2014"
+          true,
+          "shelter_operations"
         ],
         "cli_flag": [
           true,
@@ -1356,17 +1357,32 @@
       "host_ref_files": {
         "OutpostSettlementSystem": [
           "src/Main.OutpostSettlement.cs",
-          "src/Host/OutpostSettlementHostSession.cs"
+          "src/Host/OutpostSettlementHostSession.cs",
+          "src/Host/HostCli.ShelterOperations.cs"
+        ],
+        "OutpostDef": [
+          "src/Main.OutpostSettlement.cs",
+          "src/Host/ShelterOperationsHostSession.cs"
+        ],
+        "OutpostInstance": [
+          "src/Main.OutpostSettlement.cs",
+          "src/Host/ShelterOperationsHostSession.cs"
         ],
         "OutpostSettlementState": [
           "src/Main.CampaignOwners.cs",
-          "src/Host/OutpostSettlementHostSession.cs",
-          "src/Host/HostCli.OutpostSettlement.cs"
+          "src/Host/HostCli.OutpostSettlement.cs",
+          "src/Host/OutpostSettlementHostSession.cs"
         ],
         "OutpostSettlementHostSession": [
           "src/Main.OutpostSettlement.cs",
+          "src/Host/HostCli.OutpostSettlement.cs",
           "src/Host/OutpostSettlementHostSession.cs",
-          "src/Host/HostCli.OutpostSettlement.cs"
+          "src/Host/ShelterOperationsHostSession.cs"
+        ],
+        "ShelterOperationsHostSession": [
+          "src/Main.ShelterOperations.cs",
+          "src/Host/ShelterOperationsHostSession.cs",
+          "src/UI/ShelterOperationsPanel.cs"
         ]
       }
     },
@@ -2277,7 +2293,8 @@
         "IdeologicalFrictionHostSession": [
           "src/Main.IdeologicalFriction.cs",
           "src/Host/IdeologicalFrictionHostSession.cs",
-          "src/Host/HostCli.IdeologicalFriction.cs"
+          "src/Host/HostCli.IdeologicalFriction.cs",
+          "src/UI/PfglOctetBoardPanels.cs"
         ]
       }
     },
@@ -2356,7 +2373,8 @@
         "RomanceFamilyHostSession": [
           "src/Main.RomanceFamily.cs",
           "src/Host/RomanceFamilyHostSession.cs",
-          "src/Host/HostCli.RomanceFamily.cs"
+          "src/Host/HostCli.RomanceFamily.cs",
+          "src/UI/PfglOctetBoardPanels.cs"
         ]
       }
     },
@@ -4346,6 +4364,7 @@
       },
       "host_ref_files": {
         "RumorSystem": [
+          "src/Main.MoralChoice.cs",
           "src/Main.RumorNetwork.cs",
           "src/Main.BroadsheetPress.cs",
           "src/Host/RumorNetworkHostSession.cs",
@@ -4626,7 +4645,8 @@
           "src/Main.SurvivorSocial.cs",
           "src/Main.ShelterGovernance.cs",
           "src/Host/ShelterGovernanceHostSession.cs",
-          "src/Host/LeadershipSuccessionSelfTest.cs"
+          "src/Host/LeadershipSuccessionSelfTest.cs",
+          "src/Host/InternalCommunicationHostSession.cs"
         ],
         "LeadershipCensus": [
           "src/Main.SurvivorSocial.cs"

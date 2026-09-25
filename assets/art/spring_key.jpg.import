@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/spring_key.jpg-cf4192aaaaf55658c9ebdfe96daff8
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

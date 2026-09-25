@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/acoustic_foam_panel.jpg-c1e7c48aee850b024a41a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

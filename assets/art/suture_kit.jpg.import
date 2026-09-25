@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/suture_kit.jpg-bb9f10fb6ff3766cc8724894e3b4a4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

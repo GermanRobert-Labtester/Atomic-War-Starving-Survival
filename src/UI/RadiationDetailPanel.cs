@@ -36,10 +36,21 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(DoseLedgerHostSession? dose = null, SurvivorsHostSession? survivors = null)
         {
+            // Live refresh (UI/UX audit silent-failure sweep): the detail view must
+            // reflect play while open, not only the state at open time.
+            if (_dose != null) _dose.Ledger.OnStateChanged -= OnDoseStateChanged;
+            if (_survivors != null) _survivors.StateChanged -= OnSurvivorsStateChanged;
+
             _dose = dose;
             _survivors = survivors;
+
+            if (_dose != null) _dose.Ledger.OnStateChanged += OnDoseStateChanged;
+            if (_survivors != null) _survivors.StateChanged += OnSurvivorsStateChanged;
             RefreshView();
         }
+
+        private void OnDoseStateChanged(Ashfall.Core.DoseLedgerSystemState _) => RefreshView();
+        private void OnSurvivorsStateChanged() => RefreshView();
 
         public void RefreshView()
         {

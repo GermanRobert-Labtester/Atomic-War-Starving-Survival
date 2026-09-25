@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/nuclear_explosion_flash.jpg-ab0d86acfec8bee43
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

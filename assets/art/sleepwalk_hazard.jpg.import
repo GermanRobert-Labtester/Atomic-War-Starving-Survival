@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/sleepwalk_hazard.jpg-e371681525f9e03733712cec
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

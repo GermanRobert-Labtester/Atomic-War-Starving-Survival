@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/skirmish_player_action.jpg-fecb2e5d61b9e0c966
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

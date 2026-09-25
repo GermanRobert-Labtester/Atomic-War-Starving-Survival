@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_liquid_stitches.jpg-13b7f1e62fb4044b5692
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

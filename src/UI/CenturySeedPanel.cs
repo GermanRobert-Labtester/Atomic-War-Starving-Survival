@@ -45,8 +45,12 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(GenerationalSuccessionEngine? succession, SurvivorsHostSession? survivors)
         {
+            if (_survivors != null) _survivors.StateChanged -= RefreshView;
+
             _succession = succession;
             _survivors = survivors;
+
+            if (_survivors != null) _survivors.StateChanged += RefreshView;
             EnsureDwellersRegistered();
             RefreshView();
         }
@@ -73,9 +77,9 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
-        public void Close()
-        {
-            Visible = false;
+        public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
             OnClose?.Invoke();
         }
 

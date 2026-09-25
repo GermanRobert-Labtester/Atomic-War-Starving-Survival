@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/shotgun_benelli_m4_super90_12ga.jpg-ca8dda2f4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

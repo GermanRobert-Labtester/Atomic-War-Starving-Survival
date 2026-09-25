@@ -46,7 +46,13 @@ namespace Ashfall.Core.Onboarding
         Research = 10,
 
         /// <summary>Dispatch a real expedition.</summary>
-        Expedition = 11
+        Expedition = 11,
+
+        /// <summary>Assign a survivor to a real duty shift. Functional demand: survivors do not work unassigned.</summary>
+        Duty = 12,
+
+        /// <summary>Read the dose ledger or radiation detail. Dose accumulates quietly.</summary>
+        Dose = 13
     }
 
     /// <summary>

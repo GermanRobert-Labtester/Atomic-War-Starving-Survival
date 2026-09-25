@@ -1,0 +1,41 @@
+# Current Task State
+
+- **Task Goal:** Enforce testing step ceiling (10-15 steps), explicit full test suite ban, scoped runner tool (`bin/run-scoped-tests`), and plan approval check (`bin/check-approved-plan` / pre-commit / CI).
+- **Termination Criteria:**
+  - [x] AGENTS.md updated with explicit full test ban, scoped runner mandate, and 10-15 test step limit.
+  - [x] AI_AGENT_WORKFLOW.md updated with testing ceilings, plan approval gate, and auto-flagging rule.
+  - [x] `bin/run-scoped-tests` created in Go (detects changed files, maps tests, executes scoped tests only, bans full tests without passphrase).
+  - [x] `bin/check-approved-plan` created in Go (checks for `STATUS: APPROVED BY USER` in `.ai/plans/`).
+  - [x] Pre-commit hook and CI workflow updated to enforce approved plan check.
+  - [x] ashfall-dev sync-agents run and verified with 0 drift across all 13 client rulebooks.
+- **Iteration / Step Count:** 12 / 100
+- **Testing Steps:** 2 / 15
+- **Elapsed Time:** ~12m / 20m
+- **Files Changed:**
+  - `AGENTS.md`
+  - `AI_AGENT_WORKFLOW.md`
+  - `tools/gotools/pkg/scopedtest/`
+  - `tools/gotools/pkg/checkplan/`
+  - `tools/gotools/cmd/run-scoped-tests/`
+  - `tools/gotools/cmd/check-approved-plan/`
+  - `tools/gotools/cmd/ashfall-dev/main.go`
+  - `bin/run-scoped-tests`
+  - `bin/check-approved-plan`
+  - `bin/ashfall-dev`
+  - `.git/hooks/pre-commit`
+  - `scripts/ci/git-hooks/pre-commit`
+  - `.github/workflows/ci.yml`
+  - `.ai/plan.md`
+  - `.ai/plans/template.md`
+  - `.ai/state.md`
+- **Tests Executed:**
+  - `go test ./...` in `tools/gotools` -> OK (all unit tests passed)
+  - `./bin/run-scoped-tests --dry-run` -> OK
+  - `./bin/run-scoped-tests --full` -> OK (properly blocked with passphrase instruction)
+  - `./bin/check-approved-plan` -> OK (properly rejects unapproved code commits)
+- **Remaining Errors / Blockers:**
+  - None
+- **Auto-Flagged for Bug Validator (if test steps exceed 10-15):**
+  - None
+- **Logged Conflicts (Systems vs Narrative):**
+  - None

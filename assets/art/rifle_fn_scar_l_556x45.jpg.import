@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/rifle_fn_scar_l_556x45.jpg-0051afe24d65562cf0
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

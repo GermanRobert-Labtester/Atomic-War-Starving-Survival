@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/knife_blade.jpg-388d3e8d23d6a154182367d4cc537
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

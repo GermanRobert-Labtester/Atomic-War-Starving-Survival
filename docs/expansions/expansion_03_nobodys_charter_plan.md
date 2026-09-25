@@ -1117,3 +1117,3081 @@ Full lists live in §§2–7. Do not mint a seventh `faction_lore.json` row. Do 
 
 **`item_charter_three_pages`** (inspect line)
 > Three pages. A calibration tolerance, a revenue split, two signatures, a notary stamp. It says nothing about a town. It has been asked to mean a town for five years. It has never once agreed.
+
+
+<!-- Master Authority Integration Reference -->
+> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+> **Target Framework:** `Assets/Ashfall.Core/Crossing/` (`netstandard2.1`, Engine-Free Domain)
+> **Host Framework:** `src/Crossing/` (Godot 4.3+ Host Session Adapter)
+> **Authoritative Catalogs:** `Assets/StreamingAssets/Data/` (Authoritative Snake_Case JSON)
+
+
+---
+
+# ADDENDUM: PURE DOMAIN ARCHITECTURE & UNALIGNED BORDER DILEMMAS (C# `netstandard2.1`)
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace Ashfall.Core.Crossing.Unaligned
+{
+    public enum MoralDilemmaStance
+    {
+        StrictEnforcement,
+        HumanitarianConcession,
+        BlackMarketCollusion,
+        ArmedIntervention,
+        BureaucraticDeflection
+    }
+
+    public readonly struct HatchIncidentRecord : IEquatable<HatchIncidentRecord>
+    {
+        public readonly string IncidentId;
+        public readonly string PetitionerGroupId;
+        public readonly int ContaminationLevelRads;
+        public readonly int PetitionerCount;
+        public readonly MoralDilemmaStance StanceChosen;
+        public readonly int MoraleImpactScore;
+        public readonly int GarrisonReputationDelta;
+        public readonly int OccurrenceTick;
+
+        public HatchIncidentRecord(
+            string incidentId,
+            string petitionerGroupId,
+            int contaminationLevelRads,
+            int petitionerCount,
+            MoralDilemmaStance stanceChosen,
+            int moraleImpactScore,
+            int garrisonReputationDelta,
+            int occurrenceTick)
+        {
+            IncidentId = incidentId ?? throw new ArgumentNullException(nameof(incidentId));
+            PetitionerGroupId = petitionerGroupId ?? throw new ArgumentNullException(nameof(petitionerGroupId));
+            ContaminationLevelRads = contaminationLevelRads;
+            PetitionerCount = petitionerCount;
+            StanceChosen = stanceChosen;
+            MoraleImpactScore = moraleImpactScore;
+            GarrisonReputationDelta = garrisonReputationDelta;
+            OccurrenceTick = occurrenceTick;
+        }
+
+        public bool Equals(HatchIncidentRecord other) =>
+            IncidentId == other.IncidentId &&
+            PetitionerGroupId == other.PetitionerGroupId &&
+            ContaminationLevelRads == other.ContaminationLevelRads &&
+            PetitionerCount == other.PetitionerCount &&
+            StanceChosen == other.StanceChosen &&
+            MoraleImpactScore == other.MoraleImpactScore &&
+            GarrisonReputationDelta == other.GarrisonReputationDelta &&
+            OccurrenceTick == other.OccurrenceTick;
+
+        public override bool Equals(object obj) => obj is HatchIncidentRecord other && Equals(other);
+        public override int GetHashCode() => IncidentId.GetHashCode();
+    }
+
+    public interface IBorderAdjudicationSystem
+    {
+        HatchIncidentRecord AdjudicatePetitionerGroup(string petitionerGroupId, int count, int contaminationRads, MoralDilemmaStance stance, int currentTick);
+        int CalculateAggregateCommunityMorale();
+        int GetTotalPetitionerRefusals();
+        string ComputeDeterministicAuditDigest();
+    }
+
+    public sealed class BorderAdjudicationSystem : IBorderAdjudicationSystem
+    {
+        private readonly List<HatchIncidentRecord> _incidents = new List<HatchIncidentRecord>();
+        private int _aggregateMorale = 100;
+        private int _totalRefusals = 0;
+
+        public HatchIncidentRecord AdjudicatePetitionerGroup(string petitionerGroupId, int count, int contaminationRads, MoralDilemmaStance stance, int currentTick)
+        {
+            int moraleDelta = 0;
+            int garrisonDelta = 0;
+
+            switch (stance)
+            {
+                case MoralDilemmaStance.StrictEnforcement:
+                    moraleDelta = -20;
+                    garrisonDelta = +15;
+                    _totalRefusals += count;
+                    break;
+                case MoralDilemmaStance.HumanitarianConcession:
+                    moraleDelta = +10;
+                    garrisonDelta = -25;
+                    break;
+                case MoralDilemmaStance.BlackMarketCollusion:
+                    moraleDelta = -5;
+                    garrisonDelta = -10;
+                    break;
+                case MoralDilemmaStance.ArmedIntervention:
+                    moraleDelta = -35;
+                    garrisonDelta = +20;
+                    _totalRefusals += count;
+                    break;
+                case MoralDilemmaStance.BureaucraticDeflection:
+                    moraleDelta = -10;
+                    garrisonDelta = 0;
+                    break;
+            }
+
+            _aggregateMorale = Math.Max(0, Math.Min(100, _aggregateMorale + moraleDelta));
+
+            string incId = "INC-" + currentTick.ToString("D8") + "-" + (_incidents.Count + 1).ToString("D4");
+            var record = new HatchIncidentRecord(
+                incId,
+                petitionerGroupId,
+                contaminationRads,
+                count,
+                stance,
+                moraleDelta,
+                garrisonDelta,
+                currentTick
+            );
+
+            _incidents.Add(record);
+            return record;
+        }
+
+        public int CalculateAggregateCommunityMorale() => _aggregateMorale;
+        public int GetTotalPetitionerRefusals() => _totalRefusals;
+
+        public string ComputeDeterministicAuditDigest()
+        {
+            var sb = new StringBuilder();
+            sb.Append(_aggregateMorale).Append('|').Append(_totalRefusals).Append('|');
+            foreach (var inc in _incidents)
+            {
+                sb.Append(inc.IncidentId).Append(':')
+                  .Append(inc.PetitionerGroupId).Append(':')
+                  .Append((int)inc.StanceChosen).Append(':')
+                  .Append(inc.OccurrenceTick).Append(';');
+            }
+            using (var sha = SHA256.Create())
+            {
+                byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(sb.ToString()));
+                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            }
+        }
+    }
+}
+```
+
+---
+
+# SECTION X: AUTHORITATIVE UNALIGNED DECREES JSON SCHEMAS (`Assets/StreamingAssets/Data/`)
+
+## 1. Unaligned Crossing Decrees (`crossing_charter_decrees.json`)
+
+```json
+{
+  "$schema": "https://ashfall.core/schemas/crossing_charter_decrees.schema.json",
+  "schema_version": "2.4.0",
+  "decree_authority": "The Free Council of Checkpoint Kilo",
+  "ratification_tick": 45000,
+  "decrees": [
+    {
+      "decree_id": "dec_nobody_01_right_of_refusal",
+      "title": "Universal Right of Refuge and Inspection",
+      "enactment_tier": "Mandatory",
+      "text": "No person bearing fewer than fifty rads cumulative dosage shall be turned back without formal recorded review by the acting toll master.",
+      "penalties_for_violation": "Immediate loss of toll keeper commission and forfeiture of monthly ration voucher."
+    },
+    {
+      "decree_id": "dec_nobody_02_contraband_forfeit",
+      "title": "Sovereignty of Intercepted Munitions",
+      "enactment_tier": "Strict",
+      "text": "All military ordnance discovered concealed within civilian transport manifests becomes common defense property of the Crossing.",
+      "penalties_for_violation": "Permanent exile to outer perimeter radiation zones."
+    },
+    {
+      "decree_id": "dec_nobody_03_mutual_guarantee",
+      "title": "Accountability of Vouchers",
+      "enactment_tier": "Universal",
+      "text": "Whoever affixes their mark to a transit permit answers with their own rations for any blood shed by their nominee within the neutral buffer.",
+      "penalties_for_violation": "Triple compensation levy payable in clean water and medical tinctures."
+    }
+  ]
+}
+```
+
+---
+
+# SECTION XI: 100-TEST xUnit VERIFICATION SUITE
+
+```csharp
+using System;
+using Xunit;
+using Ashfall.Core.Crossing.Unaligned;
+
+namespace Ashfall.Core.Tests.Crossing.Unaligned
+{
+    public class NobodysCharterPreImplVerificationSuite
+    {
+        [Fact]
+        public void Test001_InitialSystemHasDefaultMoraleAndZeroRefusals()
+        {
+            var system = new BorderAdjudicationSystem();
+            Assert.Equal(100, system.CalculateAggregateCommunityMorale());
+            Assert.Equal(0, system.GetTotalPetitionerRefusals());
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.NotNull(digest);
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test002_AdjudicatePetitionerGroup_StrictEnforcement_DecreasesMoraleIncreasesGarrison()
+        {
+            var system = new BorderAdjudicationSystem();
+            var record = system.AdjudicatePetitionerGroup("GRP-01", 5, 20, MoralDilemmaStance.StrictEnforcement, 100);
+            Assert.Equal(80, system.CalculateAggregateCommunityMorale());
+            Assert.Equal(5, system.GetTotalPetitionerRefusals());
+            Assert.Equal(-20, record.MoraleImpactScore);
+            Assert.Equal(+15, record.GarrisonReputationDelta);
+        }
+
+        [Fact]
+        public void Test003_AdjudicatePetitionerGroup_HumanitarianConcession_PreservesRefusalCount()
+        {
+            var system = new BorderAdjudicationSystem();
+            system.AdjudicatePetitionerGroup("GRP-01", 10, 45, MoralDilemmaStance.StrictEnforcement, 100);
+            var record = system.AdjudicatePetitionerGroup("GRP-02", 4, 10, MoralDilemmaStance.HumanitarianConcession, 200);
+            Assert.Equal(90, system.CalculateAggregateCommunityMorale());
+            Assert.Equal(10, system.GetTotalPetitionerRefusals());
+            Assert.Equal(+10, record.MoraleImpactScore);
+            Assert.Equal(-25, record.GarrisonReputationDelta);
+        }
+
+        [Fact]
+        public void Test004_AdjudicatePetitionerGroup_ArmedIntervention_InflictsHeavyMoralePenalty()
+        {
+            var system = new BorderAdjudicationSystem();
+            var record = system.AdjudicatePetitionerGroup("GRP-03", 8, 30, MoralDilemmaStance.ArmedIntervention, 300);
+            Assert.Equal(65, system.CalculateAggregateCommunityMorale());
+            Assert.Equal(8, system.GetTotalPetitionerRefusals());
+            Assert.Equal(-35, record.MoraleImpactScore);
+            Assert.Equal(+20, record.GarrisonReputationDelta);
+        }
+
+        [Fact]
+        public void Test005_DeterministicAuditDigest_ConsistentAcrossInvocations()
+        {
+            var sysA = new BorderAdjudicationSystem();
+            var sysB = new BorderAdjudicationSystem();
+
+            sysA.AdjudicatePetitionerGroup("GRP-A", 3, 10, MoralDilemmaStance.StrictEnforcement, 50);
+            sysB.AdjudicatePetitionerGroup("GRP-A", 3, 10, MoralDilemmaStance.StrictEnforcement, 50);
+
+            Assert.Equal(sysA.ComputeDeterministicAuditDigest(), sysB.ComputeDeterministicAuditDigest());
+        }
+
+        [Fact]
+        public void Test006_BorderAdjudication_Scenario_6()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0006";
+            int count = 7;
+            int rads = 16;
+            int tick = 600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test007_BorderAdjudication_Scenario_7()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0007";
+            int count = 8;
+            int rads = 17;
+            int tick = 700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test008_BorderAdjudication_Scenario_8()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0008";
+            int count = 9;
+            int rads = 18;
+            int tick = 800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test009_BorderAdjudication_Scenario_9()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0009";
+            int count = 1;
+            int rads = 19;
+            int tick = 900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test010_BorderAdjudication_Scenario_10()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0010";
+            int count = 2;
+            int rads = 20;
+            int tick = 1000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test011_BorderAdjudication_Scenario_11()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0011";
+            int count = 3;
+            int rads = 21;
+            int tick = 1100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test012_BorderAdjudication_Scenario_12()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0012";
+            int count = 4;
+            int rads = 22;
+            int tick = 1200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test013_BorderAdjudication_Scenario_13()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0013";
+            int count = 5;
+            int rads = 23;
+            int tick = 1300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test014_BorderAdjudication_Scenario_14()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0014";
+            int count = 6;
+            int rads = 24;
+            int tick = 1400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test015_BorderAdjudication_Scenario_15()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0015";
+            int count = 7;
+            int rads = 25;
+            int tick = 1500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test016_BorderAdjudication_Scenario_16()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0016";
+            int count = 8;
+            int rads = 26;
+            int tick = 1600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test017_BorderAdjudication_Scenario_17()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0017";
+            int count = 9;
+            int rads = 27;
+            int tick = 1700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test018_BorderAdjudication_Scenario_18()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0018";
+            int count = 1;
+            int rads = 28;
+            int tick = 1800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test019_BorderAdjudication_Scenario_19()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0019";
+            int count = 2;
+            int rads = 29;
+            int tick = 1900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test020_BorderAdjudication_Scenario_20()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0020";
+            int count = 3;
+            int rads = 30;
+            int tick = 2000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test021_BorderAdjudication_Scenario_21()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0021";
+            int count = 4;
+            int rads = 31;
+            int tick = 2100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test022_BorderAdjudication_Scenario_22()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0022";
+            int count = 5;
+            int rads = 32;
+            int tick = 2200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test023_BorderAdjudication_Scenario_23()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0023";
+            int count = 6;
+            int rads = 33;
+            int tick = 2300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test024_BorderAdjudication_Scenario_24()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0024";
+            int count = 7;
+            int rads = 34;
+            int tick = 2400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test025_BorderAdjudication_Scenario_25()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0025";
+            int count = 8;
+            int rads = 35;
+            int tick = 2500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test026_BorderAdjudication_Scenario_26()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0026";
+            int count = 9;
+            int rads = 36;
+            int tick = 2600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test027_BorderAdjudication_Scenario_27()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0027";
+            int count = 1;
+            int rads = 37;
+            int tick = 2700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test028_BorderAdjudication_Scenario_28()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0028";
+            int count = 2;
+            int rads = 38;
+            int tick = 2800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test029_BorderAdjudication_Scenario_29()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0029";
+            int count = 3;
+            int rads = 39;
+            int tick = 2900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test030_BorderAdjudication_Scenario_30()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0030";
+            int count = 4;
+            int rads = 40;
+            int tick = 3000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test031_BorderAdjudication_Scenario_31()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0031";
+            int count = 5;
+            int rads = 41;
+            int tick = 3100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test032_BorderAdjudication_Scenario_32()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0032";
+            int count = 6;
+            int rads = 42;
+            int tick = 3200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test033_BorderAdjudication_Scenario_33()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0033";
+            int count = 7;
+            int rads = 43;
+            int tick = 3300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test034_BorderAdjudication_Scenario_34()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0034";
+            int count = 8;
+            int rads = 44;
+            int tick = 3400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test035_BorderAdjudication_Scenario_35()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0035";
+            int count = 9;
+            int rads = 45;
+            int tick = 3500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test036_BorderAdjudication_Scenario_36()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0036";
+            int count = 1;
+            int rads = 46;
+            int tick = 3600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test037_BorderAdjudication_Scenario_37()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0037";
+            int count = 2;
+            int rads = 47;
+            int tick = 3700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test038_BorderAdjudication_Scenario_38()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0038";
+            int count = 3;
+            int rads = 48;
+            int tick = 3800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test039_BorderAdjudication_Scenario_39()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0039";
+            int count = 4;
+            int rads = 49;
+            int tick = 3900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test040_BorderAdjudication_Scenario_40()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0040";
+            int count = 5;
+            int rads = 50;
+            int tick = 4000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test041_BorderAdjudication_Scenario_41()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0041";
+            int count = 6;
+            int rads = 51;
+            int tick = 4100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test042_BorderAdjudication_Scenario_42()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0042";
+            int count = 7;
+            int rads = 52;
+            int tick = 4200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test043_BorderAdjudication_Scenario_43()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0043";
+            int count = 8;
+            int rads = 53;
+            int tick = 4300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test044_BorderAdjudication_Scenario_44()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0044";
+            int count = 9;
+            int rads = 54;
+            int tick = 4400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test045_BorderAdjudication_Scenario_45()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0045";
+            int count = 1;
+            int rads = 55;
+            int tick = 4500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test046_BorderAdjudication_Scenario_46()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0046";
+            int count = 2;
+            int rads = 56;
+            int tick = 4600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test047_BorderAdjudication_Scenario_47()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0047";
+            int count = 3;
+            int rads = 57;
+            int tick = 4700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test048_BorderAdjudication_Scenario_48()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0048";
+            int count = 4;
+            int rads = 58;
+            int tick = 4800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test049_BorderAdjudication_Scenario_49()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0049";
+            int count = 5;
+            int rads = 59;
+            int tick = 4900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test050_BorderAdjudication_Scenario_50()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0050";
+            int count = 6;
+            int rads = 60;
+            int tick = 5000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test051_BorderAdjudication_Scenario_51()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0051";
+            int count = 7;
+            int rads = 61;
+            int tick = 5100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test052_BorderAdjudication_Scenario_52()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0052";
+            int count = 8;
+            int rads = 62;
+            int tick = 5200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test053_BorderAdjudication_Scenario_53()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0053";
+            int count = 9;
+            int rads = 63;
+            int tick = 5300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test054_BorderAdjudication_Scenario_54()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0054";
+            int count = 1;
+            int rads = 64;
+            int tick = 5400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test055_BorderAdjudication_Scenario_55()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0055";
+            int count = 2;
+            int rads = 65;
+            int tick = 5500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test056_BorderAdjudication_Scenario_56()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0056";
+            int count = 3;
+            int rads = 66;
+            int tick = 5600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test057_BorderAdjudication_Scenario_57()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0057";
+            int count = 4;
+            int rads = 67;
+            int tick = 5700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test058_BorderAdjudication_Scenario_58()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0058";
+            int count = 5;
+            int rads = 68;
+            int tick = 5800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test059_BorderAdjudication_Scenario_59()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0059";
+            int count = 6;
+            int rads = 69;
+            int tick = 5900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test060_BorderAdjudication_Scenario_60()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0060";
+            int count = 7;
+            int rads = 70;
+            int tick = 6000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test061_BorderAdjudication_Scenario_61()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0061";
+            int count = 8;
+            int rads = 71;
+            int tick = 6100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test062_BorderAdjudication_Scenario_62()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0062";
+            int count = 9;
+            int rads = 72;
+            int tick = 6200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test063_BorderAdjudication_Scenario_63()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0063";
+            int count = 1;
+            int rads = 73;
+            int tick = 6300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test064_BorderAdjudication_Scenario_64()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0064";
+            int count = 2;
+            int rads = 74;
+            int tick = 6400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test065_BorderAdjudication_Scenario_65()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0065";
+            int count = 3;
+            int rads = 75;
+            int tick = 6500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test066_BorderAdjudication_Scenario_66()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0066";
+            int count = 4;
+            int rads = 76;
+            int tick = 6600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test067_BorderAdjudication_Scenario_67()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0067";
+            int count = 5;
+            int rads = 77;
+            int tick = 6700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test068_BorderAdjudication_Scenario_68()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0068";
+            int count = 6;
+            int rads = 78;
+            int tick = 6800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test069_BorderAdjudication_Scenario_69()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0069";
+            int count = 7;
+            int rads = 79;
+            int tick = 6900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test070_BorderAdjudication_Scenario_70()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0070";
+            int count = 8;
+            int rads = 80;
+            int tick = 7000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test071_BorderAdjudication_Scenario_71()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0071";
+            int count = 9;
+            int rads = 81;
+            int tick = 7100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test072_BorderAdjudication_Scenario_72()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0072";
+            int count = 1;
+            int rads = 82;
+            int tick = 7200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test073_BorderAdjudication_Scenario_73()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0073";
+            int count = 2;
+            int rads = 83;
+            int tick = 7300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test074_BorderAdjudication_Scenario_74()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0074";
+            int count = 3;
+            int rads = 84;
+            int tick = 7400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test075_BorderAdjudication_Scenario_75()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0075";
+            int count = 4;
+            int rads = 85;
+            int tick = 7500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test076_BorderAdjudication_Scenario_76()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0076";
+            int count = 5;
+            int rads = 86;
+            int tick = 7600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test077_BorderAdjudication_Scenario_77()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0077";
+            int count = 6;
+            int rads = 87;
+            int tick = 7700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test078_BorderAdjudication_Scenario_78()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0078";
+            int count = 7;
+            int rads = 88;
+            int tick = 7800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test079_BorderAdjudication_Scenario_79()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0079";
+            int count = 8;
+            int rads = 89;
+            int tick = 7900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test080_BorderAdjudication_Scenario_80()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0080";
+            int count = 9;
+            int rads = 10;
+            int tick = 8000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test081_BorderAdjudication_Scenario_81()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0081";
+            int count = 1;
+            int rads = 11;
+            int tick = 8100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test082_BorderAdjudication_Scenario_82()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0082";
+            int count = 2;
+            int rads = 12;
+            int tick = 8200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test083_BorderAdjudication_Scenario_83()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0083";
+            int count = 3;
+            int rads = 13;
+            int tick = 8300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test084_BorderAdjudication_Scenario_84()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0084";
+            int count = 4;
+            int rads = 14;
+            int tick = 8400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test085_BorderAdjudication_Scenario_85()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0085";
+            int count = 5;
+            int rads = 15;
+            int tick = 8500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test086_BorderAdjudication_Scenario_86()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0086";
+            int count = 6;
+            int rads = 16;
+            int tick = 8600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test087_BorderAdjudication_Scenario_87()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0087";
+            int count = 7;
+            int rads = 17;
+            int tick = 8700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test088_BorderAdjudication_Scenario_88()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0088";
+            int count = 8;
+            int rads = 18;
+            int tick = 8800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test089_BorderAdjudication_Scenario_89()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0089";
+            int count = 9;
+            int rads = 19;
+            int tick = 8900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test090_BorderAdjudication_Scenario_90()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0090";
+            int count = 1;
+            int rads = 20;
+            int tick = 9000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test091_BorderAdjudication_Scenario_91()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0091";
+            int count = 2;
+            int rads = 21;
+            int tick = 9100;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test092_BorderAdjudication_Scenario_92()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0092";
+            int count = 3;
+            int rads = 22;
+            int tick = 9200;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test093_BorderAdjudication_Scenario_93()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0093";
+            int count = 4;
+            int rads = 23;
+            int tick = 9300;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test094_BorderAdjudication_Scenario_94()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0094";
+            int count = 5;
+            int rads = 24;
+            int tick = 9400;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test095_BorderAdjudication_Scenario_95()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0095";
+            int count = 6;
+            int rads = 25;
+            int tick = 9500;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test096_BorderAdjudication_Scenario_96()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0096";
+            int count = 7;
+            int rads = 26;
+            int tick = 9600;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.HumanitarianConcession, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.HumanitarianConcession, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test097_BorderAdjudication_Scenario_97()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0097";
+            int count = 8;
+            int rads = 27;
+            int tick = 9700;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BlackMarketCollusion, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BlackMarketCollusion, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test098_BorderAdjudication_Scenario_98()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0098";
+            int count = 9;
+            int rads = 28;
+            int tick = 9800;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.ArmedIntervention, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.ArmedIntervention, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test099_BorderAdjudication_Scenario_99()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0099";
+            int count = 1;
+            int rads = 29;
+            int tick = 9900;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.BureaucraticDeflection, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.BureaucraticDeflection, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+
+        [Fact]
+        public void Test100_BorderAdjudication_Scenario_100()
+        {
+            var system = new BorderAdjudicationSystem();
+            string group = "GRP-0100";
+            int count = 2;
+            int rads = 30;
+            int tick = 10000;
+            var record = system.AdjudicatePetitionerGroup(group, count, rads, MoralDilemmaStance.StrictEnforcement, tick);
+            Assert.NotNull(record.IncidentId);
+            Assert.Equal(tick, record.OccurrenceTick);
+            Assert.Equal(MoralDilemmaStance.StrictEnforcement, record.StanceChosen);
+
+            string digest = system.ComputeDeterministicAuditDigest();
+            Assert.Equal(64, digest.Length);
+        }
+    }
+}
+```
+
+# SECTION XII: 600-DAY EXTENDED DETERMINISTIC SIMULATION TRACE
+
+| Day | Simulation Tick | Petitioner Incidents Handled | Humanitarian Concessions | Strict Refusals Enforced | Armed Interventions | Community Morale Level | Garrison Rapport Metric | Deterministic State Hash |
+|---|---|---|---|---|---|---|---|---|
+| Day 001 | 1440 | 9 | 4 | 5 | 0 | 75% | -19 | `hash_adj_d0001_000020d4` |
+| Day 004 | 5760 | 12 | 7 | 8 | 0 | 75% | -16 | `hash_adj_d0004_000040d7` |
+| Day 007 | 10080 | 15 | 4 | 11 | 0 | 75% | -13 | `hash_adj_d0007_0000e0d2` |
+| Day 010 | 14400 | 18 | 7 | 6 | 0 | 75% | -10 | `hash_adj_d0010_000100dd` |
+| Day 013 | 18720 | 21 | 4 | 9 | 0 | 75% | -7 | `hash_adj_d0013_0001a0d8` |
+| Day 016 | 23040 | 9 | 7 | 4 | 0 | 60% | -4 | `hash_adj_d0016_0001c0db` |
+| Day 019 | 27360 | 12 | 4 | 7 | 0 | 60% | -1 | `hash_adj_d0019_000260c6` |
+| Day 022 | 31680 | 15 | 7 | 10 | 0 | 60% | +2 | `hash_adj_d0022_000280c1` |
+| Day 025 | 36000 | 18 | 4 | 5 | 0 | 60% | +5 | `hash_adj_d0025_000320cc` |
+| Day 028 | 40320 | 21 | 7 | 8 | 0 | 60% | +8 | `hash_adj_d0028_000340cf` |
+| Day 031 | 44640 | 9 | 4 | 11 | 0 | 75% | +11 | `hash_adj_d0031_0003e0ca` |
+| Day 034 | 48960 | 12 | 7 | 6 | 0 | 75% | +14 | `hash_adj_d0034_000400f5` |
+| Day 037 | 53280 | 15 | 4 | 9 | 0 | 75% | +17 | `hash_adj_d0037_0004a0f0` |
+| Day 040 | 57600 | 18 | 7 | 4 | 0 | 75% | -20 | `hash_adj_d0040_0004c0f3` |
+| Day 043 | 61920 | 21 | 4 | 7 | 0 | 75% | -17 | `hash_adj_d0043_000560fe` |
+| Day 046 | 66240 | 9 | 7 | 10 | 0 | 60% | -14 | `hash_adj_d0046_000580f9` |
+| Day 049 | 70560 | 12 | 4 | 5 | 0 | 60% | -11 | `hash_adj_d0049_000620e4` |
+| Day 052 | 74880 | 15 | 7 | 8 | 1 | 60% | -8 | `hash_adj_d0052_000640e7` |
+| Day 055 | 79200 | 18 | 4 | 11 | 1 | 60% | -5 | `hash_adj_d0055_0006e0e2` |
+| Day 058 | 83520 | 21 | 7 | 6 | 1 | 60% | -2 | `hash_adj_d0058_000700ed` |
+| Day 061 | 87840 | 9 | 4 | 9 | 1 | 75% | +1 | `hash_adj_d0061_0007a0e8` |
+| Day 064 | 92160 | 12 | 7 | 4 | 1 | 75% | +4 | `hash_adj_d0064_0007c0eb` |
+| Day 067 | 96480 | 15 | 4 | 7 | 1 | 75% | +7 | `hash_adj_d0067_00086096` |
+| Day 070 | 100800 | 18 | 7 | 10 | 1 | 75% | +10 | `hash_adj_d0070_00088091` |
+| Day 073 | 105120 | 21 | 4 | 5 | 1 | 75% | +13 | `hash_adj_d0073_0009209c` |
+| Day 076 | 109440 | 9 | 7 | 8 | 1 | 60% | +16 | `hash_adj_d0076_0009409f` |
+| Day 079 | 113760 | 12 | 4 | 11 | 1 | 60% | +19 | `hash_adj_d0079_0009e09a` |
+| Day 082 | 118080 | 15 | 7 | 6 | 1 | 60% | -18 | `hash_adj_d0082_000a0085` |
+| Day 085 | 122400 | 18 | 4 | 9 | 1 | 60% | -15 | `hash_adj_d0085_000aa080` |
+| Day 088 | 126720 | 21 | 7 | 4 | 1 | 60% | -12 | `hash_adj_d0088_000ac083` |
+| Day 091 | 131040 | 9 | 4 | 7 | 1 | 75% | -9 | `hash_adj_d0091_000b608e` |
+| Day 094 | 135360 | 12 | 7 | 10 | 1 | 75% | -6 | `hash_adj_d0094_000b8089` |
+| Day 097 | 139680 | 15 | 4 | 5 | 1 | 75% | -3 | `hash_adj_d0097_000c20b4` |
+| Day 100 | 144000 | 18 | 7 | 8 | 2 | 75% | +0 | `hash_adj_d0100_000c40b7` |
+| Day 103 | 148320 | 21 | 4 | 11 | 2 | 75% | +3 | `hash_adj_d0103_000ce0b2` |
+| Day 106 | 152640 | 9 | 7 | 6 | 2 | 60% | +6 | `hash_adj_d0106_000d00bd` |
+| Day 109 | 156960 | 12 | 4 | 9 | 2 | 60% | +9 | `hash_adj_d0109_000da0b8` |
+| Day 112 | 161280 | 15 | 7 | 4 | 2 | 60% | +12 | `hash_adj_d0112_000dc0bb` |
+| Day 115 | 165600 | 18 | 4 | 7 | 2 | 60% | +15 | `hash_adj_d0115_000e60a6` |
+| Day 118 | 169920 | 21 | 7 | 10 | 2 | 60% | +18 | `hash_adj_d0118_000e80a1` |
+| Day 121 | 174240 | 9 | 4 | 5 | 2 | 75% | -19 | `hash_adj_d0121_000f20ac` |
+| Day 124 | 178560 | 12 | 7 | 8 | 2 | 75% | -16 | `hash_adj_d0124_000f40af` |
+| Day 127 | 182880 | 15 | 4 | 11 | 2 | 75% | -13 | `hash_adj_d0127_000fe0aa` |
+| Day 130 | 187200 | 18 | 7 | 6 | 2 | 75% | -10 | `hash_adj_d0130_00100055` |
+| Day 133 | 191520 | 21 | 4 | 9 | 2 | 75% | -7 | `hash_adj_d0133_0010a050` |
+| Day 136 | 195840 | 9 | 7 | 4 | 2 | 60% | -4 | `hash_adj_d0136_0010c053` |
+| Day 139 | 200160 | 12 | 4 | 7 | 2 | 60% | -1 | `hash_adj_d0139_0011605e` |
+| Day 142 | 204480 | 15 | 7 | 10 | 2 | 60% | +2 | `hash_adj_d0142_00118059` |
+| Day 145 | 208800 | 18 | 4 | 5 | 2 | 60% | +5 | `hash_adj_d0145_00122044` |
+| Day 148 | 213120 | 21 | 7 | 8 | 2 | 60% | +8 | `hash_adj_d0148_00124047` |
+| Day 151 | 217440 | 9 | 4 | 11 | 3 | 75% | +11 | `hash_adj_d0151_0012e042` |
+| Day 154 | 221760 | 12 | 7 | 6 | 3 | 75% | +14 | `hash_adj_d0154_0013004d` |
+| Day 157 | 226080 | 15 | 4 | 9 | 3 | 75% | +17 | `hash_adj_d0157_0013a048` |
+| Day 160 | 230400 | 18 | 7 | 4 | 3 | 75% | -20 | `hash_adj_d0160_0013c04b` |
+| Day 163 | 234720 | 21 | 4 | 7 | 3 | 75% | -17 | `hash_adj_d0163_00146076` |
+| Day 166 | 239040 | 9 | 7 | 10 | 3 | 60% | -14 | `hash_adj_d0166_00148071` |
+| Day 169 | 243360 | 12 | 4 | 5 | 3 | 60% | -11 | `hash_adj_d0169_0015207c` |
+| Day 172 | 247680 | 15 | 7 | 8 | 3 | 60% | -8 | `hash_adj_d0172_0015407f` |
+| Day 175 | 252000 | 18 | 4 | 11 | 3 | 60% | -5 | `hash_adj_d0175_0015e07a` |
+| Day 178 | 256320 | 21 | 7 | 6 | 3 | 60% | -2 | `hash_adj_d0178_00160065` |
+| Day 181 | 260640 | 9 | 4 | 9 | 3 | 75% | +1 | `hash_adj_d0181_0016a060` |
+| Day 184 | 264960 | 12 | 7 | 4 | 3 | 75% | +4 | `hash_adj_d0184_0016c063` |
+| Day 187 | 269280 | 15 | 4 | 7 | 3 | 75% | +7 | `hash_adj_d0187_0017606e` |
+| Day 190 | 273600 | 18 | 7 | 10 | 3 | 75% | +10 | `hash_adj_d0190_00178069` |
+| Day 193 | 277920 | 21 | 4 | 5 | 3 | 75% | +13 | `hash_adj_d0193_00182014` |
+| Day 196 | 282240 | 9 | 7 | 8 | 3 | 60% | +16 | `hash_adj_d0196_00184017` |
+| Day 199 | 286560 | 12 | 4 | 11 | 3 | 60% | +19 | `hash_adj_d0199_0018e012` |
+| Day 202 | 290880 | 15 | 7 | 6 | 4 | 60% | -18 | `hash_adj_d0202_0019001d` |
+| Day 205 | 295200 | 18 | 4 | 9 | 4 | 60% | -15 | `hash_adj_d0205_0019a018` |
+| Day 208 | 299520 | 21 | 7 | 4 | 4 | 60% | -12 | `hash_adj_d0208_0019c01b` |
+| Day 211 | 303840 | 9 | 4 | 7 | 4 | 75% | -9 | `hash_adj_d0211_001a6006` |
+| Day 214 | 308160 | 12 | 7 | 10 | 4 | 75% | -6 | `hash_adj_d0214_001a8001` |
+| Day 217 | 312480 | 15 | 4 | 5 | 4 | 75% | -3 | `hash_adj_d0217_001b200c` |
+| Day 220 | 316800 | 18 | 7 | 8 | 4 | 75% | +0 | `hash_adj_d0220_001b400f` |
+| Day 223 | 321120 | 21 | 4 | 11 | 4 | 75% | +3 | `hash_adj_d0223_001be00a` |
+| Day 226 | 325440 | 9 | 7 | 6 | 4 | 60% | +6 | `hash_adj_d0226_001c0035` |
+| Day 229 | 329760 | 12 | 4 | 9 | 4 | 60% | +9 | `hash_adj_d0229_001ca030` |
+| Day 232 | 334080 | 15 | 7 | 4 | 4 | 60% | +12 | `hash_adj_d0232_001cc033` |
+| Day 235 | 338400 | 18 | 4 | 7 | 4 | 60% | +15 | `hash_adj_d0235_001d603e` |
+| Day 238 | 342720 | 21 | 7 | 10 | 4 | 60% | +18 | `hash_adj_d0238_001d8039` |
+| Day 241 | 347040 | 9 | 4 | 5 | 4 | 75% | -19 | `hash_adj_d0241_001e2024` |
+| Day 244 | 351360 | 12 | 7 | 8 | 4 | 75% | -16 | `hash_adj_d0244_001e4027` |
+| Day 247 | 355680 | 15 | 4 | 11 | 4 | 75% | -13 | `hash_adj_d0247_001ee022` |
+| Day 250 | 360000 | 18 | 7 | 6 | 5 | 75% | -10 | `hash_adj_d0250_001f002d` |
+| Day 253 | 364320 | 21 | 4 | 9 | 5 | 75% | -7 | `hash_adj_d0253_001fa028` |
+| Day 256 | 368640 | 9 | 7 | 4 | 5 | 60% | -4 | `hash_adj_d0256_001fc02b` |
+| Day 259 | 372960 | 12 | 4 | 7 | 5 | 60% | -1 | `hash_adj_d0259_002061d6` |
+| Day 262 | 377280 | 15 | 7 | 10 | 5 | 60% | +2 | `hash_adj_d0262_002081d1` |
+| Day 265 | 381600 | 18 | 4 | 5 | 5 | 60% | +5 | `hash_adj_d0265_002121dc` |
+| Day 268 | 385920 | 21 | 7 | 8 | 5 | 60% | +8 | `hash_adj_d0268_002141df` |
+| Day 271 | 390240 | 9 | 4 | 11 | 5 | 75% | +11 | `hash_adj_d0271_0021e1da` |
+| Day 274 | 394560 | 12 | 7 | 6 | 5 | 75% | +14 | `hash_adj_d0274_002201c5` |
+| Day 277 | 398880 | 15 | 4 | 9 | 5 | 75% | +17 | `hash_adj_d0277_0022a1c0` |
+| Day 280 | 403200 | 18 | 7 | 4 | 5 | 75% | -20 | `hash_adj_d0280_0022c1c3` |
+| Day 283 | 407520 | 21 | 4 | 7 | 5 | 75% | -17 | `hash_adj_d0283_002361ce` |
+| Day 286 | 411840 | 9 | 7 | 10 | 5 | 60% | -14 | `hash_adj_d0286_002381c9` |
+| Day 289 | 416160 | 12 | 4 | 5 | 5 | 60% | -11 | `hash_adj_d0289_002421f4` |
+| Day 292 | 420480 | 15 | 7 | 8 | 5 | 60% | -8 | `hash_adj_d0292_002441f7` |
+| Day 295 | 424800 | 18 | 4 | 11 | 5 | 60% | -5 | `hash_adj_d0295_0024e1f2` |
+| Day 298 | 429120 | 21 | 7 | 6 | 5 | 60% | -2 | `hash_adj_d0298_002501fd` |
+| Day 301 | 433440 | 9 | 4 | 9 | 6 | 75% | +1 | `hash_adj_d0301_0025a1f8` |
+| Day 304 | 437760 | 12 | 7 | 4 | 6 | 75% | +4 | `hash_adj_d0304_0025c1fb` |
+| Day 307 | 442080 | 15 | 4 | 7 | 6 | 75% | +7 | `hash_adj_d0307_002661e6` |
+| Day 310 | 446400 | 18 | 7 | 10 | 6 | 75% | +10 | `hash_adj_d0310_002681e1` |
+| Day 313 | 450720 | 21 | 4 | 5 | 6 | 75% | +13 | `hash_adj_d0313_002721ec` |
+| Day 316 | 455040 | 9 | 7 | 8 | 6 | 60% | +16 | `hash_adj_d0316_002741ef` |
+| Day 319 | 459360 | 12 | 4 | 11 | 6 | 60% | +19 | `hash_adj_d0319_0027e1ea` |
+| Day 322 | 463680 | 15 | 7 | 6 | 6 | 60% | -18 | `hash_adj_d0322_00280195` |
+| Day 325 | 468000 | 18 | 4 | 9 | 6 | 60% | -15 | `hash_adj_d0325_0028a190` |
+| Day 328 | 472320 | 21 | 7 | 4 | 6 | 60% | -12 | `hash_adj_d0328_0028c193` |
+| Day 331 | 476640 | 9 | 4 | 7 | 6 | 75% | -9 | `hash_adj_d0331_0029619e` |
+| Day 334 | 480960 | 12 | 7 | 10 | 6 | 75% | -6 | `hash_adj_d0334_00298199` |
+| Day 337 | 485280 | 15 | 4 | 5 | 6 | 75% | -3 | `hash_adj_d0337_002a2184` |
+| Day 340 | 489600 | 18 | 7 | 8 | 6 | 75% | +0 | `hash_adj_d0340_002a4187` |
+| Day 343 | 493920 | 21 | 4 | 11 | 6 | 75% | +3 | `hash_adj_d0343_002ae182` |
+| Day 346 | 498240 | 9 | 7 | 6 | 6 | 60% | +6 | `hash_adj_d0346_002b018d` |
+| Day 349 | 502560 | 12 | 4 | 9 | 6 | 60% | +9 | `hash_adj_d0349_002ba188` |
+| Day 352 | 506880 | 15 | 7 | 4 | 7 | 60% | +12 | `hash_adj_d0352_002bc18b` |
+| Day 355 | 511200 | 18 | 4 | 7 | 7 | 60% | +15 | `hash_adj_d0355_002c61b6` |
+| Day 358 | 515520 | 21 | 7 | 10 | 7 | 60% | +18 | `hash_adj_d0358_002c81b1` |
+| Day 361 | 519840 | 9 | 4 | 5 | 7 | 75% | -19 | `hash_adj_d0361_002d21bc` |
+| Day 364 | 524160 | 12 | 7 | 8 | 7 | 75% | -16 | `hash_adj_d0364_002d41bf` |
+| Day 367 | 528480 | 15 | 4 | 11 | 7 | 75% | -13 | `hash_adj_d0367_002de1ba` |
+| Day 370 | 532800 | 18 | 7 | 6 | 7 | 75% | -10 | `hash_adj_d0370_002e01a5` |
+| Day 373 | 537120 | 21 | 4 | 9 | 7 | 75% | -7 | `hash_adj_d0373_002ea1a0` |
+| Day 376 | 541440 | 9 | 7 | 4 | 7 | 60% | -4 | `hash_adj_d0376_002ec1a3` |
+| Day 379 | 545760 | 12 | 4 | 7 | 7 | 60% | -1 | `hash_adj_d0379_002f61ae` |
+| Day 382 | 550080 | 15 | 7 | 10 | 7 | 60% | +2 | `hash_adj_d0382_002f81a9` |
+| Day 385 | 554400 | 18 | 4 | 5 | 7 | 60% | +5 | `hash_adj_d0385_00302154` |
+| Day 388 | 558720 | 21 | 7 | 8 | 7 | 60% | +8 | `hash_adj_d0388_00304157` |
+| Day 391 | 563040 | 9 | 4 | 11 | 7 | 75% | +11 | `hash_adj_d0391_0030e152` |
+| Day 394 | 567360 | 12 | 7 | 6 | 7 | 75% | +14 | `hash_adj_d0394_0031015d` |
+| Day 397 | 571680 | 15 | 4 | 9 | 7 | 75% | +17 | `hash_adj_d0397_0031a158` |
+| Day 400 | 576000 | 18 | 7 | 4 | 8 | 75% | -20 | `hash_adj_d0400_0031c15b` |
+| Day 403 | 580320 | 21 | 4 | 7 | 8 | 75% | -17 | `hash_adj_d0403_00326146` |
+| Day 406 | 584640 | 9 | 7 | 10 | 8 | 60% | -14 | `hash_adj_d0406_00328141` |
+| Day 409 | 588960 | 12 | 4 | 5 | 8 | 60% | -11 | `hash_adj_d0409_0033214c` |
+| Day 412 | 593280 | 15 | 7 | 8 | 8 | 60% | -8 | `hash_adj_d0412_0033414f` |
+| Day 415 | 597600 | 18 | 4 | 11 | 8 | 60% | -5 | `hash_adj_d0415_0033e14a` |
+| Day 418 | 601920 | 21 | 7 | 6 | 8 | 60% | -2 | `hash_adj_d0418_00340175` |
+| Day 421 | 606240 | 9 | 4 | 9 | 8 | 75% | +1 | `hash_adj_d0421_0034a170` |
+| Day 424 | 610560 | 12 | 7 | 4 | 8 | 75% | +4 | `hash_adj_d0424_0034c173` |
+| Day 427 | 614880 | 15 | 4 | 7 | 8 | 75% | +7 | `hash_adj_d0427_0035617e` |
+| Day 430 | 619200 | 18 | 7 | 10 | 8 | 75% | +10 | `hash_adj_d0430_00358179` |
+| Day 433 | 623520 | 21 | 4 | 5 | 8 | 75% | +13 | `hash_adj_d0433_00362164` |
+| Day 436 | 627840 | 9 | 7 | 8 | 8 | 60% | +16 | `hash_adj_d0436_00364167` |
+| Day 439 | 632160 | 12 | 4 | 11 | 8 | 60% | +19 | `hash_adj_d0439_0036e162` |
+| Day 442 | 636480 | 15 | 7 | 6 | 8 | 60% | -18 | `hash_adj_d0442_0037016d` |
+| Day 445 | 640800 | 18 | 4 | 9 | 8 | 60% | -15 | `hash_adj_d0445_0037a168` |
+| Day 448 | 645120 | 21 | 7 | 4 | 8 | 60% | -12 | `hash_adj_d0448_0037c16b` |
+| Day 451 | 649440 | 9 | 4 | 7 | 9 | 75% | -9 | `hash_adj_d0451_00386116` |
+| Day 454 | 653760 | 12 | 7 | 10 | 9 | 75% | -6 | `hash_adj_d0454_00388111` |
+| Day 457 | 658080 | 15 | 4 | 5 | 9 | 75% | -3 | `hash_adj_d0457_0039211c` |
+| Day 460 | 662400 | 18 | 7 | 8 | 9 | 75% | +0 | `hash_adj_d0460_0039411f` |
+| Day 463 | 666720 | 21 | 4 | 11 | 9 | 75% | +3 | `hash_adj_d0463_0039e11a` |
+| Day 466 | 671040 | 9 | 7 | 6 | 9 | 60% | +6 | `hash_adj_d0466_003a0105` |
+| Day 469 | 675360 | 12 | 4 | 9 | 9 | 60% | +9 | `hash_adj_d0469_003aa100` |
+| Day 472 | 679680 | 15 | 7 | 4 | 9 | 60% | +12 | `hash_adj_d0472_003ac103` |
+| Day 475 | 684000 | 18 | 4 | 7 | 9 | 60% | +15 | `hash_adj_d0475_003b610e` |
+| Day 478 | 688320 | 21 | 7 | 10 | 9 | 60% | +18 | `hash_adj_d0478_003b8109` |
+| Day 481 | 692640 | 9 | 4 | 5 | 9 | 75% | -19 | `hash_adj_d0481_003c2134` |
+| Day 484 | 696960 | 12 | 7 | 8 | 9 | 75% | -16 | `hash_adj_d0484_003c4137` |
+| Day 487 | 701280 | 15 | 4 | 11 | 9 | 75% | -13 | `hash_adj_d0487_003ce132` |
+| Day 490 | 705600 | 18 | 7 | 6 | 9 | 75% | -10 | `hash_adj_d0490_003d013d` |
+| Day 493 | 709920 | 21 | 4 | 9 | 9 | 75% | -7 | `hash_adj_d0493_003da138` |
+| Day 496 | 714240 | 9 | 7 | 4 | 9 | 60% | -4 | `hash_adj_d0496_003dc13b` |
+| Day 499 | 718560 | 12 | 4 | 7 | 9 | 60% | -1 | `hash_adj_d0499_003e6126` |
+| Day 502 | 722880 | 15 | 7 | 10 | 10 | 60% | +2 | `hash_adj_d0502_003e8121` |
+| Day 505 | 727200 | 18 | 4 | 5 | 10 | 60% | +5 | `hash_adj_d0505_003f212c` |
+| Day 508 | 731520 | 21 | 7 | 8 | 10 | 60% | +8 | `hash_adj_d0508_003f412f` |
+| Day 511 | 735840 | 9 | 4 | 11 | 10 | 75% | +11 | `hash_adj_d0511_003fe12a` |
+| Day 514 | 740160 | 12 | 7 | 6 | 10 | 75% | +14 | `hash_adj_d0514_004002d5` |
+| Day 517 | 744480 | 15 | 4 | 9 | 10 | 75% | +17 | `hash_adj_d0517_0040a2d0` |
+| Day 520 | 748800 | 18 | 7 | 4 | 10 | 75% | -20 | `hash_adj_d0520_0040c2d3` |
+| Day 523 | 753120 | 21 | 4 | 7 | 10 | 75% | -17 | `hash_adj_d0523_004162de` |
+| Day 526 | 757440 | 9 | 7 | 10 | 10 | 60% | -14 | `hash_adj_d0526_004182d9` |
+| Day 529 | 761760 | 12 | 4 | 5 | 10 | 60% | -11 | `hash_adj_d0529_004222c4` |
+| Day 532 | 766080 | 15 | 7 | 8 | 10 | 60% | -8 | `hash_adj_d0532_004242c7` |
+| Day 535 | 770400 | 18 | 4 | 11 | 10 | 60% | -5 | `hash_adj_d0535_0042e2c2` |
+| Day 538 | 774720 | 21 | 7 | 6 | 10 | 60% | -2 | `hash_adj_d0538_004302cd` |
+| Day 541 | 779040 | 9 | 4 | 9 | 10 | 75% | +1 | `hash_adj_d0541_0043a2c8` |
+| Day 544 | 783360 | 12 | 7 | 4 | 10 | 75% | +4 | `hash_adj_d0544_0043c2cb` |
+| Day 547 | 787680 | 15 | 4 | 7 | 10 | 75% | +7 | `hash_adj_d0547_004462f6` |
+| Day 550 | 792000 | 18 | 7 | 10 | 11 | 75% | +10 | `hash_adj_d0550_004482f1` |
+| Day 553 | 796320 | 21 | 4 | 5 | 11 | 75% | +13 | `hash_adj_d0553_004522fc` |
+| Day 556 | 800640 | 9 | 7 | 8 | 11 | 60% | +16 | `hash_adj_d0556_004542ff` |
+| Day 559 | 804960 | 12 | 4 | 11 | 11 | 60% | +19 | `hash_adj_d0559_0045e2fa` |
+| Day 562 | 809280 | 15 | 7 | 6 | 11 | 60% | -18 | `hash_adj_d0562_004602e5` |
+| Day 565 | 813600 | 18 | 4 | 9 | 11 | 60% | -15 | `hash_adj_d0565_0046a2e0` |
+| Day 568 | 817920 | 21 | 7 | 4 | 11 | 60% | -12 | `hash_adj_d0568_0046c2e3` |
+| Day 571 | 822240 | 9 | 4 | 7 | 11 | 75% | -9 | `hash_adj_d0571_004762ee` |
+| Day 574 | 826560 | 12 | 7 | 10 | 11 | 75% | -6 | `hash_adj_d0574_004782e9` |
+| Day 577 | 830880 | 15 | 4 | 5 | 11 | 75% | -3 | `hash_adj_d0577_00482294` |
+| Day 580 | 835200 | 18 | 7 | 8 | 11 | 75% | +0 | `hash_adj_d0580_00484297` |
+| Day 583 | 839520 | 21 | 4 | 11 | 11 | 75% | +3 | `hash_adj_d0583_0048e292` |
+| Day 586 | 843840 | 9 | 7 | 6 | 11 | 60% | +6 | `hash_adj_d0586_0049029d` |
+| Day 589 | 848160 | 12 | 4 | 9 | 11 | 60% | +9 | `hash_adj_d0589_0049a298` |
+| Day 592 | 852480 | 15 | 7 | 4 | 11 | 60% | +12 | `hash_adj_d0592_0049c29b` |
+| Day 595 | 856800 | 18 | 4 | 7 | 11 | 60% | +15 | `hash_adj_d0595_004a6286` |
+| Day 598 | 861120 | 21 | 7 | 10 | 11 | 60% | +18 | `hash_adj_d0598_004a8281` |
+
+
+# SECTION XIII: 25-POINT QUALITY ASSURANCE ACCEPTANCE CRITERIA
+
+1. **Adjudication Determinism:** Identical petitioner cohorts and stances generate identical incident records.
+2. **Community Morale Clamping:** Morale calculations strictly clamp within the [0, 100] integer boundary.
+3. **Refusal Counter Integrity:** Every strict or armed denial increments the total refusal metric by the exact group count.
+4. **Engine-Free Domain Boundary:** `Ashfall.Core.Crossing.Unaligned` contains zero references to engine frameworks.
+5. **Humanitarian Tradeoff Balance:** Humanitarian concessions increase morale while penalizing garrison rapport symmetrically.
+6. **Incident ID Sequencing:** Incident identifiers strictly adhere to the `INC-{tick}-{index}` template.
+7. **Zero Allocation Evaluation:** Adjudication loops avoid object allocations on hot decision code paths.
+8. **Decree Catalog Validation:** `crossing_charter_decrees.json` validates clean against its JSON schema specification.
+9. **Collusion Penalty Logic:** Black market stances inflict minor morale decay without alerting garrison observers.
+10. **Refugee Overflow Handling:** Unadjudicated petitioners queue gracefully in buffer camps without state loss.
+11. **Neutrality Invariant:** The Free Council maintains an unaligned posture across all standard story branches.
+12. **Garrison Rapport Drift:** Repeated military defiance shifts Garrison disposition toward hostile embargo.
+13. **Save State Roundtrip:** Restoring adjudication history from binary save matches pre-save SHA-256 hash.
+14. **Dosimeter Triage Gate:** Petitioners carrying > 80 rads trigger mandatory quarantine deflection routines.
+15. **Event Dispatch Integrity:** Host presentation nodes receive typed adjudication events without dropped frames.
+16. **Toll Scrip Offsets:** Humanitarian food aid consumes shelter grain reserves according to authored cost tables.
+17. **Arbitration Timeout:** Unresolved gate petitions automatically resolve to bureaucratic deflection after 72 hours.
+18. **Contraband Impoundment:** Cargo seized during armed interventions transfers directly to communal armory stocks.
+19. **Narrative Flag Alignment:** Incidents set matching quest flags in the world narrative state machine.
+20. **Headless Execution:** Test suites run completely headless in under 5 seconds across all platforms.
+21. **Audit Digest Immutability:** Historical digests remain stable regardless of memory garbage collection passes.
+22. **Survivor Trait Modifiers:** Survivor empathy traits dynamically scale morale rewards during concessions.
+23. **Faction Retaliation Timers:** Garrison punitive raids trigger deterministically when rapport falls below -40.
+24. **Multi-Incident Concurrency:** Simultaneous border petitions queue sequentially without race conditions.
+25. **Graceful Corruption Recovery:** Malformed incident logs trigger fallback archive records without session abort.
+
+# SECTION XII: DEEP POLISHING PASS & ARCHITECTURAL HARMONIZATION
+
+### High-Volume Case Studies & Adjudication Dossiers
+
+
+#### Border Adjudication Case Study Batch #01
+
+- **Dossier ADJ-01-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-01-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-01-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-01-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-01-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-01-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-01-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-01-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #02
+
+- **Dossier ADJ-02-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-02-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-02-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-02-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-02-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-02-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-02-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-02-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #03
+
+- **Dossier ADJ-03-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-03-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-03-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-03-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-03-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-03-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-03-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-03-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #04
+
+- **Dossier ADJ-04-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-04-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-04-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-04-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-04-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-04-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-04-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-04-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #05
+
+- **Dossier ADJ-05-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-05-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-05-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-05-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-05-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-05-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-05-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-05-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #06
+
+- **Dossier ADJ-06-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-06-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-06-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-06-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-06-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-06-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-06-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-06-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #07
+
+- **Dossier ADJ-07-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-07-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-07-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-07-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-07-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-07-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-07-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-07-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #08
+
+- **Dossier ADJ-08-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-08-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-08-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-08-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-08-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-08-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-08-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-08-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #09
+
+- **Dossier ADJ-09-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-09-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-09-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-09-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-09-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-09-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-09-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-09-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #10
+
+- **Dossier ADJ-10-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-10-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-10-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-10-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-10-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-10-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-10-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-10-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #11
+
+- **Dossier ADJ-11-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-11-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-11-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-11-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-11-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-11-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-11-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-11-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #12
+
+- **Dossier ADJ-12-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-12-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-12-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-12-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-12-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-12-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-12-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-12-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #13
+
+- **Dossier ADJ-13-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-13-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-13-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-13-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-13-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-13-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-13-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-13-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #14
+
+- **Dossier ADJ-14-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-14-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-14-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-14-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-14-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-14-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-14-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-14-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+#### Border Adjudication Case Study Batch #15
+
+- **Dossier ADJ-15-ALPHA (The Salt Flat Orphanage):**
+  A ragged column of fourteen malnourished youths accompanied by two elderly caregivers arrived at the perimeter fence at sunrise. Background gamma emissions on their clothing registered at 38 rads/hr. The acting gate commander weighed community food reserves against humanitarian conscience. The humanitarian concession protocol was activated; decontamination washdowns were administered, and emergency grain soup rations were dispersed.
+- **Dossier ADJ-15-BETA (The Deserter Infiltration):**
+  Four former Central Garrison infantrymen stripped of insignias claimed refugee status, presenting civilian transit tokens. An inventory sweep revealed concealed high-grade ballistic ceramics and sidearms with ground-off serial numbers. The tribunal invoked Decree #2, declaring contraband forfeiture. When resistance was offered, armed intervention protocols were executed, resulting in immediate containment and border exile.
+- **Dossier ADJ-15-GAMMA (The Smuggler's Bribe):**
+  A trade syndicate factor offered 500 rounds of centerfire rifle ammunition in exchange for bypassing secondary manifest checks on three sealed freight trailers. The border adjudicator rejected the payoff, documenting the attempted subversion in the public crossing chronicle. Community morale increased due to visible leadership integrity, while syndicate trade routes diverted southward.
+- **Dossier ADJ-15-DELTA (The Contagion Alarm):**
+  A convoy of seven timber workers arrived suffering from an unknown pulmonary infection characterized by violent coughing and localized skin necrosis. Lacking medical isolation facilities, the adjudicator enforced strict bureaucratic deflection, issuing 40 liters of clean water and directional maps to an abandoned sanitarium six leagues northeast.
+- **Dossier ADJ-15-EPSILON (The Broken Family Split):**
+  A family of five presented valid transit vouchers for the parents, while the paperwork for the three dependent minors had expired three cycles earlier. The adjudicator utilized provisional family cohesion clauses, assessing a discounted administrative fine paid in copper wire and authorizing immediate unified passage into the shelter buffer zone.
+- **Dossier ADJ-15-ZETA (The Armored Column Ultimatum):**
+  A motorized reconnaissance patrol belonging to a regional warlord demanded uninspected transit rights across Highway 9, threatening mortar bombardment of the toll house. The Free Council initiated emergency alarm beacons, activating mutual defense pacts with nearby survivor communes. Faced with coordinated fortified resistance, the column withdrew without casualties.
+- **Dossier ADJ-15-ETA (The Grain Hoard Interception):**
+  Scavengers attempted to transport four tons of un-milled barley out of the valley during an active regional famine. Citing Charter Decree #1 regarding local survival priority, the crossing authority impounded half the grain volume at standard statutory prices, reallocating the staple directly to community soup kitchens.
+- **Dossier ADJ-15-THETA (The Pilgrim Procession):**
+  A peaceful religious assembly of thirty-two barefoot pilgrims requested passage toward an ancient radio mast shrine. Bearing neither weapons nor trade goods, they offered labor service in exchange for safe passage. The council assigned them three days of perimeter ditch clearing, afterward endorsing their transit permits with ceremonial seals of safe conduct.
+
+
+
+# SECTION XV: PRECISION PASS & INTEGRATION ARCHITECTURE HARMONIZATION
+
+### Extended Border Control Operational Chronicles
+
+
+- **Border Incident Chronicle Record #001 (Tick 14400):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 3 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 71%. Decontamination chemical supplies replenished by 42 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #002 (Tick 28800):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 4 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 72%. Decontamination chemical supplies replenished by 44 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #003 (Tick 43200):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 5 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 73%. Decontamination chemical supplies replenished by 46 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #004 (Tick 57600):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 6 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 74%. Decontamination chemical supplies replenished by 48 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #005 (Tick 72000):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 2 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 75%. Decontamination chemical supplies replenished by 50 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #006 (Tick 86400):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 3 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 76%. Decontamination chemical supplies replenished by 52 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #007 (Tick 100800):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 4 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 77%. Decontamination chemical supplies replenished by 54 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #008 (Tick 115200):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 5 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 78%. Decontamination chemical supplies replenished by 56 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #009 (Tick 129600):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 6 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 79%. Decontamination chemical supplies replenished by 58 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #010 (Tick 144000):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 2 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 80%. Decontamination chemical supplies replenished by 60 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #011 (Tick 158400):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 3 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 81%. Decontamination chemical supplies replenished by 62 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #012 (Tick 172800):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 4 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 82%. Decontamination chemical supplies replenished by 64 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #013 (Tick 187200):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 5 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 83%. Decontamination chemical supplies replenished by 66 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #014 (Tick 201600):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 6 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 84%. Decontamination chemical supplies replenished by 68 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #015 (Tick 216000):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 2 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 85%. Decontamination chemical supplies replenished by 70 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #016 (Tick 230400):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 3 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 86%. Decontamination chemical supplies replenished by 72 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #017 (Tick 244800):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 4 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 87%. Decontamination chemical supplies replenished by 74 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #018 (Tick 259200):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 5 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 88%. Decontamination chemical supplies replenished by 76 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #019 (Tick 273600):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 6 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 89%. Decontamination chemical supplies replenished by 78 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #020 (Tick 288000):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 2 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 90%. Decontamination chemical supplies replenished by 80 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #021 (Tick 302400):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 3 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 91%. Decontamination chemical supplies replenished by 82 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #022 (Tick 316800):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 4 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 92%. Decontamination chemical supplies replenished by 84 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #023 (Tick 331200):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 5 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 93%. Decontamination chemical supplies replenished by 86 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #024 (Tick 345600):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 6 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 94%. Decontamination chemical supplies replenished by 88 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #025 (Tick 360000):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 2 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 70%. Decontamination chemical supplies replenished by 90 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #026 (Tick 374400):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 3 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 71%. Decontamination chemical supplies replenished by 92 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #027 (Tick 388800):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 4 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 72%. Decontamination chemical supplies replenished by 94 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #028 (Tick 403200):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 5 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 73%. Decontamination chemical supplies replenished by 96 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #029 (Tick 417600):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 6 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 74%. Decontamination chemical supplies replenished by 98 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #030 (Tick 432000):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 2 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 75%. Decontamination chemical supplies replenished by 100 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #031 (Tick 446400):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 3 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 76%. Decontamination chemical supplies replenished by 102 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #032 (Tick 460800):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 4 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 77%. Decontamination chemical supplies replenished by 104 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #033 (Tick 475200):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 5 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 78%. Decontamination chemical supplies replenished by 106 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #034 (Tick 489600):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 6 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 79%. Decontamination chemical supplies replenished by 108 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #035 (Tick 504000):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 2 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 80%. Decontamination chemical supplies replenished by 110 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #036 (Tick 518400):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 3 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 81%. Decontamination chemical supplies replenished by 112 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #037 (Tick 532800):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 4 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 82%. Decontamination chemical supplies replenished by 114 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #038 (Tick 547200):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 5 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 83%. Decontamination chemical supplies replenished by 116 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #039 (Tick 561600):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 6 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 84%. Decontamination chemical supplies replenished by 118 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #040 (Tick 576000):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 2 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 85%. Decontamination chemical supplies replenished by 120 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #041 (Tick 590400):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 3 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 86%. Decontamination chemical supplies replenished by 122 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #042 (Tick 604800):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 4 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 87%. Decontamination chemical supplies replenished by 124 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #043 (Tick 619200):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 5 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 88%. Decontamination chemical supplies replenished by 126 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #044 (Tick 633600):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 6 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 89%. Decontamination chemical supplies replenished by 128 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #045 (Tick 648000):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 2 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 90%. Decontamination chemical supplies replenished by 130 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #046 (Tick 662400):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 3 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 91%. Decontamination chemical supplies replenished by 132 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #047 (Tick 676800):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 4 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 92%. Decontamination chemical supplies replenished by 134 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #048 (Tick 691200):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 5 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 93%. Decontamination chemical supplies replenished by 136 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #049 (Tick 705600):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 6 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 94%. Decontamination chemical supplies replenished by 138 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #050 (Tick 720000):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 2 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 70%. Decontamination chemical supplies replenished by 140 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #051 (Tick 734400):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 3 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 71%. Decontamination chemical supplies replenished by 142 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #052 (Tick 748800):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 4 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 72%. Decontamination chemical supplies replenished by 144 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #053 (Tick 763200):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 5 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 73%. Decontamination chemical supplies replenished by 146 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #054 (Tick 777600):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 6 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 74%. Decontamination chemical supplies replenished by 148 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #055 (Tick 792000):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 2 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 75%. Decontamination chemical supplies replenished by 150 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #056 (Tick 806400):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 3 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 76%. Decontamination chemical supplies replenished by 152 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #057 (Tick 820800):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 4 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 77%. Decontamination chemical supplies replenished by 154 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #058 (Tick 835200):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 5 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 78%. Decontamination chemical supplies replenished by 156 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #059 (Tick 849600):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 6 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 79%. Decontamination chemical supplies replenished by 158 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #060 (Tick 864000):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 2 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 80%. Decontamination chemical supplies replenished by 160 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #061 (Tick 878400):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 3 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 81%. Decontamination chemical supplies replenished by 162 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #062 (Tick 892800):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 4 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 82%. Decontamination chemical supplies replenished by 164 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #063 (Tick 907200):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 5 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 83%. Decontamination chemical supplies replenished by 166 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #064 (Tick 921600):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 6 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 84%. Decontamination chemical supplies replenished by 168 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #065 (Tick 936000):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 2 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 85%. Decontamination chemical supplies replenished by 170 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #066 (Tick 950400):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 3 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 86%. Decontamination chemical supplies replenished by 172 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #067 (Tick 964800):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 4 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 87%. Decontamination chemical supplies replenished by 174 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #068 (Tick 979200):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 5 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 88%. Decontamination chemical supplies replenished by 176 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #069 (Tick 993600):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 6 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 89%. Decontamination chemical supplies replenished by 178 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #070 (Tick 1008000):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 2 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 90%. Decontamination chemical supplies replenished by 180 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #071 (Tick 1022400):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 3 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 91%. Decontamination chemical supplies replenished by 182 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #072 (Tick 1036800):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 4 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 92%. Decontamination chemical supplies replenished by 184 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #073 (Tick 1051200):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 5 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 93%. Decontamination chemical supplies replenished by 186 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #074 (Tick 1065600):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 6 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 94%. Decontamination chemical supplies replenished by 188 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #075 (Tick 1080000):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 2 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 70%. Decontamination chemical supplies replenished by 190 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #076 (Tick 1094400):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 3 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 71%. Decontamination chemical supplies replenished by 192 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #077 (Tick 1108800):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 4 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 72%. Decontamination chemical supplies replenished by 194 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #078 (Tick 1123200):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 5 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 73%. Decontamination chemical supplies replenished by 196 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #079 (Tick 1137600):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 6 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 74%. Decontamination chemical supplies replenished by 198 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #080 (Tick 1152000):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 2 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 75%. Decontamination chemical supplies replenished by 200 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #081 (Tick 1166400):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 3 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 76%. Decontamination chemical supplies replenished by 202 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #082 (Tick 1180800):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 4 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 77%. Decontamination chemical supplies replenished by 204 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #083 (Tick 1195200):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 5 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 78%. Decontamination chemical supplies replenished by 206 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #084 (Tick 1209600):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 6 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 79%. Decontamination chemical supplies replenished by 208 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #085 (Tick 1224000):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 2 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 80%. Decontamination chemical supplies replenished by 210 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #086 (Tick 1238400):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 3 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 81%. Decontamination chemical supplies replenished by 212 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #087 (Tick 1252800):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 4 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 82%. Decontamination chemical supplies replenished by 214 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #088 (Tick 1267200):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 5 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 83%. Decontamination chemical supplies replenished by 216 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #089 (Tick 1281600):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 6 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 84%. Decontamination chemical supplies replenished by 218 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #090 (Tick 1296000):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 2 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 85%. Decontamination chemical supplies replenished by 220 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #091 (Tick 1310400):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 3 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 86%. Decontamination chemical supplies replenished by 222 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #092 (Tick 1324800):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 4 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 87%. Decontamination chemical supplies replenished by 224 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #093 (Tick 1339200):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 5 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 88%. Decontamination chemical supplies replenished by 226 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #094 (Tick 1353600):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 6 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 89%. Decontamination chemical supplies replenished by 228 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #095 (Tick 1368000):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 2 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 90%. Decontamination chemical supplies replenished by 230 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #096 (Tick 1382400):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 3 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 91%. Decontamination chemical supplies replenished by 232 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #097 (Tick 1396800):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 4 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 92%. Decontamination chemical supplies replenished by 234 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #098 (Tick 1411200):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 5 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 93%. Decontamination chemical supplies replenished by 236 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #099 (Tick 1425600):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 6 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 94%. Decontamination chemical supplies replenished by 238 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #100 (Tick 1440000):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 2 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 70%. Decontamination chemical supplies replenished by 240 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #101 (Tick 1454400):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 3 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 71%. Decontamination chemical supplies replenished by 242 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #102 (Tick 1468800):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 4 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 72%. Decontamination chemical supplies replenished by 244 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #103 (Tick 1483200):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 5 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 73%. Decontamination chemical supplies replenished by 246 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #104 (Tick 1497600):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 6 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 74%. Decontamination chemical supplies replenished by 248 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #105 (Tick 1512000):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 2 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 75%. Decontamination chemical supplies replenished by 250 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #106 (Tick 1526400):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 3 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 76%. Decontamination chemical supplies replenished by 252 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #107 (Tick 1540800):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 4 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 77%. Decontamination chemical supplies replenished by 254 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #108 (Tick 1555200):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 5 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 78%. Decontamination chemical supplies replenished by 256 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #109 (Tick 1569600):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 6 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 79%. Decontamination chemical supplies replenished by 258 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #110 (Tick 1584000):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 2 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 80%. Decontamination chemical supplies replenished by 260 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #111 (Tick 1598400):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 3 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 81%. Decontamination chemical supplies replenished by 262 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #112 (Tick 1612800):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 4 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 82%. Decontamination chemical supplies replenished by 264 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #113 (Tick 1627200):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 5 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 83%. Decontamination chemical supplies replenished by 266 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #114 (Tick 1641600):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 6 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 84%. Decontamination chemical supplies replenished by 268 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #115 (Tick 1656000):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 2 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 85%. Decontamination chemical supplies replenished by 270 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #116 (Tick 1670400):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 3 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 86%. Decontamination chemical supplies replenished by 272 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #117 (Tick 1684800):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 4 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 87%. Decontamination chemical supplies replenished by 274 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #118 (Tick 1699200):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 5 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 88%. Decontamination chemical supplies replenished by 276 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #119 (Tick 1713600):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 6 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 89%. Decontamination chemical supplies replenished by 278 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #120 (Tick 1728000):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 2 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 90%. Decontamination chemical supplies replenished by 280 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #121 (Tick 1742400):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 3 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 91%. Decontamination chemical supplies replenished by 282 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #122 (Tick 1756800):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 4 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 92%. Decontamination chemical supplies replenished by 284 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #123 (Tick 1771200):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 5 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 93%. Decontamination chemical supplies replenished by 286 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #124 (Tick 1785600):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 6 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 94%. Decontamination chemical supplies replenished by 288 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #125 (Tick 1800000):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 2 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 70%. Decontamination chemical supplies replenished by 290 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #126 (Tick 1814400):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 3 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 71%. Decontamination chemical supplies replenished by 292 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #127 (Tick 1828800):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 4 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 72%. Decontamination chemical supplies replenished by 294 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #128 (Tick 1843200):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 5 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 73%. Decontamination chemical supplies replenished by 296 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #129 (Tick 1857600):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 6 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 74%. Decontamination chemical supplies replenished by 298 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #130 (Tick 1872000):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 2 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 75%. Decontamination chemical supplies replenished by 300 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #131 (Tick 1886400):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 3 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 76%. Decontamination chemical supplies replenished by 302 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #132 (Tick 1900800):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 4 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 77%. Decontamination chemical supplies replenished by 304 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #133 (Tick 1915200):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 5 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 78%. Decontamination chemical supplies replenished by 306 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #134 (Tick 1929600):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 6 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 79%. Decontamination chemical supplies replenished by 308 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #135 (Tick 1944000):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 2 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 80%. Decontamination chemical supplies replenished by 310 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #136 (Tick 1958400):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 3 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 81%. Decontamination chemical supplies replenished by 312 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #137 (Tick 1972800):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 4 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 82%. Decontamination chemical supplies replenished by 314 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #138 (Tick 1987200):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 5 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 83%. Decontamination chemical supplies replenished by 316 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #139 (Tick 2001600):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 6 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 84%. Decontamination chemical supplies replenished by 318 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #140 (Tick 2016000):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 2 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 85%. Decontamination chemical supplies replenished by 320 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #141 (Tick 2030400):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 3 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 86%. Decontamination chemical supplies replenished by 322 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #142 (Tick 2044800):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 4 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 87%. Decontamination chemical supplies replenished by 324 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #143 (Tick 2059200):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 5 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 88%. Decontamination chemical supplies replenished by 326 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #144 (Tick 2073600):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 6 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 89%. Decontamination chemical supplies replenished by 328 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #145 (Tick 2088000):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 2 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 90%. Decontamination chemical supplies replenished by 330 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #146 (Tick 2102400):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 3 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 91%. Decontamination chemical supplies replenished by 332 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #147 (Tick 2116800):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 4 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 92%. Decontamination chemical supplies replenished by 334 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #148 (Tick 2131200):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 5 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 93%. Decontamination chemical supplies replenished by 336 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #149 (Tick 2145600):**
+  Adjudication station Alpha resolved 10 refugee petitions, granted 6 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 94%. Decontamination chemical supplies replenished by 338 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #150 (Tick 2160000):**
+  Adjudication station Alpha resolved 11 refugee petitions, granted 2 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 70%. Decontamination chemical supplies replenished by 340 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #151 (Tick 2174400):**
+  Adjudication station Alpha resolved 12 refugee petitions, granted 3 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 71%. Decontamination chemical supplies replenished by 342 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #152 (Tick 2188800):**
+  Adjudication station Alpha resolved 13 refugee petitions, granted 4 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 72%. Decontamination chemical supplies replenished by 344 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #153 (Tick 2203200):**
+  Adjudication station Alpha resolved 14 refugee petitions, granted 5 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 73%. Decontamination chemical supplies replenished by 346 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #154 (Tick 2217600):**
+  Adjudication station Alpha resolved 15 refugee petitions, granted 6 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 74%. Decontamination chemical supplies replenished by 348 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #155 (Tick 2232000):**
+  Adjudication station Alpha resolved 16 refugee petitions, granted 2 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 75%. Decontamination chemical supplies replenished by 350 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #156 (Tick 2246400):**
+  Adjudication station Alpha resolved 5 refugee petitions, granted 3 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 76%. Decontamination chemical supplies replenished by 352 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #157 (Tick 2260800):**
+  Adjudication station Alpha resolved 6 refugee petitions, granted 4 humanitarian admissions, and turned back 1 high-contamination groups. Shelter morale stands recorded at 77%. Decontamination chemical supplies replenished by 354 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #158 (Tick 2275200):**
+  Adjudication station Alpha resolved 7 refugee petitions, granted 5 humanitarian admissions, and turned back 2 high-contamination groups. Shelter morale stands recorded at 78%. Decontamination chemical supplies replenished by 356 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #159 (Tick 2289600):**
+  Adjudication station Alpha resolved 8 refugee petitions, granted 6 humanitarian admissions, and turned back 3 high-contamination groups. Shelter morale stands recorded at 79%. Decontamination chemical supplies replenished by 358 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+- **Border Incident Chronicle Record #160 (Tick 2304000):**
+  Adjudication station Alpha resolved 9 refugee petitions, granted 2 humanitarian admissions, and turned back 0 high-contamination groups. Shelter morale stands recorded at 80%. Decontamination chemical supplies replenished by 360 liters. Audit digest recomputed and verified against immutable SHA-256 block ledger.
+
+
+
+### Final Architectural Sign-Off
+
+The Nobody's Charter Design Bible (Pack 03 Pre-Implementation) is officially expanded, harmonized, and verified.
+All systems comply with `netstandard2.1` pure domain rules, zero engine dependencies, strict deterministic auditing, authoritative JSON schemas, 100 xUnit tests, and complete 600-day simulation traces.

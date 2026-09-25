@@ -95,6 +95,11 @@ namespace Ashfall.Core.Onboarding
             OnboardingStage.Water,
             OnboardingStage.Power,
             OnboardingStage.Food,
+            // Functional demand discovered during the teach-vs-demand audit
+            // (2026-09-25): survivors cannot work without a shift, and dose is
+            // the quiet day-1..3 accumulator that expeditions amplify.
+            OnboardingStage.Duty,
+            OnboardingStage.Dose,
             OnboardingStage.Research,
             OnboardingStage.Expedition,
         };
@@ -119,6 +124,18 @@ namespace Ashfall.Core.Onboarding
                 "Eat a food ration from stores.",
                 "inventory",
                 ("food.ration_consumed", 1)),
+            new OnboardingStageDef(
+                OnboardingStage.Duty,
+                "Put someone on shift",
+                "Open the duty roster and assign one survivor. Work does not happen by itself.",
+                "duty_roster",
+                ("duty.assigned", 1)),
+            new OnboardingStageDef(
+                OnboardingStage.Dose,
+                "Read your dose",
+                "Open the dose ledger or radiation detail. It accumulates quietly.",
+                "dose_ledger",
+                ("dose.read", 1)),
             new OnboardingStageDef(
                 OnboardingStage.Research,
                 "Start research",
@@ -575,7 +592,10 @@ namespace Ashfall.Core.Onboarding
             }
             else
             {
-                j._state.journeyComplete = OnboardingCatalog.FirstHourOrder
+                // Additive stages (Duty/Dose, 2026-09-25) must never demote a
+                // campaign that already completed the first-hour contract before
+                // they existed; new campaigns complete via the live signal path.
+                j._state.journeyComplete = saved.journeyComplete || OnboardingCatalog.FirstHourOrder
                     .All(stage => j._state.completedStages.Contains((int)stage));
             }
 

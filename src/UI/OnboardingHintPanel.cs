@@ -91,7 +91,7 @@ namespace AtomicWar.GodotApp.UI
             panel.AddChild(margins);
 
             var vbox = new VBoxContainer();
-            vbox.AddThemeConstantOverride("separation", 10);
+            vbox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             margins.AddChild(vbox);
 
             // ── Header ──
@@ -189,7 +189,7 @@ namespace AtomicWar.GodotApp.UI
             vbox.AddChild(_checklistScroll);
 
             _checklist = new VBoxContainer();
-            _checklist.AddThemeConstantOverride("separation", 6);
+            _checklist.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _checklistScroll.AddChild(_checklist);
 
             RefreshView();

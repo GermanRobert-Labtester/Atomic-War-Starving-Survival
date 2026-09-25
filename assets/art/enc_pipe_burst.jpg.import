@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/enc_pipe_burst.jpg-5d265d4d0450d821b48fae050d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

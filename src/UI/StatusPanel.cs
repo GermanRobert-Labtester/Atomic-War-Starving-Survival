@@ -43,13 +43,28 @@ namespace AtomicWar.GodotApp.UI
             InventoryHostSession? inventory = null,
             int simDay = 1)
         {
+            // Live refresh (UI/UX audit silent-failure sweep): rebound sessions
+            // are detached first, then the open status view tracks state changes
+            // instead of freezing at open time.
+            if (_survivors != null) _survivors.StateChanged -= RefreshView;
+            if (_weather != null) _weather.OnStateChanged -= OnWeatherStateChanged;
+            if (_power != null) _power.OnStateChanged -= RefreshView;
+            if (_inventory != null) _inventory.StateChanged -= RefreshView;
+
             _survivors = survivors;
             _weather = weather;
             _power = power;
             _inventory = inventory;
             _simDay = simDay;
+
+            if (_survivors != null) _survivors.StateChanged += RefreshView;
+            if (_weather != null) _weather.OnStateChanged += OnWeatherStateChanged;
+            if (_power != null) _power.OnStateChanged += RefreshView;
+            if (_inventory != null) _inventory.StateChanged += RefreshView;
             RefreshView();
         }
+
+        private void OnWeatherStateChanged(Ashfall.Core.World.WorldWeatherState _) => RefreshView();
 
         public void RefreshView()
         {

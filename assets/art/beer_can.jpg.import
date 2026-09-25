@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/beer_can.jpg-868d201c068911338086014481a8d1d7
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

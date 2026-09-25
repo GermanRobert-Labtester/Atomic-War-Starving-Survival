@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-24",
+  "generated_at": "2026-09-25",
   "canvas": {
     "resolution": "1920x1080",
     "scaling": "fixed"
@@ -21,7 +21,7 @@
       },
       {
         "token": "Pale",
-        "hex": "#C7DCD0"
+        "hex": "#E6E0D2"
       },
       {
         "token": "Muted",
@@ -29,7 +29,7 @@
       },
       {
         "token": "Dim",
-        "hex": "#66675F"
+        "hex": "#8E8F82"
       },
       {
         "token": "Exclusive",
@@ -41,11 +41,11 @@
       },
       {
         "token": "Surface",
-        "hex": "#050709"
+        "hex": "#0E1114"
       },
       {
         "token": "SurfaceCard",
-        "hex": "#090B0D"
+        "hex": "#14191E"
       },
       {
         "token": "SelectedBg",
@@ -61,7 +61,7 @@
       },
       {
         "token": "Warning",
-        "hex": "#FF6B35"
+        "hex": "#C97B3A"
       },
       {
         "token": "Radiation",
@@ -118,41 +118,41 @@
     }
   },
   "surface_counts": {
-    "total_panels": 241,
-    "shell_panels": 110,
-    "bindable_panels": 114,
+    "total_panels": 244,
+    "shell_panels": 112,
+    "bindable_panels": 116,
     "scene_backed": 22,
-    "rail_surfaces": 118
+    "rail_surfaces": 120
   },
   "layout_patterns": {
     "shell:split-body": 38,
-    "shell:single-column": 72,
+    "shell:single-column": 74,
     "scene-backed": 22,
-    "code-built": 109
+    "code-built": 110
   },
   "component_totals": {
-    "scroll": 117,
-    "option_buttons": 43,
-    "buttons": 229,
+    "scroll": 121,
+    "option_buttons": 47,
+    "buttons": 215,
     "panel_cards": 39,
-    "separators": 413,
-    "hbox": 223,
-    "vbox": 473,
+    "separators": 415,
+    "hbox": 238,
+    "vbox": 478,
     "datagrid": 2014,
     "sidebar": 199,
-    "metric_card": 1587
+    "metric_card": 1612
   },
   "component_users": {
-    "scroll": 78,
-    "option_buttons": 20,
-    "buttons": 65,
+    "scroll": 82,
+    "option_buttons": 23,
+    "buttons": 62,
     "panel_cards": 23,
-    "separators": 118,
-    "hbox": 133,
-    "vbox": 151,
+    "separators": 119,
+    "hbox": 136,
+    "vbox": 154,
     "datagrid": 33,
     "sidebar": 32,
-    "metric_card": 118
+    "metric_card": 120
   },
   "shell_min_sizes": [
     "720\u00d7480",
@@ -168,10 +168,12 @@
     "1040\u00d7680",
     "1050\u00d7680",
     "1060\u00d7680",
+    "1080\u00d7680",
     "1100\u00d7640",
     "1100\u00d7680",
     "1100\u00d7700",
     "1100\u00d7720",
+    "1120\u00d7720",
     "1160\u00d7700",
     "1180\u00d7700",
     "1280\u00d7720"
@@ -275,6 +277,18 @@
         {
           "label": "DUTY ROSTER",
           "route": "duty_roster"
+        },
+        {
+          "label": "ROMANCE / FAMILY",
+          "route": "romance_family_board"
+        },
+        {
+          "label": "COLONY OPERATIONS",
+          "route": "colony_operations"
+        },
+        {
+          "label": "MEDIATION DESK",
+          "route": "ideological_mediation_desk"
         },
         {
           "label": "QUESTS",
@@ -438,6 +452,155 @@
           "route": "relationship_decay"
         }
       ]
+    },
+    {
+      "group": "SUBSYSTEM CONSOLES",
+      "buttons": [
+        {
+          "label": "MEMORIAL CENOTAPH",
+          "route": "iron_cenotaph_memorial"
+        },
+        {
+          "label": "BIOGAS DIGESTER",
+          "route": "biogas_digester"
+        },
+        {
+          "label": "FUNGAL FERMENTER",
+          "route": "fungal_protein_fermenter"
+        },
+        {
+          "label": "GEOTHERMAL TURBINE",
+          "route": "geothermal_turbine"
+        },
+        {
+          "label": "DIESEL GENERATOR",
+          "route": "heavy_marine_diesel_gen"
+        },
+        {
+          "label": "CUPOLA FURNACE",
+          "route": "induction_cupola_furnace"
+        },
+        {
+          "label": "PLASMA SMELTING",
+          "route": "plasma_smelting"
+        },
+        {
+          "label": "LOGISTICS AIRLOCK",
+          "route": "logistics_airlock"
+        },
+        {
+          "label": "LONG WALK",
+          "route": "long_walk_expedition"
+        },
+        {
+          "label": "PROSTHETICS LATHE",
+          "route": "mechanical_prosthetics_lathe"
+        },
+        {
+          "label": "PRINTING PRESS",
+          "route": "printing_press"
+        },
+        {
+          "label": "DEBT LEDGER",
+          "route": "subterranean_debt_ledger"
+        },
+        {
+          "label": "WAR KENNEL",
+          "route": "war_dog_kennel"
+        },
+        {
+          "label": "ULTRASONIC AIRLOCK",
+          "route": "ultrasonic_decontam_airlock"
+        },
+        {
+          "label": "TRAUMA BONDS",
+          "route": "trauma_bonding_cohort"
+        },
+        {
+          "label": "CONDUCT VOUCH",
+          "route": "crossing_safe_conduct_vouch"
+        },
+        {
+          "label": "CARTOGRAPHY",
+          "route": "cartography_gis"
+        },
+        {
+          "label": "DRUM ARCHIVE",
+          "route": "magnetic_drum_archive"
+        },
+        {
+          "label": "SHRAPNEL AEGIS",
+          "route": "surface_shrapnel_aegis"
+        },
+        {
+          "label": "INSURGENCY",
+          "route": "clandestine_insurgency"
+        },
+        {
+          "label": "FUNGI BEDS",
+          "route": "fungi_cultivation"
+        },
+        {
+          "label": "PLASTIC PYROLYSIS",
+          "route": "plastic_pyrolysis"
+        },
+        {
+          "label": "CARGO AIRDROP",
+          "route": "cargo_airdrop"
+        },
+        {
+          "label": "EB-PVD COATER",
+          "route": "ebpvd_coating"
+        },
+        {
+          "label": "MICROFLUIDIC LAB",
+          "route": "microfluidic_diagnostic"
+        },
+        {
+          "label": "MINE FLAIL",
+          "route": "mine_clearing_flail"
+        },
+        {
+          "label": "RAIL GRINDING",
+          "route": "rail_grinding"
+        },
+        {
+          "label": "RADIO INTEL",
+          "route": "radio_intelligence"
+        },
+        {
+          "label": "SHELTER SOCIAL",
+          "route": "shelter_social"
+        },
+        {
+          "label": "SUBTERRANEAN OPS",
+          "route": "subterranean_operations"
+        },
+        {
+          "label": "SCRUBBER STAGE",
+          "route": "electrostatic_scrubber"
+        },
+        {
+          "label": "GEOTHERMAL AQUIFER",
+          "route": "geothermal_aquifer"
+        },
+        {
+          "label": "RADON MIGRATION",
+          "route": "basal_radon_migration"
+        },
+        {
+          "label": "SEISMOGRAPH",
+          "route": "borehole_seismograph"
+        },
+        {
+          "label": "CRYO VAULT",
+          "route": "cryo_permafrost_core"
+        },
+        {
+          "label": "BREACHING OPS",
+          "route": "vault_door_breaching"
+        }
+      ]
     }
   ],
   "routes": {
@@ -483,8 +646,10 @@
       "runflat_tire",
       "sofc_power",
       "sound_ranging",
+      "night_watch",
       "cvd_diamond",
       "amphibious_draisine",
+      "shelter_operations",
       "sanitation",
       "black_market",
       "companion_kennel",
@@ -512,9 +677,11 @@
       "archaeology_excavation",
       "aviation",
       "ballistics_workbench",
+      "basal_radon_migration",
       "bestiary",
       "bio_fermentation",
       "black_projects_archive",
+      "borehole_seismograph",
       "brine_extraction",
       "caravan_barter",
       "cargo_airdrop",
@@ -523,6 +690,7 @@
       "chem_warfare_defense",
       "chronicle",
       "codex",
+      "colony_operations",
       "combat",
       "combat_detail",
       "combat_history",
@@ -530,6 +698,7 @@
       "comms_array_transceiver",
       "crafting",
       "crossing_quests",
+      "cryo_permafrost_core",
       "deep_coast",
       "defense_grid",
       "desperation_crisis",
@@ -561,13 +730,16 @@
       "forced_labor",
       "fungi_cultivation",
       "geiger_calibration",
+      "geothermal_aquifer",
       "geothermal_orc",
       "greenhouse",
       "guidance",
       "help",
       "holdfast",
+      "ideological_mediation_desk",
       "inventory",
       "inventory_detail",
+      "iron_cenotaph_memorial",
       "journal",
       "journal_detail",
       "justice_tribunal",
@@ -611,6 +783,7 @@
       "research",
       "research_atlas",
       "robotics_assembly",
+      "romance_family_board",
       "save",
       "settings",
       "shelter",
@@ -671,6 +844,7 @@
       "low_background_metrology",
       "medical_ward",
       "mental_health_crisis",
+      "night_watch",
       "personal_belongings",
       "personal_quests",
       "phantom_memory",
@@ -685,6 +859,7 @@
       "shelter_atmosphere",
       "shelter_barter",
       "shelter_decor",
+      "shelter_operations",
       "shelter_reputation",
       "shelter_schedule",
       "shelter_security",
@@ -709,29 +884,29 @@
     {
       "rule": "Every dashboard shell declares a min size \u2265 720\u00d7480",
       "holds": true,
-      "evidence": "110 shell panels"
+      "evidence": "112 shell panels"
     },
     {
       "rule": "Every bindable panel exposes Unbind (lifecycle symmetry)",
       "holds": false,
-      "evidence": "114 bindable panels; missing: DutyRosterDetailPanel, EpiloguePanel, EventsLogPanel, FactionDetailPanel, MaritimeAtlasPanel, OnboardingHintPanel, OpeningProtocolModal, WeatherSondePanel"
+      "evidence": "116 bindable panels; missing: DutyRosterDetailPanel, EpiloguePanel, EventsLogPanel, FactionDetailPanel, MaritimeAtlasPanel, OnboardingHintPanel, OpeningProtocolModal, WeatherSondePanel"
     },
     {
       "rule": "Every expanded panel id has an open path (switch case or PanelRegistry binding)",
       "holds": true,
-      "evidence": "61 ids, 61 switch cases, 135 registry bindings"
+      "evidence": "63 ids, 63 switch cases, 143 registry bindings"
     },
     {
       "rule": "Every surface with status-rail cards obtains the rail via shell.SetStatusRail()",
       "holds": true,
-      "evidence": "118 surfaces with rails"
+      "evidence": "120 surfaces with rails"
     }
   ],
   "panels": [
     {
       "panel": "AchievementsPanel",
       "file": "src/UI/AchievementsPanel.cs",
-      "loc": 204,
+      "loc": 208,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -759,7 +934,7 @@
     {
       "panel": "AfflictionsPanel",
       "file": "src/UI/AfflictionsPanel.cs",
-      "loc": 448,
+      "loc": 489,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -884,7 +1059,7 @@
     {
       "panel": "AmputationTriagePanel",
       "file": "src/UI/AmputationTriagePanel.cs",
-      "loc": 274,
+      "loc": 284,
       "bind_target": "AmputationSystem",
       "has_unbind": true,
       "bindable": true,
@@ -918,7 +1093,7 @@
         "buttons": 0,
         "panel_cards": 0,
         "separators": 2,
-        "hbox": 1,
+        "hbox": 2,
         "vbox": 0,
         "datagrid": 0,
         "sidebar": 0,
@@ -1097,7 +1272,7 @@
     {
       "panel": "ArchaeologyExcavationPanel",
       "file": "src/UI/ArchaeologyExcavationPanel.cs",
-      "loc": 222,
+      "loc": 227,
       "bind_target": "ArchaeologySystem",
       "has_unbind": true,
       "bindable": true,
@@ -1275,7 +1450,7 @@
     {
       "panel": "BasalRadonMigrationPanel",
       "file": "src/UI/BasalRadonMigrationPanel.cs",
-      "loc": 101,
+      "loc": 166,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -1289,7 +1464,7 @@
       "components": {
         "scroll": 0,
         "option_buttons": 0,
-        "buttons": 4,
+        "buttons": 0,
         "panel_cards": 0,
         "separators": 0,
         "hbox": 0,
@@ -1395,7 +1570,7 @@
     {
       "panel": "BioFermentationPanel",
       "file": "src/UI/BioFermentationPanel.cs",
-      "loc": 332,
+      "loc": 337,
       "bind_target": "BioFermentationEngine",
       "has_unbind": true,
       "bindable": true,
@@ -1519,7 +1694,7 @@
     {
       "panel": "BoreholeSeismographPanel",
       "file": "src/UI/BoreholeSeismographPanel.cs",
-      "loc": 127,
+      "loc": 185,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -1533,11 +1708,11 @@
       "components": {
         "scroll": 0,
         "option_buttons": 0,
-        "buttons": 5,
+        "buttons": 0,
         "panel_cards": 0,
         "separators": 0,
-        "hbox": 1,
-        "vbox": 1,
+        "hbox": 0,
+        "vbox": 0,
         "datagrid": 0,
         "sidebar": 0,
         "metric_card": 0
@@ -1667,7 +1842,7 @@
     {
       "panel": "CargoAirdropPanel",
       "file": "src/UI/CargoAirdropPanel.cs",
-      "loc": 230,
+      "loc": 235,
       "bind_target": "CargoAirdropHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -1697,7 +1872,7 @@
     {
       "panel": "CenturySeedPanel",
       "file": "src/UI/CenturySeedPanel.cs",
-      "loc": 267,
+      "loc": 271,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -1725,7 +1900,7 @@
     {
       "panel": "CeremonyFestivalPanel",
       "file": "src/UI/CeremonyFestivalPanel.cs",
-      "loc": 289,
+      "loc": 294,
       "bind_target": "CeremonySystem",
       "has_unbind": true,
       "bindable": true,
@@ -1818,7 +1993,7 @@
     {
       "panel": "ChemWarfareDefensePanel",
       "file": "src/UI/ChemWarfareDefensePanel.cs",
-      "loc": 228,
+      "loc": 233,
       "bind_target": "ChemWarfareSystem",
       "has_unbind": true,
       "bindable": true,
@@ -1863,7 +2038,7 @@
     {
       "panel": "ChemicalDependencyPanel",
       "file": "src/UI/ChemicalDependencyPanel.cs",
-      "loc": 413,
+      "loc": 420,
       "bind_target": "ChemicalDependencyHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2203,7 +2378,7 @@
     {
       "panel": "CombatPanel",
       "file": "src/UI/CombatPanel.cs",
-      "loc": 475,
+      "loc": 492,
       "bind_target": "CombatHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2234,7 +2409,7 @@
     {
       "panel": "CommsArrayTransceiverPanel",
       "file": "src/UI/CommsArrayTransceiverPanel.cs",
-      "loc": 254,
+      "loc": 259,
       "bind_target": "CommsArraySystem",
       "has_unbind": true,
       "bindable": true,
@@ -2450,7 +2625,7 @@
     {
       "panel": "CryogenicPermafrostCorePanel",
       "file": "src/UI/CryogenicPermafrostCorePanel.cs",
-      "loc": 101,
+      "loc": 166,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -2464,7 +2639,7 @@
       "components": {
         "scroll": 0,
         "option_buttons": 0,
-        "buttons": 4,
+        "buttons": 0,
         "panel_cards": 0,
         "separators": 0,
         "hbox": 0,
@@ -2756,7 +2931,7 @@
     {
       "panel": "DefenseGridPanel",
       "file": "src/UI/DefenseGridPanel.cs",
-      "loc": 475,
+      "loc": 491,
       "bind_target": "DefenseHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2794,7 +2969,7 @@
         "vbox": 1,
         "datagrid": 40,
         "sidebar": 5,
-        "metric_card": 14
+        "metric_card": 16
       },
       "routes": [
         "defense_grid"
@@ -2848,7 +3023,7 @@
     {
       "panel": "DoseGeographyPanel",
       "file": "src/UI/DoseGeographyPanel.cs",
-      "loc": 433,
+      "loc": 486,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -2878,6 +3053,10 @@
           "label": "HOT ZONES"
         },
         {
+          "id": "watch",
+          "label": "WATCH LIST"
+        },
+        {
           "id": "events",
           "label": "READINGS"
         }
@@ -2894,7 +3073,7 @@
         "vbox": 3,
         "datagrid": 22,
         "sidebar": 7,
-        "metric_card": 21
+        "metric_card": 24
       },
       "routes": []
     },
@@ -3198,7 +3377,7 @@
     {
       "panel": "EmergencyResponseHud",
       "file": "src/UI/EmergencyResponseHud.cs",
-      "loc": 282,
+      "loc": 294,
       "bind_target": "CrisisPresentationSnapshot",
       "has_unbind": true,
       "bindable": true,
@@ -3883,7 +4062,7 @@
     {
       "panel": "FeedbackPanel",
       "file": "src/UI/FeedbackPanel.cs",
-      "loc": 235,
+      "loc": 242,
       "bind_target": "IFeedbackService",
       "has_unbind": true,
       "bindable": true,
@@ -3969,7 +4148,7 @@
     {
       "panel": "FungiCultivationBedPanel",
       "file": "src/UI/FungiCultivationBedPanel.cs",
-      "loc": 310,
+      "loc": 315,
       "bind_target": "FungiCultivationSystem",
       "has_unbind": true,
       "bindable": true,
@@ -3997,7 +4176,7 @@
     {
       "panel": "GameDashboardPanel",
       "file": "src/UI/GameDashboardPanel.cs",
-      "loc": 708,
+      "loc": 769,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -4009,11 +4188,11 @@
       "uses_status_rail": false,
       "layout_pattern": "code-built",
       "components": {
-        "scroll": 0,
+        "scroll": 1,
         "option_buttons": 0,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 7,
+        "separators": 8,
         "hbox": 0,
         "vbox": 0,
         "datagrid": 0,
@@ -4537,7 +4716,7 @@
     {
       "panel": "InventoryPanel",
       "file": "src/UI/InventoryPanel.cs",
-      "loc": 283,
+      "loc": 309,
       "bind_target": "InventoryHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -4557,6 +4736,10 @@
         {
           "id": "equip",
           "label": "EQUIP LINE"
+        },
+        {
+          "id": "bench",
+          "label": "SALVAGE BENCH"
         }
       ],
       "uses_status_rail": true,
@@ -4564,14 +4747,14 @@
       "components": {
         "scroll": 0,
         "option_buttons": 0,
-        "buttons": 1,
+        "buttons": 2,
         "panel_cards": 0,
         "separators": 1,
         "hbox": 1,
         "vbox": 5,
         "datagrid": 0,
         "sidebar": 6,
-        "metric_card": 11
+        "metric_card": 12
       },
       "routes": [
         "inventory",
@@ -4581,7 +4764,7 @@
     {
       "panel": "IronCenotaphMemorialPanel",
       "file": "src/UI/IronCenotaphMemorialPanel.cs",
-      "loc": 182,
+      "loc": 188,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -4595,7 +4778,7 @@
       "components": {
         "scroll": 0,
         "option_buttons": 0,
-        "buttons": 4,
+        "buttons": 1,
         "panel_cards": 0,
         "separators": 0,
         "hbox": 0,
@@ -4697,7 +4880,7 @@
     {
       "panel": "JusticeTribunalPanel",
       "file": "src/UI/JusticeTribunalPanel.cs",
-      "loc": 219,
+      "loc": 224,
       "bind_target": "JusticeSystem",
       "has_unbind": true,
       "bindable": true,
@@ -5189,7 +5372,7 @@
     {
       "panel": "MapDetailPanel",
       "file": "src/UI/MapDetailPanel.cs",
-      "loc": 244,
+      "loc": 248,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -5513,7 +5696,7 @@
     {
       "panel": "MercenaryBountyBoardPanel",
       "file": "src/UI/MercenaryBountyBoardPanel.cs",
-      "loc": 232,
+      "loc": 237,
       "bind_target": "MercenarySystem",
       "has_unbind": true,
       "bindable": true,
@@ -5860,6 +6043,53 @@
       "routes": []
     },
     {
+      "panel": "NightWatchPanel",
+      "file": "src/UI/NightWatchPanel.cs",
+      "loc": 350,
+      "bind_target": "NightWatchHostSession",
+      "has_unbind": true,
+      "bindable": true,
+      "shell": true,
+      "shell_title": "The Watch // Patrol Readiness",
+      "min_width": 1080,
+      "min_height": 680,
+      "rail_cards": [
+        {
+          "id": "readiness",
+          "label": "Watch Readiness"
+        },
+        {
+          "id": "coverage",
+          "label": "Patrol Coverage"
+        },
+        {
+          "id": "gate",
+          "label": "Gate Protocol"
+        },
+        {
+          "id": "sensors",
+          "label": "Acoustic Array"
+        }
+      ],
+      "uses_status_rail": true,
+      "layout_pattern": "shell:single-column",
+      "components": {
+        "scroll": 1,
+        "option_buttons": 1,
+        "buttons": 0,
+        "panel_cards": 0,
+        "separators": 1,
+        "hbox": 3,
+        "vbox": 1,
+        "datagrid": 0,
+        "sidebar": 0,
+        "metric_card": 13
+      },
+      "routes": [
+        "night_watch"
+      ]
+    },
+    {
       "panel": "NurseryPanel",
       "file": "src/UI/NurseryPanel.cs",
       "loc": 166,
@@ -6071,9 +6301,35 @@
         "sidebar": 0,
         "metric_card": 3
       },
-      "routes": [
-        "personal_quests"
-      ]
+      "routes": []
+    },
+    {
+      "panel": "RomanceFamilyBoardPanel",
+      "file": "src/UI/PfglOctetBoardPanels.cs",
+      "loc": 357,
+      "bind_target": null,
+      "has_unbind": false,
+      "bindable": false,
+      "shell": false,
+      "shell_title": null,
+      "min_width": 720,
+      "min_height": 480,
+      "rail_cards": [],
+      "uses_status_rail": false,
+      "layout_pattern": "code-built",
+      "components": {
+        "scroll": 1,
+        "option_buttons": 2,
+        "buttons": 0,
+        "panel_cards": 0,
+        "separators": 0,
+        "hbox": 3,
+        "vbox": 1,
+        "datagrid": 0,
+        "sidebar": 0,
+        "metric_card": 0
+      },
+      "routes": []
     },
     {
       "panel": "PhantomMemoryPanel",
@@ -6247,7 +6503,7 @@
     {
       "panel": "GeothermalOrcPanel",
       "file": "src/UI/Plans74To77Panels.cs",
-      "loc": 367,
+      "loc": 387,
       "bind_target": "GeothermalOrcHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -6331,7 +6587,7 @@
     {
       "panel": "PlasticPyrolysisPanel",
       "file": "src/UI/PlasticPyrolysisPanel.cs",
-      "loc": 269,
+      "loc": 274,
       "bind_target": "PlasticPyrolysisHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -6689,7 +6945,7 @@
     {
       "panel": "RadiationDetailPanel",
       "file": "src/UI/RadiationDetailPanel.cs",
-      "loc": 295,
+      "loc": 306,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -6877,7 +7133,7 @@
     {
       "panel": "RailwayTerminalPanel",
       "file": "src/UI/RailwayTerminalPanel.cs",
-      "loc": 243,
+      "loc": 248,
       "bind_target": "RailwaySystem",
       "has_unbind": true,
       "bindable": true,
@@ -7032,7 +7288,7 @@
     {
       "panel": "ResearchAtlasPanel",
       "file": "src/UI/ResearchAtlasPanel.cs",
-      "loc": 492,
+      "loc": 497,
       "bind_target": "ResearchHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -7115,7 +7371,7 @@
     {
       "panel": "RoboticsWorkshopPanel",
       "file": "src/UI/RoboticsWorkshopPanel.cs",
-      "loc": 290,
+      "loc": 295,
       "bind_target": "RoboticsSystem",
       "has_unbind": true,
       "bindable": true,
@@ -7354,7 +7610,9 @@
         "sidebar": 0,
         "metric_card": 12
       },
-      "routes": []
+      "routes": [
+        "sanitation"
+      ]
     },
     {
       "panel": "SaveLoadPanel",
@@ -7671,6 +7929,53 @@
       "routes": []
     },
     {
+      "panel": "ShelterOperationsPanel",
+      "file": "src/UI/ShelterOperationsPanel.cs",
+      "loc": 399,
+      "bind_target": "ShelterOperationsHostSession",
+      "has_unbind": true,
+      "bindable": true,
+      "shell": true,
+      "shell_title": "Shelter Operations // Works, Crews & Outposts",
+      "min_width": 1120,
+      "min_height": 720,
+      "rail_cards": [
+        {
+          "id": "stability",
+          "label": "Structural Stability"
+        },
+        {
+          "id": "depth",
+          "label": "Open Depth"
+        },
+        {
+          "id": "projects",
+          "label": "Active Projects"
+        },
+        {
+          "id": "outposts",
+          "label": "Outposts"
+        }
+      ],
+      "uses_status_rail": true,
+      "layout_pattern": "shell:single-column",
+      "components": {
+        "scroll": 1,
+        "option_buttons": 1,
+        "buttons": 0,
+        "panel_cards": 0,
+        "separators": 0,
+        "hbox": 6,
+        "vbox": 1,
+        "datagrid": 0,
+        "sidebar": 0,
+        "metric_card": 6
+      },
+      "routes": [
+        "shelter_operations"
+      ]
+    },
+    {
       "panel": "ShelterPanel",
       "file": "src/UI/ShelterPanel.cs",
       "loc": 497,
@@ -7865,7 +8170,7 @@
     {
       "panel": "ShelterSocialPanel",
       "file": "src/UI/ShelterSocialPanel.cs",
-      "loc": 355,
+      "loc": 558,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -7879,21 +8184,23 @@
       "components": {
         "scroll": 0,
         "option_buttons": 0,
-        "buttons": 3,
+        "buttons": 4,
         "panel_cards": 0,
         "separators": 0,
-        "hbox": 1,
-        "vbox": 0,
+        "hbox": 2,
+        "vbox": 3,
         "datagrid": 0,
         "sidebar": 0,
         "metric_card": 0
       },
-      "routes": []
+      "routes": [
+        "shelter_social"
+      ]
     },
     {
       "panel": "ShelterThermalPanel",
       "file": "src/UI/ShelterThermalPanel.cs",
-      "loc": 126,
+      "loc": 147,
       "bind_target": "ShelterThermalHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -8167,7 +8474,7 @@
     {
       "panel": "SnapshotOrchestrator",
       "file": "src/UI/SnapshotOrchestrator.cs",
-      "loc": 424,
+      "loc": 432,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -8429,7 +8736,7 @@
     {
       "panel": "StatusPanel",
       "file": "src/UI/StatusPanel.cs",
-      "loc": 362,
+      "loc": 377,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -8667,7 +8974,7 @@
     {
       "panel": "SurvivalDetailPanel",
       "file": "src/UI/SurvivalDetailPanel.cs",
-      "loc": 141,
+      "loc": 145,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -8819,7 +9126,7 @@
     {
       "panel": "SurvivorDowntimePanel",
       "file": "src/UI/SurvivorDowntimePanel.cs",
-      "loc": 229,
+      "loc": 234,
       "bind_target": "SurvivorDowntimeSystem",
       "has_unbind": true,
       "bindable": true,
@@ -9166,7 +9473,7 @@
     {
       "panel": "TutorialPanel",
       "file": "src/UI/TutorialPanel.cs",
-      "loc": 259,
+      "loc": 263,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -9353,7 +9660,7 @@
     {
       "panel": "VerdictDashboardPanel",
       "file": "src/UI/VerdictDashboardPanel.cs",
-      "loc": 162,
+      "loc": 179,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -9530,7 +9837,7 @@
     {
       "panel": "WaterTreatmentPanel",
       "file": "src/UI/WaterTreatmentPanel.cs",
-      "loc": 143,
+      "loc": 294,
       "bind_target": "WaterTreatmentHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -9568,7 +9875,7 @@
         "buttons": 0,
         "panel_cards": 0,
         "separators": 0,
-        "hbox": 0,
+        "hbox": 2,
         "vbox": 0,
         "datagrid": 0,
         "sidebar": 0,
@@ -9859,7 +10166,7 @@
     {
       "panel": "WinterFreezePanel",
       "file": "src/UI/WinterFreezePanel.cs",
-      "loc": 189,
+      "loc": 194,
       "bind_target": "YearOfAshDeepFreezeSystem",
       "has_unbind": true,
       "bindable": true,
@@ -9904,7 +10211,7 @@
     {
       "panel": "WorkshopPanel",
       "file": "src/UI/WorkshopPanel.cs",
-      "loc": 495,
+      "loc": 507,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,

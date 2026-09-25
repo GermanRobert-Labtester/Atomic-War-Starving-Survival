@@ -82,7 +82,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("FITMENT"));
 
             var vehicleRow = new HBoxContainer();
-            vehicleRow.AddThemeConstantOverride("separation", 10);
+            vehicleRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             vehicleRow.AddChild(AshfallUiHelpers.MakeBody("Vehicle id:"));
             _vehicleInput = new LineEdit { Text = "rover_1", CustomMinimumSize = new Vector2(220, 36) };
             vehicleRow.AddChild(_vehicleInput);
@@ -93,7 +93,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(vehicleRow);
 
             var profileRow = new HBoxContainer();
-            profileRow.AddThemeConstantOverride("separation", 10);
+            profileRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             profileRow.AddChild(AshfallUiHelpers.MakeBody("Profile:"));
             _profileSelector = new OptionButton { CustomMinimumSize = new Vector2(460, 36) };
             _profileSelector.ItemSelected += idx =>
@@ -111,7 +111,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("ROAD HAZARD / TRAVEL"));
 
             var hazardRow = new HBoxContainer();
-            hazardRow.AddThemeConstantOverride("separation", 10);
+            hazardRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             hazardRow.AddChild(AshfallUiHelpers.MakeBody("Hazard:"));
             _hazardSelector = new OptionButton { CustomMinimumSize = new Vector2(150, 36) };
             foreach (var h in HazardClasses) _hazardSelector.AddItem(h);
@@ -125,7 +125,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(hazardRow);
 
             var heatRow = new HBoxContainer();
-            heatRow.AddThemeConstantOverride("separation", 10);
+            heatRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             heatRow.AddChild(AshfallUiHelpers.MakeBody("Load:"));
             _loadInput = new SpinBox { MinValue = 0, MaxValue = 200, Step = 10, Value = 50, CustomMinimumSize = new Vector2(90, 36) };
             heatRow.AddChild(_loadInput);

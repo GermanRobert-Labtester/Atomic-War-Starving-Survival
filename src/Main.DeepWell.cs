@@ -62,51 +62,20 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool DeepWellTryBuild()
         {
-            SetupDeepWell();
-            var inv = _inventory.Inventory;
-
-            if (_sharedResearch == null || !_sharedResearch.HasCapability(DeepWellSystem.RequiredKnowledgeId))
-            {
-                ObserveSigil("deepwell.build_blocked_missing_knowledge");
-                return false;
-            }
-            if (inv.CountById(DeepWellSystem.BuildItemId) < 1
-                || inv.CountById("mechanical_parts") < 2)
-            {
-                ObserveSigil("deepwell.build_blocked_missing_items");
-                return false;
-            }
-
-            if (!_deepWell!.TryBuild(hasRequiredCapability: true, out var reason))
-            {
-                ObserveSigil("deepwell.build_blocked_" + reason);
-                return false;
-            }
-
-            inv.TryConsumeById(DeepWellSystem.BuildItemId, 1);
-            inv.TryConsumeById("mechanical_parts", 2);
-            ObserveSigil("deepwell.built");
-            return true;
+            bool built = EnsureWaterSourcesSession().TryBuildDeepWell();
+            ObserveSigil(built ? "deepwell.built" : "deepwell.build_blocked_water_sources");
+            return built;
         }
 
         /// <summary>Service route: canonical machine oil consumed once on commit.</summary>
         public bool DeepWellTryService()
         {
-            SetupDeepWell();
-            var inv = _inventory.Inventory;
-            if (inv.CountById(DeepWellSystem.MaintenanceItemId) < 1)
-            {
-                ObserveSigil("deepwell.service_blocked_missing_item");
-                return false;
-            }
-            if (!_deepWell!.PerformMaintenance(out var reason))
-            {
-                ObserveSigil("deepwell.service_blocked_" + reason);
-                return false;
-            }
-            inv.TryConsumeById(DeepWellSystem.MaintenanceItemId, 1);
-            ObserveSigil("deepwell.serviced");
-            return true;
+            bool serviced = EnsureWaterSourcesSession().TryServiceDeepWell();
+            ObserveSigil(serviced ? "deepwell.serviced" : "deepwell.service_blocked_water_sources");
+            return serviced;
         }
+
+        public bool DeepWellSetEnabled(bool enabled) =>
+            EnsureWaterSourcesSession().TrySetDeepWellEnabled(enabled);
     }
 }

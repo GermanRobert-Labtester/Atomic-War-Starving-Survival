@@ -7,6 +7,9 @@
     <AssemblyName>Ashfall.Core</AssemblyName>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
+    <UseSharedCompilation>false</UseSharedCompilation>
+    <UseRazorBuildServer>false</UseRazorBuildServer>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
     <!--
       Remaining suppressed warnings (narrowed from original 19):
       CS0108/CS0114  — intentional member hiding in host sessions

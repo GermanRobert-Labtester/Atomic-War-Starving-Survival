@@ -1007,6 +1007,25 @@ namespace AtomicWar.GodotApp
                     passed++;
             }
 
+            // ── Faction emblem runtime load audit (2026-09-25 emblem wave) ──
+            // Validates the whole chain FactionIconCatalog → FactionIconLoader →
+            // Texture2D for every mapped faction id. Before this, an unmapped or
+            // missing emblem silently degraded to the unknown-faction placeholder,
+            // so the gate could not see a broken emblem.
+            int factionMapped = 0;
+            int factionLoadFailures = 0;
+            foreach (string factionId in Ashfall.Core.UI.FactionIconCatalog.MappedIds())
+            {
+                factionMapped++;
+                if (FactionIconLoader.LoadFor(factionId) == null)
+                {
+                    factionLoadFailures++;
+                    GD.PrintErr($"[AssetRegistrySelfTest] FACTION EMBLEM LOAD FAILED: id={factionId} path={Ashfall.Core.UI.FactionIconCatalog.Resolve(factionId)}");
+                }
+            }
+            probeFailures += factionLoadFailures;
+            GD.Print($"[AssetRegistrySelfTest] Faction emblems: {factionMapped - factionLoadFailures}/{factionMapped} resolve through the icon catalog");
+
             int total = rows.Count;
             int uniqueMissing = AssetRegistry.MissingAssetCount;
             int duplicateFallbackRequests = AssetRegistry.DuplicateFallbackRequestCount;

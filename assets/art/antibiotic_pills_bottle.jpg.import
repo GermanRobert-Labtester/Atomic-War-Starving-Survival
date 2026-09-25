@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/antibiotic_pills_bottle.jpg-9b0eb6dc1743a3487
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

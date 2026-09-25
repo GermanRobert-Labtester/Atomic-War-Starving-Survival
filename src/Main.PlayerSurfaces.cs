@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
 {
@@ -37,7 +38,7 @@ namespace AtomicWar.GodotApp
                     EnsureOnboardingPanel();
                     _onboardingHintPanel?.Show();
                 },
-                closeAction: () => { if (_onboardingHintPanel != null) _onboardingHintPanel.Visible = false; });
+                closeAction: () => ClosePanelAnimated(_onboardingHintPanel));
 
             PanelRegistry.ConfigureActions("emergency_response",
                 bindAction: () =>
@@ -60,57 +61,57 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("expansion_fallout_plume",
                 bindAction: () => _falloutPlumePanel.Bind(EnsureFallout()),
                 openAction: () => _falloutPlumePanel.Visible = true,
-                closeAction: () => _falloutPlumePanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_falloutPlumePanel));
 
             PanelRegistry.ConfigureActions("desperation_crisis",
                 bindAction: () => _desperationCrisisPanel.Bind(EnsureDesperation()),
                 openAction: () => _desperationCrisisPanel.Visible = true,
-                closeAction: () => _desperationCrisisPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_desperationCrisisPanel));
 
             PanelRegistry.ConfigureActions("mercenary_bounty_board",
                 bindAction: () => _mercenaryBountyBoardPanel.Bind(EnsureMercenary()),
                 openAction: () => { _mercenaryBountyBoardPanel.SetDisplayClock(_simDay); _mercenaryBountyBoardPanel.Visible = true; },
-                closeAction: () => _mercenaryBountyBoardPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_mercenaryBountyBoardPanel));
 
             PanelRegistry.ConfigureActions("archaeology_excavation",
                 bindAction: () => _archaeologyExcavationPanel.Bind(EnsureArchaeology()),
                 openAction: () => _archaeologyExcavationPanel.Visible = true,
-                closeAction: () => _archaeologyExcavationPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_archaeologyExcavationPanel));
 
             PanelRegistry.ConfigureActions("amputation_surgery",
                 bindAction: () => _amputationTriagePanel.Bind(EnsureAmputation()),
                 openAction: () => _amputationTriagePanel.Visible = true,
-                closeAction: () => _amputationTriagePanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_amputationTriagePanel));
 
             PanelRegistry.ConfigureActions("railway_logistics",
                 bindAction: () => _railwayTerminalPanel.Bind(EnsureRailway()),
                 openAction: () => _railwayTerminalPanel.Visible = true,
-                closeAction: () => _railwayTerminalPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_railwayTerminalPanel));
 
             PanelRegistry.ConfigureActions("fungi_cultivation",
                 bindAction: () => _fungiCultivationBedPanel.Bind(EnsureFungi()),
                 openAction: () => _fungiCultivationBedPanel.Visible = true,
-                closeAction: () => _fungiCultivationBedPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_fungiCultivationBedPanel));
 
             PanelRegistry.ConfigureActions("plastic_pyrolysis",
                 bindAction: () => _plasticPyrolysisPanel.Bind(EnsurePlasticPyrolysis()),
                 openAction: () => _plasticPyrolysisPanel.Visible = true,
-                closeAction: () => _plasticPyrolysisPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_plasticPyrolysisPanel));
 
             PanelRegistry.ConfigureActions("cargo_airdrop",
                 bindAction: () => _cargoAirdropPanel.Bind(EnsureCargoAirdrop()),
                 openAction: () => _cargoAirdropPanel.Visible = true,
-                closeAction: () => _cargoAirdropPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_cargoAirdropPanel));
 
             PanelRegistry.ConfigureActions("justice_tribunal",
                 bindAction: () => _justiceTribunalPanel.Bind(EnsureJustice()),
                 openAction: () => _justiceTribunalPanel.Visible = true,
-                closeAction: () => _justiceTribunalPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_justiceTribunalPanel));
 
             PanelRegistry.ConfigureActions("chem_warfare_defense",
                 bindAction: () => _chemWarfareDefensePanel.Bind(EnsureChemWarfare()),
                 openAction: () => _chemWarfareDefensePanel.Visible = true,
-                closeAction: () => _chemWarfareDefensePanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_chemWarfareDefensePanel));
 
             // Plans 146–149 industrial flagship consoles.
             PanelRegistry.ConfigureActions("ebpvd_coating",
@@ -136,32 +137,32 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("comms_array_transceiver",
                 bindAction: () => _commsArrayTransceiverPanel.Bind(EnsureCommsArray()),
                 openAction: () => { _commsArrayTransceiverPanel.SetDisplayClock(_simDay, 12); _commsArrayTransceiverPanel.Visible = true; },
-                closeAction: () => _commsArrayTransceiverPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_commsArrayTransceiverPanel));
 
             PanelRegistry.ConfigureActions("ceremony_ritual",
                 bindAction: () => _ceremonyFestivalPanel.Bind(EnsureCeremonySystem()),
                 openAction: () => _ceremonyFestivalPanel.Visible = true,
-                closeAction: () => _ceremonyFestivalPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_ceremonyFestivalPanel));
 
             PanelRegistry.ConfigureActions("robotics_assembly",
                 bindAction: () => _roboticsWorkshopPanel.Bind(EnsureRobotics()),
                 openAction: () => _roboticsWorkshopPanel.Visible = true,
-                closeAction: () => _roboticsWorkshopPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_roboticsWorkshopPanel));
 
             PanelRegistry.ConfigureActions("bio_fermentation",
                 bindAction: () => _bioFermentationPanel.Bind(EnsureBioFermentation()),
                 openAction: () => _bioFermentationPanel.Visible = true,
-                closeAction: () => _bioFermentationPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_bioFermentationPanel));
 
             PanelRegistry.ConfigureActions("survivor_downtime",
                 bindAction: () => _survivorDowntimePanel.Bind(EnsureRecreation()),
                 openAction: () => _survivorDowntimePanel.Visible = true,
-                closeAction: () => _survivorDowntimePanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_survivorDowntimePanel));
 
             PanelRegistry.ConfigureActions("winter_freeze",
                 bindAction: () => _winterFreezePanel.Bind(_yearOfAsh != null ? _yearOfAsh.DeepFreeze : null!),
                 openAction: () => _winterFreezePanel.Visible = true,
-                closeAction: () => _winterFreezePanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_winterFreezePanel));
 
             PanelRegistry.ConfigureActions("afflictions",
                 bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory); },
@@ -170,7 +171,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("radiation_detail",
                 bindAction: () => { SetupSurvivors(); SetupPhase0(); _radiationDetailPanel.Bind(_doseLedger, _survivors); },
-                openAction: () => _radiationDetailPanel.Open(),
+                openAction: () => { ObserveSigil("dose.read"); _radiationDetailPanel.Open(); },
                 closeAction: () => CloseRadiationDetailPanel());
 
             PanelRegistry.ConfigureActions("research",
@@ -190,18 +191,18 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("weather_detail",
                 bindAction: () => { SetupWorld(); _weatherDetailPanel.Bind(_world?.Weather); },
-                openAction: () => _weatherDetailPanel.Open(),
+                openAction: () => { MaybeRequestSevereWeatherLesson(); _weatherDetailPanel.Open(); },
                 closeAction: () => CloseWeatherDetailPanel());
 
             PanelRegistry.ConfigureActions("weather_forecast",
                 bindAction: () => { SetupWorld(); _weatherForecastPanel.Bind(_world?.Weather, _world?.WeatherIntelligence); },
-                openAction: () => _weatherForecastPanel.Open(),
+                openAction: () => { MaybeRequestSevereWeatherLesson(); _weatherForecastPanel.Open(); },
                 closeAction: () => CloseWeatherForecastPanel());
 
             PanelRegistry.ConfigureActions("weather_history",
                 bindAction: () => { SetupWorld(); _weatherHistoryPanel.Bind(_world?.Weather); },
                 openAction: () => OpenWeatherHistoryPanel(),
-                closeAction: () => { if (_weatherHistoryPanel != null) _weatherHistoryPanel.Visible = false; });
+                closeAction: () => ClosePanelAnimated(_weatherHistoryPanel));
 
             PanelRegistry.ConfigureActions("event_detail",
                 bindAction: () => { SetupEventsHost(); _eventDetailPanel.Bind(_eventsHost); },
@@ -315,12 +316,12 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("expeditions",
                 bindAction: () => { SetupExpeditions(); SetupExpansions(); _expeditions.CrossingGate = _expansions.Vouch; SetupSurvivors(); SetupInventory(); SetupWorld(); SetupEvolvingWorldInfluence(); _expeditionPanel.Bind(_expeditions, _survivors, _inventory, _equipmentCondition?.System, _world); },
-                openAction: () => _expeditionPanel.Open(),
+                openAction: () => { MaybeRequestProtectionLesson(); _expeditionPanel.Open(); },
                 closeAction: () => CloseExpeditionPanel());
 
             PanelRegistry.ConfigureActions("weather",
                 bindAction: () => { SetupWorld(); _weatherPanel.Bind(_world); },
-                openAction: () => _weatherPanel.Open(),
+                openAction: () => { MaybeRequestSevereWeatherLesson(); _weatherPanel.Open(); },
                 closeAction: () => CloseWeatherPanel());
 
             PanelRegistry.ConfigureActions("radio",
@@ -467,7 +468,7 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("holdfast",
                 bindAction: () => { SetupHoldfastRuntime(); if (_holdfastTerminal != null) { _holdfastTerminal.BindSession(_holdfastRuntime); } },
                 openAction: () => { if (_holdfastTerminal != null) _holdfastTerminal.OpenTerminal(); },
-                closeAction: () => { if (_holdfastTerminal != null) _holdfastTerminal.Visible = false; });
+                closeAction: () => ClosePanelAnimated(_holdfastTerminal));
 
             PanelRegistry.ConfigureActions("duty_roster",
                 bindAction: () => { SetupJournal(); DiscoverBureaucraticDocuments("duty_roster"); SetupDutyRoster(); SetupSurvivors(); _dutyRosterPanel.Bind(_dutyRoster, _survivors); },
@@ -504,12 +505,12 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("brine_extraction",
                 bindAction: () => { SetupSilentFoundry(); if (_silentFoundry != null) _brineExtractionPanel.Bind(_silentFoundry); },
                 openAction: () => _brineExtractionPanel.Open(),
-                closeAction: () => _brineExtractionPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_brineExtractionPanel));
 
             PanelRegistry.ConfigureActions("expedition_camp",
                 bindAction: () => { SetupExpeditions(); SetupSurvivors(); string survId = _survivors?.RosterState?.FirstOrDefault()?.Id ?? string.Empty; _expeditionCampPanel.Bind(_expeditions, survId); },
                 openAction: () => _expeditionCampPanel.Open(),
-                closeAction: () => _expeditionCampPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_expeditionCampPanel));
 
             PanelRegistry.ConfigureActions("fire_incident",
                 bindAction: () =>
@@ -523,17 +524,17 @@ namespace AtomicWar.GodotApp
                     _fireIncidentPanel.Bind(_shelterFireSession!);
                 },
                 openAction: () => _fireIncidentPanel.Open(),
-                closeAction: () => _fireIncidentPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_fireIncidentPanel));
 
             PanelRegistry.ConfigureActions("geiger_calibration",
                 bindAction: () => { SetupPhase0(); _geigerCalibrationPanel.Bind(_doseLedger, ResolveLiveDosimeterTag()); },
                 openAction: () => _geigerCalibrationPanel.Open(),
-                closeAction: () => _geigerCalibrationPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_geigerCalibrationPanel));
 
             PanelRegistry.ConfigureActions("triangulation",
                 bindAction: () => { SetupRadio(); _triangulationPanel.Bind(_radio, ResolveLiveTriangulationSignalId()); },
                 openAction: () => _triangulationPanel.Open(),
-                closeAction: () => _triangulationPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_triangulationPanel));
 
             PanelRegistry.ConfigureActions("weather_sonde",
                 bindAction: () =>
@@ -542,12 +543,12 @@ namespace AtomicWar.GodotApp
                     _weatherSondePanel.Bind(_weatherSondeHost);
                 },
                 openAction: () => _weatherSondePanel.Open(),
-                closeAction: () => _weatherSondePanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_weatherSondePanel));
 
             PanelRegistry.ConfigureActions("power_grid",
                 bindAction: () => OpenPowerGrid(),
                 openAction: () => _powerGridPanel?.Open(),
-                closeAction: () => { if (_powerGridPanel != null) _powerGridPanel.Visible = false; });
+                closeAction: () => ClosePanelAnimated(_powerGridPanel));
 
             PanelRegistry.ConfigureActions("geothermal_orc",
                 bindAction: () => { ComposePlans74To77(); _geothermalOrcPanel.Bind(_geothermalOrc); },
@@ -572,12 +573,12 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("expedition_radar",
                 bindAction: () => { SetupExpeditions(); SetupSurvivors(); _expeditionRadarPanel.Bind(_expeditions, _survivors); },
                 openAction: () => _expeditionRadarPanel.Open(),
-                closeAction: () => _expeditionRadarPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_expeditionRadarPanel));
 
             PanelRegistry.ConfigureActions("dose_ledger",
                 bindAction: () => { SetupPhase0(); SetupSurvivors(); _doseLedgerPanel.Bind(_doseLedger, _survivors); },
-                openAction: () => _doseLedgerPanel.Open(),
-                closeAction: () => _doseLedgerPanel.Visible = false);
+                openAction: () => { ObserveSigil("dose.read"); _doseLedgerPanel.Open(); },
+                closeAction: () => ClosePanelAnimated(_doseLedgerPanel));
 
             PanelRegistry.ConfigureActions("dose_geography",
                 bindAction: () => { SetupPhase0(); _doseGeographyPanel.Bind(_doseLedger); },
@@ -586,7 +587,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("caravan_barter",
                 openAction: () => _caravanBarterLedgerPanel.Open(),
-                closeAction: () => _caravanBarterLedgerPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_caravanBarterLedgerPanel));
 
             PanelRegistry.ConfigureActions("shelter_barter",
                 bindAction: () =>
@@ -614,52 +615,52 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("faction_matrix",
                 bindAction: () => _factionMatrixPanel.Bind(EnsureSharedFactionStance()),
                 openAction: () => _factionMatrixPanel.Open(),
-                closeAction: () => _factionMatrixPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_factionMatrixPanel));
 
             PanelRegistry.ConfigureActions("factions_narrative",
                 bindAction: () => _factionsNarrativePanel.Bind(EnsureSharedFactionStance()),
                 openAction: () => _factionsNarrativePanel.Open(),
-                closeAction: () => _factionsNarrativePanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_factionsNarrativePanel));
 
             PanelRegistry.ConfigureActions("faction_communique_board",
                 bindAction: () => { SetupYearOfAsh(); _communiqueBoardPanel.Bind(_yearOfAsh, _simDay); },
                 openAction: () => _communiqueBoardPanel.Open(),
-                closeAction: () => _communiqueBoardPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_communiqueBoardPanel));
 
             PanelRegistry.ConfigureActions("skill_matrix",
                 bindAction: () => { SetupSurvivors(); _skillMatrixPanel.Bind(EnsureSharedSkillProgression(), _survivors); },
                 openAction: () => _skillMatrixPanel.Open(),
-                closeAction: () => _skillMatrixPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_skillMatrixPanel));
 
             PanelRegistry.ConfigureActions("survival_workstation",
                 bindAction: () => { SetupCrafting(); SetupInventory(); SetupSurvivors(); _survivalWorkstationPanel.Bind(_crafting, _inventory, _survivors); },
                 openAction: () => _survivalWorkstationPanel.Open(),
-                closeAction: () => _survivalWorkstationPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_survivalWorkstationPanel));
 
             PanelRegistry.ConfigureActions("verdict_dashboard",
                 bindAction: () => { SetupVerdict(); _verdictDashboardPanel.Bind(_verdictPanel, _verdict); },
                 openAction: () => _verdictDashboardPanel.Open(),
-                closeAction: () => _verdictDashboardPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_verdictDashboardPanel));
 
             PanelRegistry.ConfigureActions("map_atlas",
                 bindAction: () => { SetupExpeditions(); SetupWorld(); _mapAtlasPanel.Bind(_expeditions, _world); },
                 openAction: () => _mapAtlasPanel.Open(),
-                closeAction: () => _mapAtlasPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_mapAtlasPanel));
 
             PanelRegistry.ConfigureActions("maritime_atlas",
                 bindAction: () => { SetupMaritime(); if (_maritime != null) _maritimeAtlasPanel.Bind(_maritime); },
                 openAction: () => _maritimeAtlasPanel.Open(),
-                closeAction: () => _maritimeAtlasPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_maritimeAtlasPanel));
 
             PanelRegistry.ConfigureActions("muster_atlas",
                 bindAction: () => { SetupMuster(); if (_muster != null) _musterAtlasPanel.Bind(_muster); },
                 openAction: () => _musterAtlasPanel.Open(),
-                closeAction: () => _musterAtlasPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_musterAtlasPanel));
 
             PanelRegistry.ConfigureActions("quests_atlas",
                 bindAction: () => { SetupHoldfastRuntime(); SetupExpansions(); _questsAtlasPanel.Bind(_core.Quests, _expansions?.CrossingQuests); },
                 openAction: () => _questsAtlasPanel.Open(),
-                closeAction: () => _questsAtlasPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_questsAtlasPanel));
 
             PanelRegistry.ConfigureActions("research_atlas",
                 bindAction: () =>
@@ -670,17 +671,17 @@ namespace AtomicWar.GodotApp
                     _researchAtlasPanel.Bind(_researchHostSession);
                 },
                 openAction: () => _researchAtlasPanel.Open(),
-                closeAction: () => _researchAtlasPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_researchAtlasPanel));
 
             PanelRegistry.ConfigureActions("standing_record_atlas",
                 bindAction: () => { _standingRecordHostSession ??= StandingRecordHostSession.Create(_dataDir); _standingRecordAtlasPanel.Bind(_standingRecordHostSession); },
                 openAction: () => _standingRecordAtlasPanel.Open(),
-                closeAction: () => _standingRecordAtlasPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_standingRecordAtlasPanel));
 
             PanelRegistry.ConfigureActions("combat_hud",
                 bindAction: () => { if (_combat != null) _combatHudOverlay.Bind(_combat); },
                 openAction: () => _combatHudOverlay.Open(),
-                closeAction: () => _combatHudOverlay.Visible = false);
+                closeAction: () => ClosePanelAnimated(_combatHudOverlay));
 
             // ── Plans 178-201 Expansion Surfaces ─────────────────────────
             PanelRegistry.ConfigureActions("aviation",
@@ -732,7 +733,7 @@ namespace AtomicWar.GodotApp
             PanelRegistry.ConfigureActions("slurry_dewatering_sump",
                 bindAction: () => { SetupSumpFlooding(); _slurryDewateringSumpPanel.Bind(_sumpFlooding); },
                 openAction: () => _slurryDewateringSumpPanel.Open(),
-                closeAction: () => _slurryDewateringSumpPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_slurryDewateringSumpPanel));
 
             PanelRegistry.ConfigureActions("electrostatic_scrubber",
                 bindAction: () =>
@@ -742,7 +743,7 @@ namespace AtomicWar.GodotApp
                         _electrostaticScrubberPanel.Bind(_ventilationHost);
                 },
                 openAction: () => _electrostaticScrubberPanel.Open(),
-                closeAction: () => _electrostaticScrubberPanel.Visible = false);
+                closeAction: () => ClosePanelAnimated(_electrostaticScrubberPanel));
 
             PanelRegistry.ConfigureActions("plans_94_97",
                 bindAction: () =>
@@ -828,6 +829,269 @@ namespace AtomicWar.GodotApp
                 PanelRegistry.ConfigureActions(id,
                     openAction: () => OpenExpandedPanel(id));
             }
+
+            // ── UI/UX audit 2026-09-25 — prototype console re-route ──────────────
+            // Twenty previously-shelved console ids are now Live and resolve to
+            // the live surface that owns their domain (one authority per concern:
+            // the shelved shells display static fixture text and were never
+            // session-bound — showing them directly would be a fake operational
+            // route). iron_cenotaph_memorial opens its own panel, which is already
+            // bound to the live mourning projection (Plan 24 A3). Nine ids remain
+            // prototype pending a foreman-approved target surface
+            // (docs/ui/UI_UX_AUDIT_2026-09-25.md).
+            PanelRegistry.ConfigureActions("iron_cenotaph_memorial",
+                openAction: () => _ironCenotaphMemorialPanel.Open());
+            RedirectPrototypeRoute("biogas_digester", "bio_fermentation");
+            RedirectPrototypeRoute("fungal_protein_fermenter", "bio_fermentation");
+            RedirectPrototypeRoute("geothermal_turbine", "geothermal_orc");
+            RedirectPrototypeRoute("heavy_marine_diesel_gen", "power_grid");
+            RedirectPrototypeRoute("induction_cupola_furnace", "silent_foundry");
+            RedirectPrototypeRoute("plasma_smelting", "silent_foundry");
+            RedirectPrototypeRoute("logistics_airlock", "airlock_security");
+            RedirectPrototypeRoute("long_walk_expedition", "expeditions");
+            RedirectPrototypeRoute("mechanical_prosthetics_lathe", "cybernetics");
+            RedirectPrototypeRoute("printing_press", "propaganda");
+            RedirectPrototypeRoute("subterranean_debt_ledger", "black_market");
+            RedirectPrototypeRoute("war_dog_kennel", "companion_kennel");
+            RedirectPrototypeRoute("ultrasonic_decontam_airlock", "decontamination");
+            RedirectPrototypeRoute("trauma_bonding_cohort", "survivor_relations");
+            RedirectPrototypeRoute("crossing_safe_conduct_vouch", "crossing_quests");
+            RedirectPrototypeRoute("cartography_gis", "map_atlas");
+            RedirectPrototypeRoute("magnetic_drum_archive", "archive_desk");
+            RedirectPrototypeRoute("surface_shrapnel_aegis", "sky_defense_battery");
+            RedirectPrototypeRoute("clandestine_insurgency", "factions");
+
+            // ── UI/UX audit 2026-09-25 — third batch, aquifer seal + conversions ──
+            // geothermal_aquifer: bound panel + handler existed with no route.
+            // The two redirects resolve to the live surface owning the domain.
+            // The three conversions bind their previously-static shells to the
+            // live host authorities (YearOfAsh radon, SeismicDynamics, CryoVault).
+            PanelRegistry.ConfigureActions("geothermal_aquifer",
+                bindAction: () => SetupGeothermalAquifer(),
+                openAction: () => HandleGeothermalAction("OPEN"),
+                closeAction: () => HandleGeothermalAction("CLOSE"));
+
+            RedirectPrototypeRoute("aquifer_treaty_concession", "geothermal_aquifer");
+            RedirectPrototypeRoute("vault_door_breaching", "combat");
+
+            PanelRegistry.ConfigureActions("basal_radon_migration",
+                bindAction: () => { SetupYearOfAsh(); _basalRadonMigrationPanel.Bind(_yearOfAsh); },
+                openAction: () => _basalRadonMigrationPanel.Open(),
+                closeAction: () => ClosePanelAnimated(_basalRadonMigrationPanel));
+            PanelRegistry.ConfigureActions("borehole_seismograph",
+                bindAction: () => { SetupSeismicDynamics(); _boreholeSeismographPanel.Bind(_seismicDynamics); },
+                openAction: () => _boreholeSeismographPanel.Open(),
+                closeAction: () => ClosePanelAnimated(_boreholeSeismographPanel));
+            PanelRegistry.ConfigureActions("cryo_permafrost_core",
+                bindAction: () => { SetupCryoVault(); _cryoPermafrostCorePanel.Bind(_cryoVault); },
+                openAction: () => _cryoPermafrostCorePanel.Open(),
+                closeAction: () => ClosePanelAnimated(_cryoPermafrostCorePanel));
+
+            PanelRegistry.ConfigureActions("romance_family_board",
+                bindAction: BindRomanceFamilyBoard,
+                openAction: () => _romanceFamilyBoard?.Open(),
+                closeAction: () => ClosePanelAnimated(_romanceFamilyBoard));
+            PanelRegistry.ConfigureActions("colony_operations",
+                bindAction: BindColonyOperationsBoard,
+                openAction: () => _colonyOperationsBoard?.Open(),
+                closeAction: () => ClosePanelAnimated(_colonyOperationsBoard));
+            PanelRegistry.ConfigureActions("ideological_mediation_desk",
+                bindAction: BindIdeologicalMediationDesk,
+                openAction: () => _ideologicalMediationDesk?.Open(),
+                closeAction: () => ClosePanelAnimated(_ideologicalMediationDesk));
+
+            // Construct before the central lifecycle/accessibility walk so the
+            // three board roots join overlay close, focus, and motion handling.
+            EnsurePfglOctetBoardPanels();
+
+            // ── Central accessibility-gated open motion (UI/UX audit 2026-09-25) ──
+            // Every overlay root the player can open animates its entrance through
+            // one shared seam: the 167 IBindablePanel surfaces, the modal family,
+            // and every other direct child of the UI host (dashboards/overlays).
+            // The motion gate is the existing ReducedMotion authority
+            // (AccessibilityPresentation), auto-disabled under --headless and while
+            // SnapshotOrchestrator captures, so goldens never see a fade. Closing
+            // stays synchronous — Esc dismissal is never delayed by motion.
+            AshfallUiTheme.Install(this);
+            RegisterOpenMotionRecursive(this, isHostRoot: true);
+        }
+
+        /// <summary>
+        /// Registers the shared full-scale entrance animation on every visible
+        /// overlay root. Direct children of the UI host are overlay roots by
+        /// construction (player panels, dashboards, full-screen modals); nested
+        /// IBindablePanel/IModalPanel controls are registered too so embedded
+        /// surfaces animate when they open.
+        /// </summary>
+        private void RegisterOpenMotionRecursive(Control node, bool isHostRoot)
+        {
+            foreach (var child in node.GetChildren())
+            {
+                if (child is Button fxButton)
+                    UiMotion.AttachButtonFx(fxButton);
+
+                if (child is Control control && control is not Button &&
+                    (isHostRoot || control is IBindablePanel || control is AtomicWar.GodotApp.UI.IModalPanel))
+                {
+                    Control captured = control;
+                    captured.VisibilityChanged += () =>
+                    {
+                        if (captured.Visible)
+                        {
+                            _lastVisibilityGranted = captured;
+                            UiMotion.AnimateOpen(captured);
+                            EnsureInitialFocus(captured);
+                        }
+                    };
+                }
+
+                if (child is Control childControl)
+                    RegisterOpenMotionRecursive(childControl, isHostRoot: false);
+            }
+        }
+
+        /// <summary>
+        /// Contextual first-hour lessons (2026-09-25): event-driven nudges through
+        /// the persisted onboarding authority. Each fires at most once per campaign
+        /// and only when the real runtime state warrants it.
+        /// </summary>
+        private Ashfall.Core.World.WeatherSystem? _weatherLessonSubscription;
+        private Ashfall.Core.Expeditions.ExpeditionSystem? _dispatchLessonSubscription;
+
+        /// <summary>Subscribes once to the live weather system (re-subscribes if the session swaps).</summary>
+        private void EnsureWeatherLessonHook()
+        {
+            if (_world == null)
+                return;
+            var weather = _world.Weather;
+            if (ReferenceEquals(weather, _weatherLessonSubscription))
+                return;
+            if (_weatherLessonSubscription != null)
+                _weatherLessonSubscription.OnWeatherChanged -= OnLessonWeatherChanged;
+            _weatherLessonSubscription = weather;
+            weather.OnWeatherChanged += OnLessonWeatherChanged;
+        }
+
+        private void OnLessonWeatherChanged(Ashfall.Core.WeatherKind kind)
+        {
+            if (_world != null && _world.IsSevereWeather(kind))
+                MaybeRequestSevereWeatherLesson();
+        }
+
+        /// <summary>Subscribes once to the live expedition engine (re-subscribes if the session swaps).</summary>
+        private void EnsureDispatchLessonHook()
+        {
+            if (_expeditions?.Engine == null)
+                return;
+            var engine = _expeditions.Engine;
+            if (ReferenceEquals(engine, _dispatchLessonSubscription))
+                return;
+            if (_dispatchLessonSubscription != null)
+                _dispatchLessonSubscription.OnExpeditionStarted -= OnLessonExpeditionStarted;
+            _dispatchLessonSubscription = engine;
+            engine.OnExpeditionStarted += OnLessonExpeditionStarted;
+        }
+
+        private void OnLessonExpeditionStarted(Ashfall.Core.Expeditions.ExpeditionState _) =>
+            MaybeRequestProtectionLesson();
+
+        private void MaybeRequestProtectionLesson()
+        {
+            SetupOnboarding();
+            EnsureDispatchLessonHook();
+            if (_onboardingJourney == null || _expeditions == null || _expeditions.Definitions.Count == 0)
+                return;
+            var definition = _expeditions.Definitions[0];
+            var estimate = _expeditions.EstimateExpedition(
+                definition.id, Ashfall.Core.Expeditions.ExpeditionStance.Stealth);
+            if (estimate.HasValue && estimate.Value.estimate.unprotectedCount > 0)
+            {
+                _onboardingJourney.RequestContextualTutorial(
+                    Ashfall.Core.Localization.OnboardingLessonLocalization.ProtectionBeforeDispatchId);
+            }
+        }
+
+        private void MaybeRequestSevereWeatherLesson()
+        {
+            SetupOnboarding();
+            EnsureWeatherLessonHook();
+            if (_onboardingJourney == null || _world == null)
+                return;
+            if (_world.IsSevereWeather(_world.Weather.Current))
+            {
+                _onboardingJourney.RequestContextualTutorial(
+                    Ashfall.Core.Localization.OnboardingLessonLocalization.SevereWeatherPrepId);
+            }
+        }
+
+        /// <summary>Last overlay root that became visible during an open call.</summary>
+        private Control? _lastVisibilityGranted;
+
+        /// <summary>
+        /// Keyboard/controller alpha usability (UI/UX audit follow-up): when a
+        /// panel opens, focus its first interactive control once layout settles,
+        /// so D-pad/arrows navigate from inside the panel immediately. Deferred
+        /// and guarded — a panel (or modal) that already chose a focus owner
+        /// keeps it, and the focus ring only appears for keyboard/controller use.
+        /// </summary>
+        private static void EnsureInitialFocus(Control panel)
+        {
+            Callable.From(() =>
+            {
+                if (!GodotObject.IsInstanceValid(panel) || !panel.Visible)
+                    return;
+                var owner = panel.GetViewport()?.GuiGetFocusOwner();
+                if (owner != null && GodotObject.IsInstanceValid(owner) && panel.IsAncestorOf(owner))
+                    return; // the panel already focused something deliberately
+                var first = AtomicWar.GodotApp.UI.AshfallFocusPolicy.FindFirstFocusable(panel);
+                if (first != null && GodotObject.IsInstanceValid(first))
+                    first.GrabFocus();
+            }).CallDeferred();
+        }
+
+        /// <summary>
+        /// Route → overlay-root map learned lazily from visibility grants. Used
+        /// only to cancel an in-flight exit transition when a route is re-opened
+        /// before its close fade completes.
+        /// </summary>
+        private readonly System.Collections.Generic.Dictionary<string, Control> _openControlById = new();
+
+        /// <summary>
+        /// Host close seam (UI/UX audit 2026-09-25 follow-up): plays the shared
+        /// exit transition when motion is available, else hides immediately.
+        /// </summary>
+        private static void ClosePanelAnimated(Control? panel)
+        {
+            if (panel == null || !GodotObject.IsInstanceValid(panel))
+                return;
+            if (!UiMotion.AnimateClose(panel))
+                panel.Visible = false;
+        }
+
+        /// <summary>Closes a route's control with the shared exit transition when known.</summary>
+        private void CloseRouteAnimated(string targetId)
+        {
+            if (_openControlById.TryGetValue(targetId, out var control) &&
+                control != null && GodotObject.IsInstanceValid(control) &&
+                UiMotion.AnimateClose(control))
+            {
+                return;
+            }
+            PanelRegistry.TryClose(targetId);
+        }
+
+        /// <summary>
+        /// Routes a promoted prototype console id to the live surface that owns
+        /// its domain (UI/UX audit 2026-09-25). Opening re-enters the canonical
+        /// OpenPlayerPanel path so the target opens exactly as it would from its
+        /// own navigation entry (availability, menu gating, and fallback wiring
+        /// all apply); the AudioManager cue cooldown absorbs the second confirm.
+        /// </summary>
+        private void RedirectPrototypeRoute(string sourceId, string targetId)
+        {
+            PanelRegistry.ConfigureActions(sourceId,
+                openAction: () => OpenPlayerPanel(targetId),
+                closeAction: () => CloseRouteAnimated(targetId));
         }
 
         /// <summary>

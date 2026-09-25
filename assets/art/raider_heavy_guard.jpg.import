@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/raider_heavy_guard.jpg-5fa8776f04e1bf2f5fa4ec
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

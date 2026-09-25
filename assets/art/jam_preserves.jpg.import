@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/jam_preserves.jpg-4603b169d7077be0bd1b522aeb7
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

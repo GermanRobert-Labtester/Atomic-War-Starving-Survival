@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/thermal_blanket.jpg-188ba396386097e8071e1ee11
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

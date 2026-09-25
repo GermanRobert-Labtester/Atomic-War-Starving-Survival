@@ -53,9 +53,9 @@ namespace AtomicWar.GodotApp.UI
         }
 
         /// <summary>Hides the chronicle and notifies the host route.</summary>
-        public void Close()
-        {
-            Visible = false;
+        public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
             OnClose?.Invoke();
         }
 
@@ -120,14 +120,14 @@ namespace AtomicWar.GodotApp.UI
             // Memorial tributes card
             var memorialCard = AshfallUiHelpers.MakeCardFrame("HONOR ROLL & MEMORIALS");
             _memorialContainer = new VBoxContainer();
-            _memorialContainer.AddThemeConstantOverride("separation", 6);
+            _memorialContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             memorialCard.AddChild(_memorialContainer);
             contentBox.AddChild(memorialCard);
 
             // Faction legacy card
             var factionCard = AshfallUiHelpers.MakeCardFrame("REGIONAL FACTION LEGACY");
             _factionsContainer = new VBoxContainer();
-            _factionsContainer.AddThemeConstantOverride("separation", 6);
+            _factionsContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             factionCard.AddChild(_factionsContainer);
             contentBox.AddChild(factionCard);
 

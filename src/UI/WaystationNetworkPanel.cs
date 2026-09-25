@@ -86,7 +86,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_stockList);
 
             var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            buttonRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
 
             _unlockBtn = new Button { Text = "Unlock Waystation Camp", CustomMinimumSize = new Vector2(200, 36) };
             _unlockBtn.Pressed += () => _host?.Unlock();

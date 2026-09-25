@@ -65,7 +65,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("betrayals", "Betrayals", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -81,14 +81,14 @@ namespace AtomicWar.GodotApp.UI
             leftScroll.SizeFlagsVertical = SizeFlags.ExpandFill;
 
             _agendaListContainer = new VBoxContainer();
-            _agendaListContainer.AddThemeConstantOverride("separation", 6);
+            _agendaListContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _agendaListContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             leftScroll.AddChild(_agendaListContainer);
             _splitBody.AddChild(leftScroll);
 
             // Right column: Detailed view & Actions
             _detailContainer = new VBoxContainer();
-            _detailContainer.AddThemeConstantOverride("separation", 10);
+            _detailContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _detailContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _detailContainer.SizeFlagsVertical = SizeFlags.ExpandFill;
 

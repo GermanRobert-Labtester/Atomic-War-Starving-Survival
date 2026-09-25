@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/box_of_tea_20.jpg-732b342c1f2b6f9d94af2b498ba
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

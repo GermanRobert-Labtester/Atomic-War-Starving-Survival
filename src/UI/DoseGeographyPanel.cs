@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Radiation;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
@@ -39,8 +41,26 @@ public partial class DoseGeographyPanel : Control
     private string _sectorFilter = "all";
 
     private DoseLedgerHostSession? _dose;
+    private RadiationHotspotPolicy? _hotspotPolicy;
     private readonly List<DoseLocationDef> _visibleLocations = new();
     private readonly StringBuilder _renderDump = new();
+
+    /// <summary>Optional authored hotspot policy; falls back to the Core default
+    /// bands (mirrors radiation_hotspot_policy.json) when unbound.</summary>
+    public void BindHotspotPolicy(RadiationHotspotPolicy? policy)
+    {
+        _hotspotPolicy = policy;
+        RefreshView();
+    }
+
+    private RadiationHotspotPolicy HotspotPolicy => _hotspotPolicy ?? RadiationHotspotPolicy.Default;
+
+    private IReadOnlyList<HotspotRow> HotspotWatch()
+    {
+        var locations = _dose?.Content?.locations;
+        if (locations == null) return Array.Empty<HotspotRow>();
+        return RadiationHotspotSurvey.Classify(HotspotPolicy, locations);
+    }
 
     public bool IsBound => _dose != null;
 
@@ -108,6 +128,17 @@ public partial class DoseGeographyPanel : Control
         _statusRail.Set("risk", $"{maxRisk} · {RiskTier(maxRisk)}", maxRisk >= 5 ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("hot", $"{hot}", hot > 0 ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("events", $"{CountProvenanceEvents()}", AshfallMetricCard.Criticality.Normal);
+
+        // Alpha feature F4 — hotspot watch list (read-only severity projection).
+        var watch = HotspotWatch();
+        _statusRail.Set("watch", $"{watch.Count}",
+            watch.Count > 0 ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
+        _renderDump.Append("WATCH ").Append(watch.Count).Append(" | ");
+        foreach (var row in watch.Take(3))
+        {
+            _renderDump.Append(row.DisplayName).Append(" ").Append(row.RadiationUsv.ToString("0.0"))
+                .Append(" µSv/h ").Append(row.Severity).Append(" | ");
+        }
     }
 
     private void BuildRows()
@@ -219,6 +250,27 @@ public partial class DoseGeographyPanel : Control
             _detailTitle.Text = "EXPOSURE GEOGRAPHY";
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Select a place to read why it is radioactive, and what the ledger has booked there."));
+
+            // Alpha feature F4 — hotspot watch list, worst first.
+            var watch = HotspotWatch();
+            if (watch.Count > 0)
+            {
+                _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("HOTSPOT WATCH LIST"));
+                foreach (var row in watch.Take(5))
+                {
+                    _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        row.DisplayName, $"{row.RadiationUsv:0.0} µSv/h · {row.Label}",
+                        AshfallUiHelpers.ToColor(row.Severity switch
+                        {
+                            "extreme" => DesignTheme.Entropy,
+                            "high" => DesignTheme.Critical,
+                            "elevated" => DesignTheme.Hot,
+                            _ => DesignTheme.Warm,
+                        })));
+                }
+                _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+                    "Every reading is already booked in the dose ledger — survey it before you travel, not after."));
+            }
             return;
         }
 
@@ -333,6 +385,7 @@ public partial class DoseGeographyPanel : Control
         _statusRail.AddCard("peak", "PEAK RATE", "—", AshfallMetricCard.Criticality.Normal, 130);
         _statusRail.AddCard("risk", "PEAK RISK", "—", AshfallMetricCard.Criticality.Normal, 130);
         _statusRail.AddCard("hot", "HOT ZONES", "0", AshfallMetricCard.Criticality.Normal, 100);
+        _statusRail.AddCard("watch", "WATCH LIST", "0", AshfallMetricCard.Criticality.Normal, 110);
         _statusRail.AddCard("events", "READINGS", "0", AshfallMetricCard.Criticality.Normal, 100);
 
         _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());

@@ -239,12 +239,12 @@ public partial class CaravanBarterLedgerPanel : Control, IBindablePanel
         RefreshView();
     }
 
-    public void Close()
-    {
-        _tradeInner.Close();
-        Visible = false;
-        OnClose?.Invoke();
-    }
+    public void Close() {
+            _tradeInner.Close();
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
 
     public override void _UnhandledInput(InputEvent @event)
     {

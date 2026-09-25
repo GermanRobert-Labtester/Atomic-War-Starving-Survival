@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_potassium_iodide.jpg-a2a55412c2f6ec37c50
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

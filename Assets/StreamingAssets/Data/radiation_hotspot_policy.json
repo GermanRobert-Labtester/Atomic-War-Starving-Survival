@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "collection_id": "radiation_hotspot_alpha1",
+  "description": "Severity bands for the dose-geography hotspot watch list. Authored gameplay values only; no real-world radiological guidance.",
+  "watch_threshold_usv": 25.0,
+  "bands": [
+    { "severity": "extreme",  "min_usv": 200.0, "label": "EXTREME — do not linger" },
+    { "severity": "high",     "min_usv": 100.0, "label": "HIGH — shielded transit only" },
+    { "severity": "elevated", "min_usv": 50.0,  "label": "ELEVATED — time the exposure" },
+    { "severity": "watch",    "min_usv": 25.0,  "label": "WATCH — log the reading" }
+  ]
+}

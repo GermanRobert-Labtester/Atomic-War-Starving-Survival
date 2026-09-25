@@ -98,6 +98,10 @@ namespace AtomicWar.GodotApp.UI
             string captureRoot)
         {
             _mode = mode;
+            // Capture runs must never observe panel entrance fades
+            // (UI/UX audit 2026-09-25): suppress central open motion for the
+            // whole capture/diff/regenerate session.
+            UiMotion.Suppress = true;
             _goldenRoot = goldenRoot;
             _captureRoot = captureRoot;
             _outputRoot = captureRoot;
@@ -185,6 +189,10 @@ namespace AtomicWar.GodotApp.UI
             };
             var root = new Control { Name = $"SnapRoot_{_current.StableId}" };
             root.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+            // Same class-default chrome as the live UI so captures verify the
+            // real theme (raw buttons/inputs in panels otherwise fell through
+            // to Godot's default theme in this isolated SubViewport).
+            AshfallUiTheme.InstallOn(root);
             sub.AddChild(root);
 
             var bg = new ColorRect { Color = new Color(0.10f, 0.09f, 0.07f, 1.0f) };

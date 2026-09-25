@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/clean_water.jpg-e02559501a7504eb72056b866df1c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

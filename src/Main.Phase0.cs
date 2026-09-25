@@ -368,6 +368,29 @@ namespace AtomicWar.GodotApp
             _doseLedger = DoseLedgerHostSession.Create(_dataDir, campaignRng: _campaignDay.Rng);
             _doseLedger.StateChanged += () => _doseLedgerDirty = true;
 
+            // CORE-MECH W2: bind the live campaign day and the authored Year-of-Ash
+            // fallout windows so radiation bookings are conditioned by the season.
+            // The provider is read-only and pure; the dose ledger keeps owning every
+            // reading rule (AA.2 receiver contract).
+            _doseLedger.DayProvider = () => _simDay;
+            try
+            {
+                var catalogPath = CatalogPath.ResolveCatalog("year_of_ash_events.json");
+                var catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
+                if (catalogIo.FileExists(catalogPath))
+                {
+                    var yoaEvents = YearOfAshCatalogLoader.LoadEvents(
+                        CatalogPath.ResolveDataDir(), catalogIo, new SystemTextJsonSerializer());
+                    _doseLedger.FalloutWindowProviderRef = new FalloutWindowProvider(yoaEvents);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Fail-closed: no calendar ⇒ neutral multiplier (1.0), never a crash
+                // and never a silently reduced exposure.
+                GD.Print("[Ashfall Godot] Dose fallout windows unavailable: " + ex.Message);
+            }
+
             var save = DoseLedgerSaveStore.TryLoad();
             if (save != null)
             {

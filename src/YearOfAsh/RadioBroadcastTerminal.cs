@@ -29,7 +29,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             CustomMinimumSize = new Vector2(420, 260);
 
             var rootVbox = new VBoxContainer();
-            rootVbox.AddThemeConstantOverride("separation", 6);
+            rootVbox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             AddChild(rootVbox);
 
             _lblHeader = new Label

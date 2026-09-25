@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/workbench_action_kind.jpg-22f775a2a062219a06e
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

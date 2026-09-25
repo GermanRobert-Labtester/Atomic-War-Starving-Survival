@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/concrete_patch_mix.jpg-f8609a5cadd50b346d5125
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

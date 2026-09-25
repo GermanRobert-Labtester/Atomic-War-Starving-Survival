@@ -14,9 +14,14 @@ namespace AtomicWar.GodotApp
     public partial class Main
     {
         private SpiritualMeaningCoordinator? _spiritual;
+        private SpiritualCatalog? _spiritualCatalog;
         private bool _spiritualDeathWired;
 
         public SpiritualMeaningCoordinator? SpiritualCoordinator => _spiritual;
+
+        /// <summary>CORE-MECH W9: the loaded catalog is also the authored source of
+        /// belief→faction affinities (BeliefStanceBridge). Retained, not reloaded.</summary>
+        public SpiritualCatalog? SpiritualCatalogRef => _spiritualCatalog;
 
         private void SetupSpiritual()
         {
@@ -28,6 +33,7 @@ namespace AtomicWar.GodotApp
 
             string dataDir = string.IsNullOrEmpty(_dataDir) ? CatalogPath.ResolveDataDir() : _dataDir;
             var catalog = SpiritualCatalogLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            _spiritualCatalog = catalog;
             _spiritual = new SpiritualMeaningCoordinator(catalog);
 
             var saved = SpiritualSaveStore.TryLoad();
@@ -38,9 +44,52 @@ namespace AtomicWar.GodotApp
             GD.Print("[Ashfall Godot] Spiritual meaning coordinator ready.");
         }
 
+        /// <summary>
+        /// CORE-MECH W10 — a performed memorial rite leaves a trace in the
+        /// campaign record. Subscribed at the SPIRITUAL OWNER (not at the call
+        /// site in the shared Main.Campaign.cs) so every rite performance is
+        /// covered, whoever performs it.
+        ///
+        /// Once-per-(mourner, rite) is enforced by the W11 one-shot primitive over
+        /// the campaign consequence ledger, so a repeated vigil cannot inflate
+        /// the register and the guard survives save/load. Fails closed: no verdict
+        /// owner means the rite still happened, it simply left no mark.
+        /// </summary>
+        private void WireMemorialRiteTrace()
+        {
+            if (_memorialRiteTraceWired || _spiritual == null) return;
+            _memorialRiteTraceWired = true;
+            _spiritual.OnMemorialRitePerformed += (deceasedId, riteId) =>
+            {
+                if (string.IsNullOrEmpty(deceasedId) || string.IsNullOrEmpty(riteId)) return;
+
+                var triggers = RiteTraceTriggers();
+                if (!triggers.TryFire("rite." + deceasedId + "." + riteId, _simDay)) return;
+
+                SetupVerdict();
+                if (_verdict == null) return;
+                _verdict.Reckoning.EnrollRiteTrace(1);
+                _verdictDirty = true;
+
+                SetupJournal();
+                _journal?.TryAddRawEntry(
+                    $"rite_trace_{deceasedId}_{riteId}_{_simDay}",
+                    "A memorial act was entered in the register.",
+                    null!, _simDay);
+            };
+        }
+
+        /// <summary>W10 one-shot guard over the campaign consequence ledger.</summary>
+        private Ashfall.Core.Flags.OneShotTriggerLedger RiteTraceTriggers()
+            => _riteTraceTriggers ??= new Ashfall.Core.Flags.OneShotTriggerLedger(_consequenceLedger);
+
+        private Ashfall.Core.Flags.OneShotTriggerLedger? _riteTraceTriggers;
+        private bool _memorialRiteTraceWired;
+
         private void WireSpiritualDeathFeed()
         {
             if (_spiritualDeathWired || _spiritual == null) return;
+            WireMemorialRiteTrace();
             SetupSurvivorFate();
             if (_spiritualDeathWired || _survivorFate == null) return;
 

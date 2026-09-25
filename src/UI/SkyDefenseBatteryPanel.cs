@@ -125,7 +125,7 @@ namespace AtomicWar.GodotApp.UI
                 SizeFlagsHorizontal = SizeFlags.ExpandFill
             };
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
             scroll.AddChild(_contentStack);
@@ -140,7 +140,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("EMPLACEMENT"));
 
             var turretRow = new HBoxContainer();
-            turretRow.AddThemeConstantOverride("separation", 10);
+            turretRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             turretRow.AddChild(AshfallUiHelpers.MakeBody("Turret:"));
             _turretSelector = new OptionButton { CustomMinimumSize = new Vector2(280, 34) };
             _turretSelector.ItemSelected += OnTurretSelected;
@@ -152,7 +152,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("MAGAZINE LOAD"));
 
             var loadRow = new HBoxContainer();
-            loadRow.AddThemeConstantOverride("separation", 10);
+            loadRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             loadRow.AddChild(AshfallUiHelpers.MakeBody("Ordnance:"));
             _ordnanceSelector = new OptionButton { CustomMinimumSize = new Vector2(360, 34) };
             _ordnanceSelector.ItemSelected += OnOrdnanceSelected;
@@ -167,7 +167,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("FIRE CONTROL"));
 
             var fireRow = new HBoxContainer();
-            fireRow.AddThemeConstantOverride("separation", 10);
+            fireRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             fireRow.AddChild(AshfallUiHelpers.MakeBody("Track:"));
             _trackSelector = new OptionButton { CustomMinimumSize = new Vector2(360, 34) };
             _trackSelector.ItemSelected += OnTrackSelected;
@@ -181,7 +181,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("MAINTENANCE"));
 
             var serviceRow = new HBoxContainer();
-            serviceRow.AddThemeConstantOverride("separation", 10);
+            serviceRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _serviceOnHand = AshfallUiHelpers.MakeSmall("machine oil on hand: —");
             serviceRow.AddChild(_serviceOnHand);
             _serviceButton = AshfallUiHelpers.MakeButton("SERVICE HYDRAULICS", OnServicePressed);
@@ -192,7 +192,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("CREW"));
 
             var crewRow = new HBoxContainer();
-            crewRow.AddThemeConstantOverride("separation", 10);
+            crewRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             crewRow.AddChild(AshfallUiHelpers.MakeBody("Survivor:"));
             _crewSelector = new OptionButton { CustomMinimumSize = new Vector2(320, 34) };
             _crewSelector.ItemSelected += OnCrewSelected;

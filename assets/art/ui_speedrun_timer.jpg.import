@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ui_speedrun_timer.jpg-0f35a6d2223f41083466392
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/survivor_state.jpg-cb919a99f0f448fdf297330795
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

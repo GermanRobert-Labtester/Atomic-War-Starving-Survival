@@ -1,5 +1,13 @@
 # Plan 195 — Survivor Specialization Roles — Canonical Duties, Skill Gates, and Earned Role Practice
 
+## PFGL Codex Luna 6 execution revision — 2026-09-25
+
+**Verified boundary:** DEC-185 is signed. `SurvivorRoleSystem`, `survivor_roles.json`, its capture/restore contract, and six focused Core integration tests already exist. A repository-wide `src/` search found no production construction or consumption of `SurvivorRoleSystem`. `DutyRosterSystem` remains the sole shift-assignment authority; DEC-185 explicitly assigns role identity, bonus scaling, and role XP to this system while leaving skills and work assignments to their existing owners. The earlier text below that treats the role/duty distinction as unsigned is superseded.
+
+**Bounded implementation:** add one production host and restore path for role identity and earned role practice. Only verified completed-work facts may award role XP. `TriggerAutoAction` is bookkeeping and does not execute healing, repair, or scouting, so this package must not advertise those actions as operational. Skill eligibility must be read from the current SkillProgression owner; no copied skill values or second duty assignment list. Surface the current role through the existing survivor detail/duty routes only after checking their live bind contract; a new role board is not part of this octet.
+
+**Acceptance:** authored catalog loads; assignment respects the signed skill/cap rules; one legitimate work fact advances XP once; invalid or repeated facts do not; capture/restore preserves role identity and XP; no second roster or auto-action execution is introduced. The implementation claim must name the actual work-completion producer before connecting XP.
+
 ## Current evidence and integration architecture — 2026-09-24
 
 This section controls the integration route for **Survivor specialization roles**. The scenario inventory retained below is historical planning material: a line there that proposes a new system, save section, catalog, or UI route is conditional until Phase 0 proves the premise and a named owner claims the files. This document is a plan and does not modify production behavior.

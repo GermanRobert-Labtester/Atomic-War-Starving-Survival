@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ui_button_action_craft.jpg-d83a70a9f14282cfee
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

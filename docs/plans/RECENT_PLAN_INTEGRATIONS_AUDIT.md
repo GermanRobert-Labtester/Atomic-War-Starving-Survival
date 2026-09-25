@@ -1,6 +1,6 @@
 # Recent Plan Integrations — Programmatic Audit
 
-**Generated:** 2026-09-24
+**Generated:** 2026-09-25
 
 **Method:** programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)
 
@@ -39,7 +39,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 | 52 | Scarcity Audio | read model | ✅ 2/2 identifiers referenced | — | ✅ | — | — | **INTEGRATED** |
 | 54 | Seven-Day Slice | `seven_day_slice` | ✅ 3/3 identifiers referenced | ✅ | ✅ | — | — | **INTEGRATED** |
 | 55 | Retention & 400-Year Campaign | `retention` | ✅ 3/4 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
-| 58 | Outposts & Second Holdfast | `outpost_settlement` | ✅ 3/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 58 | Outposts & Second Holdfast | `outpost_settlement` | ✅ 6/6 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 59 | Standing Gates Retrospective | read model | ✅ 2/2 identifiers referenced | — | ✅ | — | ✅ | **INTEGRATED** |
 | 132 | Hidden Agendas & Betrayal | `hidden_agenda` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 134 | Territory & Supply Lines | `territory_control` | ✅ 3/7 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
@@ -288,7 +288,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --playable-metrics-selftest
 - ✅ `tests`: Plan46PlayMetricsHostIntegrationTests
-- Host reference files (first authority, up to 8): `src/Host/PlayMetricsHostSession.cs`, `src/Host/HostCli.PlayMetrics.cs`
+- Host reference files (first authority, up to 8): `src/Host/PlayMetricsHostSession.cs`, `src/Host/HostCli.PlayMetrics.cs`, `src/Host/PlayMetricJsonlSink.cs`
 
 ### Plan 49 — Content Orphan Certification — INTEGRATED
 
@@ -368,17 +368,17 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 ### Plan 58 — Outposts & Second Holdfast — INTEGRATED
 
 - ✅ `authority`: OutpostSettlementSystem [Core], OutpostDef [Core], OutpostInstance [Core], OutpostSettlementState [Core]
-- ✅ `host_refs`: 3/5 identifiers referenced
+- ✅ `host_refs`: 6/6 identifiers referenced
 - ✅ `save_section`: `outpost_settlement`
 - ✅ `triad`: SetupOutpostSettlement / SaveOutpostSettlement
 - ✅ `save_file`: outpost_settlement_save.json
 - ✅ `save_store`: OutpostSettlementSaveStore
-- ✅ `host_session`: OutpostSettlementHostSession
-- — `ui_panel`: no dedicated panel (read model / detail rows)
-- — `route`: —
+- ✅ `host_session`: OutpostSettlementHostSession, ShelterOperationsHostSession
+- ✅ `ui_panel`: ShelterOperationsPanel
+- ✅ `route`: shelter_operations
 - ✅ `cli_flag`: --outpost-settlement-selftest
 - ✅ `tests`: Plan58OutpostHostIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.OutpostSettlement.cs`, `src/Host/OutpostSettlementHostSession.cs`
+- Host reference files (first authority, up to 8): `src/Main.OutpostSettlement.cs`, `src/Host/OutpostSettlementHostSession.cs`, `src/Host/HostCli.ShelterOperations.cs`
 
 ### Plan 59 — Standing Gates Retrospective — INTEGRATED
 
@@ -1023,7 +1023,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: rumors
 - ✅ `cli_flag`: --rumor-network-selftest
 - — `tests`: no named fixture (host selftest only)
-- Host reference files (first authority, up to 8): `src/Main.RumorNetwork.cs`, `src/Main.BroadsheetPress.cs`, `src/Host/RumorNetworkHostSession.cs`, `src/Host/RumorNetworkSelfTest.cs`, `src/Host/BroadsheetPressHostSession.cs`
+- Host reference files (first authority, up to 8): `src/Main.MoralChoice.cs`, `src/Main.RumorNetwork.cs`, `src/Main.BroadsheetPress.cs`, `src/Host/RumorNetworkHostSession.cs`, `src/Host/RumorNetworkSelfTest.cs`, `src/Host/BroadsheetPressHostSession.cs`
 
 ### Plan 205 — Shelter Noise — INTEGRATED
 
@@ -1083,7 +1083,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --leadership-succession-selftest
 - ✅ `tests`: Plan208LeadershipSuccessionIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.Plans182_185.cs`, `src/Main.SurvivorSocial.cs`, `src/Main.ShelterGovernance.cs`, `src/Host/ShelterGovernanceHostSession.cs`, `src/Host/LeadershipSuccessionSelfTest.cs`
+- Host reference files (first authority, up to 8): `src/Main.Plans182_185.cs`, `src/Main.SurvivorSocial.cs`, `src/Main.ShelterGovernance.cs`, `src/Host/ShelterGovernanceHostSession.cs`, `src/Host/LeadershipSuccessionSelfTest.cs`, `src/Host/InternalCommunicationHostSession.cs`
 
 ### Plan 210 — Personal Belongings & Effects — INTEGRATED
 

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/enc_the_stroller.jpg-f51e2da7f9f43747886ccb5f
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

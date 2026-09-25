@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/cardboard_box.jpg-2c78e3280be667933be658db1d6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -275,9 +275,19 @@ public partial class AshfallDataGrid : PanelContainer
         {
             int captured = rowIndex;
             Action capturedHandler = row.OnSelected ?? (() => { });
+            // UI/UX audit 2026-09-25: selectable rows are keyboard-reachable —
+            // visible focus style + FocusMode.All via the shared focus policy,
+            // with ui_accept (Enter/Space) mirroring the left-click activation.
+            AshfallFocusPolicy.ApplyFocusVisibleStyle(panel);
             panel.GuiInput += evt =>
             {
                 if (evt is InputEventMouseButton mb && mb.Pressed && mb.ButtonIndex == MouseButton.Left)
+                {
+                    SetSelected(captured);
+                    capturedHandler();
+                    AcceptEvent();
+                }
+                else if (evt.IsActionPressed("ui_accept"))
                 {
                     SetSelected(captured);
                     capturedHandler();

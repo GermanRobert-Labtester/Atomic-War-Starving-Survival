@@ -1,0 +1,24 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra --strict-markers"
+norecursedirs = [
+  ".git",
+  ".venv",
+  "bin",
+  "obj",
+  "build",
+  "dist",
+  "node_modules",
+  "assets",
+  "logs",
+  "saves",
+  "generated",
+  "third_party"
+]
+markers = [
+  "fast: pure unit test; run on each edit",
+  "integration: requires engine, filesystem, or database",
+  "slow: expensive simulation or large fixture",
+  "e2e: launches game or UI",
+]

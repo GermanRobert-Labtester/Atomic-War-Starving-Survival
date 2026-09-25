@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bunker_social.jpg-b8c94dc0b3b8f19979d7188ec69
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

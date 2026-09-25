@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/rope_coil.jpg-47a359da78474490c4ec9e2f3aa3e24
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

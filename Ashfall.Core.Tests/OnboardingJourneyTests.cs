@@ -28,6 +28,7 @@ namespace Ashfall.Core.Tests
         private const string S_FoodConsumed = "food.ration_consumed";
         private const string S_ResearchStarted = "research.started";
         private const string S_ExpeditionDispatched = "expedition.dispatched";
+        private const string S_DoseRead = "dose.read";
 
         [Fact]
         public void FreshJourney_StartsAtProtocolStage()
@@ -40,13 +41,23 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void FirstHourJourney_StartsAtWaterAndUsesFiveDomainStages()
+        public void FirstHourJourney_StartsAtWaterAndUsesPressureOrderedDomainStages()
         {
             var j = OnboardingJourney.CreateFirstHour();
 
             Assert.Equal(OnboardingProfile.FirstHour, j.Profile);
             Assert.Equal(OnboardingStage.Water, j.CurrentStage);
-            Assert.Equal(5, j.OutstandingStages().Count);
+            Assert.Equal(new[]
+            {
+                OnboardingStage.Water,
+                OnboardingStage.Power,
+                OnboardingStage.Food,
+                OnboardingStage.Duty,
+                OnboardingStage.Dose,
+                OnboardingStage.Research,
+                OnboardingStage.Expedition,
+            }, OnboardingCatalog.OrderFor(OnboardingProfile.FirstHour).ToArray());
+            Assert.Equal(7, j.OutstandingStages().Count);
             Assert.False(j.JourneyComplete);
         }
 
@@ -60,6 +71,10 @@ namespace Ashfall.Core.Tests
             j.RecordSigil(S_PowerToggled);
             Assert.Equal(OnboardingStage.Food, j.CurrentStage);
             j.RecordSigil(S_FoodConsumed);
+            Assert.Equal(OnboardingStage.Duty, j.CurrentStage);
+            j.RecordSigil(S_DutyAssigned);
+            Assert.Equal(OnboardingStage.Dose, j.CurrentStage);
+            j.RecordSigil(S_DoseRead);
             Assert.Equal(OnboardingStage.Research, j.CurrentStage);
             j.RecordSigil(S_ResearchStarted);
             Assert.Equal(OnboardingStage.Expedition, j.CurrentStage);
@@ -81,6 +96,65 @@ namespace Ashfall.Core.Tests
             Assert.Equal(2, j.Day);
             Assert.False(j.JourneyComplete);
             Assert.Equal(OnboardingStage.Water, j.CurrentStage);
+        }
+
+        [Fact]
+        public void FirstHourJourney_PreAuditSaveWithoutDutyDose_ResumesAtNewDutyLesson()
+        {
+            // Mid-journey pre-audit save: water/power/food complete, in flight at
+            // Research. Restore relocates to the first incomplete stage of the
+            // extended order, so the two additive lessons get taught once; their
+            // completion is never fabricated.
+            var preAudit = new OnboardingSaveState
+            {
+                schemaVersion = OnboardingJourney.SaveVersion,
+                profile = (int)OnboardingProfile.FirstHour,
+                currentStage = (int)OnboardingStage.Research,
+                completedStages = new List<int>
+                {
+                    (int)OnboardingStage.Water,
+                    (int)OnboardingStage.Power,
+                    (int)OnboardingStage.Food,
+                },
+                day = 1,
+            };
+
+            var restored = OnboardingJourney.Restore(preAudit);
+
+            Assert.Equal(OnboardingStage.Duty, restored.CurrentStage);
+            Assert.False(restored.IsStageComplete(OnboardingStage.Duty));
+            Assert.False(restored.IsStageComplete(OnboardingStage.Dose));
+            Assert.False(restored.JourneyComplete);
+        }
+
+        [Fact]
+        public void FirstHourJourney_PreAuditCompletedSave_IsNotDemoted()
+        {
+            // A campaign that finished the first-hour contract before the
+            // Duty/Dose lessons existed must stay complete (no regression), even
+            // though the additive stages have no stored completion.
+            var preAuditComplete = new OnboardingSaveState
+            {
+                schemaVersion = OnboardingJourney.SaveVersion,
+                profile = (int)OnboardingProfile.FirstHour,
+                currentStage = (int)OnboardingStage.Expedition,
+                completedStages = new List<int>
+                {
+                    (int)OnboardingStage.Water,
+                    (int)OnboardingStage.Power,
+                    (int)OnboardingStage.Food,
+                    (int)OnboardingStage.Research,
+                    (int)OnboardingStage.Expedition,
+                },
+                journeyComplete = true,
+                day = 2,
+            };
+
+            var restored = OnboardingJourney.Restore(preAuditComplete);
+
+            Assert.True(restored.JourneyComplete);
+            Assert.False(restored.IsStageComplete(OnboardingStage.Duty));
+            Assert.False(restored.IsStageComplete(OnboardingStage.Dose));
         }
 
         [Fact]

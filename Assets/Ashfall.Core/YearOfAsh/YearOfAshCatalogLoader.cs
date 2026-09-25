@@ -26,6 +26,21 @@ namespace Ashfall.Core.YearOfAsh
         public string hazardType = string.Empty;
         public string phase = string.Empty;
         public float temperatureDeltaC = 0f;
+
+        /// <summary>
+        /// CORE-MECH W2 — authored environmental exposure multiplier for this day
+        /// (1.0 = clear / neutral). Read only by FalloutWindowProvider when
+        /// conditioning radiation dose bookings; an absent value means 1.0.
+        /// </summary>
+        public float exposureMultiplier = 1.0f;
+
+        /// <summary>
+        /// CORE-MECH W3 — authored seasonal utility-pressure multiplier for this day
+        /// (1.0 = clear / neutral). Read only by SeasonalPressureProvider when
+        /// conditioning utility load; an absent value means 1.0. Distinct from
+        /// exposureMultiplier on purpose: a diesel gelling crisis is not fallout.
+        /// </summary>
+        public float pressureMultiplier = 1.0f;
     }
 
     [Serializable]

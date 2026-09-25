@@ -1,5 +1,13 @@
 # Plan 148 — Ideological Friction → Events & Quests
 
+## PFGL Codex Luna 6 execution revision — mediation desk only — 2026-09-25
+
+**Verified boundary:** DEC-146 is signed and ideological event/faction Core state, authored templates, host session, `ideological_friction` save section, deterministic day owner, and survivor-detail projection already exist. The earlier claim below that the feature is only passive sleep/affinity math is historical and superseded. The remaining requested work is a player-facing Ideological Mediation Desk.
+
+**Bounded implementation:** show unresolved confrontation/mediation events and route the four existing choices through the current host. Apply the Core-returned morale delta to the two involved survivors through `NeedsSystem`. The current relationship owner stores one pair affinity, while the ideology command returns two individual preference deltas; project their arithmetic mean once to `SurvivorRelationsSystem.ModifyAffinity` and document that mapping. Do not create a second affinity store, belief editor, or event engine.
+
+**Acceptance:** only unresolved eligible events can be decided; each decision resolves once; both survivors receive the authored morale result once; the pair affinity receives one deterministic projected delta; read/refresh does not mutate; state survives the existing save/day lifecycle; route, keyboard close/back, and host binding have focused coverage.
+
 ## Goal
 
 Transform `IdeologicalFrictionSystem` from a passive numerical modifier (sleep penalties, affinity deltas) into an active narrative generator that produces ideological confrontation events, belief conversion attempts, bunker faction splits, and friction-triggered quest chains. Currently friction only affects sleep quality — this plan makes it a source of emergent storytelling and meaningful player decisions.

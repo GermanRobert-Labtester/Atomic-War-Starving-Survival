@@ -56,6 +56,10 @@ namespace Ashfall.Core.Quests
         public string parentQuestInstanceId = string.Empty;
         public string mergeGroupId = string.Empty;
         public List<string> childInstanceIds = new List<string>();
+
+        /// <summary>CORE-MECH W7 — the reopen grammar fires at most once per instance.</summary>
+        public bool reopenedOnce;
+        public int reopenedDay = -1;
     }
 
     [Serializable]
@@ -94,6 +98,10 @@ namespace Ashfall.Core.Quests
         public event Action<QuestInstanceState>? OnQuestRegistered;
         public event Action<QuestInstanceState>? OnQuestCompleted;
         public event Action<QuestInstanceState>? OnQuestFailed;
+
+        /// <summary>CORE-MECH W7 — abandonment and revival notifications.</summary>
+        public event Action<QuestInstanceState>? OnQuestAbandoned;
+        public event Action<QuestInstanceState>? OnQuestReopened;
         public event Action<QuestInstanceState>? OnQuestExpired;
 
         public QuestRuntimeCoordinator(ILog? log = null, QuestRuntimeState? state = null)
@@ -147,6 +155,56 @@ namespace Ashfall.Core.Quests
             quest.status = QuestLifecycleState.Failed;
             OnQuestFailed?.Invoke(quest);
             return true;
+        }
+
+        /// <summary>
+        /// CORE-MECH W7 — abandon an active quest. The lifecycle state existed but
+        /// had no transition into it, so the reopen grammar had nothing to reopen.
+        /// </summary>
+        public bool Abandon(string instanceId)
+        {
+            var quest = Find(instanceId);
+            if (quest == null || quest.status != QuestLifecycleState.Active) return false;
+            quest.status = QuestLifecycleState.Abandoned;
+            OnQuestAbandoned?.Invoke(quest);
+            return true;
+        }
+
+        /// <summary>
+        /// CORE-MECH W7 — a later discovery can revive a failed or abandoned thread.
+        /// The owner keeps the state machine and the exactly-once guard; the caller
+        /// supplies the data-driven eligibility (authored prerequisites and flags),
+        /// so Core needs no knowledge of catalogs or the flag ledger. Completed and
+        /// expired quests are never reopened.
+        /// </summary>
+        public bool Reopen(string instanceId, int day, Func<QuestInstanceState, bool>? eligibility = null)
+        {
+            var quest = Find(instanceId);
+            if (quest == null) return false;
+            if (quest.reopenedOnce) return false;                        // exactly once, ever
+            if (quest.status != QuestLifecycleState.Failed &&
+                quest.status != QuestLifecycleState.Abandoned) return false;
+            if (eligibility != null && !eligibility(quest)) return false;
+
+            quest.status = QuestLifecycleState.Active;
+            quest.reopenedOnce = true;
+            quest.reopenedDay = day;
+            OnQuestReopened?.Invoke(quest);
+            return true;
+        }
+
+        /// <summary>Every instance currently eligible to reopen under a predicate.</summary>
+        public IReadOnlyList<QuestInstanceState> GetReopenCandidates(Func<QuestInstanceState, bool>? eligibility = null)
+        {
+            var list = new List<QuestInstanceState>();
+            foreach (var q in _state.quests)
+            {
+                if (q == null || q.reopenedOnce) continue;
+                if (q.status != QuestLifecycleState.Failed && q.status != QuestLifecycleState.Abandoned) continue;
+                if (eligibility != null && !eligibility(q)) continue;
+                list.Add(q);
+            }
+            return list;
         }
 
         public void Tick(int day)
@@ -206,7 +264,11 @@ namespace Ashfall.Core.Quests
                 generationSeed = source.generationSeed,
                 parentQuestInstanceId = source.parentQuestInstanceId ?? string.Empty,
                 mergeGroupId = source.mergeGroupId ?? string.Empty,
-                childInstanceIds = source.childInstanceIds != null ? new List<string>(source.childInstanceIds) : new List<string>()
+                childInstanceIds = source.childInstanceIds != null ? new List<string>(source.childInstanceIds) : new List<string>(),
+                // CORE-MECH W7: the reopen guard must survive save/load, or a
+                // reloaded campaign could revive the same thread a second time.
+                reopenedOnce = source.reopenedOnce,
+                reopenedDay = source.reopenedDay
             };
 
         private static QuestObjectiveRuntimeState CloneObjective(QuestObjectiveRuntimeState source)

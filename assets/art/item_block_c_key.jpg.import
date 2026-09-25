@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_block_c_key.jpg-0241d450b9f4c3766ca123b2
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

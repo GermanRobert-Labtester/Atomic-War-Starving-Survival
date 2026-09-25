@@ -267,7 +267,17 @@ namespace Ashfall.Core.Telemetry
             new FunnelStepDefinition("first_ration_decision", "First Ration Policy Decided", "ration_policy_set"),
             new FunnelStepDefinition("first_storm_survived", "First Storm Survived", "weather.read"),
             new FunnelStepDefinition("first_day_past_tutorial", "First Day Beyond Tutorial", "day_advanced"),
-            new FunnelStepDefinition("first_death_witnessed", "First Casualty Witnessed", "survivor_perished")
+            new FunnelStepDefinition("first_death_witnessed", "First Casualty Witnessed", "survivor_perished"),
+            // Live FirstHour journey sigils (UI/UX audit 2026-09-25 follow-up):
+            // the funnel previously tracked only the legacy protocol order, so
+            // the live water → power → food → duty → dose → research journey
+            // (and the two contextual lessons) were invisible to tuning.
+            new FunnelStepDefinition("first_water", "First Water Treatment Started", "water.treatment_started"),
+            new FunnelStepDefinition("first_power", "First Breaker Toggled", "power.breaker_toggled"),
+            new FunnelStepDefinition("first_food", "First Food Ration Consumed", "food.ration_consumed"),
+            new FunnelStepDefinition("first_duty", "First Duty Assigned", "duty.assigned"),
+            new FunnelStepDefinition("first_dose", "First Dose Reading Opened", "dose.read"),
+            new FunnelStepDefinition("first_research", "First Research Started", "research.started"),
         };
 
         private readonly Dictionary<string, long> _completedSteps = new Dictionary<string, long>(StringComparer.Ordinal);

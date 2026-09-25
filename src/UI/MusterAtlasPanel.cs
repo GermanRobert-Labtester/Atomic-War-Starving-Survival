@@ -173,7 +173,7 @@ public partial class MusterAtlasPanel : Control, IBindablePanel
         _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("MUSTER DETAIL"));
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
         _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Bind a MusterHostSession to see live currents, coalition camp composition, and witness dossier weight."));
+            "Bind a MusterHostSession to see live currents, coalition camp composition, and witness dossier weight.", autowrap: true));
         actionRow.AddChild(_detailBox);
 
         body.AddChild(actionRow);
@@ -373,26 +373,26 @@ public partial class MusterAtlasPanel : Control, IBindablePanel
         if (_host == null)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Muster engine offline. Bind a MusterHostSession to see live currents and coalition."));
+                "Muster engine offline. Bind a MusterHostSession to see live currents and coalition.", autowrap: true));
             return;
         }
         if (_selectedIndex < 0)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Select a faction row to view approach, current direction, and coalition breakdown."));
+                "Select a faction row to view approach, current direction, and coalition breakdown.", autowrap: true));
             return;
         }
         var id = ResolveVisibleRow(_selectedIndex);
         if (string.IsNullOrEmpty(id))
         {
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("Selected row out of scope."));
+            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("Selected row out of scope.", autowrap: true));
             return;
         }
         var current = _currentRows.Find(r => r.id == id);
         var coal = _coalitionRows.Find(r => r.id == id);
         if (current.id == null)
         {
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("Faction unknown."));
+            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("Faction unknown.", autowrap: true));
             return;
         }
         _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Faction", current.display,

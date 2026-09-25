@@ -384,7 +384,34 @@ namespace AtomicWar.GodotApp
         private void OnDoorEncounterChoiceClicked(DoorEncounterEntry encounter, EncounterChoice choice)
         {
             if (_yearOfAsh == null) return;
+
+            // Barter gate (alpha feature): an item-requiring choice must actually
+            // have the item in storage. Before this, requirements were flavour
+            // only and nothing was consumed — a fake gate.
+            if (!string.IsNullOrEmpty(choice.requiredItemId) && choice.requiredItemQuantity > 0)
+            {
+                if (_inventory == null || !_inventory.Inventory.HasSufficient(choice.requiredItemId, choice.requiredItemQuantity))
+                {
+                    _statusLabel.Text = $"Not enough {choice.requiredItemId} to honour that choice.";
+                    return;
+                }
+            }
+
             var result = _yearOfAsh.Encounters.ResolveChoice(encounter, choice, _yearOfAsh.DemoRoster);
+
+            if (!string.IsNullOrEmpty(choice.requiredItemId) && choice.requiredItemQuantity > 0)
+            {
+                _inventory!.Inventory.TryConsume(choice.requiredItemId, choice.requiredItemQuantity);
+            }
+
+            // Barter grant: what the visitor leaves behind, applied through the
+            // canonical inventory owner and shown in the resolution text.
+            if (!string.IsNullOrEmpty(result.grantItemId) && result.grantItemQuantity > 0)
+            {
+                _inventory?.Inventory.AddById(result.grantItemId, result.grantItemQuantity);
+                result.outcomeText += $"\n\nThey leave {result.grantItemQuantity} × {result.grantItemId} behind for you.";
+            }
+
             _doorModal.DisplayResolution(result);
             _statusLabel.Text = $"Encounter resolved: {encounter.visitorName}. Morale: {result.netMoraleDelta:+#;-#;0}, Guilt: {result.netGuiltDelta:+#;-#;0}";
             SaveYearOfAsh();

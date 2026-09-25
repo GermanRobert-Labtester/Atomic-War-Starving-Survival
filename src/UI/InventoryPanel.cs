@@ -28,6 +28,7 @@ namespace AtomicWar.GodotApp.UI
         private Label _weightLabel = null!;
 
         private InventoryHostSession? _inventoryHost;
+        private SalvageHostSession? _salvageHost;
         private string _activeFilter = "all"; // all | consumable | material | medical | equipment
 
         public bool IsBound => _inventoryHost != null;
@@ -100,6 +101,19 @@ namespace AtomicWar.GodotApp.UI
                 string itemId = slot.Item.id;
                 selectBtn.Pressed += () => OnItemSelected?.Invoke(itemId);
                 row.AddChild(selectBtn);
+
+                if (_salvageHost != null && _salvageHost.CanTeardown(itemId))
+                {
+                    var salvageBtn = new Button { Text = "SALVAGE" };
+                    salvageBtn.CustomMinimumSize = new Vector2(82, 24);
+                    salvageBtn.TooltipText = "Break one unit down into its parts at the bench.";
+                    salvageBtn.Pressed += () =>
+                    {
+                        var result = _salvageHost.TryTeardown(itemId, 1);
+                        _statusRail?.Set("bench", result.Message);
+                    };
+                    row.AddChild(salvageBtn);
+                }
                 _storageGrid.AddChild(row);
             }
             if (_storageGrid.GetChildCount() == 0)
@@ -116,6 +130,17 @@ namespace AtomicWar.GodotApp.UI
                 return;
             }
             _gearGrid.AddChild(AshfallUiHelpers.MakeSmall(_inventoryHost.EquipLine()));
+        }
+
+        /// <summary>
+        /// Binds the salvage teardown bench. Rows for items with an authored
+        /// recipe gain a SALVAGE action; the session owns the mutation, the
+        /// panel only issues the command (no gameplay authority here).
+        /// </summary>
+        public void BindSalvage(SalvageHostSession salvage)
+        {
+            _salvageHost = salvage;
+            RefreshView();
         }
 
         private bool FilterPass(Ashfall.Core.Inventory.ItemDefinition item)
@@ -171,6 +196,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("stacks", "STACKS",     "0",   AshfallMetricCard.Criticality.Normal, 100);
             _statusRail.AddCard("weight", "WEIGHT",     "—",   AshfallMetricCard.Criticality.Normal, 130);
             _statusRail.AddCard("equip",  "EQUIP LINE", "—",   AshfallMetricCard.Criticality.Normal, 320);
+            _statusRail.AddCard("bench",  "SALVAGE BENCH", "—", AshfallMetricCard.Criticality.Normal, 360);
 
             _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());
 

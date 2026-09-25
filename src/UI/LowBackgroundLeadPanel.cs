@@ -89,7 +89,7 @@ namespace AtomicWar.GodotApp.UI
             var assayHeader = AshfallUiHelpers.MakeSectionHeader("SAMPLE ASSAY");
             _contentStack.AddChild(assayHeader);
             var assayRow = new HBoxContainer();
-            assayRow.AddThemeConstantOverride("separation", 10);
+            assayRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _assayBtn = new Button { Text = "Assay Latest Raw-Water Intake", CustomMinimumSize = new Vector2(280, 36) };
             _assayBtn.Pressed += () =>
             {
@@ -116,7 +116,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(batchHeader);
 
             var profileRow = new HBoxContainer();
-            profileRow.AddThemeConstantOverride("separation", 10);
+            profileRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             var profileLabel = AshfallUiHelpers.MakeBody("Feedstock:");
             profileRow.AddChild(profileLabel);
             _profileSelector = new OptionButton { CustomMinimumSize = new Vector2(380, 36) };
@@ -134,7 +134,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(profileRow);
 
             var batchRow = new HBoxContainer();
-            batchRow.AddThemeConstantOverride("separation", 10);
+            batchRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _startBatchBtn = new Button { Text = "Start Batch (10 units)", CustomMinimumSize = new Vector2(200, 36) };
             _startBatchBtn.Pressed += () => _host?.StartBatch(_selectedProfileId, 10, SystemDay());
             batchRow.AddChild(_startBatchBtn);

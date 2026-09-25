@@ -1,6 +1,6 @@
 # Shelter Operations Board Integration
 
-**Status:** COMPLETE  
+**Status:** IMPLEMENTED; documentation-index check blocked by concurrent documentation edits
 **Claim:** `claim-shelter-operations-board-2026-09-25`  
 **Authority:** User-approved `skill_crafting`; existing shelter, inventory, survivor, outpost, celebration, and save owners remain authoritative.
 
@@ -22,6 +22,7 @@
 - `--data-integrity-selftest`: 0 errors across 424 catalogs; 5 documented primary-wins warnings.
 - `MainTriadDriftGateTests` 7/7 and `SaveSectionRegistryTests` 5/5; no new save section was introduced.
 - Architecture map generator/check passed at 266 subsystems; self-test manifest check passed at 206 tests; catalog registry check passed at 708 catalogs / 14,391 definitions.
+- The documentation index was regenerated to include this plan, but `generate-docs-index.py --check` remains red because other active documentation files changed between generation and verification. Their edits are outside this package; rerun the check after those writers finish.
 
 ## Authority and Persistence Boundaries
 
@@ -33,4 +34,4 @@
 
 ## Remaining Limitations
 
-None identified in the accepted scope. Five non-blocking duplicate-ID warnings remain in the data-integrity output for the radio distress expansion catalog; they are unrelated to this package.
+No feature limitations were identified in the accepted scope. The docs-index drift is external to this package and awaits a stable documentation snapshot. Five non-blocking duplicate-ID warnings remain in the data-integrity output for the radio distress expansion catalog; they are unrelated to this package.

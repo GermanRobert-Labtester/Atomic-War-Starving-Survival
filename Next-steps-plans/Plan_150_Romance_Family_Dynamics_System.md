@@ -1,5 +1,13 @@
 # Plan 150 — Romance & Family Dynamics System
 
+## PFGL Codex Luna 6 execution revision — player board only — 2026-09-25
+
+**Verified boundary:** DEC-148 is signed and the romance/family Core authority, validated courtship catalog, host session, `romance_family` save section, deterministic day owner, and survivor-detail projection already exist. The older proposal below claiming there is no romance system is historical and superseded. The remaining requested work is a dedicated Romance & Family Board over the existing session.
+
+**Bounded implementation:** provide a navigable, read-only board that lists the existing relationship and family records from `RomanceFamilyHostSession`. Do not add courtship commands, automatic attraction rules, family bonuses, relationship stages, save state, RNG calls, or alternate affinity calculations. Existing detail projection and save/day paths remain the sole authorities.
+
+**Acceptance:** repeated board reads do not mutate or consume RNG; listed relationships and family units match the host state; an unavailable host is reported without synthesizing records; close/back and rebind work; save/reload and the existing day owner preserve current state. Route coverage is tested through PanelRegistry and the live host binding.
+
 ## Goal
 
 Create a romance and family dynamics system where survivors can form romantic relationships, establish family units, and experience generational storytelling. Currently `CohortSystem` tracks children with parent IDs but there are no romantic relationships, no courtship, no marriage/partnership mechanics, no family interactions, and no inter-generational social dynamics. The `bondType` field in `RelationshipEntry` can store "mentor" or "caregiver" but no code sets or reads romantic/family bond types. This plan adds meaningful romantic and family gameplay that deepens survivor relationships and creates multi-generational stories.

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/smg_steyr_solo_s1_100_765x21.jpg-acb8f24f4e52
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

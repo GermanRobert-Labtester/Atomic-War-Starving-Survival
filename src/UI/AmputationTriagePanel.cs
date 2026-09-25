@@ -76,7 +76,12 @@ namespace AtomicWar.GodotApp.UI
         }
 
         public void Open() { Visible = true; RefreshView(); }
-        public void Close() { Visible = false; OnClose?.Invoke(); }
+        public void Close()
+        {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
 
         /// <summary>Last feedback line rendered by the panel (test/diagnostic surface).</summary>
         public string LastFeedback { get; private set; } = string.Empty;
@@ -153,7 +158,12 @@ namespace AtomicWar.GodotApp.UI
                 return;
             }
 
-            _detail.AddChild(AshfallUiHelpers.MakeSectionHeader($"PATIENT: {ItemDisplay.Prettify(selected).ToUpperInvariant()}"));
+            var patientHeader = new HBoxContainer { Name = "PatientHeaderRow" };
+            patientHeader.AddThemeConstantOverride("separation", 10);
+            var patientPortrait = AshfallUiHelpers.MakeSurvivorPortrait(selected, 64);
+            if (patientPortrait != null) patientHeader.AddChild(patientPortrait);
+            patientHeader.AddChild(AshfallUiHelpers.MakeSectionHeader($"PATIENT: {ItemDisplay.Prettify(selected).ToUpperInvariant()}"));
+            _detail.AddChild(patientHeader);
 
             if (_system.State.survivorLimbs.TryGetValue(selected, out var limbs) && limbs != null)
             {

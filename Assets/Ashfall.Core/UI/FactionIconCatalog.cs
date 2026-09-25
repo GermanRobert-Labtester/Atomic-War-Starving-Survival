@@ -100,7 +100,44 @@ namespace Ashfall.Core.UI
                 { "faction_rebuilders",          "assets/ui/Icons/faction_icon_rebuilders.png" },
                 { "faction_salt_freeholders",    "assets/ui/Icons/faction_icon_salt_freeholders.png" },
                 { "faction_supply_corps",        "assets/ui/Icons/faction_icon_supply_corps.png" },
+
+                // ── 2026-09-25: registry-driven emblem wave — the remaining
+                // faction ids declared in faction_lore.json / crossing_factions.json /
+                // standing_record_factions.json. Two are aliases of already-shipped
+                // emblems; the rest were rendered and verified this wave. ──
+                { "cult_of_ash_sign", "assets/ui/Icons/faction_icon_cult_of_ash_sign.png" },
+                { "faction_ash_market_brokers", "assets/ui/Icons/faction_icon_ash_market_brokers.png" },
+                { "faction_cold_ledger", "assets/ui/Icons/faction_icon_cold_ledger.png" },
+                { "faction_doctrine_archetype_ashprophet", "assets/ui/Icons/faction_icon_doctrine_archetype_ashprophet.png" },
+                { "faction_doctrine_archetype_besiege", "assets/ui/Icons/faction_icon_doctrine_archetype_besiege.png" },
+                { "faction_doctrine_archetype_procedure", "assets/ui/Icons/faction_icon_doctrine_archetype_procedure.png" },
+                { "faction_doctrine_archetype_traffic", "assets/ui/Icons/faction_icon_doctrine_archetype_traffic.png" },
+                { "faction_forward_roster", "assets/ui/Icons/faction_icon_forward_roster.png" },
+                { "faction_scavengers", "assets/ui/Icons/faction_icon_scavengers.png" },
+                { "faction_the_garrison", "assets/ui/Icons/faction_icon_the_garrison.png" },
+                { "faction_the_granary_wardens", "assets/ui/Icons/faction_icon_the_granary_wardens.png" },
+                { "faction_the_lamplighters", "assets/ui/Icons/faction_icon_lamplighters.png" },
+                { "faction_the_quarantine_post", "assets/ui/Icons/faction_icon_the_quarantine_post.png" },
+                { "faction_the_rebuilders", "assets/ui/Icons/faction_icon_rebuilders.png" },
+                { "faction_the_smugglers_court", "assets/ui/Icons/faction_icon_the_smugglers_court.png" },
+                { "faction_the_water_committee", "assets/ui/Icons/faction_icon_the_water_committee.png" },
+                { "faction_unaligned", "assets/ui/Icons/faction_icon_unaligned.png" },
+                { "iron_garrison", "assets/ui/Icons/faction_icon_iron_garrison.png" },
+                { "raiders", "assets/ui/Icons/faction_icon_raiders.png" },
+                { "warlords_sector_4", "assets/ui/Icons/faction_icon_warlords_sector_4.png" },
+
             };
+
+        /// <summary>
+        /// Every explicitly mapped faction id (dictionary keys). Used by the
+        /// host asset self-test to load each emblem end-to-end so a missing
+        /// file fails the gate instead of silently degrading to the unknown
+        /// emblem.
+        /// </summary>
+        public static IReadOnlyList<string> MappedIds()
+        {
+            return new List<string>(_systemsIdsToIcon.Keys);
+        }
 
         /// <summary>
         /// Resolve a faction id to its canonical emblem path.

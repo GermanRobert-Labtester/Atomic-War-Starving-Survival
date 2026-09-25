@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/vegetable_carrot.jpg-cd1a77852765568a11de3c53
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

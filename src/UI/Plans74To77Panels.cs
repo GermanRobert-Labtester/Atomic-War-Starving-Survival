@@ -124,7 +124,12 @@ namespace AtomicWar.GodotApp.UI
         }
 
         public void Open() { Visible = true; RefreshView(); }
-        public void Close() { Visible = false; OnClose?.Invoke(); }
+        public void Close()
+        {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
     }
 
     public partial class BallisticsWorkbenchPanel : Plans74To77PanelBase, IBindablePanel
@@ -205,7 +210,12 @@ namespace AtomicWar.GodotApp.UI
         }
 
         public void Open() { Visible = true; RefreshView(); }
-        public void Close() { Visible = false; OnClose?.Invoke(); }
+        public void Close()
+        {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
     }
 
     public partial class AeroponicsPanel : Plans74To77PanelBase, IBindablePanel
@@ -281,7 +291,12 @@ namespace AtomicWar.GodotApp.UI
         }
 
         public void Open() { Visible = true; RefreshView(); }
-        public void Close() { Visible = false; OnClose?.Invoke(); }
+        public void Close()
+        {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
     }
 
     public partial class PneumaticDispatchPanel : Plans74To77PanelBase, IBindablePanel
@@ -361,6 +376,11 @@ namespace AtomicWar.GodotApp.UI
         }
 
         public void Open() { Visible = true; RefreshView(); }
-        public void Close() { Visible = false; OnClose?.Invoke(); }
+        public void Close()
+        {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
     }
 }

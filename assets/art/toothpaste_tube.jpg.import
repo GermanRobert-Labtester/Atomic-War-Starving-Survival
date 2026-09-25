@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/toothpaste_tube.jpg-41c3dcd05770df3226f411b51
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

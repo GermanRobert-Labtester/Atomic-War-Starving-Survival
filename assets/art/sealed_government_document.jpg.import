@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/sealed_government_document.jpg-e06d26a11ce205
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

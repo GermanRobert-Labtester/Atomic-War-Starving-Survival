@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_iodine_crystal.jpg-ba38c9ab8d96e4f9dff5b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -59,7 +59,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("impact", "Faction Impact", "0", AshfallMetricCard.Criticality.Normal, minWidth: 140);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -70,7 +70,7 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Left Column: Operations / Campaigns ─────────────────────
             _leftColumn = new VBoxContainer();
-            _leftColumn.AddThemeConstantOverride("separation", 10);
+            _leftColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _leftColumn.CustomMinimumSize = new Vector2(480, 400);
             _leftColumn.SizeFlagsHorizontal = SizeFlags.Fill;
             _leftColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -93,7 +93,7 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Right Column: Messages & Intel ──────────────────────────
             _rightColumn = new VBoxContainer();
-            _rightColumn.AddThemeConstantOverride("separation", 10);
+            _rightColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _rightColumn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _rightColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -202,7 +202,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     var msgCard = new PanelContainer();
                     var msgBox = new VBoxContainer();
-                    msgBox.AddThemeConstantOverride("separation", 2);
+                    msgBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                     var header = new Label();
                     header.Text = $"Day {msg.CreationDay} | {msg.Medium} | {msg.Theme} ({msg.Truthfulness})";

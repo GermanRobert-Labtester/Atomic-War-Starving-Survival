@@ -158,14 +158,20 @@ namespace AtomicWar.GodotApp.UI
             var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("BRONZE EPITAPH ENGRAVER & ETERNAL FLAME");
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
-            _buttonContainer.AddChild(new Button { Text = "[ENGRAVE BRONZE MEMORIAL PLAQUE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[REFUEL ETERNAL MEMORIAL FLAME]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(AshfallUiHelpers.MakeDisabledButton(
+                "[ENGRAVE BRONZE MEMORIAL PLAQUE]",
+                "Not yet available \u2014 no memorial engraving authority is wired."));
+            _buttonContainer.AddChild(AshfallUiHelpers.MakeDisabledButton(
+                "[REFUEL ETERNAL MEMORIAL FLAME]",
+                "Not yet available \u2014 eternal-flame upkeep is not wired to an owner."));
             // Plan 24C (A3): the vigil is the mourning action — once per death,
             // routed through the memorial owner's command with truthful feedback.
             var vigilButton = new Button { Text = "[HOLD ALL-SHELTER VIGIL & MOMENT OF SILENCE]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
             vigilButton.Pressed += OnVigilPressed;
             _buttonContainer.AddChild(vigilButton);
-            _buttonContainer.AddChild(new Button { Text = "[RECITE DIEGETIC COMMEMORATION EULOGY]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(AshfallUiHelpers.MakeDisabledButton(
+                "[RECITE DIEGETIC COMMEMORATION EULOGY]",
+                "Not yet available \u2014 no eulogy authority is wired."));
 
             // Right Column (Data & Logistics)
             var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("MEMORIAL RELICS & VIGIL ATTENDANCE");

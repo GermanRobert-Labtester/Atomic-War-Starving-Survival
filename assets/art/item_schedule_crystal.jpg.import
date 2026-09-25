@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_schedule_crystal.jpg-8c789161c82e57970f0
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

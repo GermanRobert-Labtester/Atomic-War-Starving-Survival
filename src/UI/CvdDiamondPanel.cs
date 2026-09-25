@@ -99,7 +99,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("INDUSTRIAL COMMANDS"));
             var row = new HBoxContainer();
-            row.AddThemeConstantOverride("separation", 10);
+            row.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _startBtn = AshfallUiHelpers.MakeButton("Start Growth Batch", () => { });
             _startBtn.Pressed += () => _host?.StartBatch(_host.NextBatchId(), "diamond_insert_industrial", "feed_refined_methane", "substrate_superalloy_billet");
             _advanceBtn = AshfallUiHelpers.MakeButton("Advance Batch", () => { });

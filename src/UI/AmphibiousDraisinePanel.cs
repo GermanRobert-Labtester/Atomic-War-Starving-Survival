@@ -113,7 +113,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("KIT COMMANDS"));
             var row = new HBoxContainer();
-            row.AddThemeConstantOverride("separation", 10);
+            row.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _installBtn = AshfallUiHelpers.MakeButton("Install Kit", () => { });
             _installBtn.Pressed += () => _host?.InstallKit("draisine_1", "amphibious_draisine_mk1");
             _deployBtn = AshfallUiHelpers.MakeButton("Deploy Outriggers", () => { });
@@ -128,7 +128,7 @@ namespace AtomicWar.GodotApp.UI
             row.AddChild(_abortBtn);
             _contentStack.AddChild(row);
             var row2 = new HBoxContainer();
-            row2.AddThemeConstantOverride("separation", 10);
+            row2.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _repairBtn = AshfallUiHelpers.MakeButton("Repair Kit", () => { });
             _repairBtn.Pressed += () => _host?.RepairKit("draisine_1");
             _tickBtn = AshfallUiHelpers.MakeButton("Advance Transition", () => { });

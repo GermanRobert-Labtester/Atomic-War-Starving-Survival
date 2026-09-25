@@ -312,9 +312,11 @@ namespace Ashfall.Core.Tests.Save
             // Plan 185 added memory_decay; Plan 202 added interpersonal_conflict; Plan 216 added exercise.
             // Plan 178 added culture_creation; Plan 179 added psychological_profiles; Plan 180 added skill_certifications.
             // Plan 187 added bestiary_knowledge; Plan 198 added health_history.
-            Assert.Equal(266, SaveSectionRegistry.All.Count);
+            // Plan 211 added the distinct internal_communication section; external
+            // communications remains the antenna/radio section.
+            Assert.Equal(267, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(266, keys.Count);
+            Assert.Equal(267, keys.Count);
 
         }
 

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/government_bunker.jpg-0f48b4f43ceaf450db2d4c1
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

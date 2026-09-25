@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/env_bunker_blast_door_exterior.jpg-4e434ba886
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

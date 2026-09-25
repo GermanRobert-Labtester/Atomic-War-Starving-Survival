@@ -51,6 +51,12 @@ namespace AtomicWar.GodotApp
             var session = new PlayMetricsHostSession("local_session", PlayMetricsBuildVersion);
             session.RestoreState(PlayMetricsSaveStore.TryLoad());
             session.StateChanged += () => _playMetricsDirty = true;
+            // Local JSONL audit sink: every recorded event is appended to
+            // user://play_metrics.jsonl for the first-hour funnel tool. The sink
+            // never drains the recorder buffer, so the playable_metrics section
+            // and end-of-campaign report keep their rows.
+            session.Recorder.PlaySessionEventRecordedSeam += evt =>
+                PlayMetricJsonlSink.AppendLine(session.Recorder.ToJsonLine(evt));
 
             _playMetrics = session;
             return _playMetrics;

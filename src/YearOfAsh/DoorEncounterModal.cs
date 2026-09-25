@@ -61,7 +61,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _panel.AddChild(rootMargin);
 
             var rootBox = new VBoxContainer();
-            rootBox.AddThemeConstantOverride("separation", 14);
+            rootBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingLg);
             rootMargin.AddChild(rootBox);
 
             _titleLabel = new Label
@@ -106,7 +106,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             rootBox.AddChild(_choicesContainer);
 
             _reactionsContainer = new VBoxContainer();
-            _reactionsContainer.AddThemeConstantOverride("separation", 6);
+            _reactionsContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             rootBox.AddChild(_reactionsContainer);
 
             _closeButton = new Button

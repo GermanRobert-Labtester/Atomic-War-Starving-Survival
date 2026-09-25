@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/honey_jar.jpg-76fc31947d792f9cf4f7c4ffc433a95
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

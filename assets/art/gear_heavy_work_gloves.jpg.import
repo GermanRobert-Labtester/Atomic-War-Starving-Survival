@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/gear_heavy_work_gloves.jpg-ac798a78cc82be6ad9
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -298,10 +298,10 @@ public partial class PsychologyArcPanel : Control
         QueueRedraw();
     }
 
-    public void Close()
-    {
-        Visible = false;
-    }
+    public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+        }
 
     public override void _UnhandledInput(InputEvent @event)
     {

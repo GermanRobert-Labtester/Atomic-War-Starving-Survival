@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/zip_ties.jpg-37c75ae848f4955b0611ba0d683da7dc
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

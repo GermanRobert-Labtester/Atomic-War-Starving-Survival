@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/crop_lifecycle_stage.jpg-9c67566e3062b4958c8a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/weapon_heavy_machine_gun.jpg-a24e2972a2d0390d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

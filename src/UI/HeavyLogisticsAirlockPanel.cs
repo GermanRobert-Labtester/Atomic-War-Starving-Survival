@@ -46,7 +46,7 @@ namespace AtomicWar.GodotApp.UI
             AddChild(margin);
 
             var root = new VBoxContainer();
-            root.AddThemeConstantOverride("separation", 10);
+            root.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             margin.AddChild(root);
 
             _headerLabel = AshfallUiHelpers.MakeLabel("SHELTER LOGISTICS // HEAVY CARGO AIRLOCK & SUMP (LOG-03)", 20, true);

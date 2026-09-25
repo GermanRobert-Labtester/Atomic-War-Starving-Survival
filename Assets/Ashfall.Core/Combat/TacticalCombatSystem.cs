@@ -330,10 +330,17 @@ namespace Ashfall.Core.Combat
 
         // ══ Action Preflight & Reason Explanations ═════════════════════════
 
+        private bool IsPlayerActionPhase()
+        {
+            if (_state == null) return false;
+            if (_state.Phase == (int)CombatPhase.PlayerTurn) return true;
+            return _state.RealtimeActive && _state.Phase == (int)CombatPhase.ActiveRealtime;
+        }
+
         public ActionPreflight EvaluateFire(string targetId)
         {
             if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
-            if (_state.Phase != (int)CombatPhase.PlayerTurn) return ActionPreflight.Blocked("Not player turn");
+            if (!IsPlayerActionPhase()) return ActionPreflight.Blocked("Not player turn");
             var shooter = PickActiveShooter();
             if (shooter == null) return ActionPreflight.Blocked("No standing armed survivor");
             var weapon = WeaponOf(shooter);
@@ -354,7 +361,7 @@ namespace Ashfall.Core.Combat
         public ActionPreflight EvaluateSuppress()
         {
             if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
-            if (_state.Phase != (int)CombatPhase.PlayerTurn) return ActionPreflight.Blocked("Not player turn");
+            if (!IsPlayerActionPhase()) return ActionPreflight.Blocked("Not player turn");
             var shooter = PickActiveShooter();
             if (shooter == null) return ActionPreflight.Blocked("No standing armed survivor");
             var weapon = WeaponOf(shooter);
@@ -368,12 +375,27 @@ namespace Ashfall.Core.Combat
         public ActionPreflight EvaluateClearJam(string subjectId)
         {
             if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
-            if (_state.Phase != (int)CombatPhase.PlayerTurn) return ActionPreflight.Blocked("Not player turn");
+            if (!IsPlayerActionPhase()) return ActionPreflight.Blocked("Not player turn");
             var c = FindPlayerCombatant(subjectId);
             if (c == null) return ActionPreflight.Blocked("Survivor not in encounter");
             var weapon = WeaponOf(c);
             if (weapon == null) return ActionPreflight.Blocked("No equipped weapon");
             if (!weapon.IsJammed) return ActionPreflight.Blocked("Weapon is not jammed");
+            return ActionPreflight.Ok;
+        }
+
+        public ActionPreflight EvaluateReload(string subjectId)
+        {
+            if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
+            if (!IsPlayerActionPhase()) return ActionPreflight.Blocked("Not player turn");
+            var c = FindPlayerCombatant(subjectId);
+            if (c == null) return ActionPreflight.Blocked("Survivor not in encounter");
+            var weapon = WeaponOf(c);
+            if (weapon == null) return ActionPreflight.Blocked("No equipped weapon");
+            if (weapon.IsJammed) return ActionPreflight.Blocked("Clear jam before reloading");
+            int maxLoad = weapon.MagazineCapacity > 0 ? weapon.MagazineCapacity : 30;
+            if (weapon.AmmoRemaining >= maxLoad) return ActionPreflight.Blocked("Magazine already full");
+            if (string.IsNullOrEmpty(weapon.AmmoId)) return ActionPreflight.Blocked("Weapon has no ammo type");
             return ActionPreflight.Ok;
         }
 
@@ -393,6 +415,16 @@ namespace Ashfall.Core.Combat
             if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
             var mods = GetStanceMods(CurrentStance());
             if (!mods.CanFlee) return ActionPreflight.Blocked("Cannot retreat during Last Stand");
+            if (_state.RealtimeActive && _state.Phase == (int)CombatPhase.ActiveRealtime)
+            {
+                var players = LivingPlayers();
+                bool anyStanding = false;
+                for (int i = 0; i < players.Count; i++)
+                {
+                    if (players[i] != null && !players[i].IsDowned) { anyStanding = true; break; }
+                }
+                if (!anyStanding) return ActionPreflight.Blocked("No standing survivors to extract");
+            }
             return ActionPreflight.Ok;
         }
 

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/candle.jpg-1289615e5d8340464bfde348abb468cd.c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

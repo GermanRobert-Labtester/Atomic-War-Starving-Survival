@@ -366,11 +366,26 @@ namespace AtomicWar.GodotApp
                     }
                 }
                 StateChanged?.Invoke();
+                // CORE-MECH W1: one-shot per eating event (not per unit) so a
+                // foodborne exposure attempt can never stack within a single meal.
+                FoodConsumed?.Invoke(itemId, amount, targetSurvivor);
                 return ActionResult.Success($"Ate {amount} × {itemId}.", aggregatedDeltas);
             }
 
-            return FallbackConsume(itemId, amount, targetSurvivor, ItemType.Food);
+            var fallback = FallbackConsume(itemId, amount, targetSurvivor, ItemType.Food);
+            if (fallback.IsSuccess)
+                FoodConsumed?.Invoke(itemId, amount, targetSurvivor);
+            return fallback;
         }
+
+        /// <summary>
+        /// CORE-MECH W1 foodborne-disease bridge seam. Raised exactly once per
+        /// successful food consumption event with (itemId, amount, survivorId).
+        /// The subscriber (Main) owns the preservation → disease translation; this
+        /// session stays ignorant of both systems. Not raised for water, blocked
+        /// eats, or failed consumes.
+        /// </summary>
+        public Action<string, int, string>? FoodConsumed { get; set; }
 
         /// <summary>
         /// Consume water items from inventory to reduce thirst.

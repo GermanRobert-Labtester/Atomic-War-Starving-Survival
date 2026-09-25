@@ -76,7 +76,12 @@ namespace AtomicWar.GodotApp.UI
         }
 
         public void Open() { Visible = true; RefreshView(); }
-        public void Close() { Visible = false; OnClose?.Invoke(); }
+        public void Close()
+        {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
 
         /// <summary>Last feedback line rendered by the panel (test/diagnostic surface).</summary>
         public string LastFeedback { get; private set; } = string.Empty;

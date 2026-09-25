@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ui_button_action_scavenge.jpg-51ff43289ae702c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

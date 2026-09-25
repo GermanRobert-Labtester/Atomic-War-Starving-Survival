@@ -250,6 +250,18 @@ namespace AtomicWar.GodotApp.UI
         public void Open()
         {
             Visible = true;
+
+            // Truthful standby state (UI/UX audit silent-failure sweep): an
+            // unbound HUD must say so instead of rendering an empty shell, and a
+            // stale snapshot from a previous crisis must not be re-presented.
+            if (!IsBound)
+            {
+                if (_severityHeader != null) _severityHeader.Text = "RESPONSE STANDBY";
+                if (_crisisTitle != null) _crisisTitle.Text = "NO ACTIVE CRISIS";
+                if (_crisisSummary != null)
+                    _crisisSummary.Text = "No crisis is bound. This console populates when a crisis is detected.";
+            }
+
             _acknowledgeButton?.GrabFocus();
             if (IsBound)
             {
@@ -257,9 +269,9 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        public void Close()
-        {
-            Visible = false;
+        public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
             AudioManager.Instance?.SetSnapshot(AudioSnapshot.Normal);
             OnPanelClosed?.Invoke();
         }

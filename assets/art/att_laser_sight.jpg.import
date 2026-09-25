@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/att_laser_sight.jpg-8f40fa1427c6e6a5e40b1b488
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

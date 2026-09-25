@@ -47,6 +47,8 @@ namespace AtomicWar.GodotApp
             SetupMedical();
             SetupWorld();
             SetupRadio();
+            SetupWaterTreatment();
+            BindWaterSourcesPanel();
 
             UiNodeDiagnostics.Section("PlayerPanelsUiTest — per-panel node counts");
 
@@ -101,6 +103,19 @@ namespace AtomicWar.GodotApp
                 && _shelterPanel.Visible;
             CloseAllOverlayPanels();
             UiNodeDiagnostics.Report(this, "shelter");
+
+            OpenExpandedPanel("water_treatment");
+            bool waterSources = _waterTreatmentPanel != null
+                && _waterTreatmentPanel.IsBound
+                && _waterTreatmentPanel.AreWaterSourcesBound
+                && _waterTreatmentPanel.Visible
+                && _waterTreatmentPanel.DeepWellActionButton != null
+                && _waterTreatmentPanel.CondenserActionButton != null
+                && _waterTreatmentPanel.PiezometerInstallButton != null
+                && _waterTreatmentPanel.WaterSourcesStatusText.Contains("DEEP WELL", StringComparison.Ordinal)
+                && _waterTreatmentPanel.WaterSourcesStatusText.Contains("CONDENSER", StringComparison.Ordinal)
+                && _waterTreatmentPanel.WaterSourcesStatusText.Contains("AQUIFER MONITORING", StringComparison.Ordinal);
+            CloseAllOverlayPanels();
 
             SetupOrphanSealWave1();
             UiNodeDiagnostics.Mark(this, "shelter_operations");
@@ -207,10 +222,10 @@ namespace AtomicWar.GodotApp
             bool nodeCallbackLifecycle = PanelBindLifecycleSelfTest.Run(_dataDir) == 0;
             bool lifecyclePass = researchLifecycle && journalLifecycle && weatherLifecycle && expeditionLifecycle && nodeCallbackLifecycle;
 
-            bool pass = survivors && medical && weather && radio && shelter && shelterOperations
+            bool pass = survivors && medical && weather && radio && shelter && waterSources && shelterOperations
                 && status && tutorial && afflictions && radiation && researchLifecycle && lifecyclePass;
             GD.Print($"[PlayerPanelsUiTest] survivors={survivors} medical={medical} weather={weather} " +
-                     $"radio={radio} shelter={shelter} shelter_operations={shelterOperations} status={status} tutorial={tutorial} " +
+                     $"radio={radio} shelter={shelter} water_sources={waterSources} shelter_operations={shelterOperations} status={status} tutorial={tutorial} " +
                      $"afflictions={afflictions} radiation={radiation} " +
                      $"lifecycle=(res={researchLifecycle}, jrn={journalLifecycle}, wtr={weatherLifecycle}, exp={expeditionLifecycle}, callbacks={nodeCallbackLifecycle})");
             HostCli.EmitSummary("player_panels_uitest", pass, pass ? 0 : 1);

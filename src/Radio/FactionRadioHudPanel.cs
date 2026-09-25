@@ -194,7 +194,7 @@ namespace AtomicWar.GodotApp.Radio
 
             var scrollPresets = new ScrollContainer { CustomMinimumSize = new Vector2(0, 160), SizeFlagsVertical = SizeFlags.ExpandFill };
             _presetGrid = new VBoxContainer();
-            _presetGrid.AddThemeConstantOverride("separation", 2);
+            _presetGrid.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
             scrollPresets.AddChild(_presetGrid);
             leftCol.AddChild(scrollPresets);
 

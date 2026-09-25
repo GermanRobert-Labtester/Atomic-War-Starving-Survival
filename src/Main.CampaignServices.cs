@@ -137,6 +137,11 @@ namespace AtomicWar.GodotApp
 
                 // Expanded shelter systems (last — depends on World/PowerGrid/Inventory/Survivors/MedicalWard/Phase0/Crafting/Journal/Expeditions)
                 SetupExpandedShelterSystems();
+                // Plan 211: fresh campaigns must construct the internal
+                // communication authority even when no social panel has been
+                // opened yet; SaveAll and the first Shelter Social bind then
+                // share this same lifetime.
+                SetupInternalCommunication();
                 // Plan 49: the excavation hazard authority must exist on the fresh
                 // path too, so the subterranean flood bridge and day events are live
                 // from day 1 (the restore path already constructs it).

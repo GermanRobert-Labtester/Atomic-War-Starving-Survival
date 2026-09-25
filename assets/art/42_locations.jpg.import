@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/42_locations.jpg-f9d4c78a3e9a438dd34aed453194
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

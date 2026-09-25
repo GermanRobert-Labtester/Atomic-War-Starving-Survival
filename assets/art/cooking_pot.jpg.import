@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/cooking_pot.jpg-4eb4f048a7cd54bf2b6d60e57cf53
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

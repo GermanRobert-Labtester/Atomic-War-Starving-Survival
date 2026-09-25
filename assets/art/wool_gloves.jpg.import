@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/wool_gloves.jpg-0f4624845a184b78f612f6c9b0c3f
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

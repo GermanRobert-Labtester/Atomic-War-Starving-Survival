@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/labor_camp_purchase.jpg-ef2f836336158f2f3b6ad
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

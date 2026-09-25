@@ -162,7 +162,19 @@ namespace AtomicWar.GodotApp.UI
             // Legacy-only layout (no shelter crafting system bound).
             if (_shelterWorkshop == null)
             {
-                if (_legacyWorkshop != null) RenderLegacy();
+                if (_legacyWorkshop != null)
+                {
+                    RenderLegacy();
+                    return;
+                }
+
+                // No workshop authority is bound at all: no job can exist, so the
+                // job action must not present an operational affordance (UI/UX
+                // audit clickability gate — an unwired CANCEL is never shown).
+                _activeJobHeader.Text = "WORKSHOP STATUS: IDLE";
+                _activeJobProgressBar.Value = 0;
+                _activeJobDetails.Text = "No workshop session bound.";
+                _cancelJobButton.Visible = false;
                 return;
             }
 

@@ -52,7 +52,13 @@ namespace Ashfall.Core.Tests.UI
                 }
             }
 
-            Assert.Equal(29, prototypeCount);
+            // Contract updated by the UI/UX audit 2026-09-25 (C46): the last
+            // four registered prototype shells were fully retired because no
+            // Core system, item or data authority exists for their domains.
+            // The registry now contains zero Prototype surfaces; the pin stays
+            // so any future re-registration of a prototype must consciously
+            // update this contract and the manifest expectations.
+            Assert.Equal(0, prototypeCount);
         }
 
         [Fact]

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/alcohol_wipes_box.jpg-d2c6a6b61a71be03432af71
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

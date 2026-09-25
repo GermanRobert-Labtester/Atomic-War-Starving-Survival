@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/signal_source_report.jpg-0dc9b1e51f15c72f4aaf
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

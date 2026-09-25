@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/anomaly_fallout_snow_drift.jpg-b424f2f43de410
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

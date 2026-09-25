@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/crayon.jpg-ba9532be4d37ef7d6e6dee36c3df5122.c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

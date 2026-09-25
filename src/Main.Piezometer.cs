@@ -114,7 +114,7 @@ namespace AtomicWar.GodotApp
         public string ConstructPiezometerNetwork()
         {
             SetupPiezometer();
-            return _piezometer?.ConstructNetwork() ?? "Piezometer network unavailable.";
+            return _piezometer?.ConstructNetwork(_inventory.Inventory) ?? "Piezometer network unavailable.";
         }
 
         /// <summary>

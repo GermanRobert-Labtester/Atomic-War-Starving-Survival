@@ -10,11 +10,13 @@ using Ashfall.Core;
 using Ashfall.Core.Combat;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
+using Ashfall.Core.Disease;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
+using Ashfall.Core.Random;
 using Ashfall.Core.YearOfAsh;
 using Ashfall.Core.Radio;
 using Ashfall.Core.Survivors;
@@ -126,6 +128,13 @@ namespace AtomicWar.GodotApp
                 if (_amputation == null) SetupAmputation();
                 return _amputation?.GetMovementSpeedMultiplier(survivorId) ?? 1f;
             };
+            // CORE-MECH W4: a breakdown now costs the crew, not just the sortie.
+            // Each consequence lands in its existing owner (AA.2/AA.4): injury →
+            // the medical/health owners, exposure → the dose ledger through W2's
+            // single conditioning site, contamination → the disease authority's
+            // exposure pipeline (the W1 seam shape). Unbound receivers fail
+            // closed: the breakdown still aborts the sortie, nothing else changes.
+            _expeditions.BreakdownConsequenceSink = outcome => ApplyBreakdownConsequence(outcome);
             _expeditions.SurvivorFitnessProvider = EvaluateSurvivorFitness;
             _expeditions.ExpeditionFitnessProvider = survivorId =>
                 EvaluateDutyRoleFitness(survivorId, DutyRosterIds.RoleExpedition);
@@ -728,6 +737,86 @@ namespace AtomicWar.GodotApp
             }
             _reconTelemetryPanel?.RefreshView();
             _reconTelemetryDirty = true;
+        }
+
+        // ── CORE-MECH W4 · breakdown crew consequences ────────────────────────
+        // Routes a typed vehicle breakdown into the existing owners. Deterministic
+        // seeds come from the campaign streams; every receiver is optional and
+        // fails closed (the sortie is still aborted by the host).
+        private void ApplyBreakdownConsequence(VehicleBreakdownOutcome outcome)
+        {
+            string survivorId = outcome.SurvivorId;
+            if (string.IsNullOrEmpty(survivorId)) return;
+
+            switch (outcome.Kind)
+            {
+                case VehicleBreakdownKind.Injury:
+                {
+                    // The medical pipeline owns treatment; NeedsSystem owns the
+                    // health scalar the rest of the simulation reads.
+                    float severity = Math.Clamp(outcome.Severity01, 0.05f, 1f);
+                    float healthLoss = 4f + severity * 16f; // authored magnitude; W12 measures
+                    SetupSurvivors();
+                    _survivors?.Needs.Modify(survivorId, NeedKind.Health, -healthLoss);
+                    if (_healthHistory == null) SetupHealthHistory();
+                    _healthHistory?.System?.LogHealthEvent(
+                        survivorId, "expedition_vehicle_breakdown",
+                        description: outcome.Cause, day: _simDay);
+                    JournalBreakdown(survivorId, outcome, $"injured (-{healthLoss:F0} health)");
+                    break;
+                }
+                case VehicleBreakdownKind.RadiationExposure:
+                {
+                    SetupDoseLedger();
+                    if (_doseLedger == null) break;
+                    // W2's single conditioning site applies any authored fallout
+                    // window to this nominal before the ledger books it.
+                    var rng = _campaignDay != null
+                        ? _campaignDay.Rng.Fork(CampaignStreamIds.Medical, _simDay, 41)
+                        : new Ashfall.Core.SeededRng(_simDay);
+                    _doseLedger.BookConditionedExposure(
+                        survivorId, _simDay, Math.Max(0.01f, outcome.NominalMsV),
+                        "expedition_breakdown", highEnergy: false, rng: rng);
+                    JournalBreakdown(survivorId, outcome, $"exposed ({outcome.NominalMsV:0.00} mSv nominal)");
+                    break;
+                }
+                case VehicleBreakdownKind.Contamination:
+                {
+                    // The W1 seam shape: an authored exposure row, never a direct
+                    // Infect call, so immunity and countermeasures still apply.
+                    if (_disease == null) SetupDisease();
+                    if (_disease == null) break;
+                    var source = _disease.Catalog.GetExposureSource("micro_hazard_contamination");
+                    if (source == null) break;
+                    float severity = Math.Clamp(outcome.Severity01, 0.05f, 1f);
+                    var result = _disease.Engine.TryExpose(new DiseaseExposureContext
+                    {
+                        SurvivorId = survivorId,
+                        DiseaseId = source.disease_id,
+                        SourceId = source.source_id,
+                        ProbabilityModifier = severity,
+                        BypassImmunity = false,
+                        Day = _simDay
+                    });
+                    JournalBreakdown(survivorId, outcome,
+                        result.Infected ? $"contaminated ({result.DiseaseId})" : $"contamination attempt ({result.Reason})");
+                    break;
+                }
+                default:
+                    // None: the vehicle broke, the crew got out. Journal only when a
+                    // survivor is known, so the event is not silently swallowed.
+                    JournalBreakdown(survivorId, outcome, "vehicle disabled, crew uninjured");
+                    break;
+            }
+        }
+
+        private void JournalBreakdown(string survivorId, VehicleBreakdownOutcome outcome, string effect)
+        {
+            SetupJournal();
+            _journal?.TryAddRawEntry(
+                $"expedition_breakdown_{outcome.VehicleId}_{survivorId}_{_simDay}",
+                $"{outcome.VehicleId} broke down on dispatch — {effect}.",
+                null!, _simDay);
         }
 
         // Debounced flush hooks for systems that mutate each frame. They run

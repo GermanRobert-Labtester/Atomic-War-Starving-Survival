@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/chem_injector_med.jpg-0c58f724c35f08ee5c2ae0b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

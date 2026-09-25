@@ -64,7 +64,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("monitored", "Monitored", "0", AshfallMetricCard.Criticality.Normal, minWidth: 110);
 
             _contentStack = new VBoxContainer();
-            _contentStack.AddThemeConstantOverride("separation", 10);
+            _contentStack.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -75,7 +75,7 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Left column: active visitors ────────────────────────────
             _leftColumn = new VBoxContainer();
-            _leftColumn.AddThemeConstantOverride("separation", 10);
+            _leftColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _leftColumn.CustomMinimumSize = new Vector2(470, 400);
             _leftColumn.SizeFlagsHorizontal = SizeFlags.Fill;
             _leftColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -103,14 +103,14 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Right column: requirements + departures ─────────────────
             _rightColumn = new VBoxContainer();
-            _rightColumn.AddThemeConstantOverride("separation", 10);
+            _rightColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _rightColumn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _rightColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
 
             var taskHeader = new Label { Text = "PENDING PROCESSING REQUIREMENTS" };
             _rightColumn.AddChild(taskHeader);
             _tasksContainer = new VBoxContainer();
-            _tasksContainer.AddThemeConstantOverride("separation", 6);
+            _tasksContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _tasksContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _rightColumn.AddChild(_tasksContainer);
 
@@ -121,7 +121,7 @@ namespace AtomicWar.GodotApp.UI
             departureScroll.SizeFlagsVertical = SizeFlags.ExpandFill;
             departureScroll.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _departuresContainer = new VBoxContainer();
-            _departuresContainer.AddThemeConstantOverride("separation", 6);
+            _departuresContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _departuresContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             departureScroll.AddChild(_departuresContainer);
             _rightColumn.AddChild(departureScroll);
@@ -192,7 +192,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 var card = new PanelContainer();
                 var box = new VBoxContainer();
-                box.AddThemeConstantOverride("separation", 3);
+                box.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                 box.AddChild(new Label { Text = $"{visitor.Name} — {visitor.Type} ({visitor.VisitorId})" });
                 box.AddChild(new Label
@@ -210,7 +210,7 @@ namespace AtomicWar.GodotApp.UI
                 });
 
                 var actions = new HBoxContainer();
-                actions.AddThemeConstantOverride("separation", 6);
+                actions.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
 
                 var bunk = new Button { Text = "Berth" };
                 bunk.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "visitor_berth_" + visitor.VisitorId, HousingType.TemporaryBunk, visitor.ArrivalDay); RefreshView(); };
@@ -231,7 +231,7 @@ namespace AtomicWar.GodotApp.UI
                 box.AddChild(actions);
 
                 var decisionRow = new HBoxContainer();
-                decisionRow.AddThemeConstantOverride("separation", 6);
+                decisionRow.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
 
                 if (visitor.Status == VisitorStatus.Integrated)
                 {

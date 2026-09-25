@@ -198,9 +198,14 @@ namespace AtomicWar.GodotApp.UI
             return lbl;
         }
 
-        public static Label MakeMetadata(string text)
+        public static Label MakeMetadata(string text, bool autowrap = false)
         {
             var lbl = new Label { Text = text };
+            if (autowrap)
+            {
+                lbl.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+                lbl.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            }
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeLabel);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Muted));
             ApplyFont(lbl, FontBarlowRegular);
@@ -502,7 +507,7 @@ namespace AtomicWar.GodotApp.UI
         public static HSeparator MakeSeparator()
         {
             var sep = new HSeparator();
-            sep.AddThemeConstantOverride("separation", 6);
+            sep.AddThemeConstantOverride("separation", Theme.SpacingSm);
             return sep;
         }
 
@@ -740,6 +745,65 @@ namespace AtomicWar.GodotApp.UI
             string mode = AtomicWar.GodotApp.Settings.UserSettingsStore.Current.ColorblindMode;
             var mapped = Ashfall.Core.Settings.ColorblindColorMapper.Map(token, mode);
             return new Color(mapped.r, mapped.g, mapped.b, mapped.a);
+        }
+
+        // ── Survivor portraits ──────────────────────────────────────────
+
+        /// <summary>
+        /// Portrait chip for a survivor: resolves `assets/art/{id}.jpg`, then
+        /// the other AssetRegistry portrait probes, and loads the first hit.
+        /// Returns null when no portrait art exists so panels can omit the
+        /// chip instead of faking a face. Pure presentation — the survivor id
+        /// is supplied by the owning system, never invented here.
+        /// </summary>
+        public static TextureRect? MakeSurvivorPortrait(string survivorId, int size = 56)
+        {
+            if (string.IsNullOrWhiteSpace(survivorId)) return null;
+            string? path = AtomicWar.GodotApp.AssetRegistry.ResolvePortraitPath(survivorId);
+            if (string.IsNullOrEmpty(path)) return null;
+            var texture = TryLoadTexture(path);
+            if (texture == null) return null;
+
+            var rect = new TextureRect
+            {
+                Name = "SurvivorPortrait",
+                Texture = texture,
+                CustomMinimumSize = new Vector2(size, size),
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+                StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+                MouseFilter = Control.MouseFilterEnum.Ignore,
+                TooltipText = survivorId
+            };
+            return rect;
+        }
+
+        // ── Location art ────────────────────────────────────────────────
+
+        /// <summary>
+        /// Establishing image for a location: resolves the registry location
+        /// probes (assets/art/{id}.jpg first) and returns a clipped banner.
+        /// Returns null when no art exists so the panel keeps its text layout
+        /// instead of showing an empty frame.
+        /// </summary>
+        public static TextureRect? MakeLocationArt(string locationId, int height = 140)
+        {
+            if (string.IsNullOrWhiteSpace(locationId)) return null;
+            string? path = AtomicWar.GodotApp.AssetRegistry.ResolveLocationPath(locationId);
+            if (string.IsNullOrEmpty(path)) return null;
+            var texture = TryLoadTexture(path);
+            if (texture == null) return null;
+
+            return new TextureRect
+            {
+                Name = "LocationArt",
+                Texture = texture,
+                CustomMinimumSize = new Vector2(0, height),
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+                MouseFilter = Control.MouseFilterEnum.Ignore,
+                TooltipText = locationId
+            };
         }
 
         // ── Texture Loading ─────────────────────────────────────────────

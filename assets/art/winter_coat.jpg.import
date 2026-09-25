@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/winter_coat.jpg-76b2436d63d8f2690c68631be2824
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

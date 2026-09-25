@@ -82,3 +82,34 @@ failure, restores retired architecture, or exceeds its stated outcome.
 
 Only the foreman edits the integration ledger and ownership ledger. Only the
 integrator edits a shared path during integration.
+
+## Subagent Role Isolation & Context Scoping
+
+Instead of one agent attempting to execute everything in one huge context, split
+responsibilities across isolated roles with strictly scoped context:
+
+| Subagent Role | Input Context | Responsibility | Output Artifact |
+|---|---|---|---|
+| **Planner** | High-level brief + catalog schemas | Read brief, inspect authority, draft bounded plan | `.ai/plan.md` |
+| **Coder** | `.ai/plan.md` + target files only | Implement smallest coherent change | Code diffs + `.ai/state.md` update |
+| **Tester** | `.ai/state.md` + changed test files | Run targeted tests only (<30s fast) | Test report in `.ai/state.md` |
+| **Auditor** | Schemas + world bible + diff | Verify data schema validity, integrity, conventions | Findings log / clearance |
+
+Each subagent receives only the context it needs (plan + relevant files + last summary),
+not the full conversational history. This prevents cross-contamination.
+
+## Operational Discipline & Limits
+
+- **No Repeated Tool Calls:** If identical tool + arguments appear >2 times, stop immediately and ask for guidance. Never loop blindly.
+- **Hard Limits:** Max 60–100 steps and 10–20 minutes per task. On limit reached: stop, record attempted progress in `.ai/state.md`, and report failure.
+- **Explicit Termination Criteria:** Define clear criteria for completion (e.g. tests pass, no new compile errors, validator clean) before beginning edits.
+- **Progress Tracking (`.ai/state.md`):** Keep a state file tracking changed files, tests run, and remaining errors. Read this file before acting.
+- **Conflict Resolution Rule:** If narrative and systems conflict, **Systems win** unless explicitly overridden by the foreman/user. Log conflicts in `.ai/state.md`.
+- **Pre-generation Checks:**
+  1. Always run Go config/save validators (`bin/validate-config` / `bin/ashfall-dev validate-config`) before generating data.
+  2. Search for existing equivalent systems, items, or quests before creating new ones. Extend existing authority instead of adding duplicates.
+- **Plan Approval Requirement:** Any commit modifying code files must have an approved plan in `.ai/plans/` (or `.ai/plan.md`) with `STATUS: APPROVED BY USER`. Pre-commit and CI will reject commits missing this.
+- **Testing Scoping & Ceilings:**
+  - Always run tests via `bin/run-scoped-tests`. Do not invoke `pytest` or `dotnet test` directly.
+  - Full test suite runs are banned unless the user explicitly enters `RUN FULL TESTS`.
+  - Maximum 10–15 testing steps per task: if failing tests cannot be fixed within 10–15 steps, auto-flag the issue in `.ai/state.md` for a bug validator to fix instead of repeatedly editing and re-running.

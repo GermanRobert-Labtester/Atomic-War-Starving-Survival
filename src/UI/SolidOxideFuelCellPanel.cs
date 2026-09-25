@@ -112,7 +112,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
             _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("COMMISSIONING"));
             var row = new HBoxContainer();
-            row.AddThemeConstantOverride("separation", 10);
+            row.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _preheatBtn = AshfallUiHelpers.MakeButton("Start Preheat Cycle", () => { });
             _preheatBtn.Pressed += () => _host?.StartPreheat(fuelAvailable: true);
             _shutdownBtn = AshfallUiHelpers.MakeButton("Controlled Shutdown", () => { });

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/vintage_radio_tuner.jpg-38c9794582a983d064059
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

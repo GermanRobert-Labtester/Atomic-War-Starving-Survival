@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/jerry_can_water.jpg-866eac66200d2f08accf0f050
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

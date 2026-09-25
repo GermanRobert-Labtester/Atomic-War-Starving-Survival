@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/canned_beetroot.jpg-2a3fd1c0eacfee2f9a9719402
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

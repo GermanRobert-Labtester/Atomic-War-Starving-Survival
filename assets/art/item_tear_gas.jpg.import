@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_tear_gas.jpg-a87960fdf34a7b108fadff5fb1f
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

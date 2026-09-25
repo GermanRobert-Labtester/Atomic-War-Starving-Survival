@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/pdw_fn_p90_57x28.jpg-70ae016e13a2cf9bcf28bff6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

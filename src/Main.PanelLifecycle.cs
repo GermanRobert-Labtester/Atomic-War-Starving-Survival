@@ -7,72 +7,168 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
-        private void CloseAllOverlayPanels()
+        /// <summary>
+        /// Canonical overlay-panel catalog. Single authority shared by
+        /// CloseAllOverlayPanels and AnyOverlayPanelOpen so global dismissal and
+        /// global close-detection can never drift apart again
+        /// (UI/UX audit 2026-09-25 — previously two hand-maintained lists, 68
+        /// panels invisible to Esc detection).
+        /// </summary>
+        private Control[] OverlayPanelCatalog()
         {
-            Control[] panels =
+            return new Control[]
             {
-                _settingsPanel, _inventoryOverlay, _survivorsOverlay, _craftingPanel,
+                _settingsPanel,
+                _inventoryOverlay,
+                _survivorsOverlay,
+                _craftingPanel,
                 _startingCohortSetupPanel,
-                _radioPanel, _medicalPanel, _dutyRosterPanel,
-                _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
-                _factionsPanel, _musterPanel, _expansionsHubPanel, _standingRecordPanel,
-                _maritimePanel, _centurySeedPanel, _epiloguePanel, _chroniclePanel, _verdictPanel,
-                _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
+                _radioPanel,
+                _medicalPanel,
+                _dutyRosterPanel,
+                _expeditionPanel,
+                _weatherPanel,
+                _questsPanel,
+                _journalPanel,
+                _factionsPanel,
+                _musterPanel,
+                _expansionsHubPanel,
+                _standingRecordPanel,
+                _maritimePanel,
+                _centurySeedPanel,
+                _epiloguePanel,
+                _chroniclePanel,
+                _verdictPanel,
+                _researchPanel,
+                _shelterPanel,
+                _greenhousePanel,
+                _combatPanel,
+                _mapPanel,
                 _silentFoundryPanel,
                 _tradePanel,
-                _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel, _moralChoiceModal, _narrativeArcModal,
-                _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
-                _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
-                _combatDetailPanel, _factionDetailPanel, _factionCultureCodexPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
-                _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
-                _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
-                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal, _holdfastTerminal,
+                _survivorDetailPanel,
+                _inventoryDetailPanel,
+                _questDetailPanel,
+                _moralChoiceModal,
+                _narrativeArcModal,
+                _achievementsPanel,
+                _weatherDetailPanel,
+                _radiationDetailPanel,
+                _eventsLogPanel,
+                _dutyRosterDetailPanel,
+                _economyDetailPanel,
+                _combatDetailPanel,
+                _factionDetailPanel,
+                _factionCultureCodexPanel,
+                _crossingQuestPanel,
+                _saveLoadPanel,
+                _tutorialPanel,
+                _afflictionsPanel,
+                _statusPanel,
+                _survivalDetailPanel,
+                _weatherForecastPanel,
+                _radiationHistoryPanel,
+                _journalDetailPanel,
+                _combatHistoryPanel,
+                _mapDetailPanel,
+                _eventDetailPanel,
+                _openingProtocolModal,
+                _holdfastTerminal,
                 _onboardingHintPanel,
-                _brineExtractionPanel, _expeditionCampPanel, _fireIncidentPanel,
-                _geigerCalibrationPanel, _triangulationPanel, _weatherSondePanel,
-                _powerGridPanel, _expeditionRadarPanel, _doseLedgerPanel,
+                _brineExtractionPanel,
+                _expeditionCampPanel,
+                _fireIncidentPanel,
+                _geigerCalibrationPanel,
+                _triangulationPanel,
+                _weatherSondePanel,
+                _powerGridPanel,
+                _expeditionRadarPanel,
+                _doseLedgerPanel,
                 _doseGeographyPanel,
-                _geothermalOrcPanel, _ballisticsWorkbenchPanel, _aeroponicsPanel,
+                _geothermalOrcPanel,
+                _ballisticsWorkbenchPanel,
+                _aeroponicsPanel,
                 _pneumaticDispatchPanel,
-                _caravanBarterLedgerPanel, _factionMatrixPanel, _factionsNarrativePanel, _communiqueBoardPanel,
-                _skillMatrixPanel, _survivalWorkstationPanel, _verdictDashboardPanel,
-                _mapAtlasPanel, _maritimeAtlasPanel, _musterAtlasPanel,
-                _questsAtlasPanel, _researchAtlasPanel, _standingRecordAtlasPanel,
-                _combatHudOverlay, _biogasDigesterPanel, _cartographyGisPanel,
-                _printingPressPanel, _siliconSlicingPanel, _geothermalTurbinePanel,
-                _warDogKennelPanel, _isotopeSeparatorPanel, _plasmaSmeltingPanel,
-                _boreholeSeismographPanel, _logisticsAirlockPanel,
-                _cryoPermafrostCorePanel, _basalRadonMigrationPanel,
-                _traumaBondingCohortPanel, _clandestineInsurgencyPanel,
-                _subterraneanDebtLedgerPanel, _surfaceShrapnelAegisPanel,
-                _longWalkExpeditionPanel, _sonicRuptureDrillPanel,
-                _vaultDoorBreachingPanel, _ironCenotaphMemorialPanel,
-                _aquiferTreatyConcessionPanel, _crossingSafeConductVouchPanel,
-                _mechanicalProstheticsLathePanel, _fungalProteinFermenterPanel,
+                _caravanBarterLedgerPanel,
+                _factionMatrixPanel,
+                _factionsNarrativePanel,
+                _communiqueBoardPanel,
+                _skillMatrixPanel,
+                _survivalWorkstationPanel,
+                _verdictDashboardPanel,
+                _mapAtlasPanel,
+                _maritimeAtlasPanel,
+                _musterAtlasPanel,
+                _questsAtlasPanel,
+                _researchAtlasPanel,
+                _standingRecordAtlasPanel,
+                _combatHudOverlay,
+                _biogasDigesterPanel,
+                _cartographyGisPanel,
+                _printingPressPanel,
+                _siliconSlicingPanel,
+                _geothermalTurbinePanel,
+                _warDogKennelPanel,
+                _isotopeSeparatorPanel,
+                _plasmaSmeltingPanel,
+                _boreholeSeismographPanel,
+                _logisticsAirlockPanel,
+                _cryoPermafrostCorePanel,
+                _basalRadonMigrationPanel,
+                _traumaBondingCohortPanel,
+                _clandestineInsurgencyPanel,
+                _subterraneanDebtLedgerPanel,
+                _surfaceShrapnelAegisPanel,
+                _longWalkExpeditionPanel,
+                _sonicRuptureDrillPanel,
+                _vaultDoorBreachingPanel,
+                _ironCenotaphMemorialPanel,
+                _aquiferTreatyConcessionPanel,
+                _crossingSafeConductVouchPanel,
+                _mechanicalProstheticsLathePanel,
+                _fungalProteinFermenterPanel,
                 _ultrasonicDecontamAirlockPanel,
-                _troposphericRadioRelayPanel, _inductionCupolaFurnacePanel,
-                _heavyMarineDieselGenPanel, _slurryDewateringSumpPanel,
-                _magneticDrumArchivePanel, _plans130To133Panel,
+                _troposphericRadioRelayPanel,
+                _inductionCupolaFurnacePanel,
+                _heavyMarineDieselGenPanel,
+                _slurryDewateringSumpPanel,
+                _magneticDrumArchivePanel,
+                _plans130To133Panel,
                 _blackProjectsArchivePanel,
-                _chemWarfareDefensePanel, _commsArrayTransceiverPanel,
-                _ceremonyFestivalPanel, _roboticsWorkshopPanel,
-                _survivorDowntimePanel, _winterFreezePanel,
-                _amputationTriagePanel, _justiceTribunalPanel,
-                _railwayTerminalPanel, _archaeologyExcavationPanel,
-                _desperationCrisisPanel, _mercenaryBountyBoardPanel,
-                _falloutPlumePanel
+                _chemWarfareDefensePanel,
+                _commsArrayTransceiverPanel,
+                _ceremonyFestivalPanel,
+                _roboticsWorkshopPanel,
+                _survivorDowntimePanel,
+                _winterFreezePanel,
+                _amputationTriagePanel,
+                _justiceTribunalPanel,
+                _railwayTerminalPanel,
+                _archaeologyExcavationPanel,
+                _desperationCrisisPanel,
+                _mercenaryBountyBoardPanel,
+                _falloutPlumePanel,
+                _dailyBriefingModal,
+                _romanceFamilyBoard,
+                _colonyOperationsBoard,
+                _ideologicalMediationDesk,
             };
+        }
 
-            foreach (Control panel in panels)
+        private void CloseAllOverlayPanels()
+        {
+            foreach (Control panel in OverlayPanelCatalog())
             {
-                if (panel != null)
-                {
-                    if (panel.Visible)
-                    {
-                        AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(panel);
-                    }
+                if (panel == null || !panel.Visible || AtomicWar.GodotApp.UI.UiMotion.IsClosing(panel))
+                    continue;
+
+                AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(panel);
+                // Central exit transition (UI/UX audit 2026-09-25): every global
+                // dismissal and panel switch fades the old shell out. Falls back
+                // to an immediate hide when motion is unavailable (headless,
+                // captures, ReducedMotion).
+                if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(panel))
                     panel.Visible = false;
-                }
             }
 
             if (_journalBook != null && _journalBook.IsOpen)
@@ -84,37 +180,44 @@ namespace AtomicWar.GodotApp
 
         private void CloseSettingsPanel()
         {
-            _settingsPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_settingsPanel))
+                _settingsPanel.Visible = false;
         }
 
         private void CloseQuestsPanel()
         {
-            _questsPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_questsPanel))
+                _questsPanel.Visible = false;
         }
 
         private void CloseFactionsPanel()
         {
-            _factionsPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_factionsPanel))
+                _factionsPanel.Visible = false;
         }
 
         private void CloseResearchPanel()
         {
-            _researchPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_researchPanel))
+                _researchPanel.Visible = false;
         }
 
         private void CloseShelterPanel()
         {
-            _shelterPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_shelterPanel))
+                _shelterPanel.Visible = false;
         }
 
         private void CloseQuestDetailPanel()
         {
-            _questDetailPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_questDetailPanel))
+                _questDetailPanel.Visible = false;
         }
 
         private void CloseMoralChoiceModal()
         {
-            _moralChoiceModal.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_moralChoiceModal))
+                _moralChoiceModal.Visible = false;
         }
 
         private void CloseNarrativeArcModal()
@@ -124,68 +227,80 @@ namespace AtomicWar.GodotApp
 
         private void CloseFactionDetailPanel()
         {
-            _factionDetailPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_factionDetailPanel))
+                _factionDetailPanel.Visible = false;
         }
 
         private void CloseFactionCultureCodexPanel()
         {
-            if (_factionCultureCodexPanel != null)
+            if (_factionCultureCodexPanel != null && !AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_factionCultureCodexPanel))
                 _factionCultureCodexPanel.Visible = false;
         }
 
         private void CloseCrossingQuestPanel()
         {
-            _crossingQuestPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_crossingQuestPanel))
+                _crossingQuestPanel.Visible = false;
         }
 
         private void CloseAchievementsPanel()
         {
-            _achievementsPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_achievementsPanel))
+                _achievementsPanel.Visible = false;
         }
 
         private void CloseRadiationDetailPanel()
         {
-            _radiationDetailPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_radiationDetailPanel))
+                _radiationDetailPanel.Visible = false;
         }
 
         private void CloseEventsLogPanel()
         {
-            _eventsLogPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_eventsLogPanel))
+                _eventsLogPanel.Visible = false;
         }
 
         private void CloseSaveLoadPanel()
         {
-            _saveLoadPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_saveLoadPanel))
+                _saveLoadPanel.Visible = false;
         }
 
         private void CloseTutorialPanel()
         {
-            _tutorialPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_tutorialPanel))
+                _tutorialPanel.Visible = false;
         }
 
         private void CloseAfflictionsPanel()
         {
-            _afflictionsPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_afflictionsPanel))
+                _afflictionsPanel.Visible = false;
         }
 
         private void CloseStatusPanel()
         {
-            _statusPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_statusPanel))
+                _statusPanel.Visible = false;
         }
 
         private void CloseSurvivalDetailPanel()
         {
-            _survivalDetailPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_survivalDetailPanel))
+                _survivalDetailPanel.Visible = false;
         }
 
         private void CloseRadiationHistoryPanel()
         {
-            _radiationHistoryPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_radiationHistoryPanel))
+                _radiationHistoryPanel.Visible = false;
         }
 
         private void CloseEventDetailPanel()
         {
-            _eventDetailPanel.Visible = false;
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_eventDetailPanel))
+                _eventDetailPanel.Visible = false;
         }
     }
 }

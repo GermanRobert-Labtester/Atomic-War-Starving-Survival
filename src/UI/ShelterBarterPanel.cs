@@ -350,7 +350,7 @@ namespace AtomicWar.GodotApp.UI
 
             // Right: Pre-Condition Gate Diagnostics
             var gateBox = new VBoxContainer();
-            gateBox.AddThemeConstantOverride("separation", 2);
+            gateBox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
             gateBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             gateBox.SizeFlagsStretchRatio = 1.0f;
 
@@ -377,7 +377,7 @@ namespace AtomicWar.GodotApp.UI
             costConsequenceRow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
             var summaryVbox = new VBoxContainer();
-            summaryVbox.AddThemeConstantOverride("separation", 2);
+            summaryVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
             summaryVbox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
             _costSummaryLabel = AshfallUiHelpers.MakeBody("COST: None allocated.");
@@ -432,9 +432,9 @@ namespace AtomicWar.GodotApp.UI
             QueueRedraw();
         }
 
-        public void Close()
-        {
-            Visible = false;
+        public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
             OnClose?.Invoke();
         }
 
@@ -599,7 +599,7 @@ namespace AtomicWar.GodotApp.UI
                 cardPanel.AddChild(margin);
 
                 var vbox = new VBoxContainer();
-                vbox.AddThemeConstantOverride("separation", 2);
+                vbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
                 margin.AddChild(vbox);
 
                 // Caravan title
@@ -721,7 +721,7 @@ namespace AtomicWar.GodotApp.UI
                 // Counter: [-] [qty] [+]
                 var counterBox = new HBoxContainer();
                 counterBox.CustomMinimumSize = new Vector2(85, 0);
-                counterBox.AddThemeConstantOverride("separation", 2);
+                counterBox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
 
                 var minusBtn = AshfallUiHelpers.MakeButton("-", () =>
                 {
@@ -872,7 +872,7 @@ namespace AtomicWar.GodotApp.UI
                 // Counter: [-] [qty] [+]
                 var counterBox = new HBoxContainer();
                 counterBox.CustomMinimumSize = new Vector2(85, 0);
-                counterBox.AddThemeConstantOverride("separation", 2);
+                counterBox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
 
                 var minusBtn = AshfallUiHelpers.MakeButton("-", () =>
                 {

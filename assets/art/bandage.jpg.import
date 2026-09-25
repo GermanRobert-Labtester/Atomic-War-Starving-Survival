@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bandage.jpg-c04a79b719d30e38a03e1312e5115b44.
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/explosive_powder_nitroglycerin.jpg-a9d15e0509
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

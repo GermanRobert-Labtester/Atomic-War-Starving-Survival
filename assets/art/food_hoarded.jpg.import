@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/food_hoarded.jpg-1857d9973f9b85b215736e9f9cb1
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

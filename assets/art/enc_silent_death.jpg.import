@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/enc_silent_death.jpg-66477b09c553baf983a2d618
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "collection_id": "combat_arenas",
+  "arenas": [
+    {
+      "id": "arena_lane_spine_default",
+      "width": 24.0,
+      "height": 10.0,
+      "walk_speed": 2.4,
+      "run_speed": 4.8,
+      "climb_speed": 1.6,
+      "flee_speed": 5.2,
+      "lane_spines": [
+        { "lane": 0, "x": 4.0 },
+        { "lane": 1, "x": 12.0 },
+        { "lane": 2, "x": 20.0 }
+      ],
+      "cover_nodes": [
+        { "id": "cover_p_left", "x": 3.0, "y": 2.0, "radius": 1.2, "cover_rating": 0.35 },
+        { "id": "cover_e_right", "x": 21.0, "y": 2.0, "radius": 1.2, "cover_rating": 0.35 }
+      ],
+      "climb_segments": [
+        { "id": "climb_barrier_a", "x0": 10.0, "y0": 0.0, "x1": 10.0, "y1": 3.0 }
+      ],
+      "extract_volume": { "x": 0.5, "y": 1.0, "w": 2.0, "h": 8.0 },
+      "player_spawns": [
+        { "lane": 1, "x": 6.0, "y": 1.0 },
+        { "lane": 0, "x": 5.0, "y": 2.5 },
+        { "lane": 2, "x": 5.0, "y": 3.5 }
+      ],
+      "enemy_spawns": [
+        { "lane": 1, "x": 18.0, "y": 1.0 },
+        { "lane": 0, "x": 19.0, "y": 2.5 },
+        { "lane": 2, "x": 19.0, "y": 3.5 }
+      ]
+    }
+  ]
+}

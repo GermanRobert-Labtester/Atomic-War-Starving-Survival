@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/violent_paranoia.jpg-603d1e62f583b2b1f23f8a51
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/att_angled_grip.jpg-0b80618ece7271c4cb28fa249
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

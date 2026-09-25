@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/faction_leader_2.jpg-665cc9e36346a62c2d09ebfb
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/perk_looters_reflex.jpg-1ef16d3eac7739ef0d1b6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

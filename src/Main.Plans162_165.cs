@@ -380,7 +380,14 @@ namespace AtomicWar.GodotApp
             // outage IsRoomPowered read) — during a brownout the armory
             // circuit stays live while generation covers it, and sheds by
             // priority otherwise. Same migration the sump pump received.
-            return _defense.System.ResolvePreCombatRaid(
+            // CORE-MECH W5: the raid resolver is the single authority (DP-CM-2). We
+            // publish its result to the defense surface and the journal so the
+            // player can see what their fortifications actually did — the mechanic
+            // was already live; this makes it legible.
+            _defense.EmplacementPoweredProvider =
+                id => _powerGrid?.System?.IsRoomServed("room_armory_munitions") ?? false;
+
+            var engagement = _defense.System.ResolvePreCombatRaid(
                 day, raiderStrength, isNight,
                 _perimeterDefense,
                 id => (_powerGrid?.System?.IsRoomServed("room_armory_munitions") ?? false),
@@ -388,6 +395,16 @@ namespace AtomicWar.GodotApp
                 // Plan 174 — guard animals improve night detection (§5.10):
                 // the authored guard rating normalized to a 0..1 fraction.
                 _companions != null ? Math.Clamp(_companions.GetGuardModifierTotal() / 100f, 0f, 1f) : 0f);
+
+            _defense.RecordEngagement(engagement);
+            SetupJournal();
+            _journal?.TryAddRawEntry(
+                $"raid_defenses_{day}_{raiderStrength}",
+                engagement.Repelled
+                    ? $"Raiders ({raiderStrength}) turned back at the perimeter — {engagement.RaidersNeutralizedByTraps} down, {engagement.RaidersCaptured} captured."
+                    : $"Perimeter breached — {engagement.RemainingRaiders} raiders reached the shelter ({engagement.RaidersNeutralizedByTraps} stopped, {engagement.RaidersCaptured} captured).",
+                null!, day);
+            return engagement;
         }
 
         private void HandleDefenseAction(string action, string param)

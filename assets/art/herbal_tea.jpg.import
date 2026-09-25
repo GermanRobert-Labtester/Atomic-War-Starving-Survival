@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/herbal_tea.jpg-2a716153c9619bb64dd2891e4fb5ef
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

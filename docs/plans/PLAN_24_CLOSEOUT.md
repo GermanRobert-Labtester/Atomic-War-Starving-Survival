@@ -29,7 +29,7 @@ implemented in dependency order (24A → 24B → 24C) across Tasks A1–A4.
 | 9 | Affliction-specific recovery ramp | **CLOSED (option ii signed 2026-09-18)** | Uniform data-authored discharge window declared complete per the user's program authorization (option ii, zero-code). Admissions carry no cause field; no ramp authority was fabricated and none is owed. Affliction-specific ramps, if ever wanted, are new scoped packages — not Plan 24 debt |
 | 10 | Full save/load journey tests | **CLOSED-WITH-EVIDENCE** | `Plan24JourneyParityTests` 3/3: treatment journey continuous==interrupted; death/grief journey continuous==interrupted-after-cascade; field-by-field + fingerprint equality through the production save path |
 | 11 | 30-day balance simulation | **CLOSED-WITH-EVIDENCE** | Same file: 30-day invariant ledger, per-day impossible-state exclusions (dead never assigned, need ranges), same-seed equality, **day-15 mid-reload suffix equality** |
-| 12 | Snapshot review | **ENVIRONMENT-BLOCKED (documented)** | Headless renderer unavailable (SubViewport needs a real display); no snapshot files touched by this wave; the intended render changes are enumerated below for the first renderer-capable rebaseline |
+| 12 | Snapshot review | **CLOSED (2026-09-25, real renderer session)** | Executed per L-P24R on the first renderer-capable host (AMD Radeon Graphics / radeonsi, direct rendering, canonical 1920×1080). All 32 snapshot targets regenerated at canonical size; diff re-run 32/32 MATCH; malformed `shelter_decor_default.png` golden replaced; atlas detail text wrap and horizontal-scroll artifacts fixed before capture. |
 | 13 | Needs characterization 14/15 baseline | **CLOSED-WITH-EVIDENCE** | Task A4: model proven (nine distinct emissions), assertion retargeted 7→9 with drift note; 15/15 |
 | 14 | Worker identity contract (§24B.23) | **CLOSED-WITH-EVIDENCE** | One shared contract; the nine-family source ids + the labor-cluster source ids form the stable vocabulary; no per-producer setters |
 
@@ -116,3 +116,12 @@ Under integrator package `UNBLOCK-RESIDUALS-PLANS-24-31` (user-authorized 2026-0
    - Verify any diffs against the intended render changes inventory. Rebaseline golden assets only for intended diffs.
    - Update this document's item 12 to CLOSED once executed on a renderer-capable host.
 3. Headless sessions are strictly prohibited from fabricating or bypassing golden snapshots.
+
+**L-P24R EXECUTED 2026-09-25** under the UI/UX audit package: real display/GPU present
+(`:0`, AMD Radeon Graphics, accelerated). Snapshot targets were aligned to the
+canonical 1920×1080 (protocol item 2), the full set captured and Diff-verified
+(32/32 MATCH after regeneration), and goldens rebaselined for intended diffs only
+(all 32 diffs attributable to landed UI waves since the 2026-09-05 goldens, the
+canonical-size alignment, spacing token normalization, and two atlas-render fixes;
+`ui-layout-selftest` PASS, `ui-accessibility-selftest` 5/5 PASS under the same
+session). Item 12 above is therefore CLOSED.

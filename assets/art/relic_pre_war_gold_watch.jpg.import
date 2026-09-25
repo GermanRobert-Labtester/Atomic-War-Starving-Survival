@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/relic_pre_war_gold_watch.jpg-09af7cbf7e04b54a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bunker_fractured.jpg-b3c8cb0096484c8b9f21c8b4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

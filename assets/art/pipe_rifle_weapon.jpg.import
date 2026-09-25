@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/pipe_rifle_weapon.jpg-65d38b63688b9b1d7a39061
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

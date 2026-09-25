@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/decontamination_soap_5_of_5.jpg-a0a284fc69907
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

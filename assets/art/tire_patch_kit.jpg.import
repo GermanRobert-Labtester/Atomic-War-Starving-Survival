@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/tire_patch_kit.jpg-d04ac36ebc949dab2e3d5d6810
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

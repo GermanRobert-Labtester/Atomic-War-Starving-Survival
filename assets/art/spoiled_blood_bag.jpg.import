@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/spoiled_blood_bag.jpg-7b7c8297fd1dae3616d71ce
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

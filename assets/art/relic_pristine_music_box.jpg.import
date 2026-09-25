@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/relic_pristine_music_box.jpg-6f3444d3de83d345
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

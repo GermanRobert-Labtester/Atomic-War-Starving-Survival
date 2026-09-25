@@ -165,9 +165,9 @@ namespace AtomicWar.GodotApp.UI
             GrabFirstProfileFocus();
         }
 
-        public void Close()
-        {
-            Visible = false;
+        public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
         }
 
         private void BuildLayout()

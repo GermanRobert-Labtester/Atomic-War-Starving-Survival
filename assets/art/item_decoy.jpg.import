@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_decoy.jpg-9a36eda9befbb4fcaebf142af08d5c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

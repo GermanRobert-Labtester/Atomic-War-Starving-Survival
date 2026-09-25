@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/med_antidote_snake_venom.jpg-ef7531746f366e94
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

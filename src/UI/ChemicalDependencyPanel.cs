@@ -242,7 +242,10 @@ namespace AtomicWar.GodotApp.UI
                     cardMargin.AddChild(cardVbox);
 
                     var nameRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-                    nameRow.AddChild(AshfallUiHelpers.MakeBadgeIcon("badge_chemical_dependency", 18));
+                    // Portrait chip when art exists; the dependency badge is a
+                    // real icon, never a stand-in face.
+                    var rosterPortrait = AshfallUiHelpers.MakeSurvivorPortrait(survivorId, 28);
+                    nameRow.AddChild(rosterPortrait ?? AshfallUiHelpers.MakeBadgeIcon("badge_chemical_dependency", 18));
                     var nameLbl = AshfallUiHelpers.MakeBody(FormatSurvivorName(survivorId));
                     nameLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                     nameRow.AddChild(nameLbl);
@@ -285,7 +288,11 @@ namespace AtomicWar.GodotApp.UI
                 var activeDep = deps.FirstOrDefault(d => d.itemId == _selectedItemId);
                 if (activeDep != null)
                 {
-                    _dossierContainer.AddChild(AshfallUiHelpers.MakeSectionHeader($"PATIENT: {FormatSurvivorName(_selectedSurvivorId)}"));
+                    var dossierHeader = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+                    var dossierPortrait = AshfallUiHelpers.MakeSurvivorPortrait(_selectedSurvivorId, 48);
+                    if (dossierPortrait != null) dossierHeader.AddChild(dossierPortrait);
+                    dossierHeader.AddChild(AshfallUiHelpers.MakeSectionHeader($"PATIENT: {FormatSurvivorName(_selectedSurvivorId)}"));
+                    _dossierContainer.AddChild(dossierHeader);
                     _dossierContainer.AddChild(AshfallUiHelpers.MakeDataRow("Target Substance", activeDep.itemId.ToUpperInvariant(), AshfallUiHelpers.ToColor(DesignTheme.Warm)));
                     _dossierContainer.AddChild(AshfallUiHelpers.MakeDataRow("Substance Category", activeDep.kind, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
                     _dossierContainer.AddChild(AshfallUiHelpers.MakeDataRow("Blood Saturation / Level", $"{BuildGauge(activeDep.dependencyLevel)} {activeDep.dependencyLevel:P1}", AshfallUiHelpers.ToColor(activeDep.dependencyLevel >= 0.5f ? DesignTheme.Critical : DesignTheme.Hot)));

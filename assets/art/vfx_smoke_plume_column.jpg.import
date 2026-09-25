@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/vfx_smoke_plume_column.jpg-dc6afe9c7836579fac
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

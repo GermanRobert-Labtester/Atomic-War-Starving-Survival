@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/towel.jpg-970fe0af20d9b9a459a7b8a5dbd044e4.ct
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

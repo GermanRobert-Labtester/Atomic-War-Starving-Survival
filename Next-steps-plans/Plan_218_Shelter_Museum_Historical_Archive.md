@@ -1,5 +1,13 @@
 # Plan 218 — Shelter Museum Archive — Host, Projection, and Save Custody
 
+## PFGL Codex Luna 6 execution revision — 2026-09-25
+
+**Verified boundary:** DEC-203 is signed. `ShelterMuseumSystem`, `museum_collection_templates.json`, capture/restore, exhibition/visit rules, and seven focused tests already exist. No production host constructs the museum. `CulturalArchiveVaultSystem` owns the distinct `cultural_archives` save section; it must not silently absorb museum state. `DonateFromTemplate` creates a museum record from a template ID, not a physical inventory transfer. `VisitMuseum` mutates visit counts on every call, so it must never be invoked by a read-only panel bind/refresh.
+
+**Bounded implementation:** add one host/save/day owner and a museum projection route. The first player surface may inspect artifacts, curator, events, and exhibitions; it must not enable donation from physical inventory until the inventory transaction and museum admission can commit as one coherent operation. Visits must be explicit once-per-visit commands, with any morale delta applied by the canonical Needs owner and no gain on panel refresh. Keep the museum save key separate from external communications and the cultural vault.
+
+**Acceptance:** restore reproduces curator, artifacts, events, exhibitions, and counts; expiry closes an exhibition once; a read-only refresh never increments visitors; donation is unavailable unless physical item custody is transaction-safe; morale is applied exactly once through Needs. No synthetic inventory removal or second archive ledger.
+
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.
 
 ## 1. Objective and bounded outcome

@@ -19,6 +19,13 @@ namespace AtomicWar.GodotApp.UI
         private Button _toggleBoilerBtn = null!;
 
         private ShelterThermalHostSession? _host;
+        private Ashfall.Core.Inventory.Inventory? _inventory;
+
+        /// <summary>Canonical inventory for retrofit costs (owned by Main).</summary>
+        public void BindInventory(Ashfall.Core.Inventory.Inventory? inventory)
+        {
+            _inventory = inventory;
+        }
 
         public bool IsBound => _host != null;
 
@@ -76,6 +83,20 @@ namespace AtomicWar.GodotApp.UI
             });
             _toggleBoilerBtn.CustomMinimumSize = new Vector2(180, 36);
             buttonRow.AddChild(_toggleBoilerBtn);
+
+            // Alpha feature F3 — storm sealing: fit the authored storm-sealing
+            // insulation on every room, paying the authored cost from the
+            // canonical inventory. The thermal system + its save store own the
+            // effect; this button only issues the command.
+            var stormSealBtn = AshfallUiHelpers.MakeButton("Storm Seal All Rooms", () =>
+            {
+                if (_host == null) return;
+                _host.RetrofitStormSealing(_inventory);
+                _statusRail?.Set("frostbite_risk", _host.LastEvent);
+            });
+            stormSealBtn.CustomMinimumSize = new Vector2(200, 36);
+            stormSealBtn.TooltipText = "Battens, tar felt and taped seams — fit before a storm, not during one.";
+            buttonRow.AddChild(stormSealBtn);
 
             _contentStack.AddChild(buttonRow);
             _shell.SetContent(_contentStack);

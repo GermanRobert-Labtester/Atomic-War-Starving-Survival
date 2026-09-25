@@ -76,7 +76,12 @@ namespace AtomicWar.GodotApp.UI
         }
 
         public void Open() { Visible = true; RefreshView(); }
-        public void Close() { Visible = false; OnClose?.Invoke(); }
+        public void Close()
+        {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+            OnClose?.Invoke();
+        }
 
         private void OnUnitSelected(long index)
         {

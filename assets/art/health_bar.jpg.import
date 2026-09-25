@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/health_bar.jpg-9096ddf9b8f24061a0ea51554d9581
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

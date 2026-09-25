@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_locket.jpg-24147de426d69ef6895ac7e8ba54e
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

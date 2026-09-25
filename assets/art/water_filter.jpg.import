@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/water_filter.jpg-0e5d5b86a758baa4bddc34a17aae
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

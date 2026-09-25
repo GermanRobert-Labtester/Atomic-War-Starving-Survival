@@ -339,14 +339,14 @@ public partial class MapAtlasPanel : Control, IBindablePanel
         if (_worldHost?.WastelandMap == null)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Map atlas offline. Bind WorldHostSession and ExpeditionHostSession."));
+                "Map atlas offline. Bind WorldHostSession and ExpeditionHostSession.", autowrap: true));
             return;
         }
 
         if (_selectedIndex < 0 || _selectedIndex >= _locations.Count)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Select a known map row to open the canonical location detail."));
+                "Select a known map row to open the canonical location detail.", autowrap: true));
             return;
         }
 
@@ -387,7 +387,7 @@ public partial class MapAtlasPanel : Control, IBindablePanel
             string.IsNullOrEmpty(location.Intel) ? "No confirmed loot intelligence." : location.Intel,
             autowrap: true));
         _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Dispatch remains in Wasteland Expeditions; this atlas does not fabricate command affordances."));
+            "Dispatch remains in Wasteland Expeditions; this atlas does not fabricate command affordances.", autowrap: true));
     }
 
     /// <summary>

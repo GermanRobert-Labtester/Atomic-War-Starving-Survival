@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ars_diagnosis_report.jpg-11a96eefb35ac2df95e2
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -47,7 +47,7 @@ namespace AtomicWar.GodotApp.UI
             AddChild(margin);
 
             var root = new VBoxContainer();
-            root.AddThemeConstantOverride("separation", 10);
+            root.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             margin.AddChild(root);
 
             _headerLabel = AshfallUiHelpers.MakeLabel("SHELTER NUCLEAR PHYSICS // ELECTROMAGNETIC ISOTOPE SEPARATOR (ISO-01)", 20, true);

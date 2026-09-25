@@ -76,7 +76,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(selectHeader);
 
             var selectRow = new HBoxContainer();
-            selectRow.AddThemeConstantOverride("separation", 10);
+            selectRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             var selLabel = AshfallUiHelpers.MakeBody("Select Album:");
             selectRow.AddChild(selLabel);
 
@@ -98,7 +98,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_recordMetadata);
 
             var buttonRow = new HBoxContainer();
-            buttonRow.AddThemeConstantOverride("separation", 10);
+            buttonRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
 
             _playBtn = new Button { Text = "Play Selected Album", CustomMinimumSize = new Vector2(180, 36) };
             _playBtn.Pressed += () =>

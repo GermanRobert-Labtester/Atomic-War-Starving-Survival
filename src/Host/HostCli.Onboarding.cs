@@ -96,6 +96,13 @@ namespace AtomicWar.GodotApp
                 Check(cannedBeforeFood == cannedBefore,
                     "onboarding signal did not fabricate or consume inventory");
 
+                journey.RecordSigil("duty.assigned");
+                Check(journey.IsStageComplete(OnboardingStage.Duty),
+                    "duty assignment signal completes Duty");
+                journey.RecordSigil("dose.read");
+                Check(journey.IsStageComplete(OnboardingStage.Dose),
+                    "dose ledger signal completes Dose");
+
                 journey.RecordSigil("research.started");
                 Check(journey.IsStageComplete(OnboardingStage.Research),
                     "research start signal completes Research");

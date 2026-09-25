@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/terrace_pumphouse_valve_key.jpg-334b8729e0ccc
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

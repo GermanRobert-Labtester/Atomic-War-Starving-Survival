@@ -168,11 +168,42 @@ namespace AtomicWar.GodotApp
         public string ScribeReading(float nominalMsv, bool highEnergy)
         {
             var rng = new CoreSeededRng(_rng.Next(0, int.MaxValue));
-            var outcome = Ledger.BookReading(
-                "survivor_gunner_mikhail", 40, nominalMsv, "demo_scan",
-                highEnergy, antiRadBefore: false, antiRadAfter: false, rng);
-            return $"Booked {nominalMsv} mSv → band {outcome} (cumulative {Ledger.GetCumulative("survivor_gunner_mikhail"):F1}).";
+            int day = DayProvider != null ? DayProvider() : 40;
+            var outcome = BookConditionedExposure("survivor_gunner_mikhail", day, nominalMsv, "demo_scan", highEnergy, rng);
+            var windowNote = outcome.Item2 != null
+                ? $" Fallout window {outcome.Item2.HazardType} x{outcome.Item2.Multiplier:0.00} applied on day {day}."
+                : string.Empty;
+            return $"Booked {nominalMsv:0.##} mSv → band {outcome.Item1} (cumulative {Ledger.GetCumulative("survivor_gunner_mikhail"):F1}).{windowNote}";
         }
+
+        /// <summary>
+        /// CORE-MECH W2/W4 — the single dose-booking conditioning site. Applies
+        /// the authored Year-of-Ash fallout window to the nominal reading, then
+        /// books through DoseLedgerSystem (which owns the seeded roll, anti-rad
+        /// timing, band edges, and cumulative totals). Returns the booked band
+        /// and the window that applied (null when clear) so callers can report
+        /// honestly. Shared by the register's own scribe path and CORE-MECH W4's
+        /// expedition breakdown exposure.
+        /// </summary>
+        public (string Band, Ashfall.Core.YearOfAsh.FalloutWindowDay? Window) BookConditionedExposure(
+            string survivorId, int day, float nominalMsV, string source, bool highEnergy, ISeededRng? rng)
+        {
+            float conditioned = nominalMsV;
+            var window = FalloutWindowProviderRef?.WindowFor(day);
+            if (window != null)
+                conditioned = nominalMsV * window.Multiplier;
+
+            var band = Ledger.BookReading(
+                survivorId, day, conditioned, source,
+                highEnergy, antiRadBefore: false, antiRadAfter: false, rng);
+            return (band.ToString(), window);
+        }
+
+        /// <summary>CORE-MECH W2: live campaign day provider (wired by Main).</summary>
+        public Func<int>? DayProvider { get; set; }
+
+        /// <summary>CORE-MECH W2: authored Year-of-Ash fallout windows (wired by Main).</summary>
+        public FalloutWindowProvider? FalloutWindowProviderRef { get; set; }
 
         /// <summary>Name the veteran into a Sick List band.</summary>
         public string DiagnoseDemo(int band)

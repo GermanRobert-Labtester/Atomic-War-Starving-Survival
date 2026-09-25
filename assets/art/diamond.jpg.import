@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/diamond.jpg-b1aa092e879e4b97807f9192b7f0c1e3.
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

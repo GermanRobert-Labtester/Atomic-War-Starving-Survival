@@ -11,34 +11,18 @@ namespace Ashfall.Core.Tests.UI
 {
     public sealed class PlayerSurfaceLivenessGateTests
     {
-        private static readonly string[] ShelvedPrototypeIds = new[]
+        /// <summary>
+        /// Retired 2026-09-25: registered Prototype-only shells with no Core
+        /// authority. They are no longer in the registry at all; the panel
+        /// classes remain on disk but unreachable. Promotion condition: author
+        /// a host authority first, then re-register with real actions.
+        /// </summary>
+        private static readonly string[] RetiredPrototypeIds = new[]
         {
-            "biogas_digester",
-            "cartography_gis",
-            "printing_press",
             "silicon_slicing",
-            "geothermal_turbine",
-            "war_dog_kennel",
             "isotope_separator",
-            "plasma_smelting",
-            "borehole_seismograph",
-            "logistics_airlock",
-            "cryo_permafrost_core",
-            "basal_radon_migration",
-            "trauma_bonding_cohort",
-            "clandestine_insurgency",
-            "surface_shrapnel_aegis",
-            "long_walk_expedition",
             "sonic_rupture_drill",
-            "vault_door_breaching",
-            "iron_cenotaph_memorial",
-            "aquifer_treaty_concession",
-            "mechanical_prosthetics_lathe",
-            "ultrasonic_decontam_airlock",
-            "tropospheric_radio_relay",
-            "induction_cupola_furnace",
-            "heavy_marine_diesel_gen",
-            "magnetic_drum_archive"
+            "tropospheric_radio_relay"
         };
 
         public PlayerSurfaceLivenessGateTests()
@@ -47,15 +31,29 @@ namespace Ashfall.Core.Tests.UI
         }
 
         [Fact]
-        public void ShelvedPrototypes_AreRegisteredButNotPlayerNavigable()
+        public void RetiredPrototypes_AreNotRegisteredAndCannotOpen()
         {
-            foreach (var id in ShelvedPrototypeIds)
+            foreach (var id in RetiredPrototypeIds)
+            {
+                Assert.False(PanelRegistry.IsRegistered(id),
+                    $"Retired prototype '{id}' must not be a registered surface.");
+                string? diag = null;
+                Assert.False(PanelRegistry.TryOpen(id, msg => diag = msg),
+                    $"Retired prototype '{id}' must not open.");
+            }
+        }
+
+        [Fact]
+        public void PrototypePanels_AreNeverPlayerNavigable()
+        {
+            // Generic invariant (replaces the stale shelved-id list): whatever is
+            // registered as Prototype must stay non-navigable with no actions.
+            foreach (var id in PanelRegistry.AllIds)
             {
                 var descriptor = PanelRegistry.Get(id);
-                Assert.NotNull(descriptor);
-                Assert.Equal(PanelMaturity.Prototype, descriptor!.Maturity);
+                if (descriptor == null || descriptor.Maturity != PanelMaturity.Prototype) continue;
                 Assert.False(descriptor.IsPlayerNavigable,
-                    $"Shelved prototype '{id}' must not be player-navigable.");
+                    $"Prototype '{id}' must not be player-navigable.");
                 Assert.Null(descriptor.BindAction);
                 Assert.Null(descriptor.OpenAction);
                 Assert.Null(descriptor.CloseAction);

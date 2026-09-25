@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/spy.jpg-2c8979723e274c74be4541ab2a134b41.ctex
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

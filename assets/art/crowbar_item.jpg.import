@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/crowbar_item.jpg-c8a0e2ca09a4d4c98b86bdb26685
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

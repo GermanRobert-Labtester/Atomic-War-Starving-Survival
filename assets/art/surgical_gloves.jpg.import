@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/surgical_gloves.jpg-9fa7fad36cba41e1b49cee365
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

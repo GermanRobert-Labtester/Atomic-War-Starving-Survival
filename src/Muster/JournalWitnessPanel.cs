@@ -26,7 +26,7 @@ namespace AtomicWar.GodotApp.Muster
             CustomMinimumSize = new Vector2(400, 240);
 
             var rootVbox = new VBoxContainer();
-            rootVbox.AddThemeConstantOverride("separation", 6);
+            rootVbox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             AddChild(rootVbox);
 
             var title = new Label
@@ -69,7 +69,7 @@ namespace AtomicWar.GodotApp.Muster
 
                 string framing = JournalVoice.ComposeFullText(w.knowledgeKey, authorBias, day);
                 var card = new VBoxContainer();
-                card.AddThemeConstantOverride("separation", 2);
+                card.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
 
                 var header = new Label { Text = $"{w.witnessName} — {w.locationId}" };
                 header.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);

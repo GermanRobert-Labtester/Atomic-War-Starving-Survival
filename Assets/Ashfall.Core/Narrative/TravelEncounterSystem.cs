@@ -444,6 +444,64 @@ namespace Ashfall.Core.Narrative
         private static bool IsPatrol(TravelEncounterDefinition encounter) =>
             encounter != null && encounter.Id.StartsWith("enc_patrol_", StringComparison.OrdinalIgnoreCase);
 
+        /// <summary>
+        /// CORE-MECH W6 — authored maximum lift a fully-migrated region applies to
+        /// encounter weights (×1.5 at pressure 1.0). A bounded authored-runtime
+        /// modifier, in the same spirit as the war and patrol multipliers above.
+        /// </summary>
+        public const float MigrationEncounterBiasK = 0.5f;
+
+        /// <summary>
+        /// CORE-MECH W6 — region id → migration pressure in [0,1]. Wired by Main
+        /// from the seasonal human-migration engine; unbound means identity.
+        /// </summary>
+        public Func<string, float>? RegionEncounterPressureProvider { get; set; }
+
+        /// <summary>
+        /// CORE-MECH W6 — region-aware weight. Seasonal human migration is a real
+        /// region state (<c>SeasonalHumanMigrationEngine.RegionWeights</c>); this
+        /// is where it becomes travel pressure.
+        ///
+        /// The bias is <b>susceptibility-weighted</b>, not uniform: a uniform
+        /// multiplier would cancel out in a weighted pick and could never change the
+        /// mix (a focused test proved that). Migration moves people, so authored
+        /// categories are lifted by different authored susceptibility — human
+        /// contacts most, wildlife/creature pressure next, the rest barely move.
+        /// Bounded, deterministic, and read purely from authored fields.
+        /// </summary>
+        public float GetEffectiveWeight(TravelEncounterDefinition encounter, string stance, string region)
+        {
+            float weight = GetEffectiveWeight(encounter, stance);
+            if (encounter == null || RegionEncounterPressureProvider == null || string.IsNullOrEmpty(region))
+                return weight;
+
+            float pressure = RegionEncounterPressureProvider(region);
+            if (float.IsNaN(pressure) || float.IsInfinity(pressure) || pressure <= 0f) return weight;
+            if (pressure > 1f) pressure = 1f;
+
+            float susceptibility = MigrationSusceptibility(encounter);
+            if (susceptibility <= 0f) return weight;
+
+            weight *= 1f + pressure * MigrationEncounterBiasK * susceptibility;
+            return Math.Max(0.01f, weight);
+        }
+
+        /// <summary>
+        /// CORE-MECH W6 — how strongly a migration wave raises an authored
+        /// encounter category: people move for people (1.0), herds and swarms
+        /// follow the same corridors (0.6), pure environment does not (0.25).
+        /// </summary>
+        public static float MigrationSusceptibility(TravelEncounterDefinition encounter)
+        {
+            if (encounter == null) return 0f;
+            string category = encounter.Category ?? string.Empty;
+            if (category.Equals("Human", StringComparison.OrdinalIgnoreCase)) return 1.0f;
+            if (category.Equals("Creature", StringComparison.OrdinalIgnoreCase)) return 0.6f;
+            if (category.Equals("Environmental", StringComparison.OrdinalIgnoreCase)) return 0.25f;
+            // Chained encounters are story beats; migration nudges them slightly.
+            return category.Equals("Chained", StringComparison.OrdinalIgnoreCase) ? 0.1f : 0f;
+        }
+
         public TravelEncounterDefinition? SelectEncounter(
             string region,
             float dangerLevel,
@@ -461,7 +519,7 @@ namespace Ashfall.Core.Narrative
             {
                 if (IsEncounterEligible(encounter, region, dangerLevel, currentSeason, currentDay, locationId))
                 {
-                    float w = GetEffectiveWeight(encounter, stance);
+                    float w = GetEffectiveWeight(encounter, stance, region);
                     eligible.Add(encounter);
                     weights.Add(w);
                     totalWeight += w;
@@ -513,7 +571,7 @@ namespace Ashfall.Core.Narrative
 
                 if (IsEncounterEligible(enc, region, dangerLevel, currentSeason, currentDay, locationId))
                 {
-                    float w = GetEffectiveWeight(enc, stance);
+                    float w = GetEffectiveWeight(enc, stance, region);
                     if (w > 0f)
                     {
                         list.Add((enc, w));

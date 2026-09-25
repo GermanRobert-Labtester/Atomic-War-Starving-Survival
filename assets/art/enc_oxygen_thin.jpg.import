@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/enc_oxygen_thin.jpg-3b64f31df681711e7d6752ef5
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -77,7 +77,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("sensors", "Acoustic Array", "—", AshfallMetricCard.Criticality.Normal, minWidth: 160);
 
             _content = new VBoxContainer();
-            _content.AddThemeConstantOverride("separation", 10);
+            _content.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
             _content.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _content.SizeFlagsVertical = SizeFlags.ExpandFill;
 

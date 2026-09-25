@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/dosimeter_badge.jpg-64e6f2eca121c996654c1e5ae
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

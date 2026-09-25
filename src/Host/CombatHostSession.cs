@@ -467,6 +467,10 @@ namespace AtomicWar.GodotApp
 
             if (ok) Engine.State.IsSelfDefense = isSelfDefense;
 
+            // DEC-358: arm fixed-tick realtime clock after a successful engage.
+            if (ok)
+                TryEnableRealtime(CombatArenaCatalog.DefaultArenaId);
+
             return ok ? "Combat engaged at " + (locationName ?? locationId) + "." : "Could not start combat.";
         }
 
@@ -519,6 +523,12 @@ namespace AtomicWar.GodotApp
             return r.Message;
         }
 
+        public string ActionReload(string subjectId)
+        {
+            var r = Engine.PlayerReload(subjectId);
+            return r.Message;
+        }
+
         public CommandResult ActionRepair(string subjectId)
         {
             var r = Engine.ExecutePlayerFieldRepair(subjectId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
@@ -560,6 +570,12 @@ namespace AtomicWar.GodotApp
 
         public string ActionRetreat()
         {
+            if (Engine.State != null && Engine.State.RealtimeActive)
+            {
+                var flee = Engine.RequestFlee();
+                return flee.Message;
+            }
+
             var r = Engine.PlayerRetreat(new SeededRng(RollSeed()));
             return r.Message;
         }
@@ -572,9 +588,53 @@ namespace AtomicWar.GodotApp
 
         public string ActionEndTurn()
         {
+            if (Engine.State != null && Engine.State.RealtimeActive)
+                return "Realtime combat is active — use PumpRealtime instead of End Turn.";
+
             var r = Engine.EndTurn(new SeededRng(RollSeed()));
             EvaluateToxicExposureAfterTurn();
             return r.Message;
+        }
+
+        // ── DEC-358 realtime pump ─────────────────────────────────────────
+
+        private CombatInputFrame _realtimeInput = CombatInputFrame.Empty;
+        private float _realtimeAccum;
+        private bool _realtimePumpEnabled;
+
+        public void SetRealtimePumpEnabled(bool enabled) => _realtimePumpEnabled = enabled;
+
+        public void SetInputFrame(CombatInputFrame frame) =>
+            _realtimeInput = frame ?? CombatInputFrame.Empty;
+
+        public bool TryEnableRealtime(string? arenaId = null)
+        {
+            bool ok = Engine.EnableRealtime(arenaId, new SeededRng(CombatEncounterSeed()));
+            if (ok) _realtimePumpEnabled = true;
+            return ok;
+        }
+
+        /// <summary>
+        /// Accumulator pump: converts wall/frame dt into fixed Core ticks.
+        /// </summary>
+        public int PumpRealtime(float wallDt)
+        {
+            if (!_realtimePumpEnabled || Engine.State == null || !Engine.State.RealtimeActive)
+                return 0;
+
+            if (wallDt < 0f) wallDt = 0f;
+            _realtimeAccum += wallDt;
+            int pumps = 0;
+            const int maxPumps = 5;
+            while (_realtimeAccum >= TacticalCombatSystem.RealtimeSimDt && pumps < maxPumps)
+            {
+                Engine.TickRealtime(TacticalCombatSystem.RealtimeSimDt, _realtimeInput, new SeededRng(RollSeed()));
+                _realtimeAccum -= TacticalCombatSystem.RealtimeSimDt;
+                pumps++;
+            }
+
+            if (pumps > 0) RaiseStateChanged();
+            return pumps;
         }
 
         /// <summary>
@@ -638,6 +698,7 @@ namespace AtomicWar.GodotApp
         public ActionPreflight EvaluateFire(string targetId) => Engine.EvaluateFire(targetId);
         public ActionPreflight EvaluateSuppress() => Engine.EvaluateSuppress();
         public ActionPreflight EvaluateClearJam(string subjectId) => Engine.EvaluateClearJam(subjectId);
+        public ActionPreflight EvaluateReload(string subjectId) => Engine.EvaluateReload(subjectId);
         public ActionPreflight EvaluateRepair(string subjectId) => Engine.EvaluateRepair(subjectId);
         public ActionPreflight EvaluateRetreat() => Engine.EvaluateRetreat();
         public ActionPreflight EvaluateEndTurn() => Engine.EvaluateEndTurn();

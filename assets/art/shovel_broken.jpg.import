@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/shovel_broken.jpg-7da21bc5fe7d38c2affae6107fc
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

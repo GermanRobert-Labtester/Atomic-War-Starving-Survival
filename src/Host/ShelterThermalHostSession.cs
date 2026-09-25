@@ -87,6 +87,41 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
+        /// <summary>
+        /// Storm sealing (alpha feature): retrofit the authored storm-sealing
+        /// insulation on every room that does not have it yet, paying each
+        /// room's authored cost through the canonical inventory. Backed by the
+        /// existing thermal retrofit engine + thermal save store; owns no new
+        /// state.
+        /// </summary>
+        public ActionResult RetrofitStormSealing(Ashfall.Core.Inventory.Inventory? inventory)
+        {
+            const string stormSealingId = "insul_storm_sealing";
+            int applied = 0;
+            int blocked = 0;
+            string lastReason = string.Empty;
+            foreach (var room in System.State.rooms)
+            {
+                if (room == null) continue;
+                if (System.State.roomInstalledInsulation.TryGetValue(room.roomId, out var installed)
+                    && installed == stormSealingId)
+                {
+                    continue;
+                }
+                var result = System.RetrofitInsulation(room.roomId, stormSealingId, inventory);
+                if (result.Status == ActionResult.StatusKind.Success) applied++;
+                else { blocked++; lastReason = string.IsNullOrEmpty(result.FailureCode) ? "retrofit_failed" : result.FailureCode; }
+            }
+
+            LastEvent = blocked == 0
+                ? $"Storm sealing fitted in {applied} room(s)."
+                : $"Storm sealing fitted in {applied} room(s); {blocked} blocked ({lastReason}).";
+            if (applied > 0) RaiseStateChanged();
+            return applied > 0
+                ? ActionResult.Success("storm_sealing")
+                : ActionResult.Blocked(lastReason.Length > 0 ? lastReason : "already_sealed", "storm_sealing_none");
+        }
+
         public void SetAssignments(Ashfall.Core.Shelter.ShelterAssignmentSystem? assignment)
         {
             System.SetAssignments(assignment);

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/journal_icon.jpg-47b22d5d309e05822e1bc26b5367
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

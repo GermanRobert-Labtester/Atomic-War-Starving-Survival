@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/gear_tactical_headlamp.jpg-4977f1e8c1c0474afc
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

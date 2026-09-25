@@ -49,6 +49,23 @@ namespace AtomicWar.GodotApp
                 && session.Funnel.IsStepCompleted("first_craft")
                 && session.Funnel.IsStepCompleted("first_storm_survived"));
 
+            // 3b — live FirstHour journey sigils drive their own funnel steps.
+            session.RecordSigil("water.treatment_started", 1);
+            session.RecordSigil("power.breaker_toggled", 1);
+            session.RecordSigil("food.ration_consumed", 1);
+            session.RecordSigil("duty.assigned", 1);
+            session.RecordSigil("dose.read", 1);
+            session.RecordSigil("research.started", 1);
+            session.RecordSigil("expedition.dispatched", 2);
+            Check("funnel_first_hour_steps",
+                session.Funnel.IsStepCompleted("first_water")
+                && session.Funnel.IsStepCompleted("first_power")
+                && session.Funnel.IsStepCompleted("first_food")
+                && session.Funnel.IsStepCompleted("first_duty")
+                && session.Funnel.IsStepCompleted("first_dose")
+                && session.Funnel.IsStepCompleted("first_research")
+                && session.Funnel.IsStepCompleted("first_dispatch"));
+
             // 4 — day advances arrive as day_join rows and complete their step.
             for (int day = 1; day <= 3; day++) session.RecordDayJoined(day, "campaign_day_coordinator", "day_advanced", 4 + day);
             Check("funnel_day_step", session.Funnel.IsStepCompleted("first_day_past_tutorial"));
@@ -80,6 +97,19 @@ namespace AtomicWar.GodotApp
             string jsonl = session.Recorder.ToJsonLine(drained[0]);
             var reparsed = System.Text.Json.JsonSerializer.Deserialize<PlaySessionEvent>(jsonl);
             Check("jsonl_roundtrip", reparsed != null && reparsed.SessionId == "probe_session");
+
+            // 7b — persist the drained session through the production JSONL sink
+            // (override path, never the playtest sink) so the first-hour funnel
+            // tool can consume an automated full-journey session.
+            PlayMetricJsonlSink.PathOverride = "user://play_metrics_selftest.jsonl";
+            PlayMetricJsonlSink.Reset();
+            foreach (var evt in drained)
+            {
+                PlayMetricJsonlSink.AppendLine(session.Recorder.ToJsonLine(evt));
+            }
+            Check("sink_selftest_rows_written", PlayMetricJsonlSink.RowCount() == drained.Count,
+                $"{PlayMetricJsonlSink.RowCount()} vs {drained.Count}");
+            PlayMetricJsonlSink.PathOverride = null;
 
             // 8 — capture/restore parity of the persisted report + funnel.
             var captured = session.CaptureState();

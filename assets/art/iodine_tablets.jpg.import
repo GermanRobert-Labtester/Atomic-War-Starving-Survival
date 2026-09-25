@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/iodine_tablets.jpg-41a30e46d54305f0b026fa7347
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

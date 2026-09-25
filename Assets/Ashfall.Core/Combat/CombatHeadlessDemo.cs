@@ -193,7 +193,7 @@ namespace Ashfall.Core.Combat
             var migrated = TacticalCombatSystem.Migrate(legacy);
             Check(migrated != null && migrated.SaveVersion == CombatState.CurrentSaveVersion, "migration bumps save version");
             if (migrated == null) return report;
-            Check(migrated.Phase >= (int)CombatPhase.Setup && migrated.Phase <= (int)CombatPhase.Retreated, "migration clamps out-of-range phase");
+            Check(migrated.Phase >= (int)CombatPhase.Setup && migrated.Phase <= (int)CombatPhase.ActiveRealtime, "migration clamps out-of-range phase");
             Check(migrated.Combatants.Count == 1, "migration preserves legacy combatants null-safely");
 
             report.FinalState = sys.CaptureState();

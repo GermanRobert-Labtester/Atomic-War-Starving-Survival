@@ -136,13 +136,29 @@ public partial class DefenseGridPanel : Control
             else if (i.armed) armed++;
             captures += i.total_captures;
         }
-        var strength = _host.System.CalculatePerimeterStrength(null, null);
+        // CORE-MECH W5: project the SAME truth the raid resolver uses — the attached
+        // perimeter and the real power state. The previous call passed (null, null),
+        // so walls, turrets, and powered state were invisible to the player who
+        // built them.
+        var strength = _host.System.CalculatePerimeterStrength(
+            _host.Perimeter, _host.EmplacementPoweredProvider);
         _statusRail.Set("armed", $"{armed}", armed > 0 ? AshfallMetricCard.Criticality.Normal : AshfallMetricCard.Criticality.Caution);
         _statusRail.Set("sprung", $"{sprung}", sprung > 0 ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("strength",
-            $"{strength.Total} (traps {strength.Traps} · penalties -{strength.DamagePenalties})",
+            $"{strength.Total} (traps {strength.Traps} · walls {strength.Walls} · turrets {strength.Turrets} · power {strength.Power} · penalties -{strength.DamagePenalties})",
             AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("captures", $"{captures}", AshfallMetricCard.Criticality.Normal);
+
+        // CORE-MECH W5: report what the defenses actually did last time.
+        var last = _host.LastEngagement;
+        if (last != null)
+        {
+            _statusRail.Set("last raid",
+                last.Repelled
+                    ? $"repelled · {last.RaidersNeutralizedByTraps} down · {last.RaidersCaptured} captured"
+                    : $"breached · {last.RemainingRaiders} reached the shelter",
+                last.Repelled ? AshfallMetricCard.Criticality.Normal : AshfallMetricCard.Criticality.Critical);
+        }
     }
 
     private void BuildGridRows()
@@ -441,10 +457,10 @@ public partial class DefenseGridPanel : Control
         QueueRedraw();
     }
 
-    public void Close()
-    {
-        Visible = false;
-    }
+    public void Close() {
+            if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
+                Visible = false;
+        }
 
     public override void _UnhandledInput(InputEvent @event)
     {

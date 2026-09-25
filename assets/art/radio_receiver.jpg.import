@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/radio_receiver.jpg-6490654eaf7f3a934170560add
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

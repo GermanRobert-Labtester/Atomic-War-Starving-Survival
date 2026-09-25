@@ -1680,6 +1680,12 @@
       "disease_id": "disease_cholera",
       "base_probability": 0.4,
       "mitigating_trait_id": ""
+    },
+    {
+      "source_id": "spoiled_preserved_stock",
+      "disease_id": "disease_typhoid_waterborne",
+      "base_probability": 0.35,
+      "mitigating_trait_id": ""
     }
   ]
 }

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/scrap_wood.jpg-f17c6840adc8fd8a030cbf9596440b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/frying_pan.jpg-e3fb996d3cac5f4cffad7456711fbe
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

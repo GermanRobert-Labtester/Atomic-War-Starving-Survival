@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/spoiled_food_scrap.jpg-64192a6c72fb7ee45bb0d6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

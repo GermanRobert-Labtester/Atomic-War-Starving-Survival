@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/mutated_human_ghoul.jpg-7e82c5af4f96b7754d2aa
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -1,12 +1,22 @@
 # Plan 211 — Internal Communication Network — Campaign Host, Day, Save, and Player Routes
 
+## PFGL Codex Luna 6 execution revision — 2026-09-25
+
+**Verified boundary:** DEC-197 is signed. `InternalCommunicationSystem`, seven authored templates, capture/restore, expiry logic, and seven focused tests already exist. At premise time, no production `src/` reference constructed it; the completed slice below now records the live host/save/day/UI seam. The existing `communications` save section represents long-range antenna traffic and cannot own internal shelter mail, notices, board occupancy, or acknowledgements.
+
+**Bounded implementation:** create the first live host/save/day seam for internal notices and expose the existing message state through an internal shelter communications route. The panel may post, acknowledge, or read only via current Core commands. Sender identity and notice visibility come from the authored message/template and canonical survivor roster; private mail must not enter public board projections. Message expiry runs from the canonical campaign day and is saved with the message state.
+
+**Acceptance:** one authored notice can be posted, read, acknowledged, expired, and restored; private recipient messages never appear in public notices; external `communications` remains unchanged; malformed/unknown template or survivor IDs fail clearly; repeated day updates are idempotent. Do not add a second broadcast/radio simulation.
+
+**Current-state override (2026-09-25):** repeated acceptance-card sentences below that describe the dedicated section as undecided are historical premise text. The signed implementation decision is now the registered, checksummed `internal_communication` section owned by `InternalCommunicationSaveStore`; the external `communications` section remains separate. The closeout and integration log are authoritative for current status, while the older cards remain preserved as acceptance history.
+
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.
 
 ## 1. Objective and bounded outcome
 
 Make one internal notice or mail event reachable through a campaign host and player surface, then bind one canonical daily expiry and durable restore path. The first slice is a posted notice; personal mail and intercom follow only after identity and permission rules are settled.
 
-**Current state:** DEC-197 SIGNED: seven template rows and a pure Core system exist. No src reference to InternalCommunicationSystem was found in the 2026-09-24 premise sweep. The existing communications save section is external antenna traffic, so similarly named sections must not be conflated.
+**Current state:** DEC-197 SIGNED: seven template rows and a pure Core system exist. The bounded host seam is now live through `InternalCommunicationHostSession`, the existing `shelter_social` route, and the distinct `internal_communication` save section; the external `communications` section remains antenna traffic and is not conflated.
 
 **Non-goals:** No new radio simulation, no duplicated duty/leadership/memorial facts, no public replay of private mail, no automatic sender creation, and no panel-owned message list.
 
@@ -14,7 +24,7 @@ Make one internal notice or mail event reachable through a campaign host and pla
 
 ## 2. Authority and evidence status
 
-The implementation authority is `InternalCommunicationSystem (internal messages, boards, mail and acknowledgements)`. Source and adjacent paths inspected for this revision (some are candidate consumers rather than active bindings): `Assets/Ashfall.Core/Communication/InternalCommunicationSystem.cs`, `src/Main.ShelterSocial.cs`, `src/Main.SaveOrchestrator.cs`, `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`, `src/UI/ShelterSocialPanel.cs`, and `Assets/StreamingAssets/Data/communication_templates.json`. The focused test starting point is `Ashfall.Core.Tests/Communication/Plan211InternalCommunicationIntegrationTests.cs`. Persistence boundary under audit: `No dedicated internal-communication section is registered; choose a current campaign save owner by explicit integrator decision, preserving the separate external communications section`. Paths are evidence pointers, not advance claims.
+The implementation authority is `InternalCommunicationSystem (internal messages, boards, mail and acknowledgements)`. Source and adjacent paths inspected for this revision (some are candidate consumers rather than active bindings): `Assets/Ashfall.Core/Communication/InternalCommunicationSystem.cs`, `src/Main.ShelterSocial.cs`, `src/Main.SaveOrchestrator.cs`, `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`, `src/UI/ShelterSocialPanel.cs`, and `Assets/StreamingAssets/Data/communication_templates.json`. The focused test starting point is `Ashfall.Core.Tests/Communication/Plan211InternalCommunicationIntegrationTests.cs`. Persistence decision (completed): `internal_communication` is a dedicated checksummed section owned by `InternalCommunicationSaveStore`; the external `communications` section remains untouched. Paths are evidence pointers plus the exact completed claim recorded in the integration ledger.
 The master expansion authority v2.0 supplies the planning discipline and continuity map: C1 shelter operations and C17 host surface identify the local-network and panel lanes. C8 covers radio and information but its external communications routes do not own internal bulletin or mail state. Its Part II requires live premise checks, bounded subject scope, explicit evidence labels, and a duplication firewall. The relevant deep maps and lane matrices guide coverage; they do not override newer code. The master compilation itself warns against padding and stale repository assumptions. This plan therefore records concrete contracts and treats older task lists as intent pending current verification.
 
 ## 3. Current contract and collision firewall
@@ -23,7 +33,7 @@ The master expansion authority v2.0 supplies the planning discipline and continu
 - **Evidence or explicit premise:** PostMessage and AddBulletinBoard allocate deterministic sequence IDs but currently do not validate author identity, recipient identity, board membership or board capacity in the shown method body. A host route must not promise those rules without a bounded Core change.
 - **Evidence or explicit premise:** MarkAsRead and AcknowledgeMessage locate a message by ID but do not visibly authenticate the reader or acknowledger. Private mail must be guarded before a player route can expose those commands.
 - **Evidence or explicit premise:** The registered `communications` save section belongs to radio/antenna communication; name similarity does not confer internal-network ownership.
-- **Evidence or explicit premise:** The current source sweep found no `src` construction of InternalCommunicationSystem, so one instance and save custody require a foreman/integrator seam decision.
+- **Evidence or explicit premise:** At premise time the source sweep found no `src` construction of InternalCommunicationSystem. The completed implementation now records the single host instance, dedicated save custody, and existing-route projection without changing the external radio owner.
 
 ### Internal network custody dossier
 
@@ -122,7 +132,7 @@ Inspect the current route to `src/UI/ShelterSocialPanel.cs` and its bind/open/cl
 | `src/UI/ShelterSocialPanel.cs` | READ / bounded MODIFY | truthful surface | medium |
 | `Ashfall.Core.Tests/Communication/Plan211InternalCommunicationIntegrationTests.cs` | READ / focused MODIFY | contract verification | low |
 
-No paths in this table are claimed by this document. At implementation time compare them with `WORKTREE_OWNERSHIP.md` and assign the exact package. Do not edit a currently claimed path.
+The implementation paths in this table were claimed under `claim-pfgl-plan211-internal-communication-2026-09-25`; generated outputs remain owned by their generators. Do not edit a currently claimed path outside that package.
 
 ## 12. Focused acceptance and rollback
 
@@ -669,4 +679,48 @@ The original 2026-09-01 task list is preserved as intent here in condensed form.
 
 **VERIFY WITH:** `bash scripts/run_test.sh Ashfall.Core.Tests/Communication/Plan211InternalCommunicationIntegrationTests.cs` plus targeted owner save/host checks selected at claim time under `TEST_POLICY.md`.
 
-**FIRST SAFE IMPLEMENTATION STEP:** publish a current premise note and exact path claim, then implement the first accepted vertical slice. This plan does not itself alter production code.
+**FIRST SAFE IMPLEMENTATION STEP:** publish a current premise note and exact path claim, then implement the first accepted vertical slice. Production changes for that completed slice are recorded in the companion implementation log and live integration ledger.
+
+## 16. Implementation closeout — first vertical slice complete (2026-09-25)
+
+**Status:** COMPLETE for the bounded implementation authorized by the PFGL
+execution revision and `claim-pfgl-plan211-internal-communication-2026-09-25`.
+The Core authority, authored catalog, host composition, distinct save section,
+canonical day expiry, identity refusals, public read/ack projection, existing
+Shelter Social route, and headless probe are now live. The external
+`communications` antenna section is unchanged.
+
+**Implemented outcome:** a current shelter leader can post
+`comm_tpl_water_rationing_notice`; an ordinary survivor receives a precise
+`author_not_authorized` refusal; a canonical roster actor can read/ack a public
+notice; unknown actors receive precise `author_unknown` refusals; ordinary
+board creation is roster-checked and leadership-only board creation is
+leader-authorized; private mail remains recipient-scoped and is never projected
+into the public board; messages expire at their authored day; and the full state
+survives checksummed save/load. Legacy state receives an empty/default baseline
+and a future schema is rejected.
+
+**Files and owners:** `InternalCommunicationSystem.cs` remains the sole Core
+state owner; `InternalCommunicationHostSession.cs` and
+`InternalCommunicationSaveStore.cs` are thin Godot adapters; `Main.InternalCommunication.cs`
+and the existing Plans 46–49/day seam compose setup, save, reset, and tick;
+`Main.CampaignServices.cs` explicitly constructs the session on the fresh-game
+path before any social panel is opened; `ShelterSocialPanel.cs` is
+presentation-only; `SaveSectionRegistry.cs` owns the new
+`internal_communication` section; the CLI probe is
+`--internal-communication-selftest`. Full change and verification evidence is
+in `docs/plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md`.
+
+**Verification completed:** Core Plan 211 9/9; host-wiring 5/5; save registry
+5/5; version report 11/11; comprehensive save/migration 1604/1604; host build
+0/0; headless internal-communication probe 19/19; player-panel/lifecycle gate
+21/21; real campaign journey PASS; data integrity 426 catalogs with 0 errors;
+architecture map, save-store matrix, and self-test manifest checks all pass.
+
+**Residual boundary:** automatic water/ration event production, intercom/private
+mail UI, relationship/schedule/memorial/security producers, localization
+authoring, and any second notification channel remain separate follow-on work.
+The host boundary already validates and exposes the existing Core intercom,
+private-mail, and board commands, but this slice does not claim those optional
+player surfaces or producers as completed. No Unity dependency,
+parallel radio state, or dirty shared `docs/INDEX.md` change was introduced.

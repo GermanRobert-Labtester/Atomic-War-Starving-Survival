@@ -58,54 +58,21 @@ namespace AtomicWar.GodotApp
         /// is consumed on a blocked build.</summary>
         public bool WaterCondenserTryBuild()
         {
-            SetupWaterCondenser();
-            var inv = _inventory.Inventory;
-
-            if (_sharedResearch == null || !_sharedResearch.HasCapability(AtmosphericCondenserSystem.RequiredKnowledgeId))
-            {
-                ObserveSigil("condenser.build_blocked_missing_knowledge");
-                return false;
-            }
-            if (inv.CountById(AtmosphericCondenserSystem.MembraneItemId) < 1
-                || inv.CountById("metal_pipe") < 2
-                || inv.CountById("scrap_metal") < 4)
-            {
-                ObserveSigil("condenser.build_blocked_missing_items");
-                return false;
-            }
-
-            if (!_waterCondenser!.TryBuild(hasRequiredCapability: true, out var reason))
-            {
-                ObserveSigil("condenser.build_blocked_" + reason);
-                return false;
-            }
-
-            inv.TryConsumeById(AtmosphericCondenserSystem.MembraneItemId, 1);
-            inv.TryConsumeById("metal_pipe", 2);
-            inv.TryConsumeById("scrap_metal", 4);
-            ObserveSigil("condenser.built");
-            return true;
+            bool built = EnsureWaterSourcesSession().TryBuildCondenser();
+            ObserveSigil(built ? "condenser.built" : "condenser.build_blocked_water_sources");
+            return built;
         }
 
         /// <summary>Membrane replacement route: canonical membrane consumed
         /// once on commit.</summary>
         public bool WaterCondenserTryReplaceMembrane()
         {
-            SetupWaterCondenser();
-            var inv = _inventory.Inventory;
-            if (inv.CountById(AtmosphericCondenserSystem.MembraneItemId) < 1)
-            {
-                ObserveSigil("condenser.membrane_missing_item");
-                return false;
-            }
-            if (!_waterCondenser!.ReplaceMembrane(out var reason))
-            {
-                ObserveSigil("condenser.membrane_blocked_" + reason);
-                return false;
-            }
-            inv.TryConsumeById(AtmosphericCondenserSystem.MembraneItemId, 1);
-            ObserveSigil("condenser.membrane_replaced");
-            return true;
+            bool replaced = EnsureWaterSourcesSession().TryReplaceCondenserMembrane();
+            ObserveSigil(replaced ? "condenser.membrane_replaced" : "condenser.membrane_blocked");
+            return replaced;
         }
+
+        public bool WaterCondenserSetEnabled(bool enabled) =>
+            EnsureWaterSourcesSession().TrySetCondenserEnabled(enabled);
     }
 }

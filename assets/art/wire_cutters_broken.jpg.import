@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/wire_cutters_broken.jpg-6846c5b362219e4cd1690
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

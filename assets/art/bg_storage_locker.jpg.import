@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bg_storage_locker.jpg-a93783d1c277d2e41f91ca1
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

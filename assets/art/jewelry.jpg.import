@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/jewelry.jpg-a3449074d71b5da8f1882c83d72361ce.
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

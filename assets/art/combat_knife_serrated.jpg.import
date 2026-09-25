@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/combat_knife_serrated.jpg-46bf3a2f0d7e0cb1836
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

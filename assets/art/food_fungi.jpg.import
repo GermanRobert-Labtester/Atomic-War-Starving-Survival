@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/food_fungi.jpg-334c6f2f8ae258ed473bb968a34858
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

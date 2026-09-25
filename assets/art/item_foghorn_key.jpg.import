@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/item_foghorn_key.jpg-47041025c2b3657d06cb5c14
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

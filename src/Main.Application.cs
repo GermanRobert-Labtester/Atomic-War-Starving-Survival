@@ -592,6 +592,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ShelterOperationsSelfTest:
                     GetTree().Quit(HostCli.RunShelterOperationsSelfTest(_dataDir));
                     return;
+                case HostCliAction.WaterSourcesSelfTest:
+                    GetTree().Quit(HostCli.RunWaterSourcesSelfTest(_dataDir));
+                    return;
                 case HostCliAction.ShelterDecorSelfTest:
                     GetTree().Quit(ShelterDecorSelfTest.Run(_dataDir));
                     return;
@@ -652,6 +655,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.TimeCapsuleSelfTest:
                     GetTree().Quit(TimeCapsuleSelfTest.Run(_dataDir));
+                    return;
+                case HostCliAction.InternalCommunicationSelfTest:
+                    GetTree().Quit(InternalCommunicationSelfTest.Run(_dataDir));
                     return;
                 case HostCliAction.DeathLegacySelfTest:
                     GetTree().Quit(SurvivorDeathLegacySelfTest.Run(_dataDir));

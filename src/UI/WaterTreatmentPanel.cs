@@ -21,10 +21,22 @@ namespace AtomicWar.GodotApp.UI
         private Button _distillBtn = null!;
         private Button _osmosisBtn = null!;
         private Button _replaceFilterBtn = null!;
+        private Label? _waterSourcesStatus;
+        private Button? _deepWellAction;
+        private Button? _deepWellService;
+        private Button? _condenserAction;
+        private Button? _condenserMembrane;
+        private Button? _piezometerInstall;
 
         private WaterTreatmentHostSession? _host;
+        private WaterSourcesHostSession? _waterSources;
 
         public bool IsBound => _host != null;
+        public bool AreWaterSourcesBound => _waterSources != null;
+        public string WaterSourcesStatusText => _waterSourcesStatus?.Text ?? string.Empty;
+        public Button? DeepWellActionButton => _deepWellAction;
+        public Button? CondenserActionButton => _condenserAction;
+        public Button? PiezometerInstallButton => _piezometerInstall;
 
         public void Bind(WaterTreatmentHostSession session)
         {
@@ -54,6 +66,22 @@ namespace AtomicWar.GodotApp.UI
                 _host.StateChanged -= RefreshView;
                 _host = null;
             }
+        }
+
+        public void BindWaterSources(WaterSourcesHostSession session)
+        {
+            if (_waterSources != null)
+                _waterSources.StateChanged -= RefreshView;
+            _waterSources = session ?? throw new ArgumentNullException(nameof(session));
+            _waterSources.StateChanged += RefreshView;
+            RefreshView();
+        }
+
+        public void UnbindWaterSources()
+        {
+            if (_waterSources == null) return;
+            _waterSources.StateChanged -= RefreshView;
+            _waterSources = null;
         }
 
 
@@ -103,6 +131,7 @@ namespace AtomicWar.GodotApp.UI
             _osmosisBtn.Pressed += () => _host?.StartFiltration(TreatmentMode.ReverseOsmosis, 10f);
             _replaceFilterBtn.Pressed += () => _host?.ReplaceFilter();
 
+            BuildWaterSourcesSection();
             _shell.SetContent(_contentScene);
             _shell.AttachHeaderCloseButton("CLOSE", () =>
             {
@@ -115,6 +144,7 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
+            RefreshWaterSourcesView();
             if (_host == null || _statusRail == null) return;
 
             var s = _host.System.State;
@@ -133,9 +163,130 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        private void BuildWaterSourcesSection()
+        {
+            var separator = new HSeparator();
+            _contentStack.AddChild(separator);
+
+            var title = new Label
+            {
+                Text = "WATER SOURCES // EXTRACTION & MONITORING",
+                FocusMode = Control.FocusModeEnum.None
+            };
+            _contentStack.AddChild(title);
+
+            _waterSourcesStatus = new Label
+            {
+                Text = "WATER SOURCES: SESSION UNAVAILABLE",
+                AutowrapMode = TextServer.AutowrapMode.WordSmart,
+                FocusMode = Control.FocusModeEnum.None
+            };
+            _contentStack.AddChild(_waterSourcesStatus);
+
+            var wellRow = new HBoxContainer();
+            _deepWellAction = CreateSourceButton("BUILD DEEP WELL");
+            _deepWellAction.Pressed += () =>
+            {
+                if (_waterSources?.DeepWellState.built == true)
+                    _waterSources.TrySetDeepWellEnabled(!_waterSources.DeepWellState.enabled);
+                else
+                    _waterSources?.TryBuildDeepWell();
+                RefreshWaterSourcesView();
+            };
+            _deepWellService = CreateSourceButton("SERVICE DEEP WELL");
+            _deepWellService.Pressed += () =>
+            {
+                _waterSources?.TryServiceDeepWell();
+                RefreshWaterSourcesView();
+            };
+            wellRow.AddChild(_deepWellAction);
+            wellRow.AddChild(_deepWellService);
+            _contentStack.AddChild(wellRow);
+
+            var condenserRow = new HBoxContainer();
+            _condenserAction = CreateSourceButton("BUILD CONDENSER");
+            _condenserAction.Pressed += () =>
+            {
+                if (_waterSources?.CondenserState.built == true)
+                    _waterSources.TrySetCondenserEnabled(!_waterSources.CondenserState.enabled);
+                else
+                    _waterSources?.TryBuildCondenser();
+                RefreshWaterSourcesView();
+            };
+            _condenserMembrane = CreateSourceButton("REPLACE MEMBRANE");
+            _condenserMembrane.Pressed += () =>
+            {
+                _waterSources?.TryReplaceCondenserMembrane();
+                RefreshWaterSourcesView();
+            };
+            condenserRow.AddChild(_condenserAction);
+            condenserRow.AddChild(_condenserMembrane);
+            _contentStack.AddChild(condenserRow);
+
+            _piezometerInstall = CreateSourceButton("INSTALL MONITORING NETWORK");
+            _piezometerInstall.Pressed += () =>
+            {
+                _waterSources?.TryConstructPiezometer();
+                RefreshWaterSourcesView();
+            };
+            _contentStack.AddChild(_piezometerInstall);
+        }
+
+        private static Button CreateSourceButton(string label) => new()
+        {
+            Text = label,
+            FocusMode = Control.FocusModeEnum.All,
+            CustomMinimumSize = new Vector2(240, 36),
+            SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+        };
+
+        private void RefreshWaterSourcesView()
+        {
+            if (_waterSources == null || _waterSourcesStatus == null) return;
+            var well = _waterSources.DeepWellState;
+            var condenser = _waterSources.CondenserState;
+            var monitor = _waterSources.PiezometerState;
+
+            string wellStatus = well.built
+                ? $"DEEP WELL: {(well.enabled ? "ENABLED" : "PAUSED")} | POWER {(_waterSources.DeepWellPowerServed ? "SERVED" : "UNSERVED")} | PUMP {well.condition:F0}% | TOTAL {well.totalYieldLiters} L"
+                : $"DEEP WELL: NOT BUILT | CAPABILITY {(_waterSources.HasDeepWellCapability ? "READY" : "LOCKED")} | ACTUATOR {_waterSources.ItemCount(DeepWellSystem.BuildItemId)}/1 | MECHANICAL PARTS {_waterSources.ItemCount("mechanical_parts")}/2";
+            string condenserStatus = condenser.built
+                ? $"CONDENSER: {(condenser.enabled ? "ENABLED" : "PAUSED")} | POWER {(_waterSources.CondenserPowerServed ? "SERVED" : "UNSERVED")} | MEMBRANE {condenser.membraneIntegrity:F0}% | TOTAL {condenser.totalYieldLiters} L"
+                : $"CONDENSER: NOT BUILT | CAPABILITY {(_waterSources.HasCondenserCapability ? "READY" : "LOCKED")} | MEMBRANE {_waterSources.ItemCount(AtmosphericCondenserSystem.MembraneItemId)}/1 | PIPES {_waterSources.ItemCount("metal_pipe")}/2 | SCRAP {_waterSources.ItemCount("scrap_metal")}/4";
+            string monitorStatus = monitor.constructed
+                ? $"AQUIFER MONITORING: ONLINE | DRAWDOWN {monitor.drawdown_state.ToUpperInvariant()} | RISK {monitor.contamination_risk:P0} | HEALTH {monitor.aquifer_health:F0}%"
+                : $"AQUIFER MONITORING: NOT INSTALLED | ZONES {(_waterSources.Piezometer.System.Catalog.strata?.Count ?? 0)} | {(_waterSources.CanConstructPiezometer ? "INSTALL MATERIALS READY" : "INSTALL MATERIALS OR CATALOG REQUIRED")}";
+
+            _waterSourcesStatus.Text = string.Join("\n", wellStatus, condenserStatus, monitorStatus,
+                string.IsNullOrEmpty(_waterSources.LastEvent) ? string.Empty : "LAST ACTION: " + _waterSources.LastEvent);
+
+            if (_deepWellAction != null)
+            {
+                _deepWellAction.Text = well.built
+                    ? (well.enabled ? "PAUSE DEEP WELL" : "ENABLE DEEP WELL")
+                    : "BUILD DEEP WELL";
+                _deepWellAction.Disabled = !well.built && !_waterSources.CanBuildDeepWell;
+            }
+            if (_deepWellService != null)
+                _deepWellService.Disabled = !_waterSources.CanServiceDeepWell;
+
+            if (_condenserAction != null)
+            {
+                _condenserAction.Text = condenser.built
+                    ? (condenser.enabled ? "PAUSE CONDENSER" : "ENABLE CONDENSER")
+                    : "BUILD CONDENSER";
+                _condenserAction.Disabled = !condenser.built && !_waterSources.CanBuildCondenser;
+            }
+            if (_condenserMembrane != null)
+                _condenserMembrane.Disabled = !_waterSources.CanReplaceCondenserMembrane;
+            if (_piezometerInstall != null)
+                _piezometerInstall.Disabled = !_waterSources.CanConstructPiezometer;
+        }
+
         public override void _ExitTree()
         {
             Unbind();
+            UnbindWaterSources();
             base._ExitTree();
         }
     }

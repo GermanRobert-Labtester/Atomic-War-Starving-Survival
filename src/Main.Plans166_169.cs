@@ -94,6 +94,57 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        /// <summary>
+        /// CORE-MECH W7 — the reopen grammar. A failed or abandoned thread can be
+        /// revived when the authored prerequisites and the campaign day say so. The
+        /// quest runtime owns the state machine and the exactly-once guard; the
+        /// eligibility is supplied here because the authored prerequisites and the
+        /// flag ledger live in the host layer. Flag ids are namespaced
+        /// <c>quest.reopened.*</c>, the namespace W11's one-shot primitive later
+        /// formalizes.
+        /// </summary>
+        internal void EvaluateQuestReopenOpportunities(int day)
+        {
+            var runtime = _proceduralNarrative169?.QuestRuntime;
+            if (runtime == null) return;
+
+            var candidates = runtime.GetReopenCandidates(quest => IsQuestReopenEligible(quest, day));
+            foreach (var quest in candidates)
+            {
+                if (!runtime.Reopen(quest.instanceId, day, q => IsQuestReopenEligible(q, day)))
+                    continue;
+
+                SetupJournal();
+                _journal?.TryAddRawEntry(
+                    $"quest_reopened_{quest.instanceId}_{day}",
+                    $"\"{quest.titleKey}\" reopens — its prerequisites are satisfied again.",
+                    null!, day);
+            }
+        }
+
+        /// <summary>
+        /// Data-driven eligibility: an authored prerequisite flag (if the quest binds
+        /// one) and the authored minimum day. With no authored prerequisite the quest
+        /// reopens as soon as it has failed or been abandoned — the grammar still
+        /// gives the player their thread back.
+        /// </summary>
+        private bool IsQuestReopenEligible(Ashfall.Core.Quests.QuestInstanceState quest, int day)
+        {
+            if (quest == null) return false;
+            if (quest.status != Ashfall.Core.Quests.QuestLifecycleState.Failed &&
+                quest.status != Ashfall.Core.Quests.QuestLifecycleState.Abandoned) return false;
+
+            string prerequisite = quest.actorBindings.TryGetValue("prereq_quest_id", out var p) ? p : string.Empty;
+            if (!string.IsNullOrEmpty(prerequisite) && !_consequenceLedger.IsSet("quest." + prerequisite))
+                return false;
+
+            if (quest.actorBindings.TryGetValue("min_day", out var minDayText)
+                && int.TryParse(minDayText, out int minDay) && day < minDay)
+                return false;
+
+            return true;
+        }
+
         private void BindEspionageConsequenceRouting()
         {
             if (_espionage166 == null || _espionageConsequenceBound) return;
@@ -208,6 +259,9 @@ namespace AtomicWar.GodotApp
         {
             SetupPlans166To169();
             _proceduralNarrative169?.AdvanceDay(day);
+            // CORE-MECH W7: after the day's expiry pass, evaluate the reopen
+            // grammar so a thread lost yesterday can come back today.
+            EvaluateQuestReopenOpportunities(day);
         }
 
         /// <summary>

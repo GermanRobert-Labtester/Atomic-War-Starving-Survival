@@ -268,35 +268,31 @@ namespace Ashfall.Core.Tests.UI
         }
 
         [Fact]
-        public void ShelvedPrototypes_AreRegisteredAsPrototypes_AndNotPlayerNavigable()
+        public void RetiredPrototypes_AreNotRegistered_AndCannotOpen()
         {
-            string[] prototypes =
+            // UI/UX audit 2026-09-25 final disposition (C46): the last four
+            // prototype consoles were fully retired because no Core system,
+            // item, or data authority exists for their domain. A registered
+            // non-navigable shell is still a fake surface in the manifest, so
+            // retirement means no registration at all. Promotion condition:
+            // author a host authority first (see docs/ui/UI_UX_AUDIT_2026-09-25.md).
+            string[] retired =
             {
-                "biogas_digester", "cartography_gis", "printing_press", "silicon_slicing",
-                "geothermal_turbine", "war_dog_kennel", "isotope_separator", "plasma_smelting",
-                "borehole_seismograph", "logistics_airlock", "cryo_permafrost_core",
-                "basal_radon_migration", "trauma_bonding_cohort", "clandestine_insurgency",
-                "subterranean_debt_ledger", "surface_shrapnel_aegis", "long_walk_expedition",
-                "sonic_rupture_drill", "vault_door_breaching", "iron_cenotaph_memorial",
-                "aquifer_treaty_concession", "crossing_safe_conduct_vouch", "mechanical_prosthetics_lathe",
-                "fungal_protein_fermenter", "ultrasonic_decontam_airlock", "tropospheric_radio_relay",
-                "induction_cupola_furnace", "heavy_marine_diesel_gen", "magnetic_drum_archive"
+                "silicon_slicing", "isotope_separator", "sonic_rupture_drill",
+                "tropospheric_radio_relay"
             };
 
-            Assert.Equal(29, prototypes.Length);
+            Assert.Equal(4, retired.Length);
 
-            foreach (var id in prototypes)
+            foreach (var id in retired)
             {
-                Assert.True(PanelRegistry.IsRegistered(id), $"Prototype panel '{id}' must be registered in PanelRegistry.");
-                var desc = PanelRegistry.Get(id)!;
-                Assert.Equal(PanelMaturity.Prototype, desc.Maturity);
-                Assert.False(desc.IsPlayerNavigable, $"Prototype '{id}' must not be player-navigable.");
+                Assert.False(PanelRegistry.IsRegistered(id),
+                    $"Retired prototype '{id}' must no longer be a registered surface.");
 
                 string? diag = null;
                 bool opened = PanelRegistry.TryOpen(id, msg => diag = msg);
-                Assert.False(opened, $"TryOpen on prototype '{id}' must return false.");
+                Assert.False(opened, $"TryOpen on retired prototype '{id}' must return false.");
                 Assert.NotNull(diag);
-                Assert.Contains("PROTOTYPE ROUTE", diag);
             }
         }
 
@@ -332,6 +328,33 @@ namespace Ashfall.Core.Tests.UI
             }
         }
 
+        [Fact]
+        public void AllConfiguredActionTargets_AreRegistered()
+        {
+            // Root-cause gate for the 2026-09-25 missingness class:
+            // PanelRegistry.ConfigureActions silently returns false for an
+            // unknown id, so an unregistered wired route fails without any
+            // error — the ten dashboard-rail panels were dead exactly this way.
+            // Every ConfigureActions target in host source must be registered.
+            string srcRoot = FindSrcRoot();
+            var pattern = new Regex(@"PanelRegistry\.ConfigureActions\(\s*""([a-z][a-z0-9_]*)""",
+                RegexOptions.Compiled);
+
+            var missing = new List<string>();
+            foreach (string file in Directory.EnumerateFiles(srcRoot, "*.cs", SearchOption.AllDirectories))
+            {
+                foreach (Match m in pattern.Matches(File.ReadAllText(file)))
+                {
+                    string id = m.Groups[1].Value;
+                    if (!PanelRegistry.IsRegistered(id)) missing.Add(id);
+                }
+            }
+
+            Assert.True(missing.Count == 0,
+                "ConfigureActions called for ids with no registered descriptor (silently fails at runtime): " +
+                string.Join(", ", missing.Distinct()));
+        }
+
         // ── Helpers ──────────────────────────────────────────────────────────
 
         private static string FindSrcRoot()
@@ -354,17 +377,25 @@ namespace Ashfall.Core.Tests.UI
             var ids = new HashSet<string>(StringComparer.Ordinal);
 
             // Pattern: OnOpenPanelRequested?.Invoke("id"), OnOpenExpansionRequested?.Invoke("id"),
-            // OpenPlayerPanel("id"), OpenExpandedPanel("id")
+            // OpenPlayerPanel("id"), OpenExpandedPanel("id"), and AddNavButton(parent, "LABEL", "id")
+            // — the dashboard-rail literal form (UI/UX audit 2026-09-25: ten rail
+            // buttons escaped the original scan and were dead routes).
             var pattern = new Regex(
-                @"(?:OnOpenPanelRequested|OnOpenExpansionRequested|OpenPlayerPanel|OpenExpandedPanel)\s*[\?\.]*\s*(?:Invoke)?\s*\(\s*""([a-z][a-z0-9_]*)""\s*\)",
+                @"(?:OnOpenPanelRequested|OnOpenExpansionRequested|OpenPlayerPanel|OpenExpandedPanel)\s*[\?\.]*\s*(?:Invoke)?\s*\(\s*""([a-z][a-z0-9_]*)""\s*\)|AddNavButton\([^,]+,\s*""[^""]*"",\s*""([a-z][a-z0-9_]*)""",
                 RegexOptions.Compiled);
+
+            // "overview" is not a route: the rail's default-view button returns
+            // early (GameDashboardPanel.AddNavButton special case) without emitting.
+            var nonRouteIds = new HashSet<string>(StringComparer.Ordinal) { "overview" };
 
             foreach (string file in Directory.EnumerateFiles(srcRoot, "*.cs", SearchOption.AllDirectories))
             {
                 string content = File.ReadAllText(file);
                 foreach (Match m in pattern.Matches(content))
                 {
-                    ids.Add(m.Groups[1].Value);
+                    string? id = m.Groups[1].Success ? m.Groups[1].Value : m.Groups[2].Value;
+                    if (id != null && !nonRouteIds.Contains(id))
+                        ids.Add(id);
                 }
             }
 

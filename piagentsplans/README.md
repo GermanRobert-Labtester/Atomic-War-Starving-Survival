@@ -30,6 +30,7 @@ godot --headless --path . -- --bridge-selftest
 | `03-schema-version-data-sweep.md` | P0 — data-authority hygiene |
 | `04-relic-blueprint-expansion.md` | P1 — WorkshopReverseEngineering content (6 → 30 relics) |
 | `05-vinyl-record-catalog.md` | P1 — VinylMoraleSystem content (1 → 20 albums) |
+| `docs/plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md` | Master Multi-System Architecture Framework (Plans 06, 09, 13, 22, 28) |
 
 ## Content plans (06–15) — 8 plans × 3 tasks, whole-game
 

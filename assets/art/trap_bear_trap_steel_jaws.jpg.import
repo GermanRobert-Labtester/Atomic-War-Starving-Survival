@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/trap_bear_trap_steel_jaws.jpg-82e00a312a64622
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

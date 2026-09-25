@@ -30,6 +30,11 @@ namespace Ashfall.Core.Verdict
         public bool countHeld;             // HOLD chosen
         public bool offerIsLease;          // DISCHARGE chosen
         public int enrolledEvidence;
+        // CORE-MECH W10 — memorial acts performed, a DISTINCT trace kind. Kept
+        // separate from enrolledEvidence on purpose: the accusation system reads
+        // that counter as read machine-log fragments, and folding rites into it
+        // would make grief a prosecutorial instrument and the readout a liar.
+        public int riteTraceTotal;
         public int driftDays = 3;          // the machine's clock disagrees with the wars' by 3 days
         // Chain 1 (Survivor drift / housing-collapse): count of dwellings that
         // did not answer census. Distinct from the lore evidence ledger.
@@ -118,6 +123,21 @@ namespace Ashfall.Core.Verdict
         }
 
         /// <summary>
+        /// CORE-MECH W10 — record a memorial act (a performed rite) as part of the
+        /// campaign's record. Separate from <see cref="EnrollEvidence"/> by design:
+        /// rites are interiority, not machine-log evidence, and the accusation
+        /// system must never count grief as proof. Idempotency belongs to the
+        /// caller (the W11 one-shot primitive), so this owner stays a counter.
+        /// </summary>
+        public void EnrollRiteTrace(int amount = 1)
+        {
+            _state.riteTraceTotal += Math.Max(1, amount);
+        }
+
+        /// <summary>How many memorial acts the record holds (W10 legibility).</summary>
+        public int RiteTraceCount => _state.riteTraceTotal;
+
+        /// <summary>
         /// Restores the derived evidence count from the canonical ledger after
         /// an older save is reconciled. This is intentionally not an eventful
         /// gameplay mutation.
@@ -176,6 +196,9 @@ namespace Ashfall.Core.Verdict
                 countHeld = _state.countHeld,
                 offerIsLease = _state.offerIsLease,
                 enrolledEvidence = _state.enrolledEvidence,
+                // W10: the memorial trace is part of the record and must survive
+                // save/load, or a reloaded campaign loses its memory of the dead.
+                riteTraceTotal = _state.riteTraceTotal,
                 driftDays = _state.driftDays,
                 dwellingDriftTotal = _state.dwellingDriftTotal,
                 lastDriftDay = _state.lastDriftDay,
@@ -196,6 +219,9 @@ namespace Ashfall.Core.Verdict
             _state.countHeld = state.countHeld;
             _state.offerIsLease = state.offerIsLease;
             _state.enrolledEvidence = state.enrolledEvidence;
+            // W10 restore: an old save without the field reads as "no rites
+            // recorded" (0), which is the truthful legacy default.
+            _state.riteTraceTotal = state.riteTraceTotal > 0 ? state.riteTraceTotal : 0;
             _state.driftDays = state.driftDays > 0 ? state.driftDays : 3;
             _state.dwellingDriftTotal = state.dwellingDriftTotal;
             _state.lastDriftDay = state.lastDriftDay;

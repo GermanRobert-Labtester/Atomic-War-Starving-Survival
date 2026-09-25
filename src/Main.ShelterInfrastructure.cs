@@ -354,6 +354,23 @@ namespace AtomicWar.GodotApp
             var wtSys = new WaterTreatmentSystem(new GodotLog());
             wtSys.RestoreState(wtState);
             _waterTreatment = new WaterTreatmentHostSession(wtSys, _inventory);
+            // CORE-MECH W3: winter pressure on the water owner. One read-only
+            // day → multiplier view of the Year-of-Ash calendar, applied once at
+            // the owner's single filter-degradation site (AA.3). Fail-closed to
+            // neutral when the calendar cannot be read.
+            try
+            {
+                var yoaEvents = YearOfAshCatalogLoader.LoadEvents(
+                    CatalogPath.ResolveDataDir(),
+                    CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir()),
+                    new SystemTextJsonSerializer());
+                var pressure = new SeasonalPressureProvider(yoaEvents);
+                wtSys.SeasonalFilterLoadMultiplier = day => pressure.MultiplierFor(day);
+            }
+            catch (Exception ex)
+            {
+                GD.Print("[Ashfall Godot] Seasonal water pressure unavailable: " + ex.Message);
+            }
             _waterTreatment.OnTreatmentStarted += () => ObserveSigil("water.treatment_started");
             // B5–B8 expansion (§9.12): unsafe-water exposure → the canonical
             // disease sweep. WaterborneExposureRules owns the dose→disease
@@ -431,6 +448,7 @@ namespace AtomicWar.GodotApp
                 RemoveChild(_shelterThermalPanel);
             _shelterThermalPanel = new ShelterThermalPanel();
             _shelterThermalPanel.Bind(_shelterThermal);
+            _shelterThermalPanel.BindInventory(_inventory?.Inventory);
             _shelterThermalPanel.Visible = false;
             AddChild(_shelterThermalPanel);
         }

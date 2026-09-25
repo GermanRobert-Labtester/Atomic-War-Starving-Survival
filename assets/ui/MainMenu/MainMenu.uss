@@ -23,7 +23,7 @@
     --hot: #f4c875;
     --pale: #e6e0d2;
     --muted: #938f84;
-    --dim: #66675f;
+    --dim: #8e8f82;
 
     --font-body: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Regular_SDF.asset");
     --font-semibold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");

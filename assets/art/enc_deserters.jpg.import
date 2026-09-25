@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/enc_deserters.jpg-ec7e69f65a6b6da0eb8fdaa7853
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
