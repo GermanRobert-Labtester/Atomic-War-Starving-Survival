@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5413 | **Total Characters:** 1,710,041,702 | **Last Verified:** 2026-09-25
-**Oversized (>= 100,000 characters):** 2018 documents carrying 1,667,157,996 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5413 | **Total Characters:** 1,710,539,239 | **Last Verified:** 2026-09-25
+**Oversized (>= 100,000 characters):** 2020 documents carrying 1,667,664,902 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 2018 documents, 1,667,157,996 characters
+## Oversized Document Register (>= 100,000 characters) — 2020 documents, 1,667,664,902 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1695,6 +1695,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 253,940 | [`piagentsplans/69-grave-epitaphs-expansion.md`](../piagentsplans/69-grave-epitaphs-expansion.md) |
 | 253,865 | [`docs/expansions/wave6/expansion_38_the_ward_plan.md`](expansions/wave6/expansion_38_the_ward_plan.md) |
 | 253,819 | [`piagentsplans/66-guilt-sources-expansion.md`](../piagentsplans/66-guilt-sources-expansion.md) |
+| 253,792 | [`piagentsplans/70-shelter-schedules-expansion.md`](../piagentsplans/70-shelter-schedules-expansion.md) |
 | 253,745 | [`piagentsplans/57-incident-expansion.md`](../piagentsplans/57-incident-expansion.md) |
 | 253,736 | [`piagentsplans/61-trade-screen-scenarios.md`](../piagentsplans/61-trade-screen-scenarios.md) |
 | 253,693 | [`piagentsplans/67-cassette-sets-expansion.md`](../piagentsplans/67-cassette-sets-expansion.md) |
@@ -1720,6 +1721,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 253,151 | [`piagentsplans/62-trade-tell-lines-expansion.md`](../piagentsplans/62-trade-tell-lines-expansion.md) |
 | 253,144 | [`piagentsplans/47-collectibles-world-culture.md`](../piagentsplans/47-collectibles-world-culture.md) |
 | 253,117 | [`piagentsplans/56-economy-goods-expansion.md`](../piagentsplans/56-economy-goods-expansion.md) |
+| 253,114 | [`piagentsplans/71-power-grid-rooms-expansion.md`](../piagentsplans/71-power-grid-rooms-expansion.md) |
 | 253,109 | [`piagentsplans/55-crafting-recipe-expansion.md`](../piagentsplans/55-crafting-recipe-expansion.md) |
 | 253,046 | [`piagentsplans/60-vehicle-expansion.md`](../piagentsplans/60-vehicle-expansion.md) |
 | 253,028 | [`piagentsplans/68-wall-carving-templates-expansion.md`](../piagentsplans/68-wall-carving-templates-expansion.md) |
@@ -7593,8 +7595,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/67-cassette-sets-expansion.md`](../piagentsplans/67-cassette-sets-expansion.md) | 253,693 | **Plan 67 — Cassette Sets Expansion: Magnetic Audio Logs, Multi-Part Wasteland Narratives & Diegetic Morale Architecture** — In the desolate ruins of ASHFALL, pre-war magnetic audio tapes are precious acoustic relics. In a world where digital... |
 | 🟢 `CURRENT` | [`piagentsplans/68-wall-carving-templates-expansion.md`](../piagentsplans/68-wall-carving-templates-expansion.md) | 253,028 | **Plan 68 — Wall Carving Templates Expansion: Diegetic Shelter Graffiti, Morale Reflection & Masonry Memory Architecture** — In ASHFALL, a fallout shelter is not an inert 2D grid of functional production rooms; it is a psychological pressure ... |
 | 🟢 `CURRENT` | [`piagentsplans/69-grave-epitaphs-expansion.md`](../piagentsplans/69-grave-epitaphs-expansion.md) | 253,940 | **Plan 69 — Wasteland Grave Epitaphs Expansion: Death Causes, Memorial Markers & Cemetery Architecture** — In ASHFALL's harsh nuclear winter, the dead do not disappear into abstract casualty statistics. Across the frozen exp... |
-| 🟢 `CURRENT` | [`piagentsplans/70-shelter-schedules-expansion.md`](../piagentsplans/70-shelter-schedules-expansion.md) | 4,536 | **Plan 70 — Shelter Schedules Expansion (3 → 12 duty schedules)** — Expand `shelter_schedules.json` from 3 verified entries to 12 duty schedules. The shelter |
-| 🟢 `CURRENT` | [`piagentsplans/71-power-grid-rooms-expansion.md`](../piagentsplans/71-power-grid-rooms-expansion.md) | 4,833 | **Plan 71 — Power Grid Rooms Expansion (6 → 18 powered rooms)** — Expand `power_grid.json` from 6 verified room entries to 18. The `PowerGridSystem` is |
+| 🟢 `CURRENT` | [`piagentsplans/70-shelter-schedules-expansion.md`](../piagentsplans/70-shelter-schedules-expansion.md) | 253,792 | **Plan 70 — Shelter Schedules Expansion: Circadian Rhythms, Shift Rotations & Bunker Cadence Architecture** — A post-apocalyptic underground shelter devoid of natural sunlight is vulnerable to total circadian disintegration. Wi... |
+| 🟢 `CURRENT` | [`piagentsplans/71-power-grid-rooms-expansion.md`](../piagentsplans/71-power-grid-rooms-expansion.md) | 253,114 | **Plan 71 — Power Grid Rooms Expansion: Electrical Topology, Load-Shedding Hierarchy & Substation Reliability Architecture** — In the subterranean survival environment of ASHFALL, electricity is the lifeblood that separates a living holdfast fr... |
 | 🟢 `CURRENT` | [`piagentsplans/72-utility-ai-actions-expansion.md`](../piagentsplans/72-utility-ai-actions-expansion.md) | 4,880 | **Plan 72 — Utility AI Actions Expansion (6 → 20 actions)** — Expand `utility_actions.json` from 6 verified entries to 20. The utility AI system |
 | 🟢 `CURRENT` | [`piagentsplans/73-faction-radio-corpus-expansion.md`](../piagentsplans/73-faction-radio-corpus-expansion.md) | 5,542 | **Plan 73 — Faction Radio Corpus Expansion (silence events → 30 broadcasts)** — Expand `faction_radio_corpus.json` from mostly silence events to 30 faction radio |
 | 🟢 `CURRENT` | [`piagentsplans/74-narrative-progression-chapters.md`](../piagentsplans/74-narrative-progression-chapters.md) | 5,756 | **Plan 74 — Narrative Progression Chapters Expansion (5 → 15 campaign chapters)** — Expand `narrative_progression.json` from 5 verified chapter entries to 15. The narrative |
