@@ -308,6 +308,8 @@ namespace Ashfall.Core.UI
             R("death_legacy",               "Death Records & Wills",       PanelGroup.Expanded, new[] { "survivors", "memorial" });
             // ── Plan 182: relationship decay & social drift (Live) ────────
             R("relationship_decay",         "Social Drift & Bonds",        PanelGroup.Expanded, new[] { "survivors", "social" });
+            // ── Plan 204: survivor recruitment & defection campaigns (Live) ──
+            R("recruitment",                "Survivor Recruitment Desk",   PanelGroup.Expanded, new[] { "survivors" });
         }
 
         private static void R(

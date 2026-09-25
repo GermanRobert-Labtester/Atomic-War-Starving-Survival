@@ -273,7 +273,8 @@ namespace AtomicWar.GodotApp
         ChildDevelopmentSelfTest,
         BestiarySelfTest,
         HealthHistorySelfTest,
-        LeadershipSuccessionSelfTest
+        LeadershipSuccessionSelfTest,
+        RecruitmentSelfTest
     }
 
     /// <summary>
@@ -814,6 +815,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.HealthHistorySelfTest;
             if (Has(args, "--leadership-succession-selftest") || Has(args, "--succession-selftest") || Has(args, "--leadership-challenges-selftest"))
                 return HostCliAction.LeadershipSuccessionSelfTest;
+            if (Has(args, "--recruitment-selftest") || Has(args, "--defection-selftest") || Has(args, "--survivor-recruitment-selftest"))
+                return HostCliAction.RecruitmentSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -1070,6 +1073,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --bestiary-selftest / --creature-encounters-selftest / --bestiary-ui-selftest  Bestiary integration probe");
             GD.Print("  --health-history-selftest / --medical-records-selftest / --vaccination-history-selftest  Health history integration probe");
             GD.Print("  --leadership-succession-selftest / --succession-selftest / --leadership-challenges-selftest  Leadership succession integration probe");
+            GD.Print("  --recruitment-selftest / --defection-selftest  Survivor recruitment & defection campaigns probe");
             GD.Print("  --aging-selftest / --elderly-survivor-selftest  Survivor aging and life-stage compatibility probes");
             GD.Print("  --atmosphere-selftest / --shelter-atmosphere-selftest  Shelter atmosphere compatibility probes");
             GD.Print("  --audio-access-selftest / --audio-accessibility-selftest  Audio accessibility compatibility probes");

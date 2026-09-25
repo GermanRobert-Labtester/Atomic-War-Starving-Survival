@@ -100,6 +100,25 @@ namespace Ashfall.Core.Survivors
     }
 
     [Serializable]
+    public struct RecruitmentCensus
+    {
+        public int ActiveCampaigns { get; }
+        public int KnownCandidates { get; }
+        public int TotalRecruited { get; }
+        public int PendingOffers { get; }
+        public int TotalEvents { get; }
+
+        public RecruitmentCensus(int activeCampaigns, int knownCandidates, int totalRecruited, int pendingOffers, int totalEvents)
+        {
+            ActiveCampaigns = activeCampaigns;
+            KnownCandidates = knownCandidates;
+            TotalRecruited = totalRecruited;
+            PendingOffers = pendingOffers;
+            TotalEvents = totalEvents;
+        }
+    }
+
+    [Serializable]
     public sealed class RecruitmentState
     {
         public int SchemaVersion { get; set; } = 1;
@@ -132,6 +151,43 @@ namespace Ashfall.Core.Survivors
         public int TotalRecruitedCount => _state.Candidates.Count(c => c.IsRecruited);
 
         public RecruitmentSystem()
+        {
+            _state = new RecruitmentState();
+        }
+
+        public RecruitmentCensus GetCensus()
+        {
+            int pendingOffers = _state.Offers.Count(o => o.Status == "pending");
+            return new RecruitmentCensus(
+                ActiveCampaignCount,
+                KnownCandidateCount,
+                TotalRecruitedCount,
+                pendingOffers,
+                _state.Events.Count
+            );
+        }
+
+        public bool TryAdmitCandidate(string candidateId, out RecruitmentCandidateRecord? candidate)
+        {
+            candidate = _state.Candidates.FirstOrDefault(c => string.Equals(c.CandidateId, candidateId, StringComparison.OrdinalIgnoreCase));
+            if (candidate == null || candidate.IsRecruited)
+            {
+                return false;
+            }
+
+            candidate.IsRecruited = true;
+            _state.Events.Add(new RecruitmentEventRecord
+            {
+                EventId = $"recevt_{_state.NextSequence++}",
+                EventType = "candidate_admitted",
+                Day = candidate.DiscoveredDay,
+                Description = $"Candidate {candidate.CandidateId} formally admitted to shelter roster.",
+                Outcome = "admitted"
+            });
+            return true;
+        }
+
+        public void Clear()
         {
             _state = new RecruitmentState();
         }

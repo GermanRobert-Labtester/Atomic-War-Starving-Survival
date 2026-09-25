@@ -88,6 +88,7 @@ namespace Ashfall.Core.Campaign
             { "psychological_profiles_ticked", SemanticKind.Heartbeat },
             { "psyops_ticked", SemanticKind.Heartbeat },
             { "radio_program_production_ticked", SemanticKind.Heartbeat },
+            { "recruitment_ticked", SemanticKind.Heartbeat },
             { "research_ticked", SemanticKind.Heartbeat },
             { "research_unlock_ticked", SemanticKind.Heartbeat },
             { "sanitation_ticked", SemanticKind.Heartbeat },

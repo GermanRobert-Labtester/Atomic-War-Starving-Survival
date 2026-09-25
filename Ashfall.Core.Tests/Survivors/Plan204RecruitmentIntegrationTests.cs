@@ -156,5 +156,27 @@ namespace Ashfall.Core.Tests.Survivors
             Assert.Equal(1, restored.KnownCandidateCount);
             Assert.Equal(1, restored.GetDefectionOffers().Count);
         }
+
+        [Fact]
+        public void GetCensusAndTryAdmitCandidate_UpdatesCensusAndRosterStatus()
+        {
+            var system = new RecruitmentSystem();
+            system.LoadCatalog(File.ReadAllText(Path.Combine(DataDirectory, "recruitment_templates.json")));
+
+            var census0 = system.GetCensus();
+            Assert.Equal(0, census0.ActiveCampaigns);
+            Assert.Equal(0, census0.KnownCandidates);
+            Assert.Equal(0, census0.TotalRecruited);
+            Assert.Equal(0, census0.PendingOffers);
+
+            var cand = system.DiscoverCandidate("candidate_scavenger", "outskirts", day: 1);
+            Assert.Equal(1, system.GetCensus().KnownCandidates);
+
+            bool admitted = system.TryAdmitCandidate(cand.CandidateId, out var admittedCand);
+            Assert.True(admitted);
+            Assert.NotNull(admittedCand);
+            Assert.Equal("recruited", admittedCand.Status);
+            Assert.Equal(1, system.GetCensus().TotalRecruited);
+        }
     }
 }

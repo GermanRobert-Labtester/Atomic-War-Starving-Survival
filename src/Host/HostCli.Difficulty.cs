@@ -195,6 +195,12 @@ namespace AtomicWar.GodotApp
                     dirgeCrisis.HorizonDays < standardCrisis.HorizonDays,
                     $"deadline horizon changes ({standardCrisis?.HorizonDays}/{dirgeCrisis?.HorizonDays})");
 
+                float standardHostile = standard.HostileEncounterMult;
+                float dirgeHostile = dirge.HostileEncounterMult;
+                Check("hostile_consumer",
+                    Math.Abs(standardHostile - 1f) < 0.001f && dirgeHostile > standardHostile,
+                    $"authored hostile_encounter_mult differs by preset ({standardHostile:0.###}/{dirgeHostile:0.###})");
+
                 var manifest = new SaveManifest
                 {
                     manifestVersion = SaveManifest.CurrentManifestVersion,

@@ -237,7 +237,8 @@ namespace Ashfall.Core
         ChildDevelopmentSelfTest,
         BestiarySelfTest,
         HealthHistorySelfTest,
-        LeadershipSuccessionSelfTest
+        LeadershipSuccessionSelfTest,
+        RecruitmentSelfTest
     }
 
 
@@ -1387,7 +1388,13 @@ namespace Ashfall.Core
                     "Host Domains & Save Stores",
                     "--leadership-succession-selftest",
                     new[] { "--succession-selftest", "--leadership-challenges-selftest" },
-                    "Plan 208: Leadership succession, deputy appointment, challenges, policy enactments, and leader death succession")
+                    "Plan 208: Leadership succession, deputy appointment, challenges, policy enactments, and leader death succession"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RecruitmentSelfTest,
+                    "Host Domains & Save Stores",
+                    "--recruitment-selftest",
+                    new[] { "--defection-selftest", "--survivor-recruitment-selftest" },
+                    "Plan 204: Survivor recruitment & defection campaigns, templates, offers, admission, and save round-trip")
         };
 
 

@@ -404,16 +404,7 @@ visible, not suppressed. Claims released. Evidence and handoff:
 2. `XP-08` / Plan 192: Trade Route Contract & Reliability Tier Engine (`TradeRouteContract` with reliability score, tiers 1–4, tariff discount at tier 3+, exclusive good unlock at tier 4, 30-day cooldown, and persistence, `TradeRouteContractTests` 6/6 PASS).
 3. `EN-07` / UNBLOCK-05: Completion History Chronicle Read Model (pure aggregation read model `CompletionHistorySummary` and `CampaignCompletionHistoryService.Summarize` without mutating history or awarding progression, `CompletionHistorySummaryTests` 3/3 PASS).
 
-**XP Expansion W1 — ACTIVE (2026-09-18):** the user authorized the XP-01 …
-XP-10 proposal and integration plan. The first owned package is
-`XP-WAVE1-DIFFICULTY-AUTHORITY`: establish the canonical difficulty catalog and
-Core director, then re-check each proposed consumer before it is bound. The
-W1 SOFC premise is corrected by source evidence: Plan 122 already consumes
-canonical inventory fuel through `Main.Plans122to125.cs` and the existing
-`SofcPowerHostSession` port, with grid-reserve fallback. No duplicate fuel
-catalog, reserve, or save section will be introduced. Evidence and decision
-record: `docs/plans/xp/w1/W1_PREMISE_EVIDENCE.md` and
-`docs/governance/DECISION_PACKET_2026-09-18_XP_EXPANSION_W1.md`.
+**XP Expansion W1 (CF-XP01-DIFFICULTY-FULL-BINDING) — COMPLETE (2026-09-26):** user-authorized package (`claim-xp-wave1-difficulty-2026-09-18`). Delivered full canonical difficulty catalog, director, scalar provider, starting bonus grant, starting cohort panel, manifest persistence, fail-closed restore, all eight authored scalar consumers bound and verified, and sealed hostile_encounter_mult regression coverage. **Verified:** `DifficultyFullBindingTests` 8/8 PASS; `DifficultyPresetCatalogTests` 4/4 PASS; `DifficultyDirectorTests` 4/4 PASS; `HostCli.Difficulty.cs` `hostile_consumer` check added; `--difficulty-selftest` 15/15 PASS; host build 0 errors / 0 warnings. Plan fully integrated, sealed, and archived to `docs/plans/integrated/systems/` and `.ai/plans/integrated/systems/`. Evidence and decision record: `docs/plans/xp/w1/W1_PREMISE_EVIDENCE.md` and `docs/governance/DECISION_PACKET_2026-09-18_XP_EXPANSION_W1.md`.
 
 **Status:** COMPLETE (presented for acceptance) — `DISTRESS-SIGNALS-9-12`
 flagship wave (user-authorized 2026-09-13); Waves 0–5 delivered; closeout:

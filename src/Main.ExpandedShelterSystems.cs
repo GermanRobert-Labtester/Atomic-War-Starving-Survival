@@ -719,6 +719,9 @@ namespace AtomicWar.GodotApp
                     SetupWorld();
                     if (_weatherPanel != null) { _weatherPanel.Bind(_world); ShowPanelLifecycle(_weatherPanel); _weatherPanel.RefreshView(); }
                     break;
+                case "recruitment":
+                    OpenRecruitmentPanel();
+                    break;
             }
         }
 

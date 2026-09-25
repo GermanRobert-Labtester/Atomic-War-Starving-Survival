@@ -346,6 +346,7 @@ namespace AtomicWar.GodotApp
             SetupBestiary();
             SetupHealthHistory();
             SetupChildDevelopment();
+            SetupRecruitment();
             // Moral ledger is reset by ResetEnrolledFlagshipSessions; re-Setup
 
             // before any early SaveAll so Continue cannot drop resolved choices.
@@ -610,6 +611,7 @@ namespace AtomicWar.GodotApp
                 SaveBestiary();
                 SaveHealthHistory();
                 SaveConsequenceLedger();
+                SaveRecruitment();
 
                 if (_sectionCaptureFailed)
 

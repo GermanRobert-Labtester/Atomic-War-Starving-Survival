@@ -121,19 +121,17 @@ Available, unexecuted, no new foreman signature needed:
    seam (new claim + premise note).
 4. `CF-P28-ONE-BOOTSTRAP-PATH` — run the manifest bootstrap on the fresh-game
    path (bounded host change).
-5. `CF-XP01-DIFFICULTY-FULL-BINDING` — preset selection, persistence,
-   remaining scalar consumers, panel (per-consumer premise checks under the
-   active W1 claim).
-6. `E1/Plan 53` — census `READY-UNCLAIMED` governance programme.
-7. `C2[15]/Plan 37` — input/focus/controller parity (prerequisites sealed;
+5. `E1/Plan 53` — census `READY-UNCLAIMED` governance programme.
+6. `C2[15]/Plan 37` — input/focus/controller parity (prerequisites sealed;
    run the premise audit first).
-8. `C2[21]/Plan 48` — release craft: versions, tags, hotfix path
+7. `C2[21]/Plan 48` — release craft: versions, tags, hotfix path
    (prerequisite sealed; run the premise audit first).
 
 Completed since 2026-09-18 (do not redo): 10 debt seals, 6 of the 15
 completion-first roster plans (Plan 24 closure, Plan 30 war projection +
 clock, Plan 32 graph travel, Plan 34 chronicle, Plan 36C port sweep,
-Plan 26A tranche-2), census anchors C2[9]–C2[13], Plan 24 residual (L-P24R
+Plan 26A tranche-2), CF-XP01 (Difficulty Full Binding sealed 2026-09-26),
+census anchors C2[9]–C2[13], Plan 24 residual (L-P24R
 snapshot rebaseline protocol), and Plan 31 residual (D11-B closed-section
 routing). Still **decision-blocked** — never start without the named signature:
 quarantine drain (D21), XP-04 economy legs (F13), XP-06 body-integrity schema
@@ -204,6 +202,7 @@ Wave 5 details: `docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.
 6. Hand off outcome, files, contract, commands/results, limitations, and
    shared paths intentionally untouched using `AI_AGENT_WORKFLOW.md`.
 7. Update the live ledger/debt only if you are the foreman or named integrator.
+8. When a plan is integrated, it is **mandatory** to first edit the top of the plan file itself to state `FULLY INTEGRATED` multiple times (e.g. `# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED` and `> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**`), and then immediately move the completed plan to the integrated plans folder (`.ai/plans/integrated/<category>/` or `docs/plans/integrated/<category>/`) — even if produced in the same session.
 
 ## SOURCE OF TRUTH
 
@@ -267,9 +266,11 @@ Wave 5 details: `docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.
 7. **Pre-generation and pre-edit checks:**
    - **Check existing tests and schemas:** Run Go config/save validators (`bin/validate-config` or `bin/ashfall-dev validate-config`) and existing tests. If validation fails, fix root cause instead of generating more content on top of broken data.
    - **Check for existing equivalent content:** Before creating a new quest, system, or test, search for similar IDs/concepts in data and code. Prefer extending or refining an existing system rather than adding a parallel one.
-8. **Plan Approval Requirement (Pre-commit / CI Guard):**
+8. **Plan Approval Requirement (Pre-commit / CI Guard), Mandatory Top Header Edit & Immediate Archival:**
    - Every commit with code changes MUST have a corresponding plan file in `.ai/plans/` (or `.ai/plan.md`) with `STATUS: APPROVED BY USER`.
    - If missing, pre-commit and CI will fail: `No approved plan found for changed files. Create/update a plan in .ai/plans/ and set STATUS: APPROVED BY USER.`
+   - **Mandatory Plan Header Edit on Integration:** When a plan is integrated, it is **strictly mandatory** that the plan file itself receives an edit at the top stating `FULLY INTEGRATED` multiple times (e.g. `# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED` and `> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**`).
+   - **Immediate Archival to Integrated Plans Folder:** Immediately following the header edit, the plan MUST be moved to the integrated plans folder (`.ai/plans/integrated/<category>/` or `docs/plans/integrated/<category>/`). Even if producing a plan in the same session, that plan when it is integrated in the same session has to be marked `FULLY INTEGRATED` multiple times at the top and moved to already integrated plans immediately upon completion of integration.
 9. **Testing Budget & Scoped Runner:**
    - Always run tests via `bin/run-scoped-tests`. Do not invoke `pytest`, `dotnet test`, etc. directly unless explicitly told.
    - NEVER run the full test suite unless the user types exactly: `RUN FULL TESTS`.

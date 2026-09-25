@@ -1,0 +1,13 @@
+{
+  "mcp": {
+    "servers": {
+      "godot": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@keeveeg/godot-mcp"],
+        "env": {},
+        "enabled": true
+      }
+    }
+  }
+}

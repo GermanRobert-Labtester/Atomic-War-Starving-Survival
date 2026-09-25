@@ -1,5 +1,13 @@
 # Feature / Task Plan: <Name>
 
+<!-- UPON INTEGRATION (MANDATORY):
+Prepend header at the top saying:
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+> **INTEGRATION STATE: FULLY INTEGRATED**
+And immediately move this file to .ai/plans/integrated/<category>/
+-->
+
 STATUS: DRAFT (Change to "STATUS: APPROVED BY USER" once approved)
 
 ## 1. Goal & Outcome

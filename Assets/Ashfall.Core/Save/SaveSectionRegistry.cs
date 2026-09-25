@@ -323,6 +323,7 @@ namespace Ashfall.Core.Save
             new("bestiary_knowledge", "SaveBestiary", "SetupBestiary", "hunting", "Plan 187 — Bestiary creature discovery, sighting records, tiered lore unlocks, kill and butcher tracking", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("health_history", "SaveHealthHistory", "SetupHealthHistory", "medical", "Plan 198 — Longitudinal health histories, diagnostic logs, recovery events, vaccination tracking, and health trends", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("consequence_ledger", "SaveConsequenceLedger", "SetupConsequenceLedger", "campaign", "Campaign consequence flags & counters — cross-quest/moral-choice state persisted across saves and reset on new campaigns"),
+            new("recruitment", "SaveRecruitment", "SetupRecruitment", "survivors", "Plan 204 — Survivor recruitment campaigns, wilderness discovery, defection offers, and asylum intake", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -349,6 +350,7 @@ namespace Ashfall.Core.Save
             {
                 { "journal", "journal_save.json" },
                 { "consequence_ledger", "consequence_ledger_save.json" },
+                { "recruitment", "recruitment_save.json" },
                 { "commitment", "commitment_save.json" },
                 { "session_durability", "session_durability_save.json" },
                 { "playable_metrics", "playable_metrics_save.json" },

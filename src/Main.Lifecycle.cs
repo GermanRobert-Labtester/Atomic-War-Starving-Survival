@@ -596,6 +596,7 @@ namespace AtomicWar.GodotApp
             ResetBestiary();
             ResetHealthHistory();
             ResetChildDevelopment();
+            ResetRecruitment();
         }
 
 

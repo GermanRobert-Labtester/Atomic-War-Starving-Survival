@@ -198,6 +198,8 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("health_history", new HealthHistoryDayOwner(this), phase: 5);
             // Plan 183 — child development stages, milestones, education, and chore capacity.
             _campaignDay.Register("child_development_stages", new ChildDevelopmentDayOwner(this), phase: 5);
+            // Plan 204 — survivor recruitment & defection campaigns.
+            _campaignDay.Register("recruitment", new RecruitmentDayOwner(this), phase: 5);
             // Plan 186 — shelter maintenance & degradation: applies daily component wear and environmental stress.
 
             _campaignDay.Register("shelter_maintenance", new ShelterMaintenanceDayOwner(this), phase: 5);
@@ -2950,6 +2952,35 @@ namespace AtomicWar.GodotApp
                 var census = _m.GetChildDevelopmentCensus();
                 events.Add(new DayStateChangeEvent(
                     "child_development_ticked", "child_development_stages", null, null, census.TotalChildren));
+            }
+        }
+
+        /// <summary>Plan 204 survivor recruitment day owner (ownerId <c>recruitment</c>, phase 5).</summary>
+        private sealed class RecruitmentDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.RecruitmentState? _snapshot;
+            public RecruitmentDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupRecruitment();
+                _snapshot = _m._recruitment?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._recruitment?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupRecruitment();
+                _m._recruitment?.TickDay(day);
+                if (_m._recruitmentDirty) _m.SaveRecruitment();
+                var census = _m.GetRecruitmentCensus();
+                events.Add(new DayStateChangeEvent(
+                    "recruitment_ticked", "recruitment", null, null, census.TotalRecruited));
             }
         }
     }

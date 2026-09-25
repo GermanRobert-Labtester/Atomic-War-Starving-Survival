@@ -49,7 +49,7 @@ func isApprovedPlan(path string, content string) bool {
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 		line = strings.Trim(line, "*_`# ")
-		if strings.EqualFold(line, "STATUS: APPROVED BY USER") {
+		if strings.EqualFold(line, "STATUS: APPROVED BY USER") || strings.Contains(strings.ToUpper(line), "FULLY INTEGRATED") {
 			return true
 		}
 	}
@@ -128,18 +128,48 @@ func CheckApprovedPlan(repoRoot string, stagedOnly bool, compareRef string, expl
 	// Search for approved plans
 	approvedPlans := []string{}
 
-	// Check .ai/plans/ directory
+	// Check .ai/plans/ directory (including integrated/ and category subdirectories)
 	plansDir := filepath.Join(repoRoot, ".ai", "plans")
-	if entries, err := os.ReadDir(plansDir); err == nil {
-		for _, e := range entries {
-			if !e.IsDir() && strings.HasSuffix(e.Name(), ".md") && !strings.EqualFold(e.Name(), "template.md") {
-				planPath := filepath.Join(plansDir, e.Name())
-				content, err := os.ReadFile(planPath)
-				if err == nil && isApprovedPlan(planPath, string(content)) {
-					approvedPlans = append(approvedPlans, filepath.Join(".ai", "plans", e.Name()))
+	if _, err := os.Stat(plansDir); err == nil {
+		_ = filepath.Walk(plansDir, func(path string, info os.FileInfo, err error) error {
+			if err != nil || info == nil || info.IsDir() {
+				return nil
+			}
+			if strings.HasSuffix(info.Name(), ".md") && !strings.EqualFold(info.Name(), "template.md") {
+				content, err := os.ReadFile(path)
+				if err == nil && isApprovedPlan(path, string(content)) {
+					rel, relErr := filepath.Rel(repoRoot, path)
+					if relErr == nil {
+						approvedPlans = append(approvedPlans, filepath.ToSlash(rel))
+					} else {
+						approvedPlans = append(approvedPlans, path)
+					}
 				}
 			}
-		}
+			return nil
+		})
+	}
+
+	// Check docs/plans/integrated directory (and category subdirectories)
+	docsIntegratedDir := filepath.Join(repoRoot, "docs", "plans", "integrated")
+	if _, err := os.Stat(docsIntegratedDir); err == nil {
+		_ = filepath.Walk(docsIntegratedDir, func(path string, info os.FileInfo, err error) error {
+			if err != nil || info == nil || info.IsDir() {
+				return nil
+			}
+			if strings.HasSuffix(info.Name(), ".md") && !strings.EqualFold(info.Name(), "template.md") {
+				content, err := os.ReadFile(path)
+				if err == nil && isApprovedPlan(path, string(content)) {
+					rel, relErr := filepath.Rel(repoRoot, path)
+					if relErr == nil {
+						approvedPlans = append(approvedPlans, filepath.ToSlash(rel))
+					} else {
+						approvedPlans = append(approvedPlans, path)
+					}
+				}
+			}
+			return nil
+		})
 	}
 
 	// Check .ai/plan.md

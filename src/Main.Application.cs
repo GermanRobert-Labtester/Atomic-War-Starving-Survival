@@ -827,6 +827,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.LeadershipSuccessionSelfTest:
                     GetTree().Quit(LeadershipSuccessionSelfTest.Run(_dataDir));
                     return;
+                case HostCliAction.RecruitmentSelfTest:
+                    GetTree().Quit(RecruitmentSelfTest.Run(_dataDir));
+                    return;
             }
             }
             catch (System.Exception ex)

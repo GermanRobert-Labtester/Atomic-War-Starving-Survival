@@ -169,6 +169,29 @@ namespace Ashfall.Core.Tests.Difficulty
             Assert.NotEqual(original, Ashfall.Core.Save.SaveSlotService.ComputeAggregateChecksum(envelope));
         }
 
+        [Fact]
+        public void HostileEncounter_DifficultyMultiplier_ScalesExistingDangerComposition_AndPreservesStandardParity()
+        {
+            // Mirrors the arithmetic in Main.EvolvingWorld.cs:
+            // ComposeExpeditionDangerMultiplier — a pure multiply, isolated from Godot.
+            float baseComposition = 1.32f;
+            float standardMult = DifficultyScalarsProvider.Legacy.HostileEncounterMult;
+            float dirgeMult = 1.75f;
+
+            float standardResult = ApplyHostileTerm(baseComposition, standardMult);
+            float dirgeResult = ApplyHostileTerm(baseComposition, dirgeMult);
+
+            Assert.Equal(baseComposition, standardResult, 4);
+            Assert.Equal(baseComposition * dirgeMult, dirgeResult, 4);
+            Assert.True(dirgeResult > standardResult);
+
+            static float ApplyHostileTerm(float mult, float hostile)
+            {
+                if (hostile > 0f && Math.Abs(hostile - 1f) > 0.001f) mult *= hostile;
+                return mult;
+            }
+        }
+
         private static EquipmentConditionSystem CreateEquipment(out Inventory.Inventory inventory)
         {
             inventory = new Inventory.Inventory();

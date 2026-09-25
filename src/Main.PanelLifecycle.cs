@@ -220,6 +220,7 @@ namespace AtomicWar.GodotApp
                 _utilityAiPanel,
                 _weatherHistoryPanel,
                 _workshopPanel,
+                _recruitmentPanel,
             };
         }
 

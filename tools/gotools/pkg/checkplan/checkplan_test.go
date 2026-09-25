@@ -63,4 +63,19 @@ func TestCheckApprovedPlan(t *testing.T) {
 	if err != nil || !ok {
 		t.Errorf("expected pass when approved plan exists, got ok=%v, err=%v", ok, err)
 	}
+
+	// 4. Plan in integrated subfolder -> should also pass
+	_ = os.Remove(planFile)
+	integratedDir := filepath.Join(plansDir, "integrated", "systems")
+	if err := os.MkdirAll(integratedDir, 0755); err != nil {
+		t.Fatalf("failed to create integrated subfolder: %v", err)
+	}
+	integratedPlan := filepath.Join(integratedDir, "feature_plan.md")
+	if err := os.WriteFile(integratedPlan, []byte("# Feature Plan\nSTATUS: APPROVED BY USER\n"), 0644); err != nil {
+		t.Fatalf("failed to write integrated plan file: %v", err)
+	}
+	ok, _, err = CheckApprovedPlan(tempDir, false, "", []string{"src/Host/HostCli.cs"})
+	if err != nil || !ok {
+		t.Errorf("expected pass when approved plan exists in integrated subfolder, got ok=%v, err=%v", ok, err)
+	}
 }
