@@ -131,6 +131,26 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// Alpha feature — load-shed drill: run the system's existing brownout
+        /// shedding preset to rehearse an emergency. Returns the rooms whose
+        /// priority was lowered; the drill itself owns no state beyond the
+        /// priority changes it makes through the canonical power grid.
+        /// </summary>
+        public IReadOnlyList<string> RunLoadShedDrill()
+        {
+            var changed = System.ApplyBrownoutShedPreset();
+            LastSnapshot = System.Snapshot();
+            LastEvent = changed.Count == 0
+                ? "Load-shed drill: nothing left to shed — the grid is already on emergency priorities."
+                : $"Load-shed drill: {changed.Count} room(s) moved to low priority ({string.Join(", ", changed)}).";
+            OnStateChanged?.Invoke();
+            return changed;
+        }
+
+        /// <summary>Last drill/action message for presentation.</summary>
+        public string LastEvent { get; private set; } = string.Empty;
+
+        /// <summary>
         /// Plans 146–149 MED: install a coated generator part. Caller must
         /// consume the inventory item first; this only mutates PowerGrid state.
         /// </summary>

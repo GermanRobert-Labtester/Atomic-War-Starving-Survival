@@ -322,6 +322,7 @@ namespace Ashfall.Core.Save
             new("skill_certifications", "SaveSkillCertifications", "SetupSkillCertifications", "survivors", "Plan 180 — Skill certification and tier system: formal qualifications, exams, benefits, and specializations", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("bestiary_knowledge", "SaveBestiary", "SetupBestiary", "hunting", "Plan 187 — Bestiary creature discovery, sighting records, tiered lore unlocks, kill and butcher tracking", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("health_history", "SaveHealthHistory", "SetupHealthHistory", "medical", "Plan 198 — Longitudinal health histories, diagnostic logs, recovery events, vaccination tracking, and health trends", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("consequence_ledger", "SaveConsequenceLedger", "SetupConsequenceLedger", "campaign", "Campaign consequence flags & counters — cross-quest/moral-choice state persisted across saves and reset on new campaigns"),
         };
 
 
@@ -347,6 +348,7 @@ namespace Ashfall.Core.Save
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 { "journal", "journal_save.json" },
+                { "consequence_ledger", "consequence_ledger_save.json" },
                 { "commitment", "commitment_save.json" },
                 { "session_durability", "session_durability_save.json" },
                 { "playable_metrics", "playable_metrics_save.json" },

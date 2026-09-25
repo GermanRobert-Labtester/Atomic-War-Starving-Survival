@@ -241,6 +241,7 @@ namespace AtomicWar.GodotApp
             SetupExcavationHazards();
             SetupDynamicQuests();
             SetupPlans50To53();
+            SetupConsequenceLedger();
             // ── Plans 178-201: expansion systems (Ensure* restores persisted state) ──
             SetupGenerational();
             SetupPrisoners();
@@ -608,6 +609,7 @@ namespace AtomicWar.GodotApp
                 SaveSkillCertifications();
                 SaveBestiary();
                 SaveHealthHistory();
+                SaveConsequenceLedger();
 
                 if (_sectionCaptureFailed)
 
@@ -666,6 +668,36 @@ namespace AtomicWar.GodotApp
                 // authority. Drop it after both success and failure.
                 _sectionPayloads.Clear();
                 _sectionCaptureFailed = false;
+            }
+        }
+
+        /// <summary>
+        /// Captures the campaign consequence ledger into the save envelope.
+        /// The ledger holds cross-quest/moral-choice flags, counters, and history
+        /// that gate progression. Persisted so a reload preserves consequence state.
+        /// </summary>
+        private void SaveConsequenceLedger()
+        {
+            if (_consequenceLedger == null) return;
+            var state = _consequenceLedger.CaptureState();
+            if (CaptureSection("consequence_ledger", ConsequenceLedgerSaveStore.TryCapture(state)))
+            {
+                GD.Print($"[Ashfall Godot] Consequence ledger saved ({state.flags.Count} flags, {state.counters.Count} counters).");
+            }
+        }
+
+        /// <summary>
+        /// Creates the consequence ledger and restores from disk if a save exists.
+        /// Called from RestoreAllSubsystemsFromDisk and the fresh-campaign path.
+        /// </summary>
+        private void SetupConsequenceLedger()
+        {
+            // _consequenceLedger is readonly and initialized inline; just restore from disk.
+            var saved = ConsequenceLedgerSaveStore.TryLoad();
+            if (saved != null)
+            {
+                _consequenceLedger.RestoreState(saved);
+                GD.Print($"[Ashfall Godot] Consequence ledger restored ({saved.flags.Count} flags, {saved.counters.Count} counters).");
             }
         }
 

@@ -213,6 +213,18 @@ namespace AtomicWar.GodotApp.UI
             bankBtn.CustomMinimumSize = new Vector2(220, 26);
             vbox.AddChild(bankBtn);
 
+            // Alpha feature — load-shed drill: rehearse the emergency shedding
+            // order through the canonical power grid (no separate drill state).
+            var drillBtn = AshfallUiHelpers.MakeButton("RUN LOAD-SHED DRILL", () =>
+            {
+                if (_session == null) return;
+                _session.RunLoadShedDrill();
+                RefreshView();
+            });
+            drillBtn.CustomMinimumSize = new Vector2(220, 26);
+            drillBtn.TooltipText = "Drop standard rooms to low priority and watch what survives. Rehearsal, not an emergency.";
+            vbox.AddChild(drillBtn);
+
             // B5–B8 Phase 5: generator service (canonical machine_oil consumed
             // by the host route; the panel only raises the request).
             var serviceBtn = AshfallUiHelpers.MakeButton("SERVICE GENERATOR",

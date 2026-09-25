@@ -54,7 +54,8 @@ namespace AtomicWar.GodotApp
 
             // Validate required catalogs before any systems are initialized.
             // This ensures the game cannot start with missing or malformed required data.
-            ValidateRequiredCatalogs();
+            // Wrapped in the try so a validation throw becomes a clean FAIL + quit
+            // instead of escaping _Ready() and leaving a blank window.
 
             // Parse once and keep the action: the catch below needs to name the
             // gate that threw, and re-parsing there could disagree with what ran.
@@ -65,6 +66,7 @@ namespace AtomicWar.GodotApp
             // A throw must always become a reported FAIL with a non-zero exit.
             try
             {
+            ValidateRequiredCatalogs();
             switch (cliAction)
             {
                 case HostCliAction.Help:
@@ -795,7 +797,7 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.RadiationMutationSelfTest:
                     GetTree().Quit(HostCliRadiationMutation.RunSelfTest(_dataDir));
                     return;
-                case HostCliAction.RadioProductionSelfTest:
+                case HostCliAction.RadioProgramProductionSelfTest:
                     GetTree().Quit(HostCliRadioProduction.RunSelfTest(_dataDir));
                     return;
                 case HostCliAction.WorkingAnimalsSelfTest:
@@ -836,6 +838,11 @@ namespace AtomicWar.GodotApp
                 return;
             }
 
+            // Boot path guard: any exception in settings/UI/session setup must
+            // become a clean quit instead of escaping _Ready() and leaving a
+            // blank Control with no error surface.
+            try
+            {
             AtomicWar.GodotApp.Settings.UserSettingsStore.Apply(AtomicWar.GodotApp.Settings.UserSettingsStore.Current);
 
             // ── Save/Load host session ───────────────────────────────────────
@@ -885,6 +892,13 @@ namespace AtomicWar.GodotApp
 
                 GD.Print("[Ashfall Godot] Headless interactive boot completed. Exiting cleanly.");
                 GetTree().Quit(0);
+                return;
+            }
+            }
+            catch (System.Exception bootEx)
+            {
+                GD.PushError($"[Ashfall Godot] Boot failed: {bootEx.Message}");
+                GetTree().Quit(1);
                 return;
             }
         }
@@ -961,7 +975,7 @@ namespace AtomicWar.GodotApp
                 if (_advanceTimerRemaining <= 0)
                 {
                     _advanceTimerRemaining = 0;
-                    _statusLabel.Text = "Sleep accepted — advancing day …";
+                    ShowAdvanceFeedback("Sleep accepted — advancing day …", Ashfall.Core.Feedback.FeedbackSeverity.Info);
                     CommitAdvance();
                 }
                 else if (_statusLabel != null)

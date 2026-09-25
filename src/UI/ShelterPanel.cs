@@ -39,6 +39,8 @@ namespace AtomicWar.GodotApp.UI
         private SurvivorsHostSession? _survivorsHost;
         private WorldHostSession? _worldHost;
         private InventoryHostSession? _inventoryHost;
+        private DutyRosterHostSession? _dutyRosterHost;
+        private ShelterAssignmentHostSession? _shelterAssignmentHost;
 
         // 2D shelter layout viewport — the visual anchor. Hosts a HoldfastInteriorView
         // whose survivor actors reflect the authoritative roster, so opening the shelter
@@ -84,7 +86,9 @@ namespace AtomicWar.GodotApp.UI
             InventoryHostSession? inventory = null,
             ShelterRoomIdentityCatalog? roomIdentities = null,
             Ashfall.Core.Narrative.BunkerGraffitiCatalog? graffiti = null,
-            int currentDay = int.MaxValue)
+            int currentDay = int.MaxValue,
+            DutyRosterHostSession? dutyRoster = null,
+            ShelterAssignmentHostSession? shelterAssignments = null)
         {
             if (_survivorsHost != null)
                 _survivorsHost.StateChanged -= RefreshView;
@@ -94,6 +98,8 @@ namespace AtomicWar.GodotApp.UI
             _survivorsHost = survivors;
             _worldHost = world;
             _inventoryHost = inventory;
+            _dutyRosterHost = dutyRoster;
+            _shelterAssignmentHost = shelterAssignments;
 
             if (_survivorsHost != null)
                 _survivorsHost.StateChanged += RefreshView;
@@ -134,7 +140,7 @@ namespace AtomicWar.GodotApp.UI
             // Keep the 2D layout anchor in sync with the authoritative roster.
             if (_interiorView != null && _survivorsHost != null)
             {
-                _interiorView.Initialize(_survivorsHost);
+                _interiorView.Initialize(_survivorsHost, _dutyRosterHost, _shelterAssignmentHost);
                 if (_graffitiCatalog != null)
                 {
                     _interiorView.SetGraffitiCatalog(_graffitiCatalog, _currentDay);

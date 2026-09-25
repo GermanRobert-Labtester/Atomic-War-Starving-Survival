@@ -220,6 +220,10 @@ namespace AtomicWar.GodotApp
                 _inventory?.Inventory ?? new Inventory(),
                 _journal,
                 id => _inventory?.Catalog?.Get(id));
+            // Wire appraisal skill. The survivor skill system (SkillProgressionState)
+            // is not yet connected to the barter panel; default to 0 until the
+            // trade-discipline skill lookup is wired through SurvivorsHostSession.
+            panel.SetAppraisalSkill(0);
             panel.Open();
         }
 

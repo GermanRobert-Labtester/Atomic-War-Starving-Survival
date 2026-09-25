@@ -550,7 +550,7 @@ namespace AtomicWar.GodotApp
                     SetupWorld();
                     SetupInventory();
                     int shelterDay = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
-                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog(), GetBunkerGraffitiCatalog(), shelterDay);
+                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog(), GetBunkerGraffitiCatalog(), shelterDay, _dutyRoster, _shelterAssignment);
                     _shelterPanel.SetMachineTellCatalog(GetMachineTellCatalog());
                     _shelterPanel.Open();
                     break;
@@ -683,7 +683,6 @@ namespace AtomicWar.GodotApp
                     SetupDutyRoster();
                     SetupSurvivors();
                     _dutyRosterPanel.Bind(_dutyRoster, _survivors);
-                    _dutyRosterPanel.OnAssignmentChanged += () => ObserveSigil("duty.assigned");
                     _dutyRosterPanel.Open();
                     break;
                 case "duty_roster_detail":

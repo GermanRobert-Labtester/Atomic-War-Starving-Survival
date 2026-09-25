@@ -84,6 +84,19 @@ public partial class AshfallDashboardShell : PanelContainer
         _titleLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         _headerHbox.AddChild(_titleLabel);
 
+        // UI/UX wave — chrome polish: a 2 px accent rule under the header
+        // separates title from content without adding noise. Inherited by
+        // every panel that uses the shell.
+        var accentRule = new ColorRect
+        {
+            Color = new Color(AshfallUiHelpers.ToColor(DesignTheme.Warm).R,
+                AshfallUiHelpers.ToColor(DesignTheme.Warm).G,
+                AshfallUiHelpers.ToColor(DesignTheme.Warm).B, 0.55f),
+            CustomMinimumSize = new Vector2(0, 2),
+            MouseFilter = Control.MouseFilterEnum.Ignore,
+        };
+        _outerStack.AddChild(accentRule);
+
         _bodyRow = new HBoxContainer();
         _bodyRow.AddThemeConstantOverride("separation", 0);
         _bodyRow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -95,6 +108,16 @@ public partial class AshfallDashboardShell : PanelContainer
         _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
         _bodyRow.AddChild(_contentStack);
+    }
+
+    /// <summary>
+    /// UI/UX wave — make the shell draggable by its header. Intended for
+    /// panels that opt into windowed sizing; full-rect screens keep their
+    /// layout. The offset persists under <paramref name="layoutKey"/>.
+    /// </summary>
+    public void EnableWindowDrag(string layoutKey)
+    {
+        UiPanelFlow.AttachDrag(this, _headerBar, layoutKey);
     }
 
     /// <summary>

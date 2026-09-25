@@ -264,7 +264,7 @@ namespace AtomicWar.GodotApp
         ExerciseSelfTest,
         AfflictionBridgeSelfTest,
         RadiationMutationSelfTest,
-        RadioProductionSelfTest,
+        RadioProgramProductionSelfTest,
         WorkingAnimalsSelfTest,
         BlackMarketSelfTest,
         CultureCreationSelfTest,
@@ -795,7 +795,7 @@ namespace AtomicWar.GodotApp
             if (Has(args, "--radiation-mutation-selftest") || Has(args, "--mutation-system-selftest"))
                 return HostCliAction.RadiationMutationSelfTest;
             if (Has(args, "--radio-production-selftest") || Has(args, "--radio-program-production-selftest"))
-                return HostCliAction.RadioProductionSelfTest;
+                return HostCliAction.RadioProgramProductionSelfTest;
             if (Has(args, "--working-animals-selftest") || Has(args, "--companion-animal-selftest"))
                 return HostCliAction.WorkingAnimalsSelfTest;
             if (Has(args, "--black-market-selftest") || Has(args, "--underworld-economy-selftest"))
@@ -979,6 +979,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --shelter-hazard-loop-selftest / --shelter-hazard-selftest / --duty-roster-loop-selftest Shelter hazard loop and duty roster assignment verification");
             GD.Print("  --shelter-decor-selftest / --shelter-interior-selftest / --memorial-wall-selftest Live items.json decor, inventory mount/remove, NeedsSystem morale, memorial-wall projection, save, and panel verification");
             GD.Print("  --shelter-operations-selftest / --shelter-ops-selftest / --operations-selftest Medical triage, expedition sorties, radio network, crafting, respiratory afflictions, and the routed shelter operations board");
+            GD.Print("  --water-sources-selftest Deep well, atmospheric condenser, aquifer piezometer, and water-treatment commands plus their snapshots (water sources surface gate)");
             GD.Print("  --silent-foundry-uitest   Silent Foundry trade panel UI construction, binding, and trade loop");
             GD.Print("  --plans198-201-uitest / --plans198-201-selftest  CBRN/comms/ceremony/robotics panels: route, bind, command, state delta, feedback");
             GD.Print("  --decon-airlock-uitest     Decon Airlock UI data grid panel bindings");
@@ -1028,7 +1029,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --shelter-security-selftest Plan 138: Shelter defense, security clearance levels, breach alerts, save persistence, and UI binding");
             GD.Print("  --personal-quests-selftest Plan 200: Survivor personal quests, character arcs, stage progression, save persistence, and UI binding");
             GD.Print("  --time-capsule-selftest  Plan 212: Time capsule & legacy messages system, scheduled opening, save persistence, and UI binding");
-            GD.Print("  --internal-communication-selftest  Plan 211: Internal shelter notices, identity refusals, expiry, save persistence, and Shelter Social UI binding");
+            GD.Print("  --internal-communication-selftest / --shelter-communications-selftest  Plan 211: Internal shelter notices, identity refusals, expiry, save persistence, and Shelter Social UI binding");
             GD.Print("  --death-legacy-selftest  Plan 206: Survivor death records, wills, estate inheritance, disputes, save persistence, and UI binding");
             GD.Print("  --relationship-decay-selftest Plan 182: Relationship decay, social drift, bond maintenance, save persistence, and UI binding");
             GD.Print("  --visitor-integration-selftest Plan 214: admitted visitor stays, temporary housing, processing requirements, recruitment handoff, and UI binding");

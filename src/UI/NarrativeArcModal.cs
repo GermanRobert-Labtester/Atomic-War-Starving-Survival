@@ -41,6 +41,10 @@ namespace AtomicWar.GodotApp.UI
             _panel.SetAnchorsPreset(LayoutPreset.Center);
             AddChild(_panel);
 
+            // UI/UX wave: the arc sheet is a movable window with persisted
+            // position (drag the sheet; buttons still receive their clicks).
+            UiPanelFlow.AttachDrag(_panel, _panel, "narrative_arc_modal");
+
             var margin = new MarginContainer();
             margin.AddThemeConstantOverride("margin_left", 26);
             margin.AddThemeConstantOverride("margin_top", 24);

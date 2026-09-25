@@ -285,6 +285,12 @@ namespace Ashfall.Core.Campaign
                     return args;
                 }
 
+                // Commit the day before persisting so the save envelope
+                // records the correct day header. The rollback path restores
+                // from pre-day snapshots regardless of commit order.
+                _lastAdvancedDay = day;
+                Calendar.SetDay(day);
+
                 // Persistence must happen once, after all required owners succeed and before briefing display.
                 if (persistence != null)
                 {
@@ -303,9 +309,6 @@ namespace Ashfall.Core.Campaign
                         throw;
                     }
                 }
-
-                _lastAdvancedDay = day;
-                Calendar.SetDay(day);
                 OnDayAdvanced?.Invoke(args);
                 return args;
             }

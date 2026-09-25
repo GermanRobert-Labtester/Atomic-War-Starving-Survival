@@ -152,7 +152,90 @@ namespace AtomicWar.GodotApp
                 _romanceFamilyBoard,
                 _colonyOperationsBoard,
                 _ideologicalMediationDesk,
+                // ── Expanded shelter panels (WHOLEGAME-P1B) — previously bypassed
+                // the catalog, so Esc fell through to ReturnToMenu with them open.
+                _waterTreatmentPanel,
+                _airlockSecurityPanel,
+                _survivorRelationsPanel,
+                _regionalTreatyPanel,
+                _vinylMoralePanel,
+                _lowBackgroundPanel,
+                _inSarPanel,
+                _hydraulicExtrusionPanel,
+                _runFlatTirePanel,
+                _wildlifeTrappingPanel,
+                _excavationPanel,
+                _apprenticeshipPanel,
+                _caregivingPanel,
+                _shelterThermalPanel,
+                _shelterSchedulePanel,
+                _autopsyReportPanel,
+                _waystationPanel,
+                _chemicalDependencyPanel,
+                _sumpFloodingPanel,
+                _decontaminationPanel,
+                _kitchenNutritionPanel,
+                _equipmentConditionPanel,
+                _libraryStudyPanel,
+                _archiveDeskPanel,
+                _contractorRosterPanel,
+                _mentalHealthCrisisPanel,
+                _phantomMemoryPanel,
+                _travelingCaravanPanel,
+                _shelterDecorPanel,
+                _medicalWardPanel,
+                _plans94To97Panel,
+                // ── Additional overlay panels not previously catalogued ──
+                _aviationPanel,
+                _bestiaryPanel,
+                _bioFermentationPanel,
+                _cargoAirdropPanel,
+                _chemicalReconPanel,
+                _chemPanel,
+                _deconAirlockPanel,
+                _deepCoastPanel,
+                _defenseGridPanel,
+                _economyPanel,
+                _electrostaticScrubberPanel,
+                _farmingPanel,
+                _fungiCultivationBedPanel,
+                _geodeticSurveyPanel,
+                _geothermalAquiferPanel,
+                _inventoryPanel,
+                _kineticStoragePanel,
+                _laborPanel,
+                _mutationTreePanel,
+                _nurseryPanel,
+                _pharmaLabPanel,
+                _phase0Panel,
+                _plasticPyrolysisPanel,
+                _politicsPanel,
+                _prisonerPanel,
+                _psychologyArcPanel,
+                _radioIntelligencePanel,
+                _reconTelemetryPanel,
+                _shelterSocialPanel,
+                _stealthReadoutPanel,
+                _subterraneanOperationsPanel,
+                _utilityAiPanel,
+                _weatherHistoryPanel,
+                _workshopPanel,
             };
+        }
+
+        /// <summary>
+        /// Opens a panel with full lifecycle: visibility, animation, and focus.
+        /// Use this instead of bare <c>panel.Visible = true</c> for all panel opens.
+        /// For panels whose VisibilityChanged hook was registered by
+        /// RegisterOpenMotionRecursive, the animation and focus fire automatically.
+        /// For lazy panels added after registration, this method provides the fallback.
+        /// </summary>
+        private void ShowPanelLifecycle(Control panel)
+        {
+            if (panel == null || !GodotObject.IsInstanceValid(panel)) return;
+            panel.Visible = true;
+            AtomicWar.GodotApp.UI.UiMotion.AnimateOpen(panel);
+            EnsureInitialFocus(panel);
         }
 
         private void CloseAllOverlayPanels()

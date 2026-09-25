@@ -55,6 +55,30 @@ namespace AtomicWar.GodotApp
         public bool CanTeardown(string itemId) => System.CanTeardown(itemId);
 
         /// <summary>
+        /// Exact yield preview for a teardown (alpha feature G1). Yields are
+        /// deterministic, so this is a promise, not an estimate: component
+        /// names/amounts, plus the required tool and its wear. Empty string
+        /// when the item has no authored recipe.
+        /// </summary>
+        public string PreviewLine(string itemId)
+        {
+            if (!System.Catalog.TryGet(itemId, out var recipe) || recipe == null) return string.Empty;
+
+            var parts = new System.Collections.Generic.List<string>();
+            foreach (var component in recipe.Components)
+            {
+                string label = _inventory.Catalog.Get(component.ItemId)?.displayName ?? component.ItemId;
+                parts.Add($"{label} ×{component.Amount}");
+            }
+
+            string yield = parts.Count == 0 ? "nothing usable" : string.Join(", ", parts);
+            if (!recipe.RequiresTool) return $"Teardown yield: {yield}. No tool needed.";
+
+            string tool = _inventory.Catalog.Get(recipe.RequiredToolId!)?.displayName ?? recipe.RequiredToolId!;
+            return $"Teardown yield: {yield}. Tool: {tool} (−{recipe.ToolWear:0.#}% durability).";
+        }
+
+        /// <summary>
         /// Run one teardown through the canonical inventory. Returns the Core
         /// result and records the message for presentation.
         /// </summary>

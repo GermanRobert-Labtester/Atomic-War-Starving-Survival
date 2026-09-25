@@ -67,6 +67,15 @@ namespace AtomicWar.GodotApp.UI
         private readonly Dictionary<string, int> _playerOffers = new(StringComparer.Ordinal);
         private readonly Dictionary<string, int> _playerRequests = new(StringComparer.Ordinal);
         private int _playerAppraisalSkillLevel = 0;
+
+        /// <summary>
+        /// Sets the player's appraisal skill level for trade risk assessment.
+        /// Called by the host after Bind to wire the survivor's appraisal skill.
+        /// </summary>
+        public void SetAppraisalSkill(int level)
+        {
+            _playerAppraisalSkillLevel = Math.Max(0, level);
+        }
         private string _feedbackMessage = "Ready for barter negotiations at shelter airlock.";
         private bool _feedbackIsError = false;
 

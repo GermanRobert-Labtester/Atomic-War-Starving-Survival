@@ -30,6 +30,10 @@ namespace AtomicWar.GodotApp.UI
             CustomMinimumSize = new Vector2(480, 220);
             Visible = false;
 
+            // UI/UX wave: dialogs are movable — drag anywhere that is not a
+            // button, and the position persists in user://ui_layout.json.
+            UiPanelFlow.AttachDrag(this, this, "confirmation_modal");
+
             // Background styling
             var styleBox = new StyleBoxFlat
             {

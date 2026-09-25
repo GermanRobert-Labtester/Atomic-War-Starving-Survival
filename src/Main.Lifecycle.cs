@@ -399,6 +399,14 @@ namespace AtomicWar.GodotApp
                         RemoveChild(_onboardingHintPanel);
                     _onboardingHintPanel = null!;
                 }));
+
+            // Campaign consequence ledger — cross-quest/moral-choice state.
+            // Must reset on new campaigns to prevent flag leakage.
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "consequence_ledger",
+                dependsOn: Array.Empty<string>(),
+                saveSectionKey: "consequence_ledger",
+                onReset: () => _consequenceLedger?.ClearAll()));
         }
 
         /// <summary>

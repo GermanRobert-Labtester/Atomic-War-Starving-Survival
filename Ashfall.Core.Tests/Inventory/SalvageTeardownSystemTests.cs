@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Alpha feature F1 — Salvage Teardown Bench: catalog validation, atomicity,
 // tool wear via the existing durability owner, and inventory outcomes.
+using System.Collections.Generic;
+using System.IO;
 
 using System.Text.Json;
 using Ashfall.Core.Inventory;
@@ -167,6 +169,43 @@ namespace Ashfall.Core.Tests.SalvageTeardown
             """);
             Assert.Equal(1, catalog.Count);
             Assert.NotEmpty(catalog.Errors);
+        }
+
+        [Fact]
+        public void Shipped_Recipes_Preview_Assets_All_Resolve_In_Items_Json()
+        {
+            // Alpha feature G1 — the salvage yield preview promises real names
+            // and a real tool, so every shipped recipe component and tool id
+            // must resolve in the item authority. Verify the premise, not the
+            // formatting.
+            string dataDir;
+            if (!CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out dataDir!))
+                dataDir = System.AppContext.BaseDirectory;
+            if (!CatalogLocator.TryFindDataDirectory(dataDir, out dataDir!))
+                throw new DirectoryNotFoundException("Assets/StreamingAssets/Data not found");
+
+            var catalog = SalvageTeardownCatalog.Load(File.ReadAllText(Path.Combine(dataDir, SalvageTeardownCatalog.FileName)));
+            Assert.Empty(catalog.Errors);
+            Assert.True(catalog.Count >= 10, "expected the shipped teardown bench to carry recipes");
+
+            var itemIds = new HashSet<string>();
+            using (var doc = JsonDocument.Parse(File.ReadAllText(Path.Combine(dataDir, "items.json"))))
+            {
+                foreach (var element in doc.RootElement.GetProperty("items").EnumerateArray())
+                {
+                    if (element.TryGetProperty("id", out var id)) itemIds.Add(id.GetString() ?? string.Empty);
+                }
+            }
+
+            foreach (var recipe in catalog.All)
+            {
+                foreach (var component in recipe.Components)
+                    Assert.True(itemIds.Contains(component.ItemId),
+                        $"recipe '{recipe.Id}' yields '{component.ItemId}' which does not resolve in items.json");
+                if (recipe.RequiredToolId != null)
+                    Assert.True(itemIds.Contains(recipe.RequiredToolId),
+                        $"recipe '{recipe.Id}' requires tool '{recipe.RequiredToolId}' which does not resolve in items.json");
+            }
         }
     }
 }

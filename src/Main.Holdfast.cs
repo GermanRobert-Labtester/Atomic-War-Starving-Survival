@@ -10,6 +10,7 @@ using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Feedback;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
@@ -221,7 +222,7 @@ namespace AtomicWar.GodotApp
             {
                 _advanceTimerRemaining = AdvanceCountdownDefaultSeconds;
                 _advanceCancelled = false;
-                _statusLabel.Text = "Sleep in progress … press ESC or MENU to cancel";
+                ShowAdvanceFeedback("Sleep in progress … press ESC or MENU to cancel", FeedbackSeverity.Info, persistent: true);
                 return;
             }
 
@@ -237,9 +238,30 @@ namespace AtomicWar.GodotApp
                 _advanceCancelled = true;
                 _advanceTimerRemaining = 0;
                 _advanceConfirmed = false;
-                if (_statusLabel != null)
-                    _statusLabel.Text = "Advance cancelled.";
+                ShowAdvanceFeedback("Advance cancelled.", FeedbackSeverity.Info);
             }
+        }
+
+        /// <summary>
+        /// Routes advance-day feedback through the visible FeedbackPanel toast
+        /// system. Falls back to _statusLabel if the feedback panel is unavailable.
+        /// </summary>
+        private void ShowAdvanceFeedback(string message, FeedbackSeverity severity, bool persistent = false)
+        {
+            var msg = new ResolvedFeedbackMessage
+            {
+                Key = "advance_day",
+                Category = "system",
+                Severity = severity,
+                FormattedText = message,
+                DisplayDurationSeconds = persistent ? 0f : 4f,
+                DedupeKey = persistent ? "advance_countdown" : $"advance_{severity}",
+                IsDiagnosticOnly = false
+            };
+            if (_feedbackPanel != null && GodotObject.IsInstanceValid(_feedbackPanel))
+                _feedbackPanel.ShowToast(msg);
+            else if (_statusLabel != null)
+                _statusLabel.Text = message;
         }
 
         /// <summary>Fully tick the simulation forward one day through the canonical
@@ -259,13 +281,13 @@ namespace AtomicWar.GodotApp
             var args = _campaignDay.Advance(targetDay, new CampaignDayPersistenceAdapter(this));
             if (args == null)
             {
-                _statusLabel.Text = $"Day {targetDay} advance rejected (already in flight or stale day).";
+                ShowAdvanceFeedback($"Day {targetDay} advance rejected (already in flight or stale day).", FeedbackSeverity.Warning);
                 return;
             }
 
             if (args.HasFailures)
             {
-                _statusLabel.Text = $"Day {targetDay} advance failed in {args.FailedReports.Count} owner(s).";
+                ShowAdvanceFeedback($"Day {targetDay} advance failed in {args.FailedReports.Count} owner(s).", FeedbackSeverity.Critical);
                 GD.PushError($"[Ashfall Godot] Day {targetDay} advance had failures. Halting without committing.");
                 return;
             }
@@ -278,7 +300,7 @@ namespace AtomicWar.GodotApp
                 CheckAndTriggerEndgame(targetDay);
 
                 _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.DayTransition);
-                _statusLabel.Text = $"Day {targetDay} advanced successfully.";
+                ShowAdvanceFeedback($"Day {targetDay} advanced successfully.", FeedbackSeverity.Success);
                 UpdateHud();
 
                 ShowBriefingForDay(_simDay, args);

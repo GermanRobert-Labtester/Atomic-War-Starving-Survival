@@ -514,31 +514,31 @@ namespace AtomicWar.GodotApp
                 case "water_treatment":
                     SetupWaterTreatment();
                     BindWaterSourcesPanel();
-                    if (_waterTreatmentPanel != null) { _waterTreatmentPanel.Visible = true; _waterTreatmentPanel.RefreshView(); }
+                    if (_waterTreatmentPanel != null) { ShowPanelLifecycle(_waterTreatmentPanel); _waterTreatmentPanel.RefreshView(); }
                     break;
                 case "airlock_security":
-                    if (_airlockSecurityPanel != null) { _airlockSecurityPanel.Visible = true; _airlockSecurityPanel.RefreshView(); }
+                    if (_airlockSecurityPanel != null) { ShowPanelLifecycle(_airlockSecurityPanel); _airlockSecurityPanel.RefreshView(); }
                     break;
                 case "survivor_relations":
-                    if (_survivorRelationsPanel != null) { _survivorRelationsPanel.Visible = true; _survivorRelationsPanel.RefreshView(); }
+                    if (_survivorRelationsPanel != null) { ShowPanelLifecycle(_survivorRelationsPanel); _survivorRelationsPanel.RefreshView(); }
                     break;
                 case "regional_treaty":
-                    if (_regionalTreatyPanel != null) { _regionalTreatyPanel.Visible = true; _regionalTreatyPanel.RefreshView(); }
+                    if (_regionalTreatyPanel != null) { ShowPanelLifecycle(_regionalTreatyPanel); _regionalTreatyPanel.RefreshView(); }
                     break;
                 case "vinyl_morale":
-                    if (_vinylMoralePanel != null) { _vinylMoralePanel.Visible = true; _vinylMoralePanel.RefreshView(); }
+                    if (_vinylMoralePanel != null) { ShowPanelLifecycle(_vinylMoralePanel); _vinylMoralePanel.RefreshView(); }
                     break;
                 case "low_background_metrology":
-                    if (_lowBackgroundPanel != null) { _lowBackgroundPanel.Visible = true; _lowBackgroundPanel.RefreshView(); }
+                    if (_lowBackgroundPanel != null) { ShowPanelLifecycle(_lowBackgroundPanel); _lowBackgroundPanel.RefreshView(); }
                     break;
                 case "insar_mapping":
-                    if (_inSarPanel != null) { _inSarPanel.Visible = true; _inSarPanel.RefreshView(); }
+                    if (_inSarPanel != null) { ShowPanelLifecycle(_inSarPanel); _inSarPanel.RefreshView(); }
                     break;
                 case "hydraulic_extrusion":
-                    if (_hydraulicExtrusionPanel != null) { _hydraulicExtrusionPanel.Visible = true; _hydraulicExtrusionPanel.RefreshView(); }
+                    if (_hydraulicExtrusionPanel != null) { ShowPanelLifecycle(_hydraulicExtrusionPanel); _hydraulicExtrusionPanel.RefreshView(); }
                     break;
                 case "runflat_tire":
-                    if (_runFlatTirePanel != null) { _runFlatTirePanel.Visible = true; _runFlatTirePanel.RefreshView(); }
+                    if (_runFlatTirePanel != null) { ShowPanelLifecycle(_runFlatTirePanel); _runFlatTirePanel.RefreshView(); }
                     break;
                 case "sofc_power":
                     OpenSofcPowerPanel();
@@ -586,46 +586,46 @@ namespace AtomicWar.GodotApp
                     OpenCyberneticsPanel();
                     break;
                 case "wildlife_trapping":
-                    if (_wildlifeTrappingPanel != null) { _wildlifeTrappingPanel.Visible = true; _wildlifeTrappingPanel.RefreshView(); }
+                    if (_wildlifeTrappingPanel != null) { ShowPanelLifecycle(_wildlifeTrappingPanel); _wildlifeTrappingPanel.RefreshView(); }
                     break;
                 case "excavation":
-                    if (_excavationPanel != null) { _excavationPanel.Visible = true; _excavationPanel.RefreshView(); }
+                    if (_excavationPanel != null) { ShowPanelLifecycle(_excavationPanel); _excavationPanel.RefreshView(); }
                     break;
                 case "apprenticeship":
-                    if (_apprenticeshipPanel != null) { _apprenticeshipPanel.Visible = true; _apprenticeshipPanel.RefreshView(); }
+                    if (_apprenticeshipPanel != null) { ShowPanelLifecycle(_apprenticeshipPanel); _apprenticeshipPanel.RefreshView(); }
                     break;
                 case "caregiving":
-                    if (_caregivingPanel != null) { _caregivingPanel.Visible = true; _caregivingPanel.RefreshView(); }
+                    if (_caregivingPanel != null) { ShowPanelLifecycle(_caregivingPanel); _caregivingPanel.RefreshView(); }
                     break;
                 case "shelter_thermal":
-                    if (_shelterThermalPanel != null) { _shelterThermalPanel.Visible = true; _shelterThermalPanel.RefreshView(); }
+                    if (_shelterThermalPanel != null) { ShowPanelLifecycle(_shelterThermalPanel); _shelterThermalPanel.RefreshView(); }
                     break;
                 case "shelter_schedule":
-                    if (_shelterSchedulePanel != null) { _shelterSchedulePanel.Visible = true; _shelterSchedulePanel.RefreshView(); }
+                    if (_shelterSchedulePanel != null) { ShowPanelLifecycle(_shelterSchedulePanel); _shelterSchedulePanel.RefreshView(); }
                     break;
                 case "autopsy_report":
-                    if (_autopsyReportPanel != null) { _autopsyReportPanel.Visible = true; _autopsyReportPanel.RefreshView(); }
+                    if (_autopsyReportPanel != null) { ShowPanelLifecycle(_autopsyReportPanel); _autopsyReportPanel.RefreshView(); }
                     break;
                 case "waystation_network":
-                    if (_waystationPanel != null) { _waystationPanel.Visible = true; _waystationPanel.RefreshView(); }
+                    if (_waystationPanel != null) { ShowPanelLifecycle(_waystationPanel); _waystationPanel.RefreshView(); }
                     break;
                 case "chemical_dependency":
-                    if (_chemicalDependencyPanel != null) { _chemicalDependencyPanel.Visible = true; _chemicalDependencyPanel.RefreshView(); }
+                    if (_chemicalDependencyPanel != null) { ShowPanelLifecycle(_chemicalDependencyPanel); _chemicalDependencyPanel.RefreshView(); }
                     break;
                 case "sump_flooding":
-                    if (_sumpFloodingPanel != null) { _sumpFloodingPanel.Visible = true; _sumpFloodingPanel.RefreshView(); }
+                    if (_sumpFloodingPanel != null) { ShowPanelLifecycle(_sumpFloodingPanel); _sumpFloodingPanel.RefreshView(); }
                     break;
                 case "decontamination":
-                    if (_decontaminationPanel != null) { _decontaminationPanel.Visible = true; _decontaminationPanel.RefreshView(); }
+                    if (_decontaminationPanel != null) { ShowPanelLifecycle(_decontaminationPanel); _decontaminationPanel.RefreshView(); }
                     break;
                 case "kitchen_nutrition":
-                    if (_kitchenNutritionPanel != null) { _kitchenNutritionPanel.Visible = true; _kitchenNutritionPanel.RefreshView(); }
+                    if (_kitchenNutritionPanel != null) { ShowPanelLifecycle(_kitchenNutritionPanel); _kitchenNutritionPanel.RefreshView(); }
                     break;
                 case "equipment_condition":
-                    if (_equipmentConditionPanel != null) { _equipmentConditionPanel.Visible = true; _equipmentConditionPanel.RefreshView(); }
+                    if (_equipmentConditionPanel != null) { ShowPanelLifecycle(_equipmentConditionPanel); _equipmentConditionPanel.RefreshView(); }
                     break;
                 case "library_study":
-                    if (_libraryStudyPanel != null) { _libraryStudyPanel.Visible = true; _libraryStudyPanel.RefreshView(); }
+                    if (_libraryStudyPanel != null) { ShowPanelLifecycle(_libraryStudyPanel); _libraryStudyPanel.RefreshView(); }
                     break;
                 case "archive_desk":
                     SetupJournal();
@@ -635,19 +635,19 @@ namespace AtomicWar.GodotApp
                     DiscoverPaperPrintingRecords("government_bunker");
                     DiscoverBoneHornRecords("government_bunker");
                     DiscoverAbyssalAnomalyRecords("government_bunker");
-                    if (_archiveDeskPanel != null) { _archiveDeskPanel.Visible = true; _archiveDeskPanel.RefreshView(); }
+                    if (_archiveDeskPanel != null) { ShowPanelLifecycle(_archiveDeskPanel); _archiveDeskPanel.RefreshView(); }
                     break;
                 case "contractor_roster":
-                    if (_contractorRosterPanel != null) { _contractorRosterPanel.Visible = true; _contractorRosterPanel.RefreshView(); }
+                    if (_contractorRosterPanel != null) { ShowPanelLifecycle(_contractorRosterPanel); _contractorRosterPanel.RefreshView(); }
                     break;
                 case "mental_health_crisis":
-                    if (_mentalHealthCrisisPanel != null) { _mentalHealthCrisisPanel.Visible = true; _mentalHealthCrisisPanel.RefreshView(); }
+                    if (_mentalHealthCrisisPanel != null) { ShowPanelLifecycle(_mentalHealthCrisisPanel); _mentalHealthCrisisPanel.RefreshView(); }
                     break;
                 case "phantom_memory":
-                    if (_phantomMemoryPanel != null) { _phantomMemoryPanel.Visible = true; _phantomMemoryPanel.RefreshView(); }
+                    if (_phantomMemoryPanel != null) { ShowPanelLifecycle(_phantomMemoryPanel); _phantomMemoryPanel.RefreshView(); }
                     break;
                 case "traveling_caravan":
-                    if (_travelingCaravanPanel != null) { _travelingCaravanPanel.Visible = true; _travelingCaravanPanel.RefreshView(); }
+                    if (_travelingCaravanPanel != null) { ShowPanelLifecycle(_travelingCaravanPanel); _travelingCaravanPanel.RefreshView(); }
                     break;
                 case "shelter_barter":
                     OpenShelterBarterPanel();
@@ -657,7 +657,7 @@ namespace AtomicWar.GodotApp
                     break;
                 case "shelter_decor":
                     SetupShelterDecor();
-                    if (_shelterDecorPanel != null) { _shelterDecorPanel.Visible = true; _shelterDecorPanel.RefreshView(); }
+                    if (_shelterDecorPanel != null) { ShowPanelLifecycle(_shelterDecorPanel); _shelterDecorPanel.RefreshView(); }
                     break;
                 case "shelter_atmosphere":
                     ShowShelterAtmospherePanel();
@@ -699,25 +699,25 @@ namespace AtomicWar.GodotApp
                     SetupJournal();
                     DiscoverBureaucraticDocuments("medical_office");
                     SetupMedicalWard();
-                    if (_medicalWardPanel != null) { _medicalWardPanel.Visible = true; _medicalWardPanel.RefreshView(); }
+                    if (_medicalWardPanel != null) { ShowPanelLifecycle(_medicalWardPanel); _medicalWardPanel.RefreshView(); }
                     break;
                 case "plans_94_97":
                     SetupGrainProcessing();
                     SetupCryogenicAirSeparation();
                     SetupHeliograph();
                     SetupPlans94To97Panel();
-                    if (_plans94To97Panel != null) { _plans94To97Panel.Visible = true; _plans94To97Panel.RefreshView(); }
+                    if (_plans94To97Panel != null) { ShowPanelLifecycle(_plans94To97Panel); _plans94To97Panel.RefreshView(); }
                     break;
                 case "plans_130_133":
                     OpenPlans130To133Panel();
                     break;
                 case "journal":
                     SetupJournal();
-                    if (_journalPanel != null) { _journalPanel.Bind(_journal); _journalPanel.Visible = true; _journalPanel.RefreshView(); }
+                    if (_journalPanel != null) { _journalPanel.Bind(_journal); ShowPanelLifecycle(_journalPanel); _journalPanel.RefreshView(); }
                     break;
                 case "weather":
                     SetupWorld();
-                    if (_weatherPanel != null) { _weatherPanel.Bind(_world); _weatherPanel.Visible = true; _weatherPanel.RefreshView(); }
+                    if (_weatherPanel != null) { _weatherPanel.Bind(_world); ShowPanelLifecycle(_weatherPanel); _weatherPanel.RefreshView(); }
                     break;
             }
         }

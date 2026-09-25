@@ -116,6 +116,49 @@ namespace Ashfall.Core.Shelter
         public event Action<bool>? OnQuietHoursChanged;
 
         public float OverallNoiseLevel => _state.OverallNoiseLevel;
+
+        /// <summary>Alpha feature G5 — quiet-hours tradeoff floor: shelter noise
+        /// above this during the quiet window books a violation (see TickDay).</summary>
+        public const float QuietHoursNoiseFloorDb = 30f;
+
+        /// <summary>Alpha feature G5 — detection risk booked per quiet-hours
+        /// violation day (see TickDay).</summary>
+        public const float QuietHoursViolationRisk = 5f;
+
+        /// <summary>Alpha feature G5 — read-only projection: would the shelter's
+        /// current noise breach the quiet-hours floor during the window?</summary>
+        public bool WouldViolateQuietHours(int currentHour = 23)
+            => _state.QuietHoursActive
+               && IsHourWithinQuietHours(currentHour)
+               && _state.OverallNoiseLevel > QuietHoursNoiseFloorDb;
+
+        /// <summary>Alpha feature G5 — count of recorded quiet-hours violations.</summary>
+        public int QuietHoursViolationCount
+        {
+            get
+            {
+                int count = 0;
+                foreach (var ev in _state.Events)
+                    if (ev != null && string.Equals(ev.EventType, "quiet_hours_violation", StringComparison.Ordinal))
+                        count++;
+                return count;
+            }
+        }
+
+        /// <summary>Alpha feature G5 — most recent recorded quiet-hours violation, if any.</summary>
+        public NoiseEvent? LatestQuietHoursViolation
+        {
+            get
+            {
+                for (int i = _state.Events.Count - 1; i >= 0; i--)
+                {
+                    var ev = _state.Events[i];
+                    if (ev != null && string.Equals(ev.EventType, "quiet_hours_violation", StringComparison.Ordinal))
+                        return ev;
+                }
+                return null;
+            }
+        }
         public float DetectionRisk => _state.DetectionRisk;
         public bool QuietHoursActive => _state.QuietHoursActive;
         public int ActiveSourceCount => _state.Sources.Count(s => s.IsActive);

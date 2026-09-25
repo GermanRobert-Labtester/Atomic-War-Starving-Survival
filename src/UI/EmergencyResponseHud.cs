@@ -14,6 +14,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnPanelClosed;
         public event Action? OnAcknowledge;
         public event Action<string>? OnRequestNavigateToPanel;
+        public event Action<string>? OnActionRequested;
 
         private ColorRect? _backdrop;
         private Label? _severityHeader;
@@ -205,6 +206,8 @@ namespace AtomicWar.GodotApp.UI
                         CustomMinimumSize = new Vector2(240, 36),
                         Disabled = !act.IsEnabled
                     };
+                    if (!act.IsEnabled)
+                        btn.TooltipText = "Action unavailable — prerequisites not met.";
                     string actionId = act.ActionId;
                     btn.Pressed += () =>
                     {
@@ -213,6 +216,10 @@ namespace AtomicWar.GodotApp.UI
                         {
                             OnAcknowledge?.Invoke();
                             Close();
+                        }
+                        else
+                        {
+                            OnActionRequested?.Invoke(actionId);
                         }
                     };
                     _actionList.AddChild(btn);

@@ -449,6 +449,7 @@ namespace AtomicWar.GodotApp
             _shelterThermalPanel = new ShelterThermalPanel();
             _shelterThermalPanel.Bind(_shelterThermal);
             _shelterThermalPanel.BindInventory(_inventory?.Inventory);
+            _shelterThermalPanel.BindStormWatch(() => StormWatch.Read(_world?.Weather));
             _shelterThermalPanel.Visible = false;
             AddChild(_shelterThermalPanel);
         }

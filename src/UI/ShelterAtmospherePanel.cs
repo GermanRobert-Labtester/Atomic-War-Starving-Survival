@@ -127,6 +127,18 @@ namespace AtomicWar.GodotApp.UI
                     noiseSb.AppendLine($"  • [{src.Type}] in {src.RoomId}: {src.NoiseOutput:F0} dB (Active: {src.IsActive})");
                 }
             }
+
+            // Alpha feature G5 — quiet-hours tradeoff, stated in the system's
+            // own published thresholds and observed events (no invented math).
+            noiseSb.AppendLine();
+            noiseSb.AppendLine("Quiet-Hours Tradeoff:");
+            noiseSb.AppendLine($"  Shelter noise now:   {noise.OverallNoiseLevel:F1} dB");
+            noiseSb.AppendLine($"  Breach floor:        {ShelterNoiseSystem.QuietHoursNoiseFloorDb:F0} dB during {noise.QuietHoursStart:D2}:00-{noise.QuietHoursEnd:D2}:00");
+            noiseSb.AppendLine($"  Cost per breach day: +{ShelterNoiseSystem.QuietHoursViolationRisk:F0}% detection risk");
+            noiseSb.AppendLine($"  Breaching now:       {(noise.WouldViolateQuietHours() ? "YES — silence a source or lift the floor" : "no")}");
+            noiseSb.AppendLine($"  Violations logged:   {noise.QuietHoursViolationCount}");
+            if (noise.LatestQuietHoursViolation is { } last)
+                noiseSb.AppendLine($"  Last breach:         day {last.Day} at {last.NoiseLevel:F0} dB (+{last.DetectionRiskAdded:F0}%)");
             _noiseSourcesText.Text = noiseSb.ToString().TrimEnd();
 
             _toggleQuietHoursBtn.Text = noise.QuietHoursActive ? "Lift Quiet Hours" : "Enforce Quiet Hours (22:00 - 06:00)";

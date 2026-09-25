@@ -362,6 +362,7 @@ namespace AtomicWar.GodotApp
             _dutyRosterPanel = new DutyRosterPanel();
             _dutyRosterPanel.OnClose += CloseDutyRosterPanel;
             _dutyRosterPanel.OnAssignmentChanged += UpdateHud;
+            _dutyRosterPanel.OnAssignmentChanged += () => ObserveSigil("duty.assigned");
             _dutyRosterPanel.OnDetailsRequested += () => OpenPlayerPanel("duty_roster_detail");
             AddChild(_dutyRosterPanel);
 
@@ -1392,6 +1393,7 @@ namespace AtomicWar.GodotApp
             _crisisHud.Visible = false;
             _crisisHud.OnPanelClosed += () => _crisisHud.Visible = false;
             _crisisHud.OnAcknowledge += () => _crisisCoordinator?.AcknowledgeCurrentCrisis();
+            _crisisHud.OnActionRequested += actionId => _crisisCoordinator?.ExecuteAction(actionId);
             _crisisHud.OnRequestNavigateToPanel += route => Ashfall.Core.UI.PanelRegistry.TryOpen(route);
             AddChild(_crisisHud);
 
@@ -1619,14 +1621,17 @@ namespace AtomicWar.GodotApp
             _codexViewer.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             rightBox.AddChild(_codexViewer);
 
-            // Bottom Diagnostics bar
-            _diagnosticsLabel = new Label
+            // Bottom Diagnostics bar (debug builds only)
+            if (OS.IsDebugBuild())
             {
-                Text = "FPS: 60 | Static Mem: 0 MB"
-            };
-            _diagnosticsLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-            _diagnosticsLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            rootColumn.AddChild(_diagnosticsLabel);
+                _diagnosticsLabel = new Label
+                {
+                    Text = "FPS: 60 | Static Mem: 0 MB"
+                };
+                _diagnosticsLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+                _diagnosticsLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                rootColumn.AddChild(_diagnosticsLabel);
+            }
 
             // Year of Ash Door Encounter Modal
             _questlineModal = new QuestlineModal();

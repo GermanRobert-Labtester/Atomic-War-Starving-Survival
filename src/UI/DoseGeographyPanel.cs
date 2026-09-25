@@ -62,6 +62,22 @@ public partial class DoseGeographyPanel : Control
         return RadiationHotspotSurvey.Classify(HotspotPolicy, locations);
     }
 
+    /// <summary>Alpha feature G4 — pre-departure check over the sectors the
+    /// current filter shows (the player's planned route). Read-only.</summary>
+    private RouteDoseCheck RouteCheck()
+    {
+        var locations = _dose?.Content?.locations;
+        if (locations == null) return default;
+
+        var planned = new List<DoseLocationDef>();
+        foreach (var location in locations)
+        {
+            if (location == null || !SectorPass(location.sector)) continue;
+            planned.Add(location);
+        }
+        return RouteDoseCheckService.Evaluate(HotspotPolicy, planned);
+    }
+
     public bool IsBound => _dose != null;
 
     /// <summary>Rendered row/rail text from the last RefreshView, for
@@ -138,6 +154,22 @@ public partial class DoseGeographyPanel : Control
         {
             _renderDump.Append(row.DisplayName).Append(" ").Append(row.RadiationUsv.ToString("0.0"))
                 .Append(" µSv/h ").Append(row.Severity).Append(" | ");
+        }
+
+        // Alpha feature G4 — route exposure check for the filtered sectors.
+        var route = RouteCheck();
+        if (route.Clear)
+        {
+            _statusRail.Set("route", "clear", AshfallMetricCard.Criticality.Normal);
+            _renderDump.Append("ROUTE clear | ");
+        }
+        else
+        {
+            var worst = route.Worst!.Value;
+            _statusRail.Set("route", $"{worst.DisplayName} · {worst.Severity.ToUpperInvariant()}",
+                worst.Severity is "extreme" or "high" ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Warn);
+            _renderDump.Append("ROUTE worst ").Append(worst.DisplayName).Append(" ").Append(worst.RadiationUsv.ToString("0.0"))
+                .Append(" µSv/h; safest ").Append(route.Safest?.DisplayName ?? "—").Append(" | ");
         }
     }
 
@@ -374,8 +406,8 @@ public partial class DoseGeographyPanel : Control
             _sidebar.OnSelected += id =>
             {
                 _sectorFilter = id;
-                BuildRows();
-                RefreshDetail();
+                // UI/UX wave: sector filter swaps animate in place.
+                UiPanelFlow.TransitionSwap(_grid, () => { BuildRows(); RefreshDetail(); });
             };
         }
 
@@ -386,6 +418,7 @@ public partial class DoseGeographyPanel : Control
         _statusRail.AddCard("risk", "PEAK RISK", "—", AshfallMetricCard.Criticality.Normal, 130);
         _statusRail.AddCard("hot", "HOT ZONES", "0", AshfallMetricCard.Criticality.Normal, 100);
         _statusRail.AddCard("watch", "WATCH LIST", "0", AshfallMetricCard.Criticality.Normal, 110);
+        _statusRail.AddCard("route", "ROUTE CHECK", "—", AshfallMetricCard.Criticality.Normal, 170);
         _statusRail.AddCard("events", "READINGS", "0", AshfallMetricCard.Criticality.Normal, 100);
 
         _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());

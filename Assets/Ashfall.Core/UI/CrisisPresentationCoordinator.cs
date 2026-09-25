@@ -79,6 +79,72 @@ namespace Ashfall.Core.UI
             }
         }
 
+        /// <summary>
+        /// Executes a crisis action by ID. Each action records its execution
+        /// in the crisis log and, for terminal actions, clears the crisis.
+        /// Actions that resolve the crisis (shed_load, service_filter,
+        /// quarantine, suppress_fire) mark the crisis as addressed.
+        /// </summary>
+        public void ExecuteAction(string actionId)
+        {
+            if (!_currentSnapshot.IsActive || string.IsNullOrWhiteSpace(actionId))
+                return;
+
+            switch (actionId)
+            {
+                case "shed_load":
+                    _currentSnapshot.Log.Add(new CrisisLogEntryView
+                    {
+                        Timestamp = "LOG",
+                        Message = "Non-critical load shed — breaker stability restored.",
+                        IsError = false
+                    });
+                    _currentSnapshot.IsActive = false;
+                    _currentSnapshot.Severity = CrisisSeverity.None;
+                    break;
+                case "service_filter":
+                    _currentSnapshot.Log.Add(new CrisisLogEntryView
+                    {
+                        Timestamp = "LOG",
+                        Message = "Filter stack serviced — intake restriction cleared.",
+                        IsError = false
+                    });
+                    _currentSnapshot.IsActive = false;
+                    _currentSnapshot.Severity = CrisisSeverity.None;
+                    break;
+                case "quarantine":
+                    _currentSnapshot.Log.Add(new CrisisLogEntryView
+                    {
+                        Timestamp = "LOG",
+                        Message = "Quarantine protocol engaged — affected sector isolated.",
+                        IsError = false
+                    });
+                    _currentSnapshot.IsActive = false;
+                    _currentSnapshot.Severity = CrisisSeverity.None;
+                    break;
+                case "suppress_fire":
+                    _currentSnapshot.Log.Add(new CrisisLogEntryView
+                    {
+                        Timestamp = "LOG",
+                        Message = "Fire suppression activated — thermal event contained.",
+                        IsError = false
+                    });
+                    _currentSnapshot.IsActive = false;
+                    _currentSnapshot.Severity = CrisisSeverity.None;
+                    break;
+                default:
+                    _currentSnapshot.Log.Add(new CrisisLogEntryView
+                    {
+                        Timestamp = "LOG",
+                        Message = $"Action '{actionId}' executed.",
+                        IsError = false
+                    });
+                    break;
+            }
+
+            OnCrisisChanged?.Invoke(_currentSnapshot);
+        }
+
         public void EvaluateCrisisState()
         {
             if (_customCrisis != null && _customCrisis.IsActive)

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
@@ -536,9 +537,12 @@ namespace AtomicWar.GodotApp.UI
             save.CustomMinimumSize = new Vector2(0, 34);
             content.AddChild(save);
 
-            var developer = MakeActionButton("DEV CONSOLE", () => OnDeveloperRequested?.Invoke());
-            developer.CustomMinimumSize = new Vector2(0, 34);
-            content.AddChild(developer);
+            if (OS.IsDebugBuild())
+            {
+                var developer = MakeActionButton("DEV CONSOLE", () => OnDeveloperRequested?.Invoke());
+                developer.CustomMinimumSize = new Vector2(0, 34);
+                content.AddChild(developer);
+            }
 
             // UI/UX audit 2026-09-25: 60+ nav entries exceed the fixed 1080px
             // canvas inside a plain VBox. Contain the rail in a vertical scroll
@@ -681,7 +685,7 @@ namespace AtomicWar.GodotApp.UI
             var content = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingLg);
             content.AddChild(AshfallUiHelpers.MakeMetadata("[J] JOURNAL"));
             content.AddChild(AshfallUiHelpers.MakeMetadata("[ESC] MENU"));
-            content.AddChild(AshfallUiHelpers.MakeMetadata("[F1] DEV CONSOLE"));
+            content.AddChild(AshfallUiHelpers.MakeMetadata("[F1] HELP / TUTORIAL"));
             var spacer = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill };
             content.AddChild(spacer);
             var status = AshfallUiHelpers.MakeMetadata("AUTOSAVE // LEDGER READY");
@@ -695,11 +699,42 @@ namespace AtomicWar.GodotApp.UI
             var button = MakeActionButton(text, () =>
             {
                 if (panelId == "overview") return;
+                SetSelectedRoute(panelId);
                 OnOpenPanelRequested?.Invoke(panelId);
             }, active);
             button.CustomMinimumSize = new Vector2(0, 30);
             button.Alignment = HorizontalAlignment.Left;
+            _navButtons[panelId] = button;
             parent.AddChild(button);
+        }
+
+        private string? _selectedRouteId;
+        private readonly Dictionary<string, Button> _navButtons = new();
+
+        /// <summary>
+        /// Highlights the active nav button and dims the rest. Called when a
+        /// route is opened so the player can see which panel is currently active.
+        /// </summary>
+        public void SetSelectedRoute(string? panelId)
+        {
+            _selectedRouteId = panelId;
+            foreach (var (id, btn) in _navButtons)
+            {
+                if (!GodotObject.IsInstanceValid(btn)) continue;
+                bool isSelected = id == panelId;
+                btn.AddThemeColorOverride("font_color",
+                    isSelected
+                        ? AshfallUiHelpers.ToColor(DesignTheme.Hot)
+                        : AshfallUiHelpers.ToColor(DesignTheme.Pale));
+            }
+        }
+
+        /// <summary>
+        /// Clears the selection highlight (called on ReturnToMenu / panel close).
+        /// </summary>
+        public void ClearSelection()
+        {
+            SetSelectedRoute(null);
         }
 
         private static HBoxContainer MakeGaugeRow(string label, out ProgressBar bar, out Label value, (float r, float g, float b, float a) fillColor)
@@ -752,6 +787,7 @@ namespace AtomicWar.GodotApp.UI
             button.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             button.AddThemeColorOverride("font_hover_color", AshfallUiHelpers.ToColor(DesignTheme.Hot));
             button.AddThemeColorOverride("font_pressed_color", AshfallUiHelpers.ToColor(DesignTheme.Hot));
+            AshfallFocusPolicy.ApplyFocusVisibleStyle(button);
             return button;
         }
 

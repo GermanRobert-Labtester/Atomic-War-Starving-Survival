@@ -60,57 +60,57 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("expansion_fallout_plume",
                 bindAction: () => _falloutPlumePanel.Bind(EnsureFallout()),
-                openAction: () => _falloutPlumePanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_falloutPlumePanel),
                 closeAction: () => ClosePanelAnimated(_falloutPlumePanel));
 
             PanelRegistry.ConfigureActions("desperation_crisis",
                 bindAction: () => _desperationCrisisPanel.Bind(EnsureDesperation()),
-                openAction: () => _desperationCrisisPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_desperationCrisisPanel),
                 closeAction: () => ClosePanelAnimated(_desperationCrisisPanel));
 
             PanelRegistry.ConfigureActions("mercenary_bounty_board",
                 bindAction: () => _mercenaryBountyBoardPanel.Bind(EnsureMercenary()),
-                openAction: () => { _mercenaryBountyBoardPanel.SetDisplayClock(_simDay); _mercenaryBountyBoardPanel.Visible = true; },
+                openAction: () => { _mercenaryBountyBoardPanel.SetDisplayClock(_simDay); ShowPanelLifecycle(_mercenaryBountyBoardPanel); },
                 closeAction: () => ClosePanelAnimated(_mercenaryBountyBoardPanel));
 
             PanelRegistry.ConfigureActions("archaeology_excavation",
                 bindAction: () => _archaeologyExcavationPanel.Bind(EnsureArchaeology()),
-                openAction: () => _archaeologyExcavationPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_archaeologyExcavationPanel),
                 closeAction: () => ClosePanelAnimated(_archaeologyExcavationPanel));
 
             PanelRegistry.ConfigureActions("amputation_surgery",
                 bindAction: () => _amputationTriagePanel.Bind(EnsureAmputation()),
-                openAction: () => _amputationTriagePanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_amputationTriagePanel),
                 closeAction: () => ClosePanelAnimated(_amputationTriagePanel));
 
             PanelRegistry.ConfigureActions("railway_logistics",
                 bindAction: () => _railwayTerminalPanel.Bind(EnsureRailway()),
-                openAction: () => _railwayTerminalPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_railwayTerminalPanel),
                 closeAction: () => ClosePanelAnimated(_railwayTerminalPanel));
 
             PanelRegistry.ConfigureActions("fungi_cultivation",
                 bindAction: () => _fungiCultivationBedPanel.Bind(EnsureFungi()),
-                openAction: () => _fungiCultivationBedPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_fungiCultivationBedPanel),
                 closeAction: () => ClosePanelAnimated(_fungiCultivationBedPanel));
 
             PanelRegistry.ConfigureActions("plastic_pyrolysis",
                 bindAction: () => _plasticPyrolysisPanel.Bind(EnsurePlasticPyrolysis()),
-                openAction: () => _plasticPyrolysisPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_plasticPyrolysisPanel),
                 closeAction: () => ClosePanelAnimated(_plasticPyrolysisPanel));
 
             PanelRegistry.ConfigureActions("cargo_airdrop",
                 bindAction: () => _cargoAirdropPanel.Bind(EnsureCargoAirdrop()),
-                openAction: () => _cargoAirdropPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_cargoAirdropPanel),
                 closeAction: () => ClosePanelAnimated(_cargoAirdropPanel));
 
             PanelRegistry.ConfigureActions("justice_tribunal",
                 bindAction: () => _justiceTribunalPanel.Bind(EnsureJustice()),
-                openAction: () => _justiceTribunalPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_justiceTribunalPanel),
                 closeAction: () => ClosePanelAnimated(_justiceTribunalPanel));
 
             PanelRegistry.ConfigureActions("chem_warfare_defense",
                 bindAction: () => _chemWarfareDefensePanel.Bind(EnsureChemWarfare()),
-                openAction: () => _chemWarfareDefensePanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_chemWarfareDefensePanel),
                 closeAction: () => ClosePanelAnimated(_chemWarfareDefensePanel));
 
             // Plans 146–149 industrial flagship consoles.
@@ -136,32 +136,32 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("comms_array_transceiver",
                 bindAction: () => _commsArrayTransceiverPanel.Bind(EnsureCommsArray()),
-                openAction: () => { _commsArrayTransceiverPanel.SetDisplayClock(_simDay, 12); _commsArrayTransceiverPanel.Visible = true; },
+                openAction: () => { _commsArrayTransceiverPanel.SetDisplayClock(_simDay, 12); ShowPanelLifecycle(_commsArrayTransceiverPanel); },
                 closeAction: () => ClosePanelAnimated(_commsArrayTransceiverPanel));
 
             PanelRegistry.ConfigureActions("ceremony_ritual",
                 bindAction: () => _ceremonyFestivalPanel.Bind(EnsureCeremonySystem()),
-                openAction: () => _ceremonyFestivalPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_ceremonyFestivalPanel),
                 closeAction: () => ClosePanelAnimated(_ceremonyFestivalPanel));
 
             PanelRegistry.ConfigureActions("robotics_assembly",
                 bindAction: () => _roboticsWorkshopPanel.Bind(EnsureRobotics()),
-                openAction: () => _roboticsWorkshopPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_roboticsWorkshopPanel),
                 closeAction: () => ClosePanelAnimated(_roboticsWorkshopPanel));
 
             PanelRegistry.ConfigureActions("bio_fermentation",
                 bindAction: () => _bioFermentationPanel.Bind(EnsureBioFermentation()),
-                openAction: () => _bioFermentationPanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_bioFermentationPanel),
                 closeAction: () => ClosePanelAnimated(_bioFermentationPanel));
 
             PanelRegistry.ConfigureActions("survivor_downtime",
                 bindAction: () => _survivorDowntimePanel.Bind(EnsureRecreation()),
-                openAction: () => _survivorDowntimePanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_survivorDowntimePanel),
                 closeAction: () => ClosePanelAnimated(_survivorDowntimePanel));
 
             PanelRegistry.ConfigureActions("winter_freeze",
                 bindAction: () => _winterFreezePanel.Bind(_yearOfAsh != null ? _yearOfAsh.DeepFreeze : null!),
-                openAction: () => _winterFreezePanel.Visible = true,
+                openAction: () => ShowPanelLifecycle(_winterFreezePanel),
                 closeAction: () => ClosePanelAnimated(_winterFreezePanel));
 
             PanelRegistry.ConfigureActions("afflictions",
@@ -351,7 +351,7 @@ namespace AtomicWar.GodotApp
                     SetupWorld();
                     SetupInventory();
                     int shelterDay = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
-                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog(), GetBunkerGraffitiCatalog(), shelterDay);
+                    _shelterPanel.Bind(_survivors, _world, _inventory, GetShelterRoomIdentityCatalog(), GetBunkerGraffitiCatalog(), shelterDay, _dutyRoster, _shelterAssignment);
                     _shelterPanel.SetMachineTellCatalog(GetMachineTellCatalog());
                 },
                 openAction: () => _shelterPanel.Open(),

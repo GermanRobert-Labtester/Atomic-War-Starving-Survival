@@ -94,9 +94,14 @@ namespace AtomicWar.GodotApp
         /// existing thermal retrofit engine + thermal save store; owns no new
         /// state.
         /// </summary>
-        public ActionResult RetrofitStormSealing(Ashfall.Core.Inventory.Inventory? inventory)
+        public ActionResult RetrofitStormSealing(Ashfall.Core.Inventory.Inventory? inventory, bool stormActive = false)
         {
             const string stormSealingId = "insul_storm_sealing";
+            if (stormActive)
+            {
+                LastEvent = "The wind would tear the felt out of your hands. Seal before the storm, not during it.";
+                return ActionResult.Blocked("storm_in_progress", "storm_sealing_blocked_by_weather");
+            }
             int applied = 0;
             int blocked = 0;
             string lastReason = string.Empty;

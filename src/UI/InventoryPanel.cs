@@ -106,7 +106,10 @@ namespace AtomicWar.GodotApp.UI
                 {
                     var salvageBtn = new Button { Text = "SALVAGE" };
                     salvageBtn.CustomMinimumSize = new Vector2(82, 24);
-                    salvageBtn.TooltipText = "Break one unit down into its parts at the bench.";
+                    string preview = _salvageHost.PreviewLine(itemId);
+                    salvageBtn.TooltipText = string.IsNullOrEmpty(preview)
+                        ? "Break one unit down into its parts at the bench."
+                        : preview;
                     salvageBtn.Pressed += () =>
                     {
                         var result = _salvageHost.TryTeardown(itemId, 1);
@@ -216,7 +219,8 @@ namespace AtomicWar.GodotApp.UI
                 "filter_equipment" => "equipment",
                 _ => "all",
             };
-            RefreshStorageList();
+            // UI/UX wave: filter swaps fade/rise instead of popping.
+            UiPanelFlow.TransitionSwap(_storageGrid, RefreshStorageList);
         }
 
         private void BuildContent()

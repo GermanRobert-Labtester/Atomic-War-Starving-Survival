@@ -33,6 +33,16 @@ namespace AtomicWar.GodotApp.UI
         public bool IsBound => _phase0 != null;
         public int RenderedConditionCount => _conditionList?.GetChildCount() ?? 0;
 
+        public override void _UnhandledInput(InputEvent @event)
+        {
+            if (!Visible) return;
+            if (AshfallInputActions.IsCloseOrCancel(@event))
+            {
+                OnClose?.Invoke();
+                GetViewport().SetInputAsHandled();
+            }
+        }
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);

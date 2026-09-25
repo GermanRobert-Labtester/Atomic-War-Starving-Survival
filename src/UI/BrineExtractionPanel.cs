@@ -194,11 +194,11 @@ namespace AtomicWar.GodotApp.UI
             if (_foundryHost == null)
             {
                 if (_veinLabel != null) _veinLabel.Text = "Vein: No salt mine session bound";
-                if (_openMineButton != null) _openMineButton.Disabled = true;
-                if (_tickButton != null) _tickButton.Disabled = true;
-                if (_deliverButton != null) _deliverButton.Disabled = true;
-                if (_replaceDrillButton != null) _replaceDrillButton.Disabled = true;
-                if (_repairPumpButton != null) _repairPumpButton.Disabled = true;
+                if (_openMineButton != null) { _openMineButton.Disabled = true; _openMineButton.TooltipText = "No salt mine session bound."; }
+                if (_tickButton != null) { _tickButton.Disabled = true; _tickButton.TooltipText = "No salt mine session bound."; }
+                if (_deliverButton != null) { _deliverButton.Disabled = true; _deliverButton.TooltipText = "No salt mine session bound."; }
+                if (_replaceDrillButton != null) { _replaceDrillButton.Disabled = true; _replaceDrillButton.TooltipText = "No salt mine session bound."; }
+                if (_repairPumpButton != null) { _repairPumpButton.Disabled = true; _repairPumpButton.TooltipText = "No salt mine session bound."; }
                 return;
             }
 

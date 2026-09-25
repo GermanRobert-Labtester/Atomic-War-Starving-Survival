@@ -108,5 +108,49 @@ namespace Ashfall.Core.Tests.DoorBarter
                 }
             }
         }
+
+        [Fact]
+        public void Shipped_Catalog_Carries_Counter_Offers_That_Pay_More_For_More()
+        {
+            // Alpha feature G2 — the counter-offer is a real risk/reward choice:
+            // pay a strictly larger requirement for a strictly larger grant on
+            // the same item, through the same consume/grant pipeline.
+            string dataDir;
+            if (!CatalogLocator.TryFindDataDirectory(Directory.GetCurrentDirectory(), out dataDir!))
+                dataDir = System.AppContext.BaseDirectory;
+            if (!CatalogLocator.TryFindDataDirectory(dataDir, out dataDir!))
+                throw new DirectoryNotFoundException("Assets/StreamingAssets/Data not found");
+
+            var loaderFiles = new FileSystemIO();
+            var loaderSerializer = new SystemTextJsonSerializer();
+            var entries = DoorEncounterCatalogLoader.Load(dataDir, loaderFiles, loaderSerializer);
+            int pairs = 0;
+
+            foreach (var encounter in entries)
+            {
+                var barters = encounter.choices
+                    .Where(c => !string.IsNullOrEmpty(c.grantItemId) && !string.IsNullOrEmpty(c.requiredItemId))
+                    .ToList();
+
+                foreach (var counter in barters)
+                {
+                    var baseChoice = barters.FirstOrDefault(c =>
+                        c != counter &&
+                        c.grantItemId == counter.grantItemId &&
+                        c.requiredItemId == counter.requiredItemId &&
+                        c.requiredItemQuantity < counter.requiredItemQuantity &&
+                        c.grantItemQuantity < counter.grantItemQuantity);
+                    if (baseChoice == null) continue;
+
+                    pairs++;
+                    Assert.True(counter.requiredItemQuantity > baseChoice.requiredItemQuantity);
+                    Assert.True(counter.grantItemQuantity > baseChoice.grantItemQuantity);
+                    Assert.True(counter.factionStandingDelta >= baseChoice.factionStandingDelta,
+                        $"{encounter.encounterId}/{counter.choiceId}: paying more must not reduce standing");
+                }
+            }
+
+            Assert.True(pairs >= 5, $"expected at least 5 counter-offer pairs, found {pairs}");
+        }
     }
 }

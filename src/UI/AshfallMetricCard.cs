@@ -89,8 +89,13 @@ public partial class AshfallMetricCard : PanelContainer
 
     public void SetValue(string value)
     {
-        _valueText = value ?? string.Empty;
+        string next = value ?? string.Empty;
+        bool changed = !string.Equals(next, _valueText, System.StringComparison.Ordinal);
+        _valueText = next;
         _valueLbl.Text = _valueText;
+        // UI/UX wave: value changes settle with a short pulse instead of
+        // snapping — covered here once for every status rail in the game.
+        if (changed) UiPanelFlow.Pulse(_valueLbl);
     }
 
     public void SetLabel(string label)
