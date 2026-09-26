@@ -275,7 +275,7 @@ namespace Ashfall.Core.Survivors
                 return (false, $"Unknown campaign template '{campaignTypeId}'", null);
 
             if (ActiveCampaignCount >= _state.MaxActiveCampaigns)
-                return (false, $"Maximum active campaigns ({_state.MaxActiveCampaigns}) reached", null);
+                return (false, $"Campaign capacity reached: Maximum active campaigns ({_state.MaxActiveCampaigns}) allowed", null);
 
             int calculatedSuccessChance = Math.Clamp(def.base_success_chance + (recruiterSkill / 4), 10, 95);
 
