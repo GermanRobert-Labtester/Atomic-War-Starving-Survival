@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "godot": {
+      "command": "/home/robertsrff/.local/bin/godot-mcp",
+      "args": []
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 210,
-  "headless_test_count": 208,
+  "total_tests": 219,
+  "headless_test_count": 217,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1988,6 +1988,45 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "shelter_museum_selftest",
+      "action": "ShelterMuseumSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--shelter-museum-selftest",
+      "aliases": [
+        "--museum-selftest"
+      ],
+      "description": "Plan 218: Shelter museum & historical archive, artifact accession, curator, exhibitions, once-per-day visits, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "shelter_museum_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "rationing_selftest",
+      "action": "RationingSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--rationing-selftest",
+      "aliases": [
+        "--ration-selftest"
+      ],
+      "description": "Plan 215: Crisis rationing overlay, authored protocol catalog, lawful protocol command, inventory authorization, restore parity, and panel readout",
+      "headless_compatible": true,
+      "expected_summary_id": "rationing_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "genealogy_selftest",
+      "action": "GenealogySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--genealogy-selftest",
+      "aliases": [
+        "--family-tree-selftest"
+      ],
+      "description": "Plan 217: Survivor genealogy, committed kinship facts, union/birth/adoption/death lineage records, restore parity, and read-only projection",
+      "headless_compatible": true,
+      "expected_summary_id": "genealogy_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "radiation_mutation_selftest",
       "action": "RadiationMutationSelfTest",
       "category": "Host Domains & Save Stores",
@@ -2147,6 +2186,88 @@
       "description": "Plan 204: Survivor recruitment & defection campaigns, templates, offers, admission, and save round-trip",
       "headless_compatible": true,
       "expected_summary_id": "recruitment_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "clothing_warmth_selftest",
+      "action": "ClothingWarmthSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--clothing-warmth-selftest",
+      "aliases": [
+        "--thermal-clothing-selftest",
+        "--insulation-layers-selftest"
+      ],
+      "description": "Plan 142: Clothing & warmth gear layers, condition wear, wetness penalties, and NeedsSystem cold-loss mitigation",
+      "headless_compatible": true,
+      "expected_summary_id": "clothing_warmth_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "emergency_alert_selftest",
+      "action": "EmergencyAlertSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--emergency-alert-selftest",
+      "aliases": [
+        "--alert-selftest",
+        "--emergency-warning-selftest"
+      ],
+      "description": "Plan 194: Emergency alert types, prioritization, response windows, evacuation protocols, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "emergency_alert_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "diplomacy_selftest",
+      "action": "DiplomacySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--diplomacy-selftest",
+      "aliases": [
+        "--treaty-selftest",
+        "--faction-diplomacy-selftest"
+      ],
+      "description": "Faction diplomacy: treaty templates, relations, active treaties, missions, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "diplomacy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "radiation_economy_selftest",
+      "action": "RadiationEconomySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--radiation-economy-selftest",
+      "aliases": [
+        "--contaminated-trade-selftest"
+      ],
+      "description": "Radiation economy bridge: contamination price multipliers, trade blocks, and evaluation ledger",
+      "headless_compatible": true,
+      "expected_summary_id": "radiation_economy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "radiation_social_selftest",
+      "action": "RadiationSocialSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--radiation-social-selftest",
+      "aliases": [
+        "--dose-bracket-selftest"
+      ],
+      "description": "Radiation social bridge: dose brackets, social penalties, discrimination incidents, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "radiation_social_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "trophy_selftest",
+      "action": "TrophySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--trophy-selftest",
+      "aliases": [
+        "--trophies-selftest",
+        "--trophy-mount-selftest"
+      ],
+      "description": "Trophy mount pipeline: catalog, exactly-once quarry awards, unlocked recipes, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "trophy_selftest",
       "timeout_seconds": 30
     },
     {

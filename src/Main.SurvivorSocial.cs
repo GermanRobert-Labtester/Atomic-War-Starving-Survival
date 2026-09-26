@@ -41,11 +41,14 @@ namespace AtomicWar.GodotApp
                 foreach (var entry in _survivors.Roster.Roster)
                 {
                     if (entry == null || !entry.isAlive) continue;
-                    var def = _survivors.Roster.FindDefinition(entry.definitionId);
                     var fields = _enrichment?.GetSurvivorFields(entry.survivorId);
-                    string belief = !string.IsNullOrEmpty(fields?.belief_profile_id)
-                        ? fields.belief_profile_id
-                        : InferBeliefProfile(def);
+                    // C2[17] — authored survivor identity is the sole belief
+                    // source: runtime reads the authored field or registers
+                    // nothing. The trait-keyword shadow inference is retired
+                    // (Plan 40 authored profiles + survivor_fields data own
+                    // identity; a definition without an authored belief field
+                    // truthfully has no registered belief).
+                    string belief = fields?.belief_profile_id ?? string.Empty;
                     if (!string.IsNullOrEmpty(belief))
                         _survivorSocial.RegisterBelief(entry.survivorId, belief);
                 }
@@ -75,31 +78,6 @@ namespace AtomicWar.GodotApp
 
             // Push the read model to the survivor-relations panel.
             RefreshSurvivorSocialReadModel();
-        }
-
-        private static string InferBeliefProfile(Ashfall.Core.Survivors.SurvivorDefinition? def)
-        {
-            if (def == null || def.traitIds == null) return string.Empty;
-            for (int i = 0; i < def.traitIds.Count; i++)
-            {
-                string t = def.traitIds[i];
-                if (string.IsNullOrEmpty(t)) continue;
-                if (t.Contains("military", StringComparison.OrdinalIgnoreCase))
-                    return "military_discipline";
-                if (t.Contains("religious", StringComparison.OrdinalIgnoreCase) || t.Contains("faith", StringComparison.OrdinalIgnoreCase))
-                    return "religious_faith";
-                if (t.Contains("rationalist", StringComparison.OrdinalIgnoreCase) || t.Contains("scientist", StringComparison.OrdinalIgnoreCase))
-                    return "atheist_rationalist";
-                if (t.Contains("collectivist", StringComparison.OrdinalIgnoreCase) || t.Contains("communal", StringComparison.OrdinalIgnoreCase))
-                    return "collectivist_solidarity";
-                if (t.Contains("individualist", StringComparison.OrdinalIgnoreCase) || t.Contains("pragmatic", StringComparison.OrdinalIgnoreCase))
-                    return "pragmatic_individualism";
-                if (t.Contains("pacifist", StringComparison.OrdinalIgnoreCase))
-                    return "pacifist";
-                if (t.Contains("superstitious", StringComparison.OrdinalIgnoreCase) || t.Contains("traditional", StringComparison.OrdinalIgnoreCase))
-                    return "superstitious_traditional";
-            }
-            return string.Empty;
         }
 
         private void SaveSurvivorSocial()

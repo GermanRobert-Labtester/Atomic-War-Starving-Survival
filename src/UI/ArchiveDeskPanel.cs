@@ -31,6 +31,16 @@ namespace AtomicWar.GodotApp.UI
 
         public bool IsBound => _host != null;
 
+        // Plan 218 — museum projection: read-only inspection plus ONE explicit
+        // once-per-day visit command. A panel refresh never increments visitors.
+        public Func<ShelterMuseumSnapshot?>? MuseumProvider { get; set; }
+        public Func<IReadOnlyList<(string Id, string Name)>>? MuseumRosterProvider { get; set; }
+        public Func<string, string>? MuseumVisitCommand { get; set; }
+
+        private VBoxContainer _museumList = null!;
+        private OptionButton _museumVisitorChoice = null!;
+        private Button _museumVisitButton = null!;
+
         public void Bind(ArchiveDeskHostSession session)
         {
             if (_host != null)
@@ -78,6 +88,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("completed", "ARCHIVED DOCS", "0", AshfallMetricCard.Criticality.Normal, minWidth: 130);
             _statusRail.AddCard("paper", "PULP PAPER", "12 SHEETS", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("status", "ARCHIVIST", "READY", AshfallMetricCard.Criticality.Normal, minWidth: 120);
+            _statusRail.AddCard("museum", "MUSEUM", "0 ARTIFACTS", AshfallMetricCard.Criticality.Normal, minWidth: 130);
 
             _shell.AttachHeaderCloseButton("CLOSE [Esc]", () =>
             {
@@ -145,6 +156,22 @@ namespace AtomicWar.GodotApp.UI
             rightVbox.AddChild(rightScroll);
 
             rightVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            rightVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("SHELTER MUSEUM & HISTORICAL ARCHIVE"));
+            var museumRow = new HBoxContainer();
+            museumRow.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            _museumVisitorChoice = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _museumVisitorChoice.TooltipText = "Who visits the museum today (once per day).";
+            museumRow.AddChild(_museumVisitorChoice);
+            _museumVisitButton = new Button { Text = "RECORD VISIT" };
+            _museumVisitButton.TooltipText = "Explicit once-per-day visit; morale is applied through the canonical needs owner.";
+            _museumVisitButton.Pressed += OnMuseumVisitPressed;
+            museumRow.AddChild(_museumVisitButton);
+            rightVbox.AddChild(museumRow);
+            _museumList = new VBoxContainer();
+            _museumList.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+            rightVbox.AddChild(_museumList);
+
+            rightVbox.AddChild(AshfallUiHelpers.MakeSeparator());
             _eventLogLabel = AshfallUiHelpers.MakeMetadata("No recent archival events.");
             _eventLogLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             rightVbox.AddChild(_eventLogLabel);
@@ -152,6 +179,25 @@ namespace AtomicWar.GodotApp.UI
             gridRow.AddChild(rightPanel);
 
             _shell.SetContent(gridRow);
+            RefreshView();
+        }
+
+        private void OnMuseumVisitPressed()
+        {
+            if (MuseumVisitCommand == null || _museumVisitorChoice.Selected < 0
+                || _museumVisitorChoice.ItemCount == 0)
+            {
+                return;
+            }
+            var survivorId = _museumVisitorChoice.GetItemMetadata(_museumVisitorChoice.Selected).AsString();
+            if (string.IsNullOrEmpty(survivorId)) return;
+            // The command returns the visitor feedback line; the museum session
+            // applies the morale delta exactly once and flags the save dirty.
+            string feedback = MuseumVisitCommand(survivorId);
+            if (!string.IsNullOrEmpty(feedback) && _eventLogLabel != null)
+            {
+                _eventLogLabel.Text = feedback;
+            }
             RefreshView();
         }
 
@@ -279,6 +325,69 @@ namespace AtomicWar.GodotApp.UI
                 {
                     _archiveLogContainer.AddChild(AshfallUiHelpers.MakeMono($"[UNLOCKED] {evId}"));
                 }
+            }
+
+            // Plan 218 — museum projection (read-only; visit only via the button).
+            RenderMuseumSection();
+        }
+
+        private void RenderMuseumSection()
+        {
+            AshfallUiHelpers.EmptyChildren(_museumList);
+
+            var roster = MuseumRosterProvider?.Invoke() ?? Array.Empty<(string Id, string Name)>();
+            var previous = _museumVisitorChoice.Selected >= 0
+                ? _museumVisitorChoice.GetItemMetadata(_museumVisitorChoice.Selected).AsString()
+                : null;
+            _museumVisitorChoice.Clear();
+            foreach (var (id, name) in roster)
+            {
+                _museumVisitorChoice.AddItem(string.IsNullOrEmpty(name) ? id : name);
+                _museumVisitorChoice.SetItemMetadata(_museumVisitorChoice.ItemCount - 1, id);
+            }
+            _museumVisitorChoice.Selected = roster.Count > 0 ? 0 : -1;
+            if (!string.IsNullOrEmpty(previous))
+            {
+                for (int i = 0; i < roster.Count; i++)
+                {
+                    if (roster[i].Id == previous)
+                    {
+                        _museumVisitorChoice.Select(i);
+                        break;
+                    }
+                }
+            }
+            _museumVisitButton.Disabled = MuseumVisitCommand == null || roster.Count == 0;
+
+            var museum = MuseumProvider?.Invoke();
+            if (museum == null)
+            {
+                _museumList.AddChild(AshfallUiHelpers.MakeMetadata("Museum session unavailable."));
+                _statusRail?.Set("museum", "OFFLINE", AshfallMetricCard.Criticality.Caution);
+                return;
+            }
+
+            _statusRail?.Set("museum", $"{museum.ArtifactCount} ARTIFACTS", AshfallMetricCard.Criticality.Normal);
+            _museumList.AddChild(AshfallUiHelpers.MakeDataRow("Archive", museum.MuseumName, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+            _museumList.AddChild(AshfallUiHelpers.MakeDataRow("Curator", string.IsNullOrEmpty(museum.CuratorId) ? "None appointed" : museum.CuratorId, AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+            _museumList.AddChild(AshfallUiHelpers.MakeDataRow("Collection", $"{museum.DisplayedArtifactCount}/{museum.ArtifactCount} on display · significance {museum.SignificanceScore:0.0}", AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+            _museumList.AddChild(AshfallUiHelpers.MakeDataRow("Visitors", $"{museum.TotalVisitors} all-time", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+
+            if (museum.Exhibitions.Count == 0)
+            {
+                _museumList.AddChild(AshfallUiHelpers.MakeMetadata("No active exhibition."));
+            }
+            else
+            {
+                foreach (var (_, name, theme, visitors, _) in museum.Exhibitions)
+                {
+                    _museumList.AddChild(AshfallUiHelpers.MakeMono($"[EXHIBIT] {name} ({theme}) — {visitors} visitors"));
+                }
+            }
+
+            foreach (var (_, _, description) in museum.RecentEvents)
+            {
+                _museumList.AddChild(AshfallUiHelpers.MakeMetadata(description));
             }
         }
 

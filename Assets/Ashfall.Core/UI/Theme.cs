@@ -72,9 +72,19 @@ namespace Ashfall.Core.UI
         public const string ExclusiveHex = "#C4785A";
         public static readonly (float r, float g, float b, float a) Exclusive = (0.769f, 0.471f, 0.353f, 1f);
 
-        /// <summary>Danger / critical — restrained red. #e63333.</summary>
-        public const string CriticalHex = "#E63333";
-        public static readonly (float r, float g, float b, float a) Critical = (0.902f, 0.200f, 0.200f, 1f);
+        /// <summary>
+        /// Danger / critical — restrained red. #FF5252.
+        /// Contrast fix 2026-09-26 (UI accessibility audit): the previous #E63333
+        /// measured 4.59:1 on Ink but only 4.41:1 on Surface, 4.11:1 on
+        /// SurfaceCard, 3.72:1 on HoverBg, and 3.63:1 on SelectedBg — below the
+        /// WCAG AA body-text floor (4.5:1) on every surface except Ink, and the
+        /// token is consumed as a text <c>font_color</c> across dozens of panels.
+        /// #FF5252 restores AA on every consumed opaque surface (Ink 6.18,
+        /// Surface 5.93, SurfaceCard 5.54, HoverBg 5.02, SelectedBg 4.89) while
+        /// keeping the alarm hue (~0°) and remaining distinct from Warm/Hot.
+        /// </summary>
+        public const string CriticalHex = "#FF5252";
+        public static readonly (float r, float g, float b, float a) Critical = (1.000f, 0.322f, 0.322f, 1f);
 
         // ── Semantic Design Tokens ───────────────────────────────────────
         public const string SurfaceHex = "#0E1114"; // Deep Black (matches tuple)

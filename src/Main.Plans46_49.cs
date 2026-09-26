@@ -379,6 +379,10 @@ namespace AtomicWar.GodotApp
             // second day owner or wall-clock timer is introduced.
             TickInternalCommunication(day);
 
+            // Plan 218 — daily museum exhibition expiry rides the same existing
+            // world/day orchestration seam; no second day owner is introduced.
+            TickShelterMuseum(day);
+
             if (_shelterWorkshop != null)
             {
                 _shelterWorkshop.TickDay(day);

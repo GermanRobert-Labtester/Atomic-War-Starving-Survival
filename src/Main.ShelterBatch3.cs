@@ -239,6 +239,27 @@ namespace AtomicWar.GodotApp
                 RemoveChild(_archiveDeskPanel);
             _archiveDeskPanel = new ArchiveDeskPanel();
             _archiveDeskPanel.Bind(_archiveDesk);
+            // Plan 218 — museum projection through the existing archive desk
+            // surface: read-only inspection plus one explicit visit command.
+            _archiveDeskPanel.MuseumProvider = () => GetShelterMuseumSnapshot();
+            _archiveDeskPanel.MuseumRosterProvider = () =>
+            {
+                var list = new List<(string Id, string Name)>();
+                var rosterState = _survivors?.RosterState;
+                if (rosterState != null)
+                {
+                    foreach (var s in rosterState)
+                    {
+                        if (s != null && s.IsAliveState)
+                        {
+                            var def = _survivors?.Roster?.FindDefinition(s.Id);
+                            list.Add((s.Id, string.IsNullOrEmpty(def?.displayName) ? s.Id : def!.displayName));
+                        }
+                    }
+                }
+                return list;
+            };
+            _archiveDeskPanel.MuseumVisitCommand = id => VisitShelterMuseum(id);
             _archiveDeskPanel.Visible = false;
             AddChild(_archiveDeskPanel);
         }

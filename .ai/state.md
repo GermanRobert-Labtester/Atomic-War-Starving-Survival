@@ -1,5 +1,45 @@
 # Current Task State
 
+## UI-AUDIT-PRECISION-REPAIR — 2026-09-26 (user-authorized)
+
+- **Directive:** user "Please do a UI audit with immediate precision and functionality repair!" Plan: `.ai/plans/ui-audit-precision-repair-2026-09-26.md` (STATUS: APPROVED BY USER).
+- **Audit:** WCAG contrast sweep of all `Theme` text tokens against the five consumed opaque surfaces; confirmed the 2026-09-05 audit's open HIGH finding that `Theme.Critical` (`#E63333`) failed AA body-text contrast on Surface (4.41), SurfaceCard (4.11), HoverBg (3.72), SelectedBg (3.63) while being consumed as `font_color` in dozens of panels.
+- **Repair:** `Assets/Ashfall.Core/UI/Theme.cs` — `CriticalHex`/`Critical` → `#FF5252` / `(1.000, 0.322, 0.322)`; AA now holds on all five surfaces (min 4.89). Ratchet added in `Ashfall.Core.Tests/UI/ThemeSemanticTokensTests.cs`; `ColorblindColorMapperTests` Critical pin moved to the sealed value (mapper contract unchanged). Report addendum: `docs/ui/ACCESSIBILITY_REPORT.md`.
+- **Verify:** `ThemeSemanticTokensTests` 5/5; `AccessibilitySourceAuditTests` 5/5; `ColorblindColorMapperTests` 14/14.
+- **Blocker (not mine):** host build red from concurrent untracked Plan 217 (`src/Host/HostCli.Genealogy.cs`); not touched.
+- **Open ranked UI findings for a follow-up package:** DataGrid keyboard row selection; dashboard nav-rail overflow; overlay-detection list disagreement (`Main.GameFlow.AnyOverlayPanelOpen` vs `Main.PanelLifecycle.CloseAllOverlayPanels`); hex/tuple drift; 11px label floor.
+- **Testing steps used:** 3 / 15. **No commit** (shared dirty worktree).
+
+## FOUR-TRACK-ORPHAN-BATCH — IN PROGRESS (user-authorized 2026-09-26, no commit)
+
+- **Directive:** user "Start integrating 4 plans concurrently without testing anything excessively and don't commit".
+- **Tracks:** (1) Diplomacy `FactionDiplomacySystem`; (2) Radiation economy `RadiationEconomyBridge`; (3) Radiation social `RadiationSocialBridge`; (4) Trophies `TrophySystem` — all committed Core host-orphans with authored catalogs.
+- **Delivered:** Core save sections `diplomacy`/`radiation_economy`/`radiation_social`/`trophies` + filenames; CLI actions/descriptors (`DiplomacySelfTest`, `RadiationEconomySelfTest`, `RadiationSocialSelfTest`, `TrophySelfTest`); `diplomacy_ticked` heartbeat; 4 host sessions + stores; 4 Main partials; 4 probes; wiring in HostCli/Application/SaveOrchestrator/Lifecycle/CampaignOwners (`DiplomacyDayOwner` phase 5); event-matrix row.
+- **Verified:** `Ashfall.Core` builds 0 errors; host build 0 errors / 0 warnings (the concurrent `HostCli.Genealogy.cs` error cleared itself). Probes: diplomacy 8/8, radiation-economy 7/7, radiation-social 7/7, trophy 7/7 (29/29). Gates: HostCliActionParity 4/4, DayEventParity 2/2, save pin 1670/1670 (278 sections). Generated in sync: save-store matrix 280, CLI catalog 283, selftest manifest 219.
+- **Open (concurrent, not this batch):** architecture-map `--check` fails only on the concurrent `genealogy` save section missing from ARCHITECTURE_GRAPH; my four nodes are recognized. Save pin reconciled to 278 (includes the concurrent `genealogy` section).
+- **No commit** per directive. Plan: `.ai/plans/four-track-orphan-batch-2026-09-26.md` (STATUS: APPROVED BY USER). Claim: `claim-four-track-orphan-batch-2026-09-26`.
+
+## UNBLOCK-PLAN194-EMERGENCY-ALERT — FULLY INTEGRATED & SEALED — 2026-09-26 (user-authorized)
+
+- **Directive:** user "instead of committing anything move on to the next plan!". Chose Plan 194 (Emergency Alert & Warning, DEC-184) — a committed Core system with 0 `src/` references.
+- **Premise:** `EmergencyAlertSystem` had 0 host references; `emergency_alerts.json` (8 types) unconsumed; no save section/probe/UI/day owner. Radio `BroadcastGenre.EmergencyAlert` and `EmergencyResponseHud` are unrelated; not reused.
+- **Delivered:** Core `emergency_alert` save section + filename, `emergency_alert_ticked` heartbeat, `EmergencyAlertSelfTest` enum/descriptor; host `EmergencyAlertHostSession`+`EmergencyAlertSaveStore` with authored-catalog loader, `Main.EmergencyAlerts.cs` (raise/ack/resolve/protocols/day tick/readout), phase-5 `EmergencyAlertDayOwner`, 12-check `HostCli.EmergencyAlert.cs`, read-only dashboard alert card (`GameDashboardPanel` + `Main.GameFlow.cs`), lifecycle/SaveOrchestrator/Application/HostCli wiring, architecture-map node.
+- **Gate repair:** save section pin reconciled 272→273.
+- **Verification:** host build 0 errors / package files 0 warnings; `--emergency-alert-selftest` 12/12; `Plan194EmergencyAlertHostIntegrationTests` 8/8; Save 1640/1640 (273 sections); `SaveSectionRegistryTests` 5/5; `HostCliActionParityGateTests` 4/4; `HostCliHelpContractTests` 2/2; `DayEventParitySourceGateTests` 2/2; `MainTriadDriftGateTests` 7/7; generators `--check` OK (arch 273, save 276, selftest 214, CLI 278, catalog 711, plan audit 71/71).
+- **Row-level warnings note:** three pre-existing `CS0162`/`CS8602` warnings remain in concurrent packages' files (`HostCli.ShelterMuseum.cs`, `HostCli.SurvivorRoles.cs`, `ShelterThermalPanel.cs`); none are in Plan 194 files.
+- **Seal/archival:** `.ai/plans/integrated/emergency/INTEGRATED_PLAN_194_EMERGENCY_ALERT.md` and `docs/plans/integrated/emergency/INTEGRATED_PLAN_194_EMERGENCY_ALERT.md`, both headed FULLY INTEGRATED (×3). DEC-360 signed. Claim row added; INTEGRATION_PLANS updated. **No commit** — active concurrent `claim-plan215`/`claim-plan218` packages share the same composition seams and generated artifacts (user directed no commit).
+- **Testing steps used:** 12 / 15. **Iterations:** ~55 / 100.
+
+## UNBLOCK-PLAN142-CLOTHING-WARMTH — FULLY INTEGRATED & SEALED — 2026-09-26 (user-authorized)
+
+- **Directive:** user "search the next plan to integrate fully not partially!" then "Yes integrate that fully!". Chose Plan 142 (Clothing & Warmth, DEC-109).
+- **Premise:** `ClothingWarmthSystem` had 0 `src/` refs; `NeedsSystem.ClothingWarmthReductionProvider` (NeedsSystem.cs:97) was assigned only by the Core test, so equipped clothing was inert in the live game; no save section/probe/UI. The 8 profile item ids are absent from `items.json`, so no catalog was invented (DEC-109 internal table stays the data authority).
+- **Delivered:** Core `ClothingWarmthCensus`+`GetCensus`, `clothing_warmth` save section, `clothing_warmth_ticked` heartbeat, `ClothingWarmthSelfTest` enum/descriptor; host `ClothingWarmthHostSession`+`ClothingWarmthSaveStore`, `Main.ClothingWarmth.cs` (provider bound to `CalculateColdLossReduction`), phase-5 `ClothingWarmthDayOwner` (weather wetness + drying + wear), 12-check `HostCli.ClothingWarmth.cs`, survivor-detail `Clothing:` row; lifecycle/SaveOrchestrator wiring; architecture-map node.
+- **Gate repairs (pre-existing red, documented):** `EVENT_SEMANTIC_PARITY_MATRIX.md` stale from Plan 204 (`recruitment_ticked` missing); `ComprehensiveSaveStoreCorruptionAndMigrationTests` section pin stale → measured 272 (both `All.Count` and `SectionKeys.Count`).
+- **Verification:** host/tests builds 0/0; `--clothing-warmth-selftest` 12/12; `Plan142ClothingWarmthHostIntegrationTests` 7/7; `ClothingWarmthSystemTests` 7/7; Save 1634/1634; SaveSectionRegistry 5/5; HostCliActionParity 4/4; HostCliHelp 2/2; DayEventParity 2/2; MainTriadDrift 7/7; generators `--check` OK (arch 272, save 274, selftest 212, CLI 276/427, catalog 711, plan audit 71/71).
+- **Seal/archival:** `.ai/plans/integrated/inventory/INTEGRATED_PLAN_142_CLOTHING_WARMTH.md` and `docs/plans/integrated/inventory/INTEGRATED_PLAN_142_CLOTHING_WARMTH.md`, both headed FULLY INTEGRATED (×3). DEC-359 signed. Claim row added to WORKTREE_OWNERSHIP; INTEGRATION_PLANS updated. No partial residue.
+- **Testing steps used:** 12 / 15. **Iterations:** ~30 / 100.
+
 ## PLAN-195-SURVIVOR-SPECIALIZATION-ROLES — FULLY INTEGRATED & SEALED — 2026-09-26 (continuation)
 
 - **Directive:** user "find a plan and start integrating it fully … don't leave the plan as a partial". Plan 195 was the in-flight uncommitted package (claim `claim-plan195-survivor-roles-integration-2026-09-26`); the prior session had landed the code but left the `.ai` execution plan unsealed.
@@ -1531,3 +1571,32 @@
   3. Determinism & RNG (seeded LCG PRNG, zero `System.Random`)
   4. Save ownership (`SaveStoreHub` section handlers with FNV-1a checksums)
   5. Single source of authority (one owner per concern, zero parallel registries)
+
+## PLAN-195-SURVIVOR-SPECIALIZATION-ROLES — 2026-09-26 (user-authorized; COMPLETE, committed in 6e5ce4f2b)
+
+- **Claim:** `claim-plan195-survivor-roles-integration-2026-09-26`; plan `.ai/plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md` (STATUS: APPROVED BY USER; content authored this session, archived by the concurrent seal commit).
+- **Selection evidence:** the audited 2026-09-19 queue is fully drained (CF-P1/P5/P6/P28, Plans 37/48, CF-XP01 all sealed; E1/Plan 53 ACTIVE — not raced). Plan 195 chosen from the 2026-09-24 closeout custody table + PFGL 2026-09-25 execution revision as the genuine remaining Core-only island (`SurvivorRoleSystem` had zero `src/` references).
+- **Outcome:** full host integration — `survivor_roles` checksummed save section, `SurvivorRoleHostSession`, discipline-gated assignment (`required_discipline`/`required_discipline_level` schema v2 gates; eligibility read from the SkillProgression owner — authored `required_skills` keys proven absent from `skills.json`), earned role practice from the named producer `SkillProgressionSystem.OnXpGained` (fixed +10/fact, exactly-once, handler unsubscribed on reset), read-only `Specialization` row in `SurvivorDetailPanel`, `--survivor-roles-selftest` 12/12 headless. DEC-185 boundaries respected; `TriggerAutoAction` exposed nowhere as operational.
+- **Verification:** Plan195 suites 13/13; adjacent gates 44/44 (save registry, CLI parity, help contract, triad drift, Plan204, Plan216); data integrity 427/427 (0 errors); player-panels uitest 21/21; content-utilization CI+deep-chain PASS; builds 0 errors / 0 new warnings; generators --check OK (architecture 270, save-store 272, CLI 274, selftest manifest 210, plan audit 71/71).
+- **Gate repairs (pre-existing red at HEAD from the recruitment lane, documented in claim):** `Plan204RecruitmentIntegrationTests` stale `.Status` → `IsRecruited`; undocumented `--survivor-recruitment-selftest` help line in `HostCli.PrintHelp`.
+- **Known handed-off residue:** `generate-docs-index.py --check` form times out (>280 s) on this corpus; index itself was regenerated to the latest snapshot (5446 docs, new integrated path indexed, old path 0 hits) — same disposition as prior ledger rows. `survivor_roles.json` shares the pre-existing UNRESOLVED class in `artifacts/content-utilization.json` common to all host-loaded catalogs (exercise, skill_certifications) — not a regression.
+- **Note:** concurrent agent (Cline) committed this session's in-flight work as `6e5ce4f2b` with its own seal message; all file content verified intact (archived plan 256,131 bytes; ledger rows present).
+- **Testing steps used:** 8 / 15. **Iterations:** ~70 / 100.
+
+## PLAN-218-SHELTER-MUSEUM-HISTORICAL-ARCHIVE — 2026-09-26 (user-authorized; COMPLETE)
+
+- **Claim:** `claim-plan218-shelter-museum-integration-2026-09-26`; plan `.ai/plans/plan218-shelter-museum-integration.md` (STATUS: APPROVED BY USER); plan archived to `docs/plans/integrated/culture/INTEGRATED_PLAN_218_SHELTER_MUSEUM_HISTORICAL_ARCHIVE.md` (header FULLY INTEGRATED ×3).
+- **Selection evidence:** remaining census candidates re-verified in live source — Plans 188/176/199 already hosted (`SurvivorRoutineHostSession` / `AgingHostSession` / `HumanMigrationHostSession`); 191 retired (C3); 193/197 decision-gated; 190 needs an item-instance identity architecture first. Plan 218 = strongest full-integration target (DEC-203 signed, Core 7/7, unhosted, PFGL revision 2026-09-25).
+- **Outcome:** full host integration — own `shelter_museum` checksummed section, `ShelterMuseumHostSession`, additive once-per-day `TryVisitMuseum` ledger (old-save neutral), morale exactly-once via `_survivors.Needs.Modify(NeedKind.Morale)`, daily exhibition expiry through the existing `TickPlans46_49` seam (no C1-owned `CampaignOwners.cs` edit), read-only museum projection + explicit RECORD VISIT on `archive_desk` (`ArchiveDeskPanel` + 3 additive bind lines in `Main.ShelterBatch3.cs`), `--shelter-museum-selftest` 12/12 headless. No donation from physical inventory (custody bridge unsigned) — gated by tests.
+- **Verification:** Plan218 suites 13/13; adjacent gates 51/51; data integrity 427/427 (0 errors); player-panels uitest 21/21 (Errors: 0); builds 0 errors; save-store matrix 274 / CLI catalog 276 / selftest manifest 212 / docs index 5446 all current.
+- **Concurrent lane noted:** Plan 142 (Clothing Warmth) is actively in flight by another agent (untracked `src/Main.ClothingWarmth.cs` etc.); its in-flight removal of `ClothingWarmthCensus` transiently fails the architecture-map `clothing_warmth` node — deliberately untouched per Rule 6; my `shelter_museum` node itself validates clean.
+- **Testing steps used:** 7 / 15. **Iterations:** ~66 / 100.
+
+## PLAN-215-SHELTER-RESOURCE-RATIONING-CRISIS-MANAGEMENT (overlay completion) — 2026-09-26 (user-authorized; COMPLETE)
+
+- **Claim:** `claim-plan215-rationing-overlay-completion-2026-09-26`; plan `.ai/plans/plan215-rationing-overlay-completion.md` (STATUS: APPROVED BY USER); plan archived to `docs/plans/integrated/economy/INTEGRATED_PLAN_215_SHELTER_RESOURCE_RATIONING_CRISIS_MANAGEMENT.md` (header FULLY INTEGRATED ×3).
+- **Selection evidence:** census re-drain proved Plans 42/46/135/136/137/140/141/145/149/159/165/166/181/151/155 already integrated (stale rows); Plan 217 rejected for a live `RomanceFamilySystem` family-unit collision; remaining orphans decision-blocked (Barter/ItemLore/Chronic/Diplomacy/Emergency) or retired (`ShelterPrisonerSystem`). Plan 215 revision named the exact missing arrows.
+- **Outcome:** full overlay completion — strict snake_case `RationingProtocolCatalogLoader` feeds the previously orphaned `rationing_protocols.json` into `ResourceRationingSystem` BEFORE the saved `ActiveProtocolId` restores; duplicate `_economy.Market.RestoreState(save)` in `Main.SetupEconomy` removed; `ApplyRationingProtocol` host forwarder + `ApplyRationingProtocolCommand` player route (unknown ids refused without mutation); `EconomyMarketPanel` RATIONING POLICY readout (policy vs stock distinction, one explicit APPLY button); `--rationing-selftest` 12-check probe in both registries; no new save section (nested `MarketState.rationing` per DEC-200); no automatic crisis fabrication.
+- **Verification:** Plan215 overlay 8/8 (22/22 with pre-existing suites); adjacent gates 142/142; `--rationing-selftest` 12/12 headless; data integrity 427/427 (0 errors); player-panels uitest PASS; 7-day smoke PASS; builds 0 errors; architecture map 272 (clothing_warmth transient cleared by the Plan 142 lane), CLI catalog 277, selftest manifest 213, docs index 5447 all current.
+- **Concurrent-lane note:** docs-index first run hit a race on a Plan 142 doc mid-move; clean on retry. Plan 142 agent's `CampaignOwners.cs`/`DayEventVocabulary.cs` edits deliberately untouched.
+- **Testing steps used:** 8 / 15. **Iterations:** ~58 / 100.

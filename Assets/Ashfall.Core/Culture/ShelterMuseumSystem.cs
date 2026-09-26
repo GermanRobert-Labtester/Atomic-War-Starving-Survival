@@ -131,6 +131,13 @@ namespace Ashfall.Core.Culture
         public List<MuseumArtifact> Artifacts { get; set; } = new List<MuseumArtifact>();
         public List<Exhibition> Exhibitions { get; set; } = new List<Exhibition>();
         public List<MuseumEvent> Events { get; set; } = new List<MuseumEvent>();
+
+        /// <summary>
+        /// Plan 218 host integration — once-per-day visit ledger keyed by
+        /// survivor id (value = campaign day of the last recorded visit).
+        /// Additive; old saves restore to an empty ledger (no visits recorded).
+        /// </summary>
+        public Dictionary<string, int> VisitorLastDay { get; set; } = new Dictionary<string, int>();
     }
 
     /// <summary>
@@ -159,6 +166,9 @@ namespace Ashfall.Core.Culture
         public int ActiveExhibitionCount => _state.Exhibitions.Count(e => e.Status == ExhibitionStatus.Active);
         public int TotalVisitors => _state.TotalVisitors;
         public string CuratorId => _state.CuratorId;
+
+        /// <summary>Plan 218 host integration — current museum display name.</summary>
+        public string MuseumName => _state.MuseumName;
 
         public ShelterMuseumSystem(ShelterMuseumState? state = null)
         {
@@ -196,6 +206,9 @@ namespace Ashfall.Core.Culture
             if (string.IsNullOrWhiteSpace(templateId)) return null;
             return _templates.TryGetValue(templateId, out var t) ? t : null;
         }
+
+        /// <summary>Plan 218 host integration — read-only view of all authored artifact templates.</summary>
+        public IReadOnlyCollection<MuseumArtifactTemplate> GetAllTemplates() => _templates.Values;
 
         public void AppointCurator(string survivorId, int currentDay)
         {
@@ -351,6 +364,29 @@ namespace Ashfall.Core.Culture
             return totalMorale;
         }
 
+        /// <summary>
+        /// Plan 218 host-path visit command: explicit, at most one recorded
+        /// visit per survivor per campaign day. Refusal returns false with a
+        /// zero morale delta and mutates nothing (a read-only refresh can
+        /// never increment visitors). The returned morale is applied by the
+        /// host through the canonical Needs owner exactly once.
+        /// </summary>
+        public bool TryVisitMuseum(string visitorId, int currentDay, out float morale)
+        {
+            morale = 0f;
+            if (string.IsNullOrWhiteSpace(visitorId)) return false;
+
+            if (_state.VisitorLastDay.TryGetValue(visitorId, out int lastDay)
+                && lastDay == currentDay)
+            {
+                return false;
+            }
+
+            morale = VisitMuseum(visitorId, currentDay);
+            _state.VisitorLastDay[visitorId] = currentDay;
+            return true;
+        }
+
         public void TickDay(int currentDay)
         {
             // Auto-conclude expired exhibitions
@@ -408,7 +444,8 @@ namespace Ashfall.Core.Culture
                 TotalVisitors = _state.TotalVisitors,
                 Artifacts = new List<MuseumArtifact>(_state.Artifacts.Count),
                 Exhibitions = new List<Exhibition>(_state.Exhibitions.Count),
-                Events = new List<MuseumEvent>(_state.Events.Count)
+                Events = new List<MuseumEvent>(_state.Events.Count),
+                VisitorLastDay = new Dictionary<string, int>(_state.VisitorLastDay)
             };
 
             foreach (var a in _state.Artifacts)
@@ -527,6 +564,15 @@ namespace Ashfall.Core.Culture
                         Participants = new List<string>(ev.Participants ?? Enumerable.Empty<string>()),
                         Significance = ev.Significance
                     });
+                }
+            }
+
+            _state.VisitorLastDay.Clear();
+            if (state.VisitorLastDay != null)
+            {
+                foreach (var pair in state.VisitorLastDay)
+                {
+                    _state.VisitorLastDay[pair.Key] = pair.Value;
                 }
             }
 

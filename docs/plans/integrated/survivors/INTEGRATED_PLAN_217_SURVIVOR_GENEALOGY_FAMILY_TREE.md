@@ -1,3 +1,12 @@
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+
+> **Verified fully integrated 2026-09-26** (quad reconciliation package,
+> claim `claim-quad-package-217-c2-17-plan49-reconciliation-2026-09-26`):
+> the authority is hosted end-to-end in current source and its focused
+> self-test probe passes headless. See `INTEGRATION_PLANS.md` for evidence.
+
 # Plan 217 — Survivor Genealogy — Core Lineage and a Truthful Family Tree
 
 > **Planning revision — 2026-09-24.** The evidence and decision gates in this section govern the older inventory below. VERIFIED means inspected in current source; PROPOSAL means a path for a future claimed package. This document is not an implementation claim.

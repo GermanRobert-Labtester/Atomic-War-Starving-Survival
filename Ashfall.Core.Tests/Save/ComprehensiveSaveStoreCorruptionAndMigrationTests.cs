@@ -314,9 +314,11 @@ namespace Ashfall.Core.Tests.Save
             // Plan 187 added bestiary_knowledge; Plan 198 added health_history.
             // Plan 211 added the distinct internal_communication section; external
             // communications remains the antenna/radio section. Plan 204 added recruitment.
-            Assert.Equal(268, SaveSectionRegistry.All.Count);
+            // Plan 142 added clothing_warmth; Plan 194 added emergency_alert.
+            // Four-track orphan batch added diplomacy, radiation_economy, radiation_social, trophies.
+            Assert.Equal(278, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(268, keys.Count);
+            Assert.Equal(278, keys.Count);
 
         }
 

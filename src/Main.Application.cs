@@ -787,6 +787,33 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.SurvivorRolesSelfTest:
                     GetTree().Quit(HostCliSurvivorRoles.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.ClothingWarmthSelfTest:
+                    GetTree().Quit(HostCliClothingWarmth.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.EmergencyAlertSelfTest:
+                    GetTree().Quit(HostCliEmergencyAlert.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DiplomacySelfTest:
+                    GetTree().Quit(HostCliDiplomacy.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RadiationEconomySelfTest:
+                    GetTree().Quit(HostCliRadiationEconomy.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RadiationSocialSelfTest:
+                    GetTree().Quit(HostCliRadiationSocial.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.TrophySelfTest:
+                    GetTree().Quit(HostCliTrophy.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.GenealogySelfTest:
+                    GetTree().Quit(HostCliGenealogy.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RationingSelfTest:
+                    GetTree().Quit(HostCliRationing.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ShelterMuseumSelfTest:
+                    GetTree().Quit(HostCliShelterMuseum.RunSelfTest(_dataDir));
+                    return;
                 case HostCliAction.ShelterMaintenanceSelfTest:
 
                     GetTree().Quit(HostCliShelterMaintenance.RunSelfTest(_dataDir));

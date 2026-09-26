@@ -1,3 +1,30 @@
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+
+> **FULLY INTEGRATED 2026-09-26** under user-authorized claim
+> `claim-plan215-rationing-overlay-completion-2026-09-26` (see `INTEGRATION_PLANS.md`
+> and `.ai/plans/plan215-rationing-overlay-completion.md`, STATUS: APPROVED BY USER).
+> Every arrow this revision demanded is now live: the authored
+> `rationing_protocols.json` table loads through a strict snake_case loader
+> (`RationingProtocolCatalogLoader`) and feeds the canonical
+> `ResourceRationingSystem` BEFORE the saved `ActiveProtocolId` restores; the
+> duplicate market restore in `Main.SetupEconomy` is removed (session Create
+> already restores market + nested rationing); one lawful player protocol
+> command routes through the canonical owner (unknown ids refused without
+> mutation); the EconomyMarketPanel renders a truthful RATIONING POLICY
+> readout (active protocol, per-resource tiers/multipliers, crisis count)
+> that distinguishes policy from stock and never mutates on refresh. The
+> snapshot stays nested in `MarketState.rationing` under the existing
+> `economy` section (DEC-200; no second ration store), restore never re-fires
+> tier events, and `AuthorizeAllocation` remains a bounded non-mutating
+> decision consumed through the already-closed `InventoryHostSession`
+> authorization loop. No automatic crisis fabrication (no real producer).
+> Evidence: Plan215 overlay tests 8/8 (22/22 with the pre-existing suites),
+> adjacent gates 142/142, `--rationing-selftest` 12/12 headless, data
+> integrity 427/427 (0 errors), player-panels uitest PASS, 7-day smoke PASS,
+> builds 0 errors, generated indexes current. Zero partial residue.
+
 # Plan 215 — Crisis Rationing — Existing Economy Policy Overlay Completion
 
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.

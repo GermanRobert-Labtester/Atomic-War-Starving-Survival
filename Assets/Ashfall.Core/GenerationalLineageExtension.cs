@@ -391,6 +391,18 @@ namespace Ashfall.Core
             return _state.familyUnits.FirstOrDefault(u => u.memberIds.Contains(dwellerId, StringComparer.OrdinalIgnoreCase));
         }
 
+        /// <summary>
+        /// Plan 217 host integration — read-only views of the recorded kinship
+        /// facts for host read models. The extension still owns the lists;
+        /// no host path may mutate them directly. Family-unit grouping stays
+        /// with the canonical RomanceFamilySystem owner — the genealogy
+        /// surface derives the tree from these kinship records instead.
+        /// </summary>
+        public IReadOnlyList<LineageRecord> LineageRecords => _state.lineages;
+
+        /// <summary>Plan 217 — read-only family event log (kinship facts).</summary>
+        public IReadOnlyList<FamilyEvent> FamilyEventLog => _state.familyEvents;
+
         public FamilyEvent RecordFamilyEvent(string eventType, int day, IEnumerable<string> participants, string description, string significance = "moderate")
         {
             var ev = new FamilyEvent

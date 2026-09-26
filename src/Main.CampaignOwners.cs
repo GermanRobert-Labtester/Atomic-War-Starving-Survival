@@ -200,6 +200,10 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("child_development_stages", new ChildDevelopmentDayOwner(this), phase: 5);
             // Plan 204 — survivor recruitment & defection campaigns.
             _campaignDay.Register("recruitment", new RecruitmentDayOwner(this), phase: 5);
+            // Plan 142 — clothing layers, wetness, and gear wear.
+            _campaignDay.Register("clothing_warmth", new ClothingWarmthDayOwner(this), phase: 5);
+            _campaignDay.Register("emergency_alert", new EmergencyAlertDayOwner(this), phase: 5);
+            _campaignDay.Register("diplomacy", new DiplomacyDayOwner(this), phase: 5);
             // Plan 186 — shelter maintenance & degradation: applies daily component wear and environmental stress.
 
             _campaignDay.Register("shelter_maintenance", new ShelterMaintenanceDayOwner(this), phase: 5);
@@ -2981,6 +2985,89 @@ namespace AtomicWar.GodotApp
                 var census = _m.GetRecruitmentCensus();
                 events.Add(new DayStateChangeEvent(
                     "recruitment_ticked", "recruitment", null, null, census.TotalRecruited));
+            }
+        }
+        /// <summary>Plan 142 clothing & warmth day owner (ownerId <c>clothing_warmth</c>, phase 5).</summary>
+        private sealed class ClothingWarmthDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Inventory.ClothingWarmthSaveState? _snapshot;
+            public ClothingWarmthDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupClothingWarmth();
+                _snapshot = _m._clothingWarmth?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._clothingWarmth?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickClothingWarmth(day);
+                if (_m._clothingWarmthDirty) _m.SaveClothingWarmth();
+                var census = _m.GetClothingWarmthCensus();
+                events.Add(new DayStateChangeEvent(
+                    "clothing_warmth_ticked", "clothing_warmth", null, null, census.TotalEquippedItems));
+            }
+        }
+
+        /// <summary>Plan 194 emergency alert day owner (ownerId <c>emergency_alert</c>, phase 5).</summary>
+        private sealed class EmergencyAlertDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Emergency.EmergencyAlertState? _snapshot;
+            public EmergencyAlertDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupEmergencyAlerts();
+                _snapshot = _m._emergencyAlerts?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._emergencyAlerts?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickEmergencyAlerts(day);
+                if (_m._emergencyAlertsDirty) _m.SaveEmergencyAlerts();
+                var readout = _m.GetEmergencyAlertReadout();
+                events.Add(new DayStateChangeEvent(
+                    "emergency_alert_ticked", "emergency_alert", null, null, readout.Active));
+            }
+        }
+
+        /// <summary>Faction diplomacy day owner (ownerId <c>diplomacy</c>, phase 5).</summary>
+        private sealed class DiplomacyDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Diplomacy.FactionDiplomacyState? _snapshot;
+            public DiplomacyDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupDiplomacy();
+                _snapshot = _m._diplomacy?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._diplomacy?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickDiplomacy(day);
+                if (_m._diplomacyDirty) _m.SaveDiplomacy();
+                var readout = _m.GetDiplomacyReadout();
+                events.Add(new DayStateChangeEvent(
+                    "diplomacy_ticked", "diplomacy", null, null, readout.ActiveTreaties));
             }
         }
     }

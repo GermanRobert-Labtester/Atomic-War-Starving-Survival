@@ -13,6 +13,22 @@ namespace Ashfall.Core.Memorial
     /// <see cref="Peaceful"/> is what existing captures load as — the new
     /// field is additive on every save shape and never breaks a round-trip.
     /// </summary>
+    /// <summary>Plan 49 — authored memorial text row.</summary>
+    public sealed class AuthoredMemorialText
+    {
+        public string id { get; set; } = string.Empty;
+        public string name { get; set; } = string.Empty;
+        public string text { get; set; } = string.Empty;
+        public string type { get; set; } = string.Empty;
+    }
+
+    /// <summary>Plan 49 — root document of memorials_expansion_05.json.</summary>
+    public sealed class MemorialTextCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<AuthoredMemorialText> memorials { get; set; } = new List<AuthoredMemorialText>();
+    }
+
     public enum DeathQuality
     {
         Unattended = 0, // no medic present, no vigil held
@@ -160,6 +176,42 @@ namespace Ashfall.Core.Memorial
         /// inscriptions per cause of death when none is explicitly provided.
         /// </summary>
         public GraveEpitaphCatalog? EpitaphCatalog { get; set; }
+
+        // Plan 49 depth pass — authored memorial text catalog (memorials_
+        // expansion_05.json). Read-only name→text lookups for shelter memorial
+        // surfaces; the runtime grief/memorial state above stays authoritative.
+        private readonly Dictionary<string, AuthoredMemorialText> _memorialTexts =
+            new Dictionary<string, AuthoredMemorialText>(StringComparer.Ordinal);
+
+        /// <summary>Count of authored memorial text rows currently bound.</summary>
+        public int MemorialTextCount => _memorialTexts.Count;
+
+        public void LoadMemorialTexts(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var data = System.Text.Json.JsonSerializer.Deserialize<MemorialTextCatalogData>(json);
+                if (data?.memorials == null) return;
+                _memorialTexts.Clear();
+                foreach (var row in data.memorials)
+                {
+                    if (row == null || string.IsNullOrWhiteSpace(row.id)) continue;
+                    _memorialTexts[row.id.Trim()] = row;
+                }
+            }
+            catch (Exception)
+            {
+                _memorialTexts.Clear();
+            }
+        }
+
+        /// <summary>Authored memorial text by row id, or null.</summary>
+        public string? GetMemorialText(string memorialId)
+        {
+            if (string.IsNullOrWhiteSpace(memorialId)) return null;
+            return _memorialTexts.TryGetValue(memorialId.Trim(), out var row) ? row.text : null;
+        }
 
         /// <summary>Optional seeded RNG for deterministic epitaph selection.</summary>
         public ISeededRng? EpitaphRng { get; set; }

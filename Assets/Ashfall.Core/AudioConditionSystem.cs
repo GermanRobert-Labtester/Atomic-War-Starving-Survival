@@ -6,6 +6,21 @@ using System.Collections.Generic;
 namespace Ashfall.Core
 {
     [Serializable]
+    /// <summary>Plan 49 — authored audio-log row (diegetic broadcast/log text).</summary>
+    public sealed class AuthoredAudioLog
+    {
+        public string id { get; set; } = string.Empty;
+        public string title { get; set; } = string.Empty;
+        public string bodyText { get; set; } = string.Empty;
+    }
+
+    /// <summary>Plan 49 — root document of audio_logs_expansion_05.json.</summary>
+    public sealed class AudioLogCatalogData
+    {
+        public int schema_version { get; set; } = 1;
+        public List<AuthoredAudioLog> audio_logs { get; set; } = new List<AuthoredAudioLog>();
+    }
+
     public sealed class AudioConditionState
     {
         public string systemId = AudioConditionSystem.SystemId;
@@ -31,6 +46,45 @@ namespace Ashfall.Core
         private readonly ILog _log;
 
         public AudioConditionState State => _state;
+
+        // Plan 49 depth pass — authored audio-log catalog (diegetic log texts
+        // keyed by id). Read-only data authority consumed by host read models;
+        // the runtime condition state above stays untouched by this catalog.
+        private readonly Dictionary<string, AuthoredAudioLog> _audioLogs =
+            new Dictionary<string, AuthoredAudioLog>(StringComparer.Ordinal);
+
+        /// <summary>Count of authored audio-log rows currently bound.</summary>
+        public int AudioLogCount => _audioLogs.Count;
+
+        public void LoadAudioLogCatalog(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return;
+            try
+            {
+                var data = System.Text.Json.JsonSerializer.Deserialize<AudioLogCatalogData>(json);
+                if (data?.audio_logs == null) return;
+                _audioLogs.Clear();
+                foreach (var log in data.audio_logs)
+                {
+                    if (log == null || string.IsNullOrWhiteSpace(log.id)) continue;
+                    _audioLogs[log.id.Trim()] = log;
+                }
+            }
+            catch (Exception)
+            {
+                // A malformed catalog must not corrupt the runtime condition
+                // state; the previous binding (if any) is discarded wholesale.
+                _audioLogs.Clear();
+            }
+        }
+
+        /// <summary>Authored diegetic body text for an audio log id, or null.</summary>
+        public string? GetAudioLogBody(string logId)
+        {
+            if (string.IsNullOrWhiteSpace(logId)) return null;
+            return _audioLogs.TryGetValue(logId.Trim(), out var log) ? log.bodyText : null;
+        }
+
         public event Action<ActiveAudioCondition> OnConditionStarted;
         public event Action<ActiveAudioCondition> OnConditionStopped;
         public event Action OnConditionsChanged;

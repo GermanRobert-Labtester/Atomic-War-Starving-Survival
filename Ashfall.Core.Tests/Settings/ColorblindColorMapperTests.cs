@@ -76,9 +76,12 @@ namespace Ashfall.Core.Tests.Settings
         public void ThemeConstants_RemainUnchangedByMapperContract()
         {
             // Pin Theme floors so Path β cannot silently rewrite authority tokens.
-            Assert.Equal(0.902f, Theme.Critical.r, 3);
-            Assert.Equal(0.200f, Theme.Critical.g, 3);
-            Assert.Equal(0.200f, Theme.Critical.b, 3);
+            // Critical moved 2026-09-26 (UI accessibility audit: WCAG AA text
+            // contrast fix, #E63333 → #FF5252); the mapper contract itself is
+            // unchanged.
+            Assert.Equal(1.000f, Theme.Critical.r, 3);
+            Assert.Equal(0.322f, Theme.Critical.g, 3);
+            Assert.Equal(0.322f, Theme.Critical.b, 3);
             Assert.Equal(0.361f, Theme.Success.r, 3);
             Assert.Equal(0.839f, Theme.Success.g, 3);
             Assert.Equal(0.439f, Theme.Success.b, 3);

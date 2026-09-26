@@ -14,6 +14,15 @@ namespace AtomicWar.GodotApp.UI
     /// </summary>
     public static class AshfallFocusPolicy
     {
+        /// <summary>
+        /// Metadata key under which a panel remembers the control that held
+        /// focus immediately before it opened. Written by the host open seam
+        /// (<c>Main.EnsureInitialFocus</c>) and read by
+        /// <see cref="RestoreFocusFromRoot"/> on dismissal. Shared so the
+        /// writer and reader cannot drift.
+        /// </summary>
+        public const string FocusOpenerMeta = "_ashfall_focus_opener";
+
         private static StyleBoxFlat? _cachedFocusBox;
 
         /// <summary>
@@ -112,7 +121,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (opener != null && GodotObject.IsInstanceValid(opener))
             {
-                root.SetMeta("_ashfall_focus_opener", opener);
+                root.SetMeta(FocusOpenerMeta, opener);
             }
 
             Control? target = initial;
@@ -188,9 +197,9 @@ namespace AtomicWar.GodotApp.UI
             if (root == null || !GodotObject.IsInstanceValid(root))
                 return;
 
-            if (root.HasMeta("_ashfall_focus_opener"))
+            if (root.HasMeta(FocusOpenerMeta))
             {
-                var val = root.GetMeta("_ashfall_focus_opener");
+                var val = root.GetMeta(FocusOpenerMeta);
                 if (val.VariantType == Variant.Type.Object)
                 {
                     var opener = val.As<Control>();

@@ -263,6 +263,9 @@ namespace AtomicWar.GodotApp
         InterpersonalConflictSelfTest,
         ExerciseSelfTest,
         SurvivorRolesSelfTest,
+        ShelterMuseumSelfTest,
+        RationingSelfTest,
+        GenealogySelfTest,
         AfflictionBridgeSelfTest,
         RadiationMutationSelfTest,
         RadioProgramProductionSelfTest,
@@ -275,7 +278,13 @@ namespace AtomicWar.GodotApp
         BestiarySelfTest,
         HealthHistorySelfTest,
         LeadershipSuccessionSelfTest,
-        RecruitmentSelfTest
+        RecruitmentSelfTest,
+        ClothingWarmthSelfTest,
+        EmergencyAlertSelfTest,
+        DiplomacySelfTest,
+        RadiationEconomySelfTest,
+        RadiationSocialSelfTest,
+        TrophySelfTest
     }
 
     /// <summary>
@@ -794,6 +803,12 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ExerciseSelfTest;
             if (Has(args, "--survivor-roles-selftest") || Has(args, "--specialization-roles-selftest"))
                 return HostCliAction.SurvivorRolesSelfTest;
+            if (Has(args, "--shelter-museum-selftest") || Has(args, "--museum-selftest"))
+                return HostCliAction.ShelterMuseumSelfTest;
+            if (Has(args, "--rationing-selftest") || Has(args, "--ration-selftest"))
+                return HostCliAction.RationingSelfTest;
+            if (Has(args, "--genealogy-selftest") || Has(args, "--family-tree-selftest"))
+                return HostCliAction.GenealogySelfTest;
             if (Has(args, "--affliction-bridge-selftest") || Has(args, "--affliction-bridges-selftest") || Has(args, "--affliction-quest-work-selftest"))
                 return HostCliAction.AfflictionBridgeSelfTest;
             if (Has(args, "--radiation-mutation-selftest") || Has(args, "--mutation-system-selftest"))
@@ -820,6 +835,18 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.LeadershipSuccessionSelfTest;
             if (Has(args, "--recruitment-selftest") || Has(args, "--defection-selftest") || Has(args, "--survivor-recruitment-selftest"))
                 return HostCliAction.RecruitmentSelfTest;
+            if (Has(args, "--clothing-warmth-selftest") || Has(args, "--thermal-clothing-selftest") || Has(args, "--insulation-layers-selftest"))
+                return HostCliAction.ClothingWarmthSelfTest;
+            if (Has(args, "--emergency-alert-selftest") || Has(args, "--alert-selftest") || Has(args, "--emergency-warning-selftest"))
+                return HostCliAction.EmergencyAlertSelfTest;
+            if (Has(args, "--diplomacy-selftest") || Has(args, "--treaty-selftest") || Has(args, "--faction-diplomacy-selftest"))
+                return HostCliAction.DiplomacySelfTest;
+            if (Has(args, "--radiation-economy-selftest") || Has(args, "--contaminated-trade-selftest"))
+                return HostCliAction.RadiationEconomySelfTest;
+            if (Has(args, "--radiation-social-selftest") || Has(args, "--dose-bracket-selftest"))
+                return HostCliAction.RadiationSocialSelfTest;
+            if (Has(args, "--trophy-selftest") || Has(args, "--trophies-selftest") || Has(args, "--trophy-mount-selftest"))
+                return HostCliAction.TrophySelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -1065,6 +1092,9 @@ namespace AtomicWar.GodotApp
             GD.Print("  --interpersonal-conflict-selftest / --conflict-system-selftest  Interpersonal conflict integration probe");
             GD.Print("  --exercise-selftest / --physical-training-selftest  Exercise and physical training integration probe");
             GD.Print("  --survivor-roles-selftest / --specialization-roles-selftest  Survivor specialization roles integration probe");
+            GD.Print("  --shelter-museum-selftest / --museum-selftest  Shelter museum & historical archive probe");
+            GD.Print("  --rationing-selftest / --ration-selftest  Crisis rationing overlay probe");
+            GD.Print("  --genealogy-selftest / --family-tree-selftest  Survivor genealogy probe");
             GD.Print("  --affliction-bridge-selftest / --affliction-bridges-selftest / --affliction-quest-work-selftest  Affliction quest-work bridge probe");
             GD.Print("  --radiation-mutation-selftest / --mutation-system-selftest  Radiation mutation integration probe");
             GD.Print("  --radio-production-selftest / --radio-program-production-selftest  Radio program production probe");
@@ -1078,6 +1108,12 @@ namespace AtomicWar.GodotApp
             GD.Print("  --health-history-selftest / --medical-records-selftest / --vaccination-history-selftest  Health history integration probe");
             GD.Print("  --leadership-succession-selftest / --succession-selftest / --leadership-challenges-selftest  Leadership succession integration probe");
             GD.Print("  --recruitment-selftest / --defection-selftest / --survivor-recruitment-selftest  Survivor recruitment & defection campaigns probe");
+            GD.Print("  --clothing-warmth-selftest / --thermal-clothing-selftest / --insulation-layers-selftest  Clothing & warmth gear layers, wetness, and cold-loss mitigation probe");
+            GD.Print("  --emergency-alert-selftest / --alert-selftest / --emergency-warning-selftest  Emergency alert types, response windows, and evacuation protocols probe");
+            GD.Print("  --diplomacy-selftest / --treaty-selftest / --faction-diplomacy-selftest  Faction treaties, relations, missions, and reputation probe");
+            GD.Print("  --radiation-economy-selftest / --contaminated-trade-selftest  Contaminated-trade price multipliers and block rules probe");
+            GD.Print("  --radiation-social-selftest / --dose-bracket-selftest  Radiation dose brackets, social penalties, and discrimination probe");
+            GD.Print("  --trophy-selftest / --trophies-selftest / --trophy-mount-selftest  Trophy catalog, exactly-once awards, and unlocked recipes probe");
             GD.Print("  --aging-selftest / --elderly-survivor-selftest  Survivor aging and life-stage compatibility probes");
             GD.Print("  --atmosphere-selftest / --shelter-atmosphere-selftest  Shelter atmosphere compatibility probes");
             GD.Print("  --audio-access-selftest / --audio-accessibility-selftest  Audio accessibility compatibility probes");

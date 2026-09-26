@@ -2353,13 +2353,15 @@
       },
       "host_ref_files": {
         "RomanceFamilySystem": [
-          "src/Host/RomanceFamilyHostSession.cs"
+          "src/Host/RomanceFamilyHostSession.cs",
+          "src/Host/GenealogyHostSession.cs"
         ],
         "RomanticRelationship": [
           "src/Host/RomanceFamilyHostSession.cs"
         ],
         "FamilyUnit": [
-          "src/Host/RomanceFamilyHostSession.cs"
+          "src/Host/RomanceFamilyHostSession.cs",
+          "src/Host/GenealogyHostSession.cs"
         ],
         "RomanceCourtshipCatalog": [
           "src/Host/RomanceFamilyHostSession.cs"

@@ -1,3 +1,20 @@
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+
+> **FULLY INTEGRATED 2026-09-26** under user-authorized claim
+> `claim-plan218-shelter-museum-integration-2026-09-26` (see `INTEGRATION_PLANS.md`
+> and `.ai/plans/plan218-shelter-museum-integration.md`, STATUS: APPROVED BY USER).
+> `ShelterMuseumSystem` is fully wired: own checksummed save section `shelter_museum`,
+> host session `ShelterMuseumHostSession`, daily exhibition expiry through the
+> existing `TickPlans46_49` orchestration, explicit once-per-day visits with the
+> morale delta applied exactly once through the canonical Needs owner, read-only
+> museum projection + explicit visit command on the existing `archive_desk` route.
+> Physical-inventory donation remains unexposed pending a signed custody bridge.
+> Evidence: Plan218 tests 13/13, adjacent gates 51/51, `--shelter-museum-selftest`
+> 12/12 headless, data integrity 427/427 (0 errors), player-panels uitest 21/21,
+> builds 0 errors, generated indexes current. Zero partial residue.
+
 # Plan 218 — Shelter Museum Archive — Host, Projection, and Save Custody
 
 ## PFGL Codex Luna 6 execution revision — 2026-09-25

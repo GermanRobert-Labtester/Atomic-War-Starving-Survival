@@ -82,21 +82,28 @@ namespace AtomicWar.GodotApp.UI
             // touching the boiler or inventing a second heat authority.
             var zoningRow = new HBoxContainer();
             zoningRow.AddThemeConstantOverride("separation", 6);
-            foreach (var room in _host.System.State.rooms)
+            // Host is nullable until Bind(); guard defensively (matches the
+            // _host != null idiom used by RefreshView/ValveFor). The live
+            // wiring binds before AddChild, so this only prevents a latent
+            // NullReferenceException if that order ever changes.
+            if (_host != null)
             {
-                if (room == null) continue;
-                var zoneBtn = new Button { Text = $"{room.displayName} · {room.radiatorValveOpen * 100f:F0}%" };
-                zoneBtn.CustomMinimumSize = new Vector2(150, 32);
-                zoneBtn.TooltipText = "Cycle this room's radiator valve: 100% → 75% → 50% → 25% → 0%.";
-                string roomId = room.roomId;
-                zoneBtn.Pressed += () =>
+                foreach (var room in _host.System.State.rooms)
                 {
-                    float next = NextValveStep(ValveFor(roomId));
-                    _host.SetRadiatorValve(roomId, next);
-                    RefreshView();
-                };
-                _zoneButtons.Add((zoneBtn, roomId));
-                zoningRow.AddChild(zoneBtn);
+                    if (room == null) continue;
+                    var zoneBtn = new Button { Text = $"{room.displayName} · {room.radiatorValveOpen * 100f:F0}%" };
+                    zoneBtn.CustomMinimumSize = new Vector2(150, 32);
+                    zoneBtn.TooltipText = "Cycle this room's radiator valve: 100% → 75% → 50% → 25% → 0%.";
+                    string roomId = room.roomId;
+                    zoneBtn.Pressed += () =>
+                    {
+                        float next = NextValveStep(ValveFor(roomId));
+                        _host.SetRadiatorValve(roomId, next);
+                        RefreshView();
+                    };
+                    _zoneButtons.Add((zoneBtn, roomId));
+                    zoningRow.AddChild(zoneBtn);
+                }
             }
             _contentStack.AddChild(zoningRow);
 

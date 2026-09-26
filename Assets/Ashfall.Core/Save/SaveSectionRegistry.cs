@@ -145,6 +145,7 @@ namespace Ashfall.Core.Save
             new("death_legacy", "SaveDeathLegacy", "SetupDeathLegacy", "survivors", "Plan 206 — survivor death records, last wills, estate inheritance, and disputes", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("relationship_decay", "SaveRelationshipDecay", "SetupRelationshipDecay", "social", "Plan 182 — survivor pair bond decay, interaction tracking, and social drift", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("survivor_roles", "SaveSurvivorRoles", "SetupSurvivorRoles", "survivors", "Plan 195 — survivor specialization roles: identity, earned practice XP, level progression, and bonus readout", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("clothing_warmth", "SaveClothingWarmth", "SetupClothingWarmth", "inventory", "Plan 142 — equipped clothing layers, gear condition, wetness, and cold-loss mitigation", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("survivor_social", "SaveSurvivorSocial", "SetupSurvivorSocial", "social", "Leadership, friction, ration conflict, trauma bonds, skill atrophy"),
             new("morale_contagion", "SaveMoraleContagion", "SetupMoraleContagion", "social", "Flagship XI Plan 154 — morale contagion channels, breakdowns, social isolation, schism ledger, HopeBeacon installation"),
             new("pathogen_strains", "SavePathogenStrains", "SetupPathogenStrains", "medical", "Flagship XI Plan 155 — fictional strain layer: cure projects and unlocked cures"),
@@ -210,6 +211,8 @@ namespace Ashfall.Core.Save
             new("settlement_politics", "SavePolitics", "SetupPolitics", "narrative", "Settlement elections, political policies, approval rating, and coups"),
             // Flagship institutions (Tasks 5-8): culture / diplomacy / sky defense / sanatorium
             new("cultural_archives", "SaveCulturalArchive", "SetupCulturalArchive", "knowledge", "Deep-vault cultural archives: restoration, transcription, microfiche preservation, discs, salons, chronicles"),
+            new("shelter_museum", "SaveShelterMuseum", "SetupShelterMuseum", "knowledge", "Plan 218 — shelter museum: curated artifact collection, exhibitions, curator, once-per-day visits, and event history"),
+new("genealogy", "SaveGenealogy", "SetupGenealogy", "survivors", "Plan 217 — survivor genealogy: committed kinship facts (lineage records, unions, family events)"),
             new("diplomatic_summits", "SaveDiplomaticSummit", "SetupDiplomaticSummit", "factions", "Wasteland summits, treaty lifecycle, guarantees, DMZ rules, violations"),
             new("sky_defense_battery", "SaveSkyDefense", "SetupSkyDefense", "combat", "Kinetic sky-layer counter-battery: turret state, magazine, tracks, maintenance"),
             new("psychological_sanatorium", "SaveSanatorium", "SetupSanatorium", "medical", "Trauma sanatorium: admissions, therapies, sedatives, relapse, discharge"),
@@ -325,6 +328,11 @@ namespace Ashfall.Core.Save
             new("health_history", "SaveHealthHistory", "SetupHealthHistory", "medical", "Plan 198 — Longitudinal health histories, diagnostic logs, recovery events, vaccination tracking, and health trends", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("consequence_ledger", "SaveConsequenceLedger", "SetupConsequenceLedger", "campaign", "Campaign consequence flags & counters — cross-quest/moral-choice state persisted across saves and reset on new campaigns"),
             new("recruitment", "SaveRecruitment", "SetupRecruitment", "survivors", "Plan 204 — Survivor recruitment campaigns, wilderness discovery, defection offers, and asylum intake", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("emergency_alert", "SaveEmergencyAlerts", "SetupEmergencyAlerts", "shelter", "Plan 194 — Emergency alert & warning system: threat detection, prioritization, response windows, and evacuation protocols", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("diplomacy", "SaveDiplomacy", "SetupDiplomacy", "factions", "Faction diplomacy: treaty templates, relations, active treaties, missions, violations, and global reputation", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("radiation_economy", "SaveRadiationEconomy", "SetupRadiationEconomy", "economy", "Contaminated-trade radiation economy bridge: price multipliers, blocks, and evaluation ledger", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("radiation_social", "SaveRadiationSocial", "SetupRadiationSocial", "survivors", "Radiation social bridge: dose brackets, social penalties, and discrimination incident ledger", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("trophies", "SaveTrophies", "SetupTrophies", "shelter", "Trophy mount pipeline: exactly-once quarry trophy awards and unlocked recipes", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -352,6 +360,12 @@ namespace Ashfall.Core.Save
                 { "journal", "journal_save.json" },
                 { "consequence_ledger", "consequence_ledger_save.json" },
                 { "recruitment", "recruitment_save.json" },
+                { "emergency_alert", "emergency_alert_save.json" },
+                { "diplomacy", "diplomacy_save.json" },
+                { "radiation_economy", "radiation_economy_save.json" },
+                { "radiation_social", "radiation_social_save.json" },
+                { "trophies", "trophies_save.json" },
+                { "clothing_warmth", "clothing_warmth_save.json" },
                 { "commitment", "commitment_save.json" },
                 { "session_durability", "session_durability_save.json" },
                 { "playable_metrics", "playable_metrics_save.json" },

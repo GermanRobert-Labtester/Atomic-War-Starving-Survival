@@ -853,6 +853,7 @@ namespace AtomicWar.GodotApp
 
             SetupStartingLevel();
             string intakeAssignee = _dutyRoster?.Roster.GetAssignment(Ashfall.Core.DutyRosterIds.RoleIntakeSleeper) ?? "Dr. Sarah Chen";
+            var alertReadout = GetEmergencyAlertReadout();
 
             _dashboard.UpdateState(new GameDashboardPanel.DashboardSnapshot
             {
@@ -885,6 +886,10 @@ namespace AtomicWar.GodotApp
                 FilterDutyAssignee = intakeAssignee,
                 Forecast = _world.Weather.PeekForecast(3),
                 LastEvent = lastEvent,
+                ActiveEmergencyAlerts = alertReadout.Active,
+                EmergencyAlertText = string.IsNullOrEmpty(alertReadout.HighestType)
+                    ? string.Empty
+                    : alertReadout.HighestType.Replace("alert_", string.Empty).Replace('_', ' ').ToUpperInvariant(),
                 MachineTellText = BuildMachineTellText(),
                 MemorialCount = _memorial?.Entries?.Count ?? 0,
                 CohortLivingCount = _doseLedger?.Cohort?.SurvivingChildrenCount ?? 0

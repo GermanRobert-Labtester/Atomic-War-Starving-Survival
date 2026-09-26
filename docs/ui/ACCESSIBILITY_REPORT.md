@@ -73,3 +73,23 @@ No images were edited, regenerated, annotated destructively or accepted as new b
 --ui-accessibility-selftest printed five passing gates, but it does not compute these contrast ratios or traverse all row controls by keyboard. Its text gate checks placeholder strings, not visual readability. --ui-layout-selftest sets/checks root sizes rather than proving child fit; its pass log also reported 16634 leaked ObjectDB instances. The decon smoke check printed PASS after 18 missing-node, 18 null-reference and three disposed-object reports.
 
 A later approved repair needs: exception-free construction/rebinding; all domain controls reachable from normal navigation; tab/directional traversal with visible focus; correct topmost back/close; descendant bounds at supported sizes; long/empty/error text; readable actual composited colors; textual hazard states; command correctness and feedback. Use dotnet and godot --headless, preserve baselines, and do not equate a screenshot or IsBound flag with a working player workflow.
+
+---
+
+## Addendum — 2026-09-26 (precision repair sealed)
+
+**F-UI-CONTRAST-CRITICAL sealed.** `Theme.Critical` was consumed as a text
+`font_color` across dozens of panels but measured below the WCAG AA body-text
+floor (4.5:1) on four of five opaque surfaces (Surface 4.41, SurfaceCard 4.12,
+HoverBg 3.72, SelectedBg 3.63). The token moved `#E63333` → `#FF5252`
+(`(1.000, 0.322, 0.322)`), restoring AA on every consumed surface (Ink 6.18,
+Surface 5.93, SurfaceCard 5.54, HoverBg 5.02, SelectedBg 4.89) while keeping
+the ~0° alarm hue. A ratchet test
+(`ThemeSemanticTokensTests.CriticalTextColor_MeetsWcagAaOnEveryConsumedSurface`)
+recomputes the ratios and pins hex↔tuple agreement.
+
+**Still open (ranked, need their own package/claim):** DataGrid keyboard row
+selection; dashboard nav-rail overflow at supported sizes; overlay-detection
+list disagreement (`Main.GameFlow.AnyOverlayPanelOpen` vs
+`Main.PanelLifecycle.CloseAllOverlayPanels`); hex/tuple drift in
+Pale/Surface/SurfaceCard/Warning; 11px label floor on dense metadata.

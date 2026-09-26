@@ -54,6 +54,11 @@ namespace AtomicWar.GodotApp.UI
         /// <summary>Read-only romantic relationship projection supplied by Main (Plan 150).</summary>
         public Func<string, (string PartnerId, string Stage, bool IsSoulmate)?>? RomanceProvider { get; set; }
 
+        // Plan 217 — read-only kinship projection (parents/partner/children/
+        // family name) derived from the genealogy authority's committed facts.
+        // Refresh never mutates lineage state.
+        public Func<string, string?>? KinshipProvider { get; set; }
+
         /// <summary>Read-only family unit projection supplied by Main (Plan 150).</summary>
         public Func<string, string?>? FamilyProvider { get; set; }
 
@@ -68,6 +73,9 @@ namespace AtomicWar.GodotApp.UI
 
         /// <summary>Plan 195 — read-only specialization role readout (role id, display name, level, XP). Null when the survivor holds no role.</summary>
         public Func<string, (string RoleId, string DisplayName, int Level, int ExperiencePoints)?>? RoleProvider { get; set; }
+
+        /// <summary>Plan 142 — truthful current clothing layers, warmth, wetness, and cold reduction; read-only projection.</summary>
+        public Func<string, (int Layers, int TotalWarmth, float Wetness, int ColdReductionBp)?>? ClothingProvider { get; set; }
 
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
@@ -150,6 +158,15 @@ namespace AtomicWar.GodotApp.UI
                 RenderedRowCount++;
             }
 
+            // Plan 142 — truthful current clothing layers and cold mitigation; read-only projection.
+            var clothingReadout = ClothingProvider?.Invoke(_survivorId);
+            if (clothingReadout.HasValue && clothingReadout.Value.Layers > 0)
+            {
+                var c = clothingReadout.Value;
+                AddRow(_survivorInfo, $"Clothing: {c.Layers} layer(s), warmth {c.TotalWarmth}, wetness {c.Wetness:P0}, cold reduction {c.ColdReductionBp / 100f:F0}%", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+
             if (view != null && !string.IsNullOrEmpty(view.BeliefProfileLabel) && !string.IsNullOrEmpty(view.BeliefProfileId))
             {
                 AddRow(_survivorInfo, $"Worldview: {view.BeliefProfileLabel}", Ashfall.Core.UI.Theme.Lethe);
@@ -207,6 +224,14 @@ namespace AtomicWar.GodotApp.UI
             if (!string.IsNullOrEmpty(family))
             {
                 AddRow(_survivorInfo, $"Family Unit: {family}", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+
+            // Plan 217 — committed kinship facts (genealogy authority), read-only.
+            var kinship = KinshipProvider?.Invoke(s.Id);
+            if (!string.IsNullOrEmpty(kinship))
+            {
+                AddRow(_survivorInfo, $"Lineage: {kinship}", Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
 

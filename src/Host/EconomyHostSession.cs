@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Economy;
@@ -143,6 +144,26 @@ namespace AtomicWar.GodotApp
                 {
                     session.LastEvent = "Regional prices using neutral path: " + atlasLoad.Errors[0];
                 }
+
+                // Plan 215 overlay completion — the authored rationing protocol
+                // table feeds the canonical ResourceRationingSystem BEFORE the
+                // saved ActiveProtocolId is restored, so a restored policy id
+                // always resolves against its real definition. Optional file:
+                // a missing or invalid table leaves the system on the legacy
+                // path (built-in default protocol), never a hard failure.
+                var protocolLoad = RationingProtocolCatalogLoader.Load(dataDir, fileIO);
+                if (!protocolLoad.HasErrors && protocolLoad.Protocols.Count > 0)
+                {
+                    session.Rationing.LoadCatalog(new RationingProtocolCatalogData
+                    {
+                        SchemaVersion = 1,
+                        Protocols = protocolLoad.Protocols
+                    });
+                }
+                else if (protocolLoad.HasErrors)
+                {
+                    session.LastEvent = "Rationing protocols using legacy path: " + protocolLoad.Errors[0];
+                }
             }
             var save = EconomySaveStore.TryLoad();
             if (save != null)
@@ -162,6 +183,36 @@ namespace AtomicWar.GodotApp
         /// <summary>Bind the canonical item/goods validator before player policy commands.</summary>
         public void BindRationingResourceValidator(Func<string, bool>? validator)
             => Rationing.BindResourceValidator(validator);
+
+        /// <summary>
+        /// Plan 215 overlay completion — the one lawful player route for
+        /// switching the shelter-wide rationing protocol. Forwards to the
+        /// canonical <see cref="ResourceRationingSystem.ApplyProtocol"/>;
+        /// returns false for an unknown protocol without mutating state.
+        /// </summary>
+        public bool ApplyRationingProtocol(string protocolId, int currentDay)
+            => Rationing.ApplyProtocol(protocolId, TargetedResourceIds(), currentDay);
+
+        /// <summary>
+        /// Resources the rationing policy targets: the protocol is applied to
+        /// the resources that already carry a ration target (the survival
+        /// staples the shelter actually rations), validated by the bound
+        /// canonical validator. An empty target set applies the protocol
+        /// without inventing resource ids the catalogs do not know.
+        /// </summary>
+        private IEnumerable<string> TargetedResourceIds()
+        {
+            foreach (var target in Rationing.RationTargets)
+            {
+                if (!string.IsNullOrWhiteSpace(target?.ResourceId))
+                {
+                    yield return target.ResourceId;
+                }
+            }
+        }
+
+        /// <summary>Loaded protocol definitions for player-surface read models.</summary>
+        public IReadOnlyCollection<RationingProtocolDefinition> RationingProtocols => Rationing.Protocols;
 
         public RationTarget SetRationTier(string resourceId, RationingTier tier, int currentDay)
             => Rationing.SetRationTier(resourceId, tier, currentDay);

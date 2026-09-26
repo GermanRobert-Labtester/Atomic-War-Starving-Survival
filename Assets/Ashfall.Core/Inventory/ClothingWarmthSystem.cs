@@ -47,6 +47,31 @@ namespace Ashfall.Core.Inventory
     }
 
     /// <summary>
+    /// Plan 142 read model: current clothing/warmth totals for the host census.
+    /// Pure projection over <see cref="ClothingWarmthSystem"/> state; adds no authority.
+    /// </summary>
+    [Serializable]
+    public struct ClothingWarmthCensus
+    {
+        public int SurvivorsTracked { get; }
+        public int TotalEquippedItems { get; }
+        public int SoakedSurvivors { get; }
+        public int ProfilesRegistered { get; }
+
+        public ClothingWarmthCensus(
+            int survivorsTracked,
+            int totalEquippedItems,
+            int soakedSurvivors,
+            int profilesRegistered)
+        {
+            SurvivorsTracked = survivorsTracked;
+            TotalEquippedItems = totalEquippedItems;
+            SoakedSurvivors = soakedSurvivors;
+            ProfilesRegistered = profilesRegistered;
+        }
+    }
+
+    /// <summary>
     /// Plan 142 / C2[29] / DEC-109: Clothing & Warmth Gear Progression System.
     /// Governs equipped clothing insulation, multi-layer cold protection,
     /// condition degradation, wetness thermal penalties, and cold mitigation for NeedsSystem.
@@ -324,6 +349,22 @@ namespace Ashfall.Core.Inventory
         }
 
         // ── Save / Load ───────────────────────────────────────────
+
+        /// <summary>
+        /// Plan 142 read model: survivors tracked, equipped items, soaked
+        /// survivors (wetness ≥ 0.5), and registered profiles. Pure projection.
+        /// </summary>
+        public ClothingWarmthCensus GetCensus()
+        {
+            int equipped = 0;
+            int soaked = 0;
+            foreach (var rec in _state.survivors.Values)
+            {
+                equipped += rec.equipped.Count;
+                if (rec.wetness >= 0.5f) soaked++;
+            }
+            return new ClothingWarmthCensus(_state.survivors.Count, equipped, soaked, _profiles.Count);
+        }
 
         public ClothingWarmthSaveState CaptureState()
         {

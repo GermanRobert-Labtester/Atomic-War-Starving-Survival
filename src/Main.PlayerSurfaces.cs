@@ -246,7 +246,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseSurvivalDetailPanel());
 
             PanelRegistry.ConfigureActions("survivor_detail",
-                bindAction: () => { SetupSurvivors(); SetupEnrichment(); SetupSurvivorSocial(); SetupCulturalArchive(); SetupBackstory(); SetupIdeologicalFriction(); SetupRomanceFamily(); _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id) ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>(); _survivorDetailPanel.DocumentationProvider = id => GetSurvivorDocumentation(id); _survivorDetailPanel.RoleProvider = id => GetSurvivorRoleReadout(id); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
+                bindAction: () => { SetupSurvivors(); SetupEnrichment(); SetupSurvivorSocial(); SetupCulturalArchive(); SetupBackstory(); SetupIdeologicalFriction(); SetupRomanceFamily(); _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id) ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>(); _survivorDetailPanel.DocumentationProvider = id => GetSurvivorDocumentation(id); _survivorDetailPanel.RoleProvider = id => GetSurvivorRoleReadout(id); _survivorDetailPanel.ClothingProvider = id => GetClothingWarmthReadout(id); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
                 openAction: () => _survivorDetailPanel.Open(),
                 closeAction: () => CloseSurvivorDetailPanel());
 
@@ -1043,6 +1043,12 @@ namespace AtomicWar.GodotApp
                 var owner = panel.GetViewport()?.GuiGetFocusOwner();
                 if (owner != null && GodotObject.IsInstanceValid(owner) && panel.IsAncestorOf(owner))
                     return; // the panel already focused something deliberately
+                // Record whoever held focus before this panel opened so a later
+                // dismissal can restore it. AshfallFocusPolicy.RestoreFocusFromRoot
+                // reads this metadata on every overlay close; nothing previously
+                // wrote it, so keyboard/controller focus was silently lost.
+                if (owner != null && GodotObject.IsInstanceValid(owner))
+                    panel.SetMeta(AtomicWar.GodotApp.UI.AshfallFocusPolicy.FocusOpenerMeta, owner);
                 var first = AtomicWar.GodotApp.UI.AshfallFocusPolicy.FindFirstFocusable(panel);
                 if (first != null && GodotObject.IsInstanceValid(first))
                     first.GrabFocus();

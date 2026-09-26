@@ -88,6 +88,63 @@ namespace Ashfall.Core.Tests.UI
             Assert.NotEqual(Theme.Info, Theme.Warning);
         }
 
+        /// <summary>
+        /// Contrast ratchet (UI accessibility audit, 2026-09-26):
+        /// <see cref="Theme.Critical"/> is consumed as a text `font_color`
+        /// across dozens of panels, so it must clear the WCAG AA body-text
+        /// floor of 4.5:1 on every opaque surface it is rendered over. The
+        /// previous #E63333 failed on four of five surfaces (down to 3.63:1 on
+        /// SelectedBg); #FF5252 is the sealed replacement. This gate prevents a
+        /// silent regression of that fix and pins hex/tuple agreement for the
+        /// token.
+        /// </summary>
+        [Fact]
+        public void CriticalTextColor_MeetsWcagAaOnEveryConsumedSurface()
+        {
+            var surfaces = new (string Name, (float r, float g, float b, float a) Color)[]
+            {
+                ("Ink", Theme.Ink),
+                ("Surface", Theme.Surface),
+                ("SurfaceCard", Theme.SurfaceCard),
+                ("HoverBg", Theme.HoverBg),
+                ("SelectedBg", Theme.SelectedBg),
+            };
+
+            foreach (var surface in surfaces)
+            {
+                double ratio = ContrastRatio(Theme.Critical, surface.Color);
+                Assert.True(ratio >= 4.5,
+                    $"Theme.Critical must meet WCAG AA 4.5:1 on {surface.Name}; measured {ratio:0.00}:1.");
+            }
+
+            Assert.Equal(Theme.CriticalHex, RgbToHex(Theme.Critical));
+        }
+
+        private static double ContrastRatio(
+            (float r, float g, float b, float a) fg,
+            (float r, float g, float b, float a) bg)
+        {
+            double lf = RelativeLuminance(fg);
+            double lb = RelativeLuminance(bg);
+            double lighter = Math.Max(lf, lb);
+            double darker = Math.Min(lf, lb);
+            return (lighter + 0.05) / (darker + 0.05);
+        }
+
+        private static double RelativeLuminance((float r, float g, float b, float a) c)
+            => 0.2126 * Linearize(c.r) + 0.7152 * Linearize(c.g) + 0.0722 * Linearize(c.b);
+
+        private static double Linearize(double channel)
+            => channel <= 0.04045 ? channel / 12.92 : Math.Pow((channel + 0.055) / 1.055, 2.4);
+
+        private static string RgbToHex((float r, float g, float b, float a) c)
+        {
+            int r = (int)Math.Round(c.r * 255f);
+            int g = (int)Math.Round(c.g * 255f);
+            int b = (int)Math.Round(c.b * 255f);
+            return $"#{r:X2}{g:X2}{b:X2}";
+        }
+
         private static void AssertColorTuple((float r, float g, float b, float a) c)
         {
             Assert.InRange(c.r, 0f, 1f);

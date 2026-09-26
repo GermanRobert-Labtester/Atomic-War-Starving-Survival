@@ -82,9 +82,13 @@ namespace AtomicWar.GodotApp
             var save = EconomySaveStore.TryLoad();
             if (save != null)
             {
-                _economy.Market.RestoreState(save);
-                _economyDirty = false; // restore just raised state-change events
-                GD.Print("[Ashfall Godot] Economy state restored.");
+                // Plan 215 overlay completion — EconomyHostSession.Create already
+                // restored BOTH the market and the nested rationing snapshot
+                // from this same save file. Restoring the market a second time
+                // here duplicated setup; the dirty flag reset is all that
+                // remains needed after restore raised state-change events.
+                _economyDirty = false;
+                GD.Print("[Ashfall Godot] Economy state restored (market + rationing via session.Create).");
             }
 
             if (_economyPanel == null && _rightColumn != null)
@@ -95,6 +99,9 @@ namespace AtomicWar.GodotApp
             if (_economyPanel != null)
             {
                 _economyPanel.BindSession(_economy);
+                // Plan 215 overlay completion — the one lawful protocol
+                // command route through the canonical rationing owner.
+                _economyPanel.RationingProtocolCommand = id => ApplyRationingProtocolCommand(id);
                 _economyPanel.RefreshView();
             }
         }
@@ -113,6 +120,29 @@ namespace AtomicWar.GodotApp
             if (_inventory == null || _economy == null) return;
             _inventory.RationingAuthorizer = (resourceId, consumerId, demand, day, available) =>
                 _economy.AuthorizeAllocation(resourceId, consumerId, demand, available, day);
+        }
+
+        /// <summary>
+        /// Plan 215 overlay completion — the one lawful player route for
+        /// switching the shelter-wide rationing protocol. The canonical
+        /// ResourceRationingSystem validates the protocol id against the
+        /// loaded authored table and applies the default tier to the current
+        /// ration targets; this adapter only reports the outcome and dirties
+        /// the existing economy save. Returns the player feedback line.
+        /// </summary>
+        private string ApplyRationingProtocolCommand(string protocolId)
+        {
+            if (_economy == null) return "Economy session unavailable.";
+            if (string.IsNullOrWhiteSpace(protocolId)) return "No protocol selected.";
+            int day = _economy.Market.Day;
+            bool applied = _economy.ApplyRationingProtocol(protocolId, day);
+            if (!applied)
+            {
+                return $"Protocol '{protocolId}' is not a loaded rationing policy.";
+            }
+            _economyDirty = true;
+            var proto = _economy.Rationing.GetProtocol(protocolId);
+            return $"Rationing protocol applied: {(proto?.Name ?? protocolId)} (day {day}).";
         }
 
         private void OnEconomyOpenClicked()

@@ -54,6 +54,8 @@ namespace AtomicWar.GodotApp.UI
             public bool AirWarning;
             public string FilterDutyAssignee = "Dr. Sarah Chen";
             public string LastEvent = string.Empty;
+            public int ActiveEmergencyAlerts;
+            public string EmergencyAlertText = string.Empty;
             public System.Collections.Generic.List<Ashfall.Core.World.WeatherForecastEntry> Forecast = new();
             public System.Collections.Generic.Dictionary<string, string> DutyAssignments = new();
             public string MachineTellText = string.Empty;
@@ -64,6 +66,7 @@ namespace AtomicWar.GodotApp.UI
         private Label _dayLabel = null!;
         private Label _locationLabel = null!;
         private Label _weatherLabel = null!;
+        private Label _emergencyAlertLabel = null!;
         private Label _healthValue = null!;
         private Label _radiationValue = null!;
         private Label _hungerValue = null!;
@@ -145,6 +148,13 @@ namespace AtomicWar.GodotApp.UI
                 ? "THE HOLDFAST"
                 : state.Location.Replace('_', ' ').ToUpperInvariant();
             _weatherLabel.Text = $"WEATHER // {weather} · VIS {visibility:P0} · RAD +{outdoorRadiation:0}";
+            _emergencyAlertLabel.Text = state.ActiveEmergencyAlerts <= 0
+                ? "ALERTS // NONE ACTIVE"
+                : $"ALERTS // {state.ActiveEmergencyAlerts} ACTIVE"
+                    + (string.IsNullOrWhiteSpace(state.EmergencyAlertText) ? string.Empty : " · " + state.EmergencyAlertText);
+            _emergencyAlertLabel.AddThemeColorOverride(
+                "font_color",
+                AshfallUiHelpers.ToColor(state.ActiveEmergencyAlerts > 0 ? DesignTheme.Critical : DesignTheme.Lethe));
 
             _healthValue.Text = $"{safeHealth}/{safeMaxHealth}";
             _healthBar.MaxValue = safeMaxHealth;
@@ -401,6 +411,10 @@ namespace AtomicWar.GodotApp.UI
             _weatherLabel = AshfallUiHelpers.MakeMono("WEATHER // UNREAD");
             _weatherLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Lethe));
             content.AddChild(_weatherLabel);
+
+            _emergencyAlertLabel = AshfallUiHelpers.MakeMono("ALERTS // NONE ACTIVE");
+            _emergencyAlertLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Lethe));
+            content.AddChild(_emergencyAlertLabel);
             return content;
         }
 

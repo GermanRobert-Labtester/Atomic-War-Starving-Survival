@@ -35,6 +35,17 @@ namespace AtomicWar.GodotApp.Economy
         /// </summary>
         public string CurrentRegion { get; set; } = "settlement";
 
+        /// <summary>
+        /// Plan 215 overlay completion — the lawful player route for switching
+        /// the shelter-wide rationing protocol. Returns a feedback line; the
+        /// canonical ResourceRationingSystem validates and applies.
+        /// </summary>
+        public Func<string, string>? RationingProtocolCommand { get; set; }
+
+        private Label _rationingSummary = null!;
+        private OptionButton _rationingProtocolChoice = null!;
+        private Button _rationingApplyButton = null!;
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.TopRight);
@@ -75,6 +86,28 @@ namespace AtomicWar.GodotApp.Economy
                 CustomMinimumSize = new Vector2(0, 220)
             };
             rootVbox.AddChild(scroll);
+
+            // Plan 215 — rationing overlay readout: the current policy, per-
+            // resource tiers, and active crises from the canonical owner, plus
+            // ONE explicit protocol command. A refresh never mutates policy.
+            rootVbox.AddChild(MakeSection("RATIONING POLICY"));
+            var protocolRow = new HBoxContainer();
+            protocolRow.AddThemeConstantOverride("separation", 8);
+            _rationingProtocolChoice = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _rationingProtocolChoice.TooltipText = "Shelter-wide rationing protocol to apply.";
+            protocolRow.AddChild(_rationingProtocolChoice);
+            _rationingApplyButton = new Button { Text = "APPLY" };
+            _rationingApplyButton.TooltipText = "Apply the selected rationing protocol (validated by the canonical owner).";
+            _rationingApplyButton.Pressed += OnRationingApplyPressed;
+            protocolRow.AddChild(_rationingApplyButton);
+            rootVbox.AddChild(protocolRow);
+            _rationingSummary = new Label
+            {
+                Text = "RATIONING\n  —",
+                AutowrapMode = TextServer.AutowrapMode.WordSmart
+            };
+            _rationingSummary.AddThemeFontSizeOverride("font_size", 11);
+            rootVbox.AddChild(_rationingSummary);
 
             _goodsList = new VBoxContainer();
             scroll.AddChild(_goodsList);
@@ -142,6 +175,7 @@ namespace AtomicWar.GodotApp.Economy
             }
 
             RefreshCommodityTrends();
+            RefreshRationing();
 
             foreach (var good in _session.Catalog.All())
             {
@@ -190,6 +224,81 @@ namespace AtomicWar.GodotApp.Economy
 
                 _goodsList.AddChild(row);
             }
+        }
+
+        /// <summary>
+        /// Plan 215 — rationing overlay readout. Distinguishes policy from
+        /// stock: the multiplier line is policy; stock levels live with the
+        /// inventory owner and are never re-computed here.
+        /// </summary>
+        private void OnRationingApplyPressed()
+        {
+            if (RationingProtocolCommand == null || _rationingProtocolChoice.Selected < 0
+                || _rationingProtocolChoice.ItemCount == 0)
+            {
+                return;
+            }
+            string protocolId = _rationingProtocolChoice.GetItemMetadata(_rationingProtocolChoice.Selected).AsString();
+            if (string.IsNullOrEmpty(protocolId)) return;
+            string feedback = RationingProtocolCommand(protocolId);
+            if (!string.IsNullOrEmpty(feedback) && _rationingSummary != null)
+            {
+                _rationingSummary.Text = feedback;
+            }
+            RefreshView();
+        }
+
+        private void RefreshRationing()
+        {
+            if (_rationingSummary == null || _session == null) return;
+            var rationing = _session.Rationing;
+
+            var previous = _rationingProtocolChoice.Selected >= 0
+                ? _rationingProtocolChoice.GetItemMetadata(_rationingProtocolChoice.Selected).AsString()
+                : null;
+            _rationingProtocolChoice.Clear();
+            foreach (var proto in _session.RationingProtocols)
+            {
+                if (proto == null || string.IsNullOrWhiteSpace(proto.Id)) continue;
+                _rationingProtocolChoice.AddItem(string.IsNullOrEmpty(proto.Name) ? proto.Id : proto.Name);
+                _rationingProtocolChoice.SetItemMetadata(_rationingProtocolChoice.ItemCount - 1, proto.Id);
+            }
+            _rationingProtocolChoice.Selected = _rationingProtocolChoice.ItemCount > 0 ? 0 : -1;
+            if (!string.IsNullOrEmpty(previous))
+            {
+                for (int i = 0; i < _rationingProtocolChoice.ItemCount; i++)
+                {
+                    if (_rationingProtocolChoice.GetItemMetadata(i).AsString() == previous)
+                    {
+                        _rationingProtocolChoice.Select(i);
+                        break;
+                    }
+                }
+            }
+            _rationingApplyButton.Disabled = RationingProtocolCommand == null || _rationingProtocolChoice.ItemCount == 0;
+
+            var lines = new System.Collections.Generic.List<string>();
+            var active = rationing.ActiveProtocol;
+            lines.Add($"  policy: {(active != null ? $"{active.Name} ({rationing.ActiveProtocolId})" : rationing.ActiveProtocolId + " (legacy, definition not loaded)")}");
+            foreach (var target in rationing.RationTargets)
+            {
+                if (target == null || string.IsNullOrWhiteSpace(target.ResourceId)) continue;
+                lines.Add($"  {target.ResourceId}: {target.Tier} (×{target.BaseMultiplier:0.00})");
+            }
+            if (rationing.TargetCount == 0)
+            {
+                lines.Add("  no ration targets set — full allocations");
+            }
+            int activeCrises = rationing.ActiveCrisesCount;
+            lines.Add($"  crises: {(activeCrises == 0 ? "none active" : $"{activeCrises} active")}");
+            _rationingSummary.Text = "RATIONING\n" + string.Join("\n", lines);
+        }
+
+        private static Control MakeSection(string title)
+        {
+            var label = new Label { Text = title };
+            label.AddThemeFontSizeOverride("font_size", 12);
+            return label;
         }
 
         /// <summary>

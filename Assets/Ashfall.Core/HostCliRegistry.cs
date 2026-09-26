@@ -227,6 +227,9 @@ namespace Ashfall.Core
         InterpersonalConflictSelfTest,
         ExerciseSelfTest,
         SurvivorRolesSelfTest,
+        ShelterMuseumSelfTest,
+        RationingSelfTest,
+        GenealogySelfTest,
         AfflictionBridgeSelfTest,
         RadiationMutationSelfTest,
         RadioProgramProductionSelfTest,
@@ -239,7 +242,13 @@ namespace Ashfall.Core
         BestiarySelfTest,
         HealthHistorySelfTest,
         LeadershipSuccessionSelfTest,
-        RecruitmentSelfTest
+        RecruitmentSelfTest,
+        ClothingWarmthSelfTest,
+        EmergencyAlertSelfTest,
+        DiplomacySelfTest,
+        RadiationEconomySelfTest,
+        RadiationSocialSelfTest,
+        TrophySelfTest
     }
 
 
@@ -1331,6 +1340,24 @@ namespace Ashfall.Core
                     new[] { "--specialization-roles-selftest" },
                     "Plan 195: Survivor specialization roles, discipline-gated assignment, earned practice XP, level progression, save persistence, and UI binding"),
                 new HostCliActionDescriptor(
+                    HostCliAction.ShelterMuseumSelfTest,
+                    "Host Domains & Save Stores",
+                    "--shelter-museum-selftest",
+                    new[] { "--museum-selftest" },
+                    "Plan 218: Shelter museum & historical archive, artifact accession, curator, exhibitions, once-per-day visits, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RationingSelfTest,
+                    "Host Domains & Save Stores",
+                    "--rationing-selftest",
+                    new[] { "--ration-selftest" },
+                    "Plan 215: Crisis rationing overlay, authored protocol catalog, lawful protocol command, inventory authorization, restore parity, and panel readout"),
+                new HostCliActionDescriptor(
+                    HostCliAction.GenealogySelfTest,
+                    "Host Domains & Save Stores",
+                    "--genealogy-selftest",
+                    new[] { "--family-tree-selftest" },
+                    "Plan 217: Survivor genealogy, committed kinship facts, union/birth/adoption/death lineage records, restore parity, and read-only projection"),
+                new HostCliActionDescriptor(
                     HostCliAction.RadiationMutationSelfTest,
                     "Host Domains & Save Stores",
                     "--radiation-mutation-selftest",
@@ -1401,7 +1428,43 @@ namespace Ashfall.Core
                     "Host Domains & Save Stores",
                     "--recruitment-selftest",
                     new[] { "--defection-selftest", "--survivor-recruitment-selftest" },
-                    "Plan 204: Survivor recruitment & defection campaigns, templates, offers, admission, and save round-trip")
+                    "Plan 204: Survivor recruitment & defection campaigns, templates, offers, admission, and save round-trip"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ClothingWarmthSelfTest,
+                    "Host Domains & Save Stores",
+                    "--clothing-warmth-selftest",
+                    new[] { "--thermal-clothing-selftest", "--insulation-layers-selftest" },
+                    "Plan 142: Clothing & warmth gear layers, condition wear, wetness penalties, and NeedsSystem cold-loss mitigation"),
+                new HostCliActionDescriptor(
+                    HostCliAction.EmergencyAlertSelfTest,
+                    "Host Domains & Save Stores",
+                    "--emergency-alert-selftest",
+                    new[] { "--alert-selftest", "--emergency-warning-selftest" },
+                    "Plan 194: Emergency alert types, prioritization, response windows, evacuation protocols, and save round-trip"),
+                new HostCliActionDescriptor(
+                    HostCliAction.DiplomacySelfTest,
+                    "Host Domains & Save Stores",
+                    "--diplomacy-selftest",
+                    new[] { "--treaty-selftest", "--faction-diplomacy-selftest" },
+                    "Faction diplomacy: treaty templates, relations, active treaties, missions, and save round-trip"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RadiationEconomySelfTest,
+                    "Host Domains & Save Stores",
+                    "--radiation-economy-selftest",
+                    new[] { "--contaminated-trade-selftest" },
+                    "Radiation economy bridge: contamination price multipliers, trade blocks, and evaluation ledger"),
+                new HostCliActionDescriptor(
+                    HostCliAction.RadiationSocialSelfTest,
+                    "Host Domains & Save Stores",
+                    "--radiation-social-selftest",
+                    new[] { "--dose-bracket-selftest" },
+                    "Radiation social bridge: dose brackets, social penalties, discrimination incidents, and save round-trip"),
+                new HostCliActionDescriptor(
+                    HostCliAction.TrophySelfTest,
+                    "Host Domains & Save Stores",
+                    "--trophy-selftest",
+                    new[] { "--trophies-selftest", "--trophy-mount-selftest" },
+                    "Trophy mount pipeline: catalog, exactly-once quarry awards, unlocked recipes, and save round-trip")
         };
 
 

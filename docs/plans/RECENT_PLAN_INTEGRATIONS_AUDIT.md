@@ -588,7 +588,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: survivor_detail
 - ✅ `cli_flag`: --romance-family-selftest
 - ✅ `tests`: Plan150RomanceFamilyHostIntegrationTests
-- Host reference files (first authority, up to 8): `src/Host/RomanceFamilyHostSession.cs`
+- Host reference files (first authority, up to 8): `src/Host/RomanceFamilyHostSession.cs`, `src/Host/GenealogyHostSession.cs`
 
 ### Plan 151 — Working Animals / Companions — INTEGRATED
 

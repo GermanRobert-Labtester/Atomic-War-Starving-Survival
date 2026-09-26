@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-09-26<br>
-**Total Registered Actions:** 274 entries / 422 flag tokens (aliases included)
+**Total Registered Actions:** 283 entries / 444 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -238,6 +238,9 @@
 | `--interpersonal-conflict-selftest` | `--conflict-system-selftest` | Interpersonal conflict integration probe |
 | `--exercise-selftest` | `--physical-training-selftest` | Exercise and physical training integration probe |
 | `--survivor-roles-selftest` | `--specialization-roles-selftest` | Survivor specialization roles integration probe |
+| `--shelter-museum-selftest` | `--museum-selftest` | Shelter museum & historical archive probe |
+| `--rationing-selftest` | `--ration-selftest` | Crisis rationing overlay probe |
+| `--genealogy-selftest` | `--family-tree-selftest` | Survivor genealogy probe |
 | `--affliction-bridge-selftest` | `--affliction-bridges-selftest`, `--affliction-quest-work-selftest` | Affliction quest-work bridge probe |
 | `--radiation-mutation-selftest` | `--mutation-system-selftest` | Radiation mutation integration probe |
 | `--radio-production-selftest` | `--radio-program-production-selftest` | Radio program production probe |
@@ -251,6 +254,12 @@
 | `--health-history-selftest` | `--medical-records-selftest`, `--vaccination-history-selftest` | Health history integration probe |
 | `--leadership-succession-selftest` | `--succession-selftest`, `--leadership-challenges-selftest` | Leadership succession integration probe |
 | `--recruitment-selftest` | `--defection-selftest`, `--survivor-recruitment-selftest` | Survivor recruitment & defection campaigns probe |
+| `--clothing-warmth-selftest` | `--thermal-clothing-selftest`, `--insulation-layers-selftest` | Clothing & warmth gear layers, wetness, and cold-loss mitigation probe |
+| `--emergency-alert-selftest` | `--alert-selftest`, `--emergency-warning-selftest` | Emergency alert types, response windows, and evacuation protocols probe |
+| `--diplomacy-selftest` | `--treaty-selftest`, `--faction-diplomacy-selftest` | Faction treaties, relations, missions, and reputation probe |
+| `--radiation-economy-selftest` | `--contaminated-trade-selftest` | Contaminated-trade price multipliers and block rules probe |
+| `--radiation-social-selftest` | `--dose-bracket-selftest` | Radiation dose brackets, social penalties, and discrimination probe |
+| `--trophy-selftest` | `--trophies-selftest`, `--trophy-mount-selftest` | Trophy catalog, exactly-once awards, and unlocked recipes probe |
 | `--aging-selftest` | `--elderly-survivor-selftest` | Survivor aging and life-stage compatibility probes |
 | `--atmosphere-selftest` | `--shelter-atmosphere-selftest` | Shelter atmosphere compatibility probes |
 | `--audio-access-selftest` | `--audio-accessibility-selftest` | Audio accessibility compatibility probes |

@@ -179,6 +179,16 @@ namespace Ashfall.Core.Economy
 
         public int ActiveCrisesCount => _state.Crises.Count(c => !c.IsResolved);
         public int TargetCount => _state.Targets.Count;
+
+        /// <summary>
+        /// Plan 215 overlay completion — read-only view of the current ration
+        /// targets for host read models. The system still owns the list; no
+        /// host path may mutate it directly.
+        /// </summary>
+        public IReadOnlyList<RationTarget> RationTargets => _state.Targets;
+
+        /// <summary>Plan 215 probe/read-model accessor — number of recorded rationing events.</summary>
+        public int EventCount => _state.Events.Count;
         public string ActiveProtocolId => _state.ActiveProtocolId;
         public RationingProtocolDefinition? ActiveProtocol =>
             _protocols.TryGetValue(_state.ActiveProtocolId ?? "", out var p) ? p : null;

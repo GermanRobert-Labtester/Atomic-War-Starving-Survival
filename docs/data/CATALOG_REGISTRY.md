@@ -1,7 +1,7 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
 **Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-26
-**Total Catalogs:** 711 | **Total Definitions:** 14407 | **Domain Families:** 32
+**Total Catalogs:** 711 | **Total Definitions:** 14410 | **Domain Families:** 32
 
 > [!IMPORTANT]
 > **DATA AUTHORITY INVARIANT (Invariant 6):**
@@ -61,16 +61,16 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `audio_logs_expansion_05.json` | 30 | `1.0.0` | `ORPHANED` | `AudioConditionSystem` |
 | `cassette_sets.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `VinylMoraleSystem` |
 
-### Combat & Warlords (4 Catalogs, 140 Definitions)
+### Combat & Warlords (4 Catalogs, 137 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `chemical_weapons.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ChemWarfareSystem` |
-| `combat_arenas.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `combat_arenas.json` | 1 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `combat_catalog.json` | 53 | `1.0.0` | `GAMEPLAY_CONSUMED` | `CombatCatalog` |
 | `warlord_doctrines.json` | 78 | `1.0.0` | `GAMEPLAY_CONSUMED` | `WarlordDoctrineCatalog` |
 
-### Core / Miscellaneous (230 Catalogs, 3586 Definitions)
+### Core / Miscellaneous (230 Catalogs, 3590 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -236,7 +236,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `psychological_trauma.json` | 14 | `1.0.0` | `GAMEPLAY_CONSUMED` | `PsychologicalTraumaCatalogLoader, SurvivorMentalHealthSystem` |
 | `psychology_profiles.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `radar_ecm_catalog.json` | 2 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `radiation_hotspot_policy.json` | 0 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `radiation_hotspot_policy.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `rail_grinding_catalog.json` | 3 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RailGrindingCatalogLoader, RailGrindingEngine` |
 | `rail_logistics_catalog.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `RailLogisticsCatalogLoader, RailwaySystem` |
 | `rail_network.json` | 15 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
@@ -259,7 +259,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `routine_templates.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `rumor_hubs.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `runflat_tire_catalog.json` | 3 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `salvage_teardown.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
+| `salvage_teardown.json` | 12 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `sanitation_facilities.json` | 9 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `scavenging_tables.json` | 54 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `seasonal_human_migration.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
@@ -478,12 +478,12 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 |---|---|---|---|---|
 | `dive_sites.json` | 14 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DiveSiteCatalog` |
 
-### Medical & Health (6 Catalogs, 188 Definitions)
+### Medical & Health (6 Catalogs, 189 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
 | `autopsy_procedures.json` | 12 | `1.0.0` | `GAMEPLAY_CONSUMED` | `AutopsyProcedureCatalogLoader` |
-| `disease_catalog.json` | 28 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DiseaseCatalog, DiseaseSystem` |
+| `disease_catalog.json` | 29 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DiseaseCatalog, DiseaseSystem` |
 | `dose_registers.json` | 31 | `1.0.0` | `GAMEPLAY_CONSUMED` | `DoseRegistersCatalog` |
 | `medical_record_templates.json` | 7 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `medical_texts.json` | 83 | `1.0.0` | `GAMEPLAY_CONSUMED` | `MedicalWardSystem` |
@@ -839,7 +839,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `verdict_radio.json` | 30 | `1.0.0` | `GAMEPLAY_CONSUMED` | `Core default` |
 | `year_of_ash_radio.json` | 50 | `1.0.0` | `GAMEPLAY_CONSUMED` | `YearOfAshCatalogLoader` |
 
-### Shelter & Power (16 Catalogs, 281 Definitions)
+### Shelter & Power (16 Catalogs, 282 Definitions)
 
 | Catalog Path | Definitions | Schema | Classification | Primary C# Loader |
 |---|---|---|---|---|
@@ -850,7 +850,7 @@ The following JSON property keys are validated as strict foreign keys by `Catalo
 | `shelter_components.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `shelter_construction.json` | 10 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `shelter_governance_blocs.json` | 4 | `1.0.0` | `UNRESOLVED` | `Core default` |
-| `shelter_insulation_catalog.json` | 4 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ShelterThermalSystem` |
+| `shelter_insulation_catalog.json` | 5 | `1.0.0` | `GAMEPLAY_CONSUMED` | `ShelterThermalSystem` |
 | `shelter_machine_identities.json` | 38 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `shelter_origins.json` | 6 | `1.0.0` | `UNRESOLVED` | `Core default` |
 | `shelter_room_identities.json` | 87 | `1.0.0` | `UNRESOLVED` | `Core default` |
