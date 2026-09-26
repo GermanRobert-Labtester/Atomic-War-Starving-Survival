@@ -94,6 +94,11 @@ namespace AtomicWar.GodotApp
                     $"Candidate successfully admitted to shelter roster (id={admittedCandidate?.CandidateId}).");
 
                 // Check 11: Census reflects operational metrics
+                // (offers made before the tick are resolved by TickDay per the
+                // Core contract pinned in TickDay_CompletesCampaignsAndResolvesDefections,
+                // so a fresh offer is extended afterwards to census pending offers)
+                var postTickCandidate = session.DiscoverCandidate("candidate_faction_deserter", "loc_perimeter", day: 10, currentFaction: "militia");
+                session.MakeDefectionOffer(postTickCandidate.CandidateId, "rations_safety", 50f, day: 10, diplomacySkill: 75);
                 var census = session.GetCensus();
                 Check(census.TotalRecruited >= 1 && census.PendingOffers >= 1,
                     $"Recruitment census reflects live metrics (Recruited={census.TotalRecruited}, Known={census.KnownCandidates}, Offers={census.PendingOffers}).");
@@ -110,13 +115,13 @@ namespace AtomicWar.GodotApp
                     "Save and restore state verified with full round-trip fidelity.");
 
                 Console.WriteLine($"=== [HostCli] Recruitment System Self-Test PASSED ({passed}/12 checks) ===");
-                return 0;
+                return HostCli.EmitSummary("recruitment_selftest", true, 0, passed, 0, $"{passed}/12 checks passed");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"[FAIL] Recruitment self-test threw exception: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
-                return 1;
+                return HostCli.EmitSummary("recruitment_selftest", false, 1, passed, 1, $"unhandled {ex.GetType().Name}: {ex.Message}");
             }
         }
     }

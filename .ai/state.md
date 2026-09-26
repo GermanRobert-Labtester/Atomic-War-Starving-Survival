@@ -1,5 +1,12 @@
 # Current Task State
 
+## PLAN-195-SURVIVOR-SPECIALIZATION-ROLES — FULLY INTEGRATED & SEALED — 2026-09-26 (continuation)
+
+- **Directive:** user "find a plan and start integrating it fully … don't leave the plan as a partial". Plan 195 was the in-flight uncommitted package (claim `claim-plan195-survivor-roles-integration-2026-09-26`); the prior session had landed the code but left the `.ai` execution plan unsealed.
+- **Verification (re-run this session):** Core/tests/host builds 0 errors / 0 warnings; `Plan195SurvivorRoleWiringTests` 7/7; `Plan195SurvivorRoleIntegrationTests` 6/6; runtime `godot --headless -- --survivor-roles-selftest` 12/12 PASS; generated `--check` gates all OK — architecture map 270, save-store matrix 272, CLI catalog 274/422, selftest manifest 210.
+- **Seal/archival:** `.ai/plans/plan195-survivor-roles-integration.md` edited at the top to `FULLY INTEGRATED` (×3) and moved to `.ai/plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md`. Source plan already at `docs/plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md`. No partial residue.
+- **Testing steps used:** 4 / 15. **Iterations:** 4 / 100.
+
 ## PLACEHOLDER-ART-SHELTER-ROOMS — 2026-09-26 (user-authorized lane; COMPLETE)
 
 - **Claim:** `claim-placeholder-art-shelter-rooms-2026-09-26`; plan `.ai/plans/placeholder-art-shelter-rooms-2026-09-26.md` (STATUS: APPROVED BY USER).

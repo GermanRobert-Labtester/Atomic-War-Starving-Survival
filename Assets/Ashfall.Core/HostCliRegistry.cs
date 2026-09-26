@@ -226,6 +226,7 @@ namespace Ashfall.Core
         MemoryDecaySelfTest,
         InterpersonalConflictSelfTest,
         ExerciseSelfTest,
+        SurvivorRolesSelfTest,
         AfflictionBridgeSelfTest,
         RadiationMutationSelfTest,
         RadioProgramProductionSelfTest,
@@ -1323,6 +1324,12 @@ namespace Ashfall.Core
                     "--exercise-selftest",
                     new[] { "--physical-training-selftest" },
                     "Plan 216: Survivor exercise & physical training, athletic conditioning, workout routines, deconditioning, save persistence, and UI binding"),
+                new HostCliActionDescriptor(
+                    HostCliAction.SurvivorRolesSelfTest,
+                    "Host Domains & Save Stores",
+                    "--survivor-roles-selftest",
+                    new[] { "--specialization-roles-selftest" },
+                    "Plan 195: Survivor specialization roles, discipline-gated assignment, earned practice XP, level progression, save persistence, and UI binding"),
                 new HostCliActionDescriptor(
                     HostCliAction.RadiationMutationSelfTest,
                     "Host Domains & Save Stores",

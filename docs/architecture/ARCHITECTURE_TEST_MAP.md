@@ -1,9 +1,9 @@
 # ASHFALL — Evidence-Derived Architecture & Verification Graph
 
 **Last Verified:** 2026-09-26<br>
-**Total Subsystems Mapped:** 269/269 (100.0%)<br>
-**Verified End-to-End Coverage:** 159/269 (59.1% across all 6 vertical layers)<br>
-**Status Breakdown:** Implemented: 269/269 | Constructed: 263/269 | Ticked: 269/269 | Persisted: 269/269 | Routed: 176/269 | Tested: 213/269<br>
+**Total Subsystems Mapped:** 270/270 (100.0%)<br>
+**Verified End-to-End Coverage:** 160/270 (59.3% across all 6 vertical layers)<br>
+**Status Breakdown:** Implemented: 270/270 | Constructed: 264/270 | Ticked: 270/270 | Persisted: 270/270 | Routed: 177/270 | Tested: 214/270<br>
 **Single Source of Truth:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` & `Assets/Ashfall.Core/HostCliRegistry.cs`
 
 > **GENERATED FILE — do not edit by hand.**
@@ -295,35 +295,36 @@ Every subsystem in ASHFALL is verified against six distinct, non-fungible lifecy
 | 238 | `romance_family` | Survivors | `RomanceFamilySystem`, `RomanticRelationship`, `FamilyUnit`, `RomanceCourtshipCatalog`, `RomanceFamilyCensus`, `RomanceCourtshipCatalogLoader` | `romance_courtship.json` | `Main`, `RomanceFamilyHostSession` | `RomanceFamilySaveStore` | `SurvivorDetailPanel` | `--romance-family-selftest`, `Plan150RomanceFamilyHostIntegrationTests`, `Plan150RomanceFamilyIntegrationTests`, `RomanceCourtshipCatalogLoaderTests` | ✅ 6/6 |
 | 239 | `skill_certifications` | Survivors | `SkillCertificationSystem`, `SkillCertificationState`, `SkillCertificationCensus` | `skill_certifications.json` | `Main`, `SkillCertificationHostSession` | `SkillCertificationSaveStore` | *None (GAP)* | `--skill-certification-selftest`, `Plan180SkillCertificationTests` | ❌ GAP |
 | 240 | `survivor_dreams` | Survivors | `DreamSystem`, `DreamSystemState`, `DreamCensus` | `dream_templates.json` | `Main`, `DreamHostSession` | `DreamSaveStore` | *None (GAP)* | `--dream-system-selftest`, `Plan177DreamSleepIntegrationTests` | ❌ GAP |
-| 241 | `survivor_routines` | Survivors | `SurvivorRoutineSystem`, `RoutineTemplateCatalogLoader`, `SurvivorRoutineCensus` | `routine_templates.json` | `Main`, `SurvivorRoutineHostSession` | `SurvivorRoutineSaveStore` | `SurvivorDetailPanel` | `--survivor-routines-selftest`, `Plan188SurvivorRoutineIntegrationTests`, `RoutineTemplateCatalogLoaderTests` | ✅ 6/6 |
-| 242 | `survivor_voice` | Survivors | `SurvivorVoiceSystem`, `VoiceLineDispatchCoordinator` | `survivor_voice_lines.json` | `Main`, `SurvivorVoiceHostSession` | `SurvivorVoiceSaveStore` | *None (GAP)* | `--survivor-voice-selftest`, `Plan42SurvivorVoiceHostIntegrationTests`, `SurvivorVoiceSystemTests` | ❌ GAP |
-| 243 | `hidden_agenda` | Survivors (Plan 132) | `HiddenAgendaSystem` | — *(Procedural)* | `HiddenAgendaHostSession` | `HiddenAgendaSaveStore` | `HiddenAgendaPanel`, `GameDashboardPanel` | `--hidden-agenda-selftest`, `Plan132HiddenAgendaIntegrationTests`, `HiddenAgendaSystemTests` | ✅ 6/6 |
-| 244 | `combat` | Tactical Combat | `TacticalCombatSystem`, `CombatTraumaSystem` | `combat_catalog.json` | `CombatHostSession` | `CombatSaveStore` | `CombatPanel`, `CombatDetailPanel`, `CombatHistoryPanel` | `--combat-selftest`, `CombatBallisticsTests` | ✅ 6/6 |
-| 245 | `technical_material_archive` | Technical Material Archive | `TechnicalMaterialArchiveSystem` | `hemp_fiber_hackling_logs.json`, `wire_rope_stranding_assays.json`, `manila_hawser_breakage_reports.json`, `rope_transmission_splicing_audits.json`, `neoprene_gasket_degradation_logs.json`, `aramid_fiber_rot_reports.json`, `tire_retreading_compound_logs.json`, `celluloid_film_decomposition_records.json` | `Main` | `TechnicalMaterialArchiveSaveStore` | *None (GAP)* | , `TechnicalMaterialArchiveTests`, `CordageCableCatalogTests`, `PolymerTextileCatalogTests` | ❌ GAP |
-| 246 | `vehicle_customization` | Vehicles | `VehicleCustomizationSystem`, `VehicleCustomizationCatalog`, `VehicleModule`, `VehicleCustomizationCensus`, `VehicleModuleCatalogLoader` | `vehicle_modules.json` | `Main`, `VehicleCustomizationHostSession` | `VehicleCustomizationSaveStore` | *None (GAP)* | `--vehicle-customization-selftest`, `Plan152VehicleCustomizationHostIntegrationTests`, `Plan152VehicleCustomizationIntegrationTests`, `VehicleModuleCatalogLoaderTests` | ❌ GAP |
-| 247 | `visitor_integration` | Visitors | `VisitorIntegrationSystem`, `VisitorCatalogData` | `visitor_templates.json` | `Main`, `VisitorIntegrationHostSession` | `VisitorIntegrationSaveStore` | `VisitorIntegrationPanel`, `GameDashboardPanel` | `--visitor-integration-selftest`, `Plan214VisitorIntegrationTests` | ✅ 6/6 |
-| 248 | `deep_well` | Water & Infrastructure | `DeepWellSystem` | — *(Procedural)* | `DeepWellHostSession`, `DeepWellSaveStore` | `DeepWellSaveStore` | `WaterTreatmentPanel` | `--water-sources-selftest`, `DeepWellSystemTests`, `WaterSourcesSurfaceWiringTests` | ✅ 6/6 |
-| 249 | `piezometer_network` | Water & Infrastructure | `AquiferPiezometerEngine` | `piezometer_network_catalog.json` | `PiezometerHostSession` | `PiezometerSaveStore` | `WaterTreatmentPanel` | `--water-sources-selftest`, `Plan189IntakeAdvisoryBridgeTests`, `WaterSourcesSurfaceWiringTests` | ✅ 6/6 |
-| 250 | `water_condenser` | Water & Infrastructure | `AtmosphericCondenserSystem` | — *(Procedural)* | `WaterCondenserHostSession`, `WaterCondenserSaveStore` | `WaterCondenserSaveStore` | `WaterTreatmentPanel` | `--water-sources-selftest`, `AtmosphericCondenserSystemTests`, `WaterSourcesSurfaceWiringTests` | ✅ 6/6 |
-| 251 | `weather_cascade` | Weather | `WeatherCascadeSystem`, `WeatherGameplayCascadeEngine`, `WeatherCascadeSeverity`, `WeatherCascadeCatalogLoader` | `weather_gameplay_effects.json`, `weather_effects.json` | `WeatherCascadeHostSession`, `Main` | `WeatherCascadeSaveStore` | *None (GAP)* | `--weather-cascade-selftest`, `Plan135WeatherCascadeHostIntegrationTests`, `Plan135WeatherCascadeIntegrationTests` | ❌ GAP |
-| 252 | `ecological_infestation` | World | `EcologicalInfestationSystem` | `micro_locations.json` | `Main` | `EcologicalInfestationSaveStore` | `GameDashboardPanel` | `--faction-ecology-selftest`, `EcologicalInfestationSystemTests` | ✅ 6/6 |
-| 253 | `geodetic_survey` | World | `GeodeticSurveyEngine` | — *(Procedural)* | `GeodeticSurveySaveStore` | `GeodeticSurveySaveStore` | *None (GAP)* | ,  | ❌ GAP |
-| 254 | `human_migration` | World | `SeasonalHumanMigrationEngine`, `SeasonalMigrationCatalogLoader`, `HumanMigrationCensus` | `seasonal_human_migration.json` | `Main`, `HumanMigrationHostSession` | `HumanMigrationSaveStore` | *None (GAP)* | `--human-migration-selftest`, `Plan199HumanMigrationHostIntegrationTests`, `SeasonalHumanMigrationEngineTests` | ❌ GAP |
-| 255 | `nuclear_winter_progression` | World | `NuclearWinterProgressionSystem` | `nuclear_winter_phases.json` | `Main` | `NuclearWinterSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan164NuclearWinterIntegrationTests` | ❌ GAP |
-| 256 | `route_infrastructure` | World | `RouteInfrastructureSystem` | — *(Procedural)* | `RouteInfrastructureSaveStore` | `RouteInfrastructureSaveStore` | *None (GAP)* | , `RouteInfrastructureSystemTests` | ❌ GAP |
-| 257 | `storm_forecast` | World | `StormForecastLedger`, `StormForecastState`, `StormForecastCensus`, `StormForecastReadinessEngine` | — *(Procedural)* | `Main`, `StormForecastHostSession` | `StormForecastSaveStore` | *None (GAP)* | `--storm-forecast-selftest`, `StormForecastReadinessEngineTests`, `StormForecastLedgerTests` | ❌ GAP |
-| 258 | `subterranean` | World | `SubterraneanSystem` | `subterranean_zones.json` | `SubterraneanHostSession` | `SubterraneanSaveStore` | *None (GAP)* | , `SubterraneanSystemTests` | ❌ GAP |
-| 259 | `amphibious_draisine` | World & Expeditions | `AmphibiousDraisineEngine` | `amphibious_draisine_catalog.json` | `AmphibiousDraisineHostSession` | `AmphibiousDraisineSaveStore` | `AmphibiousDraisinePanel` | `--plans-122-125-selftest`, `Plan125AmphibiousDraisineEngineTests` | ✅ 6/6 |
-| 260 | `armored_crawlers` | World & Expeditions | `ArmoredCrawlerExpeditionSystem` | `armored_crawler_modules.json` | `Main` | `ArmoredCrawlerSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FlagshipIntegrationIxSmokeTests` | ✅ 6/6 |
-| 261 | `encounter_choice` | World & Expeditions | `EncounterChoiceResolver` | `door_encounters.json` | `EncounterChoiceState` | `EncounterChoiceSaveStore` | `DoorEncounterModal` | `--moral-choice-selftest`, `EncounterChoiceResolverTests` | ❌ GAP |
-| 262 | `expedition` | World & Expeditions | `ExpeditionSystem`, `ExpeditionEncounterBridge` | `locations.json` | `ExpeditionHostSession` | `ExpeditionSaveStore` | `ExpeditionPanel` | `--expedition-selftest`, `--expedition-panel-uitest`, `ExpeditionCampSystemTests` | ✅ 6/6 |
-| 263 | `insar_deformation` | World & Expeditions | `InSarDeformationEngine` | `insar_geodesy_catalog.json` | `InSarMappingHostSession` | `InSarMappingSaveStore` | `InSarMappingPanel` | `--plans-139-141-selftest`, `Plan139InSarDeformationTests` | ✅ 6/6 |
-| 264 | `runflat_tire` | World & Expeditions | `RunFlatTireEngine` | `runflat_tire_catalog.json` | `RunFlatTireHostSession` | `RunFlatTireSaveStore` | `RunFlatTirePanel` | `--plans-139-141-selftest`, `Plan141RunFlatTireTests` | ✅ 6/6 |
-| 265 | `travel_encounters` | World & Expeditions | `TravelEncounterSystem`, `TravelEncounterCatalog` | `travel_encounters.json` | `TravelEncounterSystem` | `TravelEncounterSaveStore` | `ExpeditionPanel` | `--expedition-encounter-bridge-selftest`, `TravelEncounterCooldownGroupTests`, `PatrolEncounterFullRegressionTests` | ✅ 6/6 |
-| 266 | `wasteland_map` | World & Expeditions | `WastelandMapSystem` | `wasteland_map_v1.json` | `WorldHostSession` | `WastelandMapSaveStore` | `MapPanel` | `--world-selftest`, `WastelandMapPersistenceTests` | ✅ 6/6 |
-| 267 | `waystation` | World & Expeditions | `WaystationSystem` | `locations.json` | `WaystationHostSession` | `WaystationSaveStore` | `WaystationNetworkPanel` | `--shelter-operations-selftest`, `WaystationSystemTests` | ✅ 6/6 |
-| 268 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
-| 269 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
+| 241 | `survivor_roles` | Survivors | `SurvivorRoleSystem`, `SurvivorRoleState` | `survivor_roles.json` | `Main`, `SurvivorRoleHostSession` | `SurvivorRoleSaveStore` | `SurvivorDetailPanel` | `--survivor-roles-selftest`, `Plan195SurvivorRoleIntegrationTests`, `Plan195SurvivorRoleWiringTests` | ✅ 6/6 |
+| 242 | `survivor_routines` | Survivors | `SurvivorRoutineSystem`, `RoutineTemplateCatalogLoader`, `SurvivorRoutineCensus` | `routine_templates.json` | `Main`, `SurvivorRoutineHostSession` | `SurvivorRoutineSaveStore` | `SurvivorDetailPanel` | `--survivor-routines-selftest`, `Plan188SurvivorRoutineIntegrationTests`, `RoutineTemplateCatalogLoaderTests` | ✅ 6/6 |
+| 243 | `survivor_voice` | Survivors | `SurvivorVoiceSystem`, `VoiceLineDispatchCoordinator` | `survivor_voice_lines.json` | `Main`, `SurvivorVoiceHostSession` | `SurvivorVoiceSaveStore` | *None (GAP)* | `--survivor-voice-selftest`, `Plan42SurvivorVoiceHostIntegrationTests`, `SurvivorVoiceSystemTests` | ❌ GAP |
+| 244 | `hidden_agenda` | Survivors (Plan 132) | `HiddenAgendaSystem` | — *(Procedural)* | `HiddenAgendaHostSession` | `HiddenAgendaSaveStore` | `HiddenAgendaPanel`, `GameDashboardPanel` | `--hidden-agenda-selftest`, `Plan132HiddenAgendaIntegrationTests`, `HiddenAgendaSystemTests` | ✅ 6/6 |
+| 245 | `combat` | Tactical Combat | `TacticalCombatSystem`, `CombatTraumaSystem` | `combat_catalog.json` | `CombatHostSession` | `CombatSaveStore` | `CombatPanel`, `CombatDetailPanel`, `CombatHistoryPanel` | `--combat-selftest`, `CombatBallisticsTests` | ✅ 6/6 |
+| 246 | `technical_material_archive` | Technical Material Archive | `TechnicalMaterialArchiveSystem` | `hemp_fiber_hackling_logs.json`, `wire_rope_stranding_assays.json`, `manila_hawser_breakage_reports.json`, `rope_transmission_splicing_audits.json`, `neoprene_gasket_degradation_logs.json`, `aramid_fiber_rot_reports.json`, `tire_retreading_compound_logs.json`, `celluloid_film_decomposition_records.json` | `Main` | `TechnicalMaterialArchiveSaveStore` | *None (GAP)* | , `TechnicalMaterialArchiveTests`, `CordageCableCatalogTests`, `PolymerTextileCatalogTests` | ❌ GAP |
+| 247 | `vehicle_customization` | Vehicles | `VehicleCustomizationSystem`, `VehicleCustomizationCatalog`, `VehicleModule`, `VehicleCustomizationCensus`, `VehicleModuleCatalogLoader` | `vehicle_modules.json` | `Main`, `VehicleCustomizationHostSession` | `VehicleCustomizationSaveStore` | *None (GAP)* | `--vehicle-customization-selftest`, `Plan152VehicleCustomizationHostIntegrationTests`, `Plan152VehicleCustomizationIntegrationTests`, `VehicleModuleCatalogLoaderTests` | ❌ GAP |
+| 248 | `visitor_integration` | Visitors | `VisitorIntegrationSystem`, `VisitorCatalogData` | `visitor_templates.json` | `Main`, `VisitorIntegrationHostSession` | `VisitorIntegrationSaveStore` | `VisitorIntegrationPanel`, `GameDashboardPanel` | `--visitor-integration-selftest`, `Plan214VisitorIntegrationTests` | ✅ 6/6 |
+| 249 | `deep_well` | Water & Infrastructure | `DeepWellSystem` | — *(Procedural)* | `DeepWellHostSession`, `DeepWellSaveStore` | `DeepWellSaveStore` | `WaterTreatmentPanel` | `--water-sources-selftest`, `DeepWellSystemTests`, `WaterSourcesSurfaceWiringTests` | ✅ 6/6 |
+| 250 | `piezometer_network` | Water & Infrastructure | `AquiferPiezometerEngine` | `piezometer_network_catalog.json` | `PiezometerHostSession` | `PiezometerSaveStore` | `WaterTreatmentPanel` | `--water-sources-selftest`, `Plan189IntakeAdvisoryBridgeTests`, `WaterSourcesSurfaceWiringTests` | ✅ 6/6 |
+| 251 | `water_condenser` | Water & Infrastructure | `AtmosphericCondenserSystem` | — *(Procedural)* | `WaterCondenserHostSession`, `WaterCondenserSaveStore` | `WaterCondenserSaveStore` | `WaterTreatmentPanel` | `--water-sources-selftest`, `AtmosphericCondenserSystemTests`, `WaterSourcesSurfaceWiringTests` | ✅ 6/6 |
+| 252 | `weather_cascade` | Weather | `WeatherCascadeSystem`, `WeatherGameplayCascadeEngine`, `WeatherCascadeSeverity`, `WeatherCascadeCatalogLoader` | `weather_gameplay_effects.json`, `weather_effects.json` | `WeatherCascadeHostSession`, `Main` | `WeatherCascadeSaveStore` | *None (GAP)* | `--weather-cascade-selftest`, `Plan135WeatherCascadeHostIntegrationTests`, `Plan135WeatherCascadeIntegrationTests` | ❌ GAP |
+| 253 | `ecological_infestation` | World | `EcologicalInfestationSystem` | `micro_locations.json` | `Main` | `EcologicalInfestationSaveStore` | `GameDashboardPanel` | `--faction-ecology-selftest`, `EcologicalInfestationSystemTests` | ✅ 6/6 |
+| 254 | `geodetic_survey` | World | `GeodeticSurveyEngine` | — *(Procedural)* | `GeodeticSurveySaveStore` | `GeodeticSurveySaveStore` | *None (GAP)* | ,  | ❌ GAP |
+| 255 | `human_migration` | World | `SeasonalHumanMigrationEngine`, `SeasonalMigrationCatalogLoader`, `HumanMigrationCensus` | `seasonal_human_migration.json` | `Main`, `HumanMigrationHostSession` | `HumanMigrationSaveStore` | *None (GAP)* | `--human-migration-selftest`, `Plan199HumanMigrationHostIntegrationTests`, `SeasonalHumanMigrationEngineTests` | ❌ GAP |
+| 256 | `nuclear_winter_progression` | World | `NuclearWinterProgressionSystem` | `nuclear_winter_phases.json` | `Main` | `NuclearWinterSaveStore` | *None (GAP)* | `--orphan-seal-wave1-selftest`, `Plan164NuclearWinterIntegrationTests` | ❌ GAP |
+| 257 | `route_infrastructure` | World | `RouteInfrastructureSystem` | — *(Procedural)* | `RouteInfrastructureSaveStore` | `RouteInfrastructureSaveStore` | *None (GAP)* | , `RouteInfrastructureSystemTests` | ❌ GAP |
+| 258 | `storm_forecast` | World | `StormForecastLedger`, `StormForecastState`, `StormForecastCensus`, `StormForecastReadinessEngine` | — *(Procedural)* | `Main`, `StormForecastHostSession` | `StormForecastSaveStore` | *None (GAP)* | `--storm-forecast-selftest`, `StormForecastReadinessEngineTests`, `StormForecastLedgerTests` | ❌ GAP |
+| 259 | `subterranean` | World | `SubterraneanSystem` | `subterranean_zones.json` | `SubterraneanHostSession` | `SubterraneanSaveStore` | *None (GAP)* | , `SubterraneanSystemTests` | ❌ GAP |
+| 260 | `amphibious_draisine` | World & Expeditions | `AmphibiousDraisineEngine` | `amphibious_draisine_catalog.json` | `AmphibiousDraisineHostSession` | `AmphibiousDraisineSaveStore` | `AmphibiousDraisinePanel` | `--plans-122-125-selftest`, `Plan125AmphibiousDraisineEngineTests` | ✅ 6/6 |
+| 261 | `armored_crawlers` | World & Expeditions | `ArmoredCrawlerExpeditionSystem` | `armored_crawler_modules.json` | `Main` | `ArmoredCrawlerSaveStore` | `GameDashboardPanel` | `--save-store-checksum-selftest`, `FlagshipIntegrationIxSmokeTests` | ✅ 6/6 |
+| 262 | `encounter_choice` | World & Expeditions | `EncounterChoiceResolver` | `door_encounters.json` | `EncounterChoiceState` | `EncounterChoiceSaveStore` | `DoorEncounterModal` | `--moral-choice-selftest`, `EncounterChoiceResolverTests` | ❌ GAP |
+| 263 | `expedition` | World & Expeditions | `ExpeditionSystem`, `ExpeditionEncounterBridge` | `locations.json` | `ExpeditionHostSession` | `ExpeditionSaveStore` | `ExpeditionPanel` | `--expedition-selftest`, `--expedition-panel-uitest`, `ExpeditionCampSystemTests` | ✅ 6/6 |
+| 264 | `insar_deformation` | World & Expeditions | `InSarDeformationEngine` | `insar_geodesy_catalog.json` | `InSarMappingHostSession` | `InSarMappingSaveStore` | `InSarMappingPanel` | `--plans-139-141-selftest`, `Plan139InSarDeformationTests` | ✅ 6/6 |
+| 265 | `runflat_tire` | World & Expeditions | `RunFlatTireEngine` | `runflat_tire_catalog.json` | `RunFlatTireHostSession` | `RunFlatTireSaveStore` | `RunFlatTirePanel` | `--plans-139-141-selftest`, `Plan141RunFlatTireTests` | ✅ 6/6 |
+| 266 | `travel_encounters` | World & Expeditions | `TravelEncounterSystem`, `TravelEncounterCatalog` | `travel_encounters.json` | `TravelEncounterSystem` | `TravelEncounterSaveStore` | `ExpeditionPanel` | `--expedition-encounter-bridge-selftest`, `TravelEncounterCooldownGroupTests`, `PatrolEncounterFullRegressionTests` | ✅ 6/6 |
+| 267 | `wasteland_map` | World & Expeditions | `WastelandMapSystem` | `wasteland_map_v1.json` | `WorldHostSession` | `WastelandMapSaveStore` | `MapPanel` | `--world-selftest`, `WastelandMapPersistenceTests` | ✅ 6/6 |
+| 268 | `waystation` | World & Expeditions | `WaystationSystem` | `locations.json` | `WaystationHostSession` | `WaystationSaveStore` | `WaystationNetworkPanel` | `--shelter-operations-selftest`, `WaystationSystemTests` | ✅ 6/6 |
+| 269 | `wildlife_trapping` | World & Expeditions | `WildlifeTrappingSystem` | — *(Procedural)* | `WildlifeTrappingHostSession` | `WildlifeTrappingSaveStore` | `WildlifeTrappingPanel` | `--shelter-operations-selftest`, `WildlifeTrappingSystemTests` | ✅ 6/6 |
+| 270 | `world` | World & Expeditions | `WastelandMapSystem`, `WeatherSystem` | `locations.json` | `WorldHostSession` | `WorldSaveStore` | `MapPanel`, `WeatherPanel` | `--world-selftest`, `WorldSaveablesTests` | ✅ 6/6 |
 
 ---
 
@@ -375,7 +376,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 4. `endgame` — Campaign endgame phase, ending selection, sealed epilogue report (Campaign & Lore)
 - **Owner Domain:** `endgame`
 - **Setup Method:** `Main.SetupEndgame()` | **Invoked:** yes | **Cadence:** `On-Demand (Day Threshold / Extinction)`
-- **Setup Invocation Sites:** `src/Main.Application.cs:877`, `src/Main.Endgame.cs:48`, `src/Main.Holdfast.cs:299`, `src/Main.PlayerSurfaces.cs:459`, `src/Main.SaveOrchestrator.cs:283`
+- **Setup Invocation Sites:** `src/Main.Application.cs:880`, `src/Main.Endgame.cs:48`, `src/Main.Holdfast.cs:299`, `src/Main.PlayerSurfaces.cs:459`, `src/Main.SaveOrchestrator.cs:283`
 - **UI Routes:** `epilogue`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Endgame/CampaignOutcomeEvaluator.cs`](../../Assets/Ashfall.Core/Endgame/CampaignOutcomeEvaluator.cs)
@@ -402,7 +403,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 6. `journal` — Player journal, logs, and codex entries (Campaign & Lore)
 - **Owner Domain:** `journal`
 - **Setup Method:** `Main.SetupJournal()` | **Invoked:** yes | **Cadence:** `On-Demand (Log/Event)`
-- **Setup Invocation Sites:** `src/Main.Application.cs:860`, `src/Main.CampaignOwners.cs:1889`, `src/Main.CampaignOwners.cs:1976`, `src/Main.CampaignOwners.cs:2097`, `src/Main.CampaignServices.cs:47`, `src/Main.Codex.cs:74`, `src/Main.Codex.cs:91`, `src/Main.Codex.cs:102`, `src/Main.DutyRoster.cs:40`, `src/Main.Echoes.cs:27`, `src/Main.Echoes.cs:101`, `src/Main.Echoes.cs:129`, `src/Main.EcologicalInfestations.cs:70`, `src/Main.EcologicalInfestations.cs:158`, `src/Main.EcologicalInfestations.cs:178`, `src/Main.EcologicalInfestations.cs:211`, `src/Main.Economy.cs:223`, `src/Main.ExpandedShelterSystems.cs:61`, `src/Main.ExpandedShelterSystems.cs:99`, `src/Main.ExpandedShelterSystems.cs:631`, `src/Main.ExpandedShelterSystems.cs:699`, `src/Main.ExpandedShelterSystems.cs:715`, `src/Main.Expeditions.cs:815`, `src/Main.GameFlow.cs:452`, `src/Main.GameFlow.cs:501`, `src/Main.GameFlow.cs:540`, `src/Main.GameFlow.cs:547`, `src/Main.GameFlow.cs:589`, `src/Main.GameFlow.cs:681`, `src/Main.Lifecycle.cs:647`, `src/Main.Maritime.cs:56`, `src/Main.Medical.cs:603`, `src/Main.MoralChoice.cs:36`, `src/Main.MoralChoice.cs:273`, `src/Main.MoralChoice.cs:290`, `src/Main.MoralChoice.cs:318`, `src/Main.MoraleContagion.cs:95`, `src/Main.Narrative.cs:319`, `src/Main.Narrative.cs:460`, `src/Main.Narrative.cs:468`, `src/Main.Narrative.cs:591`, `src/Main.Phase0.cs:113`, `src/Main.Plans147.cs:217`, `src/Main.Plans152.cs:278`, `src/Main.Plans162_165.cs:400`, `src/Main.Plans162_185.cs:21`, `src/Main.Plans162_185.cs:106`, `src/Main.Plans166_169.cs:117`, `src/Main.Plans62_65.cs:208`, `src/Main.PlayerSurfaces.cs:239`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:348`, `src/Main.PlayerSurfaces.cs:389`, `src/Main.PlayerSurfaces.cs:394`, `src/Main.PlayerSurfaces.cs:474`, `src/Main.ShelterInfrastructure.cs:162`, `src/Main.ShelterSocial.cs:406`, `src/Main.ShelterSocial.cs:439`, `src/Main.Spiritual.cs:74`, `src/Main.UiHandlers.cs:40`, `src/Main.UiHandlers.cs:57`, `src/Main.UiHandlers.cs:113`, `src/Main.UiHandlers.cs:129`, `src/Main.UiHandlers.cs:139`, `src/Main.UiPanels.cs:1010`, `src/Main.UiPanels.cs:1035`, `src/Main.UiPanels.cs:1051`, `src/Main.VisitorIntegration.cs:95`, `src/Main.YearOfAsh.cs:499`, `src/Main.Zealotry.cs:64`
+- **Setup Invocation Sites:** `src/Main.Application.cs:863`, `src/Main.CampaignOwners.cs:1889`, `src/Main.CampaignOwners.cs:1976`, `src/Main.CampaignOwners.cs:2097`, `src/Main.CampaignServices.cs:47`, `src/Main.Codex.cs:74`, `src/Main.Codex.cs:91`, `src/Main.Codex.cs:102`, `src/Main.DutyRoster.cs:40`, `src/Main.Echoes.cs:27`, `src/Main.Echoes.cs:101`, `src/Main.Echoes.cs:129`, `src/Main.EcologicalInfestations.cs:70`, `src/Main.EcologicalInfestations.cs:158`, `src/Main.EcologicalInfestations.cs:178`, `src/Main.EcologicalInfestations.cs:211`, `src/Main.Economy.cs:223`, `src/Main.ExpandedShelterSystems.cs:61`, `src/Main.ExpandedShelterSystems.cs:99`, `src/Main.ExpandedShelterSystems.cs:631`, `src/Main.ExpandedShelterSystems.cs:699`, `src/Main.ExpandedShelterSystems.cs:715`, `src/Main.Expeditions.cs:815`, `src/Main.GameFlow.cs:452`, `src/Main.GameFlow.cs:501`, `src/Main.GameFlow.cs:540`, `src/Main.GameFlow.cs:547`, `src/Main.GameFlow.cs:589`, `src/Main.GameFlow.cs:681`, `src/Main.Lifecycle.cs:648`, `src/Main.Maritime.cs:56`, `src/Main.Medical.cs:603`, `src/Main.MoralChoice.cs:36`, `src/Main.MoralChoice.cs:273`, `src/Main.MoralChoice.cs:290`, `src/Main.MoralChoice.cs:318`, `src/Main.MoraleContagion.cs:95`, `src/Main.Narrative.cs:319`, `src/Main.Narrative.cs:460`, `src/Main.Narrative.cs:468`, `src/Main.Narrative.cs:591`, `src/Main.Phase0.cs:113`, `src/Main.Plans147.cs:217`, `src/Main.Plans152.cs:278`, `src/Main.Plans162_165.cs:400`, `src/Main.Plans162_185.cs:21`, `src/Main.Plans162_185.cs:106`, `src/Main.Plans166_169.cs:117`, `src/Main.Plans62_65.cs:208`, `src/Main.PlayerSurfaces.cs:239`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:348`, `src/Main.PlayerSurfaces.cs:389`, `src/Main.PlayerSurfaces.cs:394`, `src/Main.PlayerSurfaces.cs:474`, `src/Main.ShelterInfrastructure.cs:162`, `src/Main.ShelterSocial.cs:406`, `src/Main.ShelterSocial.cs:439`, `src/Main.Spiritual.cs:74`, `src/Main.UiHandlers.cs:40`, `src/Main.UiHandlers.cs:57`, `src/Main.UiHandlers.cs:113`, `src/Main.UiHandlers.cs:129`, `src/Main.UiHandlers.cs:139`, `src/Main.UiPanels.cs:1010`, `src/Main.UiPanels.cs:1035`, `src/Main.UiPanels.cs:1051`, `src/Main.VisitorIntegration.cs:95`, `src/Main.YearOfAsh.cs:499`, `src/Main.Zealotry.cs:64`
 - **UI Routes:** `journal`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Journal/JournalSystem.cs`](../../Assets/Ashfall.Core/Journal/JournalSystem.cs)
@@ -415,7 +416,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 7. `memorial` — Fallen survivors memorial wall (Campaign & Lore)
 - **Owner Domain:** `memorial`
 - **Setup Method:** `Main.SetupMemorial()` | **Invoked:** yes | **Cadence:** `On-Demand (Survivor Fallen Eulogy)`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2258`, `src/Main.Endgame.cs:254`, `src/Main.Lifecycle.cs:664`, `src/Main.Medical.cs:71`, `src/Main.MedicalTriage.cs:172`, `src/Main.Plans162_185.cs:107`, `src/Main.SaveOrchestrator.cs:229`, `src/Main.ShelterBatch3.cs:357`, `src/Main.SurvivorFate.cs:31`, `src/Main.UiPanels.cs:1324`, `src/Main.UnifiedEnding.cs:76`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2258`, `src/Main.Endgame.cs:254`, `src/Main.Lifecycle.cs:665`, `src/Main.Medical.cs:71`, `src/Main.MedicalTriage.cs:172`, `src/Main.Plans162_185.cs:107`, `src/Main.SaveOrchestrator.cs:229`, `src/Main.ShelterBatch3.cs:357`, `src/Main.SurvivorFate.cs:31`, `src/Main.UiPanels.cs:1324`, `src/Main.UnifiedEnding.cs:76`
 - **UI Routes:** `status`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Memorial/MemorialSystem.cs`](../../Assets/Ashfall.Core/Memorial/MemorialSystem.cs)
@@ -536,7 +537,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 17. `narrative_questlines` — Survivor narrative questline arcs and crisis branch outcomes (Campaign & Quests)
 - **Owner Domain:** `quests`
 - **Setup Method:** `Main.SetupNarrativeQuestlines()` | **Invoked:** yes | **Cadence:** `On-Demand (Survivor Narrative Arc Progression)`
-- **Setup Invocation Sites:** `src/Main.Application.cs:883`, `src/Main.NarrativeQuestlines.cs:65`, `src/Main.NarrativeQuestlines.cs:99`, `src/Main.NarrativeQuestlines.cs:174`, `src/Main.NarrativeQuestlines.cs:227`, `src/Main.NarrativeQuestlines.cs:238`, `src/Main.SaveOrchestrator.cs:296`
+- **Setup Invocation Sites:** `src/Main.Application.cs:886`, `src/Main.NarrativeQuestlines.cs:65`, `src/Main.NarrativeQuestlines.cs:99`, `src/Main.NarrativeQuestlines.cs:174`, `src/Main.NarrativeQuestlines.cs:227`, `src/Main.NarrativeQuestlines.cs:238`, `src/Main.SaveOrchestrator.cs:296`
 - **UI Routes:** `quests`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Quests/NarrativeQuestlineSystem.cs`](../../Assets/Ashfall.Core/Quests/NarrativeQuestlineSystem.cs)
@@ -605,7 +606,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 23. `sky_defense_battery` — Kinetic sky-layer counter-battery: turret state, magazine, tracks, maintenance (Combat)
 - **Owner Domain:** `combat`
 - **Setup Method:** `Main.SetupSkyDefense()` | **Invoked:** yes | **Cadence:** `On-Demand`
-- **Setup Invocation Sites:** `src/Main.Lifecycle.cs:661`
+- **Setup Invocation Sites:** `src/Main.Lifecycle.cs:662`
 - **UI Routes:** `sky_defense_battery`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/SkyDefense/SkyDefenseBatterySystem.cs`](../../Assets/Ashfall.Core/SkyDefense/SkyDefenseBatterySystem.cs)
@@ -662,7 +663,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 27. `chemical_synthesis` — Chemical synthesis retorts and apparatus (Crafting & Chemistry)
 - **Owner Domain:** `crafting`
 - **Setup Method:** `Main.SetupChemicalSynthesis()` | **Invoked:** yes | **Cadence:** `On-Demand (Retort Synthesis)`
-- **Setup Invocation Sites:** `src/Main.Application.cs:884`, `src/Main.SaveOrchestrator.cs:297`
+- **Setup Invocation Sites:** `src/Main.Application.cs:887`, `src/Main.SaveOrchestrator.cs:297`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Crafting/ChemicalSynthesisSystem.cs`](../../Assets/Ashfall.Core/Crafting/ChemicalSynthesisSystem.cs)
@@ -673,7 +674,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 28. `culture_creation` — Plan 178 — Art and culture creation: survivor artworks, masterworks, cultural identity, and display morale bonus (Culture)
 - **Owner Domain:** `culture`
 - **Setup Method:** `Main.SetupCultureCreation()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2798`, `src/Main.CampaignOwners.cs:2809`, `src/Main.CultureCreation.cs:18`, `src/Main.SaveOrchestrator.cs:343`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2798`, `src/Main.CampaignOwners.cs:2809`, `src/Main.CultureCreation.cs:18`, `src/Main.SaveOrchestrator.cs:344`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Culture/CultureCreationSystem.cs`](../../Assets/Ashfall.Core/Culture/CultureCreationSystem.cs)
@@ -699,7 +700,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 30. `black_market` — Plan 211 — underworld contacts, stock snapshots, debts, heat, and trust (Economy & Trade)
 - **Owner Domain:** `economy`
 - **Setup Method:** `Main.SetupBlackMarket()` | **Invoked:** yes | **Cadence:** `Daily Underworld Tick`
-- **Setup Invocation Sites:** `src/Main.BlackMarket.cs:21`, `src/Main.BlackMarket.cs:73`, `src/Main.CampaignOwners.cs:1771`, `src/Main.CampaignOwners.cs:1781`, `src/Main.Lifecycle.cs:663`, `src/Main.SaveOrchestrator.cs:207`
+- **Setup Invocation Sites:** `src/Main.BlackMarket.cs:21`, `src/Main.BlackMarket.cs:73`, `src/Main.CampaignOwners.cs:1771`, `src/Main.CampaignOwners.cs:1781`, `src/Main.Lifecycle.cs:664`, `src/Main.SaveOrchestrator.cs:207`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Economy/BlackMarketInventoryCatalog.cs`](../../Assets/Ashfall.Core/Economy/BlackMarketInventoryCatalog.cs)
@@ -736,7 +737,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 33. `economy` — Dynamic economy rates and market orders (Economy & Trade)
 - **Owner Domain:** `economy`
 - **Setup Method:** `Main.SetupEconomy()` | **Invoked:** yes | **Cadence:** `Daily Market Rate Tick`
-- **Setup Invocation Sites:** `src/Main.BlackMarket.cs:31`, `src/Main.CampaignOwners.cs:1176`, `src/Main.CampaignOwners.cs:1186`, `src/Main.CampaignOwners.cs:1993`, `src/Main.CampaignServices.cs:46`, `src/Main.Economy.cs:120`, `src/Main.Economy.cs:127`, `src/Main.Economy.cs:173`, `src/Main.Economy.cs:224`, `src/Main.GameFlow.cs:441`, `src/Main.GameFlow.cs:442`, `src/Main.GameFlow.cs:610`, `src/Main.Lifecycle.cs:659`, `src/Main.PlayerSurfaces.cs:225`, `src/Main.PlayerSurfaces.cs:414`, `src/Main.SaveOrchestrator.cs:203`
+- **Setup Invocation Sites:** `src/Main.BlackMarket.cs:31`, `src/Main.CampaignOwners.cs:1176`, `src/Main.CampaignOwners.cs:1186`, `src/Main.CampaignOwners.cs:1993`, `src/Main.CampaignServices.cs:46`, `src/Main.Economy.cs:120`, `src/Main.Economy.cs:127`, `src/Main.Economy.cs:173`, `src/Main.Economy.cs:224`, `src/Main.GameFlow.cs:441`, `src/Main.GameFlow.cs:442`, `src/Main.GameFlow.cs:610`, `src/Main.Lifecycle.cs:660`, `src/Main.PlayerSurfaces.cs:225`, `src/Main.PlayerSurfaces.cs:414`, `src/Main.SaveOrchestrator.cs:203`
 - **UI Routes:** `trade`, `economy_detail`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Economy/MarketSystem.cs`](../../Assets/Ashfall.Core/Economy/MarketSystem.cs)
@@ -791,7 +792,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 37. `expansion_hub` — Expansion hub discovery state (Expansion Framework)
 - **Owner Domain:** `expansion_hub`
 - **Setup Method:** `Main.SetupExpansions()` | **Invoked:** yes | **Cadence:** `Daily Hub Tick`
-- **Setup Invocation Sites:** `src/Main.Application.cs:868`, `src/Main.CampaignOwners.cs:1062`, `src/Main.CampaignOwners.cs:2177`, `src/Main.CampaignServices.cs:69`, `src/Main.DebtCredit.cs:157`, `src/Main.Economy.cs:221`, `src/Main.Endgame.cs:250`, `src/Main.ExpansionHub.cs:128`, `src/Main.ExpansionHub.cs:140`, `src/Main.ExpansionHub.cs:155`, `src/Main.ExpansionHub.cs:165`, `src/Main.ExpansionHub.cs:175`, `src/Main.ExpansionHub.cs:184`, `src/Main.ExpansionHub.cs:205`, `src/Main.ExpansionHub.cs:227`, `src/Main.ExpansionHub.cs:253`, `src/Main.ExpansionHub.cs:265`, `src/Main.ExpansionHub.cs:275`, `src/Main.ExpansionHub.cs:287`, `src/Main.ExpansionHub.cs:297`, `src/Main.GameFlow.cs:517`, `src/Main.GameFlow.cs:538`, `src/Main.GameFlow.cs:560`, `src/Main.GameFlow.cs:574`, `src/Main.GameFlow.cs:603`, `src/Main.GameFlow.cs:620`, `src/Main.GameFlow.cs:633`, `src/Main.GameFlow.cs:638`, `src/Main.GameFlow.cs:655`, `src/Main.Medical.cs:537`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:361`, `src/Main.PlayerSurfaces.cs:375`, `src/Main.PlayerSurfaces.cs:409`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.PlayerSurfaces.cs:429`, `src/Main.PlayerSurfaces.cs:434`, `src/Main.PlayerSurfaces.cs:449`, `src/Main.PlayerSurfaces.cs:661`, `src/Main.SaveOrchestrator.cs:218`, `src/Main.UiHandlers.cs:82`, `src/Main.UiHandlers.cs:98`, `src/Main.UiHandlers.cs:127`, `src/Main.UiHandlers.cs:169`, `src/Main.UiHandlers.cs:180`, `src/Main.UiHandlers.cs:261`, `src/Main.UnifiedEnding.cs:72`, `src/Main.World.cs:64`, `src/Main.World.cs:152`
+- **Setup Invocation Sites:** `src/Main.Application.cs:871`, `src/Main.CampaignOwners.cs:1062`, `src/Main.CampaignOwners.cs:2177`, `src/Main.CampaignServices.cs:69`, `src/Main.DebtCredit.cs:157`, `src/Main.Economy.cs:221`, `src/Main.Endgame.cs:250`, `src/Main.ExpansionHub.cs:128`, `src/Main.ExpansionHub.cs:140`, `src/Main.ExpansionHub.cs:155`, `src/Main.ExpansionHub.cs:165`, `src/Main.ExpansionHub.cs:175`, `src/Main.ExpansionHub.cs:184`, `src/Main.ExpansionHub.cs:205`, `src/Main.ExpansionHub.cs:227`, `src/Main.ExpansionHub.cs:253`, `src/Main.ExpansionHub.cs:265`, `src/Main.ExpansionHub.cs:275`, `src/Main.ExpansionHub.cs:287`, `src/Main.ExpansionHub.cs:297`, `src/Main.GameFlow.cs:517`, `src/Main.GameFlow.cs:538`, `src/Main.GameFlow.cs:560`, `src/Main.GameFlow.cs:574`, `src/Main.GameFlow.cs:603`, `src/Main.GameFlow.cs:620`, `src/Main.GameFlow.cs:633`, `src/Main.GameFlow.cs:638`, `src/Main.GameFlow.cs:655`, `src/Main.Medical.cs:537`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:361`, `src/Main.PlayerSurfaces.cs:375`, `src/Main.PlayerSurfaces.cs:409`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.PlayerSurfaces.cs:429`, `src/Main.PlayerSurfaces.cs:434`, `src/Main.PlayerSurfaces.cs:449`, `src/Main.PlayerSurfaces.cs:661`, `src/Main.SaveOrchestrator.cs:218`, `src/Main.UiHandlers.cs:82`, `src/Main.UiHandlers.cs:98`, `src/Main.UiHandlers.cs:127`, `src/Main.UiHandlers.cs:169`, `src/Main.UiHandlers.cs:180`, `src/Main.UiHandlers.cs:261`, `src/Main.UnifiedEnding.cs:72`, `src/Main.World.cs:64`, `src/Main.World.cs:152`
 - **UI Routes:** `expansions`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/ExpansionMasterSession.cs`](../../Assets/Ashfall.Core/ExpansionMasterSession.cs)
@@ -843,7 +844,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 41. `duty_roster` — Duty roster shifts and assignments (Expansions (Exp 02))
 - **Owner Domain:** `duty_roster`
 - **Setup Method:** `Main.SetupDutyRoster()` | **Invoked:** yes | **Cadence:** `Daily Shift Tick`
-- **Setup Invocation Sites:** `src/Main.Application.cs:862`, `src/Main.CampaignOwners.cs:1367`, `src/Main.CampaignOwners.cs:1570`, `src/Main.CampaignOwners.cs:1663`, `src/Main.CampaignServices.cs:55`, `src/Main.DutyRoster.cs:123`, `src/Main.DutyRoster.cs:129`, `src/Main.DutyRoster.cs:137`, `src/Main.DutyRoster.cs:144`, `src/Main.DutyRoster.cs:151`, `src/Main.DutyRoster.cs:159`, `src/Main.DutyRoster.cs:166`, `src/Main.ExpandedShelterSystems.cs:92`, `src/Main.GameFlow.cs:575`, `src/Main.GameFlow.cs:622`, `src/Main.GameFlow.cs:683`, `src/Main.GameFlow.cs:689`, `src/Main.Lifecycle.cs:654`, `src/Main.MoraleContagion.cs:30`, `src/Main.NightWatch.cs:30`, `src/Main.PlayerSurfaces.cs:375`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.PlayerSurfaces.cs:474`, `src/Main.PlayerSurfaces.cs:479`, `src/Main.SaveOrchestrator.cs:209`, `src/Main.ShelterBatch3.cs:159`, `src/Main.ShelterBatch3.cs:202`, `src/Main.ShelterBatch3.cs:228`, `src/Main.ShelterBatch3.cs:249`, `src/Main.ShelterBatch3.cs:269`, `src/Main.ShelterSocial.cs:486`, `src/Main.ShelterSocial.cs:525`, `src/Main.ShelterSocial.cs:568`, `src/Main.SurvivorFate.cs:34`, `src/Main.SurvivorFitness.cs:225`, `src/Main.SurvivorFitness.cs:237`, `src/Main.SurvivorFitness.cs:424`, `src/Main.SurvivorSocial.cs:22`, `src/Main.UiHandlers.cs:83`
+- **Setup Invocation Sites:** `src/Main.Application.cs:865`, `src/Main.CampaignOwners.cs:1367`, `src/Main.CampaignOwners.cs:1570`, `src/Main.CampaignOwners.cs:1663`, `src/Main.CampaignServices.cs:55`, `src/Main.DutyRoster.cs:123`, `src/Main.DutyRoster.cs:129`, `src/Main.DutyRoster.cs:137`, `src/Main.DutyRoster.cs:144`, `src/Main.DutyRoster.cs:151`, `src/Main.DutyRoster.cs:159`, `src/Main.DutyRoster.cs:166`, `src/Main.ExpandedShelterSystems.cs:92`, `src/Main.GameFlow.cs:575`, `src/Main.GameFlow.cs:622`, `src/Main.GameFlow.cs:683`, `src/Main.GameFlow.cs:689`, `src/Main.Lifecycle.cs:655`, `src/Main.MoraleContagion.cs:30`, `src/Main.NightWatch.cs:30`, `src/Main.PlayerSurfaces.cs:375`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.PlayerSurfaces.cs:474`, `src/Main.PlayerSurfaces.cs:479`, `src/Main.SaveOrchestrator.cs:209`, `src/Main.ShelterBatch3.cs:159`, `src/Main.ShelterBatch3.cs:202`, `src/Main.ShelterBatch3.cs:228`, `src/Main.ShelterBatch3.cs:249`, `src/Main.ShelterBatch3.cs:269`, `src/Main.ShelterSocial.cs:486`, `src/Main.ShelterSocial.cs:525`, `src/Main.ShelterSocial.cs:568`, `src/Main.SurvivorFate.cs:34`, `src/Main.SurvivorFitness.cs:225`, `src/Main.SurvivorFitness.cs:237`, `src/Main.SurvivorFitness.cs:424`, `src/Main.SurvivorSocial.cs:22`, `src/Main.UiHandlers.cs:83`
 - **UI Routes:** `duty_roster`, `duty_roster_detail`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs`](../../Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs)
@@ -882,7 +883,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 44. `year_of_ash` — The Year of Ash harsh winter state (Expansions (Exp 05))
 - **Owner Domain:** `year_of_ash`
 - **Setup Method:** `Main.SetupYearOfAsh()` | **Invoked:** yes | **Cadence:** `Daily Deep-Freeze Tick`
-- **Setup Invocation Sites:** `src/Main.Application.cs:871`, `src/Main.CampaignOwners.cs:1960`, `src/Main.CampaignOwners.cs:2167`, `src/Main.CampaignServices.cs:53`, `src/Main.DebtCredit.cs:64`, `src/Main.Expeditions.cs:100`, `src/Main.Expeditions.cs:249`, `src/Main.Expeditions.cs:288`, `src/Main.Expeditions.cs:350`, `src/Main.GameFlow.cs:542`, `src/Main.GameFlow.cs:561`, `src/Main.Narrative.cs:491`, `src/Main.Narrative.cs:499`, `src/Main.Plans166_169.cs:44`, `src/Main.Plans166_169.cs:154`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:361`, `src/Main.PlayerSurfaces.cs:626`, `src/Main.PlayerSurfaces.cs:878`, `src/Main.SaveOrchestrator.cs:217`, `src/Main.UiHandlers.cs:99`, `src/Main.UiHandlers.cs:131`, `src/Main.YearOfAsh.cs:369`, `src/Main.YearOfAsh.cs:426`, `src/Main.YearOfAsh.cs:527`
+- **Setup Invocation Sites:** `src/Main.Application.cs:874`, `src/Main.CampaignOwners.cs:1960`, `src/Main.CampaignOwners.cs:2167`, `src/Main.CampaignServices.cs:53`, `src/Main.DebtCredit.cs:64`, `src/Main.Expeditions.cs:100`, `src/Main.Expeditions.cs:249`, `src/Main.Expeditions.cs:288`, `src/Main.Expeditions.cs:350`, `src/Main.GameFlow.cs:542`, `src/Main.GameFlow.cs:561`, `src/Main.Narrative.cs:491`, `src/Main.Narrative.cs:499`, `src/Main.Plans166_169.cs:44`, `src/Main.Plans166_169.cs:154`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:361`, `src/Main.PlayerSurfaces.cs:626`, `src/Main.PlayerSurfaces.cs:878`, `src/Main.SaveOrchestrator.cs:217`, `src/Main.UiHandlers.cs:99`, `src/Main.UiHandlers.cs:131`, `src/Main.YearOfAsh.cs:369`, `src/Main.YearOfAsh.cs:426`, `src/Main.YearOfAsh.cs:527`
 - **UI Routes:** `door_encounter`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/YearOfAsh/YearOfAshDeepFreezeSystem.cs`](../../Assets/Ashfall.Core/YearOfAsh/YearOfAshDeepFreezeSystem.cs)
@@ -907,7 +908,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 46. `dose_ledger` — Survivor radiation dose ledger & cohorts (Expansions (Exp 07))
 - **Owner Domain:** `dose_ledger`
 - **Setup Method:** `Main.SetupDoseLedger()` | **Invoked:** yes | **Cadence:** `On-Demand (Dose Log)`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1020`, `src/Main.CampaignServices.cs:62`, `src/Main.DutyRoster.cs:103`, `src/Main.Endgame.cs:255`, `src/Main.Expeditions.cs:770`, `src/Main.Lifecycle.cs:651`, `src/Main.MedicalTriage.cs:53`, `src/Main.Phase0.cs:416`, `src/Main.Phase0.cs:422`, `src/Main.Phase0.cs:431`, `src/Main.Phase0.cs:440`, `src/Main.Phase0.cs:449`, `src/Main.Phase0.cs:458`, `src/Main.SaveOrchestrator.cs:215`, `src/Main.ShelterSocial.cs:497`, `src/Main.SurvivorFitness.cs:116`, `src/Main.UnifiedEnding.cs:77`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1020`, `src/Main.CampaignServices.cs:62`, `src/Main.DutyRoster.cs:103`, `src/Main.Endgame.cs:255`, `src/Main.Expeditions.cs:770`, `src/Main.Lifecycle.cs:652`, `src/Main.MedicalTriage.cs:53`, `src/Main.Phase0.cs:416`, `src/Main.Phase0.cs:422`, `src/Main.Phase0.cs:431`, `src/Main.Phase0.cs:440`, `src/Main.Phase0.cs:449`, `src/Main.Phase0.cs:458`, `src/Main.SaveOrchestrator.cs:215`, `src/Main.ShelterSocial.cs:497`, `src/Main.SurvivorFitness.cs:116`, `src/Main.UnifiedEnding.cs:77`
 - **UI Routes:** `radiation_history`, `radiation_detail`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/DoseLedgerSystem.cs`](../../Assets/Ashfall.Core/DoseLedgerSystem.cs)
@@ -1038,7 +1039,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 57. `vehicle_garage` — Plans 50-53 — expedition overland vehicle modifications and garage maintenance state (Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupVehicleGarage()` | **Invoked:** yes | **Cadence:** `On-Demand`
-- **Setup Invocation Sites:** `src/Main.Lifecycle.cs:662`
+- **Setup Invocation Sites:** `src/Main.Lifecycle.cs:663`
 - **UI Routes:** `vehicle_garage`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Expeditions/VehicleArmorGradeCatalog.cs`](../../Assets/Ashfall.Core/Expeditions/VehicleArmorGradeCatalog.cs)
@@ -1119,7 +1120,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 64. `weight_of_choices` — Weight of choices faction branch progression and PoNR commitments (Factions & Diplomacy)
 - **Owner Domain:** `factions`
 - **Setup Method:** `Main.SetupFactionBranch()` | **Invoked:** yes | **Cadence:** `On-Demand (Branch Decisions)`
-- **Setup Invocation Sites:** `src/Main.CampaignServices.cs:57`, `src/Main.FactionBranch.cs:68`, `src/Main.FactionBranch.cs:84`, `src/Main.GameFlow.cs:562`, `src/Main.GameFlow.cs:576`, `src/Main.Lifecycle.cs:658`, `src/Main.PlayerSurfaces.cs:361`, `src/Main.PlayerSurfaces.cs:375`, `src/Main.SaveOrchestrator.cs:234`, `src/Main.UiHandlers.cs:84`, `src/Main.UiHandlers.cs:100`, `src/Main.UnifiedEnding.cs:78`
+- **Setup Invocation Sites:** `src/Main.CampaignServices.cs:57`, `src/Main.FactionBranch.cs:68`, `src/Main.FactionBranch.cs:84`, `src/Main.GameFlow.cs:562`, `src/Main.GameFlow.cs:576`, `src/Main.Lifecycle.cs:659`, `src/Main.PlayerSurfaces.cs:361`, `src/Main.PlayerSurfaces.cs:375`, `src/Main.SaveOrchestrator.cs:234`, `src/Main.UiHandlers.cs:84`, `src/Main.UiHandlers.cs:100`, `src/Main.UnifiedEnding.cs:78`
 - **UI Routes:** `factions`, `quests`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Factions/FactionBranchCoordinator.cs`](../../Assets/Ashfall.Core/Factions/FactionBranchCoordinator.cs)
@@ -1339,7 +1340,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 81. `collectible_discovery` — One-time collectible discovery ledger (Inventory & Lore)
 - **Owner Domain:** `inventory`
 - **Setup Method:** `Main.SetupCollectibles()` | **Invoked:** yes | **Cadence:** `On-Demand (One-Time Discovery Ledger)`
-- **Setup Invocation Sites:** `src/Main.Application.cs:878`, `src/Main.SaveOrchestrator.cs:298`
+- **Setup Invocation Sites:** `src/Main.Application.cs:881`, `src/Main.SaveOrchestrator.cs:298`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/CollectibleDiscoveryState.cs`](../../Assets/Ashfall.Core/CollectibleDiscoveryState.cs)
@@ -1351,7 +1352,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 82. `unique_claims` — Global unique-item claim ledger (Inventory & Lore)
 - **Owner Domain:** `inventory`
 - **Setup Method:** `Main.SetupCollectibles()` | **Invoked:** yes | **Cadence:** `On-Demand (Global Unique Claim Ledger)`
-- **Setup Invocation Sites:** `src/Main.Application.cs:878`, `src/Main.SaveOrchestrator.cs:298`
+- **Setup Invocation Sites:** `src/Main.Application.cs:881`, `src/Main.SaveOrchestrator.cs:298`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/UniqueItemClaimRegistry.cs`](../../Assets/Ashfall.Core/UniqueItemClaimRegistry.cs)
@@ -1473,7 +1474,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 92. `health_history` — Plan 198 — Longitudinal health histories, diagnostic logs, recovery events, vaccination tracking, and health trends (Medical)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupHealthHistory()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2910`, `src/Main.CampaignOwners.cs:2921`, `src/Main.Expeditions.cs:761`, `src/Main.HealthHistory.cs:19`, `src/Main.SaveOrchestrator.cs:347`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2910`, `src/Main.CampaignOwners.cs:2921`, `src/Main.Expeditions.cs:761`, `src/Main.HealthHistory.cs:19`, `src/Main.SaveOrchestrator.cs:348`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Medical/HealthHistorySystem.cs`](../../Assets/Ashfall.Core/Medical/HealthHistorySystem.cs)
@@ -1496,7 +1497,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 94. `medical_pipeline` — Diagnosis knowledge, treatment reservations, scheduled procedures (Task #133) (Medical)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMedical()` | **Invoked:** yes | **Cadence:** `On-Demand (Triage & Procedure Commands)`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1489`, `src/Main.CampaignOwners.cs:1515`, `src/Main.CampaignServices.cs:40`, `src/Main.DutyRoster.cs:50`, `src/Main.ExpandedShelterSystems.cs:102`, `src/Main.GameFlow.cs:411`, `src/Main.GameFlow.cs:505`, `src/Main.GameFlow.cs:627`, `src/Main.Lifecycle.cs:657`, `src/Main.Medical.cs:103`, `src/Main.Medical.cs:194`, `src/Main.Medical.cs:212`, `src/Main.Medical.cs:223`, `src/Main.Medical.cs:461`, `src/Main.Phase0.cs:102`, `src/Main.Phase0.cs:116`, `src/Main.PlayerSurfaces.cs:168`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.SaveOrchestrator.cs:178`, `src/Main.ShelterBatch3.cs:279`, `src/Main.SurvivorFitness.cs:65`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1489`, `src/Main.CampaignOwners.cs:1515`, `src/Main.CampaignServices.cs:40`, `src/Main.DutyRoster.cs:50`, `src/Main.ExpandedShelterSystems.cs:102`, `src/Main.GameFlow.cs:411`, `src/Main.GameFlow.cs:505`, `src/Main.GameFlow.cs:627`, `src/Main.Lifecycle.cs:658`, `src/Main.Medical.cs:103`, `src/Main.Medical.cs:194`, `src/Main.Medical.cs:212`, `src/Main.Medical.cs:223`, `src/Main.Medical.cs:461`, `src/Main.Phase0.cs:102`, `src/Main.Phase0.cs:116`, `src/Main.PlayerSurfaces.cs:168`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.SaveOrchestrator.cs:178`, `src/Main.ShelterBatch3.cs:279`, `src/Main.SurvivorFitness.cs:65`
 - **UI Routes:** `medical`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs`](../../Assets/Ashfall.Core/Medical/MedicalPipelineCoordinator.cs)
@@ -1567,7 +1568,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 100. `bestiary_knowledge` — Plan 187 — Bestiary creature discovery, sighting records, tiered lore unlocks, kill and butcher tracking (Narrative)
 - **Owner Domain:** `hunting`
 - **Setup Method:** `Main.SetupBestiary()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
-- **Setup Invocation Sites:** `src/Main.Bestiary.cs:18`, `src/Main.CampaignOwners.cs:2882`, `src/Main.CampaignOwners.cs:2893`, `src/Main.SaveOrchestrator.cs:346`
+- **Setup Invocation Sites:** `src/Main.Bestiary.cs:18`, `src/Main.CampaignOwners.cs:2882`, `src/Main.CampaignOwners.cs:2893`, `src/Main.SaveOrchestrator.cs:347`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Bestiary/BestiarySystem.cs`](../../Assets/Ashfall.Core/Bestiary/BestiarySystem.cs)
@@ -1669,7 +1670,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 108. `moral_choice` — Moral choice ledger and community trust (Narrative & Decisions)
 - **Owner Domain:** `events`
 - **Setup Method:** `Main.SetupMoralChoice()` | **Invoked:** yes | **Cadence:** `On-Demand (Branch Choice)`
-- **Setup Invocation Sites:** `src/Main.Application.cs:874`, `src/Main.CampaignOwners.cs:2157`, `src/Main.CampaignServices.cs:58`, `src/Main.FactionBranch.cs:69`, `src/Main.GameFlow.cs:563`, `src/Main.GameFlow.cs:577`, `src/Main.GameFlow.cs:582`, `src/Main.MoralChoice.cs:103`, `src/Main.MoralChoice.cs:110`, `src/Main.MoralChoice.cs:170`, `src/Main.MoralChoice.cs:182`, `src/Main.MoralChoice.cs:190`, `src/Main.MoralChoice.cs:201`, `src/Main.MoralChoice.cs:301`, `src/Main.MoralChoice.cs:328`, `src/Main.PlayerSurfaces.cs:361`, `src/Main.PlayerSurfaces.cs:375`, `src/Main.PlayerSurfaces.cs:384`, `src/Main.SaveOrchestrator.cs:353`, `src/Main.ShelterSocial.cs:329`, `src/Main.UiHandlers.cs:85`, `src/Main.UiHandlers.cs:101`, `src/Main.UiHandlers.cs:181`, `src/Main.UiHandlers.cs:211`
+- **Setup Invocation Sites:** `src/Main.Application.cs:877`, `src/Main.CampaignOwners.cs:2157`, `src/Main.CampaignServices.cs:58`, `src/Main.FactionBranch.cs:69`, `src/Main.GameFlow.cs:563`, `src/Main.GameFlow.cs:577`, `src/Main.GameFlow.cs:582`, `src/Main.MoralChoice.cs:103`, `src/Main.MoralChoice.cs:110`, `src/Main.MoralChoice.cs:170`, `src/Main.MoralChoice.cs:182`, `src/Main.MoralChoice.cs:190`, `src/Main.MoralChoice.cs:201`, `src/Main.MoralChoice.cs:301`, `src/Main.MoralChoice.cs:328`, `src/Main.PlayerSurfaces.cs:361`, `src/Main.PlayerSurfaces.cs:375`, `src/Main.PlayerSurfaces.cs:384`, `src/Main.SaveOrchestrator.cs:354`, `src/Main.ShelterSocial.cs:329`, `src/Main.UiHandlers.cs:85`, `src/Main.UiHandlers.cs:101`, `src/Main.UiHandlers.cs:181`, `src/Main.UiHandlers.cs:211`
 - **UI Routes:** `status`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/MoralChoice/MoralChoiceState.cs`](../../Assets/Ashfall.Core/MoralChoice/MoralChoiceState.cs)
@@ -2136,7 +2137,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 146. `psychological_profiles` — Plan 179 — Unified psychology and phobia profiles: phobias, coping mechanisms, resilience, and therapy (Psychology)
 - **Owner Domain:** `psychology`
 - **Setup Method:** `Main.SetupPsychologicalProfiles()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2826`, `src/Main.CampaignOwners.cs:2837`, `src/Main.PsychologicalProfiles.cs:19`, `src/Main.SaveOrchestrator.cs:344`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2826`, `src/Main.CampaignOwners.cs:2837`, `src/Main.PsychologicalProfiles.cs:19`, `src/Main.SaveOrchestrator.cs:345`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Psychology/PsychologicalProfileSystem.cs`](../../Assets/Ashfall.Core/Psychology/PsychologicalProfileSystem.cs)
@@ -2170,7 +2171,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 149. `personal_quests` — Survivor personal quest progression (Quests)
 - **Owner Domain:** `quests`
 - **Setup Method:** `Main.SetupPersonalQuests()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
-- **Setup Invocation Sites:** `src/Main.Application.cs:882`, `src/Main.ExpandedShelterSystems.cs:152`, `src/Main.PersonalQuests.cs:22`, `src/Main.SaveOrchestrator.cs:295`
+- **Setup Invocation Sites:** `src/Main.Application.cs:885`, `src/Main.ExpandedShelterSystems.cs:152`, `src/Main.PersonalQuests.cs:22`, `src/Main.SaveOrchestrator.cs:295`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Quests/PersonalQuestSystem.cs`](../../Assets/Ashfall.Core/Quests/PersonalQuestSystem.cs)
@@ -2725,7 +2726,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 194. `greenhouse` — Hydroponic crops and food production (Shelter & Infrastructure)
 - **Owner Domain:** `greenhouse`
 - **Setup Method:** `Main.SetupGreenhouse()` | **Invoked:** yes | **Cadence:** `Daily Hydroponic Growth`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1061`, `src/Main.CampaignServices.cs:50`, `src/Main.GameFlow.cs:598`, `src/Main.GameFlow.cs:621`, `src/Main.Lifecycle.cs:660`, `src/Main.Plans162_165.cs:35`, `src/Main.PlayerSurfaces.cs:404`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.SaveOrchestrator.cs:221`, `src/Main.World.cs:63`, `src/Main.World.cs:151`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1061`, `src/Main.CampaignServices.cs:50`, `src/Main.GameFlow.cs:598`, `src/Main.GameFlow.cs:621`, `src/Main.Lifecycle.cs:661`, `src/Main.Plans162_165.cs:35`, `src/Main.PlayerSurfaces.cs:404`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.SaveOrchestrator.cs:221`, `src/Main.World.cs:63`, `src/Main.World.cs:151`
 - **UI Routes:** `greenhouse`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Greenhouse/GreenhouseSystem.cs`](../../Assets/Ashfall.Core/Greenhouse/GreenhouseSystem.cs)
@@ -2799,7 +2800,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 200. `shelter_fire` — Shelter fire incidents, smoke, and brigade response (Shelter & Infrastructure)
 - **Owner Domain:** `shelter`
 - **Setup Method:** `Main.SetupShelterFireHazard()` | **Invoked:** yes | **Cadence:** `Daily Fire Propagation Tick`
-- **Setup Invocation Sites:** `src/Main.Application.cs:879`, `src/Main.CampaignOwners.cs:1284`, `src/Main.CampaignOwners.cs:1292`, `src/Main.CampaignOwners.cs:1299`, `src/Main.PlayerSurfaces.cs:518`, `src/Main.SaveOrchestrator.cs:299`, `src/Main.ShelterInfrastructure.cs:643`, `src/Main.UiHandlers.cs:249`
+- **Setup Invocation Sites:** `src/Main.Application.cs:882`, `src/Main.CampaignOwners.cs:1284`, `src/Main.CampaignOwners.cs:1292`, `src/Main.CampaignOwners.cs:1299`, `src/Main.PlayerSurfaces.cs:518`, `src/Main.SaveOrchestrator.cs:299`, `src/Main.ShelterInfrastructure.cs:643`, `src/Main.UiHandlers.cs:249`
 - **UI Routes:** `fire_incident`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Shelter/ShelterFireHazardSystem.cs`](../../Assets/Ashfall.Core/Shelter/ShelterFireHazardSystem.cs)
@@ -2904,7 +2905,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 208. `crafting` — Known recipes and workbench queues (Shelter & Logistics)
 - **Owner Domain:** `crafting`
 - **Setup Method:** `Main.SetupCrafting()` | **Invoked:** yes | **Cadence:** `Daily Workbench Queue`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1046`, `src/Main.CampaignServices.cs:43`, `src/Main.ExpandedShelterSystems.cs:100`, `src/Main.GameFlow.cs:491`, `src/Main.Lifecycle.cs:655`, `src/Main.Phase0.cs:114`, `src/Main.Plans166_169.cs:40`, `src/Main.Plans74_77.cs:28`, `src/Main.Plans74_77.cs:58`, `src/Main.PlayerSurfaces.cs:274`, `src/Main.PlayerSurfaces.cs:279`, `src/Main.PlayerSurfaces.cs:299`, `src/Main.PlayerSurfaces.cs:304`, `src/Main.PlayerSurfaces.cs:636`, `src/Main.SaveOrchestrator.cs:197`, `src/Main.UiHandlers.cs:19`, `src/Main.World.cs:426`, `src/Main.World.cs:432`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1046`, `src/Main.CampaignServices.cs:43`, `src/Main.ExpandedShelterSystems.cs:100`, `src/Main.GameFlow.cs:491`, `src/Main.Lifecycle.cs:656`, `src/Main.Phase0.cs:114`, `src/Main.Plans166_169.cs:40`, `src/Main.Plans74_77.cs:28`, `src/Main.Plans74_77.cs:58`, `src/Main.PlayerSurfaces.cs:274`, `src/Main.PlayerSurfaces.cs:279`, `src/Main.PlayerSurfaces.cs:299`, `src/Main.PlayerSurfaces.cs:304`, `src/Main.PlayerSurfaces.cs:636`, `src/Main.SaveOrchestrator.cs:197`, `src/Main.UiHandlers.cs:19`, `src/Main.World.cs:426`, `src/Main.World.cs:432`
 - **UI Routes:** `crafting`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Crafting/CraftingSystem.cs`](../../Assets/Ashfall.Core/Crafting/CraftingSystem.cs)
@@ -2928,7 +2929,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 210. `inventory` — Shelter warehouse & items storage (Shelter & Logistics)
 - **Owner Domain:** `inventory`
 - **Setup Method:** `Main.SetupInventory()` | **Invoked:** yes | **Cadence:** `On-Demand (Item Use)`
-- **Setup Invocation Sites:** `src/Main.AdvancedShelterSystems.cs:44`, `src/Main.AdvancedShelterSystems.cs:100`, `src/Main.AdvancedShelterSystems.cs:158`, `src/Main.AdvancedShelterSystems.cs:231`, `src/Main.AdvancedShelterSystems.cs:339`, `src/Main.AdvancedShelterSystems.cs:423`, `src/Main.AdvancedShelterSystems.cs:513`, `src/Main.BlackMarket.cs:30`, `src/Main.BriefingCrisis.cs:56`, `src/Main.CampaignOwners.cs:1019`, `src/Main.CampaignOwners.cs:1338`, `src/Main.CampaignServices.cs:36`, `src/Main.ChemicalSynthesis.cs:19`, `src/Main.DebtCredit.cs:66`, `src/Main.Echoes.cs:100`, `src/Main.Echoes.cs:128`, `src/Main.Economy.cs:222`, `src/Main.ExpandedShelterSystems.cs:97`, `src/Main.Expeditions.cs:98`, `src/Main.Expeditions.cs:346`, `src/Main.GameFlow.cs:400`, `src/Main.GameFlow.cs:410`, `src/Main.GameFlow.cs:468`, `src/Main.GameFlow.cs:484`, `src/Main.GameFlow.cs:492`, `src/Main.GameFlow.cs:504`, `src/Main.GameFlow.cs:520`, `src/Main.GameFlow.cs:551`, `src/Main.GameFlow.cs:789`, `src/Main.Holdfast.cs:82`, `src/Main.Holdfast.cs:432`, `src/Main.Inventory.cs:172`, `src/Main.Inventory.cs:179`, `src/Main.Inventory.cs:187`, `src/Main.Inventory.cs:195`, `src/Main.Inventory.cs:215`, `src/Main.Inventory.cs:231`, `src/Main.Inventory.cs:249`, `src/Main.Lifecycle.cs:649`, `src/Main.Medical.cs:226`, `src/Main.Medical.cs:574`, `src/Main.Medical.cs:593`, `src/Main.Narrative.cs:617`, `src/Main.NarrativeQuestlines.cs:273`, `src/Main.NightWatch.cs:29`, `src/Main.PersonalBelongings.cs:28`, `src/Main.Phase0.cs:58`, `src/Main.Plans110_113.cs:31`, `src/Main.Plans110_113.cs:53`, `src/Main.Plans110_113.cs:98`, `src/Main.Plans110_113.cs:118`, `src/Main.Plans122to125.cs:72`, `src/Main.Plans122to125.cs:88`, `src/Main.Plans130_133.cs:35`, `src/Main.Plans130_133.cs:86`, `src/Main.Plans130_133.cs:136`, `src/Main.Plans146_149.cs:557`, `src/Main.Plans146_149.cs:582`, `src/Main.Plans146_149.cs:645`, `src/Main.Plans146_149.cs:675`, `src/Main.Plans147.cs:216`, `src/Main.Plans147.cs:243`, `src/Main.Plans162_165.cs:36`, `src/Main.Plans162_165.cs:188`, `src/Main.Plans162_165.cs:310`, `src/Main.Plans162_165.cs:430`, `src/Main.Plans162_165.cs:525`, `src/Main.Plans162_165.cs:669`, `src/Main.Plans166_169.cs:37`, `src/Main.Plans166_169.cs:279`, `src/Main.Plans167_219.cs:67`, `src/Main.Plans46_49.cs:40`, `src/Main.Plans46_49.cs:268`, `src/Main.Plans62_65.cs:37`, `src/Main.Plans74_77.cs:27`, `src/Main.Plans74_77.cs:42`, `src/Main.Plans74_77.cs:57`, `src/Main.Plans74_77.cs:78`, `src/Main.Plans74_77.cs:94`, `src/Main.Plans94_97.cs:20`, `src/Main.Plans94_97.cs:33`, `src/Main.PlansB68_B69.cs:86`, `src/Main.PlansB86_B89.cs:38`, `src/Main.PlansB86_B89.cs:145`, `src/Main.PlayerSurfaces.cs:17`, `src/Main.PlayerSurfaces.cs:168`, `src/Main.PlayerSurfaces.cs:254`, `src/Main.PlayerSurfaces.cs:269`, `src/Main.PlayerSurfaces.cs:274`, `src/Main.PlayerSurfaces.cs:279`, `src/Main.PlayerSurfaces.cs:294`, `src/Main.PlayerSurfaces.cs:299`, `src/Main.PlayerSurfaces.cs:304`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:352`, `src/Main.PlayerSurfaces.cs:595`, `src/Main.PlayerSurfaces.cs:636`, `src/Main.SaveOrchestrator.cs:177`, `src/Main.ShelterBatch3.cs:355`, `src/Main.ShelterOperations.cs:22`, `src/Main.SkyDefense.cs:52`, `src/Main.SkyDefense.cs:81`, `src/Main.UiHandlers.cs:20`, `src/Main.UiPanels.cs:1023`, `src/Main.VehicleGarage.cs:23`, `src/Main.VehicleGarage.cs:44`, `src/Main.VisitorIntegration.cs:57`, `src/Main.WaterSources.cs:21`, `src/Main.World.cs:77`, `src/Main.World.cs:211`, `src/Main.World.cs:279`, `src/Main.World.cs:674`, `src/Main.YearOfAsh.cs:494`
+- **Setup Invocation Sites:** `src/Main.AdvancedShelterSystems.cs:44`, `src/Main.AdvancedShelterSystems.cs:100`, `src/Main.AdvancedShelterSystems.cs:158`, `src/Main.AdvancedShelterSystems.cs:231`, `src/Main.AdvancedShelterSystems.cs:339`, `src/Main.AdvancedShelterSystems.cs:423`, `src/Main.AdvancedShelterSystems.cs:513`, `src/Main.BlackMarket.cs:30`, `src/Main.BriefingCrisis.cs:56`, `src/Main.CampaignOwners.cs:1019`, `src/Main.CampaignOwners.cs:1338`, `src/Main.CampaignServices.cs:36`, `src/Main.ChemicalSynthesis.cs:19`, `src/Main.DebtCredit.cs:66`, `src/Main.Echoes.cs:100`, `src/Main.Echoes.cs:128`, `src/Main.Economy.cs:222`, `src/Main.ExpandedShelterSystems.cs:97`, `src/Main.Expeditions.cs:98`, `src/Main.Expeditions.cs:346`, `src/Main.GameFlow.cs:400`, `src/Main.GameFlow.cs:410`, `src/Main.GameFlow.cs:468`, `src/Main.GameFlow.cs:484`, `src/Main.GameFlow.cs:492`, `src/Main.GameFlow.cs:504`, `src/Main.GameFlow.cs:520`, `src/Main.GameFlow.cs:551`, `src/Main.GameFlow.cs:789`, `src/Main.Holdfast.cs:82`, `src/Main.Holdfast.cs:432`, `src/Main.Inventory.cs:172`, `src/Main.Inventory.cs:179`, `src/Main.Inventory.cs:187`, `src/Main.Inventory.cs:195`, `src/Main.Inventory.cs:215`, `src/Main.Inventory.cs:231`, `src/Main.Inventory.cs:249`, `src/Main.Lifecycle.cs:650`, `src/Main.Medical.cs:226`, `src/Main.Medical.cs:574`, `src/Main.Medical.cs:593`, `src/Main.Narrative.cs:617`, `src/Main.NarrativeQuestlines.cs:273`, `src/Main.NightWatch.cs:29`, `src/Main.PersonalBelongings.cs:28`, `src/Main.Phase0.cs:58`, `src/Main.Plans110_113.cs:31`, `src/Main.Plans110_113.cs:53`, `src/Main.Plans110_113.cs:98`, `src/Main.Plans110_113.cs:118`, `src/Main.Plans122to125.cs:72`, `src/Main.Plans122to125.cs:88`, `src/Main.Plans130_133.cs:35`, `src/Main.Plans130_133.cs:86`, `src/Main.Plans130_133.cs:136`, `src/Main.Plans146_149.cs:557`, `src/Main.Plans146_149.cs:582`, `src/Main.Plans146_149.cs:645`, `src/Main.Plans146_149.cs:675`, `src/Main.Plans147.cs:216`, `src/Main.Plans147.cs:243`, `src/Main.Plans162_165.cs:36`, `src/Main.Plans162_165.cs:188`, `src/Main.Plans162_165.cs:310`, `src/Main.Plans162_165.cs:430`, `src/Main.Plans162_165.cs:525`, `src/Main.Plans162_165.cs:669`, `src/Main.Plans166_169.cs:37`, `src/Main.Plans166_169.cs:279`, `src/Main.Plans167_219.cs:67`, `src/Main.Plans46_49.cs:40`, `src/Main.Plans46_49.cs:268`, `src/Main.Plans62_65.cs:37`, `src/Main.Plans74_77.cs:27`, `src/Main.Plans74_77.cs:42`, `src/Main.Plans74_77.cs:57`, `src/Main.Plans74_77.cs:78`, `src/Main.Plans74_77.cs:94`, `src/Main.Plans94_97.cs:20`, `src/Main.Plans94_97.cs:33`, `src/Main.PlansB68_B69.cs:86`, `src/Main.PlansB86_B89.cs:38`, `src/Main.PlansB86_B89.cs:145`, `src/Main.PlayerSurfaces.cs:17`, `src/Main.PlayerSurfaces.cs:168`, `src/Main.PlayerSurfaces.cs:254`, `src/Main.PlayerSurfaces.cs:269`, `src/Main.PlayerSurfaces.cs:274`, `src/Main.PlayerSurfaces.cs:279`, `src/Main.PlayerSurfaces.cs:294`, `src/Main.PlayerSurfaces.cs:299`, `src/Main.PlayerSurfaces.cs:304`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:352`, `src/Main.PlayerSurfaces.cs:595`, `src/Main.PlayerSurfaces.cs:636`, `src/Main.SaveOrchestrator.cs:177`, `src/Main.ShelterBatch3.cs:355`, `src/Main.ShelterOperations.cs:22`, `src/Main.SkyDefense.cs:52`, `src/Main.SkyDefense.cs:81`, `src/Main.UiHandlers.cs:20`, `src/Main.UiPanels.cs:1023`, `src/Main.VehicleGarage.cs:23`, `src/Main.VehicleGarage.cs:44`, `src/Main.VisitorIntegration.cs:57`, `src/Main.WaterSources.cs:21`, `src/Main.World.cs:77`, `src/Main.World.cs:211`, `src/Main.World.cs:279`, `src/Main.World.cs:674`, `src/Main.YearOfAsh.cs:494`
 - **UI Routes:** `inventory`, `inventory_detail`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Inventory/Inventory.cs`](../../Assets/Ashfall.Core/Inventory/Inventory.cs)
@@ -2953,7 +2954,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 212. `radio` — Radio frequencies, logs, and distress signals (Shelter & Logistics)
 - **Owner Domain:** `radio`
 - **Setup Method:** `Main.SetupRadio()` | **Invoked:** yes | **Cadence:** `On-Demand (Frequency Scan)`
-- **Setup Invocation Sites:** `src/Main.CampaignServices.cs:48`, `src/Main.Economy.cs:70`, `src/Main.Economy.cs:77`, `src/Main.Expeditions.cs:626`, `src/Main.Expeditions.cs:644`, `src/Main.GameFlow.cs:530`, `src/Main.Lifecycle.cs:652`, `src/Main.NpcArcs.cs:39`, `src/Main.Plans130_133.cs:62`, `src/Main.Plans94_97.cs:52`, `src/Main.PlayerSurfaces.cs:330`, `src/Main.PlayerSurfaces.cs:535`, `src/Main.RadioProgramProduction.cs:29`, `src/Main.SaveOrchestrator.cs:182`, `src/Main.UiHandlers.cs:30`, `src/Main.UiPanels.cs:1049`
+- **Setup Invocation Sites:** `src/Main.CampaignServices.cs:48`, `src/Main.Economy.cs:70`, `src/Main.Economy.cs:77`, `src/Main.Expeditions.cs:626`, `src/Main.Expeditions.cs:644`, `src/Main.GameFlow.cs:530`, `src/Main.Lifecycle.cs:653`, `src/Main.NpcArcs.cs:39`, `src/Main.Plans130_133.cs:62`, `src/Main.Plans94_97.cs:52`, `src/Main.PlayerSurfaces.cs:330`, `src/Main.PlayerSurfaces.cs:535`, `src/Main.RadioProgramProduction.cs:29`, `src/Main.SaveOrchestrator.cs:182`, `src/Main.UiHandlers.cs:30`, `src/Main.UiPanels.cs:1049`
 - **UI Routes:** `radio`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Radio/FactionRadioEngine.cs`](../../Assets/Ashfall.Core/Radio/FactionRadioEngine.cs)
@@ -3108,7 +3109,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 224. `medical` — Triage, illnesses, and treatments (Survival & Biology)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMedical()` | **Invoked:** yes | **Cadence:** `Daily Recovery / Affliction`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1489`, `src/Main.CampaignOwners.cs:1515`, `src/Main.CampaignServices.cs:40`, `src/Main.DutyRoster.cs:50`, `src/Main.ExpandedShelterSystems.cs:102`, `src/Main.GameFlow.cs:411`, `src/Main.GameFlow.cs:505`, `src/Main.GameFlow.cs:627`, `src/Main.Lifecycle.cs:657`, `src/Main.Medical.cs:103`, `src/Main.Medical.cs:194`, `src/Main.Medical.cs:212`, `src/Main.Medical.cs:223`, `src/Main.Medical.cs:461`, `src/Main.Phase0.cs:102`, `src/Main.Phase0.cs:116`, `src/Main.PlayerSurfaces.cs:168`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.SaveOrchestrator.cs:178`, `src/Main.ShelterBatch3.cs:279`, `src/Main.SurvivorFitness.cs:65`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1489`, `src/Main.CampaignOwners.cs:1515`, `src/Main.CampaignServices.cs:40`, `src/Main.DutyRoster.cs:50`, `src/Main.ExpandedShelterSystems.cs:102`, `src/Main.GameFlow.cs:411`, `src/Main.GameFlow.cs:505`, `src/Main.GameFlow.cs:627`, `src/Main.Lifecycle.cs:658`, `src/Main.Medical.cs:103`, `src/Main.Medical.cs:194`, `src/Main.Medical.cs:212`, `src/Main.Medical.cs:223`, `src/Main.Medical.cs:461`, `src/Main.Phase0.cs:102`, `src/Main.Phase0.cs:116`, `src/Main.PlayerSurfaces.cs:168`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.SaveOrchestrator.cs:178`, `src/Main.ShelterBatch3.cs:279`, `src/Main.SurvivorFitness.cs:65`
 - **UI Routes:** `medical`, `afflictions`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Medical/MedicalWardSystem.cs`](../../Assets/Ashfall.Core/Medical/MedicalWardSystem.cs)
@@ -3122,7 +3123,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 225. `medical_ward` — Hospital ward beds and inpatients (Survival & Biology)
 - **Owner Domain:** `medical`
 - **Setup Method:** `Main.SetupMedicalWard()` | **Invoked:** yes | **Cadence:** `Daily Bed Inpatient Triage`
-- **Setup Invocation Sites:** `src/Main.CampaignServices.cs:41`, `src/Main.ExpandedShelterSystems.cs:103`, `src/Main.ExpandedShelterSystems.cs:701`, `src/Main.Lifecycle.cs:657`, `src/Main.Medical.cs:586`, `src/Main.Medical.cs:641`, `src/Main.SaveOrchestrator.cs:179`, `src/Main.SurvivorFate.cs:35`
+- **Setup Invocation Sites:** `src/Main.CampaignServices.cs:41`, `src/Main.ExpandedShelterSystems.cs:103`, `src/Main.ExpandedShelterSystems.cs:701`, `src/Main.Lifecycle.cs:658`, `src/Main.Medical.cs:586`, `src/Main.Medical.cs:641`, `src/Main.SaveOrchestrator.cs:179`, `src/Main.SurvivorFate.cs:35`
 - **UI Routes:** `medical_ward`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Medical/MedicalWardSystem.cs`](../../Assets/Ashfall.Core/Medical/MedicalWardSystem.cs)
@@ -3170,7 +3171,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 229. `survivors` — Living survivors, needs, and traits (Survival & Biology)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupSurvivors()` | **Invoked:** yes | **Cadence:** `Daily Needs Decay`
-- **Setup Invocation Sites:** `src/Main.BriefingCrisis.cs:35`, `src/Main.BroadsheetPress.cs:40`, `src/Main.BroadsheetPress.cs:103`, `src/Main.CampaignOwners.cs:1316`, `src/Main.CampaignOwners.cs:1326`, `src/Main.CampaignServices.cs:37`, `src/Main.DreamSystem.cs:71`, `src/Main.Echoes.cs:99`, `src/Main.Echoes.cs:127`, `src/Main.Echoes.cs:174`, `src/Main.Endgame.cs:249`, `src/Main.ExpandedShelterSystems.cs:91`, `src/Main.Expeditions.cs:99`, `src/Main.Expeditions.cs:347`, `src/Main.Expeditions.cs:759`, `src/Main.GameFlow.cs:398`, `src/Main.GameFlow.cs:409`, `src/Main.GameFlow.cs:417`, `src/Main.GameFlow.cs:457`, `src/Main.GameFlow.cs:462`, `src/Main.GameFlow.cs:474`, `src/Main.GameFlow.cs:479`, `src/Main.GameFlow.cs:493`, `src/Main.GameFlow.cs:503`, `src/Main.GameFlow.cs:519`, `src/Main.GameFlow.cs:549`, `src/Main.GameFlow.cs:644`, `src/Main.GameFlow.cs:656`, `src/Main.GameFlow.cs:684`, `src/Main.GameFlow.cs:790`, `src/Main.HiddenAgenda.cs:21`, `src/Main.Holdfast.cs:70`, `src/Main.Lifecycle.cs:648`, `src/Main.Medical.cs:225`, `src/Main.MoraleContagion.cs:26`, `src/Main.Narrative.cs:418`, `src/Main.Narrative.cs:427`, `src/Main.Narrative.cs:441`, `src/Main.NarrativeQuestlines.cs:263`, `src/Main.NarrativeQuestlines.cs:285`, `src/Main.NarrativeQuestlines.cs:295`, `src/Main.NpcArcs.cs:28`, `src/Main.OrphanSealWave1.cs:216`, `src/Main.PathogenStrains.cs:25`, `src/Main.PersonalBelongings.cs:29`, `src/Main.PfglOctetBoards.cs:61`, `src/Main.PfglOctetBoards.cs:123`, `src/Main.Phase0.cs:49`, `src/Main.Phase0.cs:112`, `src/Main.Plans162_165.cs:524`, `src/Main.Plans162_185.cs:20`, `src/Main.Plans163_210.cs:44`, `src/Main.Plans163_210.cs:127`, `src/Main.Plans166_169.cs:36`, `src/Main.Plans166_169.cs:278`, `src/Main.Plans167_219.cs:140`, `src/Main.Plans167_219.cs:188`, `src/Main.Plans167_219.cs:232`, `src/Main.Plans167_219.cs:271`, `src/Main.Plans167_219.cs:311`, `src/Main.Plans216_202Interpersonal.cs:105`, `src/Main.Plans62_65.cs:36`, `src/Main.PlayerSurfaces.cs:17`, `src/Main.PlayerSurfaces.cs:168`, `src/Main.PlayerSurfaces.cs:173`, `src/Main.PlayerSurfaces.cs:244`, `src/Main.PlayerSurfaces.cs:249`, `src/Main.PlayerSurfaces.cs:259`, `src/Main.PlayerSurfaces.cs:264`, `src/Main.PlayerSurfaces.cs:274`, `src/Main.PlayerSurfaces.cs:279`, `src/Main.PlayerSurfaces.cs:289`, `src/Main.PlayerSurfaces.cs:294`, `src/Main.PlayerSurfaces.cs:299`, `src/Main.PlayerSurfaces.cs:304`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:350`, `src/Main.PlayerSurfaces.cs:439`, `src/Main.PlayerSurfaces.cs:449`, `src/Main.PlayerSurfaces.cs:474`, `src/Main.PlayerSurfaces.cs:511`, `src/Main.PlayerSurfaces.cs:519`, `src/Main.PlayerSurfaces.cs:574`, `src/Main.PlayerSurfaces.cs:579`, `src/Main.PlayerSurfaces.cs:631`, `src/Main.PlayerSurfaces.cs:636`, `src/Main.SaveOrchestrator.cs:176`, `src/Main.ShelterBatch3.cs:158`, `src/Main.ShelterBatch3.cs:168`, `src/Main.ShelterBatch3.cs:354`, `src/Main.ShelterOperations.cs:21`, `src/Main.ShelterSocial.cs:237`, `src/Main.ShelterSocial.cs:306`, `src/Main.SkyDefense.cs:53`, `src/Main.SkyDefense.cs:66`, `src/Main.Subterranean.cs:27`, `src/Main.SurvivorFate.cs:30`, `src/Main.SurvivorSocial.cs:20`, `src/Main.Survivors.cs:266`, `src/Main.Survivors.cs:273`, `src/Main.Survivors.cs:283`, `src/Main.Survivors.cs:290`, `src/Main.Survivors.cs:297`, `src/Main.UiHandlers.cs:21`, `src/Main.UiHandlers.cs:47`, `src/Main.UiHandlers.cs:250`, `src/Main.UiPanels.cs:1031`, `src/Main.UiPanels.cs:1135`, `src/Main.UnifiedEnding.cs:71`, `src/Main.VisitorIntegration.cs:80`
+- **Setup Invocation Sites:** `src/Main.BriefingCrisis.cs:35`, `src/Main.BroadsheetPress.cs:40`, `src/Main.BroadsheetPress.cs:103`, `src/Main.CampaignOwners.cs:1316`, `src/Main.CampaignOwners.cs:1326`, `src/Main.CampaignServices.cs:37`, `src/Main.DreamSystem.cs:71`, `src/Main.Echoes.cs:99`, `src/Main.Echoes.cs:127`, `src/Main.Echoes.cs:174`, `src/Main.Endgame.cs:249`, `src/Main.ExpandedShelterSystems.cs:91`, `src/Main.Expeditions.cs:99`, `src/Main.Expeditions.cs:347`, `src/Main.Expeditions.cs:759`, `src/Main.GameFlow.cs:398`, `src/Main.GameFlow.cs:409`, `src/Main.GameFlow.cs:417`, `src/Main.GameFlow.cs:457`, `src/Main.GameFlow.cs:462`, `src/Main.GameFlow.cs:474`, `src/Main.GameFlow.cs:479`, `src/Main.GameFlow.cs:493`, `src/Main.GameFlow.cs:503`, `src/Main.GameFlow.cs:519`, `src/Main.GameFlow.cs:549`, `src/Main.GameFlow.cs:644`, `src/Main.GameFlow.cs:656`, `src/Main.GameFlow.cs:684`, `src/Main.GameFlow.cs:790`, `src/Main.HiddenAgenda.cs:21`, `src/Main.Holdfast.cs:70`, `src/Main.Lifecycle.cs:649`, `src/Main.Medical.cs:225`, `src/Main.MoraleContagion.cs:26`, `src/Main.Narrative.cs:418`, `src/Main.Narrative.cs:427`, `src/Main.Narrative.cs:441`, `src/Main.NarrativeQuestlines.cs:263`, `src/Main.NarrativeQuestlines.cs:285`, `src/Main.NarrativeQuestlines.cs:295`, `src/Main.NpcArcs.cs:28`, `src/Main.OrphanSealWave1.cs:216`, `src/Main.PathogenStrains.cs:25`, `src/Main.PersonalBelongings.cs:29`, `src/Main.PfglOctetBoards.cs:61`, `src/Main.PfglOctetBoards.cs:123`, `src/Main.Phase0.cs:49`, `src/Main.Phase0.cs:112`, `src/Main.Plans162_165.cs:524`, `src/Main.Plans162_185.cs:20`, `src/Main.Plans163_210.cs:44`, `src/Main.Plans163_210.cs:127`, `src/Main.Plans166_169.cs:36`, `src/Main.Plans166_169.cs:278`, `src/Main.Plans167_219.cs:140`, `src/Main.Plans167_219.cs:188`, `src/Main.Plans167_219.cs:232`, `src/Main.Plans167_219.cs:271`, `src/Main.Plans167_219.cs:311`, `src/Main.Plans216_202Interpersonal.cs:105`, `src/Main.Plans62_65.cs:36`, `src/Main.PlayerSurfaces.cs:17`, `src/Main.PlayerSurfaces.cs:168`, `src/Main.PlayerSurfaces.cs:173`, `src/Main.PlayerSurfaces.cs:244`, `src/Main.PlayerSurfaces.cs:249`, `src/Main.PlayerSurfaces.cs:259`, `src/Main.PlayerSurfaces.cs:264`, `src/Main.PlayerSurfaces.cs:274`, `src/Main.PlayerSurfaces.cs:279`, `src/Main.PlayerSurfaces.cs:289`, `src/Main.PlayerSurfaces.cs:294`, `src/Main.PlayerSurfaces.cs:299`, `src/Main.PlayerSurfaces.cs:304`, `src/Main.PlayerSurfaces.cs:309`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:350`, `src/Main.PlayerSurfaces.cs:439`, `src/Main.PlayerSurfaces.cs:449`, `src/Main.PlayerSurfaces.cs:474`, `src/Main.PlayerSurfaces.cs:511`, `src/Main.PlayerSurfaces.cs:519`, `src/Main.PlayerSurfaces.cs:574`, `src/Main.PlayerSurfaces.cs:579`, `src/Main.PlayerSurfaces.cs:631`, `src/Main.PlayerSurfaces.cs:636`, `src/Main.SaveOrchestrator.cs:176`, `src/Main.ShelterBatch3.cs:158`, `src/Main.ShelterBatch3.cs:168`, `src/Main.ShelterBatch3.cs:354`, `src/Main.ShelterOperations.cs:21`, `src/Main.ShelterSocial.cs:237`, `src/Main.ShelterSocial.cs:306`, `src/Main.SkyDefense.cs:53`, `src/Main.SkyDefense.cs:66`, `src/Main.Subterranean.cs:27`, `src/Main.SurvivorFate.cs:30`, `src/Main.SurvivorRoles.cs:99`, `src/Main.SurvivorSocial.cs:20`, `src/Main.Survivors.cs:266`, `src/Main.Survivors.cs:273`, `src/Main.Survivors.cs:283`, `src/Main.Survivors.cs:290`, `src/Main.Survivors.cs:297`, `src/Main.UiHandlers.cs:21`, `src/Main.UiHandlers.cs:47`, `src/Main.UiHandlers.cs:250`, `src/Main.UiPanels.cs:1031`, `src/Main.UiPanels.cs:1135`, `src/Main.UnifiedEnding.cs:71`, `src/Main.VisitorIntegration.cs:80`
 - **UI Routes:** `survivors`, `survivor_detail`, `status`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Survivors/NeedsSystem.cs`](../../Assets/Ashfall.Core/Survivors/NeedsSystem.cs)
@@ -3286,7 +3287,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 237. `recruitment` — Plan 204 — Survivor recruitment campaigns, wilderness discovery, defection offers, and asylum intake (Survivors)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupRecruitment()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2967`, `src/Main.CampaignOwners.cs:2978`, `src/Main.Recruitment.cs:25`, `src/Main.SaveOrchestrator.cs:349`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2967`, `src/Main.CampaignOwners.cs:2978`, `src/Main.Recruitment.cs:25`, `src/Main.SaveOrchestrator.cs:350`
 - **UI Routes:** `recruitment`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Survivors/RecruitmentSystem.cs`](../../Assets/Ashfall.Core/Survivors/RecruitmentSystem.cs)
@@ -3316,7 +3317,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 ### 239. `skill_certifications` — Plan 180 — Skill certification and tier system: formal qualifications, exams, benefits, and specializations (Survivors)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupSkillCertifications()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2854`, `src/Main.CampaignOwners.cs:2865`, `src/Main.SaveOrchestrator.cs:345`, `src/Main.SkillCertification.cs:19`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2854`, `src/Main.CampaignOwners.cs:2865`, `src/Main.SaveOrchestrator.cs:346`, `src/Main.SkillCertification.cs:19`
 - **UI Routes:**
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Survivors/SkillCertificationSystem.cs`](../../Assets/Ashfall.Core/Survivors/SkillCertificationSystem.cs)
@@ -3337,7 +3338,21 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/DreamHostSession.cs`](../../src/Host/DreamHostSession.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan177DreamSleepIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan177DreamSleepIntegrationTests.cs)
 
-### 241. `survivor_routines` — Plan 188 — Individual survivor daily routines: activity time blocks, chronotypes, satisfaction evaluation, and interpersonal conflicts (Survivors)
+### 241. `survivor_roles` — Plan 195 — survivor specialization roles: identity, earned practice XP, level progression, and bonus readout (Survivors)
+- **Owner Domain:** `survivors`
+- **Setup Method:** `Main.SetupSurvivorRoles()` | **Invoked:** yes | **Cadence:** `Work-Fact Driven (SkillProgression OnXpGained)`
+- **Setup Invocation Sites:** `src/Main.SaveOrchestrator.cs:343`, `src/Main.SurvivorRoles.cs:100`, `src/Main.SurvivorRoles.cs:109`, `src/Main.SurvivorRoles.cs:117`, `src/Main.SurvivorRoles.cs:124`
+- **UI Routes:**
+- **Verified Source Files:**
+  - Core System: [`Assets/Ashfall.Core/Survivors/SurvivorRoleSystem.cs`](../../Assets/Ashfall.Core/Survivors/SurvivorRoleSystem.cs)
+  - Host Session: [`src/Host/SurvivorRoleHostSession.cs`](../../src/Host/SurvivorRoleHostSession.cs)
+  - Host Session: [`src/Main.cs`](../../src/Main.cs)
+  - Save Store: [`src/Host/SurvivorRoleHostSession.cs`](../../src/Host/SurvivorRoleHostSession.cs)
+  - UI Panel: [`src/UI/SurvivorDetailPanel.cs`](../../src/UI/SurvivorDetailPanel.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan195SurvivorRoleIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan195SurvivorRoleIntegrationTests.cs)
+  - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan195SurvivorRoleWiringTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan195SurvivorRoleWiringTests.cs)
+
+### 242. `survivor_routines` — Plan 188 — Individual survivor daily routines: activity time blocks, chronotypes, satisfaction evaluation, and interpersonal conflicts (Survivors)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupSurvivorRoutines()` | **Invoked:** yes | **Cadence:** `None`
 - **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:818`, `src/Main.CampaignOwners.cs:829`, `src/Main.SaveOrchestrator.cs:323`, `src/Main.SurvivorRoutines.cs:47`
@@ -3352,7 +3367,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Records/RoutineTemplateCatalogLoaderTests.cs`](../../Ashfall.Core.Tests/Records/RoutineTemplateCatalogLoaderTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan188SurvivorRoutineIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan188SurvivorRoutineIntegrationTests.cs)
 
-### 242. `survivor_voice` — Plan 42 — survivor voice line catalog selection, cooldowns, utterance history, and playback dispatch (Survivors)
+### 243. `survivor_voice` — Plan 42 — survivor voice line catalog selection, cooldowns, utterance history, and playback dispatch (Survivors)
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupSurvivorVoice()` | **Invoked:** yes | **Cadence:** `Event-Driven`
 - **Setup Invocation Sites:** `src/Main.ExpandedShelterSystems.cs:159`
@@ -3366,7 +3381,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Campaign/Plan42SurvivorVoiceHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Campaign/Plan42SurvivorVoiceHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Voice/SurvivorVoiceSystemTests.cs`](../../Ashfall.Core.Tests/Voice/SurvivorVoiceSystemTests.cs)
 
-### 243. `hidden_agenda` — Plan 132 — survivor hidden agendas, secret motivations, clue discovery, and confrontation arcs (Survivors (Plan 132))
+### 244. `hidden_agenda` — Plan 132 — survivor hidden agendas, secret motivations, clue discovery, and confrontation arcs (Survivors (Plan 132))
 - **Owner Domain:** `survivors`
 - **Setup Method:** `Main.SetupHiddenAgenda()` | **Invoked:** yes | **Cadence:** `Daily (Passive Slip-Up & Exposure Drift)`
 - **Setup Invocation Sites:** `src/Main.ExpandedShelterSystems.cs:146`
@@ -3380,7 +3395,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/HiddenAgendaSystemTests.cs`](../../Ashfall.Core.Tests/Survivors/HiddenAgendaSystemTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Survivors/Plan132HiddenAgendaIntegrationTests.cs`](../../Ashfall.Core.Tests/Survivors/Plan132HiddenAgendaIntegrationTests.cs)
 
-### 244. `combat` — Combat encounters and tactical trauma (Tactical Combat)
+### 245. `combat` — Combat encounters and tactical trauma (Tactical Combat)
 - **Owner Domain:** `combat`
 - **Setup Method:** `Main.SetupCombat()` | **Invoked:** yes | **Cadence:** `On-Demand (Turn-Based)`
 - **Setup Invocation Sites:** `src/Main.CampaignServices.cs:63`, `src/Main.SaveOrchestrator.cs:200`, `src/Main.UiHandlers.cs:119`
@@ -3395,7 +3410,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/CombatPanel.cs`](../../src/UI/CombatPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/CombatBallisticsTests.cs`](../../Ashfall.Core.Tests/CombatBallisticsTests.cs)
 
-### 245. `technical_material_archive` — Plan 158 — cordage/cable/polymer/textile technical material archive: discovered-record ledger (IDs only) (Technical Material Archive)
+### 246. `technical_material_archive` — Plan 158 — cordage/cable/polymer/textile technical material archive: discovered-record ledger (IDs only) (Technical Material Archive)
 - **Owner Domain:** `narrative`
 - **Setup Method:** `Main.SetupTechnicalMaterialArchive()` | **Invoked:** yes | **Cadence:** `Event-Driven (Location Discovery)`
 - **Setup Invocation Sites:** `src/Main.CampaignServices.cs:123`, `src/Main.SaveOrchestrator.cs:270`
@@ -3408,7 +3423,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Narrative/TechnicalMaterialArchiveTests.cs`](../../Ashfall.Core.Tests/Narrative/TechnicalMaterialArchiveTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/PolymerTextileCatalogTests.cs`](../../Ashfall.Core.Tests/PolymerTextileCatalogTests.cs)
 
-### 246. `vehicle_customization` — Plan 152 — Vehicle customization & mobile base: module installation, effective vehicle stats, and deployed base camps (Vehicles)
+### 247. `vehicle_customization` — Plan 152 — Vehicle customization & mobile base: module installation, effective vehicle stats, and deployed base camps (Vehicles)
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupVehicleCustomization()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
 - **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:536`, `src/Main.CampaignOwners.cs:547`, `src/Main.SaveOrchestrator.cs:313`, `src/Main.VehicleCustomization.cs:52`
@@ -3423,7 +3438,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Vehicles/Plan152VehicleCustomizationHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Vehicles/Plan152VehicleCustomizationHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Vehicles/Plan152VehicleCustomizationIntegrationTests.cs`](../../Ashfall.Core.Tests/Vehicles/Plan152VehicleCustomizationIntegrationTests.cs)
 
-### 247. `visitor_integration` — Plan 214 — admitted visitor stays, temporary housing, processing requirements, and departures (Visitors)
+### 248. `visitor_integration` — Plan 214 — admitted visitor stays, temporary housing, processing requirements, and departures (Visitors)
 - **Owner Domain:** `visitors`
 - **Setup Method:** `Main.SetupVisitorIntegration()` | **Invoked:** yes | **Cadence:** `Daily (Visitor Lifecycle & Ration Draw)`
 - **Setup Invocation Sites:** `src/Main.ExpandedShelterSystems.cs:151`, `src/Main.VisitorIntegration.cs:164`
@@ -3437,7 +3452,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/VisitorIntegrationPanel.cs`](../../src/UI/VisitorIntegrationPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Visitors/Plan214VisitorIntegrationTests.cs`](../../Ashfall.Core.Tests/Visitors/Plan214VisitorIntegrationTests.cs)
 
-### 248. `deep_well` — B5–B8 Phase 6 — built deep-well pump: build state, condition, yield ledger (raw water into treatment via the Plan 189 intake seam) (Water & Infrastructure)
+### 249. `deep_well` — B5–B8 Phase 6 — built deep-well pump: build state, condition, yield ledger (raw water into treatment via the Plan 189 intake seam) (Water & Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupDeepWell()` | **Invoked:** yes | **Cadence:** `Daily Deep-Well Pump Tick`
 - **Setup Invocation Sites:** `src/Main.SaveOrchestrator.cs:205`, `src/Main.WaterSources.cs:25`
@@ -3451,7 +3466,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Integration/WaterSourcesSurfaceWiringTests.cs`](../../Ashfall.Core.Tests/Integration/WaterSourcesSurfaceWiringTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Water/DeepWellSystemTests.cs`](../../Ashfall.Core.Tests/Water/DeepWellSystemTests.cs)
 
-### 249. `piezometer_network` — Plan 189 — aquifer monitoring network state driving the water-treatment intake advisory gate (Water & Infrastructure)
+### 250. `piezometer_network` — Plan 189 — aquifer monitoring network state driving the water-treatment intake advisory gate (Water & Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupPiezometer()` | **Invoked:** yes | **Cadence:** `Daily Aquifer Advisory Tick`
 - **Setup Invocation Sites:** `src/Main.Piezometer.cs:25`, `src/Main.Piezometer.cs:116`, `src/Main.Piezometer.cs:127`, `src/Main.SaveOrchestrator.cs:196`, `src/Main.WaterSources.cs:27`
@@ -3464,7 +3479,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Integration/WaterSourcesSurfaceWiringTests.cs`](../../Ashfall.Core.Tests/Integration/WaterSourcesSurfaceWiringTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Water/Plan189IntakeAdvisoryBridgeTests.cs`](../../Ashfall.Core.Tests/Water/Plan189IntakeAdvisoryBridgeTests.cs)
 
-### 250. `water_condenser` — B5–B8 expansion — Peltier condensation array: build state, membrane integrity, weather-indexed yield ledger (Water & Infrastructure)
+### 251. `water_condenser` — B5–B8 expansion — Peltier condensation array: build state, membrane integrity, weather-indexed yield ledger (Water & Infrastructure)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupWaterCondenser()` | **Invoked:** yes | **Cadence:** `Daily Condensate Intake Tick`
 - **Setup Invocation Sites:** `src/Main.SaveOrchestrator.cs:206`, `src/Main.WaterSources.cs:26`
@@ -3478,7 +3493,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Integration/WaterSourcesSurfaceWiringTests.cs`](../../Ashfall.Core.Tests/Integration/WaterSourcesSurfaceWiringTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Water/AtmosphericCondenserSystemTests.cs`](../../Ashfall.Core.Tests/Water/AtmosphericCondenserSystemTests.cs)
 
-### 251. `weather_cascade` — Plan 135 — weather→gameplay cascade: active weather events, their effects, and the event history (Weather)
+### 252. `weather_cascade` — Plan 135 — weather→gameplay cascade: active weather events, their effects, and the event history (Weather)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupWeatherCascade()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
 - **Setup Invocation Sites:** `src/Main.ExpandedShelterSystems.cs:164`, `src/Main.SaveOrchestrator.cs:304`
@@ -3494,7 +3509,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Weather/Plan135WeatherCascadeHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Weather/Plan135WeatherCascadeHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Weather/Plan135WeatherCascadeIntegrationTests.cs`](../../Ashfall.Core.Tests/Weather/Plan135WeatherCascadeIntegrationTests.cs)
 
-### 252. `ecological_infestation` — Plan 28 — location and shelter ecological infestations (trigger/clear/tolerate lifecycle) (World)
+### 253. `ecological_infestation` — Plan 28 — location and shelter ecological infestations (trigger/clear/tolerate lifecycle) (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupEcologicalInfestation()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
 - **Setup Invocation Sites:** `src/Main.EcologicalInfestations.cs:52`, `src/Main.SaveOrchestrator.cs:236`
@@ -3506,7 +3521,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs`](../../Ashfall.Core.Tests/EcologicalInfestationSystemTests.cs)
 
-### 253. `geodetic_survey` — Plans 78-81 — survey monuments, observations, resolved triangles, and network accuracy (World)
+### 254. `geodetic_survey` — Plans 78-81 — survey monuments, observations, resolved triangles, and network accuracy (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupGeodeticSurvey()` | **Invoked:** yes | **Cadence:** `On-Demand`
 - **Setup Invocation Sites:** `src/Main.Plans78_81.cs:90`
@@ -3516,7 +3531,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Host Session: [`src/Host/GeodeticSurveySaveStore.cs`](../../src/Host/GeodeticSurveySaveStore.cs)
   - Save Store: [`src/Host/GeodeticSurveySaveStore.cs`](../../src/Host/GeodeticSurveySaveStore.cs)
 
-### 254. `human_migration` — Plan 199 — Seasonal human migration engine, regional population weights, and dwell hysteresis (World)
+### 255. `human_migration` — Plan 199 — Seasonal human migration engine, regional population weights, and dwell hysteresis (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupHumanMigration()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
 - **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:706`, `src/Main.CampaignOwners.cs:717`, `src/Main.HumanMigration.cs:74`, `src/Main.SaveOrchestrator.cs:317`
@@ -3530,7 +3545,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/Economy/Plan199HumanMigrationHostIntegrationTests.cs`](../../Ashfall.Core.Tests/Economy/Plan199HumanMigrationHostIntegrationTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Economy/SeasonalHumanMigrationEngineTests.cs`](../../Ashfall.Core.Tests/Economy/SeasonalHumanMigrationEngineTests.cs)
 
-### 255. `nuclear_winter_progression` — ORPHAN-SEAL-W1 — nuclear-winter phase/season progression and recorded climate events (World)
+### 256. `nuclear_winter_progression` — ORPHAN-SEAL-W1 — nuclear-winter phase/season progression and recorded climate events (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupNuclearWinter()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
 - **Setup Invocation Sites:** `src/Main.OrphanSealWave1.cs:74`, `src/Main.OrphanSealWave1.cs:373`
@@ -3541,7 +3556,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Weather/Plan164NuclearWinterIntegrationTests.cs`](../../Ashfall.Core.Tests/Weather/Plan164NuclearWinterIntegrationTests.cs)
 
-### 256. `route_infrastructure` — Plans 146-149 — mutable route infrastructure, corridor maintenance, and minefield clearance (World)
+### 257. `route_infrastructure` — Plans 146-149 — mutable route infrastructure, corridor maintenance, and minefield clearance (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupRouteInfrastructure()` | **Invoked:** yes | **Cadence:** `On-Demand`
 - **Setup Invocation Sites:** `src/Main.Plans146_149.cs:175`, `src/Main.Plans146_149.cs:188`, `src/Main.Plans146_149.cs:299`, `src/Main.Plans146_149.cs:723`, `src/Main.Plans146_149.cs:776`
@@ -3552,7 +3567,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/RouteInfrastructureSaveStore.cs`](../../src/Host/RouteInfrastructureSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/RouteInfrastructureSystemTests.cs`](../../Ashfall.Core.Tests/World/RouteInfrastructureSystemTests.cs)
 
-### 257. `storm_forecast` — Expansion 33 — observation-post forecast skill, storm-response drill recency, and issued warnings (World)
+### 258. `storm_forecast` — Expansion 33 — observation-post forecast skill, storm-response drill recency, and issued warnings (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupStormForecast()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
 - **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:2431`, `src/Main.CampaignOwners.cs:2442`, `src/Main.SaveOrchestrator.cs:330`, `src/Main.StormForecast.cs:37`, `src/Main.StormForecast.cs:43`, `src/Main.StormForecast.cs:51`, `src/Main.StormForecast.cs:63`, `src/Main.StormForecast.cs:72`, `src/Main.StormForecast.cs:79`, `src/Main.StormForecast.cs:85`
@@ -3566,7 +3581,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/World/StormForecastLedgerTests.cs`](../../Ashfall.Core.Tests/World/StormForecastLedgerTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/StormForecastReadinessEngineTests.cs`](../../Ashfall.Core.Tests/World/StormForecastReadinessEngineTests.cs)
 
-### 258. `subterranean` — Flagship XI Plan 156 — generated underground topology, oxygen/collapse/flood/shoring state, discovery (World)
+### 259. `subterranean` — Flagship XI Plan 156 — generated underground topology, oxygen/collapse/flood/shoring state, discovery (World)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupSubterranean()` | **Invoked:** yes | **Cadence:** `Daily Sim Tick`
 - **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1797`, `src/Main.SaveOrchestrator.cs:185`, `src/Main.Subterranean.cs:109`, `src/Main.Subterranean.cs:116`, `src/Main.Subterranean.cs:123`
@@ -3577,7 +3592,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Save Store: [`src/Host/SubterraneanSaveStore.cs`](../../src/Host/SubterraneanSaveStore.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Flagship11/SubterraneanSystemTests.cs`](../../Ashfall.Core.Tests/Flagship11/SubterraneanSystemTests.cs)
 
-### 259. `amphibious_draisine` — Plan 125 — per-vehicle amphibious kit condition, pontoons, ingress, crossing state (World & Expeditions)
+### 260. `amphibious_draisine` — Plan 125 — per-vehicle amphibious kit condition, pontoons, ingress, crossing state (World & Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupAmphibiousDraisine()` | **Invoked:** yes | **Cadence:** `Expedition Travel/Action Cadence (Crossing Ticks)`
 - **Setup Invocation Sites:** `src/Main.Plans122to125.cs:316`, `src/Main.SaveOrchestrator.cs:195`
@@ -3589,7 +3604,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/AmphibiousDraisinePanel.cs`](../../src/UI/AmphibiousDraisinePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/Plan125AmphibiousDraisineEngineTests.cs`](../../Ashfall.Core.Tests/Expeditions/Plan125AmphibiousDraisineEngineTests.cs)
 
-### 260. `armored_crawlers` — Armored crawler modules and forward camps (World & Expeditions)
+### 261. `armored_crawlers` — Armored crawler modules and forward camps (World & Expeditions)
 - **Owner Domain:** `expedition`
 - **Setup Method:** `Main.SetupArmoredCrawlers()` | **Invoked:** yes | **Cadence:** `Daily Crawler Module Tick`
 - **Setup Invocation Sites:** `src/Main.SaveOrchestrator.cs:294`
@@ -3601,7 +3616,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/GameDashboardPanel.cs`](../../src/UI/GameDashboardPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/FlagshipIntegrationIxSmokeTests.cs`](../../Ashfall.Core.Tests/FlagshipIntegrationIxSmokeTests.cs)
 
-### 261. `encounter_choice` — Encounter choice history & outcomes (World & Expeditions)
+### 262. `encounter_choice` — Encounter choice history & outcomes (World & Expeditions)
 - **Owner Domain:** `encounters`
 - **Setup Method:** `Main.SetupEncounterChoice()` | **Invoked:** no | **Cadence:** `On-Demand (Door Event Resolution)`
 - **UI Routes:** `door_encounter`
@@ -3612,10 +3627,10 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/YearOfAsh/DoorEncounterModal.cs`](../../src/YearOfAsh/DoorEncounterModal.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/EncounterChoiceResolverTests.cs`](../../Ashfall.Core.Tests/Expeditions/EncounterChoiceResolverTests.cs)
 
-### 262. `expedition` — Wasteland expedition runs & status (World & Expeditions)
+### 263. `expedition` — Wasteland expedition runs & status (World & Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupExpeditions()` | **Invoked:** yes | **Cadence:** `Daily Sortie Travel`
-- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1635`, `src/Main.CampaignOwners.cs:1654`, `src/Main.CampaignOwners.cs:1932`, `src/Main.CampaignServices.cs:44`, `src/Main.EvolvingWorld.cs:46`, `src/Main.ExpandedShelterSystems.cs:101`, `src/Main.Expeditions.cs:443`, `src/Main.Expeditions.cs:485`, `src/Main.Expeditions.cs:492`, `src/Main.Expeditions.cs:498`, `src/Main.Expeditions.cs:504`, `src/Main.GameFlow.cs:516`, `src/Main.GameFlow.cs:537`, `src/Main.Lifecycle.cs:653`, `src/Main.Narrative.cs:476`, `src/Main.PfglOctetBoards.cs:53`, `src/Main.PfglOctetBoards.cs:71`, `src/Main.Phase0.cs:115`, `src/Main.Plans166_169.cs:277`, `src/Main.PlayerSurfaces.cs:279`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:511`, `src/Main.PlayerSurfaces.cs:574`, `src/Main.PlayerSurfaces.cs:646`, `src/Main.SaveOrchestrator.cs:199`, `src/Main.Subterranean.cs:26`, `src/Main.UiHandlers.cs:126`, `src/Main.UiHandlers.cs:138`, `src/Main.VehicleGarage.cs:22`, `src/Main.VehicleGarage.cs:45`
+- **Setup Invocation Sites:** `src/Main.CampaignOwners.cs:1635`, `src/Main.CampaignOwners.cs:1654`, `src/Main.CampaignOwners.cs:1932`, `src/Main.CampaignServices.cs:44`, `src/Main.EvolvingWorld.cs:46`, `src/Main.ExpandedShelterSystems.cs:101`, `src/Main.Expeditions.cs:443`, `src/Main.Expeditions.cs:485`, `src/Main.Expeditions.cs:492`, `src/Main.Expeditions.cs:498`, `src/Main.Expeditions.cs:504`, `src/Main.GameFlow.cs:516`, `src/Main.GameFlow.cs:537`, `src/Main.Lifecycle.cs:654`, `src/Main.Narrative.cs:476`, `src/Main.PfglOctetBoards.cs:53`, `src/Main.PfglOctetBoards.cs:71`, `src/Main.Phase0.cs:115`, `src/Main.Plans166_169.cs:277`, `src/Main.PlayerSurfaces.cs:279`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:511`, `src/Main.PlayerSurfaces.cs:574`, `src/Main.PlayerSurfaces.cs:646`, `src/Main.SaveOrchestrator.cs:199`, `src/Main.Subterranean.cs:26`, `src/Main.UiHandlers.cs:126`, `src/Main.UiHandlers.cs:138`, `src/Main.VehicleGarage.cs:22`, `src/Main.VehicleGarage.cs:45`
 - **UI Routes:** `expeditions`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/Expeditions/ExpeditionEncounterBridge.cs`](../../Assets/Ashfall.Core/Expeditions/ExpeditionEncounterBridge.cs)
@@ -3625,7 +3640,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/ExpeditionPanel.cs`](../../src/UI/ExpeditionPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/ExpeditionCampSystemTests.cs`](../../Ashfall.Core.Tests/ExpeditionCampSystemTests.cs)
 
-### 263. `insar_deformation` — Plan 139 — repeat-pass InSAR survey passes, coherence, deformation summaries, excavation/travel intelligence (World & Expeditions)
+### 264. `insar_deformation` — Plan 139 — repeat-pass InSAR survey passes, coherence, deformation summaries, excavation/travel intelligence (World & Expeditions)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupInSarMapping()` | **Invoked:** yes | **Cadence:** `On-Demand (Survey Pass & Repeat-Pass Process)`
 - **Setup Invocation Sites:** `src/Main.InSarMapping.cs:27`, `src/Main.InSarMapping.cs:173`, `src/Main.InSarMapping.cs:180`, `src/Main.SaveOrchestrator.cs:189`
@@ -3637,7 +3652,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/InSarMappingPanel.cs`](../../src/UI/InSarMappingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/World/Plan139InSarDeformationTests.cs`](../../Ashfall.Core.Tests/World/Plan139InSarDeformationTests.cs)
 
-### 264. `runflat_tire` — Plan 141 — run-flat wheel profiles, integrity, heat, rim/bead, rolling-resistance cost (World & Expeditions)
+### 265. `runflat_tire` — Plan 141 — run-flat wheel profiles, integrity, heat, rim/bead, rolling-resistance cost (World & Expeditions)
 - **Owner Domain:** `expeditions`
 - **Setup Method:** `Main.SetupRunFlatTire()` | **Invoked:** yes | **Cadence:** `On-Demand (Fit, Hazard & Heat Commands)`
 - **Setup Invocation Sites:** `src/Main.RunFlatTire.cs:25`, `src/Main.RunFlatTire.cs:94`, `src/Main.RunFlatTire.cs:112`, `src/Main.RunFlatTire.cs:119`, `src/Main.RunFlatTire.cs:126`, `src/Main.SaveOrchestrator.cs:191`
@@ -3649,7 +3664,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/RunFlatTirePanel.cs`](../../src/UI/RunFlatTirePanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/Expeditions/Plan141RunFlatTireTests.cs`](../../Ashfall.Core.Tests/Expeditions/Plan141RunFlatTireTests.cs)
 
-### 265. `travel_encounters` — Travel encounters and cooldown states (World & Expeditions)
+### 266. `travel_encounters` — Travel encounters and cooldown states (World & Expeditions)
 - **Owner Domain:** `encounters`
 - **Setup Method:** `Main.SetupTravelEncounters()` | **Invoked:** yes | **Cadence:** `On-Demand (Travel Step)`
 - **Setup Invocation Sites:** `src/Main.Expeditions.cs:106`, `src/Main.SaveOrchestrator.cs:227`
@@ -3663,10 +3678,10 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - Test Fixture: [`Ashfall.Core.Tests/PatrolEncounterFullRegressionTests.cs`](../../Ashfall.Core.Tests/PatrolEncounterFullRegressionTests.cs)
   - Test Fixture: [`Ashfall.Core.Tests/TravelEncounterCooldownGroupTests.cs`](../../Ashfall.Core.Tests/TravelEncounterCooldownGroupTests.cs)
 
-### 266. `wasteland_map` — Wasteland map markers and fog-of-war (World & Expeditions)
+### 267. `wasteland_map` — Wasteland map markers and fog-of-war (World & Expeditions)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupWorld()` | **Invoked:** yes | **Cadence:** `On-Demand (Fog-of-War Discovery)`
-- **Setup Invocation Sites:** `src/Main.AdvancedShelterSystems.cs:54`, `src/Main.BriefingCrisis.cs:89`, `src/Main.CampaignOwners.cs:846`, `src/Main.CampaignOwners.cs:856`, `src/Main.CampaignOwners.cs:1839`, `src/Main.CampaignOwners.cs:1855`, `src/Main.CampaignServices.cs:39`, `src/Main.Economy.cs:179`, `src/Main.EvolvingWorld.cs:43`, `src/Main.EvolvingWorld.cs:61`, `src/Main.ExpandedShelterSystems.cs:105`, `src/Main.ExpandedShelterSystems.cs:719`, `src/Main.GameFlow.cs:399`, `src/Main.GameFlow.cs:431`, `src/Main.GameFlow.cs:525`, `src/Main.GameFlow.cs:539`, `src/Main.GameFlow.cs:550`, `src/Main.GameFlow.cs:626`, `src/Main.GameFlow.cs:788`, `src/Main.Lifecycle.cs:650`, `src/Main.NightWatch.cs:31`, `src/Main.Plans110_113.cs:54`, `src/Main.Plans162_165.cs:723`, `src/Main.Plans163_210.cs:22`, `src/Main.Plans163_210.cs:43`, `src/Main.Plans166_169.cs:38`, `src/Main.Plans167_219.cs:27`, `src/Main.Plans167_219.cs:36`, `src/Main.Plans167_219.cs:48`, `src/Main.Plans167_219.cs:66`, `src/Main.Plans94_97.cs:51`, `src/Main.PlayerSurfaces.cs:17`, `src/Main.PlayerSurfaces.cs:193`, `src/Main.PlayerSurfaces.cs:198`, `src/Main.PlayerSurfaces.cs:203`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:323`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:351`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.PlayerSurfaces.cs:646`, `src/Main.SaveOrchestrator.cs:181`, `src/Main.ShelterSocial.cs:268`, `src/Main.TunnelNetwork.cs:26`, `src/Main.TunnelNetwork.cs:38`, `src/Main.TunnelNetwork.cs:47`, `src/Main.TunnelNetwork.cs:54`, `src/Main.TunnelNetwork.cs:66`, `src/Main.TunnelNetwork.cs:84`, `src/Main.TunnelNetwork.cs:107`, `src/Main.UiHandlers.cs:128`, `src/Main.WaterCondenser.cs:24`, `src/Main.WaterSources.cs:23`, `src/Main.World.cs:210`, `src/Main.WorldPlaytest.cs:41`
+- **Setup Invocation Sites:** `src/Main.AdvancedShelterSystems.cs:54`, `src/Main.BriefingCrisis.cs:89`, `src/Main.CampaignOwners.cs:846`, `src/Main.CampaignOwners.cs:856`, `src/Main.CampaignOwners.cs:1839`, `src/Main.CampaignOwners.cs:1855`, `src/Main.CampaignServices.cs:39`, `src/Main.Economy.cs:179`, `src/Main.EvolvingWorld.cs:43`, `src/Main.EvolvingWorld.cs:61`, `src/Main.ExpandedShelterSystems.cs:105`, `src/Main.ExpandedShelterSystems.cs:719`, `src/Main.GameFlow.cs:399`, `src/Main.GameFlow.cs:431`, `src/Main.GameFlow.cs:525`, `src/Main.GameFlow.cs:539`, `src/Main.GameFlow.cs:550`, `src/Main.GameFlow.cs:626`, `src/Main.GameFlow.cs:788`, `src/Main.Lifecycle.cs:651`, `src/Main.NightWatch.cs:31`, `src/Main.Plans110_113.cs:54`, `src/Main.Plans162_165.cs:723`, `src/Main.Plans163_210.cs:22`, `src/Main.Plans163_210.cs:43`, `src/Main.Plans166_169.cs:38`, `src/Main.Plans167_219.cs:27`, `src/Main.Plans167_219.cs:36`, `src/Main.Plans167_219.cs:48`, `src/Main.Plans167_219.cs:66`, `src/Main.Plans94_97.cs:51`, `src/Main.PlayerSurfaces.cs:17`, `src/Main.PlayerSurfaces.cs:193`, `src/Main.PlayerSurfaces.cs:198`, `src/Main.PlayerSurfaces.cs:203`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:323`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:351`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.PlayerSurfaces.cs:646`, `src/Main.SaveOrchestrator.cs:181`, `src/Main.ShelterSocial.cs:268`, `src/Main.TunnelNetwork.cs:26`, `src/Main.TunnelNetwork.cs:38`, `src/Main.TunnelNetwork.cs:47`, `src/Main.TunnelNetwork.cs:54`, `src/Main.TunnelNetwork.cs:66`, `src/Main.TunnelNetwork.cs:84`, `src/Main.TunnelNetwork.cs:107`, `src/Main.UiHandlers.cs:128`, `src/Main.WaterCondenser.cs:24`, `src/Main.WaterSources.cs:23`, `src/Main.World.cs:210`, `src/Main.WorldPlaytest.cs:41`
 - **UI Routes:** `map`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/World/WastelandMapSystem.cs`](../../Assets/Ashfall.Core/World/WastelandMapSystem.cs)
@@ -3675,7 +3690,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/MapPanel.cs`](../../src/UI/MapPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WastelandMapPersistenceTests.cs`](../../Ashfall.Core.Tests/WastelandMapPersistenceTests.cs)
 
-### 267. `waystation` — Wasteland outpost network & relay hubs (World & Expeditions)
+### 268. `waystation` — Wasteland outpost network & relay hubs (World & Expeditions)
 - **Owner Domain:** `infrastructure`
 - **Setup Method:** `Main.SetupWaystation()` | **Invoked:** yes | **Cadence:** `Daily Outpost Relay Barter`
 - **Setup Invocation Sites:** `src/Main.ExpandedShelterSystems.cs:123`
@@ -3687,7 +3702,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/WaystationNetworkPanel.cs`](../../src/UI/WaystationNetworkPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WaystationSystemTests.cs`](../../Ashfall.Core.Tests/WaystationSystemTests.cs)
 
-### 268. `wildlife_trapping` — Snares, game catches, and foraging (World & Expeditions)
+### 269. `wildlife_trapping` — Snares, game catches, and foraging (World & Expeditions)
 - **Owner Domain:** `hunting`
 - **Setup Method:** `Main.SetupWildlifeTrapping()` | **Invoked:** yes | **Cadence:** `Daily Snare Yield & Butchery`
 - **Setup Invocation Sites:** `src/Main.EvolvingWorld.cs:139`, `src/Main.ExpandedShelterSystems.cs:114`, `src/Main.PlayerSurfaces.cs:338`
@@ -3699,10 +3714,10 @@ Detailed file paths and symbols proving zero conceptual placeholders:
   - UI Panel: [`src/UI/WildlifeTrappingPanel.cs`](../../src/UI/WildlifeTrappingPanel.cs)
   - Test Fixture: [`Ashfall.Core.Tests/WildlifeTrappingSystemTests.cs`](../../Ashfall.Core.Tests/WildlifeTrappingSystemTests.cs)
 
-### 269. `world` — World map nodes, sectors, and discovery (World & Expeditions)
+### 270. `world` — World map nodes, sectors, and discovery (World & Expeditions)
 - **Owner Domain:** `world`
 - **Setup Method:** `Main.SetupWorld()` | **Invoked:** yes | **Cadence:** `Daily Weather & Hazard`
-- **Setup Invocation Sites:** `src/Main.AdvancedShelterSystems.cs:54`, `src/Main.BriefingCrisis.cs:89`, `src/Main.CampaignOwners.cs:846`, `src/Main.CampaignOwners.cs:856`, `src/Main.CampaignOwners.cs:1839`, `src/Main.CampaignOwners.cs:1855`, `src/Main.CampaignServices.cs:39`, `src/Main.Economy.cs:179`, `src/Main.EvolvingWorld.cs:43`, `src/Main.EvolvingWorld.cs:61`, `src/Main.ExpandedShelterSystems.cs:105`, `src/Main.ExpandedShelterSystems.cs:719`, `src/Main.GameFlow.cs:399`, `src/Main.GameFlow.cs:431`, `src/Main.GameFlow.cs:525`, `src/Main.GameFlow.cs:539`, `src/Main.GameFlow.cs:550`, `src/Main.GameFlow.cs:626`, `src/Main.GameFlow.cs:788`, `src/Main.Lifecycle.cs:650`, `src/Main.NightWatch.cs:31`, `src/Main.Plans110_113.cs:54`, `src/Main.Plans162_165.cs:723`, `src/Main.Plans163_210.cs:22`, `src/Main.Plans163_210.cs:43`, `src/Main.Plans166_169.cs:38`, `src/Main.Plans167_219.cs:27`, `src/Main.Plans167_219.cs:36`, `src/Main.Plans167_219.cs:48`, `src/Main.Plans167_219.cs:66`, `src/Main.Plans94_97.cs:51`, `src/Main.PlayerSurfaces.cs:17`, `src/Main.PlayerSurfaces.cs:193`, `src/Main.PlayerSurfaces.cs:198`, `src/Main.PlayerSurfaces.cs:203`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:323`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:351`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.PlayerSurfaces.cs:646`, `src/Main.SaveOrchestrator.cs:181`, `src/Main.ShelterSocial.cs:268`, `src/Main.TunnelNetwork.cs:26`, `src/Main.TunnelNetwork.cs:38`, `src/Main.TunnelNetwork.cs:47`, `src/Main.TunnelNetwork.cs:54`, `src/Main.TunnelNetwork.cs:66`, `src/Main.TunnelNetwork.cs:84`, `src/Main.TunnelNetwork.cs:107`, `src/Main.UiHandlers.cs:128`, `src/Main.WaterCondenser.cs:24`, `src/Main.WaterSources.cs:23`, `src/Main.World.cs:210`, `src/Main.WorldPlaytest.cs:41`
+- **Setup Invocation Sites:** `src/Main.AdvancedShelterSystems.cs:54`, `src/Main.BriefingCrisis.cs:89`, `src/Main.CampaignOwners.cs:846`, `src/Main.CampaignOwners.cs:856`, `src/Main.CampaignOwners.cs:1839`, `src/Main.CampaignOwners.cs:1855`, `src/Main.CampaignServices.cs:39`, `src/Main.Economy.cs:179`, `src/Main.EvolvingWorld.cs:43`, `src/Main.EvolvingWorld.cs:61`, `src/Main.ExpandedShelterSystems.cs:105`, `src/Main.ExpandedShelterSystems.cs:719`, `src/Main.GameFlow.cs:399`, `src/Main.GameFlow.cs:431`, `src/Main.GameFlow.cs:525`, `src/Main.GameFlow.cs:539`, `src/Main.GameFlow.cs:550`, `src/Main.GameFlow.cs:626`, `src/Main.GameFlow.cs:788`, `src/Main.Lifecycle.cs:651`, `src/Main.NightWatch.cs:31`, `src/Main.Plans110_113.cs:54`, `src/Main.Plans162_165.cs:723`, `src/Main.Plans163_210.cs:22`, `src/Main.Plans163_210.cs:43`, `src/Main.Plans166_169.cs:38`, `src/Main.Plans167_219.cs:27`, `src/Main.Plans167_219.cs:36`, `src/Main.Plans167_219.cs:48`, `src/Main.Plans167_219.cs:66`, `src/Main.Plans94_97.cs:51`, `src/Main.PlayerSurfaces.cs:17`, `src/Main.PlayerSurfaces.cs:193`, `src/Main.PlayerSurfaces.cs:198`, `src/Main.PlayerSurfaces.cs:203`, `src/Main.PlayerSurfaces.cs:318`, `src/Main.PlayerSurfaces.cs:323`, `src/Main.PlayerSurfaces.cs:338`, `src/Main.PlayerSurfaces.cs:351`, `src/Main.PlayerSurfaces.cs:424`, `src/Main.PlayerSurfaces.cs:646`, `src/Main.SaveOrchestrator.cs:181`, `src/Main.ShelterSocial.cs:268`, `src/Main.TunnelNetwork.cs:26`, `src/Main.TunnelNetwork.cs:38`, `src/Main.TunnelNetwork.cs:47`, `src/Main.TunnelNetwork.cs:54`, `src/Main.TunnelNetwork.cs:66`, `src/Main.TunnelNetwork.cs:84`, `src/Main.TunnelNetwork.cs:107`, `src/Main.UiHandlers.cs:128`, `src/Main.WaterCondenser.cs:24`, `src/Main.WaterSources.cs:23`, `src/Main.World.cs:210`, `src/Main.WorldPlaytest.cs:41`
 - **UI Routes:** `map`, `weather`
 - **Verified Source Files:**
   - Core System: [`Assets/Ashfall.Core/World/WastelandMapSystem.cs`](../../Assets/Ashfall.Core/World/WastelandMapSystem.cs)
@@ -3755,11 +3770,11 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `chemical_dependency` | ✅ | ✅ | ✅ `Main.SetupMentalHealthCrisis()` ([src/Main.ExpandedShelterSystems.cs:142](../../src/Main.ExpandedShelterSystems.cs#L142)) | ✅ `Daily Tolerance & Withdrawal` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `chemical_reagent_synthesis` | ✅ | ✅ | ✅ `Main.SetupChemicalReagentSynthesis()` ([src/Main.CampaignOwners.cs:2543](../../src/Main.CampaignOwners.cs#L2543)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `chemical_recon` | ✅ | ✅ | ✅ `Main.SetupChemicalRecon()` ([src/Main.Plans78_81.cs:92](../../src/Main.Plans78_81.cs#L92)) | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
-| `chemical_synthesis` | ✅ | ✅ | ✅ `Main.SetupChemicalSynthesis()` ([src/Main.Application.cs:884](../../src/Main.Application.cs#L884)) | ⚡ `On-Demand (Retort Synthesis)` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
+| `chemical_synthesis` | ✅ | ✅ | ✅ `Main.SetupChemicalSynthesis()` ([src/Main.Application.cs:887](../../src/Main.Application.cs#L887)) | ⚡ `On-Demand (Retort Synthesis)` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
 | `child_development` | ✅ | ✅ | ✅ `Main.SetupGenerational()` ([src/Main.CampaignServices.cs:101](../../src/Main.CampaignServices.cs#L101)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `chlor_alkali_synthesis` | ✅ | ✅ | ✅ `Main.SetupChlorAlkali()` ([src/Main.Plans110_113.cs:136](../../src/Main.Plans110_113.cs#L136)) | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `clinical_ward_triage` | ✅ | ✅ | ✅ `Main.SetupClinicalWardTriage()` ([src/Main.CampaignOwners.cs:2515](../../src/Main.CampaignOwners.cs#L2515)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
-| `collectible_discovery` | ✅ | ✅ | ✅ `Main.SetupCollectibles()` ([src/Main.Application.cs:878](../../src/Main.Application.cs#L878)) | ⚡ `On-Demand (One-Time Discovery Ledger)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `collectible_discovery` | ✅ | ✅ | ✅ `Main.SetupCollectibles()` ([src/Main.Application.cs:881](../../src/Main.Application.cs#L881)) | ⚡ `On-Demand (One-Time Discovery Ledger)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `colony` | ✅ | ✅ | ✅ `Main.SetupColony()` ([src/Main.OrphanSealWave1.cs:78](../../src/Main.OrphanSealWave1.cs#L78)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `combat` | ✅ | ✅ | ✅ `Main.SetupCombat()` ([src/Main.CampaignServices.cs:63](../../src/Main.CampaignServices.cs#L63)) | ⚡ `On-Demand (Turn-Based)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `commitment` | ✅ | ✅ | ✅ `Main.SetupCommitments()` ([src/Main.ExpandedShelterSystems.cs:156](../../src/Main.ExpandedShelterSystems.cs#L156)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
@@ -3790,20 +3805,20 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `disease` | ✅ | ✅ | ✅ `Main.SetupDisease()` ([src/Main.CampaignOwners.cs:1494](../../src/Main.CampaignOwners.cs#L1494)) | ✅ `Daily Pathogen Transmission` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `dose_ledger` | ✅ | ✅ | ✅ `Main.SetupDoseLedger()` ([src/Main.CampaignOwners.cs:1020](../../src/Main.CampaignOwners.cs#L1020)) | ⚡ `On-Demand (Dose Log)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `draisine_recovery` | ✅ | ✅ | ✅ `Main.SetupDraisineRerailing()` ([src/Main.Plans130_133.cs:28](../../src/Main.Plans130_133.cs#L28)) | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
-| `duty_roster` | ✅ | ✅ | ✅ `Main.SetupDutyRoster()` ([src/Main.Application.cs:862](../../src/Main.Application.cs#L862)) | ✅ `Daily Shift Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `duty_roster` | ✅ | ✅ | ✅ `Main.SetupDutyRoster()` ([src/Main.Application.cs:865](../../src/Main.Application.cs#L865)) | ✅ `Daily Shift Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `dynamic_quests` | ✅ | ✅ | ✅ `Main.SetupDynamicQuests()` ([src/Main.SaveOrchestrator.cs:242](../../src/Main.SaveOrchestrator.cs#L242)) | ⚡ `On-Demand (Campaign-Wide Emergency Quests)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `ebpvd_coating` | ✅ | ✅ | ✅ `Main.SetupEbPvdCoating()` ([src/Main.Plans146_149.cs:300](../../src/Main.Plans146_149.cs#L300)) | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `echoes` | ✅ | ✅ | ✅ `Main.SetupEchoes()` ([src/Main.CampaignOwners.cs:2201](../../src/Main.CampaignOwners.cs#L2201)) | ✅ `Narrative Echo Tick` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `ecological_infestation` | ✅ | ✅ | ✅ `Main.SetupEcologicalInfestation()` ([src/Main.EcologicalInfestations.cs:52](../../src/Main.EcologicalInfestations.cs#L52)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `economy` | ✅ | ✅ | ✅ `Main.SetupEconomy()` ([src/Main.BlackMarket.cs:31](../../src/Main.BlackMarket.cs#L31)) | ✅ `Daily Market Rate Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `encounter_choice` | ✅ | ❌ | ❌ `Main.SetupEncounterChoice()` | ⚡ `On-Demand (Door Event Resolution)` | ✅ | ✅ | ✅ | **FAIL (GAP)** |
-| `endgame` | ✅ | ✅ | ✅ `Main.SetupEndgame()` ([src/Main.Application.cs:877](../../src/Main.Application.cs#L877)) | ⚡ `On-Demand (Day Threshold / Extinction)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `endgame` | ✅ | ✅ | ✅ `Main.SetupEndgame()` ([src/Main.Application.cs:880](../../src/Main.Application.cs#L880)) | ⚡ `On-Demand (Day Threshold / Extinction)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `equipment_condition` | ✅ | ✅ | ✅ `Main.SetupEquipmentCondition()` ([src/Main.ExpandedShelterSystems.cs:138](../../src/Main.ExpandedShelterSystems.cs#L138)) | ✅ `Daily Gear Wear & Maintenance` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `espionage` | ✅ | ✅ | ✅ `Main.SetupPlans166To169()` ([src/Main.CampaignServices.cs:149](../../src/Main.CampaignServices.cs#L149)) | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `excavation` | ✅ | ✅ | ✅ `Main.SetupExcavation()` ([src/Main.ExpandedShelterSystems.cs:115](../../src/Main.ExpandedShelterSystems.cs#L115)) | ✅ `Daily Rubble Shoring Work` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `excavation_hazards` | ✅ | ✅ | ✅ `Main.SetupExcavationHazards()` ([src/Main.CampaignServices.cs:148](../../src/Main.CampaignServices.cs#L148)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `exercise` | ✅ | ✅ | ✅ `Main.SetupExercise()` ([src/Main.CampaignOwners.cs:2770](../../src/Main.CampaignOwners.cs#L2770)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
-| `expansion_hub` | ✅ | ✅ | ✅ `Main.SetupExpansions()` ([src/Main.Application.cs:868](../../src/Main.Application.cs#L868)) | ✅ `Daily Hub Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `expansion_hub` | ✅ | ✅ | ✅ `Main.SetupExpansions()` ([src/Main.Application.cs:871](../../src/Main.Application.cs#L871)) | ✅ `Daily Hub Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `expansion_quest` | ✅ | ✅ | ✅ `Main.SetupExpansionQuests()` ([src/Main.CampaignOwners.cs:2180](../../src/Main.CampaignOwners.cs#L2180)) | ⚡ `On-Demand (Stage Milestone)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `expedition` | ✅ | ✅ | ✅ `Main.SetupExpeditions()` ([src/Main.CampaignOwners.cs:1635](../../src/Main.CampaignOwners.cs#L1635)) | ✅ `Daily Sortie Travel` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `expedition_stealth` | ✅ | ✅ | ✅ `Main.SetupStealth()` ([src/Main.CampaignServices.cs:104](../../src/Main.CampaignServices.cs#L104)) | ⚡ `Event-Driven (Expedition Phases)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -3838,7 +3853,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `internal_communication` | ✅ | ✅ | ✅ `Main.SetupInternalCommunication()` ([src/Main.CampaignServices.cs:144](../../src/Main.CampaignServices.cs#L144)) | ✅ `Daily (Message Expiry)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `interpersonal_conflict` | ✅ | ✅ | ✅ `Main.SetupInterpersonalConflict()` ([src/Main.CampaignOwners.cs:2742](../../src/Main.CampaignOwners.cs#L2742)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `inventory` | ✅ | ✅ | ✅ `Main.SetupInventory()` ([src/Main.AdvancedShelterSystems.cs:44](../../src/Main.AdvancedShelterSystems.cs#L44)) | ⚡ `On-Demand (Item Use)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `journal` | ✅ | ✅ | ✅ `Main.SetupJournal()` ([src/Main.Application.cs:860](../../src/Main.Application.cs#L860)) | ⚡ `On-Demand (Log/Event)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `journal` | ✅ | ✅ | ✅ `Main.SetupJournal()` ([src/Main.Application.cs:863](../../src/Main.Application.cs#L863)) | ⚡ `On-Demand (Log/Event)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `kilnworks` | ✅ | ✅ | ✅ `Main.SetupKilnworks()` ([src/Main.CampaignOwners.cs:2376](../../src/Main.CampaignOwners.cs#L2376)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `kinetic_storage` | ✅ | ✅ | ✅ `Main.SetupKineticStorage()` ([src/Main.Plans78_81.cs:91](../../src/Main.Plans78_81.cs#L91)) | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `kitchen_nutrition` | ✅ | ✅ | ✅ `Main.SetupKitchenNutrition()` ([src/Main.ExpandedShelterSystems.cs:134](../../src/Main.ExpandedShelterSystems.cs#L134)) | ✅ `Daily Rationing Meal Prep` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -3858,13 +3873,13 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `meta_progression` | ✅ | ✅ | ✅ `Main.SetupMetaProgression()` ([src/Main.CampaignOwners.cs:592](../../src/Main.CampaignOwners.cs#L592)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `microfluidic_diagnostic` | ✅ | ✅ | ✅ `Main.SetupMicrofluidicDiagnostic()` ([src/Main.Plans146_149.cs:301](../../src/Main.Plans146_149.cs#L301)) | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `mine_clearing_flail` | ✅ | ✅ | ✅ `Main.SetupMineClearingFlail()` ([src/Main.Plans146_149.cs:302](../../src/Main.Plans146_149.cs#L302)) | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `moral_choice` | ✅ | ✅ | ✅ `Main.SetupMoralChoice()` ([src/Main.Application.cs:874](../../src/Main.Application.cs#L874)) | ⚡ `On-Demand (Branch Choice)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `moral_choice` | ✅ | ✅ | ✅ `Main.SetupMoralChoice()` ([src/Main.Application.cs:877](../../src/Main.Application.cs#L877)) | ⚡ `On-Demand (Branch Choice)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `morale_contagion` | ✅ | ✅ | ✅ `Main.SetupMoraleContagion()` ([src/Main.CampaignOwners.cs:1354](../../src/Main.CampaignOwners.cs#L1354)) | ✅ `Daily Contagion / Isolation Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `muster` | ✅ | ✅ | ✅ `Main.SetupMuster()` ([src/Main.CampaignOwners.cs:2173](../../src/Main.CampaignOwners.cs#L2173)) | ⚡ `On-Demand (Rally Stance)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `mutation_tree` | ✅ | ✅ | ✅ `Main.SetupMutations()` ([src/Main.CampaignServices.cs:103](../../src/Main.CampaignServices.cs#L103)) | ⚡ `Event-Driven (Dose Thresholds)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `narcotics` | ✅ | ✅ | ✅ `Main.SetupNarcotics()` ([src/Main.CampaignServices.cs:107](../../src/Main.CampaignServices.cs#L107)) | ✅ `24h Medical Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `narrative` | ✅ | ✅ | ✅ `Main.SetupNarrative()` ([src/Main.CampaignOwners.cs:2187](../../src/Main.CampaignOwners.cs#L2187)) | ⚡ `On-Demand (Dialog Choice)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `narrative_questlines` | ✅ | ✅ | ✅ `Main.SetupNarrativeQuestlines()` ([src/Main.Application.cs:883](../../src/Main.Application.cs#L883)) | ⚡ `On-Demand (Survivor Narrative Arc Progression)` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
+| `narrative_questlines` | ✅ | ✅ | ✅ `Main.SetupNarrativeQuestlines()` ([src/Main.Application.cs:886](../../src/Main.Application.cs#L886)) | ⚡ `On-Demand (Survivor Narrative Arc Progression)` | ✅ | ✅ | ❌ | **FAIL (GAP)** |
 | `npc_memory` | ✅ | ✅ | ✅ `Main.SetupNpcMemory()` ([src/Main.CampaignOwners.cs:452](../../src/Main.CampaignOwners.cs#L452)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `nuclear_core_lifecycle` | ✅ | ✅ | ✅ `Main.SetupNuclearCore()` ([src/Main.SaveOrchestrator.cs:293](../../src/Main.SaveOrchestrator.cs#L293)) | ✅ `Daily Core Thermal Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `nuclear_winter_progression` | ✅ | ✅ | ✅ `Main.SetupNuclearWinter()` ([src/Main.OrphanSealWave1.cs:74](../../src/Main.OrphanSealWave1.cs#L74)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
@@ -3874,7 +3889,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `outpost_settlement` | ✅ | ✅ | ✅ `Main.SetupOutpostSettlement()` ([src/Main.ExpandedShelterSystems.cs:163](../../src/Main.ExpandedShelterSystems.cs#L163)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `pathogen_strains` | ✅ | ✅ | ✅ `Main.SetupPathogenStrains()` ([src/Main.CampaignOwners.cs:1538](../../src/Main.CampaignOwners.cs#L1538)) | ✅ `Daily Strain Progression Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `perimeter_defense` | ✅ | ✅ | ✅ `Main.SetupPerimeterDefense()` ([src/Main.NightWatch.cs:32](../../src/Main.NightWatch.cs#L32)) | ✅ `Daily Emplacement + Watch Readiness Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `personal_quests` | ✅ | ✅ | ✅ `Main.SetupPersonalQuests()` ([src/Main.Application.cs:882](../../src/Main.Application.cs#L882)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `personal_quests` | ✅ | ✅ | ✅ `Main.SetupPersonalQuests()` ([src/Main.Application.cs:885](../../src/Main.Application.cs#L885)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `phantom_memory` | ✅ | ✅ | ✅ `Main.SetupPhantom()` ([src/Main.CampaignServices.cs:61](../../src/Main.CampaignServices.cs#L61)) | ⚡ `On-Demand (Scavenge Echo)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `phase0` | ✅ | ✅ | ✅ `Main.SetupPhase0()` ([src/Main.CampaignOwners.cs:1604](../../src/Main.CampaignOwners.cs#L1604)) | ⚡ `On-Demand (Pre-War Flashback)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `piezometer_network` | ✅ | ✅ | ✅ `Main.SetupPiezometer()` ([src/Main.Piezometer.cs:25](../../src/Main.Piezometer.cs#L25)) | ✅ `Daily Aquifer Advisory Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -3926,7 +3941,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `shelter_decor` | ✅ | ✅ | ✅ `Main.SetupShelterDecor()` ([src/Main.CampaignOwners.cs:1344](../../src/Main.CampaignOwners.cs#L1344)) | ⚡ `On-Demand (Decoration Placement)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_expansion` | ✅ | ✅ | ✅ `Main.SetupShelterExpansion()` ([src/Main.OrphanSealWave1.cs:81](../../src/Main.OrphanSealWave1.cs#L81)) | ⚡ `Labor-Driven` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_festival` | ✅ | ✅ | ✅ `Main.SetupShelterFestival()` ([src/Main.OrphanSealWave1.cs:83](../../src/Main.OrphanSealWave1.cs#L83)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
-| `shelter_fire` | ✅ | ✅ | ✅ `Main.SetupShelterFireHazard()` ([src/Main.Application.cs:879](../../src/Main.Application.cs#L879)) | ✅ `Daily Fire Propagation Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `shelter_fire` | ✅ | ✅ | ✅ `Main.SetupShelterFireHazard()` ([src/Main.Application.cs:882](../../src/Main.Application.cs#L882)) | ✅ `Daily Fire Propagation Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_governance` | ✅ | ✅ | ✅ `Main.SetupShelterGovernance()` ([src/Main.CampaignOwners.cs:734](../../src/Main.CampaignOwners.cs#L734)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_identity` | ✅ | ✅ | ✅ `Main.SetupShelterIdentity()` ([src/Main.CampaignOwners.cs:650](../../src/Main.CampaignOwners.cs#L650)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `shelter_maintenance` | ✅ | ✅ | ✅ `Main.SetupShelterMaintenance()` ([src/Main.CampaignOwners.cs:790](../../src/Main.CampaignOwners.cs#L790)) | ⚡ `None` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -3939,7 +3954,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `shelter_workshop` | ✅ | ✅ | ✅ `Main.SetupWorkshop()` ([src/Main.SaveOrchestrator.cs:238](../../src/Main.SaveOrchestrator.cs#L238)) | ⚡ `On-Demand (Crafting & Refurbishment)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `silent_foundry` | ✅ | ✅ | ✅ `Main.SetupSilentFoundry()` ([src/Main.CampaignOwners.cs:1076](../../src/Main.CampaignOwners.cs#L1076)) | ✅ `Daily Smelter Cycle` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `skill_certifications` | ✅ | ✅ | ✅ `Main.SetupSkillCertifications()` ([src/Main.CampaignOwners.cs:2854](../../src/Main.CampaignOwners.cs#L2854)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
-| `sky_defense_battery` | ✅ | ✅ | ✅ `Main.SetupSkyDefense()` ([src/Main.Lifecycle.cs:661](../../src/Main.Lifecycle.cs#L661)) | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `sky_defense_battery` | ✅ | ✅ | ✅ `Main.SetupSkyDefense()` ([src/Main.Lifecycle.cs:662](../../src/Main.Lifecycle.cs#L662)) | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `sleep_acoustic_rest` | ✅ | ✅ | ✅ `Main.SetupSleepAcousticRest()` ([src/Main.CampaignOwners.cs:2599](../../src/Main.CampaignOwners.cs#L2599)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `sofc_power` | ✅ | ✅ | ✅ `Main.SetupSofcPower()` ([src/Main.Plans122to125.cs:295](../../src/Main.Plans122to125.cs#L295)) | ✅ `Shelter Power Cadence (TickDay)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `solar_concentrator` | ✅ | ✅ | ✅ `Main.SetupSolarConcentrator()` ([src/Main.Plans110_113.cs:137](../../src/Main.Plans110_113.cs#L137)) | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
@@ -3956,6 +3971,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `survivor_fate` | ✅ | ✅ | ✅ `Main.SetupSurvivorFate()` ([src/Main.CampaignOwners.cs:1364](../../src/Main.CampaignOwners.cs#L1364)) | ✅ `Daily Survivor-Death Cascade` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `survivor_mental_health` | ✅ | ✅ | ✅ `Main.SetupSurvivorMentalHealth()` ([src/Main.Plans50_53.cs:239](../../src/Main.Plans50_53.cs#L239)) | ⚡ `On-Demand` | ✅ | ❌ | ❌ | **FAIL (GAP)** |
 | `survivor_relations` | ✅ | ✅ | ✅ `Main.SetupSurvivorRelations()` ([src/Main.ExpandedShelterSystems.cs:111](../../src/Main.ExpandedShelterSystems.cs#L111)) | ✅ `Daily Affinity & Feud Drift` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `survivor_roles` | ✅ | ✅ | ✅ `Main.SetupSurvivorRoles()` ([src/Main.SaveOrchestrator.cs:343](../../src/Main.SaveOrchestrator.cs#L343)) | ⚡ `Work-Fact Driven (SkillProgression OnXpGained)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `survivor_routines` | ✅ | ✅ | ✅ `Main.SetupSurvivorRoutines()` ([src/Main.CampaignOwners.cs:818](../../src/Main.CampaignOwners.cs#L818)) | ⚡ `None` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `survivor_social` | ✅ | ✅ | ✅ `Main.SetupSurvivorSocial()` ([src/Main.InternalCommunication.cs:39](../../src/Main.InternalCommunication.cs#L39)) | ✅ `Daily Shelter Social Dynamics` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `survivor_voice` | ✅ | ✅ | ✅ `Main.SetupSurvivorVoice()` ([src/Main.ExpandedShelterSystems.cs:159](../../src/Main.ExpandedShelterSystems.cs#L159)) | ⚡ `Event-Driven` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
@@ -3967,9 +3983,9 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `trade_routes` | ✅ | ✅ | ✅ `Main.SetupTradeRoutes()` ([src/Main.CampaignOwners.cs:678](../../src/Main.CampaignOwners.cs#L678)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `travel_encounters` | ✅ | ✅ | ✅ `Main.SetupTravelEncounters()` ([src/Main.Expeditions.cs:106](../../src/Main.Expeditions.cs#L106)) | ⚡ `On-Demand (Travel Step)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `unified_ending` | ✅ | ✅ | ✅ `Main.SetupUnifiedEnding()` ([src/Main.CampaignOwners.cs:424](../../src/Main.CampaignOwners.cs#L424)) | ✅ `On-Demand (Campaign Sealed)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `unique_claims` | ✅ | ✅ | ✅ `Main.SetupCollectibles()` ([src/Main.Application.cs:878](../../src/Main.Application.cs#L878)) | ⚡ `On-Demand (Global Unique Claim Ledger)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `unique_claims` | ✅ | ✅ | ✅ `Main.SetupCollectibles()` ([src/Main.Application.cs:881](../../src/Main.Application.cs#L881)) | ⚡ `On-Demand (Global Unique Claim Ledger)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `vehicle_customization` | ✅ | ✅ | ✅ `Main.SetupVehicleCustomization()` ([src/Main.CampaignOwners.cs:536](../../src/Main.CampaignOwners.cs#L536)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
-| `vehicle_garage` | ✅ | ✅ | ✅ `Main.SetupVehicleGarage()` ([src/Main.Lifecycle.cs:662](../../src/Main.Lifecycle.cs#L662)) | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `vehicle_garage` | ✅ | ✅ | ✅ `Main.SetupVehicleGarage()` ([src/Main.Lifecycle.cs:663](../../src/Main.Lifecycle.cs#L663)) | ⚡ `On-Demand` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `verdict` | ✅ | ✅ | ✅ `Main.SetupVerdict()` ([src/Main.CampaignServices.cs:54](../../src/Main.CampaignServices.cs#L54)) | ✅ `Daily Machine Log Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `vinyl_morale` | ✅ | ✅ | ✅ `Main.SetupVinylMorale()` ([src/Main.ExpandedShelterSystems.cs:113](../../src/Main.ExpandedShelterSystems.cs#L113)) | ✅ `Daily Turntable Morale Broadcast` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `visitor_integration` | ✅ | ✅ | ✅ `Main.SetupVisitorIntegration()` ([src/Main.ExpandedShelterSystems.cs:151](../../src/Main.ExpandedShelterSystems.cs#L151)) | ✅ `Daily (Visitor Lifecycle & Ration Draw)` | ✅ | ✅ | ✅ | **PASS (6/6)** |
@@ -3986,7 +4002,7 @@ Detailed file paths and symbols proving zero conceptual placeholders:
 | `wildlife_harvest` | ✅ | ✅ | ✅ `Main.SetupWildlifeHarvest()` ([src/Main.CampaignOwners.cs:2404](../../src/Main.CampaignOwners.cs#L2404)) | ✅ `Daily Sim Tick` | ✅ | ❌ | ✅ | **FAIL (GAP)** |
 | `wildlife_trapping` | ✅ | ✅ | ✅ `Main.SetupWildlifeTrapping()` ([src/Main.EvolvingWorld.cs:139](../../src/Main.EvolvingWorld.cs#L139)) | ✅ `Daily Snare Yield & Butchery` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `world` | ✅ | ✅ | ✅ `Main.SetupWorld()` ([src/Main.AdvancedShelterSystems.cs:54](../../src/Main.AdvancedShelterSystems.cs#L54)) | ✅ `Daily Weather & Hazard` | ✅ | ✅ | ✅ | **PASS (6/6)** |
-| `year_of_ash` | ✅ | ✅ | ✅ `Main.SetupYearOfAsh()` ([src/Main.Application.cs:871](../../src/Main.Application.cs#L871)) | ✅ `Daily Deep-Freeze Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
+| `year_of_ash` | ✅ | ✅ | ✅ `Main.SetupYearOfAsh()` ([src/Main.Application.cs:874](../../src/Main.Application.cs#L874)) | ✅ `Daily Deep-Freeze Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 | `zealotry` | ✅ | ✅ | ✅ `Main.SetupZealotry()` ([src/Main.CampaignServices.cs:112](../../src/Main.CampaignServices.cs#L112)) | ✅ `Daily Sim Tick` | ✅ | ✅ | ✅ | **PASS (6/6)** |
 
 ### Never-Invoked Setup Methods

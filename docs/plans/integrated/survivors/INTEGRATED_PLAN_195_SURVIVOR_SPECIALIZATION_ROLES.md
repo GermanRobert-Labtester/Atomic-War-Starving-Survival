@@ -1,3 +1,19 @@
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+
+> **FULLY INTEGRATED 2026-09-26** under user-authorized claim
+> `claim-plan195-survivor-roles-integration-2026-09-26` (see `INTEGRATION_PLANS.md`
+> and `.ai/plans/plan195-survivor-roles-integration.md`, STATUS: APPROVED BY USER).
+> `SurvivorRoleSystem` is fully wired: checksummed save section `survivor_roles`,
+> host session `SurvivorRoleHostSession`, discipline-gated assignment read from
+> the SkillProgression owner, earned role practice via `SkillProgressionSystem.OnXpGained`
+> (exactly once per verified completed-work fact), read-only `Specialization`
+> readout in `SurvivorDetailPanel`, and `--survivor-roles-selftest` 12/12 headless.
+> Evidence: Plan195 tests 13/13, adjacent gates 36/36, data integrity 427/427
+> (0 errors), player-panels uitest 21/21 lifecycle, builds 0 errors / 0 new
+> warnings, all generated indexes `--check` OK. Zero partial residue.
+
 # Plan 195 — Survivor Specialization Roles — Canonical Duties, Skill Gates, and Earned Role Practice
 
 ## PFGL Codex Luna 6 execution revision — 2026-09-25

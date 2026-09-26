@@ -340,6 +340,7 @@ namespace AtomicWar.GodotApp
             SetupMemoryDecay();
             SetupInterpersonalConflict();
             SetupExercise();
+            SetupSurvivorRoles();
             SetupCultureCreation();
             SetupPsychologicalProfiles();
             SetupSkillCertifications();
@@ -605,6 +606,7 @@ namespace AtomicWar.GodotApp
                 SaveMemoryDecay();
                 SaveInterpersonalConflict();
                 SaveExercise();
+                SaveSurvivorRoles();
                 SaveCultureCreation();
                 SavePsychologicalProfiles();
                 SaveSkillCertifications();

@@ -262,6 +262,7 @@ namespace AtomicWar.GodotApp
         MemoryDecaySelfTest,
         InterpersonalConflictSelfTest,
         ExerciseSelfTest,
+        SurvivorRolesSelfTest,
         AfflictionBridgeSelfTest,
         RadiationMutationSelfTest,
         RadioProgramProductionSelfTest,
@@ -791,6 +792,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.InterpersonalConflictSelfTest;
             if (Has(args, "--exercise-selftest") || Has(args, "--physical-training-selftest"))
                 return HostCliAction.ExerciseSelfTest;
+            if (Has(args, "--survivor-roles-selftest") || Has(args, "--specialization-roles-selftest"))
+                return HostCliAction.SurvivorRolesSelfTest;
             if (Has(args, "--affliction-bridge-selftest") || Has(args, "--affliction-bridges-selftest") || Has(args, "--affliction-quest-work-selftest"))
                 return HostCliAction.AfflictionBridgeSelfTest;
             if (Has(args, "--radiation-mutation-selftest") || Has(args, "--mutation-system-selftest"))
@@ -1061,6 +1064,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --memory-decay-selftest / --memory-system-selftest  Memory decay integration probe");
             GD.Print("  --interpersonal-conflict-selftest / --conflict-system-selftest  Interpersonal conflict integration probe");
             GD.Print("  --exercise-selftest / --physical-training-selftest  Exercise and physical training integration probe");
+            GD.Print("  --survivor-roles-selftest / --specialization-roles-selftest  Survivor specialization roles integration probe");
             GD.Print("  --affliction-bridge-selftest / --affliction-bridges-selftest / --affliction-quest-work-selftest  Affliction quest-work bridge probe");
             GD.Print("  --radiation-mutation-selftest / --mutation-system-selftest  Radiation mutation integration probe");
             GD.Print("  --radio-production-selftest / --radio-program-production-selftest  Radio program production probe");
@@ -1073,7 +1077,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --bestiary-selftest / --creature-encounters-selftest / --bestiary-ui-selftest  Bestiary integration probe");
             GD.Print("  --health-history-selftest / --medical-records-selftest / --vaccination-history-selftest  Health history integration probe");
             GD.Print("  --leadership-succession-selftest / --succession-selftest / --leadership-challenges-selftest  Leadership succession integration probe");
-            GD.Print("  --recruitment-selftest / --defection-selftest  Survivor recruitment & defection campaigns probe");
+            GD.Print("  --recruitment-selftest / --defection-selftest / --survivor-recruitment-selftest  Survivor recruitment & defection campaigns probe");
             GD.Print("  --aging-selftest / --elderly-survivor-selftest  Survivor aging and life-stage compatibility probes");
             GD.Print("  --atmosphere-selftest / --shelter-atmosphere-selftest  Shelter atmosphere compatibility probes");
             GD.Print("  --audio-access-selftest / --audio-accessibility-selftest  Audio accessibility compatibility probes");

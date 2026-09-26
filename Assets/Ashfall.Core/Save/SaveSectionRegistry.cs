@@ -144,6 +144,7 @@ namespace Ashfall.Core.Save
             new("internal_communication", "SaveInternalCommunication", "SetupInternalCommunication", "communication", "Plan 211 — internal shelter notices, bulletin boards, intercom acknowledgements, and private mail", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("death_legacy", "SaveDeathLegacy", "SetupDeathLegacy", "survivors", "Plan 206 — survivor death records, last wills, estate inheritance, and disputes", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("relationship_decay", "SaveRelationshipDecay", "SetupRelationshipDecay", "social", "Plan 182 — survivor pair bond decay, interaction tracking, and social drift", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("survivor_roles", "SaveSurvivorRoles", "SetupSurvivorRoles", "survivors", "Plan 195 — survivor specialization roles: identity, earned practice XP, level progression, and bonus readout", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("survivor_social", "SaveSurvivorSocial", "SetupSurvivorSocial", "social", "Leadership, friction, ration conflict, trauma bonds, skill atrophy"),
             new("morale_contagion", "SaveMoraleContagion", "SetupMoraleContagion", "social", "Flagship XI Plan 154 — morale contagion channels, breakdowns, social isolation, schism ledger, HopeBeacon installation"),
             new("pathogen_strains", "SavePathogenStrains", "SetupPathogenStrains", "medical", "Flagship XI Plan 155 — fictional strain layer: cure projects and unlocked cures"),

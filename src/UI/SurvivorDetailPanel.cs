@@ -66,6 +66,9 @@ namespace AtomicWar.GodotApp.UI
         /// <summary>Read-only daily routine projection supplied by Main (Plan 188).</summary>
         public Func<string, Ashfall.Core.Survivors.SurvivorRoutineRecord?>? RoutineProvider { get; set; }
 
+        /// <summary>Plan 195 — read-only specialization role readout (role id, display name, level, XP). Null when the survivor holds no role.</summary>
+        public Func<string, (string RoleId, string DisplayName, int Level, int ExperiencePoints)?>? RoleProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
@@ -138,6 +141,14 @@ namespace AtomicWar.GodotApp.UI
             AddRow(_survivorInfo, $"Name: {view?.DisplayName ?? Name(s.Id)}", Ashfall.Core.UI.Theme.Pale);
             AddRow(_survivorInfo, $"Profession: {view?.ProfessionLabel ?? (!string.IsNullOrEmpty(def?.profession) ? def.profession : "Unspecified")}", Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount += 2;
+
+            // Plan 195 — truthful current specialization role; read-only projection.
+            var roleReadout = RoleProvider?.Invoke(_survivorId);
+            if (roleReadout.HasValue && !string.IsNullOrEmpty(roleReadout.Value.RoleId))
+            {
+                AddRow(_survivorInfo, $"Specialization: {roleReadout.Value.DisplayName} (Level {roleReadout.Value.Level}, {roleReadout.Value.ExperiencePoints} practice XP)", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
 
             if (view != null && !string.IsNullOrEmpty(view.BeliefProfileLabel) && !string.IsNullOrEmpty(view.BeliefProfileId))
             {

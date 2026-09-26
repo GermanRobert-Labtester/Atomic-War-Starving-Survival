@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-25<br>
-**Total Registered Actions:** 272 entries / 417 flag tokens (aliases included)
+**Last Verified:** 2026-09-26<br>
+**Total Registered Actions:** 274 entries / 422 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -237,6 +237,7 @@
 | `--memory-decay-selftest` | `--memory-system-selftest` | Memory decay integration probe |
 | `--interpersonal-conflict-selftest` | `--conflict-system-selftest` | Interpersonal conflict integration probe |
 | `--exercise-selftest` | `--physical-training-selftest` | Exercise and physical training integration probe |
+| `--survivor-roles-selftest` | `--specialization-roles-selftest` | Survivor specialization roles integration probe |
 | `--affliction-bridge-selftest` | `--affliction-bridges-selftest`, `--affliction-quest-work-selftest` | Affliction quest-work bridge probe |
 | `--radiation-mutation-selftest` | `--mutation-system-selftest` | Radiation mutation integration probe |
 | `--radio-production-selftest` | `--radio-program-production-selftest` | Radio program production probe |
@@ -249,6 +250,7 @@
 | `--bestiary-selftest` | `--creature-encounters-selftest`, `--bestiary-ui-selftest` | Bestiary integration probe |
 | `--health-history-selftest` | `--medical-records-selftest`, `--vaccination-history-selftest` | Health history integration probe |
 | `--leadership-succession-selftest` | `--succession-selftest`, `--leadership-challenges-selftest` | Leadership succession integration probe |
+| `--recruitment-selftest` | `--defection-selftest`, `--survivor-recruitment-selftest` | Survivor recruitment & defection campaigns probe |
 | `--aging-selftest` | `--elderly-survivor-selftest` | Survivor aging and life-stage compatibility probes |
 | `--atmosphere-selftest` | `--shelter-atmosphere-selftest` | Shelter atmosphere compatibility probes |
 | `--audio-access-selftest` | `--audio-accessibility-selftest` | Audio accessibility compatibility probes |

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 208,
-  "headless_test_count": 206,
+  "total_tests": 210,
+  "headless_test_count": 208,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1975,6 +1975,19 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "survivor_roles_selftest",
+      "action": "SurvivorRolesSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--survivor-roles-selftest",
+      "aliases": [
+        "--specialization-roles-selftest"
+      ],
+      "description": "Plan 195: Survivor specialization roles, discipline-gated assignment, earned practice XP, level progression, save persistence, and UI binding",
+      "headless_compatible": true,
+      "expected_summary_id": "survivor_roles_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "radiation_mutation_selftest",
       "action": "RadiationMutationSelfTest",
       "category": "Host Domains & Save Stores",
@@ -2120,6 +2133,20 @@
       "description": "Plan 208: Leadership succession, deputy appointment, challenges, policy enactments, and leader death succession",
       "headless_compatible": true,
       "expected_summary_id": "leadership_succession_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "recruitment_selftest",
+      "action": "RecruitmentSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--recruitment-selftest",
+      "aliases": [
+        "--defection-selftest",
+        "--survivor-recruitment-selftest"
+      ],
+      "description": "Plan 204: Survivor recruitment & defection campaigns, templates, offers, admission, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "recruitment_selftest",
       "timeout_seconds": 30
     },
     {

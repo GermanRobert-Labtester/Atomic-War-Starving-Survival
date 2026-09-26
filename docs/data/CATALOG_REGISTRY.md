@@ -1,6 +1,6 @@
 # ASHFALL Data Authority & Master Catalog Registry
 
-**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-25
+**Authoritative Location:** `Assets/StreamingAssets/Data/` | **Last Verified:** 2026-09-26
 **Total Catalogs:** 711 | **Total Definitions:** 14407 | **Domain Families:** 32
 
 > [!IMPORTANT]

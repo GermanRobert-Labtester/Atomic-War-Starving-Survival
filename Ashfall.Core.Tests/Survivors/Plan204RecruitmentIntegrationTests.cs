@@ -175,7 +175,7 @@ namespace Ashfall.Core.Tests.Survivors
             bool admitted = system.TryAdmitCandidate(cand.CandidateId, out var admittedCand);
             Assert.True(admitted);
             Assert.NotNull(admittedCand);
-            Assert.Equal("recruited", admittedCand.Status);
+            Assert.True(admittedCand.IsRecruited);
             Assert.Equal(1, system.GetCensus().TotalRecruited);
         }
     }

@@ -26,6 +26,18 @@ namespace Ashfall.Core.Survivors
         public float secondary_bonus_value { get; set; } = 0.15f;
         public string auto_action_type { get; set; } = string.Empty;
         public string description { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Plan 195 host-path eligibility gate: the single SkillProgression
+        /// discipline this role is governed by (one of medical, crafting,
+        /// science, combat, scavenging, survival). Empty means no discipline
+        /// gate; the legacy <see cref="required_skills"/> dictionary stays the
+        /// Core-level contract for callers that pass explicit skill levels.
+        /// </summary>
+        public string required_discipline { get; set; } = string.Empty;
+
+        /// <summary>Minimum normalized discipline level (0–100 scale) required for assignment.</summary>
+        public float required_discipline_level { get; set; } = 0f;
     }
 
     [Serializable]
@@ -155,6 +167,59 @@ namespace Ashfall.Core.Survivors
                         failureReason = $"insufficient_skill_{req.Key}";
                         return false;
                     }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Plan 195 host-path eligibility check. Reads eligibility from the
+        /// SkillProgression owner's normalized discipline levels (0–100) — no
+        /// copied skill values. Enforces the same role cap as
+        /// <see cref="CanAssignRole(string,string,Dictionary{string,int},out string)"/>.
+        /// Failure reasons: survivor_id_required, role_not_found,
+        /// role_cap_reached, insufficient_discipline_{discipline}.
+        /// </summary>
+        public bool CanAssignRoleByDiscipline(
+            string survivorId,
+            string roleId,
+            IReadOnlyDictionary<string, float>? disciplineLevels,
+            out string failureReason)
+        {
+            failureReason = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(survivorId))
+            {
+                failureReason = "survivor_id_required";
+                return false;
+            }
+
+            if (!_roleDefs.TryGetValue(roleId, out var roleDef))
+            {
+                failureReason = "role_not_found";
+                return false;
+            }
+
+            int currentCount = _state.Assignments.Count(a =>
+                string.Equals(a.RoleId, roleId, StringComparison.OrdinalIgnoreCase) &&
+                !string.Equals(a.SurvivorId, survivorId, StringComparison.OrdinalIgnoreCase));
+
+            if (currentCount >= _state.MaxSurvivorsPerRole)
+            {
+                failureReason = "role_cap_reached";
+                return false;
+            }
+
+            string discipline = roleDef.required_discipline;
+            if (!string.IsNullOrWhiteSpace(discipline) && roleDef.required_discipline_level > 0f)
+            {
+                float level = 0f;
+                disciplineLevels?.TryGetValue(discipline, out level);
+                if (level < roleDef.required_discipline_level)
+                {
+                    failureReason = $"insufficient_discipline_{discipline}";
+                    return false;
                 }
             }
 

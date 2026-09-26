@@ -590,6 +590,7 @@ namespace AtomicWar.GodotApp
             ResetMemoryDecay();
             ResetInterpersonalConflict();
             ResetExercise();
+            ResetSurvivorRoles();
             ResetCultureCreation();
             ResetPsychologicalProfiles();
             ResetSkillCertifications();
