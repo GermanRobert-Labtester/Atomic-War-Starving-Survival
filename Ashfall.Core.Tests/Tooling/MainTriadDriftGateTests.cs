@@ -38,6 +38,7 @@ namespace Ashfall.Core.Tests
             new HashSet<string>(StringComparer.Ordinal)
             {
                 "ChildDevelopment", // Plan 183 child state persists through the survivor_social aggregate; no duplicate child-development save section.
+                "Plan49DepthPass", // Plan 49 depth passes bind four authored catalogs through existing Core loaders at setup; the catalogs are static data re-derived from the data authority — no mutable campaign state, hence no save twin.
                 "DailyBriefingModal",
                 "DeepCoast",
                 "EncounterChoiceResolver",

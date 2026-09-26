@@ -88,8 +88,32 @@ the ~0° alarm hue. A ratchet test
 (`ThemeSemanticTokensTests.CriticalTextColor_MeetsWcagAaOnEveryConsumedSurface`)
 recomputes the ratios and pins hex↔tuple agreement.
 
-**Still open (ranked, need their own package/claim):** DataGrid keyboard row
-selection; dashboard nav-rail overflow at supported sizes; overlay-detection
-list disagreement (`Main.GameFlow.AnyOverlayPanelOpen` vs
-`Main.PanelLifecycle.CloseAllOverlayPanels`); hex/tuple drift in
+**Verified already-sealed since this report (do not re-open):** the three HIGH
+functional findings below are fixed in current source — DataGrid rows are
+keyboard/controller selectable (`FocusMode.All` + `ui_accept` in
+`AshfallDataGrid.BuildRowContainer`); the dashboard navigation rail is contained
+in a `railScroll` `ScrollContainer`; and `AnyOverlayPanelOpen` /
+`CloseAllOverlayPanels` share the single `OverlayPanelCatalog()` authority
+(all 2026-09-25). Only these remain genuinely open: hex/tuple drift in
 Pale/Surface/SurfaceCard/Warning; 11px label floor on dense metadata.
+
+## Addendum 2 — 2026-09-26 (functional focus repair sealed)
+
+**F-UI-FOCUS-OPENER sealed.** `RestoreFocusFromRoot` (called on every overlay
+dismissal) read the `_ashfall_focus_opener` metadata, but the only writer —
+`AshfallFocusPolicy.OpenWithFocus` — had zero call sites, so focus was never
+restored after closing a panel. The host open seam
+(`Main.PlayerSurfaces.EnsureInitialFocus`, reached by both
+`RegisterOpenMotionRecursive` and `ShowPanelLifecycle`) now records the pre-open
+focus owner via the shared `AshfallFocusPolicy.FocusOpenerMeta` constant. A
+source gate (`AccessibilitySourceAuditTests.HostOpenSeam_RecordsFocusOpenerForRestoration`)
+pins the writer side.
+
+**F-UI-THERMAL-NULL sealed.** `ShelterThermalPanel._Ready` dereferenced the
+nullable `_host` before `Bind()` (the live `CS8602` warning and a latent
+`NullReferenceException`); it now uses the file's guarded `_host != null` idiom,
+like every other method. Warning count dropped 4 → 3.
+
+**Evidence:** `Ashfall.csproj` build 0 errors; headless
+`--ui-accessibility-selftest` 5/5 PASS; `--player-panels-uitest` 21/21 PASS;
+`AccessibilitySourceAuditTests` 6/6; `ThemeSemanticTokensTests` 5/5.

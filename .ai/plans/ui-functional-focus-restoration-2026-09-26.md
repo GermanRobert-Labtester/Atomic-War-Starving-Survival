@@ -61,6 +61,15 @@ working restore), no grid/nav-rail rework, no gameplay/save/data changes.
 
 ## Verification
 
-- Host build `Ashfall.csproj` → 0 errors / 0 warnings in touched files.
-- Focused UI gates: `AccessibilitySourceAuditTests`, plus the host
-  `--ui-accessibility-selftest` / `--player-panels-uitest` headless probes.
+- `Ashfall.csproj` build → **0 errors**; touched-file warning `CS8602` cleared
+  (4 → 3 warnings, remaining are pre-existing CS0162 in others' files).
+- Headless `godot --headless -- --ui-accessibility-selftest` → **5/5 PASS**.
+- Headless `godot --headless -- --player-panels-uitest` → **21/21 PASS**.
+- `AccessibilitySourceAuditTests` → **6/6** (new writer-side gate).
+- `ThemeSemanticTokensTests` → **5/5**.
+
+## Additional context
+
+`WORKTREE_OWNERSHIP.md` is foreman-only, so no claim row was added; the
+user-authorized scope and the PFGL-claim overlap on `Main.PlayerSurfaces.cs`
+are recorded in `.ai/state.md`.

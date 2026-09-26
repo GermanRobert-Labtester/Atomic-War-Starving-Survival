@@ -1,5 +1,16 @@
 # Current Task State
 
+## UI-FUNCTIONAL-FOCUS-RESTORATION — 2026-09-26 (user-authorized)
+
+- **Directive:** user "yes!" to the larger functional UI repairs after the contrast package. Plan: `.ai/plans/ui-functional-focus-restoration-2026-09-26.md` (STATUS: APPROVED BY USER).
+- **Premise corrected (Rule 7):** the 3 HIGH 2026-09-05 findings are already sealed in current source — DataGrid keyboard selection (`FocusMode.All` + `ui_accept`), dashboard nav-rail `railScroll`, and the single `OverlayPanelCatalog()` shared by `AnyOverlayPanelOpen`/`CloseAllOverlayPanels`.
+- **Real gap repaired — focus restoration was a silent no-op:** `RestoreFocusFromRoot` reads `_ashfall_focus_opener`, but its only writer (`OpenWithFocus`) had 0 call sites, so closing any overlay never returned keyboard/controller focus. Fixed at the single host open seam `Main.PlayerSurfaces.EnsureInitialFocus`, recording the pre-open focus owner via a new shared `AshfallFocusPolicy.FocusOpenerMeta` constant (used by writer + reader).
+- **Second repair:** `ShelterThermalPanel._Ready` dereferenced nullable `_host` before `Bind()` (live `CS8602` + latent NRE); now guarded with the file's `_host != null` idiom.
+- **Claim overlap (transparent):** `src/Main.PlayerSurfaces.cs` is listed under the ACTIVE PFGL-octet claim; this is a 2-line additive edit in `EnsureInitialFocus` (~line 1037), far from the octet board region, under the user's explicit functional-repair authorization. Unrelated dirty Plan 142 clothing wiring preserved. `WORKTREE_OWNERSHIP.md` is foreman-only and was not edited.
+- **Verify:** `Ashfall.csproj` build 0 errors, CS8602 cleared; `--ui-accessibility-selftest` 5/5 PASS; `--player-panels-uitest` 21/21 PASS; `AccessibilitySourceAuditTests` 6/6 (new writer-side gate); `ThemeSemanticTokensTests` 5/5.
+- **Still genuinely open:** hex/tuple drift (Pale/Surface/SurfaceCard/Warning); 11px label floor on dense metadata.
+- **Testing steps used:** 5 this package (10 total task) / 15. **No commit** (shared dirty worktree).
+
 ## UI-AUDIT-PRECISION-REPAIR — 2026-09-26 (user-authorized)
 
 - **Directive:** user "Please do a UI audit with immediate precision and functionality repair!" Plan: `.ai/plans/ui-audit-precision-repair-2026-09-26.md` (STATUS: APPROVED BY USER).
@@ -1600,3 +1611,14 @@
 - **Verification:** Plan215 overlay 8/8 (22/22 with pre-existing suites); adjacent gates 142/142; `--rationing-selftest` 12/12 headless; data integrity 427/427 (0 errors); player-panels uitest PASS; 7-day smoke PASS; builds 0 errors; architecture map 272 (clothing_warmth transient cleared by the Plan 142 lane), CLI catalog 277, selftest manifest 213, docs index 5447 all current.
 - **Concurrent-lane note:** docs-index first run hit a race on a Plan 142 doc mid-move; clean on retry. Plan 142 agent's `CampaignOwners.cs`/`DayEventVocabulary.cs` edits deliberately untouched.
 - **Testing steps used:** 8 / 15. **Iterations:** ~58 / 100.
+
+## QUAD PACKAGE (Plans 217 + C2[17] + Plan 49 + census reconciliation) — 2026-09-26 (user-authorized; COMPLETE)
+
+- **Claim:** `claim-quad-package-217-c2-17-plan49-reconciliation-2026-09-26`; approved plan `.ai/plans/quad-package-217-c2-17-49-reconciliation.md` (STATUS: APPROVED BY USER). Testing kept minimal per user direction: one focused run per package + one combined final gate.
+- **Package A — Plan 217 genealogy:** `GenealogyHostSession` records ONLY canonical facts (union via `SetSpouse` — bridge unit-forming path deliberately unused, no second family-unit ledger; exactly-once per-parent lineage; fate death facts); own `genealogy` checksummed section; read-only `KinshipProvider` survivor-detail row; `--genealogy-selftest` 10/10; tests 13/13.
+- **Package B — C2[17]:** `InferBeliefProfile` trait-keyword shadow deleted from `Main.SurvivorSocial.cs` (was already inert — 53 unauthored definitions have empty traits); authored `belief_profile_id` is the sole source; item-tag half already live via `ItemTagCatalog` Core consumers. Tests 2/2.
+- **Package C — Plan 49 depth passes:** prereq Plans 42/46 premise-verified hosted; the four orphaned catalogs (phantom_heirlooms, trade_screen_scenarios, audio_logs_expansion_05, memorials_expansion_05) bound through existing Core loaders into constructed owners; **content-utilization Orphaned 4→0**; no save section (authored data). Plan 191 evaluated and REJECTED: retired by signed C3 — documented in census.
+- **Package D — census reconciliation:** Plans 131/186/201/214/220 verified integrated via existing probes (maintenance 12/12; atmosphere/rumor/visitor PASS; sanitation hosted) and marked SEALED in the census; plan files archived under `docs/plans/integrated/` with FULLY INTEGRATED headers (220 has no standalone plan file — census-only seal).
+- **Final combined gate:** 75/75 (Plan217/C2[17]/Plan49/Plan215/218/195 + save registry, CLI parity, help contract, triad drift with documented `Plan49DepthPass` allowlist disposition); data integrity 427/427 (0 errors); player-panels uitest PASS; architecture map 278 `--check` OK; CLI catalog 283; selftest manifest 219; docs index 5448.
+- **Foreign-lane notes:** 3 missing commas in `HostCliRegistry.cs` descriptor entries left by the concurrent Plan 142 lane repaired (documented in claim row); their in-flight Trophy additions appeared mid-session and now compile. Plan 142 files untouched.
+- **Testing steps used:** 9 / 15. **Iterations:** ~94 / 100.

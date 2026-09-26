@@ -173,5 +173,23 @@ namespace Ashfall.Core.Tests.UI
             Assert.Contains("TrapFocus", content);
             Assert.Contains("RestoreFocus", content);
         }
+
+        /// <summary>
+        /// UI accessibility audit 2026-09-26: <c>RestoreFocusFromRoot</c> reads
+        /// the <c>_ashfall_focus_opener</c> metadata, but before this fix nothing
+        /// ever wrote it, so overlay dismissal silently never restored focus.
+        /// This gate pins the writer side: the host open seam must record the
+        /// opener via the shared <c>FocusOpenerMeta</c> constant.
+        /// </summary>
+        [Fact]
+        public void HostOpenSeam_RecordsFocusOpenerForRestoration()
+        {
+            string root = FindRepoRoot();
+            string host = Path.Combine(root, "src", "Main.PlayerSurfaces.cs");
+            Assert.True(File.Exists(host), "Main.PlayerSurfaces.cs must exist");
+
+            string content = StripComments(File.ReadAllText(host));
+            Assert.Contains("FocusOpenerMeta", content);
+        }
     }
 }
