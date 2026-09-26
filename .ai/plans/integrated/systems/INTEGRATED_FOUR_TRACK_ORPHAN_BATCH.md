@@ -1,3 +1,7 @@
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+> **INTEGRATION STATE: FULLY INTEGRATED**
+
 # Four-Track Host-Orphan Integration Batch (Diplomacy / Radiation-Economy / Radiation-Social / Trophies)
 
 **STATUS: APPROVED BY USER**

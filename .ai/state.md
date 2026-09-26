@@ -21,7 +21,7 @@
 - **Open ranked UI findings for a follow-up package:** DataGrid keyboard row selection; dashboard nav-rail overflow; overlay-detection list disagreement (`Main.GameFlow.AnyOverlayPanelOpen` vs `Main.PanelLifecycle.CloseAllOverlayPanels`); hex/tuple drift; 11px label floor.
 - **Testing steps used:** 3 / 15. **No commit** (shared dirty worktree).
 
-## FOUR-TRACK-ORPHAN-BATCH — IN PROGRESS (user-authorized 2026-09-26, no commit)
+## FOUR-TRACK-ORPHAN-BATCH — FULLY INTEGRATED & COMMITTED — 2026-09-26 (user-authorized)
 
 - **Directive:** user "Start integrating 4 plans concurrently without testing anything excessively and don't commit".
 - **Tracks:** (1) Diplomacy `FactionDiplomacySystem`; (2) Radiation economy `RadiationEconomyBridge`; (3) Radiation social `RadiationSocialBridge`; (4) Trophies `TrophySystem` — all committed Core host-orphans with authored catalogs.
