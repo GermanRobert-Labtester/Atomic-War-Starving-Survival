@@ -1,6 +1,24 @@
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+
 # Repository Enhancement Tasks 4-8 — Sentry Audit, LINQ Sweep, L10n, Clutter, Audio
 
 STATUS: APPROVED BY USER
+
+## Outcome (2026-09-27)
+
+| Task | Result | Commit / record |
+|---|---|---|
+| 4 Sentry | Premise disproven; SDK unused. Dangling package removal blocked by the `Ashfall.csproj` claim (`DEBT-SENTRY-DANGLING-PACKAGE`) | `docs/telemetry/SENTRY_CRASH_REPORTING_AUDIT_2026-09-27.md` |
+| 5 LINQ | 2 sites changed (Owners cached view, linear trend scan); 3 left unchanged on cadence evidence; runtime-scale selftest skipped (dirty host csproj) | `873870de4`, `docs/perf/LINQ_CLOSURE_SWEEP_2026-09-27.md` |
+| 6 L10n | 184 German fills, 5 malformed rows repaired, full-catalog gate test | `0f8dccdd0`, `docs/i18n/L10N_TASK6_COVERAGE_RECORD_2026-09-27.md` |
+| 7 Clutter | All findings re-verified; nothing left to delete; KNOWN_DEBT rows; 9 HOLDs keep POTENTIALCLUTTER.md in place | `docs/hygiene/CLUTTER_DISPOSITION_2026-09-27.md` |
+| 8 Audio | Verdict gap has no Core event; rationing events have no producer (`DEBT-RATIONING-CRISIS-NO-PRODUCER`); volume persistence already correct. No code change | `docs/audio/AUDIO_TASK8_COVERAGE_RECORD_2026-09-27.md` |
+
+Divergences from the approved scope: Task 5 narrowed from five sites to two;
+Task 8 wired nothing; `docs/hygiene/CLUTTER_DISPOSITION_2026-09-27.md` is an
+added path under the Task 7 claim.
 
 Authorization: user assigned Tasks 4-8 of
 `Repo_enhancement_plans/ashfall-repository-enhancement-plan-8-tasks.md` in this session

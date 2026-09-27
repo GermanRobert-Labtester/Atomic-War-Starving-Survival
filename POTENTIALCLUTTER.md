@@ -8,6 +8,8 @@
 # Confidence: HIGH (zero references proven) / MED (unclear references) / LOW (needs human judgment)
 # Status at sweep time: IDLE batch per INTEGRATION_PLANS.md; no live claims per WORKTREE_OWNERSHIP.md
 # This file is a tag-only audit. It does NOT authorize deletion, modification, or promotion.
+# Disposition 2026-09-27: every finding re-verified; see docs/hygiene/CLUTTER_DISPOSITION_2026-09-27.md
+# and KNOWN_DEBT.md DEBT-CLUTTER-*-2026-09-27. Nine HOLD findings remain open; archive this file once closed.
 
 ================================================================================
 SECTION A — POTENTIAL CLUTTER (unreferenced / one-off / oversized artifacts)
