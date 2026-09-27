@@ -73,11 +73,19 @@ namespace Ashfall.Core.Campaign
         {
             get
             {
-                var view = new List<IDayAdvanceOwner>(_owners.Count);
-                foreach (var r in _owners) view.Add(r.Owner);
-                return view;
+                if (_ownersView == null)
+                {
+                    var view = new List<IDayAdvanceOwner>(_owners.Count);
+                    foreach (var r in _owners) view.Add(r.Owner);
+                    _ownersView = view.AsReadOnly();
+                }
+                return _ownersView;
             }
         }
+
+        // Rebuilt lazily; Register/Unregister null it. Read-only wrapper so a
+        // shared cached view cannot be mutated by a caller casting to List.
+        private IReadOnlyList<IDayAdvanceOwner>? _ownersView;
 
         /// <summary>
         /// Register a daily tick owner. <paramref name="ownerId"/> must be unique,
@@ -116,6 +124,7 @@ namespace Ashfall.Core.Campaign
             _byId.Clear();
             for (int i = 0; i < _owners.Count; i++)
                 _byId[_owners[i].OwnerId] = _owners[i];
+            _ownersView = null;
         }
 
         /// <summary>
@@ -131,6 +140,7 @@ namespace Ashfall.Core.Campaign
             if (!_byId.TryGetValue(ownerId, out var reg)) return false;
             _owners.Remove(reg);
             _byId.Remove(ownerId);
+            _ownersView = null;
             return true;
         }
 

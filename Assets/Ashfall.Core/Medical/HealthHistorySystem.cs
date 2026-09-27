@@ -303,10 +303,19 @@ namespace Ashfall.Core.Medical
 
             void AddTrend(string metric, float value)
             {
-                var prevTrend = _state.Trends
-                    .Where(t => string.Equals(t.SurvivorId, survivorId, StringComparison.OrdinalIgnoreCase) && string.Equals(t.HealthMetric, metric, StringComparison.OrdinalIgnoreCase))
-                    .OrderByDescending(t => t.MeasurementDay)
-                    .FirstOrDefault();
+                // Linear scan; strict '>' keeps the earliest-inserted row among
+                // equal days, matching the stable OrderByDescending it replaces.
+                HealthTrend? prevTrend = null;
+                var trends = _state.Trends;
+                for (int i = 0; i < trends.Count; i++)
+                {
+                    var t = trends[i];
+                    if (!string.Equals(t.SurvivorId, survivorId, StringComparison.OrdinalIgnoreCase) ||
+                        !string.Equals(t.HealthMetric, metric, StringComparison.OrdinalIgnoreCase))
+                        continue;
+                    if (prevTrend == null || t.MeasurementDay > prevTrend.MeasurementDay)
+                        prevTrend = t;
+                }
 
                 string trendDirection = "stable";
                 if (prevTrend != null)

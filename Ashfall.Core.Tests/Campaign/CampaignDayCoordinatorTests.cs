@@ -31,6 +31,28 @@ namespace Ashfall.Core.Tests.Campaign
         }
 
         [Fact]
+        public void Owners_CachedViewIsStableReadOnlyAndInvalidatedOnRegisterUnregister()
+        {
+            var c = new CampaignDayCoordinator();
+            c.Register("mike", new StubOwner("mike"));
+            var first = c.Owners;
+            Assert.Same(first, c.Owners);
+            Assert.False(first is List<IDayAdvanceOwner>);
+
+            c.Register("alpha", new StubOwner("alpha"));
+            var afterRegister = c.Owners;
+            Assert.NotSame(first, afterRegister);
+            Assert.Single(first);
+            Assert.Equal(new[] { "alpha", "mike" },
+                new[] { ((StubOwner)afterRegister[0]).Id, ((StubOwner)afterRegister[1]).Id });
+
+            Assert.True(c.Unregister("alpha"));
+            var afterUnregister = c.Owners;
+            Assert.NotSame(afterRegister, afterUnregister);
+            Assert.Equal("mike", ((StubOwner)Assert.Single(afterUnregister)).Id);
+        }
+
+        [Fact]
         public void Advance_ReturnsNullWhenAlreadyAdvancing()
         {
             var c = new CampaignDayCoordinator();
