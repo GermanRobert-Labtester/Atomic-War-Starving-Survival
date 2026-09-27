@@ -1,5 +1,33 @@
 # ASHFALL Worktree Ownership
 
+## claim-repo-enhancement-tasks-4-8-2026-09-27
+
+User assigned enhancement-plan Tasks 4-8
+(`Repo_enhancement_plans/ashfall-repository-enhancement-plan-8-tasks.md`) to this
+integrator; Tasks 1-3 stay with `claim-performance-host-qol-2026-09-27` and every
+path that claim lists is untouched. This claim's exact paths: the plan file
+`.ai/plans/repo-enhancement-tasks-4-8-2026-09-27.md`; Task 4 record
+`docs/telemetry/SENTRY_CRASH_REPORTING_AUDIT_2026-09-27.md` (no code change; the
+dangling `Ashfall.csproj` Sentry reference is dispositioned there, blocked by the
+active lane's build-builder claim); Task 6 — `assets/l10n/strings.csv`, new
+`Ashfall.Core.Tests/Localization/StringsCsvLocaleGateTests.cs`, new
+`docs/i18n/L10N_TASK6_COVERAGE_RECORD_2026-09-27.md`; Task 5 —
+`Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs`,
+`Assets/Ashfall.Core/Emergency/EmergencyAlertSystem.cs`,
+`Assets/Ashfall.Core/Expeditions/RailwaySystem.cs`,
+`Assets/Ashfall.Core/Medical/MutationSystem.cs`,
+`Assets/Ashfall.Core/Medical/HealthHistorySystem.cs`, new
+`docs/perf/LINQ_CLOSURE_SWEEP_2026-09-27.md`, and the selftest's
+`artifacts/runtime-scale-results.json` output; Task 7 — `POTENTIALCLUTTER.md`,
+`KNOWN_DEBT.md`, and the per-entry archive moves/deletions the ledger protocol
+justifies (exact file lists recorded in the task record and commit messages);
+Task 8 — `src/Audio/AudioEventBridge.cs`, `src/Main.Audio.cs`,
+`src/Audio/AudioSelfTest.cs`, a `docs/audio/` coverage record, and
+`Assets/StreamingAssets/Data/audio_cues.json` only if a proven-needed cue is
+added. Shared coordination paths are append-only: this ledger (this new section
+only, existing sections preserved byte-for-byte) and `.ai/state.md` (one appended
+handoff section at the end). Status: ACTIVE.
+
 The foreman is the sole writer of this ledger. Builders and reviewers must read
 it before editing. A path claim prevents accidental agent races; it is not a
 claim of permanent subsystem ownership.
