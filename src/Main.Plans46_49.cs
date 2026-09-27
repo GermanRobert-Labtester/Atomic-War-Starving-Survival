@@ -147,38 +147,23 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// <summary>
         /// Plan B67 — map the canonical weather authority onto radio
-        /// atmospheric noise. Wiring only: the mapping is authored host
-        /// presentation; the weather state itself stays canonical.
-        /// Storm kinds that also blind the triangulation engine
-        /// (FalloutStorm, Blizzard) get the heaviest penalty; electrical
-        /// storms interfere most of all.
+        /// atmospheric noise. The attenuation itself is the propagation
+        /// engine's authority (<see cref="RadioPropagationEngine.GetWeatherAttenuation"/>);
+        /// the weather state stays canonical in the world owner, and only the
+        /// noise fraction it produces is composed here.
         /// </summary>
         private static float WeatherNoiseForKind(WeatherKind kind)
         {
-            switch (kind)
-            {
-                case WeatherKind.EMPStorm:
-                case WeatherKind.AshLightning:
-                    return 0.45f;
-                case WeatherKind.FalloutStorm:
-                case WeatherKind.Blizzard:
-                case WeatherKind.BlackRain:
-                case WeatherKind.AcidSnow:
-                case WeatherKind.RadHail:
-                case WeatherKind.GlassStorm:
-                case WeatherKind.BloodRain:
-                case WeatherKind.BlackSnow:
-                    return 0.35f;
-                case WeatherKind.Rain:
-                case WeatherKind.Overcast:
-                case WeatherKind.Ashfall:
-                case WeatherKind.BioFog:
-                case WeatherKind.AlgaeBloom:
-                    return 0.15f;
-                default:
-                    return 0.05f; // Clear
-            }
+            // Engine authority: 1.0 = pristine propagation, 0.15 = worst ducting loss.
+            float attenuation = RadioPropagationEngine.GetWeatherAttenuation(kind);
+            const float worstAttenuation = 0.15f;
+            float noise = 1.0f - attenuation;
+            // Normalise against the engine's own worst case so the band stays
+            // inside the legacy 0.05..0.45 noise range used by the station.
+            float normalised = noise / (1.0f - worstAttenuation);
+            return Math.Clamp(0.05f + normalised * 0.40f, 0.05f, 0.45f);
         }
 
         private void SaveRadioStation()

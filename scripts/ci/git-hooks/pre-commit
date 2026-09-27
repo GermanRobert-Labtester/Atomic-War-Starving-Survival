@@ -14,8 +14,8 @@
 #     commit; the hook prints the exact fix command.
 #   * The sweep script itself is committed alongside this hook
 #     (scripts/ci/asset-orphan-sweep.sh) and must be executable.
-#   * Docs-index guard: any staged markdown regenerates docs/INDEX.md and
-#     re-stages it, so parallel doc authors cannot land a stale index
+#   * Docs-index guard: staged Markdown outside artifacts/ regenerates
+#     docs/INDEX.md and re-stages it, so parallel doc authors cannot land a stale index
 #     (the 2026-09-'23 prose-wave drift hazard).
 #
 # To intentionally commit despite orphans (e.g. a one-off snapshot before a
@@ -48,8 +48,10 @@ elif [ -x "bin/ashfall-dev" ]; then
     bin/ashfall-dev check-plan --staged
 fi
 
-# --- Docs index guard (staged markdown must not land a stale index) ---
-staged_md=$(git diff --cached --name-only --diff-filter=ACMR -- '*.md' || true)
+# --- Docs index guard (artifacts/ is outside the indexed corpus) ---
+# The generator excludes artifacts/, so an inventory report there cannot
+# change docs/INDEX.md and must not trigger a full corpus scan.
+staged_md=$(git diff --cached --name-only --diff-filter=ACMR -- '*.md' ':!artifacts/**' || true)
 if [ -n "$staged_md" ] && [ -f scripts/ci/generate-docs-index.py ]; then
     if ! python3 scripts/ci/generate-docs-index.py --check >/dev/null 2>&1; then
         if python3 scripts/ci/generate-docs-index.py >/dev/null 2>&1; then

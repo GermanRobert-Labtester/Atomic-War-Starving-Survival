@@ -236,6 +236,7 @@ namespace AtomicWar.GodotApp
             SetupFieldGuide();
             SetupWorkshop();
             SetupRadioStation();
+            SetupCipherQuestChain();
             SetupShelterSocial();
             SetupExcavationHazards();
             SetupDynamicQuests();
@@ -516,6 +517,7 @@ namespace AtomicWar.GodotApp
                 SaveFieldGuide();
                 SaveWorkshop();
                 SaveRadioStation();
+                SaveCipherQuestChain();
                 SaveShelterSocial();
                 SaveExcavationHazards();
                 SaveDynamicQuests();

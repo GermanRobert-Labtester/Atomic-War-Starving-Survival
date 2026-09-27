@@ -52,6 +52,8 @@ namespace Ashfall.Core.Campaign
             { "chemical_reagent_synthesis_ticked", SemanticKind.Heartbeat },
             { "advanced_industrial_ticked", SemanticKind.Heartbeat },
             { "clinical_ward_triage_ticked", SemanticKind.Heartbeat },
+            { "cipher_chain_decoded", SemanticKind.Alert },
+            { "cipher_chain_location_revealed", SemanticKind.Discovery },
             { "clothing_warmth_ticked", SemanticKind.Heartbeat },
             { "cooking_ticked", SemanticKind.Heartbeat },
             { "cryo_vault_ticked", SemanticKind.Heartbeat },

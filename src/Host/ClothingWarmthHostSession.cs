@@ -89,6 +89,25 @@ namespace AtomicWar.GodotApp
 
         public ClothingWarmthCensus GetCensus() => _system.GetCensus();
 
+        /// <summary>Plan 142 / D9 — layered warmth for one survivor under shelter comfort.</summary>
+        public Ashfall.Core.Textiles.ThermalLayeringResult EvaluateLayeredWarmth(
+            string survivorId, int shelterThermalComfortPermille) =>
+            _system.EvaluateLayeredWarmth(survivorId, shelterThermalComfortPermille);
+
+        public int GetLaundryHygieneRestoration(int garmentDirtPermille, int washQualityPermille) =>
+            _system.GetLaundryHygieneRestoration(garmentDirtPermille, washQualityPermille);
+
+        public int WashGarments(string survivorId, int washQualityPermille)
+        {
+            int washed = _system.WashGarments(survivorId, washQualityPermille);
+            if (washed > 0)
+            {
+                LastEvent = $"Laundered {washed} garment(s) on {survivorId}.";
+                RaiseStateChanged();
+            }
+            return washed;
+        }
+
         public ClothingWarmthSaveState CaptureState() => _system.CaptureState();
 
         public void RestoreState(ClothingWarmthSaveState state)

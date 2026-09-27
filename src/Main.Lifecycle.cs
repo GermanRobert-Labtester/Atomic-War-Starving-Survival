@@ -418,6 +418,13 @@ namespace AtomicWar.GodotApp
                 dependsOn: Array.Empty<string>(),
                 saveSectionKey: "consequence_ledger",
                 onReset: () => _consequenceLedger?.ClearAll()));
+
+            // Plan 11 / 251 — cipher puzzle chains.
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "cipher_quest_chain",
+                dependsOn: new[] { "world_weather", "inventory" },
+                saveSectionKey: "cipher_quest_chain",
+                onReset: ResetCipherQuestChain));
         }
 
         /// <summary>

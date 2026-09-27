@@ -138,6 +138,33 @@ namespace AtomicWar.GodotApp
             return (equipped.Count, warmth, _clothingWarmth.System.State.survivors.TryGetValue(survivorId, out var rec) ? rec.wetness : 0f, reductionBp);
         }
 
+        /// <summary>
+        /// D9 — the garment-layering engine's verdict for one survivor: composed
+        /// warmth, waterproof-shell coverage, full-layering bonus and the grime
+        /// hygiene penalty. Read-only; authority stays in Core.
+        /// </summary>
+        public Ashfall.Core.Textiles.ThermalLayeringResult? GetSurvivorLayeringReadout(
+            string survivorId, int shelterThermalComfortPermille = 0)
+        {
+            SetupClothingWarmth();
+            if (_clothingWarmth == null || string.IsNullOrEmpty(survivorId)) return null;
+            return _clothingWarmth.EvaluateLayeredWarmth(survivorId, shelterThermalComfortPermille);
+        }
+
+        /// <summary>
+        /// D9 — one laundry wash over a survivor's equipped garments. Returns
+        /// how many garments came back cleaner; the engine owns how much grime
+        /// a wash of this quality removes, this host owns garment custody.
+        /// </summary>
+        public int WashSurvivorGarments(string survivorId, int washQualityPermille)
+        {
+            SetupClothingWarmth();
+            if (_clothingWarmth == null) return 0;
+            int washed = _clothingWarmth.WashGarments(survivorId, washQualityPermille);
+            if (washed > 0) _clothingWarmthDirty = true;
+            return washed;
+        }
+
         public void SaveClothingWarmth()
         {
             if (_clothingWarmth == null) return;

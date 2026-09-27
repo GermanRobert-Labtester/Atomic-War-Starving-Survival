@@ -76,9 +76,14 @@ namespace AtomicWar.GodotApp
             if (_expeditions != null)
             {
                 var routes = _routeInfrastructure;
+                // D16 — the wasteland-map route hazard evaluator owns traversal
+                // feasibility (flooding, amphibious waterways, seasonal mud,
+                // radiation hotspots). The route-infrastructure system still owns
+                // minefield / rail-roughness modifiers; both are composed here so
+                // the expedition estimate has a single projection point.
                 _expeditions.SetEstimateRouteModifiers(
-                    locationId => routes.GetHazardModifier(locationId),
-                    locationId => routes.GetTravelModifier(locationId));
+                    locationId => routes.GetHazardModifier(locationId) * GetRouteTraversalHazardMultiplier(locationId),
+                    locationId => routes.GetTravelModifier(locationId) * GetRouteTraversalDelayMultiplier(locationId));
             }
             // Reinstall the encounter composer so GetHazardModifier is included
             // even when evolving-world wiring ran before route setup.
@@ -87,6 +92,88 @@ namespace AtomicWar.GodotApp
                 _expeditionDangerComposer = ComposeExpeditionDangerMultiplier();
                 _expeditions.SetEncounterChanceMultiplier(_expeditionDangerComposer);
             }
+        }
+
+        /// <summary>
+        /// D16 — worst traversal verdict for the wasteland-map route that reaches
+        /// <paramref name="locationId"/> from the home holdfast, or
+        /// <c>null</c> when no map route exists (legacy multipliers then apply).
+        /// </summary>
+        private RouteTraversalFeasibility? GetRouteTraversalFeasibility(string locationId)
+        {
+            var map = _world?.WastelandMap;
+            if (map == null || string.IsNullOrEmpty(locationId)) return null;
+
+            RouteTraversalFeasibility? worst = null;
+            foreach (var route in map.GetRoutesFrom(MapRouteHomeHoldfast))
+            {
+                if (route == null) continue;
+                if (!string.Equals(route.To, locationId, StringComparison.OrdinalIgnoreCase)) continue;
+
+                var verdict = MapRouteHazardEvaluator.EvaluateTraversal(
+                    route,
+                    hasAmphibiousCapability: HasAmphibiousTraversalCapability(),
+                    isHeavyRainOrFloodSeason: IsFloodSeason(),
+                    vehicleGroundClearanceMm: VehicleGroundClearanceMm);
+
+                if (worst == null || verdict.RiskScorePermille > worst.Value.RiskScorePermille) worst = verdict;
+            }
+            return worst;
+        }
+
+        /// <summary>Encounter-risk multiplier contributed by route traversal hazards.</summary>
+        private float GetRouteTraversalHazardMultiplier(string locationId)
+        {
+            var verdict = GetRouteTraversalFeasibility(locationId);
+            if (verdict == null) return 1f;
+            return 1f + Math.Clamp(verdict.Value.RiskScorePermille / 1000f, 0f, 1f);
+        }
+
+        /// <summary>Travel-time multiplier contributed by route traversal delay days.</summary>
+        private float GetRouteTraversalDelayMultiplier(string locationId)
+        {
+            var verdict = GetRouteTraversalFeasibility(locationId);
+            if (verdict == null) return 1f;
+            return 1f + Math.Clamp(verdict.Value.DelayDays / BaseRouteTravelDays, 0f, 1f);
+        }
+
+        /// <summary>Baseline overland travel days used to scale traversal delay.</summary>
+        private const float BaseRouteTravelDays = 3f;
+
+        /// <summary>Map node id of the home holdfast (matches the wasteland map authority).</summary>
+        private const string MapRouteHomeHoldfast = "loc_holdfast";
+
+        /// <summary>Ground clearance of the rig used for overland traversals.</summary>
+        private int VehicleGroundClearanceMm => 200;
+
+        /// <summary>
+        /// True when the amphibious draisine authority (the amphibious-traversal
+        /// owner) has a crossing rig registered and reports it capable for a
+        /// water crossing. No registered rig means no amphibious capability.
+        /// </summary>
+        private bool HasAmphibiousTraversalCapability()
+        {
+            if (_amphibiousDraisine?.System == null) return false;
+
+            System.Collections.Generic.Dictionary<string, AmphibiousDraisineState>? save = null;
+            try { save = _amphibiousDraisine.CaptureSave(); } catch { return false; }
+            if (save == null || save.Count == 0) return false;
+
+            foreach (var vehicleId in save.Keys)
+            {
+                if (string.IsNullOrEmpty(vehicleId)) continue;
+                if (_amphibiousDraisine.IsRouteCapable(vehicleId, "water_crossing", out _)) return true;
+            }
+            return false;
+        }
+
+        /// <summary>Flood/weather season read from the canonical weather owner.</summary>
+        private bool IsFloodSeason()
+        {
+            var current = _world?.Weather?.Current ?? Ashfall.Core.WeatherKind.Clear;
+            return current == Ashfall.Core.WeatherKind.FalloutStorm
+                || current == Ashfall.Core.WeatherKind.BlackRain
+                || current == Ashfall.Core.WeatherKind.Blizzard;
         }
 
         private void SetupEbPvdCoating()

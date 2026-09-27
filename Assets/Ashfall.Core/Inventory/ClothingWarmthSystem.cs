@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Textiles;
 
 namespace Ashfall.Core.Inventory
 {
@@ -346,6 +347,96 @@ namespace Ashfall.Core.Inventory
 
             float rawFraction = totalMitigationBp / 10000f;
             return Math.Max(0f, Math.Min(MaxColdMitigation, rawFraction));
+        }
+
+        // ── Garment Layering & Grime (D9 / GarmentLayeringThermalEngine) ──
+
+        /// <summary>
+        /// Projects the survivor's equipped layers into the garment-layering
+        /// engine and returns layer-aware warmth, waterproof shell coverage,
+        /// the full-layering bonus and the hygiene penalty from accumulated
+        /// grime. <see cref="GarmentLayeringThermalEngine"/> stays the single
+        /// layering authority; this system stays the single authority for what
+        /// a survivor is wearing.
+        /// </summary>
+        public ThermalLayeringResult EvaluateLayeredWarmth(
+            string survivorId,
+            int shelterThermalComfortPermille)
+        {
+            return GarmentLayeringThermalEngine.EvaluateThermalInsulation(
+                BuildWornGarments(survivorId),
+                shelterThermalComfortPermille);
+        }
+
+        /// <summary>
+        /// Projects one survivor's equipped records into engine garment states.
+        /// Clothing layer ordinals map 1:1 onto <see cref="GarmentLayer"/>
+        /// (Underwear→Base, Middle→Mid, Outer→Outer, Accessory→WeatherShell).
+        /// </summary>
+        public IReadOnlyList<WornGarmentState> BuildWornGarments(string survivorId)
+        {
+            var worn = new List<WornGarmentState>();
+            if (string.IsNullOrEmpty(survivorId)) return worn;
+            if (!_state.survivors.TryGetValue(survivorId, out var rec)) return worn;
+
+            foreach (var eq in rec.equipped)
+            {
+                if (!_profiles.TryGetValue(eq.item_id, out var prof)) continue;
+                float condition = Math.Max(0.1f, Math.Min(1.0f, eq.condition));
+
+                int insulation = (int)Math.Round(
+                    Math.Max(0f, Math.Min(60f, prof.warmth_value)) * 20f);
+
+                worn.Add(new WornGarmentState
+                {
+                    GarmentId = eq.item_id,
+                    Layer = (GarmentLayer)(int)prof.layer,
+                    InsulationPermille = insulation,
+                    DurabilityPermille = (int)Math.Round(condition * 1000f),
+                    // Grime tracks lost condition up to the engine's 900-permille ceiling.
+                    DirtPermille = (int)Math.Round((1.0f - condition) * 900f),
+                    IsWaterproof = prof.is_waterproof
+                });
+            }
+            return worn;
+        }
+
+        /// <summary>Dirt removed by one laundry wash, in permille (engine authority).</summary>
+        public int GetLaundryHygieneRestoration(int garmentDirtPermille, int washQualityPermille) =>
+            GarmentLayeringThermalEngine.CalculateLaundryHygieneRestoration(garmentDirtPermille, washQualityPermille);
+
+        /// <summary>
+        /// One laundry wash over a survivor's equipped garments. The engine
+        /// owns how much grime a wash of a given quality removes; this system
+        /// owns garment custody, so the restored dirt is written back onto the
+        /// equipped records' condition. Durability wear stays owned by
+        /// <see cref="DegradeCondition"/> — no second wear model here.
+        /// </summary>
+        /// <returns>Number of garments that came back cleaner.</returns>
+        public int WashGarments(string survivorId, int washQualityPermille)
+        {
+            if (string.IsNullOrEmpty(survivorId) || washQualityPermille <= 0) return 0;
+            if (!_state.survivors.TryGetValue(survivorId, out var rec) || rec.equipped.Count == 0) return 0;
+
+            int washed = 0;
+            foreach (var eq in rec.equipped)
+            {
+                float condition = Math.Max(0.1f, Math.Min(1.0f, eq.condition));
+                int dirt = (int)Math.Round((1.0f - condition) * 900f);
+                int restored = GetLaundryHygieneRestoration(dirt, washQualityPermille);
+                if (restored <= 0) continue;
+
+                float next = (float)Math.Round(condition + restored / 900f, 4);
+                next = Math.Max(0.1f, Math.Min(1.0f, next));
+                if (next > condition + 0.0001f)
+                {
+                    eq.condition = next;
+                    washed++;
+                }
+            }
+
+            if (washed > 0) OnWetnessChanged?.Invoke(survivorId, rec.wetness);
+            return washed;
         }
 
         // ── Save / Load ───────────────────────────────────────────
