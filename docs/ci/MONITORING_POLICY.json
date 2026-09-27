@@ -5,7 +5,14 @@
     "new_markdown_max_bytes": 2097152,
     "pr_growth_fail_bytes": 1073741824,
     "pr_growth_warn_bytes": 104857600,
-    "markdown_allowlist": []
+    "markdown_allowlist": [
+      ".ai/plans/integrated/kitchen/INTEGRATED_ORPHAN_SEAL_01_A98_FOOD_TYPE_SPOILAGE.md",
+      "docs/plans/integrated/kitchen/INTEGRATED_ORPHAN_SEAL_01_A98_FOOD_TYPE_SPOILAGE.md",
+      "docs/plans/integrated/narrative/INTEGRATED_PLAN_CIPHER_CHAIN_TRUTH_251.md",
+      "docs/plans/integrated/radio/INTEGRATED_PLAN_ORPHAN_SEAL_01_A24_RADIO_PROPAGATION.md",
+      "docs/plans/integrated/survivors/INTEGRATED_PLANS_142_145_GARMENT_LAYERING_AUTHORITY.md",
+      "docs/plans/integrated/world/INTEGRATED_W4_02_WORLD_TRAVEL_EXPLORATION_D16_ROUTE_HAZARD.md"
+    ]
   },
   "compile": {
     "description": "Exact-path allowlist for tracked .cs files that are intentionally uncompiled or intentionally compiled only by the test project. Any tracked .cs not matched by MSBuild compile-item evaluation of the production/test projects, a discovered standalone tool project, or this allowlist is a NEW unclassified violation and fails the gate.",
