@@ -124,6 +124,21 @@ namespace AtomicWar.GodotApp
                 rtSys.LoadCatalog(definitions);
             }
             _regionalTreaty = new RegionalTreatyHostSession(rtSys);
+
+            // Plan VIII · Task 21 — typed treaty transitions become world
+            // consequences through the canonical consumers: faction-war standing
+            // (escalation spine, 21.10) and the radio broadcast wire (21.6).
+            // RestoreState never emits transitions, so neither consumer can
+            // double-apply across a save/load.
+            rtSys.OnTreatyTransition += transition =>
+                OnTreatyTransitionWorldConsequences(rtSys, transition);
+
+            if (_regionalTreatyPanel != null && _regionalTreatyPanel.IsInsideTree())
+                RemoveChild(_regionalTreatyPanel);
+            _regionalTreatyPanel = new RegionalTreatyPanel();
+            _regionalTreatyPanel.Bind(_regionalTreaty);
+            _regionalTreatyPanel.Visible = false;
+            AddChild(_regionalTreatyPanel);
         }
 
         /// <summary>
