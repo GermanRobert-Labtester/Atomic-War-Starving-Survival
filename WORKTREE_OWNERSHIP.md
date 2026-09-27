@@ -357,3 +357,19 @@ formatting, or conflict resolution. A package may touch only its listed paths.
 Claims name exact files or narrow directories. Shared composition roots,
 registries, and generated authority files belong to the integrator, never to
 parallel builders.
+registries, and generated authority files belong to the integrator, never to
+parallel builders.
+
+## claim-plan-bloat-reduction-3-plans-2026-09-27
+
+User-authorized 2026-09-27 ("pick 3 plans ... determine what is bloat and what
+to cut, immediate reducing"). Docs-atlas bloat pass. Exact paths: the three
+trimmed plan files `docs/plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md`,
+the record `docs/hygiene/PLAN_BLOAT_REDUCTION_2026-09-27.md`, and this
+appended section only. Files were clean and unclaimed before editing; removed
+content is template-generated padding (no code/data/test references) and
+remains in git history at `241a179fb`. No production code, data, or tests
+touched. Other lanes' unstaged sections in this file are untouched and stay
+unstaged. Status: COMPLETE, pending commit.

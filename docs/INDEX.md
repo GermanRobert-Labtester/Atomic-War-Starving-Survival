@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5527 | **Total Characters:** 28,843,415,712 | **Last Verified:** 2026-09-27
-**Oversized (>= 100,000 characters):** 3587 documents carrying 28,816,459,599 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5529 | **Total Characters:** 28,594,508,235 | **Last Verified:** 2026-09-28
+**Oversized (>= 100,000 characters):** 3581 documents carrying 28,567,465,843 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5473 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5475 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 52 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3587 documents, 28,816,459,599 characters
+## Oversized Document Register (>= 100,000 characters) — 3581 documents, 28,567,465,843 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -27,18 +27,14 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,398,543 | [`docs/expansions/prose_wave151/cw151_06_a_little_damp_a_little_dark_plan.md`](expansions/prose_wave151/cw151_06_a_little_damp_a_little_dark_plan.md) |
 | 11,396,977 | [`docs/expansions/prose_wave170/cw170_09_a_rule_posted_over_a_door_plan.md`](expansions/prose_wave170/cw170_09_a_rule_posted_over_a_door_plan.md) |
 | 11,396,809 | [`docs/expansions/prose_wave152/cw152_03_a_name_offered_as_a_word_plan.md`](expansions/prose_wave152/cw152_03_a_name_offered_as_a_word_plan.md) |
-| 11,396,413 | [`docs/plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md) |
 | 11,395,405 | [`docs/expansions/prose_wave114/cw114_10_room_fixture_pump_flow_ledger_two_hands_recorded_the_well_plan.md`](expansions/prose_wave114/cw114_10_room_fixture_pump_flow_ledger_two_hands_recorded_the_well_plan.md) |
-| 11,395,185 | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md) |
 | 11,395,002 | [`docs/expansions/prose_wave170/cw170_08_capacity_is_not_a_welcome_plan.md`](expansions/prose_wave170/cw170_08_capacity_is_not_a_welcome_plan.md) |
 | 11,394,776 | [`docs/expansions/prose_wave150/cw150_02_every_figure_has_a_drift_plan.md`](expansions/prose_wave150/cw150_02_every_figure_has_a_drift_plan.md) |
 | 11,393,826 | [`docs/expansions/prose_wave155/cw155_02_the_claim_ledger_opens_plan.md`](expansions/prose_wave155/cw155_02_the_claim_ledger_opens_plan.md) |
-| 11,393,570 | [`docs/plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md) |
 | 11,392,641 | [`docs/expansions/prose_wave139/cw139_05_four_days_without_service_plan.md`](expansions/prose_wave139/cw139_05_four_days_without_service_plan.md) |
 | 11,391,503 | [`docs/expansions/prose_wave121/cw121_03_open_microphone_plan.md`](expansions/prose_wave121/cw121_03_open_microphone_plan.md) |
 | 11,391,322 | [`docs/expansions/prose_wave101/cw101_01_audio_log_black_flotilla_offer_day_80_docks_at_midnight_plan.md`](expansions/prose_wave101/cw101_01_audio_log_black_flotilla_offer_day_80_docks_at_midnight_plan.md) |
 | 11,390,291 | [`docs/expansions/prose_wave151/cw151_07_a_blank_is_still_a_form_plan.md`](expansions/prose_wave151/cw151_07_a_blank_is_still_a_form_plan.md) |
-| 11,389,680 | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211.md) |
 | 11,388,328 | [`docs/expansions/prose_wave121/cw121_02_no_network_feed_plan.md`](expansions/prose_wave121/cw121_02_no_network_feed_plan.md) |
 | 11,387,073 | [`docs/expansions/prose_wave169/cw169_02_steam_is_not_a_signal_plan.md`](expansions/prose_wave169/cw169_02_steam_is_not_a_signal_plan.md) |
 | 11,386,331 | [`docs/expansions/prose_wave146/cw146_03_the_scale_is_used_once_plan.md`](expansions/prose_wave146/cw146_03_the_scale_is_used_once_plan.md) |
@@ -48,7 +44,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,380,417 | [`docs/expansions/prose_wave158/cw158_13_a_favor_is_counted_beside_the_tool_plan.md`](expansions/prose_wave158/cw158_13_a_favor_is_counted_beside_the_tool_plan.md) |
 | 11,379,662 | [`docs/expansions/prose_wave101/cw101_02_journal_day_85_alex_recovery_quarantine_left_a_mark_plan.md`](expansions/prose_wave101/cw101_02_journal_day_85_alex_recovery_quarantine_left_a_mark_plan.md) |
 | 11,378,023 | [`docs/expansions/prose_wave113/cw113_08_room_fixture_pump_well_collar_chain_without_bucket_plan.md`](expansions/prose_wave113/cw113_08_room_fixture_pump_well_collar_chain_without_bucket_plan.md) |
-| 11,377,245 | [`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md) |
 | 11,377,135 | [`docs/expansions/prose_wave107/cw107_05_room_history_a_frame_stayed_the_name_on_the_board_plan.md`](expansions/prose_wave107/cw107_05_room_history_a_frame_stayed_the_name_on_the_board_plan.md) |
 | 11,376,409 | [`docs/expansions/prose_wave100/cw100_05_ritual_generator_casing_knock_three_spanner_taps_plan.md`](expansions/prose_wave100/cw100_05_ritual_generator_casing_knock_three_spanner_taps_plan.md) |
 | 11,376,312 | [`docs/expansions/prose_wave141/cw141_01_breakfast_starts_at_half_past_six_plan.md`](expansions/prose_wave141/cw141_01_breakfast_starts_at_half_past_six_plan.md) |
@@ -56,7 +51,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,375,130 | [`docs/expansions/prose_wave111/cw111_02_room_fixture_corridor_chart_rail_string_gone_dark_plan.md`](expansions/prose_wave111/cw111_02_room_fixture_corridor_chart_rail_string_gone_dark_plan.md) |
 | 11,375,037 | [`docs/expansions/prose_wave112/cw112_04_room_fixture_kitchen_ladle_nail_head_height_order_plan.md`](expansions/prose_wave112/cw112_04_room_fixture_kitchen_ladle_nail_head_height_order_plan.md) |
 | 11,374,420 | [`docs/expansions/prose_wave103/cw103_04_journal_day_115_food_theft_crossed_out_suspicion_plan.md`](expansions/prose_wave103/cw103_04_journal_day_115_food_theft_crossed_out_suspicion_plan.md) |
-| 11,374,126 | [`docs/plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md`](plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md) |
 | 11,373,047 | [`docs/expansions/prose_wave101/cw101_07_audio_log_power_crisis_day_280_generator_room_call_plan.md`](expansions/prose_wave101/cw101_07_audio_log_power_crisis_day_280_generator_room_call_plan.md) |
 | 11,371,974 | [`docs/expansions/prose_wave99/cw99_02_journal_day_58_radiation_storm_72_hours_to_prepare_plan.md`](expansions/prose_wave99/cw99_02_journal_day_58_radiation_storm_72_hours_to_prepare_plan.md) |
 | 11,371,390 | [`docs/plans/wave8_part2/C1_DECISION.md`](plans/wave8_part2/C1_DECISION.md) |
@@ -106,15 +100,12 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,355,655 | [`docs/expansions/prose_wave111/cw111_08_room_fixture_foundry_sand_beds_chalk_no_match_plan.md`](expansions/prose_wave111/cw111_08_room_fixture_foundry_sand_beds_chalk_no_match_plan.md) |
 | 11,354,842 | [`docs/expansions/prose_wave99/cw99_04_room_history_bench_markings_tally_not_days_plan.md`](expansions/prose_wave99/cw99_04_room_history_bench_markings_tally_not_days_plan.md) |
 | 11,354,708 | [`docs/expansions/prose_wave146/cw146_15_a_passive_node_loses_its_reach_in_weather_plan.md`](expansions/prose_wave146/cw146_15_a_passive_node_loses_its_reach_in_weather_plan.md) |
-| 11,354,477 | [`docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md`](plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md) |
 | 11,354,304 | [`docs/expansions/wave27/expansion_143_the_ledger_has_no_decorative_columns_plan.md`](expansions/wave27/expansion_143_the_ledger_has_no_decorative_columns_plan.md) |
 | 11,354,225 | [`docs/expansions/prose_wave152/cw152_10_eleven_footboards_and_one_extra_blanket_plan.md`](expansions/prose_wave152/cw152_10_eleven_footboards_and_one_extra_blanket_plan.md) |
-| 11,354,172 | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189.md) |
 | 11,354,135 | [`docs/expansions/prose_wave39/cw39_01_the_stars_are_fewer_than_the_books_promised_plan.md`](expansions/prose_wave39/cw39_01_the_stars_are_fewer_than_the_books_promised_plan.md) |
 | 11,353,505 | [`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-WEATHER-ATMOSPHERE-28_APPENDIX-A_ORPHAN_DOSSIERS.md`](plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-WEATHER-ATMOSPHERE-28_APPENDIX-A_ORPHAN_DOSSIERS.md) |
 | 11,353,452 | [`docs/expansions/prose_wave160/cw160_02_take_only_what_you_need_is_still_an_order_plan.md`](expansions/prose_wave160/cw160_02_take_only_what_you_need_is_still_an_order_plan.md) |
 | 11,353,390 | [`docs/expansions/prose_wave111/cw111_05_room_fixture_kitchen_flue_damper_welded_open_plan.md`](expansions/prose_wave111/cw111_05_room_fixture_kitchen_flue_damper_welded_open_plan.md) |
-| 11,353,373 | [`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md) |
 | 11,352,937 | [`docs/expansions/prose_wave102/cw102_07_journal_day_292_power_restored_heat_returns_plan.md`](expansions/prose_wave102/cw102_07_journal_day_292_power_restored_heat_returns_plan.md) |
 | 11,352,850 | [`docs/expansions/prose_wave45/cw45_01_the_station_that_predicted_its_own_silence_plan.md`](expansions/prose_wave45/cw45_01_the_station_that_predicted_its_own_silence_plan.md) |
 | 11,352,809 | [`docs/expansions/prose_wave131/cw131_09_the_road_stays_open_either_way_plan.md`](expansions/prose_wave131/cw131_09_the_road_stays_open_either_way_plan.md) |
@@ -127,7 +118,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,351,389 | [`docs/expansions/prose_wave141/cw141_11_the_register_attached_to_the_map_plan.md`](expansions/prose_wave141/cw141_11_the_register_attached_to_the_map_plan.md) |
 | 11,351,085 | [`docs/plans/integrated/economy/INTEGRATED_PLAN_155_BLACK_MARKET.md`](plans/integrated/economy/INTEGRATED_PLAN_155_BLACK_MARKET.md) |
 | 11,350,943 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/EVIDENCE.md`](plans/EXPANSION_PROGRAM_2026-09-21/EVIDENCE.md) |
-| 11,349,131 | [`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md) |
 | 11,348,865 | [`docs/plans/wave8_part2/D1_HANDOFF.md`](plans/wave8_part2/D1_HANDOFF.md) |
 | 11,348,033 | [`docs/expansions/prose_wave46/cw46_05_the_shelter_that_reported_without_a_person_plan.md`](expansions/prose_wave46/cw46_05_the_shelter_that_reported_without_a_person_plan.md) |
 | 11,347,994 | [`docs/plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md) |
@@ -144,7 +134,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,343,765 | [`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-RELATIONSHIP-DECAY-TRUTH-195_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-RELATIONSHIP-DECAY-TRUTH-195_APPENDIX-A_SCAFFOLD.md) |
 | 11,343,454 | [`docs/expansions/prose_wave122/cw122_04_the_transfer_list_plan.md`](expansions/prose_wave122/cw122_04_the_transfer_list_plan.md) |
 | 11,343,382 | [`docs/plans/UNBLOCK_OLDEST_BATCH7_PLANS_59_134_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH7_PLANS_59_134_INTEGRATION_PLAN.md) |
-| 11,343,224 | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md) |
 | 11,343,213 | [`docs/expansions/prose_wave151/cw151_14_the_intake_stool_tastes_the_draw_first_plan.md`](expansions/prose_wave151/cw151_14_the_intake_stool_tastes_the_draw_first_plan.md) |
 | 11,342,995 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-O_VERIFICATION_COMMANDS.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-O_VERIFICATION_COMMANDS.md) |
 | 11,342,916 | [`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-HEIRLOOM-PHANTOM-TRUTH-149_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-HEIRLOOM-PHANTOM-TRUTH-149_APPENDIX-A_SCAFFOLD.md) |
@@ -176,7 +165,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,339,382 | [`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-AQUIFER-MONITORING-TRUTH-164_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-AQUIFER-MONITORING-TRUTH-164_APPENDIX-A_SCAFFOLD.md) |
 | 11,339,358 | [`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-BASE-DEFENSE-RAIDS-61_APPENDIX-A_ORPHAN_DOSSIERS.md`](plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-BASE-DEFENSE-RAIDS-61_APPENDIX-A_ORPHAN_DOSSIERS.md) |
 | 11,339,215 | [`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-ADVANCED-MACHINERY-CONTRACTS-TRUTH-140.md`](plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-ADVANCED-MACHINERY-CONTRACTS-TRUTH-140.md) |
-| 11,338,841 | [`docs/plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md`](plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md) |
 | 11,338,713 | [`docs/expansions/prose_wave120/cw120_08_if_the_trains_stop_plan.md`](expansions/prose_wave120/cw120_08_if_the_trains_stop_plan.md) |
 | 11,338,691 | [`docs/expansions/prose_wave120/cw120_03_no_further_east_plan.md`](expansions/prose_wave120/cw120_03_no_further_east_plan.md) |
 | 11,338,569 | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PSYCHOLOGICAL-ARC-TRUTH-186_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PSYCHOLOGICAL-ARC-TRUTH-186_APPENDIX-A_SCAFFOLD.md) |
@@ -274,7 +262,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,294,453 | [`docs/expansions/prose_wave82/cw82_04_activated_charcoal_toast_biscuits_plan.md`](expansions/prose_wave82/cw82_04_activated_charcoal_toast_biscuits_plan.md) |
 | 11,294,277 | [`docs/expansions/prose_wave161/cw161_15_the_lost_world_is_not_one_person_plan.md`](expansions/prose_wave161/cw161_15_the_lost_world_is_not_one_person_plan.md) |
 | 11,293,986 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-UNBLOCK-03_APPENDIX-A_REGISTER_INVENTORY.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-UNBLOCK-03_APPENDIX-A_REGISTER_INVENTORY.md) |
-| 11,293,763 | [`docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`](plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md) |
 | 11,293,694 | [`docs/expansions/prose_wave47/cw47_01_the_river_name_between_the_numbers_plan.md`](expansions/prose_wave47/cw47_01_the_river_name_between_the_numbers_plan.md) |
 | 11,293,482 | [`docs/expansions/wave29/expansion_150_the_count_happens_in_the_open_plan.md`](expansions/wave29/expansion_150_the_count_happens_in_the_open_plan.md) |
 | 11,292,649 | [`docs/expansions/prose_wave143/cw143_05_the_brine_pans_have_a_boundary_plan.md`](expansions/prose_wave143/cw143_05_the_brine_pans_have_a_boundary_plan.md) |
@@ -343,7 +330,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,235,115 | [`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-LOCALIZATION-READINESS-52.md`](plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-LOCALIZATION-READINESS-52.md) |
 | 11,233,559 | [`docs/expansions/prose_wave116/cw116_03_two_chalk_knuckles_by_inner_dog_plan.md`](expansions/prose_wave116/cw116_03_two_chalk_knuckles_by_inner_dog_plan.md) |
 | 11,233,126 | [`docs/expansions/prose_wave124/cw124_10_last_note_plan.md`](expansions/prose_wave124/cw124_10_last_note_plan.md) |
-| 11,232,473 | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) |
 | 11,232,447 | [`docs/expansions/prose_wave148/cw148_18_a_piano_chord_under_the_answer_plan.md`](expansions/prose_wave148/cw148_18_a_piano_chord_under_the_answer_plan.md) |
 | 11,231,760 | [`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-HEALTH-HISTORY-TRUTH-196.md`](plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-HEALTH-HISTORY-TRUTH-196.md) |
 | 11,231,521 | [`docs/expansions/prose_wave47/cw47_02_the_school_radio_petar_used_once_plan.md`](expansions/prose_wave47/cw47_02_the_school_radio_petar_used_once_plan.md) |
@@ -379,7 +365,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,219,893 | [`docs/expansions/prose_wave142/cw142_08_the_vacancy_sign_went_dark_plan.md`](expansions/prose_wave142/cw142_08_the_vacancy_sign_went_dark_plan.md) |
 | 11,219,822 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-E_DETERMINISM_AUDIT.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-E_DETERMINISM_AUDIT.md) |
 | 11,219,035 | [`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-PORT-CONTRACT-TRUTH-157_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-PORT-CONTRACT-TRUTH-157_APPENDIX-A_SCAFFOLD.md) |
-| 11,218,774 | [`docs/plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md`](plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md) |
 | 11,218,765 | [`docs/expansions/prose_wave127/cw127_12_twenty_minutes_on_the_page_plan.md`](expansions/prose_wave127/cw127_12_twenty_minutes_on_the_page_plan.md) |
 | 11,218,529 | [`docs/expansions/prose_wave92/cw92_03_room_history_the_first_filter_change_plan.md`](expansions/prose_wave92/cw92_03_room_history_the_first_filter_change_plan.md) |
 | 11,217,897 | [`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DATA-SCHEMA-COVERAGE-90_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DATA-SCHEMA-COVERAGE-90_APPENDIX-A_SCAFFOLD.md) |
@@ -416,7 +401,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,208,294 | [`docs/expansions/prose_wave147/cw147_11_two_titles_on_one_label_plan.md`](expansions/prose_wave147/cw147_11_two_titles_on_one_label_plan.md) |
 | 11,208,114 | [`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md`](plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md) |
 | 11,207,134 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-N_SURFACE_ROUTES.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-N_SURFACE_ROUTES.md) |
-| 11,206,849 | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) |
 | 11,206,831 | [`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-BALANCE-DIFFICULTY-INTEGRATION-73.md`](plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-BALANCE-DIFFICULTY-INTEGRATION-73.md) |
 | 11,206,619 | [`docs/expansions/wave24/expansion_122_the-trust-they-can-withdraw_plan.md`](expansions/wave24/expansion_122_the-trust-they-can-withdraw_plan.md) |
 | 11,206,315 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-B_WAVE_PACKAGES.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-B_WAVE_PACKAGES.md) |
@@ -448,7 +432,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,200,070 | [`docs/expansions/prose_wave82/cw82_01_powdered_willow_bark_salicylate_plan.md`](expansions/prose_wave82/cw82_01_powdered_willow_bark_salicylate_plan.md) |
 | 11,199,675 | [`docs/expansions/prose_wave80/cw80_02_tempest_scavenger_ambush_orders_plan.md`](expansions/prose_wave80/cw80_02_tempest_scavenger_ambush_orders_plan.md) |
 | 11,199,332 | [`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DEPRECATED-TREE-RETIREMENT-94.md`](plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DEPRECATED-TREE-RETIREMENT-94.md) |
-| 11,199,120 | [`docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md`](plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md) |
 | 11,198,667 | [`docs/expansions/prose_wave140/cw140_05_the_ash_is_a_question_plan.md`](expansions/prose_wave140/cw140_05_the_ash_is_a_question_plan.md) |
 | 11,198,374 | [`docs/expansions/prose_wave43/cw43_05_the_ridge_that_kept_the_horizon_plan.md`](expansions/prose_wave43/cw43_05_the_ridge_that_kept_the_horizon_plan.md) |
 | 11,198,330 | [`docs/expansions/prose_wave92/cw92_04_glitch_22_repeating_relay_click_plan.md`](expansions/prose_wave92/cw92_04_glitch_22_repeating_relay_click_plan.md) |
@@ -458,7 +441,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,196,788 | [`docs/expansions/wave28/expansion_146_the_label_is_not_the_seed_plan.md`](expansions/wave28/expansion_146_the_label_is_not_the_seed_plan.md) |
 | 11,196,630 | [`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-WORKSHOP-TRUTH-175_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-WORKSHOP-TRUTH-175_APPENDIX-A_SCAFFOLD.md) |
 | 11,196,472 | [`docs/expansions/prose_wave82/cw82_03_fermented_poppy_straw_laudanum_plan.md`](expansions/prose_wave82/cw82_03_fermented_poppy_straw_laudanum_plan.md) |
-| 11,196,417 | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`](plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md) |
 | 11,196,197 | [`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-THIRDONARY-COVENANT-TRUTH-134.md`](plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-THIRDONARY-COVENANT-TRUTH-134.md) |
 | 11,196,075 | [`docs/expansions/prose_wave117/cw117_06_for_whoever_walked_out_plan.md`](expansions/prose_wave117/cw117_06_for_whoever_walked_out_plan.md) |
 | 11,195,761 | [`docs/expansions/wave22/expansion_112_the_slot_kept_at_its_hour_plan.md`](expansions/wave22/expansion_112_the_slot_kept_at_its_hour_plan.md) |
@@ -503,7 +485,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,165,623 | [`docs/expansions/prose_wave57/cw57_01_the_station_with_no_questions_plan.md`](expansions/prose_wave57/cw57_01_the_station_with_no_questions_plan.md) |
 | 11,165,151 | [`docs/expansions/prose_wave79/cw79_02_cult_recruitment_conversation_plan.md`](expansions/prose_wave79/cw79_02_cult_recruitment_conversation_plan.md) |
 | 11,164,406 | [`docs/expansions/prose_wave145/cw145_03_tools_at_the_basement_door_plan.md`](expansions/prose_wave145/cw145_03_tools_at_the_basement_door_plan.md) |
-| 11,164,097 | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) |
 | 11,163,877 | [`docs/expansions/prose_wave81/cw81_03_mimeographed_heresy_pamphlet_plan.md`](expansions/prose_wave81/cw81_03_mimeographed_heresy_pamphlet_plan.md) |
 | 11,163,826 | [`docs/expansions/prose_wave35/cw35_01_the_tower_that_holds_no_water_plan.md`](expansions/prose_wave35/cw35_01_the_tower_that_holds_no_water_plan.md) |
 | 11,163,541 | [`docs/expansions/wave25/expansion_127_the_door_that_was_oiled_plan.md`](expansions/wave25/expansion_127_the_door_that_was_oiled_plan.md) |
@@ -512,7 +493,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,161,285 | [`docs/expansions/prose_wave85/cw85_05_canticle_of_the_geiger_psalm_plan.md`](expansions/prose_wave85/cw85_05_canticle_of_the_geiger_psalm_plan.md) |
 | 11,160,720 | [`docs/expansions/prose_wave127/cw127_17_the_white_line_near_shore_plan.md`](expansions/prose_wave127/cw127_17_the_white_line_near_shore_plan.md) |
 | 11,159,820 | [`docs/expansions/prose_wave83/cw83_03_unregistered_geiger_crystal_plan.md`](expansions/prose_wave83/cw83_03_unregistered_geiger_crystal_plan.md) |
-| 11,158,852 | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) |
 | 11,158,768 | [`docs/expansions/prose_wave162/cw162_17_a_name_held_by_the_margin_plan.md`](expansions/prose_wave162/cw162_17_a_name_held_by_the_margin_plan.md) |
 | 11,158,718 | [`docs/expansions/prose_wave84/cw84_03_distillery_hydrometer_glass_plan.md`](expansions/prose_wave84/cw84_03_distillery_hydrometer_glass_plan.md) |
 | 11,157,282 | [`docs/expansions/prose_wave55/cw55_02_the_suitcases_in_the_stands_plan.md`](expansions/prose_wave55/cw55_02_the_suitcases_in_the_stands_plan.md) |
@@ -626,7 +606,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,092,853 | [`docs/expansions/wave21/expansion_108_two_versions_in_full_view_plan.md`](expansions/wave21/expansion_108_two_versions_in_full_view_plan.md) |
 | 11,092,072 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AI_METHOD_NAMES.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AI_METHOD_NAMES.md) |
 | 11,092,057 | [`docs/expansions/prose_wave39/cw39_06_the_appointment_the_dishes_kept_plan.md`](expansions/prose_wave39/cw39_06_the_appointment_the_dishes_kept_plan.md) |
-| 11,091,879 | [`docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`](plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md) |
 | 11,091,759 | [`docs/expansions/prose_wave119/cw119_05_case_definition_plan.md`](expansions/prose_wave119/cw119_05_case_definition_plan.md) |
 | 11,091,728 | [`docs/expansions/wave24/expansion_123_the-skill-that-fell-quiet_plan.md`](expansions/wave24/expansion_123_the-skill-that-fell-quiet_plan.md) |
 | 11,091,628 | [`docs/expansions/prose_wave98/cw98_04_room_history_the_second_blower_plan.md`](expansions/prose_wave98/cw98_04_room_history_the_second_blower_plan.md) |
@@ -650,7 +629,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,087,416 | [`docs/expansions/prose_wave41/cw41_05_the_bunkers_below_the_bunkers_plan.md`](expansions/prose_wave41/cw41_05_the_bunkers_below_the_bunkers_plan.md) |
 | 11,086,991 | [`docs/expansions/prose_wave58/cw58_01_the_note_at_eighty_eight_five_plan.md`](expansions/prose_wave58/cw58_01_the_note_at_eighty_eight_five_plan.md) |
 | 11,086,805 | [`docs/expansions/prose_wave145/cw145_02_a_name_asked_for_once_plan.md`](expansions/prose_wave145/cw145_02_a_name_asked_for_once_plan.md) |
-| 11,086,388 | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md`](plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md) |
 | 11,085,988 | [`docs/expansions/prose_wave49/cw49_02_the_promise_at_the_radio_tower_plan.md`](expansions/prose_wave49/cw49_02_the_promise_at_the_radio_tower_plan.md) |
 | 11,085,759 | [`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-AUTONOMOUS-MACHINES-79.md`](plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-AUTONOMOUS-MACHINES-79.md) |
 | 11,085,668 | [`docs/plans/integrated/survivors/INTEGRATED_PLANS_142_145_GARMENT_LAYERING_AUTHORITY.md`](plans/integrated/survivors/INTEGRATED_PLANS_142_145_GARMENT_LAYERING_AUTHORITY.md) |
@@ -713,7 +691,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 11,051,430 | [`docs/expansions/wave17/expansion_85_hands_at_the_workbench_plan.md`](expansions/wave17/expansion_85_hands_at_the_workbench_plan.md) |
 | 11,051,072 | [`docs/expansions/prose_wave45/cw45_04_the_interval_between_tones_plan.md`](expansions/prose_wave45/cw45_04_the_interval_between_tones_plan.md) |
 | 11,050,622 | [`docs/expansions/prose_wave77/cw77_03_ventilation_grate_memorial_plan.md`](expansions/prose_wave77/cw77_03_ventilation_grate_memorial_plan.md) |
-| 11,050,026 | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) |
 | 11,049,500 | [`docs/expansions/prose_wave67/cw67_02_the_bunker_as_seen_in_song_plan.md`](expansions/prose_wave67/cw67_02_the_bunker_as_seen_in_song_plan.md) |
 | 11,049,426 | [`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-DEEP-STRATA-83_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-DEEP-STRATA-83_APPENDIX-A_SCAFFOLD.md) |
 | 11,048,916 | [`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-ESPIONAGE-SYSTEM-TRUTH-161.md`](plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-ESPIONAGE-SYSTEM-TRUTH-161.md) |
@@ -851,7 +828,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,981,264 | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-UV-CORONA-DETECTION-TRUTH-250.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-UV-CORONA-DETECTION-TRUTH-250.md) |
 | 10,980,749 | [`docs/expansions/prose_wave122/cw122_01_the_hardest_decision_plan.md`](expansions/prose_wave122/cw122_01_the_hardest_decision_plan.md) |
 | 10,980,466 | [`docs/expansions/wave13/expansion_68_only_in_emergency_plan.md`](expansions/wave13/expansion_68_only_in_emergency_plan.md) |
-| 10,980,418 | [`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`](plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md) |
 | 10,979,989 | [`docs/expansions/prose_wave133/cw133_15_the_figure_above_the_wolves_plan.md`](expansions/prose_wave133/cw133_15_the_figure_above_the_wolves_plan.md) |
 | 10,979,289 | [`docs/plans/expansion_wave1/INTEGRATION_CLOSEOUT_PLANS_01_04.md`](plans/expansion_wave1/INTEGRATION_CLOSEOUT_PLANS_01_04.md) |
 | 10,979,226 | [`docs/expansions/prose_wave135/cw135_04_the_third_hand_stops_plan.md`](expansions/prose_wave135/cw135_04_the_third_hand_stops_plan.md) |
@@ -902,7 +878,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,968,109 | [`docs/expansions/prose_wave75/cw75_04_the_three_mask_rule_song_plan.md`](expansions/prose_wave75/cw75_04_the_three_mask_rule_song_plan.md) |
 | 10,967,688 | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-WEAPON-CONDITION-TRUTH-242.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-WEAPON-CONDITION-TRUTH-242.md) |
 | 10,967,481 | [`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-INVENTORY-CONSERVATION-93.md`](plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-INVENTORY-CONSERVATION-93.md) |
-| 10,967,130 | [`docs/plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md`](plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md) |
+| 10,967,008 | [`docs/plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md`](plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md) |
 | 10,966,967 | [`docs/expansions/prose_wave123/cw123_10_the_glass_falling_plan.md`](expansions/prose_wave123/cw123_10_the_glass_falling_plan.md) |
 | 10,966,646 | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-PRECISION-OPTICS-TRUTH-220.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-PRECISION-OPTICS-TRUTH-220.md) |
 | 10,966,335 | [`docs/expansions/prose_wave131/cw131_12_the_map_being_repainted_plan.md`](expansions/prose_wave131/cw131_12_the_map_being_repainted_plan.md) |
@@ -955,7 +931,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,933,863 | [`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-BOOTSTRAP-GATE-TRUTH-147.md`](plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-BOOTSTRAP-GATE-TRUTH-147.md) |
 | 10,932,975 | [`docs/plans/wave2_integration/W2-04_ENVIRONMENT_PLANNING.md`](plans/wave2_integration/W2-04_ENVIRONMENT_PLANNING.md) |
 | 10,930,966 | [`docs/plans/integrated/narrative/INTEGRATED_PLAN_CIPHER_CHAIN_TRUTH_251.md`](plans/integrated/narrative/INTEGRATED_PLAN_CIPHER_CHAIN_TRUTH_251.md) |
-| 10,930,717 | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MUSTER-FAMILY-TRUTH-275.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MUSTER-FAMILY-TRUTH-275.md) |
 | 10,930,372 | [`docs/plans/wave11_part1/A5_PLAN47_IMPLEMENTATION_LOG.md`](plans/wave11_part1/A5_PLAN47_IMPLEMENTATION_LOG.md) |
 | 10,930,055 | [`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-MORAL-CHOICE-TRUTH-136.md`](plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-MORAL-CHOICE-TRUTH-136.md) |
 | 10,929,751 | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-CIPHER-CHAIN-TRUTH-251.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-CIPHER-CHAIN-TRUTH-251.md) |
@@ -1059,7 +1034,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,860,661 | [`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-HOTFIX-DRILL-99_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-HOTFIX-DRILL-99_APPENDIX-A_SCAFFOLD.md) |
 | 10,860,453 | [`docs/expansions/prose_wave34/cw34_02_the_board_updated_for_nobody_plan.md`](expansions/prose_wave34/cw34_02_the_board_updated_for_nobody_plan.md) |
 | 10,860,407 | [`docs/expansions/prose_wave50/cw50_02_the_sounder_in_the_river_mud_plan.md`](expansions/prose_wave50/cw50_02_the_sounder_in_the_river_mud_plan.md) |
-| 10,860,208 | [`docs/plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md`](plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md) |
 | 10,859,588 | [`docs/expansions/prose_wave59/cw59_02_the_two_chalks_of_the_hallway_plan.md`](expansions/prose_wave59/cw59_02_the_two_chalks_of_the_hallway_plan.md) |
 | 10,859,437 | [`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-FAMILY-DYNASTY-43.md`](plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-FAMILY-DYNASTY-43.md) |
 | 10,859,375 | [`docs/expansions/prose_wave96/cw96_02_journal_day_195_memory_loss_plan.md`](expansions/prose_wave96/cw96_02_journal_day_195_memory_loss_plan.md) |
@@ -1251,7 +1225,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,761,291 | [`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-WEATHER-SONDE-TRUTH-168.md`](plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-WEATHER-SONDE-TRUTH-168.md) |
 | 10,761,272 | [`docs/plans/expansion_wave1/PLAN_16_ENDGAME_HORIZONS_FACTION_CONVERGENCE_AND_LEGACY_FRONTIERS.md`](plans/expansion_wave1/PLAN_16_ENDGAME_HORIZONS_FACTION_CONVERGENCE_AND_LEGACY_FRONTIERS.md) |
 | 10,761,020 | [`docs/expansions/wave8/expansion_51_the_machine_plan.md`](expansions/wave8/expansion_51_the_machine_plan.md) |
-| 10,761,012 | [`docs/plans/PLANS_86_89_INTEGRATION_PLAN.md`](plans/PLANS_86_89_INTEGRATION_PLAN.md) |
 | 10,760,767 | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-CRAFT-ARCHIVE-TRUTH-208.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-CRAFT-ARCHIVE-TRUTH-208.md) |
 | 10,760,005 | [`docs/plans/integrated/farming/INTEGRATED_PLAN_PRESERVATION-TRUTH-118.md`](plans/integrated/farming/INTEGRATED_PLAN_PRESERVATION-TRUTH-118.md) |
 | 10,759,870 | [`docs/plans/PLAN_B66_METALLURGY_CLOSEOUT.md`](plans/PLAN_B66_METALLURGY_CLOSEOUT.md) |
@@ -1495,7 +1468,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,623,732 | [`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-ASSET-PIPELINE-19.md`](plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-ASSET-PIPELINE-19.md) |
 | 10,623,451 | [`docs/expansions/prose_wave138/cw138_04_the_number_she_cannot_send_plan.md`](expansions/prose_wave138/cw138_04_the_number_she_cannot_send_plan.md) |
 | 10,623,345 | [`docs/expansions/prose_wave133/cw133_01_the_room_will_be_different_again_plan.md`](expansions/prose_wave133/cw133_01_the_room_will_be_different_again_plan.md) |
-| 10,622,971 | [`docs/plans/CROP_ROSTER_INTEGRATION_PLAN.md`](plans/CROP_ROSTER_INTEGRATION_PLAN.md) |
 | 10,622,794 | [`docs/expansions/prose_wave138/cw138_13_three_days_on_the_marker_plan.md`](expansions/prose_wave138/cw138_13_three_days_on_the_marker_plan.md) |
 | 10,622,627 | [`docs/expansions/DEEP_LORE_MASTER_PLAN.md`](expansions/DEEP_LORE_MASTER_PLAN.md) |
 | 10,620,554 | [`docs/expansions/prose_wave167/cw167_05_a_guest_book_records_the_candle_not_the_visitor_plan.md`](expansions/prose_wave167/cw167_05_a_guest_book_records_the_candle_not_the_visitor_plan.md) |
@@ -2356,7 +2328,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,199,332 | [`docs/expansions/prose_wave153/cw153_20_grey_water_in_the_reservoir_crater_plan.md`](expansions/prose_wave153/cw153_20_grey_water_in_the_reservoir_crater_plan.md) |
 | 10,199,093 | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_151_WORKING_ANIMALS.md`](plans/integrated/survivors/INTEGRATED_PLAN_151_WORKING_ANIMALS.md) |
 | 10,197,695 | [`docs/expansions/prose_wave122/cw122_06_leave_the_tags_plan.md`](expansions/prose_wave122/cw122_06_leave_the_tags_plan.md) |
-| 10,197,378 | [`docs/plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md`](plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md) |
 | 10,197,142 | [`docs/plans/wave8_part2/D1_ACCEPTANCE.md`](plans/wave8_part2/D1_ACCEPTANCE.md) |
 | 10,196,571 | [`docs/expansions/prose_wave105/cw105_04_journal_day_208_alex_quarantine_deteriorating_options_plan.md`](expansions/prose_wave105/cw105_04_journal_day_208_alex_quarantine_deteriorating_options_plan.md) |
 | 10,196,437 | [`docs/expansions/prose_wave169/cw169_03_where_the_melt_stops_being_clear_plan.md`](expansions/prose_wave169/cw169_03_where_the_melt_stops_being_clear_plan.md) |
@@ -2412,7 +2383,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,179,092 | [`docs/expansions/prose_wave107/cw107_08_folklore_comfort_blackout_freeze_red_light_rhyme_plan.md`](expansions/prose_wave107/cw107_08_folklore_comfort_blackout_freeze_red_light_rhyme_plan.md) |
 | 10,179,020 | [`docs/expansions/prose_wave154/cw154_09_the_needles_peg_red_at_the_crater_rim_plan.md`](expansions/prose_wave154/cw154_09_the_needles_peg_red_at_the_crater_rim_plan.md) |
 | 10,178,822 | [`docs/expansions/prose_wave156/cw156_11_the_knife_was_sharpened_past_the_mark_plan.md`](expansions/prose_wave156/cw156_11_the_knife_was_sharpened_past_the_mark_plan.md) |
-| 10,176,463 | [`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md`](plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md) |
 | 10,176,387 | [`docs/expansions/prose_wave105/cw105_01_audio_log_food_storage_theft_day_150_speak_up_plan.md`](expansions/prose_wave105/cw105_01_audio_log_food_storage_theft_day_150_speak_up_plan.md) |
 | 10,176,176 | [`docs/expansions/prose_wave108/cw108_02_room_fixture_airlock_handprints_hatch_height_plan.md`](expansions/prose_wave108/cw108_02_room_fixture_airlock_handprints_hatch_height_plan.md) |
 | 10,175,859 | [`docs/expansions/prose_wave102/cw102_02_journal_day_72_medical_crisis_fever_and_fear_plan.md`](expansions/prose_wave102/cw102_02_journal_day_72_medical_crisis_fever_and_fear_plan.md) |
@@ -2526,6 +2496,21 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,129,005 | [`docs/expansions/prose_wave124/cw124_07_stories_in_hearts_plan.md`](expansions/prose_wave124/cw124_07_stories_in_hearts_plan.md) |
 | 10,126,485 | [`docs/expansions/prose_wave126/cw126_07_what_the_ledger_cannot_guarantee_plan.md`](expansions/prose_wave126/cw126_07_what_the_ledger_cannot_guarantee_plan.md) |
 | 10,124,582 | [`docs/expansions/prose_wave126/cw126_04_the_voice_that_arrived_too_clean_plan.md`](expansions/prose_wave126/cw126_04_the_voice_that_arrived_too_clean_plan.md) |
+| 5,622,183 | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) |
+| 5,593,003 | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) |
+| 5,585,636 | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) |
+| 5,560,226 | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) |
+| 5,540,901 | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) |
+| 5,530,140 | [`docs/plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md`](plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md) |
+| 5,528,836 | [`docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`](plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md) |
+| 5,468,345 | [`docs/plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md`](plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md) |
+| 5,435,949 | [`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`](plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md) |
+| 5,423,855 | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`](plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md) |
+| 5,408,591 | [`docs/plans/CROP_ROSTER_INTEGRATION_PLAN.md`](plans/CROP_ROSTER_INTEGRATION_PLAN.md) |
+| 5,403,642 | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md`](plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md) |
+| 5,339,296 | [`docs/plans/PLANS_86_89_INTEGRATION_PLAN.md`](plans/PLANS_86_89_INTEGRATION_PLAN.md) |
+| 5,298,372 | [`docs/plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md`](plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md) |
+| 5,215,595 | [`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md`](plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md) |
 | 3,210,548 | [`docs/expeditions/PLAN_46_SCAVENGING_TABLES_BASELINE.md`](expeditions/PLAN_46_SCAVENGING_TABLES_BASELINE.md) |
 | 3,210,302 | [`docs/saves/PLANS_146_149_SAVE_MIGRATION_MATRIX.md`](saves/PLANS_146_149_SAVE_MIGRATION_MATRIX.md) |
 | 3,210,099 | [`docs/expeditions/PLAN_46_SCAVENGING_TABLES_CLOSEOUT.md`](expeditions/PLAN_46_SCAVENGING_TABLES_CLOSEOUT.md) |
@@ -3092,6 +3077,10 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 585,995 | [`piagentsplans/39-orbital-harrow-telemetry-events.md`](../piagentsplans/39-orbital-harrow-telemetry-events.md) |
 | 555,949 | [`docs/world/DYNAMIC_WORLD_BALANCE_AUDIT.md`](world/DYNAMIC_WORLD_BALANCE_AUDIT.md) |
 | 555,523 | [`piagentsplans/109-moral-choice-echo-quests-expansion.md`](../piagentsplans/109-moral-choice-echo-quests-expansion.md) |
+| 553,505 | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md) |
+| 533,089 | [`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md) |
+| 533,012 | [`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md) |
+| 531,563 | [`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md) |
 | 526,940 | [`piagentsplans/82-verdict-locations-expansion.md`](../piagentsplans/82-verdict-locations-expansion.md) |
 | 524,304 | [`piagentsplans/54-combat-catalog-expansion.md`](../piagentsplans/54-combat-catalog-expansion.md) |
 | 523,665 | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) |
@@ -3109,9 +3098,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 490,518 | [`piagentsplans/111-phantom-triggers-expansion.md`](../piagentsplans/111-phantom-triggers-expansion.md) |
 | 489,577 | [`piagentsplans/21-phantom-memory-heirloom.md`](../piagentsplans/21-phantom-memory-heirloom.md) |
 | 485,144 | [`piagentsplans/94-verdict-radio-expansion.md`](../piagentsplans/94-verdict-radio-expansion.md) |
+| 479,200 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 478,795 | [`docs/production/FOUNDRY_TREATY_LABOR_MATRIX.md`](production/FOUNDRY_TREATY_LABOR_MATRIX.md) |
 | 478,549 | [`piagentsplans/85-damaged-map-zones-expansion.md`](../piagentsplans/85-damaged-map-zones-expansion.md) |
-| 475,431 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 474,798 | [`piagentsplans/90-dose-registers-expansion.md`](../piagentsplans/90-dose-registers-expansion.md) |
 | 468,837 | [`docs/radio/RADIO_ALERT_PRIORITY.md`](radio/RADIO_ALERT_PRIORITY.md) |
 | 463,529 | [`docs/expeditions/DIVE_LOOT_PROVENANCE.md`](expeditions/DIVE_LOOT_PROVENANCE.md) |
@@ -3150,9 +3139,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 381,138 | [`docs/SHELTER_ACOUSTIC_AUTHORITY_MAP.md`](SHELTER_ACOUSTIC_AUTHORITY_MAP.md) |
 | 379,903 | [`docs/memorials/WASTELAND_EPITAPH_MICRO_LOCATION_HANDOFF.md`](memorials/WASTELAND_EPITAPH_MICRO_LOCATION_HANDOFF.md) |
 | 376,637 | [`docs/economy/HARDCORE_CONTENT_UTILIZATION.md`](economy/HARDCORE_CONTENT_UTILIZATION.md) |
+| 374,548 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 374,277 | [`docs/bodymind/DOSE_INSTITUTION_CONSEQUENCE_MATRIX.md`](bodymind/DOSE_INSTITUTION_CONSEQUENCE_MATRIX.md) |
 | 374,117 | [`docs/moral_choice/MORAL_FLAG_SCHEMA.md`](moral_choice/MORAL_FLAG_SCHEMA.md) |
-| 373,434 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 371,665 | [`docs/world/ORBITAL_HARROW_EVENT_MATRIX.md`](world/ORBITAL_HARROW_EVENT_MATRIX.md) |
 | 371,365 | [`docs/survivors/FINAL_WISH_CONFESSION_HANDOFF.md`](survivors/FINAL_WISH_CONFESSION_HANDOFF.md) |
 | 370,645 | [`docs/saves/battery/EXPEDITION_BATTERY.md`](saves/battery/EXPEDITION_BATTERY.md) |
@@ -3551,6 +3540,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 212,361 | [`Next-steps-plans/shipped_to_chat/Plan_212_Time_Capsule_Legacy_Messages.md`](../Next-steps-plans/shipped_to_chat/Plan_212_Time_Capsule_Legacy_Messages.md) |
 | 210,224 | [`Next-steps-plans/shipped_to_chat/Plan_161_Survivor_Hobby_Leisure_System.md`](../Next-steps-plans/shipped_to_chat/Plan_161_Survivor_Hobby_Leisure_System.md) |
 | 209,287 | [`Next-steps-plans/shipped_to_chat/Plan_163_Wasteland_Cartography_Mapping.md`](../Next-steps-plans/shipped_to_chat/Plan_163_Wasteland_Cartography_Mapping.md) |
+| 209,254 | [`docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md`](plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md) |
+| 207,315 | [`docs/plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md`](plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md) |
 | 181,295 | [`docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`](ASHFALL_IMPLEMENTED_CANON_REGISTRY.md) |
 | 173,479 | [`docs/ashfall-master-world-bible-and-expansion-authority.md`](ashfall-master-world-bible-and-expansion-authority.md) |
 | 157,695 | [`piagentsplans/32-expedition-destination-wiring.md`](../piagentsplans/32-expedition-destination-wiring.md) |
@@ -3603,7 +3594,10 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 127,112 | [`docs/lore/ASHFALL_GAME_MASTER_DOCUMENT_UPDATED.md`](lore/ASHFALL_GAME_MASTER_DOCUMENT_UPDATED.md) |
 | 122,206 | [`docs/plans/expansion_wave1/README.md`](plans/expansion_wave1/README.md) |
 | 117,484 | [`C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md`](../C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md) |
+| 116,209 | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md) |
 | 106,457 | [`docs/expansions/expansion_03_the_standing_record_creative_pack.md`](expansions/expansion_03_the_standing_record_creative_pack.md) |
+| 105,205 | [`docs/plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md) |
+| 105,003 | [`docs/plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md) |
 | 101,405 | [`Seal-steps/Completed/531842_ASHFALL_WAVE8_IMPLEMENTATION_UNBLOCKER_PLAN.md`](../Seal-steps/Completed/531842_ASHFALL_WAVE8_IMPLEMENTATION_UNBLOCKER_PLAN.md) |
 
 ---
@@ -3791,7 +3785,7 @@ The following documents share identical or near-identical filenames across root,
 |---|---|---|---|
 | 🟢 `CURRENT` | [`AGENTS.md`](../AGENTS.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`README.md`](../README.md) | 5,978 | **ASHFALL: Atomic War – Starving Survival** — 2D post-nuclear survival-management game. Godot 4.7 .NET (C#) is the only |
-| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | 523,665 | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-09-27<br> |
+| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | 523,665 | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-09-28<br> |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_AUTHORITY_MAP.md`](architecture/BUNKER_COURT_AUTHORITY_MAP.md) | 4,591 | **Bunker Court Authority & System Boundary Map** — **Document ID:** ARCH-BUNKER-COURT-AUTHORITY |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_CASE_MATRIX.md`](architecture/BUNKER_COURT_CASE_MATRIX.md) | 12,637 | **Bunker Court Case Matrix — Full 24-Case Census** — **Document ID:** ARCH-BUNKER-COURT-CASE-MATRIX |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_DISCOVERY_MATRIX.md`](architecture/BUNKER_COURT_DISCOVERY_MATRIX.md) | 6,032 | **Bunker Court Discovery Matrix & Manifest Registration** — **Document ID:** ARCH-BUNKER-COURT-DISCOVERY-MATRIX |
@@ -3931,7 +3925,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/VERDICT_SAVE_CONTRACT.md`](verdict/VERDICT_SAVE_CONTRACT.md) | 1,392 | **Verdict Save Contract & Migration Policy** — The Verdict save section persists player investigation progress using the following canonical structure: |
 | 🟢 `CURRENT` | [`docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md`](world/DYNAMIC_WORLD_SAVE_CONTRACT.md) | 281,648 | **Dynamic World Save Contract & Migration Integrity Specification — Weather Intelligence, Orbital Telemetry, Sky Armor & Ecological Dayowner** — **Document Reference:** `docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md` |
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md`](year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md) | 292,431 | **Year of Ash Save Contract** — No new save schema was introduced. `YearOfAshSave` remains version 5 and persists the existing |
-| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 73,025 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-27<br> |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 73,025 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-28<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | 3,141,300 | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
 ## 4. Expansions (01–10 Master Plans & Context) (2774 documents)
@@ -6386,7 +6380,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PNEUMATIC-DISPATCH-TRUTH-180_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PNEUMATIC-DISPATCH-TRUTH-180_APPENDIX-A_SCAFFOLD.md) | 11,342,015 | **PLAN-PNEUMATIC-DISPATCH-TRUTH-180 — Appendix A: Implementation Scaffold** — **Generated:** 2026-09-21 by the session scaffold generator (paired variant, batch 3). |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PSYCHOLOGICAL-ARC-TRUTH-186.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PSYCHOLOGICAL-ARC-TRUTH-186.md) | 10,974,693 | **PLAN-PSYCHOLOGICAL-ARC-TRUTH-186 — Personal Change Over Time: Stages & Guardrails** — **Wave 14 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PSYCHOLOGICAL-ARC-TRUTH-186_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PSYCHOLOGICAL-ARC-TRUTH-186_APPENDIX-A_SCAFFOLD.md) | 11,338,569 | **PLAN-PSYCHOLOGICAL-ARC-TRUTH-186 — Appendix A: Implementation Scaffold** — **Generated:** 2026-09-21 by the session scaffold generator (paired variant, batch 3). |
-| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189.md) | 11,354,172 | **PLAN-RADIATION-BACKGROUND-TRUTH-189 — Low-Background Shelter, Counting & Contamination** — **Wave 14 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
+| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189.md) | 15,000 | **PLAN-RADIATION-BACKGROUND-TRUTH-189 — Low-Background Shelter, Counting & Contamination** — **Wave 14 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189_APPENDIX-A_SCAFFOLD.md) | 11,351,734 | **PLAN-RADIATION-BACKGROUND-TRUTH-189 — Appendix A: Implementation Scaffold** — **Generated:** 2026-09-21 by the session scaffold generator (paired variant, batch 3). |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-TRAVEL-ENCOUNTER-TRUTH-177.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-TRAVEL-ENCOUNTER-TRUTH-177.md) | 11,102,834 | **PLAN-TRAVEL-ENCOUNTER-TRUTH-177 — Encounters en Route: Selection, Avoidance & Resolution** — **Wave 14 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/README.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/README.md) | 3,659 | **ASHFALL Expansion & Integration Program — Wave 14 (2026-09-21)** — Fifteen new plans (176–190), continuing the type-level audit: the next largest |
@@ -6419,7 +6413,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-CRAFT-ARCHIVE-TRUTH-208.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-CRAFT-ARCHIVE-TRUTH-208.md) | 10,760,767 | **PLAN-CRAFT-ARCHIVE-TRUTH-208 — Technical & Trade Knowledge Archives** — **Wave 16 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-CRYO-VAULT-TRUTH-206.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-CRYO-VAULT-TRUTH-206.md) | 10,991,883 | **PLAN-CRYO-VAULT-TRUTH-206 — Cold Storage, Power Dependency & Sample Integrity** — **Wave 16 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DEFENSE-COMMAND-TRUTH-207.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DEFENSE-COMMAND-TRUTH-207.md) | 10,678,117 | **PLAN-DEFENSE-COMMAND-TRUTH-207 — Readiness, Postures & Command Decisions** — **Wave 16 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
-| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211.md) | 11,389,680 | **PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211 — What a Discovery Changes** — **Wave 16 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
+| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211.md) | 14,811 | **PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211 — What a Discovery Changes** — **Wave 16 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DYNAMIC-QUESTLINE-TRUTH-212.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DYNAMIC-QUESTLINE-TRUTH-212.md) | 11,187,043 | **PLAN-DYNAMIC-QUESTLINE-TRUTH-212 — Generated Chains: Selection, Composition & Termination** — **Wave 16 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-EXPEDITION-VEHICLE-TRUTH-219.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-EXPEDITION-VEHICLE-TRUTH-219.md) | 11,079,237 | **PLAN-EXPEDITION-VEHICLE-TRUTH-219 — Field Rigs: Loadout, Range & Breakdown** — **Wave 16 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-NARCOTICS-TRUTH-215.md`](plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-NARCOTICS-TRUTH-215.md) | 10,885,296 | **PLAN-NARCOTICS-TRUTH-215 — Controlled Substances: Supply, Use & Consequences** — **Wave 16 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
@@ -6462,7 +6456,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-GUILT-INSOMNIA-TRUTH-246.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-GUILT-INSOMNIA-TRUTH-246.md) | 10,648,549 | **PLAN-GUILT-INSOMNIA-TRUTH-246 — Sleeplessness from Conscience: Triggers & Relief** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-MATERIAL-SHIELDING-TRUTH-257.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-MATERIAL-SHIELDING-TRUTH-257.md) | 11,007,123 | **PLAN-MATERIAL-SHIELDING-TRUTH-257 — Shielding Materials: Grades, Sourcing & Siting** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-MUSTER-FACTIONS-TRUTH-254.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-MUSTER-FACTIONS-TRUTH-254.md) | 10,895,700 | **PLAN-MUSTER-FACTIONS-TRUTH-254 — Named Camp Factions: Barons, Guilds & Raiders** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
-| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md) | 11,343,224 | **PLAN-QUARANTINE-STRAIN-TRUTH-241 — Isolation Execution & Strain Variants** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
+| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md) | 553,505 | **PLAN-QUARANTINE-STRAIN-TRUTH-241 — Isolation Execution & Strain Variants** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUEST-RUNTIME-TRUTH-247.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUEST-RUNTIME-TRUTH-247.md) | 10,926,982 | **PLAN-QUEST-RUNTIME-TRUTH-247 — The Quest Engine Contract: Dispatch, State & Cleanup** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-RADIO-RECORDING-TRUTH-258.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-RADIO-RECORDING-TRUTH-258.md) | 11,152,384 | **PLAN-RADIO-RECORDING-TRUTH-258 — Recorded Broadcasts: Media, Archive & Replay** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-SHELTER-PRISONER-TRUTH-243.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-SHELTER-PRISONER-TRUTH-243.md) | 11,155,414 | **PLAN-SHELTER-PRISONER-TRUTH-243 — Holding Facility: Bays, Watches & Treatment** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
@@ -6475,14 +6469,14 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/README.md`](plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/README.md) | 4,163 | **ASHFALL Expansion & Integration Program — Wave 18 (2026-09-21)** — Twenty new plans (241–260). The type-level audit pool is down to **39** |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CAMPAIGN-FAMILY-TRUTH-272.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CAMPAIGN-FAMILY-TRUTH-272.md) | 10,972,723 | **PLAN-CAMPAIGN-FAMILY-TRUTH-272 — Calendar, Briefing & Provenance Data** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-COMBAT-FAMILY-TRUTH-273.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-COMBAT-FAMILY-TRUTH-273.md) | 10,959,949 | **PLAN-COMBAT-FAMILY-TRUTH-273 — Tactical AI, Catalogs & Partial Classes** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
-| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md) | 11,395,185 | **PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274 — Acceptance Ladders & Utilization Gates** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
+| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md) | 116,209 | **PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274 — Acceptance Ladders & Utilization Gates** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CORE-ROOT-FAMILY-TRUTH-262.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CORE-ROOT-FAMILY-TRUTH-262.md) | 10,775,743 | **PLAN-CORE-ROOT-FAMILY-TRUTH-262 — The 59 Unreferenced Root Files** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-FACTIONS-STATE-FAMILY-TRUTH-268.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-FACTIONS-STATE-FAMILY-TRUTH-268.md) | 10,988,340 | **PLAN-FACTIONS-STATE-FAMILY-TRUTH-268 — Branch State, Saves & Consequence Routers** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-FOUNDRY-FAMILY-TRUTH-278.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-FOUNDRY-FAMILY-TRUTH-278.md) | 10,963,882 | **PLAN-FOUNDRY-FAMILY-TRUTH-278 — Silent Foundry Partials & Catalogs** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-INVENTORY-FAMILY-TRUTH-271.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-INVENTORY-FAMILY-TRUTH-271.md) | 10,976,080 | **PLAN-INVENTORY-FAMILY-TRUTH-271 — Migration, Transactions & Port Contracts** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MEDICAL-FAMILY-TRUTH-263.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MEDICAL-FAMILY-TRUTH-263.md) | 10,961,929 | **PLAN-MEDICAL-FAMILY-TRUTH-263 — Affliction Contracts & Handler Wiring** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MORALCHOICE-LOADER-FAMILY-TRUTH-276.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MORALCHOICE-LOADER-FAMILY-TRUTH-276.md) | 11,257,288 | **PLAN-MORALCHOICE-LOADER-FAMILY-TRUTH-276 — Loader & Data Integrity for Choices** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
-| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MUSTER-FAMILY-TRUTH-275.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MUSTER-FAMILY-TRUTH-275.md) | 10,930,717 | **PLAN-MUSTER-FAMILY-TRUTH-275 — Path Evaluation, Warfare Types & Demos** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
+| 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MUSTER-FAMILY-TRUTH-275.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MUSTER-FAMILY-TRUTH-275.md) | 17,457 | **PLAN-MUSTER-FAMILY-TRUTH-275 — Path Evaluation, Warfare Types & Demos** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-NARRATIVE-FAMILY-TRUTH-261.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-NARRATIVE-FAMILY-TRUTH-261.md) | 11,047,987 | **PLAN-NARRATIVE-FAMILY-TRUTH-261 — The 87 Unreferenced Narrative Files** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-PERF-HARNESS-FAMILY-TRUTH-279.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-PERF-HARNESS-FAMILY-TRUTH-279.md) | 10,832,605 | **PLAN-PERF-HARNESS-FAMILY-TRUTH-279 — Performance Harness: Sessions, Statistics & Workloads** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-RADIO-FAMILY-TRUTH-266.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-RADIO-FAMILY-TRUTH-266.md) | 10,756,099 | **PLAN-RADIO-FAMILY-TRUTH-266 — Radio Data & Support Families (Distress Excluded)** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
@@ -6672,12 +6666,12 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SHELTER-CAPACITY-AUTHORITY-103.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SHELTER-CAPACITY-AUTHORITY-103.md) | 11,202,246 | **PLAN-SHELTER-CAPACITY-AUTHORITY-103 — Room Occupancy, Overcrowding & Sleep Quality** — **Wave 9 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SKILL-PROGRESSION-TRUTH-113.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SKILL-PROGRESSION-TRUTH-113.md) | 11,182,129 | **PLAN-SKILL-PROGRESSION-TRUTH-113 — Skill Growth, Atrophy & Display Consistency** — **Wave 9 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/README.md`](plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/README.md) | 4,610 | **ASHFALL Expansion & Integration Program — Wave 9 (2026-09-21)** — Fifteen new plans (101–115): **ten gap-sealing, three major expansion, two |
-| 🟢 `CURRENT` | [`docs/plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md`](plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md) | 10,197,378 | **Master Integration Framework & Code Architecture: The 5 Oldest Foundation Plans** — **Package:** `MASTER-EXPANSION-FIVE-OLDEST-PLANS` |
+| 🟢 `CURRENT` | [`docs/plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md`](plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md) | 5,298,372 | **Master Integration Framework & Code Architecture: The 5 Oldest Foundation Plans** — **Package:** `MASTER-EXPANSION-FIVE-OLDEST-PLANS` |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_133_139_142_146_149_155_178_179_180_183_EXPANSION_CLOSEOUT_2026-09-24.md`](plans/PLAN_133_139_142_146_149_155_178_179_180_183_EXPANSION_CLOSEOUT_2026-09-24.md) | 10,424,483 | **Ten-plan expansion closeout — 2026-09-24** — This closes the **documentation and integration architecture** pass requested for Plans 133, 139, 142, 146, 149, 155,... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_187_189_190_191_193_194_195_196_197_198_EXPANSION_CLOSEOUT_2026-09-24.md`](plans/PLAN_187_189_190_191_193_194_195_196_197_198_EXPANSION_CLOSEOUT_2026-09-24.md) | 10,442,714 | **Plans 187–198 documentation and integration architecture closeout** — **Date:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_204_206_207_211_213_215_217_218_219_XP04F6_EXPANSION_CLOSEOUT_2026-09-24.md`](plans/PLAN_204_206_207_211_213_215_217_218_219_XP04F6_EXPANSION_CLOSEOUT_2026-09-24.md) | 10,448,451 | **Plans 204–219 and XP-04-F6 integration architecture closeout** — **Date:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/plans/TEN_EXPANSION_INTEGRATION_ARCHITECTURE_CLOSEOUT_2026-09-24.md`](plans/TEN_EXPANSION_INTEGRATION_ARCHITECTURE_CLOSEOUT_2026-09-24.md) | 10,442,064 | **Ten-document expansion and integration architecture closeout — 2026-09-24** — This documentation package expands the ten paths requested in the active user message. It draws design direction from... |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md) | 11,396,413 | **UNBLOCK — Expansion 25 (The Iron Road) & Expansion 29 (The Glass): Host Integration** — **Status:** HOST INTEGRATION COMPLETE 2026-09-24 (integrator, user-authorized). |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md) | 105,205 | **UNBLOCK — Expansion 25 (The Iron Road) & Expansion 29 (The Glass): Host Integration** — **Status:** HOST INTEGRATION COMPLETE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md) | 11,217,718 | **UNBLOCK-EXPANSION-30-31 — Readiness Plan (The Press + The Kiln)** — **Date:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION32_33_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION32_33_INTEGRATION_PLAN.md) | 11,321,275 | **UNBLOCK — Expansion 32 (The Wild) & Expansion 33 (The Weather): Host Integration** — **Status:** HOST INTEGRATION COMPLETE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md) | 11,297,759 | **UNBLOCK — Expansion 35: The Habit / Chemical Dependency Taper & Withdrawal** — **Status:** SEALED — user-authorized full host integration completed |
@@ -6685,8 +6679,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md) | 10,206,057 | **UNBLOCK — Expansion 37: The Quickening / Antenatal & Neonatal Health** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md) | 10,158,902 | **UNBLOCK — Expansion 38: The Ward / Clinical Triage & Sterile Supply** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md) | 10,169,392 | **UNBLOCK — Expansion 39: The Reagent / Chemical Synthesis Safety** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md) | 11,353,373 | **UNBLOCK — Expansion 40: The Wheel / Mechanical Power Driveline & Machine Tools** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md) | 11,377,245 | **UNBLOCK — Expansion 41: The Quiet / Sleep Quality, Soundproofing & Shelter Crowding** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md) | 531,563 | **UNBLOCK — Expansion 40: The Wheel / Mechanical Power Driveline & Machine Tools** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md) | 533,089 | **UNBLOCK — Expansion 41: The Quiet / Sleep Quality, Soundproofing & Shelter Crowding** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md`](plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md) | 10,278,990 | **Expansion-series Plan 17 — Quest Content and Lifecycle Architecture** — **Status:** Design proposal; documentation only. No implementation ownership is claimed. |
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md`](plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md) | 11,325,674 | **Expansion-series Plan 18 — Expedition Location Selection** — **Status:** Architecture proposal; documentation only. |
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md`](plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md) | 10,319,017 | **Expansion-series Plan 19 — Authored and Generated World Content Boundaries** — **Status:** Architecture and content proposal; documentation only. |
@@ -6914,7 +6908,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/systems/SURVIVOR_JOURNEY_OWNERSHIP.md`](systems/SURVIVOR_JOURNEY_OWNERSHIP.md) | 6,650 | **Survivor Journey Ownership** — This document records the live ownership seams for Plan 24 — the survivor |
 | 🟢 `CURRENT` | [`docs/systems/SURVIVOR_STATE_AUTHORITY_MATRIX.md`](systems/SURVIVOR_STATE_AUTHORITY_MATRIX.md) | 7,812 | **Survivor State Authority Matrix** — Plan 24 integration reference. This matrix names the current owner for each |
 
-## 8. Developer Tooling, Skills & QA (13 documents)
+## 8. Developer Tooling, Skills & QA (14 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -6924,6 +6918,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/health/PERF_BUDGET_2026-09-25.md`](health/PERF_BUDGET_2026-09-25.md) | 3,239 | **ASHFALL — Performance Budget (2026-09-25, alpha)** — Measured on the alpha checkout (Linux, AMD/radeonsi X11 display; headless where noted) with the |
 | 🟢 `CURRENT` | [`docs/hygiene/CLUTTER_DISPOSITION_2026-09-27.md`](hygiene/CLUTTER_DISPOSITION_2026-09-27.md) | 2,411 | **Clutter Ledger Disposition — Enhancement Task 7 (2026-09-27)** — For each finding: a working-tree reference search excluding the ledger itself |
 | 🟢 `CURRENT` | [`docs/hygiene/GIT_OBJECT_INVENTORY.md`](hygiene/GIT_OBJECT_INVENTORY.md) | 20,745 | **ASHFALL — Git Object Inventory & Retention Policy** — **0 stashes.** Working tree is clean. |
+| 🟢 `CURRENT` | [`docs/hygiene/PLAN_BLOAT_REDUCTION_2026-09-27.md`](hygiene/PLAN_BLOAT_REDUCTION_2026-09-27.md) | 3,107 | **Plan Bloat Reduction — Three Unintegrated Plans (2026-09-27)** — User-authorized creative bloat analysis ("pick 3 plans, determine what is bloat |
 | 🟢 `CURRENT` | [`docs/hygiene/REPO_HYGIENE_REPORT.md`](hygiene/REPO_HYGIENE_REPORT.md) | 6,569 | **ASHFALL — Repository Hygiene Report** — These directories are owned by AI coding assistants, aider, composio, etc. |
 | 🟢 `CURRENT` | [`docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`](qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md) | 8,362 | **Manual Smoke-Test Checklist — Audio & User Settings Recovery Behavior** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/qa/MANUAL_PLAYTHROUGH_CHECKLIST.md`](qa/MANUAL_PLAYTHROUGH_CHECKLIST.md) | 18,915 | **Manual Playthrough Checklist — Day 1 → Day 2 Milestone** — **Environment:** Desktop Godot 4.7+ (.NET), launch via `godot --path .` or editor Play. |
@@ -6932,7 +6927,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2420 documents)
+## 9. General Project Guides & Archive Reference (2421 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -7191,7 +7186,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — name: ASHFALL Tactical UI |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 373,434 | **ASHFALL Integration Plans** — This is the sole live integration ledger. It is not a backlog and must not |
+| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 374,548 | **ASHFALL Integration Plans** — This is the sole live integration ledger. It is not a backlog and must not |
 | 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 37,833 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md`](../Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md) | 13,113 | **Plan 132 — Survivor Hidden Agendas & Betrayal Arc** — Create a persistent hidden-agenda system where survivors carry secret motivations, loyalties, and goals that unfold o... |
@@ -7528,7 +7523,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 475,431 | **ASHFALL Worktree Ownership** — `claim-performance-host-qol-2026-09-27`: root is foreman/integrator. User explicitly |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 479,200 | **ASHFALL Worktree Ownership** — Root owns documentation-only edits to `docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`, |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
@@ -8332,12 +8327,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/perf/LINQ_CLOSURE_SWEEP_2026-09-27.md`](perf/LINQ_CLOSURE_SWEEP_2026-09-27.md) | 2,819 | **LINQ / Closure Allocation Sweep — Enhancement Task 5 (2026-09-27)** — The sweep audit ranked five Core sites as hot. Tracing each site's production |
 | 🟢 `CURRENT` | [`docs/perf/RUNTIME_SCALE_AFTER.md`](perf/RUNTIME_SCALE_AFTER.md) | 2,931 | **ASHFALL — RUNTIME SCALE & PERFORMANCE OPTIMIZATION REPORT (PLAN 82 / TASK B23)** — **Date:** 2026-09-03 |
 | 🟢 `CURRENT` | [`docs/perf/RUNTIME_SCALE_BASELINE.md`](perf/RUNTIME_SCALE_BASELINE.md) | 2,630 | **ASHFALL — RUNTIME SCALE & PERFORMANCE BASELINE (PLAN 82 / TASK B23)** — **Date:** 2026-09-03 |
-| 🟢 `CURRENT` | [`docs/perf/STARTUP_BASELINE.md`](perf/STARTUP_BASELINE.md) | 1,853 | **Main Scene Startup Baseline** — **Captured:** 2026-09-27 |
+| 🟢 `CURRENT` | [`docs/perf/STARTUP_BASELINE.md`](perf/STARTUP_BASELINE.md) | 3,402 | **Main Scene Startup Baseline** — **Captured:** 2026-09-27 |
+| 🟢 `CURRENT` | [`docs/performance/ASHFALL_PERFORMANCE_AUDIT.md`](performance/ASHFALL_PERFORMANCE_AUDIT.md) | 19,092 | **ASHFALL Performance Audit — 2026-09-27** — **Mode:** audit only (`/performance-audit`). No production code was changed. |
 | 🟢 `CURRENT` | [`docs/phantoms/PHANTOM_BACKGROUND_INVENTORY.md`](phantoms/PHANTOM_BACKGROUND_INVENTORY.md) | 3,027 | **Phantom Background Inventory** — `Assets/StreamingAssets/Data/survivors.json` is the active survivor |
 | 🟢 `CURRENT` | [`docs/phantoms/PHANTOM_MEMORY_RUNTIME_CONTRACT.md`](phantoms/PHANTOM_MEMORY_RUNTIME_CONTRACT.md) | 4,384 | **Phantom Memory Runtime Contract** — - Data: `Assets/StreamingAssets/Data/phantom_triggers.json` |
 | 🟢 `CURRENT` | [`docs/phantoms/PHANTOM_TRIGGER_CATEGORY_INVENTORY.md`](phantoms/PHANTOM_TRIGGER_CATEGORY_INVENTORY.md) | 2,210 | **Phantom Trigger Category Inventory** — The category authority is `PhantomMemoryEngine.GetCategoryFromId`. It |
 | 🟢 `CURRENT` | [`docs/phantoms/PLAN_111_PHANTOM_BASELINE_MATRIX.md`](phantoms/PLAN_111_PHANTOM_BASELINE_MATRIX.md) | 3,185,411 | **Plan 111 Phantom Baseline Matrix** — The repository already contained 11 entries when Plan 111 was reconciled. |
-| 🟢 `CURRENT` | [`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`](plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md) | 10,980,418 | **ASHFALL — Unblocker Plan for the Blocked Plan Queue (2026-09-19)** — **Role:** read-only planning pass, no production/data/test change. |
+| 🟢 `CURRENT` | [`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`](plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md) | 5,435,949 | **ASHFALL — Unblocker Plan for the Blocked Plan Queue (2026-09-19)** — **Role:** read-only planning pass, no production/data/test change. |
 | 🟢 `CURRENT` | [`docs/plans/C1_planintegration.md`](plans/C1_planintegration.md) | 10,493,472 | **C1 — Flagship Integration Plan: Economy, Weather & Shelter Feedback Loops** — Plan 14 is not a content-addition pass. It is an **integration closure pass**. |
 | 🟢 `CURRENT` | [`docs/plans/C1_planintegration[2].md`](plans/C1_planintegration[2].md) | 10,504,178 | **C1 — Flagship Integration Plan [2]: Honest Navigation, Campaign Authority & Panel Lifecycle Integrity** — This plan closes a continuity defect in the player-facing UI layer: routed surfaces imply that gameplay capability ex... |
 | 🟢 `CURRENT` | [`docs/plans/C1_planintegration[3].md`](plans/C1_planintegration[3].md) | 10,499,056 | **C1 — Flagship Integration Plan [3]: Ending Continuity, Generational State & Repository Truth** — A long-form survival campaign is only continuous if the ending is a faithful projection of the campaign that preceded... |
@@ -8352,10 +8348,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/C2_planintegration[5].md`](plans/C2_planintegration[5].md) | 10,513,332 | **C2 — Flagship Integration Plan [5]: Protection Wears Out, One Condition Authority, Decisions Read It** — ASHFALL already tells the player that gas masks, hazmat suits, weapons, vehicles, and shelter machinery wear out. The... |
 | 🟢 `CURRENT` | [`docs/plans/C2_planintegration[6].md`](plans/C2_planintegration[6].md) | 10,499,183 | **C2 — Flagship Integration Plan [6]: Power as a Dependency, Player Load Shedding, and Recoverable Failure Cascades** — ASHFALL already has a capable bunker electricity simulator. |
 | 🟢 `CURRENT` | [`docs/plans/C2_planintegration[7].md`](plans/C2_planintegration[7].md) | 10,511,222 | **C2 — Flagship Integration Plan [7]: One Language of Strings, Localization Seam, Extraction, and Typography** — ASHFALL already has a partial localization implementation. The historical |
-| 🟢 `CURRENT` | [`docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`](plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md) | 11,293,763 | **CF-P1-DISTRESS-CONTENT-SEAL — Integration Plan (Plan 02 / "Plan 01" of the 2026-09-19 execution program)** — Seal the distress-signal follow-up and audio-cue **content** that landed in the |
-| 🟢 `CURRENT` | [`docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`](plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md) | 11,091,879 | **CF-P28-ONE-BOOTSTRAP-PATH — Integration Plan** — **Package:** `CF-P28-ONE-BOOTSTRAP-PATH` (completion-first program "Plan 10"; census anchor C2[9] / Plan 28 residual) |
-| 🟢 `CURRENT` | [`docs/plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md`](plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md) | 10,860,208 | **CF-P5-RESTOCK-RECONCILE — Merchant Restock Priority Ledger Reconciliation & Ratification** — **Package:** `CF-P5-RESTOCK-RECONCILE` (completion-first program "Plan 03", roster entry 02) |
-| 🟢 `CURRENT` | [`docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md`](plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md) | 11,199,120 | **CF-P6 — Vehicle Armor Grades Integration Plan** — **Package:** `CF-P6-VEHICLE-ARMOR-GRADES` (completion-first program "Plan 04") |
+| 🟢 `CURRENT` | [`docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`](plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md) | 5,528,836 | **CF-P1-DISTRESS-CONTENT-SEAL — Integration Plan (Plan 02 / "Plan 01" of the 2026-09-19 execution program)** — Seal the distress-signal follow-up and audio-cue **content** that landed in the |
+| 🟢 `CURRENT` | [`docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`](plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md) | 4,903 | **CF-P28 — One manifest bootstrap for fresh and restored campaigns** — **Package:** `CF-P28-ONE-BOOTSTRAP-PATH` · completion-first Plan 10 · C2[9]. |
+| 🟢 `CURRENT` | [`docs/plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md`](plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md) | 4,241 | **CF-P5 — Merchant restock decision reconciliation** — **Package:** `CF-P5-RESTOCK-RECONCILE` · completion-first Plan 03 / roster 02. |
+| 🟢 `CURRENT` | [`docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md`](plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md) | 6,119 | **CF-P6 — Vehicle armor grades** — **Package:** `CF-P6-VEHICLE-ARMOR-GRADES` · completion-first Plan 04. |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_ENTRY_MATRIX.md`](plans/CONTRABAND_ENTRY_MATRIX.md) | 10,598,098 | **CONTRABAND ENTRY MATRIX — Plan 147 Task A.1/A.2** — Complete inventory of all 20 records in |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_ITEM_IDENTITY_MATRIX.md`](plans/CONTRABAND_ITEM_IDENTITY_MATRIX.md) | 10,972,302 | **CONTRABAND ITEM IDENTITY MATRIX — Plan 147 Task A.3/A.4** — Identity classification per record. A contraband record is **not automatically |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_MECHANICS_AUTHORITY_MATRIX.md`](plans/CONTRABAND_MECHANICS_AUTHORITY_MATRIX.md) | 11,024,493 | **CONTRABAND MECHANICS AUTHORITY MATRIX — Plan 147 Task A.5** — One row per authored mechanics key (45 total: 14 typed + 31 silently-dropped), |
@@ -8363,13 +8359,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md`](plans/CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md) | 11,022,706 | **CONTRABAND TRADE AND ARBITRAGE AUDIT — Plan 147 Task A.7 (prices) / Task C.2–C.3** — **Finding:** the repo has **no scrip currency runtime**. "Scrip" appears in |
 | 🟢 `CURRENT` | [`docs/plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`](plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md) | 10,147,888 | **CORE GAME MECHANICS — GAP-SEAL MASTER INTEGRATION PLAN** — **Program id:** `CORE-MECH-2026-09-25` |
 | 🟢 `CURRENT` | [`docs/plans/CORE_MECHANICS_PLAYER_FACING_PORTFOLIO_PRECISION_FULL_INTEGRATION_HANDOFF.md`](plans/CORE_MECHANICS_PLAYER_FACING_PORTFOLIO_PRECISION_FULL_INTEGRATION_HANDOFF.md) | 10,427,464 | **ASHFALL TWO-PLAN PORTFOLIO — PRECISION PASS + FULL-INTEGRATION HANDOFF** — **Document type:** coordination and implementation handoff; this is not a third subject plan |
-| 🟢 `CURRENT` | [`docs/plans/CROP_ROSTER_INTEGRATION_PLAN.md`](plans/CROP_ROSTER_INTEGRATION_PLAN.md) | 10,622,971 | **Crop Roster Integration Plan** — **Date:** 2026-09-19 |
+| 🟢 `CURRENT` | [`docs/plans/CROP_ROSTER_INTEGRATION_PLAN.md`](plans/CROP_ROSTER_INTEGRATION_PLAN.md) | 5,408,591 | **Crop Roster Integration Plan** — **Date:** 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md`](plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md) | 11,208,114 | **Crossing Hardening Implementation Log** — - Added an optional projection from Crossing choices to the existing campaign |
-| 🟢 `CURRENT` | [`docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md`](plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md) | 11,354,477 | **F9–F12 Micro-Location Verification Wave — Implementation Log** — Plan: Flagship Micro-Location Persistence, Determinism, Utilization & Reward-Economy Verification (Tasks F9–F12). |
-| 🟢 `CURRENT` | [`docs/plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md`](plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md) | 11,218,774 | **Faction War Communiqué Player-Facing Surface — Integration Plan** — Built from `docs/forensics/FACTION_WAR_COMMUNIQUE_SURFACE_FORENSIC_REPORT.md` (read-only |
+| 🟢 `CURRENT` | [`docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md`](plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md) | 209,254 | **F9–F12 Micro-Location Verification Wave — Implementation Log** — Plan: Flagship Micro-Location Persistence, Determinism, Utilization & Reward-Economy Verification (Tasks F9–F12). |
+| 🟢 `CURRENT` | [`docs/plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md`](plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md) | 5,468,345 | **Faction War Communiqué Player-Facing Surface — Integration Plan** — Built from `docs/forensics/FACTION_WAR_COMMUNIQUE_SURFACE_FORENSIC_REPORT.md` (read-only |
 | 🟢 `CURRENT` | [`docs/plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_16_30_CLOSEOUT_2026-09-24.md`](plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_16_30_CLOSEOUT_2026-09-24.md) | 10,437,043 | **Fifteen partial-authority integration plans, items 16–30 — planning closeout** — **Date:** 2026-09-24. **Scope:** prose, source audit, integration framework, editorial polishing, and architecture ha... |
 | 🟢 `CURRENT` | [`docs/plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_CLOSEOUT_2026-09-24.md`](plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_CLOSEOUT_2026-09-24.md) | 10,425,725 | **Fifteen partial-authority integration plans — planning closeout** — **Date:** 2026-09-24. **Scope:** documentation and integration architecture only. No Core, Godot host, save codec, ca... |
-| 🟢 `CURRENT` | [`docs/plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md`](plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md) | 11,338,841 | **1. Objective** — Deliver a release-grade ASHFALL asset library through one flagship, dependency-ordered production program, with audio... |
+| 🟢 `CURRENT` | [`docs/plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md`](plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md) | 5,530,140 | **1. Objective** — Deliver a release-grade ASHFALL asset library through one flagship, dependency-ordered production program, with audio... |
 | 🟢 `CURRENT` | [`docs/plans/FLAGSHIP_XI_IMPLEMENTATION_LOG.md`](plans/FLAGSHIP_XI_IMPLEMENTATION_LOG.md) | 10,796,660 | **Flagship Integration Plan XI — Implementation Log** — Plans 154–157: Morale Contagion · Pathogen Outbreak · Subterranean Networks · PsyOps. |
 | 🟢 `CURRENT` | [`docs/plans/HOLDFAST_HARDENING_IMPLEMENTATION_LOG.md`](plans/HOLDFAST_HARDENING_IMPLEMENTATION_LOG.md) | 10,589,491 | **Holdfast Hardening Implementation Log** — - Rejected unknown non-built-in quest IDs when a catalog is bound. |
 | 🟢 `CURRENT` | [`docs/plans/OLDEST_PARTIAL_PLANS_AUDIT_20_2026-09-23.md`](plans/OLDEST_PARTIAL_PLANS_AUDIT_20_2026-09-23.md) | 11,083,786 | **ASHFALL — Oldest Partial / Non-Integrated Plans Audit (2026-09-23)** — **Role:** read-only audit produced for the foreman/user, in support of the |
@@ -8413,7 +8409,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLANS_66_69_RECONNAISSANCE.md`](plans/PLANS_66_69_RECONNAISSANCE.md) | 11,134,391 | **PLANS 66–69 FLAGSHIP RECONNAISSANCE (Wave 0)** — **Branch:** `feat/asset-pipeline-flagship` (heavy concurrent modification — see Baseline) |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_78_81_FLAGSHIP_CLOSEOUT.md`](plans/PLANS_78_81_FLAGSHIP_CLOSEOUT.md) | 10,766,222 | **Plans 78–81 Flagship Closeout — Decontamination Airlocks, Geodetic Survey, Kinetic Storage & Chemical Reconnaissance** — **Status:** Core, data, persistence, host wiring, and Wave-5 test matrix complete. Wave-6 UI panels deferred to `goog... |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_86_89_IMPLEMENTATION_LOG.md`](plans/PLANS_86_89_IMPLEMENTATION_LOG.md) | 10,800,064 | **Plans B86–B89 — Implementation Log** — Status: PASS (with known-accepted baseline failure) |
-| 🟢 `CURRENT` | [`docs/plans/PLANS_86_89_INTEGRATION_PLAN.md`](plans/PLANS_86_89_INTEGRATION_PLAN.md) | 10,761,012 | **Plans B86–B89 — Evidence-Grounded Integration Plan** — **Scope:** B86 Expedition Combat Breaching · B87 Closed-Loop Aquaponics · B88 HF/DF Direction Finding · B89 Precision... |
+| 🟢 `CURRENT` | [`docs/plans/PLANS_86_89_INTEGRATION_PLAN.md`](plans/PLANS_86_89_INTEGRATION_PLAN.md) | 5,339,296 | **Plans B86–B89 — Evidence-Grounded Integration Plan** — **Scope:** B86 Expedition Combat Breaching · B87 Closed-Loop Aquaponics · B88 HF/DF Direction Finding · B89 Precision... |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_90_93_FLAGSHIP_IMPLEMENTATION_LOG.md`](plans/PLANS_90_93_FLAGSHIP_IMPLEMENTATION_LOG.md) | 10,589,841 | **Phase 0 — Forensic Architecture Audit** — // Implementation Log — Flagship Plans 90–93 |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_B70_B73_AUTHORITY_MAP.md`](plans/PLANS_B70_B73_AUTHORITY_MAP.md) | 10,711,516 | **Plans B70–B73 Authority Map & Architectural Matrix** — **Domain:** Subterranean Sump Drainage (Plan 70), Atmospheric Sounding (Plan 71), Electrostatic Dust Scrubbing (Plan ... |
 | 🟢 `CURRENT` | [`docs/plans/PLANS_B98_B101_IMPLEMENTATION_LOG.md`](plans/PLANS_B98_B101_IMPLEMENTATION_LOG.md) | 10,807,227 | **Plans B98–B101 Implementation Log** — Historical narrative glass catalogs remain read-only lore. `VehicleGarageSystem` |
@@ -8429,13 +8425,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md) | 11,334,581 | **PLAN 22 — Greenhouse Runtime Consumption of Fertilizer / Pest / Repair Items** — Plan 91 shipped 16 greenhouse supplies that are valid, reachable, and |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md) | 10,323,048 | **PLAN 22 IMPLEMENTATION LOG — Greenhouse Runtime Item Consumption** — Plan: `docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md` |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_24_CLOSEOUT.md`](plans/PLAN_24_CLOSEOUT.md) | 10,434,497 | **Plan 24 — Survivor Fitness, Needs, Labor, and Medical Journey: CLOSEOUT** — **Status:** CLOSED — both signature items resolved 2026-09-18 |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) | 11,158,852 | **Plan 25 Integration Plan — Faction Ecology & the Muster** — Turn ASHFALL's political systems from isolated reputation surfaces into a traceable late-game spine: |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) | 5,593,003 | **Plan 25 Integration Plan — Faction Ecology & the Muster** — Turn ASHFALL's political systems from isolated reputation surfaces into a traceable late-game spine: |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`](plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md) | 11,106,844 | **Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality** — **Status:** FULLY IMPLEMENTED & INTEGRATED (2026-09-19). All phases P1–P7 delivered, |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) | 11,050,026 | **Plan 42 — A Voice for Each of Them: Survivor Voice Integration Plan** — **Package:** `C2[18]` / Plan 42 — Deterministic Survivor Voice, Delivery Contracts, and Social Speech |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) | 11,164,097 | **PLAN 46 — PLAYABLE METRICS INTEGRATION PLAN** — Deliver the measurement layer ASHFALL currently lacks, in three dependency-ordered deliveries, exactly as scoped by t... |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) | 5,540,901 | **Plan 42 — A Voice for Each of Them: Survivor Voice Integration Plan** — **Package:** `C2[18]` / Plan 42 — Deterministic Survivor Voice, Delivery Contracts, and Social Speech |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) | 5,560,226 | **PLAN 46 — PLAYABLE METRICS INTEGRATION PLAN** — Deliver the measurement layer ASHFALL currently lacks, in three dependency-ordered deliveries, exactly as scoped by t... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md`](plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md) | 10,769,998 | **PLAN 48 / C2[21] — Release Craft Closeout** — Plan 48 (C2[21]) — *Release Craft: Versioning, Changelog, and the Hotfix Path* — |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) | 11,206,849 | **PLAN 48 (C2[21]) — Release Craft: Versioning, Changelog & Hotfix Path — Integration Plan** — Make an ASHFALL release a **computed, gated, reproducible event** instead of a manual act of |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) | 11,232,473 | **Plan 53 / E1 — Ambition Governance & Expansion Intake: Integration Plan** — Convert ASHFALL's accumulated plan corpus — three numbering namespaces, no universal status markers, demonstrably sta... |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) | 5,585,636 | **PLAN 48 (C2[21]) — Release Craft: Versioning, Changelog & Hotfix Path — Integration Plan** — Make an ASHFALL release a **computed, gated, reproducible event** instead of a manual act of |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) | 5,622,183 | **Plan 53 / E1 — Ambition Governance & Expansion Intake: Integration Plan** — Convert ASHFALL's accumulated plan corpus — three numbering namespaces, no universal status markers, demonstrably sta... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md`](plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md) | 10,711,008 | **PLANS B66–B69 — HOST WIRING & CROSS-PLAN SCENARIOS CLOSEOUT** — **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship` |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B66_B69_RENUMBERING.md`](plans/PLAN_B66_B69_RENUMBERING.md) | 10,381,022 | **PLANS B66–B69 — FLAGSHIP WAVE (renumbered 2026-09-06)** — **Owner decision:** the flagship wave formerly proposed as "Plans 66–69" is |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B66_METALLURGY_CLOSEOUT.md`](plans/PLAN_B66_METALLURGY_CLOSEOUT.md) | 10,759,870 | **PLAN B66 CLOSEOUT — Subterranean Heavy Manufacturing & Metallurgical Smelting** — **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship` |
@@ -8446,7 +8442,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B75_BALLISTICS_WORKBENCH_CLOSEOUT.md`](plans/PLAN_B75_BALLISTICS_WORKBENCH_CLOSEOUT.md) | 10,996,773 | **Plan B75 — Ballistics workbench closeout** — Status: implemented in the current Godot host. |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B76_AEROPONICS_CLOSEOUT.md`](plans/PLAN_B76_AEROPONICS_CLOSEOUT.md) | 10,715,355 | **Plan B76 — Aeroponics closeout** — Status: implemented in the current Godot host. |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B77_PNEUMATIC_DISPATCH_CLOSEOUT.md`](plans/PLAN_B77_PNEUMATIC_DISPATCH_CLOSEOUT.md) | 10,609,774 | **Plan B77 — Pneumatic dispatch closeout** — Status: implemented in the current Godot host. |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md`](plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md) | 11,374,126 | **PLAN F21 — Discovery Selection-Context Extension (Season / Drought / Skill Weights)** — **Class:** P2 follow-up from the F17–F20 flagship integration (flagship plan §8.10, §9.10, §10.10 — all three documen... |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md`](plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md) | 207,315 | **PLAN F21 — Discovery Selection-Context Extension (Season / Drought / Skill Weights)** — **Class:** P2 follow-up from the F17–F20 flagship integration (flagship plan §8.10, §9.10, §10.10 — all three documen... |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_IV_LEDGER_DEBT_INTEGRATION_IMPLEMENTATION_LOG.md`](plans/PLAN_IV_LEDGER_DEBT_INTEGRATION_IMPLEMENTATION_LOG.md) | 10,641,106 | **Plan IV — Ledger Debt Consequences, Trade Credit & Headless Integration — Implementation Log** — **Plan:** ASHFALL Flagship Integration Plan IV (F1/F2/F3) |
 | 🟢 `CURRENT` | [`docs/plans/PLAYER_FACING_GAMEPLAY_LOOPS_MASTER_INTEGRATION_PLAN.md`](plans/PLAYER_FACING_GAMEPLAY_LOOPS_MASTER_INTEGRATION_PLAN.md) | 10,151,328 | **PLAYER-FACING GAMEPLAY LOOPS — MASTER INTEGRATION PLAN** — **Document type:** Implementation-ready master integration plan (planning artifact only) |
 | 🟢 `CURRENT` | [`docs/plans/PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md`](plans/PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md) | 10,196,409 | **PFGL-RT-COMBAT-TETRAD — Implementation Log** — **Package:** `PFGL-RT-COMBAT-TETRAD-2026-09-25` |
@@ -8454,13 +8450,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAYER_FACING_TRIAD_B_EXERCISE_DREAM_SANITATION_INTEGRATION_PLAN.md`](plans/PLAYER_FACING_TRIAD_B_EXERCISE_DREAM_SANITATION_INTEGRATION_PLAN.md) | 10,291,347 | **PLAYER-FACING TRIAD B — EXERCISE · DREAM · SANITATION — INTEGRATION PLAN** — **Package ID:** `PFGL-TRIAD-B-2026-09-25` |
 | 🟢 `CURRENT` | [`docs/plans/PRODUCTION_ISLANDS_WIRING_LOG.md`](plans/PRODUCTION_ISLANDS_WIRING_LOG.md) | 10,724,896 | **Production-island wiring log** — **Date:** 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md`](plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md) | 61,561 | **Recent Plan Integrations — Programmatic Audit** — **Generated:** 2026-09-26 |
-| 🟢 `CURRENT` | [`docs/plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md`](plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md) | 10,967,130 | **ASHFALL Release Stability Remediation Plan — 65 Bugs** — Make the Godot campaign **honest and safe**: |
+| 🟢 `CURRENT` | [`docs/plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md`](plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md) | 10,967,008 | **ASHFALL Release Stability Remediation Plan — 65 Bugs** — Make the Godot campaign **honest and safe**: |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_IMPLEMENTATION_LOG.md`](plans/SHELTER_EMP_MEDICAL_POWER_IMPLEMENTATION_LOG.md) | 10,880,390 | **SHELTER EMP & MEDICAL POWER — IMPLEMENTATION LOG** — Plan: `docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md` |
-| 🟢 `CURRENT` | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`](plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md) | 11,196,417 | **SHELTER EMP & MEDICAL POWER — INTEGRATION PLAN (G4–G5)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (G4/G5/G6 findings) |
+| 🟢 `CURRENT` | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`](plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md) | 5,423,855 | **SHELTER EMP & MEDICAL POWER — INTEGRATION PLAN (G4–G5)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (G4/G5/G6 findings) |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_IMPLEMENTATION_LOG.md`](plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_IMPLEMENTATION_LOG.md) | 10,289,342 | **SHELTER FAILURE EFFECTS & QUARANTINE WIRING — IMPLEMENTATION LOG** — Plan: `docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md` |
-| 🟢 `CURRENT` | [`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md`](plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md) | 10,176,463 | **SHELTER FAILURE EFFECTS & QUARANTINE WIRING — INTEGRATION PLAN (G6 + QUARANTINE CONSTRUCTION)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (G6); |
+| 🟢 `CURRENT` | [`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md`](plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md) | 5,215,595 | **SHELTER FAILURE EFFECTS & QUARANTINE WIRING — INTEGRATION PLAN (G6 + QUARANTINE CONSTRUCTION)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (G6); |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_IMPLEMENTATION_LOG.md`](plans/SHELTER_GRID_CATALOG_SEAL_IMPLEMENTATION_LOG.md) | 11,095,240 | **SHELTER GRID CATALOG SEAL — IMPLEMENTATION LOG** — Plan: `docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md` |
-| 🟢 `CURRENT` | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md`](plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md) | 11,086,388 | **SHELTER GRID CATALOG SEAL — INTEGRATION PLAN (G1–G3)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (2026-09-06) |
+| 🟢 `CURRENT` | [`docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md`](plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md) | 5,403,642 | **SHELTER GRID CATALOG SEAL — INTEGRATION PLAN (G1–G3)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (2026-09-06) |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md`](plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md) | 10,173,105 | **Shelter Operations Board Integration** — **Status:** IMPLEMENTED; documentation-index check blocked by concurrent documentation edits |
 | 🟢 `CURRENT` | [`docs/plans/TEN_CORE_ONLY_MEDICAL_RAIL_DEFENSE_TROPHY_INTEGRATION_CLOSEOUT_2026-09-24.md`](plans/TEN_CORE_ONLY_MEDICAL_RAIL_DEFENSE_TROPHY_INTEGRATION_CLOSEOUT_2026-09-24.md) | 10,437,200 | **Items 21–30 integration-plan closeout** — **Date:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/plans/TEN_ORPHAN_BRANCH_AND_WARD_INTEGRATION_PLANS_CLOSEOUT_2026-09-24.md`](plans/TEN_ORPHAN_BRANCH_AND_WARD_INTEGRATION_PLANS_CLOSEOUT_2026-09-24.md) | 10,406,596 | **Ten branch, transport, social, weather, labour, and Ward integration plans — documentation closeout** — **Date:** 2026-09-24 |
@@ -8477,10 +8473,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_PLAN165_166_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN165_166_INTEGRATION_PLAN.md) | 10,143,639 | **UNBLOCK — Plans 165 & 166: Modding Support + Shelter Identity** — **Status:** DONE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md) | 10,149,305 | **UNBLOCK — Plans 167 & 169: Underground Tunnel Network + Audio Accessibility** — **Status:** DONE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_PLAN171_174_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN171_174_INTEGRATION_PLAN.md) | 10,145,202 | **UNBLOCK — Plans 171 & 174: Dynamic Quest Generation + Mechanical Origin Seam** — **Status:** DONE 2026-09-24 (integrator, user-authorized). |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md) | 11,393,570 | **UNBLOCK — Plan 181: Difficulty Settings System Host Integration** — **Status:** HOST INTEGRATION COMPLETE 2026-09-24 (integrator, user-authorized). |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md) | 105,003 | **UNBLOCK — Plan 181: Difficulty Settings System Host Integration** — **Status:** HOST INTEGRATION COMPLETE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN143_AFFLICTION_BRIDGE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN143_AFFLICTION_BRIDGE_INTEGRATION_PLAN.md) | 10,175,073 | **UNBLOCK — Plan 143: Medical Afflictions → Quest & Work Bridge** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md) | 10,195,310 | **UNBLOCK — Plan 162: ShelterArchiveSystem / Shelter History & Archive** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md) | 11,349,131 | **UNBLOCK — Plan 177: DreamSystem / Dream & Sleep Event System** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md) | 533,012 | **UNBLOCK — Plan 177: DreamSystem / Dream & Sleep Event System** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md) | 10,309,298 | **UNBLOCK — Plan 184: AccessibilitySettingsSystem / Accessibility Options System** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md) | 11,347,994 | **UNBLOCK — Plan 185: MemoryDecaySystem / Memory & Knowledge Decay** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN200_PERSONAL_QUESTS_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN200_PERSONAL_QUESTS_INTEGRATION_PLAN.md) | 10,200,970 | **UNBLOCK — Plan 200: PersonalQuestSystem / Survivor Personal Quests & Character Arcs** — **Status:** SEALED — user-authorized full host integration completed |
