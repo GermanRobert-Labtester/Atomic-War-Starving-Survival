@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 313,
-  "headless_test_count": 311,
+  "total_tests": 312,
+  "headless_test_count": 310,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -2778,19 +2778,6 @@
       "description": "World evolution: authored day-threshold and flag-gated world-state events, exactly-once triggering, and exact captured-state restore",
       "headless_compatible": true,
       "expected_summary_id": "world_evolution_selftest",
-      "timeout_seconds": 30
-    },
-    {
-      "test_id": "dynamic_questlines_selftest",
-      "action": "DynamicQuestlinesSelfTest",
-      "category": "Quests",
-      "primary_flag": "--dynamic-questlines-selftest",
-      "aliases": [
-        "--emergency-quests-selftest"
-      ],
-      "description": "Dynamic questlines: exactly-once incident triggering, labour progress, stage advance, and deadline failure with save round-trip",
-      "headless_compatible": true,
-      "expected_summary_id": "dynamic_questlines_selftest",
       "timeout_seconds": 30
     },
     {

@@ -304,6 +304,19 @@ namespace AtomicWar.GodotApp
             if (_survivors == null) return;
             if (CaptureSection("survivors", SurvivorsSaveStore.TryCapturePersisted(_survivors.CaptureSave())))
                 GD.Print("[Ashfall Godot] Survivors save written.");
+
+            // Dual-run parity gate over the needs migration boundary. Reported
+            // once per save; never reconciled by guessing which side is right.
+            try
+            {
+                var parity = _survivors.BuildNeedsParityReport();
+                if (!parity.IsMatch)
+                    GD.PrintErr($"[Survivors] needs parity mismatch: {parity.Describe()}");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[Survivors] needs parity check failed: {ex.Message}");
+            }
         }
 
         private void CloseSurvivorsOverlay()

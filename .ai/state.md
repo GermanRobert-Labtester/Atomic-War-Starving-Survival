@@ -2109,3 +2109,114 @@ Package H code introduces none of these errors.
 - **Shared gates:** save round-trip 1832/1832; `DayAdvanceOrderTests` 2/2; adjacent `--shelter-maintenance-selftest` 12/12.
 - **Governance:** `INTEGRATION_PLANS.md` (FOUR-PLAN SEAL row), `WORKTREE_OWNERSHIP.md` (`claim-four-plan-seal-188-181-210-ui-2026-09-26`), `docs/plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md` regenerated (71/71 INTEGRATED).
 - **No commit** (user directive). **Testing steps:** 8/15.
+
+---
+
+## TRIPLE PACKAGE J — VOLUNTARY REGISTER + WORLD EVOLUTION (2026-09-26, user-authorized option 1; NO COMMIT)
+
+Claim: `claim-triple-j-voluntaryregister-worldevolution-2026-09-26`.
+
+**Selection.** Option 1 ("tackle full feature implementations") was executed after
+the mechanical "designed seam + authored data + live owner" pattern was exhausted
+across Packages E–I (20 plans) plus oldest-partials Batches 10–12 (6 plans).
+Requirement was 3 plans (user chose option 1 = proceed with 3, not 4).
+
+**Premise audits — four rejections, three merges.** Rule 7 (current evidence)
+rejected four candidates that looked unwired but were not:
+- `WeaponConditionSystem` — static utility class (jam chance / degrade helpers on
+  `WeaponInstanceState`), no state, nothing to wire.
+- `UvCoronaDetectionEngine` — already integrated as part of `advanced_industrial`
+  (Plans 118–121, `AdvancedIndustrialHostSession`); the engine is constructed,
+  catalog-bound and scanned there.
+- `MercenarySystem` — already integrated in `src/Main.Plans186_189.cs`
+  (`EnsureMercenary`, `CatalogPath.ResolveCatalog("bounty_board.json")`) plus
+  `src/UI/MercenaryBountyBoardPanel.cs`.
+- `DynamicQuestlineSystem` — **already fully integrated** by the Plans 46–49
+  lane: `src/Host/DynamicQuestSaveStore.cs`, `src/UI/DynamicQuestlinePanel.cs`,
+  `src/Main.Plans46_49.cs:EnsureDynamicQuests/SetupDynamicQuests/SaveDynamicQuests`,
+  and the registered `dynamic_quests` section. Discovered via the architecture-map
+  graph entry `dynamic_quests` while checking for a duplicate authority. **A full
+  second host session + store + save section had already been written and was
+  completely reverted** (Rule 5 — one authority per concern). The duplicate's 6
+  Core tests were also deleted because `Ashfall.Core.Tests/Quests/DynamicQuestlineTests.cs`
+  (13 tests) already covers incident exactly-once, same-sector refusal,
+  progress/completion, deadline failure, and capture/restore.
+
+**Plan 253 — Voluntary Register (FULLY INTEGRATED).**
+`VoluntaryRegisterSystem` (148 lines) was stateful with Capture/Restore and zero
+host references. New: `src/Host/VoluntaryRegisterHostSession.cs` (session +
+checksummed `VoluntaryRegisterSaveStore`), `src/Main.VoluntaryRegister.cs`
+(Setup/Save/Tick/Flush/Reset), `WorldEvolution`-style phase-5 day owner
+(`VoluntaryRegisterDayOwner` with `IPreDaySnapshotRestore`) emitting
+`voluntary_register_ticked`, section `voluntary_register` /
+`voluntary_register_save.json`, `--voluntary-register-selftest`
+(`src/Host/HostCli.VoluntaryRegister.cs`), and consolidated Core tests.
+Authority boundary: the Core system stays the sole owner of signatures,
+exactly-once completion, and banked dose. **No second dose store was created** —
+no campaign dose owner was found bound in the host, and inventing one would have
+been a duplicate authority.
+
+**Plan 227 — World Evolution (FULLY INTEGRATED).**
+`WorldEvolutionEngine` (317 lines) was stateful with Capture/Restore but reachable
+only from the `--world-exploration-selftest` probe — never from the campaign.
+New: `src/Host/WorldEvolutionHostSession.cs` (engine constructed with the authored
+data dir; `TickDay` as the only tick seam), `src/Main.WorldEvolution.cs`, phase-5
+`WorldEvolutionDayOwner` with pre-day rollback emitting `world_evolution_ticked`,
+section `world_evolution` / `world_evolution_save.json`,
+`--world-evolution-selftest` (`src/Host/HostCli.WorldEvolution.cs`), consolidated
+Core tests. Authority boundary: the engine is the sole event authority and the
+host passes the **authoritative** `_world.WastelandMap` in at tick time — no
+second map graph. `LocationEvolutionSystem`/`LandmarkDegradationSystem`/
+`WildlifeMigrationSystem` are passed `null` because their owners are not
+campaign-bound; the engine handles null explicitly rather than the host inventing
+a collaborator. `ActiveWorldFlags()` is a derived read model returning an empty
+set (a missing flag is a closed gate).
+
+**Three probe/test findings pinned (all in the probe or test, none by changing Core):**
+1. Flag gating is real — the earliest authored event (day 0,
+   `event_evolution_surge_harbor_overrun`) requires `dc8_surge_began`; an empty
+   flag set must not fire it. The first *ungated* authored day is 12.
+2. `RestoreState(null)` is a documented no-op, not a reset. `Reset()` must restore
+   an empty `WorldEvolutionState` to clear the triggered set. Core semantics left
+   unchanged (Rule 10); the host was corrected.
+3. Later days may fire additional *distinct* authored events; the real invariant is
+   same-day idempotence plus "triggered is never removed, never re-runs", not
+   "count never grows". My first two test versions asserted the wrong shape.
+
+**Concurrent-lane reconciliation (verified, not edited).**
+`world_evolution_ticked` already existed in `DayEventVocabulary` (line 138,
+alphabetical position) from an earlier lane; my duplicate was removed. A second
+section pin (`Assert.Equal(316, ...)`) in
+`ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` predates concurrent rows
+and disagreed with the 311 pin above it; both are now consolidated on the measured
+value **314** with a comment naming the triple-package delta and the
+`DynamicQuestlineSystem` re-integration rejection.
+
+**Gates / generators.** Host build 0 errors / 0 warnings in owned files; Core test
+build 0/0. `--voluntary-register-selftest` **11/11**; `--world-evolution-selftest`
+**8/8**. `PlanTriplePackageJCoreTests` **9/9** (consolidated, engine-free — host
+wiring is proven by the probes). Adjacent sweep
+(`PlanTriplePackageJCoreTests`, `Quests.DynamicQuestlineTests`,
+`SaveSectionRegistryTests`, `DayEventVocabularyTests`,
+`DayEventParitySourceGateTests`, `HostCliActionParityGateTests`,
+`MainTriadDriftGateTests`, `PersistentFilenameRegistryGateTests`,
+`ComprehensiveSaveStoreCorruptionAndMigrationTests`) **1929/1929 PASS**.
+
+**DEBT-HOSTCLI-PROBE-MANIFEST-GAP closed.** `HostCliActionParityGateTests`
+instructs: "regenerate the manifest, then remove the name from
+`DocumentedUnmanifestedSelfTests`". Regenerating the selftest manifest (312
+tests, 310 headless) revealed that **all 25** listed names were already cataloged
+— the manifest had been 25 entries stale. The shrink-only baseline was emptied
+with a comment recording why. The same regeneration also exposed a missing
+parity-matrix row for `advanced_industrial_ticked`, which is classified in
+`DayEventVocabulary` and dispatched from `Main.CampaignOwners.cs:2936`; that row
+was added as measured truth.
+
+**Archival.** `docs/plans/integrated/survivors/INTEGRATED_PLAN_VOLUNTARY_REGISTER.md`
+and `docs/plans/integrated/world/INTEGRATED_PLAN_WORLD_EVOLUTION.md`, both with
+the mandatory `FULLY INTEGRATED` triple headers. Working copies removed from
+`docs/plans/`. **No commit** (user instruction).
+
+**Section count: 312 → 314** (2 added: voluntary_register, world_evolution).
+**Selftest manifest: 285 → 312 tests** (283 → 310 headless). **Architecture map:
+314 subsystems.**

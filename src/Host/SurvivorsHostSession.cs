@@ -595,6 +595,29 @@ namespace AtomicWar.GodotApp
 
         // ── Save / Load ────────────────────────────────────────────────
 
+        /// <summary>
+        /// Dual-run parity report: compares the live
+        /// <see cref="NeedsSystem"/> roster against a typed
+        /// <see cref="NeedsComponentStore"/> mirrored from it, through the
+        /// authored comparator.
+        /// <para>Read-only. Neither side is ticked or mutated, so this is safe
+        /// to call at any save boundary. A mismatch means the typed migration
+        /// boundary disagrees with the runtime authority — reported, never
+        /// reconciled by guessing.</para>
+        /// </summary>
+        public Ashfall.Core.Survivors.NeedsParityReport BuildNeedsParityReport()
+        {
+            var typed = new Ashfall.Core.Survivors.NeedsComponentStore();
+            foreach (var state in Needs.Registered)
+            {
+                if (state == null) continue;
+                if (!Ashfall.Core.Survivors.SurvivorId.TryParse(state.Id, out var owner, out _))
+                    continue; // an unparseable legacy id is itself a parity finding
+                typed.TryUpsert(owner, state, out _);
+            }
+            return Ashfall.Core.Survivors.NeedsComponentParity.Compare(Needs, typed);
+        }
+
         public SurvivorsSaveState CaptureSave()
         {
             var save = new SurvivorsSaveState

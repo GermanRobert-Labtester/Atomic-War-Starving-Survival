@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5505 | **Total Characters:** 28,843,654,724 | **Last Verified:** 2026-09-27
-**Oversized (>= 100,000 characters):** 3588 documents carrying 28,816,806,852 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5509 | **Total Characters:** 28,843,408,704 | **Last Verified:** 2026-09-27
+**Oversized (>= 100,000 characters):** 3587 documents carrying 28,816,551,047 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5455 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5459 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 48 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3588 documents, 28,816,806,852 characters
+## Oversized Document Register (>= 100,000 characters) — 3587 documents, 28,816,551,047 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -3392,7 +3392,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 255,931 | [`docs/expeditions/EXPEDITION_SCHEMA_CONTRACT.md`](expeditions/EXPEDITION_SCHEMA_CONTRACT.md) |
 | 255,903 | [`docs/radio/RADIO_RECORDING_CONTRACT.md`](radio/RADIO_RECORDING_CONTRACT.md) |
 | 255,822 | [`docs/economy/DEBT_SAVE_CONTRACT.md`](economy/DEBT_SAVE_CONTRACT.md) |
-| 255,805 | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md`](plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md) |
 | 255,602 | [`piagentsplans/116-deep-lore-locations-expansion.md`](../piagentsplans/116-deep-lore-locations-expansion.md) |
 | 255,519 | [`docs/plans/integrated/shelter/INTEGRATED_PLAN_201_SHELTER_SANITATION_WASTE_MANAGEMENT_SYSTEM.md`](plans/integrated/shelter/INTEGRATED_PLAN_201_SHELTER_SANITATION_WASTE_MANAGEMENT_SYSTEM.md) |
 | 255,352 | [`docs/radio/RADIO_CONTENT_UTILIZATION.md`](radio/RADIO_CONTENT_UTILIZATION.md) |
@@ -3932,7 +3931,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/verdict/VERDICT_SAVE_CONTRACT.md`](verdict/VERDICT_SAVE_CONTRACT.md) | 1,392 | **Verdict Save Contract & Migration Policy** — The Verdict save section persists player investigation progress using the following canonical structure: |
 | 🟢 `CURRENT` | [`docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md`](world/DYNAMIC_WORLD_SAVE_CONTRACT.md) | 281,648 | **Dynamic World Save Contract & Migration Integrity Specification — Weather Intelligence, Orbital Telemetry, Sky Armor & Ecological Dayowner** — **Document Reference:** `docs/world/DYNAMIC_WORLD_SAVE_CONTRACT.md` |
 | 🟢 `CURRENT` | [`docs/year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md`](year_of_ash/YEAR_OF_ASH_SAVE_CONTRACT.md) | 292,496 | **Year of Ash Save Contract** — No new save schema was introduced. `YearOfAshSave` remains version 5 and persists the existing |
-| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 73,180 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-27<br> |
+| 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 73,020 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-27<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | 3,141,365 | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
 ## 4. Expansions (01–10 Master Plans & Context) (2774 documents)
@@ -6932,7 +6931,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2399 documents)
+## 9. General Project Guides & Archive Reference (2403 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -8530,6 +8529,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/integrated/combat/INTEGRATED_PLAN_CHEMICAL-RECON-TRUTH-183.md`](plans/integrated/combat/INTEGRATED_PLAN_CHEMICAL-RECON-TRUTH-183.md) | 10,934,541 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Wave 14 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/integrated/combat/INTEGRATED_PLAN_COMBAT_DOCTRINE_CAPABILITY.md`](plans/integrated/combat/INTEGRATED_PLAN_COMBAT_DOCTRINE_CAPABILITY.md) | 5,382 | **PLAN-COMBAT-DOCTRINE-CAPABILITY — Researched Doctrine → Combat Capability Host Binding** — * Researched knowledge now drives the live combat engine: `RecomputeCombatDoctrine()` (called from `SetupExpeditions`... |
 | 🟢 `CURRENT` | [`docs/plans/integrated/communication/INTEGRATED_PLAN_RUMOR-PROPAGATION-TRUTH-120.md`](plans/integrated/communication/INTEGRATED_PLAN_RUMOR-PROPAGATION-TRUTH-120.md) | 10,733,432 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Wave 10 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
+| 🟢 `CURRENT` | [`docs/plans/integrated/crafting/INTEGRATED_TRAP_RECIPE_INTEGRITY_AUTHORITY.md`](plans/integrated/crafting/INTEGRATED_TRAP_RECIPE_INTEGRITY_AUTHORITY.md) | 1,292 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `TrapRecipeIntegrity.Validate(recipes, trapCatalog)` is the authored gate that |
+| 🟢 `CURRENT` | [`docs/plans/integrated/crossing/INTEGRATED_CROSSING_THIRDONARY_INTEGRATION_AUTHORITY.md`](plans/integrated/crossing/INTEGRATED_CROSSING_THIRDONARY_INTEGRATION_AUTHORITY.md) | 1,363 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `CrossingThirdonaryIntegration` composes the live `CrossingArbitrationSystem` |
 | 🟢 `CURRENT` | [`docs/plans/integrated/culture/INTEGRATED_PLAN_CASSETTE_PLAYBACK_SETS.md`](plans/integrated/culture/INTEGRATED_PLAN_CASSETTE_PLAYBACK_SETS.md) | 5,792 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — Bind `Assets/Ashfall.Core/Audio/CassettePlaybackSystem.cs` and the orphaned |
 | 🟢 `CURRENT` | [`docs/plans/integrated/economy/INTEGRATED_EN03_UNDERGROUND_ECONOMY_HOST_INTEGRATION.md`](plans/integrated/economy/INTEGRATED_EN03_UNDERGROUND_ECONOMY_HOST_INTEGRATION.md) | 1,551 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **STATUS: APPROVED BY USER** (user authorized all previously-gated integrations, 2026-09-26) |
 | 🟢 `CURRENT` | [`docs/plans/integrated/economy/INTEGRATED_F13C_RESTOCK_ALLOCATION_HOST_INTEGRATION.md`](plans/integrated/economy/INTEGRATED_F13C_RESTOCK_ALLOCATION_HOST_INTEGRATION.md) | 2,625 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **STATUS: APPROVED BY USER** (user authorized XP-04/F13, 2026-09-26) |
@@ -8539,6 +8540,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/integrated/economy/INTEGRATED_PLAN_ECONOMY-DATA-FAMILY-TRUTH-270.md`](plans/integrated/economy/INTEGRATED_PLAN_ECONOMY-DATA-FAMILY-TRUTH-270.md) | 11,083,837 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Wave 19 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/integrated/economy/INTEGRATED_PLAN_ECONOMY-LEDGER-TRUTH-96.md`](plans/integrated/economy/INTEGRATED_PLAN_ECONOMY-LEDGER-TRUTH-96.md) | 10,929,281 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Wave 8 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
 | 🟢 `CURRENT` | [`docs/plans/integrated/economy/INTEGRATED_PLAN_TRADE-TELL-TRUTH-248.md`](plans/integrated/economy/INTEGRATED_PLAN_TRADE-TELL-TRUTH-248.md) | 10,574,734 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Wave 18 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
+| 🟢 `CURRENT` | [`docs/plans/integrated/economy/INTEGRATED_REGIONAL_TREATY_FEED_AUTHORITY.md`](plans/integrated/economy/INTEGRATED_REGIONAL_TREATY_FEED_AUTHORITY.md) | 1,632 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `RegionalTreatyFeed` is the single authored interpreter from the narrative |
 | 🟢 `CURRENT` | [`docs/plans/integrated/economy/INTEGRATED_UNDERGROUND_ECONOMY_PRESSURE_AUTHORITY.md`](plans/integrated/economy/INTEGRATED_UNDERGROUND_ECONOMY_PRESSURE_AUTHORITY.md) | 1,307 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `UndergroundEconomyPressure` (market temperature bands, price pressure, attention risk) was a |
 | 🟢 `CURRENT` | [`docs/plans/integrated/emergency/INTEGRATED_PLAN_194_EMERGENCY_ALERT.md`](plans/integrated/emergency/INTEGRATED_PLAN_194_EMERGENCY_ALERT.md) | 3,566 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Package:** `UNBLOCK-PLAN194-EMERGENCY-ALERT` |
 | 🟢 `CURRENT` | [`docs/plans/integrated/encounters/INTEGRATED_PLAN_KNOCK-WHITELIST-TRUTH-155.md`](plans/integrated/encounters/INTEGRATED_PLAN_KNOCK-WHITELIST-TRUTH-155.md) | 10,968,189 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Wave 12 · Kind:** GAP SEALING · **Status:** PROPOSED — foreman claim required. |
@@ -8577,9 +8579,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/integrated/shelter/INTEGRATED_PLAN_201_SHELTER_SANITATION_WASTE_MANAGEMENT_SYSTEM.md`](plans/integrated/shelter/INTEGRATED_PLAN_201_SHELTER_SANITATION_WASTE_MANAGEMENT_SYSTEM.md) | 255,519 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — Deepen real waste-state and cleaning feedback, validate a single downstream medical or room consequence from current ... |
 | 🟢 `CURRENT` | [`docs/plans/integrated/shelter/INTEGRATED_PLAN_214_VISITOR_INTEGRATION_HOUSING.md`](plans/integrated/shelter/INTEGRATED_PLAN_214_VISITOR_INTEGRATION_HOUSING.md) | 12,145 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — Create a visitor integration and housing system where admitted visitors (refugees, traders, defectors, guests) are pr... |
 | 🟢 `CURRENT` | [`docs/plans/integrated/shelter/INTEGRATED_PLAN_THERMAL_STORM_SEAL_INSULATION.md`](plans/integrated/shelter/INTEGRATED_PLAN_THERMAL_STORM_SEAL_INSULATION.md) | 4,478 | **PLAN-THERMAL-STORM-SEAL-INSULATION — Authored Insulation Catalog Reaches the Live Thermal Owner** — Authored `shelter_insulation_catalog.json` (5 tiers) now reaches `ShelterThermalSystem` through its own `LoadInsulati... |
+| 🟢 `CURRENT` | [`docs/plans/integrated/survivors/INTEGRATED_NEEDS_COMPONENT_PARITY_AUTHORITY.md`](plans/integrated/survivors/INTEGRATED_NEEDS_COMPONENT_PARITY_AUTHORITY.md) | 1,429 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `NeedsComponentParity.Compare(NeedsSystem, NeedsComponentStore)` is the authored |
 | 🟢 `CURRENT` | [`docs/plans/integrated/survivors/INTEGRATED_PLANS_142_145_GARMENT_LAYERING_AUTHORITY.md`](plans/integrated/survivors/INTEGRATED_PLANS_142_145_GARMENT_LAYERING_AUTHORITY.md) | 11,086,287 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `GarmentLayeringThermalEngine` was unit-tested but had **no production consumer**; |
 | 🟢 `CURRENT` | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_151_WORKING_ANIMALS.md`](plans/integrated/survivors/INTEGRATED_PLAN_151_WORKING_ANIMALS.md) | 10,199,093 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Execution Date:** 2026-09-24 |
-| 🟢 `CURRENT` | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md`](plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md) | 255,805 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **Verified boundary:** DEC-185 is signed. `SurvivorRoleSystem`, `survivor_roles.json`, its capture/restore contract, ... |
+| 🟢 `CURRENT` | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md`](plans/integrated/survivors/INTEGRATED_PLAN_195_SURVIVOR_SPECIALIZATION_ROLES.md) | 4,229 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **STATUS: APPROVED BY USER** |
 | 🟢 `CURRENT` | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_210_PERSONAL_BELONGINGS.md`](plans/integrated/survivors/INTEGRATED_PLAN_210_PERSONAL_BELONGINGS.md) | 2,452 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — *(Archived planning artifact. The full historical plan body is preserved in |
 | 🟢 `CURRENT` | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_217_SURVIVOR_GENEALOGY_FAMILY_TREE.md`](plans/integrated/survivors/INTEGRATED_PLAN_217_SURVIVOR_GENEALOGY_FAMILY_TREE.md) | 254,663 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — **VERIFIED Core:** `Assets/Ashfall.Core/GenerationalLineageExtension.cs; Assets/Ashfall.Core/Survivors/GenealogyBridg... |
 | 🟢 `CURRENT` | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_GENEALOGY_FAMILY_NAMES.md`](plans/integrated/survivors/INTEGRATED_PLAN_GENEALOGY_FAMILY_NAMES.md) | 4,121 | **PLAN-GENEALOGY-FAMILY-NAMES — Authored Family-Name Catalog Reaches the Live Lineage Owner** — Authored `family_name_templates.json` now binds to the live lineage owner (`GenealogyHostSession.Lineage`) inside `Se... |

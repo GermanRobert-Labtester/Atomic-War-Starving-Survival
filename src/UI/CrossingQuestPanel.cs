@@ -292,6 +292,35 @@ namespace AtomicWar.GodotApp.UI
 
                 _completedQuestsContainer.AddChild(compCard);
             }
+
+            // ── Covenant & dispute eligibility ──────────────────────
+            // Projected by the authored arbitrator/quest composition over the
+            // two live systems. Read-only: neither system is mutated here.
+            var thirdonary = new Ashfall.Core.Crossing.CrossingThirdonaryIntegration(
+                _expansions.Arbitration, _expansions.CrossingQuests);
+            foreach (var covenantId in Ashfall.Core.Crossing.CrossingThirdonaryIntegration.RecognizedCovenantIds)
+            {
+                var eligibility = thirdonary.GetCovenantEligibility(covenantId, _currentDay);
+                _completedQuestsContainer.AddChild(AshfallUiHelpers.MakeDataRow(
+                    $"◈ {eligibility.CovenantId}",
+                    $"{eligibility.Status} — {eligibility.Reason}",
+                    AshfallUiHelpers.ToColor(eligibility.Status == Ashfall.Core.Crossing.CovenantStatus.Eligible
+                        || eligibility.Status == Ashfall.Core.Crossing.CovenantStatus.Active
+                        ? CoreTheme.Success
+                        : CoreTheme.Muted)));
+            }
+
+            foreach (var disputeId in Ashfall.Core.Crossing.CrossingThirdonaryIntegration.RecognizedDisputeIds)
+            {
+                var eligibility = thirdonary.GetDisputeEligibility(disputeId, _currentDay);
+                _completedQuestsContainer.AddChild(AshfallUiHelpers.MakeDataRow(
+                    $"⚖ {eligibility.DisputeId}",
+                    $"{eligibility.Status} — {eligibility.Reason}",
+                    AshfallUiHelpers.ToColor(eligibility.Status == Ashfall.Core.Crossing.DisputeStatus.Eligible
+                        || eligibility.Status == Ashfall.Core.Crossing.DisputeStatus.Active
+                        ? CoreTheme.Success
+                        : CoreTheme.Muted)));
+            }
         }
 
         // ── Active Quest Card ─────────────────────────────────────────

@@ -75,38 +75,97 @@ namespace AtomicWar.GodotApp
                 CaptureSection("survivor_relations", SurvivorRelationsSaveStore.TryCapturePersisted(_survivorRelations.System.CaptureState()));
         }
 
+        /// <summary>
+        /// Authored trap-recipe integrity gate. Cross-checks the crafting recipe
+        /// catalog against the trap definition catalog: a `craft_trap_*` recipe
+        /// whose result item has no trap definition would craft a trap that can
+        /// never be deployed. Findings are reported once through the log. Pure
+        /// validation — neither catalog is mutated and no gameplay authority is
+        /// duplicated.
+        /// </summary>
+        private void ValidateTrapRecipeChain(WildlifeTrappingCatalog? trapCatalog)
+        {
+            if (_crafting?.Recipes == null || _crafting.Recipes.Count == 0) return;
+            try
+            {
+                List<string> errors = Ashfall.Core.Crafting.TrapRecipeIntegrity.Validate(
+                    _crafting.Recipes,
+                    trapCatalog?.Traps);
+                foreach (string error in errors)
+                    GD.PrintErr($"[Trapping] trap recipe integrity: {error}");
+                if (errors.Count == 0)
+                    GD.Print($"[Trapping] trap recipe chain intact ({_crafting.Recipes.Count} recipes checked).");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[Trapping] trap recipe integrity check failed: {ex.Message}");
+            }
+        }
+
         private void SetupRegionalTreaty()
         {
             if (_regionalTreaty != null) return;
             var rtState = RegionalTreatySaveStore.TryLoad() ?? new RegionalTreatyState();
             var rtSys = new RegionalTreatySystem(new GodotLog());
             rtSys.RestoreState(rtState);
-            // Mechanical treaty catalog only. Narrative protocols and foundry
-            // accords are different schemas and must not be fed into this system.
+            // Mechanical treaty catalog (regional_treaties.json) AND the
+            // narrative treaty corpus (foundry_accords.json +
+            // narrative/regional_treaty_protocols.json). The narrative files use
+            // the RegionalTreatyEntry schema, which RegionalTreatyFeed.Map is the
+            // single authored interpreter for — it is fed in here, not spliced in
+            // by callers. Everything lands as TreatyDefinition on the same system.
             if (!string.IsNullOrEmpty(_dataDir))
             {
                 var fileIO = CatalogPath.CreateFileIOForDataDir(_dataDir);
                 var json = new SystemTextJsonSerializer();
-                rtSys.LoadCatalog(RegionalTreatyCatalogLoader.Load(_dataDir, fileIO, json));
+                var definitions = RegionalTreatyCatalogLoader.Load(_dataDir, fileIO, json);
+                definitions ??= new List<TreatyDefinition>();
+                definitions.AddRange(LoadNarrativeTreatyDefinitions(fileIO, json));
+                rtSys.LoadCatalog(definitions);
             }
             _regionalTreaty = new RegionalTreatyHostSession(rtSys);
-
-            // Plan VIII · Task 21 — typed treaty transitions become world
-            // consequences through the canonical consumers: faction-war standing
-            // (escalation spine, 21.10) and the radio broadcast wire (21.6).
-            // RestoreState never emits transitions, so neither consumer can
-            // double-apply across a save/load.
-            rtSys.OnTreatyTransition += transition =>
-                OnTreatyTransitionWorldConsequences(rtSys, transition);
-
-            if (_regionalTreatyPanel != null && _regionalTreatyPanel.IsInsideTree())
-                RemoveChild(_regionalTreatyPanel);
-            _regionalTreatyPanel = new RegionalTreatyPanel();
-            _regionalTreatyPanel.Bind(_regionalTreaty);
-            _regionalTreatyPanel.Visible = false;
-            AddChild(_regionalTreatyPanel);
         }
 
+        /// <summary>
+        /// Narrative treaty protocols and foundry accords (RegionalTreatyEntry
+        /// schema) mapped into the treaty system's own TreatyDefinition through
+        /// the single authored interpreter, <see cref="RegionalTreatyFeed"/>.
+        /// Empty when neither authored file is present — an absent corpus is not
+        /// an error.
+        /// </summary>
+        private static List<TreatyDefinition> LoadNarrativeTreatyDefinitions(IFileIO files, IJsonSerializer json)
+        {
+            var definitions = new List<TreatyDefinition>();
+            foreach (var relative in NarrativeTreatyFiles)
+            {
+                try
+                {
+                    if (!files.FileExists(relative)) continue;
+                    var catalog = new Ashfall.Core.Narrative.RegionalTreatyCatalog();
+                    catalog.Load(files.ReadAllText(relative), json);
+                    if (catalog.AllTreaties.Count > 0)
+                        definitions.AddRange(Ashfall.Core.RegionalTreatyFeed.Map(catalog.AllTreaties));
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[Treaty] narrative treaty corpus unreadable ({relative}): {ex.Message}");
+                }
+            }
+            return definitions;
+        }
+
+        /// <summary>Narrative treaty corpora interpreted by RegionalTreatyFeed.</summary>
+        private static readonly string[] NarrativeTreatyFiles =
+        {
+            "foundry_accords.json",
+            "narrative/regional_treaty_protocols.json",
+        };
+
+        /// <summary>Plan VIII · Task 21 — typed treaty transitions become world
+        /// consequences through the canonical consumers: faction-war standing
+        /// (escalation spine, 21.10) and the radio broadcast wire (21.6).
+        /// RestoreState never emits transitions, so neither consumer can
+        /// double-apply across a save/load.</summary>
         private void OnTreatyTransitionWorldConsequences(RegionalTreatySystem treatySystem, TreatyTransition transition)
         {
             if (transition.IsBreach && !string.IsNullOrEmpty(transition.FactionId))
@@ -220,6 +279,13 @@ namespace AtomicWar.GodotApp
                 if (trapCatalog != null) trapCatalog.RegisterWith(wtrapSys);
             }
             wtrapSys.RestoreState(wtrapState);
+
+            // Authored trap-recipe integrity gate: every craft_trap_* recipe
+            // must resolve to a trap definition or the crafted trap could never
+            // be deployed. Reported here, once, at composition time. The trap
+            // catalog keeps ownership of definitions; the recipe catalog keeps
+            // ownership of recipes — this only cross-checks them.
+            ValidateTrapRecipeChain(trapCatalog);
             // C2 / Plan 20C (§40) — trap penalties from the ONE weather-effects
             // table (penalty = 1 − trap_yield_multiplier); unbound → the legacy
             // hardcoded curve byte-identical.

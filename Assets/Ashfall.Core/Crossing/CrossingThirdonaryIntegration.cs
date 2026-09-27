@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 
+
 namespace Ashfall.Core.Crossing
 {
     public enum CovenantStatus
@@ -49,12 +50,35 @@ namespace Ashfall.Core.Crossing
             "covenant_water_charter"
         };
 
+        /// <summary>
+        /// Covenant ids the Crossing charter recognizes, in canonical ordinal
+        /// order so hosts and panels enumerate deterministically. Read-only.
+        /// </summary>
+        public static IReadOnlyList<string> RecognizedCovenantIds => SortedCovenantIds;
+
+        private static readonly List<string> SortedCovenantIds = BuildSorted(RecognizedCovenants);
+
         private static readonly HashSet<string> RecognizedDisputes = new(StringComparer.Ordinal)
         {
             "dispute_registry_claim",
             "dispute_ferry_passage",
             "dispute_scrapline_border"
         };
+
+        /// <summary>
+        /// Dispute ids the Crossing charter recognizes, in canonical ordinal
+        /// order so hosts and panels enumerate deterministically. Read-only.
+        /// </summary>
+        public static IReadOnlyList<string> RecognizedDisputeIds => SortedDisputeIds;
+
+        private static readonly List<string> SortedDisputeIds = BuildSorted(RecognizedDisputes);
+
+        private static List<string> BuildSorted(HashSet<string> ids)
+        {
+            var list = new List<string>(ids);
+            list.Sort(StringComparer.Ordinal);
+            return list;
+        }
 
         private readonly CrossingArbitrationSystem _arbitration;
         private readonly CrossingQuestSystem _quests;
