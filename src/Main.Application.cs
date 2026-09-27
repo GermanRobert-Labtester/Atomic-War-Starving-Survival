@@ -961,6 +961,12 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.RationConflictSelfTest:
                     GetTree().Quit(HostCliRationConflict.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.VoluntaryRegisterSelfTest:
+                    GetTree().Quit(HostCliVoluntaryRegister.RunSelfTest());
+                    return;
+                case HostCliAction.WorldEvolutionSelfTest:
+                    GetTree().Quit(HostCliWorldEvolution.RunSelfTest());
+                    return;
                 case HostCliAction.CassettePlaybackSelfTest:
                     GetTree().Quit(HostCliCassettePlayback.RunSelfTest(_dataDir));
                     return;

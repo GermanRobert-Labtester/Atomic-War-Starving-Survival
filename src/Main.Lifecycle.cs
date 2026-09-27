@@ -519,6 +519,7 @@ namespace AtomicWar.GodotApp
             _collectibleDiscovery = null;
             _uniqueClaims = null;
             _collectibleDispatcher = null;
+            _collectibleTutorials = null;
             _collectibleInventoryWired = false;
             _collectiblesDirty = false;
 
@@ -592,6 +593,8 @@ namespace AtomicWar.GodotApp
             ResetWarlordResponse();
             ResetPatrolRadioHooks();
             ResetRationConflict();
+            ResetVoluntaryRegister();
+            ResetWorldEvolution();
             ResetCassettePlayback();
             ResetShelterGovernance();
             ResetAging();

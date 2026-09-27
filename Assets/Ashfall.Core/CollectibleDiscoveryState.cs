@@ -53,6 +53,14 @@ namespace Ashfall.Core
 
         /// <summary>Origin location IDs where collectibles were discovered.</summary>
         public CollectibleDiscoveryLocationEntry[] discovery_locations = Array.Empty<CollectibleDiscoveryLocationEntry>();
+
+        /// <summary>
+        /// Optional first-time tutorial progress (collectible introductions).
+        /// Absent in saves written before this field existed; a missing value
+        /// restores as "nothing seen, nothing queued", which is the correct
+        /// truthful answer for historical discoveries.
+        /// </summary>
+        public CollectibleTutorialSave? tutorials = null;
     }
 
     /// <summary>

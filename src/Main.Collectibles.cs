@@ -15,6 +15,7 @@ namespace AtomicWar.GodotApp
         private CollectibleDiscoveryState? _collectibleDiscovery;
         private UniqueItemClaimRegistry? _uniqueClaims;
         private CollectibleEffectDispatcher? _collectibleDispatcher;
+        private CollectibleTutorialTracker? _collectibleTutorials;
         private bool _collectiblesDirty;
         private bool _collectibleInventoryWired;
 
@@ -34,6 +35,12 @@ namespace AtomicWar.GodotApp
         /// Production collectible effect feeder (audit #27). Null until setup.
         /// </summary>
         public CollectibleEffectDispatcher? CollectibleDispatcher => _collectibleDispatcher;
+
+        /// <summary>
+        /// First-time collectible tutorial progress. Seeded only by live dispatch
+        /// results, never by historical discovery state.
+        /// </summary>
+        public CollectibleTutorialTracker? CollectibleTutorials => _collectibleTutorials;
 
         private void SetupCollectibles()
         {
@@ -56,11 +63,16 @@ namespace AtomicWar.GodotApp
             }
 
             _collectibleDiscovery ??= new CollectibleDiscoveryState();
+            _collectibleTutorials ??= new CollectibleTutorialTracker();
             _uniqueClaims ??= new UniqueItemClaimRegistry(uniqueIds);
 
             var discoverySaved = CollectibleDiscoverySaveStore.TryLoad();
             if (discoverySaved != null)
                 _collectibleDiscovery.RestoreState(discoverySaved);
+
+            _collectibleTutorials = new CollectibleTutorialTracker();
+            if (discoverySaved?.tutorials != null)
+                _collectibleTutorials.RestoreState(discoverySaved.tutorials);
 
             var claimsSaved = UniqueClaimSaveStore.TryLoad();
             if (claimsSaved != null)
@@ -127,6 +139,10 @@ namespace AtomicWar.GodotApp
             var result = _collectibleDispatcher.DispatchOnAcquire(item.id);
             if (result.DiscoveryRegistered)
                 MarkCollectiblesDirty();
+
+            // First-time tutorial queue — driven by the live dispatch result, so
+            // an already-discovered (historical) item cannot re-trigger it.
+            _collectibleTutorials?.OnCollectibleDiscovered(result);
         }
 
         private void SaveCollectibles()
@@ -135,9 +151,13 @@ namespace AtomicWar.GodotApp
 
             if (_collectibleDiscovery != null)
             {
+                // Tutorial progress rides in the collectible-discovery section: it
+                // is a player-facing facet of discovery, not a separate store.
+                var discoveryState = _collectibleDiscovery.CaptureState();
+                discoveryState.tutorials = _collectibleTutorials?.CaptureState();
                 ok &= CaptureSection(
                     "collectible_discovery",
-                    CollectibleDiscoverySaveStore.TryCapturePersisted(_collectibleDiscovery.CaptureState()));
+                    CollectibleDiscoverySaveStore.TryCapturePersisted(discoveryState));
             }
 
             if (_uniqueClaims != null)

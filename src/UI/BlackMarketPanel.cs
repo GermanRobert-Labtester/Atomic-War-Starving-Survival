@@ -127,6 +127,16 @@ namespace AtomicWar.GodotApp.UI
                 _stockRows.AddChild(AshfallUiHelpers.MakeSectionHeader(
                     $"{contactId} · TRUST {ledger.trust:0}/100 · HEAT {ledger.heat:0}/100 · TIER {ledger.accessTier}"));
 
+                // Market conditions for this counter, projected from the same
+                // live ledger — no second pressure/pricing store.
+                var pressure = _host.GetMarketPressure(contactId);
+                if (pressure != null)
+                {
+                    _stockRows.AddChild(AshfallUiHelpers.MakeMono(
+                        $"market: {pressure.Band.ToString().ToUpperInvariant()} · prices x{pressure.PricePressureMultiplier:0.00} · scrutiny x{pressure.AttentionRiskMultiplier:0.00}"));
+                    _stockRows.AddChild(AshfallUiHelpers.MakeBody(pressure.StatusSummary));
+                }
+
                 var lines = _host.System.GetStock(contactId);
                 if (lines.Count == 0)
                 {

@@ -79,7 +79,13 @@ namespace AtomicWar.GodotApp
                 closeAction: () => ClosePanelAnimated(_archaeologyExcavationPanel));
 
             PanelRegistry.ConfigureActions("amputation_surgery",
-                bindAction: () => _amputationTriagePanel.Bind(EnsureAmputation()),
+                bindAction: () =>
+                {
+                    EnsureAmputation();
+                    _amputationTriagePanel.PhantomPainProvider = id =>
+                        EnsureAmputation().HasPhantomPain(id);
+                    _amputationTriagePanel.Bind(EnsureAmputation());
+                },
                 openAction: () => ShowPanelLifecycle(_amputationTriagePanel),
                 closeAction: () => ClosePanelAnimated(_amputationTriagePanel));
 

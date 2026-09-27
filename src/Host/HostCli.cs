@@ -297,6 +297,8 @@ namespace AtomicWar.GodotApp
         PatrolRadioSelfTest,
         ModalTravelDispatchSelfTest,
         RationConflictSelfTest,
+        VoluntaryRegisterSelfTest,
+        WorldEvolutionSelfTest,
         CassettePlaybackSelfTest,
         GuiltSourcesSelfTest,
         BlackFlotillaStandingSelfTest,
@@ -869,6 +871,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ModalTravelDispatchSelfTest;
             if (Has(args, "--ration-conflict-selftest") || Has(args, "--ration-resentment-selftest"))
                 return HostCliAction.RationConflictSelfTest;
+            if (Has(args, "--voluntary-register-selftest") || Has(args, "--volunteers-selftest"))
+                return HostCliAction.VoluntaryRegisterSelfTest;
+            if (Has(args, "--world-evolution-selftest") || Has(args, "--evolution-events-selftest"))
+                return HostCliAction.WorldEvolutionSelfTest;
             if (Has(args, "--cassette-playback-selftest") || Has(args, "--cassette-sets-selftest"))
                 return HostCliAction.CassettePlaybackSelfTest;
             if (Has(args, "--guilt-sources-selftest") || Has(args, "--guilt-source-catalog-selftest"))

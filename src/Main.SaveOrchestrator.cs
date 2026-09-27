@@ -322,6 +322,8 @@ namespace AtomicWar.GodotApp
             SetupWarlordResponse();
             SetupPatrolRadio();
             SetupRationConflict();
+            SetupVoluntaryRegister();
+            SetupWorldEvolution();
             SetupCassettePlayback();
             SetupShelterIdentity();
             SetupDynamicQuestGeneration();
@@ -636,6 +638,8 @@ namespace AtomicWar.GodotApp
                 SaveWarlordResponse();
                 SavePatrolRadioHooks();
                 SaveRationConflict();
+                SaveVoluntaryRegister();
+                SaveWorldEvolution();
                 SaveCassettePlayback();
                 SaveShelterIdentity();
                 SaveShelterGovernance();

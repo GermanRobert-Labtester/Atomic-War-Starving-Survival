@@ -323,6 +323,34 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--core-selftest"],
         "tests": ["ShelterRadioStationTests"]
     },
+    "cipher_quest_chain": {
+        "domain": "Narrative",
+        "core": ["CipherQuestChainEngine"],
+        "catalog": [],
+        "host": ["Main", "CipherQuestChainHostSession"],
+        "setup": "SetupCipherQuestChain",
+        "ticked": False,
+        "tick_type": "Event-Driven (Broadcast Heard / Key Acquired)",
+        "store": ["CipherQuestChainSaveStore"],
+        "ui": [],
+        "routes": [],
+        "cli": ["--world-selftest"],
+        "tests": ["Plan11ExplorationTests", "Plan10_11CombatExplorationIntegrationTests"]
+    },
+    "survivor_letter_delivery": {
+        "domain": "Narrative",
+        "core": ["SurvivorLetterDeliverySystem"],
+        "catalog": ["narrative/survivor_letters_lost_kin.json"],
+        "host": ["Main", "SurvivorLetterDeliveryHostSession"],
+        "setup": "SetupSurvivorLetterDelivery",
+        "ticked": False,
+        "tick_type": "Player Action (Find / Address / Deliver / Withhold)",
+        "store": ["SurvivorLetterDeliverySaveStore"],
+        "ui": [],
+        "routes": [],
+        "cli": [],
+        "tests": ["NarrativeAndFactionWarIntegrationTests"]
+    },
     "shelter_social_dynamics": {
         "domain": "Shelter",
         "core": ["ShelterSocialDynamicsSystem"],

@@ -96,6 +96,10 @@ namespace AtomicWar.GodotApp
                 RestoreCooking(payload);
             }
 
+            // Plan 196 — the food-type/spoilage authority loads its authored
+            // catalog through the same data-path authority as the recipes.
+            session.LoadFoodTypeCatalog(_dataDir, CatalogPath.CreateFileIOForDataDir(_dataDir));
+
             var census = session.Census;
             GD.Print($"[Cooking] {census.DiscoveredRecipesCount} recipes loaded. Total meals: {census.TotalMealsPrepared}, Skill: {census.CookingSkillLevel:0.#}.");
         }
@@ -156,6 +160,41 @@ namespace AtomicWar.GodotApp
             {
                 _cookingDirty = true;
             }
+
+            // Plan 196 — the food-type/spoilage authority ages tracked provisions.
+            // Inventory custody stays with Inventory; spoilage verdicts stay here.
+            _foodSpoilageSinceFlush += session.TickFoodSpoilage(currentDay);
         }
+
+        private int _foodSpoilageSinceFlush;
+
+        /// <summary>Items that spoiled since the last save (diagnostic/handoff surface).</summary>
+        public int FoodSpoiledSinceFlush => _foodSpoilageSinceFlush;
+
+        /// <summary>Truthful freshness verdict for one tracked food item.</summary>
+        public string CheckFoodSafety(string itemId) => EnsureCooking()?.CheckFoodSafety(itemId) ?? "Unknown";
+
+        /// <summary>Tracks a stored food item with the food-type authority.</summary>
+        public string? TrackStoredFood(string foodTypeId, string preservation = "none", string storageLocation = "pantry")
+        {
+            var session = EnsureCooking();
+            if (session == null) return null;
+            string? id = session.TrackFood(foodTypeId, _simDay, preservation, storageLocation);
+            if (id != null) _cookingDirty = true;
+            return id;
+        }
+
+        /// <summary>Applies the food-type authority's storage temperature.</summary>
+        public void SetFoodStorageTemperature(float tempC)
+        {
+            var session = EnsureCooking();
+            session?.SetFoodStorageTemperature(tempC);
+        }
+
+        /// <summary>Tracked provisions still safe to eat.</summary>
+        public int FreshFoodCount => EnsureCooking()?.FreshFoodCount ?? 0;
+
+        /// <summary>Tracked provisions that have spoiled.</summary>
+        public int SpoiledFoodCount => EnsureCooking()?.SpoiledFoodCount ?? 0;
     }
 }

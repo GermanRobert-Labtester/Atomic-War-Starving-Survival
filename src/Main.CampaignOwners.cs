@@ -166,6 +166,9 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("patrol_radio_hooks", new PatrolRadioHooksDayOwner(this), phase: 5);
             // Ration conflict — resentment over unequal allocations.
             _campaignDay.Register("ration_conflict", new RationConflictDayOwner(this), phase: 5);
+            // Triple package J — volunteer signatures, world evolution, emergency questlines.
+            _campaignDay.Register("voluntary_register", new VoluntaryRegisterDayOwner(this), phase: 5);
+            _campaignDay.Register("world_evolution", new WorldEvolutionDayOwner(this), phase: 5);
             // Cassette collections — derive tape acquisition from the live inventory.
             _campaignDay.Register("cassette_playback", new CassettePlaybackDayOwner(this), phase: 5);
             // Plan 159 — shelter governance: evaluates policy consent, disputes, and shelter stability.
@@ -925,6 +928,62 @@ namespace AtomicWar.GodotApp
                     "ration_conflict_ticked", "ration_conflict", null, null, ticked));
             }
         }
+
+        /// <summary>Voluntary register day owner (ownerId <c>voluntary_register</c>, phase 5).</summary>
+        private sealed class VoluntaryRegisterDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.VoluntaryRegisterSystemState? _snapshot;
+            public VoluntaryRegisterDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupVoluntaryRegister();
+                _snapshot = _m.VoluntaryRegister?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.VoluntaryRegister?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickVoluntaryRegister(day);
+                _m.FlushVoluntaryRegisterIfDirty();
+                events.Add(new DayStateChangeEvent(
+                    "voluntary_register_ticked", "voluntary_register", null, null, day));
+            }
+        }
+
+        /// <summary>World evolution day owner (ownerId <c>world_evolution</c>, phase 5).</summary>
+        private sealed class WorldEvolutionDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.World.WorldEvolutionState? _snapshot;
+            public WorldEvolutionDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupWorldEvolution();
+                _snapshot = _m.WorldEvolution?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.WorldEvolution?.RestoreState(_snapshot, null);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickWorldEvolution(day);
+                _m.FlushWorldEvolutionIfDirty();
+                int triggered = _m.WorldEvolution?.TriggeredEventIds.Count ?? 0;
+                events.Add(new DayStateChangeEvent(
+                    "world_evolution_ticked", "world_evolution", null, null, triggered));
+            }
+        }
+
 
         /// <summary>Patrol radio bridge day owner (ownerId <c>patrol_radio_hooks</c>, phase 5).</summary>
         private sealed class PatrolRadioHooksDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore

@@ -26,6 +26,71 @@ namespace AtomicWar.GodotApp
 
         public CookingCensus Census => System.GetCensus();
 
+        // ── Food freshness & spoilage (Plan 196 / FoodTypeSystem) ─────────
+
+        private readonly Ashfall.Core.Kitchen.FoodTypeSystem _foodTypes = new Ashfall.Core.Kitchen.FoodTypeSystem();
+
+        /// <summary>
+        /// The food-type/freshness authority for tracked provisions. The cooking
+        /// system keeps its own recipe-and-progress authority; spoilage of a
+        /// stored food item is owned here only.
+        /// </summary>
+        public Ashfall.Core.Kitchen.FoodTypeSystem FoodTypes => _foodTypes;
+
+        /// <summary>Loads the authored food-type catalog. Returns false when absent.</summary>
+        public bool LoadFoodTypeCatalog(string dataDirectory, IFileIO files)
+        {
+            try
+            {
+                string path = files.Combine(dataDirectory, "food_types.json");
+                if (!files.FileExists(path)) return false;
+                _foodTypes.LoadCatalog(files.ReadAllText(path));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>Truthful freshness verdict for a tracked food item.</summary>
+        public string CheckFoodSafety(string itemId) => _foodTypes.CheckFoodSafety(itemId);
+
+        /// <summary>Adds a tracked food item; returns its tracked id or null when untyped.</summary>
+        public string? TrackFood(string foodTypeId, int currentDay, string preservation = "none", string storageLocation = "pantry")
+        {
+            var item = _foodTypes.AddFood(foodTypeId, 100f, preservation, storageLocation, currentDay);
+            return item?.ItemId;
+        }
+
+        /// <summary>Applies the food-type authority's storage temperature.</summary>
+        public void SetFoodStorageTemperature(float tempC) => _foodTypes.SetStorageTemperature(tempC);
+
+        private int _spoiledSinceLastTick;
+
+        /// <summary>
+        /// Ages every tracked provision one day through the food-type authority.
+        /// Returns how many items newly crossed into spoiled during this tick, so
+        /// the host can journal/surface the loss without owning the rule.
+        /// </summary>
+        public int TickFoodSpoilage(int currentDay)
+        {
+            int before = _foodTypes.GetSpoiledFoodCount();
+            _foodTypes.TickDay(currentDay);
+            int after = _foodTypes.GetSpoiledFoodCount();
+            _spoiledSinceLastTick = Math.Max(0, after - before);
+            return _spoiledSinceLastTick;
+        }
+
+        /// <summary>Foods that spoiled on the most recent daily spoilage tick.</summary>
+        public int LastTickSpoiledCount => _spoiledSinceLastTick;
+
+        /// <summary>Foods still safe to eat after the most recent spoilage tick.</summary>
+        public int FreshFoodCount => _foodTypes.GetFreshFoodCount();
+
+        /// <summary>Foods that have spoiled.</summary>
+        public int SpoiledFoodCount => _foodTypes.GetSpoiledFoodCount();
+
         public CookingHostSession(CookingSystem? system = null)
         {
             System = system ?? new CookingSystem();

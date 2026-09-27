@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 # scripts/ci/release-gate.sh — Plan 48 / C2[21] Phase 4
 # ======================================================
-# Release-tier CI gate: runs all checks required before a version tag is pushed.
-# Runs all fast gates + the full-tier save_support_window gate + build/export
-# smoke boot.
+# Release-tier CI gate: runs all checks required before a version tag is
+# pushed. Runs the full fast tier (docs/ci/CI_GATE_MANIFEST.json) plus the
+# release-required full-tier gates through the canonical runner. Do not add
+# direct gate commands here — every gate this script needs must come from
+# the manifest via verify-fast.sh / run-gates.py, or the release policy
+# monitor (tools/gotools/cmd/releasepolicy) will flag drift.
 #
 # Usage:
 #   bash scripts/ci/release-gate.sh
-#   bash scripts/ci/release-gate.sh --skip-full   (fast gates only, for quick pre-tag check)
+#   bash scripts/ci/release-gate.sh --skip-full   (fast gates only, for a
+#                                                   developer's quick local
+#                                                   pre-tag sanity check —
+#                                                   the release workflow must
+#                                                   never pass this flag)
 #
 # Exit codes:
 #   0  All release gates pass
@@ -32,30 +39,13 @@ PASS=0
 FAIL=0
 FAILURES=()
 
-run_gate() {
-    local name="$1"; shift
-    local cmd=("$@")
-    echo -n "  [release-gate] $name ... "
-    if "${cmd[@]}" > /tmp/rg_out.txt 2>&1; then
-        echo "PASS"
-        PASS=$((PASS + 1))
-    else
-        echo "FAIL"
-        FAIL=$((FAIL + 1))
-        FAILURES+=("$name")
-        echo "  --- Output ---"
-        tail -10 /tmp/rg_out.txt | sed 's/^/    /'
-        echo "  -------------"
-    fi
-}
-
 echo "========================================"
 echo "  ASHFALL Release Gate"
 echo "========================================"
 echo ""
 
-# --- Fast tier (all 53 gates) ---
-echo "[1/3] Fast tier — all 53 fast gates"
+# --- Fast tier (every gate in CI_GATE_MANIFEST.json classified "fast") ---
+echo "[1/2] Fast tier — all fast gates (scripts/ci/verify-fast.sh)"
 if bash scripts/ci/verify-fast.sh; then
     echo "  Fast tier: PASS"
     PASS=$((PASS + 1))
@@ -65,19 +55,21 @@ else
     FAILURES+=("fast_tier (verify-fast.sh)")
 fi
 
-# --- Release-specific gates ---
-echo ""
-echo "[2/3] Release-specific gates"
-
-run_gate "version_gate" python3 scripts/ci/version-gate.py
-run_gate "changelog_drift" python3 scripts/release/generate_changelog.py --check
-
+# --- Full-tier release-required gates (canonical runner, not duplicated
+#     direct commands) ---
 if ! $SKIP_FULL; then
     echo ""
-    echo "[3/3] Full-tier gates"
-    run_gate "save_support_window" \
-        dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj \
-            --filter SaveSupportWindowTests --nologo
+    echo "[2/2] Full-tier release gates — test_core_suite + save_support_window"
+    if python3 scripts/ci/run-gates.py \
+        --gate test_core_suite,save_support_window \
+        --report-json build/reports/release-full-results.json; then
+        echo "  Full-tier release gates: PASS"
+        PASS=$((PASS + 1))
+    else
+        echo "  Full-tier release gates: FAIL"
+        FAIL=$((FAIL + 1))
+        FAILURES+=("full_tier (test_core_suite,save_support_window)")
+    fi
 fi
 
 # --- Summary ---

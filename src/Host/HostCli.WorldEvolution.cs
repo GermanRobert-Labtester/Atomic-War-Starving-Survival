@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.World;
 
@@ -23,34 +24,40 @@ namespace AtomicWar.GodotApp
 
             try
             {
-                // Coordination repair 2026-09-27 (rumor/memorial seal session):
-                // mapped the draft's guessed API to the live Core API —
-                // engine ctor is (dataDir, …) and loads its authored catalog;
-                // state truth is lastEvaluatedDay / triggeredEventIds.
-                var session = new WorldEvolutionHostSession();
+                string dataDir = System.IO.Path.Combine("Assets", "StreamingAssets", "Data");
+                var engine = new WorldEvolutionEngine(dataDir);
+                var session = new WorldEvolutionHostSession(dataDir, engine);
 
-                // 1. Initial state
-                Check("initial_state", session.State.triggeredEventIds.Count == 0);
-                Check("initial_day", session.State.lastEvaluatedDay == -1);
+                // 1. Authored catalog reached the engine
+                Check("catalog_loaded", engine.Events.Count >= 10);
+                Check("no_events_triggered", engine.TriggeredEventIds.Count == 0);
 
-                // 2. Tick
-                session.Tick(1);
-                Check("tick_advances", session.State.lastEvaluatedDay == 1);
+                // 2. Tick to the authored trigger day of the first UNGATED event.
+                // (The earliest authored event is flag-gated, so it must NOT
+                // fire from an empty flag set — the flag is the gate.)
+                int firstUngatedDay = int.MaxValue;
+                foreach (var evt in engine.Events)
+                    if (string.IsNullOrEmpty(evt.required_flag))
+                        firstUngatedDay = Math.Min(firstUngatedDay, evt.trigger_day);
+                Check("authored_ungated_day_found", firstUngatedDay < int.MaxValue);
 
-                // 3. Capture/restore
-                var state1 = session.CaptureState();
-                Check("capture_state", state1 != null);
-                Check("capture_day", state1 != null && state1.lastEvaluatedDay == 1);
+                session.Tick(firstUngatedDay, new HashSet<string>(StringComparer.OrdinalIgnoreCase), null);
+                Check("event_triggered", engine.TriggeredEventIds.Count >= 1);
 
-                session.Tick(2);
-                Check("tick_advances_2", session.State.lastEvaluatedDay == 2);
+                // 3. Capture/restore is exact and does not re-trigger
+                var state = session.CaptureState();
+                Check("capture_state", state != null);
+                int triggeredCount = engine.TriggeredEventIds.Count;
 
-                session.RestoreState(state1!);
-                Check("restore_day", session.State.lastEvaluatedDay == 1);
+                session.RestoreState(state, null);
+                Check("restore_triggered_count", engine.TriggeredEventIds.Count == triggeredCount);
 
-                // 4. Reset
+                session.Tick(firstUngatedDay + 1, new HashSet<string>(StringComparer.OrdinalIgnoreCase), null);
+                Check("no_duplicate_trigger", engine.TriggeredEventIds.Count == triggeredCount);
+
+                // 4. Reset clears triggered events
                 session.Reset();
-                Check("reset_clears", session.State.lastEvaluatedDay == -1);
+                Check("reset_clears", engine.TriggeredEventIds.Count == 0);
 
                 Console.WriteLine($"\nWorld Evolution self-test: {passed}/{passed + failed}");
                 return failed == 0 ? 0 : 1;

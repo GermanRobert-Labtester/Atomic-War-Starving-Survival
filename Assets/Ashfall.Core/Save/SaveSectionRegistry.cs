@@ -268,6 +268,7 @@ new("genealogy", "SaveGenealogy", "SetupGenealogy", "survivors", "Plan 217 — s
             new("hobby", "SaveHobby", "SetupHobby", "survivors", "ORPHAN-SEAL-W1 — survivor hobby progress, mastery, and co-participation", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("survivor_education", "SaveSurvivorEducation", "SetupSurvivorEducation", "survivors", "ORPHAN-SEAL-W1 — learner records, subjects, teachers, and graduation", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_expansion", "SaveShelterExpansion", "SetupShelterExpansion", "shelter", "ORPHAN-SEAL-W1 — expansion rooms, construction projects, and upgrade state", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("survivor_letter_delivery", "SaveSurvivorLetterDelivery", "SetupSurvivorLetterDelivery", "narrative", "ORPHAN-SEAL follow-up — dead-letter discovery, dweller addressing, and delivery resolution", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("confession_secret", "SaveConfessionSecrets", "SetupConfessionSecrets", "survivors", "ORPHAN-SEAL-W1 — discovered secrets, resolution choices, and leverage records", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_festival", "SaveShelterFestival", "SetupShelterFestival", "events", "ORPHAN-SEAL-W1 — player-scheduled festivals, commodity costs, and completion state", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("faction_covert_ops", "SaveFactionCovertOps", "SetupFactionCovertOps", "factions", "ORPHAN-SEAL-W1 — rival-faction covert operations, suspicion ladder, and intelligence reports", LifecycleGroup: ExpandedShelterLifecycleGroup),
@@ -366,6 +367,8 @@ new("genealogy", "SaveGenealogy", "SetupGenealogy", "survivors", "Plan 217 — s
             new("soil_reclamation_profile", "SaveSoilReclamationProfile", "SetupSoilReclamationProfile", "farming", "Expansion 15 The Deep Root — open-ground soil amendment chemistry, fertility evaluation, and germination viability", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("campaign_action_log", "SaveCampaignActionLog", "SetupCampaignActionLog", "campaign", "Deterministic campaign action log: sequence-stable record of every successful significant player command", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("advanced_industrial", "SaveAdvancedIndustrial", "SetupAdvancedIndustrial", "production", "Plans 118-121 — synthetic lubricant (Fischer-Tropsch), UV corona detection, carbon composites, and ground-penetrating radar host integration", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("voluntary_register", "SaveVoluntaryRegister", "SetupVoluntaryRegister", "survivors", "Plan 253 — high-dose surface-work volunteer signatures, accepted-day/completed-day and banked dose tracking", LifecycleGroup: ExpandedShelterLifecycleGroup),
+            new("world_evolution", "SaveWorldEvolution", "SetupWorldEvolution", "world", "Plan 227 — deterministic world-state evolution events driven by authored day thresholds, required flags and map-target effects", LifecycleGroup: ExpandedShelterLifecycleGroup),
         };
 
 
@@ -426,6 +429,7 @@ new("genealogy", "SaveGenealogy", "SetupGenealogy", "survivors", "Plan 217 — s
                 { "survivor_education", "survivor_education_save.json" },
                 { "shelter_expansion", "shelter_expansion_save.json" },
                 { "confession_secret", "confession_secret_save.json" },
+                { "survivor_letter_delivery", "survivor_letter_delivery_save.json" },
                 { "shelter_festival", "shelter_festival_save.json" },
                 { "faction_covert_ops", "faction_covert_ops_save.json" },
                 { "holdfast", "holdfast_s1_save.json" },
@@ -701,6 +705,8 @@ new("genealogy", "SaveGenealogy", "SetupGenealogy", "survivors", "Plan 217 — s
                 { "genealogy", "genealogy_save.json" },
                 { "survivor_roles", "survivor_roles_save.json" },
                 { "advanced_industrial", "advanced_industrial_save.json" },
+                { "voluntary_register", "voluntary_register_save.json" },
+                { "world_evolution", "world_evolution_save.json" },
             };
 
 

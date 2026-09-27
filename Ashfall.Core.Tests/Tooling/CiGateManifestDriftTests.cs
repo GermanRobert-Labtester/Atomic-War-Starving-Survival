@@ -164,7 +164,11 @@ namespace Ashfall.Core.Tests.Tooling
                 "persistent_filename_registry",
                 "central_package_management",
                 "doc_link_portability",
-                "lfs_health_check"
+                "lfs_health_check",
+                "release_workflow_parity",
+                "repository_size_budget",
+                "compile_set_reachability",
+                "test_only_production_source"
             };
 
             foreach (string required in requiredGates)

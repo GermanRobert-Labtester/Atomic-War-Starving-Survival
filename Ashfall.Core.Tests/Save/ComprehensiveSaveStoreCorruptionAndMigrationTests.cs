@@ -324,9 +324,12 @@ namespace Ashfall.Core.Tests.Save
             // ration_conflict (modal travel dispatch is a derived read model).
             // Quad package G added cassette_playback (guilt sources, flotilla
             // standing, and record integrity bind live owners and add no section).
-            Assert.Equal(310, SaveSectionRegistry.All.Count);
+            // Triple package J added voluntary_register, world_evolution and
+            // (313 registered sections).
+            // Orphan-seal follow-up added survivor_letter_delivery (316 sections).
+            Assert.Equal(316, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(310, keys.Count);
+            Assert.Equal(316, keys.Count);
 
         }
 

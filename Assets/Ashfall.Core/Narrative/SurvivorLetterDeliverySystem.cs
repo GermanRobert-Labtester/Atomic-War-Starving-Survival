@@ -58,7 +58,7 @@ namespace Ashfall.Core.Narrative
         private readonly Dictionary<string, SurvivorLetterRecordState> _records =
             new Dictionary<string, SurvivorLetterRecordState>(StringComparer.OrdinalIgnoreCase);
 
-        private readonly SurvivorLetterCatalog? _catalog;
+        private SurvivorLetterCatalog? _catalog;
         private readonly ILog _log;
 
         public event Action<string, int>? OnLetterFound;
@@ -71,6 +71,27 @@ namespace Ashfall.Core.Narrative
         {
             _catalog = catalog;
             _log = log ?? NullLog.Instance;
+        }
+
+        /// <summary>
+        /// Binds the authored dead-letter catalog after construction, so a host
+        /// can restore saved delivery state before loading authored content.
+        /// Passing null simply clears the binding.
+        /// </summary>
+        public void BindCatalog(SurvivorLetterCatalog? catalog)
+        {
+            _catalog = catalog;
+        }
+
+        /// <summary>
+        /// Delivery record without creating one. Returns null when the letter is
+        /// untouched, so callers never accidentally materialize a fresh record.
+        /// </summary>
+        public SurvivorLetterRecordState? GetRecord(string letterId)
+        {
+            return string.IsNullOrEmpty(letterId)
+                ? null
+                : (_records.TryGetValue(letterId, out var rec) ? rec : null);
         }
 
         public SurvivorLetterRecordState GetOrCreateRecord(string letterId)

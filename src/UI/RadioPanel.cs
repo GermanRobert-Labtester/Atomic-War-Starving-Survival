@@ -554,6 +554,7 @@ namespace AtomicWar.GodotApp.UI
                     if (mission.Expired) overdue++;
                 }
                 _rescueBox.AddChild(AshfallUiHelpers.MakeMono(FormatRescueLine(mission, preflight)));
+                _rescueBox.AddChild(AshfallUiHelpers.MakeMono("    " + FormatArcLine(mission, _radioHost.Day)));
             }
 
             if (_rescueEventLabel != null)
@@ -563,6 +564,19 @@ namespace AtomicWar.GodotApp.UI
                     (threats > 0 ? $"{threats} deception warning(s) · " : string.Empty) +
                     (overdue > 0 ? $"{overdue} gone unanswered past deadline" : "none expired");
             }
+        }
+
+        /// <summary>
+        /// EN-05 rescued-survivor arc readback for one mission — the projection's
+        /// own status summary, phase and recovery countdown. Projection only.
+        /// </summary>
+        private static string FormatArcLine(DistressRescueMission mission, int currentDay)
+        {
+            var arc = Ashfall.Core.Radio.RescuedArcProjection.Project(mission, currentDay);
+            string recovery = arc.RecoveryDaysLeft > 0
+                ? $"recovery {arc.RecoveryDaysLeft}d left"
+                : (arc.IsTerminal ? "closed" : "no recovery window");
+            return $"arc: {arc.StatusSummary} · {recovery}";
         }
 
         private static string FormatRescueLine(DistressRescueMission mission, RescueDispatchPreflight? preflight)

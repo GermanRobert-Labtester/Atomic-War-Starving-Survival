@@ -32,33 +32,15 @@ namespace Ashfall.Core.Tests.Tooling
         /// catalog decision. Measured 2026-09-25 on claim
         /// claim-wholegame-p0-build-green-2026-09-25.
         /// </summary>
+        // Shrink-only baseline for DEBT-HOSTCLI-PROBE-MANIFEST-GAP.
+        // Every previously documented unmanifested probe (25 of them) was
+        // resolved when the selftest manifest was regenerated: their Core
+        // HostCliRegistry descriptors exist and the manifest catalogs them, so
+        // no dispatched host probe is silently absent from manifest-driven
+        // shard smokes. A probe re-enters this list only by being dispatched
+        // without a catalog entry.
         private static readonly string[] DocumentedUnmanifestedSelfTests =
         {
-            "CampaignFuzzSelfTest",
-            "CartographySelfTest",
-            "ChemicalReconUiTest",
-            "CompositionRootSelfTest",
-            "ContentUtilizationSelfTest",
-            "DeconAirlockUiTest",
-            "DynamicWorldSelfTest",
-            "ExpansionDepthSelfTest",
-            "ExportParitySelfTest",
-            "GeodeticSurveyUiTest",
-            "GeothermalAquiferSelfTest",
-            "KineticStorageUiTest",
-            "ModSelfTest",
-            "NarrativeContinuitySelfTest",
-            "OralLoreSelfTest",
-            "Plans198To201UiTest",
-            "PowerGridCatalogSelfTest",
-            "ReconTelemetrySelfTest",
-            "SceneBindingSelfTest",
-            "StartingCohortLifecycleSelfTest",
-            "StartingSuppliesSelfTest",
-            "TrappingHostSelfTest",
-            "WastelandInhabitantsSelfTest",
-            "WorkshopRelicUiTest",
-            "WorldExplorationSelfTest"
         };
 
         /// <summary>No-argument default action; it has no flag and no switch case.</summary>

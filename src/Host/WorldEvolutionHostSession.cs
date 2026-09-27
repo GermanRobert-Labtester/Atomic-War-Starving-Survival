@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Ashfall.Core;
 using Ashfall.Core.Save;
@@ -20,50 +21,41 @@ namespace AtomicWar.GodotApp
 
         public static string SavePath => s_store.SavePath;
         public static bool Exists => s_store.Exists();
+        public static string TryCapturePersisted(WorldEvolutionState state) => s_store.CaptureBare(state);
+        public static WorldEvolutionState? TryRestorePersisted(string json) => s_store.RestoreBare(json);
         public static bool TrySave(WorldEvolutionState state) => s_store.TrySave(state);
         public static WorldEvolutionState? TryLoad() => s_store.TryLoad();
-        // Coordination repair 2026-09-27 (rumor/memorial seal session): added the
-        // canonical capture method Main.WorldEvolution.SaveWorldEvolution calls
-        // (Checksummed stores expose CaptureBare).
-        public static string TryCapturePersisted(WorldEvolutionState state) => s_store.CaptureBare(state);
     }
 
     /// <summary>
     /// Plan 227: World Evolution — host session binding the Core engine to
-    /// the campaign lifecycle. Loads event catalog, ticks daily, persists state.
+    /// the campaign lifecycle. The engine is the single authority for
+    /// world-state evolution events; it reads the authoritative wasteland map
+    /// passed in at tick time and never keeps a second map graph.
     /// </summary>
     public sealed class WorldEvolutionHostSession : HostSessionBase
     {
         private readonly WorldEvolutionEngine _engine;
-        private readonly string _dataDir;
 
         public WorldEvolutionEngine Engine => _engine;
-        /// <summary>Read-only projection of the engine's current state.</summary>
         public WorldEvolutionState State => _engine.CaptureState();
+        public IReadOnlyList<WorldEvolutionEventDef> Events => _engine.Events;
+        public IReadOnlyCollection<string> TriggeredEventIds => _engine.TriggeredEventIds;
 
-        public WorldEvolutionHostSession(WorldEvolutionEngine? engine = null, string? dataDir = null)
+        public WorldEvolutionHostSession(string? dataDir = null, WorldEvolutionEngine? engine = null)
         {
-            // Coordination repair 2026-09-27 (rumor/memorial seal session): the
-            // live engine ctor requires a dataDir and loads its authored event
-            // catalog there (falling back to built-in defaults).
-            _dataDir = dataDir ?? Path.Combine("Assets", "StreamingAssets", "Data");
-            _engine = engine ?? new WorldEvolutionEngine(_dataDir);
+            _engine = engine ?? new WorldEvolutionEngine(
+                dataDir ?? Path.Combine("Assets", "StreamingAssets", "Data"));
         }
 
-        public void Setup()
+        /// <summary>
+        /// Advance one campaign day. Collaborators other than the map are
+        /// passed null when their own owners are not yet campaign-bound; the
+        /// engine handles that explicitly.
+        /// </summary>
+        public void Tick(int day, System.Collections.Generic.HashSet<string>? activeWorldFlags, WastelandMapSystem? map)
         {
-            // The engine loads world_evolution_events.json from _dataDir in its
-            // own constructor (defaults on absence/parse failure); nothing to
-            // read a second time here.
-            if (_engine.Events.Count == 0)
-                Console.Error.WriteLine("[WORLD_EVOLUTION] event catalog empty after construction");
-        }
-
-        public void Tick(int day)
-        {
-            // Optional collaborators (flags/evolution/landmarks/map) are
-            // null-guarded inside Core; the canonical clock is always stamped.
-            _engine.TickDay(day, null, null, null, null);
+            _engine.TickDay(day, activeWorldFlags, null, null, map);
             RaiseStateChanged();
         }
 
@@ -72,15 +64,15 @@ namespace AtomicWar.GodotApp
             return _engine.CaptureState();
         }
 
-        public void RestoreState(WorldEvolutionState state)
+        public void RestoreState(WorldEvolutionState state, WastelandMapSystem? map)
         {
-            _engine.RestoreState(state);
+            _engine.RestoreState(state, map);
             RaiseStateChanged();
         }
 
         public void Reset()
         {
-            _engine.RestoreState(new WorldEvolutionState());
+            _engine.RestoreState(null, null);
             RaiseStateChanged();
         }
     }

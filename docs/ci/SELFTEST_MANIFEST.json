@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 285,
-  "headless_test_count": 283,
+  "total_tests": 313,
+  "headless_test_count": 311,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -248,6 +248,113 @@
       "description": "Plan 36: Port Contracts & Host Wiring \u2014 validates all Core integration seams against docs/ci/port_contract_policy.json and runtime host collaborator/port wiring",
       "headless_compatible": true,
       "expected_summary_id": "port_contract_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "campaign_fuzz_selftest",
+      "action": "CampaignFuzzSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--campaign-fuzz-selftest",
+      "aliases": [],
+      "description": "Host-layer CI gate wrapper for the Core campaign fuzz harness (fuzz assertions themselves live in Ashfall.Core.Tests; this verb exists so CI can gate the suite through the same headless verb used by every other gate)",
+      "headless_compatible": true,
+      "expected_summary_id": "campaign_fuzz_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "composition_root_selftest",
+      "action": "CompositionRootSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--composition-root-selftest",
+      "aliases": [],
+      "description": "Architecture regression test for the campaign composition root: ComposeCampaign() constructs all expected services, is idempotent across repeated calls, and opening panels in shuffled order never constructs a service outside ComposeCampaign()",
+      "headless_compatible": true,
+      "expected_summary_id": "composition_root_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "content_utilization_selftest",
+      "action": "ContentUtilizationSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--content-utilization-selftest",
+      "aliases": [
+        "--content-utilization"
+      ],
+      "description": "Deterministic diagnostic mode that exercises representative runtime content wiring and generates the utilization manifest",
+      "headless_compatible": true,
+      "expected_summary_id": "content_utilization_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "export_parity_selftest",
+      "action": "ExportParitySelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--export-parity-selftest",
+      "aliases": [],
+      "description": "Plan VIII Task 23 packaged-data parity gate: proves the exported Linux layout (exe + .pck + loose StreamingAssets data) carries the same authoritative catalogs as the repository data authority",
+      "headless_compatible": true,
+      "expected_summary_id": "export_parity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "mod_selftest",
+      "action": "ModSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--mod-selftest",
+      "aliases": [
+        "--mods-selftest"
+      ],
+      "description": "Mod-loading self-test: builds a temp Data+Mods sandbox, loads a well-formed sample mod and a mod referencing an unsafe path-traversal target, and verifies the safe mod applies while the unsafe one is rejected",
+      "headless_compatible": true,
+      "expected_summary_id": "mod_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "narrative_continuity_selftest",
+      "action": "NarrativeContinuitySelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--narrative-continuity-selftest",
+      "aliases": [],
+      "description": "Deterministic diagnostic mode that runs the Core narrative continuity engine over the corpus and writes artifacts",
+      "headless_compatible": true,
+      "expected_summary_id": "narrative_continuity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "power_grid_catalog_selftest",
+      "action": "PowerGridCatalogSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--power-grid-catalog-selftest",
+      "aliases": [],
+      "description": "SHELTER_GRID_CATALOG_SEAL Phase 5: verifies power_grid.json is the runtime authority \u2014 catalog loads via the Core loader, the session carries every shipped room, canonical consumer room IDs resolve via IsRoomPowered, and fluid-network power derivation is nominal when all breakers are closed",
+      "headless_compatible": true,
+      "expected_summary_id": "power_grid_catalog_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "starting_cohort_lifecycle_selftest",
+      "action": "StartingCohortLifecycleSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--starting-cohort-lifecycle-selftest",
+      "aliases": [
+        "--cohort-lifecycle-selftest"
+      ],
+      "description": "Plan 138 lifecycle proof: exercises the production New Game and Continue routes in an isolated save root without relying on the broader combat/trade journey",
+      "headless_compatible": true,
+      "expected_summary_id": "starting_cohort_lifecycle_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "starting_supplies_selftest",
+      "action": "StartingSuppliesSelfTest",
+      "category": "Core & System Gates",
+      "primary_flag": "--starting-supplies-selftest",
+      "aliases": [
+        "--starting-profile-selftest"
+      ],
+      "description": "Verifies the starting supplies catalog loads and resolves against the item catalog for every starting profile",
+      "headless_compatible": true,
+      "expected_summary_id": "starting_supplies_selftest",
       "timeout_seconds": 30
     },
     {
@@ -1605,6 +1712,94 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "cartography_selftest",
+      "action": "CartographySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--cartography-selftest",
+      "aliases": [
+        "--plan16-selftest"
+      ],
+      "description": "Plan 16 physical & institutional geography: 60-node wasteland map graph, 6 macro-regions, 6 waystations, 4 caravan circuits, 12-treaty accord web, and damaged map zones",
+      "headless_compatible": true,
+      "expected_summary_id": "cartography_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "dynamic_world_selftest",
+      "action": "DynamicWorldSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--dynamic-world-selftest",
+      "aliases": [
+        "--plan19-selftest"
+      ],
+      "description": "Plan 19 Dynamic World Systems: weather forecasting lookahead, weather station tiers, 6-phase seasonal calendar, 18+ seasonal events, Orbital Harrow strike templates, sky armor impact cascades, salvage/site reveals, and save/load persistence",
+      "headless_compatible": true,
+      "expected_summary_id": "dynamic_world_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "expansion_depth_selftest",
+      "action": "ExpansionDepthSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--expansion-depth-selftest",
+      "aliases": [
+        "--plan18-selftest"
+      ],
+      "description": "Plan 18 Expansion Deepening: Holdfast (24 quests), Standing Record (52 memories, 22 quests), Crossing (20 quests, 14 encounters), Verdict (16 questlines, 9 NPCs), cross-expansion evidence hooks, and save stability",
+      "headless_compatible": true,
+      "expected_summary_id": "expansion_depth_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "oral_lore_selftest",
+      "action": "OralLoreSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--oral-lore-selftest",
+      "aliases": [],
+      "description": "Oral Lore Codex self-test: loads both catalog files via the host session, verifies entry count, and exercises query methods (by id, by tag, by genre)",
+      "headless_compatible": true,
+      "expected_summary_id": "oral_lore_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "trapping_selftest",
+      "action": "TrappingHostSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--trapping-selftest",
+      "aliases": [],
+      "description": "Flagship trapping tranche host-layer gates for the player-facing TrySetTrap path: item billing, broken-trap replacement, atomic failure on missing materials, and the trap_active no-charge block",
+      "headless_compatible": true,
+      "expected_summary_id": "trapping_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "wasteland_inhabitants_selftest",
+      "action": "WastelandInhabitantsSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--wasteland-inhabitants-selftest",
+      "aliases": [
+        "--plan20-selftest",
+        "--inhabitants-selftest"
+      ],
+      "description": "Plan 20 Wasteland Inhabitants: Field Guide (32 entries), Wasteland Settlements (6 settlements, 18 named NPCs, standing greetings, trade tells), repeatable side-work quest templates, and route-aware travel encounters (24 encounters + 4 multi-stage chains)",
+      "headless_compatible": true,
+      "expected_summary_id": "wasteland_inhabitants_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "world_exploration_selftest",
+      "action": "WorldExplorationSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--world-exploration-selftest",
+      "aliases": [
+        "--plan11-selftest"
+      ],
+      "description": "Plan 11 deep-strata excavation catalogs, cipher decoding loops, living geography evolution triggers, route blockades, and location memory recasts",
+      "headless_compatible": true,
+      "expected_summary_id": "world_exploration_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "audio_selftest",
       "action": "AudioSelfTest",
       "category": "Host Domains & Save Stores",
@@ -2557,6 +2752,45 @@
       "description": "Ration conflict: perceived fairness, resentment escalation to confrontation or theft, and morale/relationship consequences through the canonical owners",
       "headless_compatible": true,
       "expected_summary_id": "ration_conflict_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "voluntary_register_selftest",
+      "action": "VoluntaryRegisterSelfTest",
+      "category": "Survivors",
+      "primary_flag": "--voluntary-register-selftest",
+      "aliases": [
+        "--volunteers-selftest"
+      ],
+      "description": "Voluntary register: high-dose surface-work signatures, banked incurred dose, and exactly-once task completion per survivor",
+      "headless_compatible": true,
+      "expected_summary_id": "voluntary_register_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "world_evolution_selftest",
+      "action": "WorldEvolutionSelfTest",
+      "category": "World",
+      "primary_flag": "--world-evolution-selftest",
+      "aliases": [
+        "--evolution-events-selftest"
+      ],
+      "description": "World evolution: authored day-threshold and flag-gated world-state events, exactly-once triggering, and exact captured-state restore",
+      "headless_compatible": true,
+      "expected_summary_id": "world_evolution_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "dynamic_questlines_selftest",
+      "action": "DynamicQuestlinesSelfTest",
+      "category": "Quests",
+      "primary_flag": "--dynamic-questlines-selftest",
+      "aliases": [
+        "--emergency-quests-selftest"
+      ],
+      "description": "Dynamic questlines: exactly-once incident triggering, labour progress, stage advance, and deadline failure with save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "dynamic_questlines_selftest",
       "timeout_seconds": 30
     },
     {
@@ -3529,6 +3763,123 @@
       "description": "Rail grinding train UI panel construction, reprofiling telemetry, and stone maintenance",
       "headless_compatible": true,
       "expected_summary_id": "rail_grinding_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "chemical_recon_uitest",
+      "action": "ChemicalReconUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--chemical-recon-uitest",
+      "aliases": [
+        "--chemical-recon-selftest"
+      ],
+      "description": "Chemical recon UI panel construction via its action route (OPEN)",
+      "headless_compatible": true,
+      "expected_summary_id": "chemical_recon_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "decon_airlock_uitest",
+      "action": "DeconAirlockUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--decon-airlock-uitest",
+      "aliases": [
+        "--decon-airlock-selftest"
+      ],
+      "description": "Decon airlock UI panel construction via its action route (OPEN)",
+      "headless_compatible": true,
+      "expected_summary_id": "decon_airlock_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "geodetic_survey_uitest",
+      "action": "GeodeticSurveyUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--geodetic-survey-uitest",
+      "aliases": [
+        "--geodetic-survey-selftest"
+      ],
+      "description": "Geodetic survey UI panel construction via its action route (OPEN)",
+      "headless_compatible": true,
+      "expected_summary_id": "geodetic_survey_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "geothermal_aquifer_selftest",
+      "action": "GeothermalAquiferSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--geothermal-aquifer-selftest",
+      "aliases": [
+        "--geothermal-uitest"
+      ],
+      "description": "Geothermal aquifer UI panel construction and visibility toggle",
+      "headless_compatible": true,
+      "expected_summary_id": "geothermal_aquifer_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "kinetic_storage_uitest",
+      "action": "KineticStorageUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--kinetic-storage-uitest",
+      "aliases": [
+        "--kinetic-storage-selftest"
+      ],
+      "description": "Kinetic storage UI panel construction via its action route (OPEN)",
+      "headless_compatible": true,
+      "expected_summary_id": "kinetic_storage_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "plans198_201_uitest",
+      "action": "Plans198To201UiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--plans198-201-uitest",
+      "aliases": [
+        "--plans198-201-selftest"
+      ],
+      "description": "Plans 198-201 end-to-end UI contract: per panel, route (registry resolve) -> bind -> visible -> command -> Core state delta -> feedback strip; any engine exception fails the gate",
+      "headless_compatible": true,
+      "expected_summary_id": "plans198_201_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "recon_telemetry_uitest",
+      "action": "ReconTelemetrySelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--recon-telemetry-uitest",
+      "aliases": [
+        "--recon-telemetry-selftest"
+      ],
+      "description": "Recon telemetry UI panel construction via its action route (OPEN)",
+      "headless_compatible": true,
+      "expected_summary_id": "recon_telemetry_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "workshop_relic_uitest",
+      "action": "WorkshopRelicUiTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--workshop-relic-uitest",
+      "aliases": [
+        "--workshop-relic-selftest"
+      ],
+      "description": "Plan 87 follow-up QA \u2014 workshop dual-bind relic restoration path: route -> bind (shelter crafting + relic catalog) -> render (both sections present) -> select -> command (component-gated start) -> tick to completion -> state deltas (morale + world flag, each exactly once) -> save/reload",
+      "headless_compatible": true,
+      "expected_summary_id": "workshop_relic_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "scene_binding_selftest",
+      "action": "SceneBindingSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--scene-binding-selftest",
+      "aliases": [
+        "--scene-bindings-selftest"
+      ],
+      "description": "Loads every production scene declared via PanelSceneLoader.Load<R>() for the migrated detail panels and resolves each scene's typed unique-name node contract via SceneBinder",
+      "headless_compatible": true,
+      "expected_summary_id": "scene_binding_selftest",
       "timeout_seconds": 30
     },
     {

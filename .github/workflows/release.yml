@@ -19,6 +19,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           lfs: true
+          # HEAD^1 is needed by the fast-tier repository monitors this job
+          # also runs (release-gate.sh runs the full fast tier, same as ci.yml).
+          fetch-depth: 2
+
+      - name: Setup Go for repository monitors
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: tools/gotools/go.mod
+          cache-dependency-path: tools/gotools/go.sum
 
       - name: Setup .NET SDKs
         uses: actions/setup-dotnet@v4
@@ -27,19 +36,26 @@ jobs:
             8.0.x
             9.0.x
 
-      - name: Version drift gate
-        run: python3 scripts/ci/version-gate.py
+      - name: Setup Godot 4.7.1 mono
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.7.1
+          use-dotnet: true
+          include-templates: true
 
-      - name: Changelog drift gate
-        run: python3 scripts/release/generate_changelog.py --check
+      # One canonical, blocking command: fast tier + full Core suite +
+      # save-support window. Never pass --skip-full here — that flag exists
+      # only for a developer's local pre-tag sanity check.
+      - name: Run canonical release gate
+        run: bash scripts/ci/release-gate.sh
 
-      - name: dotnet build (0/0 check)
-        run: dotnet build Ashfall.csproj --nologo
-
-      - name: Save support window gate
-        run: >
-          dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
-          --filter SaveSupportWindowTests --nologo
+      - name: Upload Release Gate Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-gate-reports-${{ github.ref_name }}
+          path: build/reports/
+          if-no-files-found: ignore
 
   export-release:
     name: Export Release Builds
@@ -64,17 +80,26 @@ jobs:
           use-dotnet: true
           include-templates: true
 
-      - name: Run export-build.sh
+      - name: Run export-build.sh (Linux export + packaged parity)
         run: bash scripts/ci/export-build.sh
+
+      - name: Export Windows Desktop
+        run: |
+          mkdir -p builds/windows
+          bash scripts/ci/run-godot-bounded.sh --path . --export-release "Windows Desktop" builds/windows/ashfall.exe
+          ls -lh builds/windows/
+          test -f builds/windows/ashfall.exe
 
       - name: Upload Linux build
         uses: actions/upload-artifact@v4
         with:
           name: release-Linux-${{ github.ref_name }}
           path: builds/linux
+          if-no-files-found: error
 
       - name: Upload Windows build
         uses: actions/upload-artifact@v4
         with:
           name: release-Windows-${{ github.ref_name }}
           path: builds/windows
+          if-no-files-found: error

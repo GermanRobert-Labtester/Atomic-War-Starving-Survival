@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.1.1",
-  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 — Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates).",
+  "schema_version": "1.1.2",
+  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 — Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 — W1 assurance: four fast monitors and release_required metadata on three full release gates.",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 59,
-  "fast_tier_count": 55,
+  "total_gates": 63,
+  "fast_tier_count": 59,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -43,7 +43,8 @@
       "timeout_seconds": 120,
       "expected_summary": "Passed!",
       "classification": "full",
-      "critical": true
+      "critical": true,
+      "release_required": true
     },
     {
       "gate_id": "build_godot_host",
@@ -563,9 +564,55 @@
       "timeout_seconds": 180,
       "expected_summary": "EXPORT_PARITY_SELFTEST PASS",
       "classification": "full",
+      "critical": true,
+      "release_required": true,
       "depends_on": [
         "build_godot_host"
       ]
+    },
+    {
+      "gate_id": "release_workflow_parity",
+      "name": "Release workflow and required-gate parity (W1 assurance)",
+      "category": "Release",
+      "command": "go run -C tools/gotools ./cmd/releasepolicy --root ../.. --out ../../build/reports/monitoring/release-policy.json",
+      "timeout_seconds": 120,
+      "expected_summary": "[releasepolicy] PASS",
+      "classification": "fast",
+      "critical": true,
+      "depends_on": []
+    },
+    {
+      "gate_id": "repository_size_budget",
+      "name": "Tracked repository growth and new Markdown budget (W1 assurance)",
+      "category": "Code & Repo Hygiene",
+      "command": "go run -C tools/gotools ./cmd/ashfall-dev monitor-size --root ../.. --base HEAD^1 --out ../../build/reports/monitoring/repository-size.json",
+      "timeout_seconds": 120,
+      "expected_summary": "[monitor-size] Report written",
+      "classification": "fast",
+      "critical": true,
+      "depends_on": []
+    },
+    {
+      "gate_id": "compile_set_reachability",
+      "name": "Tracked C# source versus evaluated production and test compile sets (W1 assurance)",
+      "category": "Code & Repo Hygiene",
+      "command": "go run -C tools/gotools ./cmd/ashfall-dev monitor-compile --root ../.. --out ../../build/reports/monitoring/compile-set.json",
+      "timeout_seconds": 120,
+      "expected_summary": "[monitor-compile] Report written",
+      "classification": "fast",
+      "critical": true,
+      "depends_on": []
+    },
+    {
+      "gate_id": "test_only_production_source",
+      "name": "Test-only production-like C# custody (W1 assurance)",
+      "category": "Code & Repo Hygiene",
+      "command": "go run -C tools/gotools ./cmd/ashfall-dev monitor-compile --root ../.. --out ../../build/reports/monitoring/test-only-production.json",
+      "timeout_seconds": 120,
+      "expected_summary": "[monitor-compile] Report written",
+      "classification": "fast",
+      "critical": true,
+      "depends_on": []
     },
     {
       "gate_id": "uid_sidecar_gate",
@@ -646,6 +693,7 @@
       "expected_summary": "Passed!",
       "classification": "full",
       "critical": true,
+      "release_required": true,
       "depends_on": []
     }
   ]

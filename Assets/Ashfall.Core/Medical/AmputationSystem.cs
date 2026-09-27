@@ -590,6 +590,18 @@ namespace Ashfall.Core.Medical
             return body;
         }
 
+        /// <summary>
+        /// True when the amputation authority has phantom pain on record for this
+        /// survivor. Read-only projection of existing state — the triage slate
+        /// reads it instead of holding a parallel pain cache.
+        /// </summary>
+        public bool HasPhantomPain(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return false;
+            return _state.phantomPainSurvivorIds != null
+                && _state.phantomPainSurvivorIds.Contains(survivorId);
+        }
+
         /// <summary>F14-G — per-prosthetic-item condition projection for the presentation slate.</summary>
         public Dictionary<string, int> GetProstheticConditions(string survivorId)
         {

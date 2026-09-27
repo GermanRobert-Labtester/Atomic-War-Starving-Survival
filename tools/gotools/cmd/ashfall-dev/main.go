@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"ashfall/gotools/pkg/agentsync"
@@ -14,6 +15,7 @@ import (
 	"ashfall/gotools/pkg/config"
 	"ashfall/gotools/pkg/indexer"
 	"ashfall/gotools/pkg/manifest"
+	"ashfall/gotools/pkg/monitor"
 	"ashfall/gotools/pkg/orchestrator"
 	"ashfall/gotools/pkg/parser"
 	"ashfall/gotools/pkg/proxy"
@@ -44,6 +46,8 @@ Commands:
   llm-proxy        Lightweight local LLM API proxy and router
   sync-agents      Synchronize and check drift across all 13 client agent rulebooks
   agent-core       Resident long-running AI agent orchestrator (< 20 MB RAM)
+  monitor-size     Repository tracked-blob size/growth monitor (base vs HEAD)
+  monitor-compile  Compile-set / test-only-production-source monitor (MSBuild-evaluated)
 
 Use "ashfall-dev <command> -h" for options on a specific command.`)
 }
@@ -84,6 +88,10 @@ func main() {
 		runSyncAgents(args)
 	case "agent-core":
 		runAgentCore(args)
+	case "monitor-size":
+		runMonitorSize(args)
+	case "monitor-compile":
+		runMonitorCompile(args)
 	case "-h", "--help", "help":
 		printUsage()
 	default:
@@ -445,4 +453,104 @@ func runCheckPlan(args []string) {
 	}
 
 	fmt.Printf("[check-plan] OK: %s\n", msg)
+}
+
+// resolveMonitorRootAndPolicy normalizes --root to an absolute path (so
+// downstream git/MSBuild invocations are unambiguous regardless of the
+// caller's CWD or spaces in the path) and fills in the default policy file
+// location when --policy is not given.
+func resolveMonitorRootAndPolicy(rootFlag, policyFlag string) (absRoot, policyPath string, err error) {
+	absRoot, err = filepath.Abs(rootFlag)
+	if err != nil {
+		return "", "", fmt.Errorf("resolve --root %q: %w", rootFlag, err)
+	}
+	policyPath = policyFlag
+	if policyPath == "" {
+		policyPath = filepath.Join(absRoot, "docs", "ci", "MONITORING_POLICY.json")
+	} else if !filepath.IsAbs(policyPath) {
+		policyPath = filepath.Join(absRoot, policyPath)
+	}
+	return absRoot, policyPath, nil
+}
+
+func runMonitorSize(args []string) {
+	fs := flag.NewFlagSet("monitor-size", flag.ExitOnError)
+	rootDir := fs.String("root", ".", "Repository root directory (absolute preferred; resolved to absolute either way)")
+	baseRef := fs.String("base", "", "Git ref to diff HEAD against for growth (required; fails closed if unresolvable)")
+	outPath := fs.String("out", "", "Output path for the JSON report (required; written even on policy violation)")
+	policyPath := fs.String("policy", "", "Path to MONITORING_POLICY.json (default: <root>/docs/ci/MONITORING_POLICY.json)")
+	_ = fs.Parse(args)
+
+	if strings.TrimSpace(*baseRef) == "" {
+		fmt.Fprintln(os.Stderr, "[monitor-size] ERROR: --base is required (growth cannot be computed without a base ref; this monitor fails closed rather than skipping the comparison)")
+		os.Exit(2)
+	}
+	if strings.TrimSpace(*outPath) == "" {
+		fmt.Fprintln(os.Stderr, "[monitor-size] ERROR: --out is required")
+		os.Exit(2)
+	}
+
+	absRoot, policy, err := resolveMonitorRootAndPolicy(*rootDir, *policyPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[monitor-size] ERROR: %v\n", err)
+		os.Exit(2)
+	}
+
+	report, err := monitor.RunSizeMonitor(monitor.SizeOptions{
+		Root:       absRoot,
+		BaseRef:    *baseRef,
+		PolicyPath: policy,
+	})
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[monitor-size] ERROR: %v\n", err)
+		os.Exit(2)
+	}
+
+	if err := report.WriteJSON(*outPath); err != nil {
+		fmt.Fprintf(os.Stderr, "[monitor-size] ERROR writing report to %s: %v\n", *outPath, err)
+		os.Exit(2)
+	}
+
+	fmt.Printf("[monitor-size] Report written to %s (passed=%v)\n", *outPath, report.Passed)
+	if report.HasError() {
+		os.Exit(1)
+	}
+}
+
+func runMonitorCompile(args []string) {
+	fs := flag.NewFlagSet("monitor-compile", flag.ExitOnError)
+	rootDir := fs.String("root", ".", "Repository root directory (absolute preferred; resolved to absolute either way)")
+	outPath := fs.String("out", "", "Output path for the JSON report (required; written even on policy violation)")
+	policyPath := fs.String("policy", "", "Path to MONITORING_POLICY.json (default: <root>/docs/ci/MONITORING_POLICY.json)")
+	_ = fs.Parse(args)
+
+	if strings.TrimSpace(*outPath) == "" {
+		fmt.Fprintln(os.Stderr, "[monitor-compile] ERROR: --out is required")
+		os.Exit(2)
+	}
+
+	absRoot, policy, err := resolveMonitorRootAndPolicy(*rootDir, *policyPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[monitor-compile] ERROR: %v\n", err)
+		os.Exit(2)
+	}
+
+	report, err := monitor.RunCompileMonitor(monitor.CompileOptions{
+		Root:       absRoot,
+		PolicyPath: policy,
+	})
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[monitor-compile] ERROR: %v\n", err)
+		os.Exit(2)
+	}
+
+	if err := report.WriteJSON(*outPath); err != nil {
+		fmt.Fprintf(os.Stderr, "[monitor-compile] ERROR writing report to %s: %v\n", *outPath, err)
+		os.Exit(2)
+	}
+
+	fmt.Printf("[monitor-compile] Report written to %s (passed=%v)\n", *outPath, report.Passed)
+	if report.HasError() {
+		os.Exit(1)
+	}
 }

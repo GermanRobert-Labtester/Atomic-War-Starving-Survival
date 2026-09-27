@@ -170,5 +170,16 @@ namespace AtomicWar.GodotApp
             _unifiedEndingDirty = true;
             return result;
         }
+
+        /// <summary>
+        /// The epilogue chronicle for the last resolved campaign ending, built by
+        /// the epilogue chronicle builder from the resolver's own result. Returns
+        /// null while no ending has been resolved. Presentation only.
+        /// </summary>
+        public Ashfall.Core.Endgame.EpilogueChronicle? GetEpilogueChronicle()
+        {
+            SetupUnifiedEnding();
+            return _unifiedEnding?.LastChronicle;
+        }
     }
 }

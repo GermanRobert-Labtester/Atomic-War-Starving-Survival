@@ -261,6 +261,8 @@ namespace Ashfall.Core
         PatrolRadioSelfTest,
         ModalTravelDispatchSelfTest,
         RationConflictSelfTest,
+        VoluntaryRegisterSelfTest,
+        WorldEvolutionSelfTest,
         CassettePlaybackSelfTest,
         GuiltSourcesSelfTest,
         BlackFlotillaStandingSelfTest,
@@ -1799,6 +1801,18 @@ namespace Ashfall.Core
                     "--ration-conflict-selftest",
                     new[] { "--ration-resentment-selftest" },
                     "Ration conflict: perceived fairness, resentment escalation to confrontation or theft, and morale/relationship consequences through the canonical owners"),
+                new HostCliActionDescriptor(
+                    HostCliAction.VoluntaryRegisterSelfTest,
+                    "Survivors",
+                    "--voluntary-register-selftest",
+                    new[] { "--volunteers-selftest" },
+                    "Voluntary register: high-dose surface-work signatures, banked incurred dose, and exactly-once task completion per survivor"),
+                new HostCliActionDescriptor(
+                    HostCliAction.WorldEvolutionSelfTest,
+                    "World",
+                    "--world-evolution-selftest",
+                    new[] { "--evolution-events-selftest" },
+                    "World evolution: authored day-threshold and flag-gated world-state events, exactly-once triggering, and exact captured-state restore"),
                 new HostCliActionDescriptor(
                     HostCliAction.ModalTravelDispatchSelfTest,
                     "World & Map",

@@ -361,6 +361,7 @@ namespace AtomicWar.GodotApp
             SaveOutpostSettlement();
             SavePresentation();
             PersistOrphanSealWave1();
+            SaveSurvivorLetterDelivery();
             SaveCampaignLegacy();
             SaveResearchUnlock();
             SaveUnifiedEnding();

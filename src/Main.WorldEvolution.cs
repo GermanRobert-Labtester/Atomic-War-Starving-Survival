@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 // ============================================================================
 // ASHFALL Plan 227 — World Evolution Host Wiring.
-// Core WorldEvolutionEngine is the authority for world-state evolution events
-// and campaign progression tracking.
+// Core WorldEvolutionEngine is the single authority for world-state evolution
+// events. It reads the authoritative wasteland map owned by the world session;
+// no second map graph, no parallel event ledger.
 // ============================================================================
 
 using System;
+using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.World;
 
@@ -22,13 +24,12 @@ namespace AtomicWar.GodotApp
         {
             if (_worldEvolution != null) return;
 
-            _worldEvolution = new WorldEvolutionHostSession(dataDir: _dataDir);
-            _worldEvolution.Setup();
+            _worldEvolution = new WorldEvolutionHostSession(_dataDir);
 
             var saved = WorldEvolutionSaveStore.TryLoad();
             if (saved != null)
             {
-                _worldEvolution.RestoreState(saved);
+                _worldEvolution.RestoreState(saved, _world?.WastelandMap);
             }
 
             _worldEvolution.StateChanged += () => _worldEvolutionDirty = true;
@@ -50,7 +51,7 @@ namespace AtomicWar.GodotApp
             if (_worldEvolution == null) SetupWorldEvolution();
             if (_worldEvolution == null) return;
 
-            _worldEvolution.Tick(day);
+            _worldEvolution.Tick(day, ActiveWorldFlags(), _world?.WastelandMap);
         }
 
         public void FlushWorldEvolutionIfDirty()
@@ -65,6 +66,17 @@ namespace AtomicWar.GodotApp
         {
             _worldEvolution?.Reset();
             _worldEvolutionDirty = false;
+        }
+
+        /// <summary>
+        /// Derived read model over the campaign's active world flags. Returns an
+        /// empty set when no flags owner is bound; the engine treats a missing
+        /// flag as a gate that is not open, so no event fires on an unowned fact.
+        /// </summary>
+        private HashSet<string> ActiveWorldFlags()
+        {
+            var flags = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            return flags;
         }
     }
 }

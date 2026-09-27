@@ -195,6 +195,37 @@ namespace AtomicWar.GodotApp
                 : $"Black market: {contacts.Count} contacts · {activeDebts} active debts · last: {LastEvent}";
         }
 
+        // ── Underground economy pressure ─────────────────────────────────
+
+        /// <summary>
+        /// Market-condition readback for one syndicate contact, derived from that
+        /// contact's live underworld ledger (heat + trust). Pure view: no new
+        /// ledger, no price book, no mutable pressure store.
+        /// </summary>
+        public UndergroundEconomyPressure? GetMarketPressure(string syndicateId)
+        {
+            if (string.IsNullOrEmpty(syndicateId)) return null;
+            var ledger = System.FindLedger(syndicateId);
+            if (ledger == null || !ledger.discovered) return null;
+            return UndergroundEconomyPressure.Evaluate(
+                currentHeat: (int)Math.Clamp((float)Math.Round(ledger.heat), 0f, BlackMarketSystem.HeatMax),
+                heatThreshold: (int)BlackMarketSystem.HeatMax,
+                trust: (int)Math.Clamp((float)Math.Round(ledger.trust), 0f, 100f));
+        }
+
+        /// <summary>Hottest contact pressure, for the panel status rail.</summary>
+        public UndergroundEconomyPressure? GetHottestMarketPressure()
+        {
+            UndergroundEconomyPressure? hottest = null;
+            foreach (var id in System.DiscoveredContacts)
+            {
+                var p = GetMarketPressure(id);
+                if (p == null) continue;
+                if (hottest == null || p.PricePressureMultiplier > hottest.PricePressureMultiplier) hottest = p;
+            }
+            return hottest;
+        }
+
         // ── Save / Load ──────────────────────────────────────────────
 
         public BlackMarketState CaptureSave() => System.CaptureState();

@@ -36,6 +36,27 @@ namespace AtomicWar.GodotApp.UI
         public void Bind(AmputationSystem system) { _system = system; _feedbackText = string.Empty; RefreshView(); }
         public void Unbind() { _system = null; }
 
+        /// <summary>Phantom-pain readout used by the rehabilitation slate projection.</summary>
+        public Func<string, bool>? PhantomPainProvider { get; set; }
+
+        /// <summary>
+        /// EN-04 rehabilitation slate for the selected patient — pure projection of
+        /// the amputation authority's own body state. Returns null when nothing
+        /// is selected or no limb system is bound.
+        /// </summary>
+        public Ashfall.Core.Medical.RehabilitationSlateProjection? GetRehabSlate()
+        {
+            if (_system == null) return null;
+            var patients = PatientIds();
+            if (patients.Count == 0 || _selectedPatientIndex < 0 || _selectedPatientIndex >= patients.Count)
+                return null;
+
+            string survivorId = patients[_selectedPatientIndex];
+            bool phantom = PhantomPainProvider?.Invoke(survivorId) ?? false;
+            return Ashfall.Core.Medical.RehabilitationSlateProjection.Project(
+                survivorId, _system.BuildBodyState(survivorId), phantom);
+        }
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
@@ -189,6 +210,29 @@ namespace AtomicWar.GodotApp.UI
                 _detail.AddChild(_feedbackIsFailure
                     ? AshfallUiHelpers.MakeWarning(_feedbackText)
                     : AshfallUiHelpers.MakeSuccess(_feedbackText));
+            }
+
+            // ── EN-04 Rehabilitation slate ──
+            var rehab = GetRehabSlate();
+            if (rehab != null)
+            {
+                _detail.AddChild(AshfallUiHelpers.MakeSeparator());
+                _detail.AddChild(AshfallUiHelpers.MakeSubsectionHeader("REHABILITATION"));
+                if (!rehab.HasProsthetics)
+                {
+                    _detail.AddChild(AshfallUiHelpers.MakeMetadata("  No prosthetics fitted."));
+                }
+                else
+                {
+                    _detail.AddChild(AshfallUiHelpers.MakeDataRow("  Phase", rehab.CurrentPhase, AshfallUiHelpers.ColorText));
+                    _detail.AddChild(AshfallUiHelpers.MakeDataRow("  Days in phase", rehab.DaysInPhase.ToString(), AshfallUiHelpers.ColorDim));
+                    _detail.AddChild(AshfallUiHelpers.MakeDataRow("  Adaptation quality", $"{rehab.QualityPercent:0.#}%", AshfallUiHelpers.ColorText));
+                    _detail.AddChild(AshfallUiHelpers.MakeDataRow("  Next milestone", rehab.NextMilestone, AshfallUiHelpers.ColorDim));
+                    _detail.AddChild(AshfallUiHelpers.MakeDataRow(
+                        "  Phantom pain",
+                        rehab.HasPhantomPain ? "episodes reported" : "none reported",
+                        rehab.HasPhantomPain ? AshfallUiHelpers.ColorWarning : AshfallUiHelpers.ColorDim));
+                }
             }
 
             // ── Actions ──

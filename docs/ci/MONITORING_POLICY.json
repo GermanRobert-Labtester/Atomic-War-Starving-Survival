@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "size": {
+    "description": "Growth-only policy. Absolute repository size is not gated; only the delta between --base and HEAD git trees is gated. Never treat a prior absolute byte count as an accepted baseline.",
+    "new_markdown_max_bytes": 2097152,
+    "pr_growth_fail_bytes": 1073741824,
+    "pr_growth_warn_bytes": 104857600,
+    "markdown_allowlist": []
+  },
+  "compile": {
+    "description": "Exact-path allowlist for tracked .cs files that are intentionally uncompiled or intentionally compiled only by the test project. Any tracked .cs not matched by MSBuild compile-item evaluation of the production/test projects, a discovered standalone tool project, or this allowlist is a NEW unclassified violation and fails the gate.",
+    "production_projects": [
+      "Ashfall.csproj",
+      "Ashfall.Core/Ashfall.Core.csproj"
+    ],
+    "test_projects": [
+      "Ashfall.Core.Tests/Ashfall.Core.Tests.csproj"
+    ],
+    "test_root_prefix": "Ashfall.Core.Tests/",
+    "known_paths": [
+      {
+        "path": "Assets/_Game/Shelter/NoiseDisciplineSystem.cs",
+        "classification": "test_only_production_debt",
+        "severity": "info",
+        "reason": "Explicit <Compile Include> in Ashfall.Core.Tests.csproj links this legacy Assets/_Game production-like source into the test assembly only; no production project (Ashfall.csproj / Ashfall.Core.csproj) compiles it. Named accepted debt per KNOWN_DEBT.md quarantine history, not silently treated as a normal test file. Do not migrate without a signed plan."
+      },
+      {
+        "path": "Assets/_Game/Survivors/BunkerSocialSystems.cs",
+        "classification": "unity_retired_uncompiled",
+        "severity": "info",
+        "reason": "Legacy Unity-era source (references UnityEngine) under the deprecated Assets/_Game tree. Not included by any current .csproj Compile item. Unity is retired per AGENTS.md rule 1; do not migrate or re-wire without an explicit user request for historical Unity work."
+      },
+      {
+        "path": "assets/ui/MainMenu/MainMenuController.cs",
+        "classification": "unity_retired_uncompiled",
+        "severity": "info",
+        "reason": "Part of the retired Unity MainMenuController partial-class family (references UnityEngine/UnityEngine.UIElements). Not included by any current .csproj Compile item. Preserved as historical reference only."
+      },
+      {
+        "path": "assets/ui/MainMenu/MainMenuController.Animation.cs",
+        "classification": "unity_retired_uncompiled",
+        "severity": "info",
+        "reason": "Partial-class file of the retired Unity MainMenuController family (references UnityEngine.UIElements). Not included by any current .csproj Compile item."
+      },
+      {
+        "path": "assets/ui/MainMenu/MainMenuController.Dialogs.cs",
+        "classification": "unity_retired_uncompiled",
+        "severity": "info",
+        "reason": "Partial-class file of the retired Unity MainMenuController family (references UnityEngine/UnityEngine.UIElements). Not included by any current .csproj Compile item."
+      },
+      {
+        "path": "assets/ui/MainMenu/MainMenuController.Settings.cs",
+        "classification": "unity_retired_uncompiled",
+        "severity": "info",
+        "reason": "Partial-class file of the retired Unity MainMenuController family (references UnityEngine). Not included by any current .csproj Compile item."
+      },
+      {
+        "path": "assets/ui/MainMenu/MainMenuModel.cs",
+        "classification": "unity_retired_uncompiled",
+        "severity": "info",
+        "reason": "Data model for the retired Unity MainMenu family. Not included by any current .csproj Compile item."
+      },
+      {
+        "path": "docs/contracts/Cross-host/UnityJsonSerializer.template.cs",
+        "classification": "cross_host_reference_template",
+        "severity": "info",
+        "reason": "Documented reference implementation a future Unity host would copy into its own project to satisfy the cross-host save wire-format contract. Deliberately outside this repo's build per its own file header; not dead code."
+      }
+    ]
+  }
+}

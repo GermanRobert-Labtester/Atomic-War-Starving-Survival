@@ -1333,15 +1333,20 @@ namespace AtomicWar.GodotApp
             }
 
             // ── World flag (authored micro-location consequence) ──
-            app.FlagId = r.SetWorldFlagId;
-            bool flagWasAlreadySet = true;
+            // Routed through the authored dispatcher so provenance, idempotency and
+            // the "no authority" case stay in one place (F5 / §11-12).
+            app.FlagId = r.SetWorldFlagId ?? string.Empty;
             if (!string.IsNullOrEmpty(r.SetWorldFlagId))
             {
-                flagWasAlreadySet = Flags != null && Flags.IsSet(r.SetWorldFlagId);
-                Flags?.Set(r.SetWorldFlagId, NarrativeEncounterSystem.SystemId, r.ResolutionId, r.Day);
-                app.Flag = flagWasAlreadySet
-                    ? EncounterApplicationResult.Status.AlreadyKnown
-                    : EncounterApplicationResult.Status.Applied;
+                var flagResult = EncounterChoiceEffectDispatcher.ApplyWorldFlag(r, Flags);
+                bool flagWasAlreadySet = flagResult.Status == EncounterChoiceEffectDispatcher.EffectStatus.AlreadyKnown;
+                app.Flag = flagResult.Status switch
+                {
+                    EncounterChoiceEffectDispatcher.EffectStatus.Applied => EncounterApplicationResult.Status.Applied,
+                    EncounterChoiceEffectDispatcher.EffectStatus.AlreadyKnown => EncounterApplicationResult.Status.AlreadyKnown,
+                    EncounterChoiceEffectDispatcher.EffectStatus.SkippedNoAuthority => EncounterApplicationResult.Status.SkippedNoAuthority,
+                    _ => EncounterApplicationResult.Status.NotApplicable,
+                };
 
                 // F17 — hazard consequence: a freshly-set micro-location hazard
                 // flag routes into the owning disease authority exactly once
