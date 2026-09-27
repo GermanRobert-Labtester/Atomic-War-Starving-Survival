@@ -288,6 +288,8 @@ namespace Ashfall.Core.Campaign
                 // Commit the day before persisting so the save envelope
                 // records the correct day header. The rollback path restores
                 // from pre-day snapshots regardless of commit order.
+                int? committedBefore = _lastAdvancedDay;
+                int calendarBefore = Calendar.CurrentDay;
                 _lastAdvancedDay = day;
                 Calendar.SetDay(day);
 
@@ -302,9 +304,17 @@ namespace Ashfall.Core.Campaign
                     {
                         if (failClosed)
                         {
+                            // The day must not be committed unless it is actually
+                            // saved. Rolling both the committed-day marker and the
+                            // calendar header back to their pre-commit values is what
+                            // keeps a persistence failure from claiming a day that has
+                            // no save on disk, and what stops a retry from
+                            // double-ticking owners on a day already counted.
+                            _lastAdvancedDay = committedBefore ?? int.MinValue;
+                            Calendar.SetDay(calendarBefore);
+
                             _pendingRestoreDay = day;
-                            reports.Add(new DayOwnerReport("persistence", false, Array.Empty<DayStateChangeEvent>(), pEx.Message));
-                            return new DayAdvancedEventArgs(day, reports);
+                            return ReportsWithPersistenceFailure(args, reports, pEx);
                         }
                         throw;
                     }
@@ -316,6 +326,21 @@ namespace Ashfall.Core.Campaign
             {
                 _advancing = false;
             }
+        }
+
+        /// <summary>
+        /// Builds the fail-closed result for a persistence throw. The owner tick
+        /// reports already collected for this day are preserved (the caller must
+        /// see which owners ran before the save failed) and the persistence
+        /// failure is appended as its own report rather than replacing the set.
+        /// </summary>
+        private static DayAdvancedEventArgs ReportsWithPersistenceFailure(
+            DayAdvancedEventArgs source, List<DayOwnerReport> reports, Exception pEx)
+        {
+            var combined = new List<DayOwnerReport>(source.OwnerReports);
+            combined.AddRange(reports);
+            combined.Add(new DayOwnerReport("persistence", false, Array.Empty<DayStateChangeEvent>(), pEx.Message));
+            return new DayAdvancedEventArgs(source.Day, combined.ToArray());
         }
 
         private sealed class RegisteredOwner

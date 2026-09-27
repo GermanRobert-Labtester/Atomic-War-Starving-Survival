@@ -24,17 +24,25 @@ namespace AtomicWar.GodotApp
                 if (session.Contains("knock_exp07_vel_vigil")) { Console.WriteLine("[PASS] Check 2: Known knock id present."); passed++; }
                 else Console.WriteLine("[FAIL] Check 2: known knock missing.");
 
-                var flags = new InMemoryFlagLedger();
+                // One shared campaign consequence ledger drives every check below.
+                // Constructing a private in-memory ledger here would open a second
+                // flag authority beside the campaign's ConsequenceLedger, which the
+                // ConsequenceLedgerSourceGate forbids for anything under src/.
+                var flags = new Ashfall.Core.Flags.CampaignConsequenceLedger();
                 flags.Set("flag_exp07_vel_vigil_knock", "probe");
                 if (session.Validate("door.knock.practiced", flags, out var diag) && diag.Contains("orphan_validated"))
                 { Console.WriteLine($"[PASS] Check 3: Gated deliberate knock validated."); passed++; }
                 else Console.WriteLine($"[FAIL] Check 3: gated knock rejected ({diag}).");
 
-                var empty = new InMemoryFlagLedger();
-                if (!session.Validate("door.knock.practiced", empty, out var diag2) && diag2.Contains("orphan_rejected"))
+                // "No flag recorded" is expressed by clearing the shared ledger,
+                // not by constructing a second one. Check 5 restores the flag so it
+                // still proves refusal is a property of the knock id, not the flags.
+                flags.ClearAll();
+                if (!session.Validate("door.knock.practiced", flags, out var diag2) && diag2.Contains("orphan_rejected"))
                 { Console.WriteLine("[PASS] Check 4: Ungated knock refused (not silently dropped)."); passed++; }
                 else Console.WriteLine($"[FAIL] Check 4: ungated knock not refused ({diag2}).");
 
+                flags.Set("flag_exp07_vel_vigil_knock", "probe");
                 if (!session.Validate("door.knock.unregistered", flags, out _)) { Console.WriteLine("[PASS] Check 5: Unregistered knock refused."); passed++; }
                 else Console.WriteLine("[FAIL] Check 5: unregistered knock accepted.");
 
