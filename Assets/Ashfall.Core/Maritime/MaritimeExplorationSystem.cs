@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Ashfall.Core.IO;
 
 namespace Ashfall.Core.Maritime
 {
@@ -222,20 +223,34 @@ namespace Ashfall.Core.Maritime
             if (string.IsNullOrWhiteSpace(json))
                 throw new ArgumentException("Catalog JSON cannot be null or empty", nameof(json));
 
-            var catalog = JsonSerializer.Deserialize<MaritimeZonesCatalog>(json, new JsonSerializerOptions
+            try
             {
-                PropertyNameCaseInsensitive = true
-            });
-
-            if (catalog?.zones == null) return;
-
-            _zoneDefs.Clear();
-            foreach (var zone in catalog.zones)
-            {
-                if (!string.IsNullOrEmpty(zone.zone_id))
+                var catalog = JsonSerializer.Deserialize<MaritimeZonesCatalog>(json, new JsonSerializerOptions
                 {
-                    _zoneDefs[zone.zone_id] = zone;
+                    PropertyNameCaseInsensitive = true
+                });
+
+                if (catalog?.zones == null)
+                {
+                    CatalogDiagnostics.Warn(
+                        "maritime_zones.json",
+                        nameof(MaritimeZonesCatalog),
+                        new JsonException("Catalog root is missing the zones array."));
+                    return;
                 }
+
+                _zoneDefs.Clear();
+                foreach (var zone in catalog.zones)
+                {
+                    if (!string.IsNullOrEmpty(zone.zone_id))
+                    {
+                        _zoneDefs[zone.zone_id] = zone;
+                    }
+                }
+            }
+            catch (JsonException ex)
+            {
+                CatalogDiagnostics.Warn("maritime_zones.json", nameof(MaritimeZonesCatalog), ex);
             }
         }
 
@@ -610,7 +625,7 @@ namespace Ashfall.Core.Maritime
 
         private static MaritimeHazardType DetermineHazardType(DiveSiteType siteType, int hash)
         {
-            int subRoll = hash % 4;
+            int subRoll = StableHash.NonNegativeRemainder(hash, 4);
             return siteType switch
             {
                 DiveSiteType.ContaminatedZone => MaritimeHazardType.RadiationHotspot,

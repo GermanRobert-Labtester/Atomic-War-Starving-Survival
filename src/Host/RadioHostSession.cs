@@ -350,6 +350,46 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// Canonical delivery seam for faction broadcasts produced outside the
+        /// tuner flow (for example the patrol radio bridge, which queues a
+        /// broadcast after a wasteland patrol encounter choice). The catalog
+        /// remains the content authority; the radio owner keeps the intercept
+        /// log, the latest-intercept pointer, and the consumer event. An unknown
+        /// broadcast id is a refusal, never a fabricated intercept.
+        /// </summary>
+        public bool PlayFactionBroadcast(string broadcastId, int day)
+        {
+            if (string.IsNullOrWhiteSpace(broadcastId)) return false;
+            var broadcast = BroadcastCatalog.GetById(broadcastId);
+            if (broadcast == null) return false;
+
+            var intercept = new RadioIntercept(
+                broadcast.StationId ?? string.Empty,
+                broadcast.SourceName ?? broadcast.Title ?? broadcast.BroadcastId,
+                broadcast.FrequencyMhz,
+                broadcast.IsEmergency ? RadioEventKind.RaidWarning : RadioEventKind.InterceptChatter,
+                broadcast.Message ?? string.Empty,
+                Math.Clamp(broadcast.SignalStrength, 1, 9),
+                day > 0 ? day : Day);
+
+            AppendIntercept(intercept);
+            LastEvent = $"Faction broadcast received: {intercept.Callsign} on {intercept.FrequencyMhz:0.00} MHz.";
+            string? cue = ResolveVoiceOver(intercept);
+            BroadcastIntercepted?.Invoke(intercept, cue);
+            RaiseStateChanged();
+            return true;
+        }
+
+        /// <summary>The radio owner is the only writer of the intercept log.</summary>
+        private void AppendIntercept(RadioIntercept intercept)
+        {
+            _history.Add(intercept);
+            if (_history.Count > 32)
+                _history.RemoveAt(0);
+            LastIntercept = intercept;
+        }
+
+        /// <summary>
         /// Record a direction-finding observation for the currently intercepted signal.
         /// </summary>
         public bool RecordBearingObservation(float bearingDegrees)

@@ -101,6 +101,8 @@ namespace Ashfall.Core.SkyDefense
         private readonly ISurvivorSkillsPort? _skills;
 
         private readonly Dictionary<string, SkyDefenseOrdnanceDefinition> _ordnance = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, SkyDefenseOrdnanceDefinition> _ordnanceByItemId = new(StringComparer.Ordinal);
+        private readonly HashSet<string> _ambiguousOrdnanceItemIds = new(StringComparer.Ordinal);
         private SkyDefenseBatterySave _state = new();
 
         public SkyDefenseBatterySystem(
@@ -140,9 +142,26 @@ namespace Ashfall.Core.SkyDefense
         {
             if (ordnance == null) return;
             _ordnance.Clear();
+            _ordnanceByItemId.Clear();
+            _ambiguousOrdnanceItemIds.Clear();
             foreach (var o in ordnance)
                 if (!string.IsNullOrEmpty(o.ordnance_id))
                     _ordnance[o.ordnance_id] = o;
+
+            foreach (var o in _ordnance.Values)
+            {
+                if (string.IsNullOrEmpty(o.item_id) || _ambiguousOrdnanceItemIds.Contains(o.item_id))
+                    continue;
+
+                if (_ordnanceByItemId.ContainsKey(o.item_id))
+                {
+                    _ordnanceByItemId.Remove(o.item_id);
+                    _ambiguousOrdnanceItemIds.Add(o.item_id);
+                    continue;
+                }
+
+                _ordnanceByItemId[o.item_id] = o;
+            }
         }
 
         /// <summary>Ensures the authored default emplacement exists.</summary>
@@ -210,6 +229,8 @@ namespace Ashfall.Core.SkyDefense
                 return ActionResult.Blocked("unknown_turret", "sky.unknown_turret");
             if (!_ordnance.TryGetValue(ordnanceId, out var ordnance))
                 return ActionResult.Blocked("unknown_ordnance", "sky.unknown_ordnance");
+            if (_ambiguousOrdnanceItemIds.Contains(ordnance.item_id))
+                return ActionResult.Blocked("ambiguous_ordnance", "sky.ambiguous_ordnance");
             if (ordnance.item_id == turret.loaded_ammo_id && turret.magazine_count >= ordnance.magazine_units)
                 return ActionResult.Blocked("magazine_full", "sky.magazine_full");
             if (_inventory == null)
@@ -290,8 +311,9 @@ namespace Ashfall.Core.SkyDefense
             if (turret.hydraulic_condition <= 0)
                 return ActionResult.Blocked("hydraulics_failed", "sky.hydraulics_failed");
 
-            var ordnance = _ordnance.Values.FirstOrDefault(o => o.item_id == turret.loaded_ammo_id);
-            if (ordnance == null)
+            if (_ambiguousOrdnanceItemIds.Contains(turret.loaded_ammo_id))
+                return ActionResult.Blocked("ambiguous_ordnance", "sky.ambiguous_ordnance");
+            if (!_ordnanceByItemId.TryGetValue(turret.loaded_ammo_id, out var ordnance))
                 return ActionResult.Blocked("unknown_ordnance", "sky.unknown_ordnance");
 
             // Author the firing solution: deterministic angles from the track.

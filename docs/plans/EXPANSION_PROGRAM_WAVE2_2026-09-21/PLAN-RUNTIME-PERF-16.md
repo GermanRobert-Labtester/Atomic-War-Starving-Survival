@@ -10,6 +10,11 @@ composition and tick surface).
 **Non-goals:** no speculative micro-optimization, no frame-rate regression, no
 engine changes, no new threading model.
 
+> **Current disposition (2026-09-26):** the original performance inventory is
+> historical. `PerfTestMarker.cs` was a zero-reference 10-line marker and has
+> been removed with user authorization. Its inventory and zero-in-degree entry
+> below are historical evidence, not a live Core path.
+
 ---
 
 ## 1. Outcome
@@ -172,7 +177,7 @@ Support 8
 | `PerfSession.cs` | 165 | Support | — | 0 | 0 | 0 |
 | `PerfStatistics.cs` | 123 | Support | — | 0 | 0 | 0 |
 | `PerfStopwatch.cs` | 58 | Support | — | 0 | 0 | 0 |
-| `PerfTestMarker.cs` | 10 | Support | — | 0 | 0 | 0 |
+| `PerfTestMarker.cs` | 10 | Retired (2026-09-26) | — | 0 | 0 | 0 |
 | `PerfWorkloadContext.cs` | 47 | Support | — | 0 | 0 | 0 |
 | `PerformanceCampaignHarness.cs` | 404 | Support | — | 0 | 0 | 3 |
 
@@ -282,7 +287,7 @@ Domain files: 9; intra-domain edges: **10**; isolated files:
 | `PerfStopwatch` | 2 |
 | `PerfResult` | 1 |
 | `PerfSession` | 0 |
-| `PerfTestMarker` | 0 |
+| `PerfTestMarker` (retired 2026-09-26) | 0 |
 | `PerformanceCampaignHarness` | 0 |
 | `SubsystemManifest` | 0 |
 

@@ -38,6 +38,7 @@ namespace AtomicWar.GodotApp
 
             _timeCapsule = new TimeCapsuleHostSession(system);
             _timeCapsule.StateChanged += OnTimeCapsuleStateChanged;
+            _timeCapsule.DayProvider = () => _simDay;
             return _timeCapsule;
         }
 
@@ -79,8 +80,10 @@ namespace AtomicWar.GodotApp
                 return;
 
             EnsureTimeCapsule();
+            SetupLetters();
             _timeCapsulePanel = new TimeCapsulePanel();
             _timeCapsulePanel.Bind(_timeCapsule);
+            _timeCapsulePanel.BindLetters(_letters);
             _timeCapsulePanel.OnClose += () => _timeCapsulePanel.Visible = false;
             _timeCapsulePanel.Visible = false;
             AddChild(_timeCapsulePanel);

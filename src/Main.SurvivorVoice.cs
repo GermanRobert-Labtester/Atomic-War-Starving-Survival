@@ -20,6 +20,8 @@
 using System;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Campaign;
+using Ashfall.Core.Radiation;
 using Ashfall.Core.Random;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Voice;
@@ -33,12 +35,18 @@ namespace AtomicWar.GodotApp
 
         private SurvivorVoiceHostSession? _survivorVoice;
         private bool _survivorVoiceDirty;
+        private ICampaignCalendar? _survivorVoiceBoundCalendar;
+        private RadiationSystem? _survivorVoiceBoundRadiation;
 
         public SurvivorVoiceHostSession? SurvivorVoice => _survivorVoice;
 
         private SurvivorVoiceHostSession EnsureSurvivorVoice()
         {
-            if (_survivorVoice != null) return _survivorVoice;
+            if (_survivorVoice != null)
+            {
+                BindSurvivorVoiceTriggers();
+                return _survivorVoice;
+            }
 
             var system = new SurvivorVoiceSystem();
             // Catalog authority: the authored JSON is the only line source.
@@ -64,20 +72,46 @@ namespace AtomicWar.GodotApp
 
         private void BindSurvivorVoiceTriggers()
         {
-            // Season owner: the calendar is the single season authority.
-            if (_campaignDay?.Calendar != null)
+            // Season owner: rebind only when the canonical calendar instance changes.
+            var calendar = _campaignDay?.Calendar;
+            if (!ReferenceEquals(calendar, _survivorVoiceBoundCalendar))
             {
-                _campaignDay.Calendar.OnSeasonChanged += TriggerSurvivorVoiceSeasonChanged;
+                if (_survivorVoiceBoundCalendar != null)
+                    _survivorVoiceBoundCalendar.OnSeasonChanged -= TriggerSurvivorVoiceSeasonChanged;
+
+                _survivorVoiceBoundCalendar = calendar;
+                if (_survivorVoiceBoundCalendar != null)
+                    _survivorVoiceBoundCalendar.OnSeasonChanged += TriggerSurvivorVoiceSeasonChanged;
             }
 
-            // Radiation owner: dose events are the only spike source.
-            if (_survivors?.Radiation != null)
+            // Radiation owner: named handler allows exact teardown on rebind/reset.
+            var radiation = _survivors?.Radiation;
+            if (!ReferenceEquals(radiation, _survivorVoiceBoundRadiation))
             {
-                _survivors.Radiation.OnDoseChanged += (state, dose) =>
-                {
-                    if (state != null) TriggerSurvivorVoiceRadiationSpike(state.Id, dose);
-                };
+                if (_survivorVoiceBoundRadiation != null)
+                    _survivorVoiceBoundRadiation.OnDoseChanged -= OnSurvivorVoiceDoseChanged;
+
+                _survivorVoiceBoundRadiation = radiation;
+                if (_survivorVoiceBoundRadiation != null)
+                    _survivorVoiceBoundRadiation.OnDoseChanged += OnSurvivorVoiceDoseChanged;
             }
+        }
+
+        private void UnbindSurvivorVoiceTriggers()
+        {
+            if (_survivorVoiceBoundCalendar != null)
+                _survivorVoiceBoundCalendar.OnSeasonChanged -= TriggerSurvivorVoiceSeasonChanged;
+            if (_survivorVoiceBoundRadiation != null)
+                _survivorVoiceBoundRadiation.OnDoseChanged -= OnSurvivorVoiceDoseChanged;
+
+            _survivorVoiceBoundCalendar = null;
+            _survivorVoiceBoundRadiation = null;
+        }
+
+        private void OnSurvivorVoiceDoseChanged(SurvivorRadState state, float dose)
+        {
+            if (state != null)
+                TriggerSurvivorVoiceRadiationSpike(state.Id, dose);
         }
 
         private void SetupSurvivorVoice()
@@ -101,6 +135,7 @@ namespace AtomicWar.GodotApp
 
         private void ResetSurvivorVoice()
         {
+            UnbindSurvivorVoiceTriggers();
             _survivorVoice?.Dispose();
             _survivorVoice = null;
             _survivorVoiceDirty = false;

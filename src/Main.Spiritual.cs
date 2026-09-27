@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+using System;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Spiritual;
@@ -16,6 +17,10 @@ namespace AtomicWar.GodotApp
         private SpiritualMeaningCoordinator? _spiritual;
         private SpiritualCatalog? _spiritualCatalog;
         private bool _spiritualDeathWired;
+        private SpiritualMeaningCoordinator? _memorialRiteTraceSource;
+        private Action<string, string>? _memorialRiteTraceHandler;
+        private SurvivorFateSystem? _spiritualDeathSource;
+        private Action<SurvivorFateEvent>? _spiritualDeathHandler;
 
         public SpiritualMeaningCoordinator? SpiritualCoordinator => _spiritual;
 
@@ -59,24 +64,28 @@ namespace AtomicWar.GodotApp
         {
             if (_memorialRiteTraceWired || _spiritual == null) return;
             _memorialRiteTraceWired = true;
-            _spiritual.OnMemorialRitePerformed += (deceasedId, riteId) =>
-            {
-                if (string.IsNullOrEmpty(deceasedId) || string.IsNullOrEmpty(riteId)) return;
+            _memorialRiteTraceSource = _spiritual;
+            _memorialRiteTraceHandler = OnMemorialRitePerformedForReckoning;
+            _memorialRiteTraceSource.OnMemorialRitePerformed += _memorialRiteTraceHandler;
+        }
 
-                var triggers = RiteTraceTriggers();
-                if (!triggers.TryFire("rite." + deceasedId + "." + riteId, _simDay)) return;
+        private void OnMemorialRitePerformedForReckoning(string deceasedId, string riteId)
+        {
+            if (string.IsNullOrEmpty(deceasedId) || string.IsNullOrEmpty(riteId)) return;
 
-                SetupVerdict();
-                if (_verdict == null) return;
-                _verdict.Reckoning.EnrollRiteTrace(1);
-                _verdictDirty = true;
+            var triggers = RiteTraceTriggers();
+            if (!triggers.TryFire("rite." + deceasedId + "." + riteId, _simDay)) return;
 
-                SetupJournal();
-                _journal?.TryAddRawEntry(
-                    $"rite_trace_{deceasedId}_{riteId}_{_simDay}",
-                    "A memorial act was entered in the register.",
-                    null!, _simDay);
-            };
+            SetupVerdict();
+            if (_verdict == null) return;
+            _verdict.Reckoning.EnrollRiteTrace(1);
+            _verdictDirty = true;
+
+            SetupJournal();
+            _journal?.TryAddRawEntry(
+                $"rite_trace_{deceasedId}_{riteId}_{_simDay}",
+                "A memorial act was entered in the register.",
+                null!, _simDay);
         }
 
         /// <summary>W10 one-shot guard over the campaign consequence ledger.</summary>
@@ -93,7 +102,9 @@ namespace AtomicWar.GodotApp
             SetupSurvivorFate();
             if (_spiritualDeathWired || _survivorFate == null) return;
 
-            _survivorFate.OnSurvivorFate += OnSurvivorFateForSpiritual;
+            _spiritualDeathSource = _survivorFate;
+            _spiritualDeathHandler = OnSurvivorFateForSpiritual;
+            _spiritualDeathSource.OnSurvivorFate += _spiritualDeathHandler;
             foreach (var fate in _survivorFate.Fates)
             {
                 if (fate == null || string.IsNullOrEmpty(fate.survivorId)) continue;
@@ -112,6 +123,24 @@ namespace AtomicWar.GodotApp
         {
             if (_spiritual == null) return;
             CaptureSection("spiritual_meaning", SpiritualSaveStore.TryCapturePersisted(_spiritual.CaptureState()));
+        }
+
+        public void ResetSpiritual()
+        {
+            if (_memorialRiteTraceSource != null && _memorialRiteTraceHandler != null)
+                _memorialRiteTraceSource.OnMemorialRitePerformed -= _memorialRiteTraceHandler;
+            if (_spiritualDeathSource != null && _spiritualDeathHandler != null)
+                _spiritualDeathSource.OnSurvivorFate -= _spiritualDeathHandler;
+
+            _spiritual = null;
+            _spiritualCatalog = null;
+            _memorialRiteTraceSource = null;
+            _memorialRiteTraceHandler = null;
+            _spiritualDeathSource = null;
+            _spiritualDeathHandler = null;
+            _spiritualDeathWired = false;
+            _memorialRiteTraceWired = false;
+            _riteTraceTriggers = null;
         }
 
         public void TickSpiritualDay(int day)

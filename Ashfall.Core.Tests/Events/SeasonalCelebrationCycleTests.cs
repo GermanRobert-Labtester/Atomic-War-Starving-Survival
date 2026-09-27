@@ -69,5 +69,26 @@ namespace Ashfall.Core.Tests.Events
             restored.RestoreState(system.CaptureState());
             Assert.True(restored.WasHolidayOccurrenceSkipped("hol_midsummer_day", 540));
         }
+
+        [Fact]
+        public void CheckHolidayForDay_SelectsDuplicateTriggerByStableIdOrder()
+        {
+            const string reverseIdOrder =
+                "{\"holidays\":[" +
+                "{\"holiday_id\":\"holiday_zulu\",\"name\":\"Later Id\",\"trigger_day\":17}," +
+                "{\"holiday_id\":\"holiday_alpha\",\"name\":\"Earlier Id\",\"trigger_day\":17}]}";
+            const string stableIdOrder =
+                "{\"holidays\":[" +
+                "{\"holiday_id\":\"holiday_alpha\",\"name\":\"Earlier Id\",\"trigger_day\":17}," +
+                "{\"holiday_id\":\"holiday_zulu\",\"name\":\"Later Id\",\"trigger_day\":17}]}";
+
+            var first = new SeasonalCelebrationSystem();
+            first.LoadCatalog(reverseIdOrder);
+            var second = new SeasonalCelebrationSystem();
+            second.LoadCatalog(stableIdOrder);
+
+            Assert.Equal("holiday_alpha", first.CheckHolidayForDay(17)!.HolidayId);
+            Assert.Equal("holiday_alpha", second.CheckHolidayForDay(17)!.HolidayId);
+        }
     }
 }

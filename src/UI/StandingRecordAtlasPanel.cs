@@ -45,11 +45,21 @@ public partial class StandingRecordAtlasPanel : Control, IBindablePanel
 
     public bool IsBound => _host != null;
 
+    /// <summary>Self-test observable: event-driven refreshes while bound.</summary>
+    internal int RefreshCount { get; private set; }
+
     public void Bind(StandingRecordHostSession host)
     {
+        Unbind();
         _host = host;
         if (_host != null)
-            _host.StateChanged += RefreshView;
+            _host.StateChanged += HandleHostStateChanged;
+        RefreshView();
+    }
+
+    private void HandleHostStateChanged()
+    {
+        RefreshCount++;
         RefreshView();
     }
 
@@ -502,9 +512,8 @@ public partial class StandingRecordAtlasPanel : Control, IBindablePanel
     public void Unbind()
     {
         if (_host != null)
-        {
-            _host.StateChanged -= RefreshView;
-        }
+            _host.StateChanged -= HandleHostStateChanged;
+        _host = null;
     }
 
     public override void _ExitTree()

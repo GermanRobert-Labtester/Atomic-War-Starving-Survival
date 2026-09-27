@@ -117,6 +117,8 @@ namespace AtomicWar.GodotApp
                       !string.IsNullOrEmpty(restoredCensus.CurrentLeaderId),
                     "Leadership save and restore state verified with full round-trip fidelity.");
 
+                if (passed != 12)
+                    throw new InvalidOperationException($"Expected 12 checks, completed {passed}.");
                 Console.WriteLine($"=== [HostCli] Leadership Succession Self-Test PASSED ({passed}/12 checks) ===");
                 return 0;
             }

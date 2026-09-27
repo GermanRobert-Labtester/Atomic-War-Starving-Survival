@@ -239,6 +239,13 @@ namespace AtomicWar.GodotApp.UI
             base._ExitTree();
         }
 
+        public override void _Notification(int what)
+        {
+            if (what == NotificationPredelete)
+                Unbind();
+            base._Notification(what);
+        }
+
         private void MountSelected()
         {
             if (_host == null) return;
@@ -301,7 +308,7 @@ namespace AtomicWar.GodotApp.UI
 
         private void RebuildPlacements(string roomId, System.Collections.Generic.List<ShelterDecorPlacement> placements)
         {
-            ClearChildren(_placements);
+            AshfallUiHelpers.EmptyChildren(_placements);
             if (_host == null || placements.Count == 0)
             {
                 _placements.AddChild(AshfallUiHelpers.MakeEmptyState(
@@ -382,7 +389,7 @@ namespace AtomicWar.GodotApp.UI
 
         private void RebuildStorage()
         {
-            ClearChildren(_storage);
+            AshfallUiHelpers.EmptyChildren(_storage);
             if (_host == null) return;
             var options = _host.ListAvailableDecor();
             if (options.Count == 0)
@@ -430,14 +437,5 @@ namespace AtomicWar.GodotApp.UI
             return count;
         }
 
-        private static void ClearChildren(Node container)
-        {
-            if (container == null) return;
-            foreach (Node child in container.GetChildren())
-            {
-                container.RemoveChild(child);
-                child.QueueFree();
-            }
-        }
     }
 }

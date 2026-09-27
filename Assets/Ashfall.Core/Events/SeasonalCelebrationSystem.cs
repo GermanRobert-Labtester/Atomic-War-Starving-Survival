@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.IO;
 
 namespace Ashfall.Core.Events
 {
@@ -194,8 +194,9 @@ namespace Ashfall.Core.Events
                     }
                 }
             }
-            catch (JsonException)
+            catch (JsonException ex)
             {
+                CatalogDiagnostics.Warn("shelter_celebrations.json", nameof(CelebrationCatalogData), ex);
                 // Catalog parse failure; fallback retained
             }
         }
@@ -204,7 +205,20 @@ namespace Ashfall.Core.Events
         {
             _currentDay = day;
             int cycleDay = (Math.Max(1, day) - 1) % 360 + 1;
-            return _holidays.Values.FirstOrDefault(h => h.TriggerDay == cycleDay);
+            HolidayDef? selected = null;
+            foreach (var holiday in _holidays.Values)
+            {
+                if (holiday.TriggerDay != cycleDay)
+                    continue;
+
+                if (selected == null
+                    || StringComparer.Ordinal.Compare(holiday.HolidayId, selected.HolidayId) < 0)
+                {
+                    selected = holiday;
+                }
+            }
+
+            return selected;
         }
 
         public bool IsHolidayOccurrenceResolved(string holidayId, int day)

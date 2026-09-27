@@ -24,6 +24,12 @@ namespace AtomicWar.GodotApp
     {
         private GenealogyHostSession? _genealogy;
         private bool _genealogyDirty;
+        private RomanceFamilySystem? _genealogyRomanceSource;
+        private SurvivorFateSystem? _genealogyFateSource;
+        private Action? _genealogyStateChangedHandler;
+        private RomanceFamilySystem.FamilyUnitEstablishedDelegate? _genealogyFamilyEstablishedHandler;
+        private RomanceFamilySystem.ChildWelcomedDelegate? _genealogyChildWelcomedHandler;
+        private Action<SurvivorFateEvent>? _genealogySurvivorFateHandler;
 
         public GenealogyHostSession? Genealogy => _genealogy;
 
@@ -34,6 +40,9 @@ namespace AtomicWar.GodotApp
             // Compose over the hosted succession engine — never a second one.
             var engine = _expansions?.Generational ?? new GenerationalSuccessionEngine();
             _genealogy = new GenealogyHostSession(engine);
+            // Authored cultural archetypes/templates drive surname assignment only if
+            // the lineage owner's own catalog field is populated. Bind it here.
+            BindAuthoredFamilyNames();
 
             var saved = GenealogySaveStore.TryLoad();
             if (saved != null)
@@ -41,16 +50,19 @@ namespace AtomicWar.GodotApp
                 _genealogy.RestoreState(saved);
             }
 
-            _genealogy.StateChanged += () => _genealogyDirty = true;
+            _genealogyStateChangedHandler = () => _genealogyDirty = true;
+            _genealogy.StateChanged += _genealogyStateChangedHandler;
 
             // Canonical producer 1+2: the romance/family owner's committed
             // facts. Parent resolution goes through the canonical family unit
             // (FamilyResolver), never through name inference.
-            if (_romanceFamily != null)
+            var romanceSystem = _romanceFamily?.System;
+            if (romanceSystem != null)
             {
+                _genealogyRomanceSource = romanceSystem;
                 _genealogy.FamilyResolver = familyId =>
                 {
-                    foreach (var unit in _romanceFamily.System.FamilyUnits)
+                    foreach (var unit in romanceSystem.FamilyUnits)
                     {
                         if (unit != null && string.Equals(unit.FamilyId, familyId, StringComparison.OrdinalIgnoreCase))
                         {
@@ -59,25 +71,29 @@ namespace AtomicWar.GodotApp
                     }
                     return null;
                 };
-                _romanceFamily.System.OnFamilyUnitEstablishedSeam += (familyId, parentIds) =>
+                _genealogyFamilyEstablishedHandler = (familyId, parentIds) =>
                 {
                     if (_genealogy == null || parentIds == null || parentIds.Count < 2) return;
                     _genealogy.RecordUnion(parentIds[0], parentIds[1], _campaignDay.LastAdvancedDay);
                 };
-                _romanceFamily.System.OnChildWelcomedToFamilySeam += (familyId, childId, isAdopted) =>
+                _genealogyChildWelcomedHandler = (familyId, childId, isAdopted) =>
                 {
                     _genealogy?.RecordChild(familyId, childId, isAdopted, _campaignDay.LastAdvancedDay);
                 };
+                romanceSystem.OnFamilyUnitEstablishedSeam += _genealogyFamilyEstablishedHandler;
+                romanceSystem.OnChildWelcomedToFamilySeam += _genealogyChildWelcomedHandler;
             }
 
             // Canonical producer 3: the fate owner's committed death fact
             // (OnSurvivorFate is the canonical "survivor_perished" producer —
             // the same event the Plan 42 voice trigger and Plan 46 metrics use).
-            _survivorFate.OnSurvivorFate += fate =>
+            _genealogyFateSource = _survivorFate;
+            _genealogySurvivorFateHandler = fate =>
             {
                 if (fate == null || string.IsNullOrWhiteSpace(fate.survivorId)) return;
                 _genealogy?.RecordDeath(fate.survivorId, fate.day > 0 ? fate.day : _campaignDay.LastAdvancedDay);
             };
+            _genealogyFateSource.OnSurvivorFate += _genealogySurvivorFateHandler;
 
             if (_survivorDetailPanel != null)
             {
@@ -118,8 +134,26 @@ namespace AtomicWar.GodotApp
 
         public void ResetGenealogy()
         {
+            if (_genealogy != null && _genealogyStateChangedHandler != null)
+                _genealogy.StateChanged -= _genealogyStateChangedHandler;
+            if (_genealogyRomanceSource != null)
+            {
+                if (_genealogyFamilyEstablishedHandler != null)
+                    _genealogyRomanceSource.OnFamilyUnitEstablishedSeam -= _genealogyFamilyEstablishedHandler;
+                if (_genealogyChildWelcomedHandler != null)
+                    _genealogyRomanceSource.OnChildWelcomedToFamilySeam -= _genealogyChildWelcomedHandler;
+            }
+            if (_genealogyFateSource != null && _genealogySurvivorFateHandler != null)
+                _genealogyFateSource.OnSurvivorFate -= _genealogySurvivorFateHandler;
+
             _genealogy = null;
             _genealogyDirty = false;
+            _genealogyRomanceSource = null;
+            _genealogyFateSource = null;
+            _genealogyStateChangedHandler = null;
+            _genealogyFamilyEstablishedHandler = null;
+            _genealogyChildWelcomedHandler = null;
+            _genealogySurvivorFateHandler = null;
         }
     }
 }

@@ -1727,7 +1727,10 @@ Each must receive one disposition: live gameplay, codex-only, test/tool-only, in
 
 After the final reference check, these are safe cleanup candidates:
 
-- Assets/Ashfall.Core/Performance/PerfTestMarker.cs — only declaration/constant occurrence observed.
+- **Resolved 2026-09-26:** `Assets/Ashfall.Core/Performance/PerfTestMarker.cs`
+  was confirmed to have no live references and removed with user authorization.
+  The pinned audit snapshot below is historical; this marker is no longer a
+  cleanup candidate.
 - ICampaignSaveSection in Assets/Ashfall.Core/Save/CampaignSaveEnvelope.cs — declaration only; no implementer or caller observed.
 - Sentry package reference — no Sentry API usage observed in src, Core, or tests; remove only if telemetry is not an external runtime contract.
 - Ashfall.Core.Tests/TestResults/results.trx — tracked generated output.

@@ -3,7 +3,6 @@ using Godot;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
@@ -32,8 +31,6 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
-        private static readonly string[] AllSaveSections = SaveSectionRegistry.SectionKeys.ToArray();
-
         /// <summary>
         /// In-memory campaign section payloads for the envelope-primary save.
         /// Each SaveXxx captures its section's persisted bytes here (instead
@@ -177,8 +174,10 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             SetupMedical();
             SetupMedicalWard();
+            SetupChronicConditions();
             SetupDifficulty();
             SetupWorld();
+            SetupWeatherSonde();
             SetupRadio();
             SetupMoraleContagion();
             SetupPathogenStrains();
@@ -315,6 +314,14 @@ namespace AtomicWar.GodotApp
             SetupMetaProgression();
             SetupTradeRoutes();
             SetupHumanMigration();
+            SetupPowerLoadShedding();
+            SetupSpiritualRitual();
+            SetupTraumaBond();
+            SetupMigrationConsequence();
+            SetupWarlordResponse();
+            SetupPatrolRadio();
+            SetupRationConflict();
+            SetupCassettePlayback();
             SetupShelterIdentity();
             SetupDynamicQuestGeneration();
             SetupShelterGovernance();
@@ -332,6 +339,7 @@ namespace AtomicWar.GodotApp
             SetupAntenatalMaternalHealth();
             SetupClinicalWardTriage();
             SetupChemicalReagentSynthesis();
+            SetupAdvancedIndustrial();
             SetupMechanicalDriveline();
             SetupSleepAcousticRest();
             SetupShelterArchive();
@@ -347,9 +355,34 @@ namespace AtomicWar.GodotApp
             SetupRadiationEconomy();
             SetupRadiationSocial();
             SetupTrophies();
+            SetupSurvivorBarter();
+            SetupPerimeterEarlyWarning();
+            SetupSkillAtrophy();
+            SetupProceduralEulogy();
+            SetupPalliativeCare();
+            SetupWaterQualityProfile();
+            SetupWeatherForecastReliability();
+            SetupApprenticeshipCurriculum();
+            SetupCommonTableRationing();
+            SetupEmergencyMusterReadiness();
+            SetupSoilReclamationProfile();
+            SetupCampaignActionLog();
             SetupShelterMuseum();
             SetupGenealogy();
             SetupPlan49DepthPass();
+            SetupSurgicalGraft();
+            SetupPharmaceuticalTablet();
+            SetupTradeTells();
+            SetupEconomyFamily();
+            SetupExpeditionFamily();
+            SetupKnockWhitelist();
+            SetupSecondGenerationMilestones();
+            SetupJourneyDiagnostics();
+            SetupCloudSeeding();
+            SetupChemicalPlume();
+            SetupOilseedPressing();
+            SetupVerdictAccusation();
+            SetupLoanShark();
             SetupCultureCreation();
             SetupPsychologicalProfiles();
             SetupSkillCertifications();
@@ -417,6 +450,7 @@ namespace AtomicWar.GodotApp
                 SaveJournal();
                 SaveMoralChoice();
                 SaveCounterIntelligence();
+                SaveInformantNetwork();
                 SaveHoldfast();
                 SaveHoldfastRuntime();
                 SaveDutyRoster();
@@ -427,6 +461,8 @@ namespace AtomicWar.GodotApp
                 SaveDoseLedger();
                 SaveMuster();
                 SaveInventory();
+                SaveItemLore();
+                SaveLetters();
                 SaveSurvivors();
                 SaveEconomy();
                 SaveSanitation();
@@ -443,6 +479,7 @@ namespace AtomicWar.GodotApp
                 SaveEventAdapter();
                 SaveMedical();
                 SaveMedicalPipeline();
+                SaveChronicConditions();
                 SaveWorld();
                 SaveCrafting();
                 SaveCaravans();
@@ -591,6 +628,13 @@ namespace AtomicWar.GodotApp
                 SaveMetaProgression();
                 SaveTradeRoutes();
                 SaveHumanMigration();
+                SaveSpiritualRitual();
+                SaveTraumaBond();
+                SaveMigrationConsequence();
+                SaveWarlordResponse();
+                SavePatrolRadioHooks();
+                SaveRationConflict();
+                SaveCassettePlayback();
                 SaveShelterIdentity();
                 SaveShelterGovernance();
                 SaveAging();
@@ -607,6 +651,7 @@ namespace AtomicWar.GodotApp
                 SaveAntenatalMaternalHealth();
                 SaveClinicalWardTriage();
                 SaveChemicalReagentSynthesis();
+                SaveAdvancedIndustrial();
                 SaveMechanicalDriveline();
                 SaveSleepAcousticRest();
                 SaveShelterArchive();
@@ -622,8 +667,28 @@ namespace AtomicWar.GodotApp
                 SaveRadiationEconomy();
                 SaveRadiationSocial();
                 SaveTrophies();
+                SaveSurvivorBarter();
+                SavePerimeterEarlyWarning();
+                SaveSkillAtrophy();
+                SaveProceduralEulogy();
+                SavePalliativeCare();
+                SaveWaterQualityProfile();
+                SaveWeatherForecastReliability();
+                SaveApprenticeshipCurriculum();
+                SaveCommonTableRationing();
+                SaveEmergencyMusterReadiness();
+                SaveSoilReclamationProfile();
+                SaveCampaignActionLog();
                 SaveShelterMuseum();
             SaveGenealogy();
+            SaveSurgicalGraft();
+            SavePharmaceuticalTablet();
+            SaveEconomyFamily();
+            SaveCloudSeeding();
+            SaveChemicalPlume();
+            SaveOilseedPressing();
+            SaveVerdictAccusation();
+            SaveLoanShark();
                 SaveCultureCreation();
                 SavePsychologicalProfiles();
                 SaveSkillCertifications();

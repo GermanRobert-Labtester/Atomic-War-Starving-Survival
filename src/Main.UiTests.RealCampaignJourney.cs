@@ -161,6 +161,7 @@ namespace AtomicWar.GodotApp
                 // is the same in-process equivalent of a fresh process load
                 // without a redundant extra reset here. ──
                 var slotToContinue = _saveLoadHost.ActiveSlotId!.Value;
+                var manifestBeforeRestore = CaptureManifestSessionValues();
 
                 // ── Continue: the real production restore entry point. ──
                 bool restored = TryLoadAndRestoreGame(slotToContinue, out string restoreMessage);
@@ -170,6 +171,14 @@ namespace AtomicWar.GodotApp
                 var manifestAfterRestore = CaptureManifestSessionValues();
                 Check(manifestAfterRestore.Values.All(value => value != null),
                     "Continue restored all manifest-mapped sessions");
+                bool manifestSessionsRebuilt = manifestBeforeRestore.Count == manifestAfterRestore.Count
+                    && manifestBeforeRestore.All(pair =>
+                        pair.Value != null
+                        && manifestAfterRestore.TryGetValue(pair.Key, out var restoredSession)
+                        && restoredSession != null
+                        && !ReferenceEquals(pair.Value, restoredSession));
+                Check(manifestSessionsRebuilt,
+                    "Continue rebuilt every manifest-mapped session with a fresh instance");
 
                 int dayAfterContinue = _campaignDay!.Calendar.CurrentDay;
                 Check(dayAfterContinue == targetDay,

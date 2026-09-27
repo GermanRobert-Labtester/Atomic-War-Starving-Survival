@@ -19,6 +19,10 @@ namespace AtomicWar.GodotApp
         private VisitorIntegrationHostSession _visitorIntegration = null!;
         private VisitorIntegrationPanel _visitorIntegrationPanel = null!;
         private bool _visitorIntegrationDirty;
+        private VisitorIntegrationHostSession? _visitorIntegrationStateChangedSource;
+        private Action? _visitorIntegrationStateChangedHandler;
+        private Action? _visitorIntegrationPanelCloseHandler;
+        private AirlockSecurityHostSession? _visitorAirlockSource;
 
         public VisitorIntegrationHostSession VisitorIntegration => EnsureVisitorIntegration();
 
@@ -35,7 +39,9 @@ namespace AtomicWar.GodotApp
                 system.LoadCatalog(catalogIo.ReadAllText(catalogPath));
 
             _visitorIntegration = new VisitorIntegrationHostSession(system);
-            _visitorIntegration.StateChanged += OnVisitorIntegrationStateChanged;
+            _visitorIntegrationStateChangedSource = _visitorIntegration;
+            _visitorIntegrationStateChangedHandler = OnVisitorIntegrationStateChanged;
+            _visitorIntegration.StateChanged += _visitorIntegrationStateChangedHandler;
             _visitorIntegration.ConsumeDailyRations = ConsumeVisitorRations;
             _visitorIntegration.RecruitToSurvivor = RecruitVisitorAsResident;
             _visitorIntegration.JournalEvent = PublishVisitorNotice;
@@ -104,10 +110,16 @@ namespace AtomicWar.GodotApp
             // exactly one temporary stay. The incident ledger stays owned by
             // AirlockSecurity; the host session de-duplicates by source id.
             SetupAirlockSecurity();
-            if (_airlockSecurity != null)
+            if (_visitorAirlockSource != null
+                && !ReferenceEquals(_visitorAirlockSource, _airlockSecurity))
             {
-                _airlockSecurity.System.OnIncidentResolved -= OnAirlockIncidentResolved;
+                _visitorAirlockSource.System.OnIncidentResolved -= OnAirlockIncidentResolved;
+                _visitorAirlockSource = null;
+            }
+            if (_airlockSecurity != null && !ReferenceEquals(_visitorAirlockSource, _airlockSecurity))
+            {
                 _airlockSecurity.System.OnIncidentResolved += OnAirlockIncidentResolved;
+                _visitorAirlockSource = _airlockSecurity;
             }
         }
 
@@ -146,7 +158,12 @@ namespace AtomicWar.GodotApp
             EnsureVisitorIntegration();
             _visitorIntegrationPanel = new VisitorIntegrationPanel();
             _visitorIntegrationPanel.Bind(_visitorIntegration);
-            _visitorIntegrationPanel.OnClose += () => _visitorIntegrationPanel.Visible = false;
+            _visitorIntegrationPanelCloseHandler = () =>
+            {
+                if (_visitorIntegrationPanel != null)
+                    _visitorIntegrationPanel.Visible = false;
+            };
+            _visitorIntegrationPanel.OnClose += _visitorIntegrationPanelCloseHandler;
             _visitorIntegrationPanel.Visible = false;
             AddChild(_visitorIntegrationPanel);
         }
@@ -163,6 +180,33 @@ namespace AtomicWar.GodotApp
         {
             SetupVisitorIntegration();
             return _visitorIntegration.GetActiveVisitors();
+        }
+
+        public void ResetVisitorIntegration()
+        {
+            if (_visitorAirlockSource != null)
+                _visitorAirlockSource.System.OnIncidentResolved -= OnAirlockIncidentResolved;
+            if (_visitorIntegrationStateChangedSource != null
+                && _visitorIntegrationStateChangedHandler != null)
+            {
+                _visitorIntegrationStateChangedSource.StateChanged -= _visitorIntegrationStateChangedHandler;
+            }
+            if (_visitorIntegrationPanel != null)
+            {
+                _visitorIntegrationPanel.Unbind();
+                if (_visitorIntegrationPanel.IsInsideTree())
+                    RemoveChild(_visitorIntegrationPanel);
+                if (_visitorIntegrationPanelCloseHandler != null)
+                    _visitorIntegrationPanel.OnClose -= _visitorIntegrationPanelCloseHandler;
+            }
+
+            _visitorAirlockSource = null;
+            _visitorIntegrationStateChangedSource = null;
+            _visitorIntegrationStateChangedHandler = null;
+            _visitorIntegrationPanelCloseHandler = null;
+            _visitorIntegration = null!;
+            _visitorIntegrationPanel = null!;
+            _visitorIntegrationDirty = false;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace AtomicWar.GodotApp
         {
             GD.Print("── GODOT-NODE CALLBACK PANEL BIND/UNBIND/REBIND SELF-TEST ──");
             int passedGates = 0;
-            int totalGates = 21;
+            int totalGates = 22;
 
             try
             {
@@ -1355,6 +1355,76 @@ namespace AtomicWar.GodotApp
                 }
                 GD.Print("[PASS] Gate 21: Inventory sidebar routes material/consumable/all filters to actual item rows.");
                 passedGates++;
+
+                GD.Print("\n[Gate 22] Testing Muster and Standing Record Atlas rebind lifecycle...");
+                var musterHost1 = new MusterHostSession();
+                var musterHost2 = new MusterHostSession();
+                var musterAtlas = new MusterAtlasPanel();
+                musterAtlas._Ready();
+                musterAtlas.Bind(musterHost1);
+                for (int i = 0; i < 25; i++)
+                    musterAtlas.Bind(musterHost1);
+
+                int musterBeforeEvent = musterAtlas.RefreshCount;
+                musterHost1.MarkDirty();
+                bool musterSingleRefresh = musterAtlas.RefreshCount == musterBeforeEvent + 1;
+
+                musterAtlas.Bind(musterHost2);
+                int musterAfterSwitch = musterAtlas.RefreshCount;
+                musterHost1.MarkDirty();
+                bool musterDetachedOldHost = musterAtlas.RefreshCount == musterAfterSwitch;
+                musterHost2.MarkDirty();
+                bool musterBoundNewHost = musterAtlas.RefreshCount == musterAfterSwitch + 1;
+
+                musterAtlas.Unbind();
+                int musterAfterUnbind = musterAtlas.RefreshCount;
+                musterHost2.MarkDirty();
+                bool musterUnbound = !musterAtlas.IsBound && musterAtlas.RefreshCount == musterAfterUnbind;
+                musterAtlas.Free();
+                musterHost1.Dispose();
+                musterHost2.Dispose();
+
+                var standingHost1 = StandingRecordHostSession.Create(dataDir, seed: 1401);
+                var standingHost2 = StandingRecordHostSession.Create(dataDir, seed: 1402);
+                var standingAtlas = new StandingRecordAtlasPanel();
+                standingAtlas._Ready();
+                standingAtlas.Bind(standingHost1);
+                for (int i = 0; i < 25; i++)
+                    standingAtlas.Bind(standingHost1);
+
+                int standingBeforeEvent = standingAtlas.RefreshCount;
+                standingHost1.MarkDirty();
+                bool standingSingleRefresh = standingAtlas.RefreshCount == standingBeforeEvent + 1;
+
+                standingAtlas.Bind(standingHost2);
+                int standingAfterSwitch = standingAtlas.RefreshCount;
+                standingHost1.MarkDirty();
+                bool standingDetachedOldHost = standingAtlas.RefreshCount == standingAfterSwitch;
+                standingHost2.MarkDirty();
+                bool standingBoundNewHost = standingAtlas.RefreshCount == standingAfterSwitch + 1;
+
+                standingAtlas.Unbind();
+                int standingAfterUnbind = standingAtlas.RefreshCount;
+                standingHost2.MarkDirty();
+                bool standingUnbound = !standingAtlas.IsBound && standingAtlas.RefreshCount == standingAfterUnbind;
+                standingAtlas.Free();
+                standingHost1.Dispose();
+                standingHost2.Dispose();
+
+                bool atlasLifecyclePassed =
+                    musterSingleRefresh && musterDetachedOldHost && musterBoundNewHost && musterUnbound &&
+                    standingSingleRefresh && standingDetachedOldHost && standingBoundNewHost && standingUnbound;
+                if (!atlasLifecyclePassed)
+                {
+                    GD.PrintErr(
+                        "[FAIL] Gate 22: atlas bind/rebind must deliver exactly one refresh, detach the old host, and clear IsBound on unbind. " +
+                        $"Muster={musterSingleRefresh}/{musterDetachedOldHost}/{musterBoundNewHost}/{musterUnbound}; " +
+                        $"Standing={standingSingleRefresh}/{standingDetachedOldHost}/{standingBoundNewHost}/{standingUnbound}.");
+                    return 1;
+                }
+                GD.Print("[PASS] Gate 22: Both atlas panels remain single-subscribed across repeated binds, session switches, and unbind.");
+                passedGates++;
+
                 if (!pneumaticInputsPassed)
                     return 1;
 

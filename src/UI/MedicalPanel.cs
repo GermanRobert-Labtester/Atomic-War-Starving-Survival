@@ -110,9 +110,9 @@ namespace AtomicWar.GodotApp.UI
 
             RefreshStatusRail();
 
-            ClearChildren(_healthStats);
-            ClearChildren(_treatmentList);
-            ClearChildren(_supplyList);
+            AshfallUiHelpers.EmptyChildren(_healthStats);
+            AshfallUiHelpers.EmptyChildren(_treatmentList);
+            AshfallUiHelpers.EmptyChildren(_supplyList);
 
             if (_medicalHost == null)
             {
@@ -782,19 +782,12 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("vigil", vigilState, vigilCrit);
         }
 
-        private static void ClearChildren(Node parent)
-        {
-            AshfallUiHelpers.EmptyChildren(parent);
-        }
-
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.88f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+            AddChild(AshfallUiHelpers.MakeBackdropOverlay());
 
             var center = new CenterContainer();
             center.SetAnchorsPreset(LayoutPreset.FullRect);

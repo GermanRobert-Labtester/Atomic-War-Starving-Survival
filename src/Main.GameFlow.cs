@@ -410,7 +410,7 @@ namespace AtomicWar.GodotApp
                     SetupInventory();
                     SetupMedical();
                     SetupPhase0();
-                    _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory);
+                    _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory, chronicConditions: _chronicConditions);
                     _afflictionsPanel.Open();
                     break;
                 case "radiation_detail":
@@ -561,7 +561,7 @@ namespace AtomicWar.GodotApp
                     SetupYearOfAsh();
                     SetupFactionBranch();
                     SetupMoralChoice();
-                    _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice);
+                    _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice, _informantNetwork);
                     _factionsPanel.Open();
                     break;
                 case "faction_culture_codex":

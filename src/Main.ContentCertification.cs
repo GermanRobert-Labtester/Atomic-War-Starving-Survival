@@ -81,9 +81,13 @@ namespace AtomicWar.GodotApp
                 _survivorVoice != null && _survivorVoice.Voice.Catalog.Count > 0);
             session.MarkConsumerActive("SurvivorVoiceSystem", _survivorVoice != null);
 
-            // Families whose consumers are still orphans in the host graph.
-            session.MarkCatalogLoaded("cassette_sets.json", false);
-            session.MarkConsumerActive("CassettePlaybackSystem", false);
+            // Cassette playback is now hosted: the authored catalog loads through
+            // CassetteSetCatalogLoader and the collection owner is live. Reported as
+            // measured truth, never as a constant.
+            SetupCassettePlayback();
+            bool cassettesLoaded = _cassettePlayback != null && _cassettePlayback.SetCount > 0;
+            session.MarkCatalogLoaded("cassette_sets.json", cassettesLoaded);
+            session.MarkConsumerActive("CassettePlaybackSystem", cassettesLoaded);
             session.MarkCatalogLoaded("damaged_map_zones.json", false);
             session.MarkConsumerActive("DamagedMapCatalogContainer", false);
         }

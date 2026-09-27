@@ -12,6 +12,8 @@ namespace AtomicWar.GodotApp
         private ShelterAtmosphereHostSession _shelterAtmosphere = null!;
         private ShelterAtmospherePanel _shelterAtmospherePanel = null!;
         private bool _shelterAtmosphereDirty;
+        private Action? _shelterAtmosphereStateChangedHandler;
+        private Action? _shelterAtmospherePanelCloseHandler;
 
         public ShelterAtmosphereHostSession ShelterAtmosphere => EnsureShelterAtmosphere();
 
@@ -56,7 +58,8 @@ namespace AtomicWar.GodotApp
             }
 
             _shelterAtmosphere = new ShelterAtmosphereHostSession(atmoSys, noiseSys);
-            _shelterAtmosphere.StateChanged += OnShelterAtmosphereStateChanged;
+            _shelterAtmosphereStateChangedHandler = OnShelterAtmosphereStateChanged;
+            _shelterAtmosphere.StateChanged += _shelterAtmosphereStateChangedHandler;
             return _shelterAtmosphere;
         }
 
@@ -193,7 +196,12 @@ namespace AtomicWar.GodotApp
             EnsureShelterAtmosphere();
             _shelterAtmospherePanel = new ShelterAtmospherePanel();
             _shelterAtmospherePanel.Bind(_shelterAtmosphere);
-            _shelterAtmospherePanel.OnClose += () => _shelterAtmospherePanel.Visible = false;
+            _shelterAtmospherePanelCloseHandler = () =>
+            {
+                if (_shelterAtmospherePanel != null)
+                    _shelterAtmospherePanel.Visible = false;
+            };
+            _shelterAtmospherePanel.OnClose += _shelterAtmospherePanelCloseHandler;
             _shelterAtmospherePanel.Visible = false;
             AddChild(_shelterAtmospherePanel);
         }
@@ -203,6 +211,26 @@ namespace AtomicWar.GodotApp
             SetupShelterAtmospherePanel();
             _shelterAtmospherePanel.Visible = true;
             _shelterAtmospherePanel.RefreshView();
+        }
+
+        public void ResetShelterAtmosphere()
+        {
+            if (_shelterAtmosphere != null && _shelterAtmosphereStateChangedHandler != null)
+                _shelterAtmosphere.StateChanged -= _shelterAtmosphereStateChangedHandler;
+            if (_shelterAtmospherePanel != null)
+            {
+                _shelterAtmospherePanel.Unbind();
+                if (_shelterAtmospherePanel.IsInsideTree())
+                    RemoveChild(_shelterAtmospherePanel);
+                if (_shelterAtmospherePanelCloseHandler != null)
+                    _shelterAtmospherePanel.OnClose -= _shelterAtmospherePanelCloseHandler;
+            }
+
+            _shelterAtmosphere = null!;
+            _shelterAtmospherePanel = null!;
+            _shelterAtmosphereDirty = false;
+            _shelterAtmosphereStateChangedHandler = null;
+            _shelterAtmospherePanelCloseHandler = null;
         }
     }
 }

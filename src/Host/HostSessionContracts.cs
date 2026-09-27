@@ -72,11 +72,13 @@ namespace AtomicWar.GodotApp
         public IReadOnlyList<string> MissingPorts { get; set; } = Array.Empty<string>();
         public IReadOnlyList<NamedFallback> ActiveFallbacks { get; set; } = Array.Empty<NamedFallback>();
 
-        public bool IsValid => MissingCollaborators.Count == 0 && MissingPorts.Count == 0;
+        public bool IsValid =>
+            (MissingCollaborators?.Count ?? 0) == 0 &&
+            (MissingPorts?.Count ?? 0) == 0;
 
-        public int TotalRequired => RequiredCollaborators.Count + RequiredPorts.Count;
-        public int TotalBound => BoundCollaborators.Count + BoundPorts.Count;
-        public int TotalMissing => MissingCollaborators.Count + MissingPorts.Count;
+        public int TotalRequired => (RequiredCollaborators?.Count ?? 0) + (RequiredPorts?.Count ?? 0);
+        public int TotalBound => (BoundCollaborators?.Count ?? 0) + (BoundPorts?.Count ?? 0);
+        public int TotalMissing => (MissingCollaborators?.Count ?? 0) + (MissingPorts?.Count ?? 0);
     }
 
     /// <summary>
@@ -109,7 +111,7 @@ namespace AtomicWar.GodotApp
     {
         private static readonly List<IWiringReporter> _reporters = new();
 
-        public static void RegisterReporter(IWiringReporter reporter)
+        public static void RegisterReporter(IWiringReporter? reporter)
         {
             if (reporter != null && !_reporters.Contains(reporter))
             {
@@ -117,7 +119,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static void UnregisterReporter(IWiringReporter reporter)
+        public static void UnregisterReporter(IWiringReporter? reporter)
         {
             if (reporter != null)
             {
@@ -147,28 +149,55 @@ namespace AtomicWar.GodotApp
 
             foreach (var reporter in targetList)
             {
+                if (reporter == null)
+                {
+                    GD.PrintErr("[HOST_WIRING] Null wiring reporter entry.");
+                    var nullReport = new WiringReport
+                    {
+                        SessionId = "<null reporter>",
+                        MissingCollaborators = new[] { "Null wiring reporter entry." }
+                    };
+                    reports.Add(nullReport);
+                    totalMissing += nullReport.TotalMissing;
+                    continue;
+                }
+
                 try
                 {
                     var report = reporter.GetWiringReport();
-                    if (report != null)
+                    if (report == null)
                     {
-                        reports.Add(report);
-                        totalRequired += report.TotalRequired;
-                        totalBound += report.TotalBound;
-                        totalMissing += report.TotalMissing;
-                        totalFallbacks += report.ActiveFallbacks.Count;
+                        string reporterName = reporter.GetType().Name;
+                        GD.PrintErr($"[HOST_WIRING] {reporterName}.GetWiringReport returned null.");
+                        var nullResultReport = new WiringReport
+                        {
+                            SessionId = reporterName,
+                            MissingCollaborators = new[] { "GetWiringReport returned null." }
+                        };
+                        reports.Add(nullResultReport);
+                        totalMissing += nullResultReport.TotalMissing;
+                        continue;
                     }
+
+                    NormalizeReport(report, reporter.GetType().Name);
+                    reports.Add(report);
+                    totalRequired += report.TotalRequired;
+                    totalBound += report.TotalBound;
+                    totalMissing += report.TotalMissing;
+                    totalFallbacks += report.ActiveFallbacks.Count;
                 }
                 catch (Exception ex)
                 {
-                    GD.PrintErr($"[HOST_WIRING] Exception obtaining report from {reporter.GetType().Name}: {ex.Message}");
+                    string reporterName = reporter.GetType().Name;
+                    string errorContext = $"{ex.GetType().Name}: {ex.Message}";
+                    GD.PrintErr($"[HOST_WIRING] Exception obtaining report from {reporterName}: {errorContext}");
                     var errReport = new WiringReport
                     {
-                        SessionId = reporter.GetType().Name,
-                        MissingCollaborators = new[] { $"Exception: {ex.Message}" }
+                        SessionId = reporterName,
+                        MissingCollaborators = new[] { $"GetWiringReport failed ({errorContext})." }
                     };
                     reports.Add(errReport);
-                    totalMissing++;
+                    totalMissing += errReport.TotalMissing;
                 }
             }
 
@@ -184,6 +213,19 @@ namespace AtomicWar.GodotApp
 
             PrintWiringTable(summary);
             return summary;
+        }
+
+        private static void NormalizeReport(WiringReport report, string reporterName)
+        {
+            if (string.IsNullOrWhiteSpace(report.SessionId))
+                report.SessionId = reporterName;
+            report.RequiredCollaborators ??= Array.Empty<string>();
+            report.BoundCollaborators ??= Array.Empty<string>();
+            report.MissingCollaborators ??= Array.Empty<string>();
+            report.RequiredPorts ??= Array.Empty<string>();
+            report.BoundPorts ??= Array.Empty<string>();
+            report.MissingPorts ??= Array.Empty<string>();
+            report.ActiveFallbacks ??= Array.Empty<NamedFallback>();
         }
 
         /// <summary>

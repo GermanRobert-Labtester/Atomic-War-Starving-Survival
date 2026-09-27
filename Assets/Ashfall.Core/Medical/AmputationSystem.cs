@@ -38,6 +38,15 @@ namespace Ashfall.Core.Medical
         public string? prostheticId { get; set; } = null;
         public int recoveryDaysLeft { get; set; } = 0;
         public bool hasPhantomPain { get; set; } = false;
+
+        // F14-D/F14-E additive fields (legacy-neutral defaults).
+        // Device condition in permille (1000 = factory-new); -1/0 is treated
+        // as "uninitialised" and normalised to 1000 by the wear pass.
+        public int prostheticConditionPermille { get; set; } = 1000;
+        public string? prostheticTypeKey { get; set; } = null;
+        public string? rehabPhase { get; set; } = null;
+        public int rehabDaysInPhase { get; set; } = 0;
+        public int rehabQualityPermille { get; set; } = 0;
     }
 
     [Serializable]
@@ -109,6 +118,21 @@ namespace Ashfall.Core.Medical
         public event Action<string, LimbId>? OnGangreneDeclared;
         public event Action<string, string>? OnProstheticFitted;
         public event Action<string, float>? OnPhantomPainEpisode;
+
+        /// <summary>F14-D — raised when a fitted prosthetic crosses the immediate-maintenance threshold.</summary>
+        public event Action<string, LimbId, string>? OnProstheticMaintenanceNeeded;
+
+        public const int DefaultLaborIntensityPermille = 300;
+        public const int DefaultMaintenanceQualityPermille = 600;
+
+        /// <summary>F14-D — optional canonical daily labour-intensity source in permille (0..1000).</summary>
+        public Func<string, int>? ProstheticLaborIntensityProvider { get; set; }
+
+        /// <summary>F14-D — optional canonical daily maintenance-quality source in permille (0..1000).</summary>
+        public Func<string, int>? ProstheticMaintenanceQualityProvider { get; set; }
+
+        /// <summary>F14-E — optional survivor resilience multiplier (0.5..2.0) driving adaptation rate.</summary>
+        public Func<string, float>? ProstheticResilienceProvider { get; set; }
 
         public AmputationSystemState State => _state;
 
@@ -195,7 +219,13 @@ namespace Ashfall.Core.Medical
                         l.recoveryDaysLeft--;
                     }
 
-                    if (l.condition == LimbCondition.Amputated || l.condition == LimbCondition.Bionic || l.condition == LimbCondition.Intact)
+                    if (l.condition == LimbCondition.Prosthetic || l.condition == LimbCondition.Bionic)
+                    {
+                        AdvanceProstheticCare(survivorId, l);
+                        continue;
+                    }
+
+                    if (l.condition == LimbCondition.Amputated || l.condition == LimbCondition.Intact)
                         continue;
 
                     l.daysUntreated++;
@@ -388,6 +418,15 @@ namespace Ashfall.Core.Medical
             l.condition = LimbCondition.Prosthetic;
             l.prostheticId = prostheticItemId;
 
+            // F14-D/F14-E: a freshly fitted prosthetic is factory-new and starts
+            // its rehabilitation arc (fitting → adaptation → mastery).
+            l.prostheticConditionPermille = 1000;
+            l.prostheticTypeKey = prostheticItemId;
+            var rehab = RehabilitationProgressionEngine.StartRehabilitation(prostheticItemId);
+            l.rehabPhase = rehab.Phase;
+            l.rehabDaysInPhase = rehab.DaysInPhase;
+            l.rehabQualityPermille = rehab.QualityRampPermille;
+
             OnProstheticFitted?.Invoke(survivorId, prostheticItemId);
             return ActionResult.Success("amputation.prosthetic_fitted");
         }
@@ -411,6 +450,8 @@ namespace Ashfall.Core.Medical
             l.condition = LimbCondition.Bionic;
             l.prostheticId = bionicItemId;
             l.hasPhantomPain = false;
+            l.prostheticConditionPermille = 1000;
+            l.prostheticTypeKey = bionicItemId;
 
             return ActionResult.Success("amputation.bionic_integrated");
         }
@@ -507,6 +548,112 @@ namespace Ashfall.Core.Medical
             }
 
             return Math.Max(0.10f, mult);
+        }
+
+        /// <summary>
+        /// F14-D — restores a fitted prosthetic's condition (bounded). The host
+        /// player route for maintenance; the owner remains the only writer.
+        /// </summary>
+        public ActionResult ServiceProsthetic(string survivorId, LimbId limb, int restoredPermille = 250)
+        {
+            var l = GetLimb(survivorId, limb);
+            if (l == null) return ActionResult.Blocked("invalid_survivor", "amputation.invalid_survivor");
+            if (l.condition != LimbCondition.Prosthetic && l.condition != LimbCondition.Bionic)
+                return ActionResult.Blocked("no_prosthetic", "amputation.no_prosthetic");
+            int restore = Math.Clamp(restoredPermille, 0, 1000);
+            int current = l.prostheticConditionPermille <= 0 ? 0 : Math.Min(1000, l.prostheticConditionPermille);
+            l.prostheticConditionPermille = Math.Min(1000, current + restore);
+            return ActionResult.Success("amputation.prosthetic_serviced");
+        }
+
+        /// <summary>
+        /// F14-C/F14-G — builds the survivor body-state read model from the live
+        /// limb authority (no parallel state). Used by the presentation slate.
+        /// </summary>
+        public SurvivorBodyState BuildBodyState(string survivorId)
+        {
+            var limbs = EnsureSurvivorLimbs(survivorId);
+            var body = SurvivorBodyState.FromLimbStates(limbs);
+            foreach (var l in limbs)
+            {
+                if ((l.condition == LimbCondition.Prosthetic || l.condition == LimbCondition.Bionic)
+                    && !string.IsNullOrEmpty(l.rehabPhase))
+                {
+                    body.Rehab = new RehabRecord(
+                        l.prostheticTypeKey ?? l.prostheticId ?? "prosthetic",
+                        l.rehabPhase!,
+                        l.rehabDaysInPhase,
+                        l.rehabQualityPermille <= 0 ? RehabilitationProgressionEngine.FittingQualityPermille : l.rehabQualityPermille);
+                    break;
+                }
+            }
+            return body;
+        }
+
+        /// <summary>F14-G — per-prosthetic-item condition projection for the presentation slate.</summary>
+        public Dictionary<string, int> GetProstheticConditions(string survivorId)
+        {
+            var result = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var l in EnsureSurvivorLimbs(survivorId))
+            {
+                if ((l.condition == LimbCondition.Prosthetic || l.condition == LimbCondition.Bionic)
+                    && !string.IsNullOrEmpty(l.prostheticId))
+                {
+                    result[l.prostheticId!] = l.prostheticConditionPermille <= 0 ? 1000 : l.prostheticConditionPermille;
+                }
+            }
+            return result;
+        }
+
+        /// <summary>F14-G — accessible, words-not-colour body presentation slate (read-only).</summary>
+        public SurvivorBodyPresentationSlate BuildBodySlate(
+            string survivorId,
+            Func<string, Ashfall.Core.Inventory.ItemDefinition?>? catalog = null)
+        {
+            var body = BuildBodyState(survivorId);
+            var conditions = GetProstheticConditions(survivorId);
+            bool phantom = _state.phantomPainSurvivorIds.Contains(survivorId);
+            return SurvivorBodyPresentationSlate.Project(survivorId, body, conditions, phantom, catalog);
+        }
+
+        private void AdvanceProstheticCare(string survivorId, LimbState l)
+        {
+            if (l.condition != LimbCondition.Prosthetic && l.condition != LimbCondition.Bionic)
+                return;
+
+            int current = l.prostheticConditionPermille <= 0 ? 1000 : Math.Min(1000, l.prostheticConditionPermille);
+            var complexity = l.condition == LimbCondition.Bionic
+                ? ProstheticComplexityClass.AdvancedArticulated
+                : ComplexityFor(l.prostheticTypeKey ?? l.prostheticId);
+
+            int labor = Math.Clamp(ProstheticLaborIntensityProvider?.Invoke(survivorId) ?? DefaultLaborIntensityPermille, 0, 1000);
+            int maintenance = Math.Clamp(ProstheticMaintenanceQualityProvider?.Invoke(survivorId) ?? DefaultMaintenanceQualityPermille, 0, 1000);
+
+            var wear = ProstheticConditionWearEngine.EvaluateDailyWear(current, complexity, labor, maintenance);
+            l.prostheticConditionPermille = wear.NetConditionPermille;
+
+            // F14-E: advance the rehabilitation arc (no-op once at mastery).
+            int ramp = l.rehabQualityPermille <= 0 ? RehabilitationProgressionEngine.FittingQualityPermille : l.rehabQualityPermille;
+            var rehab = RehabilitationProgressionEngine.AdvanceDaily(
+                new RehabRecord(l.prostheticTypeKey ?? "prosthetic", l.rehabPhase ?? "fitting", l.rehabDaysInPhase, ramp),
+                ProstheticResilienceProvider?.Invoke(survivorId) ?? 1.0f);
+            l.rehabPhase = rehab.Phase;
+            l.rehabDaysInPhase = rehab.DaysInPhase;
+            l.rehabQualityPermille = rehab.QualityRampPermille;
+
+            if (wear.RequiresImmediateMaintenance)
+                OnProstheticMaintenanceNeeded?.Invoke(survivorId, l.limb, wear.MaintenanceStatus);
+        }
+
+        private static ProstheticComplexityClass ComplexityFor(string? typeKey)
+        {
+            if (string.IsNullOrEmpty(typeKey)) return ProstheticComplexityClass.StandardMechanical;
+            string k = typeKey.ToLowerInvariant();
+            if (k.Contains("bionic") || k.Contains("articulated") || k.Contains("advanced") || k.Contains("precision"))
+                return ProstheticComplexityClass.AdvancedArticulated;
+            if (k.Contains("simple") || k.Contains("peg") || k.Contains("hook") || k.Contains("wooden") || k.Contains("improvised") || k.Contains("splint"))
+                return ProstheticComplexityClass.SimpleImprovised;
+            return ProstheticComplexityClass.StandardMechanical;
         }
 
         public AmputationSystemState CaptureState()

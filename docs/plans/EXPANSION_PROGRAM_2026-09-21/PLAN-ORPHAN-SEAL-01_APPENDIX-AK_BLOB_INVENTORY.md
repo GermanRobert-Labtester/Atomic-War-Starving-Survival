@@ -10,6 +10,11 @@ support authority systems.
 families with no authority owner — candidates for retirement review, not
 automatic deletion.
 
+> **Current disposition (2026-09-26):** this generated inventory is historical.
+> `Performance/PerfTestMarker.cs` was a zero-reference 10-line marker and has
+> been removed with user authorization. Any inventory row naming it is
+> provenance only, not a live source path or cleanup task.
+
 **Blob by directory:**
 
 | Directory | Files |
@@ -73,7 +78,7 @@ automatic deletion.
 - **Narrative**: `ApicultureBeeCatalog.cs`, `CandleMakingWaxCatalog.cs`, `CeramicsKilnCatalog.cs`, `CharcoalPyrolysisCatalog.cs`, `CourierDispatchCatalog.cs`, `CrucibleFoundryCatalog.cs`
 - **NarrativeConsequence**: `NarrativeConsequenceGraph.cs`, `NarrativeSimulator.cs`, `NarrativeValidator.cs`
 - **Orchestration**: `BootstrapLifecycleGate.cs`, `LedgerTruthIntegrityGate.cs`
-- **Performance**: `PerfTestMarker.cs`
+- **Performance**: `PerfTestMarker.cs` (retired 2026-09-26; no live marker remains)
 - **Phantoms**: `ConfessionSecretCatalog.cs`
 - **PlayerCommand**: `CampaignActionLog.cs`, `CommandContext.cs`
 - **Ports**: `PortContract.cs`

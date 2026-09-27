@@ -57,6 +57,19 @@ namespace AtomicWar.GodotApp.UI
             AddChild(_toastStack);
         }
 
+        public override void _Notification(int what)
+        {
+            if (what == NotificationPredelete)
+                Unbind(clearToasts: false);
+            base._Notification(what);
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind();
+            base._ExitTree();
+        }
+
         public void Bind(IFeedbackService feedbackService)
         {
             Unbind();
@@ -68,13 +81,17 @@ namespace AtomicWar.GodotApp.UI
         }
 
         public void Unbind()
+            => Unbind(clearToasts: true);
+
+        private void Unbind(bool clearToasts)
         {
             if (_feedbackService != null)
             {
                 _feedbackService.OnFeedbackEmitted -= HandleFeedbackEmitted;
                 _feedbackService = null;
             }
-            ClearAllToasts();
+            if (clearToasts)
+                ClearAllToasts();
         }
 
         private void HandleFeedbackEmitted(ResolvedFeedbackMessage message)
@@ -130,17 +147,14 @@ namespace AtomicWar.GodotApp.UI
 
             var style = new StyleBoxFlat
             {
-                BgColor = new Color(0.10f, 0.10f, 0.12f, 0.94f),
+                BgColor = new Color(DesignTheme.SurfaceCard.r, DesignTheme.SurfaceCard.g, DesignTheme.SurfaceCard.b, 0.94f),
                 BorderColor = borderColor,
                 BorderWidthBottom = 2,
                 BorderWidthLeft = 4, // distinct left severity stripe
                 BorderWidthTop = 1,
-                BorderWidthRight = 1,
-                CornerRadiusBottomLeft = 3,
-                CornerRadiusBottomRight = 3,
-                CornerRadiusTopLeft = 3,
-                CornerRadiusTopRight = 3
+                BorderWidthRight = 1
             };
+            style.SetCornerRadiusAll(DesignTheme.RadiusSm);
             card.AddThemeStyleboxOverride("panel", style);
 
             var margin = new MarginContainer();

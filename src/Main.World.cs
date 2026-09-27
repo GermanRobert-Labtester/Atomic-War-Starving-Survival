@@ -932,13 +932,31 @@ namespace AtomicWar.GodotApp
 
         private void HandleGeothermalAction(string action, string param = "")
         {
+            if (string.IsNullOrWhiteSpace(action)) return;
             if (action == "OPEN") { if (_geothermalAquiferPanel != null) _geothermalAquiferPanel.Visible = true; return; }
             if (action == "CLOSE") { if (_geothermalAquiferPanel != null) _geothermalAquiferPanel.Visible = false; return; }
             if (_geothermalAquiferPanel == null || _geothermalAquifer == null) return;
             switch(action)
             {
                 case "start_drilling": _geothermalAquifer.System.StartDrilling(); break;
-                case "install_casing": _geothermalAquifer.System.InstallCasing(float.Parse(param ?? "100")); break;
+                case "install_casing":
+                {
+                    string casingInput = string.IsNullOrWhiteSpace(param) ? "100" : param;
+                    if (!float.TryParse(casingInput, NumberStyles.Float, CultureInfo.InvariantCulture, out float casingDepth)
+                        || !float.IsFinite(casingDepth)
+                        || casingDepth <= 0f)
+                    {
+                        GD.PrintErr($"[Geothermal] Invalid casing depth input '{casingInput}'. Expected a positive finite number.");
+                        _geothermalAquiferPanel.ShowFeedback(
+                            "Invalid casing depth. Enter a positive finite number, such as 100 or 100.5.");
+                        return;
+                    }
+
+                    var casingResult = _geothermalAquifer.System.InstallCasing(casingDepth);
+                    if (!casingResult.IsSuccess)
+                        _geothermalAquiferPanel.ShowFeedback($"Casing not installed: {casingResult.MessageKey}");
+                    break;
+                }
                 case "commission_turbine": _geothermalAquifer.System.CommissionTurbine(); break;
                 case "descale": _geothermalAquifer.System.Descale(); break;
                 case "vent_pressure": _geothermalAquifer.System.VentPressure(); break;

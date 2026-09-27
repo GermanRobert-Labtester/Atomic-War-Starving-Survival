@@ -313,6 +313,9 @@ namespace AtomicWar.GodotApp
 
         private TravelEncounterSystem? _travelEngine;
         /// <summary>The Plan 20 wasteland-inhabitants encounter engine. Null outside Create(dataDir) hosts — combat binding degrades honestly.</summary>
+        /// <summary>The catalog the travel encounter owner resolves from, for integrity reporting.</summary>
+        public TravelEncounterCatalog? BoundTravelCatalog { get; internal set; }
+
         public TravelEncounterSystem? TravelEngine
         {
             get => _travelEngine;
@@ -527,6 +530,9 @@ namespace AtomicWar.GodotApp
                     var travelCatalog = TravelEncounterCatalog.LoadFromDirectory(dataDir, fileIO);
                     if (travelCatalog != null && travelCatalog.Count > 0)
                         session.TravelEngine = new TravelEncounterSystem(travelCatalog);
+                    // Hand the same catalog to the host so the authored integrity
+                    // rules run over exactly what the campaign plays from.
+                    session.BoundTravelCatalog = travelCatalog;
                 }
             }
             if (session.TravelEngine != null)

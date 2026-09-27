@@ -15,6 +15,12 @@ namespace Ashfall.Core.Economy
         public int quantity { get; set; } = 1;
         public int price_multiplier_bp { get; set; } = 10000; // 10000 = 1.0x
 
+        /// <summary>F13-C — optional restock category grouping (blank = "general").</summary>
+        public string restock_category { get; set; } = string.Empty;
+
+        /// <summary>F13-C — optional target par; 0 falls back to <see cref="quantity"/>.</summary>
+        public int target_par { get; set; } = 0;
+
         /// <summary>
         /// Plan 147 — optional campaign-day gate: the item only enters
         /// <c>remainingStock</c> when the restock (arrival) happens on/after
@@ -45,6 +51,9 @@ namespace Ashfall.Core.Economy
         /// authority drifts away from the item definitions.
         /// </summary>
         public bool use_canonical_item_values { get; set; } = false;
+
+        /// <summary>F13-C — optional restock capacity bound. 0 means full restock (legacy behaviour), which is reproduced exactly by the allocation engine.</summary>
+        public int restock_capacity { get; set; } = 0;
 
         public List<CaravanStockItem> stock { get; set; } = new List<CaravanStockItem>();
         public List<string> demanded_item_tags { get; set; } = new List<string>();
@@ -119,6 +128,7 @@ namespace Ashfall.Core.Economy
         private ShelterBarterSaveState _state = new ShelterBarterSaveState();
         private bool _isSevereWinterWeather;
         private Func<string, int>? _priorityScorer;
+        private Func<MerchantCaravanDef, int>? _restockCapacityProvider;
 
         public IReadOnlyDictionary<string, MerchantCaravanDef> Catalog => _catalog;
         public ShelterBarterSaveState State => _state;
@@ -150,6 +160,20 @@ namespace Ashfall.Core.Economy
             get => _priorityScorer;
             set => _priorityScorer = value;
         }
+
+        /// <summary>
+        /// F13-C — optional canonical restock-capacity source. When bound it
+        /// overrides the authored <see cref="MerchantCaravanDef.restock_capacity"/>;
+        /// the <c>RestockAllocationEngine</c> is always the allocator.
+        /// </summary>
+        public Func<MerchantCaravanDef, int>? RestockCapacityProvider
+        {
+            get => _restockCapacityProvider;
+            set => _restockCapacityProvider = value;
+        }
+
+        /// <summary>F13-C — units placed by the most recent restock (observability/probe).</summary>
+        public int LastRestockCapacityAllocated { get; private set; }
 
         public event Action<MerchantCaravanDef>? OnCaravanArrived;
         public event Action<MerchantCaravanDef>? OnCaravanDeparted;
@@ -328,13 +352,61 @@ namespace Ashfall.Core.Economy
         private void RestockCaravan(MerchantCaravanDef def, CaravanRuntimeState cState)
         {
             cState.remainingStock.Clear();
-            var stockItems = GetPrioritizedStock(def);
-            foreach (var item in stockItems)
+
+            // F13-C: the deterministic RestockAllocationEngine is the single
+            // allocator. A capacity of 0 (authored or provided) reproduces the
+            // legacy full restock exactly: one "general" category whose target
+            // pars equal the authored quantities, with capacity equal to their sum.
+            int capacity = RestockCapacityProvider?.Invoke(def) ?? 0;
+            if (capacity <= 0) capacity = def.restock_capacity;
+            if (capacity <= 0)
             {
+                capacity = 0;
+                foreach (var item in def.stock)
+                {
+                    int par = item.target_par > 0 ? item.target_par : item.quantity;
+                    if (par > 0) capacity += par;
+                }
+            }
+
+            var groups = new Dictionary<string, List<CaravanStockItem>>(StringComparer.Ordinal);
+            var order = new List<string>();
+            foreach (var item in def.stock)
+            {
+                string key = string.IsNullOrEmpty(item.restock_category) ? "general" : item.restock_category;
+                if (!groups.TryGetValue(key, out var list))
+                {
+                    list = new List<CaravanStockItem>();
+                    groups[key] = list;
+                    order.Add(key);
+                }
+                list.Add(item);
+            }
+
+            var categories = new List<RestockCategory>(order.Count);
+            for (int i = 0; i < order.Count; i++)
+            {
+                var list = groups[order[i]];
+                var candidates = new List<RestockItemCandidate>(list.Count);
+                for (int j = 0; j < list.Count; j++)
+                {
+                    var it = list[j];
+                    int par = it.target_par > 0 ? it.target_par : it.quantity;
+                    if (par <= 0) continue;
+                    candidates.Add(new RestockItemCandidate(it.item_id, currentStock: 0, targetPar: par, authoredRestockOrder: j));
+                }
+                categories.Add(new RestockCategory(order[i], weight: 1, scarcityFloor: 0, authoredOrder: i, candidates));
+            }
+
+            var result = RestockAllocationEngine.Allocate(capacity, categories);
+            LastRestockCapacityAllocated = result.TotalAllocated;
+
+            foreach (var item in def.stock)
+            {
+                int qty = result.ItemAllocations.TryGetValue(item.item_id, out var allocated) ? allocated : 0;
                 // Plan 147: per-arrival day gate — high-tier stock only enters
                 // the manifest from its gate day (real campaign state). Stock is
                 // then pinned for the whole stay; no reroll by reopening.
-                int qty = item.quantity;
                 if (item.available_from_day > 0 && _state.currentDay < item.available_from_day)
                     qty = 0;
                 cState.remainingStock[item.item_id] = qty;

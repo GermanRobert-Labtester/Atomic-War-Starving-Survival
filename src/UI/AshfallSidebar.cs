@@ -65,7 +65,9 @@ public partial class AshfallSidebar : PanelContainer
             Text = string.IsNullOrWhiteSpace(headerLabel) ? "NAV" : headerLabel.ToUpperInvariant(),
             HorizontalAlignment = HorizontalAlignment.Left,
         };
-        _railHeader.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
+        // UI accessibility audit 2026-09-26: non-disabled navigation metadata
+        // uses the Small size (12px) instead of the compact Label floor (11px).
+        _railHeader.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
         _railHeader.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
         if (_monoFont != null) _railHeader.AddThemeFontOverride("font", _monoFont);
         vbox.AddChild(_railHeader);
@@ -154,7 +156,9 @@ public partial class AshfallSidebar : PanelContainer
             {
                 hint.TooltipText = tooltipText;
             }
-            hint.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
+            // UI accessibility audit 2026-09-26: hints are non-disabled
+            // navigation metadata; use Small (12px), not the Label floor.
+            hint.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
             if (_monoFont != null) hint.AddThemeFontOverride("font", _monoFont);
             rowVbox.AddChild(hint);

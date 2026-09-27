@@ -38,7 +38,12 @@ namespace Ashfall.Core.Tests
             new HashSet<string>(StringComparer.Ordinal)
             {
                 "ChildDevelopment", // Plan 183 child state persists through the survivor_social aggregate; no duplicate child-development save section.
-                "Plan49DepthPass", // Plan 49 depth passes bind four authored catalogs through existing Core loaders at setup; the catalogs are static data re-derived from the data authority — no mutable campaign state, hence no save twin.
+                                "ExpeditionFamily", // PLAN-EXPEDITION-FAMILY-TRUTH-269 aerial/loot evaluators are pure static projections; no mutable campaign state.
+                "KnockWhitelist", // PLAN-KNOCK-WHITELIST-TRUTH-155 authored whitelist is read-only; no mutable state.
+                "SecondGenerationMilestones", // PLAN-GENERATIONAL-MILESTONE-TRUTH-160 milestones persist inside ChildDevelopmentState via its owner.
+                "JourneyDiagnostics", // PLAN-JOURNEY-CONTEXT-TRUTH-156 diagnostics-only context; no save.
+                "TradeTells", // PLAN-TRADE-TELL-TRUTH-248 tells are a derived read-only selection over the authored corpus and live ledger; no mutable campaign state, no save twin.
+"Plan49DepthPass", // Plan 49 depth passes bind four authored catalogs through existing Core loaders at setup; the catalogs are static data re-derived from the data authority — no mutable campaign state, hence no save twin.
                 "DailyBriefingModal",
                 "DeepCoast",
                 "EncounterChoiceResolver",
@@ -70,6 +75,11 @@ namespace Ashfall.Core.Tests
                 "ShelterFireHazard", // Save twin is SaveShelterFire
                 "UtilityAi",
                 "WeatherSonde",
+                "PowerLoadShedding", // EXPANSION-21-THE-GRID — derived read model over the live PowerGridSystem/PowerDistributionSubgridSystem owners; zero mutable campaign state, so a save section would be fabricated state (same disposition as NeedsPerformance).
+                "ModalTravelDispatch", // MODAL-TRAVEL-DISPATCH — derived pre-departure read model over the live WastelandMapSystem routes, vehicle condition, inventory fuel, and weather owner; zero mutable campaign state, so a save section would be fabricated state (same disposition as PowerLoadShedding).
+                "GuiltSources", // GUILT-SOURCE-CATALOG — read-only authored table (guilt_sources.json) bound to the live GuiltInsomniaSystem; guilt records already persist in the Phase-0 aggregate, so a second store would duplicate authority (Rule 5).
+                "FlotillaStanding", // BLACK-FLOTILLA-STANDING — registers authored faction thresholds on the live FactionStanceEngine and reads verdicts; trust is already owned and persisted by that engine, so this adapter holds no state.
+                "GraveEpitaphs", // GRAVE-EPITAPH-BINDING — assigns the read-only authored table (wasteland_grave_epitaphs.json) and a fork of the campaign-seeded RNG to MemorialSystem, whose selection rule already existed. Grave inscriptions persist inside the existing memorial save section, so a second epitaph store would duplicate authority (Rule 5).
                 "WildlifeTrappingIfBound",
                 "Enrichment", // Read-only static catalog projection + journal knowledge persistence; no standalone save store
                 "Codex", // Read-only projection (CodexProjectionBuilder); zero persistent state — unlocks derive from journal/field-guide/research/faction-standing, which persist themselves

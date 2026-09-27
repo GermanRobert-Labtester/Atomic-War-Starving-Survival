@@ -94,8 +94,8 @@ namespace AtomicWar.GodotApp.UI
             RefreshCrafterOptions();
 
             // Clear
-            ClearChildren(_recipeList);
-            ClearChildren(_queueList);
+            AshfallUiHelpers.EmptyChildren(_recipeList);
+            AshfallUiHelpers.EmptyChildren(_queueList);
 
             if (_craftingHost == null)
             {
@@ -373,11 +373,6 @@ namespace AtomicWar.GodotApp.UI
             var def = _survivorsHost?.Roster?.FindDefinition(survivorId);
             return Ashfall.Core.Survivors.TradeSpecialtySystem.ResolveProfessionId(
                 string.Empty, def?.profession);
-        }
-
-        private static void ClearChildren(Node parent)
-        {
-            AshfallUiHelpers.EmptyChildren(parent);
         }
 
         // ── Godot lifecycle ────────────────────────────────────────────

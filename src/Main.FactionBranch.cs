@@ -12,6 +12,8 @@ namespace AtomicWar.GodotApp
         private bool _factionBranchDirty;
         private CounterIntelligenceHostSession _counterIntelligence = null!;
         private bool _counterIntelligenceDirty;
+        private InformantNetworkHostSession? _informantNetwork;
+        private bool _informantNetworkDirty;
 
         private void SetupFactionBranch()
         {
@@ -55,6 +57,30 @@ namespace AtomicWar.GodotApp
                 if (CaptureSection("counter_intelligence", CounterIntelligenceSaveStore.TryCapturePersisted(_counterIntelligence.System.CaptureState())))
                     _counterIntelligenceDirty = false;
             }
+        }
+
+        /// <summary>
+        /// Plan 146 batch-4 / A.83: informant field-ops ledger. Own session,
+        /// own save section; the counter-intelligence system keeps its
+        /// shelter-side vetting concern untouched.
+        /// </summary>
+        private void SetupInformantNetwork()
+        {
+            if (_informantNetwork != null) return;
+            _informantNetwork = InformantNetworkHostSession.Create();
+            _informantNetwork.StateChanged += () => _informantNetworkDirty = true;
+        }
+
+        private void SaveInformantNetwork()
+        {
+            if (_informantNetwork == null) return;
+            if (CaptureSection("informant_network", InformantNetworkSaveStore.TryCapturePersisted(_informantNetwork.System.CaptureState())))
+                _informantNetworkDirty = false;
+        }
+
+        private void FlushInformantNetwork()
+        {
+            if (_informantNetworkDirty) SaveInformantNetwork();
         }
 
         private void FlushFactionBranch()

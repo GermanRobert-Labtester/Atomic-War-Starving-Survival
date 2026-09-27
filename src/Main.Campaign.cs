@@ -225,6 +225,9 @@ namespace AtomicWar.GodotApp
             if (_memorial != null) return;
             _memorial = new Ashfall.Core.Memorial.MemorialSystem(
                 new Ashfall.Core.Memorial.MemorialState());
+            // Authored grave epitaphs: MemorialSystem.SelectEpitaph fallback was
+            // already implemented but read two seams nothing ever assigned.
+            SetupGraveEpitaphs();
             _memorial.OnMemorialized += _ => _memorialDirty = true;
             _memorial.OnMemorialized += OnMemorializedForShelterDecor;
             // Plan 178/190: the same committed death record enters the culture

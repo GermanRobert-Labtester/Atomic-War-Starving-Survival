@@ -29,6 +29,21 @@ namespace Ashfall.Core.Economy
 
         public IReadOnlyCollection<string> AppliedConsequenceKeys => _appliedConsequenceKeys;
 
+        /// <summary>
+        /// Regional human population weight as the live migration owner measures
+        /// it. Additive read accessor so the host surfaces the raw weight the
+        /// multipliers are derived from instead of back-computing it.
+        /// </summary>
+        /// <summary>
+        /// The live migration engine this consequence engine derives from. Exposed
+        /// so the host can prove it is bound to the same instance the campaign
+        /// ticks instead of building a second migration authority.
+        /// </summary>
+        public SeasonalHumanMigrationEngine MigrationEngine => _migrationEngine;
+
+        public int GetRegionPopulationWeight(string regionId) =>
+            _migrationEngine.GetRegionPopulationWeight(regionId);
+
         public event Action<string, string, int, int>? OnMigrationConsequenceApplied;
 
         public MigrationConsequenceEngine(SeasonalHumanMigrationEngine migrationEngine)

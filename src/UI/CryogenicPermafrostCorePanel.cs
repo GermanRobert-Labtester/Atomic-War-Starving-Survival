@@ -80,8 +80,8 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            ClearChildren(_vault);
-            ClearChildren(_canisters);
+            AshfallUiHelpers.EmptyChildren(_vault);
+            AshfallUiHelpers.EmptyChildren(_canisters);
             if (_cryo == null)
             {
                 _status.Text = "[NOT CONNECTED — CRYO VAULT NOT INITIALIZED]";
@@ -152,14 +152,5 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        private static void ClearChildren(Node parent)
-        {
-            for (int i = parent.GetChildCount() - 1; i >= 0; i--)
-            {
-                var child = parent.GetChild(i);
-                parent.RemoveChild(child);
-                child.Free();
-            }
-        }
     }
 }

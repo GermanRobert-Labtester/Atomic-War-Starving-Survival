@@ -77,6 +77,9 @@ namespace AtomicWar.GodotApp.UI
         /// <summary>Plan 142 — truthful current clothing layers, warmth, wetness, and cold reduction; read-only projection.</summary>
         public Func<string, (int Layers, int TotalWarmth, float Wetness, int ColdReductionBp)?>? ClothingProvider { get; set; }
 
+        /// <summary>F14-G / UNBLOCK-01 — read-only accessible body/limb presentation slate derived from the amputation limb authority.</summary>
+        public Func<string, Ashfall.Core.Medical.SurvivorBodyPresentationSlate?>? BodySlateProvider { get; set; }
+
         public bool IsBound => _survivors != null && !string.IsNullOrEmpty(_survivorId);
         public int RenderedRowCount { get; private set; }
 
@@ -165,6 +168,30 @@ namespace AtomicWar.GodotApp.UI
                 var c = clothingReadout.Value;
                 AddRow(_survivorInfo, $"Clothing: {c.Layers} layer(s), warmth {c.TotalWarmth}, wetness {c.Wetness:P0}, cold reduction {c.ColdReductionBp / 100f:F0}%", Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
+            }
+
+            // F14-G / UNBLOCK-01 — accessible words-not-colour body presentation slate;
+            // read-only projection over the amputation limb authority. Intact limbs
+            // are summarised by the headline and not enumerated.
+            var bodySlate = BodySlateProvider?.Invoke(_survivorId);
+            if (bodySlate != null)
+            {
+                AddRow(_survivorInfo, $"Body: {bodySlate.SummaryStatus} · {bodySlate.GripCapability}", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+                foreach (var limb in bodySlate.Limbs)
+                {
+                    if (string.Equals(limb.ConditionTag, "intact", StringComparison.OrdinalIgnoreCase)) continue;
+                    string maint = limb.RequiresMaintenance && !string.IsNullOrEmpty(limb.MaintenanceNotice)
+                        ? $" — {limb.MaintenanceNotice}"
+                        : string.Empty;
+                    AddRow(_survivorInfo, $"  {limb.DisplayName}: {limb.StatusText}{maint}", Ashfall.Core.UI.Theme.Dim);
+                    RenderedRowCount++;
+                }
+                if (bodySlate.HasPhantomPain)
+                {
+                    AddRow(_survivorInfo, $"  {bodySlate.PhantomPainAlert}", Ashfall.Core.UI.Theme.Warm);
+                    RenderedRowCount++;
+                }
             }
 
             if (view != null && !string.IsNullOrEmpty(view.BeliefProfileLabel) && !string.IsNullOrEmpty(view.BeliefProfileId))

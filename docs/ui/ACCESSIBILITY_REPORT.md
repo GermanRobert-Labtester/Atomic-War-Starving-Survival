@@ -117,3 +117,20 @@ like every other method. Warning count dropped 4 → 3.
 **Evidence:** `Ashfall.csproj` build 0 errors; headless
 `--ui-accessibility-selftest` 5/5 PASS; `--player-panels-uitest` 21/21 PASS;
 `AccessibilitySourceAuditTests` 6/6; `ThemeSemanticTokensTests` 5/5.
+
+## Addendum 3 — 2026-09-26 (legibility + authority reconciliation)
+
+**F-UI-DENSE-METADATA-LEGIBILITY sealed.** The three non-disabled metadata
+surfaces named above (`AshfallDataGrid.MakeHeaderLabel`, `AshfallSidebar` rail
+header + hints) moved from the 11px `FontSizeLabel` floor to 12px
+`FontSizeSmall`. The token floor itself is unchanged and remains gate-enforced.
+
+**F-UI-STALE-DESIGN-AUTHORITY sealed.** `DESIGN_SYSTEM_RULES.md` still listed
+the pre-fix palette (`Dim=#66675F`, `Critical=#E63333`) and a below-floor scale
+(`Label=10px`); it is now reconciled to `Theme.cs`.
+
+**Re-verified already-sealed (do not re-open):** hex↔tuple drift — all 23 pairs
+in `Theme.cs` match exactly.
+
+**Evidence:** build 0 errors; `--ui-layout-selftest` PASS (Failures: 0);
+`--ui-accessibility-selftest` 5/5; `AccessibilitySourceAuditTests` 6/6.

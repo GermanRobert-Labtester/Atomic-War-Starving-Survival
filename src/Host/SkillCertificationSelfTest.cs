@@ -116,6 +116,8 @@ namespace AtomicWar.GodotApp
                       restoredSession.HasSpecialization("survivor_candidate", "spec_combat_medic"),
                     "Save/restore round-trip preserved 100% parity across profiles, certifications, and specializations.");
 
+                if (passed != 12)
+                    throw new InvalidOperationException($"Expected 12 checks, completed {passed}.");
                 Console.WriteLine($"=== Skill Certification Self-Test Result: {passed}/12 Passed ===");
                 return 0;
             }

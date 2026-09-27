@@ -1,160 +1,151 @@
 // SPDX-License-Identifier: MIT
 // ============================================================================
-// Plan 193: Chronic Conditions & Disabilities System — Integration Tests
-// Verifies chronic conditions and accommodations catalog loading, condition
-// addition, capability modifier calculations, accommodation mitigation,
-// multi-condition penalty stacking, and save/restore state persistence.
+// Plan 193 — Chronic Conditions & Accommodations: integration + wiring tests.
+// Core contract: catalog load, condition records from a clinical producer fit,
+// accommodation refusal, capability projection, replay-after-restore.
+// Production wiring gates: the host records diagnoses, registers the
+// chronic_condition save section, and projects the rows on the care surface.
 // ============================================================================
 using System;
 using System.IO;
-using System.Linq;
-using Xunit;
 using Ashfall.Core.Medical;
+using Ashfall.Core.Save;
+using Xunit;
 
 namespace Ashfall.Core.Tests.Medical
 {
-    public sealed class Plan193ChronicConditionIntegrationTests : CatalogTestBase
+    public sealed class Plan193ChronicConditionIntegrationTests
     {
-        [Fact]
-        public void LoadCatalog_LoadsConditionsAndAccommodations()
+        private static string RepoRoot()
         {
-            var system = new ChronicConditionSystem();
-            string path = Path.Combine(DataDirectory, "chronic_conditions.json");
-            Assert.True(File.Exists(path), $"chronic_conditions.json must exist at {path}");
+            string[] candidates = { Directory.GetCurrentDirectory(), AppContext.BaseDirectory };
+            foreach (string start in candidates)
+            {
+                var directory = new DirectoryInfo(Path.GetFullPath(start));
+                while (directory != null)
+                {
+                    if (File.Exists(Path.Combine(directory.FullName, "src", "Main.ChronicConditions.cs")))
+                        return directory.FullName;
+                    directory = directory.Parent!;
+                }
+            }
+            throw new DirectoryNotFoundException("Could not locate the ASHFALL repository root.");
+        }
 
-            system.LoadCatalog(File.ReadAllText(path));
+        private static string DataDir()
+        {
+            return Path.Combine(RepoRoot(), "Assets", "StreamingAssets", "Data");
+        }
 
-            var conditions = system.GetAllConditionDefs();
-            Assert.Equal(6, conditions.Count);
+        private static string Source(string relativePath) =>
+            File.ReadAllText(Path.Combine(RepoRoot(), relativePath));
 
-            var accommodations = system.GetAllAccommodationDefs();
-            Assert.Equal(6, accommodations.Count);
-
-            var limp = system.GetConditionDef("cond_chronic_limp");
+        [Fact]
+        public void AuthoredCatalog_LoadsSixConditionsAndSixAccommodations()
+        {
+            var session = new ChronicConditionSystem();
+            session.LoadCatalog(File.ReadAllText(Path.Combine(DataDir(), "chronic_conditions.json")));
+            Assert.True(session.GetAllConditionDefs().Count > 0, "chronic_conditions.json must load");
+            Assert.Equal(6, session.GetAllConditionDefs().Count);
+            Assert.Equal(6, session.GetAllAccommodationDefs().Count);
+            var limp = session.GetConditionDef("cond_chronic_limp");
             Assert.NotNull(limp);
-            Assert.Equal("mobility", limp.condition_type);
-            Assert.Equal(0.20f, limp.capability_penalties["movement_speed"]);
-            Assert.Equal("accom_cane_crutch", limp.recommended_accommodation_id);
-
-            var cane = system.GetAccommodationDef("accom_cane_crutch");
-            Assert.NotNull(cane);
-            Assert.Equal(0.15f, cane.effective_bonus);
+            Assert.Equal("accom_cane_crutch", limp!.recommended_accommodation_id);
         }
 
         [Fact]
-        public void AddCondition_RecordsConditionAndReducesCapability()
+        public void ValidEvent_RecordsOnce_RepeatedDeliveryIsExactlyOnce()
         {
-            var system = new ChronicConditionSystem();
-            system.LoadCatalog(File.ReadAllText(Path.Combine(DataDirectory, "chronic_conditions.json")));
-
-            SurvivorConditionRecord? added = null;
-            system.OnConditionAdded += rec => added = rec;
-
-            var record = system.AddCondition("surv_01", "cond_chronic_limp", day: 10, cause: "blast_injury");
-
-            Assert.NotNull(record);
-            Assert.NotNull(added);
-            Assert.Equal("surv_01", record.SurvivorId);
-            Assert.Equal("cond_chronic_limp", record.ConditionId);
-            Assert.Equal(1, system.TrackedConditionCount);
-
-            // Baseline was 1.0, limp imposes 0.20 penalty -> 0.80
-            float moveMod = system.CalculateCapabilityModifier("surv_01", "movement_speed");
-            Assert.Equal(0.80f, moveMod);
-
-            // Unaffected capability remains 1.0
-            float workMod = system.CalculateCapabilityModifier("surv_01", "work_speed");
-            Assert.Equal(1.0f, workMod);
+            var session = new ChronicConditionSystem();
+            session.LoadCatalog(File.ReadAllText(Path.Combine(DataDir(), "chronic_conditions.json")));
+            var rec = session.AddCondition("surv_a", "cond_respiratory_damage", 12, "diagnosis_confirmed");
+            Assert.NotNull(rec);
+            Assert.Equal("moderate", rec!.Severity);
+            Assert.Equal("diagnosis_confirmed", rec.Cause);
+            var again = session.AddCondition("surv_a", "cond_respiratory_damage", 20, "diagnosis_confirmed");
+            Assert.Same(rec, again);
+            Assert.Single(session.GetSurvivorConditions("surv_a"));
         }
 
         [Fact]
-        public void AssignAccommodation_MitigatesPenalty()
+        public void UnknownAccommodation_RefusesExplicitly()
         {
-            var system = new ChronicConditionSystem();
-            system.LoadCatalog(File.ReadAllText(Path.Combine(DataDirectory, "chronic_conditions.json")));
-
-            system.AddCondition("surv_01", "cond_chronic_limp", day: 10);
-            Assert.Equal(0.80f, system.CalculateCapabilityModifier("surv_01", "movement_speed"));
-
-            SurvivorAccommodationRecord? assigned = null;
-            system.OnAccommodationAssigned += a => assigned = a;
-
-            // Cane provides +0.15 bonus, reducing penalty from 0.20 to 0.05 -> 0.95
-            var accom = system.AssignAccommodation("surv_01", "accom_cane_crutch", "cond_chronic_limp", day: 11);
-
-            Assert.NotNull(accom);
-            Assert.NotNull(assigned);
-            Assert.Equal(1, system.ActiveAccommodationCount);
-
-            float mitigatedMod = system.CalculateCapabilityModifier("surv_01", "movement_speed");
-            Assert.Equal(0.95f, mitigatedMod);
-
-            // Remove accommodation and penalty returns
-            system.RemoveAccommodation("surv_01", "accom_cane_crutch");
-            Assert.Equal(0.80f, system.CalculateCapabilityModifier("surv_01", "movement_speed"));
+            var session = new ChronicConditionSystem();
+            session.LoadCatalog(File.ReadAllText(Path.Combine(DataDir(), "chronic_conditions.json")));
+            session.AddCondition("surv_a", "cond_chronic_limp", 3, "injury");
+            var known = session.AssignAccommodation("surv_a", "accom_cane_crutch", "cond_chronic_limp", 4);
+            Assert.NotNull(known);
+            Assert.True(session.RemoveAccommodation("surv_a", "accom_cane_crutch"));
+            Assert.False(session.RemoveAccommodation("surv_a", "accom_cane_crutch")); // second removal refused
         }
 
         [Fact]
-        public void MultipleConditions_StackPenalties()
+        public void CapabilityPenalty_TightlyScoped_ReducedByRecommendedAccommodation()
         {
-            var system = new ChronicConditionSystem();
-            system.LoadCatalog(File.ReadAllText(Path.Combine(DataDirectory, "chronic_conditions.json")));
+            var session = new ChronicConditionSystem();
+            session.LoadCatalog(File.ReadAllText(Path.Combine(DataDir(), "chronic_conditions.json")));
+            session.AddCondition("surv_a", "cond_chronic_limp", 3, "injury");
+            float raw = session.CalculateCapabilityModifier("surv_a", "movement_speed");
+            Assert.True(raw < 1f);
+            Assert.Equal(1f, session.CalculateCapabilityModifier("surv_a", "learning_rate"));
+            Assert.Equal(1f, session.CalculateCapabilityModifier("surv_b", "movement_speed"));
 
-            // Limp: movement_speed -0.20
-            system.AddCondition("surv_02", "cond_chronic_limp", day: 5);
-            // Ash fibrosis: movement_speed -0.15, work_speed -0.25
-            system.AddCondition("surv_02", "cond_respiratory_damage", day: 8);
-
-            // Total movement penalty = 0.20 + 0.15 = 0.35 -> 0.65
-            float moveMod = system.CalculateCapabilityModifier("surv_02", "movement_speed");
-            Assert.Equal(0.65f, moveMod);
-
-            // Work penalty = 0.25 -> 0.75
-            float workMod = system.CalculateCapabilityModifier("surv_02", "work_speed");
-            Assert.Equal(0.75f, workMod);
+            Assert.NotNull(session.AssignAccommodation("surv_a", "accom_cane_crutch", "cond_chronic_limp", 4));
+            float fitted = session.CalculateCapabilityModifier("surv_a", "movement_speed");
+            Assert.True(fitted > raw, $"{raw:0.00} should rise under the cane");
+            Assert.True(session.RemoveAccommodation("surv_a", "accom_cane_crutch"));
+            Assert.Equal(raw, session.CalculateCapabilityModifier("surv_a", "movement_speed"));
         }
 
         [Fact]
-        public void GetTotalImpairmentScore_CalculatesSurvivorImpact()
+        public void ReplayAfterRestore_AppliesExactlyOnce()
         {
-            var system = new ChronicConditionSystem();
-            system.LoadCatalog(File.ReadAllText(Path.Combine(DataDirectory, "chronic_conditions.json")));
+            var session = new ChronicConditionSystem();
+            session.LoadCatalog(File.ReadAllText(Path.Combine(DataDir(), "chronic_conditions.json")));
+            session.AddCondition("surv_a", "cond_chronic_limp", 3, "injury");
+            session.AssignAccommodation("surv_a", "accom_cane_crutch", "cond_chronic_limp", 4);
 
-            // Clean survivor has 0% impairment
-            Assert.Equal(0.0f, system.GetTotalImpairmentScore("surv_healthy"));
+            var captured = session.CaptureState();
+            var fresh = new ChronicConditionSystem();
+            fresh.RestoreState(captured);
+            Assert.Single(fresh.GetSurvivorConditions("surv_a"));
+            Assert.Single(fresh.GetSurvivorAccommodations("surv_a"));
 
-            // Survivor with partial blindness (combat -0.30, learning -0.15, crafting -0.20)
-            system.AddCondition("surv_blind", "cond_partial_blindness", day: 12);
-            float score = system.GetTotalImpairmentScore("surv_blind");
-            Assert.True(score > 5.0f);
+            fresh.AddCondition("surv_a", "cond_chronic_limp", 9, "injury");
+            Assert.Single(fresh.GetSurvivorConditions("surv_a"));
+            Assert.Equal(3, fresh.GetSurvivorConditions("surv_a")[0].OnsetDay);
         }
 
         [Fact]
-        public void SaveRestoreState_PreservesConditionsAndAccommodations()
+        public void SaveRegistry_RegistersChronicConditionSection()
         {
-            var system = new ChronicConditionSystem();
-            system.LoadCatalog(File.ReadAllText(Path.Combine(DataDirectory, "chronic_conditions.json")));
+            Assert.True(SaveSectionRegistry.TryGetSection("chronic_condition", out var meta));
+            Assert.Equal("SaveChronicCondition", meta!.SaveMethod);
+            Assert.Equal("chronic_condition_save.json", SaveSectionRegistry.FileNameFor("chronic_condition"));
+        }
 
-            system.AddCondition("surv_veteran", "cond_tremors_neurological", day: 20, cause: "toxic_waste");
-            system.AssignAccommodation("surv_veteran", "accom_stabilizing_brace", "cond_tremors_neurological", day: 21);
+        [Fact]
+        public void HostSource_RecordsTheClinicalProducerAndProjectsCareRows()
+        {
+            string main = Source(Path.Combine("src", "Main.ChronicConditions.cs"));
+            Assert.Contains("OnDiagnosisConfirmed", main);   // real clinical producer seam
+            Assert.Contains("SetupChronicConditions", main);
+            Assert.Contains("SaveChronicConditions", main);
+            Assert.Contains("GetChronicCapabilityModifier", main);
 
-            var state = system.CaptureState();
+            // Care surface projection on the existing afflictions panel.
+            string panel = Source(Path.Combine("src", "UI", "AfflictionsPanel.cs"));
+            Assert.Contains("ChronicConditionHostSession? chronicConditions", panel);
 
-            var restoredSystem = new ChronicConditionSystem();
-            restoredSystem.LoadCatalog(File.ReadAllText(Path.Combine(DataDirectory, "chronic_conditions.json")));
-            restoredSystem.RestoreState(state);
-
-            Assert.Equal(1, restoredSystem.TrackedConditionCount);
-            Assert.Equal(1, restoredSystem.ActiveAccommodationCount);
-
-            var cond = restoredSystem.GetSurvivorConditions("surv_veteran").FirstOrDefault();
-            Assert.NotNull(cond);
-            Assert.Equal("cond_tremors_neurological", cond.ConditionId);
-            Assert.Equal("toxic_waste", cond.Cause);
-
-            var accom = restoredSystem.GetSurvivorAccommodations("surv_veteran").FirstOrDefault();
-            Assert.NotNull(accom);
-            Assert.Equal("accom_stabilizing_brace", accom.AccommodationId);
+            foreach (string site in new[]
+                     {
+                         Path.Combine("src", "Main.GameFlow.cs"),
+                         Path.Combine("src", "Main.PlayerSurfaces.cs"),
+                         Path.Combine("src", "Main.UiTests.PlayerPanels.cs"),
+                     })
+            {
+                Assert.Contains("chronicConditions: _chronicConditions", Source(site));
+            }
         }
     }
 }

@@ -152,8 +152,20 @@ public partial class AshfallDashboardShell : PanelContainer
     {
         if (content == null) return null!;
 
-        if (ContentRef != null && ContentRef.GetParent() == _contentStack)
-            _contentStack.RemoveChild(ContentRef);
+        if (ReferenceEquals(ContentRef, content) &&
+            GodotObject.IsInstanceValid(content) &&
+            content.GetParent() == _contentStack)
+            return content;
+
+        var previousContent = ContentRef;
+        ContentRef = null;
+        if (previousContent != null &&
+            GodotObject.IsInstanceValid(previousContent) &&
+            previousContent.GetParent() == _contentStack)
+        {
+            _contentStack.RemoveChild(previousContent);
+            previousContent.Free();
+        }
 
         _contentStack.AddChild(content);
         if (content is Control c)

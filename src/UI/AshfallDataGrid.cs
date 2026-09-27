@@ -378,7 +378,11 @@ public partial class AshfallDataGrid : PanelContainer
             },
         };
         lbl.SizeFlagsHorizontal = Control.SizeFlags.Fill;
-        lbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
+        // UI accessibility audit 2026-09-26: dense-data header labels are
+        // non-disabled metadata, so they use the Small size (12px) rather than
+        // the compact Label floor (11px) that the audit flagged as a readability
+        // risk on high-density grids.
+        lbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
         lbl.AddThemeColorOverride("font_color",
             AshfallUiHelpers.ToColor(DesignTheme.Dim));
         var mono = AshfallUiHelpers.FontShareTechMono;

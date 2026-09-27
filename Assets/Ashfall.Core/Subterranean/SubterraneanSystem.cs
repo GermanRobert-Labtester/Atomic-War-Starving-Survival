@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ashfall.Core.Excavation;
 using Ashfall.Core.Inventory;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 
@@ -64,6 +65,55 @@ namespace Ashfall.Core.Subterranean
         public const float ShoringIntegrityRepair = 25f;
         public const float RiskScalePerDay = 0.1f; // ExcavationSystem cave-in precedent
 
+        // ---------------------------------------------------------- Plan 146 / A.56 crosswalk
+
+        /// <summary>
+        /// AUTHORED crosswalk: zone_type → subsidence strata + baseline void
+        /// volume (m³). Deterministic constants; no data authoring required.
+        /// Granite-class: Metro/Bunker (bored, braced). Limestone: Cave/Mine
+        /// (karst-bearing). Basalt: UtilityTunnel (drilled). Sandstone:
+        /// CollapsedFacility (unconsolidated fill over void).
+        /// </summary>
+        public static (Excavation.StrataType strata, int voidVolume) StrataProfileFor(string zoneType) => zoneType switch
+        {
+            "Cave" => (Excavation.StrataType.LimestoneKarst, 600),
+            "Mine" => (Excavation.StrataType.LimestoneKarst, 800),
+            "Metro" => (Excavation.StrataType.GraniteSolid, 500),
+            "Bunker" => (Excavation.StrataType.GraniteSolid, 400),
+            "UtilityTunnel" => (Excavation.StrataType.BasaltShield, 300),
+            "CollapsedFacility" => (Excavation.StrataType.SandstoneUnconsolidated, 900),
+            _ => (Excavation.StrataType.SandstoneUnconsolidated, 500)
+        };
+
+        /// <summary>Salt seams are not authored in subterranean_zones.json.</summary>
+        public static Excavation.ExcavationNodeProfile ProfileForNode(SubterraneanNodeState node, SubterraneanZoneDef zone)
+        {
+            var (strata, voidVolume) = StrataProfileFor(zone.zone_type);
+            return new Excavation.ExcavationNodeProfile
+            {
+                NodeId = node.nodeId,
+                Tier = (Excavation.DepthTier)Math.Clamp(node.depthTier, 1, 5),
+                Strata = strata,
+                VoidVolumeCubicMeters = voidVolume,
+                ShoringLevel = Math.Clamp(node.shoringLevel, 0, 3),
+                StructuralIntegrityPermille = Math.Clamp((int)(node.structuralIntegrity * 10f), 0, 1000)
+            };
+        }
+
+        /// <summary>Engine evaluation for a node (risk readout for the panel; zero-side-effect).</summary>
+        public Excavation.SubsidenceEvaluationResult EvaluateSubsidence(string nodeId)
+        {
+            var node = Find(nodeId);
+            var zone = _zoneById.GetValueOrDefault(nodeId);
+            if (node == null || zone == null)
+            {
+                return new Excavation.SubsidenceEvaluationResult(nodeId, 0, Excavation.SubsidenceCategory.Negligible, 0, 0, false);
+            }
+            var profile = ProfileForNode(node, zone);
+            profile.StructuralIntegrityPermille = Math.Clamp((int)(node.structuralIntegrity * 10f), 0, 1000);
+            return SubterraneanSubsidenceEngine.EvaluateSubsidence(profile);
+        }
+
         private readonly SubterraneanZoneCatalogContainer _catalog;
         private readonly InventoryContainer _inventory;
         private readonly Dictionary<string, SubterraneanZoneDef> _zoneById =
@@ -90,6 +140,10 @@ namespace Ashfall.Core.Subterranean
         }
 
         public SubterraneanNetworkState State => _state;
+
+        /// <summary>Discovered underground nodes (subsidence survey surface).</summary>
+        public IReadOnlyList<SubterraneanNodeState> DiscoveredNodes() =>
+            _state.nodes.Where(n => n.discovered).ToList();
         public IReadOnlyDictionary<string, SubterraneanZoneDef> Zones => _zoneById;
 
         // ---------------------------------------------------------- generation
@@ -257,6 +311,18 @@ namespace Ashfall.Core.Subterranean
                              + (100f - node.structuralIntegrity) / 200f
                              + node.waterLevel / 250f;
                 risk *= 1f - 0.25f * node.shoringLevel;
+
+                // A.56 subsidence engine: daily integrity decay now comes from
+                // the deterministic strata/shoring/water math (the ad-hoc
+                // erosion above stays as the event-scale cave-in roll).
+                var profile = ProfileForNode(node, zone);
+                int decay = SubterraneanSubsidenceEngine.CalculateDailyIntegrityDecayPermille(
+                    profile, Math.Clamp((int)(node.waterLevel * 10f), 0, 1000));
+                if (decay > 0)
+                {
+                    node.structuralIntegrity = Math.Max(0f, node.structuralIntegrity - decay / 10f);
+                }
+
                 if (risk > 0f)
                 {
                     var rng = new SeededRng(NodeSeed(day, node.nodeId));

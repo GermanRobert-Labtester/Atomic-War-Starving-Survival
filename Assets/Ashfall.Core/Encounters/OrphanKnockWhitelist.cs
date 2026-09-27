@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Ashfall.Core.Flags;
 
 namespace Ashfall.Core.Encounters
@@ -58,6 +59,58 @@ namespace Ashfall.Core.Encounters
         public bool ContainsKnock(string knockId)
         {
             return _entries.ContainsKey(knockId);
+        }
+
+        /// <summary>Number of authored deliberate orphan knocks.</summary>
+        public int Count => _entries.Count;
+
+        /// <summary>Look up an authored entry by knock id (null when absent).</summary>
+        public OrphanKnockEntry? GetEntry(string knockId) =>
+            _entries.TryGetValue(knockId, out var entry) ? entry : null;
+
+        private sealed class WhitelistDto
+        {
+            public int schema_version { get; set; }
+            public List<WhitelistEntryDto> orphan_knocks { get; set; } = new List<WhitelistEntryDto>();
+        }
+
+        private sealed class WhitelistEntryDto
+        {
+            public string knock_id { get; set; } = string.Empty;
+            public string event_name { get; set; } = string.Empty;
+            public string gating_flag { get; set; } = string.Empty;
+            public string mystery_thread_id { get; set; } = string.Empty;
+            public string resolution_expansion { get; set; } = string.Empty;
+        }
+
+        /// <summary>PLAN-KNOCK-WHITELIST-TRUTH-155 — strict authored-loader for
+        /// <c>Data/whitelists/orphan_knocks.json</c>. Returns an empty whitelist
+        /// on malformed input rather than a half-parsed one.</summary>
+        public static OrphanKnockWhitelist LoadFromJson(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return new OrphanKnockWhitelist(null);
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var dto = JsonSerializer.Deserialize<WhitelistDto>(json, options);
+                var entries = new List<OrphanKnockEntry>();
+                if (dto?.orphan_knocks != null)
+                {
+                    foreach (var e in dto.orphan_knocks)
+                    {
+                        if (string.IsNullOrWhiteSpace(e.knock_id) || string.IsNullOrWhiteSpace(e.event_name))
+                            continue;
+                        entries.Add(new OrphanKnockEntry(
+                            e.knock_id.Trim(), e.event_name.Trim(), e.gating_flag ?? string.Empty,
+                            e.mystery_thread_id ?? string.Empty, e.resolution_expansion ?? string.Empty));
+                    }
+                }
+                return new OrphanKnockWhitelist(entries);
+            }
+            catch (JsonException)
+            {
+                return new OrphanKnockWhitelist(null);
+            }
         }
     }
 }

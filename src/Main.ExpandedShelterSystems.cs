@@ -505,6 +505,14 @@ namespace AtomicWar.GodotApp
             TickSurvivorDeathLegacy(day);
             TickRelationshipDecay(day);
             TickOrphanSealWave1(day);
+            TickChronicConditions(day);
+            TickSurgicalGraft(day);
+            TickPharmaceuticalTablet(day);
+            TickEconomyFamily(day);
+            TickSecondGenerationMilestones(day);
+            TickCloudSeeding(day);
+            TickChemicalPlume(day);
+            TickLoanShark(day);
         }
 
         public void OpenExpandedPanel(string panelKey)
@@ -763,8 +771,9 @@ namespace AtomicWar.GodotApp
             RemovePanel(_medicalWardPanel); _medicalWardPanel = null!;
             RemovePanel(_shelterDecorPanel); _shelterDecorPanel = null!;
             RemovePanel(_shelterReputationPanel); _shelterReputationPanel = null!;
-            _visitorIntegrationPanel?.Unbind();
-            RemovePanel(_visitorIntegrationPanel); _visitorIntegrationPanel = null!;
+            ResetShelterAtmosphere();
+            ResetHiddenAgenda();
+            ResetVisitorIntegration();
             RemovePanel(_personalQuestPanel); _personalQuestPanel = null!;
             RemovePanel(_timeCapsulePanel); _timeCapsulePanel = null!;
             RemovePanel(_deathLegacyPanel); _deathLegacyPanel = null!;

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Ashfall.Core.IO;
 using Ashfall.Core.Radio;
 using Xunit;
@@ -85,6 +86,27 @@ namespace Ashfall.Core.Tests.Radio
             Assert.NotNull(b11);
             Assert.Equal(102.1f, b11!.FrequencyMhz);
             Assert.Equal(BroadcastGenre.MilitaryEdict, b11.Genre);
+        }
+
+        [Fact]
+        public void LoadBaseRadioJson_FormatsFrequencySourceNameInvariantly()
+        {
+            CultureInfo originalCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("de-DE");
+                var catalog = new RadioBroadcastCatalog();
+                catalog.LoadBaseRadioJson(
+                    "{\"radio_broadcasts\":[{\"id\":\"radio_culture_check\",\"frequency\":88.5}]}");
+
+                var broadcast = catalog.GetById("radio_culture_check");
+                Assert.NotNull(broadcast);
+                Assert.Equal("Radio Service 88.5", broadcast!.SourceName);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = originalCulture;
+            }
         }
     }
 }

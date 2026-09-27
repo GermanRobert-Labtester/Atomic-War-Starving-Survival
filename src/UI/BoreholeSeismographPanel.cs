@@ -80,8 +80,8 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            ClearChildren(_events);
-            ClearChildren(_faults);
+            AshfallUiHelpers.EmptyChildren(_events);
+            AshfallUiHelpers.EmptyChildren(_faults);
             if (_seismic == null)
             {
                 _status.Text = "[NOT CONNECTED — SEISMIC NETWORK NOT INITIALIZED]";
@@ -171,14 +171,5 @@ namespace AtomicWar.GodotApp.UI
                 AshfallUiHelpers.ToColor(DesignTheme.Muted)));
         }
 
-        private static void ClearChildren(Node parent)
-        {
-            for (int i = parent.GetChildCount() - 1; i >= 0; i--)
-            {
-                var child = parent.GetChild(i);
-                parent.RemoveChild(child);
-                child.Free();
-            }
-        }
     }
 }

@@ -101,8 +101,8 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            ClearChildren(_telemetry);
-            ClearChildren(_vectors);
+            AshfallUiHelpers.EmptyChildren(_telemetry);
+            AshfallUiHelpers.EmptyChildren(_vectors);
             if (_session == null)
             {
                 _status.Text = "[NOT CONNECTED — YEAR OF ASH SESSION NOT READY]";
@@ -152,14 +152,5 @@ namespace AtomicWar.GodotApp.UI
                 AshfallUiHelpers.ToColor(DesignTheme.Dim)));
         }
 
-        private static void ClearChildren(Node parent)
-        {
-            for (int i = parent.GetChildCount() - 1; i >= 0; i--)
-            {
-                var child = parent.GetChild(i);
-                parent.RemoveChild(child);
-                child.Free();
-            }
-        }
     }
 }

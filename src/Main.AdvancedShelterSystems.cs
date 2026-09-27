@@ -53,6 +53,9 @@ namespace AtomicWar.GodotApp
                 new GodotLog());
             SetupWorld();
             _caravanTradeNetwork.Map = _world?.WastelandMap;
+            // Base prices read the canonical item catalog through the owner's own
+            // resolver seam instead of the fallback literal table.
+            BindCanonicalCaravanItemValue();
 
             var saved = CaravanTradeSaveStore.TryLoad();
             if (saved != null)

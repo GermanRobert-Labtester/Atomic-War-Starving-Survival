@@ -99,12 +99,30 @@ namespace AtomicWar.GodotApp
             SetupYearOfAsh();
             SetupFactionBranch();
             SetupMoralChoice();
-            _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice);
+            _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice, _informantNetwork);
             _factionsPanel.OnWarlordTributePay -= PayWarlordTribute;
             _factionsPanel.OnWarlordTributePay += PayWarlordTribute;
             _factionsPanel.OnWarlordTributeRefuse -= RefuseWarlordTribute;
             _factionsPanel.OnWarlordTributeRefuse += RefuseWarlordTribute;
+            _factionsPanel.OnWarlordTributeContest -= RefuseWarlordTribute;
+            _factionsPanel.OnWarlordTributeContest += RefuseWarlordTribute;
+            _factionsPanel.OnWarlordTributeSubmit -= SubmitToWarlordTribute;
+            _factionsPanel.OnWarlordTributeSubmit += SubmitToWarlordTribute;
+            // The panel asks this projection whether the current ask already has a
+            // response; it is the only source for the disabled-button state.
+            _factionsPanel.WarlordResponseStateProvider = () =>
+            {
+                try { SetupWarlordResponse(); } catch { /* unbound owner */ }
+                return WarlordResponseStatusLine();
+            };
             _factionsPanel.Open();
+        }
+
+        private void SubmitToWarlordTribute()
+        {
+            string line = SubmitToWarlordGuarded();
+            GD.Print($"[warlord] {line}");
+            _statusLabel.Text = line;
         }
 
 

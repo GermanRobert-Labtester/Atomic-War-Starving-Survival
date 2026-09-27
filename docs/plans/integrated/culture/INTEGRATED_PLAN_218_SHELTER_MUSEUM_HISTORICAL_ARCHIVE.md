@@ -4,7 +4,8 @@
 
 > **FULLY INTEGRATED 2026-09-26** under user-authorized claim
 > `claim-plan218-shelter-museum-integration-2026-09-26` (see `INTEGRATION_PLANS.md`
-> and `.ai/plans/plan218-shelter-museum-integration.md`, STATUS: APPROVED BY USER).
+> and `.ai/plans/integrated/culture/INTEGRATED_PLAN_218_SHELTER_MUSEUM_HISTORICAL_ARCHIVE.md`
+> — the archived copy of `.ai/plans/plan218-shelter-museum-integration.md`, STATUS: APPROVED BY USER).
 > `ShelterMuseumSystem` is fully wired: own checksummed save section `shelter_museum`,
 > host session `ShelterMuseumHostSession`, daily exhibition expiry through the
 > existing `TickPlans46_49` orchestration, explicit once-per-day visits with the

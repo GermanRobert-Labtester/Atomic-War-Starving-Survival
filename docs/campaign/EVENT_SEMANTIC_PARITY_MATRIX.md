@@ -60,6 +60,14 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `hazard_warning` | HostCli.WorldPlaytest.cs, Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `holdfast_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `human_migration_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 199) |
+| `power_load_shedding_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 21 / The Grid) |
+| `spiritual_ritual_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 13 / The Faithful & The Fractured) |
+| `trauma_bond_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; trauma bond authority) |
+| `migration_consequence_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; XP-08-F6) |
+| `warlord_response_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; warlord tribute responses) |
+| `patrol_radio_hooks_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; patrol radio bridge) |
+| `ration_conflict_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; ration resentment) |
+| `cassette_playback_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; cassette collection acquisition sync) |
 | `ideological_friction_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 148) |
 | `journal_ticked` | PerformanceCampaignHarness.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `maritime_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
@@ -145,6 +153,17 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `recruitment_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 204) |
 | `clothing_warmth_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 142) |
 | `diplomacy_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `survivor_barter_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 213) |
+| `perimeter_early_warning_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `skill_atrophy_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `palliative_care_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `water_quality_profile_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `weather_forecast_reliability_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `apprenticeship_curriculum_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `common_table_rationing_ticked` | Main.CampaignOwners.cs | generic default | via kitchen panel readout | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `emergency_muster_readiness_ticked` | Main.CampaignOwners.cs | generic default | via muster panel readout | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `soil_reclamation_profile_ticked` | Main.CampaignOwners.cs | generic default | via farming plot panel readout | GENERIC (internal heartbeat — intentionally non-player-facing) |
+| `campaign_action_log_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |
 | `emergency_alert_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Plan 194) |
 | `storm_forecast_ticked` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing; Expansion 33) |
 

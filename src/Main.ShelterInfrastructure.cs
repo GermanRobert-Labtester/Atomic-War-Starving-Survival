@@ -444,6 +444,10 @@ namespace AtomicWar.GodotApp
             var stSys = new ShelterThermalSystem(new SeededRng(1986), stNeeds, stStarting, stDeepFreeze, new GodotLog());
             stSys.RestoreState(stState);
             _shelterThermal = new ShelterThermalHostSession(stSys);
+            // Authored insulation rows (including "insul_storm_sealing", the id the
+            // storm-sealing routine asks for) reach the owner through its own
+            // LoadInsulationCatalog seam. Without this the routine failed every room.
+            BindAuthoredInsulationCatalog();
             if (_shelterThermalPanel != null && _shelterThermalPanel.IsInsideTree())
                 RemoveChild(_shelterThermalPanel);
             _shelterThermalPanel = new ShelterThermalPanel();

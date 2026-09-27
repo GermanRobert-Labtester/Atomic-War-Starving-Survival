@@ -193,12 +193,14 @@ namespace Ashfall.Core.Save
 
                 // 1. Try envelope deserialization
                 SaveEnvelope<T>? envelope = null;
+                Exception? envelopeDecodeError = null;
                 try
                 {
                     envelope = json.Deserialize<SaveEnvelope<T>>(raw);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    envelopeDecodeError = ex;
                     // Not in standard generic envelope format, try legacy fallback
                 }
 
@@ -231,18 +233,23 @@ namespace Ashfall.Core.Save
                 }
 
                 // 3. Direct raw bare state fallback
+                Exception? bareStateDecodeError = null;
                 try
                 {
                     var rawState = json.Deserialize<T>(raw);
                     if (rawState != null)
                         return (true, rawState, null);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    bareStateDecodeError = ex;
                     // Deserialization failure
                 }
 
-                return (false, null, "Failed to deserialize save payload.");
+                string decodeMessage = bareStateDecodeError?.Message
+                    ?? envelopeDecodeError?.Message
+                    ?? "No decoder returned a save state.";
+                return (false, null, $"Failed to deserialize save payload: {decodeMessage}");
             }
             catch (Exception ex)
             {

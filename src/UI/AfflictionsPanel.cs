@@ -37,14 +37,17 @@ namespace AtomicWar.GodotApp.UI
         private InventoryHostSession? _inventory;
         private RespiratoryDegenerationSystem? _respiratory;
         private MedicalTextCatalog? _medicalTexts;
+        private ChronicConditionHostSession? _chronic;
 
         public void Bind(
             MedicalHostSession? medical = null,
             SurvivorsHostSession? survivors = null,
             InventoryHostSession? inventory = null,
             RespiratoryDegenerationSystem? respiratory = null,
-            MedicalTextCatalog? medicalTexts = null)
+            MedicalTextCatalog? medicalTexts = null,
+            ChronicConditionHostSession? chronicConditions = null)
         {
+            _chronic = chronicConditions;
             // Live refresh: affliction rows track survivor state while open.
             if (_survivors != null) _survivors.StateChanged -= RefreshView;
             if (_inventory != null) _inventory.StateChanged -= RefreshView;
@@ -380,6 +383,35 @@ namespace AtomicWar.GodotApp.UI
                                 }
                             }
                         }
+                    }
+                }
+            }
+
+            // Plan 193: tracked chronic conditions + fitted accommodations are
+            // truthful rows in the existing CHRONIC list, each tied to the
+            // clinical attribution (cause) already held by the record.
+            if (_chronic != null && _survivors?.RosterState != null)
+            {
+                foreach (var s in _survivors.RosterState)
+                {
+                    if (s == null || !s.IsAlive) continue;
+                    foreach (var c in _chronic.GetSurvivorConditions(s.Id))
+                    {
+                        var def = _chronic.System.GetConditionDef(c.ConditionId);
+                        AddAffliction(_chronicList,
+                            $"{Name(s.Id)} — {def?.display_name ?? c.ConditionId}",
+                            Ashfall.Core.UI.Theme.Entropy);
+                        AddDimSubline(_chronicList,
+                            $"   ↳ cause: {c.Cause} · since day {c.OnsetDay} · {def?.severity ?? c.Severity}");
+                        chronicCount++;
+                    }
+                    foreach (var a in _chronic.GetSurvivorAccommodations(s.Id))
+                    {
+                        var def = _chronic.System.GetAccommodationDef(a.AccommodationId);
+                        AddAffliction(_chronicList,
+                            $"(+ {Name(s.Id)} — {def?.display_name ?? a.AccommodationId})",
+                            Ashfall.Core.UI.Theme.Success);
+                        chronicCount++;
                     }
                 }
             }

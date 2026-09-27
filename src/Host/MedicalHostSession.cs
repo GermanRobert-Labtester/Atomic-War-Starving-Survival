@@ -207,6 +207,12 @@ namespace AtomicWar.GodotApp
                 session._pendingPipelineSave = pipelineSave;
             }
 
+            // Clinical record integrity: the authored validator previously had no
+            // consumer at all, so a restored pipeline could carry dangling survivor,
+            // treatment, and item references silently. Findings are reported here and
+            // never repaired by invention.
+            session.ValidatePatientRecords(pipelineSave);
+
             // Plan 143: Load affliction bridge rules catalog
             string dataRoot = (!string.IsNullOrEmpty(dataDir) && Directory.Exists(dataDir) ? dataDir : CatalogPath.ResolveDataDir());
             string rulesPath = Path.Combine(dataRoot, "affliction_bridge_rules.json");
@@ -258,6 +264,44 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Pipeline save capture for the campaign envelope.</summary>
         public MedicalPipelineSaveState? CapturePipelineSave() => Pipeline?.CaptureState();
+
+        // ── Clinical record integrity ────────────────────────────
+        //
+        // PatientRecordIntegrityValidator shipped with no consumer at all, so a
+        // restored pipeline could carry dangling survivor, treatment, and item
+        // references silently. These findings are reported only: a dangling
+        // reference is never repaired by invention.
+
+        private PatientRecordIntegrityHostSession? _recordIntegrity;
+        private MedicalPipelineSaveState? _recordIntegritySubject;
+
+        /// <summary>Live clinical integrity report (empty until first validated).</summary>
+        public PatientRecordIntegrityHostSession? RecordIntegrity => _recordIntegrity;
+
+        /// <summary>Findings from the most recent validation of the live pipeline.</summary>
+        public int FindingCount => _recordIntegrity?.FindingCount ?? 0;
+
+        /// <summary>
+        /// Validates a restored pipeline save slice against the real reference
+        /// owners. Idempotent; safe to call on every load.
+        /// </summary>
+        public IReadOnlyList<Ashfall.Core.Medical.MedicalPipelineIntegrityFinding> ValidatePatientRecords(
+            Ashfall.Core.Medical.MedicalPipelineSaveState? state,
+            Func<string, bool>? isKnownSurvivor = null,
+            Func<string, bool>? isKnownItem = null)
+        {
+            var subject = state ?? _recordIntegritySubject;
+            _recordIntegritySubject = subject;
+            // The validator is a pure function over (state, context), so a fresh
+            // adapter per call keeps the report honest and adds no mutable cache.
+            _recordIntegrity = new PatientRecordIntegrityHostSession(
+                () => subject, isKnownSurvivor, null, isKnownItem);
+            return _recordIntegrity.Validate();
+        }
+
+        /// <summary>Truthful one-line integrity readout for surfaces and logs.</summary>
+        public string PatientRecordIntegrityStatusLine() =>
+            _recordIntegrity?.StatusLine() ?? "clinical integrity not run";
 
         // ── Demo actions ─────────────────────────────────────────────
 

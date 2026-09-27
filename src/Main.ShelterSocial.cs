@@ -57,6 +57,10 @@ namespace AtomicWar.GodotApp
             // and mediation history.
             srSys.OnConflictResolved += ApplyInterpersonalConflictMorale;
             _survivorRelations = new SurvivorRelationsHostSession(srSys);
+            // Bands are live gameplay authority (they gate caregiving/training/morale
+            // modifiers) and the state owns them, so bind AFTER restore: authored
+            // relationship_bands.json, not the built-in literal table, is the truth.
+            BindAuthoredRelationshipBands();
             if (_survivorRelationsPanel != null && _survivorRelationsPanel.IsInsideTree())
                 RemoveChild(_survivorRelationsPanel);
             _survivorRelationsPanel = new SurvivorRelationsPanel();

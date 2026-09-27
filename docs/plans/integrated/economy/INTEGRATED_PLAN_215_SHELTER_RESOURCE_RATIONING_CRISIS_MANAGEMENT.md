@@ -4,7 +4,8 @@
 
 > **FULLY INTEGRATED 2026-09-26** under user-authorized claim
 > `claim-plan215-rationing-overlay-completion-2026-09-26` (see `INTEGRATION_PLANS.md`
-> and `.ai/plans/plan215-rationing-overlay-completion.md`, STATUS: APPROVED BY USER).
+> and `.ai/plans/integrated/economy/INTEGRATED_PLAN_215_SHELTER_RESOURCE_RATIONING_CRISIS_MANAGEMENT.md`
+> — the archived copy of `.ai/plans/plan215-rationing-overlay-completion.md`, STATUS: APPROVED BY USER).
 > Every arrow this revision demanded is now live: the authored
 > `rationing_protocols.json` table loads through a strict snake_case loader
 > (`RationingProtocolCatalogLoader`) and feeds the canonical

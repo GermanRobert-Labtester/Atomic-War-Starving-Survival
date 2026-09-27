@@ -288,7 +288,8 @@ namespace Ashfall.Core.Radio
                             DayMax = maxD,
                             DayTrigger = minD,
                             StationId = stationId,
-                            SourceName = "Radio Service " + freq.ToString("0.0"),
+                            SourceName = "Radio Service " + freq.ToString(
+                                "0.0", System.Globalization.CultureInfo.InvariantCulture),
                             Message = msg,
                             Genre = genre,
                             Reliability = genre == BroadcastGenre.MilitaryEdict ? SourceReliability.Partisan : SourceReliability.Official,

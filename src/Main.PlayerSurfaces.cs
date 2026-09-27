@@ -165,7 +165,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => ClosePanelAnimated(_winterFreezePanel));
 
             PanelRegistry.ConfigureActions("afflictions",
-                bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory); },
+                bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory, chronicConditions: _chronicConditions); },
                 openAction: () => _afflictionsPanel.Open(),
                 closeAction: () => CloseAfflictionsPanel());
 
@@ -246,12 +246,12 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseSurvivalDetailPanel());
 
             PanelRegistry.ConfigureActions("survivor_detail",
-                bindAction: () => { SetupSurvivors(); SetupEnrichment(); SetupSurvivorSocial(); SetupCulturalArchive(); SetupBackstory(); SetupIdeologicalFriction(); SetupRomanceFamily(); _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id) ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>(); _survivorDetailPanel.DocumentationProvider = id => GetSurvivorDocumentation(id); _survivorDetailPanel.RoleProvider = id => GetSurvivorRoleReadout(id); _survivorDetailPanel.ClothingProvider = id => GetClothingWarmthReadout(id); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
+                bindAction: () => { SetupSurvivors(); SetupEnrichment(); SetupSurvivorSocial(); SetupCulturalArchive(); SetupBackstory(); SetupIdeologicalFriction(); SetupRomanceFamily(); _survivorDetailPanel.BelongingsProvider = id => _survivorSocial?.Belongings.GetBelongingsForSurvivor(id) ?? Array.Empty<Ashfall.Core.Survivors.PersonalBelonging>(); _survivorDetailPanel.DocumentationProvider = id => GetSurvivorDocumentation(id); _survivorDetailPanel.RoleProvider = id => GetSurvivorRoleReadout(id); _survivorDetailPanel.ClothingProvider = id => GetClothingWarmthReadout(id); _survivorDetailPanel.BodySlateProvider = id => EnsureAmputation().BuildBodySlate(id); var first = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? ""; _survivorDetailPanel.Bind(_survivors, first, _enrichmentService); },
                 openAction: () => _survivorDetailPanel.Open(),
                 closeAction: () => CloseSurvivorDetailPanel());
 
             PanelRegistry.ConfigureActions("inventory_detail",
-                bindAction: () => { SetupInventory(); SetupEnrichment(); var first = _inventory?.Inventory?.FindSlot("bandage")?.Item?.id ?? "bandage"; _inventoryDetailPanel.Bind(_inventory, first, null, _enrichment); },
+                bindAction: () => { SetupInventory(); SetupItemLore(); SetupEnrichment(); var first = _inventory?.Inventory?.FindSlot("bandage")?.Item?.id ?? "bandage"; _inventoryDetailPanel.Bind(_inventory, first, null, _enrichment); _inventoryDetailPanel.BindItemLore(_itemLore); },
                 openAction: () => _inventoryDetailPanel.Open(),
                 closeAction: () => CloseInventoryDetailPanel());
 
@@ -291,7 +291,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseShelterSocialPanel());
 
             PanelRegistry.ConfigureActions("subterranean_operations",
-                bindAction: () => { EnsureExcavationHazards(); SetupInventory(); SetupSurvivors(); _subterraneanOperationsPanel.Bind(_excavationHazards!, _inventory.Inventory, _survivors); },
+                bindAction: () => { EnsureExcavationHazards(); SetupInventory(); SetupSurvivors(); SetupSubterranean(); _subterraneanOperationsPanel.Bind(_excavationHazards!, _inventory.Inventory, _survivors); _subterraneanOperationsPanel.BindSubsidence(_subterranean!); },
                 openAction: () => _subterraneanOperationsPanel.Open(),
                 closeAction: () => CloseSubterraneanOperationsPanel());
 
@@ -358,7 +358,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseShelterPanel());
 
             PanelRegistry.ConfigureActions("factions",
-                bindAction: () => { SetupHoldfastRuntime(); SetupMuster(); SetupExpansions(); SetupYearOfAsh(); SetupFactionBranch(); SetupMoralChoice(); _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice); },
+                bindAction: () => { SetupHoldfastRuntime(); SetupMuster(); SetupExpansions(); SetupYearOfAsh(); SetupFactionBranch(); SetupMoralChoice(); SetupInformantNetwork(); _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions, _yearOfAsh, _factionBranch?.Coordinator, _moralChoice, _informantNetwork); },
                 openAction: () => _factionsPanel.Open(),
                 closeAction: () => CloseFactionsPanel());
 

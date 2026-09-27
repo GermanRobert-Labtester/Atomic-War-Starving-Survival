@@ -85,14 +85,27 @@ namespace Ashfall.Core.Tests.Campaign
         public void ReachableProducers_AreWiredToTheirCanonicalOwners()
         {
             string voice = ReadRepoFile("src", "Main.SurvivorVoice.cs");
-            Assert.Contains("_campaignDay.Calendar.OnSeasonChanged += TriggerSurvivorVoiceSeasonChanged;", voice);
-            Assert.Contains("_survivors.Radiation.OnDoseChanged +=", voice);
+            Assert.Contains("var calendar = _campaignDay?.Calendar;", voice);
+            Assert.Contains("_survivorVoiceBoundCalendar.OnSeasonChanged += TriggerSurvivorVoiceSeasonChanged;", voice);
+            Assert.Contains("var radiation = _survivors?.Radiation;", voice);
+            Assert.Contains("_survivorVoiceBoundRadiation.OnDoseChanged += OnSurvivorVoiceDoseChanged;", voice);
 
             string fate = ReadRepoFile("src", "Main.SurvivorFate.cs");
             Assert.Contains("TriggerSurvivorVoicePerished(fate.survivorId);", fate);
 
             string economyMain = ReadRepoFile("src", "Main.Economy.cs");
             Assert.Contains("TriggerSurvivorVoiceRationCut(target);", economyMain);
+        }
+
+        [Fact]
+        public void TriggerSubscriptions_AreRemovedAndUseNamedRadiationHandler()
+        {
+            string voice = ReadRepoFile("src", "Main.SurvivorVoice.cs");
+            Assert.Contains("_survivorVoiceBoundCalendar.OnSeasonChanged -= TriggerSurvivorVoiceSeasonChanged;", voice);
+            Assert.Contains("_survivorVoiceBoundRadiation.OnDoseChanged += OnSurvivorVoiceDoseChanged;", voice);
+            Assert.Contains("_survivorVoiceBoundRadiation.OnDoseChanged -= OnSurvivorVoiceDoseChanged;", voice);
+            Assert.Contains("UnbindSurvivorVoiceTriggers();", voice);
+            Assert.DoesNotContain("OnDoseChanged += (", voice);
         }
 
         [Fact]

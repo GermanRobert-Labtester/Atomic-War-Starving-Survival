@@ -9,6 +9,11 @@ CLI probe, focused fixture) and the appendix/maintenance convention of
 A claim still owns the edits; this page exists so the claim starts from real
 paths, real names, and a fixture skeleton derived from this plan's own packages.
 
+> **Current disposition (2026-09-26):** this generated inventory is historical.
+> `Performance/PerfTestMarker.cs` was a zero-reference 10-line marker and has
+> been removed with user authorization. Its row below is retained as provenance,
+> not as a live source path or cleanup task.
+
 ## 1. Source inventory (42 files)
 
 | File | Lines |
@@ -43,7 +48,7 @@ paths, real names, and a fixture skeleton derived from this plan's own packages.
 | `Performance/PerfSession.cs` | 165 |
 | `Performance/PerfStatistics.cs` | 123 |
 | `Performance/PerfStopwatch.cs` | 58 |
-| `Performance/PerfTestMarker.cs` | 10 |
+| `Performance/PerfTestMarker.cs` (retired 2026-09-26) | 10 |
 | `Performance/PerfWorkloadContext.cs` | 47 |
 | `Performance/ScaleTier.cs` | 100 |
 | `Performance/WorkloadProfile.cs` | 83 |

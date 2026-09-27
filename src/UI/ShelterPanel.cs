@@ -123,10 +123,10 @@ namespace AtomicWar.GodotApp.UI
 
             RefreshStatusRail();
 
-            ClearChildren(_statusList);
-            ClearChildren(_radiationData);
-            ClearChildren(_structureList);
-            ClearChildren(_upgradesList);
+            AshfallUiHelpers.EmptyChildren(_statusList);
+            AshfallUiHelpers.EmptyChildren(_radiationData);
+            AshfallUiHelpers.EmptyChildren(_structureList);
+            AshfallUiHelpers.EmptyChildren(_upgradesList);
 
             if (!IsBound)
             {
@@ -219,11 +219,6 @@ namespace AtomicWar.GodotApp.UI
             _upgradesList.AddChild(AshfallUiHelpers.MakeDataRow("Electronic Scrap on Hand", $"{Count("scrap_electronic")} units", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
         }
 
-        private static void ClearChildren(Node parent)
-        {
-            AshfallUiHelpers.EmptyChildren(parent);
-        }
-
         private int Count(string itemId)
         {
             return _inventoryHost?.Inventory.CountById(itemId) ?? 0;
@@ -243,9 +238,7 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.88f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+            AddChild(AshfallUiHelpers.MakeBackdropOverlay());
 
             var center = new CenterContainer();
             center.SetAnchorsPreset(LayoutPreset.FullRect);

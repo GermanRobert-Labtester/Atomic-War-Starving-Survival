@@ -21,6 +21,11 @@ namespace AtomicWar.GodotApp
     {
         private SurvivorFateSystem _survivorFate = null!;
         private bool _survivorFateDirty;
+        private SurvivorsHostSession? _survivorFateSurvivorsSource;
+        private DiseaseHostSession? _survivorFateDiseaseSource;
+        private System.Action<SurvivorFateEvent>? _survivorFateChangedHandler;
+        private System.Action<string, Ashfall.Core.Survivors.SurvivorDeathCause, string>? _survivorFateNeedsHandler;
+        private System.Action<string, string>? _survivorFateDiseaseHandler;
 
         private void SetupSurvivorFate()
         {
@@ -57,7 +62,7 @@ namespace AtomicWar.GodotApp
                         _expeditions.Engine.Retreat(id);
                 });
 
-            _survivorFate.OnSurvivorFate += fate =>
+            _survivorFateChangedHandler = fate =>
             {
                 _survivorFateDirty = true;
                 // Plan 42 — the fate owner's death signal is the canonical
@@ -77,6 +82,7 @@ namespace AtomicWar.GodotApp
                     dedupeKey: $"survivor_lost_{fate.survivorId}"
                 ));
             };
+            _survivorFate.OnSurvivorFate += _survivorFateChangedHandler;
             _survivorFate.OnLastSurvivorDied += OnLastSurvivorDied;
             // Plan 210: the fate owner is the only death/inheritance trigger;
             // belongings keep only ownership metadata and never move inventory
@@ -85,13 +91,19 @@ namespace AtomicWar.GodotApp
 
             // ── Death-source feeds ─────────────────────────────────────
             // Needs + radiation (survival loop).
-            _survivors.OnSurvivorDied += (id, cause, detail) =>
-                _survivorFate.ReportDeath(id, cause, detail, source: "survivors_needs");
+            _survivorFateSurvivorsSource = _survivors;
+            _survivorFateNeedsHandler = (id, cause, detail) =>
+                _survivorFate?.ReportDeath(id, cause, detail, source: "survivors_needs");
+            _survivorFateSurvivorsSource.OnSurvivorDied += _survivorFateNeedsHandler;
 
             // Disease (lethal outcome).
             if (_disease != null)
-                _disease.OnSurvivorDied += (id, diseaseId) =>
-                    _survivorFate.ReportDeath(id, SurvivorDeathCause.Disease, diseaseId, source: "disease");
+            {
+                _survivorFateDiseaseSource = _disease;
+                _survivorFateDiseaseHandler = (id, diseaseId) =>
+                    _survivorFate?.ReportDeath(id, SurvivorDeathCause.Disease, diseaseId, source: "disease");
+                _survivorFateDiseaseSource.OnSurvivorDied += _survivorFateDiseaseHandler;
+            }
 
             // The player/avatar death feed is wired in SetupHoldfastRuntime
             // (OnPlayerDied → avatar ReportDeath → campaign loss), which owns
@@ -156,6 +168,29 @@ namespace AtomicWar.GodotApp
         private void FlushSurvivorFateIfDirty()
         {
             if (_survivorFateDirty) SaveSurvivorFate();
+        }
+
+        public void ResetSurvivorFate()
+        {
+            if (_survivorFate != null)
+            {
+                if (_survivorFateChangedHandler != null)
+                    _survivorFate.OnSurvivorFate -= _survivorFateChangedHandler;
+                _survivorFate.OnLastSurvivorDied -= OnLastSurvivorDied;
+                _survivorFate.OnSurvivorFate -= HandlePersonalBelongingsInheritance;
+            }
+            if (_survivorFateSurvivorsSource != null && _survivorFateNeedsHandler != null)
+                _survivorFateSurvivorsSource.OnSurvivorDied -= _survivorFateNeedsHandler;
+            if (_survivorFateDiseaseSource != null && _survivorFateDiseaseHandler != null)
+                _survivorFateDiseaseSource.OnSurvivorDied -= _survivorFateDiseaseHandler;
+
+            _survivorFate = null!;
+            _survivorFateDirty = false;
+            _survivorFateSurvivorsSource = null;
+            _survivorFateDiseaseSource = null;
+            _survivorFateChangedHandler = null;
+            _survivorFateNeedsHandler = null;
+            _survivorFateDiseaseHandler = null;
         }
     }
 }

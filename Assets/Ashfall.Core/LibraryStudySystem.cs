@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json.Serialization;
 #pragma warning disable CS8618
 using Ashfall.Core.Journal;
@@ -307,7 +308,11 @@ namespace Ashfall.Core
                     for (int i = 0; i < manual.skillXpGrants.Count; i += 2)
                     {
                         string skillId = manual.skillXpGrants[i];
-                        if (float.TryParse(manual.skillXpGrants[i + 1], out float xp))
+                        if (float.TryParse(
+                            manual.skillXpGrants[i + 1],
+                            NumberStyles.Float,
+                            CultureInfo.InvariantCulture,
+                            out float xp))
                             _skills.RecordAction(new SimpleSkillActor(job.readerId), skillId, xp, _currentDay);
                     }
 

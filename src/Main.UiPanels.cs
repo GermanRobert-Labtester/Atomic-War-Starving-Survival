@@ -218,6 +218,27 @@ namespace AtomicWar.GodotApp
             _confirmationModal.Prompt(title, message, onConfirm, onCancel);
         }
 
+        private void BindDutyRosterPanelCallbacks()
+        {
+            _dutyRosterPanel.OnClose -= CloseDutyRosterPanel;
+            _dutyRosterPanel.OnClose += CloseDutyRosterPanel;
+            _dutyRosterPanel.OnAssignmentChanged -= HandleDutyRosterAssignmentChanged;
+            _dutyRosterPanel.OnAssignmentChanged += HandleDutyRosterAssignmentChanged;
+            _dutyRosterPanel.OnDetailsRequested -= HandleDutyRosterDetailsRequested;
+            _dutyRosterPanel.OnDetailsRequested += HandleDutyRosterDetailsRequested;
+        }
+
+        private void HandleDutyRosterAssignmentChanged()
+        {
+            UpdateHud();
+            ObserveSigil("duty.assigned");
+        }
+
+        private void HandleDutyRosterDetailsRequested()
+        {
+            OpenPlayerPanel("duty_roster_detail");
+        }
+
         private void BuildUserInterface()
         {
             // Root full-rect styling
@@ -360,10 +381,7 @@ namespace AtomicWar.GodotApp
 
             // ── Duty Roster panel (overlay) ──
             _dutyRosterPanel = new DutyRosterPanel();
-            _dutyRosterPanel.OnClose += CloseDutyRosterPanel;
-            _dutyRosterPanel.OnAssignmentChanged += UpdateHud;
-            _dutyRosterPanel.OnAssignmentChanged += () => ObserveSigil("duty.assigned");
-            _dutyRosterPanel.OnDetailsRequested += () => OpenPlayerPanel("duty_roster_detail");
+            BindDutyRosterPanelCallbacks();
             AddChild(_dutyRosterPanel);
 
             // ── Expedition panel (overlay) ──

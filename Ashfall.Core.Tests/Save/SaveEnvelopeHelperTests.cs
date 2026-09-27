@@ -18,6 +18,19 @@ namespace Ashfall.Core.Tests.Save
     {
         private readonly string _tempDir;
 
+        private sealed class FailingDecoder : IJsonSerializer
+        {
+            public string Serialize<T>(T value) => string.Empty;
+
+            public T? Deserialize<T>(string json) where T : class
+            {
+                string message = typeof(T) == typeof(SaveEnvelope<SampleSaveState>)
+                    ? "envelope decode failed"
+                    : "bare state decode failed";
+                throw new InvalidOperationException(message);
+            }
+        }
+
         public SaveEnvelopeHelperTests()
         {
             _tempDir = Path.Combine(Path.GetTempPath(), "AshfallSaveHelperTests_" + Guid.NewGuid().ToString("N"));
@@ -99,6 +112,20 @@ namespace Ashfall.Core.Tests.Save
             Assert.Equal(7, loaded!.Day);
             Assert.Equal("Legacy Bunker", loaded.Name);
             Assert.Equal(250, loaded.Score);
+        }
+
+        [Fact]
+        public void TryLoad_WhenBothDecodersThrow_PreservesFinalDecodeError()
+        {
+            string path = Path.Combine(_tempDir, "invalid_save.json");
+            File.WriteAllText(path, "not a save");
+
+            var (success, loaded, error) = SaveEnvelopeHelper.TryLoad<SampleSaveState>(
+                path, serializer: new FailingDecoder());
+
+            Assert.False(success);
+            Assert.Null(loaded);
+            Assert.Contains("bare state decode failed", error);
         }
 
         [Fact]

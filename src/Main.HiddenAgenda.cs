@@ -11,6 +11,8 @@ namespace AtomicWar.GodotApp
         private HiddenAgendaHostSession _hiddenAgenda = null!;
         private HiddenAgendaPanel _hiddenAgendaPanel = null!;
         private bool _hiddenAgendaDirty;
+        private Action? _hiddenAgendaStateChangedHandler;
+        private Action? _hiddenAgendaPanelCloseHandler;
 
         public HiddenAgendaHostSession HiddenAgenda => EnsureHiddenAgenda();
 
@@ -49,7 +51,8 @@ namespace AtomicWar.GodotApp
             }
 
             _hiddenAgenda = new HiddenAgendaHostSession(system);
-            _hiddenAgenda.StateChanged += OnHiddenAgendaStateChanged;
+            _hiddenAgendaStateChangedHandler = OnHiddenAgendaStateChanged;
+            _hiddenAgenda.StateChanged += _hiddenAgendaStateChangedHandler;
             return _hiddenAgenda;
         }
 
@@ -88,7 +91,12 @@ namespace AtomicWar.GodotApp
             EnsureHiddenAgenda();
             _hiddenAgendaPanel = new HiddenAgendaPanel();
             _hiddenAgendaPanel.Bind(_hiddenAgenda);
-            _hiddenAgendaPanel.OnClose += () => _hiddenAgendaPanel.Visible = false;
+            _hiddenAgendaPanelCloseHandler = () =>
+            {
+                if (_hiddenAgendaPanel != null)
+                    _hiddenAgendaPanel.Visible = false;
+            };
+            _hiddenAgendaPanel.OnClose += _hiddenAgendaPanelCloseHandler;
             _hiddenAgendaPanel.Visible = false;
             AddChild(_hiddenAgendaPanel);
         }
@@ -98,6 +106,26 @@ namespace AtomicWar.GodotApp
             SetupHiddenAgendaPanel();
             _hiddenAgendaPanel.Visible = true;
             _hiddenAgendaPanel.RefreshView();
+        }
+
+        public void ResetHiddenAgenda()
+        {
+            if (_hiddenAgenda != null && _hiddenAgendaStateChangedHandler != null)
+                _hiddenAgenda.StateChanged -= _hiddenAgendaStateChangedHandler;
+            if (_hiddenAgendaPanel != null)
+            {
+                _hiddenAgendaPanel.Unbind();
+                if (_hiddenAgendaPanel.IsInsideTree())
+                    RemoveChild(_hiddenAgendaPanel);
+                if (_hiddenAgendaPanelCloseHandler != null)
+                    _hiddenAgendaPanel.OnClose -= _hiddenAgendaPanelCloseHandler;
+            }
+
+            _hiddenAgenda = null!;
+            _hiddenAgendaPanel = null!;
+            _hiddenAgendaDirty = false;
+            _hiddenAgendaStateChangedHandler = null;
+            _hiddenAgendaPanelCloseHandler = null;
         }
     }
 }

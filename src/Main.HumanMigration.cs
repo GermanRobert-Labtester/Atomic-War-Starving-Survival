@@ -33,6 +33,8 @@ namespace AtomicWar.GodotApp
             // them through one bounded provider (identity when unbound), so the
             // map gets alive without a second encounter selector.
             BindMigrationToTravelEncounters();
+            // Patrol radio bridge: the same live travel owner feeds it.
+            BindPatrolRadioToTravel(_expeditions?.TravelEngine);
         }
 
         /// <summary>

@@ -301,20 +301,13 @@ namespace AtomicWar.GodotApp.UI
 
         private void ClearActions()
         {
-            if (_actionsBox == null) return;
-            while (_actionsBox.GetChildCount() > 0)
-            {
-                var child = _actionsBox.GetChild(0);
-                _actionsBox.RemoveChild(child);
-                child.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_actionsBox);
         }
 
         private void AddActionButton(string label, string action, string param)
         {
-            if (_actionsBox == null) return;
-            var btn = AshfallUiHelpers.MakeButton(label, () => OnActionRequested?.Invoke(action, param));
-            _actionsBox.AddChild(btn);
+            AshfallUiHelpers.AddActionButton(
+                _actionsBox, label, () => OnActionRequested?.Invoke(action, param));
         }
     }
 }

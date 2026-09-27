@@ -51,8 +51,11 @@ namespace AtomicWar.GodotApp
                 var session = new ShelterDecorHostSession(
                     new ShelterDecorSystem(), assignment.System, survivors.Needs, inventory);
                 session.SetCurrentDay(3);
-                Check(session.LoadCatalogModifiers() == 12,
-                    "all twelve item_decor_* modifiers registered from the live catalog");
+                int decorModifierCount = 0;
+                foreach (string decorId in catalog.Ids)
+                    if (decorId.StartsWith("item_decor_", System.StringComparison.Ordinal)) decorModifierCount++;
+                Check(session.LoadCatalogModifiers() == decorModifierCount && decorModifierCount >= 12,
+                    $"all {decorModifierCount} item_decor_* modifiers registered from the live catalog");
                 int beforeInventory = inventory.Inventory.CountById(poster.id);
                 Check(session.TryMount("room_bunks", "north_wall", poster.id, 3, out _),
                     "mount consumes the selected real inventory item");

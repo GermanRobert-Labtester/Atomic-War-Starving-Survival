@@ -104,6 +104,8 @@ namespace AtomicWar.GodotApp
                       restoredProfile.coping_mechanisms.Count == p1.coping_mechanisms.Count,
                     "Save/restore round-trip preserved 100% parity across profiles, phobias, coping, and therapy.");
 
+                if (passed != 12)
+                    throw new InvalidOperationException($"Expected 12 checks, completed {passed}.");
                 Console.WriteLine($"=== Psychological Profile Self-Test Result: {passed}/12 Passed ===");
                 return 0;
             }

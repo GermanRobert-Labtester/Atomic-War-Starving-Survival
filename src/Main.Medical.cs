@@ -302,6 +302,15 @@ namespace AtomicWar.GodotApp
             };
 
             _medical.BindPipeline(pipeline);
+            // Clinical record integrity, evaluated against the REAL reference owners:
+            // the survivor roster and the item catalog. The validator only reports;
+            // a dangling reference is never repaired by invention.
+            _medical.ValidatePatientRecords(
+                _medical.CapturePipelineSave(),
+                id => !string.IsNullOrEmpty(id) && Ashfall.Core.Survivors.SurvivorId.TryParse(id, out _),
+                id => !string.IsNullOrEmpty(id) && _inventory?.Catalog?.Get(id) != null);
+            if (_medical.FindingCount > 0)
+                GD.Print($"[Ashfall Godot] Clinical record integrity: {_medical.PatientRecordIntegrityStatusLine()}");
             // Task #133 P1b: share the pipeline with the ward and chem-dep
             // sessions when already constructed (they backfill from
             // _medical.Pipeline otherwise, covering every setup order).

@@ -176,6 +176,12 @@ namespace AtomicWar.GodotApp
             return _zealotry;
         }
 
+        public void ResetZealotry()
+        {
+            _zealotry = null;
+            _beliefStance = null;
+        }
+
         private void SetupZealotry()
         {
             EnsureZealotry();

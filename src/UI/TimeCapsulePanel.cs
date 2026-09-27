@@ -36,6 +36,75 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        /// <summary>
+        /// Plan 212 letter route — a separate discovered-letters authority bound
+        /// beside (never inside) the capsule state. Optional; existing binds
+        /// unchanged.
+        /// </summary>
+        public void BindLetters(LetterDeliveryHostSession? letters)
+        {
+            // Detach any previous subscription before rebinding.
+            if (_letters != null && _lettersBound)
+            {
+                _letters.StateChanged -= RefreshView;
+            }
+            _letters = letters;
+            _lettersBound = _letters != null;
+            if (_letters != null)
+            {
+                _letters.StateChanged += RefreshView;
+            }
+            RefreshView();
+        }
+
+        /// <summary>Discovered-letters privacy-safe section under the right column.</summary>
+        private void RefreshLettersSection()
+        {
+            if (!IsInsideTree() || _messagesContainer == null) return;
+
+            // Drop the previous letters section (tracked by name) and re-render.
+            var previous = GetNodeOrNull("Plan212LettersSection");
+            previous?.QueueFree();
+
+            if (_letters == null) return;
+
+            var section = new VBoxContainer { Name = "Plan212LettersSection", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            section.AddThemeConstantOverride("separation", 6);
+
+            var hdr = new Label { Text = "DISCOVERED LETTERS (Plan 212 letter route)" };
+            hdr.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+            section.AddChild(hdr);
+
+            var visible = _letters.VisibleLetters();
+            if (visible.Count == 0)
+            {
+                var empty = new Label { Text = "No letters discovered yet. Expeditions may surface authored letters." };
+                empty.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                section.AddChild(empty);
+            }
+            else
+            {
+                foreach (var (rec, body) in visible)
+                {
+                    var row = new Label
+                    {
+                        Text = $"• {rec.letterId} [{rec.state}] found day {rec.foundDay}\n   {body}",
+                        AutowrapMode = TextServer.AutowrapMode.WordSmart,
+                    };
+                    row.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                        rec.state == Ashfall.Core.Narrative.LetterDeliveryState.Delivered
+                            ? Ashfall.Core.UI.Theme.Success
+                            : Ashfall.Core.UI.Theme.Dim));
+                    section.AddChild(row);
+                }
+            }
+
+            _messagesContainer.AddChild(section);
+        }
+
+        private LetterDeliveryHostSession? _letters;
+        private bool _lettersBound;
+
         public void Unbind()
         {
             if (_host != null)
@@ -105,8 +174,14 @@ namespace AtomicWar.GodotApp.UI
 
         public void RefreshView()
         {
-            if (_host == null || !IsInsideTree())
+            if (!IsInsideTree())
                 return;
+            if (_host == null)
+            {
+                // Letters-only bind (Plan 212 letter route) still refreshes.
+                RefreshLettersSection();
+                return;
+            }
 
             _statusRail?.Set("unopened", _host.UnopenedCapsuleCount.ToString());
             _statusRail?.Set("total", _host.TotalCapsuleCount.ToString());
@@ -163,7 +238,11 @@ namespace AtomicWar.GodotApp.UI
                         string capId = c.CapsuleId;
                         var openBtn = AshfallUiHelpers.MakeButton("UNSEAL CAPSULE", () =>
                         {
-                            _host.OpenCapsule(capId, "Overseer", 1);
+                            // Plan 212: truthful unseal — validates the capsule's
+                            // own condition at the live campaign day; the
+                            // blocked reason surfaces when it refuses.
+                            var (opened, reason) = _host.TryOpenCapsule(capId, "Overseer", 1);
+                            if (!opened) GD.PushWarning($"[TimeCapsule] unseal refused: {reason}");
                         });
                         cardStack.AddChild(openBtn);
                     }
@@ -189,7 +268,7 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                foreach (var m in _host.Messages)
+                foreach (var m in _host.VisibleMessages()) // Plan 212: pending content stays sealed
                 {
                     var card = new PanelContainer();
                     var cardStack = new VBoxContainer();
@@ -209,6 +288,8 @@ namespace AtomicWar.GodotApp.UI
                     _messagesContainer.AddChild(card);
                 }
             }
+
+            RefreshLettersSection();
         }
     }
 }

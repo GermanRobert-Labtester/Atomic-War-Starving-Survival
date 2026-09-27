@@ -102,6 +102,8 @@ namespace AtomicWar.GodotApp
                       restoredCensus.TotalDiscovered == census.TotalDiscovered,
                     "Save and restore state verified with full round-trip fidelity.");
 
+                if (passed != 12)
+                    throw new InvalidOperationException($"Expected 12 checks, completed {passed}.");
                 Console.WriteLine($"=== [HostCli] Bestiary Self-Test PASSED ({passed}/12 checks) ===");
                 return 0;
             }

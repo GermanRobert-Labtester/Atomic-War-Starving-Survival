@@ -60,8 +60,14 @@ namespace AtomicWar.GodotApp
         public void SaveRecruitment()
         {
             if (_recruitment == null) return;
-            RecruitmentSaveStore.TrySave(_recruitment.CaptureState());
-            _recruitmentDirty = false;
+            var state = _recruitment.CaptureState();
+            RecruitmentSaveStore.TrySave(state);
+            if (CaptureSection(
+                    RecruitmentSaveStore.SectionName,
+                    RecruitmentSaveStore.TryCapturePersisted(state)))
+            {
+                _recruitmentDirty = false;
+            }
         }
 
         public void FlushRecruitment()

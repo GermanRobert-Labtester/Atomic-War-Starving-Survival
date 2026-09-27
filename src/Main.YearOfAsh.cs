@@ -51,35 +51,16 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void PayWarlordTribute(int amount)
         {
-            if (_yearOfAsh?.Warlord == null || _holdfastRuntime?.Trade.Inventory == null) return;
-            int day = _yearOfAsh.Timeline.CurrentDay;
-            var inventory = _holdfastRuntime.Trade.Inventory;
-            string item = _yearOfAsh.Warlord.Catalog.Warlord.tribute_currency_item;
-            if (!inventory.Items.TryGetValue(item, out int held) || held < amount)
-            {
-                GD.Print($"[warlord] Tribute refused by shortage: {amount}× {item} needed, {held} on hand.");
-                _statusLabel.Text = $"The collector waits. You do not have {amount}× {item} to hand over.";
-                return;
-            }
-            inventory.RemoveItem(item, amount);
-            int next;
-            bool full = _yearOfAsh.SettleWarlordTribute(amount, day, out next);
-            string line = _yearOfAsh.CollectorLine(full ? "paid" : "short", day);
-            GD.Print($"[warlord] Tribute paid: {amount}× {item} (day {day}). {line}");
+            string line = PayWarlordTributeGuarded(amount);
+            GD.Print($"[warlord] {line}");
             _statusLabel.Text = line;
-            _yearOfAshDirty = true;
         }
 
         private void RefuseWarlordTribute()
         {
-            if (_yearOfAsh?.Warlord == null) return;
-            int day = _yearOfAsh.Timeline.CurrentDay;
-            int next;
-            _yearOfAsh.SettleWarlordTribute(0, day, out next);
-            string line = _yearOfAsh.CollectorLine("refused", day);
-            GD.Print($"[warlord] Tribute refused (day {day}). Next ask: {next}. {line}");
+            string line = RefuseWarlordTributeGuarded();
+            GD.Print($"[warlord] {line}");
             _statusLabel.Text = line;
-            _yearOfAshDirty = true;
         }
 
         private void SaveYearOfAsh()
@@ -97,10 +78,40 @@ namespace AtomicWar.GodotApp
             if (_yearOfAshDirty) SaveYearOfAsh();
         }
 
+        /// <summary>
+        /// Plan 146 residual — ice-road window line for the codex readout.
+        /// Truthful projection of the Core owner's state: open/closed, the
+        /// trade multiplier, expedition exposure risk, and whether an authored
+        /// blocking storm (thaw_flood / thermal_inversion) gates today.
+        /// </summary>
+        private string IceRoadWindowLine()
+        {
+            var ice = _yearOfAsh.IceRoad;
+            if (ice == null) return "not installed";
+            int day = _yearOfAsh.Timeline.CurrentDay;
+            bool stormBlocked = false;
+            foreach (var storm in _yearOfAsh.StormWindows)
+            {
+                if (storm == null) continue;
+                if (day >= storm.day_start && day <= storm.day_end
+                    && (storm.type == "thaw_flood" || storm.type == "thermal_inversion"))
+                {
+                    stormBlocked = true;
+                    break;
+                }
+            }
+            return $"{(ice.IsIceRoadOpen ? "OPEN" : "closed")} · trade x{ice.GetTradeMultiplier():F1}"
+                 + $" · expedition risk {ice.GetExpeditionExposureRisk():F2}"
+                 + (stormBlocked ? " · storm-blocked today" : "");
+        }
+
         private void SetupYearOfAsh()
         {
             if (_yearOfAsh != null) return;
             _yearOfAsh = YearOfAshHostSession.Create(_dataDir);
+            // Plan 146 residual: the ice road gate reads the authored storm
+            // windows (thaw_flood / thermal_inversion) alongside temperature.
+            _yearOfAsh.BindStormCatalog(_dataDir);
             BuildYearOfAshPanel();
 
             // Questline progress rides the same save as the rest of Year of Ash, so any
@@ -541,6 +552,7 @@ namespace AtomicWar.GodotApp
                                    $"Ambient Temp: {_yearOfAsh.Timeline.AmbientTemperatureCelsius:F1}°C\n" +
                                    $"Caloric Multiplier: {_yearOfAsh.Timeline.CalculateCaloricMultiplier():F2}x\n" +
                                    $"Radon Infiltration: {_yearOfAsh.Timeline.RadonInfiltrationRate * 100:F1}%\n" +
+                                   $"Ice Road: {(IceRoadWindowLine())}\n" +
                                    $"War Tension: {_yearOfAsh.FactionWar.WarTension}/100\n" +
                                    $"Dominant Faction: {_yearOfAsh.FactionWar.DominantFactionId}\n" +
                                    $"Encounters Available: {_yearOfAsh.Encounters.Catalog.Count}\n";

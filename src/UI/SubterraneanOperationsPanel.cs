@@ -21,6 +21,7 @@ namespace AtomicWar.GodotApp.UI
 
         public bool IsBound => _excavation != null;
         private ExcavationHazardSystem? _excavation;
+        private AtomicWar.GodotApp.SubterraneanHostSession? _subterranean;
         private Ashfall.Core.Inventory.Inventory? _inventory;
         private SurvivorsHostSession? _survivors;
 
@@ -63,6 +64,9 @@ namespace AtomicWar.GodotApp.UI
 
         public void Unbind()
         {
+            if (_subterranean != null)
+                _subterranean.StateChanged -= RefreshView;
+            _subterranean = null;
             if (_excavation != null)
             {
                 _excavation.OnMitigationInstalled -= OnMitigationInstalled;
@@ -221,6 +225,8 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
 
+            RenderSubsidence();
+
             // Rescue Operation HUD
             if (hasTrapped && !sector.RescueCompleted && !sector.RescueFailed)
             {
@@ -294,5 +300,47 @@ namespace AtomicWar.GodotApp.UI
         private void OnRescueStarted(string sec, int count) => RefreshView();
         private void OnRescueSucceeded(string sec) => RefreshView();
         private void OnRescueFailed(string sec) => RefreshView();
+
+        /// <summary>
+        /// Plan 146 batch-4 — subsidence readout (ORPHAN-SEAL A.56). Binds the
+        /// underground network owner; the per-node evaluation below is the
+        /// engine's risk math surfaced truthfully inside the mitigation column.
+        /// </summary>
+        public void BindSubsidence(AtomicWar.GodotApp.SubterraneanHostSession subterranean)
+        {
+            if (_subterranean != null) _subterranean.StateChanged -= RefreshView;
+            _subterranean = subterranean;
+            if (_subterranean != null) _subterranean.StateChanged += RefreshView;
+            RefreshView();
+        }
+
+        private void RenderSubsidence()
+        {
+            if (_subterranean == null || _mitigationListContainer == null) return;
+            var nodes = _subterranean.System.DiscoveredNodes();
+            if (nodes.Count == 0)
+            {
+                _mitigationListContainer.AddChild(AshfallUiHelpers.MakeMetadata("No underground nodes discovered yet — subsidence survey pending."));
+                return;
+            }
+
+            _mitigationListContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("SUBSIDENCE SURVEY"));
+            foreach (var node in nodes.OrderBy(n => n.nodeId, StringComparer.Ordinal))
+            {
+                var eval = _subterranean.System.EvaluateSubsidence(node.nodeId);
+                var row = new Label
+                {
+                    Text = $"{node.nodeId}: integrity {(int)(node.structuralIntegrity * 10)}/1000 · "
+                         + $"risk {eval.SubsidenceRiskPermille}/1000 ({eval.Category}) · shoring {node.shoringLevel}/3"
+                         + (eval.RequiresImmediateEvacuation ? " · EVACUATE" : ""),
+                    AutowrapMode = TextServer.AutowrapMode.WordSmart,
+                };
+                if (eval.RequiresImmediateEvacuation)
+                    row.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+                else if (eval.SubsidenceRiskPermille >= 500)
+                    row.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
+                _mitigationListContainer.AddChild(row);
+            }
+        }
     }
 }

@@ -100,6 +100,8 @@ namespace AtomicWar.GodotApp
                       restoredSession.GetShelterCultureMoraleBonus() == bonusWithOne,
                     "Save/restore round-trip preserved 100% parity of artworks, identity, values, and morale bonus.");
 
+                if (passed != 12)
+                    throw new InvalidOperationException($"Expected 12 checks, completed {passed}.");
                 Console.WriteLine($"=== Culture Creation Self-Test Result: {passed}/12 Passed ===");
                 return 0;
             }

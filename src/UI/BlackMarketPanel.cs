@@ -86,8 +86,8 @@ namespace AtomicWar.GodotApp.UI
 
             _focusTargets.Clear();
             _firstFocusTarget = null;
-            ClearChildren(_stockRows);
-            ClearChildren(_debtRows);
+            AshfallUiHelpers.EmptyChildren(_stockRows);
+            AshfallUiHelpers.EmptyChildren(_debtRows);
             BuildStockRows(contacts);
             BuildDebtRows();
             _outcomeText.Text = _lastOutcome;
@@ -372,15 +372,6 @@ namespace AtomicWar.GodotApp.UI
 
         private static string FocusKey(string actionId, string ownerId, string subjectId) =>
             $"{actionId}:{ownerId}:{subjectId}";
-
-        private static void ClearChildren(Node parent)
-        {
-            foreach (Node child in parent.GetChildren())
-            {
-                parent.RemoveChild(child);
-                child.QueueFree();
-            }
-        }
 
         public override void _Ready()
         {

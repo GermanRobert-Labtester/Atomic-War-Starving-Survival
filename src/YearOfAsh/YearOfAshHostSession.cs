@@ -21,6 +21,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
         private readonly QuestlineSystem _quests;
         private readonly YearOfAshDeepFreezeSystem _deepFreeze;
         private readonly YearOfAshRadonSystem _radon;
+        private YearOfAshIceRoadSystem _iceRoad;
+        private List<StormWindowEntry> _stormWindows;
         private WarlordDoctrineSystem _warlord;
         private FactionWarChainRunner _warRunner;
         private readonly List<SurvivorOccupantSnapshot> _demoRoster;
@@ -32,6 +34,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
         public QuestlineSystem Quests => _quests;
         public YearOfAshDeepFreezeSystem DeepFreeze => _deepFreeze;
         public YearOfAshRadonSystem Radon => _radon;
+        public YearOfAshIceRoadSystem IceRoad => _iceRoad;
+        public IReadOnlyList<StormWindowEntry> StormWindows => _stormWindows;
         public WarlordDoctrineSystem Warlord => _warlord;
         public FactionWarChainRunner WarRunner => _warRunner;
         public IReadOnlyList<SurvivorOccupantSnapshot> DemoRoster => _demoRoster;
@@ -43,6 +47,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             QuestlineSystem quests = null!,
             YearOfAshDeepFreezeSystem deepFreeze = null!,
             YearOfAshRadonSystem radon = null!,
+            YearOfAshIceRoadSystem iceRoad = null!,
             WarlordDoctrineSystem warlord = null!,
             FactionWarChainRunner warRunner = null!)
         {
@@ -52,6 +57,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _quests = quests ?? new QuestlineSystem();
             _deepFreeze = deepFreeze ?? new YearOfAshDeepFreezeSystem();
             _radon = radon ?? new YearOfAshRadonSystem();
+            _iceRoad = iceRoad ?? new YearOfAshIceRoadSystem();
+            _stormWindows = new List<StormWindowEntry>();
             _warlord = warlord ?? new WarlordDoctrineSystem();
             _warRunner = warRunner ?? new FactionWarChainRunner(new FactionWarContentCatalog());
             _warlordRng = new SeededRng(2026);
@@ -165,6 +172,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _warRunner.TickDay(FactionWarChainRunner.ToAuthoredDay(day));
             _deepFreeze.TickDailyThermal(day, _timeline.AmbientTemperatureCelsius);
             _radon.TickDailyRadon(day, _timeline.AmbientTemperatureCelsius);
+            _iceRoad.TickDay(day, _timeline.AmbientTemperatureCelsius, ActiveStormsForDay(day));
             TickWarlord(day);
         }
 
@@ -283,6 +291,39 @@ namespace AtomicWar.GodotApp.YearOfAsh
         /// a fresh scrubber, a clear intake and no quest history at whatever day the
         /// timeline restored to.
         /// </summary>
+        /// <summary>
+        /// Storm windows authored for the campaign day (Plan 146 residual):
+        /// blocking storms (thaw_flood / thermal_inversion) keep the ice road
+        /// closed regardless of temperature.
+        /// </summary>
+        private IReadOnlyList<StormWindowEntry> ActiveStormsForDay(int day)
+        {
+            List<StormWindowEntry>? active = null;
+            for (int i = 0; i < _stormWindows.Count; i++)
+            {
+                var storm = _stormWindows[i];
+                if (storm == null) continue;
+                if (day >= storm.day_start && day <= storm.day_end)
+                {
+                    active ??= new List<StormWindowEntry>();
+                    active.Add(storm);
+                }
+            }
+            return active ?? (IReadOnlyList<StormWindowEntry>)Array.Empty<StormWindowEntry>();
+        }
+
+        /// <summary>
+        /// Loads the authored storm-window catalog for the ice road gate
+        /// (year_of_ash_storm_windows.json). Missing catalog = empty list;
+        /// the temperature threshold alone then governs the road.
+        /// </summary>
+        public void BindStormCatalog(string dataDir)
+        {
+            if (string.IsNullOrWhiteSpace(dataDir)) return;
+            var fileIO = AtomicWar.GodotApp.CatalogPath.CreateFileIOForDataDir(dataDir);
+            _stormWindows = YearOfAshStormCatalogLoader.Load(dataDir, fileIO, new SystemTextJsonSerializer());
+        }
+
         public YearOfAshSave CaptureSave()
         {
             return YearOfAshSaveCodec.Capture(
@@ -294,7 +335,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 _radon,
                 _quests,
                 _warlord,
-                _warRunner);
+                _warRunner,
+                _iceRoad);
         }
 
         public void RestoreSave(YearOfAshSave save)
@@ -303,7 +345,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             YearOfAshSaveCodec.Restore(
                 save, _timeline, _encounters, _factionWar,
                 _deepFreeze, _radon, _quests, _warlord,
-                _warRunner);
+                _warRunner, _iceRoad);
             // Verdict quest progress is owned by the Verdict envelope (v3+) and
             // Dose quest progress by the Dose envelope (v2+). After the one-time
             // adoption in their host sessions, strip any quest_verdict_* /

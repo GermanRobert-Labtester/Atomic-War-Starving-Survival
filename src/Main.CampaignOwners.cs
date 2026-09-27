@@ -6,6 +6,10 @@ using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Farming;
+using Ashfall.Core.Nutrition;
+using Ashfall.Core.PlayerCommand;
+using Ashfall.Core.Shelter;
 using Godot;
 
 namespace AtomicWar.GodotApp
@@ -148,6 +152,22 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("trade_routes", new TradeRouteDayOwner(this), phase: 5);
             // Plan 199 — seasonal human migration: tracks regional population weight transitions.
             _campaignDay.Register("human_migration", new HumanMigrationDayOwner(this), phase: 5);
+            // EXPANSION-21-THE-GRID — microgrid load shedding projection (read model).
+            _campaignDay.Register("power_load_shedding", new PowerLoadSheddingDayOwner(this), phase: 5);
+            // EXPANSION-13-THE-FAITHFUL-AND-THE-FRACTURED — ritual cooldown ledger.
+            _campaignDay.Register("spiritual_ritual", new SpiritualRitualDayOwner(this), phase: 5);
+            // Trauma bond authority — daily bond decay over the live roster.
+            _campaignDay.Register("trauma_bond", new TraumaBondDayOwner(this), phase: 5);
+            // XP-08-F6 — seasonal migration consequence application.
+            _campaignDay.Register("migration_consequence", new MigrationConsequenceDayOwner(this), phase: 5);
+            // Warlord tribute responses — prunes superseded ask ids each day.
+            _campaignDay.Register("warlord_response", new WarlordResponseDayOwner(this), phase: 5);
+            // Patrol radio bridge — drains queued patrol broadcasts into the radio log.
+            _campaignDay.Register("patrol_radio_hooks", new PatrolRadioHooksDayOwner(this), phase: 5);
+            // Ration conflict — resentment over unequal allocations.
+            _campaignDay.Register("ration_conflict", new RationConflictDayOwner(this), phase: 5);
+            // Cassette collections — derive tape acquisition from the live inventory.
+            _campaignDay.Register("cassette_playback", new CassettePlaybackDayOwner(this), phase: 5);
             // Plan 159 — shelter governance: evaluates policy consent, disputes, and shelter stability.
             _campaignDay.Register("shelter_governance", new ShelterGovernanceDayOwner(this), phase: 5);
             // Plan 176 — aging & elderly survivor system: advances chronological age and evaluates milestones/retirement.
@@ -170,6 +190,7 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("clinical_ward_triage", new ClinicalWardTriageDayOwner(this), phase: 5);
             // Expansion 39 — chemical synthesis reactor safety, catalyst purity, and reagent grading.
             _campaignDay.Register("chemical_reagent_synthesis", new ChemicalReagentSynthesisDayOwner(this), phase: 5);
+            _campaignDay.Register("advanced_industrial", new AdvancedIndustrialDayOwner(this), phase: 5);
             // Expansion 40 — mechanical power driveline, line shafts, and machine tools.
             _campaignDay.Register("mechanical_driveline", new MechanicalDrivelineDayOwner(this), phase: 5);
             // Expansion 41 — sleep quality, soundproofing, and shelter crowding.
@@ -204,6 +225,17 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("clothing_warmth", new ClothingWarmthDayOwner(this), phase: 5);
             _campaignDay.Register("emergency_alert", new EmergencyAlertDayOwner(this), phase: 5);
             _campaignDay.Register("diplomacy", new DiplomacyDayOwner(this), phase: 5);
+            _campaignDay.Register("survivor_barter", new SurvivorBarterDayOwner(this), phase: 5);
+            _campaignDay.Register("perimeter_early_warning", new PerimeterEarlyWarningDayOwner(this), phase: 5);
+            _campaignDay.Register("skill_atrophy", new SkillAtrophyDayOwner(this), phase: 5);
+            _campaignDay.Register("palliative_care", new PalliativeCareDayOwner(this), phase: 5);
+            _campaignDay.Register("water_quality_profile", new WaterQualityProfileDayOwner(this), phase: 5);
+            _campaignDay.Register("weather_forecast_reliability", new WeatherForecastReliabilityDayOwner(this), phase: 5);
+            _campaignDay.Register("apprenticeship_curriculum", new ApprenticeshipCurriculumDayOwner(this), phase: 5);
+            _campaignDay.Register("common_table_rationing", new CommonTableRationingDayOwner(this), phase: 5);
+            _campaignDay.Register("emergency_muster_readiness", new EmergencyMusterReadinessDayOwner(this), phase: 5);
+            _campaignDay.Register("soil_reclamation_profile", new SoilReclamationProfileDayOwner(this), phase: 5);
+            _campaignDay.Register("campaign_action_log", new CampaignActionLogDayOwner(this), phase: 5);
             // Plan 186 — shelter maintenance & degradation: applies daily component wear and environmental stress.
 
             _campaignDay.Register("shelter_maintenance", new ShelterMaintenanceDayOwner(this), phase: 5);
@@ -695,6 +727,231 @@ namespace AtomicWar.GodotApp
                 var census = _m._tradeRoutes?.Census;
                 events.Add(new DayStateChangeEvent(
                     "trade_route_ticked", "trade_routes", null, null, census?.ActiveContracts ?? 0));
+            }
+        }
+
+        /// <summary>Expansion 21 — microgrid load shedding projection day owner (ownerId <c>power_load_shedding</c>, phase 5).</summary>
+        private sealed class PowerLoadSheddingDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            public PowerLoadSheddingDayOwner(Main m) => _m = m;
+
+            // Derived read model: no persistent state, so the pre-day snapshot is
+            // a deliberate no-op (nothing to roll back).
+            public void CapturePreDaySnapshot(int day) { }
+
+            public void RestorePreDaySnapshot(int day) { }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupPowerLoadShedding();
+                _m.TickPowerLoadShedding(day);
+                var projection = _m.PowerLoadShedding?.GetProjection();
+                events.Add(new DayStateChangeEvent(
+                    "power_load_shedding_ticked", "power_load_shedding", null, null,
+                    projection?.ShedLoadKw ?? 0));
+            }
+        }
+
+        /// <summary>Expansion 13 — spiritual ritual cooldown ledger day owner (ownerId <c>spiritual_ritual</c>, phase 5).</summary>
+        private sealed class SpiritualRitualDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Spiritual.SpiritualRitualSaveState? _snapshot;
+            public SpiritualRitualDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSpiritualRitual();
+                _snapshot = _m.SpiritualRitual?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.SpiritualRitual?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupSpiritualRitual();
+                _m.FlushSpiritualRitualIfDirty();
+                events.Add(new DayStateChangeEvent(
+                    "spiritual_ritual_ticked", "spiritual_ritual", null, null,
+                    _m.SpiritualRitual?.LastPerformedDay.Count ?? 0));
+            }
+        }
+
+        /// <summary>Trauma bond authority day owner (ownerId <c>trauma_bond</c>, phase 5).</summary>
+        private sealed class TraumaBondDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.TraumaBondSaveState? _snapshot;
+            public TraumaBondDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupTraumaBond();
+                _snapshot = _m.TraumaBond?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.TraumaBond?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupTraumaBond();
+                _m.TickTraumaBond(day);
+                _m.FlushTraumaBondIfDirty();
+                events.Add(new DayStateChangeEvent(
+                    "trauma_bond_ticked", "trauma_bond", null, null,
+                    _m.TraumaBond?.GetTotalBondCount() ?? 0));
+            }
+        }
+
+        /// <summary>XP-08-F6 — migration consequence day owner (ownerId <c>migration_consequence</c>, phase 5).</summary>
+        private sealed class MigrationConsequenceDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Economy.MigrationConsequenceSaveState? _snapshot;
+            public MigrationConsequenceDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupMigrationConsequence();
+                _snapshot = _m.MigrationConsequence?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.MigrationConsequence?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupMigrationConsequence();
+                _m.TickMigrationConsequence(day);
+                _m.FlushMigrationConsequenceIfDirty();
+                events.Add(new DayStateChangeEvent(
+                    "migration_consequence_ticked", "migration_consequence", null, null,
+                    _m.MigrationConsequence?.CaptureState().AppliedConsequenceKeys.Count ?? 0));
+            }
+        }
+
+        /// <summary>Cassette collection day owner (ownerId <c>cassette_playback</c>, phase 5).</summary>
+        private sealed class CassettePlaybackDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Audio.CassettePlaybackState? _snapshot;
+            public CassettePlaybackDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupCassettePlayback();
+                _snapshot = _m.CassettePlayback?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.CassettePlayback?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupCassettePlayback();
+                int acquired = _m.TickCassettePlayback();
+                _m.FlushCassettePlaybackIfDirty();
+                events.Add(new DayStateChangeEvent(
+                    "cassette_playback_ticked", "cassette_playback", null, null, acquired));
+            }
+        }
+
+        /// <summary>Warlord tribute response day owner (ownerId <c>warlord_response</c>, phase 5).</summary>
+        private sealed class WarlordResponseDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Warlords.WarlordResponseState? _snapshot;
+            public WarlordResponseDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupWarlordResponse();
+                _snapshot = _m.WarlordResponse?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.WarlordResponse?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupWarlordResponse();
+                // A new ask must never be blocked by last week's issued response.
+                int week = _m._yearOfAsh?.Warlord?.State.totalWeeksAsked ?? 0;
+                _m.WarlordResponse?.PruneSuperseded(week);
+                _m.FlushWarlordResponseIfDirty();
+                events.Add(new DayStateChangeEvent(
+                    "warlord_response_ticked", "warlord_response", null, null,
+                    _m.WarlordResponse?.ResponseCount ?? 0));
+            }
+        }
+
+        /// <summary>Ration conflict day owner (ownerId <c>ration_conflict</c>, phase 5).</summary>
+        private sealed class RationConflictDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.RationConflictSaveState? _snapshot;
+            public RationConflictDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupRationConflict();
+                _snapshot = _m.RationConflict?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.RationConflict?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SyncRationConflictFromRationing();
+                int ticked = _m.TickRationConflict();
+                _m.FlushRationConflictIfDirty();
+                events.Add(new DayStateChangeEvent(
+                    "ration_conflict_ticked", "ration_conflict", null, null, ticked));
+            }
+        }
+
+        /// <summary>Patrol radio bridge day owner (ownerId <c>patrol_radio_hooks</c>, phase 5).</summary>
+        private sealed class PatrolRadioHooksDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Radio.PatrolRadioHooksState? _snapshot;
+            public PatrolRadioHooksDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupPatrolRadio();
+                _snapshot = _m.PatrolRadio?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.PatrolRadio?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupPatrolRadio();
+                int delivered = _m.TickPatrolRadio();
+                _m.FlushPatrolRadioIfDirty();
+                events.Add(new DayStateChangeEvent(
+                    "patrol_radio_hooks_ticked", "patrol_radio_hooks", null, null,
+                    delivered));
             }
         }
 
@@ -2162,6 +2419,8 @@ namespace AtomicWar.GodotApp
                 _m._moralChoice.Reconcile(day);
                 _m.TickFactionBranchDay(day);
                 _m.SetupCounterIntelligence();
+                _m.SetupInformantNetwork();
+                _m._informantNetwork?.TickDay(day);
                 _m._counterIntelligence?.TickDay(day);
 
                 _m.TickVerdict(day, _m.LivingDwellerCountEstimate());
@@ -2560,6 +2819,35 @@ namespace AtomicWar.GodotApp
                 var census = _m.GetChemicalReagentCensus();
                 events.Add(new DayStateChangeEvent(
                     "chemical_reagent_synthesis_ticked", "chemical_reagent_synthesis", null, null, census.ActiveReactorsCount));
+            }
+        }
+
+        /// <summary>Plans 118-121 advanced industrial/reconnaissance day owner (ownerId <c>advanced_industrial</c>, phase 5).</summary>
+        private sealed class AdvancedIndustrialDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private AdvancedIndustrialSaveState? _snapshot;
+            public AdvancedIndustrialDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupAdvancedIndustrial();
+                _snapshot = _m.AdvancedIndustrial?.Capture();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.AdvancedIndustrial?.Restore(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupAdvancedIndustrial();
+                _m.AdvanceAdvancedIndustrialDay(day);
+                var census = _m.GetAdvancedIndustrialCensus();
+                events.Add(new DayStateChangeEvent(
+                    "advanced_industrial_ticked", "advanced_industrial", null, null,
+                    (census.SynthesisActive ? 1 : 0) + (census.CompositeActive ? 1 : 0)));
             }
         }
 
@@ -3068,6 +3356,307 @@ namespace AtomicWar.GodotApp
                 var readout = _m.GetDiplomacyReadout();
                 events.Add(new DayStateChangeEvent(
                     "diplomacy_ticked", "diplomacy", null, null, readout.ActiveTreaties));
+            }
+        }
+
+        /// <summary>Plan 213 survivor barter day owner (ownerId <c>survivor_barter</c>, phase 5).</summary>
+        private sealed class SurvivorBarterDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Economy.SurvivorBarterSaveState? _snapshot;
+            public SurvivorBarterDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSurvivorBarter();
+                _snapshot = _m._barter?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._barter?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickSurvivorBarter(day);
+                if (_m._barterDirty) _m.SaveSurvivorBarter();
+                var readout = _m.GetBarterReadout();
+                events.Add(new DayStateChangeEvent(
+                    "survivor_barter_ticked", "survivor_barter", null, null, readout.Offers));
+            }
+        }
+
+        /// <summary>Perimeter radar day owner (ownerId <c>perimeter_early_warning</c>, phase 5).</summary>
+        private sealed class PerimeterEarlyWarningDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Defense.PerimeterEarlyWarningSaveState? _snapshot;
+            public PerimeterEarlyWarningDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupPerimeterEarlyWarning();
+                _snapshot = _m._perimeter?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._perimeter?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickPerimeterEarlyWarning(day);
+                if (_m._perimeterDirty) _m.SavePerimeterEarlyWarning();
+                var readout = _m.GetPerimeterReadout();
+                events.Add(new DayStateChangeEvent(
+                    "perimeter_early_warning_ticked", "perimeter_early_warning", null, null, readout.Contacts));
+            }
+        }
+
+        /// <summary>Skill atrophy day owner (ownerId <c>skill_atrophy</c>, phase 5).</summary>
+        private sealed class SkillAtrophyDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Survivors.SkillAtrophySaveState? _snapshot;
+            public SkillAtrophyDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSkillAtrophy();
+                _snapshot = _m._skillAtrophy?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._skillAtrophy?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.TickSkillAtrophy(24f);
+                if (_m._skillAtrophyDirty) _m.SaveSkillAtrophy();
+                var readout = _m.GetSkillAtrophyReadout();
+                events.Add(new DayStateChangeEvent(
+                    "skill_atrophy_ticked", "skill_atrophy", null, null, readout.Atrophied));
+            }
+        }
+
+        /// <summary>Palliative-care day owner (ownerId <c>palliative_care</c>, phase 5).</summary>
+        private sealed class PalliativeCareDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private AtomicWar.GodotApp.PalliativeCareSaveState? _snapshot;
+            public PalliativeCareDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupPalliativeCare();
+                _snapshot = _m._palliative?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._palliative?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.AdvancePalliativeCareDay(day);
+                if (_m._palliativeDirty) _m.SavePalliativeCare();
+                var readout = _m.GetPalliativeCareReadout();
+                events.Add(new DayStateChangeEvent(
+                    "palliative_care_ticked", "palliative_care", null, null, readout.Patients));
+            }
+        }
+
+        /// <summary>Water-quality day owner (ownerId <c>water_quality_profile</c>, phase 5).</summary>
+        private sealed class WaterQualityProfileDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private AtomicWar.GodotApp.WaterQualityProfileSaveState? _snapshot;
+            public WaterQualityProfileDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupWaterQualityProfile();
+                _snapshot = _m._waterQuality?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._waterQuality?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                if (_m._waterQualityDirty) _m.SaveWaterQualityProfile();
+                var readout = _m.GetWaterQualityReadout();
+                events.Add(new DayStateChangeEvent(
+                    "water_quality_profile_ticked", "water_quality_profile", null, null, readout.Sources));
+            }
+        }
+
+        /// <summary>Forecast-reliability day owner (ownerId <c>weather_forecast_reliability</c>, phase 5).</summary>
+        private sealed class WeatherForecastReliabilityDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private AtomicWar.GodotApp.WeatherForecastReliabilitySaveState? _snapshot;
+            public WeatherForecastReliabilityDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupWeatherForecastReliability();
+                _snapshot = _m._forecast?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._forecast?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                if (_m._forecastDirty) _m.SaveWeatherForecastReliability();
+                var readout = _m.GetForecastReliabilityReadout();
+                events.Add(new DayStateChangeEvent(
+                    "weather_forecast_reliability_ticked", "weather_forecast_reliability", null, null, readout.Forecasts));
+            }
+        }
+
+        /// <summary>Curriculum day owner (ownerId <c>apprenticeship_curriculum</c>, phase 5).</summary>
+        private sealed class ApprenticeshipCurriculumDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private AtomicWar.GodotApp.ApprenticeshipCurriculumSaveState? _snapshot;
+            public ApprenticeshipCurriculumDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupApprenticeshipCurriculum();
+                _snapshot = _m._curriculum?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._curriculum?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                if (_m._curriculumDirty) _m.SaveApprenticeshipCurriculum();
+                var readout = _m.GetApprenticeshipCurriculumReadout();
+                events.Add(new DayStateChangeEvent(
+                    "apprenticeship_curriculum_ticked", "apprenticeship_curriculum", null, null, readout.Learners));
+            }
+        }
+
+        /// <summary>Expansion 26 common-table nutrition day owner (ownerId <c>common_table_rationing</c>, phase 5).</summary>
+        private sealed class CommonTableRationingDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private CommonTableRationingSaveState? _snapshot;
+            public CommonTableRationingDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupCommonTableRationing();
+                _snapshot = _m._commonTable?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._commonTable?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                if (_m._commonTableDirty) _m.SaveCommonTableRationing();
+                var readout = _m.GetCommonTableRationingReadout();
+                events.Add(new DayStateChangeEvent(
+                    "common_table_rationing_ticked", "common_table_rationing", null, null, readout.Sessions));
+            }
+        }
+
+        /// <summary>Expansion 23 The Alarm emergency muster day owner (ownerId <c>emergency_muster_readiness</c>, phase 5).</summary>
+        private sealed class EmergencyMusterReadinessDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private EmergencyMusterReadinessSaveState? _snapshot;
+            public EmergencyMusterReadinessDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupEmergencyMusterReadiness();
+                _snapshot = _m._musterReadiness?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._musterReadiness?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                if (_m._musterReadinessDirty) _m.SaveEmergencyMusterReadiness();
+                var readout = _m.GetEmergencyMusterReadinessReadout();
+                events.Add(new DayStateChangeEvent(
+                    "emergency_muster_readiness_ticked", "emergency_muster_readiness", null, null, readout.Drills));
+            }
+        }
+
+        /// <summary>Expansion 15 The Deep Root soil reclamation day owner (ownerId <c>soil_reclamation_profile</c>, phase 5).</summary>
+        private sealed class SoilReclamationProfileDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private SoilReclamationProfileSaveState? _snapshot;
+            public SoilReclamationProfileDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupSoilReclamationProfile();
+                _snapshot = _m._soilReclamation?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._soilReclamation?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                if (_m._soilReclamationDirty) _m.SaveSoilReclamationProfile();
+                var readout = _m.GetSoilReclamationProfileReadout();
+                events.Add(new DayStateChangeEvent(
+                    "soil_reclamation_profile_ticked", "soil_reclamation_profile", null, null, readout.Plots));
+            }
+        }
+
+        /// <summary>Campaign action log day owner (ownerId <c>campaign_action_log</c>, phase 5).</summary>
+        private sealed class CampaignActionLogDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private CampaignActionLogSave? _snapshot;
+            public CampaignActionLogDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupCampaignActionLog();
+                _snapshot = _m._actionLog?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._actionLog?.RestoreState(_snapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                if (_m._actionLogDirty) _m.SaveCampaignActionLog();
+                var readout = _m.GetCampaignActionLogReadout();
+                events.Add(new DayStateChangeEvent(
+                    "campaign_action_log_ticked", "campaign_action_log", null, null, readout.Entries));
             }
         }
     }

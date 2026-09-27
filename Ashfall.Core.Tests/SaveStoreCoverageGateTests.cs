@@ -58,8 +58,7 @@ namespace Ashfall.Core.Tests
             return LineComment.Replace(text, string.Empty);
         }
 
-        [Fact]
-        public void EverySaveStore_IsChecksumProtected()
+        private static List<string> DiscoverSaveStoreFiles()
         {
             string srcRoot = SrcDir();
             var storeFiles = Directory
@@ -76,7 +75,13 @@ namespace Ashfall.Core.Tests
             // If this drops drastically the discovery broke — fail loudly.
             Assert.True(storeFiles.Count >= 40,
                 $"Expected to discover the full save-store population under src/, found only {storeFiles.Count}.");
+            return storeFiles;
+        }
 
+        [Fact]
+        public void EverySaveStore_IsChecksumProtected()
+        {
+            var storeFiles = DiscoverSaveStoreFiles();
             var bare = new List<string>();
             foreach (string file in storeFiles)
             {
@@ -102,17 +107,7 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void EverySaveStore_IsSlotRootIsolated()
         {
-            string srcRoot = SrcDir();
-            var storeFiles = Directory
-                .EnumerateFiles(srcRoot, "*SaveStore*.cs", SearchOption.AllDirectories)
-                .Where(f => !f.Replace('\\', '/').Contains("/obj/") &&
-                            !f.Replace('\\', '/').Contains("/bin/") &&
-                            !f.EndsWith("SelfTest.cs", StringComparison.OrdinalIgnoreCase) &&
-                            !f.EndsWith("Tests.cs", StringComparison.OrdinalIgnoreCase) &&
-                            !f.EndsWith("Test.cs", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(f => f, StringComparer.Ordinal)
-                .ToList();
-
+            var storeFiles = DiscoverSaveStoreFiles();
             var unisolated = new List<string>();
             foreach (string file in storeFiles)
             {

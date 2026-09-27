@@ -64,6 +64,13 @@ namespace AtomicWar.GodotApp
                 _holdfastRuntime!.Trade.Inventory!,
                 _maritime!,
                 _campaignDay.Rng);
+            // Authored Black Flotilla standing: the live stance engine previously
+            // fell back to its generic synthesised row for this faction. Registering
+            // the authored thresholds makes the flotilla's trade/intel/salvage/deep
+            // -dive gates resolve on their authored policy. Trust itself stays in
+            // the engine; this registers policy only.
+            SetupFlotillaStanding();
+
             // Seasonal (Ice Road) + route-stage gate for expedition dispatch.
             if (_expeditions != null)
             {

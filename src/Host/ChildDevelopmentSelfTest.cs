@@ -115,6 +115,8 @@ namespace AtomicWar.GodotApp
                       restoredChild.EducationScore == child1.EducationScore,
                     "Save and restore state verified with full round-trip fidelity.");
 
+                if (passed != 12)
+                    throw new InvalidOperationException($"Expected 12 checks, completed {passed}.");
                 Console.WriteLine($"=== [HostCli] Child Development Self-Test PASSED ({passed}/12 checks) ===");
                 return 0;
             }

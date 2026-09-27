@@ -316,9 +316,17 @@ namespace Ashfall.Core.Tests.Save
             // communications remains the antenna/radio section. Plan 204 added recruitment.
             // Plan 142 added clothing_warmth; Plan 194 added emergency_alert.
             // Four-track orphan batch added diplomacy, radiation_economy, radiation_social, trophies.
-            Assert.Equal(278, SaveSectionRegistry.All.Count);
+            // Batch 4 (Plan 146 residual) added informant_network + concurrent lanes' rows.
+            // Quad package E (Expansion 21 / Expansion 13 / Trauma Bond / XP-08-F6) added
+            // spiritual_ritual, trauma_bond, and migration_consequence (Expansion 21 is a
+            // derived read model and adds no section).
+            // Quad package F added warlord_response, patrol_radio_hooks, and
+            // ration_conflict (modal travel dispatch is a derived read model).
+            // Quad package G added cassette_playback (guilt sources, flotilla
+            // standing, and record integrity bind live owners and add no section).
+            Assert.Equal(310, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(278, keys.Count);
+            Assert.Equal(310, keys.Count);
 
         }
 

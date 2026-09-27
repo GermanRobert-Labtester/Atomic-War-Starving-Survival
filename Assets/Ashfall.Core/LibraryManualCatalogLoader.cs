@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.IO;
 
 namespace Ashfall.Core
 {
@@ -32,8 +33,16 @@ namespace Ashfall.Core
             if (string.IsNullOrWhiteSpace(rawText))
                 return new List<ManualDefinition>();
 
-            var container = json.Deserialize<LibraryManualCatalogContainer>(rawText);
-            return container?.manuals ?? new List<ManualDefinition>();
+            try
+            {
+                var container = json.Deserialize<LibraryManualCatalogContainer>(rawText);
+                return container?.manuals ?? new List<ManualDefinition>();
+            }
+            catch (Exception ex)
+            {
+                CatalogDiagnostics.Warn(path, nameof(LibraryManualCatalogContainer), ex);
+                return new List<ManualDefinition>();
+            }
         }
 
         public static int LoadAndRegister(

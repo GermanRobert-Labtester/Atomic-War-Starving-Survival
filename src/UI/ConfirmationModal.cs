@@ -37,17 +37,14 @@ namespace AtomicWar.GodotApp.UI
             // Background styling
             var styleBox = new StyleBoxFlat
             {
-                BgColor = new Color(0.08f, 0.08f, 0.09f, 0.95f),
+                BgColor = new Color(DesignTheme.Ink.r, DesignTheme.Ink.g, DesignTheme.Ink.b, 0.95f),
                 BorderColor = AshfallUiHelpers.ToColor(DesignTheme.Entropy),
                 BorderWidthBottom = 2,
                 BorderWidthTop = 2,
                 BorderWidthLeft = 2,
-                BorderWidthRight = 2,
-                CornerRadiusBottomLeft = 4,
-                CornerRadiusBottomRight = 4,
-                CornerRadiusTopLeft = 4,
-                CornerRadiusTopRight = 4
+                BorderWidthRight = 2
             };
+            styleBox.SetCornerRadiusAll(DesignTheme.RadiusSm);
             AddThemeStyleboxOverride("panel", styleBox);
 
             var margin = new MarginContainer();

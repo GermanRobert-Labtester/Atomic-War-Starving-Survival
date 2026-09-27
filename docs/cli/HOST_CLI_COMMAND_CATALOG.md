@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-26<br>
-**Total Registered Actions:** 283 entries / 444 flag tokens (aliases included)
+**Last Verified:** 2026-09-27<br>
+**Total Registered Actions:** 345 entries / 563 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -43,6 +43,22 @@
 | `--kilnworks-selftest` | `--the-kiln-selftest` | Expansion 31 The Kiln: batch firing stages, thermal shock, draw grades, lime calcination yield, refractory lining wear and reline, kiln fuel reserve, and fired-output tallies |
 | `--agriculture-selftest` | — | Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition |
 | `--orphan-seal-wave1-selftest` | — | ORPHAN-SEAL-PRIORITY-W1: ten priority orphan authorities — catalog, command, state round-trip |
+| `--resource-mass-balance-selftest` | `--mass-balance-selftest` | Release-craft balance gate: deterministic 30-day survival-loop mass balance (water/power/nutrition) with invariant checks |
+| `--store-capability-selftest` | `--store-manifest-selftest` | Plan 57 / Plan 48 release craft: store capability claims cannot run ahead of shipped systems and passing verification gates |
+| `--ledger-truth-selftest` | — | EN-08 ledger truth: decision-register terminal/deferred invariants and the zero-quarantine D21 truth |
+| `--bootstrap-lifecycle-selftest` | — | EN-06 one bootstrap path: all path modes reach Ready with zero deferred seams and no unreached required subsystem |
+| `--difficulty-consequence-selftest` | — | EN-01 difficulty-consequence weave: war severity, crisis deadline offset, shock weight, monotonicity over difficulty scalars |
+| `--living-map-route-selftest` | `--map-route-projection-selftest` | EN-02 living map route projection: canonical PlanRoute to hops, distance, flooded/amphibious hazards and tags |
+| `--underground-economy-selftest` | `--market-temperature-selftest` | EN-03 underground economy pressure: heat/trust/relocation to Calm/Raised/Hot/Relocated band, price and attention multipliers |
+| `--rehabilitation-slate-selftest` | `--prosthetics-slate-selftest` | EN-04 rehabilitation medicine slate: prosthetics count, rehab phase, quality ramp, next milestone, phantom pain |
+| `--rescued-arc-selftest` | `--distress-rescue-arc-selftest` | EN-05 rescued survivor arc projection: distress rescue stage to None/EnRoute/Hospitalized/Integrated/Perished/Ambushed with recovery countdown |
+| `--completion-history-selftest` | `--chronicle-summary-selftest` | EN-07 completion history chronicle: append-only completion records to a pure per-run summary (days, milestones, endings, difficulty) |
+| `--string-freeze-selftest` | `--localization-freeze-selftest` | D22 localization string freeze: frozen classes require structured keys; raw strings refused unless allowlisted as debt |
+| `--rehabilitation-progression-selftest` | `--prosthetic-progression-selftest` | F14-E rehabilitation arc progression: deterministic fitting -> adaptation -> mastery permille ramp with resilience scaling |
+| `--restock-allocation-selftest` | `--restock-allocation-engine-selftest` | F13-C restock capacity allocation: effective weights, scarcity floors, largest-remainder rounding, and rational stock/target_par sort |
+| `--prosthetic-wear-selftest` | `--prosthetic-condition-selftest` | F14-D prosthetic condition & wear: daily wear, complexity-tier efficiency caps, and failure risk permille |
+| `--body-presentation-selftest` | `--limb-presentation-selftest` | F14-G survivor body presentation slate: accessible limb rows, grip capability, mobility permille, maintenance and phantom-pain alerts |
+| `--epilogue-chronicle-selftest` | `--epilogue-builder-selftest` | Epilogue chronicle builder: deterministic ordering of ending slides, survivor fate cards, and metrics with ending-title mapping |
 | `--commitments-selftest` | — | Plan 38 commitments & deadlines: catalog, warning ladder, exactly-once miss + consequence routing, met settlement, save round-trip |
 | `--session-durability-selftest` | — | Plan 39 session durability: slot capacity/isolation, interrupted-write + backup recovery audit, soak stability verdicts, capture round-trip |
 | `--playable-metrics-selftest` | — | Plan 46 playable metrics: bounded recorder stream, first-hour funnel, aggregation grades, capture round-trip |
@@ -78,6 +94,10 @@
 | `--trapping-selftest` | — | Wildlife trapping host path: TrySetTrap billing, broken-trap replacement, atomic failure, trap-recipe identity |
 | `--holdfast-briefing` | — | Print location count and every Holdfast quest briefing |
 | `--holdfast-selftest` | — | Holdfast S1 survival loop, ice road, and trade verification |
+| `--yoa-ice-road-selftest` | — | Year-of-Ash ice road (Plan 146 residual): threshold open/close, storm gates, trade multipliers, envelope ride-along |
+| `--subsidence-selftest` | — | Subterranean subsidence (A.56): strata crosswalk, daily decay, shoring, evacuation gate |
+| `--informant-network-selftest` | — | Informant tradecraft (A.83): recruitment, exposure, ops, doctrine, sweeps |
+| `--trade-route-risk-selftest` | — | Trade-route transit risk (A.04): raid/disruption/attrition projection |
 | `--ice-road-selftest` | — | IceRoadHeadlessDemo (Exp 01) |
 | `--ice-road-tick-demo` | — | Unlock, clerk, 30 day ticks, print catalog + briefing |
 | `--ledger-debt-selftest` | — | LedgerDebtHeadlessDemo |
@@ -241,6 +261,11 @@
 | `--shelter-museum-selftest` | `--museum-selftest` | Shelter museum & historical archive probe |
 | `--rationing-selftest` | `--ration-selftest` | Crisis rationing overlay probe |
 | `--genealogy-selftest` | `--family-tree-selftest` | Survivor genealogy probe |
+| `--surgical-graft-selftest` | `--graft-selftest` | Surgical graft rejection probe |
+| `--pharmaceutical-tablet-selftest` | `--tablet-works-selftest` | Tablet works production probe |
+| `--trade-tell-selftest` | `--market-tell-selftest` | Market tells probe |
+| `--economy-family-selftest` | `--trade-monopoly-selftest` | Economy family probe |
+| `--expedition-family-selftest` | `--aerial-recon-selftest` | Expedition family probe |
 | `--affliction-bridge-selftest` | `--affliction-bridges-selftest`, `--affliction-quest-work-selftest` | Affliction quest-work bridge probe |
 | `--radiation-mutation-selftest` | `--mutation-system-selftest` | Radiation mutation integration probe |
 | `--radio-production-selftest` | `--radio-program-production-selftest` | Radio program production probe |
@@ -255,11 +280,48 @@
 | `--leadership-succession-selftest` | `--succession-selftest`, `--leadership-challenges-selftest` | Leadership succession integration probe |
 | `--recruitment-selftest` | `--defection-selftest`, `--survivor-recruitment-selftest` | Survivor recruitment & defection campaigns probe |
 | `--clothing-warmth-selftest` | `--thermal-clothing-selftest`, `--insulation-layers-selftest` | Clothing & warmth gear layers, wetness, and cold-loss mitigation probe |
+| `--chronic-condition-selftest` | `--chronic-conditions-selftest`, `--accommodation-selftest` | Chronic conditions probe (Plan 193: attribution, capability, replay) |
 | `--emergency-alert-selftest` | `--alert-selftest`, `--emergency-warning-selftest` | Emergency alert types, response windows, and evacuation protocols probe |
 | `--diplomacy-selftest` | `--treaty-selftest`, `--faction-diplomacy-selftest` | Faction treaties, relations, missions, and reputation probe |
+| `--warlord-response-selftest` | `--warlord-tribute-response-selftest` | Idempotent warlord tribute Pay/Contest/Submit responses probe |
+| `--patrol-radio-selftest` | `--patrol-radio-hooks-selftest` | Patrol encounter choices queueing one-shot faction broadcasts probe |
+| `--modal-travel-dispatch-selftest` | `--travel-modality-selftest` | Pre-departure foot/convoy/rig/flight feasibility, duration, fuel, and attrition probe |
+| `--ration-conflict-selftest` | `--ration-resentment-selftest` | Survivor ration resentment, confrontation, theft, and routed morale/relationship consequences probe |
+| `--cassette-playback-selftest` | `--cassette-sets-selftest` | Cultural cassette sets: catalog, once-only play morale, set completion, hidden caches probe |
+| `--guilt-sources-selftest` | `--guilt-source-catalog-selftest` | Authored guilt severity and templated description resolution probe |
+| `--black-flotilla-standing-selftest` | `--flotilla-standing-selftest` | Black Flotilla authored thresholds and trust tiers on the live stance engine probe |
+| `--patient-record-integrity-selftest` | `--clinical-record-integrity-selftest` | Clinical record dangling-reference integrity across the live medical pipeline probe |
+| `--combat-doctrine-selftest` | `--doctrine-capability-selftest` | Combat probe |
+| `--grave-epitaphs-selftest` | `--epitaph-binding-selftest` | Culture & Audio probe |
+| `--patrol-encounter-integrity-selftest` | `--travel-encounter-integrity-selftest` | Narrative probe |
+| `--player-surface-manifest-selftest` | `--surface-manifest-selftest` | UI & Accessibility probe |
+| `--thermal-storm-seal-selftest` | `--insulation-catalog-selftest` | Shelter probe |
+| `--genealogy-family-names-selftest` | `--family-name-catalog-selftest` | Survivors probe |
+| `--relationship-bands-selftest` | `--affinity-bands-selftest` | Survivors probe |
+| `--caravan-item-value-selftest` | `--canonical-item-value-selftest` | Economy probe |
 | `--radiation-economy-selftest` | `--contaminated-trade-selftest` | Contaminated-trade price multipliers and block rules probe |
 | `--radiation-social-selftest` | `--dose-bracket-selftest` | Radiation dose brackets, social penalties, and discrimination probe |
 | `--trophy-selftest` | `--trophies-selftest`, `--trophy-mount-selftest` | Trophy catalog, exactly-once awards, and unlocked recipes probe |
+| `--barter-selftest` | `--survivor-barter-selftest`, `--trade-reputation-selftest` | Survivor barter: offers, trades, reputation, and favors probe |
+| `--perimeter-early-warning-selftest` | `--radar-sweep-selftest` | Perimeter radar: calibration, contact classification, false alarms probe |
+| `--skill-atrophy-selftest` | `--atrophy-selftest` | Skill atrophy: practice decay and exactly-once events probe |
+| `--procedural-eulogy-selftest` | `--eulogy-selftest` | Procedural eulogies: life summary composition and archival probe |
+| `--palliative-care-selftest` | `--long-goodbye-selftest` | Palliative care: dignity, grief stages, and memorial echo probe |
+| `--water-quality-profile-selftest` | `--water-purity-selftest` | Water quality: contaminant profiles, purity tiers, and filter wear probe |
+| `--weather-forecast-reliability-selftest` | `--forecast-confidence-selftest` | Forecast reliability: confidence grades and dispatch safety probe |
+| `--apprenticeship-curriculum-selftest` | `--curriculum-selftest` | Apprenticeship curriculum: learner literacy and subject progress probe |
+| `--knock-whitelist-selftest` | `--orphan-knock-selftest` | Orphan door-arrival gate probe |
+| `--second-generation-milestones-selftest` | `--lineage-milestone-selftest` | Second-generation milestone probe |
+| `--journey-diagnostics-selftest` | `--journey-context-selftest` | Journey context probe |
+| `--cloud-seeding-selftest` | `--weather-seeding-selftest` | Cloud seeding probe |
+| `--chemical-plume-selftest` | `--plume-dispersion-selftest` | Chemical plume probe |
+| `--oilseed-pressing-selftest` | `--seed-press-selftest` | Oilseed pressing probe |
+| `--verdict-accusation-selftest` | `--tribunal-accusation-selftest` | Verdict accusation probe |
+| `--loan-shark-selftest` | `--enforcer-debt-selftest` | Loan shark probe |
+| `--common-table-rationing-selftest` | `--nutrition-diversity-selftest` | Common table: dietary diversity, deficiency, and rationing policy probe |
+| `--emergency-muster-readiness-selftest` | `--the-alarm-selftest` | Emergency muster: readiness scores, drills, and evacuation timing probe |
+| `--soil-reclamation-profile-selftest` | `--the-deep-root-selftest` | Soil reclamation: amendment chemistry, fertility, and germination probe |
+| `--campaign-action-log-selftest` | `--action-log-selftest` | Campaign action log: deterministic command records and save round-trip probe |
 | `--aging-selftest` | `--elderly-survivor-selftest` | Survivor aging and life-stage compatibility probes |
 | `--atmosphere-selftest` | `--shelter-atmosphere-selftest` | Shelter atmosphere compatibility probes |
 | `--audio-access-selftest` | `--audio-accessibility-selftest` | Audio accessibility compatibility probes |

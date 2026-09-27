@@ -513,6 +513,16 @@ namespace AtomicWar.GodotApp.UI
 
         // ── Buttons ─────────────────────────────────────────────────────
 
+        public static Button? AddActionButton(VBoxContainer? parent, string label, Action onPressed)
+        {
+            if (parent == null || !GodotObject.IsInstanceValid(parent))
+                return null;
+
+            var button = MakeButton(label, onPressed);
+            parent.AddChild(button);
+            return button;
+        }
+
         public static Button MakeButton(string text, Action onPressed, bool disabled = false)
         {
             var btn = new Button
@@ -930,7 +940,7 @@ namespace AtomicWar.GodotApp.UI
         /// behaviour introduced in ShelterPanel yesterday (see audit
         /// AUDIT_2026-08-19_UI_AND_YESTERDAYS_ASSETS.md).
         /// </summary>
-        public static void EmptyChildren(Node parent)
+        public static void EmptyChildren(Node? parent)
         {
             if (parent == null || !GodotObject.IsInstanceValid(parent))
                 return;

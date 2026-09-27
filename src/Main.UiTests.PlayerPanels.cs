@@ -147,7 +147,7 @@ namespace AtomicWar.GodotApp
 
             SetupMedical();
             SetupPhase0();
-            _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory);
+            _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory, chronicConditions: _chronicConditions);
             UiNodeDiagnostics.Mark(this, "afflictions");
             _afflictionsPanel.Open();
             bool afflictions = _afflictionsPanel.IsBound && _afflictionsPanel.Visible;

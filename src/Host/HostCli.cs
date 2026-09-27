@@ -168,6 +168,22 @@ namespace AtomicWar.GodotApp
         CampaignLegacySelfTest,
         WarlordUiSelfTest,
         FactionCommuniqueBoardSelfTest,
+        ResourceMassBalanceSelfTest,
+        StoreCapabilitySelfTest,
+        LedgerTruthGateSelfTest,
+        BootstrapLifecycleGateSelfTest,
+        DifficultyConsequenceSelfTest,
+        LivingMapRouteSelfTest,
+        UndergroundEconomyPressureSelfTest,
+        RehabilitationSlateSelfTest,
+        RescuedArcSelfTest,
+        CompletionHistorySelfTest,
+        StringFreezeSelfTest,
+        RehabilitationProgressionSelfTest,
+        RestockAllocationSelfTest,
+        ProstheticConditionWearSelfTest,
+        SurvivorBodyPresentationSelfTest,
+        EpilogueChronicleSelfTest,
         BlackFlotillaSelfTest,
         RadioSelfTest,
         ExpeditionPanelUiTest,
@@ -245,6 +261,10 @@ namespace AtomicWar.GodotApp
         VisitorIntegrationSelfTest,
         PersonalBelongingsSelfTest,
         WildlifeHarvestSelfTest,
+        YoaIceRoadSelfTest,
+        SubsidenceSelfTest,
+        InformantNetworkSelfTest,
+        TradeRouteRiskSelfTest,
         StormForecastSelfTest,
         RailTrackMaintenanceSelfTest,
         GlassworksSelfTest,
@@ -266,6 +286,31 @@ namespace AtomicWar.GodotApp
         ShelterMuseumSelfTest,
         RationingSelfTest,
         GenealogySelfTest,
+        SurgicalGraftSelfTest,
+        PharmaceuticalTabletSelfTest,
+        TradeTellSelfTest,
+        PowerLoadSheddingSelfTest,
+        SpiritualRitualSelfTest,
+        TraumaBondSelfTest,
+        MigrationConsequenceSelfTest,
+        WarlordResponseSelfTest,
+        PatrolRadioSelfTest,
+        ModalTravelDispatchSelfTest,
+        RationConflictSelfTest,
+        CassettePlaybackSelfTest,
+        GuiltSourcesSelfTest,
+        BlackFlotillaStandingSelfTest,
+        PatientRecordIntegritySelfTest,
+        CombatDoctrineSelfTest,
+        GraveEpitaphsSelfTest,
+        PatrolEncounterIntegritySelfTest,
+        PlayerSurfaceManifestSelfTest,
+        ThermalStormSealSelfTest,
+        GenealogyFamilyNamesSelfTest,
+        RelationshipBandsSelfTest,
+        CaravanItemValueSelfTest,
+        EconomyFamilySelfTest,
+        ExpeditionFamilySelfTest,
         AfflictionBridgeSelfTest,
         RadiationMutationSelfTest,
         RadioProgramProductionSelfTest,
@@ -284,7 +329,28 @@ namespace AtomicWar.GodotApp
         DiplomacySelfTest,
         RadiationEconomySelfTest,
         RadiationSocialSelfTest,
-        TrophySelfTest
+        TrophySelfTest,
+        BarterSelfTest,
+        PerimeterEarlyWarningSelfTest,
+        SkillAtrophySelfTest,
+        ProceduralEulogySelfTest,
+        PalliativeCareSelfTest,
+        WaterQualityProfileSelfTest,
+        WeatherForecastReliabilitySelfTest,
+        ApprenticeshipCurriculumSelfTest,
+        KnockWhitelistSelfTest,
+        SecondGenerationMilestonesSelfTest,
+        JourneyDiagnosticsSelfTest,
+        CloudSeedingSelfTest,
+        ChemicalPlumeSelfTest,
+        OilseedPressingSelfTest,
+        VerdictAccusationSelfTest,
+        LoanSharkSelfTest,
+        CommonTableRationingSelfTest,
+        EmergencyMusterReadinessSelfTest,
+        SoilReclamationProfileSelfTest,
+        CampaignActionLogSelfTest,
+        ChronicConditionSelfTest
     }
 
     /// <summary>
@@ -337,6 +403,46 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.WildlifeHarvestSelfTest;
             if (Has(args, "--storm-forecast-selftest") || Has(args, "--the-weather-selftest"))
                 return HostCliAction.StormForecastSelfTest;
+            if (Has(args, "--yoa-ice-road-selftest"))
+                return HostCliAction.YoaIceRoadSelfTest;
+            if (Has(args, "--subsidence-selftest") || Has(args, "--the-underneath-selftest"))
+                return HostCliAction.SubsidenceSelfTest;
+            if (Has(args, "--informant-network-selftest") || Has(args, "--the-network-selftest"))
+                return HostCliAction.InformantNetworkSelfTest;
+            if (Has(args, "--trade-route-risk-selftest"))
+                return HostCliAction.TradeRouteRiskSelfTest;
+            if (Has(args, "--mass-balance-selftest") || Has(args, "--resource-mass-balance-selftest"))
+                return HostCliAction.ResourceMassBalanceSelfTest;
+            if (Has(args, "--store-capability-selftest") || Has(args, "--store-manifest-selftest"))
+                return HostCliAction.StoreCapabilitySelfTest;
+            if (Has(args, "--ledger-truth-selftest"))
+                return HostCliAction.LedgerTruthGateSelfTest;
+            if (Has(args, "--bootstrap-lifecycle-selftest"))
+                return HostCliAction.BootstrapLifecycleGateSelfTest;
+            if (Has(args, "--difficulty-consequence-selftest"))
+                return HostCliAction.DifficultyConsequenceSelfTest;
+            if (Has(args, "--living-map-route-selftest") || Has(args, "--map-route-projection-selftest"))
+                return HostCliAction.LivingMapRouteSelfTest;
+            if (Has(args, "--underground-economy-selftest") || Has(args, "--market-temperature-selftest"))
+                return HostCliAction.UndergroundEconomyPressureSelfTest;
+            if (Has(args, "--rehabilitation-slate-selftest") || Has(args, "--prosthetics-slate-selftest"))
+                return HostCliAction.RehabilitationSlateSelfTest;
+            if (Has(args, "--rescued-arc-selftest") || Has(args, "--distress-rescue-arc-selftest"))
+                return HostCliAction.RescuedArcSelfTest;
+            if (Has(args, "--completion-history-selftest") || Has(args, "--chronicle-summary-selftest"))
+                return HostCliAction.CompletionHistorySelfTest;
+            if (Has(args, "--string-freeze-selftest") || Has(args, "--localization-freeze-selftest"))
+                return HostCliAction.StringFreezeSelfTest;
+            if (Has(args, "--rehabilitation-progression-selftest") || Has(args, "--prosthetic-progression-selftest"))
+                return HostCliAction.RehabilitationProgressionSelfTest;
+            if (Has(args, "--restock-allocation-selftest") || Has(args, "--restock-allocation-engine-selftest"))
+                return HostCliAction.RestockAllocationSelfTest;
+            if (Has(args, "--prosthetic-wear-selftest") || Has(args, "--prosthetic-condition-selftest"))
+                return HostCliAction.ProstheticConditionWearSelfTest;
+            if (Has(args, "--body-presentation-selftest") || Has(args, "--limb-presentation-selftest"))
+                return HostCliAction.SurvivorBodyPresentationSelfTest;
+            if (Has(args, "--epilogue-chronicle-selftest") || Has(args, "--epilogue-builder-selftest"))
+                return HostCliAction.EpilogueChronicleSelfTest;
 
             if (Has(args, "--host-help") || Has(args, "--help"))
                 return HostCliAction.Help;
@@ -747,6 +853,46 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.TradeRoutesSelfTest;
             if (Has(args, "--human-migration-selftest") || Has(args, "--migration-selftest"))
                 return HostCliAction.HumanMigrationSelfTest;
+            if (Has(args, "--power-load-shedding-selftest") || Has(args, "--grid-shedding-selftest") || Has(args, "--brownout-selftest"))
+                return HostCliAction.PowerLoadSheddingSelfTest;
+            if (Has(args, "--spiritual-ritual-selftest") || Has(args, "--ritual-calendar-selftest"))
+                return HostCliAction.SpiritualRitualSelfTest;
+            if (Has(args, "--trauma-bond-selftest") || Has(args, "--trauma-bonds-selftest"))
+                return HostCliAction.TraumaBondSelfTest;
+            if (Has(args, "--migration-consequence-selftest") || Has(args, "--migration-consequences-selftest"))
+                return HostCliAction.MigrationConsequenceSelfTest;
+            if (Has(args, "--warlord-response-selftest") || Has(args, "--warlord-tribute-response-selftest"))
+                return HostCliAction.WarlordResponseSelfTest;
+            if (Has(args, "--patrol-radio-selftest") || Has(args, "--patrol-radio-hooks-selftest"))
+                return HostCliAction.PatrolRadioSelfTest;
+            if (Has(args, "--modal-travel-dispatch-selftest") || Has(args, "--travel-modality-selftest"))
+                return HostCliAction.ModalTravelDispatchSelfTest;
+            if (Has(args, "--ration-conflict-selftest") || Has(args, "--ration-resentment-selftest"))
+                return HostCliAction.RationConflictSelfTest;
+            if (Has(args, "--cassette-playback-selftest") || Has(args, "--cassette-sets-selftest"))
+                return HostCliAction.CassettePlaybackSelfTest;
+            if (Has(args, "--guilt-sources-selftest") || Has(args, "--guilt-source-catalog-selftest"))
+                return HostCliAction.GuiltSourcesSelfTest;
+            if (Has(args, "--black-flotilla-standing-selftest") || Has(args, "--flotilla-standing-selftest"))
+                return HostCliAction.BlackFlotillaStandingSelfTest;
+            if (Has(args, "--patient-record-integrity-selftest") || Has(args, "--clinical-record-integrity-selftest"))
+                return HostCliAction.PatientRecordIntegritySelfTest;
+            if (Has(args, "--combat-doctrine-selftest") || Has(args, "--doctrine-capability-selftest"))
+                return HostCliAction.CombatDoctrineSelfTest;
+            if (Has(args, "--grave-epitaphs-selftest") || Has(args, "--epitaph-binding-selftest"))
+                return HostCliAction.GraveEpitaphsSelfTest;
+            if (Has(args, "--patrol-encounter-integrity-selftest") || Has(args, "--travel-encounter-integrity-selftest"))
+                return HostCliAction.PatrolEncounterIntegritySelfTest;
+            if (Has(args, "--player-surface-manifest-selftest") || Has(args, "--surface-manifest-selftest"))
+                return HostCliAction.PlayerSurfaceManifestSelfTest;
+            if (Has(args, "--thermal-storm-seal-selftest") || Has(args, "--insulation-catalog-selftest"))
+                return HostCliAction.ThermalStormSealSelfTest;
+            if (Has(args, "--genealogy-family-names-selftest") || Has(args, "--family-name-catalog-selftest"))
+                return HostCliAction.GenealogyFamilyNamesSelfTest;
+            if (Has(args, "--relationship-bands-selftest") || Has(args, "--affinity-bands-selftest"))
+                return HostCliAction.RelationshipBandsSelfTest;
+            if (Has(args, "--caravan-item-value-selftest") || Has(args, "--canonical-item-value-selftest"))
+                return HostCliAction.CaravanItemValueSelfTest;
             if (Has(args, "--tunnel-network-selftest") || Has(args, "--tunnel-selftest"))
                 return HostCliAction.TunnelNetworkSelfTest;
             if (Has(args, "--audio-accessibility-selftest") || Has(args, "--audio-access-selftest"))
@@ -809,6 +955,16 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.RationingSelfTest;
             if (Has(args, "--genealogy-selftest") || Has(args, "--family-tree-selftest"))
                 return HostCliAction.GenealogySelfTest;
+            if (Has(args, "--surgical-graft-selftest") || Has(args, "--graft-selftest"))
+                return HostCliAction.SurgicalGraftSelfTest;
+            if (Has(args, "--pharmaceutical-tablet-selftest") || Has(args, "--tablet-works-selftest"))
+                return HostCliAction.PharmaceuticalTabletSelfTest;
+            if (Has(args, "--trade-tell-selftest") || Has(args, "--market-tell-selftest"))
+                return HostCliAction.TradeTellSelfTest;
+            if (Has(args, "--economy-family-selftest") || Has(args, "--trade-monopoly-selftest"))
+                return HostCliAction.EconomyFamilySelfTest;
+            if (Has(args, "--expedition-family-selftest") || Has(args, "--aerial-recon-selftest"))
+                return HostCliAction.ExpeditionFamilySelfTest;
             if (Has(args, "--affliction-bridge-selftest") || Has(args, "--affliction-bridges-selftest") || Has(args, "--affliction-quest-work-selftest"))
                 return HostCliAction.AfflictionBridgeSelfTest;
             if (Has(args, "--radiation-mutation-selftest") || Has(args, "--mutation-system-selftest"))
@@ -837,6 +993,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.RecruitmentSelfTest;
             if (Has(args, "--clothing-warmth-selftest") || Has(args, "--thermal-clothing-selftest") || Has(args, "--insulation-layers-selftest"))
                 return HostCliAction.ClothingWarmthSelfTest;
+            if (Has(args, "--chronic-condition-selftest") || Has(args, "--chronic-conditions-selftest") || Has(args, "--accommodation-selftest"))
+                return HostCliAction.ChronicConditionSelfTest;
             if (Has(args, "--emergency-alert-selftest") || Has(args, "--alert-selftest") || Has(args, "--emergency-warning-selftest"))
                 return HostCliAction.EmergencyAlertSelfTest;
             if (Has(args, "--diplomacy-selftest") || Has(args, "--treaty-selftest") || Has(args, "--faction-diplomacy-selftest"))
@@ -847,6 +1005,46 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.RadiationSocialSelfTest;
             if (Has(args, "--trophy-selftest") || Has(args, "--trophies-selftest") || Has(args, "--trophy-mount-selftest"))
                 return HostCliAction.TrophySelfTest;
+            if (Has(args, "--barter-selftest") || Has(args, "--survivor-barter-selftest") || Has(args, "--trade-reputation-selftest"))
+                return HostCliAction.BarterSelfTest;
+            if (Has(args, "--perimeter-early-warning-selftest") || Has(args, "--radar-sweep-selftest"))
+                return HostCliAction.PerimeterEarlyWarningSelfTest;
+            if (Has(args, "--skill-atrophy-selftest") || Has(args, "--atrophy-selftest"))
+                return HostCliAction.SkillAtrophySelfTest;
+            if (Has(args, "--procedural-eulogy-selftest") || Has(args, "--eulogy-selftest"))
+                return HostCliAction.ProceduralEulogySelfTest;
+            if (Has(args, "--palliative-care-selftest") || Has(args, "--long-goodbye-selftest"))
+                return HostCliAction.PalliativeCareSelfTest;
+            if (Has(args, "--water-quality-profile-selftest") || Has(args, "--water-purity-selftest"))
+                return HostCliAction.WaterQualityProfileSelfTest;
+            if (Has(args, "--weather-forecast-reliability-selftest") || Has(args, "--forecast-confidence-selftest"))
+                return HostCliAction.WeatherForecastReliabilitySelfTest;
+            if (Has(args, "--apprenticeship-curriculum-selftest") || Has(args, "--curriculum-selftest"))
+                return HostCliAction.ApprenticeshipCurriculumSelfTest;
+            if (Has(args, "--common-table-rationing-selftest") || Has(args, "--nutrition-diversity-selftest"))
+                return HostCliAction.CommonTableRationingSelfTest;
+            if (Has(args, "--emergency-muster-readiness-selftest") || Has(args, "--the-alarm-selftest"))
+                return HostCliAction.EmergencyMusterReadinessSelfTest;
+            if (Has(args, "--soil-reclamation-profile-selftest") || Has(args, "--the-deep-root-selftest"))
+                return HostCliAction.SoilReclamationProfileSelfTest;
+            if (Has(args, "--knock-whitelist-selftest") || Has(args, "--orphan-knock-selftest"))
+                return HostCliAction.KnockWhitelistSelfTest;
+            if (Has(args, "--second-generation-milestones-selftest") || Has(args, "--lineage-milestone-selftest"))
+                return HostCliAction.SecondGenerationMilestonesSelfTest;
+            if (Has(args, "--journey-diagnostics-selftest") || Has(args, "--journey-context-selftest"))
+                return HostCliAction.JourneyDiagnosticsSelfTest;
+            if (Has(args, "--cloud-seeding-selftest") || Has(args, "--weather-seeding-selftest"))
+                return HostCliAction.CloudSeedingSelfTest;
+            if (Has(args, "--chemical-plume-selftest") || Has(args, "--plume-dispersion-selftest"))
+                return HostCliAction.ChemicalPlumeSelfTest;
+            if (Has(args, "--oilseed-pressing-selftest") || Has(args, "--seed-press-selftest"))
+                return HostCliAction.OilseedPressingSelfTest;
+            if (Has(args, "--verdict-accusation-selftest") || Has(args, "--tribunal-accusation-selftest"))
+                return HostCliAction.VerdictAccusationSelfTest;
+            if (Has(args, "--loan-shark-selftest") || Has(args, "--enforcer-debt-selftest"))
+                return HostCliAction.LoanSharkSelfTest;
+            if (Has(args, "--campaign-action-log-selftest") || Has(args, "--action-log-selftest"))
+                return HostCliAction.CampaignActionLogSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -887,6 +1085,22 @@ namespace AtomicWar.GodotApp
             GD.Print("  --kilnworks-selftest / --the-kiln-selftest  Expansion 31 The Kiln: batch firing stages, thermal shock, draw grades, lime calcination yield, refractory lining wear and reline, kiln fuel reserve, and fired-output tallies");
             GD.Print("  --agriculture-selftest   Agriculture Expansion (Plan 162): crop strain catalog, greenhouse growth, mutation RNG, compost, nutrition");
             GD.Print("  --orphan-seal-wave1-selftest  ORPHAN-SEAL-PRIORITY-W1: ten priority orphan authorities — catalog, command, state round-trip");
+            GD.Print("  --resource-mass-balance-selftest / --mass-balance-selftest  Release-craft balance gate: deterministic 30-day survival-loop mass balance (water/power/nutrition) with invariant checks");
+            GD.Print("  --store-capability-selftest / --store-manifest-selftest  Plan 57 / Plan 48 release craft: store capability claims cannot run ahead of shipped systems and passing verification gates");
+            GD.Print("  --ledger-truth-selftest  EN-08 ledger truth: decision-register terminal/deferred invariants and the zero-quarantine D21 truth");
+            GD.Print("  --bootstrap-lifecycle-selftest  EN-06 one bootstrap path: all path modes reach Ready with zero deferred seams and no unreached required subsystem");
+            GD.Print("  --difficulty-consequence-selftest  EN-01 difficulty-consequence weave: war severity, crisis deadline offset, shock weight, monotonicity over difficulty scalars");
+            GD.Print("  --living-map-route-selftest / --map-route-projection-selftest  EN-02 living map route projection: canonical PlanRoute to hops, distance, flooded/amphibious hazards and tags");
+            GD.Print("  --underground-economy-selftest / --market-temperature-selftest  EN-03 underground economy pressure: heat/trust/relocation to Calm/Raised/Hot/Relocated band, price and attention multipliers");
+            GD.Print("  --rehabilitation-slate-selftest / --prosthetics-slate-selftest  EN-04 rehabilitation medicine slate: prosthetics count, rehab phase, quality ramp, next milestone, phantom pain");
+            GD.Print("  --rescued-arc-selftest / --distress-rescue-arc-selftest  EN-05 rescued survivor arc projection: distress rescue stage to None/EnRoute/Hospitalized/Integrated/Perished/Ambushed with recovery countdown");
+            GD.Print("  --completion-history-selftest / --chronicle-summary-selftest  EN-07 completion history chronicle: append-only completion records to a pure per-run summary (days, milestones, endings, difficulty)");
+            GD.Print("  --string-freeze-selftest / --localization-freeze-selftest  D22 localization string freeze: frozen classes require structured keys; raw strings refused unless allowlisted as debt");
+            GD.Print("  --rehabilitation-progression-selftest / --prosthetic-progression-selftest  F14-E rehabilitation arc progression: deterministic fitting -> adaptation -> mastery permille ramp with resilience scaling");
+            GD.Print("  --restock-allocation-selftest / --restock-allocation-engine-selftest  F13-C restock capacity allocation: effective weights, scarcity floors, largest-remainder rounding, and rational stock/target_par sort");
+            GD.Print("  --prosthetic-wear-selftest / --prosthetic-condition-selftest  F14-D prosthetic condition & wear: daily wear, complexity-tier efficiency caps, and failure risk permille");
+            GD.Print("  --body-presentation-selftest / --limb-presentation-selftest  F14-G survivor body presentation slate: accessible limb rows, grip capability, mobility permille, maintenance and phantom-pain alerts");
+            GD.Print("  --epilogue-chronicle-selftest / --epilogue-builder-selftest  Epilogue chronicle builder: deterministic ordering of ending slides, survivor fate cards, and metrics with ending-title mapping");
             GD.Print("  --commitments-selftest   Plan 38 commitments & deadlines: catalog, warning ladder, exactly-once miss + consequence routing, met settlement, save round-trip");
             GD.Print("  --session-durability-selftest  Plan 39 session durability: slot capacity/isolation, interrupted-write + backup recovery audit, soak stability verdicts, capture round-trip");
             GD.Print("  --playable-metrics-selftest   Plan 46 playable metrics: bounded recorder stream, first-hour funnel, aggregation grades, capture round-trip");
@@ -922,6 +1136,10 @@ namespace AtomicWar.GodotApp
             GD.Print("  --trapping-selftest      Wildlife trapping host path: TrySetTrap billing, broken-trap replacement, atomic failure, trap-recipe identity");
             GD.Print("  --holdfast-briefing      Print location count and every Holdfast quest briefing");
             GD.Print("  --holdfast-selftest      Holdfast S1 survival loop, ice road, and trade verification");
+            GD.Print("  --yoa-ice-road-selftest  Year-of-Ash ice road (Plan 146 residual): threshold open/close, storm gates, trade multipliers, envelope ride-along");
+            GD.Print("  --subsidence-selftest    Subterranean subsidence (A.56): strata crosswalk, daily decay, shoring, evacuation gate");
+            GD.Print("  --informant-network-selftest  Informant tradecraft (A.83): recruitment, exposure, ops, doctrine, sweeps");
+            GD.Print("  --trade-route-risk-selftest  Trade-route transit risk (A.04): raid/disruption/attrition projection");
             GD.Print("  --ice-road-selftest      IceRoadHeadlessDemo (Exp 01)");
             GD.Print("  --ice-road-tick-demo     Unlock, clerk, 30 day ticks, print catalog + briefing");
             GD.Print("  --ledger-debt-selftest   LedgerDebtHeadlessDemo");
@@ -1095,6 +1313,11 @@ namespace AtomicWar.GodotApp
             GD.Print("  --shelter-museum-selftest / --museum-selftest  Shelter museum & historical archive probe");
             GD.Print("  --rationing-selftest / --ration-selftest  Crisis rationing overlay probe");
             GD.Print("  --genealogy-selftest / --family-tree-selftest  Survivor genealogy probe");
+            GD.Print("  --surgical-graft-selftest / --graft-selftest  Surgical graft rejection probe");
+            GD.Print("  --pharmaceutical-tablet-selftest / --tablet-works-selftest  Tablet works production probe");
+            GD.Print("  --trade-tell-selftest / --market-tell-selftest  Market tells probe");
+            GD.Print("  --economy-family-selftest / --trade-monopoly-selftest  Economy family probe");
+            GD.Print("  --expedition-family-selftest / --aerial-recon-selftest  Expedition family probe");
             GD.Print("  --affliction-bridge-selftest / --affliction-bridges-selftest / --affliction-quest-work-selftest  Affliction quest-work bridge probe");
             GD.Print("  --radiation-mutation-selftest / --mutation-system-selftest  Radiation mutation integration probe");
             GD.Print("  --radio-production-selftest / --radio-program-production-selftest  Radio program production probe");
@@ -1109,11 +1332,48 @@ namespace AtomicWar.GodotApp
             GD.Print("  --leadership-succession-selftest / --succession-selftest / --leadership-challenges-selftest  Leadership succession integration probe");
             GD.Print("  --recruitment-selftest / --defection-selftest / --survivor-recruitment-selftest  Survivor recruitment & defection campaigns probe");
             GD.Print("  --clothing-warmth-selftest / --thermal-clothing-selftest / --insulation-layers-selftest  Clothing & warmth gear layers, wetness, and cold-loss mitigation probe");
+            GD.Print("  --chronic-condition-selftest / --chronic-conditions-selftest / --accommodation-selftest  Chronic conditions probe (Plan 193: attribution, capability, replay)");
             GD.Print("  --emergency-alert-selftest / --alert-selftest / --emergency-warning-selftest  Emergency alert types, response windows, and evacuation protocols probe");
             GD.Print("  --diplomacy-selftest / --treaty-selftest / --faction-diplomacy-selftest  Faction treaties, relations, missions, and reputation probe");
+            GD.Print("  --warlord-response-selftest / --warlord-tribute-response-selftest  Idempotent warlord tribute Pay/Contest/Submit responses probe");
+            GD.Print("  --patrol-radio-selftest / --patrol-radio-hooks-selftest  Patrol encounter choices queueing one-shot faction broadcasts probe");
+            GD.Print("  --modal-travel-dispatch-selftest / --travel-modality-selftest  Pre-departure foot/convoy/rig/flight feasibility, duration, fuel, and attrition probe");
+            GD.Print("  --ration-conflict-selftest / --ration-resentment-selftest  Survivor ration resentment, confrontation, theft, and routed morale/relationship consequences probe");
+            GD.Print("  --cassette-playback-selftest / --cassette-sets-selftest  Cultural cassette sets: catalog, once-only play morale, set completion, hidden caches probe");
+            GD.Print("  --guilt-sources-selftest / --guilt-source-catalog-selftest  Authored guilt severity and templated description resolution probe");
+            GD.Print("  --black-flotilla-standing-selftest / --flotilla-standing-selftest  Black Flotilla authored thresholds and trust tiers on the live stance engine probe");
+            GD.Print("  --patient-record-integrity-selftest / --clinical-record-integrity-selftest  Clinical record dangling-reference integrity across the live medical pipeline probe");
+            GD.Print("  --combat-doctrine-selftest / --doctrine-capability-selftest  Combat probe");
+            GD.Print("  --grave-epitaphs-selftest / --epitaph-binding-selftest  Culture & Audio probe");
+            GD.Print("  --patrol-encounter-integrity-selftest / --travel-encounter-integrity-selftest  Narrative probe");
+            GD.Print("  --player-surface-manifest-selftest / --surface-manifest-selftest  UI & Accessibility probe");
+            GD.Print("  --thermal-storm-seal-selftest / --insulation-catalog-selftest  Shelter probe");
+            GD.Print("  --genealogy-family-names-selftest / --family-name-catalog-selftest  Survivors probe");
+            GD.Print("  --relationship-bands-selftest / --affinity-bands-selftest  Survivors probe");
+            GD.Print("  --caravan-item-value-selftest / --canonical-item-value-selftest  Economy probe");
             GD.Print("  --radiation-economy-selftest / --contaminated-trade-selftest  Contaminated-trade price multipliers and block rules probe");
             GD.Print("  --radiation-social-selftest / --dose-bracket-selftest  Radiation dose brackets, social penalties, and discrimination probe");
             GD.Print("  --trophy-selftest / --trophies-selftest / --trophy-mount-selftest  Trophy catalog, exactly-once awards, and unlocked recipes probe");
+            GD.Print("  --barter-selftest / --survivor-barter-selftest / --trade-reputation-selftest  Survivor barter: offers, trades, reputation, and favors probe");
+            GD.Print("  --perimeter-early-warning-selftest / --radar-sweep-selftest  Perimeter radar: calibration, contact classification, false alarms probe");
+            GD.Print("  --skill-atrophy-selftest / --atrophy-selftest  Skill atrophy: practice decay and exactly-once events probe");
+            GD.Print("  --procedural-eulogy-selftest / --eulogy-selftest  Procedural eulogies: life summary composition and archival probe");
+            GD.Print("  --palliative-care-selftest / --long-goodbye-selftest  Palliative care: dignity, grief stages, and memorial echo probe");
+            GD.Print("  --water-quality-profile-selftest / --water-purity-selftest  Water quality: contaminant profiles, purity tiers, and filter wear probe");
+            GD.Print("  --weather-forecast-reliability-selftest / --forecast-confidence-selftest  Forecast reliability: confidence grades and dispatch safety probe");
+            GD.Print("  --apprenticeship-curriculum-selftest / --curriculum-selftest  Apprenticeship curriculum: learner literacy and subject progress probe");
+            GD.Print("  --knock-whitelist-selftest / --orphan-knock-selftest  Orphan door-arrival gate probe");
+            GD.Print("  --second-generation-milestones-selftest / --lineage-milestone-selftest  Second-generation milestone probe");
+            GD.Print("  --journey-diagnostics-selftest / --journey-context-selftest  Journey context probe");
+            GD.Print("  --cloud-seeding-selftest / --weather-seeding-selftest  Cloud seeding probe");
+            GD.Print("  --chemical-plume-selftest / --plume-dispersion-selftest  Chemical plume probe");
+            GD.Print("  --oilseed-pressing-selftest / --seed-press-selftest  Oilseed pressing probe");
+            GD.Print("  --verdict-accusation-selftest / --tribunal-accusation-selftest  Verdict accusation probe");
+            GD.Print("  --loan-shark-selftest / --enforcer-debt-selftest  Loan shark probe");
+            GD.Print("  --common-table-rationing-selftest / --nutrition-diversity-selftest  Common table: dietary diversity, deficiency, and rationing policy probe");
+            GD.Print("  --emergency-muster-readiness-selftest / --the-alarm-selftest  Emergency muster: readiness scores, drills, and evacuation timing probe");
+            GD.Print("  --soil-reclamation-profile-selftest / --the-deep-root-selftest  Soil reclamation: amendment chemistry, fertility, and germination probe");
+            GD.Print("  --campaign-action-log-selftest / --action-log-selftest  Campaign action log: deterministic command records and save round-trip probe");
             GD.Print("  --aging-selftest / --elderly-survivor-selftest  Survivor aging and life-stage compatibility probes");
             GD.Print("  --atmosphere-selftest / --shelter-atmosphere-selftest  Shelter atmosphere compatibility probes");
             GD.Print("  --audio-access-selftest / --audio-accessibility-selftest  Audio accessibility compatibility probes");

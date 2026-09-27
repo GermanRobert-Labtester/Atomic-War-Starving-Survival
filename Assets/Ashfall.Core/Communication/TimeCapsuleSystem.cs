@@ -179,16 +179,56 @@ namespace Ashfall.Core.Communication
             return capsule;
         }
 
-        public bool OpenCapsule(string capsuleId, string openedBy, int currentDay)
+        /// <summary>
+        /// Opens a sealed capsule when — and only when — its own condition is
+        /// satisfied at <paramref name="currentDay"/> for
+        /// <paramref name="openedBy"/>. Plan 212: Manual is the one condition a
+        /// player may open freely; DateBased requires its open day; EventBased
+        /// opens through <see cref="TryOpenEventCapsules"/>; SurvivorBased
+        /// requires the named recipient. Refusal is explicit via the result
+        /// code — callers that need the text use the reason overload.
+        /// </summary>
+        public bool OpenCapsule(string capsuleId, string openedBy, int currentDay) =>
+            TryOpenCapsule(capsuleId, openedBy, currentDay, out _, out _);
+
+        /// <summary>Plan 212 truthfulness overload: the blocked reason names
+        /// the invariant that refused the unseal.</summary>
+        public bool TryOpenCapsule(string capsuleId, string openedBy, int currentDay, out string blockedReason, out TimeCapsule? capsule)
         {
-            var capsule = _state.Capsules.FirstOrDefault(c => string.Equals(c.CapsuleId, capsuleId, StringComparison.OrdinalIgnoreCase));
-            if (capsule == null || capsule.IsOpen) return false;
+            blockedReason = string.Empty;
+            capsule = null;
+            var found = _state.Capsules.FirstOrDefault(c => string.Equals(c.CapsuleId, capsuleId, StringComparison.OrdinalIgnoreCase));
+            if (found == null) { blockedReason = "capsule_unknown"; return false; }
+            if (found.IsOpen) { blockedReason = "capsule_already_open"; capsule = found; return false; }
+            capsule = found;
 
-            capsule.IsOpen = true;
-            capsule.OpenedDay = Math.Max(1, currentDay);
-            capsule.OpenedBy = string.IsNullOrWhiteSpace(openedBy) ? "unknown" : openedBy.Trim();
+            switch (found.ConditionType)
+            {
+                case OpenConditionType.DateBased:
+                    if (found.OpenDay > 0 && currentDay < found.OpenDay)
+                    {
+                        blockedReason = $"date_not_reached (opens day {found.OpenDay})";
+                        return false;
+                    }
+                    break;
+                case OpenConditionType.EventBased:
+                    blockedReason = "event_condition (opens through its authored event)";
+                    return false;
+                case OpenConditionType.SurvivorBased:
+                    if (string.IsNullOrWhiteSpace(found.TargetSurvivorId)
+                        || !string.Equals(found.TargetSurvivorId, openedBy, StringComparison.OrdinalIgnoreCase))
+                    {
+                        blockedReason = "recipient_only";
+                        return false;
+                    }
+                    break;
+            }
 
-            OnCapsuleOpened?.Invoke(capsule, capsule.OpenedBy);
+            found.IsOpen = true;
+            found.OpenedDay = Math.Max(1, currentDay);
+            found.OpenedBy = string.IsNullOrWhiteSpace(openedBy) ? "unknown" : openedBy.Trim();
+
+            OnCapsuleOpened?.Invoke(found, found.OpenedBy);
             return true;
         }
 

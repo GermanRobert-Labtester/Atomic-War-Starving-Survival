@@ -39,6 +39,7 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(WeatherHostSession weather)
         {
+            Unbind(refresh: false);
             _weatherHost = weather;
             if (_weatherHost?.System != null)
             {
@@ -50,6 +51,7 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(WorldHostSession weather)
         {
+            Unbind(refresh: false);
             _worldHost = weather;
             if (_worldHost?.Weather != null)
             {
@@ -333,9 +335,7 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.88f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+            AddChild(AshfallUiHelpers.MakeBackdropOverlay());
 
             _shell = new AshfallDashboardShell(
                 "WEATHER & FALLOUT FORECAST — RAD_NOW_LEDGER",
@@ -451,7 +451,9 @@ namespace AtomicWar.GodotApp.UI
                 Visible = false;
         }
 
-        public void Unbind()
+        public void Unbind() => Unbind(refresh: true);
+
+        private void Unbind(bool refresh)
         {
             if (_worldHost?.Weather != null)
             {
@@ -463,7 +465,8 @@ namespace AtomicWar.GodotApp.UI
             }
             _worldHost = null;
             _weatherHost = null;
-            RefreshView();
+            if (refresh)
+                RefreshView();
         }
 
         public override void _UnhandledInput(InputEvent @event)
@@ -478,8 +481,15 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _ExitTree()
         {
-            Unbind();
+            Unbind(refresh: false);
             base._ExitTree();
+        }
+
+        public override void _Notification(int what)
+        {
+            if (what == NotificationPredelete)
+                Unbind(refresh: false);
+            base._Notification(what);
         }
     }
 }

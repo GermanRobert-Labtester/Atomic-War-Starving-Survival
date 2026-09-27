@@ -353,6 +353,11 @@ namespace AtomicWar.GodotApp
             ComposePlans74To77();
             SetupCampaignDay();
             _combat = CombatHostSession.Create(_dataDir, _campaignDay.Rng);
+            // Researched doctrine now reaches the engine that already consumes it:
+            // TacticalCombatSystem adds DoctrineCapability.AccuracyBonus to every
+            // shot and TacticalMobilityBonus to every mobility check, but the
+            // property was never assigned, so doctrine did nothing.
+            RecomputeCombatDoctrine();
             if (_combat != null)
             {
                 _combat.Inventory = _inventory;

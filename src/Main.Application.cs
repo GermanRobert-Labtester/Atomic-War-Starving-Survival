@@ -748,6 +748,66 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.StormForecastSelfTest:
                     GetTree().Quit(HostCliStormForecast.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.YoaIceRoadSelfTest:
+                    GetTree().Quit(HostCliYoaIceRoad.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SubsidenceSelfTest:
+                    GetTree().Quit(HostCliSubsidence.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.InformantNetworkSelfTest:
+                    GetTree().Quit(HostCliInformantNetwork.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.TradeRouteRiskSelfTest:
+                    GetTree().Quit(HostCliTradeRouteRisk.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ResourceMassBalanceSelfTest:
+                    GetTree().Quit(HostCliMassBalance.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.StoreCapabilitySelfTest:
+                    GetTree().Quit(HostCliStoreCapability.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.LedgerTruthGateSelfTest:
+                    GetTree().Quit(HostCliLedgerTruth.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.BootstrapLifecycleGateSelfTest:
+                    GetTree().Quit(HostCliBootstrapLifecycle.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DifficultyConsequenceSelfTest:
+                    GetTree().Quit(HostCliDifficultyConsequence.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.LivingMapRouteSelfTest:
+                    GetTree().Quit(HostCliLivingMapRoute.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.UndergroundEconomyPressureSelfTest:
+                    GetTree().Quit(HostCliUndergroundEconomy.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RehabilitationSlateSelfTest:
+                    GetTree().Quit(HostCliRehabilitationSlate.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RescuedArcSelfTest:
+                    GetTree().Quit(HostCliRescuedArc.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CompletionHistorySelfTest:
+                    GetTree().Quit(HostCliCompletionHistory.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.StringFreezeSelfTest:
+                    GetTree().Quit(HostCliStringFreeze.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RehabilitationProgressionSelfTest:
+                    GetTree().Quit(HostCliRehabilitationProgression.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RestockAllocationSelfTest:
+                    GetTree().Quit(HostCliRestockAllocation.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ProstheticConditionWearSelfTest:
+                    GetTree().Quit(HostCliProstheticWear.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SurvivorBodyPresentationSelfTest:
+                    GetTree().Quit(HostCliBodyPresentation.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.EpilogueChronicleSelfTest:
+                    GetTree().Quit(HostCliEpilogueChronicle.RunSelfTest(_dataDir));
+                    return;
                 case HostCliAction.DependencyTaperWithdrawalSelfTest:
                     GetTree().Quit(HostCliDependencyTaperWithdrawal.RunSelfTest(_dataDir));
                     return;
@@ -790,6 +850,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ClothingWarmthSelfTest:
                     GetTree().Quit(HostCliClothingWarmth.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.ChronicConditionSelfTest:
+                    GetTree().Quit(HostCliChronicCondition.RunSelfTest(_dataDir));
+                    return;
                 case HostCliAction.EmergencyAlertSelfTest:
                     GetTree().Quit(HostCliEmergencyAlert.RunSelfTest(_dataDir));
                     return;
@@ -804,6 +867,141 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.TrophySelfTest:
                     GetTree().Quit(HostCliTrophy.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.BarterSelfTest:
+                    GetTree().Quit(HostCliBarter.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PerimeterEarlyWarningSelfTest:
+                    GetTree().Quit(HostCliPerimeterEarlyWarning.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SkillAtrophySelfTest:
+                    GetTree().Quit(HostCliSkillAtrophy.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ProceduralEulogySelfTest:
+                    GetTree().Quit(HostCliProceduralEulogy.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PalliativeCareSelfTest:
+                    GetTree().Quit(HostCliPalliativeCare.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.WaterQualityProfileSelfTest:
+                    GetTree().Quit(HostCliWaterQualityProfile.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.WeatherForecastReliabilitySelfTest:
+                    GetTree().Quit(HostCliWeatherForecastReliability.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.KnockWhitelistSelfTest:
+                    GetTree().Quit(HostCliKnockWhitelist.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SecondGenerationMilestonesSelfTest:
+                    GetTree().Quit(HostCliSecondGenerationMilestones.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.JourneyDiagnosticsSelfTest:
+                    GetTree().Quit(HostCliJourneyDiagnostics.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CloudSeedingSelfTest:
+                    GetTree().Quit(HostCliCloudSeeding.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ChemicalPlumeSelfTest:
+                    GetTree().Quit(HostCliChemicalPlume.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.OilseedPressingSelfTest:
+                    GetTree().Quit(HostCliOilseedPressing.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.VerdictAccusationSelfTest:
+                    GetTree().Quit(HostCliVerdictAccusation.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.LoanSharkSelfTest:
+                    GetTree().Quit(HostCliLoanShark.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ApprenticeshipCurriculumSelfTest:
+                    GetTree().Quit(HostCliApprenticeshipCurriculum.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CommonTableRationingSelfTest:
+                    GetTree().Quit(HostCliCommonTableRationing.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.EmergencyMusterReadinessSelfTest:
+                    GetTree().Quit(HostCliEmergencyMusterReadiness.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SoilReclamationProfileSelfTest:
+                    GetTree().Quit(HostCliSoilReclamationProfile.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CampaignActionLogSelfTest:
+                    GetTree().Quit(HostCliCampaignActionLog.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.EconomyFamilySelfTest:
+                    GetTree().Quit(HostCliEconomyFamily.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ExpeditionFamilySelfTest:
+                    GetTree().Quit(HostCliExpeditionFamily.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.TradeTellSelfTest:
+                    GetTree().Quit(HostCliTradeTell.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PowerLoadSheddingSelfTest:
+                    GetTree().Quit(HostCliPowerLoadShedding.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SpiritualRitualSelfTest:
+                    GetTree().Quit(HostCliSpiritualRitual.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.TraumaBondSelfTest:
+                    GetTree().Quit(HostCliTraumaBond.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.MigrationConsequenceSelfTest:
+                    GetTree().Quit(HostCliMigrationConsequence.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.WarlordResponseSelfTest:
+                    GetTree().Quit(HostCliWarlordResponse.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PatrolRadioSelfTest:
+                    GetTree().Quit(HostCliPatrolRadio.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ModalTravelDispatchSelfTest:
+                    GetTree().Quit(HostCliModalTravelDispatch.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RationConflictSelfTest:
+                    GetTree().Quit(HostCliRationConflict.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CassettePlaybackSelfTest:
+                    GetTree().Quit(HostCliCassettePlayback.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.GuiltSourcesSelfTest:
+                    GetTree().Quit(HostCliGuiltSources.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.BlackFlotillaStandingSelfTest:
+                    GetTree().Quit(HostCliBlackFlotillaStanding.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PatientRecordIntegritySelfTest:
+                    GetTree().Quit(HostCliPatientRecordIntegrity.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CombatDoctrineSelfTest:
+                    GetTree().Quit(HostCliCombatDoctrine.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.GraveEpitaphsSelfTest:
+                    GetTree().Quit(HostCliGraveEpitaphs.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PatrolEncounterIntegritySelfTest:
+                    GetTree().Quit(HostCliPatrolEncounterIntegrity.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PlayerSurfaceManifestSelfTest:
+                    GetTree().Quit(HostCliPlayerSurfaceManifest.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ThermalStormSealSelfTest:
+                    GetTree().Quit(HostCliThermalStormSeal.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.GenealogyFamilyNamesSelfTest:
+                    GetTree().Quit(HostCliGenealogyFamilyNames.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.RelationshipBandsSelfTest:
+                    GetTree().Quit(HostCliRelationshipBands.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.CaravanItemValueSelfTest:
+                    GetTree().Quit(HostCliCaravanItemValue.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PharmaceuticalTabletSelfTest:
+                    GetTree().Quit(HostCliPharmaceuticalTablet.RunSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SurgicalGraftSelfTest:
+                    GetTree().Quit(HostCliSurgicalGraft.RunSelfTest(_dataDir));
                     return;
                 case HostCliAction.GenealogySelfTest:
                     GetTree().Quit(HostCliGenealogy.RunSelfTest(_dataDir));

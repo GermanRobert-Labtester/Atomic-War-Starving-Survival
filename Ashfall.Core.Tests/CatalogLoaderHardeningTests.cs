@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Ashfall.Core;
+using Ashfall.Core.Events;
 using Ashfall.Core.IO;
+using Ashfall.Core.Maritime;
 using Ashfall.Core.Verdict;
 using Ashfall.Core.YearOfAsh;
 using Xunit;
@@ -68,6 +71,47 @@ namespace Ashfall.Core.Tests
             Assert.Contains(_messages, m =>
                 m.Contains(path, StringComparison.Ordinal)
                 && m.Contains("VerdictItemEntry list", StringComparison.Ordinal));
+        }
+
+        [Fact]
+        public void LibraryManualMalformedCatalog_IsObservableWithPathAndShape()
+        {
+            string path = Path.Combine(_scratch, LibraryManualCatalogLoader.DefaultFileName);
+            File.WriteAllText(path, "{");
+
+            var loaded = LibraryManualCatalogLoader.Load(_scratch, FileIO, Json);
+
+            Assert.Empty(loaded);
+            Assert.Contains(_messages, m =>
+                m.Contains(path, StringComparison.Ordinal)
+                && m.Contains(nameof(LibraryManualCatalogContainer), StringComparison.Ordinal));
+        }
+
+        [Fact]
+        public void SeasonalCelebrationMalformedCatalog_IsObservableAndKeepsFallback()
+        {
+            var system = new SeasonalCelebrationSystem();
+
+            system.LoadCatalog("{");
+
+            Assert.Contains(_messages, m =>
+                m.Contains("shelter_celebrations.json", StringComparison.Ordinal)
+                && m.Contains("CelebrationCatalogData", StringComparison.Ordinal));
+            Assert.Contains(system.Holidays, h => h.Key == "hol_new_year");
+        }
+
+        [Fact]
+        public void MaritimeMalformedCatalog_IsObservableAndKeepsPreviousCatalog()
+        {
+            var system = new MaritimeExplorationSystem();
+            system.LoadCatalog("{\"zones\":[{\"zone_id\":\"zone_preserved\",\"name\":\"Preserved\"}]}");
+
+            system.LoadCatalog("{");
+
+            Assert.Contains(_messages, m =>
+                m.Contains("maritime_zones.json", StringComparison.Ordinal)
+                && m.Contains("MaritimeZonesCatalog", StringComparison.Ordinal));
+            Assert.NotNull(system.GetZoneDef("zone_preserved"));
         }
 
         // ── (b) valid file ⇒ identical load result to the pre-H4 baseline ────────────

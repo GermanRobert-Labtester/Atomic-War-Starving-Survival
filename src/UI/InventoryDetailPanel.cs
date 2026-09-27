@@ -74,6 +74,18 @@ public partial class InventoryDetailPanel : Control
         RefreshView();
     }
 
+    /// <summary>
+    /// Plan 190 — the item-lore host session (read-only from the panel).
+    /// Null until the inventory lane binds it, so existing callers untouched.
+    /// </summary>
+    public void BindItemLore(ItemLoreHostSession? itemLore)
+    {
+        _itemLore = itemLore;
+        RefreshView();
+    }
+
+    private ItemLoreHostSession? _itemLore;
+
     public override void _Ready()
     {
         // Scene composition lives entirely in InventoryDetailPanel.tscn.
@@ -167,6 +179,35 @@ public partial class InventoryDetailPanel : Control
                     : $"{record.MeasurementSummary} — {record.FailureSummary.Replace('_', ' ').ToLowerInvariant()}";
                 AddRow(_itemInfo, $"Tanning record [{record.Family}]: {record.FacilityLabel.Replace('_', ' ')} — {summary} (ARCHIVAL BATCH — NOT THIS ITEM'S MEASURED QUALITY)", Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
+            }
+        }
+
+        // ── Provenance chain (Plan 190, display-only read model) ──
+        if (_itemLore != null)
+        {
+            var prov = _itemLore.GetProvenance(_itemId);
+            if (prov != null)
+            {
+                if (!string.IsNullOrEmpty(prov.CrafterSurvivorId))
+                {
+                    AddRow(_itemInfo, $"Provenance: crafted by {prov.CrafterSurvivorId} (day {prov.CraftingDay})", Ashfall.Core.UI.Theme.Lethe);
+                    RenderedRowCount++;
+                }
+                if (!string.IsNullOrEmpty(prov.DiscoveryLocationId))
+                {
+                    AddRow(_itemInfo, $"Provenance: found at {prov.DiscoveryLocationId.Replace('_', ' ')} (day {prov.DiscoveryDay}){(!string.IsNullOrEmpty(prov.DiscoveryContext) ? $" — {prov.DiscoveryContext}" : string.Empty)}", Ashfall.Core.UI.Theme.Lethe);
+                    RenderedRowCount++;
+                }
+                if (prov.OwnershipChain.Count > 1)
+                {
+                    AddRow(_itemInfo, $"Ownership chain: {string.Join(" → ", prov.OwnershipChain)}", Ashfall.Core.UI.Theme.Lethe);
+                    RenderedRowCount++;
+                }
+                foreach (var lore in _itemLore.GetItemLore(_itemId))
+                {
+                    AddRow(_itemInfo, $"Lore [{lore.TriggerType}]: {lore.Text}", Ashfall.Core.UI.Theme.Dim);
+                    RenderedRowCount++;
+                }
             }
         }
 

@@ -1,17 +1,43 @@
-# Agent Rulebooks Synchronization Report
-Generated: 2026-09-25
+# ASHFALL Agent-Rulebook Synchronization Report
 
-All client rulebooks are synchronized with canonical `AGENTS.md` via `ashfall-dev sync-agents`:
-- [x] `MIMOCODE.md`
-- [x] `OPENSETUP.md`
-- [x] `GEMINI.md`
-- [x] `.clinerules`
-- [x] `.cursorrules`
-- [x] `.windsurfrules`
-- [x] `CODEX.md`
-- [x] `CRUSH.md`
-- [x] `GOOSE.md`
-- [x] `VIBE.md`
-- [x] `ANTIGRAVITY.md`
-- [x] `CLAUDE.md`
-- [x] `QWEN.md`
+**Canonical source:** `AGENTS.md`<br>
+**Synced files:** 13 derived client files<br>
+**Sync date:** 2026-09-26<br>
+**Tool:** `scripts/ci/sync-agent-rulebooks.py`
+
+---
+
+## PHASE 1 — Drift Audit & Status
+
+All 13 derived files are structurally synchronized with `AGENTS.md`.
+
+| File | Divergence Class | Header Branding |
+|---|---|---|
+| `.clinerules` | SYNCED | `ASHFALL PROJECT — Cline Rules` |
+| `.cursorrules` | SYNCED | `ASHFALL PROJECT — Cursor Rules` |
+| `.windsurfrules` | SYNCED | `ASHFALL PROJECT — Windsurf Rules` |
+| `ANTIGRAVITY.md` | SYNCED | `ASHFALL PROJECT — ANTIGRAVITY Instructions` |
+| `CLAUDE.md` | SYNCED | `CLAUDE CODE INSTRUCTIONS — ASHFALL PROJECT` |
+| `CODEX.md` | SYNCED | `ASHFALL PROJECT — CODEX Instructions` |
+| `CRUSH.md` | SYNCED | `ASHFALL PROJECT — CRUSH Instructions` |
+| `GEMINI.md` | SYNCED | `ASHFALL PROJECT — GEMINI Instructions` |
+| `GOOSE.md` | SYNCED | `ASHFALL PROJECT — GOOSE Instructions` |
+| `MIMOCODE.md` | SYNCED | `ASHFALL PROJECT — MIMOCODE Instructions` |
+| `OPENSETUP.md` | SYNCED | `ASHFALL PROJECT — OPENSETUP Instructions` |
+| `QWEN.md` | SYNCED | `ASHFALL PROJECT — QWEN Instructions` |
+| `VIBE.md` | SYNCED | `ASHFALL PROJECT — VIBE Instructions` |
+
+**STALE:** 0<br>
+**NEWER:** 0<br>
+**CONFLICT:** 0
+
+---
+
+## Quality Gate Checklist
+
+- [x] Zero `CONFLICT` divergences remain
+- [x] Every synced file contains the 5 non-negotiable rules
+- [x] Every synced file contains the 6 core invariants
+- [x] Every synced file contains the canonical MCP connection registry (`composio`, `google-stitch`)
+- [x] Every synced file specifies `dotnet` + `godot --headless` as the canonical verification path
+- [x] Zero gameplay code touched

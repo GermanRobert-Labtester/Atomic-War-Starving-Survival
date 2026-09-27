@@ -58,11 +58,12 @@ namespace Ashfall.Core.Weather
             if (catalog == null) return 0f;
             if (!catalog.TryGetEffects(kind, out var effects) || effects == null) return 0f;
 
-            float visibility = Clamp01(1f - Clamp01(effects.visibility_modifier));
-            float thermal = Clamp01(MathF.Abs(effects.thermal_load_additive_c) / ThermalStressReferenceC);
-            float rad = Clamp01(effects.outdoor_rad_modifier / RadStressReference);
-            float delay = Clamp01(1f - Clamp01(effects.travel_speed_multiplier));
-            float encounter = Clamp01((Clamp01(effects.travel_encounter_multiplier) - 1f) / EncounterStressSpan);
+            float visibility = MathfCompat.Clamp01(1f - MathfCompat.Clamp01(effects.visibility_modifier));
+            float thermal = MathfCompat.Clamp01(MathF.Abs(effects.thermal_load_additive_c) / ThermalStressReferenceC);
+            float rad = MathfCompat.Clamp01(effects.outdoor_rad_modifier / RadStressReference);
+            float delay = MathfCompat.Clamp01(1f - MathfCompat.Clamp01(effects.travel_speed_multiplier));
+            float encounter = MathfCompat.Clamp01(
+                (MathfCompat.Clamp01(effects.travel_encounter_multiplier) - 1f) / EncounterStressSpan);
 
             long permille =
                 (long)(visibility * VisibilityWeightPermille
@@ -83,7 +84,5 @@ namespace Ashfall.Core.Weather
             if (!catalog.TryGetEffects(kind, out var effects) || effects == null) return true;
             return effects.explicitly_neutral;
         }
-
-        private static float Clamp01(float v) => v < 0f ? 0f : (v > 1f ? 1f : v);
     }
 }

@@ -17,6 +17,8 @@ namespace AtomicWar.GodotApp
     {
         private ShelterMuseumHostSession? _shelterMuseum;
         private bool _shelterMuseumDirty;
+        private Action? _shelterMuseumStateChangedHandler;
+        private Action<string, float>? _shelterMuseumVisitHandler;
 
         public ShelterMuseumHostSession? ShelterMuseum => _shelterMuseum;
 
@@ -26,17 +28,19 @@ namespace AtomicWar.GodotApp
 
             var saved = ShelterMuseumSaveStore.TryLoad();
             _shelterMuseum = ShelterMuseumHostSession.Create(saved);
-            _shelterMuseum.StateChanged += () => _shelterMuseumDirty = true;
+            _shelterMuseumStateChangedHandler = () => _shelterMuseumDirty = true;
+            _shelterMuseum.StateChanged += _shelterMuseumStateChangedHandler;
 
             // Museum visit morale flows through the canonical Needs owner,
             // applied exactly once per recorded visit.
-            _shelterMuseum.System.OnMuseumVisited += (visitorId, moraleGain) =>
+            _shelterMuseumVisitHandler = (visitorId, moraleGain) =>
             {
                 if (string.IsNullOrEmpty(visitorId)) return;
                 var survivor = _survivors?.Needs.Get(visitorId);
                 if (survivor == null || !survivor.IsAliveState) return;
                 _survivors!.Needs.Modify(visitorId, Ashfall.Core.Survivors.NeedKind.Morale, moraleGain);
             };
+            _shelterMuseum.System.OnMuseumVisited += _shelterMuseumVisitHandler;
 
             string catalogPath = CatalogPath.ResolveCatalog("museum_collection_templates.json");
             var catalogIo = CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir());
@@ -117,8 +121,18 @@ namespace AtomicWar.GodotApp
 
         public void ResetShelterMuseum()
         {
+            if (_shelterMuseum != null)
+            {
+                if (_shelterMuseumStateChangedHandler != null)
+                    _shelterMuseum.StateChanged -= _shelterMuseumStateChangedHandler;
+                if (_shelterMuseumVisitHandler != null)
+                    _shelterMuseum.System.OnMuseumVisited -= _shelterMuseumVisitHandler;
+            }
+
             _shelterMuseum = null;
             _shelterMuseumDirty = false;
+            _shelterMuseumStateChangedHandler = null;
+            _shelterMuseumVisitHandler = null;
         }
     }
 }

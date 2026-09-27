@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+using System.Globalization;
 using Ashfall.Core;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Survivors;
@@ -41,6 +42,35 @@ namespace Ashfall.Core.Tests
             lib.TickDay(1);
             Assert.True(lib.State.activeJobs[0].isComplete);
             Assert.Contains("man_basic", lib.State.completedManualIds);
+        }
+
+        [Fact]
+        public void TickDay_ParsesAuthoredSkillXpWithInvariantCulture()
+        {
+            CultureInfo originalCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("de-DE");
+                var lib = Create(out var skills, out _, out _, out _);
+                lib.LoadCatalog(new System.Collections.Generic.List<ManualDefinition>
+                {
+                    new ManualDefinition
+                    {
+                        manual_id = "man_fractional_xp",
+                        studyHoursRequired = 1,
+                        skillXpGrants = new System.Collections.Generic.List<string> { "survival", "12.5" }
+                    }
+                });
+
+                Assert.True(lib.StartStudy("man_fractional_xp", "survivor_1").IsSuccess);
+                lib.TickDay(1);
+
+                Assert.Equal(12.5f, skills.GetXp("survivor_1", "survival"));
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = originalCulture;
+            }
         }
 
         [Fact] public void CompleteStudy_UnlocksResearch()

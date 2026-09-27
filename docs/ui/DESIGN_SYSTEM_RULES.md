@@ -2,10 +2,10 @@
 
 ## 1. Core Visual Principles
 - **Theme**: Grim 2D survival-management (This War of Mine / Sheltered inspired).
-- **Surface**: Muted desaturated ash greys (`#1A1A1A`, `#2C2C2C`), faded olive (`#66675F`), rust/amber accents (`#D3AA62`, `#F4C875`), blood red (`#E63333`).
+- **Surface**: Muted desaturated ash greys (`#090B0C` ink, `#14191E` card), faded olive dim (`#8E8F82`), rust/amber accents (`#D3AA62`, `#F4C875`), critical red (`#FF5252`).
 - **No forbidden tropes**: Zero neon purple on dark, no unbudgeted gloss/specular bevels, no colored card borders without meaning.
 - **Rhythm**: Strict 4px base grid (`Xs=4`, `Sm=8`, `Md=12`, `Lg=16`, `Xl=24`).
-- **Typography Scale**: `Label=10px`, `Small=11px`, `Mono=12px`, `Body=14px`, `H3=18px`, `H2=22px`, `H1=28px`.
+- **Typography Scale**: `Label=11px`, `Small=12px`, `Mono=13px`, `Body=15px`, `H3=19px`, `H2=24px`, `H1=30px`. (Reconciled 2026-09-26 to the authority `Assets/Ashfall.Core/UI/Theme.cs`; the previous `Label=10px` was below the enforced accessibility floor.)
 
 ## 2. Token Mapping Table
 
@@ -19,8 +19,8 @@
 | `Theme.Hot` | `#F4C875` | `(0.957, 0.784, 0.459, 1.0)` | Highlight / emphasis / fair barter status |
 | `Theme.Pale` | `#E6E0D2` | `(0.902, 0.878, 0.824, 1.0)` | Primary readable body text |
 | `Theme.Muted` | `#938F84` | `(0.576, 0.561, 0.518, 1.0)` | Secondary labels & neutral stance |
-| `Theme.Dim` | `#66675F` | `(0.400, 0.404, 0.373, 1.0)` | Radio wiretap ticker & disabled controls |
-| `Theme.Critical` | `#E63333` | `(0.902, 0.200, 0.200, 1.0)` | Critical warning / short offer status |
+| `Theme.Dim` | `#8E8F82` | `(0.557, 0.561, 0.510, 1.0)` | Radio wiretap ticker & disabled controls |
+| `Theme.Critical` | `#FF5252` | `(1.000, 0.322, 0.322, 1.0)` | Critical warning / short offer status |
 | `Theme.Entropy` | `#C97B3A` | `(0.788, 0.482, 0.227, 1.0)` | Rob stance / structural wear |
 | `Theme.Lethe` | `#6EA3A8` | `(0.431, 0.639, 0.659, 1.0)` | Memory stratum / sight-gauge |
 

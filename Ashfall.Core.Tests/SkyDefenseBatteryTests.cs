@@ -134,6 +134,61 @@ namespace Ashfall.Core.Tests
             Assert.Equal(0, turret.magazine_count);
         }
 
+        [Fact]
+        public void DuplicateOrdnanceItemIds_FailClosedRegardlessOfCatalogOrder()
+        {
+            static SkyDefenseOrdnanceDefinition Definition(string id) => new()
+            {
+                ordnance_id = id,
+                display_name = id,
+                ammo_type = "test",
+                item_id = "ammo_76mm_he_flak",
+                magazine_units = 6,
+                residual_shrapnel_severity = 0.2f,
+            };
+
+            var forward = Fixture.Create();
+            var forwardTurret = forward.Defense.EnsureDefaultTurret();
+            forward.Defense.LoadOrdnanceCatalog(new List<SkyDefenseOrdnanceDefinition>
+            {
+                Definition("ordnance_alpha"),
+                Definition("ordnance_zulu"),
+            });
+
+            int stockBefore = forward.Inventory.CountById("ammo_76mm_he_flak");
+            var loadResult = forward.Defense.TryLoadMagazine(forwardTurret.turret_id, "ordnance_alpha");
+            Assert.Equal(ActionResult.StatusKind.Blocked, loadResult.Status);
+            Assert.Equal("ambiguous_ordnance", loadResult.FailureCode);
+            Assert.Equal(stockBefore, forward.Inventory.CountById("ammo_76mm_he_flak"));
+
+            forward.ScheduleInbound();
+            forwardTurret.loaded_ammo_id = "ammo_76mm_he_flak";
+            forwardTurret.magazine_count = 4;
+            var fireResult = forward.Defense.TryFireVolley(forwardTurret.turret_id, "custom_impact");
+            Assert.Equal(ActionResult.StatusKind.Blocked, fireResult.Status);
+            Assert.Equal("ambiguous_ordnance", fireResult.FailureCode);
+            Assert.Equal(4, forwardTurret.magazine_count);
+            Assert.Equal(0, forward.Defense.TotalVolleys);
+
+            var reverse = Fixture.Create();
+            var reverseTurret = reverse.Defense.EnsureDefaultTurret();
+            reverse.Defense.LoadOrdnanceCatalog(new List<SkyDefenseOrdnanceDefinition>
+            {
+                Definition("ordnance_zulu"),
+                Definition("ordnance_alpha"),
+            });
+            var reverseLoadResult = reverse.Defense.TryLoadMagazine(reverseTurret.turret_id, "ordnance_alpha");
+            Assert.Equal(loadResult.FailureCode, reverseLoadResult.FailureCode);
+
+            reverse.ScheduleInbound();
+            reverseTurret.loaded_ammo_id = "ammo_76mm_he_flak";
+            reverseTurret.magazine_count = 4;
+            var reverseFireResult = reverse.Defense.TryFireVolley(reverseTurret.turret_id, "custom_impact");
+            Assert.Equal(fireResult.FailureCode, reverseFireResult.FailureCode);
+            Assert.Equal(4, reverseTurret.magazine_count);
+            Assert.Equal(0, reverse.Defense.TotalVolleys);
+        }
+
         // ------------------------------------------------------------------
         // FIRING
         // ------------------------------------------------------------------

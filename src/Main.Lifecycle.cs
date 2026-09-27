@@ -259,6 +259,17 @@ namespace AtomicWar.GodotApp
                     _counterIntelligenceDirty = false;
                 }));
 
+            // Informant network (Plan 146 batch-4 / A.83)
+            _lifecycleRegistry.Register(new DelegateSessionParticipant(
+                "informant_network",
+                dependsOn: new[] { "counter_intelligence" },
+                saveSectionKey: "informant_network",
+                onReset: () =>
+                {
+                    _informantNetwork = null;
+                    _informantNetworkDirty = false;
+                }));
+
             // Maritime & Deep Coast
             _lifecycleRegistry.Register(new DelegateSessionParticipant(
                 "maritime",
@@ -557,6 +568,7 @@ namespace AtomicWar.GodotApp
             ResetNpcMemory();
             ResetIdeologicalFriction();
             ResetRomanceFamily();
+            ResetZealotry();
             ResetVehicleCustomization();
             ResetBackstory();
             ResetMetaProgression();
@@ -566,6 +578,14 @@ namespace AtomicWar.GodotApp
             ResetDynamicQuestGeneration();
             ResetTradeRoutes();
             ResetHumanMigration();
+            ResetPowerLoadShedding();
+            ResetSpiritualRitual();
+            ResetTraumaBond();
+            ResetMigrationConsequence();
+            ResetWarlordResponse();
+            ResetPatrolRadioHooks();
+            ResetRationConflict();
+            ResetCassettePlayback();
             ResetShelterGovernance();
             ResetAging();
             ResetShelterMaintenance();
@@ -581,6 +601,7 @@ namespace AtomicWar.GodotApp
             ResetAntenatalMaternalHealth();
             ResetClinicalWardTriage();
             ResetChemicalReagentSynthesis();
+            ResetAdvancedIndustrial();
             ResetMechanicalDriveline();
             ResetSleepAcousticRest();
             ResetShelterArchive();
@@ -597,9 +618,39 @@ namespace AtomicWar.GodotApp
             ResetRadiationEconomy();
             ResetRadiationSocial();
             ResetTrophies();
+            ResetSurvivorBarter();
+            ResetItemLore();
+            ResetLetters();
+            ResetPerimeterEarlyWarning();
+            ResetSkillAtrophy();
+            ResetProceduralEulogy();
+            ResetPalliativeCare();
+            ResetWaterQualityProfile();
+            ResetWeatherForecastReliability();
+            ResetApprenticeshipCurriculum();
+            ResetCommonTableRationing();
+            ResetEmergencyMusterReadiness();
+            ResetSoilReclamationProfile();
+            ResetCampaignActionLog();
+            ResetChronicConditions();
             ResetShelterMuseum();
             ResetGenealogy();
+            ResetSpiritual();
+            ResetSurvivorFate();
             ResetPlan49DepthPass();
+            ResetSurgicalGraft();
+            ResetPharmaceuticalTablet();
+            ResetTradeTells();
+            ResetEconomyFamily();
+            ResetExpeditionFamily();
+            ResetKnockWhitelist();
+            ResetSecondGenerationMilestones();
+            ResetJourneyDiagnostics();
+            ResetCloudSeeding();
+            ResetChemicalPlume();
+            ResetOilseedPressing();
+            ResetVerdictAccusation();
+            ResetLoanShark();
             ResetCultureCreation();
             ResetPsychologicalProfiles();
             ResetSkillCertifications();
@@ -656,7 +707,7 @@ namespace AtomicWar.GodotApp
 
             SubsystemManifest.RegisterSetupAction("journal", () => SetupJournal());
             SubsystemManifest.RegisterSetupAction("needs", () => SetupSurvivors());
-            SubsystemManifest.RegisterSetupAction("inventory", () => SetupInventory());
+            SubsystemManifest.RegisterSetupAction("inventory", () => { SetupInventory(); SetupItemLore(); SetupLetters(); });
             SubsystemManifest.RegisterSetupAction("weather", () => SetupWorld());
             SubsystemManifest.RegisterSetupAction("radiation", () => SetupDoseLedger());
             SubsystemManifest.RegisterSetupAction("radio", () => SetupRadio());
@@ -664,7 +715,7 @@ namespace AtomicWar.GodotApp
             SubsystemManifest.RegisterSetupAction("duty_roster", () => SetupDutyRoster());
             SubsystemManifest.RegisterSetupAction("crafting", () => SetupCrafting());
             SubsystemManifest.RegisterSetupAction("research", () => EnsureSharedResearch());
-            SubsystemManifest.RegisterSetupAction("medical", () => { SetupMedical(); SetupMedicalWard(); });
+            SubsystemManifest.RegisterSetupAction("medical", () => { SetupMedical(); SetupMedicalWard(); SetupChronicConditions(); });
             SubsystemManifest.RegisterSetupAction("factions", () => SetupFactionBranch());
             SubsystemManifest.RegisterSetupAction("economy", () => SetupEconomy());
             SubsystemManifest.RegisterSetupAction("greenhouse", () => SetupGreenhouse());

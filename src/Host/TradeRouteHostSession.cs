@@ -10,8 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Save;
+using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp
 {
@@ -48,6 +50,32 @@ namespace AtomicWar.GodotApp
         public TradeRouteCensus Census => _system.GetCensus();
         public IReadOnlyList<CaravanRouteDefinition> AvailableRoutes => _availableRoutes;
         public IReadOnlyCollection<TradeRouteContract> Contracts => _system.Contracts;
+
+        /// <summary>
+        /// ORPHAN-SEAL A.04 — read-only transit-risk projection. Binds a
+        /// committed contract to its authored caravan route and evaluates the
+        /// binding risk engine (raid, disruption, attrition). Derived read
+        /// model: mutates nothing, persists nothing.
+        /// </summary>
+        public TradeRouteRiskEvaluationResult? EvaluateContractRisk(
+            string routeId, int escortStrengthPermille, int regionalHostilityPermille)
+        {
+            var contract = _system.GetContract(routeId);
+            var definition = _availableRoutes.FirstOrDefault(r => r.route_id == routeId);
+            if (contract == null || definition == null) return null;
+
+            // Authored crosswalk: caravan days × 40 km/day of post-war roads;
+            // weather multiplier drives the hazard factor directly.
+            var route = new MapRoute
+            {
+                From = definition.origin_region_id,
+                To = definition.destination_region_id,
+                DistanceKm = definition.travel_days * 40f,
+                WeatherHazard = Math.Clamp((definition.weather_risk_multiplier - 1f) / 2f, 0f, 1f)
+            };
+            return TradeRouteRiskBindingEngine.EvaluateTransitRisk(
+                contract, route, escortStrengthPermille, regionalHostilityPermille);
+        }
 
         public TradeRouteHostSession(string? dataDir = null, PlayerTradeRouteSystem? system = null)
         {

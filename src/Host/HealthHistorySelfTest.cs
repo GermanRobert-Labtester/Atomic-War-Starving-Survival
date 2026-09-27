@@ -104,6 +104,8 @@ namespace AtomicWar.GodotApp
                       restoredSession.System.GetVaccinationImmunity("survivor_alice", "rad_shield_booster") == session.System.GetVaccinationImmunity("survivor_alice", "rad_shield_booster"),
                     "Save and restore state verified with full round-trip fidelity.");
 
+                if (passed != 12)
+                    throw new InvalidOperationException($"Expected 12 checks, completed {passed}.");
                 Console.WriteLine($"=== [HostCli] Health History Self-Test PASSED ({passed}/12 checks) ===");
                 return 0;
             }

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 219,
-  "headless_test_count": 217,
+  "total_tests": 285,
+  "headless_test_count": 283,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -1131,6 +1131,50 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "trade_route_risk_selftest",
+      "action": "TradeRouteRiskSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--trade-route-risk-selftest",
+      "aliases": [],
+      "description": "ORPHAN-SEAL A.04: trade-route transit risk binding \u2014 deterministic raid/disruption/attrition evaluation over committed contracts",
+      "headless_compatible": true,
+      "expected_summary_id": "trade_route_risk_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "informant_network_selftest",
+      "action": "InformantNetworkSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--informant-network-selftest",
+      "aliases": [],
+      "description": "Plan 146 batch-4 / A.83: informant tradecraft \u2014 recruitment, method exposure, deterministic ops, drift, interrogation doctrine, sweeps, save ride",
+      "headless_compatible": true,
+      "expected_summary_id": "informant_network_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "subsidence_selftest",
+      "action": "SubsidenceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--subsidence-selftest",
+      "aliases": [],
+      "description": "Plan 146 batch-4 / A.56: subterranean subsidence strata crosswalk, daily integrity decay, shoring mitigation, evacuation gate, and topology evaluation",
+      "headless_compatible": true,
+      "expected_summary_id": "subsidence_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "yoa_ice_road_selftest",
+      "action": "YoaIceRoadSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--yoa-ice-road-selftest",
+      "aliases": [],
+      "description": "Plan 146 Year of Ash residual: ice-road open/close against the \u221220 \u00b0C threshold, blocking storm windows, trade multipliers, expedition exposure, and envelope ride-along",
+      "headless_compatible": true,
+      "expected_summary_id": "yoa_ice_road_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "storm_forecast_selftest",
       "action": "StormForecastSelfTest",
       "category": "Expansions & Campaign Modules",
@@ -1356,6 +1400,208 @@
       "description": "Faction Communiqu\u00e9 Board: day-gated rendering, empty states, attribution, refresh idempotence",
       "headless_compatible": true,
       "expected_summary_id": "faction_communique_board_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "mass_balance_selftest",
+      "action": "ResourceMassBalanceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--mass-balance-selftest",
+      "aliases": [
+        "--resource-mass-balance-selftest"
+      ],
+      "description": "Release-craft balance gate: deterministic 30-day survival-loop mass balance (water/power/nutrition/trapping/greenhouse) with invariant checks",
+      "headless_compatible": true,
+      "expected_summary_id": "mass_balance_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "store_capability_selftest",
+      "action": "StoreCapabilitySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--store-capability-selftest",
+      "aliases": [
+        "--store-manifest-selftest"
+      ],
+      "description": "Plan 57 / Plan 48 release craft: store capability claims cannot run ahead of shipped systems and passing verification gates",
+      "headless_compatible": true,
+      "expected_summary_id": "store_capability_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ledger_truth_selftest",
+      "action": "LedgerTruthGateSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--ledger-truth-selftest",
+      "aliases": [],
+      "description": "EN-08 ledger truth: decision-register terminal/deferred invariants and the zero-quarantine D21 truth",
+      "headless_compatible": true,
+      "expected_summary_id": "ledger_truth_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "bootstrap_lifecycle_selftest",
+      "action": "BootstrapLifecycleGateSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--bootstrap-lifecycle-selftest",
+      "aliases": [],
+      "description": "EN-06 one bootstrap path: all path modes reach Ready with zero deferred seams and no unreached required subsystem",
+      "headless_compatible": true,
+      "expected_summary_id": "bootstrap_lifecycle_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "difficulty_consequence_selftest",
+      "action": "DifficultyConsequenceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--difficulty-consequence-selftest",
+      "aliases": [],
+      "description": "EN-01 difficulty-consequence weave: war severity, crisis deadline offset, shock weight, monotonicity over difficulty scalars",
+      "headless_compatible": true,
+      "expected_summary_id": "difficulty_consequence_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "living_map_route_selftest",
+      "action": "LivingMapRouteSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--living-map-route-selftest",
+      "aliases": [
+        "--map-route-projection-selftest"
+      ],
+      "description": "EN-02 living map route projection: canonical PlanRoute to hops, distance, flooded/amphibious hazards and tags",
+      "headless_compatible": true,
+      "expected_summary_id": "living_map_route_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "underground_economy_selftest",
+      "action": "UndergroundEconomyPressureSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--underground-economy-selftest",
+      "aliases": [
+        "--market-temperature-selftest"
+      ],
+      "description": "EN-03 underground economy pressure: heat/trust/relocation to Calm/Raised/Hot/Relocated band, price and attention multipliers",
+      "headless_compatible": true,
+      "expected_summary_id": "underground_economy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "rehabilitation_slate_selftest",
+      "action": "RehabilitationSlateSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--rehabilitation-slate-selftest",
+      "aliases": [
+        "--prosthetics-slate-selftest"
+      ],
+      "description": "EN-04 rehabilitation medicine slate: prosthetics count, rehab phase, quality ramp, next milestone, phantom pain",
+      "headless_compatible": true,
+      "expected_summary_id": "rehabilitation_slate_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "rescued_arc_selftest",
+      "action": "RescuedArcSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--rescued-arc-selftest",
+      "aliases": [
+        "--distress-rescue-arc-selftest"
+      ],
+      "description": "EN-05 rescued survivor arc projection: distress rescue stage to None/EnRoute/Hospitalized/Integrated/Perished/Ambushed with recovery countdown",
+      "headless_compatible": true,
+      "expected_summary_id": "rescued_arc_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "completion_history_selftest",
+      "action": "CompletionHistorySelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--completion-history-selftest",
+      "aliases": [
+        "--chronicle-summary-selftest"
+      ],
+      "description": "EN-07 completion history chronicle: append-only completion records to a pure per-run summary (days, milestones, endings, difficulty)",
+      "headless_compatible": true,
+      "expected_summary_id": "completion_history_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "string_freeze_selftest",
+      "action": "StringFreezeSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--string-freeze-selftest",
+      "aliases": [
+        "--localization-freeze-selftest"
+      ],
+      "description": "D22 localization string freeze: frozen classes require structured keys; raw strings refused unless allowlisted as debt",
+      "headless_compatible": true,
+      "expected_summary_id": "string_freeze_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "rehabilitation_progression_selftest",
+      "action": "RehabilitationProgressionSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--rehabilitation-progression-selftest",
+      "aliases": [
+        "--prosthetic-progression-selftest"
+      ],
+      "description": "F14-E rehabilitation arc progression: deterministic fitting -> adaptation -> mastery permille ramp with resilience scaling",
+      "headless_compatible": true,
+      "expected_summary_id": "rehabilitation_progression_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "restock_allocation_selftest",
+      "action": "RestockAllocationSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--restock-allocation-selftest",
+      "aliases": [
+        "--restock-allocation-engine-selftest"
+      ],
+      "description": "F13-C restock capacity allocation: effective weights, scarcity floors, largest-remainder rounding, and rational stock/target_par sort",
+      "headless_compatible": true,
+      "expected_summary_id": "restock_allocation_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "prosthetic_wear_selftest",
+      "action": "ProstheticConditionWearSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--prosthetic-wear-selftest",
+      "aliases": [
+        "--prosthetic-condition-selftest"
+      ],
+      "description": "F14-D prosthetic condition & wear: daily wear, complexity-tier efficiency caps, and failure risk permille",
+      "headless_compatible": true,
+      "expected_summary_id": "prosthetic_wear_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "body_presentation_selftest",
+      "action": "SurvivorBodyPresentationSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--body-presentation-selftest",
+      "aliases": [
+        "--limb-presentation-selftest"
+      ],
+      "description": "F14-G survivor body presentation slate: accessible limb rows, grip capability, mobility permille, maintenance and phantom-pain alerts",
+      "headless_compatible": true,
+      "expected_summary_id": "body_presentation_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "epilogue_chronicle_selftest",
+      "action": "EpilogueChronicleSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--epilogue-chronicle-selftest",
+      "aliases": [
+        "--epilogue-builder-selftest"
+      ],
+      "description": "Epilogue chronicle builder: deterministic ordering of ending slides, survivor fate cards, and metrics with ending-title mapping",
+      "headless_compatible": true,
+      "expected_summary_id": "epilogue_chronicle_selftest",
       "timeout_seconds": 30
     },
     {
@@ -2027,6 +2273,332 @@
       "timeout_seconds": 30
     },
     {
+      "test_id": "economy_family_selftest",
+      "action": "EconomyFamilySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--economy-family-selftest",
+      "aliases": [
+        "--trade-monopoly-selftest"
+      ],
+      "description": "PLAN-ECONOMY-DATA-FAMILY-TRUTH-270: route monopoly, contraband quoting, chit purity assay, syndicate heat attention, and composite save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "economy_family_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "expedition_family_selftest",
+      "action": "ExpeditionFamilySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--expedition-family-selftest",
+      "aliases": [
+        "--aerial-recon-selftest"
+      ],
+      "description": "PLAN-EXPEDITION-FAMILY-TRUTH-269: aerial recon flight-window evaluation and expedition loot reference resolution/validation",
+      "headless_compatible": true,
+      "expected_summary_id": "expedition_family_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "trade_tell_selftest",
+      "action": "TradeTellSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--trade-tell-selftest",
+      "aliases": [
+        "--market-tell-selftest"
+      ],
+      "description": "PLAN-TRADE-TELL-TRUTH-248: authored tell corpus load, trust-band mapping, deterministic stance x band selection, and pool coverage",
+      "headless_compatible": true,
+      "expected_summary_id": "trade_tell_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "power_load_shedding_selftest",
+      "action": "PowerLoadSheddingSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--power-load-shedding-selftest",
+      "aliases": [
+        "--grid-shedding-selftest",
+        "--brownout-selftest"
+      ],
+      "description": "EXPANSION-21-THE-GRID: live subgrid demand vector, priority shedding order, brownout/cascade risk, and energy-poverty morale penalty",
+      "headless_compatible": true,
+      "expected_summary_id": "power_load_shedding_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "spiritual_ritual_selftest",
+      "action": "SpiritualRitualSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--spiritual-ritual-selftest",
+      "aliases": [
+        "--ritual-calendar-selftest"
+      ],
+      "description": "EXPANSION-13-THE-FAITHFUL-AND-THE-FRACTURED: authored ritual cooldown ledger, low-morale comfort scaling, holy-day windows, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "spiritual_ritual_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "trauma_bond_selftest",
+      "action": "TraumaBondSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--trauma-bond-selftest",
+      "aliases": [
+        "--trauma-bonds-selftest"
+      ],
+      "description": "Trauma bond authority: shared-hazard bond formation routed to the canonical affinity owner, daily decay, and co-shift efficiency bonus",
+      "headless_compatible": true,
+      "expected_summary_id": "trauma_bond_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "migration_consequence_selftest",
+      "action": "MigrationConsequenceSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--migration-consequence-selftest",
+      "aliases": [
+        "--migration-consequences-selftest"
+      ],
+      "description": "XP-08-F6: regional migration consequences \u2014 market demand multipliers, labour pool, territorial friction, and exactly-once phase application",
+      "headless_compatible": true,
+      "expected_summary_id": "migration_consequence_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "warlord_response_selftest",
+      "action": "WarlordResponseSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--warlord-response-selftest",
+      "aliases": [
+        "--warlord-tribute-response-selftest"
+      ],
+      "description": "Warlord tribute responses: idempotent Pay/Contest/Submit per canonical tribute id, exactly-once currency settlement, and superseded-id pruning",
+      "headless_compatible": true,
+      "expected_summary_id": "warlord_response_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "patrol_radio_selftest",
+      "action": "PatrolRadioSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--patrol-radio-selftest",
+      "aliases": [
+        "--patrol-radio-hooks-selftest"
+      ],
+      "description": "Patrol radio hooks: patrol-encounter choices queue one-shot faction broadcasts delivered through the canonical radio intercept log",
+      "headless_compatible": true,
+      "expected_summary_id": "patrol_radio_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "cassette_playback_selftest",
+      "action": "CassettePlaybackSelfTest",
+      "category": "Culture & Audio",
+      "primary_flag": "--cassette-playback-selftest",
+      "aliases": [
+        "--cassette-sets-selftest"
+      ],
+      "description": "Cultural cassette sets: authored catalog, tape acquisition from the live inventory, once-only first-play morale, set completion, and hidden-cache reveal",
+      "headless_compatible": true,
+      "expected_summary_id": "cassette_playback_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "guilt_sources_selftest",
+      "action": "GuiltSourcesSelfTest",
+      "category": "Survivors",
+      "primary_flag": "--guilt-sources-selftest",
+      "aliases": [
+        "--guilt-source-catalog-selftest"
+      ],
+      "description": "Authored guilt sources: choice pattern resolves to authored severity and templated description instead of call-site literals",
+      "headless_compatible": true,
+      "expected_summary_id": "guilt_sources_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "black_flotilla_standing_selftest",
+      "action": "BlackFlotillaStandingSelfTest",
+      "category": "Factions",
+      "primary_flag": "--black-flotilla-standing-selftest",
+      "aliases": [
+        "--flotilla-standing-selftest"
+      ],
+      "description": "Black Flotilla standing: authored thresholds and Plan-23 trust tiers registered on the live FactionStanceEngine",
+      "headless_compatible": true,
+      "expected_summary_id": "black_flotilla_standing_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "combat_doctrine_selftest",
+      "action": "CombatDoctrineSelfTest",
+      "category": "Researched doctrine capability projected onto the live TacticalCombatSystem (accuracy, mobility, recoil, barrier)",
+      "primary_flag": "--combat-doctrine-selftest",
+      "aliases": [
+        "--doctrine-capability-selftest"
+      ],
+      "description": "Combat",
+      "headless_compatible": true,
+      "expected_summary_id": "combat_doctrine_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "grave_epitaphs_selftest",
+      "action": "GraveEpitaphsSelfTest",
+      "category": "Authored grave epitaphs bound to MemorialSystem.EpitaphCatalog/EpitaphRng with deterministic selection",
+      "primary_flag": "--grave-epitaphs-selftest",
+      "aliases": [
+        "--epitaph-binding-selftest"
+      ],
+      "description": "Culture & Audio",
+      "headless_compatible": true,
+      "expected_summary_id": "grave_epitaphs_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "patrol_encounter_integrity_selftest",
+      "action": "PatrolEncounterIntegritySelfTest",
+      "category": "Travel/patrol encounter integrity: duplicate ids, dangling faction/item references, unwired choices",
+      "primary_flag": "--patrol-encounter-integrity-selftest",
+      "aliases": [
+        "--travel-encounter-integrity-selftest"
+      ],
+      "description": "Narrative",
+      "headless_compatible": true,
+      "expected_summary_id": "patrol_encounter_integrity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "thermal_storm_seal_selftest",
+      "action": "ThermalStormSealSelfTest",
+      "category": "Shelter",
+      "primary_flag": "--thermal-storm-seal-selftest",
+      "aliases": [
+        "--insulation-catalog-selftest"
+      ],
+      "description": "Authored",
+      "headless_compatible": true,
+      "expected_summary_id": "thermal_storm_seal_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "genealogy_family_names_selftest",
+      "action": "GenealogyFamilyNamesSelfTest",
+      "category": "Survivors",
+      "primary_flag": "--genealogy-family-names-selftest",
+      "aliases": [
+        "--family-name-catalog-selftest"
+      ],
+      "description": "Authored",
+      "headless_compatible": true,
+      "expected_summary_id": "genealogy_family_names_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "relationship_bands_selftest",
+      "action": "RelationshipBandsSelfTest",
+      "category": "Survivors",
+      "primary_flag": "--relationship-bands-selftest",
+      "aliases": [
+        "--affinity-bands-selftest"
+      ],
+      "description": "Authored",
+      "headless_compatible": true,
+      "expected_summary_id": "relationship_bands_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "caravan_item_value_selftest",
+      "action": "CaravanItemValueSelfTest",
+      "category": "Economy",
+      "primary_flag": "--caravan-item-value-selftest",
+      "aliases": [
+        "--canonical-item-value-selftest"
+      ],
+      "description": "Canonical",
+      "headless_compatible": true,
+      "expected_summary_id": "caravan_item_value_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "player_surface_manifest_selftest",
+      "action": "PlayerSurfaceManifestSelfTest",
+      "category": "Player surface coverage manifest generated from the live panel registry",
+      "primary_flag": "--player-surface-manifest-selftest",
+      "aliases": [
+        "--surface-manifest-selftest"
+      ],
+      "description": "UI & Accessibility",
+      "headless_compatible": true,
+      "expected_summary_id": "player_surface_manifest_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "patient_record_integrity_selftest",
+      "action": "PatientRecordIntegritySelfTest",
+      "category": "Medical",
+      "primary_flag": "--patient-record-integrity-selftest",
+      "aliases": [
+        "--clinical-record-integrity-selftest"
+      ],
+      "description": "Clinical record integrity: dangling survivor, treatment, and item references reported across the live medical pipeline (read-only)",
+      "headless_compatible": true,
+      "expected_summary_id": "patient_record_integrity_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "ration_conflict_selftest",
+      "action": "RationConflictSelfTest",
+      "category": "Survivors",
+      "primary_flag": "--ration-conflict-selftest",
+      "aliases": [
+        "--ration-resentment-selftest"
+      ],
+      "description": "Ration conflict: perceived fairness, resentment escalation to confrontation or theft, and morale/relationship consequences through the canonical owners",
+      "headless_compatible": true,
+      "expected_summary_id": "ration_conflict_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "modal_travel_dispatch_selftest",
+      "action": "ModalTravelDispatchSelfTest",
+      "category": "World & Map",
+      "primary_flag": "--modal-travel-dispatch-selftest",
+      "aliases": [
+        "--travel-modality-selftest"
+      ],
+      "description": "Modal travel dispatch: pre-departure feasibility, duration, fuel, and attrition projection over the live wasteland map routes",
+      "headless_compatible": true,
+      "expected_summary_id": "modal_travel_dispatch_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "pharmaceutical_tablet_selftest",
+      "action": "PharmaceuticalTabletSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--pharmaceutical-tablet-selftest",
+      "aliases": [
+        "--tablet-works-selftest"
+      ],
+      "description": "PLAN-PHARMACEUTICAL-TRUTH-167: press construction, authored formulations, batch staging, deterministic production, canonical inventory binding, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "pharmaceutical_tablet_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "surgical_graft_selftest",
+      "action": "SurgicalGraftSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--surgical-graft-selftest",
+      "aliases": [
+        "--graft-selftest"
+      ],
+      "description": "PLAN-SURGICAL-WARD-TRUTH-213: graft placement, integration progress, rejection risk, immunosuppressant levels, deterministic daily tick, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "surgical_graft_selftest",
+      "timeout_seconds": 30
+    },
+    {
       "test_id": "radiation_mutation_selftest",
       "action": "RadiationMutationSelfTest",
       "category": "Host Domains & Save Stores",
@@ -2268,6 +2840,267 @@
       "description": "Trophy mount pipeline: catalog, exactly-once quarry awards, unlocked recipes, and save round-trip",
       "headless_compatible": true,
       "expected_summary_id": "trophy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "barter_selftest",
+      "action": "BarterSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--barter-selftest",
+      "aliases": [
+        "--survivor-barter-selftest",
+        "--trade-reputation-selftest"
+      ],
+      "description": "Plan 213: Survivor barter offers, trades, trade reputation, favors, disputes, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "barter_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "perimeter_early_warning_selftest",
+      "action": "PerimeterEarlyWarningSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--perimeter-early-warning-selftest",
+      "aliases": [
+        "--radar-sweep-selftest"
+      ],
+      "description": "Perimeter radar: sensor calibration, contact classification, false alarms, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "perimeter_early_warning_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "skill_atrophy_selftest",
+      "action": "SkillAtrophySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--skill-atrophy-selftest",
+      "aliases": [
+        "--atrophy-selftest"
+      ],
+      "description": "Skill atrophy: practice-hour decay, exactly-once events, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "skill_atrophy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "procedural_eulogy_selftest",
+      "action": "ProceduralEulogySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--procedural-eulogy-selftest",
+      "aliases": [
+        "--eulogy-selftest"
+      ],
+      "description": "Procedural eulogies: dweller life summary composition, archival, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "procedural_eulogy_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "palliative_care_selftest",
+      "action": "PalliativeCareSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--palliative-care-selftest",
+      "aliases": [
+        "--long-goodbye-selftest"
+      ],
+      "description": "Expansion 24: palliative care pain/lucidity/dignity, grief stages, final wishes, memorial echoes, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "palliative_care_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "water_quality_profile_selftest",
+      "action": "WaterQualityProfileSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--water-quality-profile-selftest",
+      "aliases": [
+        "--water-purity-selftest"
+      ],
+      "description": "Water source contaminant profiles, purity-tier derivation, filter wear, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "water_quality_profile_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "weather_forecast_reliability_selftest",
+      "action": "WeatherForecastReliabilitySelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--weather-forecast-reliability-selftest",
+      "aliases": [
+        "--forecast-confidence-selftest"
+      ],
+      "description": "Weather forecast reliability: confidence grades, lead time, dispatch safety, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "weather_forecast_reliability_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "apprenticeship_curriculum_selftest",
+      "action": "ApprenticeshipCurriculumSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--apprenticeship-curriculum-selftest",
+      "aliases": [
+        "--curriculum-selftest"
+      ],
+      "description": "Apprenticeship curriculum: learner literacy, subject progress, teaching sessions, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "apprenticeship_curriculum_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "knock_whitelist_selftest",
+      "action": "KnockWhitelistSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--knock-whitelist-selftest",
+      "aliases": [
+        "--orphan-knock-selftest"
+      ],
+      "description": "PLAN-KNOCK-WHITELIST-TRUTH-155: authored orphan-knock whitelist load, gated validation, and refusal diagnostics",
+      "headless_compatible": true,
+      "expected_summary_id": "knock_whitelist_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "second_generation_milestones_selftest",
+      "action": "SecondGenerationMilestonesSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--second-generation-milestones-selftest",
+      "aliases": [
+        "--lineage-milestone-selftest"
+      ],
+      "description": "PLAN-GENERATIONAL-MILESTONE-TRUTH-160: second-generation milestone evaluation, once-only recording, and capture/restore",
+      "headless_compatible": true,
+      "expected_summary_id": "second_generation_milestones_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "journey_diagnostics_selftest",
+      "action": "JourneyDiagnosticsSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--journey-diagnostics-selftest",
+      "aliases": [
+        "--journey-context-selftest"
+      ],
+      "description": "PLAN-JOURNEY-CONTEXT-TRUTH-156: travel-context route/day/action tracking and standardized failure diagnostics",
+      "headless_compatible": true,
+      "expected_summary_id": "journey_diagnostics_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "cloud_seeding_selftest",
+      "action": "CloudSeedingSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--cloud-seeding-selftest",
+      "aliases": [
+        "--weather-seeding-selftest"
+      ],
+      "description": "PLAN-WEATHER-ATMOSPHERE-28 (cloud-seeding package): install, preflight, deploy, cooldown, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "cloud_seeding_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "chemical_plume_selftest",
+      "action": "ChemicalPlumeSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--chemical-plume-selftest",
+      "aliases": [
+        "--plume-dispersion-selftest"
+      ],
+      "description": "PLAN-CHEMICAL-RECON-TRUTH-183: plume dispersion, shelter air infiltration, respirator protection, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "chemical_plume_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "oilseed_pressing_selftest",
+      "action": "OilseedPressingSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--oilseed-pressing-selftest",
+      "aliases": [
+        "--seed-press-selftest"
+      ],
+      "description": "PLAN-PRESERVATION-TRUTH-118: oilseed press install, yield evaluation, canonical inventory consumption, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "oilseed_pressing_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "verdict_accusation_selftest",
+      "action": "VerdictAccusationSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--verdict-accusation-selftest",
+      "aliases": [
+        "--tribunal-accusation-selftest"
+      ],
+      "description": "PLAN-INVESTIGATION-EVIDENCE-TRUTH-121: typed accusation eligibility, tribunal resolution, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "verdict_accusation_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "loan_shark_selftest",
+      "action": "LoanSharkSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--loan-shark-selftest",
+      "aliases": [
+        "--enforcer-debt-selftest"
+      ],
+      "description": "PLAN-ECONOMY-LEDGER-TRUTH-96: loan issuance, escalation, repayment, trade sanction, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "loan_shark_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "common_table_rationing_selftest",
+      "action": "CommonTableRationingSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--common-table-rationing-selftest",
+      "aliases": [
+        "--nutrition-diversity-selftest"
+      ],
+      "description": "Expansion 26: common-table dietary diversity, deficiency risk, rationing policy, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "common_table_rationing_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "emergency_muster_readiness_selftest",
+      "action": "EmergencyMusterReadinessSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--emergency-muster-readiness-selftest",
+      "aliases": [
+        "--the-alarm-selftest"
+      ],
+      "description": "Expansion 23 The Alarm: muster readiness, drill recency, evacuation timing, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "emergency_muster_readiness_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "soil_reclamation_profile_selftest",
+      "action": "SoilReclamationProfileSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--soil-reclamation-profile-selftest",
+      "aliases": [
+        "--the-deep-root-selftest"
+      ],
+      "description": "Expansion 15 The Deep Root: soil amendment chemistry, fertility evaluation, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "soil_reclamation_profile_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "campaign_action_log_selftest",
+      "action": "CampaignActionLogSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--campaign-action-log-selftest",
+      "aliases": [
+        "--action-log-selftest"
+      ],
+      "description": "Deterministic campaign action log: sequence-stable command records, filtering, and save round-trip",
+      "headless_compatible": true,
+      "expected_summary_id": "campaign_action_log_selftest",
       "timeout_seconds": 30
     },
     {
@@ -2696,6 +3529,20 @@
       "description": "Rail grinding train UI panel construction, reprofiling telemetry, and stone maintenance",
       "headless_compatible": true,
       "expected_summary_id": "rail_grinding_uitest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "chronic_condition_selftest",
+      "action": "ChronicConditionSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--chronic-condition-selftest",
+      "aliases": [
+        "--chronic-conditions-selftest",
+        "--accommodation-selftest"
+      ],
+      "description": "Plan 193 chronic conditions: clinical attribution, capability projection, accommodations, save replay",
+      "headless_compatible": true,
+      "expected_summary_id": "chronic_condition_selftest",
       "timeout_seconds": 30
     }
   ]

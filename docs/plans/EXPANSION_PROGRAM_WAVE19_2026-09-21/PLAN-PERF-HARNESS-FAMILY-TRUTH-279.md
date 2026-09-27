@@ -5,6 +5,11 @@
 **Non-goals:** no performance targets change; the harness is audited for
 measurement truth.
 
+> **Current disposition (2026-09-26):** this generated inventory is historical.
+> `PerfTestMarker.cs` was confirmed to be a zero-reference 10-line marker and
+> removed with user authorization. References below preserve audit provenance;
+> PHF-279E is retired and is not an active source file or implementation task.
+
 ## 1. Outcome
 **9 `Performance/` files** are referenced by no plan: `PerfSession`,
 `PerfStopwatch`, `PerfStatistics`, `PerfResult`, `PerfSample`,
@@ -54,7 +59,7 @@ by no plan body (the Wave 19 family definition). Class distribution: Support 10.
 | `PerfSession.cs` | 165 | Support | 0 | 0 | 0 |
 | `PerfStatistics.cs` | 123 | Support | 0 | 0 | 0 |
 | `PerfStopwatch.cs` | 58 | Support | 0 | 0 | 0 |
-| `PerfTestMarker.cs` | 10 | Support | 0 | 0 | 0 |
+| `PerfTestMarker.cs` | 10 | Retired (2026-09-26) | 0 | 0 | 0 |
 | `PerfWorkloadContext.cs` | 47 | Support | 0 | 0 | 0 |
 | `ScaleTier.cs` | 100 | Support | 0 | 0 | 0 |
 | `WorkloadProfile.cs` | 83 | Support | 0 | 0 | 0 |
@@ -127,7 +132,7 @@ This is a family-survey plan; the domain set is the plan's own `.cs` enumeration
 | `PHF-279B` | `PerfStatistics.cs` |
 | `PHF-279C` | `PerfSession.cs` |
 | `PHF-279D` | `ScaleTier.cs` |
-| `PHF-279E` | `PerfTestMarker.cs` |
+| `PHF-279E` | `PerfTestMarker.cs` (retired 2026-09-26; no active candidate) |
 
 **Reading:** incoming edges are coordination risk; candidate files are a starting point for the touch map, not a decision.
 

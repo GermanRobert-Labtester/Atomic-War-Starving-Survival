@@ -220,6 +220,33 @@ namespace Ashfall.Core.Survivors
             }
         }
 
+        /// <summary>PLAN-GENERATIONAL-MILESTONE-TRUTH-160 — record an evaluated
+        /// second-generation milestone exactly once. Appends to the profile's
+        /// milestone key set and the canonical milestone history; returns false
+        /// when the child is unknown or already holds the milestone.</summary>
+        public bool RecordSecondGenerationMilestone(string childId, string milestoneKey, int day, string description = "")
+        {
+            var child = _state.Profiles.FirstOrDefault(p => string.Equals(p.ChildId, childId, StringComparison.OrdinalIgnoreCase));
+            if (child == null || string.IsNullOrWhiteSpace(milestoneKey)) return false;
+            if (child.Milestones.Any(m => string.Equals(m, milestoneKey, StringComparison.OrdinalIgnoreCase))) return false;
+
+            child.Milestones.Add(milestoneKey);
+            var ev = new DevelopmentMilestoneEvent
+            {
+                EventId = $"dev_{_state.NextSequence++}",
+                ChildId = child.ChildId,
+                NewStage = child.Stage,
+                Day = day,
+                MilestoneName = milestoneKey,
+                Description = string.IsNullOrWhiteSpace(description)
+                    ? $"{child.Name} achieved {milestoneKey}."
+                    : description
+            };
+            _state.MilestoneHistory.Add(ev);
+            OnMilestoneAchieved?.Invoke(ev);
+            return true;
+        }
+
         public bool RecordEducation(string childId, float amount = 5f)
         {
             var child = _state.Profiles.FirstOrDefault(p => string.Equals(p.ChildId, childId, StringComparison.OrdinalIgnoreCase));

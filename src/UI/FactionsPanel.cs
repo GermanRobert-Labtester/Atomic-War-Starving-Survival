@@ -25,6 +25,12 @@ namespace AtomicWar.GodotApp.UI
         public event Action<int>? OnWarlordTributePay;
         /// <summary>Player refused the warlord tribute this week.</summary>
         public event Action? OnWarlordTributeRefuse;
+        /// <summary>Player contested this week's ask (recorded, no currency handed over).</summary>
+        public event Action? OnWarlordTributeContest;
+        /// <summary>Player handed over everything the collector asked for and more.</summary>
+        public event Action? OnWarlordTributeSubmit;
+        /// <summary>Truthful projection of whether this week's ask already has a response.</summary>
+        public Func<string>? WarlordResponseStateProvider { get; set; }
         /// <summary>Player committed allegiance to a specific faction branch.</summary>
         public event Action<string>? OnCommitBranchRequested;
 
@@ -40,9 +46,13 @@ namespace AtomicWar.GodotApp.UI
         private ExpansionHostSession? _expansions;
         private YearOfAshHostSession? _yearOfAsh;
         private Ashfall.Core.Factions.FactionBranchCoordinator? _branchCoordinator;
+        private InformantNetworkHostSession? _informantNetwork;
         private Ashfall.Core.MoralChoice.MoralChoiceSystem? _moralChoice;
 
-        public bool IsBound => _factions != null || _muster != null || _expansions != null || _branchCoordinator != null;
+        public bool IsBound =>
+            _factions != null || _trade != null || _muster != null || _expansions != null ||
+            _yearOfAsh != null || _branchCoordinator != null || _informantNetwork != null ||
+            _moralChoice != null;
 
         /// <summary>True after RefreshView when the Silent Foundry Guild card rendered.</summary>
         public bool HasGuildCard { get; private set; }
@@ -57,8 +67,11 @@ namespace AtomicWar.GodotApp.UI
             ExpansionHostSession? expansions = null,
             YearOfAshHostSession? yearOfAsh = null,
             Ashfall.Core.Factions.FactionBranchCoordinator? branchCoordinator = null,
-            Ashfall.Core.MoralChoice.MoralChoiceSystem? moralChoice = null)
+            Ashfall.Core.MoralChoice.MoralChoiceSystem? moralChoice = null,
+            InformantNetworkHostSession? informantNetwork = null)
         {
+            Unbind(clearPresentation: false);
+            _informantNetwork = informantNetwork;
             _factions = factions;
             _trade = trade;
             _muster = muster;
@@ -73,16 +86,28 @@ namespace AtomicWar.GodotApp.UI
                 _expansions.StateChanged += RefreshView;
             if (_branchCoordinator != null)
                 _branchCoordinator.OnStateChanged += RefreshView;
+            if (_informantNetwork != null)
+                _informantNetwork.StateChanged += RefreshView;
             if (_yearOfAsh?.Warlord != null)
             {
                 _yearOfAsh.Warlord.OnStateChanged += RefreshView;
-                _yearOfAsh.Warlord.OnTributeSettled += (paidFull, day) =>
-                    _collectorNote = _yearOfAsh.CollectorLine(paidFull ? "paid" : "short", day);
-                _yearOfAsh.Warlord.OnTributeDemanded += (_, _, day) =>
-                    _collectorNote = _yearOfAsh.CollectorLine("demand", day);
+                _yearOfAsh.Warlord.OnTributeSettled += HandleWarlordTributeSettled;
+                _yearOfAsh.Warlord.OnTributeDemanded += HandleWarlordTributeDemanded;
             }
 
             RefreshView();
+        }
+
+        private void HandleWarlordTributeSettled(bool paidFull, int day)
+        {
+            if (_yearOfAsh != null)
+                _collectorNote = _yearOfAsh.CollectorLine(paidFull ? "paid" : "short", day);
+        }
+
+        private void HandleWarlordTributeDemanded(int amount, string itemId, int day)
+        {
+            if (_yearOfAsh != null)
+                _collectorNote = _yearOfAsh.CollectorLine("demand", day);
         }
 
         public void RefreshView()
@@ -178,7 +203,8 @@ namespace AtomicWar.GodotApp.UI
 
                 var quoteBox = AshfallUiHelpers.MakeVBox(2);
                 quoteBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-                var quoteLbl = AshfallUiHelpers.MakeSmall(f.SignatureQuote);
+                var quoteLbl = AshfallUiHelpers.MakeSmall(f.SignatureQuote, autowrap: true);
+                quoteLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                 quoteLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
                 quoteBox.AddChild(quoteLbl);
 
@@ -290,18 +316,45 @@ namespace AtomicWar.GodotApp.UI
                 if (!string.IsNullOrEmpty(_collectorNote))
                     wBox.AddChild(AshfallUiHelpers.MakeSmall(_collectorNote, autowrap: true));
 
-                // Payment loop: pay the current ask in full, or refuse it.
+                // Payment loop: pay the current ask in full, refuse it, contest it, or
+                // hand it all over. Once the week has a response the buttons are
+                // disabled — the response surface is idempotent, and the panel says so.
                 if (_yearOfAsh != null)
                 {
+                    bool alreadyResponded = false;
+                    try { alreadyResponded = (WarlordResponseStateProvider?.Invoke() ?? "awaiting response") != "awaiting response"; }
+                    catch { alreadyResponded = false; }
+
                     var payRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                     payRow.AddThemeConstantOverride("h_separation", (int)Ashfall.Core.UI.Theme.SpacingSm);
                     var btnPay = AshfallUiHelpers.MakeButton($"PAY TRIBUTE ({ask}× {wl.tribute_currency_item})", () => OnWarlordTributePay?.Invoke(ask));
                     btnPay.CustomMinimumSize = new Vector2(300, 34);
+                    btnPay.Disabled = alreadyResponded;
                     payRow.AddChild(btnPay);
+                    var btnContest = AshfallUiHelpers.MakeButton("CONTEST", () => OnWarlordTributeContest?.Invoke());
+                    btnContest.CustomMinimumSize = new Vector2(110, 34);
+                    btnContest.Disabled = alreadyResponded;
+                    payRow.AddChild(btnContest);
+                    var btnSubmit = AshfallUiHelpers.MakeButton("SUBMIT ALL", () => OnWarlordTributeSubmit?.Invoke());
+                    btnSubmit.CustomMinimumSize = new Vector2(130, 34);
+                    btnSubmit.Disabled = alreadyResponded;
+                    payRow.AddChild(btnSubmit);
                     var btnRefuse = AshfallUiHelpers.MakeButton("REFUSE THIS WEEK", () => OnWarlordTributeRefuse?.Invoke());
                     btnRefuse.CustomMinimumSize = new Vector2(180, 34);
+                    btnRefuse.Disabled = alreadyResponded;
                     payRow.AddChild(btnRefuse);
                     wBox.AddChild(payRow);
+
+                    if (alreadyResponded)
+                    {
+                        try
+                        {
+                            wBox.AddChild(AshfallUiHelpers.MakeBody(
+                                $"This week's answer is already logged: {WarlordResponseStateProvider?.Invoke() ?? "responded"}. "
+                                + "The collector will be back next week."));
+                        }
+                        catch { /* projection failure must never break the panel */ }
+                    }
                 }
 
                 if (w.State.territory != null)
@@ -356,6 +409,23 @@ namespace AtomicWar.GodotApp.UI
                 }
 
                 branchBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                if (_informantNetwork != null)
+                {
+                    branchBox.AddChild(AshfallUiHelpers.MakeSmall("INFORMANT NETWORK // FIELD TRADECRAFT"));
+                    foreach (var informant in _informantNetwork.System.State.informants)
+                    {
+                        branchBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                            $"{informant.InformantId} ({informant.Archetype})",
+                            informant.IsCompromised
+                                ? $"BURNED · suspicion {informant.SuspicionPermille}/1000"
+                                : $"loyalty {informant.LoyaltyPermille}/1000 · suspicion {informant.SuspicionPermille}/1000 · yield {informant.IntelligenceYieldPermille}/1000",
+                            AshfallUiHelpers.ToColor(informant.IsCompromised
+                                ? Ashfall.Core.UI.Theme.Critical
+                                : (informant.SuspicionPermille >= 500 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale))));
+                    }
+                    branchBox.AddChild(AshfallUiHelpers.MakeSmall(_informantNetwork.Readout()));
+                    branchBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                }
                 branchBox.AddChild(AshfallUiHelpers.MakeSmall("BRANCH PATH AVAILABILITY & CONSEQUENCES:"));
 
                 var options = _branchCoordinator.GetBranchOptions(_moralChoice);
@@ -429,9 +499,7 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.95f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+            AddChild(AshfallUiHelpers.MakeBackdropOverlay());
 
             var scroll = new ScrollContainer();
             scroll.SetAnchorsPreset(LayoutPreset.FullRect);
@@ -515,21 +583,55 @@ namespace AtomicWar.GodotApp.UI
                 GetViewport().SetInputAsHandled();
             }
         }
+        public void Unbind() => Unbind(clearPresentation: true);
 
-
-    public void Unbind()
-    {
-        if (_muster != null)
+        private void Unbind(bool clearPresentation)
+        {
+            if (_muster != null)
                 _muster.StateChanged -= RefreshView;
             if (_expansions != null)
                 _expansions.StateChanged -= RefreshView;
+            if (_branchCoordinator != null)
+                _branchCoordinator.OnStateChanged -= RefreshView;
+            if (_informantNetwork != null)
+                _informantNetwork.StateChanged -= RefreshView;
             if (_yearOfAsh?.Warlord != null)
+            {
                 _yearOfAsh.Warlord.OnStateChanged -= RefreshView;
-    }
+                _yearOfAsh.Warlord.OnTributeSettled -= HandleWarlordTributeSettled;
+                _yearOfAsh.Warlord.OnTributeDemanded -= HandleWarlordTributeDemanded;
+            }
 
-    public override void _ExitTree()
+            _factions = null;
+            _trade = null;
+            _muster = null;
+            _expansions = null;
+            _yearOfAsh = null;
+            _branchCoordinator = null;
+            _informantNetwork = null;
+            _moralChoice = null;
+            _collectorNote = string.Empty;
+            HasGuildCard = false;
+
+            if (clearPresentation)
+            {
+                AshfallUiHelpers.EmptyChildren(_overviewContainer);
+                AshfallUiHelpers.EmptyChildren(_factionsContainer);
+                AshfallUiHelpers.EmptyChildren(_relationsContainer);
+                AshfallUiHelpers.EmptyChildren(_eventsContainer);
+            }
+        }
+
+        public override void _Notification(int what)
         {
-            Unbind();
+            if (what == NotificationPredelete)
+                Unbind(clearPresentation: false);
+            base._Notification(what);
+        }
+
+        public override void _ExitTree()
+        {
+            Unbind(clearPresentation: true);
             base._ExitTree();
         }
     }

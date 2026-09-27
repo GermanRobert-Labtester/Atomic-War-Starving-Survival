@@ -26,9 +26,10 @@
 
     <!--
       Shared Warning Policy:
-      CS0108/CS0114  — NOT suppressed: resolved member hiding across all host sessions
-      CS0067         — NOT suppressed: all public events verified invoked (lambda closures count)
-      CS8602/CS8603  — NOT suppressed: real null-dereference detection active
+      CS0108/CS0114  — not in this shared list; added by the host/Core project overrides
+      CS0067         — not in this shared list; added by the host/Core project overrides
+      CS8602         — remains enabled for host/Core; the test project suppresses it locally
+      CS8603         — suppressed by this shared list (legacy null-return diagnostics)
       CS8605/CS8629  — NOT suppressed: real unboxing/.Value crash detection active
       CS0414         — serializer-assigned fields flagged as unused
       CS8600/CS8601  — JSON-populated DTO null conversions (known safe)

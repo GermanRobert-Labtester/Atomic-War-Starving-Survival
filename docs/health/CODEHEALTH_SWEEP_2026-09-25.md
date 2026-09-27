@@ -189,15 +189,18 @@ plus non-`.cs`/docs/scripts scan):
   `IWeatherSeverityProvider` (own file!), `WaterRequestContracts`,
   `EducationLevel`, `DebtRouteAccessResolver`, `RouteAvailabilityPresentation`,
   `WeatherGateResult`, `HoldfastQuests` (file is 1184 lines), `IBriefingFactCollector`,
-  `PerfTestMarker`, `ICampaignSaveSection`, `PortContractDefinition`, `IPortValidator`,
+  `ICampaignSaveSection`, `PortContractDefinition`, `IPortValidator`,
   `CurrentsPamphletCatalog`, `WireConfessionCatalog`, `NarrativeDiscoveryManifestFile`,
   `EquippedGearData`.
 - **Fully dead files pending custody decision** (every declared type is
   zero-reference repo-wide): `WaterRequest.cs`, `World/DebtRouteAccessResolver.cs`,
-  `World/RouteAvailabilityPresentation.cs`, `World/WeatherGateResult.cs`,
-  `Performance/PerfTestMarker.cs` — all four docs-cited (authority maps / plan
-  scaffolds), so retirement needs a foreman/foredoc call. (`IsExternalInit.cs`
-  is the polyfill exception: keep.)
+  `World/RouteAvailabilityPresentation.cs`, `World/WeatherGateResult.cs`.
+  These four files remain docs-cited and need a foreman/foredoc disposition.
+  (`IsExternalInit.cs` is the polyfill exception: keep.)
+- **Resolved marker retirement (2026-09-26):** `Assets/Ashfall.Core/Performance/PerfTestMarker.cs`
+  was a zero-reference 10-line marker and has been removed with user
+  authorization. Historical plan inventories that still list it are not live
+  source or cleanup candidates.
 - **Collateral from this sweep's deletions (freshly orphaned):**
   `VerticalAscentCatalogDto`, `AcousticDirectionFindingCatalogDto`,
   `CupolaFoundryCatalogDto` — see GAP-01/02/03.

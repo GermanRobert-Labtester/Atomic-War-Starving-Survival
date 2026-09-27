@@ -73,6 +73,7 @@ namespace AtomicWar.Journal
             Func<int, bool>? unreadProvider = null,
             Func<int>? dayProvider = null)
         {
+            Unbind();
             _journal = journal;
             _codexProvider = codexProvider;
             _unreadProvider = unreadProvider;
@@ -89,6 +90,21 @@ namespace AtomicWar.Journal
             Refresh();
         }
 
+        public void Unbind()
+        {
+            if (_journal != null)
+            {
+                _journal.OnEntryAdded -= HandleEntryAdded;
+                _journal.OnTabChanged -= HandleSystemTabChanged;
+                _journal.OnCodexUnlocked -= HandleCodexUnlocked;
+            }
+            _journal = null;
+            _codexProvider = null;
+            _unreadProvider = null;
+            _dayProvider = null;
+            _codexFocusId = null;
+        }
+
         public override void _Ready()
         {
             BuildVisualTree();
@@ -97,12 +113,15 @@ namespace AtomicWar.Journal
 
         public override void _ExitTree()
         {
-            if (_journal != null)
-            {
-                _journal.OnEntryAdded -= HandleEntryAdded;
-                _journal.OnTabChanged -= HandleSystemTabChanged;
-                _journal.OnCodexUnlocked -= HandleCodexUnlocked;
-            }
+            Unbind();
+            base._ExitTree();
+        }
+
+        public override void _Notification(int what)
+        {
+            if (what == NotificationPredelete)
+                Unbind();
+            base._Notification(what);
         }
 
         private void HandleEntryAdded(JournalEntry entry) => Push(entry);
@@ -153,7 +172,7 @@ namespace AtomicWar.Journal
                 BorderColor = new Color(Ashfall.Core.UI.Theme.Line.r, Ashfall.Core.UI.Theme.Line.g, Ashfall.Core.UI.Theme.Line.b, 0.85f)
             };
             bg.SetBorderWidthAll(2);
-            bg.SetCornerRadiusAll(3);
+            bg.SetCornerRadiusAll(Ashfall.Core.UI.Theme.RadiusSm);
             bg.ContentMarginLeft = 22;
             bg.ContentMarginRight = 22;
             bg.ContentMarginTop = 16;
