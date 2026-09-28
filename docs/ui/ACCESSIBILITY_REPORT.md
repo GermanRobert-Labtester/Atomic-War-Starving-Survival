@@ -1,5 +1,10 @@
 # ASHFALL UI accessibility and usability audit — 2026-09-05
 
+> **SUPERSEDED (2026-09-29):** the current audit is
+> [ACCESSIBILITY_REPORT_2026-09-29.md](ACCESSIBILITY_REPORT_2026-09-29.md).
+> The Dim-contrast, overlay-detection, and grid-keyboard findings below were
+> fixed since this report; retained for history and the token-drift table.
+
 Read-only companion to [UI panels forensic report](../forensics/UI_PANELS_UX_FORENSIC_REPORT.md) and [178-panel/141-route inventory](../forensics/UI_PANELS_UX_INVENTORY.md). Scope: shared theme/components, navigation/lifecycle, high-density screens and representative stored renders. This is not a full assistive-technology or fresh visual certification.
 
 ## Ranked findings
