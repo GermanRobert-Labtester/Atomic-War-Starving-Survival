@@ -778,7 +778,7 @@ namespace AtomicWar.GodotApp
                 if (_deconAirlockPanel != null)
                 {
                     if (!_deconAirlockBound && _decontamination != null) { _deconAirlockPanel.Bind(_decontamination); _deconAirlockBound = true; }
-                    _deconAirlockPanel.Visible = true;
+                    ShowPanelLifecycle(_deconAirlockPanel);
                 }
                 return;
             }
@@ -812,7 +812,7 @@ namespace AtomicWar.GodotApp
                 if (_geodeticSurveyPanel != null)
                 {
                     if (!_geodeticSurveyBound && _geodeticSurvey != null) { _geodeticSurveyPanel.Bind(_geodeticSurvey); _geodeticSurveyBound = true; }
-                    _geodeticSurveyPanel.Visible = true;
+                    ShowPanelLifecycle(_geodeticSurveyPanel);
                 }
                 return;
             }
@@ -859,7 +859,7 @@ namespace AtomicWar.GodotApp
                 if (_kineticStoragePanel != null)
                 {
                     if (!_kineticStorageBound && _kineticStorage != null) { _kineticStoragePanel.Bind(_kineticStorage); _kineticStorageBound = true; }
-                    _kineticStoragePanel.Visible = true;
+                    ShowPanelLifecycle(_kineticStoragePanel);
                 }
                 return;
             }
@@ -894,7 +894,7 @@ namespace AtomicWar.GodotApp
                 if (_chemicalReconPanel != null)
                 {
                     if (!_chemicalReconBound && _chemicalRecon != null) { _chemicalReconPanel.Bind(_chemicalRecon); _chemicalReconBound = true; }
-                    _chemicalReconPanel.Visible = true;
+                    ShowPanelLifecycle(_chemicalReconPanel);
                 }
                 return;
             }
@@ -933,7 +933,7 @@ namespace AtomicWar.GodotApp
         private void HandleGeothermalAction(string action, string param = "")
         {
             if (string.IsNullOrWhiteSpace(action)) return;
-            if (action == "OPEN") { if (_geothermalAquiferPanel != null) _geothermalAquiferPanel.Visible = true; return; }
+            if (action == "OPEN") { if (_geothermalAquiferPanel != null) ShowPanelLifecycle(_geothermalAquiferPanel); return; }
             if (action == "CLOSE") { if (_geothermalAquiferPanel != null) _geothermalAquiferPanel.Visible = false; return; }
             if (_geothermalAquiferPanel == null || _geothermalAquifer == null) return;
             switch(action)

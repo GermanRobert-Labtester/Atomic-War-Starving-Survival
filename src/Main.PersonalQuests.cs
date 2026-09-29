@@ -81,7 +81,7 @@ namespace AtomicWar.GodotApp
             SetupPersonalQuestPanel();
             if (_personalQuestPanel != null)
             {
-                _personalQuestPanel.Visible = true;
+                ShowPanelLifecycle(_personalQuestPanel);
                 _personalQuestPanel.RefreshView();
             }
         }

@@ -71,7 +71,7 @@ namespace AtomicWar.GodotApp
                     _statusLabel.Text = "Shelter Operations is unavailable. Check construction and outpost catalogs.";
                 return;
             }
-            _shelterOperationsPanel.Visible = true;
+            ShowPanelLifecycle(_shelterOperationsPanel);
             _shelterOperationsPanel.RefreshView();
         }
 

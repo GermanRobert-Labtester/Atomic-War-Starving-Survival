@@ -105,7 +105,7 @@ namespace AtomicWar.GodotApp
         public void ShowRelationshipDecayPanel()
         {
             SetupRelationshipDecayPanel();
-            _relationshipDecayPanel.Visible = true;
+            ShowPanelLifecycle(_relationshipDecayPanel);
             _relationshipDecayPanel.RefreshView();
         }
     }

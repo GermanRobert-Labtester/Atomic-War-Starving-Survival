@@ -97,7 +97,7 @@ namespace AtomicWar.GodotApp
             {
                 if (_ebPvdCoatingPanel != null)
                 {
-                    _ebPvdCoatingPanel.Visible = true;
+                    ShowPanelLifecycle(_ebPvdCoatingPanel);
                     _ebPvdCoatingPanel.RefreshView();
                 }
                 return;

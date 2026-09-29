@@ -53,7 +53,7 @@ namespace AtomicWar.GodotApp
             EnsureDynamicQuestlinePanel();
             if (_dynamicQuestlinePanel != null)
             {
-                _dynamicQuestlinePanel.Visible = true;
+                ShowPanelLifecycle(_dynamicQuestlinePanel);
                 _dynamicQuestlinePanel.RefreshView();
             }
         }

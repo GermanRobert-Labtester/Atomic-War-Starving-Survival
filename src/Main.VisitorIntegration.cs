@@ -171,7 +171,7 @@ namespace AtomicWar.GodotApp
         public void ShowVisitorIntegrationPanel()
         {
             SetupVisitorIntegrationPanel();
-            _visitorIntegrationPanel.Visible = true;
+            ShowPanelLifecycle(_visitorIntegrationPanel);
             _visitorIntegrationPanel.RefreshView();
         }
 

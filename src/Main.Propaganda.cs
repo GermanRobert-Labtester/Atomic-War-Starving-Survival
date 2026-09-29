@@ -84,7 +84,7 @@ namespace AtomicWar.GodotApp
         public void ShowPropagandaPanel()
         {
             SetupPropagandaPanel();
-            _propagandaPanel.Visible = true;
+            ShowPanelLifecycle(_propagandaPanel);
             _propagandaPanel.RefreshView();
         }
     }

@@ -55,7 +55,7 @@ namespace AtomicWar.GodotApp
             EnsureSkyDefensePanel();
             if (_skyDefensePanel != null)
             {
-                _skyDefensePanel.Visible = true;
+                ShowPanelLifecycle(_skyDefensePanel);
                 _skyDefensePanel.RefreshView();
             }
         }

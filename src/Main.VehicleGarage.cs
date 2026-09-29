@@ -54,7 +54,7 @@ namespace AtomicWar.GodotApp
             EnsureVehicleGaragePanel();
             if (_vehicleGaragePanel != null)
             {
-                _vehicleGaragePanel.Visible = true;
+                ShowPanelLifecycle(_vehicleGaragePanel);
                 _vehicleGaragePanel.RefreshView();
             }
         }

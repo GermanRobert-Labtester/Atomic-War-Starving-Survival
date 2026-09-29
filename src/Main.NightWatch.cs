@@ -192,7 +192,7 @@ namespace AtomicWar.GodotApp
         {
             SetupNightWatchPanel();
             if (_nightWatchPanel == null) return;
-            _nightWatchPanel.Visible = true;
+            ShowPanelLifecycle(_nightWatchPanel);
             _nightWatchPanel.RefreshView();
         }
 

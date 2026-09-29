@@ -57,7 +57,7 @@ namespace AtomicWar.GodotApp
         {
             SetupAmphibiousDraisine();
             EnsurePlans122to125Panels();
-            if (_amphibiousPanel != null) { _amphibiousPanel.Visible = true; _amphibiousPanel.RefreshView(); }
+            if (_amphibiousPanel != null) { ShowPanelLifecycle(_amphibiousPanel); _amphibiousPanel.RefreshView(); }
         }
 
 

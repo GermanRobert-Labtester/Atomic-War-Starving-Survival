@@ -78,7 +78,7 @@ namespace AtomicWar.GodotApp
         public void ShowRumorNetworkPanel()
         {
             SetupRumorBoardPanel();
-            _rumorBoardPanel.Visible = true;
+            ShowPanelLifecycle(_rumorBoardPanel);
             _rumorBoardPanel.RefreshView();
         }
     }

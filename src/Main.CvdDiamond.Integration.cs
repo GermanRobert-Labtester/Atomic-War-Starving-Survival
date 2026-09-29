@@ -58,7 +58,7 @@ namespace AtomicWar.GodotApp
         {
             SetupCvdDiamond();
             EnsurePlans122to125Panels();
-            if (_cvdPanel != null) { _cvdPanel.Visible = true; _cvdPanel.RefreshView(); }
+            if (_cvdPanel != null) { ShowPanelLifecycle(_cvdPanel); _cvdPanel.RefreshView(); }
         }
 
     }

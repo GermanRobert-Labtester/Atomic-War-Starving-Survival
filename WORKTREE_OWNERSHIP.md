@@ -1,5 +1,31 @@
 # ASHFALL Worktree Ownership
 
+## claim-ui-lifecycle-bypass-2026-09-29
+
+User-authorized implementation ("Continue with a larger batch of doing more UI
+correction and UI precision work!", 2026-09-29) — twelfth package in the
+a11y-audit fix series: all 36 bare `<panel>.Visible = true` opens across 29
+`src/Main.*.cs` partials routed through `ShowPanelLifecycle` (defaults walk +
+AnimateOpen + EnsureInitialFocus), plus a LineEdit 28px floor in
+`AshfallUiTheme.EnforceControlDefaults`. **Plan:**
+`.ai/plans/ui-lifecycle-bypass-2026-09-29.md` (STATUS: APPROVED BY USER).
+**Exact paths:** the 29 Main.* partials touched (see commit pathspec),
+`src/UI/AshfallUiTheme.cs`, `Ashfall.Core.Tests/UI/UiLifecycleBypassGateTests.cs`
+(new). Excluded receivers: `_mainMenu`, `_dashboard`, `_gameOver`,
+`_gameUiContainer`, `_hudOverlay`, `_feedbackPanel`, `_confirmationModal`,
+crisis HUD. Shared paths intentionally untouched.
+
+## claim-chatgpt-item-art-tranche-44-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{cassette_station_14_5,cassette_dam_keeper_log_4,item_greenhouse_trowel,item_greenhouse_hand_cultivator,item_greenhouse_compost,item_greenhouse_ash_fertilizer,item_greenhouse_fish_emulsion,item_greenhouse_insecticidal_soap,item_greenhouse_sticky_traps,item_greenhouse_pest_mesh,item_greenhouse_line_filter,item_greenhouse_catchment_kit,item_greenhouse_glass_pane,item_greenhouse_uv_sheeting,item_greenhouse_shade_cloth}.jpg`
+files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
+sources under `docs/visual/sources/tranche44/`, plus
+`.ai/plans/ashfall-chatgpt-item-art-tranche-44-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: IN PROGRESS, no commit.
+
 ## claim-ui-theme-coverage-2026-09-29
 
 User-authorized implementation ("Continue with a larger batch of doing more UI
@@ -20,10 +46,10 @@ User-authorized fifteen-item visual continuation. Root owns exact new
 `assets/art/{cassette_field_hospital_7_5,cassette_evacuation_train_4,cassette_station_14_6,cassette_fathers_tapes_3,cassette_fathers_tapes_4,cassette_dam_keeper_log_3,cassette_dam_keeper_log_5,cassette_teachers_recordings_3,cassette_quarantine_tapes_4,cassette_checkpoint_kilo_3,cassette_checkpoint_kilo_4,cassette_saint_maren_3,cassette_family_bunker_3,cassette_free_radio_3,cassette_free_radio_4}.jpg`
 files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
 sources under `docs/visual/sources/tranche43/`, plus
-`.ai/plans/ashfall-chatgpt-item-art-tranche-43-2026-09-29.md`, additive
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-43-2026-09-29.md`, additive
 entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
 `.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
-Status: ACTIVE.
+Status: COMPLETE, no commit.
 
 ## claim-chatgpt-item-art-tranche-42-2026-09-29
 

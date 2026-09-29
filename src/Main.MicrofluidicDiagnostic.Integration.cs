@@ -144,7 +144,7 @@ namespace AtomicWar.GodotApp
                 if (_microfluidicDiagnosticPanel != null)
                 {
                     SyncMicrofluidicPatientCandidates();
-                    _microfluidicDiagnosticPanel.Visible = true;
+                    ShowPanelLifecycle(_microfluidicDiagnosticPanel);
                     _microfluidicDiagnosticPanel.RefreshView();
                 }
                 return;

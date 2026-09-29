@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5562 | **Total Characters:** 6,973,906,648 | **Last Verified:** 2026-09-29
-**Oversized (>= 100,000 characters):** 3544 documents carrying 6,943,664,667 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5562 | **Total Characters:** 6,973,932,679 | **Last Verified:** 2026-09-29
+**Oversized (>= 100,000 characters):** 3544 documents carrying 6,943,669,066 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3544 documents, 6,943,664,667 characters
+## Oversized Document Register (>= 100,000 characters) — 3544 documents, 6,943,669,066 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1530,10 +1530,10 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,445,845 | [`docs/expansions/prose_wave135/cw135_20_initials_too_worn_to_read_plan.md`](expansions/prose_wave135/cw135_20_initials_too_worn_to_read_plan.md) |
 | 1,436,412 | [`docs/expansions/prose_wave129/cw129_14_the_meter_and_the_sermon_plan.md`](expansions/prose_wave129/cw129_14_the_meter_and_the_sermon_plan.md) |
 | 1,435,680 | [`docs/expansions/prose_wave129/cw129_11_a_clean_trade_on_paper_plan.md`](expansions/prose_wave129/cw129_11_a_clean_trade_on_paper_plan.md) |
+| 1,435,081 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,435,000 | [`docs/expansions/prose_wave129/cw129_01_a_star_against_the_line_plan.md`](expansions/prose_wave129/cw129_01_a_star_against_the_line_plan.md) |
 | 1,434,462 | [`docs/expansions/prose_wave138/cw138_05_children_count_the_marks_plan.md`](expansions/prose_wave138/cw138_05_children_count_the_marks_plan.md) |
 | 1,433,317 | [`docs/expansions/prose_wave138/cw138_15_the_river_is_the_name_on_the_form_plan.md`](expansions/prose_wave138/cw138_15_the_river_is_the_name_on_the_form_plan.md) |
-| 1,433,215 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,432,357 | [`docs/expansions/prose_wave129/cw129_15_hold_pending_review_plan.md`](expansions/prose_wave129/cw129_15_hold_pending_review_plan.md) |
 | 1,430,638 | [`docs/expansions/prose_wave138/cw138_16_half_the_food_and_the_drawing_of_a_house_plan.md`](expansions/prose_wave138/cw138_16_half_the_food_and_the_drawing_of_a_house_plan.md) |
 | 1,427,079 | [`docs/expansions/prose_wave138/cw138_14_the_pharmacy_shelf_is_already_empty_plan.md`](expansions/prose_wave138/cw138_14_the_pharmacy_shelf_is_already_empty_plan.md) |
@@ -3141,6 +3141,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 264,379 | [`piagentsplans/79-autopsy-procedures-expansion.md`](../piagentsplans/79-autopsy-procedures-expansion.md) |
 | 264,364 | [`piagentsplans/18-expansion-deepening.md`](../piagentsplans/18-expansion-deepening.md) |
 | 264,343 | [`docs/plans/integrated/content/INTEGRATED_cw31_03_two_empty_shapes_on_the_cloth_plan.md`](plans/integrated/content/INTEGRATED_cw31_03_two_empty_shapes_on_the_cloth_plan.md) |
+| 264,260 | [`docs/expansions/expansion_02_the_duty_roster_creative_pack.md`](expansions/expansion_02_the_duty_roster_creative_pack.md) |
 | 264,067 | [`docs/plans/wave3_integration/W3-04_COMBAT_DEFENSE_SECURITY.md`](plans/wave3_integration/W3-04_COMBAT_DEFENSE_SECURITY.md) |
 | 264,041 | [`docs/ui/EXPERT_WORKFLOW_AUDIT.md`](ui/EXPERT_WORKFLOW_AUDIT.md) |
 | 263,843 | [`docs/progression/SKILL_SYSTEM_HOOK_MATRIX.md`](progression/SKILL_SYSTEM_HOOK_MATRIX.md) |
@@ -3148,7 +3149,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 263,669 | [`docs/ecology/ECOLOGY_REGRESSION_MATRIX.md`](ecology/ECOLOGY_REGRESSION_MATRIX.md) |
 | 263,521 | [`piagentsplans/55-crafting-recipe-expansion.md`](../piagentsplans/55-crafting-recipe-expansion.md) |
 | 263,402 | [`docs/plans/integrated/content/INTEGRATED_expansion_157_the_key_behind_the_diploma_plan.md`](plans/integrated/content/INTEGRATED_expansion_157_the_key_behind_the_diploma_plan.md) |
-| 263,387 | [`docs/expansions/expansion_02_the_duty_roster_creative_pack.md`](expansions/expansion_02_the_duty_roster_creative_pack.md) |
 | 263,007 | [`docs/plans/integrated/content/INTEGRATED_cw31_02_clean_wire_through_the_hatch_plan.md`](plans/integrated/content/INTEGRATED_cw31_02_clean_wire_through_the_hatch_plan.md) |
 | 262,968 | [`docs/radio/SIGNAL_INTELLIGENCE_HANDOFF.md`](radio/SIGNAL_INTELLIGENCE_HANDOFF.md) |
 | 262,950 | [`docs/plans/integrated/content/integrated_expansion_156_the_curtain_and_the_ledger_plan.md`](plans/integrated/content/integrated_expansion_156_the_curtain_and_the_ledger_plan.md) |
@@ -3472,9 +3472,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 133,050 | [`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-DATA-AUTHORITY-14_APPENDIX-A_CATALOG_CLASSIFICATION.md`](plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-DATA-AUTHORITY-14_APPENDIX-A_CATALOG_CLASSIFICATION.md) |
 | 132,947 | [`docs/expansions/wave17/expansion_82_the_far_hearth_plan.md`](expansions/wave17/expansion_82_the_far_hearth_plan.md) |
 | 132,935 | [`docs/expansions/wave17/expansion_85_hands_at_the_workbench_plan.md`](expansions/wave17/expansion_85_hands_at_the_workbench_plan.md) |
+| 132,884 | [`docs/expansions/expansion_the_holdfast_creative_pack.md`](expansions/expansion_the_holdfast_creative_pack.md) |
 | 132,532 | [`docs/plans/integrated/content/integrated_expansion_137_no_name_beside_turned_back_plan.md`](plans/integrated/content/integrated_expansion_137_no_name_beside_turned_back_plan.md) |
 | 132,411 | [`Next-steps-plans/Plan_173_Radio_Station_Content_Creation.md`](../Next-steps-plans/Plan_173_Radio_Station_Content_Creation.md) |
-| 132,078 | [`docs/expansions/expansion_the_holdfast_creative_pack.md`](expansions/expansion_the_holdfast_creative_pack.md) |
 | 131,945 | [`docs/expansions/wave17/expansion_86_the_first_winter_changes_plan.md`](expansions/wave17/expansion_86_the_first_winter_changes_plan.md) |
 | 131,758 | [`docs/expansions/wave17/expansion_84_a_calendar_of_people_plan.md`](expansions/wave17/expansion_84_a_calendar_of_people_plan.md) |
 | 131,566 | [`docs/expansions/wave17/expansion_83_the_long_alarm_plan.md`](expansions/wave17/expansion_83_the_long_alarm_plan.md) |
@@ -3537,11 +3537,11 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 109,328 | [`docs/plans/integrated/memorials/INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md`](plans/integrated/memorials/INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md) |
 | 108,799 | [`docs/plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md) |
 | 108,261 | [`docs/plans/UNBLOCK_OLDEST_BATCH12_PLANS_150_152_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH12_PLANS_150_152_INTEGRATION_PLAN.md) |
+| 108,101 | [`docs/expansions/expansion_03_the_standing_record_creative_pack.md`](expansions/expansion_03_the_standing_record_creative_pack.md) |
 | 107,861 | [`docs/plans/integrated/expeditions/INTEGRATED_PLAN_EXPEDITION-FAMILY-TRUTH-269.md`](plans/integrated/expeditions/INTEGRATED_PLAN_EXPEDITION-FAMILY-TRUTH-269.md) |
 | 107,432 | [`docs/plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md) |
 | 107,417 | [`docs/plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md`](plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md) |
 | 107,253 | [`docs/plans/UNBLOCK_C3_PLANS_174_175_INTEGRATION_PLAN.md`](plans/UNBLOCK_C3_PLANS_174_175_INTEGRATION_PLAN.md) |
-| 107,247 | [`docs/expansions/expansion_03_the_standing_record_creative_pack.md`](expansions/expansion_03_the_standing_record_creative_pack.md) |
 | 106,633 | [`docs/plans/UNBLOCK_OLDEST_PLAN165_166_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN165_166_INTEGRATION_PLAN.md) |
 | 106,177 | [`docs/plans/UNBLOCK_OLDEST_BATCH11_PLANS_147_148_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH11_PLANS_147_148_INTEGRATION_PLAN.md) |
 | 105,975 | [`docs/plans/PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md`](plans/PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md) |
@@ -3921,48 +3921,48 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/expansions/archive/wave24_prose_renumbered/expansion_124_keep_this_one_mira_plan.md`](expansions/archive/wave24_prose_renumbered/expansion_124_keep_this_one_mira_plan.md) | 4,500,495 | **EXPANSION 124 — Keep This One, Mira** — **Content type:** prose-first location content plan with scene, record, conversation, and conditional revisit drafts. |
 | 🟢 `CURRENT` | [`docs/expansions/archive/wave24_prose_renumbered/expansion_125_the_sky_kept_its_peace_plan.md`](expansions/archive/wave24_prose_renumbered/expansion_125_the_sky_kept_its_peace_plan.md) | 4,542,476 | **EXPANSION 125 — The Sky Kept Its Peace** — **Content type:** prose-first location content plan with scene, record, conversation, and conditional revisit drafts. |
 | 🟢 `CURRENT` | [`docs/expansions/archive/wave24_prose_renumbered/expansion_126_open_to_all_who_need_to_remember_plan.md`](expansions/archive/wave24_prose_renumbered/expansion_126_open_to_all_who_need_to_remember_plan.md) | 4,581,126 | **EXPANSION 126 — Open to All Who Need to Remember** — **Content type:** prose-first location content plan with scene, record, conversation, and conditional revisit drafts. |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_02_the_duty_roster_creative_pack.md`](expansions/expansion_02_the_duty_roster_creative_pack.md) | 263,387 | **ASHFALL: THE DUTY ROSTER — Creative Pack** — **Internal id:** `expansion_the_duty_roster` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_02_the_duty_roster_creative_pack.md`](expansions/expansion_02_the_duty_roster_creative_pack.md) | 264,260 | **ASHFALL: THE DUTY ROSTER — Creative Pack** — **Internal id:** `expansion_the_duty_roster` |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_02_the_duty_roster_plan.md`](expansions/expansion_02_the_duty_roster_plan.md) | 4,028,713 | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE DUTY ROSTER |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_03_nobodys_charter_INTEGRATION_PIPELINE.md`](expansions/expansion_03_nobodys_charter_INTEGRATION_PIPELINE.md) | 282,526 | **ASHFALL: NOBODY'S CHARTER — Integration & Architectural Pipeline** — Nobody's Charter is integrated exactly like the two sister packs, because it must read their flags (Appendix A of the... |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_03_nobodys_charter_plan.md`](expansions/expansion_03_nobodys_charter_plan.md) | 3,986,114 | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: NOBODY'S CHARTER |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_03_the_standing_record_creative_pack.md`](expansions/expansion_03_the_standing_record_creative_pack.md) | 107,247 | **ASHFALL: THE STANDING RECORD — Creative Pack** — **Internal id:** `expansion_the_standing_record` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_03_the_standing_record_creative_pack.md`](expansions/expansion_03_the_standing_record_creative_pack.md) | 108,101 | **ASHFALL: THE STANDING RECORD — Creative Pack** — **Internal id:** `expansion_the_standing_record` |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_03_the_standing_record_plan.md`](expansions/expansion_03_the_standing_record_plan.md) | 3,988,741 | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE STANDING RECORD |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_04_nobodys_charter_plan.md`](expansions/expansion_04_nobodys_charter_plan.md) | 3,971,754 | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: NOBODY'S CHARTER |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_05_the_year_of_ash_creative_pack.md`](expansions/expansion_05_the_year_of_ash_creative_pack.md) | 31,591 | **ASHFALL: THE YEAR OF ASH (DAYS 180–360) — Grand Lore Bible & Master Creative Pack** — **Internal id:** `expansion_05_the_year_of_ash` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_05_the_year_of_ash_creative_pack.md`](expansions/expansion_05_the_year_of_ash_creative_pack.md) | 32,401 | **ASHFALL: THE YEAR OF ASH (DAYS 180–360) — Grand Lore Bible & Master Creative Pack** — **Internal id:** `expansion_05_the_year_of_ash` |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_05_the_year_of_ash_plan.md`](expansions/expansion_05_the_year_of_ash_plan.md) | 3,916,302 | **ASHFALL — Master Expansion Design Bible & 10-Faction Strategic Integration Plan** — **Title:** ASHFALL: THE YEAR OF ASH (THE LONG WINTER & THE FINAL RECKONING) |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_06_the_muster_plan.md`](expansions/expansion_06_the_muster_plan.md) | 10,711,133 | **ASHFALL — Expansion Design Bible & Godot-Native Integration Plan** — **Title:** ASHFALL: THE MUSTER (THE FIFTEENTH CURRENT & THE VERGE RISING) |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_07_the_dose_IMPLEMENTATION.md`](expansions/expansion_07_the_dose_IMPLEMENTATION.md) | 274,480 | **ASHFALL: THE DOSE — Implementation Approach & Player Experience** — **Companion to `docs/expansions/expansion_07_the_dose_plan.md`.** This document is the build |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_07_the_dose_plan.md`](expansions/expansion_07_the_dose_plan.md) | 4,061,297 | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE DOSE |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_08_the_verdict_creative_pack.md`](expansions/expansion_08_the_verdict_creative_pack.md) | 36,284 | **ASHFALL: THE VERDICT — MASTER CREATIVE PACK** — **Internal id:** `expansion_08_the_verdict` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_08_the_verdict_creative_pack.md`](expansions/expansion_08_the_verdict_creative_pack.md) | 37,157 | **ASHFALL: THE VERDICT — MASTER CREATIVE PACK** — **Internal id:** `expansion_08_the_verdict` |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_08_the_verdict_plan.md`](expansions/expansion_08_the_verdict_plan.md) | 4,005,704 | **ASHFALL — Expansion Design Bible & Creative Pipeline Spec** — **Title:** ASHFALL: THE VERDICT (THE MACHINE THAT KEEPS THE COUNT) |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_08_verdict_INTEGRATION_MATRIX.md`](expansions/expansion_08_verdict_INTEGRATION_MATRIX.md) | 4,962 | **ASHFALL — Expansion 08 (The Verdict) Integration Matrix** — **Audit date:** Exchange + (this pass). **Architecture source:** live `Ashfall.Core` + `src/` reads. |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_09_the_black_flotilla_plan.md`](expansions/expansion_09_the_black_flotilla_plan.md) | 4,149,753 | **ASHFALL — Expansion 09: The Black Flotilla** — **Expansion 09** is the maritime expansion: coastal wreck salvage, 4-room stealth dive |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_10_the_silent_foundry_PHASE0.md`](expansions/expansion_10_the_silent_foundry_PHASE0.md) | 264,942 | **Expansion 10 — The Silent Foundry — Phase 0 Preflight & Dependency Map** — Status: implemented (Core system + host + save + trade surfaces). Re-anchored to |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_11_the_long_line_creative_pack.md`](expansions/expansion_11_the_long_line_creative_pack.md) | 82,738 | **ASHFALL — Expansion Proposal 11: THE LONG LINE** — **Proposed internal id:** `expansion_11_the_long_line` |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_crews_and_companions_plan.md`](expansions/expansion_crews_and_companions_plan.md) | 14,346 | **ASHFALL — CREWS AND COMPANIONS** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_11_the_long_line_creative_pack.md`](expansions/expansion_11_the_long_line_creative_pack.md) | 83,601 | **ASHFALL — Expansion Proposal 11: THE LONG LINE** — **Proposed internal id:** `expansion_11_the_long_line` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_crews_and_companions_plan.md`](expansions/expansion_crews_and_companions_plan.md) | 15,934 | **ASHFALL — CREWS AND COMPANIONS** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_deep_works_plan.md`](expansions/expansion_deep_works_plan.md) | 17,304 | **ASHFALL — THE DEEP WORKS** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_drowned_coast_plan.md`](expansions/expansion_drowned_coast_plan.md) | 18,424 | **ASHFALL — THE DROWNED COAST** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_faith_and_schism_plan.md`](expansions/expansion_faith_and_schism_plan.md) | 16,605 | **ASHFALL — FAITH AND SCHISM** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_faith_and_schism_plan.md`](expansions/expansion_faith_and_schism_plan.md) | 18,216 | **ASHFALL — FAITH AND SCHISM** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_living_region_plan.md`](expansions/expansion_living_region_plan.md) | 21,991 | **ASHFALL — THE LIVING REGION** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_long_line_freight_plan.md`](expansions/expansion_long_line_freight_plan.md) | 19,119 | **ASHFALL — THE LONG LINE: FREIGHT** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_long_siege_plan.md`](expansions/expansion_long_siege_plan.md) | 16,636 | **ASHFALL — THE LONG SIEGE** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_new_pressures_and_places_index.md`](expansions/expansion_new_pressures_and_places_index.md) | 12,813 | **ASHFALL — "NEW PRESSURES AND PLACES": Family Index & Boundary Sheet** — **Status:** Story-director coordination sheet. **Proposal — not a claim, not an authorization.** 2026-09-29. |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_new_ways_to_play_index.md`](expansions/expansion_new_ways_to_play_index.md) | 10,043 | **ASHFALL — "NEW WAYS TO PLAY": Family Index & Boundary Sheet** — **Status:** Story-director coordination sheet. **Proposal — not a claim, not an authorization.** 2026-09-29. |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_new_pressures_and_places_index.md`](expansions/expansion_new_pressures_and_places_index.md) | 13,957 | **ASHFALL — "NEW PRESSURES AND PLACES": Family Index & Boundary Sheet** — **Status:** Story-director coordination sheet. **Proposal — not a claim, not an authorization.** 2026-09-29. |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_new_ways_to_play_index.md`](expansions/expansion_new_ways_to_play_index.md) | 11,081 | **ASHFALL — "NEW WAYS TO PLAY": Family Index & Boundary Sheet** — **Status:** Story-director coordination sheet. **Proposal — not a claim, not an authorization.** 2026-09-29. |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_plague_year_plan.md`](expansions/expansion_plague_year_plan.md) | 19,278 | **ASHFALL — THE PLAGUE YEAR** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_quiet_war_plan.md`](expansions/expansion_quiet_war_plan.md) | 17,504 | **ASHFALL — THE QUIET WAR** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_radio_free_ashfall_plan.md`](expansions/expansion_radio_free_ashfall_plan.md) | 14,147 | **ASHFALL — RADIO FREE ASHFALL** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_radio_free_ashfall_plan.md`](expansions/expansion_radio_free_ashfall_plan.md) | 15,794 | **ASHFALL — RADIO FREE ASHFALL** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_ration_wars_plan.md`](expansions/expansion_ration_wars_plan.md) | 18,484 | **ASHFALL — THE RATION WARS** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_reconstruction_tree_plan.md`](expansions/expansion_reconstruction_tree_plan.md) | 13,105 | **ASHFALL — THE RECONSTRUCTION TREE** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_reconstruction_tree_plan.md`](expansions/expansion_reconstruction_tree_plan.md) | 14,797 | **ASHFALL — THE RECONSTRUCTION TREE** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_record_keepers_plan.md`](expansions/expansion_record_keepers_plan.md) | 17,686 | **ASHFALL — THE RECORD KEEPERS** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_shelter_governance_plan.md`](expansions/expansion_shelter_governance_plan.md) | 16,295 | **ASHFALL — SHELTER GOVERNANCE: THE ASSEMBLY** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_shelter_under_pressure_index.md`](expansions/expansion_shelter_under_pressure_index.md) | 10,729 | **ASHFALL — "THE SHELTER UNDER PRESSURE": Family Index & Boundary Sheet** — **Status:** Story-director coordination sheet. **Proposal — not a claim, not an authorization.** 2026-09-29. |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_shelter_governance_plan.md`](expansions/expansion_shelter_governance_plan.md) | 17,958 | **ASHFALL — SHELTER GOVERNANCE: THE ASSEMBLY** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_shelter_under_pressure_index.md`](expansions/expansion_shelter_under_pressure_index.md) | 11,807 | **ASHFALL — "THE SHELTER UNDER PRESSURE": Family Index & Boundary Sheet** — **Status:** Story-director coordination sheet. **Proposal — not a claim, not an authorization.** 2026-09-29. |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_the_deep_plan.md`](expansions/expansion_the_deep_plan.md) | 24,030 | **ASHFALL — THE DEEP** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_the_holdfast_creative_pack.md`](expansions/expansion_the_holdfast_creative_pack.md) | 132,078 | **ASHFALL: THE HOLDFAST — Creative Pack** — **Internal id:** `expansion_the_holdfast` |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_the_holdfast_creative_pack.md`](expansions/expansion_the_holdfast_creative_pack.md) | 132,884 | **ASHFALL: THE HOLDFAST — Creative Pack** — **Internal id:** `expansion_the_holdfast` |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_the_holdfast_plan.md`](expansions/expansion_the_holdfast_plan.md) | 4,006,244 | **ASHFALL — Expansion Design Bible** — **Title:** ASHFALL: THE HOLDFAST |
 | 🟢 `CURRENT` | [`docs/expansions/expansion_the_sky_plan.md`](expansions/expansion_the_sky_plan.md) | 24,255 | **ASHFALL — THE SKY (ORBITAL HARROW)** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_the_underworld_plan.md`](expansions/expansion_the_underworld_plan.md) | 16,210 | **ASHFALL — THE UNDERWORLD** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_world_moves_without_you_index.md`](expansions/expansion_world_moves_without_you_index.md) | 8,700 | **ASHFALL — "THE WORLD MOVES WITHOUT YOU": Family Index & Boundary Sheet** — **Status:** Story-director coordination sheet. **Proposal — not a claim, not an authorization.** 2026-09-29. |
-| 🟢 `CURRENT` | [`docs/expansions/expansion_year_two_the_long_thaw_plan.md`](expansions/expansion_year_two_the_long_thaw_plan.md) | 87,509 | **ASHFALL — YEAR TWO: THE LONG THAW** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_the_underworld_plan.md`](expansions/expansion_the_underworld_plan.md) | 17,860 | **ASHFALL — THE UNDERWORLD** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_world_moves_without_you_index.md`](expansions/expansion_world_moves_without_you_index.md) | 9,838 | **ASHFALL — "THE WORLD MOVES WITHOUT YOU": Family Index & Boundary Sheet** — **Status:** Story-director coordination sheet. **Proposal — not a claim, not an authorization.** 2026-09-29. |
+| 🟢 `CURRENT` | [`docs/expansions/expansion_year_two_the_long_thaw_plan.md`](expansions/expansion_year_two_the_long_thaw_plan.md) | 89,413 | **ASHFALL — YEAR TWO: THE LONG THAW** — **Document status:** Story-director design bible and prose plan. **Proposal — not a claim, not an authorization.** |
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave100/PROSE_WAVE100_INDEX.md`](expansions/prose_wave100/PROSE_WAVE100_INDEX.md) | 2,457 | **Prose Wave 100 — Signals, Winter, and the Work of Staying** — Eight original, prose-first game-content expansion plans grounded in current local authored records and their existin... |
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave100/cw100_03_glitch_30_generator_hum_drop_three_second_octave_plan.md`](expansions/prose_wave100/cw100_03_glitch_30_generator_hum_drop_three_second_octave_plan.md) | 289,774 | **EXPANSION CW100-03 — The Hum Drops** — **Content type:** original game-content proposal with scene, diegetic-record, conversation, and conditional-return dr... |
 | 🟢 `CURRENT` | [`docs/expansions/prose_wave100/cw100_05_ritual_generator_casing_knock_three_spanner_taps_plan.md`](expansions/prose_wave100/cw100_05_ritual_generator_casing_knock_three_spanner_taps_plan.md) | 288,267 | **EXPANSION CW100-05 — The Wrench Knock Before the Starter** — **Content type:** original game-content proposal with scene, diegetic-record, conversation, and conditional-return dr... |
@@ -6245,7 +6245,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/visual/ART_FAMILY_REFERENCE_GUIDE.md`](visual/ART_FAMILY_REFERENCE_GUIDE.md) | 9,473 | **ASHFALL — Art Family Reference Guide** — **Date:** Phase 16. |
 | 🟢 `CURRENT` | [`docs/visual/ASHFALL_LOCAL_VISUAL_ASSET_REGISTRY.md`](visual/ASHFALL_LOCAL_VISUAL_ASSET_REGISTRY.md) | 2,681 | **ASHFALL Local Visual Asset Registry** — This registry covers the deterministic procedural starter pack generated by |
 | 🟢 `CURRENT` | [`docs/visual/ASHFALL_LOCAL_VISUAL_PRODUCTION_REPORT.md`](visual/ASHFALL_LOCAL_VISUAL_PRODUCTION_REPORT.md) | 2,061 | **ASHFALL Local Visual Production Report** — Python 3, Pillow 12.3.0, ImageMagick, `pngquant`, `oxipng`, and Godot are |
-| 🟢 `CURRENT` | [`docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`](visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md) | 89,547 | **ASHFALL Visual Production Report — 2026-09-29 (Forty-Three Tranches)** — Sections 1–20 record tranches 1–8. The tranche 9–43 addenda at the end |
+| 🟢 `CURRENT` | [`docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`](visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md) | 92,480 | **ASHFALL Visual Production Report — 2026-09-29 (Forty-Four Tranches)** — Sections 1–20 record tranches 1–8. The tranche 9–44 addenda at the end |
 | 🟢 `CURRENT` | [`docs/visual/ASSET_COVERAGE_REPORT_2026-08-26.md`](visual/ASSET_COVERAGE_REPORT_2026-08-26.md) | 7,051 | **ASHFALL Visual Asset Coverage Report** — 1. **Items (91.1% Coverage)**: |
 | 🟢 `CURRENT` | [`docs/visual/ASSET_GALLERY.md`](visual/ASSET_GALLERY.md) | 10,173 | **ASHFALL — Visual Asset Gallery** — **Date:** this turn (Phase 14). |
 | 🟢 `CURRENT` | [`docs/visual/ASSET_REGISTRY_RESOLUTION.md`](visual/ASSET_REGISTRY_RESOLUTION.md) | 12,269 | **ASHFALL AssetRegistry — Resolution Semantics** — **Source of truth:** `src/Host/AssetRegistry.cs` |
@@ -6956,7 +6956,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,433,215 | **ASHFALL Worktree Ownership** — User-authorized implementation ("Continue with a larger batch of doing more UI |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,435,081 | **ASHFALL Worktree Ownership** — User-authorized implementation ("Continue with a larger batch of doing more UI |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |

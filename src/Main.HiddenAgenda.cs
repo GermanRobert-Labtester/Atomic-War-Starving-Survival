@@ -104,7 +104,7 @@ namespace AtomicWar.GodotApp
         public void ShowHiddenAgendaPanel()
         {
             SetupHiddenAgendaPanel();
-            _hiddenAgendaPanel.Visible = true;
+            ShowPanelLifecycle(_hiddenAgendaPanel);
             _hiddenAgendaPanel.RefreshView();
         }
 

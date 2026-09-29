@@ -73,6 +73,15 @@ namespace AtomicWar.GodotApp.UI
                 button.CustomMinimumSize = new Vector2(
                     button.CustomMinimumSize.X, DesignTheme.MinInteractiveHeight);
             }
+            else if (root is LineEdit edit
+                && edit.CustomMinimumSize.Y < DesignTheme.MinInteractiveHeight)
+            {
+                // Single-line inputs are interactive controls under the same
+                // 28px audit rule (pkg 12, 2026-09-29); SpinBox benefits via
+                // its internal LineEdit child. Multiline TextEdit is exempt.
+                edit.CustomMinimumSize = new Vector2(
+                    edit.CustomMinimumSize.X, DesignTheme.MinInteractiveHeight);
+            }
             else if (root is Label label
                 && !label.ClipText
                 && label.AutowrapMode == TextServer.AutowrapMode.Off

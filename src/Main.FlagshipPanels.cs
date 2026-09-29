@@ -26,7 +26,7 @@ namespace AtomicWar.GodotApp
                 _kennelPanel.Visible = false;
                 AddChild(_kennelPanel);
             }
-            _kennelPanel.Visible = true;
+            ShowPanelLifecycle(_kennelPanel);
             _kennelPanel.RefreshView();
         }
 
@@ -44,7 +44,7 @@ namespace AtomicWar.GodotApp
                 _beliefsPanel.Visible = false;
                 AddChild(_beliefsPanel);
             }
-            _beliefsPanel.Visible = true;
+            ShowPanelLifecycle(_beliefsPanel);
             _beliefsPanel.RefreshView();
         }
 
@@ -62,7 +62,7 @@ namespace AtomicWar.GodotApp
                 _anomalyWatchPanel.Visible = false;
                 AddChild(_anomalyWatchPanel);
             }
-            _anomalyWatchPanel.Visible = true;
+            ShowPanelLifecycle(_anomalyWatchPanel);
             _anomalyWatchPanel.RefreshView();
         }
 
@@ -80,7 +80,7 @@ namespace AtomicWar.GodotApp
                 _cyberneticsPanel.Visible = false;
                 AddChild(_cyberneticsPanel);
             }
-            _cyberneticsPanel.Visible = true;
+            ShowPanelLifecycle(_cyberneticsPanel);
             _cyberneticsPanel.RefreshView();
         }
     }

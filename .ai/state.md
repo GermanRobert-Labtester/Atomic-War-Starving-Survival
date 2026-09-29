@@ -1,9 +1,17 @@
 # Current Task State
 
-## ChatGPT item art tranche 43 — 2026-09-29 (ACTIVE)
+## ChatGPT item art tranche 44 — 2026-09-29 (IN PROGRESS)
 
-- Scope: fifteen exact-ID inventory JPEGs under `assets/art/`, matching Godot import sidecars, fifteen editable SVG sources in `docs/visual/sources/tranche43/`, additive report, plan, and ownership claim. No gameplay or catalog edits.
-- Premise: all fifteen authored IDs lack direct or normalized-prefix item art in the current search roots; no semantic alias or exact-path ownership overlap. Pending: local drawing, render/visual QA, Godot import, report, and plan integration.
+- Target: two final unresolved `items.json` cassettes and all thirteen unresolved `greenhouse_items.json` art candidates; exact IDs and owned paths are in `.ai/plans/ashfall-chatgpt-item-art-tranche-44-2026-09-29.md` and `WORKTREE_OWNERSHIP.md`.
+- Evidence: the previous 928/967 and 39-remaining aggregate estimate was stale. Current registry-aware static scan found 724 primary IDs, 722 with candidates; greenhouse has 34 IDs, 21 with candidates. The 967 denominator is the Godot report's aggregate item catalog count. No source/catalog edits planned.
+- Remaining: draw SVGs, export 15 JPEGs, inspect contact sheets, import in Godot, rescan candidates, update report and close plan/claim/state.
+
+## ChatGPT item art tranche 43 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; fifteen editable SVG sources in `docs/visual/sources/tranche43/`; additive tranche 43 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-43-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-43-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: fifteen cassette archive volumes drawn locally as SVG illustrations, rendered with Inkscape, and converted to runtime JPEGs with ImageMagick.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed full-size, 64 px, and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report scoped `git diff --check` PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 39 of 967 authored item IDs lack direct/prefix art candidates. Two remaining cassette IDs are `cassette_station_14_5` and `cassette_dam_keeper_log_4`. The cumulative tranche total is 517 direct item images.
 
 ## ChatGPT item art tranche 42 — 2026-09-29 (COMPLETE, NO COMMIT)
 
@@ -8626,3 +8634,72 @@ runtime tests, generated index/check, integration status change, or commit.
   items must assert the loop, literal per-type strings don't exist in source).
   Verified: host build 0 errors; --ui-layout-selftest PASS, --player-panels-uitest PASS,
   boot clean.
+- **Brief #21b/Brief #23 — SECOND PROSE PASS, BATCH 7: 10 plans (2 new arrivals + 8 companions).**
+  - **Pool selection (measured):** re-scan found 2 new arrivals in `.ai/plans/` —
+    `second-nature-and-ruins-of-the-before` (862L composite, "Land, Ruins and Starts I") and
+    `ui-theme-coverage` (57L, a11y series package 11) — plus the 7 remaining batch-3 family
+    companions in `docs/expansions/` and the Year Two umbrella bible (903L). Exactly 10.
+  - **Treatment:** composite — note list + **1c**, second layer ("evolution at the pace of pencil
+    notes; architecture at the pace of trust"), §1c objects (field note 'tail shorter', STAIR B —
+    NOT FOR PUBLIC, lunch tin, joist tested twice on two visits). UI card — §0 Framing "A Daytime
+    Theme, Trespassing" + texture ("the engine's handwriting showing through the game's"). The 8
+    companions — deeper-layer block before each register, fragments non-duplicative of the paired
+    plan §1c and the companion's own register (e.g. QW: the permit spelled *right* this time;
+    UW: "grammar as escalation" — word in third person, Door leg in second; RF: "a station that
+    goes quiet is not neutral — it is forgotten"; RT: "an argument for schools"; FS: the east-room
+    "generosity/distance" door; SG: "the margin is not part of the minutes"; CC: "one roll for the
+    party — *this happened to us*"; Y2: "the almanac has no staff").
+  - **Register discipline:** **zero** new recorded questions — all 8 "What stays unsaid" registers
+    and the composite §25 untouched; every block closes "the register below is unchanged".
+  - **Contract surfaces untouched (verified):** STATUS preserved ×10; tracked-file diff **0
+    deleted lines** (purely insertive); one deeper-layer/§1c block and one second-layer paragraph
+    per file; no duplicate `##` headings. Self-caught defect: ui-theme-coverage epigraph again lost
+    its closing `*` on write (same failure mode as tranche-41 in brief #21) — repaired in the next
+    call; **note for future batches: emit epigraph emphasis markers as one atomic string.**
+  - **Testing:** prose-only — no code, data or schema touched; per `TEST_POLICY.md` no test run.
+  - **Not done / open:** 6 creative packs (duty_roster, long_line, standing_record, holdfast,
+    year_of_ash, verdict), 4 family indexes, `template.md`, generated/audit volumes (excluded per
+    index §6.5), and future arrivals.
+- **Brief #24 — SECOND PROSE PASS, BATCH 8: corpus close-out (4 family indexes + 6 creative packs).**
+  - **Pool selection (measured):** re-scan found no new arrivals in `.ai/plans/` (only `template.md`);
+    the remaining in-scope corpus was exactly 10 documents — the 4 family indexes and 6 creative
+    packs in `docs/expansions/`. Everything else under 5k lines there is excluded by standing rule
+    (index §6.5): implementation logs (`expansion_07_the_dose_IMPLEMENTATION`,
+    `expansion_03_nobodys_charter_INTEGRATION_PIPELINE`), matrices (`EXPANSION_CONTENT_MATRIX`,
+    `EXPANSION_REGRESSION_MATRIX`, `EXPANSION_REWARD_MATRIX`, `expansion_08_verdict_INTEGRATION_MATRIX`,
+    `CROSSING_STATE_FLOW`), audits (`VERDICT_DEPTH_AUDIT`, `CROSSING_DEPTH_AUDIT`), catalogs/status
+    (`EXPANSIONS_MASTER_CATALOG`, `EXPANSION_QUEST_COVERAGE`, `PHASE_STATUS_THE_GLASS_ORCHARD`,
+    `EXPANSION_FLAG_PROVENANCE`), phase baselines (`expansion_10_the_silent_foundry_PHASE0`).
+  - **Treatment:** indexes — "The deeper layer — the family as a shape" section before each
+    shared-silences register (second layer · three cross-member fragments). Packs — second-layer
+    framing + "what the pack leaves lying around" appended to the director's framing blockquote
+    (Duty Roster: "the roster is the constitution"; Long Line: "the two most ominous words in the
+    corpus earn their menace by stopping"; Standing Record: "eight places merely true; two
+    load-bearing"; Holdfast: "a census is a safeguard and a selection, and the same clipboard holds
+    both"; Year of Ash: "the compact evaporated before the agriculture did"; Verdict: "someone was
+    there and said something").
+  - **Register discipline:** **zero** new recorded questions — every family shared-silences register
+    and pack "What stays unsaid here" block unchanged, each addition labelled texture-only and
+    saying "the silences above/below are the register".
+  - **Contract surfaces untouched (verified):** git diff across the 10 files shows **0 deleted
+    lines** (purely insertive); one second-layer block per file; no duplicate `##` headings. One
+    markdown defect self-caught mid-batch (bare blank lines broke blockquote continuity in Year of
+    Ash and Verdict packs) — repaired to `>`-continued form in the next call.
+  - **Testing:** prose-only — no code, data or schema touched; per `TEST_POLICY.md` no test run.
+  - **CORPUS STATUS:** the second prose pass is now complete across the whole in-scope corpus —
+    40 `.ai/plans/` plans (batches 1–5, 7), 17 prose companions (batches 6–7), 6 creative packs and
+    4 family indexes (batch 8). Future briefs: re-scan for new arrivals, then repeat the treatment.
+
+- 2026-09-29 — claim-ui-lifecycle-bypass-2026-09-29 (a11y series pkg 12, agent Cline): closed
+  the ShowPanelLifecycle bypass class — 36 bare `<panel>.Visible = true` opens across 29
+  src/Main.*.cs partials now route through the lifecycle seam, gaining EnforceControlDefaults
+  (pkg-10 walk), AnimateOpen, and EnsureInitialFocus (keyboard focus never landed on those
+  panels before). Excluded boot-built roots (_mainMenu/_dashboard/_gameOver/_gameUiContainer/
+  _hudOverlay/_feedbackPanel/_confirmationModal/crisis HUD). Part B: LineEdit 28px floor in
+  AshfallUiTheme.EnforceControlDefaults (SpinBox benefits via internal LineEdit; TextEdit
+  multiline exempt). Files: 29 Main partials, src/UI/AshfallUiTheme.cs,
+  Ashfall.Core.Tests/UI/UiLifecycleBypassGateTests.cs (new, 2/2 — regex sweep over Main.*.cs
+  bans the bypass class and prevents regrowth),
+  .ai/plans/ui-lifecycle-bypass-2026-09-29.md (APPROVED). Verified: host build 0 errors;
+  --ui-layout-selftest PASS, --player-panels-uitest PASS, boot clean. NOTE: worktree carries
+  heavy foreign WIP (628 files) — commit is strict-pathspec; do not blanket-add.

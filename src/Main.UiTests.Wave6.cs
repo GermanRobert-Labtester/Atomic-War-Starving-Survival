@@ -49,7 +49,7 @@ namespace AtomicWar.GodotApp
         private void RunGeothermalAquiferUiTestAndQuit()
         {
             BuildUserInterface();
-            if (_geothermalAquiferPanel != null) _geothermalAquiferPanel.Visible = true;
+            if (_geothermalAquiferPanel != null) ShowPanelLifecycle(_geothermalAquiferPanel);
             bool pass = true;
             if (_geothermalAquiferPanel == null) { GD.PrintErr("[FAIL] panel not constructed"); pass = false; }
             if (pass) GD.Print("GeothermalAquiferUiTest PASS");

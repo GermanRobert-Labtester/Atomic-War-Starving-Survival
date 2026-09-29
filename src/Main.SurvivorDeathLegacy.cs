@@ -82,7 +82,7 @@ namespace AtomicWar.GodotApp
         public void ShowSurvivorDeathLegacyPanel()
         {
             SetupDeathLegacyPanel();
-            _deathLegacyPanel.Visible = true;
+            ShowPanelLifecycle(_deathLegacyPanel);
             _deathLegacyPanel.RefreshView();
         }
     }

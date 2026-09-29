@@ -77,7 +77,7 @@ namespace AtomicWar.GodotApp
         public void ShowShelterSecurityPanel()
         {
             SetupShelterSecurityPanel();
-            _shelterSecurityPanel.Visible = true;
+            ShowPanelLifecycle(_shelterSecurityPanel);
             _shelterSecurityPanel.RefreshView();
         }
     }

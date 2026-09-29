@@ -142,7 +142,7 @@ namespace AtomicWar.GodotApp
         {
             SetupSofcPower();
             EnsurePlans122to125Panels();
-            if (_sofcPanel != null) { _sofcPanel.Visible = true; _sofcPanel.RefreshView(); }
+            if (_sofcPanel != null) { ShowPanelLifecycle(_sofcPanel); _sofcPanel.RefreshView(); }
         }
 
     }

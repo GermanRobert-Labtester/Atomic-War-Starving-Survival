@@ -209,7 +209,7 @@ namespace AtomicWar.GodotApp
         public void ShowShelterAtmospherePanel()
         {
             SetupShelterAtmospherePanel();
-            _shelterAtmospherePanel.Visible = true;
+            ShowPanelLifecycle(_shelterAtmospherePanel);
             _shelterAtmospherePanel.RefreshView();
         }
 

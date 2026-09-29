@@ -72,7 +72,7 @@ namespace AtomicWar.GodotApp
             {
                 if (_railGrindingPanel != null)
                 {
-                    _railGrindingPanel.Visible = true;
+                    ShowPanelLifecycle(_railGrindingPanel);
                     _railGrindingPanel.RefreshView();
                 }
                 return;

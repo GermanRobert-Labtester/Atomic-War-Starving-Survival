@@ -84,7 +84,7 @@ namespace AtomicWar.GodotApp
         public void ShowShelterReputationPanel()
         {
             SetupShelterReputationPanel();
-            _shelterReputationPanel.Visible = true;
+            ShowPanelLifecycle(_shelterReputationPanel);
             _shelterReputationPanel.RefreshView();
         }
     }

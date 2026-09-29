@@ -119,7 +119,7 @@ namespace AtomicWar.GodotApp
         {
             SetupSanitation();
             EnsureSanitationPanel();
-            if (_sanitationPanel != null) { _sanitationPanel.Visible = true; _sanitationPanel.RefreshView(); }
+            if (_sanitationPanel != null) { ShowPanelLifecycle(_sanitationPanel); _sanitationPanel.RefreshView(); }
         }
     }
 }

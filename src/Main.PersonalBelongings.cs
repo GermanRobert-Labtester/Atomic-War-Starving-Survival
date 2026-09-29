@@ -65,7 +65,7 @@ namespace AtomicWar.GodotApp
         public void ShowPersonalBelongingsPanel()
         {
             SetupPersonalBelongingsPanel();
-            _personalBelongingsPanel.Visible = true;
+            ShowPanelLifecycle(_personalBelongingsPanel);
             _personalBelongingsPanel.RefreshView();
         }
 

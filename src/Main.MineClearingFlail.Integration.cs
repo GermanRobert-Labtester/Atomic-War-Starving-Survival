@@ -72,7 +72,7 @@ namespace AtomicWar.GodotApp
             {
                 if (_mineFlailPanel != null)
                 {
-                    _mineFlailPanel.Visible = true;
+                    ShowPanelLifecycle(_mineFlailPanel);
                     _mineFlailPanel.RefreshView();
                 }
                 return;

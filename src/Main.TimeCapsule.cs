@@ -92,7 +92,7 @@ namespace AtomicWar.GodotApp
         public void ShowTimeCapsulePanel()
         {
             SetupTimeCapsulePanel();
-            _timeCapsulePanel.Visible = true;
+            ShowPanelLifecycle(_timeCapsulePanel);
             _timeCapsulePanel.RefreshView();
         }
 

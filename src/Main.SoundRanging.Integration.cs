@@ -51,7 +51,7 @@ namespace AtomicWar.GodotApp
         {
             SetupSoundRanging();
             EnsurePlans122to125Panels();
-            if (_soundRangingPanel != null) { _soundRangingPanel.Visible = true; _soundRangingPanel.RefreshView(); }
+            if (_soundRangingPanel != null) { ShowPanelLifecycle(_soundRangingPanel); _soundRangingPanel.RefreshView(); }
         }
 
     }
