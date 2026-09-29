@@ -53,6 +53,41 @@ namespace AtomicWar.GodotApp.UI
             host.Theme = _cached;
         }
 
+        /// <summary>
+        /// Normalizes directly-constructed controls to the audit defaults
+        /// (a11y target-size sweep 2, 2026-09-29). Panels build ~230 buttons
+        /// and many fixed-width labels with raw <c>new</c>, bypassing
+        /// AshfallUiHelpers — walking the subtree at panel-open time gives
+        /// them the same 28px interactive-target floor and fixed-width
+        /// ellipsis clipping the factories apply, without touching layout
+        /// intent elsewhere. Idempotent: already-compliant controls pass
+        /// through unchanged, and larger explicit sizes win.
+        /// </summary>
+        public static void EnforceControlDefaults(Node? root)
+        {
+            if (root == null) return;
+
+            if (root is Button button
+                && button.CustomMinimumSize.Y < DesignTheme.MinInteractiveHeight)
+            {
+                button.CustomMinimumSize = new Vector2(
+                    button.CustomMinimumSize.X, DesignTheme.MinInteractiveHeight);
+            }
+            else if (root is Label label
+                && !label.ClipText
+                && label.AutowrapMode == TextServer.AutowrapMode.Off
+                && label.CustomMinimumSize.X > 0f)
+            {
+                // Fixed-width, non-wrapping label: clip with an ellipsis
+                // instead of silently drawing past the rect.
+                label.ClipText = true;
+                label.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+            }
+
+            foreach (Node child in root.GetChildren())
+                EnforceControlDefaults(child);
+        }
+
         private static Godot.Theme Build()
         {
             var theme = new Godot.Theme();

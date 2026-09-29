@@ -1,9 +1,30 @@
 # Current Task State
 
-## ChatGPT item art tranche 38 — 2026-09-29 (ACTIVE)
+## ChatGPT item art tranche 41 — 2026-09-29 (ACTIVE)
 
-- Scope: fifteen exact-ID inventory JPEGs under `assets/art/`, matching Godot import sidecars, fifteen editable SVG sources in `docs/visual/sources/tranche38/`, additive report, plan, and ownership claim. No gameplay or catalog edits.
-- Premise: all fifteen authored IDs lack direct or normalized-prefix item art in the current search roots; no exact-path ownership overlap. Pending: local drawing, render/visual QA, Godot import, report, and plan integration.
+- Scope: fifteen exact-ID inventory JPEGs under `assets/art/`, matching Godot import sidecars, fifteen editable SVG sources in `docs/visual/sources/tranche41/`, additive report, plan, and ownership claim. No gameplay or catalog edits.
+- Premise: all fifteen authored IDs lack direct or normalized-prefix item art in the current search roots; no semantic alias or exact-path ownership overlap. `potassium_iodide` excluded because prefixed art already exists. Pending: local drawing, render/visual QA, Godot import, report, and plan integration.
+
+## ChatGPT item art tranche 40 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; fifteen editable SVG sources in `docs/visual/sources/tranche40/`; additive tranche 40 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-40-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-40-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: nine distinct records and six cassette archives drawn locally as SVG illustrations, rendered with Inkscape, and converted to runtime JPEGs with ImageMagick.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed full-size, 64 px, and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report scoped `git diff --check` PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 84 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 472 direct item images.
+
+## ChatGPT item art tranche 39 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; fifteen editable SVG sources in `docs/visual/sources/tranche39/`; additive tranche 39 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-39-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-39-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: four physical props, six fictional ammunition types, and five records drawn locally as SVG illustrations, rendered with Inkscape, and converted to runtime JPEGs with ImageMagick.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed full-size, 64 px, and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report scoped `git diff --check` PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 99 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 457 direct item images.
+
+## ChatGPT item art tranche 38 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; fifteen editable SVG sources in `docs/visual/sources/tranche38/`; additive tranche 38 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-38-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-38-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: six personal effects and nine records drawn locally as SVG illustrations, rendered with Inkscape, and converted to runtime JPEGs with ImageMagick.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report scoped `git diff --check` PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 114 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 442 direct item images.
 
 ## ChatGPT item art tranche 37 — 2026-09-29 (COMPLETE, NO COMMIT)
 
@@ -8411,3 +8432,83 @@ runtime tests, generated index/check, integration status change, or commit.
   snapshot tooling bg, GameDashboardPanel:327 (item 11 retraction), MapDetailPanel:227 (§3
   visual lane). Gotcha fixed mid-flight: replace_all of `return lbl;` swallowed FinishLabel's own
   body (recursion) — gate test now guards it; AutowrapMode is `Off`, not `Disabled`.
+- **Brief #18 — SECOND PROSE PASS, BATCH 2: 10 more non-integrated plans polished and expanded.**
+  - **Pool selection (measured):** request asks for 10; the pool held exactly 10 narrative-thin-capable
+    non-integrated family plans, taken as complete families so no family is half-passed:
+    **Shelter Under Pressure** (`the-deep`, `deep-works`, `long-siege`, `ration-wars`,
+    `record-keepers`), **World Moves Without You** (`living-region`, `long-line-freight`,
+    `plague-year`, `drowned-coast`), **New Pressures and Places** (`the-sky`).
+    Deferred: **New Ways to Play** (7 plans) + `iron-road-and-siege-year` / `convoy-wars-and-inside-a-house`
+    + `y2-p1b` / `year-two-the-long-thaw` umbrella — a future batch, not padding.
+  - **Treatment (established convention, adapted):** per plan, (a) editorial-note section list
+    swapped `§0/§1b/§12` → `§0/§1b/§1c/§12`, (b) one **"The second layer."** paragraph appended to
+    the Prologue, (c) new **§1c The Deeper Layer — scenes, artifacts & held silences** between §1b
+    and §2: three artifact slips, two micro-scenes, two held silences — deliberately NOT repeating
+    §1b's existing blocks ("What the player is never told" / "Voice" / "Design texture beats").
+    +350/−10 lines across 10 files (the 10 deletions are the single note-line phrase swap each).
+  - **Register discipline:** §12 registers untouched — **zero** new recorded open questions
+    (verified 6 rows per plan, matching the Open Mystery Index §1 counts: TD/DW/LS/RW/RK/LR/LF/PY/DC/SK).
+    §1c "held silences" explicitly labelled texture, not register rows. Index note added as §6.7.
+  - **Contract surfaces untouched (verified):** `STATUS: DRAFT` preserved ×10; evidence tables,
+    authority tables, claimed paths, packages, acceptance criteria, decision registers (DEC-*
+    proposals), pre-flight, verification and stop conditions byte-identical — git diff shows no
+    deletions outside the 10 note lines; one §1c and one second-layer paragraph per file; no
+    duplicate `##` headings; every fragment marked content-candidate/texture-only per the §1b
+    convention (no prose fields invented for named data files).
+  - **Mystery quality pass:** each §1c voiced to its plan — works-diary slips (DW), siege board
+    terms (LS), pantry rule cards and count sheets (RW), custody cards that recurse into their own
+    medium (RK), bulletin-board corrections (LR), manifests and season tables (LF), gate cards and
+    Count lines (PY), berth books and nine-year-old charts (DC), countdown sheets and disagreeing
+    catalogue rows (SK), dosimeter stubs and scrubber schedules (TD). Each pair of held silences
+    cross-references the plan's existing evidence (E7/E8/E13/DEC-*) without answering any §12 row.
+  - **Testing:** prose-only change — no code, data, or schema touched; per `TEST_POLICY.md` no test
+    run is warranted (would be a full-suite-style waste for a doc pass).
+  - **Not done / open:** New Ways to Play family (7 plans), the two large composite plans,
+    `y2-p1b`, the umbrella, `ashfall-chatgpt-item-art-tranche-36`, `performance-host-qol-2026-09-27`.
+- **Brief #19 — SECOND PROSE PASS, BATCH 3: 10 more non-integrated plans polished and expanded.**
+  - **Pool selection (measured):** request asks for 10; the remaining narrative pool held exactly 10 —
+    the complete **New Ways to Play** family (`quiet-war`, `underworld`, `radio-free-ashfall`,
+    `reconstruction-tree`, `faith-and-schism`, `shelter-governance`, `crews-and-companions`), the
+    two Movement-and-War composites (`iron-road-and-siege-year` 1250L, `convoy-wars-and-inside-a-house`
+    1351L — both explicitly marked "first full draft to be expanded and finalised"), and the last
+    Year Two card `y2-p1b-chapter-profiles`. **All three batches now cover every narrative plan in
+    `.ai/plans/` (30 files).**
+  - **Treatment:** family plans — note list swap `§0/§1b/§12` → `§0/§1b/§1c/§12`, one **"The second
+    layer."** Prologue paragraph, new **§1c The Deeper Layer** (3 artifact slips · 2 micro-scenes ·
+    2 held silences). Composites — second-layer paragraph + **§1c objects variant** explicitly
+    scoped so it does NOT duplicate their §7b/§9b/§10b day-entry chronicles ("this section is the
+    objects those entries leave behind"); no editorial note existed there, disclosure carried by
+    §1c's italic disclaimer. P1B — batch-1 card treatment (note extended, second layer, new §1b),
+    bringing it level with P0–P9.
+  - **Register discipline:** §12 / §17 / §19 registers untouched — **zero** new recorded open
+    questions (family registers verified 6 rows each = index §1 counts hold). Held-silence fragments
+    labelled "texture, not register rows". Index note added as §6.8, including the batch-complete
+    status line.
+  - **Contract surfaces untouched (verified):** STATUS preserved ×10 (7 DRAFT family plans, 2 DRAFT
+    composites, P1B APPROVED); evidence/authority tables, claimed paths, packages, acceptance,
+    decision registers (DEC-*/IR/SY/CW/IH), test plan, risk register and backlog byte-identical —
+    git diff shows exactly 8 deleted lines, all single editorial-note phrase swaps; one second-layer
+    paragraph per file; one §1c per file (or §1b for P1B); no duplicate `##` headings.
+  - **Mystery quality pass:** fragments voiced per subject — interview sheets and permits (QW),
+    broker ledgers and mark notices (UW), schedule grids and mailbag letters (RF), citations and
+    practice stamps (RT), chalk Questions and two-signature room grants (FS), statute books and
+    precedent pins (SG), watch orders and pack tallies (CC), gauge drawings and peg-lines (IR/SY),
+    load sheets and commission blanks (CW/IH), profile copy and reinterpretation lines (P1B).
+    Cross-references to DEC-*/E* evidence preserved as *questions*, never answers.
+  - **Testing:** prose-only — no code, data or schema touched; per `TEST_POLICY.md` no test run.
+  - **Not done / open:** `year-two-the-long-thaw` umbrella (already rich: §0b/§1b/§14),
+    `ashfall-chatgpt-item-art-tranche-36`, `performance-host-qol-2026-09-27`, `template.md`.
+
+- 2026-09-29 — claim-ui-a11y-target-size-sweep2-2026-09-29 (a11y series pkg 10, agent Cline):
+  28px target floor + fixed-width label clipping for ALL direct `new Button`/`new Label` sites
+  (~230 buttons / ~70 files) via ONE central seam instead of per-site edits — subagent delegation
+  was blocked by the 5h usage limit, so pivoted: `AshfallUiTheme.EnforceControlDefaults(Node)`
+  (idempotent subtree walk, larger explicit sizes win) wired at `ShowPanelLifecycle`
+  (52 open sites, runs before AnimateOpen) + deferred whole-tree sweep after boot
+  (`CallDeferred(RunUiA11yDefaultsSweep)` in Main.UiPanels). Files: src/UI/AshfallUiTheme.cs,
+  src/Main.PanelLifecycle.cs, src/Main.UiPanels.cs,
+  Ashfall.Core.Tests/UI/UiA11yTargetSizeSweep2GateTests.cs (new, 3/3),
+  .ai/plans/ui-a11y-target-size-sweep2-2026-09-29.md (APPROVED; amended with implementation
+  record after foreign prose pass touched the doc). Verified: host build 0 errors;
+  --ui-layout-selftest PASS, --player-panels-uitest PASS, boot clean. NOTE: pkg-9 plan doc and
+  this one received foreign prose-factory framing passes mid-session — substance re-edited on top.

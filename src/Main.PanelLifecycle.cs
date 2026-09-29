@@ -236,6 +236,9 @@ namespace AtomicWar.GodotApp
         {
             if (panel == null || !GodotObject.IsInstanceValid(panel)) return;
             panel.Visible = true;
+            // A11y defaults (target-size floor + fixed-width label clipping)
+            // for controls the panel built with raw `new` — see AshfallUiTheme.
+            AshfallUiTheme.EnforceControlDefaults(panel);
             AtomicWar.GodotApp.UI.UiMotion.AnimateOpen(panel);
             EnsureInitialFocus(panel);
         }

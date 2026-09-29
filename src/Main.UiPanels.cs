@@ -42,6 +42,12 @@ namespace AtomicWar.GodotApp
 
         // ── UI Panel fields (GAP-ARCH-01 Phase 1) ──
         private MainMenuPanel _mainMenu = null!;
+
+        /// <summary>Deferred boot sweep: a11y defaults for boot-built UI.</summary>
+        private void RunUiA11yDefaultsSweep()
+        {
+            AshfallUiTheme.EnforceControlDefaults(this);
+        }
         private StartingCohortSetupPanel _startingCohortSetupPanel = null!;
         private GameOverPanel _gameOver = null!;
         private GameHudOverlay _hudOverlay = null!;
@@ -280,6 +286,11 @@ namespace AtomicWar.GodotApp
                 UpdateHud();
             };
             AddChild(_dashboard);
+
+            // A11y defaults (target-size floor + fixed-width label clipping)
+            // for everything the boot path built directly — menus, dashboard,
+            // HUD. Panels opened later are normalized in ShowPanelLifecycle.
+            CallDeferred(nameof(RunUiA11yDefaultsSweep));
 
             // ── Game UI container (hidden initially) ──
             var gameUiContainer = new VBoxContainer();

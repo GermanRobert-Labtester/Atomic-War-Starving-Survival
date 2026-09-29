@@ -1,5 +1,51 @@
 # ASHFALL Worktree Ownership
 
+## claim-ui-a11y-target-size-sweep2-2026-09-29
+
+User-authorized implementation ("Continue with a larger batch of doing more UI
+correction and UI precision work!", 2026-09-29) — tenth package in the
+a11y-audit fix series: 28px interactive-target floor + fixed-width label
+clipping for ALL directly-constructed controls via one central seam.
+**Plan:** `.ai/plans/ui-a11y-target-size-sweep2-2026-09-29.md` (STATUS:
+APPROVED BY USER). **Exact paths:** `src/UI/AshfallUiTheme.cs`
+(EnforceControlDefaults walk), `src/Main.PanelLifecycle.cs`
+(ShowPanelLifecycle hook), `src/Main.UiPanels.cs` (deferred boot sweep),
+`Ashfall.Core.Tests/UI/UiA11yTargetSizeSweep2GateTests.cs` (new). Shared
+paths intentionally untouched.
+
+## claim-chatgpt-item-art-tranche-41-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_document_casualty_list,item_document_evacuation_route_map,item_document_civil_defense_poster,item_document_child_drawing,item_dog_tags_scavenged,cassette_greenhouse_tapes_2,cassette_field_hospital_7_2,cassette_evacuation_train_2,cassette_station_14_2,cassette_teachers_recordings_1,cassette_quarantine_tapes_1,cassette_checkpoint_kilo_1,cassette_saint_maren_1,cassette_family_bunker_1,cassette_free_radio_1}.jpg`
+files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
+sources under `docs/visual/sources/tranche41/`, plus
+`.ai/plans/ashfall-chatgpt-item-art-tranche-41-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: ACTIVE.
+
+## claim-chatgpt-item-art-tranche-40-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_document_last_letter,item_document_field_report,item_document_journal_fragment,item_document_death_certificate,item_document_supply_inventory,item_document_confession,item_document_will,item_document_debt_default_notice,item_document_patrol_order,cassette_greenhouse_tapes_1,cassette_field_hospital_7_1,cassette_evacuation_train_1,cassette_station_14_1,cassette_fathers_tapes_1,cassette_dam_keeper_log_1}.jpg`
+files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
+sources under `docs/visual/sources/tranche40/`, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-40-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-chatgpt-item-art-tranche-39-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{forensic_clue_bloodstained,weapon_suppressor_improvised,item_chain_gang_shackles,item_slave_collar,ammo_76mm_he_flak,ammo_76mm_proximity_fuse,ammo_76mm_tungsten_penetrator,ammo_chaff_burst,ammo_76mm_beacon_smokey,ammo_76mm_shaped_charge,item_document_triage_record,item_document_supply_requisition,item_document_quarantine_notice,item_document_radio_log,item_document_weather_gate_warning}.jpg`
+files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
+sources under `docs/visual/sources/tranche39/`, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-39-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: COMPLETE, no commit.
+
 ## claim-ui-a11y-final-color-2026-09-29
 
 User-authorized implementation ("Continue with a larger batch of doing more UI
@@ -23,10 +69,10 @@ User-authorized fifteen-item visual continuation. Root owns exact new
 `assets/art/{dog_tags,photo_album,childs_drawing,teddy_bear,creased_receipt,undelivered_mail,item_document_military_map,item_document_broadcast_transcript,item_document_vandalized_propaganda,item_document_handwritten_warning,item_document_maintenance_record,item_document_shelter_rejection_list,item_document_ration_theft_ledger,item_document_water_notice,item_document_repair_note}.jpg`
 files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
 sources under `docs/visual/sources/tranche38/`, plus
-`.ai/plans/ashfall-chatgpt-item-art-tranche-38-2026-09-29.md`, additive
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-38-2026-09-29.md`, additive
 entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
 `.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
-Status: ACTIVE.
+Status: COMPLETE, no commit.
 
 ## claim-chatgpt-item-art-tranche-37-2026-09-29
 
