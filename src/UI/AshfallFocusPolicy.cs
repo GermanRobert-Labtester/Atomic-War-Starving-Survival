@@ -194,18 +194,73 @@ namespace AtomicWar.GodotApp.UI
         /// </summary>
         public static void RestoreFocusFromRoot(Control root)
         {
-            if (root == null || !GodotObject.IsInstanceValid(root))
+            var opener = GetRecordedOpener(root);
+            if (opener != null)
+                RestoreFocus(opener);
+        }
+
+        /// <summary>
+        /// Returns the opener control recorded on root by the open seam, or null.
+        /// </summary>
+        public static Control? GetRecordedOpener(Control root)
+        {
+            if (root == null || !GodotObject.IsInstanceValid(root) || !root.HasMeta(FocusOpenerMeta))
+                return null;
+
+            var val = root.GetMeta(FocusOpenerMeta);
+            if (val.VariantType != Variant.Type.Object)
+                return null;
+
+            return val.As<Control>();
+        }
+
+        /// <summary>
+        /// Deferred restore for close loops (a11y audit 2026-09-29 §9.4): the
+        /// visibility check must run after the loop has finished mutating panel
+        /// state, not synchronously while panels are mid-close.
+        /// </summary>
+        public static void RestoreFocusDeferred(Control? opener)
+        {
+            if (opener == null || !GodotObject.IsInstanceValid(opener) || !opener.IsInsideTree())
                 return;
 
-            if (root.HasMeta(FocusOpenerMeta))
+            Callable.From(() =>
             {
-                var val = root.GetMeta(FocusOpenerMeta);
-                if (val.VariantType == Variant.Type.Object)
+                if (GodotObject.IsInstanceValid(opener) && opener.IsVisibleInTree())
+                    opener.GrabFocus();
+            }).CallDeferred();
+        }
+
+        /// <summary>
+        /// Deferred fallback: focus the first focusable control under root.
+        /// </summary>
+        public static void FocusFirstDeferred(Control root)
+        {
+            var target = FindFirstFocusable(root);
+            target?.CallDeferred(Control.MethodName.GrabFocus);
+        }
+
+        /// <summary>
+        /// True when node is node itself or a descendant of any root in roots.
+        /// Used to reject restore targets that live inside panels being closed.
+        /// </summary>
+        public static bool IsInsideAny(Control? node, IReadOnlyList<Control> roots)
+        {
+            if (node == null || !GodotObject.IsInstanceValid(node))
+                return false;
+
+            foreach (var root in roots)
+            {
+                if (root == null || !GodotObject.IsInstanceValid(root))
+                    continue;
+
+                for (Control? n = node; n != null; n = n.GetParent() as Control)
                 {
-                    var opener = val.As<Control>();
-                    RestoreFocus(opener);
+                    if (n == root)
+                        return true;
                 }
             }
+            return false;
         }
     }
 }

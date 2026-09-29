@@ -3,6 +3,7 @@ using System;
 using Godot;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -212,11 +213,11 @@ namespace AtomicWar.GodotApp.UI
             _veinLabel.Text = $"Vein: {vein.displayName} (ore: {vein.remainingOre:F0} kg)";
             _workersLabel.Text = $"Workers: {vein.assignedWorkers}/{vein.maxWorkers}";
             _drillLabel.Text = $"Drill: {vein.drillCondition:P0}";
-            _drillLabel.Modulate = vein.drillCondition < 0.3f ? Colors.Red : Colors.White;
+            _drillLabel.Modulate = vein.drillCondition < 0.3f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Pale);
             _pumpLabel.Text = $"Pump: {vein.pumpPressure:P0}";
-            _pumpLabel.Modulate = vein.pumpPressure < 0.3f ? Colors.Red : Colors.White;
+            _pumpLabel.Modulate = vein.pumpPressure < 0.3f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Pale);
             _contaminationLabel.Text = $"Contamination: {vein.contamination:P0}";
-            _contaminationLabel.Modulate = vein.contamination > 0.3f ? Colors.Red : Colors.White;
+            _contaminationLabel.Modulate = vein.contamination > 0.3f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Pale);
 
             var state = _foundryHost.SaltMine.State;
             _powerLabel.Text = $"Power: {(state.isPowered ? "ON" : "OFF")}";

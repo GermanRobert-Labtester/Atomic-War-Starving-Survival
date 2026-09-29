@@ -3,6 +3,7 @@ using System;
 using Godot;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -220,11 +221,11 @@ namespace AtomicWar.GodotApp.UI
 
             _batteryLabel.Text = $"Battery: {device.batteryLevel:P0}";
             _batteryBar.Value = device.batteryLevel * 100;
-            _batteryBar.Modulate = device.batteryLevel < 0.2f ? Colors.Red : Colors.White;
+            _batteryBar.Modulate = device.batteryLevel < 0.2f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Pale);
 
             _sensorLabel.Text = $"Sensor Condition: {device.sensorCondition:P0}";
             _sensorBar.Value = device.sensorCondition * 100;
-            _sensorBar.Modulate = device.sensorCondition < 0.3f ? Colors.Red : Colors.White;
+            _sensorBar.Modulate = device.sensorCondition < 0.3f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Pale);
 
             _qualityLabel.Text = $"Calibration Quality: {device.calibrationQuality:F2}";
             _qualityBar.Value = device.calibrationQuality * 100;
@@ -232,7 +233,7 @@ namespace AtomicWar.GodotApp.UI
             _readingsLabel.Text = $"Readings since calibration: {device.readingsSinceCalibration}/{DosimeterCalibrationSystem.ReadingsPerCalibration}";
 
             _errorBandLabel.Text = $"Error Band: ±{device.errorBandMsv:F1} mSv";
-            _errorBandLabel.Modulate = device.isOverdue ? Colors.Red : Colors.White;
+            _errorBandLabel.Modulate = device.isOverdue ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Pale);
 
             float confidence = _doseHost.Calibration.GetConfidence(_selectedDeviceTag);
             _confidenceLabel.Text = $"Measurement Confidence: {confidence:P0}";

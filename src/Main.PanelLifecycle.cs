@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using Godot;
 using System;
+using System.Collections.Generic;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -241,12 +242,13 @@ namespace AtomicWar.GodotApp
 
         private void CloseAllOverlayPanels()
         {
+            var closedPanels = new List<Control>();
             foreach (Control panel in OverlayPanelCatalog())
             {
                 if (panel == null || !panel.Visible || AtomicWar.GodotApp.UI.UiMotion.IsClosing(panel))
                     continue;
 
-                AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(panel);
+                closedPanels.Add(panel);
                 // Central exit transition (UI/UX audit 2026-09-25): every global
                 // dismissal and panel switch fades the old shell out. Falls back
                 // to an immediate hide when motion is unavailable (headless,
@@ -259,6 +261,22 @@ namespace AtomicWar.GodotApp
             {
                 AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(_journalBook);
                 _journalBook.Close();
+            }
+
+            // Focus restore (a11y audit 2026-09-29 §9.4): one deferred attempt
+            // for the topmost closed panel, taken from its recorded opener. The
+            // previous per-panel synchronous restore failed for stacked panels
+            // (the opener lives inside a panel closed earlier in catalog order)
+            // and enqueued competing deferred GrabFocus calls. When the opener
+            // lives inside a panel we just closed it cannot receive focus —
+            // fall back to the exposed dashboard surface.
+            if (closedPanels.Count > 0)
+            {
+                var opener = AtomicWar.GodotApp.UI.AshfallFocusPolicy.GetRecordedOpener(closedPanels[^1]);
+                if (opener != null && !AtomicWar.GodotApp.UI.AshfallFocusPolicy.IsInsideAny(opener, closedPanels))
+                    AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusDeferred(opener);
+                else if (_dashboard != null && _dashboard.IsVisibleInTree())
+                    AtomicWar.GodotApp.UI.AshfallFocusPolicy.FocusFirstDeferred(_dashboard);
             }
 
             // The crisis HUD is intentionally NOT in OverlayPanelCatalog —

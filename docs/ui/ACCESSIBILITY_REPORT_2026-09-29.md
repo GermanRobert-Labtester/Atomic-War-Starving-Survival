@@ -44,11 +44,16 @@ translucent stacking.
 
 ## 2. Hardcoded colors bypassing tokens
 
-### 2a. One real contrast failure
+### 2a. Retracted finding (correction 2026-09-29, later same day)
 
-| Evidence | Value | Use | Ratio | Issue |
-|---|---|---|---:|---|
-| `src/UI/GameDashboardPanel.cs:327` | `Modulate (1,1,1,0.22)` | deselected travel-route icon | ≈1.9:1 | Fails the 3:1 UI-component minimum so far that selected vs deselected is hard to distinguish for low-vision players |
+The initial sweep reported `GameDashboardPanel.cs:327`
+(`Modulate (1,1,1,0.22)`, ≈1.9:1) as a "deselected travel-route icon"
+failing the 3:1 UI-component minimum. **On re-verification that site is the
+dashboard's background image, dimmed intentionally so dashboard text stays
+readable over it** — the deselected/selected route state uses token font
+colors (`GameDashboardPanel.cs:739-742`, Pale deselected / Hot selected,
+both AA-passing). No sub-3:1 UI-component state was found; this was the
+audit's only reported hard contrast failure and it is retracted.
 
 ### 2b. Marginal / tonal drift
 
@@ -308,7 +313,9 @@ defaults; SpinBox arrows are unstyled. Only 2 files in `src/UI` use
    `AshfallDashboardShell.cs:79`)
 10. Bump the ~52 sub-28px controls to ≥28px height, starting with
     ShelterBarter 24×22 and the six 0×24 row selects. (`ShelterBarterPanel.cs:745` et al.)
-11. Lift the deselected-route icon modulate from 0.22 to a ≥3:1 state. (`GameDashboardPanel.cs:327`)
+11. ~~Lift the deselected-route icon modulate from 0.22 to a ≥3:1 state.~~
+    **RETRACTED** (see §2a correction): the flagged site is the dashboard's
+    intentionally dimmed background image, not a UI-component state.
 
 **P3 — hygiene and polish:**
 

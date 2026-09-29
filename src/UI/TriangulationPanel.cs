@@ -3,6 +3,7 @@ using System;
 using Godot;
 using Ashfall.Core.Radio;
 using Ashfall.Core.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -181,7 +182,7 @@ namespace AtomicWar.GodotApp.UI
                 _confidenceLabel.Text = "Confidence: —";
                 _uncertaintyLabel.Text = "Uncertainty: —";
                 _discoveryLabel.Text = "Discovery: —";
-                _discoveryLabel.Modulate = Colors.White;
+                _discoveryLabel.Modulate = AshfallUiHelpers.ToColor(DesignTheme.Pale);
                 _recordButton.Disabled = true;
                 _triangulateButton.Disabled = true;
                 return;
@@ -201,7 +202,7 @@ namespace AtomicWar.GodotApp.UI
 
                 bool discovered = _radioHost.Triangulation.IsLocationDiscovered(candidate.locationId);
                 _discoveryLabel.Text = discovered ? "Discovery: CONFIRMED" : "Discovery: Pending";
-                _discoveryLabel.Modulate = discovered ? Colors.Green : Colors.Yellow;
+                _discoveryLabel.Modulate = discovered ? AshfallUiHelpers.ToColor(DesignTheme.Success) : AshfallUiHelpers.ToColor(DesignTheme.Warning);
             }
             else
             {
@@ -209,7 +210,7 @@ namespace AtomicWar.GodotApp.UI
                 _confidenceLabel.Text = "Confidence: —";
                 _uncertaintyLabel.Text = "Uncertainty: —";
                 _discoveryLabel.Text = "Discovery: No data";
-                _discoveryLabel.Modulate = Colors.White;
+                _discoveryLabel.Modulate = AshfallUiHelpers.ToColor(DesignTheme.Pale);
             }
         }
 

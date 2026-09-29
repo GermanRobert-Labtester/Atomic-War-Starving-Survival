@@ -3,6 +3,7 @@ using System;
 using Godot;
 using Ashfall.Core.Maritime;
 using Ashfall.Core.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -187,7 +188,7 @@ namespace AtomicWar.GodotApp.UI
             _noiseLabel.Text = safe.cumulativeNoise >= safe.alarmThreshold
                 ? $"Noise: {safe.cumulativeNoise:F2} [ALARM!]"
                 : $"Noise: {safe.cumulativeNoise:F2}";
-            _noiseLabel.Modulate = safe.cumulativeNoise >= safe.alarmThreshold ? Colors.Red : Colors.White;
+            _noiseLabel.Modulate = safe.cumulativeNoise >= safe.alarmThreshold ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Pale);
 
             _toolLabel.Text = $"Tool Condition: {_toolCondition:P0}";
 
