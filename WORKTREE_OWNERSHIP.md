@@ -1,5 +1,38 @@
 # ASHFALL Worktree Ownership
 
+## claim-ui-a11y-target-sizes-2026-09-29
+
+User-authorized implementation ("Continue doing more work!", 2026-09-29) —
+fifth package in the a11y-audit fix series: audit §5d/§9.10.
+**Plan:** `.ai/plans/ui-a11y-target-sizes-2026-09-29.md` (STATUS: APPROVED BY
+USER). **Exact paths:** `Assets/Ashfall.Core/UI/Theme.cs` (1 additive token
+`MinInteractiveHeight = 28`), `src/UI/AshfallUiHelpers.cs` (MakeButton floor
+28px, decoupled from font size), 23 swept panel files (height literals → 28,
+widths preserved except ShelterBarter 24×22→28×28 and FeedbackPanel
+24×24→28×28): ShelterBarterPanel, FeedbackPanel, InventoryPanel,
+PowerGridPanel (9 sites incl. fuel-add `btn` at :269), RadioPanel,
+DefenseGridPanel, RoboticsWorkshopPanel, FungiCultivationBedPanel,
+BioFermentationPanel (2 OptionButtons only — :276 Label excluded),
+JusticeTribunalPanel, ArchiveDeskPanel, ChemicalDependencyPanel,
+DecontaminationPanel, ContractorRosterPanel, MedicalWardPanel,
+LibraryStudyPanel, KitchenNutritionPanel, PhantomMemoryPanel,
+EquipmentConditionPanel, MentalHealthCrisisPanel, GreenhousePanel,
+SumpFloodingPanel, TravelingCaravanPanel; new
+`Ashfall.Core.Tests/UI/UiA11yTargetSizeGateTests.cs`; governance (this row,
+`.ai/state.md`, the plan). **Deliberately untouched:** non-interactive
+minimum sizes (progress bars, meters, dots, swatches, labels), all other
+Core tokens, data/save paths.
+
+## claim-chatgpt-item-art-tranche-29-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_official_ballot_box,item_pemmican,item_travel_ration,item_vibration_dampening_mount,item_iron_pyrite_ore,item_industrial_acid_carboy,item_neutralizer_lime_bag,item_grain_flour,item_oxygen_supply,item_titanium_breaching_shield,item_coated_turbine_blade,sandbags,item_worn_pet_collar,item_pharmacist_ledger,item_grandfathers_soldering_iron}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/ashfall-chatgpt-item-art-tranche-29-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: IN PROGRESS, no commit.
+
 ## claim-chatgpt-item-art-tranche-28-2026-09-29
 
 User-authorized fifteen-item visual continuation. Root owns exact new

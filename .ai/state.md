@@ -8098,3 +8098,10 @@ runtime tests, generated index/check, integration status change, or commit.
 - Verification: AccessibilitySourceAuditTests 6/6 (floor `>=11` passes at 12) + TradeThemeAndEconomyTests 5/5 via scripts/run_test.sh (scoped runner has no mapping for Theme.cs — full run suppressed per TEST_POLICY); host build 0 errors; headless `--ui-layout-selftest` PASS Failures: 0 exit 0; boot check 0 error lines.
 - Follow-up (visual lane, not claimed): stored snapshots/ goldens drift visually; `--ui-snapshot-uitest`/`--ui-snapshot-regenerate` need a real display.
 - Remaining: P2.10 sub-28px target sizes (~52 controls), P3 hover gaps, §3 scrim snapshot pass, modal-stack dead-seam governance decision.
+
+## UI a11y P2.10 interactive target sizes ≥28px — 2026-09-29 (COMPLETE)
+
+- Plan: `.ai/plans/ui-a11y-target-sizes-2026-09-29.md` (STATUS: APPROVED BY USER); claim `claim-ui-a11y-target-sizes-2026-09-29`.
+- Changed: Core token `Theme.MinInteractiveHeight = 28`; `MakeButton` floor decoupled from font size (was FontSizeBody+SpacingMd=27); 23 panel files swept — height literals 22/24/26 → 28 on all audit-enumerated Button/OptionButton sites (ShelterBarter plus/minus 24×22→28×28, FeedbackPanel close 24×24→28×28, PowerGrid 9 sites incl. fuel-add btn:269, six 0×24 row selects, five 0×26 OptionButtons, DefenseGrid, RadioPanel, InventoryPanel row buttons, + 12 single-site select-button panels). Non-interactive minimums (bars/meters/dots/labels, e.g. BioFermentationPanel:276) untouched.
+- Verification: gate `Ashfall.Core.Tests/UI/UiA11yTargetSizeGateTests` 31/31; host build 0 errors; headless `--ui-layout-selftest` PASS; `--player-panels-uitest` PASS.
+- Remaining: P3 hover gaps (grid rows, sidebar rows, ItemList, SpinBox), §3 scrim snapshot pass (visual lane), modal-stack dead-seam governance decision.

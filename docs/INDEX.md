@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5562 | **Total Characters:** 7,245,046,516 | **Last Verified:** 2026-09-29
-**Oversized (>= 100,000 characters):** 3544 documents carrying 7,214,910,104 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5562 | **Total Characters:** 7,245,047,890 | **Last Verified:** 2026-09-29
+**Oversized (>= 100,000 characters):** 3544 documents carrying 7,214,911,478 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3544 documents, 7,214,910,104 characters
+## Oversized Document Register (>= 100,000 characters) — 3544 documents, 7,214,911,478 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1543,7 +1543,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,420,782 | [`docs/expansions/prose_wave138/cw138_03_the_scale_is_balanced_in_public_plan.md`](expansions/prose_wave138/cw138_03_the_scale_is_balanced_in_public_plan.md) |
 | 1,418,424 | [`docs/expansions/prose_wave138/cw138_20_three_notes_in_the_ruined_hall_plan.md`](expansions/prose_wave138/cw138_20_three_notes_in_the_ruined_hall_plan.md) |
 | 1,417,405 | [`docs/expansions/prose_wave138/cw138_01_first_frost_on_the_seed_packet_plan.md`](expansions/prose_wave138/cw138_01_first_frost_on_the_seed_packet_plan.md) |
-| 1,413,355 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
+| 1,414,729 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,413,345 | [`docs/expansions/prose_wave138/cw138_04_the_number_she_cannot_send_plan.md`](expansions/prose_wave138/cw138_04_the_number_she_cannot_send_plan.md) |
 | 1,412,732 | [`docs/expansions/prose_wave138/cw138_07_the_board_rewrites_prices_every_week_plan.md`](expansions/prose_wave138/cw138_07_the_board_rewrites_prices_every_week_plan.md) |
 | 1,412,149 | [`docs/expansions/prose_wave129/cw129_09_the_part_that_gets_to_be_lonely_plan.md`](expansions/prose_wave129/cw129_09_the_part_that_gets_to_be_lonely_plan.md) |
@@ -6956,7 +6956,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,413,355 | **ASHFALL Worktree Ownership** — User-authorized fifteen-item visual continuation. Root owns exact new |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,414,729 | **ASHFALL Worktree Ownership** — User-authorized implementation ("Continue doing more work!", 2026-09-29) — |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
