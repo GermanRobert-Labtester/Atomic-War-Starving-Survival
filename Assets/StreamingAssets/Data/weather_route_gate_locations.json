@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "description": "Links weather route gates (lore caravan routes) to dispatchable expedition locations that lie on them. Thematic; edit freely. route_06 and route_08 are intentionally absent: their gates use required_weather (seasonal shortcut) and would lock the linked locations outside blizzards. route_07 and route_15 have no evidence-based location.",
+  "links": [
+    {
+      "route_id": "route_01_the_iron_line_garrison_express",
+      "location_ids": [
+        "loc_settlement_fort_karkov",
+        "loc_railway_span_44_alpha"
+      ],
+      "basis": "origin hub is Fort Karkov; main railway spur"
+    },
+    {
+      "route_id": "route_02_the_canal_barge_waterway_run",
+      "location_ids": [
+        "loc_settlement_lock_seven",
+        "loc_lock_gate_four"
+      ],
+      "basis": "origin hub is the Lock Seven canal tollgate; sluice waterway"
+    },
+    {
+      "route_id": "route_03_the_black_loess_grain_haul",
+      "location_ids": [
+        "loc_grain_silo"
+      ],
+      "basis": "origin hub is the sunken grain silo collective"
+    },
+    {
+      "route_id": "route_04_the_holy_spring_mercy_trek",
+      "location_ids": [
+        "loc_settlement_st_nicholas",
+        "loc_pilgrim_switchbacks"
+      ],
+      "basis": "route is the St. Nicholas pilgrimage and mercy trek"
+    },
+    {
+      "route_id": "route_05_the_spoil_heap_coke_and_steel_route",
+      "location_ids": [
+        "loc_foundry_west_stacks"
+      ],
+      "basis": "anthracite and slag convoy serves the foundry"
+    },
+    {
+      "route_id": "route_09_the_nomad_ridge_drift",
+      "location_ids": [
+        "loc_wind_gap_ridge"
+      ],
+      "basis": "steppe ridge drift route"
+    },
+    {
+      "route_id": "route_11_the_quarry_pit_granite_cartage",
+      "location_ids": [
+        "location_quarry_overlook"
+      ],
+      "basis": "granite cartage from the quarry pit"
+    },
+    {
+      "route_id": "route_12_the_cloud_eyrie_meteorological_ascent",
+      "location_ids": [
+        "location_observatory_dome",
+        "loc_summit_relay"
+      ],
+      "basis": "Mount Karkov ascent between observatory and mountain settlements"
+    },
+    {
+      "route_id": "route_13_the_subway_tile_vault_underpass",
+      "location_ids": [
+        "loc_excavation_metro_interchange",
+        "location_sub_level_4_transit"
+      ],
+      "basis": "Metro subterranean trunk"
+    },
+    {
+      "route_id": "route_16_the_radioactive_graveyard_salvage_crawl",
+      "location_ids": [
+        "loc_recovery_yard"
+      ],
+      "basis": "ghost zone of cranes; the recovery yard is the crane site"
+    },
+    {
+      "route_id": "route_17_the_telegraph_wire_runner_post",
+      "location_ids": [
+        "loc_radio_relay_mast"
+      ],
+      "basis": "telegraph relay dispatch line"
+    }
+  ]
+}

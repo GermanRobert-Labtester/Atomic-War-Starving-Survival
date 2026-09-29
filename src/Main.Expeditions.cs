@@ -188,6 +188,20 @@ namespace AtomicWar.GodotApp
                     EncounterMultiplier = fx.travel_encounter_multiplier
                 };
             });
+            // Plan 48 — authored weather gates block dispatch (and feed the
+            // force-passage consequences below). State is derived from the
+            // current weather and held override items; nothing is saved.
+            var weatherGates = Ashfall.Core.World.WeatherRouteGateCatalog.LoadFromDirectory(
+                CatalogPath.ResolveDataDir(),
+                CatalogPath.CreateFileIOForDataDir(CatalogPath.ResolveDataDir()));
+            _expeditions.ExtraGateBlock = locationId =>
+            {
+                if (_world?.Weather == null) return null;
+                return weatherGates.EvaluateBlock(
+                    locationId,
+                    _world.Weather.Current.ToString(),
+                    item => (_inventory?.Inventory?.CountById(item) ?? 0) > 0);
+            };
             // C2 / Plan 20A (G3) — the documented contract of
             // OnWeatherGateForced is that the radiation owner applies
             // block.ForceRadDose to the survivor. This is an acute discrete

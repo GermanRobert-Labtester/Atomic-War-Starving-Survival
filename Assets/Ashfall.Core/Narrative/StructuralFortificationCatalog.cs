@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string gatePath = Path.Combine(directoryPath, "blast_gate_mechanical_audits.json");
             if (File.Exists(gatePath))
             {
-                var list = CatalogLocator.LoadWrappedList<BlastGateAuditEntry>(File.ReadAllText(gatePath), options);
+                var list = CatalogLocator.LoadWrappedList<BlastGateAuditEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(gatePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string siltPath = Path.Combine(directoryPath, "sump_drainage_silt_reports.json");
             if (File.Exists(siltPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SumpSiltReportEntry>(File.ReadAllText(siltPath), options);
+                var list = CatalogLocator.LoadWrappedList<SumpSiltReportEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(siltPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string leadPath = Path.Combine(directoryPath, "lead_wall_degradation_logs.json");
             if (File.Exists(leadPath))
             {
-                var list = CatalogLocator.LoadWrappedList<LeadWallDegradationEntry>(File.ReadAllText(leadPath), options);
+                var list = CatalogLocator.LoadWrappedList<LeadWallDegradationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(leadPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string filterPath = Path.Combine(directoryPath, "intake_filter_clogging_logs.json");
             if (File.Exists(filterPath))
             {
-                var list = CatalogLocator.LoadWrappedList<IntakeFilterClogEntry>(File.ReadAllText(filterPath), options);
+                var list = CatalogLocator.LoadWrappedList<IntakeFilterClogEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(filterPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

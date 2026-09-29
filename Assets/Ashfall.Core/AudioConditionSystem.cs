@@ -12,6 +12,10 @@ namespace Ashfall.Core
         public string id { get; set; } = string.Empty;
         public string title { get; set; } = string.Empty;
         public string bodyText { get; set; } = string.Empty;
+        /// <summary>Campaign day the log was recorded (0 = undated).</summary>
+        public int day { get; set; }
+        /// <summary>Optional editorial listening note; never replaces bodyText.</summary>
+        public string listening_note { get; set; } = string.Empty;
     }
 
     /// <summary>Plan 49 — root document of audio_logs_expansion_05.json.</summary>
@@ -83,6 +87,25 @@ namespace Ashfall.Core
         {
             if (string.IsNullOrWhiteSpace(logId)) return null;
             return _audioLogs.TryGetValue(logId.Trim(), out var log) ? log.bodyText : null;
+        }
+
+        /// <summary>Audio logs recorded on <paramref name="day"/>, in stable id order.</summary>
+        public IReadOnlyList<AuthoredAudioLog> GetAudioLogsForDay(int day)
+        {
+            var result = new List<AuthoredAudioLog>();
+            if (day <= 0) return result;
+            foreach (var log in _audioLogs.Values)
+                if (log.day == day) result.Add(log);
+            result.Sort((a, b) => string.CompareOrdinal(a.id, b.id));
+            return result;
+        }
+
+        /// <summary>Optional authored listening note for an audio log id, or null.</summary>
+        public string? GetAudioLogListeningNote(string logId)
+        {
+            if (string.IsNullOrWhiteSpace(logId)) return null;
+            if (!_audioLogs.TryGetValue(logId.Trim(), out var log)) return null;
+            return string.IsNullOrWhiteSpace(log.listening_note) ? null : log.listening_note;
         }
 
         public event Action<ActiveAudioCondition> OnConditionStarted;

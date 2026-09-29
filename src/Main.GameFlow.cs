@@ -17,6 +17,7 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+#if ASHFALL_SELFTEST
         private void RunDashboardUiTestAndQuit()
         {
             BuildUserInterface();
@@ -87,6 +88,7 @@ namespace AtomicWar.GodotApp
         }
 
 
+#endif
         // -----------------------------------------------------------------
         // Menu callbacks
         // -----------------------------------------------------------------
@@ -194,6 +196,7 @@ namespace AtomicWar.GodotApp
                 return;
             }
 
+            _lastCampaignPanelId = string.Empty;
             _saveLoadHost?.UpdateManifest(m =>
             {
                 m.manifestVersion = SaveManifest.CurrentManifestVersion;
@@ -379,6 +382,9 @@ namespace AtomicWar.GodotApp
                 if (_openControlById.TryGetValue(panelId, out var reopened) &&
                     AtomicWar.GodotApp.UI.UiMotion.IsClosing(reopened))
                     AtomicWar.GodotApp.UI.UiMotion.CancelClose(reopened);
+                if (_state == GameState.Playing && panelId != "save_load" &&
+                    panelId != "save" && panelId != "settings" && panelId != "quit")
+                    _lastCampaignPanelId = panelId;
                 return;
             }
 

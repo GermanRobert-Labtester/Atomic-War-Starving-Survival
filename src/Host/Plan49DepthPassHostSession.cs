@@ -105,6 +105,8 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Live authored-catalog consumption: audio-log text for an audio key.</summary>
         public string? GetAudioLogText(string logId) => AudioConditions.GetAudioLogBody(logId);
+        public string? GetAudioLogListeningNote(string logId) => AudioConditions.GetAudioLogListeningNote(logId);
+        public IReadOnlyList<AuthoredAudioLog> GetAudioLogsForDay(int day) => AudioConditions.GetAudioLogsForDay(day);
 
         /// <summary>Live authored-catalog consumption: memorial text by name.</summary>
         public string? GetMemorialText(string name) => Memorials.GetMemorialText(name);

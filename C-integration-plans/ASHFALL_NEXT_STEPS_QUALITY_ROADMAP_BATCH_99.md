@@ -351,7 +351,7 @@ The original summary claimed contracts are purely additive guards with zero brea
 ## Review Notes (Corrected)
 
 Adversarial review performed against the real repository at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. All findings
+`.`. All findings
 below were confirmed by reading source files and running `grep`/symbol
 search — not inferred from this document's own claims.
 

@@ -186,7 +186,7 @@ Batch 46 may begin when accessibility capabilities, calibrated observation, mari
 
 ## Review Notes (Corrected)
 
-This file was adversarially reviewed against the actual repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Findings:
+This file was adversarially reviewed against the actual repository at `.` and corrected in place. Findings:
 
 1. **Verified factual claims were accurate but under-cited.** `src/Host/MedicalHostSession.cs`, `Assets/Ashfall.Core/Medical/ChemicalDependencySystem.cs`, and `Assets/Ashfall.Core/Medical/VigilStateMachine.cs` all exist exactly as described, with confirmed save DTOs `ChemicalDependencyLedgerState` and `VigilSaveState`. Added these exact class/DTO names to Section 2 so the implementer doesn't have to re-derive them, and confirmed `--medical-selftest` is a real registered CLI verb in `src/Host/HostCli.cs`.
 

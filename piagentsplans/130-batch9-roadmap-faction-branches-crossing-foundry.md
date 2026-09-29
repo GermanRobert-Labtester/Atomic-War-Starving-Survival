@@ -2,7 +2,7 @@
 ## Comprehensive Master Architectural Integration Plan & Systems Implementation Framework
 
 **Canonical Tracking ID:** `PLAN-130-BATCH9-ROADMAP`
-**Parent Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Parent Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 **Target Core Framework:** `Assets/Ashfall.Core/` (`netstandard2.1`, Engine-Free Invariant 2)
 **Host Framework:** `src/` (Godot 4.3+ .NET 8 Host Adapter Layer)
 **Authoritative Data Path:** `Assets/StreamingAssets/Data/` (Authoritative Snake_Case JSON)
@@ -4539,7 +4539,7 @@ This section compiles extended architectural verification profiles across all te
 
 **Execution Timestamp:** 2026-09-25T04:15:00+03:00
 **Harmonization Lead:** Antigravity Senior Systems Integrity Engineer
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 15.1 Concurrency & Boundary Hardening
 1. **Thread Isolation**: The domain coordinator is strictly single-threaded, eliminating data races without expensive synchronization primitives. The Godot host adapter executes all simulation updates sequentially on the main simulation tick.

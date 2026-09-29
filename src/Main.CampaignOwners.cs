@@ -168,7 +168,9 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("ration_conflict", new RationConflictDayOwner(this), phase: 5);
             // Triple package J — volunteer signatures, world evolution, emergency questlines.
             _campaignDay.Register("voluntary_register", new VoluntaryRegisterDayOwner(this), phase: 5);
-            _campaignDay.Register("world_evolution", new WorldEvolutionDayOwner(this), phase: 5);
+            // Authored threshold events have their own owner; phase-4 world_evolution
+            // already owns location, wildlife and landmark progression.
+            _campaignDay.Register("world_evolution_events", new WorldEvolutionDayOwner(this), phase: 5);
             // Cassette collections — derive tape acquisition from the live inventory.
             _campaignDay.Register("cassette_playback", new CassettePlaybackDayOwner(this), phase: 5);
             // Plan 159 — shelter governance: evaluates policy consent, disputes, and shelter stability.
@@ -205,6 +207,8 @@ namespace AtomicWar.GodotApp
             // Plan 185 — memory & knowledge decay across cognition, skills, and relationships.
             _campaignDay.Register("memory_decay", new MemoryDecayDayOwner(this), phase: 5);
             // Plan 200 — survivor personal quests and character arcs.
+            // Plan 49 depth pass — authored audio logs surface in the journal on their recorded day.
+            _campaignDay.Register("audio_logs", new AudioLogsDayOwner(this), phase: 5);
             _campaignDay.Register("personal_quests", new PersonalQuestsDayOwner(this), phase: 5);
             // Plan 202 — interpersonal conflict, grievance accumulation, and mediation resolution.
             _campaignDay.Register("interpersonal_conflict", new InterpersonalConflictDayOwner(this), phase: 5);
@@ -956,7 +960,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        /// <summary>World evolution day owner (ownerId <c>world_evolution</c>, phase 5).</summary>
+        /// <summary>Authored world events owner (ownerId <c>world_evolution_events</c>, phase 5).</summary>
         private sealed class WorldEvolutionDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
@@ -980,7 +984,7 @@ namespace AtomicWar.GodotApp
                 _m.FlushWorldEvolutionIfDirty();
                 int triggered = _m.WorldEvolution?.TriggeredEventIds.Count ?? 0;
                 events.Add(new DayStateChangeEvent(
-                    "world_evolution_ticked", "world_evolution", null, null, triggered));
+                    "world_evolution_ticked", "world_evolution_events", null, null, triggered));
             }
         }
 
@@ -3720,4 +3724,3 @@ namespace AtomicWar.GodotApp
         }
     }
 }
-

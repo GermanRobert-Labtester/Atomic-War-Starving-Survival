@@ -9,6 +9,11 @@
     <UseSharedCompilation>false</UseSharedCompilation>
     <UseRazorBuildServer>false</UseRazorBuildServer>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <!-- Godot uses ExportRelease for shipping exports. Debug/ExportDebug retain
+         the CLI harness; an explicit property also supports development exports. -->
+    <AshfallIncludeSelfTests Condition="'$(AshfallIncludeSelfTests)' == '' and '$(Configuration)' == 'ExportRelease'">false</AshfallIncludeSelfTests>
+    <AshfallIncludeSelfTests Condition="'$(AshfallIncludeSelfTests)' == ''">true</AshfallIncludeSelfTests>
+    <DefineConstants Condition="'$(AshfallIncludeSelfTests)' == 'true'">$(DefineConstants);ASHFALL_SELFTEST</DefineConstants>
     <!--
       Effective NoWarn policy (shared Directory.Build.props list plus this project's entries):
       CS0108/CS0114  — intentional member hiding in host sessions
@@ -35,6 +40,10 @@
       host and the xUnit test project. Do not copy core sources elsewhere.
     -->
     <Compile Include="Assets/Ashfall.Core/**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(AshfallIncludeSelfTests)' != 'true'">
+    <Compile Remove="src/Main.UiTests*.cs;src/**/HostCli.*.cs;src/**/*SelfTest.cs;src/**/*SelfTests.cs;src/Main.WorldPlaytest.cs;src/Host/SevenDayDeterministicSmokeTest.cs;src/CSharpVerificationTest.cs;src/UI/SnapshotHarness.cs;src/UI/SnapshotOrchestrator.cs;src/Host/AssetCoverageScanner.cs;src/Host/AssetCoverageReport.cs" />
   </ItemGroup>
 
   <ItemGroup>

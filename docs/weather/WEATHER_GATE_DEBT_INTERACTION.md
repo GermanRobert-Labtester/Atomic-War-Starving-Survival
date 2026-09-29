@@ -11,6 +11,13 @@ The resolution chain is strictly:
 Debt Instance -> Creditor Faction -> Repayment Route -> Weather Gate -> weather_delay_debt flag -> Blocked Status
 ```
 
+> **Status (2026-09-29): implemented.** `LedgerDebtSystem.TickDaily` consults `WeatherDelayGateProvider`
+> (set by `Main.DebtCredit.cs` to `DebtRouteAccessResolver.FindBlockingGateId`). Flagged gates:
+> `gate_exposed_highway_fallout` (route_01), `gate_lake_edge_blizzard` (route_02),
+> `gate_highland_supply_blizzard` (route_05). `gate_seasonal_ice_road` (route_08) is deliberately NOT flagged: it uses
+> `required_weather` (a seasonal shortcut), so it reads as "blocked" outside blizzards and would burn the grace budget.
+> Tests: `Ashfall.Core.Tests/World/WeatherGateDebtInteractionTests.cs`.
+
 ## 3. Schema & Configuration
 Weather gates supporting debt delays carry the `weather_delay_debt` boolean flag in `weather_route_gates.json`:
 ```json

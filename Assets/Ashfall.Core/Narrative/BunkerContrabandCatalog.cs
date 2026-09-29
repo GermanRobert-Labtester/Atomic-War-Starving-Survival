@@ -120,7 +120,7 @@ namespace Ashfall.Core.Narrative
         public static BunkerContrabandCatalog LoadFromFile(string path)
         {
             if (!File.Exists(path)) return new BunkerContrabandCatalog();
-            string json = File.ReadAllText(path);
+            string json = Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(path);
             return LoadFromJson(json);
         }
 

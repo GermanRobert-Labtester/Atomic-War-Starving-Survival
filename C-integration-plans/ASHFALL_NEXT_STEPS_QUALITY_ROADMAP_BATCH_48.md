@@ -197,7 +197,7 @@ After Batch 48, run a repository-wide authority audit: one writer per mutable fi
 
 ## Review Notes (Corrected)
 
-This file was adversarially reviewed against the actual repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Findings:
+This file was adversarially reviewed against the actual repository at `.` and corrected in place. Findings:
 
 1. **The central factual claim about `EpilogueMatrixRuntime` was wrong.** The document repeatedly describes it as having an existing "evidence/criteria" contract that Step 768 merely "registers through" — read the full 149-line file: it is three small enum-classifying methods (`EvaluateRegionalFate`, `EvaluateDemographics`, `EvaluateMoralStanding`) over one flat 8-field `EpilogueEvaluationContext` DTO, feeding a `GenerateEpilogueNarrative` method built entirely from hardcoded `switch`/prose blocks. There is no evidence-bundle type, no confidence/timestamp concept, and no extensibility hook anywhere in the class. This is corrected in Section 1, Section 4.4, and Slice 48.4, which now treat Step 768 as designing that contract from scratch (with explicit regression tests proving old behavior is unchanged) rather than extending something that already exists.
 

@@ -388,7 +388,7 @@ batch that actually introduces concurrency (such as the async auto-save floated 
 ## Review Notes (Corrected)
 
 **Review method:** direct verification against the codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Ground truth gathered by
+`.`. Ground truth gathered by
 exhaustive search for concurrency primitives (`Task.Run`, `async`/`await`, `Thread`,
 `ThreadPool`, `Parallel.*`, `lock`, `Monitor`, `Interlocked`, `ConcurrentDictionary`,
 `ConcurrentBag`, `SemaphoreSlim`, `Mutex`, `volatile`, `WorkerThreadPool`, `Godot.Thread`) across

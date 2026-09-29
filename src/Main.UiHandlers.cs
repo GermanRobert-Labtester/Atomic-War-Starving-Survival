@@ -226,6 +226,10 @@ namespace AtomicWar.GodotApp
 
         public void OpenMoralChoiceModal(string? questId = null)
         {
+            // Exclusive-open seam: raw keys 1–5 are shared with CombatPanel and
+            // the moral-choice quick-select must never be live over an open
+            // combat surface (a11y audit 2026-09-29, §9.1).
+            CloseAllOverlayPanels();
             SetupMoralChoice();
             Ashfall.Core.MoralChoice.MoralChoiceQuestDefinition? targetDef = null;
             if (!string.IsNullOrEmpty(questId))
@@ -303,6 +307,7 @@ namespace AtomicWar.GodotApp
 
         private const string DailyBriefingSaveKey = "daily_briefing_v1";
 
+#if ASHFALL_SELFTEST
         /// <summary>
         /// UI smoke tests create and queue-free a large widget tree. Give Godot one
         /// process frame to flush queued frees before shutting down, otherwise the
@@ -335,5 +340,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
+#endif
     }
 }

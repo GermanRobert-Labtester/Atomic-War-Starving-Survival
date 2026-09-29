@@ -388,7 +388,7 @@ dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
 
 ## Review Notes (Corrected)
 
-This batch was adversarially reviewed against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Findings:
+This batch was adversarially reviewed against the live codebase at `.`. Findings:
 
 1. **Wrong project file path throughout.** The plan repeatedly references `Assets/Ashfall.Core/Ashfall.Core.csproj` — that file does not exist. `Assets/Ashfall.Core/` contains only source `.cs` files (303 of them, confirmed by `find Assets/Ashfall.Core -iname "*.cs" | wc -l`), no `.csproj`. The actual project that owns `GenerateDocumentationFile` and compiles those sources is the root-level `Ashfall.Core/Ashfall.Core.csproj` (confirmed by reading it: `TargetFramework net8.0`, `LangVersion 9.0`, `RootNamespace Ashfall.Core`, and a `<Compile Include="../Assets/Ashfall.Core/**/*.cs">` wildcard with an explicit comment warning not to duplicate sources into that folder). Every build/verification command referencing the fictional path was corrected to `Ashfall.Core/Ashfall.Core.csproj`.
 

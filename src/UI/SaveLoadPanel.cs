@@ -17,6 +17,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnClose;
         public event Action<SaveSlotId>? OnSlotSelected;
         public event Action<SaveSlotId>? OnLoadRequested;
+        public event Action<SaveSlotId>? OnRecoveryRequested;
         public event Action? OnSaveRequested;
         public event Action<SaveSlotId>? OnDeleteRequested;
         public event Action<string>? OnImportRequested;
@@ -140,6 +141,13 @@ namespace AtomicWar.GodotApp.UI
                     });
                     btnSelect.CustomMinimumSize = new Vector2(90, 32);
                     hbox.AddChild(btnSelect);
+
+                    if (_session.FindRecoverableBackup(slotId).IsSuccess)
+                    {
+                        var recover = AshfallUiHelpers.MakeButton("RECOVER BACKUP", () => OnRecoveryRequested?.Invoke(slotId));
+                        recover.CustomMinimumSize = new Vector2(170, 32);
+                        hbox.AddChild(recover);
+                    }
 
                     if (!card.IsTerminalIronMan)
                     {

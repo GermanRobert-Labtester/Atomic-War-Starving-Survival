@@ -2,7 +2,7 @@
 ## Master Architecture & Production Blueprint for Audio, Visual, Medical, Relics, Vinyl & Data Authority
 
 **Canonical Tracking ID:** `PLAN-02-09-CONSOLIDATED-INTEGRATION`
-**Parent Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Parent Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 **Target Core Framework:** `Assets/Ashfall.Core/` (`netstandard2.1`, Pure Engine-Free Domain)
 **Host Framework:** `src/` (Godot 4.3+ .NET 8 Adapter Layer)
 **Authoritative Data Path:** `Assets/StreamingAssets/Data/` (Authoritative Snake_Case JSON)
@@ -4515,7 +4515,7 @@ All string serialization in the consolidated coordinator strictly enforces `Cult
 
 **Execution Timestamp:** 2026-09-25T04:15:30+03:00
 **Harmonization Lead:** Antigravity Senior Systems Integrity Engineer
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 15.1 Memory Profiles & Zero-Allocation Invariants
 - Verified that `AdvanceMedicalTriageCycle` executes with zero heap allocations during steady-state ticks.

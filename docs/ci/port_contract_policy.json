@@ -4,6 +4,14 @@
   "total_seams": 308,
   "ports": [
     {
+      "class_name": "WeatherRouteGateCatalog",
+      "method_name": "BindRouteLocations",
+      "file_path": "Assets/Ashfall.Core/World/WeatherRouteGateCatalog.cs",
+      "owner": "world",
+      "reason": "Route-to-location links are bound by WeatherRouteGateCatalog.LoadFromDirectory, which the host calls.",
+      "classification": "LIVE_VIA_CORE"
+    },
+    {
       "class_name": "AeroponicsSystem",
       "method_name": "RegisterProfile",
       "file_path": "Assets/Ashfall.Core/Shelter/AeroponicsSystem.cs",
@@ -1763,15 +1771,6 @@
     },
     {
       "class_name": "SkillProgressionSystem",
-      "method_name": "RegisterDefaultSkills",
-      "file_path": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
-      "classification": "TEST_ONLY",
-      "owner": "survivors",
-      "reason": "Retained zero-op compatibility boundary; production skills load from skills.json.",
-      "diagnostic": true
-    },
-    {
-      "class_name": "SkillProgressionSystem",
       "method_name": "RegisterSkill",
       "file_path": "Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs",
       "classification": "HOST_REQUIRED",
@@ -2252,24 +2251,6 @@
       "file_path": "Assets/Ashfall.Core/Assets/AssetManifest.cs",
       "owner": "assets",
       "reason": "Plan 50 asset manifest registration exercised by tests; host resolution uses the catalog loader.",
-      "classification": "TEST_ONLY",
-      "diagnostic": true
-    },
-    {
-      "class_name": "MaritimeExplorationSystem",
-      "method_name": "RegisterDiveSite",
-      "file_path": "Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs",
-      "owner": "maritime",
-      "reason": "Island system (no host/save/panel); catalog registration covered by tests only.",
-      "classification": "TEST_ONLY",
-      "diagnostic": true
-    },
-    {
-      "class_name": "MaritimeExplorationSystem",
-      "method_name": "RegisterEquipment",
-      "file_path": "Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs",
-      "owner": "maritime",
-      "reason": "Island system (no host/save/panel); catalog registration covered by tests only.",
       "classification": "TEST_ONLY",
       "diagnostic": true
     },

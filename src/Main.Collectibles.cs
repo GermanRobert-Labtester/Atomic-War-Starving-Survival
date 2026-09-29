@@ -145,6 +145,31 @@ namespace AtomicWar.GodotApp
             _collectibleTutorials?.OnCollectibleDiscovered(result);
         }
 
+        /// <summary>
+        /// Collectible map markers projected from live discovery state, rebuilt
+        /// deterministically on demand. Pure projection over
+        /// <see cref="CollectibleDiscoveryState"/> and the loaded
+        /// <see cref="CollectibleCatalog"/>: it records nothing and mutates
+        /// nothing, so it is safe at any map/UI lifecycle boundary.
+        /// </summary>
+        private List<CollectibleMapMarker> GetCollectibleMapMarkers()
+        {
+            if (_collectibleDiscovery == null || _collectibleCatalog == null)
+                return new List<CollectibleMapMarker>();
+            return new List<CollectibleMapMarker>(
+                CollectibleMapProjector.ProjectMarkers(
+                    _collectibleDiscovery,
+                    _collectibleCatalog));
+        }
+
+        /// <summary>Same projection, clustered by location for cartography.</summary>
+        private List<CollectibleMapCluster> GetCollectibleMapClusters()
+        {
+            return new List<CollectibleMapCluster>(
+                CollectibleMapProjector.ClusterByLocation(
+                    GetCollectibleMapMarkers()));
+        }
+
         private void SaveCollectibles()
         {
             bool ok = true;

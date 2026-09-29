@@ -1,6 +1,6 @@
 # ASHFALL — Save-Store Contract Matrix & Completeness Authority
 
-**Last Verified:** 2026-09-27<br>
+**Last Verified:** 2026-09-28<br>
 **Total Save Stores:** 316 classes<br>
 **Total Static Persistence Methods:** 323 methods<br>
 **Checksum-Protected Stores:** 316/316 (100.0%)<br>
@@ -161,7 +161,7 @@
 | 133 | `InterpersonalConflictSaveStore` | [`src/Host/InterpersonalConflictHostSession.cs`](../../src/Host/InterpersonalConflictHostSession.cs) | `interpersonal_conflict` | `interpersonal_conflict_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 134 | `InventorySaveStore` | [`src/Host/InventorySaveStore.cs`](../../src/Host/InventorySaveStore.cs) | `inventory` | `inventory_save.json` | `TryLoad()` | ✅ | ✅ | `ActiveSaveSlotPersistenceTests.cs`, `CampaignEnvelopeBuilderTests.cs` *(+12 more)* |
 | 135 | `ItemLoreSaveStore` | [`src/Host/ItemLoreHostSession.cs`](../../src/Host/ItemLoreHostSession.cs) | `item_lore` | `item_lore_save.json` | `TryLoad()` | ✅ | ✅ | `Plan190ItemLoreIntegrationTests.cs` |
-| 136 | `JournalSaveStore` | [`src/Journal/JournalSaveStore.cs`](../../src/Journal/JournalSaveStore.cs) | `journal` | `journal_save.json` | `Load()`, `Save()` | ✅ | ✅ | `CampaignEnvelopeBuilderTests.cs`, `CampaignEnvelopeFuzzTests.cs` *(+12 more)* |
+| 136 | `JournalSaveStore` | [`src/Journal/JournalSaveStore.cs`](../../src/Journal/JournalSaveStore.cs) | `journal` | `journal_save.json` | `Load()`, `Save()` | ✅ | ✅ | `ActiveSaveSlotPersistenceTests.cs`, `CampaignEnvelopeBuilderTests.cs` *(+13 more)* |
 | 137 | `JusticeSaveStore` | [`src/Host/JusticeSaveStore.cs`](../../src/Host/JusticeSaveStore.cs) | `wasteland_justice` | `wasteland_justice_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 138 | `KilnworksSaveStore` | [`src/Host/KilnworksHostSession.cs`](../../src/Host/KilnworksHostSession.cs) | `kilnworks` | `kilnworks_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 139 | `KineticStorageSaveStore` | [`src/Host/KineticStorageSaveStore.cs`](../../src/Host/KineticStorageSaveStore.cs) | `kinetic_storage` | `kinetic_storage_save.json` | `TryLoad()` | ✅ | ✅ | — |
@@ -191,7 +191,7 @@
 | 163 | `MutationSaveStore` | [`src/Host/MutationSaveStore.cs`](../../src/Host/MutationSaveStore.cs) | `mutation_tree` | `mutation_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 164 | `NarcoticsSaveStore` | [`src/Host/NarcoticsSaveStore.cs`](../../src/Host/NarcoticsSaveStore.cs) | `narcotics` | `narcotics_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 165 | `NarrativeQuestlineSaveStore` | [`src/Host/NarrativeQuestlineSaveStore.cs`](../../src/Host/NarrativeQuestlineSaveStore.cs) | `narrative_questlines` | `narrative_questlines_save.json` | `TryLoad()` | ✅ | ✅ | — |
-| 166 | `NarrativeSaveStore` | [`src/Host/NarrativeSaveStore.cs`](../../src/Host/NarrativeSaveStore.cs) | `narrative` | `narrative_save.json` | `TryLoad()` | ✅ | ✅ | `AbyssalAnomaliesCatalogTests.cs`, `ApicultureBeeCatalogTests.cs` *(+98 more)* |
+| 166 | `NarrativeSaveStore` | [`src/Host/NarrativeSaveStore.cs`](../../src/Host/NarrativeSaveStore.cs) | `narrative` | `narrative_save.json` | `TryLoad()` | ✅ | ✅ | `AbyssalAnomaliesCatalogTests.cs`, `ApicultureBeeCatalogTests.cs` *(+99 more)* |
 | 167 | `NpcMemorySaveStore` | [`src/Host/NpcMemoryHostSession.cs`](../../src/Host/NpcMemoryHostSession.cs) | `npc_memory` | `npc_memory_save.json` | `TryLoad()` | ✅ | ✅ | `Plan147NpcMemoryHostIntegrationTests.cs` |
 | 168 | `NuclearCoreSaveStore` | [`src/Host/NuclearCoreSaveStore.cs`](../../src/Host/NuclearCoreSaveStore.cs) | `nuclear_core_lifecycle` | `nuclear_core_lifecycle_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 169 | `NuclearWinterSaveStore` | [`src/Host/OrphanSealWave1HostSessions.cs`](../../src/Host/OrphanSealWave1HostSessions.cs) | `nuclear_winter_progression` | `nuclear_winter_progression_save.json` | `TryLoad()` | ✅ | ✅ | `OrphanSealPriorityWave1Tests.cs` |

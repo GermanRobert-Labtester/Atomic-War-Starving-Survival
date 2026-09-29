@@ -480,7 +480,7 @@ This batch is COMPLETE when:
 ## Review Notes (Corrected)
 
 This plan was adversarially reviewed against the actual codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` prior to execution. The following
+`.` prior to execution. The following
 factual errors in the original draft were found and corrected in place above:
 
 1. **`StartingLevelSystem` does not implement "initial difficulty selection."** The original

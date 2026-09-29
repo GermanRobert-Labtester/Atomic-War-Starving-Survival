@@ -986,7 +986,7 @@ dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter "GoldenFramewo
 ## Review Notes (Corrected)
 
 This document was adversarially reviewed against the actual ASHFALL codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. The following factual
+`.`. The following factual
 errors, unrunnable code, and scope problems were found and corrected in place above.
 
 ### Factual errors found and fixed

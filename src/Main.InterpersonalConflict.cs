@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.Survivors;
 
+using Ashfall.Core;
+using Ashfall.Core.Random;
+
 namespace AtomicWar.GodotApp
 {
     public partial class Main
@@ -100,5 +103,77 @@ namespace AtomicWar.GodotApp
             _interpersonalConflict = null;
             _interpersonalConflictDirty = false;
         }
+
+        /// <summary>
+        /// Plan 202 projection. The typed conflict view is derived from the
+        /// canonical survivor-relations state and never creates a second ledger.
+        /// </summary>
+        public IReadOnlyList<InterpersonalConflict> GetInterpersonalConflictProjection()
+        {
+            SetupSurvivorRelations();
+            return InterpersonalConflictSystem.ProjectCanonicalRelations(
+                _survivorRelationsCore.State, _simDay);
+        }
+
+        /// <summary>Return source-backed relationship grievances as a read model.</summary>
+        public IReadOnlyList<SurvivorGrievance> GetInterpersonalGrievanceProjection()
+        {
+            SetupSurvivorRelations();
+            return InterpersonalConflictSystem.ProjectCanonicalGrievances(
+                _survivorRelationsCore.State, _simDay);
+        }
+
+        /// <summary>
+        /// Resolve a projected conflict through the canonical relations owner.
+        /// The caller passes the underlying relations conflict id (without the
+        /// <c>relations:</c> projection prefix), so affinity and mediation
+        /// history are applied exactly once by SurvivorRelationsSystem.
+        /// </summary>
+        public ActionResult MediateInterpersonalConflict(
+            string canonicalConflictId,
+            string mediatorId,
+            MediationStyle style = MediationStyle.Apology)
+        {
+            SetupSurvivorRelations();
+            if (!string.IsNullOrEmpty(canonicalConflictId)
+                && canonicalConflictId.StartsWith("relations:", StringComparison.Ordinal))
+            {
+                canonicalConflictId = canonicalConflictId.Substring("relations:".Length);
+            }
+            var result = _survivorRelationsCore.Mediate(canonicalConflictId, mediatorId, style);
+            if (result.IsSuccess)
+            {
+                _survivorRelationsDirty = true;
+                _survivorRelationsPanel?.RefreshView();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Applies the conflict package's typed morale fact to the canonical
+        /// Needs owner. SurvivorRelationsSystem raises this once for both the
+        /// existing panel command and the Plan 202 host command.
+        /// </summary>
+        private void ApplyInterpersonalConflictMorale(MediationEntry entry)
+        {
+            if (entry == null) return;
+            SetupSurvivors();
+            if (_survivors?.Needs == null || _survivorRelationsCore == null) return;
+
+            var conflict = _survivorRelationsCore.State.activeConflicts.Find(c =>
+                c != null && string.Equals(c.conflictId, entry.conflictId, StringComparison.Ordinal));
+            if (conflict == null) return;
+            if (!Enum.TryParse(entry.outcome, out MediationStyle style)) return;
+
+            float moraleDelta = InterpersonalConflictSystem.MoraleDeltaFor(style);
+            if (moraleDelta == 0f) return;
+            _survivors.Needs.ApplyAttributedDelta(
+                conflict.dwellerA, NeedKind.Morale, moraleDelta,
+                InterpersonalConflictSystem.ResolutionMoraleSource);
+            _survivors.Needs.ApplyAttributedDelta(
+                conflict.dwellerB, NeedKind.Morale, moraleDelta,
+                InterpersonalConflictSystem.ResolutionMoraleSource);
+        }
+
     }
 }

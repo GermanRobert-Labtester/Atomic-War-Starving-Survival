@@ -14,7 +14,7 @@
 
 ## ⚠️ BLOCKING DEPENDENCY — VERIFIED NOT TO EXIST
 
-This batch's entire foundation (Step 1's `BalanceTestRunner` "constructs a `GameSessionTestHarness` per seed") assumes `GameSessionTestHarness` from Batch 63 is a real, working class. **It is not.** Verified directly against the repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`:
+This batch's entire foundation (Step 1's `BalanceTestRunner` "constructs a `GameSessionTestHarness` per seed") assumes `GameSessionTestHarness` from Batch 63 is a real, working class. **It is not.** Verified directly against the repository at `.`:
 
 - `grep -r "GameSessionTestHarness"` across the entire tree returns **zero matches**. The class does not exist anywhere — not in `Ashfall.Core.Tests/`, not in `Assets/Ashfall.Core/`, not in `src/`.
 - No `Ashfall.Core.Tests/Integration/` directory exists at all (confirmed subfolders in `Ashfall.Core.Tests/` today: `Campaign/`, `Economy/`, `Endgame/`, `Expeditions/`, `Foundry/`, `Medical/`, `Memorial/`, `Radio/`, `Shelter/`, `Survivors/`, `Warlords/`, `World/` — no `Integration/`).
@@ -411,7 +411,7 @@ dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter "FullyQualifie
 
 ## Review Notes (Corrected)
 
-This plan was adversarially reviewed against the real repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Findings:
+This plan was adversarially reviewed against the real repository at `.` and corrected in place. Findings:
 
 1. **Critical blocking dependency, previously understated.** The original header listed "GameSessionTestHarness (Batch 63)" as a dependency with **Risk: None**. Verified via repo-wide search (`grep -r "GameSessionTestHarness"`) that this class does not exist anywhere in the codebase — no `Integration/` folder even exists under `Ashfall.Core.Tests/` yet. Reading Batch 63's own plan document confirms this is expected: Batch 63's Step 2 (the step that would actually implement the harness) is explicitly flagged in that document as "the highest-complexity item in the entire batch," not yet done, with its own open risk that some systems may not construct standalone without production-code changes. Batch 83 as originally written treated a speculative, unbuilt dependency as a solid foundation. Added a top-of-document blocking-dependency section, changed Priority to reflect the block, changed Risk from "None" to "Low" (contingent on Batch 63), and added prerequisite gates to Steps 1 and 3 specifically (the two steps that directly reference the harness).
 

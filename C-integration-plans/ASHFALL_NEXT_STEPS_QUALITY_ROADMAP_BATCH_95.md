@@ -850,7 +850,7 @@ Additionally, before Step 3's guard wiring is flipped to default-ON in a release
 
 ## Review Notes (Corrected)
 
-This file was adversarially reviewed against the real codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Summary of what was wrong and what was fixed:
+This file was adversarially reviewed against the real codebase at `.` and corrected in place. Summary of what was wrong and what was fixed:
 
 ### Factual errors found and corrected
 

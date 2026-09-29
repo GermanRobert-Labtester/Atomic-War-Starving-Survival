@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string gasketPath = Path.Combine(directoryPath, "neoprene_gasket_degradation_logs.json");
             if (File.Exists(gasketPath))
             {
-                var list = CatalogLocator.LoadWrappedList<NeopreneGasketDegradationEntry>(File.ReadAllText(gasketPath), options);
+                var list = CatalogLocator.LoadWrappedList<NeopreneGasketDegradationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(gasketPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string aramidPath = Path.Combine(directoryPath, "aramid_fiber_rot_reports.json");
             if (File.Exists(aramidPath))
             {
-                var list = CatalogLocator.LoadWrappedList<AramidFiberRotEntry>(File.ReadAllText(aramidPath), options);
+                var list = CatalogLocator.LoadWrappedList<AramidFiberRotEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(aramidPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string tirePath = Path.Combine(directoryPath, "tire_retreading_compound_logs.json");
             if (File.Exists(tirePath))
             {
-                var list = CatalogLocator.LoadWrappedList<TireRetreadCompoundEntry>(File.ReadAllText(tirePath), options);
+                var list = CatalogLocator.LoadWrappedList<TireRetreadCompoundEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(tirePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string filmPath = Path.Combine(directoryPath, "celluloid_film_decomposition_records.json");
             if (File.Exists(filmPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CelluloidFilmDecompositionEntry>(File.ReadAllText(filmPath), options);
+                var list = CatalogLocator.LoadWrappedList<CelluloidFilmDecompositionEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(filmPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

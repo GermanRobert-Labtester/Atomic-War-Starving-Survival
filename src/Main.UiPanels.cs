@@ -892,6 +892,7 @@ namespace AtomicWar.GodotApp
             // ── Save/Load panel (overlay) ──
             _saveLoadPanel = new SaveLoadPanel();
             _saveLoadPanel.OnClose += CloseSaveLoadPanel;
+            _saveLoadPanel.OnRecoveryRequested += PromptBackupRecovery;
             _saveLoadPanel.OnSlotSelected += slotId =>
             {
                 if (_saveLoadHost != null && _saveLoadHost.SelectSlot(slotId))
@@ -1716,7 +1717,8 @@ namespace AtomicWar.GodotApp
                 for (int i = 0; i < slots.Count; i++)
                 {
                     var card = _saveLoadHost.BuildSlotCard(slots[i]);
-                    if (card.Exists && !card.IsTerminalIronMan)
+                    if ((card.HasValidSave && !card.IsTerminalIronMan) ||
+                        _saveLoadHost.FindRecoverableBackup(slots[i]).IsSuccess)
                     {
                         hasSave = true;
                         break;

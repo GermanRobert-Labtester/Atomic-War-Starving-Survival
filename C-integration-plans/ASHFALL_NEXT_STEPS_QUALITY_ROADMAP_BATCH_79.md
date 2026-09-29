@@ -548,7 +548,7 @@ store before committing to a session budget.
 ## Review Notes (Corrected)
 
 **Review method:** direct enumeration against the codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` (not against other planning
+`.` (not against other planning
 documents). Ground truth commands used:
 `grep -rhoE "public static class \w+SaveStore" src/ | sort -u` (30 results) and
 `grep -rn 'public const string FileName' src/` (28 direct hits; the remaining 2 —

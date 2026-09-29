@@ -181,7 +181,7 @@ Verified against `Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs`: this 
 
 ## Review Notes (Corrected)
 
-This batch plan was adversarially reviewed against the real repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. The following issues were found and fixed in place:
+This batch plan was adversarially reviewed against the real repository at `.`. The following issues were found and fixed in place:
 
 1. **False premise for H10.** The plan claimed NeedsSystem/RadiationSystem have "zero save/load round-trip tests." Verified: `Ashfall.Core.Tests/NeedsRadiationSystemTests.cs` already contains a `SaveRoundTripTests` class with 3 round-trip tests. Steps 1–2 rewritten as gap-fill work against the existing class, not new files.
 2. **False premise for H11.** The plan claimed JournalSystem has "zero core behavior tests." Verified: `Ashfall.Core.Tests/JournalSystemTests.cs` already exists with 9 tests including a full capture/restore round-trip, and its own doc comment states it was written specifically to resolve H11. Step 3 retired.

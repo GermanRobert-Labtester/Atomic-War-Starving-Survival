@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string hydroPath = Path.Combine(directoryPath, "hydrophone_acoustic_logs.json");
             if (File.Exists(hydroPath))
             {
-                var list = CatalogLocator.LoadWrappedList<HydrophoneAcousticEntry>(File.ReadAllText(hydroPath), options);
+                var list = CatalogLocator.LoadWrappedList<HydrophoneAcousticEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(hydroPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string boreholePath = Path.Combine(directoryPath, "geothermal_borehole_logs.json");
             if (File.Exists(boreholePath))
             {
-                var list = CatalogLocator.LoadWrappedList<GeothermalBoreholeEntry>(File.ReadAllText(boreholePath), options);
+                var list = CatalogLocator.LoadWrappedList<GeothermalBoreholeEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(boreholePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -211,7 +211,7 @@ namespace Ashfall.Core.Narrative
             string cryoPath = Path.Combine(directoryPath, "cryopod_failure_logs.json");
             if (File.Exists(cryoPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CryopodFailureEntry>(File.ReadAllText(cryoPath), options);
+                var list = CatalogLocator.LoadWrappedList<CryopodFailureEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(cryoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -227,7 +227,7 @@ namespace Ashfall.Core.Narrative
             string saltPath = Path.Combine(directoryPath, "salt_mine_inscriptions.json");
             if (File.Exists(saltPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SaltMineInscriptionEntry>(File.ReadAllText(saltPath), options);
+                var list = CatalogLocator.LoadWrappedList<SaltMineInscriptionEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(saltPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

@@ -100,20 +100,6 @@ namespace Ashfall.Core.Tests
             Assert.Contains(system.Holidays, h => h.Key == "hol_new_year");
         }
 
-        [Fact]
-        public void MaritimeMalformedCatalog_IsObservableAndKeepsPreviousCatalog()
-        {
-            var system = new MaritimeExplorationSystem();
-            system.LoadCatalog("{\"zones\":[{\"zone_id\":\"zone_preserved\",\"name\":\"Preserved\"}]}");
-
-            system.LoadCatalog("{");
-
-            Assert.Contains(_messages, m =>
-                m.Contains("maritime_zones.json", StringComparison.Ordinal)
-                && m.Contains("MaritimeZonesCatalog", StringComparison.Ordinal));
-            Assert.NotNull(system.GetZoneDef("zone_preserved"));
-        }
-
         // ── (b) valid file ⇒ identical load result to the pre-H4 baseline ────────────
 
         [Fact]

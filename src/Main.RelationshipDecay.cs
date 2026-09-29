@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
 
@@ -38,6 +39,27 @@ namespace AtomicWar.GodotApp
         private void OnRelationshipDecayStateChanged()
         {
             _relationshipDecayDirty = true;
+        }
+
+        /// <summary>
+        /// Feed a real survivor-to-survivor interaction into the decay owner so
+        /// pairs exist and neglect timers reset. Unknown or blank ids are ignored.
+        /// </summary>
+        private void RecordRelationshipInteraction(string survivorA, string survivorB, string interactionType, float affinityBonus)
+        {
+            if (string.IsNullOrWhiteSpace(survivorA) || string.IsNullOrWhiteSpace(survivorB)) return;
+            if (string.Equals(survivorA, survivorB, StringComparison.Ordinal)) return;
+            EnsureRelationshipDecay().RecordInteraction(survivorA, survivorB, interactionType, affinityBonus, _simDay);
+            _relationshipDecayDirty = true;
+        }
+
+        private void FeedRelationshipDecayFromConflict(MediationEntry entry)
+        {
+            if (entry == null || _survivorRelationsCore == null) return;
+            var conflict = _survivorRelationsCore.State.activeConflicts.Find(c =>
+                c != null && string.Equals(c.conflictId, entry.conflictId, StringComparison.Ordinal));
+            if (conflict == null) return;
+            RecordRelationshipInteraction(conflict.dwellerA, conflict.dwellerB, "mediated_conflict", entry.affinityChange);
         }
 
         public void TickRelationshipDecay(int day)

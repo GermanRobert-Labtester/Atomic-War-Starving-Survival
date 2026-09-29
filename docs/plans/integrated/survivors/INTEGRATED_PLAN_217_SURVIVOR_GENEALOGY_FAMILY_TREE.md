@@ -17,7 +17,7 @@
 
 **Authority collision:** ChildDevelopment and the roster own birth identity; relationships own bonds; SurvivorFate owns death; lineage records kinship facts. GenealogyBridge must subscribe to committed events once and must not infer kinship from names. The bounded next outcome is: One recorded birth links an existing parent and new child once, survives restore, and appears in a readable lineage view without changing the roster. The producer must be a committed child birth/adoption/marriage/death fact from its owner; the accepted destination is a saved lineage relationship and a read-only family projection. A class name, content row, panel label, or event notification alone does not prove that transition.
 
-The [Master Expansion Authority v2.0](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md) informs the narrative register, Core/host/save/UI lenses, and anti-duplication checklist. Its Part II labels content proposals separately from verified repository facts and asks for one bounded outcome. Any older text in this document that calls for a new save section, panel, or system is conditional until this current-evidence section and a signed claim permit it.
+The [Master Expansion Authority v2.0](../../../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md) informs the narrative register, Core/host/save/UI lenses, and anti-duplication checklist. Its Part II labels content proposals separately from verified repository facts and asks for one bounded outcome. Any older text in this document that calls for a new save section, panel, or system is conditional until this current-evidence section and a signed claim permit it.
 
 **Source-specific premise correction.** `GenealogyBridge` calls the lineage extension for birth, adoption, marriage, divorce and death, but no `src/` composition reference was found. It may update family units when called; that makes lifecycle event identity and replay guards mandatory before production binding. A surname generated from `family_name_templates.json` is a label, not proof of kinship.
 
@@ -72,7 +72,7 @@ A future builder may call the selected case integrated only after an owner claim
 ## Historical scenario inventory — conditional on current owner
 
 
-> Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.
+> Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../../../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.
 
 ## 1. Objective and bounded outcome
 

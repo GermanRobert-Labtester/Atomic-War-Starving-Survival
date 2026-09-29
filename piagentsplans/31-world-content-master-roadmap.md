@@ -3727,7 +3727,7 @@ These are execution-ready prompts for a coding/content agent, specific to this a
 All 15 checks pass.
 
 <!-- Master Authority Integration Reference -->
-> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 > **Target Framework:** `Assets/Ashfall.Core/` (`netstandard2.1`) | `src/` (Godot 4.3+ Host)
 > **Authoritative Catalogs:** `Assets/StreamingAssets/Data/` (Authoritative Snake_Case JSON)
 
@@ -6923,7 +6923,7 @@ namespace Ashfall.Core.Tests.WorldContentRoadmap
 
 **Execution Timestamp:** 2026-09-25T04:16:00+03:00
 **Harmonization Lead:** Antigravity High-Integrity Architecture Agent
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 12.1 World Map & Location Harmonization
 In this deep polishing pass, all 60+ world map nodes and regional travel corridors have been reconciled with the 57 volumes of the Master Expansion Authority. Ambiguous naming conventions have been standardized to snake_case format across all catalogs.
@@ -6940,7 +6940,7 @@ All coordinates, radiation intensities, and travel hazard multipliers strictly u
 
 **Execution Timestamp:** 2026-09-25T04:17:00+03:00
 **Harmonization Lead:** Antigravity Senior Systems Integrity Engineer
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 15.1 Concurrency & Boundary Hardening
 1. **Thread Isolation**: The domain coordinator is strictly single-threaded, executing on the simulation tick without lock contention.
@@ -10188,7 +10188,7 @@ namespace Ashfall.Core.Tests.WorldContentRoadmap
 
 **Execution Timestamp:** 2026-09-25T04:16:00+03:00
 **Harmonization Lead:** Antigravity High-Integrity Architecture Agent
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 12.1 World Map & Location Harmonization
 In this deep polishing pass, all 60+ world map nodes and regional travel corridors have been reconciled with the 57 volumes of the Master Expansion Authority. Ambiguous naming conventions have been standardized to snake_case format across all catalogs.
@@ -10205,7 +10205,7 @@ All coordinates, radiation intensities, and travel hazard multipliers strictly u
 
 **Execution Timestamp:** 2026-09-25T04:17:00+03:00
 **Harmonization Lead:** Antigravity Senior Systems Integrity Engineer
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 15.1 Concurrency & Boundary Hardening
 1. **Thread Isolation**: The domain coordinator is strictly single-threaded, executing on the simulation tick without lock contention.

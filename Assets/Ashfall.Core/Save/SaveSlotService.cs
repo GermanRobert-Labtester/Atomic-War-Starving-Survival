@@ -25,6 +25,14 @@ public class SaveSlotService
 
     /// <summary>File name for the aggregate envelope.</summary>
     public const string AggregateFileName = "campaign.json";
+    public const int BackupCount = 3;
+
+    public string GetBackupPath(SaveProfileId profileId, SaveSlotId slotId, int generation)
+    {
+        if (generation < 1 || generation > BackupCount)
+            throw new ArgumentOutOfRangeException(nameof(generation));
+        return GetAggregatePath(profileId, slotId) + (generation == 1 ? ".bak" : $".bak{generation}");
+    }
 
     /// <summary>Extension for quarantined corrupt saves.</summary>
     public const string QuarantineExtension = ".corrupt";
@@ -497,11 +505,14 @@ public class SaveSlotService
                 return false;
             }
 
+            // Keep valid history before replacing the primary. A failed rotation
+            // refuses the save and leaves the primary generation intact.
+            if (!RotateBackups(profileId, slotId)) return false;
             return SaveEnvelopeHelper.TryWriteAtomic(
                 targetPath,
                 raw,
                 fileIO: _files,
-                createBackup: true,
+                createBackup: false,
                 log: _log,
                 logTag: $"SaveSlotService:{slotId.Value}",
                 validatePayload: candidate =>
@@ -515,6 +526,96 @@ public class SaveSlotService
             _log.Error($"SaveSlotService: failed to write aggregate envelope for slot '{slotId}': {ex.Message}");
             return false;
         }
+    }
+
+    private bool TryReadValidatedBackupSource(string path, SaveProfileId profileId,
+        SaveSlotId slotId, out AggregateSaveEnvelope? envelope, out string raw)
+    {
+        envelope = null;
+        raw = string.Empty;
+        try
+        {
+            if (!_files.FileExists(path)) return false;
+            raw = _files.ReadAllText(path);
+            envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
+            return envelope?.manifest != null && ValidateAggregate(envelope).IsValid &&
+                string.Equals(envelope.manifest.profileId.Value, profileId.Value, StringComparison.Ordinal) &&
+                string.Equals(envelope.manifest.slotId.Value, slotId.Value, StringComparison.Ordinal);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: cannot validate recovery generation '{path}': {ex.Message}");
+            return false;
+        }
+    }
+
+    private bool RotateBackups(SaveProfileId profileId, SaveSlotId slotId)
+    {
+        if (!TryReadValidatedBackupSource(GetAggregatePath(profileId, slotId), profileId, slotId,
+            out _, out string current)) return true;
+        for (int generation = BackupCount; generation >= 1; generation--)
+        {
+            string payload = current;
+            if (generation > 1 && !TryReadValidatedBackupSource(
+                GetBackupPath(profileId, slotId, generation - 1), profileId, slotId, out _, out payload))
+                continue;
+            if (!SaveEnvelopeHelper.TryWriteAtomic(GetBackupPath(profileId, slotId, generation),
+                payload, fileIO: _files, log: _log, validatePayload: candidate =>
+                {
+                    var parsed = _json.Deserialize<AggregateSaveEnvelope>(candidate);
+                    return parsed != null && ValidateAggregate(parsed).IsValid;
+                })) return false;
+        }
+        return true;
+    }
+
+    /// <summary>Read-only recovery preview. Valid primaries and sealed campaigns cannot be rolled back.</summary>
+    public SaveLoadResult FindRecoverableBackup(SaveProfileId profileId, SaveSlotId slotId)
+    {
+        if (TryReadValidatedBackupSource(GetAggregatePath(profileId, slotId), profileId, slotId,
+            out _, out _))
+            return SaveLoadResult.Fail(SaveLoadStatus.CorruptData, "The current campaign is valid; backup recovery is unavailable.");
+        var projectedManifest = LoadManifest(profileId, slotId);
+        if (projectedManifest?.ironManTerminalState == IronManTerminalState.TerminalLoss)
+            return SaveLoadResult.Fail(SaveLoadStatus.IronManBlocked, "This campaign is sealed; recovery is unavailable.");
+        for (int generation = 1; generation <= BackupCount; generation++)
+        {
+            if (!TryReadValidatedBackupSource(GetBackupPath(profileId, slotId, generation), profileId, slotId,
+                out var envelope, out _)) continue;
+            if (envelope!.manifest.ironManTerminalState == IronManTerminalState.TerminalLoss)
+                return SaveLoadResult.Fail(SaveLoadStatus.IronManBlocked, "This campaign is sealed; recovery is unavailable.");
+            try
+            {
+                if (envelope.manifestVersion != CampaignEnvelopeBuilder.CurrentEnvelopeVersion)
+                    envelope = MigrateToCurrent(envelope, _log);
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"SaveSlotService: backup migration failed: {ex.Message}");
+                continue;
+            }
+            if (!ValidateAggregate(envelope).IsValid) continue;
+            return SaveLoadResult.Ok(envelope, $"A verified backup from day {envelope.manifest.currentDay} is available.");
+        }
+        return SaveLoadResult.Fail(SaveLoadStatus.MissingFile, "No valid campaign backup is available.");
+    }
+
+    /// <summary>Explicit recovery through the canonical slot authority, preserving every backup.</summary>
+    public SaveLoadResult RecoverBackup(SaveProfileId profileId, SaveSlotId slotId)
+    {
+        var candidate = FindRecoverableBackup(profileId, slotId);
+        if (!candidate.IsSuccess || candidate.Envelope == null) return candidate;
+        string path = GetAggregatePath(profileId, slotId);
+        if (_files.FileExists(path))
+            QuarantineCorruptSave(profileId, slotId, path, "Explicit backup recovery");
+        if (!SaveEnvelopeHelper.TryWriteAtomic(path, _json.Serialize(candidate.Envelope), fileIO: _files,
+            log: _log, validatePayload: raw =>
+            {
+                var envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
+                return envelope != null && ValidateAggregate(envelope).IsValid;
+            }))
+            return SaveLoadResult.Fail(SaveLoadStatus.CorruptData, "Backup recovery could not be written. Backups preserved.");
+        return TryLoadAggregate(profileId, slotId);
     }
 
     /// <summary>
@@ -1252,8 +1353,11 @@ public class SaveSlotService
         sb.Append("campaignName=").Append(envelope.manifest?.campaignName ?? string.Empty).Append('\n');
         sb.Append("ironManTerminalState=").Append((int)(envelope.manifest?.ironManTerminalState ?? IronManTerminalState.Active)).Append('\n');
         sb.Append("lastSaveTimestamp=").Append(envelope.manifest?.lastSaveTimestamp ?? string.Empty).Append('\n');
-        if (envelope.manifest != null && envelope.manifest.manifestVersion >= Ashfall.Core.Save.SaveManifest.CurrentManifestVersion)
+        // Fixed version thresholds preserve the checksum of v1/v2 manifests.
+        if (envelope.manifest != null && envelope.manifest.manifestVersion >= 2)
             sb.Append("difficultyPresetId=").Append(envelope.manifest.difficultyPresetId ?? string.Empty).Append('\n');
+        if (envelope.manifest != null && envelope.manifest.manifestVersion >= 3)
+            sb.Append("lastPanelId=").Append(envelope.manifest.lastPanelId ?? string.Empty).Append('\n');
         if (includeGenerationId)
             sb.Append("generationId=").Append(envelope.manifest?.generationId ?? string.Empty).Append('\n');
 

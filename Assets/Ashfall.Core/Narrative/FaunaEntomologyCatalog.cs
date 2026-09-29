@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string roachPath = Path.Combine(directoryPath, "armored_cockroach_hive_logs.json");
             if (File.Exists(roachPath))
             {
-                var list = CatalogLocator.LoadWrappedList<ArmoredRoachHiveEntry>(File.ReadAllText(roachPath), options);
+                var list = CatalogLocator.LoadWrappedList<ArmoredRoachHiveEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(roachPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string moleratPath = Path.Combine(directoryPath, "blind_cave_molerat_studies.json");
             if (File.Exists(moleratPath))
             {
-                var list = CatalogLocator.LoadWrappedList<BlindMoleratStudyEntry>(File.ReadAllText(moleratPath), options);
+                var list = CatalogLocator.LoadWrappedList<BlindMoleratStudyEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(moleratPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string vulturePath = Path.Combine(directoryPath, "carrion_vulture_sighting_logs.json");
             if (File.Exists(vulturePath))
             {
-                var list = CatalogLocator.LoadWrappedList<CarrionVultureSightingEntry>(File.ReadAllText(vulturePath), options);
+                var list = CatalogLocator.LoadWrappedList<CarrionVultureSightingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(vulturePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string mosquitoPath = Path.Combine(directoryPath, "silo_mosquito_vector_records.json");
             if (File.Exists(mosquitoPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SiloMosquitoVectorEntry>(File.ReadAllText(mosquitoPath), options);
+                var list = CatalogLocator.LoadWrappedList<SiloMosquitoVectorEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(mosquitoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

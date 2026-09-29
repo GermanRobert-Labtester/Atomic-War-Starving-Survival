@@ -303,7 +303,7 @@ Because Step 0 determines whether this batch touches the live Unity `ci.yml`/`bu
 
 ## Review Notes (Corrected)
 
-This plan was adversarially reviewed against the real codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. The following were wrong in the original version and have been fixed above:
+This plan was adversarially reviewed against the real codebase at `.`. The following were wrong in the original version and have been fixed above:
 
 1. **Central factual error — CI is not partially covered, it is 0% covered and actively Unity-based.** The original Step 1 assumed `build.yml`/`ci.yml` existed in some state adjacent to the `dotnet`/`godot` pipeline ("likely Godot headless steps" missing). Reading both files in full shows they contain **zero** `dotnet`/`godot` references and are entirely `game-ci/unity-builder@v4` / `game-ci/unity-test-runner@v4` jobs (EditMode, PlayMode, Unity scene/catalog regeneration, multi-platform Unity builds), pinned to Unity `6000.5.5f1`. This directly conflicts with AGENTS.md's non-negotiable rule #1/#2 ("Unity is NOT a target editor... do not invoke... any Unity build tool — ever"). The original plan would have had an agent silently bolt `dotnet build` steps onto a live Unity CI pipeline without ever surfacing that the pipeline itself is the exact thing AGENTS.md forbids running. **Fix:** added Step 0, a mandatory blocking step that forces an explicit user decision (new additive workflow vs. replacing/retiring the Unity workflows vs. running both) before any workflow file is touched, and changed Steps 2–7 to target a new workflow file by default rather than silently editing `ci.yml`.
 

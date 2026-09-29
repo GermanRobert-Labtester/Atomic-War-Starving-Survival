@@ -185,6 +185,8 @@ public class SaveLoadResult
     public bool IsSuccess => Status == SaveLoadStatus.Success;
     public string UserMessage { get; set; } = string.Empty;
     public AggregateSaveEnvelope? Envelope { get; set; }
+    public bool RecoveryAvailable { get; set; }
+    public int RecoveryDay { get; set; }
     public System.Collections.Generic.List<string> Details { get; set; } = new();
 
     public static SaveLoadResult Ok(AggregateSaveEnvelope envelope, string message = "Save loaded successfully.") =>

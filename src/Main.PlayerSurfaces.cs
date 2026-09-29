@@ -156,7 +156,15 @@ namespace AtomicWar.GodotApp
                 closeAction: () => ClosePanelAnimated(_roboticsWorkshopPanel));
 
             PanelRegistry.ConfigureActions("bio_fermentation",
-                bindAction: () => _bioFermentationPanel.Bind(EnsureBioFermentation()),
+                bindAction: () =>
+                {
+                    _bioFermentationPanel.Bind(EnsureBioFermentation());
+                    // W2-06 · Decision Point 1 · Path B — the panel binds the
+                    // engine, so the owning host supplies the authored field log
+                    // through a provider at bind time, where both are live.
+                    _bioFermentationPanel.BindFieldLog(() =>
+                        EnsureBioFermentationSession().FieldLog);
+                },
                 openAction: () => ShowPanelLifecycle(_bioFermentationPanel),
                 closeAction: () => ClosePanelAnimated(_bioFermentationPanel));
 

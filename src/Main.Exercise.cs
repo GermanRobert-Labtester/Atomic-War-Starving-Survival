@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.Survivors;
 
+using Ashfall.Core;
+using Ashfall.Core.Random;
+
 namespace AtomicWar.GodotApp
 {
     public partial class Main
@@ -89,5 +92,39 @@ namespace AtomicWar.GodotApp
             _exercise = null;
             _exerciseDirty = false;
         }
+        /// <summary>
+        /// Execute a workout through the survivor-social coordinator. Fitness is
+        /// checked from the existing duty-fitness model; fatigue is attributed
+        /// by the coordinator to the canonical Needs owner and the result is
+        /// persisted with the existing survivor_social section.
+        /// </summary>
+        public WorkoutResult? ExecuteSurvivorWorkout(
+            string survivorId,
+            WorkoutRoutineType routine,
+            float intensity = 1f)
+        {
+            SetupSurvivorSocial();
+            var fitness = EvaluateSurvivorFitness(survivorId);
+            if (fitness.IsHardBlocked) return null;
+
+            var rng = _campaignDay.Rng.Fork(CampaignStreamIds.Social, _simDay, (int)routine);
+            var result = _survivorSocial.ExecuteWorkout(
+                survivorId, routine, _simDay, intensity, rng);
+            if (result != null)
+            {
+                _survivorSocialDirty = true;
+                RefreshSurvivorSocialReadModel();
+            }
+            return result;
+        }
+
+        /// <summary>Read-only access to the persisted conditioning profile.</summary>
+        public FitnessProfile? GetSurvivorFitnessProfile(string survivorId)
+        {
+            SetupSurvivorSocial();
+            if (_survivorSocial == null || string.IsNullOrEmpty(survivorId)) return null;
+            return _survivorSocial.Exercise.TryGetProfile(survivorId);
+        }
+
     }
 }

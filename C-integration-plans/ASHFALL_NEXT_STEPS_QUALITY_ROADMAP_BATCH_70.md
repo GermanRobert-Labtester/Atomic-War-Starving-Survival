@@ -668,7 +668,7 @@ Step 7 requires all prior steps (aggregates everything).
 ## Review Notes (Corrected)
 
 This plan was adversarially reviewed against the live repository at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` before editing. Unlike Batch 69,
+`.` before editing. Unlike Batch 69,
 this plan's core premise holds up: `src/Main.cs`'s `TickSimDay` and `_Process` genuinely contain
 zero timing/metrics infrastructure (no `Stopwatch`, no ring buffers, no structured logging) as of
 this review, so "zero runtime observability" is an accurate starting claim. Findings requiring

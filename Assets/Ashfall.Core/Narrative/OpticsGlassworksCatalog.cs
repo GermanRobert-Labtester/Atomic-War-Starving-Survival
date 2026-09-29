@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string prismPath = Path.Combine(directoryPath, "periscope_prism_delamination_logs.json");
             if (File.Exists(prismPath))
             {
-                var list = CatalogLocator.LoadWrappedList<PeriscopePrismDelaminationEntry>(File.ReadAllText(prismPath), options);
+                var list = CatalogLocator.LoadWrappedList<PeriscopePrismDelaminationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(prismPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string sightPath = Path.Combine(directoryPath, "borosilicate_sight_glass_thermal_shock.json");
             if (File.Exists(sightPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SightGlassThermalShockEntry>(File.ReadAllText(sightPath), options);
+                var list = CatalogLocator.LoadWrappedList<SightGlassThermalShockEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(sightPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string radPath = Path.Combine(directoryPath, "optical_coating_rad_browning_reports.json");
             if (File.Exists(radPath))
             {
-                var list = CatalogLocator.LoadWrappedList<OpticalCoatingRadBrowningEntry>(File.ReadAllText(radPath), options);
+                var list = CatalogLocator.LoadWrappedList<OpticalCoatingRadBrowningEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(radPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string scintPath = Path.Combine(directoryPath, "lead_crystal_scintillator_aging_logs.json");
             if (File.Exists(scintPath))
             {
-                var list = CatalogLocator.LoadWrappedList<ScintillatorAgingEntry>(File.ReadAllText(scintPath), options);
+                var list = CatalogLocator.LoadWrappedList<ScintillatorAgingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(scintPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

@@ -175,7 +175,7 @@ The original plan's per-step estimates (200/250/150/100/200/200 lines, totaling 
 
 ## Review Notes (Corrected)
 
-This batch plan was adversarially reviewed against the real repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. The following issues were found and fixed in place:
+This batch plan was adversarially reviewed against the real repository at `.`. The following issues were found and fixed in place:
 
 1. **Wrong Main.cs line count.** Plan stated 6,640 lines; actual `wc -l src/Main.cs` reports **7,014 lines**. Corrected throughout.
 2. **Wrong method-count claims.** Plan stated "31 Setup methods, 24 Save methods, and 14 Flush methods." Actual verified counts by grep: **38 Setup, 30 Save (+ `SaveAll`), 17 Flush.** Corrected in Rationale.

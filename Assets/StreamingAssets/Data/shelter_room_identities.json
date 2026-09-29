@@ -134,7 +134,7 @@
       "display_name": "Tuner Station",
       "former_use": "Long-range transceiver alcove inside a copper mesh screen, fed from a surface longwire mast",
       "current_use": "Crisis conversion: 142.850 MHz watch station, rate cards, and the coast's weather",
-      "one_line_history": "The set was installed to reach a head office that stopped answering, and it is still the politest voice in the building.",
+      "one_line_history": "The set was installed to reach a head office that stopped answering, and it is still the politest voice in the building. It still keeps a watch on 142.850 MHz.",
       "inspection_summary": "Receiver, log book, and the frequency the Hydro-Barons answer on. Silence is also a protocol here.",
       "legacy_aliases": [],
       "fixture_ids": [
@@ -212,7 +212,7 @@
       "time_period": "pre-war maintenance",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "Eleven minutes is what the first crew filed against the intake housing, and there is a notch on the strap to prove it. The manual taped inside the cabinet door allows an hour. The difference between those two numbers is the reason this shelter still breathes. The first watch drilled the pre-filter change in the dark with the blower shut down, because nobody wanted to learn the sequence during a real pressure event. Two people. One to break the bands and pull, one to seat the spare by feel while the first steadied the housing. They tapped the elements clean over the drain grating and returned the frames worn side up, because the wear pattern is the filter's memory and the manual says so. The charcoal beds underneath were not touched that day, or that month. Those are baked out with steam on a longer cycle, and every crew forgets the cycle until the wire seal is cut. The notch rows continue in six different hands. Some are quick and deep. One day is missing entirely and the notch after it is doubled, which is how this room records a shift nobody wants to discuss out loud."
+      "body": "Eleven minutes is what the first crew filed against the intake housing, and there is a notch on the strap to prove it. The manual taped inside the cabinet door allows an hour. The difference between those two numbers is the reason this shelter still breathes. The first watch drilled the pre-filter change in the dark with the blower shut down, because nobody wanted to learn the sequence during a real pressure event. Two people. One to break the bands and pull, one to seat the spare by feel while the first steadied the housing. They tapped the elements clean over the drain grating and returned the frames worn side up, because the wear pattern is the filter's memory and the manual says so. The charcoal beds underneath were not touched that day, or that month. Those are baked out with steam on a longer cycle, and every crew forgets the cycle until the wire seal is cut. The notch rows continue in six different hands. Some are quick and deep. One day is missing entirely and the notch after it is doubled, which is how this room records a shift nobody wants to discuss out loud. The notch is the record, and it was filed before anyone needed it."
     },
     {
       "id": "room_history_a_frame_stayed",
@@ -221,7 +221,7 @@
       "time_period": "early shelter occupancy",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The first death in this shelter was not dramatic enough to be written up. It happened on the watch between midnight and the milk round, in the second tier of the far frame, and the crew's only quarrel was about how to carry it out. They went through the corridor at four in the morning with the blower running, because the noise made the walk ordinary and nobody sleeping had to hear a door open twice. The frame stayed. Two people tried to lift it and found the bolts were not going to part with the slab, so the bunk was stripped, the pad boiled, the runner wiped down, and somebody else slept there by evening. There is a socket drilled in the runner for a third pad that never arrived, and the stencil on the wall has gaps in it that the original installer left there deliberately, which nobody asks about. What the crew did instead of asking was to keep the paper tags legible and to write the name on the board before the next person lay down. That is the whole custom. It has been repeated so often that new arrivals assume it predates them."
+      "body": "The first death in this shelter was not dramatic enough to be written up. It happened on the watch between midnight and the milk round, in the second tier of the far frame, and the crew's only quarrel was about how to carry it out. They went through the corridor at four in the morning with the blower running, because the noise made the walk ordinary and nobody sleeping had to hear a door open twice. The frame stayed. Two people tried to lift it and found the bolts were not going to part with the slab, so the bunk was stripped, the pad boiled, the runner wiped down, and somebody else slept there by evening. There is a socket drilled in the runner for a third pad that never arrived, and the stencil on the wall has gaps in it that the original installer left there deliberately, which nobody asks about. What the crew did instead of asking was to keep the paper tags legible and to write the name on the board before the next person lay down. That is the whole custom. It has been repeated so often that new arrivals assume it predates them. The frame kept its place on the floor, and so did the name, and the two together are what the room remembers best."
     },
     {
       "id": "room_history_four_pale_rectangles",
@@ -230,7 +230,7 @@
       "time_period": "early shelter occupancy",
       "unlock": "day_milestone",
       "unlock_day": 8,
-      "body": "There are four rectangles on this wall the colour of new concrete, and they are exactly as wide as a brass plate. The chart outlived the office that printed it. The rows are still the fourteen rows the manifest carries, and the pencil has been worn to a stub by hands that were never trained together. Somebody took the plates down in the first week. That is as much as the shelter agrees on. Half the crew believes it happened because a new arrival asked, quietly, whether there was a spare, and the person holding the screwdriver could not answer in a form that would survive being overheard. The other half believes the plates came down to keep them from being used as kindling, which is a drier story and gets told less often. Both agree the tin went behind the filtration stack, where the air moves and nobody loiters, and both agree that nobody has carried it out since. If you have counted the rectangles and then counted the plates, you have done arithmetic this crew refuses to finish. The refusal is not ignorance. It is the closest thing to a policy this shelter has about names it did not choose to inherit."
+      "body": "There are four rectangles on this wall the colour of new concrete, and they are exactly as wide as a brass plate. The chart outlived the office that printed it. The rows are still the fourteen rows the manifest carries, and the pencil has been worn to a stub by hands that were never trained together. Somebody took the plates down in the first week. That is as much as the shelter agrees on. Half the crew believes it happened because a new arrival asked, quietly, whether there was a spare, and the person holding the screwdriver could not answer in a form that would survive being overheard. The other half believes the plates came down to keep them from being used as kindling, which is a drier story and gets told less often. Both agree the tin went behind the filtration stack, where the air moves and nobody loiters, and both agree that nobody has carried it out since. If you have counted the rectangles and then counted the plates, you have done arithmetic this crew refuses to finish. The shelter kept the four rectangles and never the names. The refusal is not ignorance. It is the closest thing to a policy this shelter has about names it did not choose to inherit."
     },
     {
       "id": "room_history_the_count_came_short",
@@ -239,7 +239,7 @@
       "time_period": "crisis conversion",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The count came up short on a Tuesday, which is the kind of detail people keep because it makes the memory portable. Two bowls waited at the far end under cloth, because three people were north on the haul road and the galley had issued for fourteen regardless. By evening the cloth had taken a skin of dust and the rings in those bowls had never been broken. The argument was not about hunger. It was about whether the table should be told in advance when the count was going to fail, and there were two honest positions. One held that a family warned can plan a night and lose less dignity. The other held that a family warned begins choosing who goes north, and that is a door nobody in a bunker closes twice. The crew settled on the weakest compromise available, which was silence and extra ladle-scrapes, and then someone began counting shortfalls along the table edge in knife marks, grouped in fives, so the number could exist without anyone having to say it aloud. The salt tin has a lid from a different tin. Nobody has matched it. It is the same argument, conducted with objects."
+      "body": "The count came up short on a Tuesday, which is the kind of detail people keep because it makes the memory portable. Two bowls waited at the far end under cloth, because three people were north on the haul road and the galley had issued for fourteen regardless. By evening the cloth had taken a skin of dust and the rings in those bowls had never been broken. The argument was not about hunger. It was about whether the table should be told in advance when the count was going to fail, and there were two honest positions. One held that a family warned can plan a night and lose less dignity. The other held that a family warned begins choosing who goes north, and that is a door nobody in a bunker closes twice. The crew settled on the weakest compromise available, which was silence and extra ladle-scrapes, and then someone began counting shortfalls along the table edge in knife marks, grouped in fives, so the number could exist without anyone having to say it aloud. The salt tin has a lid from a different tin. Nobody has matched it. It is the same argument, conducted with objects. The hunger passed with the ladle-scrapes; what outlasted them is the narrower question of who gets warned first, and it is still being counted along the table edge in knife marks, grouped in fives."
     },
     {
       "id": "room_history_the_basin_that_was_a_mixing_bowl",
@@ -248,7 +248,7 @@
       "time_period": "crisis conversion",
       "unlock": "day_milestone",
       "unlock_day": 20,
-      "body": "The engineering record describes this room with a table, a drain, and a hot wash point. It has none of those things. It has a wire, a curtain, a brown bottle with a lot number ink-stamped on the shoulder, a bolt of cloth boiled until the weave went soft, and a basin that used to be a mixing bowl. You can still see where the rim ground thinner. On the twentieth day of a bad month, the shelter acquired a second reason to keep the curtain hung. There were three basins, two of them only for water, and one adult who had read about birth once and had steady hands from years of doing something else entirely. The light was a lamp on a crate. The warm room was the laundry, which is not a room either. The child exists. The curtain exists. Nobody has written a proper note about what was improvised here, because writing it down would turn the arithmetic into a promise about the next time, and the crew has already spent one argument about promises in this alcove. If you go looking for a stork, do not look at the drawing taped at child height. The number written on it is not a bunk in this stack."
+      "body": "The engineering record describes this room with a table, a drain, and a hot wash point. It has none of those things. It has a wire, a curtain, a brown bottle with a lot number ink-stamped on the shoulder, a bolt of cloth boiled until the weave went soft, and a basin that used to be a mixing bowl. You can still see where the rim ground thinner. On the twentieth day of a bad month, the shelter acquired a second reason to keep the curtain hung. There were three basins, two of them only for water, and one adult who had read about birth once and had steady hands from years of doing something else entirely. The light was a lamp on a crate. The warm room was the laundry, which is not a room either. The child exists. The curtain exists. Nobody has written a proper note about what was improvised here, because writing it down would turn the arithmetic into a promise about the next time, and the crew has already spent one argument about promises in this alcove. If you go looking for a stork, do not look at the drawing taped at child height. The number written on it is not a bunk in this stack. The alcove is remembered, not recorded."
     },
     {
       "id": "room_history_a_chair_from_the_row",
@@ -257,7 +257,7 @@
       "time_period": "crisis conversion",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The chair came in on its side through the outer hatch and it is still here. It is a dentist's chair, bolted to the floor of an airlock, facing the inner door, with no instruments and no prospect of instruments. The Row is short exactly this one item, which is the sort of thing a salvage list admits without embarrassment. The crew's own memory is two people and one afternoon, and the reason the chair stayed is mechanical rather than sentimental. The base is cast, the bolts are through the slab, and the hatch wheel does not turn for anything that wide on a dolly. So it became the airlock's seat. People wait on it. It holds boots. Someone hung a small mirror from the nozzle rail, which is where the nozzles were, and the nozzles went because a valve that seizes in the cold is worth four hands of a technician on the other side of a door. There is a rag on a nail that gets boiled or does not. Unbolting the chair would need two people, one afternoon, and somewhere wider than the hatch to put it. The crew discusses this with the energy of people who have already decided."
+      "body": "The chair came in on its side through the outer hatch and it is still here. It is a dentist's chair, bolted to the floor of an airlock, facing the inner door, with no instruments and no prospect of instruments. The Row is short exactly this one item, which is the sort of thing a salvage list admits without embarrassment. The crew's own memory is two people and one afternoon, and the reason the chair stayed is mechanical rather than sentimental. The base is cast, the bolts are through the slab, and the hatch wheel does not turn for anything that wide on a dolly. So it became the airlock's seat. People wait on it. It holds boots. Someone hung a small mirror from the nozzle rail, which is where the nozzles were, and the nozzles went because a valve that seizes in the cold is worth four hands of a technician on the other side of a door. There is a rag on a nail that gets boiled or does not. Unbolting the chair would need two people, one afternoon, and somewhere wider than the hatch to put it. The crew discusses this with the energy of people who have already decided. The accident has been furniture for longer than anyone has been keeping count."
     },
     {
       "id": "room_history_the_discrepancy",
@@ -266,7 +266,7 @@
       "time_period": "crisis conversion",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "A crate stencilled to this allocation's depot, marked not for general issue, carries a packing form with a date three days after the sky went. Eight pairs of children's winter boots, sizes one through four, banded and taped, and nobody has ever squared the circle. The first crew logged it as a discrepancy rather than a find, which tells you more about them than the manifest does. In the first month somebody wrote a rule on the bulk-head slate: what sits in the deep store is rationed like everything else, and the crate does not open by consensus alone. That rule was made by people who had already lost the argument about whether the delivery network had survived the Exchange, and the form in the lid settled it without anyone having to say so out loud. If you cut the tape, the boots are still boots and a child can wear a pair, and in forty days the crate will still be exactly what it was, which is how the crew says it when it wants to be both kind and precise at once. The balance scale on the pin is missing one disc. The humidity gauge still reads. The bins are sealed."
+      "body": "A crate stencilled to this allocation's depot, marked not for general issue, carries a packing form with a date three days after the sky went. Eight pairs of children's winter boots, sizes one through four, banded and taped, and nobody has ever squared the circle. The first crew logged it as a discrepancy rather than a find, which tells you more about them than the manifest does. In the first month somebody wrote a rule on the bulk-head slate: what sits in the deep store is rationed like everything else, and the crate does not open by consensus alone. That rule was made by people who had already lost the argument about whether the delivery network had survived the Exchange, and the form in the lid settled it without anyone having to say so out loud. If you cut the tape, the boots are still boots and a child can wear a pair, and in forty days the crate will still be exactly what it was, which is how the crew says it when it wants to be both kind and precise at once. The balance scale on the pin is missing one disc. The humidity gauge still reads. The bins are sealed. Nobody has said out loud what the form settled."
     },
     {
       "id": "room_history_the_second_blower",
@@ -275,7 +275,7 @@
       "time_period": "crisis conversion",
       "unlock": "repair_performed",
       "unlock_day": 0,
-      "body": "The second blower did not come from this allocation. It came out of a laundry on the south side, on a hand cart, with its belt cut short and its housing dented where the stairwell was. The plant as drawn has one duty blower and one standby. The standby was never installed, and the crew of this shelter grew faster than the ducting was rated. So somebody put a domestic blower into the intake leg, wired it through a lighting circuit, and let the noise be the whole argument. It is not a good installation. It moves air, which is the job. The gasket is the wrong pattern and someone filed the flange to make the bolt centres agree, which is the kind of decision nobody who did not make it can undo and nobody with a choice will repeat. The first watch stamped a plate and that plate has since been painted over twice. If you service this stack you are also servicing that flange, whether or not you are told so. The crew learned to tell the two bearings apart by ear long before anybody wrote it down. There is a spare belt on the hook. It is the wrong size. It has always been the wrong size."
+      "body": "The second blower did not come from this allocation. It came out of a laundry on the south side, on a hand cart, with its belt cut short and its housing dented where the stairwell was. The plant as drawn has one duty blower and one standby. The standby was never installed, and the crew of this shelter grew faster than the ducting was rated. So somebody put a domestic blower into the intake leg, wired it through a lighting circuit, and let the noise be the whole argument. It is not a good installation. It moves air, which is the job. The gasket is the wrong pattern and someone filed the flange to make the bolt centres agree, which is the kind of decision nobody who did not make it can undo and nobody with a choice will repeat. The first watch stamped a plate and that plate has since been painted over twice. If you service this stack you are also servicing that flange, whether or not you are told so. The crew learned to tell the two bearings apart by ear long before anybody wrote it down. There is a spare belt on the hook. It is the wrong size. It has always been the wrong size. The belt is a record of that compromise, not a promise that the machine can be made right."
     },
     {
       "id": "room_history_bench_markings",
@@ -284,7 +284,7 @@
       "time_period": "early occupancy",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The bench in the corridor has tally marks cut into the frame with a knife. They are not days. They are not water units. They are something else, because the spacing changes after the third month and the marks after that are shorter and closer together. The pencil stub on the chart rail was sharpened at both ends, which means the person who used it ran out in the middle of a watch and split the remainder rather than leave the rail bare. The four unfaded rectangles above the bench are where the brass name-plates were screwed. The plates are in the tin behind the filtration stack. The crew took them down the week the hatch was sealed and nobody has mentioned putting them back."
+      "body": "The bench in the corridor has tally marks cut into the frame with a knife. They are not days. They are not water units. They are something else, because the spacing changes after the third month and the marks after that are shorter and closer together. The pencil stub on the chart rail was sharpened at both ends, which means the person who used it ran out in the middle of a watch and split the remainder rather than leave the rail bare. The four unfaded rectangles above the bench are where the brass name-plates were screwed. The plates are in the tin behind the filtration stack. The crew took them down the week the hatch was sealed and nobody has mentioned putting them back. The marks change spacing, and nobody has written down why."
     },
     {
       "id": "room_history_shelf_unit_d",
@@ -293,7 +293,7 @@
       "time_period": "crisis conversion",
       "unlock": "repair_performed",
       "unlock_day": 0,
-      "body": "Shelf unit D was the last to be filled and the first to be reorganised. The discrepancy is in the spacing: the brackets on the left side are two holes closer together than the right, which means the shelf was cut from a different run of timber. The original bracket holes were filled with dowel and the new ones drilled through the dowel, which is why the left side sits a fraction higher. The discrepancy is visible only if you crouch and look along the shelf front, and the person who organised this bay crouched and looked along every shelf front before they signed the inventory. The discrepancy is still there. It has been there for eleven years."
+      "body": "Shelf unit D was the last to be filled and the first to be reorganised. The discrepancy is in the spacing: the brackets on the left side are two holes closer together than the right, which means the shelf was cut from a different run of timber. The original bracket holes were filled with dowel and the new ones drilled through the dowel, which is why the left side sits a fraction higher. The discrepancy is visible only if you crouch and look along the shelf front, and the person who organised this bay crouched and looked along every shelf front before they signed the inventory. The discrepancy is still there. It has been there for eleven years. The organiser saw it, and signed."
     },
     {
       "id": "room_history_bunk_three",
@@ -302,7 +302,7 @@
       "time_period": "early occupancy",
       "unlock": "day_milestone",
       "unlock_day": 5,
-      "body": "Bunk three has a notch cut in the frame rail at the height of the mattress spring. The notch is worn smooth, which means it was cut before the spring was installed and then rubbed by fabric for a long time. The person who slept there used a folded coat under the sheet for the first month and then stopped, which is how the notch got worn. The coat is still in the locker under the bunk, folded the same way, with the pocket empty and the lining patched twice. The patch material is from a shirt that was issued to a different crew member, because the thread colour does not match the coat. The two people who slept in this bunk never discussed the trade."
+      "body": "Bunk three has a notch cut in the frame rail at the height of the mattress spring. The notch is worn smooth, which means it was cut before the spring was installed and then rubbed by fabric for a long time. The person who slept there used a folded coat under the sheet for the first month and then stopped, which is how the notch got worn. The coat is still in the locker under the bunk, folded the same way, with the pocket empty and the lining patched twice. The patch material is from a shirt that was issued to a different crew member, because the thread colour does not match the coat. The two people who slept in this bunk never discussed the trade. The frame keeps the mark; the two sleepers kept the rest unspoken."
     },
     {
       "id": "room_history_can_opener_dent",
@@ -311,7 +311,7 @@
       "time_period": "current campaign",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The kitchen can opener has a dent in the handle where it was struck with something hard. The strike mark is on the left side, which means the person who used it was left-handed and frustrated. The dent is old enough to have a patina of use over it, which means the opener was not replaced after the strike. The gear teeth are still sharp. The dent is in the handle only. The opener still works. The count came short in this room on the third week and the ration ledger has a line crossed out and rewritten in different ink. The crossed-out number is higher than the rewritten one. The difference is the amount the opener's owner ate before they put the can back on the shelf."
+      "body": "The kitchen can opener has a dent in the handle where it was struck with something hard. The strike mark is on the left side, which means the person who used it was left-handed and frustrated. The dent is old enough to have a patina of use over it, which means the opener was not replaced after the strike. The gear teeth are still sharp. The dent is in the handle only. The opener still works. The count came short in this room on the third week and the ration ledger has a line crossed out and rewritten in different ink. The crossed-out number is higher than the rewritten one. The difference is the amount the opener's owner ate before they put the can back on the shelf. Nobody has written down who it was, and the ledger does not ask. The opener hangs where it always hung, and it opens the next can the same as the last."
     },
     {
       "id": "room_history_suture_pack",
@@ -320,7 +320,7 @@
       "time_period": "pre-war maintenance",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The basin that was a mixing bowl still has a ring of dried compound around the rim that is not any antiseptic anybody in this crew can name. The suture pack in drawer seven is sealed and the expiry date is before the Exchange. The pack has been opened once. The seal was cut with a scalpel and the contents rearranged and resealed with tape. The tape is medical tape but the brand is different from the rest of the clinic's stock. The person who opened this pack is not in the survivor roster. The pack is still usable. The basin is still useful. The mixing bowl is gone."
+      "body": "The basin that was a mixing bowl still has a ring of dried compound around the rim that is not any antiseptic anybody in this crew can name. The suture pack in drawer seven is sealed and the expiry date is before the Exchange. The pack has been opened once. The seal was cut with a scalpel and the contents rearranged and resealed with tape. The tape is medical tape but the brand is different from the rest of the clinic's stock. The person who opened this pack is not in the survivor roster. The pack is still usable. The basin is still useful. The mixing bowl is gone. The pack outlasted the hand that opened it, which is the whole of what the room can say about the person."
     },
     {
       "id": "room_history_lathe_true",
@@ -329,7 +329,7 @@
       "time_period": "pre-war maintenance",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The lathe was true when it was last measured, and the measurement is written on the tailstock in pencil. The pencil mark is under a layer of grease and can be read only if you wipe the tailstock with your thumb and hold it at an angle. The mark says 0.02 mm over a hundred millimetres, which is within tolerance. The person who measured it signed their initials beside the number. The initials are not in the crew roster. The lathe has been used every month since. The tailstock has not been wiped clean since. The measurement is old. The lathe has been used every month since. The tailstock has not been wiped clean since."
+      "body": "The lathe was true when it was last measured, and the measurement is written on the tailstock in pencil. The pencil mark is under a layer of grease and can be read only if you wipe the tailstock with your thumb and hold it at an angle. The mark says 0.02 mm over a hundred millimetres, which is within tolerance. The person who measured it signed their initials beside the number. The initials are not in the crew roster. The lathe has been used every month since. The tailstock has not been wiped clean since. The measurement is old. The lathe has been used every month since. The tailstock has not been wiped clean since. The mark is the only part of the machine that is still exactly the way the person who wrote it left it."
     },
     {
       "id": "room_history_tuner_warm",
@@ -338,7 +338,7 @@
       "time_period": "early occupancy",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The tuner is warm even when the set has been off for hours. The warmth is not from the electronics; the valve line draws nothing when it is cold. The warmth comes from the exhaust leg of the ventilation plant, which runs behind this wall and bleeds through the gasket. The gasket is original. The bleed is constant. The person who first noticed it wrote a note on the frequency card and the note says the warmth is useful in winter because the dial does not frost over. The note is in the same handwriting as the pencil scratch on the inverter panel in the main vault."
+      "body": "The tuner is warm even when the set has been off for hours. The warmth is not from the electronics; the valve line draws nothing when it is cold. The warmth comes from the exhaust leg of the ventilation plant, which runs behind this wall and bleeds through the gasket. The gasket is original. The bleed is constant. The person who first noticed it wrote a note on the frequency card and the note says the warmth is useful in winter because the dial does not frost over. The note is in the same handwriting as the pencil scratch on the inverter panel in the main vault. The warmth was noticed once and written down, and it is still here."
     },
     {
       "id": "room_history_cupola_breath",
@@ -347,7 +347,7 @@
       "time_period": "crisis conversion",
       "unlock": "repair_performed",
       "unlock_day": 0,
-      "body": "The cupola breathes when it cools. The breath is a slow exhalation through the tuyeres and it lasts exactly as long as the walk from the charging floor to the water jacket. The crew timed it once and wrote the number on the blower housing with chalk. The chalk mark is still there, faint, under three layers of heat stain. The number is forty-two seconds. The breath is regular when the lining is good. When the lining goes, the breath gets shorter and sharper. The crew does not need the chalk anymore. They hear the difference before they see the lining."
+      "body": "The cupola breathes when it cools. The breath is a slow exhalation through the tuyeres and it lasts exactly as long as the walk from the charging floor to the water jacket. The crew timed it once and wrote the number on the blower housing with chalk. The chalk mark is still there, faint, under three layers of heat stain. The number is forty-two seconds. The breath is regular when the lining is good. When the lining goes, the breath gets shorter and sharper. The crew does not need the chalk anymore. They hear the difference before they see the lining. The number is still under the heat stain."
     },
     {
       "id": "room_history_soil_window",
@@ -356,7 +356,7 @@
       "time_period": "current campaign",
       "unlock": "day_milestone",
       "unlock_day": 12,
-      "body": "The soil in the greenhouse trays is darker than the soil outside, which is not surprising, but the dark layer is thinner than it should be. The top millimetre is ash and the layer underneath is the original topsoil, and the boundary between them is sharp. The ash settled in one overnight and the plants that were already up pushed through it without pausing. The tray labels are written in pencil on scrap plastic. The pencil writing is smeared where the spray mists it. The labels are still legible. The plants are not all the same age. Some trays were seeded before the storm and some after. The difference in height is visible from the door."
+      "body": "The soil in the greenhouse trays is darker than the soil outside, which is not surprising, but the dark layer is thinner than it should be. The top millimetre is ash and the layer underneath is the original topsoil, and the boundary between them is sharp. The ash settled in one overnight and the plants that were already up pushed through it without pausing. The tray labels are written in pencil on scrap plastic. The pencil writing is smeared where the spray mists it. The labels are still legible. The plants are not all the same age. Some trays were seeded before the storm and some after. The difference in height is visible from the door. The boundary between ash and soil is the only calendar the room has, and it does not say when."
     },
     {
       "id": "room_history_generator_footings",
@@ -365,7 +365,7 @@
       "time_period": "pre-war maintenance",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The generator footings are cast into the slab with four anchor bolts and a shim pack. The shim pack on the left rear footing is thinner than the others by the thickness of a coin, which is why the set vibrates at idle and the pencil scratch on the inverter panel says NOT LOAD. The scratch was made by somebody who stood in this exact spot and watched the panel flicker while the generator hunted. The shim has not been replaced. The scratch has not been removed. The vibration has been present for longer than the crew has been here. It is part of the room's sound now."
+      "body": "The generator footings are cast into the slab with four anchor bolts and a shim pack. The shim pack on the left rear footing is thinner than the others by the thickness of a coin, which is why the set vibrates at idle and the pencil scratch on the inverter panel says NOT LOAD. The scratch was made by somebody who stood in this exact spot and watched the panel flicker while the generator hunted. The shim has not been replaced. The scratch has not been removed. The vibration has been present for longer than the crew has been here. It is part of the room's sound now. Somebody stood where you are standing and wrote the warning nobody has yet acted on, and the warning has held longer than the repair."
     },
     {
       "id": "room_history_boiler_jacket",
@@ -374,7 +374,7 @@
       "time_period": "early occupancy",
       "unlock": "repair_performed",
       "unlock_day": 0,
-      "body": "The boiler jacket ticks twice when the fire settles. The ticking is the steel contracting as it cools and it has done that since the canteen's range was converted. The person who made the conversion left a note inside the hatch frame with the winter set-point written in grease pencil. The number is seventy degrees. The note is in the same handwriting as the frequency card in the radio tuner. The boiler was not lit on the first night. The note says the manifold was not yet isolated and the crew waited three days before they lit it. The three days are not recorded in the log."
+      "body": "The boiler jacket ticks twice when the fire settles. The ticking is the steel contracting as it cools and it has done that since the canteen's range was converted. The person who made the conversion left a note inside the hatch frame with the winter set-point written in grease pencil. The number is seventy degrees. The note is in the same handwriting as the frequency card in the radio tuner. The boiler was not lit on the first night. The note says the manifold was not yet isolated and the crew waited three days before they lit it. The three days are not recorded in the log. The room keeps the pause even though the log never made a row for it."
     },
     {
       "id": "room_history_filter_cartridge",
@@ -383,7 +383,7 @@
       "time_period": "current campaign",
       "unlock": "inspect_room",
       "unlock_day": 0,
-      "body": "The filter cartridge slots have a wear pattern on the sealing face that matches the intake housing's mounting lugs. The pattern is not uniform. The left bank wears faster than the right, which means the intake leg is not balanced. The crew know this. They rotate the cartridges by feel and the rotation schedule is kept in their heads. The notch on the pre-filter strap records the change. The notch on the cartridge housing records the replacement. The two notches do not line up, which means the cartridge was replaced without the pre-filter being changed, or vice versa. The last time it happened was three months ago. The time before that was six months before that. The interval is shortening."
+      "body": "The filter cartridge slots have a wear pattern on the sealing face that matches the intake housing's mounting lugs. The pattern is not uniform. The left bank wears faster than the right, which means the intake leg is not balanced. The crew know this. They rotate the cartridges by feel and the rotation schedule is kept in their heads. The notch on the pre-filter strap records the change. The notch on the cartridge housing records the replacement. The two notches do not line up, which means the cartridge was replaced without the pre-filter being changed, or vice versa. The last time it happened was three months ago. The time before that was six months before that. The interval is shortening. Nobody has said the number aloud. The straps are counted by hand, and the hands are the ones that remember."
     },
     {
       "id": "vignette_water_pump_original_use",
@@ -391,7 +391,7 @@
       "room_display_name": "Water Pump",
       "title": "Before the Lock",
       "time_period": "Pre-Exchange",
-      "body": "The pump room had a schedule. Morning: draw thirty litres and check the gauge. Midday: top the seal and log the flow rate. Evening: bleed the line and hang the leather cup to dry. The schedule is still chalked on the wall above the gauge, but nobody follows it now. The well is the same well. The water is the same water. The arithmetic is different. What changed was not the shaft but the ledger. Before the Exchange, flow was a number. After the Exchange, flow became a ration. The schedule survived the lock. The meaning did not. The wall remembers both.",
+      "body": "The pump room had a schedule. Morning: draw thirty litres and check the gauge. Midday: top the seal and log the flow rate. Evening: bleed the line and hang the leather cup to dry. The schedule is still chalked on the wall above the gauge, but nobody follows it now. The well is the same well. The water is the same water. The arithmetic is different. What changed was not the shaft but the ledger. Before the Exchange, flow was a number. After the Exchange, flow became a ration. The schedule survived the lock. The meaning did not. The wall remembers both. The gauge still shows what the well can give; the chalk shows what the room used to be allowed to take.",
       "unlock": "day_milestone",
       "unlock_day": 1,
       "trigger": "inspect_room"
@@ -401,7 +401,7 @@
     {
       "id": "room_fixture_corridor_chart_rail",
       "room_id": "room_bunker_corridor",
-      "detail": "A chart rail in brass, with a pencil hanging through the ring on a string gone dark.",
+      "detail": "A chart rail in brass, with a pencil hanging through the ring on a string gone dark. The pencil has been replaced; the string has not.",
       "historical_meaning": "Printed before the Exchange for a crew of fourteen; the rail has held every roster since.",
       "inspectable": false,
       "art_visible": true,
@@ -410,7 +410,7 @@
     {
       "id": "room_fixture_corridor_plate_rectangles",
       "room_id": "room_bunker_corridor",
-      "detail": "Four unfaded rectangles of older paint above the bench, plate-width, in a row.",
+      "detail": "Four unfaded rectangles of older paint above the bench, plate-width, in a row. The wall keeps the rectangles and the tin keeps the names, and the wall is the half anyone walking past has to decide what to look at.",
       "historical_meaning": "Where the brass name-plates were screwed. The plates are in the tin behind the filtration stack.",
       "inspectable": false,
       "art_visible": true,
@@ -419,7 +419,7 @@
     {
       "id": "room_fixture_corridor_pencil_stub",
       "room_id": "room_bunker_corridor",
-      "detail": "A pencil stub on the rail, sharpened at both ends.",
+      "detail": "A pencil stub on the rail, sharpened at both ends. The point is always short.",
       "historical_meaning": "Sharpened twice so it would not run out mid-watch; the point is always short.",
       "inspectable": false,
       "art_visible": true,
@@ -428,7 +428,7 @@
     {
       "id": "room_fixture_corridor_scrub_line",
       "room_id": "room_bunker_corridor",
-      "detail": "A band of bare concrete at head height along the north wall, painted over and coming through.",
+      "detail": "A band of bare concrete at head height along the north wall, painted over and coming through. The crew repainted without discussing it.",
       "historical_meaning": "Where the first decon wash-down scrubbed the paint off and the crew repainted without discussing it.",
       "inspectable": false,
       "art_visible": true,
@@ -437,7 +437,7 @@
     {
       "id": "room_fixture_bunks_stencil_gaps",
       "room_id": "room_bunks",
-      "detail": "Bunk numbers stencilled in white; the sequence skips two numbers.",
+      "detail": "Bunk numbers stencilled in white; the sequence skips two numbers. The reason is not recorded and is not asked about.",
       "historical_meaning": "Original installer's convention. The reason is not recorded and is not asked about.",
       "inspectable": false,
       "art_visible": true,
@@ -446,7 +446,7 @@
     {
       "id": "room_fixture_bunks_spare_socket",
       "room_id": "room_bunks",
-      "detail": "A socket drilled in the runner for a third pad that never arrived.",
+      "detail": "A socket drilled in the runner for a third pad that never arrived. The hole is the only part of the manifest that is still exactly where the count said it would be.",
       "historical_meaning": "Provisioned for the manifest count and never filled.",
       "inspectable": false,
       "art_visible": true,
@@ -455,7 +455,7 @@
     {
       "id": "room_fixture_bunks_dosimeter_nail",
       "room_id": "room_bunks",
-      "detail": "A nail under a second-tier frame with a dosimeter hanging on a cord.",
+      "detail": "A nail under a second-tier frame with a dosimeter hanging on a cord. Nobody claims it, which is why everybody reads it.",
       "historical_meaning": "Read at the top of each watch by whoever wakes first; it ticks slower than the intake.",
       "inspectable": false,
       "art_visible": true,
@@ -464,7 +464,7 @@
     {
       "id": "room_fixture_bunks_bolt_rings",
       "room_id": "room_bunks",
-      "detail": "Paint circles around each foot, noticeably wider than the bolt heads.",
+      "detail": "Paint circles around each foot, noticeably wider than the bolt heads. The old holes are inside the rings.",
       "historical_meaning": "The frames were re-bolted once after the slab moved; the old holes are inside the rings.",
       "inspectable": false,
       "art_visible": true,
@@ -473,7 +473,7 @@
     {
       "id": "room_fixture_filtration_canister_notches",
       "room_id": "room_filtration",
-      "detail": "A file notch on every canister strap, grouped in days.",
+      "detail": "A file notch on every canister strap, grouped in days. The notches are the crew's own service log.",
       "historical_meaning": "The crew's own service log, cut into metal because paper runs out.",
       "inspectable": false,
       "art_visible": true,
@@ -482,7 +482,7 @@
     {
       "id": "room_fixture_filtration_nameplate_tin",
       "room_id": "room_filtration",
-      "detail": "A sweets tin behind the canister bank. Heavier than it looks, until it is not.",
+      "detail": "A sweets tin behind the canister bank. Heavier than it looks, until it is not. Everyone who finds it puts it back.",
       "historical_meaning": "Fourteen brass plates with surnames that belong to nobody here. Everyone who finds it puts it back.",
       "inspectable": false,
       "art_visible": true,
@@ -491,7 +491,7 @@
     {
       "id": "room_fixture_filtration_intake_stool",
       "room_id": "room_filtration",
-      "detail": "A stool bolted closer to the intake than anything else in the room.",
+      "detail": "A stool bolted closer to the intake than anything else in the room. The duty rota has quietly assigned it that way.",
       "historical_meaning": "Whoever sleeps nearest tastes the filter first. The duty rota has quietly assigned it that way.",
       "inspectable": false,
       "art_visible": true,
@@ -500,7 +500,7 @@
     {
       "id": "room_fixture_filtration_steam_valve",
       "room_id": "room_filtration",
-      "detail": "A bake-out valve with a wire seal and a hand-scribed quarter-mark beside it.",
+      "detail": "A bake-out valve with a wire seal and a hand-scribed quarter-mark beside it. The quarter-mark is how the room warns you.",
       "historical_meaning": "The charcoal beds are steamed on a cycle longer than the filters; the quarter-mark is how the room warns you.",
       "inspectable": false,
       "art_visible": true,
@@ -509,7 +509,7 @@
     {
       "id": "room_fixture_filtration_spare_belt",
       "room_id": "room_filtration",
-      "detail": "A spare belt on a hook, clearly the wrong size.",
+      "detail": "A spare belt on a hook, clearly the wrong size. Nobody has taken it down, and nobody has put anything else up.",
       "historical_meaning": "Salvaged with the second blower and kept because nothing else has ever fitted either.",
       "inspectable": false,
       "art_visible": true,
@@ -518,7 +518,7 @@
     {
       "id": "room_fixture_filtration_hazmat_hook",
       "room_id": "room_filtration",
-      "detail": "A rubber apron on a hook, two sizes too large for anyone currently here.",
+      "detail": "A rubber apron on a hook, two sizes too large for anyone currently here. The size is a reminder of who the plant was built for.",
       "historical_meaning": "Issued from the pre-war kit for pre-filter work. The size is a reminder of who the plant was built for.",
       "inspectable": false,
       "art_visible": true,
@@ -527,7 +527,7 @@
     {
       "id": "room_fixture_kitchen_portion_rings",
       "room_id": "room_kitchen",
-      "detail": "Concentric burn rings inside three bowls, none of them the size of a full portion.",
+      "detail": "Concentric burn rings inside three bowls, none of them the size of a full portion. Some of the stew was eaten, and some was not.",
       "historical_meaning": "Stew that sat and was eaten, and stew that sat and was not.",
       "inspectable": false,
       "art_visible": true,
@@ -536,7 +536,7 @@
     {
       "id": "room_fixture_kitchen_ladle_nail",
       "room_id": "room_kitchen",
-      "detail": "A ladle on a nail set at head height.",
+      "detail": "A ladle on a nail set at head height. What it holds just out of reach is a decision that gets remade at every meal.",
       "historical_meaning": "Placed where children can see it and cannot lift it. The order at the table is negotiated around it.",
       "inspectable": false,
       "art_visible": true,
@@ -545,7 +545,7 @@
     {
       "id": "room_fixture_kitchen_table_scratches",
       "room_id": "room_kitchen",
-      "detail": "Knife marks along the table edge, grouped in fives.",
+      "detail": "Knife marks along the table edge, grouped in fives. The scratches are a tally of short counts.",
       "historical_meaning": "A tally of short counts, kept so the number could exist without being spoken.",
       "inspectable": false,
       "art_visible": true,
@@ -554,7 +554,7 @@
     {
       "id": "room_fixture_kitchen_flue_damper",
       "room_id": "room_kitchen",
-      "detail": "A flue bypass damper welded open, the handle snapped off flush.",
+      "detail": "A flue bypass damper welded open, the handle snapped off flush. Nobody expects that handle back.",
       "historical_meaning": "The range was designed to be vented and was re-pointed when the exhaust shaft was blocked.",
       "inspectable": false,
       "art_visible": true,
@@ -563,7 +563,7 @@
     {
       "id": "room_fixture_clinic_curtain_wire",
       "room_id": "room_clinic",
-      "detail": "A curtain on a stretched wire, the hooks polished bright.",
+      "detail": "A curtain on a stretched wire, the hooks polished bright. It is the partition this shelter actually has.",
       "historical_meaning": "The partition this shelter actually has, in place of the one the drawings show.",
       "inspectable": false,
       "art_visible": true,
@@ -572,7 +572,7 @@
     {
       "id": "room_fixture_clinic_basin_rim",
       "room_id": "room_clinic",
-      "detail": "A basin with the rim ground thin, and a scuff at the height of a kneeling adult.",
+      "detail": "A basin with the rim ground thin, and a scuff at the height of a kneeling adult. It came from the stores and has served every dressing since the first week.",
       "historical_meaning": "Repurposed from the stores. It has been used for every dressing since the first week.",
       "inspectable": false,
       "art_visible": true,
@@ -581,7 +581,7 @@
     {
       "id": "room_fixture_clinic_iodine_lot",
       "room_id": "room_clinic",
-      "detail": "A brown bottle with a Continuity lot number stamped on the shoulder.",
+      "detail": "A brown bottle with a Continuity lot number stamped on the shoulder. It is pre-war stock from the provisioning network.",
       "historical_meaning": "Pre-war stock from the provisioning network, and a clue to how much of this place was meant to be supplied.",
       "inspectable": false,
       "art_visible": true,
@@ -590,7 +590,7 @@
     {
       "id": "room_fixture_clinic_capped_drain",
       "room_id": "room_clinic",
-      "detail": "A floor drain capped with folded cloth and a plate on top.",
+      "detail": "A floor drain capped with folded cloth and a plate on top. Nobody has used it as drawn, and nobody has removed the cap either.",
       "historical_meaning": "The room was drawn around this drain. Nobody has used it as drawn, and nobody has removed the cap either.",
       "inspectable": false,
       "art_visible": true,
@@ -599,7 +599,7 @@
     {
       "id": "room_fixture_workshop_busbar_leg",
       "room_id": "room_workshop",
-      "detail": "Three busbar stubs along the ceiling; one is capped and taped and never re-energised.",
+      "detail": "Three busbar stubs along the ceiling; one is capped and taped and never re-energised. The shelter can only afford to carry one leg under load.",
       "historical_meaning": "The shop was fed three-phase. The shelter can only afford to carry one leg under load.",
       "inspectable": false,
       "art_visible": true,
@@ -608,7 +608,7 @@
     {
       "id": "room_fixture_workshop_tool_shadow",
       "room_id": "room_workshop",
-      "detail": "A painted tool silhouette on the pegboard with no tool and no gap around it.",
+      "detail": "A painted tool silhouette on the pegboard with no tool and no gap around it. The workshop has bought and broken tools since, and none of them has ever hung there.",
       "historical_meaning": "The shadow predates the crew. Nobody has matched a tool to it since.",
       "inspectable": false,
       "art_visible": true,
@@ -617,7 +617,7 @@
     {
       "id": "room_fixture_workshop_swarf_grate",
       "room_id": "room_workshop",
-      "detail": "A swarf grate under the lathe position, cut and re-welded twice.",
+      "detail": "A swarf grate under the lathe position, cut and re-welded twice. Each weld was struck while the lights were already failing.",
       "historical_meaning": "Machine work continued here through the plant's own power shortages.",
       "inspectable": false,
       "art_visible": true,
@@ -626,7 +626,7 @@
     {
       "id": "room_fixture_airlock_boot_crate",
       "room_id": "room_airlock",
-      "detail": "A banded crate stencilled for this allocation's depot, tape uncut.",
+      "detail": "A banded crate stencilled for this allocation's depot, tape uncut. The delivery date on the form is after the Exchange.",
       "historical_meaning": "Children's winter boots. The delivery date on the form is after the Exchange.",
       "inspectable": false,
       "art_visible": true,
@@ -635,7 +635,7 @@
     {
       "id": "room_fixture_airlock_bolted_chair",
       "room_id": "room_airlock",
-      "detail": "A heavy chair bolted to the airlock floor, facing the inner door.",
+      "detail": "A heavy chair bolted to the airlock floor, facing the inner door. It could not be moved back through the hatch, so it stayed.",
       "historical_meaning": "Salvaged from the Row. It stayed because it could not be moved back through the hatch.",
       "inspectable": false,
       "art_visible": true,
@@ -644,7 +644,7 @@
     {
       "id": "room_fixture_airlock_nozzles",
       "room_id": "room_airlock",
-      "detail": "Four bare feed stubs in the ceiling arch where decon nozzles were mounted.",
+      "detail": "Four bare feed stubs mark where decon nozzles were mounted; their seized valves were cut out for parts the plant needed more.",
       "historical_meaning": "The valves seized in the cold and were cut out for parts the plant needed more.",
       "inspectable": false,
       "art_visible": true,
@@ -653,7 +653,7 @@
     {
       "id": "room_fixture_airlock_handprints",
       "room_id": "room_airlock",
-      "detail": "Paint worn to bare metal at head height on the inside of the door.",
+      "detail": "Paint worn to bare metal at head height on the inside of the door. The wear is at the exact height of a person waiting, which is the only description of them the threshold still keeps.",
       "historical_meaning": "Where people stood while the hatch cycled. The wear is older than the crew.",
       "inspectable": false,
       "art_visible": true,
@@ -662,7 +662,7 @@
     {
       "id": "room_fixture_airlock_rag_nail",
       "room_id": "room_airlock",
-      "detail": "A rag on a nail by the inner seal, boiled or not, depending on the week.",
+      "detail": "A rag on a nail by the inner seal, boiled or not, depending on the week. It is the shelter's entire decontamination instrumentation, in cloth form.",
       "historical_meaning": "The shelter's entire decontamination instrumentation, in cloth form.",
       "inspectable": false,
       "art_visible": true,
@@ -671,7 +671,7 @@
     {
       "id": "room_fixture_radio_mesh_panel",
       "room_id": "room_radio_tuner",
-      "detail": "Copper mesh stapled behind the set where a screened enclosure used to be.",
+      "detail": "Copper mesh stapled behind the set where a screened enclosure used to be. The mesh is a field repair, not the original screen.",
       "historical_meaning": "A field repair of a Faraday screen that was built into the wall and lost to it.",
       "inspectable": false,
       "art_visible": true,
@@ -680,7 +680,7 @@
     {
       "id": "room_fixture_radio_log_book",
       "room_id": "room_radio_tuner",
-      "detail": "A station log whose call signs predate everyone living here.",
+      "detail": "A station log whose call signs predate everyone living here. Nobody starts a new book.",
       "historical_meaning": "Continuity traffic, kept going out of habit, which is why nobody starts a new book.",
       "inspectable": false,
       "art_visible": true,
@@ -689,7 +689,7 @@
     {
       "id": "room_fixture_radio_load_bulb",
       "room_id": "room_radio_tuner",
-      "detail": "A load bulb wired in series, its glass marked with a figure in grease pencil.",
+      "detail": "A load bulb wired in series, its glass marked with a figure in grease pencil. The limit was written on the hardware so it would survive the loss of the paperwork.",
       "historical_meaning": "A power limit somebody wrote on the hardware itself so it survived the loss of the paperwork.",
       "inspectable": false,
       "art_visible": true,
@@ -698,7 +698,7 @@
     {
       "id": "room_fixture_greenhouse_peat_troughs",
       "room_id": "room_greenhouse",
-      "detail": "Timber troughs stepped up the wall; one is rotted through and shored with a prop.",
+      "detail": "Timber troughs stepped up the wall; one is rotted through and shored with a prop. The rest of the run still steps up as designed.",
       "historical_meaning": "Cascading peat beds as designed. The prop is the crew's own amendment.",
       "inspectable": false,
       "art_visible": true,
@@ -707,7 +707,7 @@
     {
       "id": "room_fixture_greenhouse_ballast_shield",
       "room_id": "room_greenhouse",
-      "detail": "A hand-formed metal shield over a lamp ballast, with a note tucked behind it.",
+      "detail": "A hand-formed metal shield over a lamp ballast, with a note tucked behind it. The plan recorded the ballast heat as a spare radiator for the level above.",
       "historical_meaning": "The ballast heat was recorded in the plan as a spare radiator for the level above.",
       "inspectable": false,
       "art_visible": true,
@@ -716,7 +716,7 @@
     {
       "id": "room_fixture_greenhouse_seed_tins",
       "room_id": "room_greenhouse",
-      "detail": "A crate of dated seed tins, three of them labelled with varieties nobody recognises.",
+      "detail": "A crate of dated seed tins, three of them labelled with varieties nobody recognises. The labels read as depot shorthand, not as anything the crew was taught.",
       "historical_meaning": "Allocation stock. The labels are depot shorthand, not a language the crew was taught.",
       "inspectable": false,
       "art_visible": true,
@@ -725,7 +725,7 @@
     {
       "id": "room_fixture_foundry_goggle_hook",
       "room_id": "room_foundry",
-      "detail": "Cobalt-tinted goggles on a hook, the lenses crazed to milk.",
+      "detail": "Cobalt-tinted goggles on a hook, the lenses crazed to milk. They are still on the hook because nobody has been able to retire them.",
       "historical_meaning": "Pouring glass requires them. The replacement stock does not exist.",
       "inspectable": false,
       "art_visible": true,
@@ -734,7 +734,7 @@
     {
       "id": "room_fixture_foundry_sand_beds",
       "room_id": "room_foundry",
-      "detail": "Casting beds raked to a chalk line that no longer matches the floor.",
+      "detail": "Casting beds raked to a chalk line that no longer matches the floor. The line is still chalked, week after week, and the floor is still argued with.",
       "historical_meaning": "The bay was levelled against a datum that has since shifted; the crew rakes to memory now.",
       "inspectable": false,
       "art_visible": true,
@@ -743,7 +743,7 @@
     {
       "id": "room_fixture_foundry_heat_stain",
       "room_id": "room_foundry",
-      "detail": "A rectangular discolouration on the slab, edges crisp as a struck match.",
+      "detail": "A rectangular discolouration on the slab, edges crisp as a struck match. The edges are the part that survives: heat fades, but the shape it had while crossing two floors stays exact.",
       "historical_meaning": "Heat from a proper full heat reads through two floor levels. The plant's siting was chosen around that.",
       "inspectable": false,
       "art_visible": true,
@@ -752,7 +752,7 @@
     {
       "id": "room_fixture_foundry_works_plate",
       "room_id": "room_foundry",
-      "detail": "A riveted builder's plate, its works number filed half-illegible.",
+      "detail": "A riveted builder's plate, its works number filed half-illegible. The plate still carries the machine's name; the crew has never agreed how the filing came to be half-illegible.",
       "historical_meaning": "Deliberate or damage; the crew has never agreed, and the plate still carries the machine's name.",
       "inspectable": false,
       "art_visible": true,
@@ -761,7 +761,7 @@
     {
       "id": "room_fixture_stores_bin_labels",
       "room_id": "room_storage_bay",
-      "detail": "Steel bins with seal gaskets and label plates in two different print runs.",
+      "detail": "Steel bins with seal gaskets and label plates in two different print runs. The first print is depot type, and the second belongs to the crew.",
       "historical_meaning": "Re-labelled in a hurry during the conversion; the first print is depot type, the second is this crew's.",
       "inspectable": false,
       "art_visible": true,
@@ -770,7 +770,7 @@
     {
       "id": "room_fixture_stores_scale_pin",
       "room_id": "room_storage_bay",
-      "detail": "A balance scale hung on a pin, its weight box missing one disc.",
+      "detail": "A balance scale hung on a pin, its weight box missing one disc. Nobody has ever proved which count the missing disc vindicates, so the disagreement is the only measurement that is still exact.",
       "historical_meaning": "Everything here is weighed. The missing disc is why two of the counts disagree.",
       "inspectable": false,
       "art_visible": true,
@@ -779,7 +779,7 @@
     {
       "id": "room_fixture_stores_humidity_gauge",
       "room_id": "room_storage_bay",
-      "detail": "A wall humidity gauge with a red line scribed well below its useful range.",
+      "detail": "A wall humidity gauge with a red line scribed well below its useful range. The red line was drawn by someone who knew exactly what the stock could survive.",
       "historical_meaning": "The bins were built to a dryness spec the shelter can no longer guarantee.",
       "inspectable": false,
       "art_visible": true,
@@ -788,7 +788,7 @@
     {
       "id": "room_fixture_stores_depot_form",
       "room_id": "room_storage_bay",
-      "detail": "A packing form stapled inside a lid, the date printed three days late.",
+      "detail": "A packing form stapled inside a lid, the date printed three days late. Three days is the only evidence the network gave of being in trouble, and the form outlived everything that was trouble.",
       "historical_meaning": "The provisioning network's last paperwork. Kept flat, not displayed.",
       "inspectable": false,
       "art_visible": true,
@@ -797,7 +797,7 @@
     {
       "id": "room_fixture_main_generator_mount",
       "room_id": "room_main",
-      "detail": "The generator sits on a cast-iron isolation pad with four hold-down lugs and a vibration cut-out that somebody has already wrapped in tape.",
+      "detail": "The generator sits on a cast-iron isolation pad with four hold-down lugs and a vibration cut-out that somebody has already wrapped in tape. The lug pattern matches a second blower that was never installed.",
       "historical_meaning": "Pre-war specification for a three-hand watch; the lug pattern matches the second blower that was never installed.",
       "inspectable": false,
       "art_visible": true,
@@ -806,7 +806,7 @@
     {
       "id": "room_fixture_main_battery_rack",
       "room_id": "room_main",
-      "detail": "The battery rack holds eight cells in two rows. The top row is original. The bottom row was added from the allocation's emergency lighting bank.",
+      "detail": "The battery rack holds eight cells in two rows. The top row is original. The bottom row was added from the allocation's emergency lighting bank. The two rows do not have the same history.",
       "historical_meaning": "Mixed provenance: pre-war cells with a post-Exchange retrofit. The capacity difference shows on the charge curve.",
       "inspectable": false,
       "art_visible": true,
@@ -815,7 +815,7 @@
     {
       "id": "room_fixture_main_inverter_panel",
       "room_id": "room_main",
-      "detail": "The inverter panel has a scratch in the paint that spells NOT LOAD in pencil, and a relay that clicks twice at odd hours.",
+      "detail": "The inverter panel has a scratch in the paint that spells NOT LOAD in pencil, and a relay that clicks twice at odd hours. The click has been logged and ignored for as long as anybody remembers.",
       "historical_meaning": "The pencil scratch predates the crew. The relay click has been logged and ignored for as long as anybody remembers.",
       "inspectable": false,
       "art_visible": true,
@@ -824,7 +824,7 @@
     {
       "id": "room_fixture_main_boiler_hatch",
       "room_id": "room_main",
-      "detail": "The boiler hatch is a range hearth door with a new sight-glass fitted and the original brass handle bent to a different angle.",
+      "detail": "The boiler hatch is a range hearth door with a new sight-glass fitted and the original brass handle bent to a different angle. The bend is from the last person who tried to open it hot.",
       "historical_meaning": "Converted from the canteen's coal range when the deep heating manifold was isolated. The handle bend is from the last person who tried to open it hot.",
       "inspectable": false,
       "art_visible": true,
@@ -833,7 +833,7 @@
     {
       "id": "room_fixture_main_isolation_pad",
       "room_id": "room_main",
-      "detail": "Four isolation pads, one under each mount. The generator pad is cracked along one edge where the set was dropped during installation.",
+      "detail": "Four isolation pads, one under each mount. The generator pad is cracked along one edge where the set was dropped during installation. The crack is old enough to have a name among the crew, though nobody uses it out loud.",
       "historical_meaning": "The drop crack is old enough to have a name among the crew, though nobody uses it out loud.",
       "inspectable": false,
       "art_visible": true,
@@ -843,7 +843,7 @@
       "id": "room_fixture_pump_pressure_gauge",
       "room_id": "room_water_pump",
       "art_visible": true,
-      "detail": "A brass pressure gauge with the needle resting at zero and a crack across the face.",
+      "detail": "A brass pressure gauge with the needle resting at zero and a crack across the face. The crack appeared on the first day of fallout.",
       "historical_meaning": "The gauge was last replaced during the Exchange. Its crack appeared on the first day of fallout.",
       "inspectable": false
     },
@@ -851,7 +851,7 @@
       "id": "room_fixture_pump_leather_cup",
       "room_id": "room_water_pump",
       "art_visible": true,
-      "detail": "A leather cup on a hook beside the hand pump, softened by use and stained dark.",
+      "detail": "A leather cup on a hook beside the hand pump, softened by use and stained dark. It has hung on that hook long enough to keep the shape of the hand that dried last.",
       "historical_meaning": "The leather was cut from a seat in the old depot truck. It still holds water.",
       "inspectable": false
     },
@@ -859,7 +859,7 @@
       "id": "room_fixture_pump_flow_ledger",
       "room_id": "room_water_pump",
       "art_visible": true,
-      "detail": "A wall ledger of flow rates in pencil, the last entry dated three days before the Exchange.",
+      "detail": "A wall ledger of flow rates in pencil, the last entry dated three days before the Exchange. Two hands kept the numbers, and the numbers are the only part of the room still arguing.",
       "historical_meaning": "The handwriting changes halfway through the page. Two people recorded the well.",
       "inspectable": false
     },
@@ -867,7 +867,7 @@
       "id": "room_fixture_pump_well_collar",
       "room_id": "room_water_pump",
       "art_visible": true,
-      "detail": "The well collar is cast iron with a rusted chain and a bucket that has no bottom.",
+      "detail": "The well collar is cast iron with a rusted chain and a bucket that has no bottom. The chain still has the original tag.",
       "historical_meaning": "The bucket was cut open to use as a strainer. The chain still has the original tag.",
       "inspectable": false
     }

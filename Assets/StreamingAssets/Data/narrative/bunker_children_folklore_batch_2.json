@@ -14,7 +14,7 @@
         "water",
         "sleep"
       ],
-      "prose": "Sung by the Therapist to the children at bedtime, accompanied by the rhythm of the condensation pipe dripping in the corridor. 'Drip, drop, the water finds its way. / Drip, drop, it will be a better day. / The pipe is tired, the tank is full, / The water rests in its concrete pool. / Close your eyes, the drip goes on. / You'll be warm until the dawn.' Sonya insists the pipe has a name — 'Mr. Drip' — and that he gets lonely if no one sings to him."
+      "prose": "Sung by the Therapist to the children at bedtime, accompanied by the rhythm of the condensation pipe dripping in the corridor. 'Drip, drop, the water finds its way. / Drip, drop, it will be a better day. / The pipe is tired, the tank is full, / The water rests in its concrete pool. / Close your eyes, the drip goes on. / You'll be warm until the dawn.' Sonya insists the pipe has a name — 'Mr. Drip' — and that he gets lonely if no one sings to him. The drip is only condensate on a named schedule and the room only needs someone to wait through it, and both of those are true at once."
     },
     {
       "id": "folklore_b2_the_dosimeter_hide_and_seek",
@@ -29,7 +29,7 @@
         "dosimeter",
         "hide_and_seek"
       ],
-      "prose": "A game invented by Petr (age 10) that combines hide-and-seek with radiation awareness. One child is 'the Geiger' and stands in the centre with their eyes closed. The other children hide. The Geiger counts to twenty, then walks the corridors calling 'Click-click-click.' When the Geiger points at a hiding spot and says 'Hot!' the hidden child must come out and say their dosimeter reading (a number they make up). If the reading is above fifty, the child is 'contaminated' and must walk slowly back to base. If below fifty, they are 'clean' and can run. No actual dosimeters are used. The children have memorised the safety thresholds from the poster in the mess hall."
+      "prose": "A game invented by Petr (age 10) that combines hide-and-seek with radiation awareness. One child is 'the Geiger' and stands in the centre with their eyes closed. The other children hide. The Geiger counts to twenty, then walks the corridors calling 'Click-click-click.' When the Geiger points at a hiding spot and says 'Hot!' the hidden child must come out and say their dosimeter reading (a number they make up). If the reading is above fifty, the child is 'contaminated' and must walk slowly back to base. If below fifty, they are 'clean' and can run. No actual dosimeters are used. The children have memorised the safety thresholds from the poster in the mess hall. Nobody told them the numbers were measured; they learned them as words that decide who walks and who runs."
     },
     {
       "id": "folklore_b2_the_bunker_is_a_body",
@@ -104,7 +104,7 @@
         "filter",
         "maintenance"
       ],
-      "prose": "Sung by children assigned to help the Electrician carry filter elements to the ventilation chamber. The rhythm matches the pace of walking down the corridor stairs: 'Pull the old one, push the new. / Check the gasket, make it true. / Screw it tight and seal it fast. / Breathe the air that's meant to last.' The Electrician says the children are better at the job than most adults because they don't complain about the dust. The chant has spread to the adult maintenance crews, who sing it during filter changes on the lower levels."
+      "prose": "Sung by children assigned to help the Electrician carry filter elements to the ventilation chamber. The rhythm matches the pace of walking down the corridor stairs: 'Pull the old one, push the new. / Check the gasket, make it true. / Screw it tight and seal it fast. / Breathe the air that's meant to last.' The Electrician says the children are better at the job than most adults because they don't complain about the dust. The chant has spread to the adult maintenance crews, who sing it during filter changes on the lower levels. The youngest children carry the words better than they carry the weight, and nobody has told them that is the point."
     },
     {
       "id": "folklore_b2_the_graveyard_dare",
@@ -134,7 +134,7 @@
         "wishing",
         "greenhouse"
       ],
-      "prose": "When the Botanist plants a new batch of seeds, the children are allowed to help. Each child is given one seed and told to whisper a wish into their palm before pressing it into the soil. The wishes are never spoken aloud — that would break the spell. But the Botanist has observed the children's lips moving and has learned to read them. Common wishes include: 'I wish it rains clean,' 'I wish Dad comes home,' 'I wish the lights never go out,' and, from Sonya, every time: 'I wish Masha lives forever.' The Botanist does not correct the children. She has learned that a seed planted with a wish grows at the same rate as a seed planted without one. But the child who planted it checks on it more often."
+      "prose": "When the Botanist plants a new batch of seeds, the children are allowed to help. Each child is given one seed and told to whisper a wish into their palm before pressing it into the soil. The wishes are never spoken aloud — that would break the spell. But the Botanist has observed the children's lips moving and has learned to read them. Common wishes include: 'I wish it rains clean,' 'I wish Dad comes home,' 'I wish the lights never go out,' and, from Sonya, every time: 'I wish Masha lives forever.' The Botanist does not correct the children. She has learned that a seed planted with a wish grows at the same rate as a seed planted without one. But the child who planted it checks on it more often. The growth rate is the part that did not change, and the Botanist has not needed to write that down to have noticed the rest."
     },
     {
       "id": "folklore_b2_the_siren_game",
@@ -149,7 +149,7 @@
         "emergency",
         "drill"
       ],
-      "prose": "When the bunker's emergency siren sounds for a drill, the children race to their designated safe positions. The game is to see who arrives first without pushing, shouting, or crying. The oldest children act as 'monitors' — they count the arrivals and report to the General. The youngest children are carried by the older ones. No one has ever been injured in the siren game. The General says the children are better at emergency response than half the adults because they treat it as a game rather than a terror. Sonya says: 'The siren is just the bunker telling us to play hide-and-seek. We're very good at hide-and-seek.'"
+      "prose": "When the bunker's emergency siren sounds for a drill, the children race to their designated safe positions. The game is to see who arrives first without pushing, shouting, or crying. The oldest children act as 'monitors' — they count the arrivals and report to the General. The youngest children are carried by the older ones. No one has ever been injured in the siren game. The General says the children are better at emergency response than half the adults because they treat it as a game rather than a terror. Sonya says: 'The siren is just the bunker telling us to play hide-and-seek. We're very good at hide-and-seek.' The game gives them a name for the sound; it does not make the sound pretend."
     }
   ]
 }

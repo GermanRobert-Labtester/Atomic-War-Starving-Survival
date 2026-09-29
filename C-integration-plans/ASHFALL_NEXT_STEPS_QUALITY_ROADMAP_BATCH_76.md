@@ -607,7 +607,7 @@ This batch is COMPLETE when:
 ## Review Notes (Corrected)
 
 This plan was adversarially reviewed against the actual codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` prior to execution. The following
+`.` prior to execution. The following
 factual errors and gaps in the original draft were found and corrected in place above:
 
 1. **"82+ systems" is not a verified count and appears to have the wrong provenance.** A direct

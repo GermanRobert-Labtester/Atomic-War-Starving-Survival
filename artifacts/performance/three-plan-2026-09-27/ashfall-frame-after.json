@@ -1,0 +1,37 @@
+{
+  "draw_calls": {
+    "max": 42.0,
+    "mean": 41.8639505274645,
+    "p50": 42.0,
+    "p95": 42.0,
+    "p99": 42.0
+  },
+  "duration_seconds": 300.030538,
+  "effective_fps_cap": 15,
+  "enabled_ui_process_frames": {
+    "res://src/UI/ExpeditionPanel.cs": 0,
+    "res://src/UI/FeedbackPanel.cs": 0,
+    "res://src/UI/LongWalkExpeditionPanel.cs": 0,
+    "res://src/UI/UiBackgroundCarousel.cs": 2749
+  },
+  "first_frame_engine_ms": 11566.325,
+  "frame_ms": {
+    "max": 539.656,
+    "mean": 109.14169152419,
+    "p50": 66.83,
+    "p95": 286.119,
+    "p99": 385.423
+  },
+  "frames": 2749,
+  "notes": "15 FPS cap; engine startup clock, not cleared OS caches; idle main menu; per-node C# timings unavailable from aggregate Performance monitors",
+  "process_ms": {
+    "max": 488.824,
+    "mean": 113.008684248818,
+    "p50": 52.018,
+    "p95": 329.803,
+    "p99": 440.971
+  },
+  "renderer": "llvmpipe (LLVM 22.1.8, 256 bits)",
+  "scene": "res://scenes/Main.tscn",
+  "static_memory_bytes": 269681236
+}

@@ -650,6 +650,22 @@
         "community",
         "forward"
       ]
+    },
+    {
+      "posting_id": "graf_cw117_05_wall_keeps_the_promise",
+      "recorded_day": 34,
+      "location": "Galley kitchen and canteen",
+      "medium": "Chalk beneath an earlier posting",
+      "author_signature": "unsigned",
+      "category": "Community / Work",
+      "content": "For the ones asleep: the promise is still written here.",
+      "morale_effect": "none",
+      "tags": [
+        "graveyard_shift",
+        "promise",
+        "wall",
+        "community"
+      ]
     }
   ]
 }

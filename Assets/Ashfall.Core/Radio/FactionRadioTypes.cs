@@ -32,6 +32,8 @@ namespace Ashfall.Core.Radio
         public string Message { get; }
         public int SignalStrength { get; } // 1..9 (S-units)
         public int Day { get; }
+        /// <summary>Optional editorial listening note; never replaces <see cref="Message"/>.</summary>
+        public string ListeningNote { get; }
 
         public RadioIntercept(
             string factionId,
@@ -40,7 +42,8 @@ namespace Ashfall.Core.Radio
             RadioEventKind kind,
             string message,
             int signalStrength,
-            int day)
+            int day,
+            string listeningNote = "")
         {
             FactionId = factionId ?? string.Empty;
             Callsign = callsign ?? string.Empty;
@@ -49,6 +52,7 @@ namespace Ashfall.Core.Radio
             Message = message ?? string.Empty;
             SignalStrength = Math.Clamp(signalStrength, 1, 9);
             Day = Math.Max(1, day);
+            ListeningNote = listeningNote ?? string.Empty;
         }
     }
 

@@ -167,7 +167,7 @@ having "won" — they have *kept a book*, or declined to, and either way the she
 document that says who was counted.
 
 <!-- Master Authority Integration Reference -->
-> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 > **Target Framework:** `Assets/Ashfall.Core/RadiationDose/` (`netstandard2.1`, Engine-Free Domain)
 > **Host Framework:** `src/Radiation/` (Godot 4.3+ Host Session Adapter)
 > **Authoritative Catalogs:** `Assets/StreamingAssets/Data/` (Authoritative Snake_Case JSON)
@@ -3784,7 +3784,7 @@ namespace Ashfall.Core.Tests.RadiationDose
 
 **Execution Timestamp:** 2026-09-25T04:28:00+03:00
 **Harmonization Lead:** Antigravity High-Integrity Architecture Agent
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 12.1 Dose Implementation Domain Model Alignment & Seam Harmonization
 Reconciled hardware dosimeter tags, calibration intervals, and attenuation envelopes against the Master Expansion Authority. Guaranteed strict decoupling from `expansion_07_the_dose_plan.md`.
@@ -3801,7 +3801,7 @@ All mSv readouts, attenuation factors, and timestamps enforce `CultureInfo.Invar
 
 **Execution Timestamp:** 2026-09-25T04:29:00+03:00
 **Harmonization Lead:** Antigravity Senior Systems Integrity Engineer
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 15.1 Concurrency & Boundary Hardening
 1. **Thread Safety**: Single-threaded domain coordinator executes safely without lock contention.

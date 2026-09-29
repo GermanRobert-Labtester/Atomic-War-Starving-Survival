@@ -1,5 +1,5672 @@
 # ASHFALL Worktree Ownership
 
+## claim-plan-trim-conservative-method-C-expansion-batch58-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-eighth batch in the method-C family (executed as 5 files per the
+explicit count, batch 48/54–57 precedent). The pool refilled since b57
+(claims completed and freed their spares); this batch takes b57's two
+named two-mention leftovers (cw163_03, cw163_04) plus three single-mention
+refills. Every mention of every file is an unused ranked spare of a
+COMPLETE claim, verified per mention (owning claim COMPLETE/DONE and "no
+substitution from the spare list was needed"; cw163_03 in method-C b27 +
+editorial b62; cw163_04 in method-C b27 + editorial b60; cw131_18 in
+editorial b56; cw161_09/cw161_10 in method-C b23). No live claim references
+any of these files; the batch-42/44/45/47/48/49/51/52/53 IN-PROGRESS
+prose_wave claims name other files. All five were git-clean and quiet at
+claim time; edit-time rechecks (git-clean + mention recheck) applied before
+each write; backups re-verified byte-identical to the worktree; trimmer is
+the batch-53-reconstructed tool (validated byte-exact against three known
+pairs):
+
+- `docs/expansions/prose_wave131/cw131_18_ask_at_the_post_plan.md`
+- `docs/expansions/prose_wave161/cw161_09_the_wagon_is_still_in_the_road_crust_plan.md`
+- `docs/expansions/prose_wave161/cw161_10_six_beds_are_endurance_not_capacity_plan.md`
+- `docs/expansions/prose_wave163/cw163_03_the_needle_blank_after_three_days_plan.md`
+- `docs/expansions/prose_wave163/cw163_04_ivory_color_is_an_observation_not_a_grade_plan.md`
+
+No spares used (relaxation class: unused ranked spares of COMPLETE claims
+only, all mentions verified stale; standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–57 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling trims
+excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b58-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw131_18_ask_at_the_post 169,657 → 69,341; cw161_09_the_wagon_is_still_in_
+the_road_crust 172,620 → 70,491; cw161_10_six_beds_are_endurance_not_
+capacity 172,620 → 70,491; cw163_03_the_needle_blank_after_three_days
+172,596 → 70,420; cw163_04_ivory_color_is_an_observation_not_a_grade
+172,596 → 70,467. Total 860,089 → 351,210 lines (~59%); 23,743
+byte-identical repeat copies replaced by `consolidated: §` pointers;
+~25.8 MB saved. Each cw plan's authored prefix retained byte-identically
+(SHA-256 prefix check per file: 37a86f81…, a706c964…, e5e6c2a2…,
+b8b307c3…, 568d7085…). Verified per file via the tool's `--verify` mode
+(every distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal (13 or 14),
+`### Tranche` container headings equal (260 or 280), authored-prefix
+SHA-256 equal, scoped `git diff --check` PASS. One verified two-mention
+spare remains in the tier (cw160_10, method-C b23 DONE + editorial b110
+COMPLETE, all mentions stale); further batches need IN PROGRESS claims to
+complete or foreman/user direction.
+
+## claim-plan-trim-conservative-method-C-expansion-batch57-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-seventh batch in the method-C family (executed as 5 files per the
+explicit count, batch 48/54–56 precedent). The single-mention relaxation
+class (unused ranked spares of COMPLETE claims) was down to 2 files, so
+this batch combines the final 2 single-mention files with 3 two-mention
+files under a verified minor extension of the same class: every mention
+of the file is an unused ranked spare of a COMPLETE claim (verified per
+mention: owning claim Status COMPLETE and "no substitution from the
+spare list was needed"; cw165_12 in method-C b24 + editorial b58;
+cw160_06 in b26 + editorial b58; cw154_04 in b26 + editorial b61). No
+live claim references any of these files. All five were git-clean and
+quiet at claim time; edit-time rechecks applied before each write;
+backups re-verified byte-identical to both worktree and HEAD; trimmer is
+the batch-53-reconstructed tool (validated byte-exact against three
+known pairs):
+
+- `docs/expansions/prose_wave165/cw165_12_the_record_says_prophylactic_it_does_not_say_harmless_plan.md`
+- `docs/expansions/prose_wave160/cw160_06_the_pledged_grain_can_be_seen_from_the_street_plan.md`
+- `docs/expansions/prose_wave154/cw154_04_three_colors_and_a_contradictory_legend_plan.md`
+- `docs/expansions/prose_wave135/cw135_16_four_carvings_on_the_table_plan.md`
+- `docs/expansions/prose_wave134/cw134_18_i_am_in_the_present_plan.md`
+
+No spares used (relaxation class: unused ranked spares of COMPLETE
+claims only, all mentions verified stale; standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–56 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b57-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw165_12_the_record_says_prophylactic_it_does_not_say_harmless 172,610 → 70,645;
+cw160_06_the_pledged_grain_can_be_seen_from_the_street 172,600 → 70,471;
+cw154_04_three_colors_and_a_contradictory_legend 172,600 → 70,471;
+cw135_16_four_carvings_on_the_table 167,697 → 68,917;
+cw134_18_i_am_in_the_present 167,495 → 68,176.
+Total 853,002 → 348,680 lines (~59%); 23,417 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~25.7 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check
+per file). Verified per file via the tool's `--verify` mode (every
+distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal, `###
+Tranche` container headings equal, authored-prefix SHA-256 equal, scoped
+`git diff --check` PASS. The single-mention class is now drained; 2
+verified two-mention spares remain (cw163_03, cw163_04); further batches
+need IN PROGRESS claims to complete or foreman/user direction.
+
+## claim-plan-trim-conservative-method-C-expansion-batch56-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-sixth batch in the method-C family (executed as 5 files per the
+explicit count, batch 48/54/55 precedent). Same standing relaxation class:
+single-mention unused ranked spares of COMPLETE claims. The five files
+below were each verified to have exactly ONE basename mention in this
+ledger — as a ranked spare never substituted in a completed claim — and
+to be git-clean and quiet at claim time; edit-time rechecks (git-clean +
+sole single mention + claim COMPLETE) applied before each write.
+Backups re-verified byte-identical to both worktree and HEAD before
+trimming; trimmer is the batch-53-reconstructed tool (validated
+byte-exact against three known pairs):
+
+- `docs/expansions/prose_wave139/cw139_14_twelve_metres_from_the_junction_plan.md`
+- `docs/expansions/prose_wave141/cw141_10_three_point_two_seconds_of_confirmation_plan.md`
+- `docs/expansions/prose_wave140/cw140_20_the_chemist_writes_down_the_herbs_plan.md`
+- `docs/expansions/prose_wave141/cw141_15_the_river_ice_cracked_on_day_eighty_two_plan.md`
+- `docs/expansions/prose_wave133/cw133_04_three_hundred_four_not_zero_plan.md`
+
+No spares used (relaxation class covers only single-mention unused
+spares of COMPLETE claims; all other standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–55 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b56-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw139_14_twelve_metres_from_the_junction 168,826 → 69,314;
+cw141_10_three_point_two_seconds_of_confirmation 168,822 → 69,310;
+cw140_20_the_chemist_writes_down_the_herbs 168,816 → 69,304;
+cw141_15_the_river_ice_cracked_on_day_eighty_two 168,598 → 69,235;
+cw133_04_three_hundred_four_not_zero 168,236 → 67,430.
+Total 843,298 → 344,593 lines (~59%); 23,507 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~25.5 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check
+per file). Verified per file via the tool's `--verify` mode (every
+distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal, `###
+Tranche` container headings equal, authored-prefix SHA-256 equal, scoped
+`git diff --check` PASS. ~2 eligible single-mention COMPLETE-claim
+spares remain (cw135_16, cw134_18) — this relaxation class is nearly
+drained; further batches need IN PROGRESS claims to complete or
+foreman/user direction to relax further.
+
+## claim-plan-trim-conservative-method-C-expansion-batch55-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-fifth batch in the method-C family (executed as 5 files per the
+explicit count, batch 48/54 precedent). Same standing relaxation class:
+single-mention unused ranked spares of COMPLETE claims. The five files
+below were each verified to have exactly ONE basename mention in this
+ledger — as a ranked spare never substituted in a completed claim — and
+to be git-clean and quiet at claim time; edit-time rechecks (git-clean +
+sole single mention + claim COMPLETE) applied before each write.
+Backups re-verified byte-identical to both worktree and HEAD before
+trimming; trimmer is the batch-53-reconstructed tool (validated
+byte-exact against three known pairs). The concurrent visual claim
+(tranche-23) was race-checked — disjoint paths:
+
+- `docs/expansions/prose_wave132/cw132_14_we_went_plan.md`
+- `docs/expansions/prose_wave134/cw134_02_three_weeks_is_a_season_turning_plan.md`
+- `docs/expansions/prose_wave139/cw139_19_triage_without_a_cause_confirmed_plan.md`
+- `docs/expansions/prose_wave141/cw141_08_the_rite_is_written_on_an_atlas_page_plan.md`
+- `docs/expansions/prose_wave139/cw139_20_three_lines_on_a_screening_form_plan.md`
+
+No spares used (relaxation class covers only single-mention unused
+spares of COMPLETE claims; all other standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–54 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b55-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw132_14_we_went 169,025 → 68,263;
+cw134_02_three_weeks_is_a_season_turning 169,008 → 68,202;
+cw139_19_triage_without_a_cause_confirmed 168,827 → 69,315;
+cw141_08_the_rite_is_written_on_an_atlas_page 168,826 → 69,314;
+cw139_20_three_lines_on_a_screening_form 168,826 → 69,314.
+Total 844,512 → 344,408 lines (~59%); 23,218 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~25.5 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check
+per file). Verified per file via the tool's `--verify` mode (every
+distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal, `###
+Tranche` container headings equal, authored-prefix SHA-256 equal, scoped
+`git diff --check` PASS. ~7 eligible single-mention COMPLETE-claim
+spares remain for further batches.
+
+## claim-chatgpt-item-art-tranche-23-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_water_filter_advanced,item_radio_cipher_rotor,item_air_filter_hepa_hospital,item_surgical_kit,item_reagent_clean,item_diving_suit_vulcanized,item_cloud_seeding_canister,item_seismic_detector,item_field_guide_annotated,item_thermal_lance,item_sentry_targeting_chip,item_radio_vacuum_tube,item_battery_reconditioned,item_hydroponic_nutrients,item_military_radio_module}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-23-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, uncommitted. Fifteen opaque 512×512 JPEGs and matching Godot
+import sidecars added; 64 px and 26 px strips inspected; catalog JSON parsed;
+headless Godot import passed. No live inventory screenshot captured.
+
+## claim-plan-trim-conservative-method-C-expansion-batch54-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-fourth batch in the method-C family (executed as 5 files per the
+explicit count, mirroring batch 48's precedent for the same mixed
+wording). Same standing relaxation class: single-mention unused ranked
+spares of COMPLETE claims. The five files below were each verified to
+have exactly ONE basename mention in this ledger — as a ranked spare
+never substituted in a completed claim — and to be git-clean and quiet
+at claim time; edit-time rechecks (git-clean + sole single mention +
+claim COMPLETE) applied before each write. Backups re-verified
+counts=5 byte-identical to both worktree and HEAD before trimming;
+trimmer is the batch-53-reconstructed tool (validated byte-exact against
+three known pairs):
+
+- `docs/expansions/prose_wave151/cw151_18_a_straggler_who_bargains_to_survive_plan.md`
+- `docs/expansions/prose_wave145/cw145_19_the_wick_bent_toward_the_last_heat_plan.md`
+- `docs/expansions/prose_wave143/cw143_07_a_life_reduced_to_its_working_name_plan.md`
+- `docs/expansions/prose_wave167/cw167_19_three_pairs_of_hands_leave_again_plan.md`
+- `docs/expansions/prose_wave167/cw167_18_the_crew_is_out_from_under_the_mezzanine_plan.md`
+
+No spares used (relaxation class covers only single-mention unused
+spares of COMPLETE claims; all other standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–53 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b54-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw151_18_a_straggler_who_bargains_to_survive 169,208 → 69,696;
+cw145_19_the_wick_bent_toward_the_last_heat 169,202 → 69,690;
+cw143_07_a_life_reduced_to_its_working_name 169,201 → 69,689;
+cw167_19_three_pairs_of_hands_leave_again 169,197 → 69,685;
+cw167_18_the_crew_is_out_from_under_the_mezzanine 169,197 → 69,685.
+Total 846,005 → 348,345 lines (~59%); 23,675 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~25.5 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check
+per file). Verified per file via the tool's `--verify` mode (every
+distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal, `###
+Tranche` container headings equal, authored-prefix SHA-256 equal, scoped
+`git diff --check` PASS. ~12 eligible single-mention COMPLETE-claim
+spares remain for further batches.
+
+## claim-plan-trim-conservative-method-C-expansion-batch53-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-third batch in the method-C family, same standing relaxation class:
+single-mention unused ranked spares of COMPLETE claims. The ten files
+below were each verified to have exactly ONE basename mention in this
+ledger — as a ranked spare never substituted in a completed claim — and
+to be git-clean and quiet at claim time; edit-time rechecks (git-clean +
+sole single mention + claim COMPLETE) applied before each write. The
+concurrent visual claim (tranche-22) was race-checked — disjoint paths.
+
+Tooling note: the /tmp batch-artifact dirs from batches 28–52 hit the
+tmpfs disk quota this batch. Recovery: every pre-trim original in those
+batches was verified byte-identical to `HEAD` (git history) via the
+per-batch SHA-256 manifests, then the redundant /tmp `originals/` and
+duplicate tool binaries were deleted (manifests and file lists retained).
+The trim tool was rebuilt from reconstructed source
+(`/tmp/methodctrim-src/main.go`) and validated byte-identical against
+three known original→trimmed pairs from batches 49/52 (cw167_01,
+cw134_19, cw168_14: `cmp` exact on all three) before use.
+
+- `docs/expansions/prose_wave149/cw149_02_bram_sells_the_shape_of_empty_ground_plan.md`
+- `docs/expansions/prose_wave149/cw149_12_the_boiler_draft_keeps_time_plan.md`
+- `docs/expansions/prose_wave145/cw145_15_the_ascent_closes_in_crosswind_plan.md`
+- `docs/expansions/prose_wave143/cw143_15_the_bag_turns_at_the_flap_plan.md`
+- `docs/expansions/prose_wave134/cw134_14_the_gift_then_the_trade_plan.md`
+- `docs/expansions/prose_wave136/cw136_18_forty_two_said_fourteen_written_plan.md`
+- `docs/expansions/prose_wave144/cw144_26_the_sibling_s_cache_is_still_a_question_plan.md`
+- `docs/expansions/prose_wave144/cw144_06_the_registrar_keeps_a_copy_plan.md`
+- `docs/expansions/prose_wave145/cw145_14_four_nodes_and_a_bearing_error_plan.md`
+- `docs/expansions/prose_wave159/cw159_04_north_culvert_one_check_in_plan.md`
+
+No spares used (relaxation class covers only single-mention unused
+spares of COMPLETE claims; all other standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–52 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b53-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw149_02_bram_sells_the_shape_of_empty_ground 169,815 → 69,665;
+cw149_12_the_boiler_draft_keeps_time 169,813 → 69,663;
+cw145_15_the_ascent_closes_in_crosswind 169,805 → 69,655;
+cw143_15_the_bag_turns_at_the_flap 169,799 → 69,696;
+cw134_14_the_gift_then_the_trade 169,413 → 68,322;
+cw136_18_forty_two_said_fourteen_written 169,268 → 66,880;
+cw144_26_the_sibling_s_cache_is_still_a_question 169,258 → 69,746;
+cw144_06_the_registrar_keeps_a_copy 169,228 → 69,716;
+cw145_14_four_nodes_and_a_bearing_error 169,216 → 69,657;
+cw159_04_north_culvert_one_check_in 169,211 → 69,699.
+Total 1,694,826 → 692,699 lines (~59%); 47,133 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.1 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check
+per file). Verified per file via the tool's `--verify` mode (every
+distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal, `###
+Tranche` container headings equal, authored-prefix SHA-256 equal, scoped
+`git diff --check` PASS. ~17 eligible single-mention COMPLETE-claim
+spares remain for further batches.
+
+## claim-chatgpt-item-art-tranche-22-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_honey_pot,item_beeswax_block,item_raw_propolis,item_mead_must_base,item_preservation_salt,item_trade_salt_sack,item_medical_saline_salt,item_pickled_tubers,item_dried_mushrooms,item_smoked_meat,item_canned_grain_stew,item_salted_meat,item_fat_confit,item_fermented_sauerkraut,item_honey_preserved_pulp}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-22-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, uncommitted. Fifteen opaque 512×512 JPEGs and matching Godot
+import sidecars added; 64 px and 26 px strips inspected; catalog JSON parsed;
+headless Godot import passed. No live inventory screenshot captured.
+
+## claim-plan-trim-conservative-method-C-expansion-batch52-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-second batch in the method-C family, same standing relaxation class:
+single-mention unused ranked spares of COMPLETE claims. The ten files
+below were each verified to have exactly ONE basename mention in this
+ledger — as a ranked spare never substituted in a completed claim — and
+to be git-clean and quiet at claim time; edit-time rechecks (git-clean +
+sole single mention + claim COMPLETE) applied before each write. The
+concurrent visual claim (tranche-21) was race-checked — disjoint paths:
+
+- `docs/expansions/prose_wave167/cw167_01_the_green_lamp_is_the_whole_door_policy_plan.md`
+- `docs/expansions/prose_wave170/cw170_14_the_polite_voice_still_has_a_frequency_plan.md`
+- `docs/expansions/prose_wave169/cw169_01_the_intake_makes_its_own_shoreline_plan.md`
+- `docs/expansions/prose_wave147/cw147_02_rule_of_the_iron_sump_plan.md`
+- `docs/expansions/prose_wave134/cw134_19_the_third_season_record_plan.md`
+- `docs/expansions/prose_wave134/cw134_16_the_chapel_went_outside_plan.md`
+- `docs/expansions/prose_wave141/cw141_13_the_beacon_repeats_every_forty_seven_minutes_plan.md`
+- `docs/expansions/prose_wave143/cw143_18_the_bus_window_keeps_the_snowline_plan.md`
+- `docs/expansions/prose_wave133/cw133_17_four_empty_chairs_plan.md`
+- `docs/expansions/prose_wave132/cw132_16_a_breath_not_a_solution_plan.md`
+
+No spares used (relaxation class covers only single-mention unused
+spares of COMPLETE claims; all other standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–51 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b52-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw167_01_the_green_lamp_is_the_whole_door_policy 170,717 → 69,727;
+cw170_14_the_polite_voice_still_has_a_frequency 170,708 → 69,671;
+cw169_01_the_intake_makes_its_own_shoreline 170,702 → 69,665;
+cw147_02_rule_of_the_iron_sump 170,694 → 70,052;
+cw134_19_the_third_season_record 170,667 → 68,742;
+cw134_16_the_chapel_went_outside 170,667 → 68,695;
+cw141_13_the_beacon_repeats_every_forty_seven_minutes 170,330 → 69,293;
+cw143_18_the_bus_window_keeps_the_snowline 170,311 → 69,736;
+cw133_17_four_empty_chairs 170,279 → 68,307;
+cw132_16_a_breath_not_a_solution 169,895 → 67,970.
+Total 1,704,970 → 691,858 lines (~59%); 47,020 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.6 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check
+per file). Verified per file via the tool's `--verify` mode (every
+distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal, `###
+Tranche` container headings equal, authored-prefix SHA-256 equal, scoped
+`git diff --check` PASS. ~27 eligible single-mention COMPLETE-claim
+spares remain for further batches.
+
+## claim-chatgpt-item-art-tranche-21-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_crop_waste,item_biofuel_low_grade,item_biofuel_generator_grade,item_biofuel_high_grade,item_separation_media_cartridge,item_machined_blank_small,item_machined_blank_medium,item_internal_spline_hub,item_keyed_actuator_collar,item_cutting_fluid_canister,item_runflat_insert_utility,item_runflat_insert_reinforced,item_rim_bead_kit,item_armored_beadlock_set,item_runflat_balancing_kit}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-21-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, uncommitted. Fifteen opaque 512×512 JPEGs and matching Godot
+import sidecars added; 64 px and 26 px strips inspected; catalog JSON parsed;
+headless Godot import passed. No live inventory screenshot captured.
+
+## claim-plan-trim-conservative-method-C-expansion-batch51-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-first batch in the method-C family, same standing relaxation class:
+single-mention unused ranked spares of COMPLETE claims. The ten files
+below were each verified to have exactly ONE basename mention in this
+ledger — as a ranked spare never substituted in a completed claim — and
+to be git-clean and quiet at claim time; edit-time rechecks (git-clean +
+sole single mention + claim COMPLETE) applied before each write:
+
+- `docs/expansions/prose_wave153/cw153_19_the_glass_slide_in_the_index_pocket_plan.md`
+- `docs/expansions/prose_wave155/cw155_11_half_a_ton_behind_the_secondary_elevator_plan.md`
+- `docs/expansions/prose_wave167/cw167_03_the_forfeit_is_collected_in_the_hall_plan.md`
+- `docs/expansions/prose_wave165/cw165_11_hand_function_intact_at_the_fourteenth_entry_plan.md`
+- `docs/expansions/prose_wave156/cw156_07_the_relay_count_loses_one_station_plan.md`
+- `docs/expansions/prose_wave151/cw151_16_the_array_keeps_time_like_a_farm_plan.md`
+- `docs/expansions/prose_wave146/cw146_16_the_supply_route_crosses_open_slag_plan.md`
+- `docs/expansions/prose_wave153/cw153_05_fifty_kilograms_issued_for_canal_clearance_plan.md`
+- `docs/expansions/prose_wave159/cw159_03_the_census_carriers_report_movement_plan.md`
+- `docs/expansions/prose_wave161/cw161_12_a_fever_has_a_name_and_no_cure_in_this_passage_plan.md`
+
+No spares used (relaxation class covers only single-mention unused
+spares of COMPLETE claims; all other standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–50 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b51-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw153_19_the_glass_slide_in_the_index_pocket 172,600 → 70,471;
+cw155_11_half_a_ton_behind_the_secondary_elevator 171,123 → 70,066;
+cw167_03_the_forfeit_is_collected_in_the_hall 171,121 → 70,064;
+cw165_11_hand_function_intact_at_the_fourteenth_entry 171,120 → 70,063;
+cw156_07_the_relay_count_loses_one_station 171,114 → 70,057;
+cw151_16_the_array_keeps_time_like_a_farm 171,113 → 70,056;
+cw146_16_the_supply_route_crosses_open_slag 171,111 → 70,007;
+cw153_05_fifty_kilograms_issued_for_canal_clearance 171,110 → 70,053;
+cw159_03_the_census_carriers_report_movement 171,107 → 70,003;
+cw161_12_a_fever_has_a_name_and_no_cure_in_this_passage 170,721 → 69,731.
+Total 1,712,240 → 700,571 lines (~59%); 47,731 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.7 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check
+per file). Verified per file via the tool's `--verify` mode (every
+distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal, `###
+Tranche` container headings equal, authored-prefix SHA-256 equal, scoped
+`git diff --check` PASS. ~37 eligible single-mention COMPLETE-claim
+spares remain for further batches.
+
+## claim-plan-trim-conservative-method-C-expansion-batch50-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fiftieth batch in the method-C family, continuing the standing
+relaxation class: single-mention unused ranked spares of COMPLETE claims.
+The ten files below were each verified to have exactly ONE basename
+mention in this ledger — as a ranked spare never substituted in a
+completed claim — and to be git-clean and quiet at claim time;
+edit-time rechecks (git-clean + sole single mention + claim COMPLETE)
+applied before each write. Four larger eligible candidates (cw165_12,
+cw160_06, cw154_04, cw163_04, plus alternate cw163_03) were screened out
+for carrying a second ledger mention, keeping this batch strictly
+single-mention:
+
+- `docs/expansions/prose_wave134/cw134_09_the_slow_thing_plan.md`
+- `docs/expansions/prose_wave149/cw149_04_something_beneath_the_road_still_ticks_plan.md`
+- `docs/expansions/prose_wave152/cw152_18_the_strand_crosses_the_mortar_joint_plan.md`
+- `docs/expansions/prose_wave151/cw151_20_twenty_four_letters_across_winter_ash_plan.md`
+- `docs/expansions/prose_wave147/cw147_09_the_wall_moves_after_the_water_leaves_plan.md`
+- `docs/expansions/prose_wave150/cw150_09_the_combination_was_already_known_plan.md`
+- `docs/expansions/prose_wave169/cw169_19_the_cabinet_is_still_closed_plan.md`
+- `docs/expansions/prose_wave142/cw142_03_twelve_units_around_a_dry_pool_plan.md`
+- `docs/expansions/prose_wave150/cw150_08_the_empty_canteen_stops_at_the_line_plan.md`
+- `docs/expansions/prose_wave145/cw145_13_the_supply_column_loses_two_rigs_plan.md`
+
+No spares used (relaxation class covers only single-mention unused
+spares of COMPLETE claims; all other standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–49 files
+now dirty; spares of IN PROGRESS claims excluded; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b50-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw134_09_the_slow_thing 172,611 → 70,240;
+cw149_04_something_beneath_the_road_still_ticks 172,610 → 70,481;
+cw152_18_the_strand_crosses_the_mortar_joint 172,604 → 70,428;
+cw151_20_twenty_four_letters_across_winter_ash 172,604 → 70,475;
+cw147_09_the_wall_moves_after_the_water_leaves 172,604 → 70,475;
+cw150_09_the_combination_was_already_known 172,233 → 70,104;
+cw169_19_the_cabinet_is_still_closed 172,230 → 70,101;
+cw142_03_twelve_units_around_a_dry_pool 171,706 → 70,067;
+cw150_08_the_empty_canteen_stops_at_the_line 171,138 → 70,081;
+cw145_13_the_supply_column_loses_two_rigs 171,126 → 70,022.
+Total 1,721,466 → 702,474 lines (~59%); 47,566 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.9 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check
+per file). Verified per file via the tool's `--verify` mode (every
+distinct original line value survives; no distinct line lost; BATCH
+banners intact) plus independent checks: banner counts equal, `###
+Tranche` container headings equal, authored-prefix SHA-256 equal, scoped
+`git diff --check` PASS. Eligible single-mention COMPLETE-claim spares
+remain (~52 files) for further batches.
+
+## claim-plan-trim-conservative-method-C-expansion-batch49-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+forty-ninth batch in the method-C family. The full-path fresh pool and the
+method-C-claim spare class are exhausted (batches 47/48); the user's repeat
+request authorizes the same one-class relaxation over the remaining stale
+single-mention entries: ranked-but-unused spares of COMPLETE claims. The
+ten files below were each verified to have exactly ONE ledger mention — as
+a ranked spare never substituted in a completed editorial duplicate-removal
+claim (batch 62 for cw168_14/cw134_07/cw134_17/cw137_07; batch 63 for
+cw143_04/cw155_05/cw132_20/cw134_03; batch 56 for cw129_16/cw131_19) — and
+to be git-clean and quiet at claim time; edit-time rechecks (git-clean +
+sole single mention) applied before each write:
+
+- `docs/expansions/prose_wave168/cw168_14_nine_names_on_the_assignment_list_plan.md`
+- `docs/expansions/prose_wave143/cw143_04_there_is_no_horizon_to_measure_plan.md`
+- `docs/expansions/prose_wave155/cw155_05_the_reading_is_lower_at_the_lip_plan.md`
+- `docs/expansions/prose_wave134/cw134_07_the_words_will_grow_plan.md`
+- `docs/expansions/prose_wave134/cw134_17_i_looked_at_the_sky_plan.md`
+- `docs/expansions/prose_wave129/cw129_16_the_needle_settles_true_plan.md`
+- `docs/expansions/prose_wave132/cw132_20_the_clock_does_not_know_the_time_plan.md`
+- `docs/expansions/prose_wave134/cw134_03_three_settlements_still_unknown_plan.md`
+- `docs/expansions/prose_wave137/cw137_07_the_canister_still_in_the_tube_plan.md`
+- `docs/expansions/prose_wave131/cw131_19_hold_the_meaning_loosely_plan.md`
+
+No spares used (this relaxation class covers only single-mention unused
+spares of COMPLETE claims; all other standing exclusions unchanged:
+deep-audit ×4; W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 +
+CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–48 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b49-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+cw168_14_nine_names_on_the_assignment_list 172,219 → 70,043;
+cw143_04_there_is_no_horizon_to_measure 172,214 → 70,085;
+cw155_05_the_reading_is_lower_at_the_lip 172,200 → 70,071;
+cw134_07_the_words_will_grow 172,168 → 69,149;
+cw134_17_i_looked_at_the_sky 171,784 → 68,765;
+cw129_16_the_needle_settles_true 171,362 → 71,581;
+cw132_20_the_clock_does_not_know_the_time 171,138 → 68,750;
+cw134_03_three_settlements_still_unknown 170,758 → 68,370;
+cw137_07_the_canister_still_in_the_tube 169,845 → 67,457;
+cw131_19_hold_the_meaning_loosely 169,774 → 68,968.
+Total 1,713,462 → 693,239 lines (~60%); 46,634 byte-identical repeat copies
+replaced by `consolidated: §` pointers; ~51.8 MB saved. Each cw plan's
+authored prefix retained byte-identically (SHA-256 prefix check per file).
+Verified per file via the tool's `--verify` mode (every distinct original
+line value survives; no distinct line lost; BATCH banners intact) plus
+independent checks: banner counts equal (14/14 or 13/13), `### Tranche`
+container headings equal (280 or 260), authored-prefix SHA-256 equal,
+scoped `git diff --check` PASS. Two further single-mention unused spares of
+COMPLETE editorial claims remain in the tier (cw131_18, cw136_18).
+
+## claim-chatgpt-item-art-tranche-20-2026-09-29
+
+User-authorized fifteen-item greenhouse-and-fermentation visual batch. Root
+claims new
+`assets/art/{item_seed_leafy_green,crop_leafy_green,item_seed_oilseed,crop_oilseed,item_seed_cold_legume,crop_cold_legume,item_fermentation_sugar_feedstock,item_fermentation_starch_feedstock,item_fermentation_culture_starter,item_fermentation_filter_module,item_fermentation_service_kit,item_fermentation_preservation_concentrate,item_fermentation_cleaning_reagent,item_fermented_organic_acid_carboy,item_fermentation_waste_pomace}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-20-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — fifteen JPEGs imported, sidecars verified,
+visual report updated, and plan archived; uncommitted.
+
+## claim-plan-trim-conservative-method-C-expansion-batch48-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+forty-eighth batch in the method-C family. The fresh-candidate pool of
+the prose_wave tier is exhausted (batch 47); the user's explicit new trim
+request authorizes relaxing the ledger-mention filter for exactly one
+class of file: ranked-but-unused spares of COMPLETE method-C claims. The
+five files below were each verified to have exactly ONE ledger mention —
+as a ranked spare in a completed, no-spares-used claim (batch 33 for
+cw137_18; batch 28 for cw158_01/cw163_07/cw166_06; batch 31 for cw141_03)
+— and to be git-clean and quiet at claim time; edit-time rechecks applied
+before each write:
+
+- `docs/expansions/prose_wave137/cw137_18_a_clock_stopped_at_03_14_plan.md`
+- `docs/expansions/prose_wave158/cw158_01_the_scout_has_no_reason_to_trust_the_questions_plan.md`
+- `docs/expansions/prose_wave163/cw163_07_the_case_record_ends_before_the_person_does_plan.md`
+- `docs/expansions/prose_wave166/cw166_06_three_generations_in_one_grip_plan.md`
+- `docs/expansions/prose_wave141/cw141_03_read_the_dosimeter_before_the_hatch_plan.md`
+
+No spares (this relaxation class covers only single-mention unused
+spares of COMPLETE method-C claims; all other standing exclusions
+unchanged: deep-audit ×4; W2-06; PLAN-READINESS-281 +
+PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX; PLAN_24_CLOSEOUT;
+wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–47 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b48-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw137_18_a_clock_stopped_at_03_14 168,893 → 67,433;
+cw158_01_the_scout_has_no_reason_to_trust_the_questions 170,712 → 69,722;
+cw163_07_the_case_record_ends_before_the_person_does 171,118 → 70,061;
+cw166_06_three_generations_in_one_grip 169,199 → 69,687;
+cw141_03_read_the_dosimeter_before_the_hatch 168,822 → 69,310.
+Total 848,744 → 346,213 lines (~59%); 23,603 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~25.6 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS.
+
+## claim-plan-trim-conservative-method-C-expansion-batch47-2026-09-29
+
+User-authorized conservative trim (method C) — "continue!" (continuation
+of "find 10 bloated plans to trim, please don't overtrim and
+overcompress, remove repetitive and ununique plus boring prose from prose
+plans and polish all 10 plans!") — forty-seventh batch in the method-C
+family and the FINAL drain batch of the unclaimed prose_wave tier: only 2
+fresh candidates remain (cw154_20, cw170_20) plus the 3 ranked-but-unused
+spares from the completed batch-46 claim (no lane collision — batch-46 is
+COMPLETE with no spares used). All 5 files below verified git-clean,
+quiet, and not edited by any other claim at claim time; edit-time
+rechecks applied before each write:
+
+- `docs/expansions/prose_wave154/cw154_20_the_water_is_black_and_the_pumps_are_gone_plan.md`
+- `docs/expansions/prose_wave170/cw170_20_the_beacon_reports_without_listening_plan.md`
+- `docs/expansions/prose_wave163/cw163_11_the_refusal_is_a_fact_its_aftermath_is_open_plan.md`
+- `docs/expansions/prose_wave164/cw164_17_occupied_is_not_speech_plan.md`
+- `docs/expansions/prose_wave167/cw167_20_ilga_is_free_the_debt_travels_plan.md`
+
+No spares (tier exhausted). Standing exclusions unchanged (deep-audit ×4;
+W2-06; PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–46 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b47-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw154_20_the_water_is_black_and_the_pumps_are_gone 171,123 → 70,066;
+cw170_20_the_beacon_reports_without_listening 170,707 → 69,670;
+cw163_11_the_refusal_is_a_fact_its_aftermath_is_open 171,117 → 70,060;
+cw164_17_occupied_is_not_speech 169,801 → 69,698;
+cw167_20_ilga_is_free_the_debt_travels 169,197 → 69,685.
+Total 851,945 → 349,179 lines (~59%); 23,790 byte-identical repeat copies
+replaced by `consolidated: §` pointers; ~25.7 MB saved. Each cw plan's
+authored prefix retained byte-identically (SHA-256 prefix check per file).
+Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares (tier drained under
+the standing ledger-mention filter).
+
+## claim-chatgpt-item-art-tranche-19-2026-09-29
+
+User-authorized ten-item seed-and-harvest visual batch. Root claims new
+`assets/art/{item_seed_hardy_tuber,crop_hardy_tuber,item_seed_ash_grain,crop_ash_grain,item_seed_biolum_mushroom,crop_biolum_mushroom,item_seed_nutrient_algae,crop_nutrient_algae,item_seed_medicinal_herb,crop_medicinal_herb}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-19-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten JPEGs imported, sidecars verified,
+visual report updated, and plan archived; uncommitted.
+
+## claim-plan-trim-conservative-method-C-expansion-batch46-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+forty-sixth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–45). This is the last full
+10-file batch in the tier; ~5 unclaimed untrimmed files will remain for a
+final partial batch. Root claims documentation-only edits to these exact
+files (each verified unclaimed (0 ledger hits), git-clean, and quiet at
+claim time; edit-time rechecks applied before each write; in-flight
+sibling files excluded by the same filter):
+
+- `docs/expansions/prose_wave136/cw136_20_someone_added_beneath_the_sign_plan.md`
+- `docs/expansions/prose_wave149/cw149_19_brass_over_stencil_at_the_last_lamp_plan.md`
+- `docs/expansions/prose_wave152/cw152_20_a_winter_rye_claim_in_the_sleeve_notes_plan.md`
+- `docs/expansions/prose_wave154/cw154_12_the_ash_is_the_veil_plan.md`
+- `docs/expansions/prose_wave155/cw155_20_the_granary_of_the_deep_plan.md`
+- `docs/expansions/prose_wave157/cw157_20_the_truce_appeal_shares_a_frequency_plan.md`
+- `docs/expansions/prose_wave158/cw158_20_a_category_cannot_measure_the_debt_someone_feels_plan.md`
+- `docs/expansions/prose_wave159/cw159_15_too_many_fires_on_the_cut_plan.md`
+- `docs/expansions/prose_wave160/cw160_20_she_is_walking_on_a_leg_that_was_set_plan.md`
+- `docs/expansions/prose_wave161/cw161_19_three_disputes_leave_a_different_kind_of_record_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave163/cw163_11_the_refusal_is_a_fact_its_aftermath_is_open_plan.md`,
+`docs/expansions/prose_wave164/cw164_17_occupied_is_not_speech_plan.md`,
+`docs/expansions/prose_wave167/cw167_20_ilga_is_free_the_debt_travels_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–45 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b46-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw136_20_someone_added_beneath_the_sign 169,266 → 66,878;
+cw149_19_brass_over_stencil_at_the_last_lamp 171,149 → 69,956;
+cw152_20_a_winter_rye_claim_in_the_sleeve_notes 170,715 → 69,725;
+cw154_12_the_ash_is_the_veil 171,108 → 70,051;
+cw155_20_the_granary_of_the_deep 171,112 → 70,055;
+cw157_20_the_truce_appeal_shares_a_frequency 169,806 → 69,703;
+cw158_20_a_category_cannot_measure_the_debt_someone_feels 170,707 → 69,881;
+cw159_15_too_many_fires_on_the_cut 171,699 → 70,060;
+cw160_20_she_is_walking_on_a_leg_that_was_set 169,197 → 69,685;
+cw161_19_three_disputes_leave_a_different_kind_of_record 168,972 → 69,820.
+Total 1,703,731 → 695,814 lines (~59%); 47,371 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.5 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-18-2026-09-29
+
+User-authorized ten-item records-and-field-medicine visual batch. Root claims
+new
+`assets/art/{shopping_list,keyring_charm,lighthouse_logbook,train_ticket_book,dog_tags_military,blood_sample,silver_scalpel,worn_stethoscope,family_heirloom_seeds,field_dressing_kit}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-18-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten JPEGs imported, sidecars verified,
+visual report updated, and plan archived; uncommitted.
+
+## claim-plan-trim-conservative-method-C-expansion-batch45-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+forty-fifth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–44). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave134/cw134_20_the_bunker_is_a_home_plan.md`
+- `docs/expansions/prose_wave136/cw136_19_the_button_left_in_the_letter_plan.md`
+- `docs/expansions/prose_wave142/cw142_19_four_tine_sections_on_the_bench_plan.md`
+- `docs/expansions/prose_wave147/cw147_19_the_warlords_claim_neutral_ground_plan.md`
+- `docs/expansions/prose_wave148/cw148_20_the_watchstation_after_the_garrison_leaves_plan.md`
+- `docs/expansions/prose_wave150/cw150_18_an_allocation_that_must_balance_plan.md`
+- `docs/expansions/prose_wave153/cw153_20_grey_water_in_the_reservoir_crater_plan.md`
+- `docs/expansions/prose_wave156/cw156_20_a_stall_holder_offers_to_stand_behind_the_ruling_plan.md`
+- `docs/expansions/prose_wave160/cw160_19_the_cache_is_counted_after_convoy_echo_7_plan.md`
+- `docs/expansions/prose_wave162/cw162_19_the_label_is_not_the_dose_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave146/cw146_16_the_supply_route_crosses_open_slag_plan.md`,
+`docs/expansions/prose_wave151/cw151_18_a_straggler_who_bargains_to_survive_plan.md`,
+`docs/expansions/prose_wave169/cw169_19_the_cabinet_is_still_closed_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–44 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b45-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw134_20_the_bunker_is_a_home 171,142 → 68,707;
+cw136_19_the_button_left_in_the_letter 167,938 → 66,800;
+cw142_19_four_tine_sections_on_the_bench 171,105 → 70,048;
+cw147_19_the_warlords_claim_neutral_ground 169,203 → 69,691;
+cw148_20_the_watchstation_after_the_garrison_leaves 171,111 → 70,054;
+cw150_18_an_allocation_that_must_balance 170,337 → 69,762;
+cw153_20_grey_water_in_the_reservoir_crater 169,804 → 69,654;
+cw156_20_a_stall_holder_offers_to_stand_behind_the_ruling 170,714 → 69,935;
+cw160_19_the_cache_is_counted_after_convoy_echo_7 169,198 → 69,686;
+cw162_19_the_label_is_not_the_dose 171,107 → 70,050.
+Total 1,701,659 → 694,387 lines (~59%); 47,216 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.6 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch44-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+forty-fourth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–43). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave136/cw136_17_the_schedule_says_it_is_time_plan.md`
+- `docs/expansions/prose_wave148/cw148_19_the_dial_goes_quiet_for_forty_eight_hours_plan.md`
+- `docs/expansions/prose_wave149/cw149_18_a_hazard_marker_seen_from_the_scout_channel_plan.md`
+- `docs/expansions/prose_wave150/cw150_16_six_rods_separated_from_the_tether_plan.md`
+- `docs/expansions/prose_wave153/cw153_13_we_have_been_wrong_before_plan.md`
+- `docs/expansions/prose_wave160/cw160_18_antenna_height_is_not_the_same_as_contact_plan.md`
+- `docs/expansions/prose_wave161/cw161_14_the_dream_text_is_not_a_memory_transcript_plan.md`
+- `docs/expansions/prose_wave162/cw162_13_the_small_coat_is_not_a_symbol_to_its_owner_plan.md`
+- `docs/expansions/prose_wave164/cw164_12_the_search_begins_before_the_question_plan.md`
+- `docs/expansions/prose_wave169/cw169_16_four_hours_at_the_outer_hatch_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave134/cw134_19_the_third_season_record_plan.md`,
+`docs/expansions/prose_wave145/cw145_19_the_wick_bent_toward_the_last_heat_plan.md`,
+`docs/expansions/prose_wave167/cw167_19_three_pairs_of_hands_leave_again_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–43 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b44-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw136_17_the_schedule_says_it_is_time 167,929 → 66,838;
+cw148_19_the_dial_goes_quiet_for_forty_eight_hours 171,111 → 70,054;
+cw149_18_a_hazard_marker_seen_from_the_scout_channel 168,971 → 69,608;
+cw150_16_six_rods_separated_from_the_tether 171,126 → 70,069;
+cw153_13_we_have_been_wrong_before 171,107 → 70,050;
+cw160_18_antenna_height_is_not_the_same_as_contact 170,702 → 69,712;
+cw161_14_the_dream_text_is_not_a_memory_transcript 169,203 → 69,691;
+cw162_13_the_small_coat_is_not_a_symbol_to_its_owner 171,109 → 70,052;
+cw164_12_the_search_begins_before_the_question 170,743 → 69,706;
+cw169_16_four_hours_at_the_outer_hatch 171,107 → 70,003.
+Total 1,703,108 → 695,783 lines (~59%); 47,431 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.5 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-17-2026-09-29
+
+User-authorized ten-item everyday-keepsake visual batch. Root claims new
+`assets/art/{tarnished_pocket_watch,farm_ledger,mechanic_gloves,teachers_stamp,bus_ticket,enamel_mug,cheap_comb,matchbook,midwife_satchel,civil_defense_radio}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-17-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten JPEGs imported, sidecars verified,
+visual report updated, and plan archived; uncommitted.
+
+## claim-plan-trim-conservative-method-C-expansion-batch43-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+forty-third batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–42). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave136/cw136_16_the_tick_before_the_knock_plan.md`
+- `docs/expansions/prose_wave147/cw147_17_the_roof_carries_the_settled_ash_plan.md`
+- `docs/expansions/prose_wave148/cw148_17_a_handbook_is_not_a_working_chamber_plan.md`
+- `docs/expansions/prose_wave149/cw149_17_mara_veln_pays_favors_back_with_interest_plan.md`
+- `docs/expansions/prose_wave150/cw150_14_a_dust_advisory_in_the_civil_register_plan.md`
+- `docs/expansions/prose_wave153/cw153_11_the_doctor_lied_about_the_sky_plan.md`
+- `docs/expansions/prose_wave157/cw157_16_forty_two_casings_face_primer_up_plan.md`
+- `docs/expansions/prose_wave160/cw160_17_the_repeater_bunker_looks_over_the_cut_plan.md`
+- `docs/expansions/prose_wave161/cw161_13_a_category_has_no_right_to_speak_for_everyone_plan.md`
+- `docs/expansions/prose_wave169/cw169_15_an_ice_collar_at_the_chimney_mouth_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave139/cw139_20_three_lines_on_a_screening_form_plan.md`,
+`docs/expansions/prose_wave144/cw144_26_the_sibling_s_cache_is_still_a_question_plan.md`,
+`docs/expansions/prose_wave151/cw151_16_the_array_keeps_time_like_a_farm_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–42 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b43-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw136_16_the_tick_before_the_knock 169,267 → 66,879;
+cw147_17_the_roof_carries_the_settled_ash 170,289 → 69,714;
+cw148_17_a_handbook_is_not_a_working_chamber 169,811 → 69,661;
+cw149_17_mara_veln_pays_favors_back_with_interest 171,123 → 70,066;
+cw150_14_a_dust_advisory_in_the_civil_register 171,107 → 70,050;
+cw153_11_the_doctor_lied_about_the_sky 169,210 → 69,651;
+cw157_16_forty_two_casings_face_primer_up 171,114 → 70,057;
+cw160_17_the_repeater_bunker_looks_over_the_cut 170,702 → 69,712;
+cw161_13_a_category_has_no_right_to_speak_for_everyone 169,203 → 69,644;
+cw169_15_an_ice_collar_at_the_chimney_mouth 171,107 → 70,050.
+Total 1,702,933 → 695,484 lines (~59%); 47,448 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.5 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch42-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+forty-second batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–41). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave136/cw136_15_two_ledgers_can_both_be_right_plan.md`
+- `docs/expansions/prose_wave142/cw142_18_the_intake_flue_is_iced_shut_plan.md`
+- `docs/expansions/prose_wave144/cw144_22_bond_088_comes_due_on_paper_plan.md`
+- `docs/expansions/prose_wave148/cw148_16_the_carrier_wave_returns_every_ninety_minutes_plan.md`
+- `docs/expansions/prose_wave149/cw149_14_the_plate_lists_more_than_it_can_prove_plan.md`
+- `docs/expansions/prose_wave152/cw152_17_the_link_pin_fails_under_load_plan.md`
+- `docs/expansions/prose_wave156/cw156_19_the_collector_waits_beside_the_bound_ledger_plan.md`
+- `docs/expansions/prose_wave160/cw160_16_the_silo_leans_over_its_own_dust_plan.md`
+- `docs/expansions/prose_wave162/cw162_12_the_notebook_stays_open_at_the_wrong_page_plan.md`
+- `docs/expansions/prose_wave164/cw164_11_the_axle_has_stopped_the_trade_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave134/cw134_18_i_am_in_the_present_plan.md`,
+`docs/expansions/prose_wave145/cw145_15_the_ascent_closes_in_crosswind_plan.md`,
+`docs/expansions/prose_wave167/cw167_18_the_crew_is_out_from_under_the_mezzanine_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–41 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b42-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw136_15_two_ledgers_can_both_be_right 169,261 → 66,873;
+cw142_18_the_intake_flue_is_iced_shut 171,701 → 70,015;
+cw144_22_bond_088_comes_due_on_paper 169,804 → 69,701;
+cw148_16_the_carrier_wave_returns_every_ninety_minutes 170,762 → 69,772;
+cw149_14_the_plate_lists_more_than_it_can_prove 171,117 → 70,060;
+cw152_17_the_link_pin_fails_under_load 171,707 → 70,068;
+cw156_19_the_collector_waits_beside_the_bound_ledger 171,118 → 70,061;
+cw160_16_the_silo_leans_over_its_own_dust 169,209 → 69,697;
+cw162_12_the_notebook_stays_open_at_the_wrong_page 170,705 → 69,715;
+cw164_11_the_axle_has_stopped_the_trade 171,147 → 70,090.
+Total 1,706,531 → 696,052 lines (~59%); 47,509 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.7 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch41-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+forty-first batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–40). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave136/cw136_14_the_stone_punches_forward_plan.md`
+- `docs/expansions/prose_wave142/cw142_16_horn_flattened_between_boards_plan.md`
+- `docs/expansions/prose_wave144/cw144_20_the_checkpoint_takes_its_place_on_the_map_plan.md`
+- `docs/expansions/prose_wave148/cw148_15_a_red_label_in_a_severe_storm_plan.md`
+- `docs/expansions/prose_wave150/cw150_12_stress_wave_models_on_a_magnetic_spool_plan.md`
+- `docs/expansions/prose_wave153/cw153_10_three_people_in_front_of_a_green_door_plan.md`
+- `docs/expansions/prose_wave156/cw156_15_the_mount_is_more_repair_than_trophy_plan.md`
+- `docs/expansions/prose_wave160/cw160_14_the_shelter_was_built_for_a_different_emergency_plan.md`
+- `docs/expansions/prose_wave162/cw162_10_a_horizon_is_not_a_destination_record_plan.md`
+- `docs/expansions/prose_wave169/cw169_14_the_cut_in_the_cable_has_no_witness_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave134/cw134_16_the_chapel_went_outside_plan.md`,
+`docs/expansions/prose_wave139/cw139_19_triage_without_a_cause_confirmed_plan.md`,
+`docs/expansions/prose_wave141/cw141_15_the_river_ice_cracked_on_day_eighty_two_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–40 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b41-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw136_14_the_stone_punches_forward 168,795 → 66,870;
+cw142_16_horn_flattened_between_boards 171,105 → 70,048;
+cw144_20_the_checkpoint_takes_its_place_on_the_map 171,110 → 70,053;
+cw148_15_a_red_label_in_a_severe_storm 169,211 → 69,699;
+cw150_12_stress_wave_models_on_a_magnetic_spool 170,713 → 69,723;
+cw153_10_three_people_in_front_of_a_green_door 171,110 → 70,053;
+cw156_15_the_mount_is_more_repair_than_trophy 169,201 → 69,689;
+cw160_14_the_shelter_was_built_for_a_different_emergency 171,117 → 70,271;
+cw162_10_a_horizon_is_not_a_destination_record 170,705 → 69,715;
+cw169_14_the_cut_in_the_cable_has_no_witness 171,107 → 70,050.
+Total 1,704,174 → 696,171 lines (~59%); 47,419 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.7 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-16-2026-09-29
+
+User-authorized ten-item precision-workshop and workday-object visual batch.
+Root claims new
+`assets/art/{machinist_caliper,item_gauge_block_set,item_optical_flat,item_surface_plate,item_micrometer_set,engineers_slide_rule,foreman_whistle,miners_tag,tram_punch,nurse_fob_watch}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-16-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten JPEGs imported, sidecars verified,
+visual report updated, and plan archived; uncommitted.
+
+## claim-plan-trim-conservative-method-C-expansion-batch40-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fortieth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–39). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave134/cw134_15_the_294_is_alive_plan.md`
+- `docs/expansions/prose_wave136/cw136_13_span_fourteen_is_not_a_suggestion_plan.md`
+- `docs/expansions/prose_wave142/cw142_15_the_marsh_is_a_gate_with_no_sign_plan.md`
+- `docs/expansions/prose_wave144/cw144_19_the_intake_grille_fills_slowly_plan.md`
+- `docs/expansions/prose_wave147/cw147_16_the_sky_is_boiling_green_plan.md`
+- `docs/expansions/prose_wave149/cw149_13_one_honest_account_from_forty_eight_hours_plan.md`
+- `docs/expansions/prose_wave152/cw152_12_a_belt_around_the_thigh_plan.md`
+- `docs/expansions/prose_wave157/cw157_12_the_vote_is_happening_without_him_plan.md`
+- `docs/expansions/prose_wave160/cw160_09_tallow_stubs_in_ration_tins_plan.md`
+- `docs/expansions/prose_wave161/cw161_11_the_second_wagon_makes_the_route_a_question_again_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave139/cw139_14_twelve_metres_from_the_junction_plan.md`,
+`docs/expansions/prose_wave143/cw143_18_the_bus_window_keeps_the_snowline_plan.md`,
+`docs/expansions/prose_wave170/cw170_14_the_polite_voice_still_has_a_frequency_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–39 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b40-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw134_15_the_294_is_alive 167,495 → 68,176;
+cw136_13_span_fourteen_is_not_a_suggestion 167,936 → 66,845;
+cw142_15_the_marsh_is_a_gate_with_no_sign 169,805 → 69,702;
+cw144_19_the_intake_grille_fills_slowly 171,111 → 70,007;
+cw147_16_the_sky_is_boiling_green 169,817 → 69,714;
+cw149_13_one_honest_account_from_forty_eight_hours 171,166 → 70,062;
+cw152_12_a_belt_around_the_thigh 169,832 → 69,729;
+cw157_12_the_vote_is_happening_without_him 171,116 → 70,059;
+cw160_09_tallow_stubs_in_ration_tins 171,126 → 70,069;
+cw161_11_the_second_wagon_makes_the_route_a_question_again 170,721 → 69,895.
+Total 1,700,125 → 694,258 lines (~59%); 47,179 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.7 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch39-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-ninth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–38). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave136/cw136_12_the_valves_that_stay_in_hands_plan.md`
+- `docs/expansions/prose_wave139/cw139_13_seven_adults_three_pups_one_drain_plan.md`
+- `docs/expansions/prose_wave142/cw142_13_glasshouses_wrapped_in_burlap_plan.md`
+- `docs/expansions/prose_wave144/cw144_16_a_track_without_a_witness_plan.md`
+- `docs/expansions/prose_wave148/cw148_13_a_surface_that_sheds_water_once_plan.md`
+- `docs/expansions/prose_wave151/cw151_15_the_garden_fence_after_the_last_family_leaves_plan.md`
+- `docs/expansions/prose_wave153/cw153_06_a_lead_tag_with_one_name_and_a_cause_plan.md`
+- `docs/expansions/prose_wave156/cw156_11_the_knife_was_sharpened_past_the_mark_plan.md`
+- `docs/expansions/prose_wave160/cw160_08_elbows_have_worn_the_viewing_slit_smooth_plan.md`
+- `docs/expansions/prose_wave169/cw169_13_tracks_under_the_rail_grade_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave134/cw134_14_the_gift_then_the_trade_plan.md`,
+`docs/expansions/prose_wave141/cw141_13_the_beacon_repeats_every_forty_seven_minutes_plan.md`,
+`docs/expansions/prose_wave150/cw150_08_the_empty_canteen_stops_at_the_line_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–38 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b39-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw136_12_the_valves_that_stay_in_hands 169,269 → 66,834;
+cw139_13_seven_adults_three_pups_one_drain 168,825 → 69,313;
+cw142_13_glasshouses_wrapped_in_burlap 169,198 → 69,686;
+cw144_16_a_track_without_a_witness 171,114 → 70,057;
+cw148_13_a_surface_that_sheds_water_once 171,114 → 70,057;
+cw151_15_the_garden_fence_after_the_last_family_leaves 170,706 → 69,669;
+cw153_06_a_lead_tag_with_one_name_and_a_cause 170,706 → 69,716;
+cw156_11_the_knife_was_sharpened_past_the_mark 169,202 → 69,690;
+cw160_08_elbows_have_worn_the_viewing_slit_smooth 170,702 → 69,712;
+cw169_13_tracks_under_the_rail_grade 171,713 → 70,074.
+Total 1,702,549 → 694,808 lines (~59%); 47,447 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.7 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch38-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-eighth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–37). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave134/cw134_13_the_classroom_without_walls_plan.md`
+- `docs/expansions/prose_wave136/cw136_11_what_the_marrow_record_knows_plan.md`
+- `docs/expansions/prose_wave139/cw139_12_a_runner_reported_not_identified_plan.md`
+- `docs/expansions/prose_wave142/cw142_12_three_days_between_calendars_plan.md`
+- `docs/expansions/prose_wave144/cw144_11_grease_pencil_at_the_spillway_plan.md`
+- `docs/expansions/prose_wave147/cw147_13_specifications_for_a_tap_that_may_not_fit_plan.md`
+- `docs/expansions/prose_wave150/cw150_07_understanding_has_a_lock_threshold_plan.md`
+- `docs/expansions/prose_wave152/cw152_08_the_moldboard_leaves_the_foundry_with_work_to_do_plan.md`
+- `docs/expansions/prose_wave160/cw160_07_the_register_hall_gives_disputes_a_room_plan.md`
+- `docs/expansions/prose_wave169/cw169_04_a_yard_measured_in_interrupted_lines_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave132/cw132_16_a_breath_not_a_solution_plan.md`,
+`docs/expansions/prose_wave133/cw133_17_four_empty_chairs_plan.md`,
+`docs/expansions/prose_wave141/cw141_10_three_point_two_seconds_of_confirmation_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–37 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b38-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw134_13_the_classroom_without_walls 167,145 → 67,411;
+cw136_11_what_the_marrow_record_knows 169,270 → 66,882;
+cw139_12_a_runner_reported_not_identified 168,822 → 69,310;
+cw142_12_three_days_between_calendars 169,801 → 69,562;
+cw144_11_grease_pencil_at_the_spillway 171,110 → 70,053;
+cw147_13_specifications_for_a_tap_that_may_not_fit 170,713 → 69,723;
+cw150_07_understanding_has_a_lock_threshold 170,713 → 69,723;
+cw152_08_the_moldboard_leaves_the_foundry_with_work_to_do 171,108 → 70,262;
+cw160_07_the_register_hall_gives_disputes_a_room 170,702 → 69,712;
+cw169_04_a_yard_measured_in_interrupted_lines 171,106 → 70,049.
+Total 1,700,490 → 692,687 lines (~59%); 47,224 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.6 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-15-2026-09-29
+
+User-authorized ten-item personal-keepsake visual batch. Root claims new
+`assets/art/{wedding_ring,worn_photograph,recipe_card,recipe_tin,childs_mitten,childs_red_scarf,engraved_lighter,tarnished_medal,pocket_notebook,family_apartment_key}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-15-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten JPEGs imported, sidecars verified,
+visual report updated, and plan archived; uncommitted.
+
+## claim-plan-trim-conservative-method-C-expansion-batch37-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-seventh batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–36). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave133/cw133_11_i_went_under_the_sky_plan.md`
+- `docs/expansions/prose_wave134/cw134_11_the_wolf_is_the_watching_plan.md`
+- `docs/expansions/prose_wave136/cw136_09_the_red_circle_on_the_page_plan.md`
+- `docs/expansions/prose_wave139/cw139_11_the_schedule_dispute_has_two_clocks_plan.md`
+- `docs/expansions/prose_wave142/cw142_10_the_boiler_needs_another_descaling_plan.md`
+- `docs/expansions/prose_wave148/cw148_08_forty_one_percent_in_blue_columns_plan.md`
+- `docs/expansions/prose_wave151/cw151_13_company_and_rations_requested_plainly_plan.md`
+- `docs/expansions/prose_wave155/cw155_17_songs_on_the_backs_of_ration_sheets_plan.md`
+- `docs/expansions/prose_wave159/cw159_06_a_repaired_pump_is_a_slogan_and_a_task_plan.md`
+- `docs/expansions/prose_wave164/cw164_10_the_gap_is_a_question_about_load_and_time_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave132/cw132_14_we_went_plan.md`,
+`docs/expansions/prose_wave143/cw143_15_the_bag_turns_at_the_flap_plan.md`,
+`docs/expansions/prose_wave167/cw167_03_the_forfeit_is_collected_in_the_hall_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–36 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b37-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw133_11_i_went_under_the_sky 168,118 → 67,802;
+cw134_11_the_wolf_is_the_watching 170,192 → 68,732;
+cw136_09_the_red_circle_on_the_page 169,286 → 66,898;
+cw139_11_the_schedule_dispute_has_two_clocks 168,822 → 69,310;
+cw142_10_the_boiler_needs_another_descaling 170,722 → 69,685;
+cw148_08_forty_one_percent_in_blue_columns 171,110 → 70,053;
+cw151_13_company_and_rations_requested_plainly 171,138 → 70,081;
+cw155_17_songs_on_the_backs_of_ration_sheets 169,859 → 69,756;
+cw159_06_a_repaired_pump_is_a_slogan_and_a_task 170,711 → 69,674;
+cw164_10_the_gap_is_a_question_about_load_and_time 171,132 → 70,075.
+Total 1,701,090 → 692,066 lines (~59%); 47,109 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.7 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch36-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-sixth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–35). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave132/cw132_12_thirty_one_grains_plan.md`
+- `docs/expansions/prose_wave134/cw134_10_the_general_of_a_place_plan.md`
+- `docs/expansions/prose_wave136/cw136_08_weight_of_the_lead_shroud_plan.md`
+- `docs/expansions/prose_wave139/cw139_07_lot_forty_four_is_not_its_contents_plan.md`
+- `docs/expansions/prose_wave142/cw142_09_thirty_feet_of_frozen_sludge_plan.md`
+- `docs/expansions/prose_wave144/cw144_09_compassion_accumulates_its_own_weight_plan.md`
+- `docs/expansions/prose_wave147/cw147_12_the_last_confession_has_a_listener_plan.md`
+- `docs/expansions/prose_wave150/cw150_06_tags_torn_from_the_rear_doors_plan.md`
+- `docs/expansions/prose_wave160/cw160_05_collateral_waits_behind_the_lockup_gate_plan.md`
+- `docs/expansions/prose_wave162/cw162_09_a_thaw_is_a_condition_not_a_verdict_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave141/cw141_08_the_rite_is_written_on_an_atlas_page_plan.md`,
+`docs/expansions/prose_wave149/cw149_12_the_boiler_draft_keeps_time_plan.md`,
+`docs/expansions/prose_wave156/cw156_07_the_relay_count_loses_one_station_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–35 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b36-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw132_12_thirty_one_grains 171,047 → 69,075;
+cw134_10_the_general_of_a_place 170,192 → 69,101;
+cw136_08_weight_of_the_lead_shroud 168,795 → 66,870;
+cw139_07_lot_forty_four_is_not_its_contents 168,825 → 69,313;
+cw142_09_thirty_feet_of_frozen_sludge 171,123 → 70,066;
+cw144_09_compassion_accumulates_its_own_weight 171,117 → 70,060;
+cw147_12_the_last_confession_has_a_listener 169,258 → 69,746;
+cw150_06_tags_torn_from_the_rear_doors 171,135 → 70,078;
+cw160_05_collateral_waits_behind_the_lockup_gate 171,110 → 70,053;
+cw162_09_a_thaw_is_a_condition_not_a_verdict 170,705 → 69,715.
+Total 1,703,307 → 694,077 lines (~59%); 47,117 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.6 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch35-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-fifth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–34). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave133/cw133_09_the_word_holds_plan.md`
+- `docs/expansions/prose_wave136/cw136_07_two_marks_and_a_date_plan.md`
+- `docs/expansions/prose_wave141/cw141_07_rates_posted_at_the_southern_perimeter_plan.md`
+- `docs/expansions/prose_wave143/cw143_10_clinic_shortage_request_no_reply_recorded_plan.md`
+- `docs/expansions/prose_wave146/cw146_14_microfractures_in_the_silo_wall_plan.md`
+- `docs/expansions/prose_wave148/cw148_06_the_chamber_is_seen_in_red_plan.md`
+- `docs/expansions/prose_wave151/cw151_12_a_tincture_someone_hopes_to_grow_plan.md`
+- `docs/expansions/prose_wave154/cw154_10_bailing_wire_and_hope_plan.md`
+- `docs/expansions/prose_wave158/cw158_15_the_chain_runs_across_the_ash_plan.md`
+- `docs/expansions/prose_wave163/cw163_09_the_valve_is_familiar_the_water_is_not_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave145/cw145_14_four_nodes_and_a_bearing_error_plan.md`,
+`docs/expansions/prose_wave155/cw155_11_half_a_ton_behind_the_secondary_elevator_plan.md`,
+`docs/expansions/prose_wave165/cw165_11_hand_function_intact_at_the_fourteenth_entry_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–34 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b35-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw133_09_the_word_holds 169,025 → 68,263;
+cw136_07_two_marks_and_a_date 168,310 → 66,850;
+cw141_07_rates_posted_at_the_southern_perimeter 168,826 → 69,314;
+cw143_10_clinic_shortage_request_no_reply_recorded 170,714 → 69,724;
+cw146_14_microfractures_in_the_silo_wall 171,125 → 70,068;
+cw148_06_the_chamber_is_seen_in_red 171,114 → 70,057;
+cw151_12_a_tincture_someone_hopes_to_grow 170,345 → 69,723;
+cw154_10_bailing_wire_and_hope 171,111 → 70,054;
+cw158_15_the_chain_runs_across_the_ash 172,231 → 70,102;
+cw163_09_the_valve_is_familiar_the_water_is_not 170,713 → 69,723.
+Total 1,703,514 → 693,878 lines (~59%); 47,165 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.7 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-14-2026-09-29
+
+User-authorized ten-item rail and field-maintenance visual batch. Root claims
+new `assets/art/{item_abrasive_grinding_stone,item_rail_profiling_cylinder,item_spark_suppression_manifold,item_blowtorch,item_pneumatic_capsule_50mm,item_pneumatic_capsule_100mm,item_manual_bolt_shears,item_mechanical_breach_ram,item_rail_control_component,item_track_maintenance_kit}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-14-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten JPEGs imported, sidecars verified,
+visual report updated, and plan archived; uncommitted.
+
+## claim-plan-trim-conservative-method-C-expansion-batch34-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-fourth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–33). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave132/cw132_09_six_chairs_and_one_memory_plan.md`
+- `docs/expansions/prose_wave134/cw134_08_the_tense_that_knows_plan.md`
+- `docs/expansions/prose_wave139/cw139_04_order_fourteen_read_at_the_gate_plan.md`
+- `docs/expansions/prose_wave142/cw142_07_the_quarterly_reading_reminder_plan.md`
+- `docs/expansions/prose_wave144/cw144_08_the_record_is_straight_then_folded_plan.md`
+- `docs/expansions/prose_wave147/cw147_03_chalk_claims_and_shared_patience_plan.md`
+- `docs/expansions/prose_wave150/cw150_04_nineteen_minutes_outside_the_window_plan.md`
+- `docs/expansions/prose_wave153/cw153_04_the_smith_s_promise_to_the_engineer_plan.md`
+- `docs/expansions/prose_wave157/cw157_04_a_name_is_cut_into_the_eating_end_plan.md`
+- `docs/expansions/prose_wave160/cw160_04_the_tower_says_someone_is_still_there_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave135/cw135_16_four_carvings_on_the_table_plan.md`,
+`docs/expansions/prose_wave145/cw145_13_the_supply_column_loses_two_rigs_plan.md`,
+`docs/expansions/prose_wave161/cw161_12_a_fever_has_a_name_and_no_cure_in_this_passage_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–33 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b34-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw132_09_six_chairs_and_one_memory 171,047 → 69,075;
+cw134_08_the_tense_that_knows 169,808 → 68,348;
+cw139_04_order_fourteen_read_at_the_gate 168,826 → 69,314;
+cw142_07_the_quarterly_reading_reminder 171,107 → 70,050;
+cw144_08_the_record_is_straight_then_folded 171,122 → 70,018;
+cw147_03_chalk_claims_and_shared_patience 169,804 → 69,701;
+cw150_04_nineteen_minutes_outside_the_window 169,211 → 69,699;
+cw153_04_the_smith_s_promise_to_the_engineer 169,258 → 69,746;
+cw157_04_a_name_is_cut_into_the_eating_end 171,110 → 70,053;
+cw160_04_the_tower_says_someone_is_still_there 169,201 → 69,689.
+Total 1,700,494 → 695,693 lines (~59%); 47,207 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.4 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch33-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-third batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–32). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave133/cw133_06_a_rectangle_with_two_lines_plan.md`
+- `docs/expansions/prose_wave134/cw134_04_the_source_holds_plan.md`
+- `docs/expansions/prose_wave136/cw136_05_a_stairwell_that_keeps_an_echo_plan.md`
+- `docs/expansions/prose_wave141/cw141_06_contour_lines_end_at_the_toll_gate_plan.md`
+- `docs/expansions/prose_wave143/cw143_09_a_specialist_who_knows_what_he_will_not_say_plan.md`
+- `docs/expansions/prose_wave146/cw146_11_the_aquifer_lines_on_etched_glass_plan.md`
+- `docs/expansions/prose_wave149/cw149_09_blankets_across_the_stairwell_plan.md`
+- `docs/expansions/prose_wave152/cw152_04_numbers_were_steady_last_time_plan.md`
+- `docs/expansions/prose_wave156/cw156_02_the_periscope_was_a_work_station_plan.md`
+- `docs/expansions/prose_wave162/cw162_04_the_stitch_holds_until_the_next_inspection_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave137/cw137_18_a_clock_stopped_at_03_14_plan.md`,
+`docs/expansions/prose_wave140/cw140_20_the_chemist_writes_down_the_herbs_plan.md`,
+`docs/expansions/prose_wave144/cw144_06_the_registrar_keeps_a_copy_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–32 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b33-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw133_06_a_rectangle_with_two_lines 169,036 → 67,945;
+cw134_04_the_source_holds 167,495 → 68,129;
+cw136_05_a_stairwell_that_keeps_an_echo 169,276 → 66,888;
+cw141_06_contour_lines_end_at_the_toll_gate 168,826 → 69,314;
+cw143_09_a_specialist_who_knows_what_he_will_not_say 170,712 → 69,722;
+cw146_11_the_aquifer_lines_on_etched_glass 169,209 → 69,697;
+cw149_09_blankets_across_the_stairwell 171,138 → 70,081;
+cw152_04_numbers_were_steady_last_time 172,200 → 70,071;
+cw156_02_the_periscope_was_a_work_station 169,199 → 69,687;
+cw162_04_the_stitch_holds_until_the_next_inspection 170,718 → 69,681.
+Total 1,697,809 → 691,215 lines (~59%); 47,052 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.4 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch32-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-second batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–31; all remaining
+candidates are now second/third files within already-started waves). Root
+claims documentation-only edits to these exact files (each verified
+unclaimed (0 ledger hits), git-clean, and quiet at claim time; edit-time
+rechecks applied before each write; in-flight sibling files excluded by
+the same filter):
+
+- `docs/expansions/prose_wave132/cw132_08_one_channel_left_plan.md`
+- `docs/expansions/prose_wave139/cw139_03_a_guest_may_leave_without_explaining_plan.md`
+- `docs/expansions/prose_wave142/cw142_05_numbers_in_children_s_chalk_plan.md`
+- `docs/expansions/prose_wave145/cw145_10_an_alliance_with_terms_on_both_sides_plan.md`
+- `docs/expansions/prose_wave148/cw148_04_room_six_where_the_pencil_changes_hands_plan.md`
+- `docs/expansions/prose_wave151/cw151_08_the_date_cut_into_broken_siding_plan.md`
+- `docs/expansions/prose_wave154/cw154_09_the_needles_peg_red_at_the_crater_rim_plan.md`
+- `docs/expansions/prose_wave157/cw157_03_the_short_pencil_still_marks_the_wall_plan.md`
+- `docs/expansions/prose_wave160/cw160_03_the_dock_marker_names_three_prohibitions_plan.md`
+- `docs/expansions/prose_wave164/cw164_08_a_water_tower_gives_a_bearing_not_a_future_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave133/cw133_04_three_hundred_four_not_zero_plan.md`,
+`docs/expansions/prose_wave143/cw143_07_a_life_reduced_to_its_working_name_plan.md`,
+`docs/expansions/prose_wave153/cw153_05_fifty_kilograms_issued_for_canal_clearance_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28/29/30/31
+files now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b32-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw132_08_one_channel_left 171,431 → 69,506;
+cw139_03_a_guest_may_leave_without_explaining 168,825 → 69,313;
+cw142_05_numbers_in_children_s_chalk 169,800 → 69,650;
+cw145_10_an_alliance_with_terms_on_both_sides 169,842 → 69,739;
+cw148_04_room_six_where_the_pencil_changes_hands 170,702 → 69,712;
+cw151_08_the_date_cut_into_broken_siding 169,827 → 69,724;
+cw154_09_the_needles_peg_red_at_the_crater_rim 169,203 → 69,691;
+cw157_03_the_short_pencil_still_marks_the_wall 170,706 → 69,716;
+cw160_03_the_dock_marker_names_three_prohibitions 168,974 → 69,611;
+cw164_08_a_water_tower_gives_a_bearing_not_a_future 171,132 → 70,075.
+Total 1,700,442 → 696,737 lines (~59%); 47,343 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.3 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-13-2026-09-29
+
+User-authorized ten-item solar and optical workshop visual batch. Root claims
+new `assets/art/{item_solar_inverter,item_parabolic_aluminum_dish_segment,item_dual_axis_tracking_gimbal,item_focal_stirling_engine_generator,item_cast_borosilicate_glass_blank,item_precision_rangefinder_achromat,item_cerium_oxide_polishing_rouge,item_optical_pitch_lap,item_foucault_tester_rig,item_laminated_ballistic_viewport_glass}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-13-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten images imported, QA checked at 64 px
+and 26 px, and the plan archived.
+
+## claim-plan-trim-conservative-method-C-expansion-batch31-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirty-first batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–30; the first seven files
+below draw from the remaining untouched waves 150/159/163/166/167/169/170,
+the last three are second files from already-trimmed waves). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave150/cw150_01_the_number_outlasts_the_argument_plan.md`
+- `docs/expansions/prose_wave159/cw159_05_one_clean_filter_set_is_still_a_request_plan.md`
+- `docs/expansions/prose_wave163/cw163_08_a_count_is_not_a_household_portrait_plan.md`
+- `docs/expansions/prose_wave166/cw166_05_two_miniatures_behind_the_hinge_plan.md`
+- `docs/expansions/prose_wave167/cw167_02_nineteen_pupils_in_a_utility_rating_lesson_plan.md`
+- `docs/expansions/prose_wave169/cw169_03_where_the_melt_stops_being_clear_plan.md`
+- `docs/expansions/prose_wave170/cw170_07_take_what_you_need_leave_some_plan.md`
+- `docs/expansions/prose_wave132/cw132_05_folded_towels_plan.md`
+- `docs/expansions/prose_wave136/cw136_06_a_request_for_other_coverage_plan.md`
+- `docs/expansions/prose_wave144/cw144_07_the_bunks_do_not_settle_doctrine_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave134/cw134_02_three_weeks_is_a_season_turning_plan.md`,
+`docs/expansions/prose_wave141/cw141_03_read_the_dosimeter_before_the_hatch_plan.md`,
+`docs/expansions/prose_wave147/cw147_02_rule_of_the_iron_sump_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28/29/30
+files now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b31-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw150_01_the_number_outlasts_the_argument 169,804 → 69,654;
+cw159_05_one_clean_filter_set_is_still_a_request 169,207 → 69,695;
+cw163_08_a_count_is_not_a_household_portrait 171,118 → 70,061;
+cw166_05_two_miniatures_behind_the_hinge 169,199 → 69,687;
+cw167_02_nineteen_pupils_in_a_utility_rating_lesson 171,119 → 70,062;
+cw169_03_where_the_melt_stops_being_clear 169,800 → 69,697;
+cw170_07_take_what_you_need_leave_some 171,109 → 70,052;
+cw132_05_folded_towels 170,561 → 69,799;
+cw136_06_a_request_for_other_coverage 166,033 → 66,299;
+cw144_07_the_bunks_do_not_settle_doctrine 169,203 → 69,691.
+Total 1,697,153 → 694,697 lines (~59%); 47,002 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.3 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-plan-trim-conservative-method-C-expansion-batch30-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+thirtieth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batches 28–29). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave135/cw135_09_the_wall_around_the_greenhouse_plan.md`
+- `docs/expansions/prose_wave140/cw140_11_the_name_the_surgeon_leaves_blank_plan.md`
+- `docs/expansions/prose_wave142/cw142_04_five_years_filed_in_one_room_plan.md`
+- `docs/expansions/prose_wave144/cw144_02_the_extra_bowl_is_not_an_extra_person_plan.md`
+- `docs/expansions/prose_wave146/cw146_10_the_binder_goes_first_plan.md`
+- `docs/expansions/prose_wave149/cw149_07_the_wound_is_not_fatal_the_sentence_is_not_comfort_plan.md`
+- `docs/expansions/prose_wave153/cw153_01_eleven_and_already_keeping_a_market_plan.md`
+- `docs/expansions/prose_wave155/cw155_01_she_explains_the_hull_etiquette_once_plan.md`
+- `docs/expansions/prose_wave158/cw158_14_the_restricted_exchange_still_has_a_human_hand_plan.md`
+- `docs/expansions/prose_wave162/cw162_02_the_enumerator_counts_what_arrived_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave159/cw159_03_the_census_carriers_report_movement_plan.md`,
+`docs/expansions/prose_wave159/cw159_04_north_culvert_one_check_in_plan.md`,
+`docs/expansions/prose_wave167/cw167_01_the_green_lamp_is_the_whole_door_policy_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28/29 files
+now dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b30-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw135_09_the_wall_around_the_greenhouse 167,311 → 69,122;
+cw140_11_the_name_the_surgeon_leaves_blank 168,825 → 69,313;
+cw142_04_five_years_filed_in_one_room 171,703 → 70,017;
+cw144_02_the_extra_bowl_is_not_an_extra_person 168,979 → 69,616;
+cw146_10_the_binder_goes_first 170,696 → 70,007;
+cw149_07_the_wound_is_not_fatal_the_sentence_is_not_comfort 169,024 → 69,872;
+cw153_01_eleven_and_already_keeping_a_market 171,117 → 70,013;
+cw155_01_she_explains_the_hull_etiquette_once 171,120 → 70,063;
+cw158_14_the_restricted_exchange_still_has_a_human_hand 170,704 → 69,714;
+cw162_02_the_enumerator_counts_what_arrived 170,717 → 69,727.
+Total 1,700,196 → 697,464 lines (~59%); 47,284 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.3 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-12-2026-09-29
+
+User-authorized ten-item Year of Ash visual batch. Root claims new
+`assets/art/{item_zinc_bromide_shielding_window,item_potassium_permanganate_crystals,item_hydro_baron_queue_chit,item_prewar_diagnostic_scanner,item_scavenger_guild_claim_marker,item_garrison_manifest_forgery_kit,item_seed_packet_nonhybrid,item_military_stimulants,item_meridian_archive_copy,item_vitamin_supplements}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-12-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten images imported, QA checked at 64 px
+and 26 px, and the plan archived.
+
+## claim-plan-trim-conservative-method-C-expansion-batch29-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+twenty-ninth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier (disjoint from batch 28). Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave133/cw133_02_the_list_on_a_borrowed_pencil_plan.md`
+- `docs/expansions/prose_wave136/cw136_03_pebbles_on_the_pressure_plate_plan.md`
+- `docs/expansions/prose_wave139/cw139_02_the_schoolroom_has_a_timetable_plan.md`
+- `docs/expansions/prose_wave143/cw143_01_the_wick_is_trimmed_before_names_plan.md`
+- `docs/expansions/prose_wave147/cw147_01_the_sachet_stings_the_hands_that_open_it_plan.md`
+- `docs/expansions/prose_wave151/cw151_01_the_arithmetic_happens_on_paper_plan.md`
+- `docs/expansions/prose_wave154/cw154_08_only_the_buried_conduits_remain_plan.md`
+- `docs/expansions/prose_wave157/cw157_02_the_right_thumb_was_patched_twice_plan.md`
+- `docs/expansions/prose_wave160/cw160_01_the_boundary_is_written_for_someone_approaching_plan.md`
+- `docs/expansions/prose_wave164/cw164_04_a_map_can_be_a_weapon_before_it_is_used_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave142/cw142_03_twelve_units_around_a_dry_pool_plan.md`,
+`docs/expansions/prose_wave149/cw149_02_bram_sells_the_shape_of_empty_ground_plan.md`,
+`docs/expansions/prose_wave169/cw169_01_the_intake_makes_its_own_shoreline_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28 files now
+dirty; in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b29-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw133_02_the_list_on_a_borrowed_pencil 170,754 → 68,366;
+cw136_03_pebbles_on_the_pressure_plate 169,276 → 66,841;
+cw139_02_the_schoolroom_has_a_timetable 168,823 → 69,311;
+cw143_01_the_wick_is_trimmed_before_names 171,124 → 70,067;
+cw147_01_the_sachet_stings_the_hands_that_open_it 169,199 → 69,640;
+cw151_01_the_arithmetic_happens_on_paper 171,116 → 70,059;
+cw154_08_only_the_buried_conduits_remain 169,202 → 69,690;
+cw157_02_the_right_thumb_was_patched_twice 170,707 → 69,717;
+cw160_01_the_boundary_is_written_for_someone_approaching 169,201 → 69,900;
+cw164_04_a_map_can_be_a_weapon_before_it_is_used 171,124 → 70,067.
+Total 1,700,526 → 693,658 lines (~59%); 47,217 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.3 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-11-2026-09-29
+
+User-authorized ten-item Crossing visual batch. Root claims new
+`assets/art/{item_arbitration_token,item_charter_stamp,item_weighbridge_chit,item_smuggled_medicine,item_crossing_bread,item_lamp_oil_crossing,item_filtered_water_crossing,item_quarantine_bands,item_granary_receipt,item_smugglers_ledger}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-11-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten images imported, QA checked at 64 px
+and 26 px, and the plan archived.
+
+## claim-chatgpt-item-art-tranche-10-2026-09-29
+
+User-authorized ten-item Year of Ash visual batch. Root claims new
+`assets/art/{item_corrosion_inhibitor_drum,item_artillery_fuze_wrench,item_brass_stamping_die,item_railroad_hydraulic_spike_puller,item_telegraph_sounder_relay,item_periscope_optics_prism,item_cyanide_antidote_kit,item_mercury_barometer_station,item_tungsten_carbide_drill_bit,item_paraffin_wax_neutron_shield}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-10-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten images imported, QA checked at 64 px
+and 26 px, and the plan archived.
+
+## claim-plan-trim-conservative-method-C-expansion-batch28-2026-09-29
+
+User-authorized conservative trim (method C) — "find 10 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+twenty-eighth batch in the method-C family; continues in the unclaimed
+prose_wave plan tier. Root claims documentation-only edits to these exact
+files (each verified unclaimed (0 ledger hits), git-clean, and quiet at claim
+time; edit-time rechecks applied before each write; in-flight sibling files
+excluded by the same filter):
+
+- `docs/expansions/prose_wave132/cw132_02_eight_flights_per_bucket_plan.md`
+- `docs/expansions/prose_wave134/cw134_01_the_seeds_are_the_crossing_plan.md`
+- `docs/expansions/prose_wave137/cw137_08_the_vent_has_no_speaker_plan.md`
+- `docs/expansions/prose_wave141/cw141_02_hours_posted_outside_the_infirmary_plan.md`
+- `docs/expansions/prose_wave145/cw145_09_a_drum_that_still_requires_cleaning_plan.md`
+- `docs/expansions/prose_wave148/cw148_02_two_people_keep_the_viaduct_ledger_plan.md`
+- `docs/expansions/prose_wave152/cw152_02_read_it_twice_under_the_sodium_glare_plan.md`
+- `docs/expansions/prose_wave156/cw156_01_the_surface_has_no_spare_warmth_plan.md`
+- `docs/expansions/prose_wave161/cw161_04_the_doubt_is_about_what_to_teach_plan.md`
+- `docs/expansions/prose_wave165/cw165_10_day_twelve_is_still_a_measurement_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave158/cw158_01_the_scout_has_no_reason_to_trust_the_questions_plan.md`,
+`docs/expansions/prose_wave163/cw163_07_the_case_record_ends_before_the_person_does_plan.md`,
+`docs/expansions/prose_wave166/cw166_06_three_generations_in_one_grip_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; in-flight sibling
+trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-b28-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw132_02_eight_flights_per_bucket 169,772 → 68,966;
+cw134_01_the_seeds_are_the_crossing 171,142 → 68,754;
+cw137_08_the_vent_has_no_speaker 169,851 → 67,463;
+cw141_02_hours_posted_outside_the_infirmary 168,823 → 69,311;
+cw145_09_a_drum_that_still_requires_cleaning 169,209 → 69,697;
+cw148_02_two_people_keep_the_viaduct_ledger 169,804 → 69,654;
+cw152_02_read_it_twice_under_the_sodium_glare 169,209 → 69,697;
+cw156_01_the_surface_has_no_spare_warmth 169,801 → 69,698;
+cw161_04_the_doubt_is_about_what_to_teach 171,105 → 70,048;
+cw165_10_day_twelve_is_still_a_measurement 169,813 → 69,663.
+Total 1,698,529 → 692,951 lines (~59%); 47,033 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~51.4 MB saved. Each cw
+plan's authored prefix retained byte-identically (SHA-256 prefix check per
+file). Verified per file: authored-prefix hash unchanged, every distinct
+original line value survives in the trimmed file (no distinct line lost),
+all 14 `BATCH-` banners intact, all added lines are well-formed
+`consolidated: §` pointers, `### Tranche` container headings retained for
+navigation, scoped `git diff --check` PASS. No spares needed (no lane
+collisions; edit-time ledger/dirty rechecks clean before every write).
+
+## claim-chatgpt-item-art-tranche-9-2026-09-29
+
+User-authorized ten-item visual batch. Root claims new
+`assets/art/{item_microfluidic_reader,item_biofilter_media,item_aquaponic_fish,item_ballistics_cleaning_kit,item_geothermal_descaling_kit,item_hydraulic_wire_cutter,item_expedition_winch_kit,item_groundwater_sensor,item_well_maintenance_kit,item_switch_stand_module}.jpg`
+and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-9-2026-09-29.md`,
+and additive updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`
+and `.ai/state.md`. Existing art, catalogs, gameplay code, and other claims
+remain read-only. Status: DONE — ten images imported, QA checked at 64 px
+and 26 px, and the plan archived.
+
+## claim-chatgpt-item-art-tranche-8-2026-09-29
+
+User-authorized five-item visual tranche. Root claims new
+`assets/art/{item_forged_clean_bill_chit,item_radiation_shielding_panel,item_gas_mask_improved,item_dosimeter_calibrated,item_cbrn_cartridge}.jpg`
+files and their `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-8-2026-09-29.md`, and additive
+updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and `.ai/state.md`.
+Existing art, catalogs, gameplay code, and other active claims remain read-only.
+Status: DONE — five images imported and the plan archived.
+
+## claim-plan-trim-conservative-method-C-expansion-batch27-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — twenty-seventh batch in the
+method-C family; continues in the unclaimed prose_wave plan tier. Root
+claims documentation-only edits to these exact files (each verified
+unclaimed (0 ledger hits), git-clean, and quiet at claim time; edit-time
+rechecks applied before each write; in-flight sibling files excluded by the
+same filter):
+
+- `docs/expansions/prose_wave153/cw153_18_numbered_squares_at_bridge_seven_plan.md`
+- `docs/expansions/prose_wave153/cw153_09_the_amendment_under_the_printed_warning_plan.md`
+- `docs/expansions/prose_wave151/cw151_03_an_exact_mass_makes_an_argument_possible_plan.md`
+- `docs/expansions/prose_wave164/cw164_18_the_archive_is_not_in_the_habit_of_taking_dictation_plan.md`
+- `docs/expansions/prose_wave162/cw162_20_care_crosses_a_species_line_without_erasing_it_plan.md`
+- `docs/expansions/prose_wave159/cw159_02_the_outer_ring_convoy_has_a_departure_line_plan.md`
+- `docs/expansions/prose_wave159/cw159_01_the_civic_register_states_the_closure_twice_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave163/cw163_04_ivory_color_is_an_observation_not_a_grade_plan.md`,
+`docs/expansions/prose_wave163/cw163_03_the_needle_blank_after_three_days_plan.md`,
+`docs/expansions/prose_wave150/cw150_09_the_combination_was_already_known_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+`claim-plan-bloat-reduction-parallel-batch-42/44/45/47` IN PROGRESS;
+in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c170-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw153_18_numbered_squares_at_bridge_seven 172,601 → 71,348;
+cw153_09_the_amendment_under_the_printed_warning 172,601 → 71,348;
+cw151_03_an_exact_mass_makes_an_argument_possible 172,601 → 71,348;
+cw164_18_the_archive_is_not_in_the_habit_of_taking_dictation
+172,598 → 71,483; cw162_20_care_crosses_a_species_line 172,598 → 71,345;
+cw159_02_the_outer_ring_convoy_has_a_departure_line 172,598 → 71,345;
+cw159_01_the_civic_register_states_the_closure_twice 172,598 → 71,345.
+Total 1,208,195 → 499,562 lines (~59%); 31,523 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~36.4 MB saved. Each cw
+plan's authored prefix retained byte-identically as first copies. Verified
+per file: markers (FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged,
+all pointer headings valid, no distinct original line lost, 0 manifest hash
+mismatches, 14 BATCH blocks' distinct content intact, scoped
+`git diff --check` PASS.
+
+## claim-plan-trim-conservative-method-C-expansion-batch26-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — twenty-sixth batch in the method-C
+family; continues in the unclaimed prose_wave plan tier. Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave162/cw162_06_the_bell_tower_became_a_reference_point_plan.md`
+- `docs/expansions/prose_wave146/cw146_02_the_hollow_vault_keeps_the_remaining_count_plan.md`
+- `docs/expansions/prose_wave142/cw142_02_what_the_ledger_of_hunger_leaves_behind_plan.md`
+- `docs/expansions/prose_wave164/cw164_19_a_day_saved_depends_on_cold_holding_plan.md`
+- `docs/expansions/prose_wave159/cw159_18_the_estuary_wind_finds_the_liner_seam_plan.md`
+- `docs/expansions/prose_wave159/cw159_17_the_pipe_breaks_before_the_night_shift_changes_plan.md`
+- `docs/expansions/prose_wave155/cw155_16_enough_fuel_for_months_by_one_writer_s_count_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave160/cw160_06_the_pledged_grain_can_be_seen_from_the_street_plan.md`,
+`docs/expansions/prose_wave154/cw154_04_three_colors_and_a_contradictory_legend_plan.md`,
+`docs/expansions/prose_wave153/cw153_19_the_glass_slide_in_the_index_pocket_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+`claim-plan-bloat-reduction-parallel-batch-42/44/45/47` IN PROGRESS;
+in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c169-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw162_06_the_bell_tower_became_a_reference_point 172,604 → 71,351;
+cw146_02_the_hollow_vault_keeps_the_remaining_count 172,604 → 71,304;
+cw142_02_what_the_ledger_of_hunger_leaves_behind 172,603 → 71,350;
+cw164_19_a_day_saved_depends_on_cold_holding 172,602 → 71,349;
+cw159_18_the_estuary_wind_finds_the_liner_seam 172,602 → 71,349;
+cw159_17_the_pipe_breaks_before_the_night_shift_changes 172,602 → 71,349;
+cw155_16_enough_fuel_for_months_by_one_writer_s_count 172,602 → 71,349.
+Total 1,208,219 → 499,401 lines (~59%); 31,544 byte-identical repeat
+copies replaced by `consolidated: §` pointers; ~36.4 MB saved. Each cw
+plan's authored prefix retained byte-identically as first copies. Verified
+per file: markers (FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged,
+all pointer headings valid, no distinct original line lost, 0 manifest hash
+mismatches, 14 BATCH blocks' distinct content intact, scoped
+`git diff --check` PASS.
+
+## claim-plan-trim-conservative-method-C-expansion-batch25-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — twenty-fifth batch in the method-C
+family; continues in the unclaimed prose_wave plan tier. Root claims
+documentation-only edits to these exact files (each verified unclaimed
+(0 ledger hits), git-clean, and quiet at claim time; edit-time rechecks
+applied before each write; in-flight sibling files excluded by the same
+filter):
+
+- `docs/expansions/prose_wave168/cw168_18_she_can_count_the_pledge_without_the_paper_plan.md`
+- `docs/expansions/prose_wave152/cw152_01_the_fastest_route_is_explained_politely_plan.md`
+- `docs/expansions/prose_wave154/cw154_13_message_088_will_be_kept_plan.md`
+- `docs/expansions/prose_wave159/cw159_19_the_third_generation_kept_the_lamp_low_plan.md`
+- `docs/expansions/prose_wave156/cw156_08_the_last_rotation_is_not_a_signature_plan.md`
+- `docs/expansions/prose_wave156/cw156_04_a_wick_must_return_to_the_same_hand_plan.md`
+- `docs/expansions/prose_wave156/cw156_03_the_dark_pressings_stay_in_the_record_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave152/cw152_18_the_strand_crosses_the_mortar_joint_plan.md`,
+`docs/expansions/prose_wave151/cw151_20_twenty_four_letters_across_winter_ash_plan.md`,
+`docs/expansions/prose_wave147/cw147_09_the_wall_moves_after_the_water_leaves_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+`claim-plan-bloat-reduction-parallel-batch-42/44/45/47` IN PROGRESS;
+in-flight sibling trims excluded by the git-clean filter).
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c168-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw168_18_she_can_count_the_pledge 172,609 → 71,356;
+cw152_01_the_fastest_route_is_explained_politely 172,609 → 71,356;
+cw154_13_message_088_will_be_kept 172,608 → 71,070;
+cw159_19_the_third_generation_kept_the_lamp_low 172,605 → 71,352;
+cw156_08_the_last_rotation_is_not_a_signature 172,605 → 71,352;
+cw156_04_a_wick_must_return_to_the_same_hand 172,605 → 71,352;
+cw156_03_the_dark_pressings_stay_in_the_record 172,605 → 71,352. Total
+1,208,246 → 499,190 lines (~59%); 31,547 byte-identical repeat copies
+replaced by `consolidated: §` pointers; ~36.3 MB saved. Each cw plan's
+authored prefix retained byte-identically as first copies. Verified per
+file: markers (FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged, all
+pointer headings valid, no distinct original line lost, 0 manifest hash
+mismatches, 14 BATCH blocks' distinct content intact, scoped
+`git diff --check` PASS.
+
+## claim-chatgpt-item-art-tranche-7-2026-09-29
+
+User-authorized ten-item visual tranche. Root claims new
+`assets/art/{item_descent_line,item_salvage_cutting_tool,item_deep_service_ribbon,item_claim_tag_stamped,item_sea_ration,item_brine_protein_tin,item_marine_sealant_kit,item_ships_bell_picket,item_fleet_log_cylinder,item_signal_lamp_module}.jpg`
+files and their `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-7-2026-09-29.md`, and additive
+updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and `.ai/state.md`.
+Existing art, catalogs, gameplay code, and other active claims remain read-only.
+Status: DONE — ten images imported and the plan archived.
+
+## claim-plan-trim-conservative-method-C-expansion-batch24-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — twenty-fourth batch in the
+method-C family; continues in the unclaimed prose_wave plan tier. Root
+claims documentation-only edits to these exact files (each verified
+unclaimed (0 ledger hits), git-clean, and quiet at claim time; edit-time
+rechecks applied before each write; in-flight sibling files excluded by the
+same filter):
+
+- `docs/expansions/prose_wave168/cw168_15_birth_years_enter_the_store_ledger_plan.md`
+- `docs/expansions/prose_wave168/cw168_13_the_surplus_is_printed_beneath_the_cut_plan.md`
+- `docs/expansions/prose_wave164/cw164_03_the_medical_bag_is_not_a_calculation_plan.md`
+- `docs/expansions/prose_wave164/cw164_02_false_coordinates_travel_farther_than_the_caravan_plan.md`
+- `docs/expansions/prose_wave155/cw155_03_the_triage_edict_is_filed_in_numbers_plan.md`
+- `docs/expansions/prose_wave152/cw152_13_the_children_in_the_motel_transmission_plan.md`
+- `docs/expansions/prose_wave162/cw162_03_soundings_taken_from_a_shore_that_moved_plan.md`
+
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave134/cw134_09_the_slow_thing_plan.md`,
+`docs/expansions/prose_wave165/cw165_12_the_record_says_prophylactic_it_does_not_say_harmless_plan.md`,
+`docs/expansions/prose_wave149/cw149_04_something_beneath_the_road_still_ticks_plan.md`.
+Standing exclusions unchanged (deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+`claim-plan-bloat-reduction-parallel-batch-42/44/45/47` IN PROGRESS;
+`cw155_04` in-flight to a sibling lane).
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim (each cw plan's
+purpose/evidence, canon fit, non-goals, verified source object, and prose
+bank kept as first copies); only byte-identical repeat copies in the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` regions are removed (each
+marked by a `consolidated: §` pointer). All unique `BATCH-` headers, all
+distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c167-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+cw168_15_birth_years_enter_the_store_ledger 172,615 → 71,362;
+cw168_13_the_surplus_is_printed_beneath_the_cut 172,615 → 71,362;
+cw164_03_the_medical_bag_is_not_a_calculation 172,615 → 71,362;
+cw164_02_false_coordinates_travel_farther 172,615 → 71,500;
+cw155_03_the_triage_edict_is_filed_in_numbers 172,615 → 71,315;
+cw152_13_the_children_in_the_motel_transmission 172,614 → 71,361;
+cw162_03_soundings_taken_from_a_shore 172,613 → 71,360. Total
+1,208,302 → 499,622 lines (~59%); 31,525 byte-identical repeat copies
+replaced by `consolidated: §` pointers; ~36.3 MB saved. Each cw plan's
+authored prefix retained byte-identically as first copies. Verified per
+file: markers (FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged, all
+pointer headings valid, no distinct original line lost, 0 manifest hash
+mismatches, 14 BATCH blocks' distinct content intact, scoped
+`git diff --check` PASS.
+
+## claim-plan-trim-conservative-method-C-expansion-batch23-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — twenty-third batch in the method-C
+family. The docs/plans marker-free pool is exhausted (only live-claim
+exclusions remain), so this batch continues into the unclaimed prose_wave
+plan tier (~172–173K lines each). Root claims documentation-only edits to
+these exact files (each verified unclaimed (0 ledger hits), git-clean, and
+quiet at claim time; edit-time rechecks applied before each write):
+
+- `docs/expansions/prose_wave161/cw161_01_weather_does_not_turn_here_plan.md`
+- `docs/expansions/prose_wave169/cw169_18_four_floors_of_the_same_afternoon_plan.md`
+- `docs/expansions/prose_wave169/cw169_17_the_cupboard_was_cleaned_carefully_plan.md`
+- `docs/expansions/prose_wave158/cw158_18_the_rim_furnace_makes_a_narrow_thread_plan.md`
+- `docs/expansions/prose_wave157/cw157_18_the_van_carries_letters_past_their_delivery_day_plan.md`
+- `docs/expansions/prose_wave145/cw145_17_a_debt_measured_in_days_plan.md`
+- `docs/expansions/prose_wave160/cw160_11_the_wheelsets_have_settled_into_the_ballast_plan.md`
+
+Concurrency notes (prose_wave is the sibling `claim-plan-bloat-reduction-*`
+lanes' active zone; both sides work claim-first + edit-time recheck, so this
+claim keeps the batches disjoint):
+- `docs/expansions/prose_wave155/cw155_04_bram_will_sell_the_sketch_but_not_walk_it_plan.md`
+  was in-flight (` M`, mid-trim by a sibling lane) at selection time —
+  skipped untouched; `cw160_11` promoted from ranked spares in its place.
+- The wave*/expansion_* tier (expansion_69/17/72/63/64/80/81) is named in
+  `claim-plan-bloat-reduction-parallel-batch-42/44/45/47-2026-09-28`
+  (Status: IN PROGRESS) — skipped untouched.
+- Standing exclusions unchanged: deep-audit ×4 (IN PROGRESS), W2-06,
+  PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX
+  (readiness claim, BLOCKED but alive), PLAN_24_CLOSEOUT (ACTIVE).
+Ranked spares if any edit-time check fails:
+`docs/expansions/prose_wave160/cw160_10_the_blankets_were_pushed_beyond_the_light_plan.md`,
+`docs/expansions/prose_wave161/cw161_10_six_beds_are_endurance_not_capacity_plan.md`,
+`docs/expansions/prose_wave161/cw161_09_the_wagon_is_still_in_the_road_crust_plan.md`.
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim; the first intact copy of
+every distinct section is retained in place and only byte-identical repeat
+copies are removed (each marked by a `consolidated: §` pointer). All unique
+`BATCH-` headers, all distinct section headings and bodies (including each
+cw plan's authored prose bank and verified source record), and any section
+carrying approval/status markers are preserved. Full pre-trim originals +
+SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-c166-20260929/` and
+recoverable from git history. No production changes, runtime tests, or
+commit. Status: COMPLETE, uncommitted. Trim results (Go manifest line
+counts): cw161_01_weather_does_not_turn_here 173,001 → 71,463;
+cw169_18_four_floors_of_the_same_afternoon 172,861 → 71,608;
+cw169_17_the_cupboard_was_cleaned_carefully 172,771 → 71,518;
+cw158_18_the_rim_furnace_makes_a_narrow_thread 172,627 → 71,374;
+cw157_18_the_van_carries_letters_past_their_delivery_day 172,627 → 71,512;
+cw145_17_a_debt_measured_in_days 172,625 → 71,087;
+cw160_11_the_wheelsets_have_settled_into_the_ballast 172,624 → 71,371.
+Total 1,209,136 → 499,933 lines (~59%); 31,533 byte-identical repeat copies
+replaced by `consolidated: §` pointers; ~36.3 MB saved. Each cw plan's
+authored prefix (purpose/evidence, canon fit, non-goals, verified source
+object, prose bank) retained byte-identically as first copies. Verified per
+file: markers (FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged, all
+pointer headings valid, no distinct original line lost, 0 manifest hash
+mismatches, scoped `git diff --check` PASS.
+
+## claim-plan-trim-conservative-method-C-expansion-batch22-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — twenty-second batch in the
+method-C family; the expansion_wave1 plan family (29.9K tier + 18.2K tier).
+Root claims documentation-only edits to these exact files (each re-checked
+free + quiet at edit time; 0 live-row claim hits re-verified immediately
+before this claim; claim occurrences belong only to CLOSED sibling blocks
+`claim-plan-bloat-reduction-batch25/30-conservative-2026-09-28`,
+"Status: COMPLETE, uncommitted"):
+
+- `docs/plans/expansion_wave1/PLAN_12_LEARNING_HOUSES_ORAL_HISTORY_AND_CIVIC_TEACHING.md`
+- `docs/plans/expansion_wave1/PLAN_11_TOOL_LIBRARIES_SALVAGE_AND_REPAIR_APPRENTICESHIPS.md`
+- `docs/plans/expansion_wave1/PLAN_10_PERIMETER_WATCH_THREAT_SIGNALS_AND_SAFE_RESPONSE.md`
+- `docs/plans/expansion_wave1/PLAN_08_EXPLORATION_CARTOGRAPHY_AND_ARCHIVE.md`
+- `docs/plans/expansion_wave1/PLAN_07_SHELTER_AUTOMATION_AND_POWER_RECOVERY.md`
+- `docs/plans/expansion_wave1/PLAN_06_SURVIVOR_RELATIONSHIP_AND_MEMORY_NETWORK.md`
+- `docs/plans/expansion_wave1/PLAN_05_REGIONAL_SUPPLY_AND_TRAVEL_RESILIENCE.md`
+
+Skipped on purpose (live-ownership exclusions, re-verified this batch):
+four `claim-deep-audit-repair-2026-09-26` files (IN PROGRESS);
+`docs/plans/wave2_integration/W2-06_ENRICHMENT_SURFACING.md`;
+`PLAN-READINESS-PACKAGE-IDS-281.md`, `PLAN-ORPHAN-SEAL-01.md`,
+`CLAIM_READINESS_INDEX.md` (`claim-wave20-readiness-closure-281-284-2026-09-27`,
+BLOCKED but alive); `docs/plans/PLAN_24_CLOSEOUT.md`
+(`claim-c1-plan24-survivor-ledger-2026-09-16`, ACTIVE).
+Ranked spares if any edit-time check fails:
+`docs/plans/expansion_wave1/PLAN_02_MOBILE_MEDICAL_OUTREACH.md`,
+`.../PLAN_03_COMMUNITY_PUBLIC_WORKS.md`,
+`.../PLAN_04_SCENARIO_CAMPAIGN_LIBRARY.md`,
+`.../PLAN_01_WILDLAND_FIRE_AND_BURN_RECOVERY.md`.
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim; the first intact copy of
+every distinct section is retained in place and only byte-identical repeat
+copies are removed (each marked by a `consolidated: §` pointer). All unique
+`BATCH-` headers, all distinct section headings and bodies, and any section
+carrying approval/status markers are preserved. Full pre-trim originals +
+SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-c165-20260929/` and
+recoverable from git history. No production changes, runtime tests, or
+commit. Status: COMPLETE, uncommitted. Trim results (Go manifest line
+counts): PLAN_12_LEARNING_HOUSES 29,912 → 27,111; PLAN_11_TOOL_LIBRARIES
+29,912 → 27,218; PLAN_10_PERIMETER_WATCH 29,912 → 27,509;
+PLAN_08_EXPLORATION_CARTOGRAPHY 18,178 → 16,696; PLAN_07_SHELTER_AUTOMATION
+18,178 → 17,040; PLAN_06_SURVIVOR_RELATIONSHIP 18,178 → 16,942;
+PLAN_05_REGIONAL_SUPPLY 18,178 → 17,420. Total 162,448 → 149,936 lines
+(~8%); 2,825 byte-identical repeat copies replaced by `consolidated: §`
+pointers; ~2.1 MB saved. Modest cut is correct conservatism: the sibling
+banner-removal lanes already stripped the generated `BATCH-NN` regions from
+these files (their staged partial trims preserved), so only verbatim
+repeats inside the retained content remained. Verified per file: markers
+(FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged, all pointer
+headings valid, no distinct original line lost, 0 manifest hash mismatches,
+scoped `git diff --check` PASS.
+
+## claim-chatgpt-item-art-tranche-6-2026-09-29
+
+User-authorized ten-item foundry art tranche. Root claims new
+`assets/art/{item_foundry_press_fitting,item_foundry_bearing_housing,item_foundry_furnace_grate,item_foundry_reinforcement_shoe,item_foundry_structural_coupling,item_foundry_drill_blanks,item_hardened_ground_anchor_spikes,item_superalloy_turbine_blade_blank,item_rail_grinding_head,item_press_tooling_set}.jpg`
+files and their `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-6-2026-09-29.md`, and additive
+updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and `.ai/state.md`.
+Existing art, catalogs, gameplay code, and other active claims remain read-only.
+Status: DONE — ten images imported and the plan archived.
+
+## claim-plan-trim-conservative-method-C-expansion-batch21-2026-09-29
+
+User-authorized conservative trim (method C) — "continue with next tier!"
+("find and continue with the next 7 plans to trim bloated text! be
+conservative, keep unique material, don't completely remove and compress!")
+— twenty-first batch in the method-C family; the 191K–187K tier plus the
+179K master plan and the next-ranked expansion_wave1 plan. Root claims
+documentation-only edits to these exact files (each re-checked free + quiet
+at edit time; every prior claim occurrence re-verified closed before
+editing):
+
+- `docs/plans/UNCLAIMED_CORPUS_CENSUS.md`
+- `docs/plans/wave8_part2/C1_PREMISE_EVIDENCE.md`
+- `docs/plans/wave11_part1/WAVE11_PART1_CLOSEOUT.md`
+- `docs/plans/flagship_b5_b8/PHASE9_UI_HONESTY.md`
+- `docs/plans/wave8_part2/B2_PANEL_WAVE.md`
+- `docs/plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`
+- `docs/plans/expansion_wave1/PLAN_09_FOOD_PRESERVATION_NUTRITION_AND_KITCHEN_RESILIENCE.md`
+
+Skipped on purpose (live-ownership exclusions, re-verified this batch):
+four `claim-deep-audit-repair-2026-09-26` files (IN PROGRESS);
+`docs/plans/wave2_integration/W2-06_ENRICHMENT_SURFACING.md` (a concurrent
+lane's active task);
+`docs/plans/EXPANSION_PROGRAM_WAVE20_2026-09-21/PLAN-READINESS-PACKAGE-IDS-281.md`,
+`.../PLAN-ORPHAN-SEAL-01.md`, and `.../CLAIM_READINESS_INDEX.md` (all named
+in `claim-wave20-readiness-closure-281-284-2026-09-27` — "source plans whose
+metadata is edited" / "Generated/docs" — claim BLOCKED 2026-09-27 but alive,
+"Re-scope and reauthorize before resuming"); and
+`docs/plans/PLAN_24_CLOSEOUT.md` (`claim-c1-plan24-survivor-ledger-2026-09-16`,
+status cell **ACTIVE 2026-09-16**). A concurrent editor is actively updating
+this ledger (line numbers shifted mid-screen); all target paths were
+re-checked for `| **ACTIVE` / `| **IN PROGRESS` / `| **BLOCKED` row hits
+immediately before this claim (0 live hits). Ranked spares if any edit-time
+check fails: `docs/plans/expansion_wave1/PLAN_12_LEARNING_HOUSES_ORAL_HISTORY_AND_CIVIC_TEACHING.md`,
+`.../PLAN_11_TOOL_LIBRARIES_SALVAGE_AND_REPAIR_APPRENTICESHIPS.md`,
+`.../PLAN_10_PERIMETER_WATCH_THREAT_SIGNALS_AND_SAFE_RESPONSE.md`.
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-`
+headers, all distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c164-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+UNCLAIMED_CORPUS_CENSUS 191,372 → 79,595; C1_PREMISE_EVIDENCE
+191,247 → 79,576; WAVE11_PART1_CLOSEOUT 191,219 → 80,343;
+PHASE9_UI_HONESTY 188,065 → 78,396; B2_PANEL_WAVE 187,177 → 77,542;
+CORE_GAME_MECHANICS_GAP_SEAL_MASTER 179,327 → 75,903;
+expansion_wave1/PLAN_09_FOOD_PRESERVATION 29,913 → 28,006 (already
+banner-trimmed by `claim-plan-bloat-reduction-batch25` (COMPLETE); its 467
+removed copies were duplicates inside the retained prefix).
+Total 1,158,320 → 499,361 lines (~57%); 34,743 byte-identical repeat copies
+replaced by `consolidated: §` pointers; ~24.4 MB saved. Verified per file:
+markers (FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged, all
+pointer headings valid, no distinct original line lost, 0 manifest hash
+mismatches (every removed copy byte-identical to its retained first copy),
+pre-existing 3-line path edits preserved, scoped `git diff --check` PASS.
+
+## claim-chatgpt-item-art-tranche-5-2026-09-29
+
+User-authorized continuation of visual production. Root claims five new
+`assets/art/{item_sealed_dive_lamp,item_rebreather_canister,item_icebreaker_rendezvous_flare_rocket,item_seed_glacier_greens,item_hot_dust_drum}.jpg`
+files and their `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-5-2026-09-29.md`, and additive
+updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and `.ai/state.md`.
+Existing art, catalogs, gameplay code, and other active claims remain read-only.
+Status: DONE — five images imported and the plan archived.
+
+## claim-plan-trim-conservative-method-C-expansion-batch20-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — twentieth batch in the method-C
+family; continues down the ranked untrimmed docs/plans tier after batch 19.
+Root claims documentation-only edits to these exact files (each re-checked
+free + quiet at edit time; all carry only the pre-existing 3-line
+path-relativity edits, preserved verbatim; every prior claim hit re-verified
+closed-out before editing):
+
+- `docs/plans/C2_planintegration[4].md`
+- `docs/plans/C1_planintegration[4].md`
+- `docs/plans/wave12_part1_1/A1_PLAN49_PREREQUISITE_AUDIT.md`
+- `docs/plans/C2_planintegration[5].md`
+- `docs/plans/C1_planintegration[3].md`
+- `docs/plans/C1_planintegration[2].md`
+- `docs/plans/flagship_b5_b8/B5_B8_COMPLETION_REPORT.md`
+
+Skipped on purpose (unchanged live-ownership exclusions): the four
+`claim-deep-audit-repair-2026-09-26` files (IN PROGRESS),
+`docs/plans/wave2_integration/W2-06_ENRICHMENT_SURFACING.md` (a concurrent
+lane's active task), and
+`docs/plans/EXPANSION_PROGRAM_WAVE20_2026-09-21/PLAN-READINESS-PACKAGE-IDS-281.md`
+(`claim-wave20-readiness-closure-281-284-2026-09-27`, Status: ACTIVE).
+Ranked spares if any edit-time check fails: `docs/plans/UNCLAIMED_CORPUS_CENSUS.md`,
+`docs/plans/wave11_part1/WAVE11_PART1_CLOSEOUT.md`, `docs/plans/PLAN_24_CLOSEOUT.md`,
+`docs/plans/wave8_part2/C1_PREMISE_EVIDENCE.md`, `docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01.md`.
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-`
+headers, all distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c163-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+C2_planintegration[4] 193,197 → 83,360; C1_planintegration[4]
+193,188 → 83,254; A1_PLAN49_PREREQUISITE_AUDIT 192,998 → 80,468;
+C2_planintegration[5] 192,886 → 82,952; C1_planintegration[3]
+192,319 → 82,391; C1_planintegration[2] 192,232 → 82,304;
+B5_B8_COMPLETION_REPORT 191,603 → 80,408. Total 1,348,423 → 575,137 lines
+(~57%); 38,675 byte-identical repeat copies replaced by `consolidated: §`
+pointers; ~39.7 MB saved. Verified per file: markers (FULLY INTEGRATED /
+STATUS: / APPROVED) counts unchanged, all pointer headings valid, no
+distinct original line lost, 0 manifest hash mismatches (every removed copy
+byte-identical to its retained first copy), unique `BATCH-` headers
+preserved (19 per file), pre-existing 3-line path edits preserved, scoped
+`git diff --check` PASS.
+
+## claim-chatgpt-item-art-tranche-4-2026-09-29
+
+User-authorized continuation of visual production. Root claims five new
+`assets/art/{item_shielded_badge_case,item_greenhouse_watering_can,item_greenhouse_pruning_shears,item_foundry_crucible_spare,item_foundry_replacement_die}.jpg`
+files and their `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-4-2026-09-29.md`, and additive
+updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and `.ai/state.md`.
+Existing art, catalogs, code, and other active claims remain read-only.
+Status: DONE — five images imported and the plan archived.
+
+## claim-plan-trim-conservative-method-C-expansion-batch19-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — nineteenth batch in the method-C
+family; continues down the ranked untrimmed docs/plans tier after batch 18.
+Root claims documentation-only edits to these exact files (each re-checked
+free + quiet at edit time; all carry only the pre-existing 3-line
+path-relativity edits, preserved verbatim; every prior claim hit re-verified
+DONE/complete before editing):
+
+- `docs/plans/wave10_part1/C2_26A_IMPLEMENTATION_LOG.md`
+- `docs/plans/C2_PLANINTEGRATION_4_BASELINE.md`
+- `docs/plans/WAVE10_MICRO_DEFERRAL_SWEEP.md`
+- `docs/plans/C1_planintegration.md`
+- `docs/plans/C2_planintegration[2].md`
+- `docs/plans/PLANS_168_203_138_INTEGRATION_LOG.md`
+- `docs/plans/UNBLOCKED_PLANS_AUDIT_2026-09-19.md`
+
+Skipped on purpose (unchanged live-ownership exclusions): the four
+`claim-deep-audit-repair-2026-09-26` files (IN PROGRESS),
+`docs/plans/wave2_integration/W2-06_ENRICHMENT_SURFACING.md` (a concurrent
+lane's active task), and
+`docs/plans/EXPANSION_PROGRAM_WAVE20_2026-09-21/PLAN-READINESS-PACKAGE-IDS-281.md`
+(`claim-wave20-readiness-closure-281-284-2026-09-27`, Status: ACTIVE).
+Ranked spares if any edit-time check fails: `docs/plans/C2_planintegration[4].md`,
+`docs/plans/C1_planintegration[4].md`, `docs/plans/C2_planintegration[5].md`,
+`docs/plans/C1_planintegration[3].md`, `docs/plans/C1_planintegration[2].md`.
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-`
+headers, all distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c162-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+C2_26A_LOG 193,793 → 81,646; C2_PLANINTEGRATION_4_BASELINE
+193,728 → 80,842; WAVE10_MICRO_DEFERRAL_SWEEP 193,722 → 80,836;
+C1_planintegration 193,705 → 83,101; C2_planintegration[2]
+193,595 → 83,758; PLANS_168_203_138_LOG 193,373 → 80,843;
+UNBLOCKED_PLANS_AUDIT 193,344 → 81,826. Total 1,355,260 → 572,852 lines
+(~58%); 39,299 byte-identical repeat copies replaced by `consolidated: §`
+pointers; ~40.4 MB saved. Verified per file: markers (FULLY INTEGRATED /
+STATUS: / APPROVED) counts unchanged, all pointer headings valid, no
+distinct original line lost, 0 manifest hash mismatches (every removed copy
+byte-identical to its retained first copy), unique `BATCH-` headers
+preserved (19 per file), pre-existing 3-line path edits preserved, scoped
+`git diff --check` PASS.
+
+## claim-plan-trim-conservative-method-C-expansion-batch18-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — eighteenth batch in the method-C
+family; continues down the ranked untrimmed docs/plans tier after batch 17.
+Root claims documentation-only edits to these exact files (each re-checked
+free + quiet at edit time; six carry only the pre-existing 3-line
+path-relativity edits, preserved verbatim; W2-06-style active-task and
+ACTIVE-claim files excluded):
+
+- `docs/plans/PLAN_22_CONSUMABLE_BILLS_INTEGRATION_PLAN.md`
+- `docs/plans/PLAN_207_SHELTER_REPUTATION_INTEGRATION_LOG.md`
+- `docs/plans/PLAN_132_HIDDEN_AGENDA_INTEGRATION_LOG.md`
+- `docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md`
+- `docs/plans/wave10_part1/B2_PLAN29_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave10_part1/C1_PLAN31_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave10_part1/B1_PLAN27_IMPLEMENTATION_LOG.md`
+
+Skipped on purpose: the four `claim-deep-audit-repair-2026-09-26` files
+(IN PROGRESS), `docs/plans/wave2_integration/W2-06_ENRICHMENT_SURFACING.md`
+(a concurrent lane's active task per `.ai/state.md`; earlier batches also
+left it untouched), and
+`docs/plans/EXPANSION_PROGRAM_WAVE20_2026-09-21/PLAN-READINESS-PACKAGE-IDS-281.md`
+(`claim-wave20-readiness-closure-281-284-2026-09-27`, Status: ACTIVE).
+Ranked spares if any edit-time check fails: `docs/plans/wave10_part1/C2_26A_IMPLEMENTATION_LOG.md`,
+`docs/plans/C2_PLANINTEGRATION_4_BASELINE.md`, `docs/plans/WAVE10_MICRO_DEFERRAL_SWEEP.md`,
+`docs/plans/C1_planintegration.md`, `docs/plans/PLANS_168_203_138_INTEGRATION_LOG.md`.
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-`
+headers, all distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c161-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+PLAN_22_CONSUMABLE_BILLS 195,512 → 81,143; PLAN_207_SHELTER_REPUTATION
+195,363 → 80,994; PLAN_132_HIDDEN_AGENDA 195,361 → 80,992;
+PLAN_48_RELEASE_CRAFT 194,608 → 81,053; B2_PLAN29 194,570 → 79,481;
+C1_PLAN31 194,565 → 79,476; B1_PLAN27 194,541 → 79,452.
+Total 1,364,520 → 562,591 lines (~59%); 39,279 byte-identical repeat copies
+replaced by `consolidated: §` pointers; ~41.5 MB saved. Verified per file:
+markers (FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged, all
+pointer headings valid, no distinct original line lost, 0 manifest hash
+mismatches (every removed copy byte-identical to its retained first copy),
+unique `BATCH-` headers preserved (19 per file), pre-existing 3-line path
+edits preserved, scoped `git diff --check` PASS.
+
+## claim-chatgpt-item-art-tranche-3-2026-09-29
+
+User-authorized continuation of visual asset production. Root claims five new
+`assets/art/{item_potassium_iodide_pack,item_shielding_apron,crop_glacier_greens,item_greenhouse_drip_kit,item_foundry_blast_fitting}.jpg`
+files and matching `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-3-2026-09-29.md`, and additive
+updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and `.ai/state.md`.
+Existing art, catalogs, code, and other active claims remain read-only. **DONE
+2026-09-29:** five final JPEGs imported without errors, visually inspected at
+64 px and 26 px, report updated, plan marked FULLY INTEGRATED and archived;
+no commit.
+
+## claim-plan-trim-conservative-method-C-expansion-batch17-2026-09-29
+
+User-authorized conservative trim (method C) — "find and continue with the
+next 7 plans to trim bloated text! be conservative, keep unique material,
+don't completely remove and compress!" — seventeenth batch in the method-C
+family; continues in the same MODIFIED / previously-untrimmed docs/plans tier
+after the batch-16 cleanup. Root claims documentation-only edits to these
+exact files (each re-checked free + quiet at edit time; only 3-line
+pre-existing path-relativity edits per file, preserved verbatim):
+
+- `docs/plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md`
+- `docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`
+- `docs/plans/PARTIAL_2_WAVE6_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`
+- `docs/plans/PLAN_220_SHELTER_ATMOSPHERE_INTEGRATION_LOG.md`
+- `docs/plans/C2_PLANINTEGRATION_2_CLOSURE_REPORT.md`
+- `docs/plans/ORPHAN_SEAL_PRIORITY_W1_BOUNDARIES.md`
+- `docs/plans/C2_PLANINTEGRATION_5_BASELINE.md`
+
+Skipped on purpose (claimed by active `claim-deep-audit-repair-2026-09-26`,
+IN PROGRESS — read-only to this root):
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-DEV-TOOLING-TRUTH-75_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AK_BLOB_INVENTORY.md`.
+Ranked spares if any edit-time check fails: `docs/plans/wave2_integration/W2-06_ENRICHMENT_SURFACING.md`,
+`docs/plans/PLAN_22_CONSUMABLE_BILLS_INTEGRATION_PLAN.md`,
+`docs/plans/PLAN_207_SHELTER_REPUTATION_INTEGRATION_LOG.md`,
+`docs/plans/PLAN_132_HIDDEN_AGENDA_INTEGRATION_LOG.md`,
+`docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md`.
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-`
+headers, all distinct section headings and bodies, and any section carrying
+approval/status markers are preserved. Full pre-trim originals + SHA-256
+manifest at `/tmp/ashfall-plan-trim-methodc-c160-20260929/` and recoverable
+from git history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go manifest line counts):
+PARTIAL_REMAINING_PLACEHOLDER 201,854 → 81,591; PLAN_37 199,817 → 82,552;
+PARTIAL_2_WAVE6 199,258 → 80,340; PLAN_220 199,248 → 81,864;
+C2_PLANINTEGRATION_2_CLOSURE 198,609 → 80,034; ORPHAN_SEAL_PRIORITY_W1
+197,930 → 79,986; C2_PLANINTEGRATION_5_BASELINE 197,688 → 80,030.
+Total 1,394,404 → 566,397 lines (~59%); 40,321 byte-identical repeat copies
+replaced by `consolidated: §` pointers. Verified per file: markers
+(FULLY INTEGRATED / STATUS: / APPROVED) counts unchanged, all pointer
+headings valid, no distinct original line lost, 0 manifest hash mismatches
+(every removed copy byte-identical to its retained first copy), unique
+`BATCH-` headers preserved (19 per file), pre-existing 3-line path edits
+preserved, scoped `git diff --check` PASS.
+
+## claim-chatgpt-item-art-tranche-2-2026-09-29
+
+User-authorized continuation of visual production. Root claims four new
+`assets/art/{item_radiation_survey_meter,item_chelation_decorporation_course,crop_frost_pea,item_foundry_shoring_bracket}.jpg`
+files and their `.import` sidecars, new
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-2-2026-09-29.md`, and additive
+updates to `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and `.ai/state.md`.
+Existing art, catalogs, code, and prior claims remain read-only. **DONE
+2026-09-29:** four final JPEGs imported without errors, visually inspected at
+64 px, report updated, plan marked FULLY INTEGRATED and archived; no commit.
+
+## claim-chatgpt-item-art-2026-09-29
+
+User-authorized visual inventory and ChatGPT image generation. Root claims the
+three new item files `assets/art/item_calibrated_dosimeter.jpg`,
+`assets/art/item_seed_frost_pea.jpg`, and
+`assets/art/item_foundry_roof_armor_plate.jpg`, their matching `.import`
+sidecars, `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-2026-09-29.md`, and new
+`docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`. Existing art, `src/`,
+catalogs, registry code, and other live claims stay read-only. The generated
+location concepts are not part of this claim because those catalog IDs already
+resolve to existing art. **DONE 2026-09-29:** three images imported, visual QA
+passed at 64 px, final plan marked FULLY INTEGRATED and archived; no commit.
+
+## claim-plan-trim-conservative-method-C-expansion-batch16-2026-09-28
+
+User-authorized conservative trim (method C) — sixteenth batch; clears the
+remaining Codex-skipped pool (6 docs: the authority trio, the referenced
+`PARTIAL_2_WAVE5` log, and the two sealed `integrated/` orphan-seal records).
+User directed "C method!" — method C preserves each doc's unique material
+(titles, `FULLY INTEGRATED` markers, all distinct sections) and everything stays
+recoverable at `c8c1e453d`, so even the authority/log docs are safe under it.
+Family remains disjoint from the concurrent Codex block-removal lanes (Codex
+stayed in `prose_wave`, batch 164). Root claims documentation-only edits to these
+exact files (each re-checked free + quiet at edit time):
+
+- `docs/expansions/DEEP_LORE_MASTER_PLAN.md`
+- `docs/expansions/EXPANSION_3_4_MASTER_PLAN.md`
+- `docs/expansions/PLAN18_BASELINE.md`
+- `docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`
+- `docs/plans/integrated/radio/INTEGRATED_PLAN_ORPHAN_SEAL_01_A24_RADIO_PROPAGATION.md`
+- `docs/plans/integrated/kitchen/INTEGRATED_ORPHAN_SEAL_01_A98_FOOD_TYPE_SPOILAGE.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` headers
+(16–19 per file), section headings (3,648–5,609 per file), `FULLY INTEGRATED`
+markers on the sealed records, and distinct bodies preserved. Full pre-trim
+originals recoverable at `git show c8c1e453d:<path>`. No production changes,
+runtime tests, or commit. Status: COMPLETE.
+DEEP_LORE_MASTER 192,509 → 72,310; EXPANSION_3_4_MASTER 190,731 → 73,319;
+PLAN18_BASELINE 186,895 → 68,564; PARTIAL_2_WAVE5 199,248 → 73,554;
+INTEGRATED_A24_RADIO 92,879 → 77,226; INTEGRATED_A98_FOOD 92,882 → 77,229.
+Total 955,144 → 442,202 lines. 1,023–1,469 repeat-section types per file.
+**Remaining Codex-skipped bloated plan pool: 0.** Cleanup complete.
+
+## claim-plan-trim-conservative-method-C-expansion-batch15-2026-09-28
+
+User-authorized conservative trim (method C) — fifteenth batch of seven bloated
+plan docs. The clean non-BASELINE plan records are exhausted, so per user
+"continue" this batch moves into the next tier: the per-plan `*_BASELINE`
+records + the sealed `integrated/` records (both safe under method C — unique
+material and the `FULLY INTEGRATED` headers are preserved). Still left for
+absolute last: the live `PARTIAL_2_WAVE5` log and the MASTER/BASELINE/lore
+authority trio. Family remains disjoint from the concurrent Codex block-removal
+lanes (Codex stayed in `prose_wave`, batch 163). Root claims documentation-only
+edits to these exact files (each re-checked free + quiet at edit time):
+
+- `docs/bodymind/PLAN27_BASELINE.md`
+- `docs/ui/PLAN14_BASELINE.md`
+- `docs/shelter/PLAN41_BASELINE.md`
+- `docs/world/PLAN43_BASELINE.md`
+- `docs/plans/integrated/systems/CF_XP01_DIFFICULTY_FULL_BINDING_INTEGRATION_PLAN.md`
+- `docs/plans/integrated/verdict/INTEGRATED_PLAN_INVESTIGATION-EVIDENCE-TRUTH-121.md`
+- `docs/plans/integrated/economy/INTEGRATED_PLAN_155_BLACK_MARKET.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (11–19 per file), section headings (1,924–6,136 per file), `FULLY
+INTEGRATED` status headers, and distinct bodies preserved. The `integrated/`
+records are dense in unique content (like earlier scaffolds), so method C removes
+proportionally less there — correct conservative behaviour. Full pre-trim
+originals recoverable at `git show c8c1e453d:<path>`. No production changes,
+runtime tests, or commit. Status: COMPLETE.
+PLAN27_BASELINE 50,774 → 30,707; PLAN14_BASELINE 49,832 → 29,765;
+PLAN41_BASELINE 49,831 → 29,764; PLAN43_BASELINE 49,773 → 29,834;
+CF_XP01 102,627 → 81,699; INTEGRATED_INVESTIGATION-121 102,443 → 85,822;
+INTEGRATED_155_BLACK_MARKET 102,076 → 81,214. Total 507,356 → 368,805 lines.
+373–1,023 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch14-2026-09-28
+
+User-authorized conservative trim (method C) — fourteenth batch of seven bloated
+plan docs. Family disjoint from the concurrent Codex block-removal lanes (Codex
+remained confined, batch 161). Conservative scoping preserved: the
+MASTER/BASELINE/lore authority trio, the live `PARTIAL_2_WAVE5` log, the sealed
+`integrated/` records, and the per-plan `*_BASELINE` docs were again left
+untouched. Root claims documentation-only edits to these exact files (each
+re-checked free + quiet at edit time):
+
+- `docs/research/PLAN_166_SALVAGE_REVERSE_ENGINEERING_CLOSEOUT.md`
+- `docs/shelter/PLAN_120_COMPONENT_CONSUMER_MATRIX.md`
+- `docs/narrative/PLAN_169_PROCEDURAL_NARRATIVE_CLOSEOUT.md`
+- `docs/ui/PLAN_14_UX_ONBOARDING_ACCESSIBILITY_CLOSEOUT.md`
+- `docs/orbital/PLAN_39_ORBITAL_HARROW_TELEMETRY_CLOSEOUT.md`
+- `docs/water/PLAN_168_FLUID_LOGISTICS_CLOSEOUT.md`
+- `docs/spiritual/PLAN30_CADENCE_AND_SUPPRESSION.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (10 per file), section headings (1,753–1,932 per file), and distinct
+bodies (closeout ledgers, component/cadence matrices) preserved. Full pre-trim
+originals recoverable at `git show c8c1e453d:<path>`. No production changes,
+runtime tests, or commit. Status: COMPLETE.
+PLAN_166_SALVAGE 44,064 → 28,048; PLAN_120_COMPONENT 43,767 → 28,776;
+PLAN_169_NARRATIVE 43,757 → 28,133; PLAN_14_UX 43,723 → 28,099;
+PLAN_39_ORBITAL 43,511 → 28,200; PLAN_168_FLUID 42,777 → 27,658;
+PLAN30_CADENCE 42,720 → 26,581. Total 304,319 → 195,495 lines.
+321–506 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch13-2026-09-28
+
+User-authorized conservative trim (method C) — thirteenth batch of seven bloated
+plan docs. Family disjoint from the concurrent Codex block-removal lanes (Codex
+stayed confined to `prose_wave`/`integrated/` + a separate `docs/audits` write,
+batch 160). Conservative scoping preserved: the MASTER/BASELINE/lore authority
+trio, the live `PARTIAL_2_WAVE5` log, the sealed `integrated/` records, and the
+per-plan `*_BASELINE` docs were again left untouched. Root claims
+documentation-only edits to these exact files (each re-checked free + quiet at
+edit time):
+
+- `docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md`
+- `docs/systems/RESEARCH_CORE_PORT_PLAN.md`
+- `docs/world/PLAN_121_GPR_CHARACTERIZATION.md`
+- `docs/shelter/PLAN_120_CARBON_COMPOSITES_CLOSEOUT.md`
+- `docs/medical/PLAN112_SAVE_COMPATIBILITY.md`
+- `docs/content/PLAN134_PLAN138_RECONCILIATION.md`
+- `docs/radio/PLAN_119_SENSOR_CHARACTERIZATION.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (10 per file), section headings (1,752–2,693 per file), and distinct
+bodies (core-port plans, characterization/closeout/reconciliation ledgers)
+preserved. Full pre-trim originals recoverable at `git show c8c1e453d:<path>`.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+SKILL_PROGRESSION_PORT 46,673 → 30,877; RESEARCH_PORT 45,903 → 31,428;
+PLAN_121_GPR 45,754 → 31,019; PLAN_120_CARBON 45,311 → 30,192;
+PLAN112_SAVE_COMPAT 44,756 → 29,001; PLAN134_138_RECON 44,468 → 28,713;
+PLAN_119_SENSOR 44,449 → 29,330. Total 317,314 → 210,560 lines.
+312–490 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch12-2026-09-28
+
+User-authorized conservative trim (method C) — twelfth batch of seven bloated
+plan docs. Family disjoint from the concurrent Codex block-removal lanes (Codex
+stayed in its `prose_wave`/`integrated/content` lane, batch 158). Conservative
+scoping preserved: the MASTER/BASELINE/lore authority trio, the live
+`PARTIAL_2_WAVE5` log, the sealed `integrated/` records, and the per-plan
+`*_BASELINE` docs were again left untouched. Root claims documentation-only
+edits to these exact files (each re-checked free + quiet at edit time):
+
+- `docs/progression/PLAN26_SAVE_CONTRACT.md`
+- `docs/progression/PLAN26_REGRESSION_MATRIX.md`
+- `docs/shelter/PLAN41_REGRESSION_MATRIX.md`
+- `docs/combat/PLAN10_SAVE_COMPATIBILITY.md`
+- `docs/ui/JOURNAL_UI_PLAN.md`
+- `docs/progression/PLAN33_CLOSEOUT.md`
+- `docs/bodymind/PLAN23_PLAN27_CONTAMINATION_RECONCILIATION.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (10–11 per file), section headings (1,829–2,498 per file), and distinct
+bodies (save/regression/compatibility matrices, closeout/reconciliation ledgers)
+preserved. Full pre-trim originals recoverable at `git show c8c1e453d:<path>`.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+PLAN26_SAVE_CONTRACT 50,442 → 30,118; PLAN26_REGRESSION 50,411 → 30,215;
+PLAN41_REGRESSION 50,368 → 30,172; PLAN10_SAVE_COMPAT 50,359 → 30,163;
+JOURNAL_UI_PLAN 50,003 → 31,007; PLAN33_CLOSEOUT 49,752 → 29,685;
+PLAN23_27_CONTAMINATION 47,080 → 29,698. Total 348,415 → 211,058 lines.
+360–536 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch11-2026-09-28
+
+User-authorized conservative trim (method C) — eleventh batch of seven bloated
+plan docs. Family disjoint from the concurrent Codex block-removal lanes (Codex
+stayed in its `wave*`/`prose_wave` lane, batch 157). Conservative scoping
+preserved: the MASTER/BASELINE/lore authority trio, the live `PARTIAL_2_WAVE5`
+log, the sealed `integrated/` records, and the per-plan `*_BASELINE` docs were
+again left untouched. Root claims documentation-only edits to these exact files
+(each re-checked free + quiet at edit time):
+
+- `docs/spiritual/PLAN30_REGRESSION_MATRIX.md`
+- `docs/i18n/LOCALIZATION_PLAN.md`
+- `docs/factions/PLAN_167_ESPIONAGE_CLOSEOUT.md`
+- `docs/spiritual/PLAN30_SAVE_COMPATIBILITY.md`
+- `docs/combat/PLAN54_SAVE_CONTRACT.md`
+- `docs/world/PLAN43_REGRESSION_MATRIX.md`
+- `docs/progression/PLAN26_BALANCE_AUDIT.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (11 per file), section headings (1,941–2,112 per file), and distinct
+bodies (regression/compatibility/save-contract matrices, closeout/audit ledgers)
+preserved. Full pre-trim originals recoverable at `git show c8c1e453d:<path>`.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+PLAN30_REGRESSION 50,911 → 30,233; LOCALIZATION 50,873 → 31,697;
+PLAN_167_ESPIONAGE 50,816 → 31,286; PLAN30_SAVE_COMPAT 50,541 → 30,473;
+PLAN54_SAVE_CONTRACT 50,517 → 30,321; PLAN43_REGRESSION 50,504 → 30,308;
+PLAN26_BALANCE_AUDIT 50,480 → 30,284. Total 354,642 → 214,602 lines.
+375–552 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch10-2026-09-28
+
+User-authorized conservative trim (method C) — tenth batch of seven bloated plan
+docs. Family disjoint from the concurrent Codex block-removal lanes (Codex stayed
+in its `prose_wave`/`integrated/content` lane, batch 156). Conservative scoping
+preserved: the MASTER/BASELINE/lore authority trio, the live `PARTIAL_2_WAVE5`
+log, and the sealed `integrated/` records were again left untouched. Root claims
+documentation-only edits to these exact files (each re-checked free + quiet at
+edit time):
+
+- `docs/expeditions/PLAN_147_MINE_FLAIL_CLOSEOUT.md`
+- `docs/architecture/PLANS_166_169_AUTHORITY_MATRIX.md`
+- `docs/archive/PLAN78_SAVE_CONTRACT.md`
+- `docs/systems/STANDING_RECORD_CORE_PORT_PLAN.md`
+- `docs/shelter/PLAN41_SAVE_COMPATIBILITY.md`
+- `docs/progression/PLAN33_SAVE_COMPATIBILITY.md`
+- `docs/maritime/PLAN23_REGRESSION_MATRIX.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (11 per file), section headings (1,947–2,349 per file), and distinct
+bodies (closeout ledgers, authority/save/regression matrices, port plans)
+preserved. Full pre-trim originals recoverable at `git show c8c1e453d:<path>`.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+PLAN_147_MINE_FLAIL 52,009 → 32,735; PLANS_166_169_AUTHORITY 51,946 → 31,780;
+PLAN78_SAVE_CONTRACT 51,902 → 32,218; STANDING_RECORD_CORE_PORT 51,323 → 30,407;
+PLAN41_SAVE_COMPAT 51,252 → 30,208; PLAN33_SAVE_COMPAT 51,072 → 30,394;
+PLAN23_REGRESSION 51,010 → 30,332. Total 360,514 → 218,074 lines.
+375–552 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch9-2026-09-28
+
+User-authorized conservative trim (method C) — ninth batch of seven bloated plan
+docs. Family disjoint from the concurrent Codex block-removal lanes (Codex stayed
+in its `prose_wave` lane, batch 155). Conservative scoping preserved: the
+MASTER/BASELINE/lore authority trio, the live `PARTIAL_2_WAVE5` log, and the
+sealed `integrated/` records were again left untouched. Root claims
+documentation-only edits to these exact files (each re-checked free + quiet at
+edit time):
+
+- `docs/bodymind/PLAN27_REGRESSION_MATRIX.md`
+- `docs/bodymind/PLAN27_SAVE_COMPATIBILITY.md`
+- `docs/content/PLAN136_REGRESSION_MATRIX.md`
+- `docs/shelter/PLAN_118_FISCHER_TROPSCH_CLOSEOUT.md`
+- `docs/content/PLAN138_SAVE_COMPATIBILITY.md`
+- `docs/shelter/PLAN_118_SYNTHETIC_LUBE_BALANCE.md`
+- `docs/saves/PLANS_166_169_SAVE_MIGRATION_MATRIX.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (11 per file), section headings (1,950–2,157 per file), and distinct
+bodies (regression/compatibility/migration matrices, closeout ledgers) preserved.
+Full pre-trim originals recoverable at `git show c8c1e453d:<path>`. No production
+changes, runtime tests, or commit. Status: COMPLETE.
+PLAN27_REGRESSION 55,367 → 34,945; PLAN27_SAVE_COMPAT 53,736 → 33,058;
+PLAN136_REGRESSION 53,480 → 32,948; PLAN_118_FISCHER 53,089 → 33,559;
+PLAN138_SAVE_COMPAT 53,071 → 33,033; PLAN_118_LUBE 53,018 → 33,488;
+PLANS_166_169_MIGRATION 52,358 → 32,320. Total 374,119 → 233,351 lines.
+391–552 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch8-2026-09-28
+
+User-authorized conservative trim (method C) — eighth batch of seven bloated plan
+docs. Family disjoint from the concurrent Codex block-removal lanes (Codex stayed
+in its `prose_wave` lane, batch 153). Conservative scoping preserved: the
+MASTER/BASELINE/lore authority trio, the live `PARTIAL_2_WAVE5` log, and the
+sealed `integrated/` records were again left untouched. Root claims
+documentation-only edits to these exact files (each re-checked free + quiet at
+edit time):
+
+- `docs/plans/wave8_part2/C1_DECISION.md`
+- `docs/plans/wave8_part2/D1_HANDOFF.md`
+- `docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-SEISMIC-DYNAMICS-TRUTH-193_APPENDIX-A_SCAFFOLD.md`
+- `docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-BIOFERMENTATION-TRUTH-178_APPENDIX-A_SCAFFOLD.md`
+- `docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-JUSTICE-LAW-37_APPENDIX-A_ORPHAN_DOSSIERS.md`
+- `docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-CAREGIVING-TRUTH-203_APPENDIX-A_SCAFFOLD.md`
+- `docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-DEBT-DRAIN-24_APPENDIX-A_LEDGER_INVENTORY.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (19–20 per file), section headings (5,261–6,665 per file), and distinct
+bodies preserved. These handoff/appendix-scaffold records are dense in unique
+material (and some were already partially reduced pre-c8c1e453d-drift), so
+method C removes proportionally less (18% here) — correct conservative
+behaviour, never over-removing near-unique material. Full pre-trim originals
+recoverable at `git show c8c1e453d:<path>`. No production changes, runtime tests,
+or commit. Status: COMPLETE.
+C1_DECISION 104,384 → 80,447; D1_HANDOFF 104,377 → 80,440;
+SEISMIC-193 103,400 → 87,561; BIOFERMENTATION-178 103,400 → 87,561;
+JUSTICE-LAW-37 103,143 → 86,163; CAREGIVING-203 103,107 → 86,250;
+DEBT-DRAIN-24 103,082 → 86,225. Total 724,893 → 594,647 lines.
+915–1,084 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch7-2026-09-28
+
+User-authorized conservative trim (method C) — seventh batch of seven bloated
+plan docs. Family disjoint from the concurrent Codex block-removal lanes (those
+verify `c8c1e453d` byte-identity and skip these whitespace-normalised files;
+Codex remained confined elsewhere, batch 151). Conservative scoping preserved:
+the MASTER/BASELINE/lore authority trio and the live `PARTIAL_2_WAVE5` log were
+again left untouched. Root claims documentation-only edits to these exact files
+(each re-checked free + quiet at edit time):
+
+- `docs/plans/wave8_part2/C3_ACCEPTANCE.md`
+- `docs/plans/xp/w1/W1_HANDOFF.md`
+- `docs/plans/wave8_part2/D2_HANDOFF.md`
+- `docs/plans/wave8_part2/C3_HANDOFF.md`
+- `docs/plans/wave8_part2/D3_HANDOFF.md`
+- `docs/plans/wave8_part2/C1_HANDOFF.md`
+- `docs/plans/wave8_part2/C2_DECISION.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (19–20 per file), section headings (3,913–5,261 per file), and distinct
+bodies preserved. These HANDOFF/DECISION records carry a larger share of unique
+content (less exact repetition), so method C removes proportionally less —
+correct conservative behaviour, never over-removing near-unique material. Full
+pre-trim originals recoverable at `git show c8c1e453d:<path>`. No production
+changes, runtime tests, or commit. Status: COMPLETE.
+C3_ACCEPTANCE 187,128 → 70,434; W1_HANDOFF 108,688 → 85,534;
+D2_HANDOFF 104,494 → 80,434; C3_HANDOFF 104,466 → 80,406;
+D3_HANDOFF 104,465 → 80,405; C1_HANDOFF 104,447 → 80,387;
+C2_DECISION 104,385 → 80,448. Total 818,073 → 558,048 lines.
+906–933 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch6-2026-09-28
+
+User-authorized conservative trim (method C) — sixth batch of seven bloated plan
+docs. Family disjoint from the concurrent Codex block-removal lanes (those verify
+`c8c1e453d` byte-identity and skip these whitespace-normalised files; Codex
+remained in its `prose_wave`/`integrated/content` lane, batch 150). Conservative
+scoping preserved: the MASTER/BASELINE/lore authority trio and the live
+`PARTIAL_2_WAVE5` log were again left untouched. Root claims documentation-only
+edits to these exact files (each re-checked free + quiet at edit time):
+
+- `docs/plans/wave8_part2/C1_CHANGE_MATRIX.md`
+- `docs/plans/xp/w1/W1_CHANGE_MATRIX.md`
+- `docs/plans/wave8_part2/D1_ACCEPTANCE.md`
+- `docs/plans/wave8_part2/D2_ACCEPTANCE.md`
+- `docs/plans/wave8_part2/D3_ACCEPTANCE.md`
+- `docs/plans/xp/w1/W1_ACCEPTANCE.md`
+- `docs/plans/wave9_part2/C2_DECISION.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (19 per file), section headings (3,880–4,120 per file), and distinct
+bodies preserved. Full pre-trim originals recoverable at
+`git show c8c1e453d:<path>`. No production changes, runtime tests, or commit.
+Status: COMPLETE.
+C1_CHANGE_MATRIX 188,015 → 70,423; W1_CHANGE_MATRIX 188,008 → 70,416;
+D1_ACCEPTANCE 187,570 → 70,587; D2_ACCEPTANCE 187,552 → 70,569;
+D3_ACCEPTANCE 187,551 → 70,568; W1_ACCEPTANCE 187,509 → 70,526;
+C2_DECISION 187,287 → 71,522. Total 1,313,492 → 494,611 lines.
+933–1,066 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch5-2026-09-28
+
+User-authorized conservative trim (method C) — fifth batch of seven bloated plan
+docs. Family disjoint from the concurrent Codex block-removal lanes (those verify
+`c8c1e453d` byte-identity and skip these whitespace-normalised files; Codex
+remained in its `prose_wave` lane, batch 149). Conservative scoping preserved:
+the MASTER/BASELINE/lore authority trio and the live `PARTIAL_2_WAVE5` log were
+again left untouched. Root claims documentation-only edits to these exact files
+(each re-checked free + quiet at edit time):
+
+- `docs/plans/wave10_part2/D1_SEVEN_DAY_SLICE_PROOF.md`
+- `docs/plans/wave11_part2/C1_DECISION_REGISTER_PASS.md`
+- `docs/plans/xp/w1/W1_IMPLEMENTATION_LOG.md`
+- `docs/plans/xp/w1/W1_PREMISE_EVIDENCE.md`
+- `docs/plans/wave10_part2/WAVE10_PART2_CLOSEOUT.md`
+- `docs/plans/wave11_part2/C2_CENSUS_REFRESH.md`
+- `docs/plans/wave8_part2/C1_ACCEPTANCE.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (19 per file), section headings (3,895–4,224 per file), and distinct
+bodies preserved. Full pre-trim originals recoverable at
+`git show c8c1e453d:<path>`. No production changes, runtime tests, or commit.
+Status: COMPLETE.
+D1_SEVEN_DAY 191,708 → 73,829; C1_DECISION_REGISTER 191,542 → 73,720;
+W1_IMPL 191,307 → 73,831; W1_PREMISE 191,288 → 72,755;
+WAVE10_PART2_CLOSEOUT 191,160 → 73,614; C2_CENSUS 189,563 → 70,854;
+C1_ACCEPTANCE 188,195 → 70,582. Total 1,334,763 → 509,185 lines.
+1,039–1,133 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch4-2026-09-28
+
+User-authorized conservative trim (method C) — fourth batch of seven bloated plan
+docs. Family disjoint from the concurrent Codex block-removal lanes (those verify
+`c8c1e453d` byte-identity and skip these whitespace-normalised files; Codex
+remained in its `prose_wave` lane, batch 149). Conservative scoping preserved:
+the MASTER/BASELINE/lore authority trio and the live `PARTIAL_2_WAVE5` log were
+again left untouched. Root claims documentation-only edits to these exact files
+(each re-checked free + quiet at edit time):
+
+- `docs/plans/wave11_part2/B4_PLAN36_PORT_CONTRACT_LOG.md`
+- `docs/plans/wave8_part2/C2_PREMISE_EVIDENCE.md`
+- `docs/plans/wave11_part2/B3_PLAN34_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave11_part2/B4_PLAN36_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave11_part1/B2_PLAN32_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave11_part1/B1_PLAN30_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave10_part2/B4_PLAN33_INTEL_VALUE_LOG.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (19 per file), section headings (4,023–4,236 per file), and distinct
+bodies preserved. Full pre-trim originals recoverable at
+`git show c8c1e453d:<path>`. No production changes, runtime tests, or commit.
+Status: COMPLETE.
+B4_PLAN36_PORT 193,787 → 74,179; C2_PREMISE 193,178 → 72,772;
+B3_PLAN34 192,978 → 73,864; B4_PLAN36 192,632 → 73,905;
+B2_PLAN32 192,596 → 73,869; B1_PLAN30 192,579 → 73,852;
+B4_PLAN33 192,188 → 73,821. Total 1,349,938 → 516,262 lines.
+1,143 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch3-2026-09-28
+
+User-authorized conservative trim (method C) — third batch of seven bloated plan
+docs. Family disjoint from the concurrent Codex block-removal lanes (those verify
+`c8c1e453d` byte-identity and skip these whitespace-normalised files; Codex
+remained in its `prose_wave` lane, batch 148). Conservative scoping preserved:
+the MASTER/BASELINE/lore authority trio and the live `PARTIAL_2_WAVE5` log were
+again left untouched. Root claims documentation-only edits to these exact files
+(each re-checked free + quiet at edit time):
+
+- `docs/plans/wave11_part1/A5_PLAN47_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave10_part2/C1_PLAN26_SHIP_GATE_RECONCILIATION.md`
+- `docs/plans/wave11_part1/A4_PLAN45_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave11_part1/A1_PLAN38_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave11_part1/A3_PLAN43_IMPLEMENTATION_LOG.md`
+- `docs/plans/wave10_part2/B5_PLAN35_36_DELIVERY_CHAIN.md`
+- `docs/plans/wave10_part2/B3_PLAN31_RECONCILIATION.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored plan content retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (19 per file), section headings (4,188–4,231 per file), and distinct
+bodies preserved. Full pre-trim originals recoverable at
+`git show c8c1e453d:<path>`. No production changes, runtime tests, or commit.
+Status: COMPLETE.
+A5_PLAN47 197,584 → 73,141; C1_PLAN26 195,463 → 72,575;
+A4_PLAN45 195,014 → 72,707; A1_PLAN38 194,543 → 72,734;
+A3_PLAN43 194,511 → 72,702; B5_PLAN35_36 193,799 → 74,191;
+B3_PLAN31 193,789 → 74,181. Total 1,364,703 → 512,231 lines.
+1,091–1,143 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-batch2-2026-09-28
+
+User-authorized conservative trim (method C) — second batch of seven bloated
+plan docs. Family disjoint from the concurrent Codex block-removal lanes (those
+verify `c8c1e453d` byte-identity and skip these whitespace-normalised files).
+Conservative scoping: the MASTER/BASELINE/lore authority trio
+(`DEEP_LORE_MASTER_PLAN`, `EXPANSION_3_4_MASTER_PLAN`, `PLAN18_BASELINE`) and
+the live `PARTIAL_2_WAVE5` log were deliberately left untouched. Root claims
+documentation-only edits to these exact files (each re-checked free + quiet at
+edit time):
+
+- `docs/expansions/expansion_09_the_black_flotilla_plan.md`
+- `docs/expansions/expansion_03_the_standing_record_plan.md`
+- `docs/expansions/prose_wave169/cw169_12_the_quarry_roof_has_another_occupant_plan.md`
+- `docs/plans/EXPANSION_PROGRAM_WAVE20_2026-09-21/PLAN-READINESS-HEADER-NORMALISATION-283.md`
+- `docs/plans/EXPANSION_PROGRAM_WAVE20_2026-09-21/PLAN-READINESS-VERIFICATION-CONTRACT-282.md`
+- `docs/plans/EXPANSION_PROGRAM_WAVE20_2026-09-21/PLAN-READINESS-AUDITOR-284.md`
+- `docs/plans/wave10_part2/C2_PLAN28_ORCHESTRATION_SPINE.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): authored prose prefix retained verbatim; within each generated
+`BATCH-NN ARCHITECTURAL EXPANSION` region, the first intact copy of every
+distinct section is retained in place and only byte-identical repeat copies are
+removed (each marked by a `consolidated: §` pointer). All unique `BATCH-` plan
+headers (14–19 per file), section headings (4,203–4,820 per file), and distinct
+bodies preserved. Full pre-trim originals recoverable at
+`git show c8c1e453d:<path>`. No production changes, runtime tests, or commit.
+Status: COMPLETE.
+expansion_09 198,518 → 74,369; expansion_03_standing 198,035 → 72,368;
+cw169_12 86,829 → 72,545; READINESS-283 201,046 → 77,235;
+READINESS-282 199,285 → 77,454; READINESS-284 193,866 → 77,907;
+C2_PLAN28 196,905 → 73,111. Total 1,274,484 → 524,989 lines.
+1,050–1,682 repeat-section types consolidated per file.
+
+## claim-plan-trim-conservative-method-C-expansion-2026-09-28
+
+User-authorized conservative trim (method C) of seven bloated top-level
+`expansion_XX` plans — a family disjoint from the concurrent Codex
+block-removal lanes (those verify `c8c1e453d` byte-identity and therefore skip
+these whitespace-normalised files). Root claims documentation-only edits to
+these exact files (each re-checked free + not recently edited at edit time):
+
+- `docs/expansions/expansion_02_the_duty_roster_plan.md`
+- `docs/expansions/expansion_03_nobodys_charter_plan.md`
+- `docs/expansions/expansion_04_nobodys_charter_plan.md`
+- `docs/expansions/expansion_05_the_year_of_ash_plan.md`
+- `docs/expansions/expansion_07_the_dose_plan.md`
+- `docs/expansions/expansion_08_the_verdict_plan.md`
+- `docs/expansions/expansion_the_holdfast_plan.md`
+
+Method C (conservative — keeps unique material; no wholesale removal, no lossy
+compression): the authored prose prefix is retained verbatim. Within each
+generated `BATCH-NN ARCHITECTURAL EXPANSION` block region, the first intact
+copy of every distinct section is retained in place and only byte-identical
+repeat copies are removed (each marked by a `consolidated: §` pointer naming the
+section). All unique `BATCH-` plan headers (19 per file), section headings
+(4,023–4,474 per file), Audit/Contract/Dossier identifiers, and distinct bodies
+are preserved. Full pre-trim originals recoverable at
+`git show c8c1e453d:<path>`. No production changes, runtime tests, or commit.
+Status: COMPLETE.
+expansion_02 193,119 → 73,214; expansion_03 197,106 → 71,983;
+expansion_04 195,157 → 72,246; expansion_05 195,696 → 71,221;
+expansion_07 192,629 → 73,360; expansion_08 191,888 → 72,349;
+expansion_the_holdfast 192,956 → 72,754. Total 1,358,551 → 507,127 lines.
+1,275–1,479 repeat-section types consolidated per file.
+
+## claim-plan-bloat-reduction-batch164-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave164/cw164_06_unknown_transponder_known_road_plan.md`
+- `docs/expansions/prose_wave155/cw155_07_a_ground_chosen_not_struck_plan.md`
+- `docs/expansions/prose_wave154/cw154_19_we_wish_we_knew_who_did_it_plan.md`
+- `docs/expansions/prose_wave151/cw151_05_pay_pass_and_nobody_learns_your_name_plan.md`
+- `docs/expansions/prose_wave166/cw166_10_the_hardest_material_took_more_abrasive_time_plan.md`
+- `docs/expansions/prose_wave166/cw166_08_the_taper_depends_on_the_turn_of_the_blank_plan.md`
+- `docs/expansions/prose_wave161/cw161_03_the_rope_is_easier_to_see_than_the_reason_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW164-06 173,002 → 7,477 lines; CW155-07, CW154-19, and CW151-05 each
+173,001 → 7,476; CW166-10, CW166-08, and CW161-03 each 173,000 → 7,475.
+Total 1,211,005 → 52,330. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch163-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave133/cw133_20_the_count_goes_up_plan.md`
+- `docs/expansions/prose_wave133/cw133_01_the_room_will_be_different_again_plan.md`
+- `docs/expansions/prose_wave166/cw166_02_four_people_inside_a_folded_garden_plan.md`
+- `docs/expansions/prose_wave146/cw146_08_claims_along_the_brine_line_plan.md`
+- `docs/expansions/prose_wave168/cw168_09_the_scraper_edge_has_a_job_plan.md`
+- `docs/expansions/prose_wave168/cw168_07_the_label_is_half_dissolved_plan.md`
+- `docs/expansions/prose_wave164/cw164_07_the_casualty_is_a_status_not_a_story_plan.md`
+
+Each has a complete authored plan (acceptance closers; 13 blocks in the
+cw133 files, 14 in the others) ending just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block. Opening, middle, and tail were
+inspected; sampled rendered IDs have no production references. Retain each
+authored prefix byte-identically, add git-history provenance, and report line
+counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW133-20 and CW133-01 each 173,088 → 7,541 lines; CW166-02 and
+CW146-08 each 173,006 → 7,481; CW168-09, CW168-07, and CW164-07 each
+173,002 → 7,477. Total 1,211,194 → 52,475. Retained prefixes are
+byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch162-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave165/cw165_13_no_fire_mission_logged_is_a_narrow_denial_plan.md`
+- `docs/expansions/prose_wave168/cw168_12_the_ventilation_complaint_starts_at_four_plan.md`
+- `docs/expansions/prose_wave157/cw157_06_the_fifth_year_grow_out_was_scheduled_before_it_was_needed_plan.md`
+- `docs/expansions/prose_wave132/cw132_10_nine_sets_of_tracks_plan.md`
+- `docs/expansions/prose_wave132/cw132_01_five_point_one_seven_people_plan.md`
+- `docs/expansions/prose_wave132/cw132_13_six_one_two_plan.md`
+- `docs/expansions/prose_wave134/cw134_06_towels_by_the_stove_plan.md`
+
+Each has a complete authored plan ("Handoff"/acceptance closers; 14 blocks in
+the cw165/cw168/cw157 files, 13 in the cw132/cw134 files) ending just before
+the first generated `BATCH-NN ARCHITECTURAL EXPANSION` block. Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW165-13 174,335 → 7,476 lines; CW168-12 174,334 → 7,475; CW157-06
+173,959 → 7,484; CW132-10 and CW132-01 each 173,856 → 8,309; CW132-13
+173,635 → 6,773; CW134-06 173,476 → 7,929. Total 1,217,451 → 53,755.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch161-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave168/cw168_02_the_gate_stopped_at_the_point_it_could_not_return_from_plan.md`
+- `docs/expansions/prose_wave167/cw167_10_a_teleprinter_can_outlive_its_addressee_plan.md`
+- `docs/expansions/prose_wave167/cw167_09_the_empty_horizon_does_not_close_the_passage_plan.md`
+- `docs/expansions/prose_wave167/cw167_08_the_tide_recorder_is_a_witness_to_timing_plan.md`
+- `docs/expansions/prose_wave145/cw145_05_shelter_fourteen_counts_the_portions_plan.md`
+- `docs/expansions/prose_wave168/cw168_08_a_cartridge_has_an_inside_and_a_spent_side_plan.md`
+- `docs/expansions/prose_wave165/cw165_17_the_warning_arrived_three_days_earlier_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW168-02, CW167-10, CW167-09, and CW167-08 each 174,342 → 7,483
+lines; CW145-05 174,339 → 7,480; CW168-08 and CW165-17 each 174,336 →
+7,477. Total 1,220,379 → 52,366. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch160-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave147/cw147_20_the_icebreaker_gate_is_more_than_a_checkpoint_plan.md`
+- `docs/expansions/prose_wave167/cw167_15_millions_of_interrogations_without_a_sync_byte_plan.md`
+- `docs/expansions/prose_wave166/cw166_17_the_lamp_makes_a_sphere_the_size_of_a_body_plan.md`
+- `docs/expansions/prose_wave165/cw165_06_seven_arrivals_enter_the_headcount_plan.md`
+- `docs/expansions/prose_wave158/cw158_08_the_shallows_market_records_its_own_terms_plan.md`
+- `docs/expansions/prose_wave163/cw163_05_the_record_survives_its_subject_link_plan.md`
+- `docs/expansions/prose_wave170/cw170_04_nine_hulls_and_a_rule_about_boarding_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW147-20 174,353 → 7,494 lines; CW167-15 174,349 → 7,490; CW166-17
+174,348 → 7,489; CW165-06 174,346 → 7,487; CW158-08 174,345 → 7,486;
+CW163-05 174,344 → 7,485; CW170-04 174,342 → 7,483. Total 1,220,427 →
+52,414. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch159-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave145/cw145_07_the_steam_column_can_be_seen_from_three_blocks_plan.md`
+- `docs/expansions/prose_wave148/cw148_05_the_finder_s_share_is_written_before_the_argument_plan.md`
+- `docs/expansions/prose_wave138/cw138_05_children_count_the_marks_plan.md`
+- `docs/expansions/prose_wave170/cw170_17_a_date_written_on_a_seed_packet_plan.md`
+- `docs/expansions/prose_wave168/cw168_04_the_pharmacy_door_is_under_the_girders_plan.md`
+- `docs/expansions/prose_wave130/cw130_19_the_story_that_will_not_hold_weight_plan.md`
+- `docs/expansions/prose_wave130/cw130_16_continuity_at_the_entrance_plan.md`
+
+Each has a complete authored plan (cw130 long-form ~12,140-line acceptance
+proposals with 12 generated blocks; the others ~6.2–7.5K-line "Handoff"
+closers with 14 blocks) ending just before the first generated `BATCH-NN
+ARCHITECTURAL EXPANSION` block. Opening, middle, and tail were inspected;
+sampled rendered IDs have no production references. Retain each authored
+prefix byte-identically, add git-history provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW145-07 175,844 → 7,478 lines; CW148-05 175,840 → 7,474; CW138-05
+175,391 → 6,253; CW170-17 174,990 → 7,489; CW168-04 174,977 → 7,476;
+CW130-19 and CW130-16 each 174,434 → 12,149. Total 1,225,910 → 60,468.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch158-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave128/cw128_19_log_thirty_nine_plan.md`
+- `docs/expansions/prose_wave128/cw128_04_no_return_address_plan.md`
+- `docs/expansions/prose_wave128/cw128_14_eight_unclaimed_pairs_plan.md`
+- `docs/expansions/prose_wave149/cw149_11_a_service_record_is_not_a_complete_memory_plan.md`
+- `docs/expansions/prose_wave158/cw158_05_the_east_concourse_is_still_arranged_for_waiting_plan.md`
+- `docs/expansions/prose_wave161/cw161_08_the_secondary_membrane_can_wait_one_more_shift_plan.md`
+- `docs/expansions/prose_wave161/cw161_06_the_sermon_was_heard_from_the_rubble_pile_plan.md`
+
+Each has a complete authored plan (cw128 long-form ~11.8K-line acceptance
+proposals with 13 generated blocks; the others ~7.5K-line "Handoff" closers
+with 14 blocks) ending just before the first generated `BATCH-NN
+ARCHITECTURAL EXPANSION` block. Opening, middle, and tail were inspected;
+sampled rendered IDs have no production references. Retain each authored
+prefix byte-identically, add git-history provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW128-19 178,673 → 11,811 lines; CW128-04 177,689 → 11,813; CW128-14
+177,684 → 11,808; CW149-11 175,854 → 7,488; CW158-05 175,849 → 7,483;
+CW161-08 and CW161-06 each 175,844 → 7,478. Total 1,237,437 → 65,359.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch157-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact files (each re-checked clean,
+identical to `c8c1e453d`, and unclaimed in this ledger at edit time):
+
+- `docs/expansions/wave6/expansion_40_the_wheel_plan.md`
+- `docs/expansions/wave4/expansion_29_the_glass_plan.md`
+- `docs/expansions/wave9/expansion_53_the_post_plan.md`
+- `docs/expansions/wave2/expansion_21_the_grid_plan.md`
+- `docs/expansions/prose_wave36/cw36_02_the_dry_floor_cargo_plan.md`
+- `docs/expansions/prose_wave129/cw129_09_the_part_that_gets_to_be_lonely_plan.md`
+- `docs/expansions/prose_wave129/cw129_17_a_token_without_a_star_plan.md`
+
+Each has a complete authored proposal (wave-family short-form editorial
+proposals ~1.5–2.9K lines; cw129 long-form ~11K lines) ending just before
+the first generated `BATCH-NN ARCHITECTURAL EXPANSION` block (19 blocks in
+the wave/cw36 files, 14 in the cw129 files). Opening, middle, and tail were
+inspected; sampled rendered IDs have no production references. Retain each
+authored prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW6-40 190,410 → 1,776 lines; CW4-29 190,380 → 1,746; CW9-53 189,807
+→ 1,671; CW2-21 189,701 → 1,565; CW36-02 188,857 → 2,897; CW129-09
+180,132 → 10,994; CW129-17 179,803 → 10,994. Total 1,309,090 → 31,643.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch156-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave149/cw149_15_the_white_track_before_the_impact_report_plan.md`
+- `docs/expansions/prose_wave168/cw168_03_folded_seats_beneath_row_f_plan.md`
+- `docs/expansions/prose_wave168/cw168_01_the_boots_mark_eleven_turns_up_the_face_plan.md`
+- `docs/expansions/prose_wave162/cw162_07_the_seventh_crossing_is_a_name_people_kept_plan.md`
+- `docs/expansions/prose_wave149/cw149_03_the_sealed_silo_read_from_the_markers_plan.md`
+- `docs/expansions/prose_wave166/cw166_04_warm_from_a_pocket_not_worn_plan.md`
+- `docs/expansions/prose_wave166/cw166_03_three_notes_turn_until_the_key_stops_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW149-15 173,009 → 7,484 lines; CW168-03, CW168-01, CW162-07, and
+CW149-03 each 173,008 → 7,483; CW166-04 and CW166-03 each 173,006 →
+7,481. Total 1,211,053 → 52,378. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch155-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave159/cw159_20_the_brush_was_small_enough_for_the_parent_line_plan.md`
+- `docs/expansions/prose_wave159/cw159_08_the_chant_moves_sideways_with_the_recorded_wave_plan.md`
+- `docs/expansions/prose_wave159/cw159_07_the_pickup_coil_is_tuned_by_hand_and_breath_plan.md`
+- `docs/expansions/prose_wave157/cw157_17_the_mask_holds_the_name_at_shoulder_height_plan.md`
+- `docs/expansions/prose_wave157/cw157_05_drying_was_the_failure_not_the_weather_plan.md`
+- `docs/expansions/prose_wave157/cw157_01_eight_scraps_of_water_repeated_as_policy_plan.md`
+- `docs/expansions/prose_wave151/cw151_10_the_iodine_number_in_the_quality_ledger_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+All seven 173,009 → 7,484 lines each. Total 1,211,063 → 52,388.
+Retained 7,475-line prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch154-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave153/cw153_12_the_children_who_do_not_cry_plan.md`
+- `docs/expansions/prose_wave162/cw162_01_two_hands_on_the_same_spoke_plan.md`
+- `docs/expansions/prose_wave147/cw147_10_ward_b_is_counted_by_month_six_plan.md`
+- `docs/expansions/prose_wave163/cw163_02_forty_two_click_packets_no_species_name_plan.md`
+- `docs/expansions/prose_wave163/cw163_01_one_ping_every_forty_five_seconds_plan.md`
+- `docs/expansions/prose_wave156/cw156_06_a_warm_note_under_the_cold_water_plan.md`
+- `docs/expansions/prose_wave156/cw156_05_the_second_pass_has_no_vessel_name_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW153-12 173,014 → 7,489 lines; CW162-01 173,013 → 7,488; CW147-10
+173,011 → 7,486; CW163-02, CW163-01, CW156-06, and CW156-05 each
+173,010 → 7,485. Total 1,211,078 → 52,403. Retained prefixes are
+byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch153-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave169/cw169_11_a_sighting_is_not_a_census_plan.md`
+- `docs/expansions/prose_wave166/cw166_18_grit_finds_the_gap_in_the_gear_plan.md`
+- `docs/expansions/prose_wave163/cw163_16_silver_scales_under_work_lights_plan.md`
+- `docs/expansions/prose_wave163/cw163_15_heat_reaches_the_branch_before_the_walker_plan.md`
+- `docs/expansions/prose_wave154/cw154_07_bearing_three_has_a_temperature_plan.md`
+- `docs/expansions/prose_wave152/cw152_16_ninety_four_percent_opacity_plan.md`
+- `docs/expansions/prose_wave166/cw166_16_a_hand_on_the_wall_counts_the_doors_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW169-11, CW166-18, CW163-16, CW163-15, CW154-07, and CW152-16 each
+173,015 → 7,490 lines; CW166-16 173,014 → 7,489. Total 1,211,104 →
+52,429. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch152-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave164/cw164_13_one_true_thing_is_still_a_claim_plan.md`
+- `docs/expansions/prose_wave158/cw158_17_ninety_one_point_three_comes_from_the_mast_plan.md`
+- `docs/expansions/prose_wave158/cw158_16_fourteen_trees_and_fourteen_supports_plan.md`
+- `docs/expansions/prose_wave157/cw157_19_the_listener_keeps_columns_of_five_plan.md`
+- `docs/expansions/prose_wave169/cw169_20_the_grid_reference_stops_mid_line_plan.md`
+- `docs/expansions/prose_wave163/cw163_12_privacy_requested_before_the_letter_plan.md`
+- `docs/expansions/prose_wave154/cw154_06_heartbeat_lost_at_03_14_09_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW164-13, CW158-17, CW158-16, and CW157-19 each 173,031 → 7,506 lines;
+CW169-20 173,029 → 7,504; CW163-12 173,017 → 7,492; CW154-06 173,016
+→ 7,491. Total 1,211,186 → 52,511. Retained prefixes are byte-identical
+to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch151-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave150/cw150_11_the_rate_is_the_two_plan.md`
+- `docs/expansions/prose_wave170/cw170_18_signed_in_honey_plan.md`
+- `docs/expansions/prose_wave143/cw143_03_notches_cut_for_days_plan.md`
+- `docs/expansions/prose_wave153/cw153_03_the_word_for_bee_plan.md`
+- `docs/expansions/prose_wave138/cw138_11_six_moulds_one_pour_session_plan.md`
+- `docs/expansions/prose_wave143/cw143_08_the_appeal_from_unit_four_plan.md`
+- `docs/expansions/prose_wave151/cw151_09_the_guild_is_not_one_voice_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW150-11 173,397 → 7,488 lines; CW170-18 173,396 → 7,487; CW143-03
+173,389 → 7,480; CW153-03 173,387 → 7,478; CW138-11 173,099 → 6,240;
+CW143-08 173,097 → 7,572; CW151-09 173,044 → 7,519. Total 1,212,809 →
+51,264. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch150-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave154/cw154_01_after_water_before_dawn_plan.md`
+- `docs/expansions/prose_wave169/cw169_05_the_third_copy_stays_plan.md`
+- `docs/expansions/prose_wave147/cw147_07_seven_seeds_out_of_twelve_plan.md`
+- `docs/expansions/prose_wave146/cw146_06_the_observatory_has_no_dish_plan.md`
+- `docs/expansions/prose_wave142/cw142_20_the_bee_is_carved_from_pine_plan.md`
+- `docs/expansions/prose_wave168/cw168_05_the_house_no_one_burned_plan.md`
+- `docs/expansions/prose_wave142/cw142_11_a_chapel_sized_room_of_reels_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW154-01 173,865 → 7,481 lines; CW169-05 173,864 → 7,480; CW147-07,
+CW146-06, and CW142-20 each 173,862 → 7,478; CW168-05 and CW142-11
+each 173,860 → 7,476. Total 1,217,035 → 52,347. Retained prefixes are
+byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch149-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave167/cw167_14_the_muzzle_faces_its_owner_plan.md`
+- `docs/expansions/prose_wave159/cw159_09_tongue_clicks_stand_in_for_a_roof_that_is_gone_plan.md`
+- `docs/expansions/prose_wave166/cw166_13_a_sprout_receives_a_date_plan.md`
+- `docs/expansions/prose_wave158/cw158_10_outbound_salt_has_eight_bags_plan.md`
+- `docs/expansions/prose_wave155/cw155_14_route_delta_on_the_manifest_plan.md`
+- `docs/expansions/prose_wave153/cw153_15_the_first_storm_closes_in_plan.md`
+- `docs/expansions/prose_wave170/cw170_05_dusting_above_the_waterline_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW167-14 173,992 → 7,608 lines; CW159-09 173,959 → 7,484; CW166-13
+and CW158-10 each 173,872 → 7,488; CW155-14 and CW153-15 each 173,870
+→ 7,486; CW170-05 173,867 → 7,483. Total 1,217,302 → 52,523. Retained
+prefixes are byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch148-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave143/cw143_14_someone_still_answers_the_intercom_plan.md`
+- `docs/expansions/prose_wave143/cw143_11_after_the_east_wing_lost_its_roof_plan.md`
+- `docs/expansions/prose_wave168/cw168_11_hands_raised_at_twenty_metres_plan.md`
+- `docs/expansions/prose_wave168/cw168_10_amber_light_before_the_ash_settles_plan.md`
+- `docs/expansions/prose_wave155/cw155_06_around_costs_three_more_days_plan.md`
+- `docs/expansions/prose_wave154/cw154_18_a_relay_that_sits_still_is_a_target_plan.md`
+- `docs/expansions/prose_wave154/cw154_15_the_two_numbers_need_paperwork_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW143-14 and CW143-11 each 174,335 → 7,476 lines; CW168-11, CW168-10,
+CW155-06, and CW154-18 each 174,334 → 7,475; CW154-15 174,333 → 7,474.
+Total 1,220,339 → 52,326. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch147-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave146/cw146_07_the_regulator_failed_at_three_plan.md`
+- `docs/expansions/prose_wave145/cw145_18_the_carrier_holds_between_identifiers_plan.md`
+- `docs/expansions/prose_wave165/cw165_20_the_stand_down_code_times_out_again_plan.md`
+- `docs/expansions/prose_wave165/cw165_15_both_patrols_walked_away_alive_plan.md`
+- `docs/expansions/prose_wave168/cw168_06_the_platform_is_not_the_ground_plan.md`
+- `docs/expansions/prose_wave152/cw152_06_the_queue_forms_beyond_the_crater_plan.md`
+- `docs/expansions/prose_wave150/cw150_19_a_seismometer_hums_below_the_lid_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW146-07 and CW145-18 each 174,337 → 7,478 lines; CW165-20 and CW165-15
+each 174,336 → 7,477; CW168-06, CW152-06, and CW150-19 each 174,335 →
+7,476. Total 1,220,351 → 52,338. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch146-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave145/cw145_20_the_names_the_shelter_did_not_admit_plan.md`
+- `docs/expansions/prose_wave144/cw144_13_names_in_three_carbon_sheets_plan.md`
+- `docs/expansions/prose_wave161/cw161_07_four_children_attend_the_lesson_plan.md`
+- `docs/expansions/prose_wave161/cw161_05_matching_boots_matching_webbing_plan.md`
+- `docs/expansions/prose_wave148/cw148_12_three_days_of_falling_pressure_plan.md`
+- `docs/expansions/prose_wave148/cw148_11_the_bow_gives_the_highest_reading_plan.md`
+- `docs/expansions/prose_wave147/cw147_06_three_metres_of_reinforced_door_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW145-20 and CW144-13 each 174,339 → 7,480 lines; CW161-07, CW161-05,
+CW148-12, CW148-11, and CW147-06 each 174,337 → 7,480 (2) / 7,478 (5).
+Total 1,220,363 → 52,350. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch145-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave170/cw170_02_three_metres_from_the_hatch_plan.md`
+- `docs/expansions/prose_wave170/cw170_01_the_queue_is_the_argument_plan.md`
+- `docs/expansions/prose_wave169/cw169_10_the_lamp_decides_the_road_plan.md`
+- `docs/expansions/prose_wave169/cw169_08_the_queue_line_is_repainted_plan.md`
+- `docs/expansions/prose_wave169/cw169_06_the_ice_kept_the_stencils_plan.md`
+- `docs/expansions/prose_wave160/cw160_12_the_number_was_stencilled_twice_plan.md`
+- `docs/expansions/prose_wave150/cw150_03_the_boots_are_still_in_their_sizes_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+All seven 174,339 → 7,480 lines each. Total 1,220,373 → 52,360.
+Retained 7,471-line prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch144-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave158/cw158_03_two_projectors_one_stopped_reel_plan.md`
+- `docs/expansions/prose_wave168/cw168_19_the_lock_was_not_broken_plan.md`
+- `docs/expansions/prose_wave153/cw153_02_forty_two_days_at_current_headcount_plan.md`
+- `docs/expansions/prose_wave155/cw155_08_the_road_is_claimed_in_marker_ink_plan.md`
+- `docs/expansions/prose_wave154/cw154_02_grid_14_c_ends_at_the_dry_creek_bed_plan.md`
+- `docs/expansions/prose_wave148/cw148_10_the_toll_ruins_counted_twice_plan.md`
+- `docs/expansions/prose_wave145/cw145_06_a_timetable_with_two_kinds_of_time_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW158-03 174,342 → 7,483 lines; CW168-19 and CW153-02 each 174,341 →
+7,482; CW155-08, CW154-02, CW148-10, and CW145-06 each 174,340 → 7,481.
+Total 1,220,384 → 52,371. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch143-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave148/cw148_07_twelve_candles_one_carbon_copy_plan.md`
+- `docs/expansions/prose_wave144/cw144_18_the_drawing_taped_beside_the_cot_plan.md`
+- `docs/expansions/prose_wave144/cw144_10_ward_b_requests_another_measure_plan.md`
+- `docs/expansions/prose_wave170/cw170_06_eleven_entries_after_the_exchange_plan.md`
+- `docs/expansions/prose_wave167/cw167_11_five_tons_of_seed_and_one_scar_plan.md`
+- `docs/expansions/prose_wave162/cw162_15_water_authority_without_water_plan.md`
+- `docs/expansions/prose_wave158/cw158_06_the_counter_outlasted_the_shift_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW148-07, CW144-18, and CW144-10 each 174,343 → 7,484 lines;
+CW170-06, CW167-11, CW162-15, and CW158-06 each 174,342 → 7,483.
+Total 1,220,397 → 52,384. Retained 7,475/7,474-line prefixes are
+byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch142-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave165/cw165_08_whatever_is_left_gets_a_line_plan.md`
+- `docs/expansions/prose_wave159/cw159_11_fold_and_press_at_the_bread_table_plan.md`
+- `docs/expansions/prose_wave156/cw156_10_the_first_clean_sheet_was_not_clean_plan.md`
+- `docs/expansions/prose_wave152/cw152_14_the_ash_is_the_grey_is_the_now_plan.md`
+- `docs/expansions/prose_wave151/cw151_17_the_first_log_calls_the_sky_black_plan.md`
+- `docs/expansions/prose_wave148/cw148_14_four_scouts_on_the_eastern_road_plan.md`
+- `docs/expansions/prose_wave144/cw144_24_pump_nine_has_a_weekly_line_to_fill_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW165-08, CW159-11, CW156-10, CW152-14, CW151-17, and CW148-14 each
+174,345 → 7,486 lines; CW144-24 174,344 → 7,485. Total 1,220,414 →
+52,401. Retained 7,477-line prefixes are byte-identical to `c8c1e453d`;
+scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch141-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave165/cw165_04_settled_is_a_status_with_a_date_plan.md`
+- `docs/expansions/prose_wave165/cw165_03_first_potato_first_trade_plan.md`
+- `docs/expansions/prose_wave159/cw159_12_the_sun_is_a_drawing_not_a_forecast_plan.md`
+- `docs/expansions/prose_wave158/cw158_12_the_katabatic_is_the_door_word_plan.md`
+- `docs/expansions/prose_wave156/cw156_09_spring_begins_as_a_mark_on_the_tin_plan.md`
+- `docs/expansions/prose_wave153/cw153_16_the_longest_dark_is_marked_by_hand_plan.md`
+- `docs/expansions/prose_wave152/cw152_19_fuel_has_three_measures_at_the_gate_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+All seven 174,346 → 7,487 lines each. Total 1,220,422 → 52,409.
+Retained 7,478-line prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch140-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave163/cw163_17_a_shell_made_from_what_the_heap_left_plan.md`
+- `docs/expansions/prose_wave163/cw163_13_nine_sixteenths_is_a_family_measure_plan.md`
+- `docs/expansions/prose_wave166/cw166_12_the_first_above_zero_mark_plan.md`
+- `docs/expansions/prose_wave158/cw158_11_three_grams_is_one_sheet_s_answer_plan.md`
+- `docs/expansions/prose_wave144/cw144_17_the_equation_does_not_choose_for_us_plan.md`
+- `docs/expansions/prose_wave170/cw170_16_the_no_horizon_morning_plan.md`
+- `docs/expansions/prose_wave166/cw166_19_pacing_keeps_the_watch_in_measure_plan.md`
+
+Each has a complete authored "Handoff" closer just before the first generated
+`BATCH-NN ARCHITECTURAL EXPANSION` block (14 blocks per file). Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests, or
+commit. Status: COMPLETE.
+CW163-17 174,349 → 7,490 lines; CW163-13 174,348 → 7,489; CW166-12,
+CW158-11, and CW144-17 each 174,347 → 7,488; CW170-16 and CW166-19
+each 174,346 → 7,487. Total 1,220,430 → 52,417. Retained prefixes are
+byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch139-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+ documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/wave20/expansion_99_the_refusal_has_a_reason_plan.md`
+- `docs/expansions/wave20/expansion_100_the_wall_has_two_sides_plan.md`
+- `docs/expansions/prose_wave164/cw164_15_the_name_was_cut_to_outlast_the_chain_plan.md`
+- `docs/expansions/prose_wave146/cw146_18_the_seed_vault_and_the_rebuilders_plan.md`
+- `docs/expansions/prose_wave142/cw142_17_a_low_reading_has_a_provenance_plan.md`
+- `docs/expansions/prose_wave163/cw163_14_one_lesson_without_a_curriculum_plan.md`
+- `docs/expansions/prose_wave167/cw167_16_impact_pits_accumulate_on_the_array_plan.md`
+
+Each has a complete authored plan ending at its "Handoff"/closer section just
+before the first generated `BATCH-NN ARCHITECTURAL EXPANSION` block (17 blocks
+in the two wave20 files, 14 in each cw file). Opening, middle, and tail were
+inspected; sampled rendered IDs have no production references. Retain each
+authored prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW20-99 180,906 → 6,897 lines; CW20-100 180,787 → 6,778;
+CW164-15 174,365 → 7,506; CW146-18 and CW142-17 each 174,353 → 7,494;
+CW163-14 174,351 → 7,492; CW167-16 174,349 → 7,490.
+Total 1,233,464 → 51,151. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch138-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave133/cw133_18_filled_not_full_plan.md`
+- `docs/expansions/prose_wave131/cw131_03_no_verse_yet_plan.md`
+- `docs/expansions/prose_wave133/cw133_08_the_reason_is_the_forty_seven_plan.md`
+- `docs/expansions/prose_wave132/cw132_19_the_water_cycle_does_not_know_plan.md`
+- `docs/expansions/prose_wave132/cw132_04_what_the_crane_does_not_do_plan.md`
+- `docs/expansions/prose_wave132/cw132_07_the_yellow_pencil_plan.md`
+- `docs/expansions/prose_wave133/cw133_05_the_reserve_is_mine_to_hold_plan.md`
+
+Each has a complete authored "Acceptance and handoff" proposal ending just
+before the first generated `BATCH-NN ARCHITECTURAL EXPANSION` block. There
+are 13 generated blocks per file. Opening, middle, and tail were inspected;
+sampled rendered IDs have no production references. Retain each authored
+prefix byte-identically, add git-history provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW133-18 172,676 → 7,541 lines; CW131-03 175,747 → 10,612;
+CW133-08 and CW133-05 each 170,754 → 7,157; CW132-19
+171,138 → 7,541; CW132-04 172,290 → 8,693; CW132-07
+173,316 → 9,077. Total 1,206,675 → 57,778. Retained prefixes are
+byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch137-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave130/cw130_18_a_route_named_after_the_loss_plan.md`
+- `docs/expansions/prose_wave130/cw130_08_the_ground_that_was_hit_plan.md`
+- `docs/expansions/prose_wave130/cw130_05_static_is_not_a_ledger_plan.md`
+- `docs/expansions/prose_wave130/cw130_02_forbearance_by_appointment_plan.md`
+- `docs/expansions/prose_wave130/cw130_12_measure_do_not_linger_plan.md`
+- `docs/expansions/prose_wave130/cw130_09_desertion_in_absentia_plan.md`
+- `docs/expansions/prose_wave130/cw130_04_the_missing_three_hundred_and_twenty_plan.md`
+
+Each has a complete authored "Acceptance and handoff" proposal through
+line 12140, followed by 12 generated `BATCH-NN ARCHITECTURAL EXPANSION`
+blocks. Opening, middle, and tail were inspected; sampled rendered IDs
+have no production references. Retain each authored prefix byte-identically,
+add git-history provenance, and report line counts. No production changes,
+runtime tests, or commit. Status: COMPLETE.
+CW130-18 170,745 → 12,149 lines; CW130-08 and CW130-05 each
+169,848 → 12,149; CW130-02, CW130-12, and CW130-09 each
+169,255 → 12,149; CW130-04 167,120 → 12,149. Total 1,185,326 → 85,043.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch136-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave130/cw130_01_the_loop_knows_no_day_plan.md`
+- `docs/expansions/prose_wave130/cw130_06_the_cairn_keeps_its_own_account_plan.md`
+- `docs/expansions/prose_wave130/cw130_10_a_counter_half_open_plan.md`
+- `docs/expansions/prose_wave130/cw130_14_daily_because_the_ground_asks_plan.md`
+- `docs/expansions/prose_wave130/cw130_13_material_loss_plan.md`
+- `docs/expansions/prose_wave130/cw130_17_somewhere_you_queue_plan.md`
+- `docs/expansions/prose_wave130/cw130_03_count_the_fingers_at_the_rope_plan.md`
+
+Each has a complete authored "Acceptance and handoff" proposal through
+line 12140, followed by 12 generated `BATCH-NN ARCHITECTURAL EXPANSION`
+blocks (13 in CW130-01). Opening, middle, and tail were inspected; sampled
+rendered IDs have no production references. Retain each authored prefix
+byte-identically, add git-history provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW130-01 176,388 → 12,149 lines; CW130-06 and CW130-14 each
+172,484 → 12,149; CW130-10 and CW130-13 each 173,126 → 12,149;
+CW130-17 171,534 → 12,149; CW130-03 170,745 → 12,149.
+Total 1,209,887 → 85,043. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch135-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave128/cw128_05_forty_seven_seconds_plan.md`
+- `docs/expansions/prose_wave128/cw128_06_still_here_on_plaster_plan.md`
+- `docs/expansions/prose_wave128/cw128_20_six_lines_apart_plan.md`
+- `docs/expansions/prose_wave128/cw128_01_fourteen_messages_one_address_plan.md`
+- `docs/expansions/prose_wave128/cw128_09_wax_at_the_edge_plan.md`
+- `docs/expansions/prose_wave128/cw128_07_a_name_in_brass_plan.md`
+- `docs/expansions/prose_wave129/cw129_12_a_clerk_with_a_rifle_plan.md`
+
+Each has a complete authored "Acceptance and handoff" proposal ending just
+before the first generated `BATCH-NN ARCHITECTURAL EXPANSION` block. There
+are 13 generated blocks per file, except CW128-01 with 12. Opening, middle,
+and tail were inspected; sampled rendered IDs have no production references.
+Retain each authored prefix byte-identically, add git-history provenance,
+and report line counts. No production changes, runtime tests, or commit.
+Status: COMPLETE.
+CW128-05 174,939 → 11,817 lines; CW128-06 174,944 → 11,822;
+CW128-20 174,929 → 11,807; CW128-01 170,802 → 11,801;
+CW128-09 174,457 → 11,810; CW128-07 172,770 → 11,809;
+CW129-12 171,362 → 10,994. Total 1,214,203 → 81,860.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch134-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave128/cw128_15_the_other_place_at_the_table_plan.md`
+- `docs/expansions/prose_wave128/cw128_10_the_open_book_plan.md`
+- `docs/expansions/prose_wave128/cw128_18_four_kilometers_the_other_way_plan.md`
+- `docs/expansions/prose_wave128/cw128_13_fourteen_surnames_plan.md`
+- `docs/expansions/prose_wave128/cw128_17_the_folded_thermal_layer_plan.md`
+- `docs/expansions/prose_wave129/cw129_03_beans_at_the_empty_end_plan.md`
+- `docs/expansions/prose_wave128/cw128_02_the_hood_stayed_up_plan.md`
+
+Each has a complete authored "Acceptance and handoff" proposal ending just
+before the first generated `BATCH-NN ARCHITECTURAL EXPANSION` block. There
+are 13 generated blocks per file. Opening, middle, and tail were inspected;
+sampled rendered IDs have no production references. Retain each authored
+prefix byte-identically, add git-history provenance, and report line counts.
+No production changes, runtime tests, or commit. Status: COMPLETE.
+CW128-15 176,042 → 11,803 lines; CW128-10 176,486 → 11,804;
+CW128-18 175,409 → 11,812; CW128-13 176,040 → 11,801;
+CW128-17 175,404 → 11,807; CW129-03 174,116 → 10,994;
+CW128-02 174,924 → 11,802. Total 1,228,421 → 81,823.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch133-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave127/cw127_15_the_measure_at_the_fence_plan.md`
+- `docs/expansions/prose_wave124/cw124_06_future_in_their_hands_plan.md`
+- `docs/expansions/prose_wave124/cw124_01_pipes_on_my_watch_plan.md`
+- `docs/expansions/prose_wave124/cw124_08_beyond_the_horizon_plan.md`
+- `docs/expansions/prose_wave126/cw126_07_what_the_ledger_cannot_guarantee_plan.md`
+- `docs/expansions/prose_wave126/cw126_04_the_voice_that_arrived_too_clean_plan.md`
+- `docs/expansions/prose_wave127/cw127_06_the_box_beneath_the_warning_plan.md`
+
+Complete authored proposals end at line 8217 (both CW127), line 3148
+(three CW124), and line 3804 (both CW126). Each then has 13, 16, or 17
+generated `BATCH-NN ARCHITECTURAL EXPANSION` blocks respectively. Opening,
+middle, and tail were inspected; sampled rendered IDs have no production
+references. Retain each authored prefix byte-identically, add git-history
+provenance, and report line counts. No production changes, runtime tests,
+or commit. Status: COMPLETE.
+CW127-15 168,594 → 8,226 lines; CW124-06 and CW124-01 each
+172,893 → 3,157; CW124-08 172,005 → 3,157; CW126-07 and CW126-04 each
+175,094 → 3,813; CW127-06 166,686 → 8,226. Total 1,203,259 → 33,549.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch132-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave123/cw123_02_blue_door_plan.md`
+- `docs/expansions/prose_wave122/cw122_03_substitutions_plan.md`
+- `docs/expansions/prose_wave121/cw121_07_practical_arithmetic_plan.md`
+- `docs/expansions/prose_wave120/cw120_01_departure_board_plan.md`
+- `docs/expansions/prose_wave122/cw122_06_leave_the_tags_plan.md`
+- `docs/expansions/prose_wave120/cw120_04_end_of_the_line_plan.md`
+- `docs/expansions/prose_wave120/cw120_09_geography_lesson_plan.md`
+
+Each has a complete authored proposal through line 3148. The generated
+`BATCH-NN ARCHITECTURAL EXPANSION` appendices number 18 in CW123-02 and
+17 in the other six files. Opening, middle, and tail were inspected; sampled
+rendered IDs have no production references. Retain each authored prefix
+byte-identically, add git-history provenance, and report line counts. No
+production changes, runtime tests, or commit. Status: COMPLETE.
+CW123-02 185,727 → 3,157 lines; CW122-03 177,571 → 3,157;
+CW121-07 176,573 → 3,157; CW120-01, CW122-06, and CW120-04 each
+176,155 → 3,157; CW120-09 175,267 → 3,157. Total 1,243,603 → 22,099.
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch131-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave114/cw114_08_room_fixture_main_isolation_pad_the_crack_with_no_name_plan.md`
+- `docs/expansions/prose_wave114/cw114_07_room_fixture_main_boiler_hatch_the_bent_brass_handle_plan.md`
+- `docs/expansions/prose_wave114/cw114_01_room_fixture_corridor_plate_rectangles_the_names_behind_the_paint_plan.md`
+- `docs/expansions/prose_wave114/cw114_03_room_fixture_foundry_heat_stain_the_heat_that_crossed_floors_plan.md`
+- `docs/expansions/prose_wave114/cw114_05_room_fixture_main_generator_mount_three_hands_on_the_watch_plan.md`
+- `docs/expansions/prose_wave118/cw118_06_the_cough_plan.md`
+- `docs/expansions/prose_wave120/cw120_05_scheduled_programming_plan.md`
+
+Each has a complete authored proposal through line 3148. The generated
+`BATCH-NN ARCHITECTURAL EXPANSION` appendices number 18 in the five CW114
+files, 19 in CW118-06, and 17 in CW120-05. Opening, middle, and tail were
+inspected; sampled rendered IDs have no production references. Retain each
+authored prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW114-08 and CW114-07 each 179,943 → 3,157 lines; CW114-01, CW114-03,
+and CW114-05 each 178,084 → 3,157; CW118-06 188,861 → 3,157; CW120-05
+176,573 → 3,157. Total 1,259,572 → 22,099. Retained prefixes are
+byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch130-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave108/cw108_02_room_fixture_airlock_handprints_hatch_height_plan.md`
+- `docs/expansions/prose_wave102/cw102_02_journal_day_72_medical_crisis_fever_and_fear_plan.md`
+- `docs/expansions/prose_wave105/cw105_07_room_history_lathe_true_pencil_measurement_plan.md`
+- `docs/expansions/prose_wave110/cw110_08_room_fixture_stores_depot_form_the_late_date_plan.md`
+- `docs/expansions/prose_wave112/cw112_08_room_fixture_stores_scale_pin_missing_disc_plan.md`
+- `docs/expansions/prose_wave103/cw103_06_audio_log_memory_loss_day_200_name_fading_plan.md`
+- `docs/expansions/prose_wave114/cw114_02_room_fixture_bunks_spare_socket_the_socket_that_waited_plan.md`
+
+The first six have complete authored proposals through line 2784; CW114-02
+has one through line 3148. Each then has 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks. Opening, middle, and tail were
+inspected; sampled rendered IDs have no production references. Retain each
+authored prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW114-02 179,943 → 3,157 lines; the other six each 178,488 → 2,793.
+Total 1,250,871 → 19,915. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch129-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave105/cw105_02_audio_log_raider_siege_day_240_negotiated_time_plan.md`
+- `docs/expansions/prose_wave107/cw107_07_vignette_water_pump_original_use_before_the_lock_plan.md`
+- `docs/expansions/prose_wave109/cw109_03_room_fixture_clinic_basin_rim_kneeling_height_plan.md`
+- `docs/expansions/prose_wave103/cw103_05_room_history_can_opener_dent_left_hand_and_ledger_plan.md`
+- `docs/expansions/prose_wave106/cw106_05_room_history_generator_footings_not_load_scratch_plan.md`
+- `docs/expansions/prose_wave107/cw107_08_folklore_comfort_blackout_freeze_red_light_rhyme_plan.md`
+- `docs/expansions/prose_wave105/cw105_01_audio_log_food_storage_theft_day_150_speak_up_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW105-02, CW109-03, and CW105-01 each 178,488 → 2,793 lines; the other four
+each 178,360 → 2,793. Total 1,248,904 → 19,551. Retained prefixes are
+byte-identical to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch128-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave103/cw103_03_audio_log_scavenger_ambush_day_112_overpass_send_help_plan.md`
+- `docs/expansions/prose_wave103/cw103_01_audio_log_medical_update_day_95_quarantine_spreading_plan.md`
+- `docs/expansions/prose_wave109/cw109_07_room_fixture_foundry_works_plate_half_illegible_name_plan.md`
+- `docs/expansions/prose_wave104/cw104_02_journal_day_135_medical_training_hope_and_skepticism_plan.md`
+- `docs/expansions/prose_wave103/cw103_08_superstition_intake_vent_nightmare_three_paces_plan.md`
+- `docs/expansions/prose_wave104/cw104_03_audio_log_raider_attack_day_170_tribute_refused_plan.md`
+- `docs/expansions/prose_wave105/cw105_06_room_history_filter_cartridge_shortening_interval_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW104-03 178,488 → 2,793 lines; the other six each 178,360 → 2,793.
+Total 1,248,648 → 19,551. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch127-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave107/cw107_02_journal_day_168_black_flotilla_trade_weight_of_the_deal_plan.md`
+- `docs/expansions/prose_wave105/cw105_04_journal_day_208_alex_quarantine_deteriorating_options_plan.md`
+- `docs/expansions/prose_wave102/cw102_01_audio_log_scavenger_meeting_day_65_shared_protection_plan.md`
+- `docs/expansions/prose_wave104/cw104_06_audio_log_technology_experiment_day_180_unknown_device_plan.md`
+- `docs/expansions/prose_wave106/cw106_02_audio_log_fuel_expedition_day_270_keep_fingers_crossed_plan.md`
+- `docs/expansions/prose_wave110/cw110_05_room_fixture_clinic_iodine_lot_the_bottle_from_before_plan.md`
+- `docs/expansions/prose_wave104/cw104_08_superstition_hatch_name_taboo_name_between_hatches_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+All seven plans: 178,360 → 2,793 lines each (total 1,248,520 → 19,551).
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch126-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave107/cw107_06_room_history_four_pale_rectangles_names_the_shelter_will_not_finish_plan.md`
+- `docs/expansions/prose_wave106/cw106_04_journal_day_235_technology_breakthrough_clean_water_celebration_plan.md`
+- `docs/expansions/prose_wave110/cw110_07_room_fixture_greenhouse_peat_troughs_the_prop_in_the_design_plan.md`
+- `docs/expansions/prose_wave111/cw111_01_audio_log_medical_training_day_160_the_eight_am_invitation_plan.md`
+- `docs/expansions/prose_wave108/cw108_03_room_fixture_greenhouse_seed_tins_the_names_no_one_knows_plan.md`
+- `docs/expansions/prose_wave107/cw107_04_journal_day_305_winter_preparations_the_worry_under_work_plan.md`
+- `docs/expansions/prose_wave104/cw104_07_journal_day_228_technology_sharing_blueprints_and_hope_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW107-06 and CW106-04 each 178,232 → 2,793 lines; CW110-07, CW111-01,
+CW108-03, CW107-04, and CW104-07 each 178,360 → 2,793. Total 1,248,264 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch125-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave108/cw108_04_room_fixture_main_battery_rack_mixed_provenance_plan.md`
+- `docs/expansions/prose_wave107/cw107_03_journal_day_215_art_project_livelier_than_before_plan.md`
+- `docs/expansions/prose_wave109/cw109_06_room_fixture_radio_load_bulb_grease_pencil_limit_plan.md`
+- `docs/expansions/prose_wave109/cw109_08_room_fixture_pump_pressure_gauge_needle_at_zero_plan.md`
+- `docs/expansions/prose_wave105/cw105_05_journal_day_268_fuel_crisis_dangerous_territory_plan.md`
+- `docs/expansions/prose_wave112/cw112_07_room_fixture_radio_log_book_call_signs_before_us_plan.md`
+- `docs/expansions/prose_wave106/cw106_06_room_history_cupola_breath_forty_two_seconds_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+All seven plans: 180,219 → 2,793 lines each (total 1,261,533 → 19,551).
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch124-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave108/cw108_08_ritual_participation_in_hot_zones_ash_before_the_zone_plan.md`
+- `docs/expansions/prose_wave106/cw106_03_journal_day_148_training_success_hope_and_progress_plan.md`
+- `docs/expansions/prose_wave107/cw107_01_audio_log_survivor_exile_day_190_the_quieter_bunker_plan.md`
+- `docs/expansions/prose_wave109/cw109_02_room_fixture_filtration_steam_valve_quarter_mark_plan.md`
+- `docs/expansions/prose_wave113/cw113_04_room_fixture_airlock_rag_nail_the_cloth_instrument_plan.md`
+- `docs/expansions/prose_wave100/cw100_04_room_history_shelf_unit_d_eleven_year_discrepancy_plan.md`
+- `docs/expansions/prose_wave111/cw111_07_room_fixture_radio_mesh_panel_the_screen_that_was_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW108-08 180,091 → 2,793 lines; CW106-03, CW107-01, CW109-02,
+CW113-04, CW100-04, and CW111-07 each 180,219 → 2,793. Total 1,261,405 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch123-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave106/cw106_08_superstition_night_shift_machine_rest_turbines_sleep_plan.md`
+- `docs/expansions/prose_wave109/cw109_05_room_fixture_airlock_bolted_chair_facing_inner_door_plan.md`
+- `docs/expansions/prose_wave99/cw99_01_audio_log_radio_signal_day_72_automated_distress_ruins_plan.md`
+- `docs/expansions/prose_wave104/cw104_04_journal_day_182_survivor_exile_sick_child_and_guilt_plan.md`
+- `docs/expansions/prose_wave104/cw104_01_audio_log_black_flotilla_trade_day_130_unstable_devices_plan.md`
+- `docs/expansions/prose_wave112/cw112_02_room_fixture_filtration_intake_stool_closest_duty_plan.md`
+- `docs/expansions/prose_wave108/cw108_05_folklore_comfort_intake_tremor_the_deep_cold_song_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW106-08 and CW104-01 each 180,091 → 2,793 lines; CW109-05, CW99-01,
+CW104-04, CW112-02, and CW108-05 each 180,219 → 2,793. Total 1,261,277 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch122-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave99/cw99_05_social_event_ideology_ration_dispute_tin_cup_reckoning_plan.md`
+- `docs/expansions/prose_wave109/cw109_01_room_fixture_corridor_pencil_stub_two_points_short_plan.md`
+- `docs/expansions/prose_wave110/cw110_01_room_fixture_corridor_scrub_line_the_paint_that_came_through_plan.md`
+- `docs/expansions/prose_wave108/cw108_06_folklore_comfort_bereaved_child_bunk_mark_the_small_circle_plan.md`
+- `docs/expansions/prose_wave106/cw106_01_audio_log_radiation_storm_day_120_filters_and_togetherness_plan.md`
+- `docs/expansions/prose_wave103/cw103_02_journal_day_95_leadership_vote_tomorrow_and_responsibility_plan.md`
+- `docs/expansions/prose_wave109/cw109_04_room_fixture_kitchen_table_scratches_counts_in_fives_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW99-05 and CW109-01 each 180,623 → 2,793 lines; CW110-01, CW108-06,
+CW106-01, and CW103-02 each 180,091 → 2,793; CW109-04 180,219 → 2,793.
+Total 1,261,829 → 19,551. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch121-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave111/cw111_06_room_fixture_clinic_curtain_wire_the_partition_we_have_plan.md`
+- `docs/expansions/prose_wave108/cw108_01_room_fixture_workshop_tool_shadow_the_shape_of_absence_plan.md`
+- `docs/expansions/prose_wave110/cw110_02_room_fixture_bunks_stencil_gaps_the_two_missing_numbers_plan.md`
+- `docs/expansions/prose_wave110/cw110_03_room_fixture_filtration_canister_notches_days_in_metal_plan.md`
+- `docs/expansions/prose_wave100/cw100_08_audio_log_winter_preparations_day_290_common_area_call_plan.md`
+- `docs/expansions/prose_wave113/cw113_07_room_fixture_stores_humidity_gauge_the_red_line_below_plan.md`
+- `docs/expansions/prose_wave100/cw100_01_audio_log_scavenger_radio_day_42_highway_overpass_deal_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW111-06, CW108-01, and CW110-02 each 182,113 → 2,793 lines; CW110-03,
+CW100-08, CW113-07, and CW100-01 each 180,623 → 2,793. Total 1,268,831 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch120-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave112/cw112_05_room_fixture_clinic_capped_drain_the_plate_over_the_cloth_plan.md`
+- `docs/expansions/prose_wave110/cw110_04_room_fixture_kitchen_portion_rings_the_bowls_that_waited_plan.md`
+- `docs/expansions/prose_wave111/cw111_04_room_fixture_filtration_nameplate_tin_heavier_until_not_plan.md`
+- `docs/expansions/prose_wave100/cw100_06_memorial_rite_roll_call_naming_three_seconds_after_name_plan.md`
+- `docs/expansions/prose_wave113/cw113_01_room_fixture_filtration_hazmat_hook_the_apron_too_large_plan.md`
+- `docs/expansions/prose_wave108/cw108_07_folklore_comfort_scout_return_count_name_in_the_hatch_plan.md`
+- `docs/expansions/prose_wave101/cw101_06_memorial_rite_last_wish_committal_spoken_wish_to_crowd_plan.md`
+
+Each has a complete authored proposal through line 2784 and 18 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+All seven plans: 182,113 → 2,793 lines each (total 1,274,791 → 19,551).
+Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch119-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave69/cw69_05_the_grey_rain_plan.md`
+- `docs/expansions/prose_wave73/cw73_06_the_book_game_plan.md`
+- `docs/expansions/prose_wave91/cw91_06_npc_smuggler_plan.md`
+- `docs/expansions/prose_wave89/cw89_05_npc_cultist_plan.md`
+- `docs/expansions/prose_wave89/cw89_06_npc_pianist_plan.md`
+- `docs/expansions/prose_wave102/cw102_06_audio_log_technology_breakthrough_day_230_water_purifier_celebration_plan.md`
+- `docs/expansions/prose_wave113/cw113_05_room_fixture_greenhouse_ballast_shield_the_spare_radiator_note_plan.md`
+
+Each has a complete authored proposal through line 2784. The first five
+have 19 generated `BATCH-NN ARCHITECTURAL EXPANSION` blocks after it; the
+last two have 18. Opening, middle, and tail were inspected; sampled rendered
+IDs have no production references. Retain the prefix byte-identically, add
+git-history provenance, and report line counts. No production changes,
+runtime tests, or commit. Status: COMPLETE. CW69-05 189,137 → 2,793 lines;
+CW73-06 189,521 → 2,793; CW91-06, CW89-05, and CW89-06 each 189,393 →
+2,793; CW102-06 and CW113-05 each 181,985 → 2,793. Total 1,310,807 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch118-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave64/cw64_01_the_sky_before_plan.md`
+- `docs/expansions/prose_wave89/cw89_01_npc_duty_clerk_plan.md`
+- `docs/expansions/prose_wave87/cw87_07_npc_rima_child_plan.md`
+- `docs/expansions/prose_wave70/cw70_05_the_ash_fairy_plan.md`
+- `docs/expansions/prose_wave70/cw70_01_the_pump_song_plan.md`
+- `docs/expansions/prose_wave73/cw73_03_the_name_game_plan.md`
+- `docs/expansions/prose_wave68/cw68_05_the_seed_wish_plan.md`
+
+Each has a complete authored proposal through line 2784 and 19 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW64-01, CW70-05, CW70-01, CW73-03, and CW68-05 each 189,521 → 2,793
+lines; CW89-01 and CW87-07 each 189,393 → 2,793. Total 1,326,391 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch117-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave87/cw87_03_npc_ivan_doctor_plan.md`
+- `docs/expansions/prose_wave87/cw87_06_npc_petr_farmer_plan.md`
+- `docs/expansions/prose_wave89/cw89_04_npc_old_veteran_plan.md`
+- `docs/expansions/prose_wave70/cw70_04_the_seed_woman_plan.md`
+- `docs/expansions/prose_wave73/cw73_01_the_bread_song_plan.md`
+- `docs/expansions/prose_wave87/cw87_04_npc_anya_nurse_plan.md`
+- `docs/expansions/prose_wave91/cw91_04_npc_child_dima_plan.md`
+
+Each has a complete authored proposal through line 2784 and 19 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW87-03, CW87-06, CW89-04, CW87-04, and CW91-04 each 189,393 → 2,793
+lines; CW70-04 and CW73-01 each 189,521 → 2,793. Total 1,326,007 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch116-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave91/cw91_03_npc_undertaker_plan.md`
+- `docs/expansions/prose_wave64/cw64_05_ash_falls_down_plan.md`
+- `docs/expansions/prose_wave69/cw69_03_the_sun_with_a_face_plan.md`
+- `docs/expansions/prose_wave77/cw77_06_dog_collar_grave_plan.md`
+- `docs/expansions/prose_wave66/cw66_01_a_very_good_worm_plan.md`
+- `docs/expansions/prose_wave77/cw77_04_water_pipe_cross_plan.md`
+- `docs/expansions/prose_wave88/cw88_02_npc_boris_baker_plan.md`
+
+Each has a complete authored proposal through line 2784 and 19 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW91-03 189,891 → 2,793 lines; CW64-05 190,019 → 2,793; CW66-01
+189,521 → 2,793; CW69-03, CW77-06, CW77-04, and CW88-02 each 189,393 →
+2,793. Total 1,327,003 → 19,551. Retained prefixes are byte-identical
+to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch115-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave67/cw67_03_mr_drips_lullaby_plan.md`
+- `docs/expansions/prose_wave69/cw69_04_the_vent_monster_plan.md`
+- `docs/expansions/prose_wave88/cw88_07_npc_river_woman_plan.md`
+- `docs/expansions/prose_wave73/cw73_05_the_before_song_plan.md`
+- `docs/expansions/prose_wave70/cw70_06_the_quiet_mouse_plan.md`
+- `docs/expansions/prose_wave70/cw70_02_the_filter_song_plan.md`
+- `docs/expansions/prose_wave72/cw72_01_the_shadow_game_plan.md`
+
+Each has a complete authored proposal through line 2784 and 19 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW67-03, CW73-05, CW70-06, CW70-02, and CW72-01 each 190,507 → 2,793
+lines; CW69-04 and CW88-07 each 190,379 → 2,793. Total 1,333,293 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch114-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave73/cw73_04_the_spring_rhyme_plan.md`
+- `docs/expansions/prose_wave60/cw60_04_the_click_ladder_plan.md`
+- `docs/expansions/prose_wave77/cw77_02_seed_jar_memorial_plan.md`
+- `docs/expansions/prose_wave64/cw64_02_my_family_inside_plan.md`
+- `docs/expansions/prose_wave72/cw72_04_the_glow_monster_plan.md`
+- `docs/expansions/prose_wave87/cw87_08_npc_bram_courier_plan.md`
+- `docs/expansions/prose_wave90/cw90_05_npc_water_seller_plan.md`
+
+Each has a complete authored proposal through line 2784 and 19 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW73-04 and CW60-04 each 190,893 → 2,793 lines; CW64-02 and CW72-04 each
+190,507 → 2,793; CW77-02, CW87-08, and CW90-05 each 190,379 → 2,793.
+Total 1,333,937 → 19,551. Retained prefixes are byte-identical to
+`c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch113-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave89/cw89_03_npc_stoker_fyodor_plan.md`
+- `docs/expansions/prose_wave71/cw71_06_the_potato_fairy_plan.md`
+- `docs/expansions/prose_wave88/cw88_08_npc_captain_gate_plan.md`
+- `docs/expansions/prose_wave67/cw67_04_the_geiger_is_it_plan.md`
+- `docs/expansions/prose_wave61/cw61_05_the_names_column_plan.md`
+- `docs/expansions/prose_wave87/cw87_05_npc_suki_teacher_plan.md`
+- `docs/expansions/prose_wave90/cw90_01_npc_dam_operator_plan.md`
+
+Each has a complete authored proposal through line 2784 and 19 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. Opening, middle, and tail
+were inspected; sampled rendered IDs have no production references. Retain
+the prefix byte-identically, add git-history provenance, and report line
+counts. No production changes, runtime tests, or commit. Status: COMPLETE.
+CW89-03, CW88-08, CW87-05, and CW90-01 each 190,765 → 2,793 lines;
+CW71-06, CW67-04, and CW61-05 each 190,893 → 2,793. Total 1,335,739 →
+19,551. Retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch112-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact clean, unclaimed files:
+
+- `docs/expansions/prose_wave77/cw77_01_sentry_rifle_cairn_plan.md`
+- `docs/expansions/prose_wave88/cw88_03_npc_dmitri_stoker_plan.md`
+- `docs/expansions/prose_wave52/cw52_02_the_ledger_at_stallrow_plan.md`
+- `docs/expansions/prose_wave50/cw50_03_the_crows_on_the_steel_plan.md`
+- `docs/expansions/prose_wave52/cw52_05_the_seed_in_the_hopper_plan.md`
+- `docs/expansions/prose_wave69/cw69_02_the_quiet_game_chant_plan.md`
+- `docs/expansions/prose_wave59/cw59_06_the_chalk_that_asked_plan.md`
+
+Each has a complete authored proposal through line 2784 and 19 generated
+`BATCH-NN ARCHITECTURAL EXPANSION` blocks after it. The opening, middle, and
+tail were inspected; sampled rendered IDs have no production references.
+Retain the prefix byte-identically, add git-history provenance, and report
+line counts. No production changes, runtime tests, or commit. Status:
+COMPLETE. CW77-01, CW52-02, CW50-03, CW52-05, CW69-02, and CW59-06 each
+191,153 → 2,793 lines; CW88-03 190,765 → 2,793. Total 1,337,683 →
+19,551. All retained prefixes are byte-identical to `c8c1e453d`; scoped
+`git diff --check` passed.
+
+Selection correction: CW53-04 and CW49-01 were clean at selection but the
+parallel lane completed them before the first edit; the per-file diff guard
+aborted. They are excluded from this claim and replaced by CW77-01 and
+CW88-03, which were independently inspected and clean before editing.
+
+## claim-plan-bloat-reduction-batch111-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact files:
+
+- `docs/expansions/prose_wave86/cw86_04_buzzer_uvb_76_marker_plan.md`
+- `docs/expansions/prose_wave84/cw84_04_forged_muster_stamp_plan.md`
+- `docs/expansions/prose_wave83/cw83_06_card_deck_pinned_kings_plan.md`
+- `docs/expansions/prose_wave81/cw81_02_illicit_triode_tube_plan.md`
+- `docs/expansions/prose_wave78/cw78_03_phantom_rain_memory_plan.md`
+- `docs/expansions/prose_wave78/cw78_01_insomnia_vent_hum_plan.md`
+- `docs/expansions/prose_wave77/cw77_05_book_stack_memorial_plan.md`
+
+Each file has a complete authored proposal through line 2784. Only the
+generated `BATCH-NN ARCHITECTURAL EXPANSION` appendix after that boundary is
+in scope; 19 repeated blocks per file were inspected at their opening,
+middle, and end. Rendered identifiers were spot-checked against code, data,
+and tests with no references. Retain the proposal byte-identically, append
+provenance, verify, and report before/after counts. No production edits,
+runtime tests, or commit. Status: COMPLETE. All seven plans: 191,153 → 2,793
+lines each (total 1,338,071 → 19,551). Retained prefixes are byte-identical
+to `c8c1e453d`; scoped `git diff --check` passed.
+
+## claim-plan-bloat-reduction-batch110-conservative-2026-09-28
+
+User-authorized continuation of seven conservative plan trims. Root claims
+documentation-only edits to these exact files:
+
+- `docs/expansions/prose_wave63/cw63_01_the_sun_was_a_bulb_plan.md`
+- `docs/expansions/prose_wave98/cw98_03_glitch_28_boiler_cutout_plan.md`
+- `docs/expansions/prose_wave96/cw96_03_glitch_26_stuck_damper_plan.md`
+- `docs/expansions/prose_wave90/cw90_03_npc_caravan_leader_plan.md`
+- `docs/expansions/prose_wave90/cw90_02_npc_relay_operator_plan.md`
+- `docs/expansions/prose_wave88/cw88_05_npc_kolya_burn_boy_plan.md`
+- `docs/expansions/prose_wave88/cw88_01_npc_mira_scavenger_plan.md`
+
+The complete authored proposal through line 2784 remains byte-identical.
+Only the generated `BATCH-NN ARCHITECTURAL EXPANSION` appendix beginning at
+line 2785 is in scope; its rendered identifiers have no code/data/test
+references. Add a git-history provenance note, verify retained-prefix hashes
+and whitespace, and report per-file before/after counts. No production edits,
+runtime tests, or commit. Status: COMPLETE, uncommitted.
+
+| File | Lines before | Lines now |
+|---|---:|---:|
+| `docs/expansions/prose_wave63/cw63_01_the_sun_was_a_bulb_plan.md` | 191,281 | 2,793 |
+| `docs/expansions/prose_wave98/cw98_03_glitch_28_boiler_cutout_plan.md` | 191,153 | 2,793 |
+| `docs/expansions/prose_wave96/cw96_03_glitch_26_stuck_damper_plan.md` | 191,153 | 2,793 |
+| `docs/expansions/prose_wave90/cw90_03_npc_caravan_leader_plan.md` | 191,153 | 2,793 |
+| `docs/expansions/prose_wave90/cw90_02_npc_relay_operator_plan.md` | 191,153 | 2,793 |
+| `docs/expansions/prose_wave88/cw88_05_npc_kolya_burn_boy_plan.md` | 191,153 | 2,793 |
+| `docs/expansions/prose_wave88/cw88_01_npc_mira_scavenger_plan.md` | 191,153 | 2,793 |
+
+Total: 1,338,199 → 19,551 lines. The 2,784-line retained prefix in every
+file matched `git show c8c1e453d:<path>` byte for byte; each replacement
+contains a provenance note. `git diff --check` passed on the seven plans and
+this handoff. No tests were run for this documentation-only reduction.
+
+## Integrator claim — three recent prose plans, 2026-09-28
+
+**DONE 2026-09-28:** Integrated one source-bounded addition per live record,
+prepended the mandatory repeated status headers, and moved all three plans to
+the integrated content folder under `integrated_` names. JSON parsing and
+scoped whitespace checks passed; no tests or commit.
+
+Root owns the bounded player-facing content integrations for CW68-06,
+CW51-05, and CW113-03, including only these live data records:
+`Assets/StreamingAssets/Data/narrative/bunker_children_folklore_batch_2.json`
+(`folklore_b2_the_siren_game`), `Assets/StreamingAssets/Data/events.json`
+(`trap_human_bootprints`), and
+`Assets/StreamingAssets/Data/shelter_room_identities.json`
+(`room_fixture_airlock_nozzles`). Root also owns the three plan headers and
+their immediate moves to `docs/plans/integrated/content/`, plus this ledger
+entry and the `.ai/state.md` handoff. No code, routes, state, tests, or other
+records are claimed. Existing edits in the room identities file are preserved;
+only the airlock nozzle fixture detail is changed.
+
+## Editorial claim — conservative duplicate removal batch 63, 2026-09-29
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes and the method-C `prose_wave` tier):
+
+- `docs/expansions/prose_wave137/cw137_03_barge_three_keeps_its_mooring_plan.md`
+- `docs/expansions/prose_wave144/cw144_23_straw_holds_until_the_wall_dries_plan.md`
+- `docs/expansions/prose_wave154/cw154_17_a_community_divided_by_two_names_plan.md`
+- `docs/expansions/prose_wave144/cw144_01_a_beacon_in_the_ash_has_a_census_plan.md`
+- `docs/expansions/prose_wave132/cw132_06_the_tablet_that_needs_four_days_plan.md`
+- `docs/expansions/prose_wave136/cw136_02_forty_seven_names_at_grange_hall_plan.md`
+- `docs/expansions/prose_wave137/cw137_06_pressure_drop_on_bank_three_plan.md`
+
+All seven passed their edit-time rechecks (git-clean + sole ownership); no
+substitution from the spare list was needed. Status: COMPLETE.
+
+Selection note: ranked pick `cw150_09` was dropped at screening time
+(claimed mid-race by a sibling lane); the list above takes the next
+unclaimed ranks instead.
+
+Any of the seven found claimed by another lane or edited at edit time is
+dropped and, if needed, substituted from these ranked spares (re-checked and
+amended here before editing): `prose_wave132/cw132_20_the_clock_does_not_know_the_time_plan.md`,
+`prose_wave155/cw155_05_the_reading_is_lower_at_the_lip_plan.md`,
+`prose_wave136/cw136_18_forty_two_said_fourteen_written_plan.md`,
+`prose_wave134/cw134_03_three_settlements_still_unknown_plan.md`,
+`prose_wave143/cw143_04_there_is_no_horizon_to_measure_plan.md`.
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 62, 2026-09-29
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes and the method-C lane's new
+`prose_wave` tier):
+
+- `docs/expansions/prose_wave149/cw149_06_everyone_has_money_on_the_eastward_fall_plan.md`
+- `docs/expansions/prose_wave153/cw153_08_fractions_beside_the_hand_crank_blower_plan.md`
+- `docs/expansions/prose_wave166/cw166_09_fifteen_degrees_for_the_heavier_thread_plan.md`
+- `docs/expansions/prose_wave153/cw153_17_the_lime_ratio_on_the_calendar_reverse_plan.md`
+- `docs/expansions/prose_wave152/cw152_15_window_four_accepts_the_updated_cards_plan.md`
+- `docs/expansions/prose_wave137/cw137_01_the_harvest_that_fits_in_one_bowl_plan.md`
+- `docs/expansions/prose_wave136/cw136_10_the_handwriting_changes_on_day_twelve_plan.md`
+
+All seven passed their edit-time rechecks (git-clean + sole ownership); no
+substitution from the spare list was needed. Status: COMPLETE.
+
+Selection note: ranked picks `cw142_02`, `cw162_06`, `cw149_04` and ranked
+spares `cw151_20`, `cw159_18`, `cw147_09` were dropped at screening time
+(claimed mid-race by the method-C `prose_wave` tier / sibling lanes); the
+list above takes the next unclaimed ranks instead.
+
+Any of the seven found claimed by another lane or edited at edit time is
+dropped and, if needed, substituted from these ranked spares (re-checked and
+amended here before editing): `prose_wave134/cw134_07_the_words_will_grow_plan.md`,
+`prose_wave134/cw134_17_i_looked_at_the_sky_plan.md`,
+`prose_wave168/cw168_14_nine_names_on_the_assignment_list_plan.md`,
+`prose_wave163/cw163_03_the_needle_blank_after_three_days_plan.md`,
+`prose_wave137/cw137_07_the_canister_still_in_the_tube_plan.md`.
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 61, 2026-09-29
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes sweeping `docs/expansions/` and the
+method-C `docs/plans` tier):
+
+- `docs/expansions/prose_wave155/cw155_15_the_tribute_demand_in_the_day_242_journal_plan.md`
+- `docs/expansions/prose_wave155/cw155_04_bram_will_sell_the_sketch_but_not_walk_it_plan.md`
+- `docs/expansions/prose_wave161/cw161_16_the_hum_reaches_the_road_before_the_fence_plan.md`
+- `docs/expansions/prose_wave159/cw159_14_the_fire_marks_the_long_night_not_its_end_plan.md`
+- `docs/expansions/prose_wave165/cw165_09_the_intake_form_keeps_the_existing_pain_plan.md`
+- `docs/expansions/prose_wave157/cw157_11_kestrel_counts_the_switchbacks_in_stages_plan.md`
+- `docs/expansions/prose_wave137/cw137_15_a_scarf_that_kept_the_smell_of_smoke_plan.md`
+
+All seven passed their edit-time rechecks (git-clean + sole ownership); no
+substitution from the spare list was needed. Status: COMPLETE.
+
+Any of the seven found claimed by another lane or edited at edit time is
+dropped and, if needed, substituted from these ranked spares (re-checked and
+amended here before editing): `prose_wave151/cw151_03_an_exact_mass_makes_an_argument_possible_plan.md`,
+`prose_wave153/cw153_09_the_amendment_under_the_printed_warning_plan.md`,
+`prose_wave154/cw154_04_three_colors_and_a_contradictory_legend_plan.md`,
+`prose_wave162/cw162_03_soundings_taken_from_a_shore_that_moved_plan.md`,
+`prose_wave152/cw152_01_the_fastest_route_is_explained_politely_plan.md`.
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 60, 2026-09-29
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes sweeping `docs/expansions/` and the
+method-C `docs/plans` tier):
+
+- `docs/expansions/prose_wave166/cw166_01_the_seam_was_repaired_with_different_thread_plan.md`
+- `docs/expansions/prose_wave151/cw151_19_use_the_tablets_while_the_cistern_is_closed_plan.md`
+- `docs/expansions/prose_wave160/cw160_15_the_lower_levels_hold_the_treatment_plant_s_cost_plan.md`
+- `docs/expansions/prose_wave164/cw164_16_a_repeated_notice_does_not_become_consent_plan.md`
+- `docs/expansions/prose_wave148/cw148_09_transfer_order_before_the_elevator_changes_plan.md`
+- `docs/expansions/prose_wave143/cw143_19_sixteen_bedrolls_and_the_inventory_that_follows_plan.md`
+- `docs/expansions/prose_wave168/cw168_16_the_number_is_real_the_inference_is_yours_plan.md`
+
+All seven passed their edit-time rechecks (git-clean + sole ownership); no
+substitution from the spare list was needed. Status: COMPLETE.
+
+Any of the seven found claimed by another lane or edited at edit time is
+dropped and, if needed, substituted from these ranked spares (re-checked and
+amended here before editing): `prose_wave159/cw159_02_the_outer_ring_convoy_has_a_departure_line_plan.md`,
+`prose_wave157/cw157_18_the_van_carries_letters_past_their_delivery_day_plan.md`,
+`prose_wave168/cw168_18_she_can_count_the_pledge_without_the_paper_plan.md`,
+`prose_wave160/cw160_10_the_blankets_were_pushed_beyond_the_light_plan.md`,
+`prose_wave163/cw163_04_ivory_color_is_an_observation_not_a_grade_plan.md`.
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 59, 2026-09-29
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes sweeping `docs/expansions/` and the
+method-C `docs/plans` tier):
+
+- `docs/expansions/prose_wave164/cw164_01_the_trap_does_not_decide_what_the_guild_takes_plan.md`
+- `docs/expansions/prose_wave164/cw164_20_the_underpass_fills_faster_than_a_plan_can_be_read_plan.md`
+- `docs/expansions/prose_wave162/cw162_14_the_last_route_cannot_be_inferred_from_the_satchel_plan.md`
+- `docs/expansions/prose_wave164/cw164_09_a_sequence_can_be_read_without_being_solved_plan.md`
+- `docs/expansions/prose_wave163/cw163_20_sixty_days_is_a_sequence_not_a_diagnosis_plan.md`
+- `docs/expansions/prose_wave163/cw163_10_a_choir_director_knows_when_a_room_stops_answering_plan.md`
+- `docs/expansions/prose_wave159/cw159_13_the_founding_day_counts_who_reached_the_door_plan.md`
+
+All seven passed their edit-time rechecks (git-clean + sole ownership); no
+substitution from the spare list was needed. Status: COMPLETE.
+
+Any of the seven found claimed by another lane or edited at edit time is
+dropped and, if needed, substituted from these ranked spares (re-checked and
+amended here before editing): `prose_wave164/cw164_02_false_coordinates_travel_farther_than_the_caravan_plan.md`,
+`prose_wave155/cw155_16_enough_fuel_for_months_by_one_writer_s_count_plan.md`,
+`prose_wave146/cw146_02_the_hollow_vault_keeps_the_remaining_count_plan.md`,
+`prose_wave160/cw160_11_the_wheelsets_have_settled_into_the_ballast_plan.md`,
+`prose_wave159/cw159_01_the_civic_register_states_the_closure_twice_plan.md`.
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 58, 2026-09-29
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes sweeping `docs/expansions/`):
+
+- `docs/expansions/prose_wave131/cw131_14_which_slopes_whose_ledger_plan.md`
+- `docs/expansions/prose_wave137/cw137_12_a_lesson_in_what_moves_downhill_plan.md`
+- `docs/expansions/prose_wave124/cw124_07_stories_in_hearts_plan.md`
+- `docs/expansions/prose_wave137/cw137_16_a_monastic_order_of_recorded_media_plan.md`
+- `docs/expansions/prose_wave137/cw137_19_the_clerk_who_keeps_trading_shifts_plan.md`
+- `docs/expansions/prose_wave137/cw137_20_the_battery_test_with_no_promise_plan.md`
+- `docs/expansions/prose_wave161/cw161_02_absconded_fits_the_form_better_than_dead_plan.md`
+
+All seven passed their edit-time rechecks (git-clean + sole ownership); no
+substitution from the spare list was needed. Status: COMPLETE.
+
+Any of the seven found claimed by another lane or edited at edit time is
+dropped and, if needed, substituted from these ranked spares (re-checked and
+amended here before editing): `prose_wave165/cw165_12_the_record_says_prophylactic_it_does_not_say_harmless_plan.md`,
+`prose_wave162/cw162_20_care_crosses_a_species_line_without_erasing_it_plan.md`,
+`prose_wave159/cw159_17_the_pipe_breaks_before_the_night_shift_changes_plan.md`,
+`prose_wave164/cw164_18_the_archive_is_not_in_the_habit_of_taking_dictation_plan.md`,
+`prose_wave160/cw160_06_the_pledged_grain_can_be_seen_from_the_street_plan.md`.
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 57, 2026-09-28
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes sweeping `docs/expansions/`):
+
+- `docs/expansions/prose_wave129/cw129_02_a_debt_to_the_tollman_plan.md`
+- `docs/expansions/wave20/expansion_97_a_shift_is_not_a_flag_plan.md`
+- `docs/expansions/prose_wave129/cw129_18_remain_in_shelter_yes_plan.md`
+- `docs/expansions/prose_wave144/cw144_14_thirty_two_tags_on_the_attendance_board_plan.md`
+- `docs/expansions/prose_wave167/cw167_12_the_rate_card_hangs_on_the_purge_valves_plan.md`
+- `docs/expansions/prose_wave150/cw150_13_the_bargain_is_written_before_the_test_plan.md`
+- `docs/expansions/prose_wave159/cw159_10_down_goes_the_spade_up_comes_the_earth_plan.md`
+
+Substitution note (amended): `prose_wave144/cw144_14_thirty_two_tags_on_the_attendance_board_plan.md`
+was dropped at edit time (a concurrent lane modified it after this claim);
+spare `prose_wave169/cw169_12_the_quarry_roof_has_another_occupant_plan.md`
+was re-checked (clean, unclaimed by others) and takes its slot as this
+batch's seventh file.
+
+Any of the seven found claimed by another lane or edited at edit time is
+dropped and, if needed, substituted from these ranked spares (re-checked and
+amended here before editing): `prose_wave169/cw169_12_the_quarry_roof_has_another_occupant_plan.md`,
+`prose_wave170/cw170_04_nine_hulls_and_a_rule_about_boarding_plan.md`,
+`prose_wave145/cw145_18_the_carrier_holds_between_identifiers_plan.md`,
+`prose_wave143/cw143_13_the_name_moth_shows_through_the_paint_plan.md`,
+`prose_wave164/cw164_15_the_name_was_cut_to_outlast_the_chain_plan.md`.
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 56, 2026-09-28
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes sweeping `docs/expansions/`):
+
+- `docs/expansions/prose_wave131/cw131_16_what_we_no_longer_claim_plan.md`
+- `docs/expansions/prose_wave131/cw131_05_continuity_not_peace_plan.md`
+- `docs/expansions/prose_wave131/cw131_15_the_rate_in_ink_plan.md`
+- `docs/expansions/prose_wave131/cw131_02_come_through_clean_plan.md`
+- `docs/expansions/prose_wave129/cw129_07_numbers_before_the_clipboard_plan.md`
+- `docs/expansions/prose_wave131/cw131_10_the_collector_knows_your_face_plan.md`
+- `docs/expansions/wave20/expansion_101_a_trade_held_in_both_hands_plan.md`
+
+Any of the seven found claimed by another lane or edited at edit time is
+dropped and, if needed, substituted from these ranked spares (re-checked and
+amended here before editing): `wave20/expansion_99_the_refusal_has_a_reason_plan.md`,
+`wave20/expansion_100_the_wall_has_two_sides_plan.md`,
+`prose_wave131/cw131_19_hold_the_meaning_loosely_plan.md`,
+`prose_wave131/cw131_18_ask_at_the_post_plan.md`,
+`prose_wave129/cw129_16_the_needle_settles_true_plan.md`.
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 55, 2026-09-28
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes sweeping `docs/expansions/`):
+
+- `docs/expansions/prose_wave96/cw96_05_social_event_scout_expedition_reconciliation_plan.md`
+- `docs/expansions/prose_wave99/cw99_06_ritual_empty_seat_meal_silence_bereaved_spoon_plan.md`
+- `docs/expansions/prose_wave99/cw99_08_audio_log_new_year_day_300_three_hundred_days_plan.md`
+- `docs/expansions/prose_wave79/cw79_06_salt_freeholders_water_theft_accusation_plan.md`
+- `docs/expansions/wave28/expansion_145_the_answer_does_not_open_the_door_plan.md`
+- `docs/expansions/prose_wave130/cw130_01_the_loop_knows_no_day_plan.md`
+- `docs/expansions/prose_wave131/cw131_11_a_kindness_with_the_boom_up_plan.md`
+- `docs/expansions/prose_wave131/cw131_01_the_question_the_toll_office_will_not_answer_plan.md`
+
+Collision note (amended): `cw130_01` was claimed by the concurrent
+`claim-plan-bloat-reduction-batch136-conservative-2026-09-28` before this
+claim and its trim is COMPLETE; the tentative dedup edit on it was reverted
+byte-exactly to that owner's state and it is NOT edited by this batch.
+`cw131_11_a_kindness_with_the_boom_up_plan.md` is this batch's seventh file
+(clean, unclaimed at claim time).
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 54, 2026-09-28
+
+Root claims documentation-only edits to these exact clean, unclaimed files
+(claimed before editing to stay disjoint from the concurrent
+`claim-plan-bloat-reduction-*` trim lanes sweeping `docs/expansions/`):
+
+- `docs/expansions/STANDING_RECORD_DEPTH_AUDIT.md`
+- `docs/expansions/EXPANSION_CROSSHOOK_MATRIX.md`
+- `docs/expansions/archive/wave24_prose_renumbered/expansion_122_the_door_that_was_oiled_plan.md`
+- `docs/expansions/archive/wave24_prose_renumbered/expansion_126_open_to_all_who_need_to_remember_plan.md`
+- `docs/expansions/archive/wave24_prose_renumbered/expansion_123_the_stretcher_left_facing_out_plan.md`
+- `docs/expansions/archive/wave24_prose_renumbered/expansion_125_the_sky_kept_its_peace_plan.md`
+- `docs/expansions/archive/wave24_prose_renumbered/expansion_124_keep_this_one_mira_plan.md`
+
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 53, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/integrated/shelter/INTEGRATED_PLAN_120_CARBON_COMPOSITES.md`,
+`docs/plans/integrated/content/integrated_cw43_02_the_spire_that_stayed_visible_plan.md`,
+`docs/plans/integrated/content/integrated_cw51_05_the_circle_beside_the_trap_plan.md`,
+`docs/plans/integrated/content/integrated_cw102_04_room_history_bunk_three_folded_coat_plan.md`,
+`docs/plans/integrated/content/integrated_cw68_06_the_siren_is_hide_and_seek_plan.md`,
+`docs/plans/integrated/content/integrated_cw98_04_room_history_the_second_blower_plan.md`,
+and `docs/plans/integrated/content/integrated_cw113_03_room_fixture_airlock_nozzles_the_bare_feeds_plan.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit. The
+three `cw51_05`/`cw68_06`/`cw113_03` content plans also fall under this
+owner's DONE `claim-three-recent-prose-plans-2026-09-28` (content integration
+and moves); no other lane is involved.
+
+## Editorial claim — conservative duplicate removal batch 52, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/integrated/medical/INTEGRATED_PLAN_PHARMACEUTICAL-TRUTH-167.md`,
+`docs/plans/integrated/combat/INTEGRATED_PLAN_CHEMICAL-RECON-TRUTH-183.md`,
+`docs/plans/integrated/narrative/INTEGRATED_PLAN_CIPHER_CHAIN_TRUTH_251.md`,
+`docs/plans/integrated/farming/INTEGRATED_PLAN_PRESERVATION-TRUTH-118.md`,
+`.ai/plans/integrated/communication/INTEGRATED_PLAN_RUMOR-PROPAGATION-TRUTH-120.md`,
+`docs/plans/integrated/communication/INTEGRATED_PLAN_RUMOR-PROPAGATION-TRUTH-120.md`,
+and `docs/plans/integrated/shelter/INTEGRATED_PLAN_118_FISCHER_TROPSCH_SYNTHETIC_LUBRICANT.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers (incl. the mandatory
+`FULLY INTEGRATED` / `STATUS:` record headers). Later copies link to
+retained text. No production edits, runtime tests, generated index, or
+commit.
+
+## Editorial claim — conservative duplicate removal batch 51, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_IMPLEMENTATION_LOG.md`,
+`docs/plans/PARTIAL_2_MORE_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-SAVE-INTEGRITY-FUZZ-OPERATIONS-98_APPENDIX-A_SCAFFOLD.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-ADVANCED-MACHINERY-CONTRACTS-TRUTH-140_APPENDIX-A_SCAFFOLD.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 50, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/PLANS_198_201_CLOSEOUT.md`,
+`docs/plans/wave9_part2/WAVE9_PART2_CLOSEOUT.md`,
+`docs/plans/wave10_part1/WAVE10_PART1_CLOSEOUT.md`,
+`docs/plans/flagship_b5_b8/B5_B8_AUTHORITY_MAP.md`,
+`docs/plans/PLAN147_BASELINE.md`,
+`docs/plans/wave9_part2/D2_DECISION.md`,
+and `docs/plans/wave10_part1/B1_ENTRY_GATE.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 49, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/flagship_b5_b8/PLAN66_PLAN189_BOUNDARY.md`,
+`docs/plans/flagship_b5_b8/PHASE2_POWER_NORMALIZATION.md`,
+`docs/plans/PLAN131_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLAN_B69_CRYO_VAULT_CLOSEOUT.md`,
+`docs/plans/flagship_b5_b8/PHASE4_GREENHOUSE_CLOSURE.md`,
+`docs/plans/flagship_b5_b8/PHASE6_WATER_SOURCE_BRINE.md`,
+and `docs/plans/flagship_b5_b8/PHASE7_DEFENSE_LOOP.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 48, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/PLANS_B70_B73_AUTHORITY_MAP.md`,
+`docs/plans/C2_planintegration[6].md`,
+`docs/plans/C2_planintegration[3].md`,
+`docs/plans/flagship_b5_b8/PHASE1_SHARED_CONTRACTS.md`,
+`docs/plans/flagship_b5_b8/EXPANSION3_CROP_ROTATION.md`,
+`docs/plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md`,
+and `docs/plans/PLANS_158_161_RECONNAISSANCE.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 47, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/PLAN127_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLAN102_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLAN112_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLAN111_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLAN103_IMPLEMENTATION_LOG.md`,
+`docs/plans/flagship_b5_b8/POWER_LOAD_CONSUMER_MATRIX.md`,
+and `docs/plans/PLANS_202_205_RECONNAISSANCE.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 46, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/PRODUCTION_ISLANDS_WIRING_LOG.md`,
+`docs/plans/PLAN_B66_METALLURGY_CLOSEOUT.md`,
+`docs/plans/PLANS_162_165_RECONNAISSANCE.md`,
+`docs/plans/PLAN_B74_GEOTHERMAL_ORC_CLOSEOUT.md`,
+`docs/plans/flagship_b5_b8/WATER_FLOW_BASELINE.md`,
+`docs/plans/C2_planintegration[7].md`,
+and `docs/plans/PLAN115_IMPLEMENTATION_LOG.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 45, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/PLAN147_COMPLETION_REPORT.md`,
+`docs/plans/PLAN_158_COMPLETION_REPORT.md`,
+`docs/plans/flagship_b5_b8/PHASE3_WATER_INTEGRATION.md`,
+`docs/plans/PLAN147_REGRESSION_MATRIX.md`,
+`docs/plans/flagship_b5_b8/RAID_DEFENSE_AUTHORITY_MAP.md`,
+`docs/plans/flagship_b5_b8/EXPANSION1_WATER_CONDENSER.md`,
+and `docs/plans/flagship_b5_b8/PHASE8_SCENARIOS_BALANCE.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 44, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/FLAGSHIP_XI_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-L_RISK_SCORECARD.md`,
+`docs/plans/PLANS_86_89_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLANS_78_81_FLAGSHIP_CLOSEOUT.md`,
+`docs/plans/flagship_b5_b8/PHASE5_GENERATION_PORTFOLIO.md`,
+`docs/plans/flagship_b5_b8/B5_B8_BASELINE_RECONCILIATION.md`,
+and `docs/plans/PLANS_54_57_AUTHORITY_MAP.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 43, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-X_STATIC_HAZARDS.md`,
+`docs/plans/PLANS_138_141_WAVE_A_RECONNAISSANCE.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-W_DATA_IDS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-ECHO-TRUTH-201_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/PLAN_129_FOUNDRY_PRODUCTION_CLOSEOUT.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-HOTFIX-DRILL-99_APPENDIX-A_SCAFFOLD.md`,
+and `docs/plans/PLANS_200_212_206_182_INTEGRATION_LOG.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 42, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/PLAN_B67_RADIO_CRYPTANALYSIS_CLOSEOUT.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-METROLOGY-TRUTH-172.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-MUTATION-HEREDITY-81.md`,
+`docs/plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md`,
+`docs/plans/CONTRABAND_SAVE_COMPATIBILITY.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-MUSTER-FACTIONS-TRUTH-254.md`,
+and `docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-LAUNCH-FACE-06_APPENDIX-A_INPUT_ACTIONS.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 41, 2026-09-28
+
+Root owns documentation-only edits to
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-CIPHER-CHAIN-TRUTH-251.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-TELEMETRY-PRIVACY-58.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-AQUAPONICS-TRUTH-163.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-NARCOTICS-TRUTH-215.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-PRISONER-TRUTH-197.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-DISCOVERY-STATE-108.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-INPUT-REBINDING-106.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 40, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/PARTIAL_2_FOLLOWUP_IMPLEMENTATION_LOG.md`,
+`docs/plans/PARTIAL_2_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md`,
+`docs/plans/PARTIAL_2_WAVE4_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLANS_202_205_FLAGSHIP_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLANS_B98_B101_IMPLEMENTATION_LOG.md`,
+`docs/plans/SHELTER_EMP_MEDICAL_POWER_IMPLEMENTATION_LOG.md`,
+and `docs/plans/PLAN_B76_AEROPONICS_CLOSEOUT.md`, plus an appended
+`.ai/state.md` handoff. Consolidate only byte-identical repeated section
+bodies within each file; retain first copies, all distinct lines, headings,
+and approval/status markers. Later copies link to retained text. No
+production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 39, 2026-09-28
+
+## Editorial claim — conservative duplicate removal batch 39, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/wave8_part2/D1_PREMISE_EVIDENCE.md`,
+`docs/plans/wave8_part2/C3_PREMISE_EVIDENCE.md`,
+`docs/plans/wave8_part2/D2_PREMISE_EVIDENCE.md`,
+`docs/plans/wave8_part2/D3_PREMISE_EVIDENCE.md`,
+`docs/plans/wave8_part2/C3_CHANGE_MATRIX.md`,
+`docs/plans/wave8_part2/D1_CHANGE_MATRIX.md`,
+and `docs/plans/wave8_part2/D3_CHANGE_MATRIX.md`, plus an appended
+`.ai/state.md` handoff. Consolidate only byte-identical repeated section
+bodies within each file; retain first copies, all distinct lines, headings,
+and approval/status markers. Later copies link to retained text. No
+production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 38, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-PERIMETER-DEFENSE-TRUTH-165_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AD_BATCH_VERIFICATION.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-SPATIAL-SIM-AUTHORITY-95_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/wave9_part2/C1_DECISION.md`,
+`docs/plans/wave8_part2/C3_DECISION.md`,
+`docs/plans/wave9_part2/C3_DECISION.md`,
+and `docs/plans/wave8_part2/D2_CHANGE_MATRIX.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 37, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-AUTOMATED-QA-CAMPAIGNS-74_APPENDIX-A_MATRIX_RUNNERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DEPRECATED-TREE-RETIREMENT-94_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-THIRDONARY-COVENANT-TRUTH-134_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SCIENCE-EDUCATION-38_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-ECOLOGY-WILDLIFE-26_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-CULTURE-04_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-SHELTER-POLITICS-69_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 36, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-WARLORDS-DIPLOMACY-29_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-TEMPORAL-AUTHORITY-33_APPENDIX-A_HOUR_CONSUMERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-CRISIS-DISASTER-RESPONSE-80_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-GENERATIONAL-MILESTONE-TRUTH-160_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-VEHICLE-CUSTOMIZATION-TRUTH-154_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-NARRATIVE-CONSEQUENCE-TRUTH-132_APPENDIX-A_SCAFFOLD.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-LOCALIZATION-READINESS-52_APPENDIX-A_L10N_INVENTORY.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 35, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-HOST-COMPOSITION-GOVERNANCE-71_APPENDIX-A_PARTIAL_INVENTORY.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-ACHIEVEMENTS-COMPLETION-TRUTH-76_APPENDIX-A_ACHIEVEMENT_CATALOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-BALANCE-DIFFICULTY-INTEGRATION-73_APPENDIX-A_SCALAR_CATALOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-AGENT-WORKFLOW-GOVERNANCE-59_APPENDIX-A_SKILLS_INVENTORY.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-ESPIONAGE-COUNTERINTEL-41_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SHELTER-ARCHITECTURE-40_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-MARITIME-DEEPWATER-27_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 34, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-ONBOARDING-TRUTH-55.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-SKY-ARMOR-TRUTH-256.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SAVE-SLOT-UX-105.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-NPC-ARCS-TRUTH-143.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-PSYOPS-TRUTH-210.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-ECHO-TRUTH-201.md`,
+and `docs/plans/CONTRABAND_ENTRY_MATRIX.md`, plus an appended `.ai/state.md`
+handoff. Consolidate only byte-identical repeated section bodies within each
+file; retain first copies, all distinct lines, headings, and approval/status
+markers. Later copies link to retained text. No production edits, runtime
+tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 33, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-UTILITY-AI-TRUTH-133.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-HOTFIX-DRILL-99.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-TRAUMA-SYSTEM-TRUTH-230.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-LATENT-EXPERT-TRUTH-239.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-AMBIENT-TEXT-TRUTH-236.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-SKY-DEFENSE-TRUTH-135.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-FINAL-WISH-TRUTH-200.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 32, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-HELIOGRAPH-TRUTH-235.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-SANATORIUM-TRUTH-144.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-POLITICS-SYSTEM-TRUTH-221.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DEFENSE-COMMAND-TRUTH-207.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-RATIONING-TRUTH-174.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-PLATFORM-PARITY-53.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-GUILT-INSOMNIA-TRUTH-246.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 31, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-WEATHER-SONDE-TRUTH-168.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-CRAFT-ARCHIVE-TRUTH-208.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-DREAM-SYSTEM-TRUTH-229.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-DESPERATION-TRUTH-232.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-CARBON-COMPOSITE-TRUTH-240.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-CHLOR-ALKALI-TRUTH-199.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-SETTINGS-INTEGRITY-54.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 30, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-MEMORY-DECAY-TRUTH-142.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-LORE-ARCHIVE-TRUTH-238.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-DOSIMETER-CALIBRATION-TRUTH-204.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-BALLISTICS-WORKBENCH-TRUTH-184.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-RECIPE-REACHABILITY-TRUTH-125.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-TUNNEL-NETWORK-TRUTH-194.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-HEIRLOOM-PHANTOM-TRUTH-149.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 29, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-MENTAL-HEALTH-THERAPY-64.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-INSTITUTIONS-TRUTH-141.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-CRAFT-QUALITY-TRUTH-112.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-COATING-TECH-TRUTH-188.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-BOOTSTRAP-GATE-TRUTH-147.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-CATALOG-BOOT-TRUTH-148.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-FORCED-LABOR-TRUTH-198.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 28, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-INVENTORY-CONSERVATION-93.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-CAMPAIGN-PORTABILITY-104.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-PRECISION-OPTICS-TRUTH-220.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-MORALE-CONTAGION-TRUTH-162.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-FISCHER-TROPSCH-TRUTH-202.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-CEREMONY-SYSTEM-TRUTH-223.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-WORLD-EVOLUTION-TRUTH-227.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 27, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-DAILY-ROUTINE-AUTHORITY-107.md`,
+`docs/plans/CONTRABAND_STASH_LOCATION_MATRIX.md`,
+`docs/plans/CONTRABAND_ITEM_IDENTITY_MATRIX.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-FLUID-LOGISTICS-TRUTH-179.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-GEOTHERMAL-PLANT-TRUTH-191.md`,
+`docs/plans/flagship_b5_b8/EXPANSION4_RAID_DISEASE_PRESETS.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-WEAPON-CONDITION-TRUTH-242.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated section bodies within each file; retain first copies, all distinct
+lines, headings, and approval/status markers. Later copies link to retained
+text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 26, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-SECRETS-CONFESSION-TRUTH-127.md`,
+`docs/plans/expansion_wave1/INTEGRATION_CLOSEOUT_PLANS_05_08.md`,
+`docs/plans/flagship_b5_b8/EXPANSION2_SOURCE_FAILURE_EVENTS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PSYCHOLOGICAL-ARC-TRUTH-186.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PLASTIC-PYROLYSIS-TRUTH-187.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-CAMPAIGN-EPILOGUE-TRUTH-259.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-CONTRABAND-STASH-TRUTH-234.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 25, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/PLAN_B75_BALLISTICS_WORKBENCH_CLOSEOUT.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AG_LOADER_GAPS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AF_SEAL_ORDER.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-I_PROVENANCE.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-UV-CORONA-DETECTION-TRUTH-250.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-AQUIFER-MONITORING-TRUTH-164.md`,
+and `docs/plans/flagship_b5_b8/EXPANSION5_BRINE_MACHINERY_CROPS.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 24, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-LEADERSHIP-TRUTH-173_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-AQUAPONICS-TRUTH-163_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-R_CATALOG_SHAPES.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-RUNTIME-RESILIENCE-57.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-RATIONING-TRUTH-174_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-ARCHAEOLOGY-TRUTH-152.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-NPC-ARCS-TRUTH-143_APPENDIX-A_SCAFFOLD.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 23, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-INTERNAL-COMMUNICATION-TRUTH-159.md`,
+`docs/plans/PLAN_B68_SEISMIC_MONITORING_CLOSEOUT.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AH_LIFECYCLE_FILES.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-CASCADE-COORDINATOR-TRUTH-249.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-MATERIAL-SHIELDING-TRUTH-257.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-CRISIS-DISASTER-RESPONSE-80.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 22, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-MOD-CONTENT-BOUNDARY-92.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-COLLECTIBLES-RELICS-67.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-CODEX-SURFACE-TRUTH-110.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-F_DEPENDENCY_CLUSTERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SCENARIO-AUTHORING-102.md`,
+`docs/plans/CONTRABAND_MECHANICS_AUTHORITY_MATRIX.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-MICROFLUIDIC-DIAGNOSTIC-TRUTH-182.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 21, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-DEEP-STRATA-83_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/integrated/journeys/INTEGRATED_PLAN_JOURNEY-CONTEXT-TRUTH-156.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-FIELD-DISCOVERY-TRUTH-237.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-BLACK-PROJECTS-TRUTH-205.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-TRADE-EMBARGO-TRUTH-166.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-SHELTER-DECOR-TRUTH-225.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-PORT-CONTRACT-TRUTH-157.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 20, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/wave11_part2/B5_PLAN35_DUPLICATE_RECONCILIATION.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-Y_BATCH_PLAN.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-COMBAT-DEPTH-62_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-RELATIONSHIP-DECAY-TRUTH-195.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-CHEMICAL-SYNTHESIS-TRUTH-226.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-RESPIRATORY-DEGENERATION-TRUTH-233.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-SAVE-INTEGRITY-FUZZ-OPERATIONS-98.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 19, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-RELEASE-OPS-20_APPENDIX-A_GATE_CENSUS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-H_API_SURFACE.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AM_GENERATORS.md`,
+`docs/plans/integrated/survivors/INTEGRATED_PLANS_142_145_GARMENT_LAYERING_AUTHORITY.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-TEST-WELFARE-17_APPENDIX-A_SUITE_MAP.md`,
+`docs/plans/OLDEST_PARTIAL_PLANS_AUDIT_20_2026-09-23.md`,
+and `docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AC_SAVE_DTOS.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 18, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-SKY-DEFENSE-TRUTH-135_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-U_DATA_REFERENCES.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-HOST-CLI-CONTRACT-86_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-UTILITY-AI-TRUTH-133_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-S_TEST_REGIONS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-Z_SHARED_SHAPES.md`,
+and `docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AI_METHOD_NAMES.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections within each file; retain first copies, every distinct line,
+all headings, and approval/status markers. Later identical copies link to
+retained text. No production edits, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 17, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-CHEMICAL-RECON-TRUTH-183_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-THREADING-ASYNCHRONY-72_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-FAMILY-DYNASTY-43_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-ANCIENT-RUINS-VAULTS-84_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-TRADE-EMBARGO-TRUTH-166_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-ECONOMY-LEDGER-TRUTH-96_APPENDIX-A_SCAFFOLD.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-CHLOR-ALKALI-TRUTH-199_APPENDIX-A_SCAFFOLD.md`,
+plus an appended `.ai/state.md` handoff. Only byte-identical repeated sections
+may be consolidated. Retain first copies, every distinct line, all headings,
+and approval/status markers; link later identical copies. No production edits,
+runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 16, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-SAVE-MIGRATION-CORRIDOR-87_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-ESPIONAGE-SYSTEM-TRUTH-161_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-ASYLUM-REFUGEES-85_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-KINETIC-STORAGE-TRUTH-181_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-MENTAL-HEALTH-THERAPY-64_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-BLACK-PROJECTS-TRUTH-205_APPENDIX-A_SCAFFOLD.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-PHARMACEUTICAL-TRUTH-167_APPENDIX-A_SCAFFOLD.md`,
+plus an appended `.ai/state.md` handoff. Consolidate only byte-identical
+repeated sections, retaining first copies, every distinct line, heading, and
+approval/status marker. Later identical copies link to the retained text.
+No production changes, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 15, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-BELIEF-IDEOLOGY-36_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-PLAYER-COMMAND-TRUTH-131_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-CARTOGRAPHY-LANDMARKS-70_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-E_DETERMINISM_AUDIT.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AJ_MAINTENANCE_MAP.md`,
+`docs/plans/integrated/generations/INTEGRATED_PLAN_GENERATIONAL-MILESTONE-TRUTH-160.md`,
+and `docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-MORALE-CONTAGION-TRUTH-162_APPENDIX-A_SCAFFOLD.md`,
+plus an appended `.ai/state.md` handoff. Retain the first byte-identical section,
+all headings, distinct lines, and approval/status markers. Link later identical
+copies. No production changes, runtime tests, generated index, or commit.
+
+## Editorial claim — conservative duplicate removal batch 7, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/PLANS_138_141_FLAGSHIP_FULL_INTEGRATION_PLAN.md`,
+`docs/plans/PARTIAL_15_PRODUCTION_UNBLOCK_INTEGRATION_PLAN.md`, and
+`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md`, plus an appended
+`.ai/state.md` handoff. No existing claim owns these exact paths; the completed
+partial-wave6 row cites the fifteen-plan document as context only. Consolidate
+only byte-identical sections within each file, retain first copies verbatim and
+all headings in order, and link later copies. Preserve unique content and status.
+No production edits, implementation, tests or commits.
+
+## Editorial claim — conservative duplicate removal batch 6, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/PLANS_158_161_MASTER_PLAN.md`,
+`docs/plans/PLANS_146_149_MASTER_PLAN.md`, and
+`docs/plans/PLANS_142_145_WAVE1_SHARED_CONTRACTS_PLAN.md`, plus an appended
+`.ai/state.md` handoff. No existing ledger claims name these paths. Consolidate
+only byte-identical repeated sections within each document, retaining first
+copies verbatim, all headings in order and links at duplicate locations. Preserve
+unique content, scope and status. No implementation, production edits or commits.
+
+## Editorial claim — conservative duplicate removal batch 5, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`,
+`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`, and
+`docs/plans/PLANS_86_89_INTEGRATION_PLAN.md`, plus an appended `.ai/state.md`
+handoff. No existing ledger claims name these exact paths. Consolidate only
+byte-identical repeated sections within each file, keep first copies verbatim,
+preserve all headings in order, and link later copies to retained text. Unique
+content and approval/status markers remain unchanged; no implementation or commits.
+
+## Editorial claim — conservative duplicate removal batch 4, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`,
+`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`, and
+`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`, plus an appended
+`.ai/state.md` handoff. No existing claims name these paths. Consolidate only
+byte-identical repeated sections within each file; keep first copies verbatim,
+all headings in order, and links at duplicate locations. Preserve unique content,
+status and scope. No implementation, production changes, tests or commits.
+
+## Editorial claim — conservative duplicate removal batch 3, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md`,
+`docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`, and
+`docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md`, plus an
+appended `.ai/state.md` handoff. No existing claims name these paths. Consolidate
+only byte-identical repeated sections within each file, retain first copies
+verbatim and all headings in order, and link later copies to retained text.
+Preserve all unique information, status and scope; no code changes or commits.
+
+## Editorial claim — conservative duplicate removal batch 2, 2026-09-28
+
+Root owns prose-only edits to `docs/plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md`,
+`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`, and
+`docs/plans/MASTER_FIVE_OLDEST_PLANS_EXPANSION_INTEGRATION_FRAMEWORK.md`, plus an
+appended `.ai/state.md` handoff. No existing claims name these paths. Consolidate
+only byte-identical repeated sections within each file, retain first copies
+verbatim and all headings in order, and link duplicate locations to retained text.
+Preserve unique content and status; no production edits, implementation or commits.
+
+## Editorial claim — conservative duplicate removal, 2026-09-28
+
+Root owns documentation-only edits to `docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`,
+`docs/plans/CROP_ROSTER_INTEGRATION_PLAN.md`, and
+`docs/plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md`, plus an appended
+`.ai/state.md` handoff. User requires unique material preserved. Only byte-identical
+repeated sections may be consolidated; retain headings and link to the first copy.
+Preserve approvals, historical status, and all distinct information. No production
+changes, new integration claims, test runs or commits.
+
+## Editorial claim — next three plans, 2026-09-28
+
+Root owns prose-only revision of `docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md`,
+`docs/plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md`, and
+`docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`, plus an appended
+`.ai/state.md` handoff. Preserve package IDs, decisions and historical status;
+remove unrelated appendices and duplicated prose. No implementation, new
+ratification, production-path claim, or integration-status change is included.
+
+## Editorial claim — three-plan polish, 2026-09-28
+
+Root owns documentation edits to `.ai/plans/performance-build-files.md`,
+`.ai/plans/performance-host-files.md`, `.ai/plans/performance-qol-save-files.md`,
+and an appended `.ai/state.md` handoff. Scope: concise contracts, current evidence,
+and acceptance criteria; no implementation or integration-status change.
+
+## Current user reassignment — 2026-09-27 performance / host / QoL
+
+`claim-performance-host-qol-2026-09-27`: root is foreman/integrator. User explicitly
+reassigned older overlapping claims in this session. Preserve their current edits.
+Root owns `.ai/state.md`, `.ai/plans/performance-host-qol-2026-09-27.md`, this ledger,
+`INTEGRATION_PLANS.md`, `export_presets.cfg`, `src/UI/FeedbackPanel.cs`, `UiBackgroundCarousel.cs`,
+`DailyBriefingModal.cs`, `ExpeditionPanel.cs`, `SnapshotOrchestrator.cs`, new
+`src/Host/FrameStartupProfiler.cs`, `scenes/Main.tscn`, and `docs/perf/` measurement
+records, plus `src/Main.UiTests.StartingCohortLifecycle.cs` for the real save/recovery
+UI acceptance probe. Following the build-builder handoff, the root integrator took
+over `scripts/ci/export-build.sh` for the final symbol-gate correction and
+`src/Host/BioFermentationHostSession.cs` for the focused compile fix; all prior
+builder edits were preserved. Build builder's remaining owned paths were
+`Ashfall.csproj`, `src/Host/HostCli.cs`, `src/Main.Application.cs`,
+`src/Main.UiHandlers.cs`, and `src/Assets/AssetRegistry.cs` (including explicit
+test-source guards). Host builder owns Main plan-partial renames and domain destinations,
+`src/Main.Campaign.cs`, `src/Main.CampaignOwners.cs`, `src/Main.Holdfast.cs`,
+new `src/Host/CampaignDayHostSession.cs`, `src/Host/HostCli.PanelTests.cs` split
+destinations, and `docs/architecture/MAIN_DECOMPOSITION_MAP.md`. Save builder owns
+`Assets/Ashfall.Core/Save/SaveSlotService.cs`, `src/Host/SaveLoadHostSession.cs`,
+`src/Main.SaveOrchestrator.cs`, `src/Main.GameFlow.cs`, recovery UI and save tests
+identified in its handoff. Shared intersections require root coordination.
+Status: COMPLETE — all three user-authorized tasks integrated and their plan archived.
+No commit. Prior builder changes and unrelated dirty worktree changes were preserved.
+
 ## claim-repo-enhancement-tasks-4-8-2026-09-27
 
 User assigned enhancement-plan Tasks 4-8
@@ -357,8 +6024,6 @@ formatting, or conflict resolution. A package may touch only its listed paths.
 Claims name exact files or narrow directories. Shared composition roots,
 registries, and generated authority files belong to the integrator, never to
 parallel builders.
-registries, and generated authority files belong to the integrator, never to
-parallel builders.
 
 ## claim-plan-bloat-reduction-3-plans-2026-09-27
 
@@ -373,3 +6038,8155 @@ content is template-generated padding (no code/data/test references) and
 remains in git history at `241a179fb`. No production code, data, or tests
 touched. Other lanes' unstaged sections in this file are untouched and stay
 unstaged. Status: COMPLETE, pending commit.
+
+## claim-plan-bloat-reduction-next-3-2026-09-28
+
+User-authorized continuation of the three-plan bloat reduction, docs-only.
+Exact editable plan paths:
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DISCOVERY-CONSEQUENCE-TRUTH-211.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MUSTER-FAMILY-TRUTH-275.md`.
+This claim owns only these three plans and this appended claim section; it does
+not claim the generated index, other plans, production files, or other
+ownership-ledger sections. Each plan was clean and unclaimed before editing.
+Keep its original pending-plan contract and acceptance material; remove only
+the appended fabricated expansion beginning at its first `# SECTION I: MASTER
+ARCHITECTURAL AUTHORITY & SCOPE EXPANSION`. Preserve the removed text in git
+history. Status: COMPLETE, uncommitted pending the previous three-plan commit's
+docs-index hook. The retained 400, 387 and 466 lines are byte-identical to
+`241a179fb`; `git diff --check` passed. No runtime tests needed for docs-only edits.
+
+## claim-plan-bloat-reduction-next-3-conservative-2026-09-28
+
+User-authorized continuation ("continue with the next 3! be conservative,
+keep unique material, don't completely remove and compress!"). Docs-only.
+Exact editable plan paths:
+`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`,
+`docs/plans/PLAN_F21_DISCOVERY_SELECTION_CONTEXT_EXTENSION.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUARANTINE-STRAIN-TRUTH-241.md`.
+Conservative approach: kept all unique content through SECTION XV (original
+plan, fabricated expansion sections I-IX, dossiers, inquests, precision pass);
+removed only the 5-8 repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+F21 additionally kept its genuine codebase analysis expansion (Parts I-VIII,
+~3,400 lines with verified file citations). Retained 6,290, 3,402 and 6,632
+lines respectively, all byte-identical to `241a179fb`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch3-conservative-2026-09-28
+
+User-authorized third continuation ("continue with the next 3! be
+conservative, keep unique material, don't completely remove and compress!").
+Docs-only. Exact editable plan paths:
+`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md` (package
+COMPLETE per INTEGRATION_PLANS.md),
+`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md` (package
+COMPLETE), `docs/plans/F9_F12_MICRO_LOCATION_VERIFICATION_IMPLEMENTATION_LOG.md`
+(genuine implementation log). Conservative approach: kept all unique content
+before the first `BATCH-NN` marker (original plan, SECTION I-XV with
+dossiers/inquests/precision pass; F9-F12's genuine Phase 0-6 implementation
+log with findings and evidence, ~3,100 lines). Removed only the 12-15 repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 6,290, 6,288 and 3,101
+lines respectively, all byte-identical to `241a179fb`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch4-conservative-2026-09-28
+
+User-authorized fourth continuation ("continue with the next 3! be
+conservative, keep unique material, don't completely remove and compress!").
+Docs-only. Exact editable plan paths:
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-TRANSPORT-EXPEDITION-30_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/EVIDENCE.md` (genuine reachability
+audit evidence with addenda), `docs/plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md`
+(package COMPLETE per INTEGRATION_PLANS.md). Conservative approach: kept all
+unique content before the first `BATCH-NN` marker (orphan dossiers +
+integration expansion + aerial recon cases; audit method/stats/inventory/addenda
++ SECTION IX-XV; original plan + SECTION I-XV). Removed only the 10-15 repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 999, 8,489 and 6,279 lines
+respectively, all byte-identical to `ba786e112`; `git diff --check` passed.
+Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch5-conservative-2026-09-28
+
+User-authorized fifth continuation ("continue with the next 3! be
+conservative, keep unique material, don't completely remove and compress!").
+Docs-only. Exact editable plan paths:
+`docs/plans/wave2_integration/W2-02_BUG_SILENT_FAILURE_REPAIR.md` (genuine
+bug/silent-failure repair plan with D19c-family defect evidence, reset-coverage
+census, lifecycle/subscription/determinism evidence),
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-SEISMIC-DYNAMICS-TRUTH-193.md`
+(genuinely pending plan),
+`docs/plans/expansion_wave1/EXPANSION_PLAN_21_DIALOGUE_CONTEXT_MEMORY_AND_GATES.md`
+(genuine dialogue/context/memory plan with continuation passes 2-3). Conservative
+approach: kept all unique content before the first `BATCH-NN` marker. Removed
+only the 12 repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 10,770,
+6,625 and 3,640 lines respectively, all byte-identical to `ba786e112`;
+`git diff --check` passed. Full removed text in git history. Status: COMPLETE,
+uncommitted.
+
+## claim-plan-bloat-reduction-batch6-conservative-2026-09-28
+
+User-authorized sixth continuation, batch of seven ("continue with the next
+7! be conservative, keep unique material, don't completely remove and
+compress!"). Docs-only. Exact editable plan paths (all clean and unclaimed
+before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-SAVE-GOVERNANCE-12_APPENDIX-A_SECTION_REGISTRY.md`,
+`docs/plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md`,
+`docs/plans/UNBLOCK_OLDEST_BATCH6_PLANS_135_59_INTEGRATION_PLAN.md` (package
+COMPLETE), `docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-ADVANCED-MACHINERY-CONTRACTS-TRUTH-140.md`,
+`docs/plans/unblockers/UNBLOCK-01_BODY-INTEGRITY_SCHEMA_F14_XP06.md`
+(documentation only; the F14/XP06 implementation block in AGENTS.md is
+unaffected), `docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-NARRATIVE-GRAPH-18_APPENDIX-A_FLAG_WORKLIST.md`,
+`docs/plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file. Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 7,680, 4,236, 7,798, 7,868, 9,256, 8,308 and 3,533
+lines respectively, all byte-identical to `ba786e112`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch7-conservative-2026-09-28
+
+User-authorized seventh continuation, batch of seven. Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/PLAN_123_REBEL_BRANCH_IMPLEMENTATION_LOG.md` (genuine implementation
+log with Phases 1-4 + evidence-grounded expansion),
+`docs/plans/UNBLOCK_EXPANSION32_33_INTEGRATION_PLAN.md` (package COMPLETE),
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-SELFTEST-TRUTH-23_APPENDIX-A_VERB_CENSUS.md`,
+`docs/plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md` (package
+COMPLETE), `docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-M_CATALOG_BINDING.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-UI-SURFACE-15_APPENDIX-A_ROUTE_INVENTORY.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-UNBLOCK-03_APPENDIX-A_REGISTER_INVENTORY.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file. Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 1,102, 6,302, 7,761, 6,291, 8,072, 7,684 and 7,779
+lines respectively, all byte-identical to `ba786e112`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch8-conservative-2026-09-28
+
+User-authorized eighth continuation, batch of seven. Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/unblockers/UNBLOCK-02_FUNDS_TRADE_F13_XP04_XP08.md` (documentation
+only; the F13/XP04 implementation block in AGENTS.md is unaffected),
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-PROCEDURAL-NARRATIVE-TRUTH-216.md`,
+`docs/plans/PLANS_210_214_FULL_INTEGRATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-DOCUMENT-DISCOVERY-TRUTH-192.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-GEOTHERMAL-AQUIFER-TRUTH-260.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MORALCHOICE-LOADER-FAMILY-TRUTH-276.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file. Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 2,729, 6,625, 6,363, 6,622, 6,610, 4,383 and 7,905
+lines respectively, all byte-identical to `ba786e112`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch9-conservative-2026-09-28
+
+User-authorized ninth continuation, batch of seven. Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-HEALTH-HISTORY-TRUTH-196_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/expansion_wave1/EXPANSION_PLAN_22_DIALOGUE_CONSEQUENCE_ROUTING.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-LOCALIZATION-READINESS-52.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-HEALTH-HISTORY-TRUTH-196.md`,
+`docs/plans/PLANS_02_09_FLAGSHIP_CONSOLIDATED_CLOSEOUT.md`,
+`docs/plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md` (package COMPLETE),
+`docs/plans/unblockers/UNBLOCK-05_EXPANSION_WAVES_C3_EN_GATE.md` (documentation
+only; the C3/EN decision gate in AGENTS.md is unaffected). Conservative
+approach: kept all unique content before the first `BATCH-NN` marker in each
+file. Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+Retained 955, 3,879, 6,621, 6,620, 3,669, 6,337 and 9,337 lines respectively,
+all byte-identical to `ba786e112`; `git diff --check` passed. Full removed text
+in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch10-conservative-2026-09-28
+
+User-authorized tenth continuation, batch of seven. Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md` (genuine implementation
+log + integration framework with current authority audit),
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-COMMITMENTS-OBLIGATIONS-TRUTH-122.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-B_WAVE_PACKAGES.md`
+(wave package specs W2-W8),
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-FACTION-BRANCH-STATUS-TRUTH-228.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-J_TEST_COVERAGE.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SHELTER-CAPACITY-AUTHORITY-103.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DEPRECATED-TREE-RETIREMENT-94.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file. Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 3,469, 7,885, 7,671, 7,915, 8,096, 7,877 and 7,912
+lines respectively, all byte-identical to `ba786e112`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch11-conservative-2026-09-28
+
+User-authorized eleventh continuation, batch of seven. Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-UI-CONTRACT-FAMILY-TRUTH-277.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-AGENT-WORKFLOW-GOVERNANCE-59.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-ENDGAME-EVALUATION-TRUTH-137.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-DYNAMIC-QUESTLINE-TRUTH-212.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-RAIL-MAINTENANCE-TRUTH-158.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-FEEDBACK-SURFACE-TRUTH-138.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-KINETIC-STORAGE-TRUTH-181.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file. Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 6,616, 7,898, 7,869, 6,613, 6,612, 6,613 and 6,623
+lines respectively, all byte-identical to `ba786e112`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch12-conservative-2026-09-28
+
+User-authorized twelfth continuation, batch of seven. Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-RADIO-RECORDING-TRUTH-258.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-SURVIVOR-ROSTER-TRUTH-244.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-ACCESSIBILITY-CLOSURE-51.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-BIONICS-ENHANCEMENT-78.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-DOC-ATLAS-CURRENCY-115.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-PROPAGANDA-TRUTH-150.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-TREATY-CONSEQUENCES-TRUTH-151.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file. Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 6,628, 6,639, 6,616, 6,595, 6,639, 6,616 and 7,882
+lines respectively, all byte-identical to `ba786e112`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch13-conservative-2026-09-28
+
+User-authorized thirteenth continuation, batch of seven. Docs-only. Exact
+editable plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-VOLUNTARY-REGISTER-TRUTH-253.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-MAINTENANCE-DECAY-TRUTH-119.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-SAVE-MIGRATION-CORRIDOR-87.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-TEXT-PACK-LOCALIZATION-88.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-STANDING-RECORD-TRUTH-139.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-ORIGINALITY-LICENSING-60.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-ELECTRONICS-COMPUTING-65.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file. Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 7,927, 7,891, 7,856, 6,594, 6,597, 7,907 and 7,953
+lines respectively, all byte-identical to `ba786e112`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch14-conservative-2026-09-28
+
+User-authorized fourteenth continuation, batch of seven. Docs-only. Exact
+editable plan paths (all clean and unclaimed before editing):
+`docs/plans/PLANS_162_165_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLANS_66_69_RECONNAISSANCE.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-P_INCOMING_REFERENCES.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AB_BATCH_PLAN_LINKS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-O_VERIFICATION_COMMANDS.md`,
+`docs/plans/PARTIAL_3_PRODUCTION_UNBLOCK_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-FOOD-CUISINE-39_APPENDIX-A_ORPHAN_DOSSIERS.md`.
+Selection: the four largest unclaimed padded plans still in the corpus
+(207,001 / 206,510 / 204,444 / 204,184 / 204,138 lines) plus two further
+large siblings, verified clean (only a pre-existing unrelated one-line
+relative-link fix each) and unclaimed in this file before editing.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (a "Final Architectural Seal/Sign-Off" close, verified
+identical boilerplate in a second/third occurrence before cutting). Removed
+only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 3,519,
+3,488, 7,182, 6,922, 6,876, 5,386 and 5,334 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch15-conservative-2026-09-28
+
+User-authorized fifteenth continuation, batch of seven (numbered batch15 to
+avoid collision with the concurrent lane's batch14 above; zero file overlap).
+Docs-only. Exact editable plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-ANCIENT-RUINS-VAULTS-84.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-VEHICLE-CUSTOMIZATION-TRUTH-154.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-AUTONOMOUS-MACHINES-79.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-EXPEDITION-VEHICLE-TRUTH-219.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-ESPIONAGE-SYSTEM-TRUTH-161.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-NARRATIVE-FAMILY-TRUTH-261.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-ESPIONAGE-COUNTERINTEL-41.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file. Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 6,610, 7,895, 6,589, 7,912, 7,884, 7,981 and 7,949
+lines respectively, all byte-identical to `ba786e112`; `git diff --check`
+passed. Full removed text in git history. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch16-conservative-2026-09-28
+
+User-authorized sixteenth continuation, batch of seven (numbered batch16 to
+avoid collision with the concurrent lane's batch15 above; zero file overlap).
+Docs-only. Exact editable plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AL_COMPILE_SURFACE.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-Q_SAVE_KEY_COLLISIONS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-NOMADS-CARAVAN-CULTURE-82_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-INVENTORY-CONSERVATION-93_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-FACTION-BRANCH-TRUTH-171_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-KNOCK-WHITELIST-TRUTH-155_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-DETERMINISM-REPLAY-13_APPENDIX-A_STREAM_REGISTRY.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker, and
+a second/third `BATCH-NN` occurrence confirmed as an identical re-skin).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+5,313, 5,412, 5,407, 5,394, 5,391, 5,380 and 5,373 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch17-conservative-2026-09-28
+
+User-authorized seventeenth continuation, batch of seven. Docs-only. Exact
+editable plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-RAIL-MAINTENANCE-TRUTH-158_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-STANDING-RECORD-TRUTH-139_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-HEIRLOOM-PHANTOM-TRUTH-149_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-BOOTSTRAP-GATE-TRUTH-147_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-STARTING-LEVEL-TRUTH-145_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-TREATY-CONSEQUENCES-TRUTH-151_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-FEEDBACK-SURFACE-TRUTH-138_APPENDIX-A_SCAFFOLD.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+5,373, 5,373, 5,371, 5,367, 5,366, 5,365 and 5,365 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch18-conservative-2026-09-28
+
+User-authorized eighteenth continuation, batch of seven. Docs-only. Exact
+editable plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-TEXT-PACK-LOCALIZATION-88_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DETERMINISM-CROSS-HOST-89_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-CULTURAL-ARCHIVE-TRUTH-169_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-WAYSTATION-NETWORK-TRUTH-153_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-TUNNEL-NETWORK-TRUTH-194_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-JOURNEY-CONTEXT-TRUTH-156_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-INDUSTRY-AUTOMATION-45_APPENDIX-A_ORPHAN_DOSSIERS.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+5,363, 5,363, 5,361, 5,358, 5,356, 5,356 and 5,352 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch19-conservative-2026-09-28
+
+User-authorized nineteenth continuation, batch of seven. Docs-only. Exact
+editable plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-WEATHER-ATMOSPHERE-28_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-BASE-DEFENSE-RAIDS-61_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-WATER-AGRICULTURE-46_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-DOCUMENT-DISCOVERY-TRUTH-192_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-GEOTHERMAL-PLANT-TRUTH-191_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PNEUMATIC-DISPATCH-TRUTH-180_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-AQUIFER-MONITORING-TRUTH-164_APPENDIX-A_SCAFFOLD.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+5,340, 5,328, 5,328, 5,402, 5,401, 5,400 and 5,397 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch17-conservative-2026-09-28
+
+User-authorized seventeenth continuation, batch of seven (numbered batch17;
+batch15/batch16 above are a concurrent lane's; zero file overlap with any
+prior claim). Docs-only. Exact editable plan paths (all clean and unclaimed
+before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-AUTOMATED-QA-CAMPAIGNS-74.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-ARCHITECTURE-BOUNDARY-31.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-JUSTICE-SYSTEM-TRUTH-222.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-SHELTER-FAMILY-TRUTH-265.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-INDUSTRY-AUTOMATION-45.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-HOST-COMPOSITION-GOVERNANCE-71.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-NARRATIVE-ARC-EVENT-TRUTH-176.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; each file verified to close its unique region with
+the "End of Architectural Expansion Plan" seal before the separator, and the
+first two `BATCH-NN` blocks confirmed as identical template re-skins whose
+fabricated plan-prefixed domains exist nowhere in code or data — the padding
+even self-declares it "meets the minimum 600,000 character threshold").
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+Retained 6,677, 8,008, 6,644, 7,937, 7,990, 7,929 and 6,634 lines
+respectively (75 MB -> 4.2 MB, ~1.28M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-16. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch20-conservative-2026-09-28
+
+User-authorized twentieth continuation, batch of seven (numbered batch20 to
+avoid the duplicate batch17 name already used by a concurrent lane above;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PSYCHOLOGICAL-ARC-TRUTH-186_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-NARRATIVE-CONTINUITY-TRUTH-170_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-RELATIONSHIP-DECAY-TRUTH-195_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-PANDEMIC-PUBLIC-HEALTH-47_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-ENDGAME-EVALUATION-TRUTH-137_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-RADIATION-BACKGROUND-TRUTH-189_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-INTERNAL-COMMUNICATION-TRUTH-159_APPENDIX-A_SCAFFOLD.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+5,395, 5,395, 5,392, 5,375, 5,372, 5,366 and 5,366 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch18-conservative-2026-09-28
+
+User-authorized eighteenth continuation, batch of seven (numbered batch18;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-NARRATIVE-ENCOUNTER-TRUTH-185.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-CONTRACTOR-ROSTER-TRUTH-245.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-CRYO-VAULT-TRUTH-206.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-FACTIONS-STATE-FAMILY-TRUTH-268.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-ANOMALY-PHANTOM-63.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-INVENTORY-FAMILY-TRUTH-271.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-NOISE-DISCIPLINE-TRUTH-116.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — four files carry the "SUPPLEMENTAL ANNEX" variant that
+self-declares it "meets the minimum 600,000 character threshold" with
+fabricated plan-prefixed domains that exist nowhere in code or data).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+Retained 7,879, 7,936, 6,634, 7,990, 6,622, 7,949 and 7,891 lines
+respectively (74 MB -> 4.3 MB, ~1.33M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-17. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch19-conservative-2026-09-28
+
+User-authorized nineteenth continuation, batch of seven (numbered batch19;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/expansion_wave1/INTEGRATION_CLOSEOUT_PLANS_01_04.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CAMPAIGN-FAMILY-TRUTH-272.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-NOMADS-CARAVAN-CULTURE-82.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-SURVIVORS-FAMILY-TRUTH-264.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-PANDEMIC-PUBLIC-HEALTH-47.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-BODY-INDUSTRY-05.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-SIGNALS-REMOTE-SENSING-49.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — block 1 in each file carries the "SUPPLEMENTAL ANNEX"
+variant that self-declares it "meets the minimum 600,000 character
+threshold", including the expansion_wave1 closeout doc whose padding uses
+the same fabricated template; no padding domain exists in code or data).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+Retained 7,713, 7,917, 7,895, 7,993, 7,985, 8,051 and 7,991 lines
+respectively (74 MB -> 4.5 MB, ~1.32M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-18. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch20-conservative-2026-09-28
+
+User-authorized twentieth continuation, batch of seven (numbered batch20;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-FOUNDRY-FAMILY-TRUTH-278.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-MEDICAL-FAMILY-TRUTH-263.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-AUDIO-CONDITION-TRUTH-255.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DETERMINISM-CROSS-HOST-89.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SHELTER-ARCHITECTURE-40.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-COMBAT-FAMILY-TRUTH-273.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-TRANSPORT-EXPEDITION-30.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — block 1 in each file carries the "SUPPLEMENTAL ANNEX"
+variant that self-declares it "meets the minimum 600,000 character
+threshold"; the padding's fabricated plan-prefixed domains, e.g.
+"Plan-foundry-...", exist nowhere in code or data). Removed only the
+repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 7,882, 8,005,
+7,906, 7,904, 7,966, 7,958 and 8,023 lines respectively (74 MB -> 4.5 MB,
+~1.32M padding lines removed); `git diff --check` passed on all seven.
+Each trimmed file carries the same provenance note as batches 13-19.
+Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch21-conservative-2026-09-28
+
+User-authorized twenty-first continuation, batch of seven (numbered batch21;
+zero file overlap with any prior claim, including the concurrent lane's
+batch19/batch20 above). Docs-only. Exact editable plan paths (all clean and
+unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-SUCCESSION-LEGACY-TRUTH-252.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-BACKSTORY-REVEAL-TRUTH-126.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-SOLAR-CONCENTRATOR-TRUTH-217.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-PNEUMATIC-DISPATCH-TRUTH-180.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-WAYSTATION-NETWORK-TRUTH-153.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-THIRDONARY-COVENANT-TRUTH-134.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SKILL-PROGRESSION-TRUTH-113.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+7,145, 7,144, 7,139, 7,130, 7,116, 7,114 and 7,105 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch21-conservative-2026-09-28
+
+User-authorized twenty-first continuation, batch of seven (numbered batch21;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-THREADING-ASYNCHRONY-72.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-REFERENCE-INTEGRITY-34.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-CARTOGRAPHY-LANDMARKS-70.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-FACTION-BRANCH-TRUTH-171.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-SPATIAL-SIM-AUTHORITY-95.md`,
+`docs/plans/wave2_integration/W2-04_ENVIRONMENT_PLANNING.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-MORAL-CHOICE-TRUTH-136.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — block 1 in each file carries the "SUPPLEMENTAL ANNEX"
+variant that self-declares it "meets the minimum 600,000 character
+threshold"; the wave2_integration W2-04 file was spot-verified to use the
+same fabricated template, with no padding domain existing in code or data).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+Retained 7,875, 7,896, 7,889, 7,920, 7,927, 9,365 and 7,915 lines
+respectively (74 MB -> 4.6 MB, ~1.32M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-20. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch22-conservative-2026-09-28
+
+User-authorized twenty-second continuation, batch of seven (numbered
+batch22; zero file overlap with any prior claim). Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/wave2_integration/W2-03_GAMEPLAY_IMPROVEMENT.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-QUEST-RUNTIME-TRUTH-247.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-MORALE-UNREST-TRUTH-129.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-WORLD-FAMILY-TRUTH-267.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-AUDIO-MIX-AUTHORITY-97.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SESSION-DURABILITY-111.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-WEATHER-ATMOSPHERE-28.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — block 1 in each file carries the "SUPPLEMENTAL ANNEX"
+variant that self-declares it "meets the minimum 600,000 character
+threshold", spot-verified again on the wave2_integration W2-03 file).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+Retained 9,344, 7,912, 7,888, 7,912, 7,920, 7,900 and 8,031 lines
+respectively (74 MB -> 4.5 MB, ~1.32M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-21. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch23-conservative-2026-09-28
+
+User-authorized twenty-third continuation, batch of seven (numbered batch23;
+zero file overlap with any prior claim, including the concurrent lane's
+batch21/batch22 above). Docs-only. Exact editable plan paths (all clean and
+unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-BALANCE-DIFFICULTY-INTEGRATION-73.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-ACHIEVEMENTS-COMPLETION-TRUTH-76.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-COLLECTIBLES-RELICS-67_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-AUTONOMOUS-MACHINES-79_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-MOD-CONTENT-BOUNDARY-92_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/UNBLOCK_RESIDUALS_PLANS_24_31_INTEGRATION_PLAN.md` (a completed
+governance record per `claim-unblock-residuals-plans-24-31-2026-09-23`;
+padding-only trim, its ratified content untouched),
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-INSTITUTIONS-TRUTH-141_APPENDIX-A_SCAFFOLD.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+7,154, 7,128, 5,401, 5,399, 5,398, 5,367 and 5,361 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch23-conservative-2026-09-28
+
+User-authorized twenty-third continuation, batch of seven (numbered batch23;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-MARITIME-DEEPWATER-27.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-TEMPORAL-AUTHORITY-33.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-LEADERSHIP-TRUTH-173.md`,
+`docs/plans/wave2_integration/W2-05_LOCATION_IMPORTANCE.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-TRIO-FAMILY-TRUTH-280.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-WARLORDS-DIPLOMACY-29.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-PRINT-MEDIA-TRUTH-128.md`.
+NOTE: `docs/plans/wave2_integration/W2-06_ENRICHMENT_SURFACING.md` was
+deliberately skipped — it is a concurrent lane's active task per
+`.ai/state.md` and stays untouched. Conservative approach: kept all unique
+content before the first `BATCH-NN` marker in each file, byte-identical to
+`ba786e112` (verified per file by md5 of the retained prefix; first two
+`BATCH-NN` blocks confirmed as identical template re-skins — the annex
+variant self-declares it "meets the minimum 600,000 character threshold",
+spot-verified on the W2-05 file). Removed only the repeated `BATCH-NN
+ARCHITECTURAL EXPANSION` copies. Retained 7,939, 7,895, 6,632, 9,458, 7,918,
+7,987 and 7,883 lines respectively (74 MB -> 4.4 MB, ~1.32M padding lines
+removed); `git diff --check` passed on all seven. Each trimmed file carries
+the same provenance note as batches 13-22. Full removed text remains in
+git history: `git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch24-conservative-2026-09-28
+
+User-authorized twenty-fourth continuation, batch of seven (numbered
+batch24; zero file overlap with any prior claim). Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/wave11_part1/A2_PLAN41_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-SHELTER-POLITICS-69.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-BELIEF-IDEOLOGY-36.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-WORKSHOP-TRUTH-175.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-FAMILY-DYNASTY-43.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SILENT-FAILURE-35.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-INTERNAL-SECURITY-TRUTH-224.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins of the same fabricated family — the A2_PLAN41 log's
+padding domain "Plan 41 Implementation" exists nowhere in code or data and
+its padding carries the "600,000 character threshold" declaration 3x).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+Retained 888, 7,872, 7,897, 6,632, 7,900, 8,014 and 7,881 lines
+respectively (74 MB -> 4.0 MB, ~1.33M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-23. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch25-conservative-2026-09-28
+
+User-authorized twenty-fifth continuation, batch of seven (numbered batch25;
+zero file overlap with any prior claim, including the concurrent lane's
+batch23/batch24 above). Docs-only. Exact editable plan paths (all clean and
+unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE18_2026-09-21/PLAN-SHELTER-PRISONER-TRUTH-243.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-BIOFERMENTATION-TRUTH-178.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-CULTURAL-ARCHIVE-TRUTH-169.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-THERMAL-EXPOSURE-TRUTH-117.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-D_SAVE_OWNERSHIP.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-CONTENT-PIPELINE-QA-77_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-BIONICS-ENHANCEMENT-78_APPENDIX-A_SCAFFOLD.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+7,152, 7,142, 7,133, 7,128, 5,419, 5,399 and 5,396 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch25-conservative-2026-09-28
+
+User-authorized twenty-fifth continuation, batch of seven (numbered batch25;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-PERIMETER-DEFENSE-TRUTH-165.md`,
+`docs/plans/expansion_wave1/PLAN_09_FOOD_PRESERVATION_NUTRITION_AND_KITCHEN_RESILIENCE.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-MUSTER-COALITION-TRUTH-130.md`,
+`docs/plans/expansion_wave1/PLAN_12_LEARNING_HOUSES_ORAL_HISTORY_AND_CIVIC_TEACHING.md`,
+`docs/plans/expansion_wave1/PLAN_11_TOOL_LIBRARIES_SALVAGE_AND_REPAIR_APPRENTICESHIPS.md`,
+`docs/plans/expansion_wave1/PLAN_10_PERIMETER_WATCH_THREAT_SIGNALS_AND_SAFE_RESPONSE.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CORE-ROOT-FAMILY-TRUTH-262.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix). The four expansion_wave1 flagship plans (PLAN_09-12)
+carry a different, older padding generation (6 accumulated `BATCH-NN`
+blocks, each a distinct mad-libs run) — extra scrutiny applied: padding
+headings are the fabricated "ASHFALL MASTER EXPANSION AUTHORITY v2.0"
+dossier template with mechanically numbered metric contracts and
+thematically unrelated tranches (e.g. "Atmospheric Chemistry x Plan 09 Food
+Preservation"); the unique region's own "Food Covenant Dossier" content is
+unrelated in-plan material and does not reference the padding; fabricated
+domains exist nowhere in code or data. The PERIMETER-DEFENSE-165 padding
+carries the "600,000 character threshold" self-declaration 3x. Removed
+only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+1,216, 29,912, 7,896, 29,911, 29,911, 29,911 and 7,996 lines respectively
+(73 MB -> 20 MB, ~1.12M padding lines removed); `git diff --check` passed
+on all seven. Each trimmed file carries the same provenance note as
+batches 13-24. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch26-conservative-2026-09-28
+
+User-authorized twenty-sixth continuation, batch of seven (numbered batch26;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-RADIO-STATION-TRUTH-209.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-PROGRAMME-CLOSEOUT-100.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-RADIO-FAMILY-TRUTH-266.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-SURGICAL-WARD-TRUTH-213.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-CONTENT-PIPELINE-QA-77.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-LABOUR-PROFESSIONS-68.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-DETERMINISM-REPLAY-13.md`.
+NOTE: `docs/plans/expansion_wave1/PLAN_14_UNDERPASS_SETTLEMENTS_HIDDEN_ROUTES_AND_INFRASTRUCTURE.md`
+was deliberately skipped — it contains no `BATCH-NN` markers (different or
+no padding format; possibly genuine unique content) and requires its own
+analysis before any cut. Conservative approach: kept all unique content
+before the first `BATCH-NN` marker in each file, byte-identical to
+`ba786e112` (verified per file by md5 of the retained prefix; first two
+`BATCH-NN` blocks confirmed as identical template re-skins of the annex
+variant that self-declares it "meets the minimum 600,000 character
+threshold", re-verified on SURGICAL-WARD-213). Removed only the repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 7,887, 7,896, 7,998,
+1,259, 7,885, 7,896 and 7,989 lines respectively (73 MB -> 4.1 MB, ~1.3M
+padding lines removed); `git diff --check` passed on all seven. Each
+trimmed file carries the same provenance note as batches 13-25. Full
+removed text remains in git history: `git show ba786e112:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-recent-trimmed-plans-cw10204-cw9804-cw4302-2026-09-28
+
+User-authorized full integration of three recent prose plans; one compact,
+source-bounded passage per plan, using existing player-facing owners. No new
+code, state, trigger, route, mechanic, or save authority.
+
+**Owned paths:**
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` — entries
+  `room_history_bunk_three` and `room_history_the_second_blower`.
+- `Assets/StreamingAssets/Data/locations.json` — entry `loc_ash_needle`.
+- Source plans:
+  `docs/expansions/prose_wave102/cw102_04_room_history_bunk_three_folded_coat_plan.md`,
+  `docs/expansions/prose_wave98/cw98_04_room_history_the_second_blower_plan.md`,
+  `docs/expansions/prose_wave43/cw43_02_the_spire_that_stayed_visible_plan.md`.
+- Integrated destinations under `docs/plans/integrated/content/` with
+  `integrated_` filename prefixes.
+- `.ai/state.md`, `WORKTREE_OWNERSHIP.md`.
+
+**Acceptance:** one added passage appears in each named live content record;
+each selected plan has the repeated `FULLY INTEGRATED` header and is moved to
+the integrated folder; JSON parses; scoped diff check is clean. No commit.
+
+**Status: COMPLETE 2026-09-28.** Added one source-bounded passage to each of
+the three existing text fields. Confirmed the Journal Places/map detail and
+room-history unlock/display paths statically. `jq empty` passed for both
+changed JSON catalogs; scoped `git diff --check` passed. No tests run because
+these are text-only catalog additions. All three plans were marked at the top
+and moved to `docs/plans/integrated/content/integrated_<plan-name>.md`.
+
+## claim-prose-wave117-cw11705-wave119-cw11902-cw11903-integration-2026-09-28
+
+User-authorized full integration of three recently trimmed prose plans. Owned
+paths: `Assets/StreamingAssets/Data/narrative/graffiti_expansion.json`,
+`Assets/StreamingAssets/Data/items.json`, `src/World/HoldfastInteriorView.cs`,
+`.ai/state.md`, and these plan files for status/header/archive moves:
+`docs/plans/integrated/content/integrated_cw117_05_request_of_the_graveyard_shift_plan.md`,
+`docs/plans/integrated/content/integrated_cw119_02_growth_trial_plan.md`,
+`docs/plans/integrated/content/integrated_cw119_03_filtered_light_plan.md`.
+Scope: one authored shelter wall-text posting shown by the existing room
+tooltip; two brief attributed cassette-sleeve annotations in existing,
+player-inspectable inventory item descriptions. `HoldfastInteriorView` now
+shows the newest eligible posting, making the added day-34 mark visible. JSON
+parse and scoped whitespace checks pass. The scoped runner dry-run sees 2,952
+pre-existing changed paths and maps 49 targets, so tests were not executed;
+content/display ownership was verified statically. Three plans were marked
+fully integrated and moved to `docs/plans/integrated/content/`. No new gameplay
+authority, state, save section, route, or mechanics. Status: COMPLETE,
+uncommitted.
+
+## claim-plan-bloat-reduction-batch27-conservative-2026-09-28
+
+User-authorized twenty-seventh continuation, batch of seven (numbered
+batch27; zero file overlap with any prior claim, including the concurrent
+lane's batch25/batch26 above). Docs-only. Exact editable plan paths (all
+clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-PROGRAMME-CLOSEOUT-100_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-ARCHAEOLOGY-TRUTH-152_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/SHELTER_GRID_CATALOG_SEAL_IMPLEMENTATION_LOG.md`,
+`docs/plans/C1_planintegration[5]_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-NARRATIVE-CONSEQUENCE-TRUTH-132.md`,
+`docs/plans/WILDLIFE_TRAPPING_FLAGSHIP_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-COMBAT-DEPTH-62_APPENDIX-A_ORPHAN_DOSSIERS.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the "15.3 Final
+Architectural Seal" or, for the two flagship implementation logs, an
+equivalent "officially expanded, harmonized, and verified" seal paragraph,
+immediately before the marker). Removed only the repeated `BATCH-NN
+ARCHITECTURAL EXPANSION` copies. Retained 5,385, 5,358, 3,516, 5,712, 7,129,
+5,487 and 5,312 lines respectively, all byte-identical to `ba786e112` for
+the retained region; `git diff --check` passed on all seven. Full removed
+text remains in git history: `git show ba786e112:<path>`. Status: COMPLETE,
+uncommitted.
+
+## claim-plan-bloat-reduction-batch27-conservative-2026-09-28
+
+User-authorized twenty-seventh continuation, batch of seven (numbered
+batch27; zero file overlap with any prior claim). Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-ACUTE-TRAUMA-CARE-124.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-BASE-DEFENSE-RAIDS-61.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-HOST-EVENT-ARCHIVE-91.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-LIFECYCLE-SEALING-32.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-CORE-ONLY-REGISTRY-11.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-DUTY-ROSTER-TRUTH-101.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SCIENCE-EDUCATION-38.md`.
+NOTE: `docs/plans/expansion_wave1/PLAN_16_ENDGAME_HORIZONS_FACTION_CONVERGENCE_AND_LEGACY_FRONTIERS.md`
+was deliberately skipped, same as PLAN_14 in batch26 — no `BATCH-NN`
+markers (different or no padding format; possibly genuine unique content);
+requires its own analysis before any cut. Conservative approach: kept all
+unique content before the first `BATCH-NN` marker in each file,
+byte-identical to `ba786e112` (verified per file by md5 of the retained
+prefix; first two `BATCH-NN` blocks confirmed as identical template
+re-skins — ACUTE-TRAUMA-124 is the clean re-skin variant, the rest the
+annex variant; CORE-ONLY-REGISTRY-11's padding carries the "600,000
+character threshold" self-declaration 12x). Removed only the repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 6,624, 7,877, 7,905,
+7,925, 1,380, 7,927 and 7,944 lines respectively (72 MB -> 4.0 MB, ~1.3M
+padding lines removed); `git diff --check` passed on all seven. Each
+trimmed file carries the same provenance note as batches 13-26. Full
+removed text remains in git history: `git show ba786e112:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch28-conservative-2026-09-28
+
+User-authorized twenty-eighth continuation, batch of seven (numbered
+batch28; zero file overlap with any prior claim). Docs-only. Exact editable
+plan paths (all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE15_2026-09-21/PLAN-CAREGIVING-TRUTH-203.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-RECREATION-MORALE-50.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-WATER-AGRICULTURE-46.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-CULTURE-04.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-CRIME-SYNDICATES-44.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-HOST-CLI-CONTRACT-86.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-ECOLOGY-WILDLIFE-26.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins of the annex variant that self-declares it "meets the
+minimum 600,000 character threshold"). Removed only the repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 7,885, 7,914, 7,920,
+8,093, 7,953, 7,955 and 7,920 lines respectively (72 MB -> 4.5 MB, ~1.3M
+padding lines removed); `git diff --check` passed on all seven. Each
+trimmed file carries the same provenance note as batches 13-27. Full
+removed text remains in git history: `git show ba786e112:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch29-conservative-2026-09-28
+
+User-authorized twenty-ninth continuation, batch of seven (numbered batch29;
+zero file overlap with any prior claim, including the concurrent lane's
+batch27/batch28 above). Docs-only. Exact editable plan paths (all clean and
+unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-MUTATION-HEREDITY-81_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-MEMORY-DECAY-TRUTH-142_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-T_WORKED_EXEMPLARS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AE_SURFACE_DECISIONS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-SOCIAL-DYNAMICS-TRUTH-214.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE17_2026-09-21/PLAN-MORAL-BRANCHING-TRUTH-231.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-CROSSING-QUEST-TRUTH-190.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+5,402, 5,371, 5,370, 5,333, 7,161, 7,151 and 7,133 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch29-conservative-2026-09-28
+
+User-authorized twenty-ninth continuation, batch of seven (numbered batch29;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-BUILD-ERGONOMICS-56.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-INTEGRATION-KIT-02.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-ASYLUM-REFUGEES-85.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-INPUT-HARDENING-25.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-CONTRACT-BOARD-109.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-NARRATIVE-GRAPH-18.md`,
+`docs/plans/flagship_xii_collectibles_IMPLEMENTATION_LOG.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — six files the annex variant, the flagship collectibles
+implementation log the clean re-skin variant with its full ~10,770-line
+unique region retained). Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 7,907, 8,051, 7,895, 8,001, 7,916, 8,017 and
+10,776 lines respectively (72 MB -> 4.6 MB, ~1.3M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-28. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch30-conservative-2026-09-28
+
+User-authorized thirtieth continuation, batch of seven (numbered batch30;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/expansion_wave1/PLAN_06_SURVIVOR_RELATIONSHIP_AND_MEMORY_NETWORK.md`,
+`docs/plans/expansion_wave1/PLAN_05_REGIONAL_SUPPLY_AND_TRAVEL_RESILIENCE.md`,
+`docs/plans/expansion_wave1/PLAN_07_SHELTER_AUTOMATION_AND_POWER_RECOVERY.md`,
+`docs/plans/expansion_wave1/PLAN_08_EXPLORATION_CARTOGRAPHY_AND_ARCHIVE.md`,
+`docs/plans/PLAN_IV_LEDGER_DEBT_INTEGRATION_IMPLEMENTATION_LOG.md`,
+`docs/plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-ENERGY-NUCLEAR-48.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix). The four expansion_wave1 PLAN_05-08 files are the
+older padding generation (9 accumulated blocks) verified per batch25
+scrutiny: fabricated "Plan NN ..." dossier domains and thematically
+unrelated mad-libs tranches (e.g. "Atmospheric Chemistry x Plan 06 Survivor
+Relationship") exist nowhere in code or data, and the unique regions carry
+zero BATCH references — full ~18,171-line unique regions retained. The two
+implementation logs (PLAN_IV_LEDGER_DEBT, plan_12c_shelter_decor) verified
+as clean re-skin variants (identical 3,262-line block outlines), full
+~10,416/~11,054-line unique regions retained. Removed only the repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 18,177, 18,177, 18,177,
+18,177, 10,416, 11,054 and 8,002 lines respectively (72 MB -> 13 MB, ~1.18M
+padding lines removed); `git diff --check` passed on all seven. Each
+trimmed file carries the same provenance note as batches 13-29. Full
+removed text remains in git history: `git show ba786e112:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch31-conservative-2026-09-28
+
+User-authorized thirty-first continuation, batch of seven (numbered batch31;
+zero file overlap with any prior claim, including the concurrent lane's
+batch30 above). Docs-only. Exact editable plan paths (all clean and
+unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE9_2026-09-21/PLAN-SAVE-PREVIEW-METADATA-114.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-STARTING-LEVEL-TRUTH-145.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-TRAVEL-ENCOUNTER-TRUTH-177.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-PLAYER-COMMAND-TRUTH-131.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DATA-SCHEMA-COVERAGE-90.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-NARRATIVE-CONTINUITY-TRUTH-170.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE16_2026-09-21/PLAN-WEATHER-INTELLIGENCE-TRUTH-218.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained
+7,131, 7,117, 7,111, 7,104, 7,103, 7,125 and 7,119 lines respectively, all
+byte-identical to `ba786e112` for the retained region; `git diff --check`
+passed on all seven. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch31-conservative-2026-09-28
+
+User-authorized thirty-first continuation, batch of seven (numbered batch31;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-ASSET-PIPELINE-19.md`,
+`docs/plans/PLAN_B77_PNEUMATIC_DISPATCH_CLOSEOUT.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-DEV-TOOLING-TRUTH-75.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-TEST-WELFARE-17.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-EVENT-WIRING-21.md`,
+`docs/plans/YEAR_OF_ASH_HARDENING_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-SAVE-GOVERNANCE-12.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — five files the annex variant, the two closeout/
+implementation logs the clean re-skin variant with their full ~10,864/
+~11,107-line unique regions retained). Removed only the repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 8,005, 10,864, 7,955,
+7,970, 7,983, 11,107 and 8,005 lines respectively (72 MB -> 4.8 MB, ~1.27M
+padding lines removed); `git diff --check` passed on all seven. Each
+trimmed file carries the same provenance note as batches 13-30. Full
+removed text remains in git history: `git show ba786e112:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch32-conservative-2026-09-28
+
+User-authorized thirty-second continuation, batch of seven (numbered batch32;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/PLANS_90_93_FLAGSHIP_IMPLEMENTATION_LOG.md`,
+`docs/plans/HOLDFAST_HARDENING_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-CREATIVE-WORKS-66.md`,
+`docs/plans/VERDICT_HARDENING_IMPLEMENTATION_LOG.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-YEAR-OF-ASH-TRUTH-146.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-DATA-AUTHORITY-14.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-SELFTEST-TRUTH-23.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — three implementation logs the clean re-skin variant
+with full ~10,888-11,213-line unique regions retained, three files the
+annex variant, and YEAR-OF-ASH-TRUTH-146 the annex variant with its ~1,281
+line unique region). Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies. Retained 11,213, 10,888, 7,881, 11,135, 1,287, 8,009 and
+7,940 lines respectively (72 MB -> 4.6 MB, ~1.28M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-31. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch33-conservative-2026-09-28
+
+User-authorized thirty-third continuation, batch of seven (numbered batch33;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-DATA-CONSUMER-22.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-FOOD-CUISINE-39.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-COMBAT-DEPTH-62.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-DEEP-STRATA-83.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-JUSTICE-LAW-37.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-LAUNCH-FACE-06.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-RELEASE-OPS-20.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins of the annex variant that self-declares it "meets the
+minimum 600,000 character threshold"). Removed only the repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 7,990, 7,899, 7,939,
+7,914, 7,999, 8,083 and 8,029 lines respectively (71 MB -> 4.5 MB, ~1.27M
+padding lines removed); `git diff --check` passed on all seven. Each
+trimmed file carries the same provenance note as batches 13-32. Full
+removed text remains in git history: `git show ba786e112:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch34-conservative-2026-09-28
+
+User-authorized thirty-fourth continuation, batch of seven (numbered
+batch34; zero file overlap with any prior claim, including the concurrent
+lane's batch32/batch33 above — note batch32 trimmed the plain
+`PLAN-YEAR-OF-ASH-TRUTH-146.md`, a distinct file from this batch's
+`_APPENDIX-A_SCAFFOLD.md` sibling). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-C_INTEGRATION_PATTERNS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-N_SURFACE_ROUTES.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-AA_TIME_COUPLING.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-AUDIO-MIX-AUTHORITY-97_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-YEAR-OF-ASH-TRUTH-146_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-METROLOGY-TRUTH-172_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-WORKSHOP-TRUTH-175_APPENDIX-A_SCAFFOLD.md`.
+NOTE: `docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-DEV-TOOLING-TRUTH-75_APPENDIX-A_SCAFFOLD.md`
+was deliberately skipped and replaced with AUDIO-MIX-AUTHORITY-97 — it is
+listed under the active `claim-deep-audit-repair-2026-09-26` claim (Status:
+IN PROGRESS) and stays untouched. Conservative approach: kept all unique
+content before the first `BATCH-NN` marker in each file (each verified to
+close with the same "15.3 Final Architectural Seal" boilerplate paragraph
+immediately before the marker). Removed only the repeated `BATCH-NN
+ARCHITECTURAL EXPANSION` copies. Retained 5,553, 5,410, 5,409, 5,390, 5,399,
+5,397 and 5,394 lines respectively, all byte-identical to `ba786e112` for
+the retained region; `git diff --check` passed on all seven. Full removed
+text remains in git history: `git show ba786e112:<path>`. Status: COMPLETE,
+uncommitted.
+
+## claim-plan-bloat-reduction-batch34-conservative-2026-09-28
+
+User-authorized thirty-fourth continuation, batch of seven (numbered batch34;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-RADIO-MEDIA-42.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-UI-SURFACE-15.md`,
+`docs/plans/PLAN_204_206_207_211_213_215_217_218_219_XP04F6_EXPANSION_CLOSEOUT_2026-09-24.md`,
+`docs/plans/PLAN_187_189_190_191_193_194_195_196_197_198_EXPANSION_CLOSEOUT_2026-09-24.md`,
+`docs/plans/TEN_EXPANSION_INTEGRATION_ARCHITECTURE_CLOSEOUT_2026-09-24.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-DEBT-DRAIN-24.md`,
+`docs/plans/TEN_CORE_ONLY_MEDICAL_RAIL_DEFENSE_TROPHY_INTEGRATION_CLOSEOUT_2026-09-24.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — three files the annex variant, the four closeout docs
+the clean re-skin variant with their full ~6,271-6,311-line unique regions
+retained). Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION`
+copies. Retained 8,011, 7,957, 6,275, 6,271, 6,273, 7,978 and 6,311 lines
+respectively (71 MB -> 4.0 MB, ~1.26M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-33. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch35-conservative-2026-09-28
+
+User-authorized thirty-fifth continuation, batch of seven (numbered batch35;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_16_30_CLOSEOUT_2026-09-24.md`,
+`docs/plans/PLANS_130_133_IMPLEMENTATION_LOG.md`,
+`docs/plans/wave4_integration/W4-05_FACTIONS_DIPLOMACY_GOVERNANCE.md`,
+`docs/plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_CLOSEOUT_2026-09-24.md`,
+`docs/plans/CORE_MECHANICS_PLAYER_FACING_PORTFOLIO_PRECISION_FULL_INTEGRATION_HANDOFF.md`,
+`docs/plans/PLAN_133_139_142_146_149_155_178_179_180_183_EXPANSION_CLOSEOUT_2026-09-24.md`,
+`docs/plans/expansion_wave1/INTEGRATION_CLOSEOUT_PLANS_01_12.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — all seven the clean re-skin variant, with full unique
+regions retained: ~6,290, 11,463, 13,365, 6,288, 8,176, 6,276 and 3,970
+lines respectively). Removed only the repeated `BATCH-NN ARCHITECTURAL
+EXPANSION` copies (71 MB -> 4.6 MB, ~1.24M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-34. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch36-conservative-2026-09-28
+
+User-authorized thirty-sixth continuation, batch of seven (numbered batch36;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/wave3_integration/W3-05_CRAFTING_RESEARCH_INDUSTRY.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-UNBLOCK-03.md`,
+`docs/plans/TEN_ORPHAN_BRANCH_AND_WARD_INTEGRATION_PLANS_CLOSEOUT_2026-09-24.md`,
+`docs/plans/PLAN_B66_B69_RENUMBERING.md`,
+`docs/plans/wave4_integration/W4-04_ECOLOGY_FARMING_WILDLIFE.md`,
+`docs/plans/wave3_integration/W3-03_PSYCHOLOGY_HEALTH_SOCIAL.md`,
+`docs/plans/wave4_integration/W4-06_MEDICINE_RADIATION_BODY.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — PLAN-UNBLOCK-03 the annex variant, the other six the
+clean re-skin variant with full ~6,300-13,496-line unique regions
+retained). Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION`
+copies. Retained 13,045, 8,092, 6,300, 10,660, 13,496, 12,727 and 13,335
+lines respectively (70 MB -> 5.1 MB, ~1.22M padding lines removed);
+`git diff --check` passed on all seven. Each trimmed file carries the same
+provenance note as batches 13-35. Full removed text remains in git history:
+`git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch37-conservative-2026-09-28
+
+User-authorized thirty-seventh continuation, batch of seven (numbered
+batch37; zero file overlap with any prior claim, including the concurrent
+lane's batch35/batch36 above). Docs-only. Exact editable plan paths (all
+clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-HOST-EVENT-ARCHIVE-91_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-MORAL-CHOICE-TRUTH-136_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-PORT-CONTRACT-TRUTH-157_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-CATALOG-BOOT-TRUTH-148_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-PROPAGANDA-TRUTH-150_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE8_2026-09-21/PLAN-DATA-SCHEMA-COVERAGE-90_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE11_2026-09-21/PLAN-SANATORIUM-TRUTH-144_APPENDIX-A_SCAFFOLD.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file (each verified to close with the same "15.3 Final
+Architectural Seal" boilerplate paragraph immediately before the marker).
+Removed only the repeated `BATCH-NN ARCHITECTURAL EXPANSION` copies.
+Retained 5,376, 5,373, 5,370, 5,366, 5,363, 5,357 and 5,356 lines
+respectively, all byte-identical to `ba786e112` for the retained region;
+`git diff --check` passed on all seven. Full removed text remains in git
+history: `git show ba786e112:<path>`. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch37-conservative-2026-09-28
+
+User-authorized thirty-seventh continuation, batch of seven (numbered batch37;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/wave4_integration/W4-03_SHELTER_INFRASTRUCTURE.md`,
+`docs/plans/wave3_integration/W3-01_NARRATIVE_QUEST_SYSTEMS.md`,
+`docs/plans/wave4_integration/W4-02_WORLD_TRAVEL_EXPLORATION.md`,
+`docs/plans/expansion_wave1/PLAN_01_WILDLAND_FIRE_AND_BURN_RECOVERY.md`,
+`docs/plans/expansion_wave1/PLAN_02_MOBILE_MEDICAL_OUTREACH.md`,
+`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION_IMPLEMENTATION_LOG.md`,
+`docs/plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md`.
+Conservative approach: kept all unique content before the first `BATCH-NN`
+marker in each file, byte-identical to `ba786e112` (verified per file by md5
+of the retained prefix; first two `BATCH-NN` blocks confirmed as identical
+template re-skins — the three wave3/wave4 files the clean re-skin variant,
+PLAN_01/PLAN_02 the older 9-block generation verified per batch30 scrutiny
+with full ~17,221/~17,535-line unique regions retained, and the greenhouse
+log + EXPANSION_PLAN_19 the annex variant). Removed only the repeated
+`BATCH-NN ARCHITECTURAL EXPANSION` copies. Retained 13,189, 12,181, 12,750,
+17,221, 17,535, 3,521 and 3,644 lines respectively (70 MB -> 7.9 MB, ~1.2M
+padding lines removed); `git diff --check` passed on all seven. Each
+trimmed file carries the same provenance note as batches 13-36. Full
+removed text remains in git history: `git show ba786e112:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch38-conservative-2026-09-28
+
+User-authorized thirty-eighth continuation, batch of seven (numbered batch38;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing; `W2-06_ENRICHMENT_SURFACING.md`
+skipped again — still the concurrent lane's active task per `.ai/state.md`;
+`PLAN-RUNTIME-PERF-16.md` skipped — claimed by `claim-deep-audit-repair-2026-09-26`;
+`PLAN-ORPHAN-SEAL-01.md` skipped — a source-metadata target of
+`claim-wave20-readiness-closure-281-284-2026-09-27`):
+`docs/plans/PLANS_FLAGSHIP_INSTITUTIONS_T5_8_IMPLEMENTATION_LOG.md`,
+`docs/plans/wave3_integration/W3-04_COMBAT_DEFENSE_SECURITY.md`,
+`docs/plans/wave3_integration/W3-06_UI_INPUT_ACCESSIBILITY.md`,
+`docs/plans/wave4_integration/W4-01_SAVE_STATE_MIGRATION.md`,
+`docs/plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md`,
+`docs/plans/wave2_integration/W2-01_MAINTENANCE_TRUTH_GRADE.md`,
+`docs/plans/UNBLOCK_OLDEST_BATCH12_PLANS_150_152_INTEGRATION_PLAN.md`.
+Conservative approach: kept all unique content up to and including the last
+genuine line before the first `BATCH-NN ARCHITECTURAL EXPANSION` /
+`SECTION XII: DEEP POLISHING PASS` marker in each file (the natural
+QA-checklist/sign-off boundary already used by prior batches), byte-identical
+to the committed original verified per file by md5 of the retained prefix.
+Spot-checked padding identifiers (`AlarmSensorGovernor`,
+`combat_defense_security_manifest.json`, `PLAN-B48-04-FLAGINSTIT`, etc.)
+against `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` — zero references, confirming the removed
+material is unreferenced generated padding, not authored content. Removed
+only the padding from the marker to EOF. Retained 3,809, 7,390, 7,771, 6,764,
+2,269, 5,138 and 2,336 lines respectively (~127 MB -> ~1.5 MB, ~1.27M padding
+lines removed); `git diff --check` passed on all seven.
+
+**Correction to the provenance-note reference used by batches 3-37:** those
+notes cite `git show ba786e112:<path>`, but `ba786e112` only trimmed the
+original three files (`UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md`,
+`UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md`,
+`PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md`) — it does not contain the
+pre-trim bloated content for any file touched in batches 3-37, so that
+reference does not resolve for them. Each of those files' actual pre-trim
+content is verifiable instead via `git log -- <path>` (all currently trace to
+commit `c8c1e453d`, the commit that landed the bloated versions). This
+batch's provenance notes cite `git show c8c1e453d:<path>` directly, which was
+confirmed correct per file before writing. Batches 3-37 were not rewritten;
+this note flags the discrepancy for whoever next touches those files or
+commits this work. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch39-conservative-2026-09-28
+
+User-authorized thirty-ninth continuation, batch of seven (numbered batch39;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/wave3_integration/W3-02_ECONOMY_LOGISTICS.md`,
+`docs/plans/PLAYER_FACING_GAMEPLAY_LOOPS_MASTER_INTEGRATION_PLAN.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE13_2026-09-21/PLAN-WEATHER-SONDE-TRUTH-168_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE6_2026-09-21/PLAN-LABOUR-PROFESSIONS-68_APPENDIX-A_SCAFFOLD.md`,
+`docs/plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_OLDEST_BATCH11_PLANS_147_148_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md`
+(the latter three describe packages `INTEGRATION_PLANS.md`/`WORKTREE_OWNERSHIP.md`
+mark DONE; the plan doc itself is listed only as a generated/docs deliverable
+in those claims, not a live code path). `W2-06_ENRICHMENT_SURFACING.md`,
+`PLAN-RUNTIME-PERF-16.md`, `PLAN-ORPHAN-SEAL-01.md` (and its appendix family)
+and `CLAIM_READINESS_INDEX.md` again left untouched for the same reasons as
+batch38. Conservative approach: kept all unique content up to and including
+the last genuine line before the first `BATCH-NN ARCHITECTURAL EXPANSION` /
+`SECTION XII: DEEP POLISHING PASS` marker in each file (QA-checklist,
+sign-off, or "Polishing checklist" scaffold boundary), byte-identical to the
+committed original verified per file by md5 of the retained prefix. The two
+`_APPENDIX-A_SCAFFOLD.md` files have very little unique content (~1,050-1,120
+lines against ~185k total) — inspected both by hand; the boundary sits
+cleanly after the scaffold's own "Polishing checklist" paragraph and before
+the padding banner, so nothing genuine was cut. Spot-checked padding
+identifiers (`ArbitrationTribunalGovernor`, `InterpersonalConflictCoordinator`,
+`CONFLICT-P202-SEC-A-0001`) against `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` — zero references. Removed only the
+padding from the marker to EOF. Retained 6,739, 3,694, 1,054, 1,120, 2,266,
+2,265 and 2,263 lines respectively (~127 MB -> ~1.4 MB, ~1.27M padding lines
+removed); `git diff --check` passed on all seven. Provenance notes cite
+`git show c8c1e453d:<path>` (confirmed correct per file, per the batch38
+correction). Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch40-conservative-2026-09-28
+
+User-authorized fortieth continuation, batch of seven (numbered batch40;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/unblockers/UNBLOCK-03_SEMANTIC_VOICE_STRING_FREEZE_D11_D22_PLAN424649.md`,
+`docs/plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md`,
+`docs/plans/unblockers/UNBLOCK-04_LEDGER_REGISTER_CENSUS_QUARANTINE_TRUTH.md`,
+`docs/plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md`,
+`docs/plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_PLAN200_PERSONAL_QUESTS_INTEGRATION_PLAN.md`
+(Plan 211's log is listed only as a `Docs:` deliverable of the COMPLETE
+`claim-pfgl-plan211-internal-communication-2026-09-25`; the three
+`UNBLOCK_PLAN*` files likewise only as `Generated & Docs:` deliverables of
+their own DONE claims — same pattern as batch38/39, not a live code path).
+Considered but skipped: `PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md`
+and `PLAYER_FACING_REALTIME_COMBAT_PHYSICS_AI_INTEGRATION_PLAN.md` — both are
+named directly under `Governance:` (not `Docs:`) in
+`claim-pfgl-rt-combat-tetrad-2026-09-25`; left untouched out of caution even
+though that claim is marked COMPLETE. `W2-06_ENRICHMENT_SURFACING.md`,
+`PLAN-RUNTIME-PERF-16.md`, `PLAN-ORPHAN-SEAL-01.md` (and its appendix
+family), and `CLAIM_READINESS_INDEX.md` again left untouched. Conservative
+approach: kept all unique content up to and including the last genuine line
+before the first `SECTION XII: DEEP POLISHING PASS` marker in each file (the
+same QA-checklist/sign-off boundary as prior batches), byte-identical to the
+committed original verified per file by md5 of the retained prefix.
+Spot-checked padding identifiers (`InternalShelterCommunicationCoordinator`,
+`CircuitInterferenceGovernor`, `COMM-P211-SEC-A-0001`) against `Assets/`,
+`src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` — zero
+references. Removed only the padding from the marker to EOF. Retained 3,667,
+2,433, 3,894, 2,299, 2,278, 2,272 and 2,266 lines respectively (~124 MB ->
+~1.3 MB, ~1.26M padding lines removed); `git diff --check` passed on all
+seven. Provenance notes cite `git show c8c1e453d:<path>` (confirmed correct
+per file). Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch41-conservative-2026-09-28
+
+User-authorized forty-first continuation, batch of seven (numbered batch41;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing):
+`docs/plans/EXPANSION_PROGRAM_WAVE5_2026-09-21/PLAN-CRIME-SYNDICATES-44_APPENDIX-A_ORPHAN_DOSSIERS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-SILENT-FAILURE-35_APPENDIX-A_CATCH_INVENTORY.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-LIFECYCLE-SEALING-32_APPENDIX-A_LIFETIME_INVENTORY.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-CORE-ONLY-REGISTRY-11_APPENDIX-A_AUTHORITY_CENSUS.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE2_2026-09-21/PLAN-DATA-AUTHORITY-14_APPENDIX-A_CATALOG_CLASSIFICATION.md`,
+`docs/plans/PLAYER_FACING_TRIAD_B_EXERCISE_DREAM_SANITATION_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md`. The five
+`_APPENDIX-A_*` files are distinct from their already-trimmed base-plan
+files (`PLAN-CRIME-SYNDICATES-44.md`, `PLAN-SILENT-FAILURE-35.md`,
+`PLAN-LIFECYCLE-SEALING-32.md`, `PLAN-CORE-ONLY-REGISTRY-11.md`,
+`PLAN-DATA-AUTHORITY-14.md` — trimmed in earlier batches per
+`WORKTREE_OWNERSHIP.md`), verified by exact-path grep before editing.
+`UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md` listed only as a
+`Generated & Docs:` deliverable of the DONE `claim-unblock-plans-167-169-2026-09-24`
+(same safe pattern as batch38-40). Considered but skipped:
+`SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md` — named directly under
+`Governance:` in `claim-shelter-operations-board-2026-09-25` (IMPLEMENTATION
+COMPLETE but not a passive `Docs:` listing; same caution as the PFGL
+realtime-combat files skipped in batch40). `W2-06_ENRICHMENT_SURFACING.md`,
+`PLAN-RUNTIME-PERF-16.md`, `PLAN-ORPHAN-SEAL-01.md` (and its appendix
+family), `CLAIM_READINESS_INDEX.md`, and the two PFGL realtime-combat files
+again left untouched. Conservative approach: kept all unique content up to
+and including the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` / `SECTION XII: DEEP POLISHING PASS`
+marker in each file (QA-checklist, sign-off, or "Polishing checklist"
+scaffold boundary), byte-identical to the committed original verified per
+file by md5 of the retained prefix. The `PLAN-CRIME-SYNDICATES-44_APPENDIX-A`
+file has very little unique content (~1,028 lines against ~181k total) —
+inspected by hand; boundary sits cleanly after its own "Polishing checklist"
+paragraph. Spot-checked padding identifiers (`DreamHallucinationGovernor`,
+`DOSSIER-TRIADB-P000-0001`) against `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` — zero references. Removed only the
+padding from the marker to EOF. Retained 1,028, 2,701, 2,469, 2,272, 2,358,
+2,310 and 2,311 lines respectively (~123 MB -> ~1.2 MB, ~1.25M padding lines
+removed); `git diff --check` passed on all seven. Provenance notes cite
+`git show c8c1e453d:<path>` (confirmed correct per file). Status: COMPLETE,
+uncommitted.
+
+## claim-plan-bloat-reduction-batch42-conservative-2026-09-28
+
+User-authorized forty-second continuation, batch of seven (numbered batch42;
+zero file overlap with any prior claim). Docs-only. Exact editable plan paths
+(all clean and unclaimed before editing; each listed only as a
+`Generated & Docs:` deliverable of a DONE claim, same safe pattern as
+batch38-41):
+`docs/plans/UNBLOCK_OLDEST_PLAN165_166_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_OLDEST_PLAN171_174_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_C3_PLANS_174_175_INTEGRATION_PLAN.md` (unclaimed),
+`docs/plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md`,
+`docs/plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE3_2026-09-21/PLAN-EVENT-WIRING-21_APPENDIX-A_EVENT_INVENTORY.md`
+(distinct from its already-trimmed base `PLAN-EVENT-WIRING-21.md`, verified
+by exact-path grep), `docs/plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md`.
+`W2-06_ENRICHMENT_SURFACING.md`, `PLAN-RUNTIME-PERF-16.md`,
+`PLAN-ORPHAN-SEAL-01.md` (and its appendix family), `CLAIM_READINESS_INDEX.md`,
+the two PFGL realtime-combat files, and `SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md`
+again left untouched. Conservative approach: kept all unique content up to
+and including the last genuine line before the first
+`SECTION XII: DEEP POLISHING PASS` marker in each file (the QA-checklist /
+sign-off boundary), byte-identical to the committed original verified per
+file by md5 of the retained prefix. Spot-checked padding identifiers
+(`IndustrialChemicalReagentCoordinator`, `SolventDistillationGovernor`,
+`EXP39-REAGENT-SEC-A-0001`) against `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` — zero references. Removed only the
+padding from the marker to EOF.
+
+| File | Lines before | Lines after |
+|---|---:|---:|
+| `UNBLOCK_OLDEST_PLAN165_166_INTEGRATION_PLAN.md` | 181,104 | 2,320 |
+| `UNBLOCK_OLDEST_PLAN171_174_INTEGRATION_PLAN.md` | 181,101 | 2,317 |
+| `UNBLOCK_C3_PLANS_174_175_INTEGRATION_PLAN.md` | 181,093 | 2,309 |
+| `UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md` | 181,074 | 2,290 |
+| `UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md` | 181,069 | 2,285 |
+| `PLAN-EVENT-WIRING-21_APPENDIX-A_EVENT_INVENTORY.md` | 181,066 | 2,394 |
+| `UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md` | 181,057 | 2,273 |
+
+Total ~124 MB -> ~1.2 MB, ~1.25M padding lines removed; `git diff --check`
+passed on all seven. Provenance notes cite `git show c8c1e453d:<path>`
+(confirmed correct per file). Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch43-conservative-2026-09-28
+
+User-authorized forty-third continuation, batch of seven (numbered batch43;
+zero file overlap with any prior claim). Docs-only. Exact editable plan
+paths (all clean and unclaimed before editing):
+`docs/plans/UNBLOCK_PLAN143_AFFLICTION_BRIDGE_INTEGRATION_PLAN.md`,
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-ARCHITECTURE-BOUNDARY-31_APPENDIX-A_IO_INVENTORY.md`
+(distinct from its already-trimmed base `PLAN-ARCHITECTURE-BOUNDARY-31.md`),
+`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-REFERENCE-INTEGRITY-34_APPENDIX-A_REFERENCE_GRAPH.md`
+(distinct from its already-trimmed base `PLAN-REFERENCE-INTEGRITY-34.md`),
+`docs/plans/UNBLOCK_OLDEST_BATCH5_PLANS_55_58_INTEGRATION_PLAN.md`
+(unclaimed). **New territory this batch:** the non-integrated `docs/plans/`
+pool of large unclaimed padded files is nearly exhausted (checked; remaining
+large files either lack any `BATCH-NN`/`SECTION XII` marker — e.g.
+`PLAN_03/13/14/15/16` under `expansion_wave1/`, flagged by batch26 as
+needing separate analysis and left untouched again here — or are excluded
+per standing caution: `CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`
+is named directly as `Plan:` in multiple active `CORE-MECH-2026-09-25` wave
+claims, same caution as batch40/41's `Governance:`-listed exclusions). So
+this batch draws its remaining three files from `docs/plans/integrated/`
+(archived `FULLY INTEGRATED` plans — verified each still carries the
+mandatory `FULLY INTEGRATED` header per the workflow rule, confirmed
+unclaimed, and confirmed to carry the identical padding pattern):
+`docs/plans/integrated/expeditions/INTEGRATED_PLAN_EXPEDITION-FAMILY-TRUTH-269.md`,
+`docs/plans/integrated/economy/INTEGRATED_PLAN_ECONOMY-DATA-FAMILY-TRUTH-270.md`,
+`docs/plans/integrated/memorials/INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md`.
+`W2-06_ENRICHMENT_SURFACING.md`, `PLAN-RUNTIME-PERF-16.md`,
+`PLAN-ORPHAN-SEAL-01.md` (and its appendix family), `CLAIM_READINESS_INDEX.md`,
+the two PFGL realtime-combat files, and `SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md`
+again left untouched. Conservative approach: kept all unique content up to
+and including the last genuine line before the first
+`SECTION XII: DEEP POLISHING PASS` marker in each file (QA-checklist or
+sign-off boundary), byte-identical to the committed original verified per
+file by md5 of the retained prefix. Spot-checked padding identifiers
+(`ProceduralLootGovernor`, `DOSSIER-EXPEDFAM-P269-0001`) against `Assets/`,
+`src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` — zero
+references. Removed only the padding from the marker to EOF.
+
+| File | Lines before | Lines after |
+|---|---:|---:|
+| `UNBLOCK_PLAN143_AFFLICTION_BRIDGE_INTEGRATION_PLAN.md` | 181,049 | 2,265 |
+| `PLAN-ARCHITECTURE-BOUNDARY-31_APPENDIX-A_IO_INVENTORY.md` | 180,900 | 2,373 |
+| `PLAN-REFERENCE-INTEGRITY-34_APPENDIX-A_REFERENCE_GRAPH.md` | 180,883 | 2,356 |
+| `UNBLOCK_OLDEST_BATCH5_PLANS_55_58_INTEGRATION_PLAN.md` | 179,496 | 2,473 |
+| `INTEGRATED_PLAN_EXPEDITION-FAMILY-TRUTH-269.md` | 198,645 | 2,339 |
+| `INTEGRATED_PLAN_ECONOMY-DATA-FAMILY-TRUTH-270.md` | 198,524 | 2,747 |
+| `INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md` | 196,890 | 2,363 |
+
+Total ~124 MB -> ~1.4 MB, ~1.24M padding lines removed; `git diff --check`
+passed on all seven. Provenance notes cite the correct source commit per
+file (`git show c8c1e453d:<path>` for the four `docs/plans/` files, `git show
+4ab1891e1:<path>` for the three `docs/plans/integrated/` files — each
+confirmed via `git log -1 -- <path>` before writing, per the batch38
+correction). Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch44-conservative-2026-09-28
+
+User-authorized forty-fourth continuation, batch of seven (numbered batch44;
+zero file overlap with any prior claim). Docs-only, all drawn from
+`docs/plans/integrated/` (archived `FULLY INTEGRATED` plans; the
+non-integrated `docs/plans/` pool of large unclaimed candidates is now
+essentially exhausted per batch43's note). Exact editable plan paths (all
+clean, unclaimed, and confirmed carrying the mandatory `FULLY INTEGRATED`
+header before editing):
+`docs/plans/integrated/encounters/INTEGRATED_PLAN_KNOCK-WHITELIST-TRUTH-155.md`,
+`docs/plans/integrated/economy/INTEGRATED_PLAN_ECONOMY-LEDGER-TRUTH-96.md`,
+`docs/plans/integrated/economy/INTEGRATED_PLAN_TRADE-TELL-TRUTH-248.md`,
+`docs/plans/integrated/world/INTEGRATED_W4_02_WORLD_TRAVEL_EXPLORATION_D16_ROUTE_HAZARD.md`,
+`docs/plans/integrated/medical/INTEGRATED_PLAN_172_RADIATION_MUTATION.md`,
+`docs/plans/integrated/audio/INTEGRATED_PLAN_173_RADIO_PRODUCTION.md`,
+`docs/plans/integrated/survivors/INTEGRATED_PLAN_151_WORKING_ANIMALS.md`.
+(The two near-name-collision `EXPANSION_PROGRAM_WAVE*_2026-09-21/PLAN-*_APPENDIX-A_SCAFFOLD.md`
+hits from the initial grep are distinct files in a different directory, not
+claims on these integrated archives — verified by exact path before
+proceeding.) `W2-06_ENRICHMENT_SURFACING.md`, `PLAN-RUNTIME-PERF-16.md`,
+`PLAN-ORPHAN-SEAL-01.md` (and its appendix family), `CLAIM_READINESS_INDEX.md`,
+the two PFGL realtime-combat files, `SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md`,
+`CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`, and the
+no-marker `PLAN_03/13/14/15/16` files again left untouched. Conservative
+approach: kept all unique content up to and including the last genuine line
+before the first `SECTION XII: DEEP POLISHING PASS` marker in each file
+(QA-checklist or sign-off boundary), byte-identical to the committed
+original verified per file by md5 of the retained prefix. Spot-checked
+padding identifiers (`RadiationMutationEvolutionCoordinator`,
+`SomaticMutationExpressionGovernor`, `RADMUT-P172-SEC-A-0001`) against
+`Assets/`, `src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/`
+— zero references. Removed only the padding from the marker to EOF.
+
+| File | Lines before | Lines after |
+|---|---:|---:|
+| `INTEGRATED_PLAN_KNOCK-WHITELIST-TRUTH-155.md` | 196,638 | 2,640 |
+| `INTEGRATED_PLAN_ECONOMY-LEDGER-TRUTH-96.md` | 196,298 | 2,692 |
+| `INTEGRATED_PLAN_TRADE-TELL-TRUTH-248.md` | 190,405 | 2,704 |
+| `INTEGRATED_W4_02_WORLD_TRAVEL_EXPLORATION_D16_ROUTE_HAZARD.md` | 188,472 | 7,117 |
+| `INTEGRATED_PLAN_172_RADIATION_MUTATION.md` | 182,555 | 2,267 |
+| `INTEGRATED_PLAN_173_RADIO_PRODUCTION.md` | 182,552 | 2,264 |
+| `INTEGRATED_PLAN_151_WORKING_ANIMALS.md` | 181,662 | 2,276 |
+
+Total ~124 MB -> ~1.3 MB, ~1.24M padding lines removed; `git diff --check`
+passed on all seven. Provenance notes cite the correct source commit per
+file, each confirmed via `git log -1 -- <path>` before writing: `git show
+4ab1891e1:<path>` for six files, `git show 02a04bc70:<path>` for
+`INTEGRATED_W4_02_WORLD_TRAVEL_EXPLORATION_D16_ROUTE_HAZARD.md` (a later,
+separate commit). Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch45-conservative-2026-09-28
+
+User-authorized forty-fifth continuation, requested as a batch of seven; only
+**three** unclaimed padded candidates actually exist in the repository at
+this point, so this claim covers three, not seven (see note below — no
+padded file was skipped to hit a count). Zero file overlap with any prior
+claim. Docs-only. Exact editable plan paths (all clean and unclaimed before
+editing):
+`docs/plans/integrated/radio/INTEGRATED_PLAN_119_UV_CORONA_DETECTION.md`,
+`docs/plans/integrated/world/INTEGRATED_PLAN_121_GPR_CARTOGRAPHY.md`,
+`docs/plans/expansion_wave1/PLAN_03_COMMUNITY_PUBLIC_WORKS.md`. The latter
+was previously miscategorized as a no-marker file by association with its
+siblings `PLAN_13/14/15/16` (batch26's finding); re-verified this batch that
+`PLAN_03` does carry the `BATCH-NN ARCHITECTURAL EXPANSION` padding pattern
+(9 copies) while `PLAN_13/14/15/16` genuinely do not (re-confirmed
+`grep -c` = 0 on all four) — those four remain untouched pending separate
+analysis per batch26. Conservative approach: kept all unique content up to
+and including the last genuine line before the first padding marker in each
+file, byte-identical to the committed original verified per file by md5 of
+the retained prefix. Spot-checked padding identifiers
+(`Domain03CommunitCoordNode`, `03_community_public_work.json`,
+`Plan119UvCoronaCoordNode`, `plan_119_uv_corona_detec.json`) against
+`Assets/`, `src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/`
+— zero references. Removed only the padding from the marker to EOF.
+
+| File | Lines before | Lines after |
+|---|---:|---:|
+| `INTEGRATED_PLAN_119_UV_CORONA_DETECTION.md` | 40,088 | 913 |
+| `INTEGRATED_PLAN_121_GPR_CARTOGRAPHY.md` | 40,077 | 902 |
+| `PLAN_03_COMMUNITY_PUBLIC_WORKS.md` | 162,267 | 17,429 |
+
+`git diff --check` passed on all three. Provenance notes cite the correct
+source commit per file (confirmed via `git log -1 -- <path>` before writing):
+`git show 7837f3fae:<path>` for the two `PLAN_119`/`PLAN_121` files, `git show
+c8c1e453d:<path>` for `PLAN_03`.
+
+**Pool status — exhaustively re-checked, not just estimated:** a fresh
+full-repository scan (`git status --porcelain docs/plans/` diffed against a
+fresh `find docs/plans -name '*.md'`, then every remaining unmodified file
+grepped for the `BATCH-NN ARCHITECTURAL EXPANSION` / `SECTION XII` markers)
+found **zero further padded candidates** outside the files already excluded
+by name in batches 38-44:
+`W2-06_ENRICHMENT_SURFACING.md` (concurrent lane, per `.ai/state.md`),
+`PLAN-RUNTIME-PERF-16.md` (claimed, `claim-deep-audit-repair-2026-09-26`),
+`PLAN-ORPHAN-SEAL-01.md` + its `APPENDIX-V/K/G` siblings (claimed,
+`claim-wave20-readiness-closure-281-284-2026-09-27`),
+`CLAIM_READINESS_INDEX.md` (same wave20 claim),
+`PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md` +
+`PLAYER_FACING_REALTIME_COMBAT_PHYSICS_AI_INTEGRATION_PLAN.md` (named under
+`Governance:` in `claim-pfgl-rt-combat-tetrad-2026-09-25`, COMPLETE but not a
+passive `Docs:` listing),
+`SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md` (named under `Governance:` in
+`claim-shelter-operations-board-2026-09-25`, IMPLEMENTATION COMPLETE with a
+noted concurrent docs-index conflict),
+`CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md` (live multi-wave
+plan file, `CORE-MECH-2026-09-25` waves ongoing through at least W12), and
+`PLAN_13/14/15/16` under `expansion_wave1/` (no padding markers at all —
+different content shape, needs its own analysis, not blind trimming). No
+further batch can proceed without either the foreman/user lifting one of
+these named exclusions, or a fresh premise check finding one has since
+closed out. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-2026-09-28
+
+User-authorized continuation (second parallel session, 2026-09-28
+"continue with the next 7 plans"), docs-only bloat reduction, conservative
+keep-operative-content protocol identical to batches 1-44: keep all unique
+content up to and including the last genuine line before the first
+`SECTION XII: DEEP POLISHING PASS` / `BATCH-NN ARCHITECTURAL EXPANSION`
+padding marker, byte-identical prefix verified per file by md5, provenance
+note citing the pre-trim commit appended, `git diff --check` enforced, and
+padding identifiers spot-checked against `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (zero references
+required). This claim is deliberately distinct from the concurrent
+batchNN-numbered lane to prevent further file collisions; the seven exact
+paths below were verified clean and unclaimed immediately before this
+claim was appended:
+`docs/plans/expansion_wave1/PLAN_15_SURVIVOR_VOCATIONS_PERSONAL_ARCS_AND_SHELTER_CULTURE.md`,
+`docs/plans/expansion_wave1/PLAN_13_ASH_MERIDIAN_DIPLOMACY_AND_LATE_GAME_COALITION.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-V_MASTER_WORKLIST.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-G_HOST_INTEGRATION_POINTS.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-K_API_SIGNATURES.md`,
+`.ai/plans/integrated/kitchen/INTEGRATED_ORPHAN_SEAL_01_A98_FOOD_TYPE_SPOILAGE.md`,
+`.ai/plans/integrated/memorials/INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md`.
+Also recorded under this claim: the three files trimmed by this session's
+earlier batch before the collision repair (notes labelled
+"parallel-session batch"):
+`docs/plans/expansion_wave1/PLAN_04_SCENARIO_CAMPAIGN_LIBRARY.md`,
+`docs/plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md`,
+`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-BODY-INDUSTRY-05_APPENDIX-A_ORPHAN_DOSSIERS.md`
+(all prefix-identical, `git diff --check` clean, provenance
+`git show c8c1e453d:<path>`). Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch46-conservative-2026-09-28
+
+User-authorized forty-sixth continuation. Batch45 reported the padded-file
+pool exhausted outside 10 named exclusions and asked the user how to
+proceed; user chose to lift the caution on the three files that were
+COMPLETE/IMPLEMENTATION COMPLETE but named under `Governance:` rather than
+`Docs:` in their claim (a self-imposed caution, not a real block). Zero file
+overlap with any prior claim, **including the concurrent
+`claim-plan-bloat-reduction-parallel-batch-2026-09-28` lane discovered on
+this file immediately above** — that lane's claimed paths
+(`PLAN_13`/`PLAN_15` under `expansion_wave1/`, the `PLAN-ORPHAN-SEAL-01`
+`APPENDIX-V/G/K` siblings, plus two others) were read but not touched by
+this claim; verified via `git status --porcelain` that none of them were
+modified by this claim's work. Docs-only. Exact editable plan paths (all
+clean and unclaimed before editing):
+`docs/plans/PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md`,
+`docs/plans/PLAYER_FACING_REALTIME_COMBAT_PHYSICS_AI_INTEGRATION_PLAN.md`,
+`docs/plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md`. Conservative
+approach: kept all unique content up to and including the last genuine line
+before the first `SECTION XII: DEEP POLISHING PASS` marker in each file
+(QA-checklist or sign-off boundary), byte-identical to the committed
+original verified per file by md5 of the retained prefix. Spot-checked
+padding identifiers (`ShelterOperationsBoardCoordinator`,
+`CriticalTaskDispatchGovernor`, `SHELTEROPS-BOARD-SEC-A-0001`) against
+`Assets/`, `src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/`
+— zero references. Removed only the padding from the marker to EOF.
+
+| File | Lines before | Lines after |
+|---|---:|---:|
+| `PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md` | 181,789 | 2,403 |
+| `PLAYER_FACING_REALTIME_COMBAT_PHYSICS_AI_INTEGRATION_PLAN.md` | 181,747 | 2,947 |
+| `SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md` | 181,647 | 2,261 |
+
+`git diff --check` passed on all three. Provenance notes cite `git show
+c8c1e453d:<path>` (confirmed correct per file via `git log -1 -- <path>`).
+
+**This closes the batch38-46 conservative-trim run's independently-tracked
+candidate list** (11 named exclusions from batch45, minus the 3 lifted here
+= 8 remaining: `W2-06_ENRICHMENT_SURFACING.md`, `PLAN-RUNTIME-PERF-16.md`,
+`PLAN-ORPHAN-SEAL-01.md` + its 3 appendices (now also claimed by the
+concurrent parallel-batch lane above — do not pick these up from this lane
+even after that claim's status changes; re-verify current ownership first),
+`CLAIM_READINESS_INDEX.md`, and `CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`).
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-2026-09-28 (same
+session, 2026-09-28 09:31): execution COMPLETE, uncommitted. All seven
+claimed files trimmed with the conservative protocol stated above. Boundaries:
+the two `expansion_wave1` wave-pattern files were cut before their first
+`## Continuation Wave 2` header (the authored plan, through its
+"Documentation receipt", is 563 lines; the removed 73,354 lines are 58
+generated continuation waves of scaffold passes/packets/receipts —
+cross-file template evidence: sibling PLAN_14/PLAN_16 share near-identical
+pass names "The Frostpetal Marker/Lesson/Horizon/Witness", "A Chair/Seat
+beside Amber Roost"; sampled identifiers Frostpetal/Amber Roost/Darkwater
+Bell have zero code/data/test references). The five framework-family files
+were cut at their first `SECTION XII` / `## BATCH-154 ARCHITECTURAL
+EXPANSION` marker per batches 1-44 convention (the `COMPREHENSIVE
+ARCHITECTURAL EXPANSION` framework blocks in APPENDIX-K and
+MORTUARY-TRUTH-123 retained, as the concurrent lane's protocol does).
+Retained 563, 563, 2,324, 2,329, 4,457, 4,406 and 2,353 content lines
+respectively (~72 MB -> ~590 KB, ~1.09M padding lines removed). Every file
+verified: retained prefix byte-identical to the pre-trim commit by md5
+(provenance `a3a938868` for the two wave files, `c8c1e453d` for the three
+ORPHAN-SEAL-01 appendices, `d7a681921` for A98, `7837f3fae` for
+Mortuary-123), `git diff --check` clean on all seven, zero padding
+self-references in any retained prefix. Provenance notes embedded in each
+file cite the correct per-file commit.
+
+## claim-plan-bloat-reduction-parallel-batch-2-2026-09-28
+
+User-authorized continuation (second parallel session, third batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to batches 1-46 and this session's earlier parallel batch: keep all unique
+content up to and including the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` / `SECTION XII` / `Continuation Wave`
+padding marker, byte-identical prefix verified per file by md5 against the
+pre-trim commit, provenance note appended, `git diff --check` enforced,
+padding identifiers spot-checked against `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, `Assets/StreamingAssets/Data/` and other docs (zero
+references). Extends the pool beyond `docs/plans` (now exhausted) into
+`docs/expansions/` prose plan files, which carry the identical generated
+`BATCH-NN` padding template. Seven exact paths, verified clean and unclaimed
+immediately before this claim (NOTE: `PLAN_14`/`PLAN_16` were previously
+listed as deliberately-skipped pending analysis in an earlier batch's note,
+not as an owned claim; the required analysis is recorded in this session's
+prior batch — the files are structurally identical to the already-trimmed
+PLAN_13/PLAN_15, same 58-wave continuation padding, cross-file duplicate
+packet names, zero code/data references):
+`docs/plans/expansion_wave1/PLAN_14_UNDERPASS_SETTLEMENTS_HIDDEN_ROUTES_AND_INFRASTRUCTURE.md`,
+`docs/plans/expansion_wave1/PLAN_16_ENDGAME_HORIZONS_FACTION_CONVERGENCE_AND_LEGACY_FRONTIERS.md`,
+`docs/expansions/prose_wave145/cw145_11_the_roadside_is_part_of_the_bargain_plan.md`,
+`docs/expansions/prose_wave170/cw170_15_heat_read_through_two_floors_plan.md`,
+`docs/expansions/prose_wave143/cw143_02_the_contract_is_read_twice_plan.md`,
+`docs/expansions/prose_wave114/cw114_10_room_fixture_pump_flow_ledger_two_hands_recorded_the_well_plan.md`,
+`docs/expansions/prose_wave152/cw152_07_the_shoe_beneath_the_pallet_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-2-2026-09-28 (same
+session, 2026-09-28 09:36): execution COMPLETE, uncommitted. All seven
+claimed files trimmed. Boundaries: the two `expansion_wave1` wave-pattern
+files cut before their first `## Continuation Wave 2` header (authored plan
+through "Documentation receipt" = 563 lines retained; 58 generated
+continuation waves removed; structure verified identical to the
+already-trimmed PLAN_13/PLAN_15, satisfying the earlier batch's
+"requires its own analysis" note). The five `docs/expansions/prose_wave*`
+prose plan files cut at their first `## BATCH-NN ARCHITECTURAL EXPANSION`
+banner; the complete authored prose plan (design bible, all prose sections
+through the "Handoff"/closer paragraph) is retained — 7,518, 7,471, 7,468,
+3,145 and 7,490 lines respectively. Retained content lines: 563, 563,
+7,518, 7,471, 7,468, 3,145, 7,490 (~74 MB -> ~2.9 MB, ~1.11M padding
+lines removed). Every file verified: worktree identical to the pre-trim
+commit at selection time (race-abort guard), retained prefix
+byte-identical by md5 (provenance `a3a938868` for PLAN_14/16,
+`c8c1e453d` for the five prose files), `git diff --check` clean on all
+seven, zero padding self-references in retained prefixes, and padding
+plan-authority identifiers (PLAN-B162-245, PLAN-B163-094/157/116,
+PLAN-B120-42) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite the correct per-file commit.
+
+## claim-plan-bloat-reduction-parallel-batch-3-2026-09-28
+
+User-authorized continuation (second parallel session, fourth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to batches 1-46 and this session's prior parallel batches: keep all unique
+authored content up to and including the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` padding banner, byte-identical prefix
+verified per file by md5 against the pre-trim commit, provenance note
+appended, `git diff --check` enforced, padding identifiers spot-checked
+against `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+`Assets/StreamingAssets/Data/` and other docs (zero references verified).
+All seven are `docs/expansions/prose_wave*` prose plan files carrying the
+identical generated `BATCH-NN` padding; the complete authored prose plan
+(design bible through the "Handoff"/closer paragraph) is retained in each.
+Seven exact paths, verified clean and unclaimed immediately before this
+claim was appended:
+`docs/expansions/prose_wave162/cw162_11_the_furrow_ends_at_the_name_plan.md`,
+`docs/expansions/prose_wave153/cw153_07_a_nest_for_the_black_bird_plan.md`,
+`docs/expansions/prose_wave151/cw151_06_a_little_damp_a_little_dark_plan.md`,
+`docs/expansions/prose_wave170/cw170_09_a_rule_posted_over_a_door_plan.md`,
+`docs/expansions/prose_wave101/cw101_01_audio_log_black_flotilla_offer_day_80_docks_at_midnight_plan.md`,
+`docs/expansions/prose_wave152/cw152_03_a_name_offered_as_a_word_plan.md`,
+`docs/expansions/prose_wave121/cw121_03_open_microphone_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-3-2026-09-28 (same
+session, 2026-09-28 09:42): execution COMPLETE, uncommitted. All seven
+prose plan files trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION`
+banner (BATCH-163 x4, BATCH-115, BATCH-163, BATCH-140). Retained content
+lines: 7,467, 7,468, 7,465, 7,467, 2,781, 7,468 and 3,145 respectively —
+the complete authored prose plan through each file's "Handoff"/closer
+paragraph (~74 MB -> ~2.9 MB, ~1.33M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at selection time (race-abort
+guard), retained prefix byte-identical by md5, `git diff --check` clean on
+all seven, zero padding self-references in retained prefixes, padding
+identifiers (PLAN-B163-103/201/100/185/226, PLAN-B115-18, PLAN-B140-090)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-4-2026-09-28
+
+User-authorized continuation (second parallel session, fifth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer paragraph (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked against
+`Assets/`, `src/`, `Ashfall.Core.Tests/`, `Assets/StreamingAssets/Data/` and
+other docs (zero references verified). Seven exact `docs/expansions/prose_wave*`
+paths, verified clean and unclaimed immediately before this claim was
+appended:
+`docs/expansions/prose_wave170/cw170_08_capacity_is_not_a_welcome_plan.md`,
+`docs/expansions/prose_wave150/cw150_02_every_figure_has_a_drift_plan.md`,
+`docs/expansions/prose_wave155/cw155_02_the_claim_ledger_opens_plan.md`,
+`docs/expansions/prose_wave139/cw139_05_four_days_without_service_plan.md`,
+`docs/expansions/prose_wave121/cw121_02_no_network_feed_plan.md`,
+`docs/expansions/prose_wave151/cw151_07_a_blank_is_still_a_form_plan.md`,
+`docs/expansions/prose_wave169/cw169_02_steam_is_not_a_signal_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-4-2026-09-28 (same
+session, 2026-09-28 10:01): execution COMPLETE, uncommitted. All seven prose
+plan files trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Retained content lines: 7,467, 7,464, 7,588, 7,092, 3,145, 7,468 and 7,464
+respectively — the complete authored prose plan through each file's
+"Handoff"/closer paragraph (~74 MB -> ~2.9 MB, ~1.32M padding lines
+removed). Every file verified: worktree identical to `c8c1e453d` at
+selection time (race-abort guard engaged, no aborts), retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references in retained prefixes, padding identifiers
+(PLAN-B163-145/189/271/137/210/260, PLAN-B140-092) confirmed unreferenced
+in code, data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch47-conservative-2026-09-28
+
+User-authorized forty-seventh continuation from this session (independent
+of, and non-overlapping with, the concurrent
+`claim-plan-bloat-reduction-parallel-batch-*` lane above — that lane
+discovered and opened up the `docs/expansions/prose_wave*/` pool after
+`docs/plans/` was exhausted; this claim extends into the same newly-found
+pool from the far end of the size-sorted list to minimize collision risk,
+and confirmed via `git status --porcelain` on the exact 7 paths immediately
+before writing that none had been touched by the parallel lane). Docs-only,
+same conservative protocol as batches 1-46: keep all unique authored prose
+content up to and including the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner, byte-identical prefix verified
+per file by md5, provenance note appended, `git diff --check` enforced,
+padding identifiers spot-checked (zero references required). Seven exact
+paths, verified clean and unclaimed immediately before this claim:
+`docs/expansions/prose_wave39/cw39_01_the_stars_are_fewer_than_the_books_promised_plan.md`,
+`docs/expansions/prose_wave42/cw42_03_the_fire_break_beneath_the_calendar_plan.md`,
+`docs/expansions/prose_wave119/cw119_08_release_criteria_plan.md`,
+`docs/expansions/prose_wave117/cw117_04_the_arithmetic_of_the_first_tin_plan.md`,
+`docs/expansions/prose_wave42/cw42_02_the_perimeter_where_mercy_waited_plan.md`,
+`docs/expansions/prose_wave99/cw99_04_room_history_bench_markings_tally_not_days_plan.md`,
+`docs/expansions/prose_wave99/cw99_03_glitch_29_boiler_sigh_one_steam_exhalation_plan.md`.
+Boundary in every file: the authored prose expansion proposal's own closing
+line ("This file is a complete prose expansion proposal. It contains no
+implementation claim...") followed by a `====` separator, then the padding
+banner — the same clean pattern the parallel lane found. Spot-checked
+padding identifiers (`Cw3901TheStarsCoordNode`, `cw39_01_the_stars_are_fe.json`,
+`Ashfall.Core.Cw3901The`) against `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` — zero references.
+
+| File | Lines before | Lines after |
+|---|---:|---:|
+| `cw39_01_the_stars_are_fewer_than_the_books_promised_plan.md` | 201,964 | 3,682 |
+| `cw42_03_the_fire_break_beneath_the_calendar_plan.md` | 201,690 | 3,680 |
+| `cw119_08_release_criteria_plan.md` | 201,373 | 3,158 |
+| `cw117_04_the_arithmetic_of_the_first_tin_plan.md` | 201,274 | 3,158 |
+| `cw42_02_the_perimeter_where_mercy_waited_plan.md` | 201,233 | 3,685 |
+| `cw99_04_room_history_bench_markings_tally_not_days_plan.md` | 201,076 | 2,794 |
+| `cw99_03_glitch_29_boiler_sigh_one_steam_exhalation_plan.md` | 201,076 | 2,794 |
+
+Total ~93 MB -> ~1.3 MB, ~1.39M padding lines removed; `git diff --check`
+passed on all seven. Provenance notes cite `git show c8c1e453d:<path>`
+(confirmed correct per file via `git log -1 -- <path>`). Status: COMPLETE,
+uncommitted.
+
+**Scale note:** `docs/expansions/prose_wave*/` contains roughly 2,000+
+files at this same ~200k-line bloated size (a pool far larger than
+`docs/plans/` ever was). Two independent sessions are now trimming from it
+in parallel; each has been re-verifying `git status` on its exact target
+paths immediately before writing to avoid collisions, and none have
+occurred so far. A batch of 7 makes negligible progress against this pool's
+total size — worth flagging to the user/foreman if a larger, coordinated
+pass is wanted instead of continued small batches.
+
+## claim-plan-bloat-reduction-parallel-batch-5-2026-09-28
+
+User-authorized continuation (second parallel session, sixth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer paragraph (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven exact `docs/expansions/prose_wave*` paths,
+verified clean and unclaimed immediately before this claim was appended:
+`docs/expansions/prose_wave146/cw146_03_the_scale_is_used_once_plan.md`,
+`docs/expansions/prose_wave154/cw154_14_the_ridge_has_no_cover_plan.md`,
+`docs/expansions/prose_wave155/cw155_12_the_hinges_are_burning_plan.md`,
+`docs/expansions/prose_wave113/cw113_02_room_fixture_workshop_busbar_leg_one_leg_under_load_plan.md`,
+`docs/expansions/prose_wave101/cw101_02_journal_day_85_alex_recovery_quarantine_left_a_mark_plan.md`,
+`docs/expansions/prose_wave113/cw113_08_room_fixture_pump_well_collar_chain_without_bucket_plan.md`,
+`docs/expansions/prose_wave107/cw107_05_room_history_a_frame_stayed_the_name_on_the_board_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-5-2026-09-28 (same
+session, 2026-09-28 10:05): execution COMPLETE, uncommitted. All seven prose
+plan files trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner
+(BATCH-163 x3, BATCH-115 x2, BATCH-114, BATCH-117). Retained content lines:
+7,468, 7,469, 7,484, 2,781, 2,781, 2,781 and 2,781 respectively — the
+complete authored prose plan through each file's "Handoff"/closer paragraph
+(~74 MB -> ~2.6 MB, ~1.34M padding lines removed). Every file verified:
+worktree identical to `c8c1e453d` at selection time (race-abort guard
+engaged, no aborts), retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references in retained
+prefixes, padding identifiers (PLAN-B163-211/209/205, PLAN-B115-17/14,
+PLAN-B114-57, PLAN-B117-37) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch48-conservative-2026-09-28
+
+User-authorized forty-eighth continuation from this session, from the same
+`docs/expansions/prose_wave*/` pool as batch47, non-overlapping with the
+concurrent parallel lane (verified via `git status --porcelain` on the
+exact 7 paths immediately before writing). Docs-only, identical protocol to
+batch47: keep all unique authored prose content through the file's own
+closing line ("This file is a complete prose expansion proposal...") plus
+the `====` separator, cut the `BATCH-NN ARCHITECTURAL EXPANSION` banner
+onward, byte-identical prefix verified per file by md5, provenance note
+appended, `git diff --check` enforced. Seven exact paths, verified clean
+and unclaimed immediately before this claim:
+`docs/expansions/prose_wave96/cw96_01_audio_log_technology_sharing_day_220_plan.md`,
+`docs/expansions/prose_wave94/cw94_05_social_event_workshop_crafting_synergy_plan.md`,
+`docs/expansions/prose_wave92/cw92_02_social_event_communal_meal_cohesion_plan.md`,
+`docs/expansions/prose_wave80/cw80_06_courier_guild_route_collapse_briefing_plan.md`,
+`docs/expansions/prose_wave101/cw101_08_journal_day_285_power_crisis_winter_fear_plan.md`,
+`docs/expansions/prose_wave47/cw47_05_the_observatory_that_wanted_its_archive_plan.md`,
+`docs/expansions/prose_wave46/cw46_05_the_shelter_that_reported_without_a_person_plan.md`.
+Spot-checked padding identifiers (`Cw9601AudioLogCoordNode`,
+`cw96_01_audio_log_techno.json`) against `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` — zero references.
+
+| File | Lines before | Lines after |
+|---|---:|---:|
+| `cw96_01_audio_log_technology_sharing_day_220_plan.md` | 201,076 | 2,794 |
+| `cw94_05_social_event_workshop_crafting_synergy_plan.md` | 201,076 | 2,794 |
+| `cw92_02_social_event_communal_meal_cohesion_plan.md` | 201,076 | 2,794 |
+| `cw80_06_courier_guild_route_collapse_briefing_plan.md` | 201,076 | 2,794 |
+| `cw101_08_journal_day_285_power_crisis_winter_fear_plan.md` | 201,076 | 2,794 |
+| `cw47_05_the_observatory_that_wanted_its_archive_plan.md` | 201,046 | 2,764 |
+| `cw46_05_the_shelter_that_reported_without_a_person_plan.md` | 201,046 | 2,764 |
+
+Total ~92 MB -> ~1.1 MB, ~1.39M padding lines removed; `git diff --check`
+passed on all seven. Provenance notes cite `git show c8c1e453d:<path>`
+(confirmed correct per file). Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-6-2026-09-28
+
+User-authorized continuation (second parallel session, seventh batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer paragraph (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified; none of these paths appear in the concurrent lane's
+batch47 claim). Seven exact `docs/expansions/prose_wave*` paths, verified
+clean and unclaimed immediately before this claim was appended:
+`docs/expansions/prose_wave100/cw100_05_ritual_generator_casing_knock_three_spanner_taps_plan.md`,
+`docs/expansions/prose_wave106/cw106_07_room_history_boiler_jacket_three_days_unlogged_plan.md`,
+`docs/expansions/prose_wave141/cw141_01_breakfast_starts_at_half_past_six_plan.md`,
+`docs/expansions/prose_wave111/cw111_02_room_fixture_corridor_chart_rail_string_gone_dark_plan.md`,
+`docs/expansions/prose_wave112/cw112_04_room_fixture_kitchen_ladle_nail_head_height_order_plan.md`,
+`docs/expansions/prose_wave158/cw158_13_a_favor_is_counted_beside_the_tool_plan.md`,
+`docs/expansions/prose_wave103/cw103_04_journal_day_115_food_theft_crossed_out_suspicion_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-6-2026-09-28 (same
+session, 2026-09-28 10:10): execution COMPLETE, uncommitted. All seven prose
+plan files trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner
+(BATCH-115 x3, BATCH-119, BATCH-162, BATCH-117, BATCH-163). Retained content
+lines: 2,781, 2,781, 7,088, 2,781, 2,781, 7,466 and 2,781 respectively —
+the complete authored prose plan through each file's "Handoff"/closer
+paragraph (~74 MB -> ~2.2 MB, ~1.36M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at selection time (race-abort
+guard engaged, no aborts — the concurrent lane had resumed into
+docs/expansions with its batch47 but none of these seven paths overlap its
+claims), retained prefix byte-identical by md5, `git diff --check` clean on
+all seven, zero padding self-references in retained prefixes, padding
+identifiers (PLAN-B115-03/22/31, PLAN-B119-06, PLAN-B162-189, PLAN-B163-021,
+PLAN-B117-58) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch49-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-48: drawn from the shared
+`docs/expansions/prose_wave*` pool (this session's continuation after
+`docs/plans/` and `docs/plans/integrated/` were exhausted by batch45-46).
+Boundary re-verified per file (all seven matched the established pattern:
+authored closing sentence *"This file is a complete prose expansion
+proposal. It contains no implementation claim and no assertion that any
+candidate passage is already reachable."*, blank lines, a `====` separator,
+then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner —
+`keep_line = marker_line - 2` in every case). Padding identifiers spot-checked
+(e.g. `Cw9401Audio`, `cw94_01_audio_log_surviv.json`) confirmed unreferenced
+via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean — no collision with the concurrent
+parallel lane's batch-6/addendum claim above, which covers a disjoint set of
+seven `prose_wave*` paths.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave94/cw94_01_audio_log_survivor_confession_day_88_plan.md` | 201,076 | 2,794 |
+| `docs/expansions/prose_wave80/cw80_01_office_cartridge_allocation_quarrel_plan.md` | 201,076 | 2,794 |
+| `docs/expansions/prose_wave101/cw101_04_room_history_tuner_warm_ventilation_bleed_plan.md` | 201,076 | 2,794 |
+| `docs/expansions/prose_wave46/cw46_02_the_free_fuel_that_asked_you_to_come_alone_plan.md` | 201,046 | 2,764 |
+| `docs/expansions/prose_wave45/cw45_01_the_station_that_predicted_its_own_silence_plan.md` | 201,046 | 2,764 |
+| `docs/expansions/prose_wave99/cw99_07_memorial_rite_empty_bunk_night_unmade_bunk_island_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave93/cw93_05_room_history_the_basin_that_was_a_mixing_bowl_plan.md` | 200,948 | 2,794 |
+
+Total: 1,407,266 -> 19,498 lines (~1,387,768 padding lines removed, ~66 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path> | head -n <N>`, `git diff --check` clean on all
+seven. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch50-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-49: drawn from the shared
+`docs/expansions/prose_wave*` pool. Boundary re-verified per file (all seven
+matched the established pattern: authored closing sentence *"This file is a
+complete prose expansion proposal. It contains no implementation claim and
+no assertion that any candidate passage is already reachable."*, blank
+lines, a `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner at line 2786 — `keep_line = 2784` in every case). Padding
+identifiers spot-checked (e.g. `Cw10103Glitch`,
+`cw101_03_glitch_31_water.json`) confirmed unreferenced via `grep -rl` across
+`Assets/`, `src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/`
+(exit 1, no matches). Provenance commit confirmed per file via
+`git log -1 --format=%h` — all seven: `c8c1e453d`. Race-safety check
+(`git status --porcelain` on the exact seven paths, immediately before
+writing) ran clean — no collision with the concurrent parallel lane's most
+recent claim (batch-6/addendum above), which covers a disjoint set of seven
+`prose_wave*` paths.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave101/cw101_03_glitch_31_water_still_gurgle_one_bubble_plan.md` | 201,076 | 2,794 |
+| `docs/expansions/prose_wave99/cw99_02_journal_day_58_radiation_storm_72_hours_to_prepare_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave112/cw112_03_room_fixture_filtration_spare_belt_wrong_size_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave110/cw110_06_room_fixture_workshop_swarf_grate_two_rewelds_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave105/cw105_08_superstition_lucky_lower_bunk_bunk_four_claim_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave104/cw104_05_room_history_suture_pack_opened_and_resealed_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave102/cw102_08_superstition_dead_frequency_omen_94_2_fear_plan.md` | 200,948 | 2,794 |
+
+Total: 1,406,764 -> 19,558 lines (~1,387,206 padding lines removed, ~66 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path> | head -n 2784`, `git diff --check` clean on all
+seven. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-7-2026-09-28
+
+User-authorized continuation (second parallel session, eighth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer paragraph (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified; none of these paths appear in the concurrent lane's
+batch47/batch48 claims; cw99_07 was dropped from selection after the lane
+took it mid-selection). Seven exact `docs/expansions/prose_wave*` paths,
+verified clean and unclaimed immediately before this claim was appended:
+`docs/expansions/prose_wave101/cw101_07_audio_log_power_crisis_day_280_generator_room_call_plan.md`,
+`docs/expansions/prose_wave99/cw99_02_journal_day_58_radiation_storm_72_hours_to_prepare_plan.md`,
+`docs/expansions/prose_wave105/cw105_08_superstition_lucky_lower_bunk_bunk_four_claim_plan.md`,
+`docs/expansions/prose_wave103/cw103_07_audio_log_fuel_crisis_day_260_workshop_tomorrow_plan.md`,
+`docs/expansions/prose_wave114/cw114_04_room_fixture_stores_bin_labels_two_print_runs_plan.md`,
+`docs/expansions/prose_wave114/cw114_09_room_fixture_pump_leather_cup_the_leather_cup_plan.md`,
+`docs/expansions/prose_wave131/cw131_09_the_road_stays_open_either_way_plan.md`.
+Status: IN PROGRESS.
+
+**Collision flag (added by the batch50 session, 2026-09-28, immediately on
+observing this claim appended above mine):** two of the seven paths just
+claimed here —
+`docs/expansions/prose_wave99/cw99_02_journal_day_58_radiation_storm_72_hours_to_prepare_plan.md`
+and
+`docs/expansions/prose_wave105/cw105_08_superstition_lucky_lower_bunk_bunk_four_claim_plan.md`
+— were already trimmed and verified moments earlier by
+`claim-plan-bloat-reduction-batch50-conservative-2026-09-28` above (both now
+2,794 lines, provenance note citing batch50 already appended, `git diff
+--check` clean, md5-verified). No content was lost — the batch50 trim is the
+only write either file has received. This session's pre-claim `git status
+--porcelain` check for these two paths must have run before the batch50
+write landed on disk; no action needed from the batch50 side, but the
+parallel session should skip re-trimming these two on execution (its own
+race-abort guard should catch this on the pre-write re-check) and select two
+replacement paths instead.
+
+Supplement to claim-plan-bloat-reduction-parallel-batch-7-2026-09-28 (same
+session, 2026-09-28 10:15): two of the seven claimed paths
+(`cw99_02_journal_day_58_radiation_storm_72_hours_to_prepare_plan.md` and
+`cw105_08_superstition_lucky_lower_bunk_bunk_four_claim_plan.md`) were
+modified by the concurrent lane between this session's claim and its trim
+attempt; this session's race-abort guard fired and no overwrite occurred —
+those two files are ceded to the concurrent lane and are NOT part of this
+session's batch. Replacements selected, verified clean/unclaimed and
+spot-checked (zero external references, zero padding self-references):
+`docs/expansions/prose_wave100/cw100_03_glitch_30_generator_hum_drop_three_second_octave_plan.md`,
+`docs/expansions/prose_wave126/cw126_01_address_without_a_guarantee_plan.md`.
+Status: IN PROGRESS (7 total: five trimmed, two replacements pending).
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-7-2026-09-28 (same
+session, 2026-09-28 10:16): execution COMPLETE, uncommitted. Final seven
+(five originals plus two replacements): cw101_07, cw103_07, cw114_04,
+cw114_09, cw131_09, cw100_03, cw126_01. All trimmed at their first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines: 2,781,
+2,781, 3,145, 3,145, 10,600, 2,781 and 3,802 respectively — the complete
+authored prose plan through each file's "Handoff"/closer section (cw131_09
+retains its full 19-section numbered prose plan, cw126_01 its complete
+multi-section proposal; ~74 MB -> ~2.4 MB, ~1.36M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time
+(race-abort guard engaged; the two lane-taken files were ceded cleanly with
+no overwrite), retained prefix byte-identical by md5, `git diff --check`
+clean on all seven, zero padding self-references, padding identifiers
+(PLAN-B115-15, PLAN-B118-30, PLAN-B120-38/35, PLAN-B176-119,
+PLAN-B115-20, PLAN-B140-024) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch51-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-50: drawn from the shared
+`docs/expansions/prose_wave*` pool, explicitly excluding the concurrent
+lane's five in-progress `batch-7` paths at selection time (all now resolved
+per that lane's own addendum above, with no overlap against this batch's
+final seven). Boundary re-verified per file: five matched the standard
+pattern at marker line 2786 (`keep_line = 2784`); two
+(`cw116_10`, `cw117_10`) use the longer per-plan authored-content template
+with the marker at line 3150 (`keep_line = 3148`) — same closing sentence,
+blank lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner, boundary confirmed by direct inspection in every case.
+Padding identifiers spot-checked (e.g. `CW11201ROOMFIXTURE`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave112/cw112_01_room_fixture_bunks_bolt_rings_old_holes_inside_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave111/cw111_08_room_fixture_foundry_sand_beds_chalk_no_match_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave105/cw105_03_audio_log_survivor_romance_day_250_rare_love_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave102/cw102_07_journal_day_292_power_restored_heat_returns_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave100/cw100_07_audio_log_medical_alert_day_58_seal_immediately_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave116/cw116_10_the_quartermasters_addition_plan.md` | 200,908 | 3,158 |
+| `docs/expansions/prose_wave117/cw117_10_quiet_hours_are_load_bearing_plan.md` | 200,780 | 3,158 |
+
+Total: 1,406,428 -> 20,086 lines (~1,386,342 padding lines removed, ~66 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch52-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-51: drawn from the shared
+`docs/expansions/prose_wave*` pool. Boundary re-verified per file: five
+matched the standard pattern at marker line 2786 (`keep_line = 2784`); one
+(`cw114_06`) uses the longer template with marker at line 3150
+(`keep_line = 3148`); one (`cw47_01`) has marker at line 2755
+(`keep_line = 2753`) — every case confirmed by direct inspection of the
+closing sentence, blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding identifiers
+spot-checked (e.g. `CW11105ROOMFIXT`, `PLAN-B116-05`) confirmed unreferenced
+via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean; no new concurrent-lane claims
+appeared between this batch's selection and its write.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave111/cw111_05_room_fixture_kitchen_flue_damper_welded_open_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave102/cw102_03_glitch_21_phantom_draft_north_corridor_thread_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave101/cw101_05_ritual_crust_for_the_waste_outer_sill_offering_plan.md` | 200,948 | 2,794 |
+| `docs/expansions/prose_wave114/cw114_06_room_fixture_main_inverter_panel_not_load_plan.md` | 200,800 | 3,158 |
+| `docs/expansions/prose_wave47/cw47_01_the_river_name_between_the_numbers_plan.md` | 200,773 | 2,763 |
+| `docs/expansions/prose_wave95/cw95_06_memorial_rite_wall_tally_engraving_plan.md` | 200,676 | 2,794 |
+| `docs/expansions/prose_wave86/cw86_07_phonetic_alphabet_drill_sergeant_plan.md` | 200,676 | 2,794 |
+
+Total: 1,405,769 -> 19,891 lines (~1,385,878 padding lines removed, ~66 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-8-2026-09-28
+
+User-authorized continuation (second parallel session, ninth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primary paths plus three named spares (used only
+if the concurrent lane takes a primary between claim and trim, per the
+race-abort protocol; lane is at batch50 and actively contending the prose
+pool). Primaries, verified clean and unclaimed immediately before this claim:
+`docs/expansions/prose_wave102/cw102_03_glitch_21_phantom_draft_north_corridor_thread_plan.md`,
+`docs/expansions/prose_wave120/cw120_06_caller_list_plan.md`,
+`docs/expansions/prose_wave156/cw156_14_the_advisory_ends_before_the_ventilation_note_plan.md`,
+`docs/expansions/prose_wave128/cw128_12_home_by_six_plan.md`,
+`docs/expansions/prose_wave111/cw111_03_room_fixture_bunks_dosimeter_nail_top_of_watch_plan.md`,
+`docs/expansions/prose_wave101/cw101_05_ritual_crust_for_the_waste_outer_sill_offering_plan.md`,
+`docs/expansions/prose_wave146/cw146_17_the_barricade_has_two_owners_in_the_record_plan.md`.
+Spares: `cw144_21_punched_tape_number_409`, `cw126_10_the_destination_still_lit`,
+`cw146_05_three_antibiotics_and_a_claim_about_water`.
+Status: IN PROGRESS.
+
+**Collision flag (added by the batch53 session, 2026-09-28, immediately on
+observing this claim appended above mine):** two of the seven primary paths
+claimed here —
+`docs/expansions/prose_wave102/cw102_03_glitch_21_phantom_draft_north_corridor_thread_plan.md`
+and
+`docs/expansions/prose_wave101/cw101_05_ritual_crust_for_the_waste_outer_sill_offering_plan.md`
+— were already trimmed and verified by
+`claim-plan-bloat-reduction-batch52-conservative-2026-09-28` above (both now
+2,794 lines, provenance note citing batch52 already appended, `git diff
+--check` clean, md5-verified). No content was lost; this session's pre-claim
+check evidently ran before that write landed. Same pattern as the
+batch50/batch-7 collision earlier in this file — the parallel lane's own
+race-abort guard and named spares should handle this on execution, no action
+needed from this side. This session (batch53) is excluding all five
+remaining primaries and all three spares listed above from its own
+selection to avoid contending the same paths.
+
+Supplement to claim-plan-bloat-reduction-parallel-batch-8-2026-09-28 (same
+session, 2026-09-28 10:21): two primaries (`cw102_03_glitch_21_phantom_draft_north_corridor_thread_plan.md`,
+`cw101_05_ritual_crust_for_the_waste_outer_sill_offering_plan.md`) were
+taken by the concurrent lane between claim and trim; race-abort guard
+fired, no overwrite, both ceded to the lane. Pre-analyzed spares
+substituted: `cw144_21_punched_tape_number_409` (K=7,468),
+`cw126_10_the_destination_still_lit` (K=3,802).
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-8-2026-09-28 (same
+session, 2026-09-28 10:22): execution COMPLETE, uncommitted. Final seven
+(cw120_06, cw156_14, cw128_12, cw111_03, cw146_17, cw144_21, cw126_10) —
+trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained
+content lines: 3,145, 7,465, 11,803, 2,781, 7,468, 7,468 and 3,802
+respectively — the complete authored prose plan through each file's
+"Handoff"/closer section (cw128_12 retains its full multi-section proposal,
+~11,800 lines; ~73 MB -> ~2.7 MB, ~1.33M padding lines removed). Every
+file verified: worktree identical to `c8c1e453d` at trim time (race-abort
+guard engaged; two lane-taken primaries ceded cleanly, two spares
+substituted), retained prefix byte-identical by md5, `git diff --check`
+clean on all seven, zero padding self-references, padding identifiers
+(PLAN-B140-098, PLAN-B160-118, PLAN-B171-119, PLAN-B115-28, PLAN-B162-027,
+PLAN-B163-140, PLAN-B140-034) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch53-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-52: drawn from the shared
+`docs/expansions/prose_wave*` pool, explicitly excluding all seven primaries
+and three spares from the concurrent lane's in-progress
+`claim-plan-bloat-reduction-parallel-batch-8-2026-09-28` at selection time
+(two of that claim's primaries — `cw102_03`, `cw101_05` — collided with this
+session's already-completed batch52; a collision flag was added to that
+entry above; no overlap against this batch's final seven). Boundary
+re-verified per file: four matched the standard pattern at marker line 2786
+(`keep_line = 2784`); three (`cw42_01`, `cw40_03`, `cw38_05`) use the longer
+per-plan template with markers at lines 3673/3675/3673 respectively
+(`keep_line = 3671`/`3673`/`3671`); one (`cw37_01`) has marker at line 3073
+(`keep_line = 3071`) — every case confirmed by direct inspection of the
+closing sentence, blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding identifiers
+spot-checked (e.g. `CW8204ACTIVATED`, `PLAN-B118-05`) confirmed unreferenced
+via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave82/cw82_04_activated_charcoal_toast_biscuits_plan.md` | 200,676 | 2,794 |
+| `docs/expansions/prose_wave42/cw42_01_the_needle_that_remembered_zero_plan.md` | 200,608 | 3,681 |
+| `docs/expansions/prose_wave95/cw95_02_journal_day_175_technology_dangers_plan.md` | 200,214 | 2,794 |
+| `docs/expansions/prose_wave92/cw92_06_memorial_rite_division_of_effects_plan.md` | 200,214 | 2,794 |
+| `docs/expansions/prose_wave40/cw40_03_the_stamp_that_was_not_a_debt_plan.md` | 200,186 | 3,683 |
+| `docs/expansions/prose_wave38/cw38_05_the_hum_means_stay_off_the_metal_plan.md` | 200,184 | 3,681 |
+| `docs/expansions/prose_wave37/cw37_01_the_transfer_slip_without_a_train_plan.md` | 200,136 | 3,081 |
+
+Total: 1,402,218 -> 22,708 lines (~1,379,510 padding lines removed, ~66 MB ->
+~1.1 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch54-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-53: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent-lane claims had
+appeared since batch53 at selection time. Boundary re-verified per file:
+three matched the standard pattern at marker line 2786 (`keep_line = 2784`);
+one (`cw41_04`) marker at line 3672 (`keep_line = 3670`); three (`cw119_10`,
+`cw116_09`, `cw115_06`) at marker line 3150 (`keep_line = 3148`); one
+(`cw47_02`) marker at line 2757 (`keep_line = 2755`) — every case confirmed
+by direct inspection of the
+closing sentence, blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding identifiers
+spot-checked (e.g. `CW8207PENICILLI`, `PLAN-B118-17`) confirmed unreferenced
+via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave82/cw82_07_penicillium_bread_crust_compress_plan.md` | 200,214 | 2,794 |
+| `docs/expansions/prose_wave41/cw41_04_the_stones_above_the_storeroom_plan.md` | 200,183 | 3,680 |
+| `docs/expansions/prose_wave119/cw119_10_evening_count_plan.md` | 199,790 | 3,158 |
+| `docs/expansions/prose_wave47/cw47_02_the_school_radio_petar_used_once_plan.md` | 199,692 | 2,765 |
+| `docs/expansions/prose_wave116/cw116_09_below_forbidden_frequencies_plan.md` | 199,682 | 3,158 |
+| `docs/expansions/prose_wave115/cw115_06_the_mornings_bare_handed_list_plan.md` | 199,682 | 3,158 |
+| `docs/expansions/prose_wave97/cw97_05_social_event_memorial_plaque_vigil_plan.md` | 199,593 | 2,794 |
+
+Total: 1,398,836 -> 21,507 lines (~1,377,329 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-9-2026-09-28
+
+User-authorized continuation (second parallel session, tenth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch52 and actively contending). Primaries:
+`docs/expansions/prose_wave146/cw146_05_three_antibiotics_and_a_claim_about_water_plan.md`,
+`docs/expansions/prose_wave140/cw140_07_the_second_sheet_holds_the_measure_plan.md`,
+`docs/expansions/expansion_143_the_ledger_has_no_decorative_columns_plan.md`,
+`docs/expansions/prose_wave166/cw166_07_ninety_days_in_charcoal_plan.md`,
+`docs/expansions/prose_wave149/cw149_05_a_sign_has_to_be_read_before_it_is_believed_plan.md`,
+`docs/expansions/prose_wave144/cw144_03_hear_ostrowski_before_marking_the_approach_plan.md`,
+`docs/expansions/prose_wave148/cw148_03_a_vigil_template_with_room_for_the_unnamed_plan.md`.
+Spares: `cw168_17_a_vouch_is_not_a_bloc`, `cw156_12_the_cap_stayed_chained`,
+`cw130_07_honest_scale_fixed_price`.
+Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch55-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-54: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-9-2026-09-28` primaries/spares
+above (different wave numbers throughout). Boundary re-verified per file:
+six matched the standard pattern at marker line 2786 (`keep_line = 2784`);
+one (`cw117_03`) at marker line 3150 (`keep_line = 3148`) — every case
+confirmed by direct inspection of the closing sentence, blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Padding identifiers spot-checked (e.g. `CW9402JOURNALDA`, `PLAN-B118-44`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave94/cw94_02_journal_day_45_scavenger_meeting_plan.md` | 199,593 | 2,794 |
+| `docs/expansions/prose_wave82/cw82_08_calcium_gluconate_chalk_slurry_plan.md` | 199,593 | 2,794 |
+| `docs/expansions/prose_wave117/cw117_03_the_names_column_by_the_ladder_plan.md` | 199,554 | 3,158 |
+| `docs/expansions/prose_wave74/cw74_04_the_cabbage_soup_counting_song_plan.md` | 199,297 | 2,794 |
+| `docs/expansions/prose_wave66/cw66_04_the_world_that_does_not_answer_plan.md` | 199,297 | 2,794 |
+| `docs/expansions/prose_wave62/cw62_01_request_of_the_graveyard_shift_plan.md` | 199,297 | 2,794 |
+| `docs/expansions/prose_wave58/cw58_06_the_morning_list_without_hands_plan.md` | 199,297 | 2,794 |
+
+Total: 1,395,928 -> 20,922 lines (~1,375,006 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+Correction to claim-plan-bloat-reduction-parallel-batch-9-2026-09-28: the
+primary listed as `docs/expansions/expansion_143_the_ledger_has_no_decorative_columns_plan.md`
+has the actual path
+`docs/expansions/wave27/expansion_143_the_ledger_has_no_decorative_columns_plan.md`
+(wave27 subdirectory was omitted by a path transcription error in the original
+claim entry; the wrong path was never touched). The correct file is verified
+clean and unclaimed, provenance `c8c1e453d`, boundary K=1,079 (closer:
+"This plan is complete as an editorial proposal...").
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-9-2026-09-28 (same
+session, 2026-09-28 10:29): execution COMPLETE, uncommitted. Final seven
+(cw146_05, cw140_07, wave27/expansion_143, cw166_07, cw149_05, cw144_03,
+cw148_03) — all trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION`
+banner. Retained content lines: 7,468, 7,092, 1,079, 7,465, 7,467, 7,460 and
+7,469 respectively — the complete authored prose plan through each file's
+"Handoff"/closer section (~72 MB -> ~2.7 MB, ~1.31M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time, retained
+prefix byte-identical by md5, `git diff --check` clean on all seven, zero
+padding self-references, padding identifiers (PLAN-B161-255, PLAN-B162-258,
+PLAN-B109-07, PLAN-B163-113, PLAN-B161-233, PLAN-B160-152, PLAN-B161-250)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch56-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-55: drawn from the shared
+`docs/expansions/prose_wave*` pool, explicitly excluding all seven primaries
+and three spares from the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-9-2026-09-28` at selection time
+(no overlap against this batch's final seven — different wave numbers
+throughout, confirmed again against that claim's addendum above). Boundary
+re-verified per file: six matched the standard closing sentence ("This file
+is a complete prose expansion proposal...") at markers 2786/2786/2786
+(`keep_line = 2784`), 2757 (`keep_line = 2755`, `cw47_03`), and 2756
+(`keep_line = 2754`, `cw44_05`) and 2722 (`keep_line = 2720`, `cw43_05`);
+one (`cw36_05`) uses a different, longer 19-section authored template with
+its own distinct closing sentence ("This plan is complete as a content
+proposal when each selected passage traces to its cited source...") but the
+identical boundary structure (closing sentence, two blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner at
+line 2890, `keep_line = 2888`) — confirmed by direct inspection of the full
+preceding section (its numbered "19. Acceptance boundary" section) before
+cutting. Padding identifiers spot-checked (e.g. `CW5605THEDRAINAGEL`,
+`PLAN-B112-20`) confirmed unreferenced via `grep -rl` across `Assets/`,
+`src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1,
+no matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave56/cw56_05_the_drainage_lines_under_south_plan.md` | 199,297 | 2,794 |
+| `docs/expansions/prose_wave56/cw56_03_the_split_block_after_midnight_plan.md` | 199,297 | 2,794 |
+| `docs/expansions/prose_wave55/cw55_05_the_seed_annex_after_the_harvest_plan.md` | 199,297 | 2,794 |
+| `docs/expansions/prose_wave47/cw47_03_the_three_knocks_in_the_clinic_plan.md` | 199,268 | 2,765 |
+| `docs/expansions/prose_wave44/cw44_05_the_pianist_between_the_static_plan.md` | 199,267 | 2,764 |
+| `docs/expansions/prose_wave43/cw43_05_the_ridge_that_kept_the_horizon_plan.md` | 199,233 | 2,730 |
+| `docs/expansions/prose_wave36/cw36_05_the_protocol_without_an_ending_plan.md` | 199,185 | 2,898 |
+
+Total: 1,394,844 -> 21,539 lines (~1,373,305 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-10-2026-09-28
+
+User-authorized continuation (second parallel session, eleventh batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch55 and actively contending). Primaries:
+`docs/expansions/prose_wave168/cw168_17_a_vouch_is_not_a_bloc_plan.md`,
+`docs/expansions/prose_wave156/cw156_12_the_cap_stayed_chained_plan.md`,
+`docs/expansions/prose_wave130/cw130_07_honest_scale_fixed_price_plan.md`,
+`docs/expansions/prose_wave146/cw146_15_a_passive_node_loses_its_reach_in_weather_plan.md`,
+`docs/expansions/prose_wave160/cw160_02_take_only_what_you_need_is_still_an_order_plan.md`,
+`docs/expansions/prose_wave152/cw152_10_eleven_footboards_and_one_extra_blanket_plan.md`,
+`docs/expansions/prose_wave140/cw140_04_the_agenda_is_written_on_the_back_plan.md`.
+Spares: `cw141_11_the_register_attached_to_the_map`,
+`cw131_04_the_crates_before_dawn`, `cw149_20_the_penitent_s_shroud_is_still_a_proposal`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-10-2026-09-28 (same
+session, 2026-09-28 10:34): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw168_17, cw156_12, cw130_07, cw146_15, cw160_02, cw152_10,
+cw140_04) trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Retained content lines: 7,478, 7,469, 12,137, 7,469, 7,467, 7,468 and 7,092
+respectively — the complete authored prose plan through each file's
+"Handoff"/closer section (cw130_07 retains its full multi-section proposal,
+~12,100 lines; ~72 MB -> ~2.7 MB, ~1.30M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B163-200, PLAN-B163-144,
+PLAN-B176-230, PLAN-B162-025, PLAN-B162-001, PLAN-B162-014, PLAN-B162-266)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch57-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-56: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-10-2026-09-28` primaries/spares
+above (different wave numbers throughout). Boundary confirmed per file via
+direct `Read` inspection (the Bash safety classifier had a transient outage
+mid-selection; boundary checks were done with the Read tool instead, then
+Bash was retried successfully for the reference/hash/race-safety checks and
+the trim itself): all seven matched the standard pattern at marker line 2786
+(`keep_line = 2784`) — closing sentence, two blank lines, `====` separator,
+then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding
+identifiers spot-checked (e.g. `CW9806MEMORIALR`, `PLAN-B116-41`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave98/cw98_06_memorial_rite_work_gang_farewell_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave97/cw97_04_room_history_the_count_came_short_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave96/cw96_04_room_history_a_chair_from_the_row_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave93/cw93_01_audio_log_radio_message_day_35_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave92/cw92_04_glitch_22_repeating_relay_click_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave82/cw82_03_fermented_poppy_straw_laudanum_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave82/cw82_01_powdered_willow_bark_salicylate_plan.md` | 199,169 | 2,794 |
+
+Total: 1,394,183 -> 19,558 lines (~1,374,625 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-11-2026-09-28
+
+User-authorized continuation (second parallel session, twelfth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch56 and actively contending). Primaries:
+`docs/expansions/prose_wave141/cw141_11_the_register_attached_to_the_map_plan.md`,
+`docs/expansions/prose_wave131/cw131_04_the_crates_before_dawn_plan.md`,
+`docs/expansions/prose_wave149/cw149_20_the_penitent_s_shroud_is_still_a_proposal_plan.md`,
+`docs/expansions/prose_wave122/cw122_04_the_transfer_list_plan.md`,
+`docs/expansions/wave18/expansion_90_the_copy_costs_less_than_the_question_plan.md`,
+`docs/expansions/prose_wave127/cw127_08_a_town_that_is_gone_plan.md`,
+`docs/expansions/prose_wave155/cw155_18_the_shaft_behind_the_barricades_plan.md`.
+Spares: `cw127_07_only_for_the_living`, `cw121_01_frequency_change`,
+`cw140_01_the_cupola_watch_changes_hands`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-11-2026-09-28 (same
+session, 2026-09-28 10:39): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw141_11, cw131_04, cw149_20, cw122_04, wave18/expansion_90,
+cw127_08, cw155_18) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 7,091, 10,600, 7,482, 3,145,
+584, 8,214 and 7,524 respectively — the complete authored prose plan
+through each file's "Handoff"/closer section (cw131_04 retains its full
+19-section numbered prose plan ~10,600 lines; wave18/expansion_90 retains
+its complete short-form editorial proposal, 584 lines; ~72 MB -> ~2.7 MB,
+~1.31M padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B162-282, PLAN-B170-241, PLAN-B161-006, PLAN-B140-079,
+PLAN-B107-13, PLAN-B170-440, PLAN-B163-013) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch58-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-57: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-11-2026-09-28` primaries/spares
+above (different wave numbers throughout). Boundary re-verified per file:
+six matched the standard pattern at marker line 2786 (`keep_line = 2784`);
+one (`cw115_08`) at marker line 3150 (`keep_line = 3148`) — every case
+confirmed by direct inspection of the closing sentence, blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Padding identifiers spot-checked (e.g. `CW8005IRONSYNOD`, `PLAN-B117-39`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave80/cw80_05_iron_synod_clandestine_forge_heist_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave80/cw80_02_tempest_scavenger_ambush_orders_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave79/cw79_05_rebuilders_census_discrepancy_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave79/cw79_03_railway_guild_schedule_dispute_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave55/cw55_03_the_substation_that_remembers_current_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave49/cw49_05_the_shadow_that_waited_at_the_airlock_plan.md` | 199,169 | 2,794 |
+| `docs/expansions/prose_wave115/cw115_08_two_sides_of_the_hallway_plan.md` | 199,061 | 3,158 |
+
+Total: 1,394,075 -> 19,922 lines (~1,374,153 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch59-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-58: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent-lane claims had
+appeared since batch58 at selection time (the prior parallel batch-11 was
+already fully resolved with its addendum). Boundary re-verified per file:
+five matched the standard pattern at marker line 2786 (`keep_line = 2784`);
+two (`cw117_06`, `cw116_03`) at marker line 3150 (`keep_line = 3148`) —
+every case confirmed by direct inspection of the closing sentence, blank
+lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Padding identifiers spot-checked (e.g. `CW9203ROOMHISTO`,
+`PLAN-B119-56`) confirmed unreferenced via `grep -rl` across `Assets/`,
+`src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1,
+no matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave92/cw92_03_room_history_the_first_filter_change_plan.md` | 199,041 | 2,794 |
+| `docs/expansions/prose_wave113/cw113_06_room_fixture_foundry_goggle_hook_milk_lenses_plan.md` | 199,041 | 2,794 |
+| `docs/expansions/prose_wave102/cw102_05_ritual_birthday_match_flame_one_flame_plan.md` | 199,041 | 2,794 |
+| `docs/expansions/prose_wave117/cw117_06_for_whoever_walked_out_plan.md` | 198,933 | 3,158 |
+| `docs/expansions/prose_wave116/cw116_03_two_chalk_knuckles_by_inner_dog_plan.md` | 198,933 | 3,158 |
+| `docs/expansions/prose_wave74/cw74_06_the_dosimeter_counting_rhyme_plan.md` | 198,837 | 2,794 |
+| `docs/expansions/prose_wave57/cw57_01_the_station_with_no_questions_plan.md` | 198,837 | 2,794 |
+
+Total: 1,392,663 -> 20,286 lines (~1,372,377 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-12-2026-09-28
+
+User-authorized continuation (second parallel session, thirteenth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch57 and actively contending). Primaries:
+`docs/expansions/prose_wave127/cw127_07_only_for_the_living_plan.md`,
+`docs/expansions/prose_wave121/cw121_01_frequency_change_plan.md`,
+`docs/expansions/prose_wave140/cw140_01_the_cupola_watch_changes_hands_plan.md`,
+`docs/expansions/prose_wave149/cw149_01_thirty_days_measured_by_what_still_works_plan.md`,
+`docs/expansions/prose_wave151/cw151_14_the_intake_stool_tastes_the_draw_first_plan.md`,
+`docs/expansions/prose_wave120/cw120_08_if_the_trains_stop_plan.md`,
+`docs/expansions/prose_wave120/cw120_03_no_further_east_plan.md`.
+Spares: `cw161_20_five_corridors_make_a_map_not_a_promise`,
+`cw140_19_the_notice_arrives_after_the_due_date`,
+`cw154_11_the_brigade_flash_on_the_apron`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-12-2026-09-28 (same
+session, 2026-09-28 10:43): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw127_07, cw121_01, cw140_01, cw149_01, cw151_14, cw120_08,
+cw120_03) trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Retained content lines: 8,214, 3,145, 7,088, 7,465, 7,476, 3,145 and 3,145
+respectively — the complete authored prose plan through each file's
+"Handoff"/closer section (~72 MB -> ~2.5 MB, ~1.31M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time,
+retained prefix byte-identical by md5, `git diff --check` clean on all
+seven, zero padding self-references, padding identifiers (PLAN-B170-428,
+PLAN-B140-077, PLAN-B163-004, PLAN-B160-182, PLAN-B161-284, PLAN-B140-074,
+PLAN-B140-091) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch60-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-59: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-12-2026-09-28` primaries/spares
+above (different wave numbers throughout). Boundary re-verified per file:
+all seven matched the standard pattern at marker line 2786
+(`keep_line = 2784`) — closing sentence, two blank lines, `====` separator,
+then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding
+identifiers spot-checked (e.g. `CW5502THESUITCASES`, `PLAN-B112-56`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave55/cw55_02_the_suitcases_in_the_stands_plan.md` | 198,837 | 2,794 |
+| `docs/expansions/prose_wave92/cw92_05_ritual_departure_plate_touch_plan.md` | 198,709 | 2,794 |
+| `docs/expansions/prose_wave85/cw85_05_canticle_of_the_geiger_psalm_plan.md` | 198,709 | 2,794 |
+| `docs/expansions/prose_wave84/cw84_03_distillery_hydrometer_glass_plan.md` | 198,709 | 2,794 |
+| `docs/expansions/prose_wave83/cw83_03_unregistered_geiger_crystal_plan.md` | 198,709 | 2,794 |
+| `docs/expansions/prose_wave81/cw81_03_mimeographed_heresy_pamphlet_plan.md` | 198,709 | 2,794 |
+| `docs/expansions/prose_wave79/cw79_02_cult_recruitment_conversation_plan.md` | 198,709 | 2,794 |
+
+Total: 1,391,091 -> 19,558 lines (~1,371,533 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch61-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-60: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent-lane claims had
+appeared since batch60 at selection time. Boundary re-verified per file: six
+matched the standard pattern at marker line 3150 (`keep_line = 3148`); one
+(`cw86_02`) at marker line 2786 (`keep_line = 2784`) — every case confirmed
+by direct inspection of the closing sentence, blank lines, `====` separator,
+then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding
+identifiers spot-checked (e.g. `CW11705REQUESTO`, `PLAN-B121-22`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave117/cw117_05_request_of_the_graveyard_shift_plan.md` | 198,509 | 3,158 |
+| `docs/expansions/prose_wave119/cw119_03_filtered_light_plan.md` | 198,345 | 3,158 |
+| `docs/expansions/prose_wave119/cw119_02_growth_trial_plan.md` | 198,345 | 3,158 |
+| `docs/expansions/prose_wave86/cw86_02_swedish_rhapsody_musicbox_plan.md` | 198,221 | 2,794 |
+| `docs/expansions/prose_wave117/cw117_02_under_the_returned_tin_plan.md` | 198,177 | 3,158 |
+| `docs/expansions/prose_wave115/cw115_03_the_third_bunk_upper_cold_plan.md` | 198,177 | 3,158 |
+| `docs/expansions/prose_wave122/cw122_07_dispatch_is_gone_plan.md` | 198,111 | 3,158 |
+
+Total: 1,387,885 -> 21,542 lines (~1,366,343 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-13-2026-09-28
+
+User-authorized continuation (second parallel session, fourteenth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch60 and actively contending). Primaries:
+`docs/expansions/prose_wave161/cw161_20_five_corridors_make_a_map_not_a_promise_plan.md`,
+`docs/expansions/prose_wave140/cw140_19_the_notice_arrives_after_the_due_date_plan.md`,
+`docs/expansions/prose_wave154/cw154_11_the_brigade_flash_on_the_apron_plan.md`,
+`docs/expansions/prose_wave157/cw157_08_the_search_is_kept_in_the_present_tense_plan.md`,
+`docs/expansions/wave26/expansion_132_the_blue_door_and_the_paper_voice_plan.md`,
+`docs/expansions/prose_wave149/cw149_16_the_form_gives_the_decision_a_clean_edge_plan.md`,
+`docs/expansions/prose_wave157/cw157_07_gregori_was_not_the_other_dead_person_plan.md`.
+Spares: `cw143_06_the_lamps_are_out_and_the_door_is_locked`,
+`cw150_17_leave_the_grain`, `wave20/expansion_103_eight_beds_three_kinds_of_waiting`.
+Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch62-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-61: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-13-2026-09-28` primaries/spares
+above (different wave numbers throughout). Boundary re-verified per file:
+five matched the standard closing sentence at marker line 3150
+(`keep_line = 3148`); one (`cw42_05`) at marker line 3675
+(`keep_line = 3673`); one (`cw35_01`) uses the same longer 19-section
+authored template seen in batch56's `cw36_05` — a distinct closing sentence
+("This plan is complete as a game-content proposal when selected passages
+can be traced to the cited location or linked records...") but the identical
+boundary structure (closing sentence, two blank lines, `====` separator,
+then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner at line 2541,
+`keep_line = 2539`) — confirmed by direct inspection of the full preceding
+"19. Acceptance boundary" section before cutting. Padding identifiers
+spot-checked (e.g. `CW12205NIGHTSHI`, `PLAN-B140-088`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave122/cw122_05_night_shift_plan.md` | 198,111 | 3,158 |
+| `docs/expansions/prose_wave121/cw121_06_keep_this_one_plan.md` | 198,111 | 3,158 |
+| `docs/expansions/prose_wave121/cw121_05_the_blue_cup_plan.md` | 198,111 | 3,158 |
+| `docs/expansions/prose_wave120/cw120_10_attendance_plan.md` | 198,111 | 3,158 |
+| `docs/expansions/prose_wave120/cw120_07_for_saturday_plan.md` | 198,111 | 3,158 |
+| `docs/expansions/prose_wave42/cw42_05_the_tower_that_only_measured_plan.md` | 198,081 | 3,683 |
+| `docs/expansions/prose_wave35/cw35_01_the_tower_that_holds_no_water_plan.md` | 198,080 | 2,549 |
+
+Total: 1,386,716 -> 22,755 lines (~1,363,961 padding lines removed, ~65 MB ->
+~1.1 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-13-2026-09-28 (same
+session, 2026-09-28 10:49): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw161_20, cw140_19, cw154_11, cw157_08, wave26/expansion_132,
+cw149_16, cw157_07) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 7,465, 7,091, 7,524, 7,468, 979,
+7,461 and 7,467 respectively — the complete authored prose plan through
+each file's "Handoff"/closer section (wave26/expansion_132 retains its
+complete short-form editorial proposal, 979 lines; ~72 MB -> ~2.5 MB,
+~1.32M padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B161-195, PLAN-B162-107, PLAN-B163-024, PLAN-B161-185,
+PLAN-B108-08, PLAN-B160-236, PLAN-B162-053) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch63-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-62: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent-lane claims had
+appeared since batch62 at selection time (the addendum to the parallel
+lane's batch-13 above was already accounted for; no overlap). Boundary
+re-verified per file: four matched the standard closing sentence at markers
+3673/3672/3674/3673 (`keep_line = 3671`/`3670`/`3672`/`3671`); three
+(`cw126_09`, `cw126_05`, `cw126_02`) use a distinct closing sentence
+("This document is a game-content prose expansion plan. It is not an
+implementation plan for new features...") at marker line 3806
+(`keep_line = 3804`) — same two-blank-line-plus-separator boundary structure
+in every case, confirmed by direct `Read` inspection of the preceding
+"19. Handoff and acceptance" section for the wave126 files before cutting.
+Padding identifiers spot-checked (e.g. `CW3804THELOGICTHAT`,
+`PLAN-B111-26`) confirmed unreferenced via `grep -rl` across `Assets/`,
+`src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1,
+no matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave38/cw38_04_the_logic_that_usually_holds_plan.md` | 198,079 | 3,681 |
+| `docs/expansions/prose_wave41/cw41_05_the_bunkers_below_the_bunkers_plan.md` | 198,078 | 3,680 |
+| `docs/expansions/prose_wave126/cw126_09_a_loop_without_a_listener_plan.md` | 198,046 | 3,814 |
+| `docs/expansions/prose_wave126/cw126_05_two_flags_three_accounts_plan.md` | 198,046 | 3,814 |
+| `docs/expansions/prose_wave126/cw126_02_hands_remember_the_cold_plan.md` | 198,046 | 3,814 |
+| `docs/expansions/prose_wave39/cw39_06_the_appointment_the_dishes_kept_plan.md` | 197,952 | 3,682 |
+| `docs/expansions/prose_wave38/cw38_01_the_floor_drops_after_the_echo_plan.md` | 197,951 | 3,681 |
+
+Total: 1,386,198 -> 26,166 lines (~1,360,032 padding lines removed, ~65 MB ->
+~1.2 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-14-2026-09-28
+
+User-authorized continuation (second parallel session, fifteenth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch62 and actively contending). Primaries:
+`docs/expansions/prose_wave143/cw143_06_the_lamps_are_out_and_the_door_is_locked_plan.md`,
+`docs/expansions/prose_wave150/cw150_17_leave_the_grain_plan.md`,
+`docs/expansions/wave20/expansion_103_eight_beds_three_kinds_of_waiting_plan.md`,
+`docs/expansions/prose_wave145/cw145_01_the_evening_meal_if_the_form_was_right_plan.md`,
+`docs/expansions/prose_wave141/cw141_09_condition_yellow_paper_fading_plan.md`,
+`docs/expansions/prose_wave166/cw166_14_stars_above_the_ash_at_eleven_plan.md`,
+`docs/expansions/prose_wave146/cw146_13_the_dispensary_is_packed_and_waiting_plan.md`.
+Spares: `cw146_12_maren_reports_the_armory_evacuation`,
+`cw141_12_the_notebook_fit_in_a_pocket`,
+`wave23/expansion_120_the_name_the_crew_stopped_saying`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-14-2026-09-28 (same
+session, 2026-09-28 10:54): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw143_06, cw150_17, wave20/expansion_103, cw145_01, cw141_09,
+cw166_14, cw146_13) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 7,464, 7,483, 839, 7,469, 7,092,
+7,476 and 7,463 respectively — the complete authored prose plan through
+each file's "Handoff"/closer section (wave20/expansion_103 retains its
+complete short-form editorial proposal, 839 lines; ~72 MB -> ~2.5 MB,
+~1.31M padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B161-005, PLAN-B164-033, PLAN-B109-03, PLAN-B161-193,
+PLAN-B162-259, PLAN-B163-017, PLAN-B161-266) confirmed unreferenced in
+code, data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch64-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-63: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-14-2026-09-28` primaries/spares
+above (different wave numbers throughout). Boundary re-verified per file:
+five matched the standard pattern at marker line 3150 (`keep_line = 3148`);
+one (`cw126_06`) uses the wave126 template at marker line 3806
+(`keep_line = 3804`, same distinct closing sentence documented in batch63);
+one (`cw37_03`) at marker line 3073 (`keep_line = 3071`) — every case
+confirmed by direct inspection of the closing sentence, blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Padding identifiers spot-checked (e.g. `CW11607THERADIO`, `PLAN-B121-11`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave116/cw116_07_the_radio_alcove_roster_plan.md` | 197,689 | 3,158 |
+| `docs/expansions/prose_wave116/cw116_01_the_ledger_of_the_lead_plan.md` | 197,689 | 3,158 |
+| `docs/expansions/prose_wave115/cw115_10_the_bellies_schedule_plan.md` | 197,689 | 3,158 |
+| `docs/expansions/prose_wave115/cw115_01_leave_the_dial_alone_plan.md` | 197,689 | 3,158 |
+| `docs/expansions/prose_wave126/cw126_06_the_key_left_in_place_plan.md` | 197,646 | 3,814 |
+| `docs/expansions/prose_wave37/cw37_03_the_sluice_kept_no_passenger_list_plan.md` | 197,607 | 3,081 |
+| `docs/expansions/prose_wave117/cw117_09_the_token_wall_ledger_plan.md` | 197,561 | 3,158 |
+
+Total: 1,383,570 -> 22,675 lines (~1,360,895 padding lines removed, ~65 MB ->
+~1.1 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch65-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-64: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent-lane claims had
+appeared since batch64 at selection time. Boundary re-verified per file:
+five matched the standard pattern at marker line 3150 (`keep_line = 3148`);
+two (`cw72_05`, `cw72_02`) at marker line 2786 (`keep_line = 2784`) — every
+case confirmed by direct inspection of the closing sentence, blank lines,
+`====` separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION`
+banner. Padding identifiers spot-checked (e.g. `CW11602THECHALK`,
+`PLAN-B121-36`) confirmed unreferenced via `grep -rl` across `Assets/`,
+`src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1,
+no matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave116/cw116_02_the_chalk_that_asked_plan.md` | 197,561 | 3,158 |
+| `docs/expansions/prose_wave119/cw119_06_separate_entrance_plan.md` | 197,433 | 3,158 |
+| `docs/expansions/prose_wave119/cw119_05_case_definition_plan.md` | 197,433 | 3,158 |
+| `docs/expansions/prose_wave119/cw119_04_save_the_seed_plan.md` | 197,433 | 3,158 |
+| `docs/expansions/prose_wave120/cw120_02_red_signal_plan.md` | 197,217 | 3,158 |
+| `docs/expansions/prose_wave72/cw72_05_the_engineer_and_the_clock_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave72/cw72_02_the_counting_children_game_plan.md` | 197,192 | 2,794 |
+
+Total: 1,381,461 -> 21,214 lines (~1,360,247 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch66-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-65: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent-lane claims had
+appeared since batch65 at selection time. Boundary re-verified per file: all
+seven matched the standard pattern at marker line 2786 (`keep_line = 2784`)
+— closing sentence, two blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding identifiers
+spot-checked (e.g. `CW6706THESURFACEIS`, `PLAN-B113-45`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave67/cw67_06_the_surface_is_a_myth_game_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave62/cw62_03_the_bunk_was_not_reassigned_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave59/cw59_04_the_smaller_rations_bellies_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave58/cw58_05_the_dog_belongs_to_the_bunker_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave58/cw58_04_the_pencil_on_the_duty_board_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave58/cw58_01_the_note_at_eighty_eight_five_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave57/cw57_05_the_grey_forest_keeps_the_ash_plan.md` | 197,192 | 2,794 |
+
+Total: 1,380,344 -> 19,558 lines (~1,360,856 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-15-2026-09-28
+
+User-authorized continuation (second parallel session, sixteenth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch64 and actively contending). Primaries:
+`docs/expansions/prose_wave146/cw146_12_maren_reports_the_armory_evacuation_plan.md`,
+`docs/expansions/prose_wave141/cw141_12_the_notebook_fit_in_a_pocket_plan.md`,
+`docs/expansions/wave23/expansion_120_the_name_the_crew_stopped_saying_plan.md`,
+`docs/expansions/prose_wave150/cw150_15_someone_is_moving_near_the_entrance_plan.md`,
+`docs/expansions/prose_wave139/cw139_06_summons_from_the_water_court_plan.md`,
+`docs/expansions/prose_wave154/cw154_16_the_hinge_will_not_stay_shut_plan.md`,
+`docs/expansions/prose_wave124/cw124_05_first_opening_plan.md`.
+Spares: `cw162_18_the_candle_has_no_witness_statement`,
+`cw139_15_the_first_snow_leaves_no_forecast`,
+`wave1/expansion_13_the_faithful_and_the_fractured`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-15-2026-09-28 (same
+session, 2026-09-28 10:59): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw146_12, cw141_12, wave23/expansion_120, cw150_15, cw139_06,
+cw154_16, cw124_05) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 7,464, 7,091, 979, 7,463, 7,092,
+7,524 and 3,145 respectively — the complete authored prose plan through
+each file's "Handoff"/closer section (wave23/expansion_120 retains its
+complete short-form editorial proposal, 979 lines; ~72 MB -> ~2.5 MB,
+~1.32M padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B162-102, PLAN-B163-031, PLAN-B109-13, PLAN-B162-062,
+PLAN-B163-048, PLAN-B163-052, PLAN-B147-236) confirmed unreferenced in
+code, data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch67-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-66: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-15-2026-09-28` primaries/spares
+above (different wave numbers throughout). Boundary re-verified per file:
+five matched the standard pattern at marker line 2786 (`keep_line = 2784`);
+two (`cw47_04`, `cw46_06`) at marker line 2756 (`keep_line = 2754`) — every
+case confirmed by direct inspection of the closing sentence, blank lines,
+`====` separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION`
+banner. Padding identifiers spot-checked (e.g. `CW5702THECHEMICALW`,
+`PLAN-B111-41`) confirmed unreferenced via `grep -rl` across `Assets/`,
+`src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1,
+no matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave57/cw57_02_the_chemical_works_breathes_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave56/cw56_06_the_frozen_reeds_keep_walking_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave54/cw54_04_the_screen_that_kept_glowing_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave54/cw54_02_the_room_with_the_crayon_sun_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave53/cw53_02_the_vote_on_the_south_slope_plan.md` | 197,192 | 2,794 |
+| `docs/expansions/prose_wave47/cw47_04_the_patrol_that_held_quietly_plan.md` | 197,162 | 2,764 |
+| `docs/expansions/prose_wave46/cw46_06_the_burst_that_said_recovery_plan.md` | 197,162 | 2,764 |
+
+Total: 1,380,284 -> 19,498 lines (~1,360,786 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch68-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-67: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent-lane claims had
+appeared since batch67 at selection time. Boundary re-verified per file: one
+(`cw33_06`) uses the 19-section authored template's distinct closing
+sentence at marker line 3242 (`keep_line = 3240`); six matched the standard
+closing sentence at markers 2724/2722 (`cw43_04`/`cw43_02`,
+`keep_line = 2722`/`2720`) and 2786 x4 (`keep_line = 2784`) — every case
+confirmed by direct inspection of the closing sentence, blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Padding identifiers spot-checked (e.g. `CW3306TAGSTIEDW`, `PLAN-B120-24`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave33/cw33_06_tags_tied_with_rotting_twine_plan.md` | 197,136 | 3,250 |
+| `docs/expansions/prose_wave43/cw43_04_the_mask_on_the_pine_branch_plan.md` | 197,130 | 2,732 |
+| `docs/expansions/prose_wave43/cw43_02_the_spire_that_stayed_visible_plan.md` | 197,128 | 2,730 |
+| `docs/expansions/prose_wave98/cw98_05_social_event_bunk_noise_friction_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave98/cw98_04_room_history_the_second_blower_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave97/cw97_01_audio_log_leadership_vote_day_105_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave95/cw95_01_audio_log_art_project_day_210_plan.md` | 197,064 | 2,794 |
+
+Total: 1,378,650 -> 19,888 lines (~1,358,762 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-16-2026-09-28
+
+User-authorized continuation (second parallel session, seventeenth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch66 and actively contending). Primaries:
+`docs/expansions/prose_wave162/cw162_18_the_candle_has_no_witness_statement_plan.md`,
+`docs/expansions/prose_wave139/cw139_15_the_first_snow_leaves_no_forecast_plan.md`,
+`docs/expansions/wave1/expansion_13_the_faithful_and_the_fractured_plan.md`,
+`docs/expansions/prose_wave156/cw156_16_warmth_and_display_share_one_hook_plan.md`,
+`docs/expansions/wave22/expansion_116_the_fence_is_not_the_whole_law_plan.md`,
+`docs/expansions/wave28/expansion_148_a_dry_gallery_is_not_a_promise_plan.md`,
+`docs/expansions/prose_wave135/cw135_12_the_rank_behind_the_cracked_glass_plan.md`.
+Spares: `cw147_14_laughter_behind_the_hatch_static`,
+`cw140_13_the_watch_beside_the_inner_hatch`,
+`wave18/expansion_91_the_margin_is_part_of_the_order`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-16-2026-09-28 (same
+session, 2026-09-28 11:03): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw162_18, cw139_15, wave1/expansion_13, cw156_16,
+wave22/expansion_116, wave28/expansion_148, cw135_12) trimmed at their
+first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines:
+7,467, 7,090, 1,178, 7,467, 780, 1,379 and 9,106 respectively — the
+complete authored prose plan through each file's "Handoff"/closer section
+(wave1/expansion_13, wave22/expansion_116 and wave28/expansion_148 retain
+their complete short-form editorial proposals; cw135_12 retains its full
+multi-section proposal ~9,100 lines; ~73 MB -> ~2.6 MB, ~1.32M padding
+lines removed). Every file verified: worktree identical to `c8c1e453d` at
+trim time, retained prefix byte-identical by md5, `git diff --check` clean
+on all seven, zero padding self-references, padding identifiers
+(PLAN-B161-272, PLAN-B162-228, PLAN-B105-10, PLAN-B162-220, PLAN-B108-20,
+PLAN-B109-37, PLAN-B170-104) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch69-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-68: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-16-2026-09-28` primaries/spares
+(different wave numbers throughout). Boundary re-verified per file: all
+seven matched the standard pattern at marker line 2786 (`keep_line = 2784`)
+— closing sentence, two blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding identifiers
+spot-checked (e.g. `CW9404ROOMHISTO`, `PLAN-B119-12`) confirmed unreferenced
+via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave94/cw94_04_room_history_the_discrepancy_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave93/cw93_04_glitch_23_old_intercom_burst_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave93/cw93_02_audio_log_survivor_diary_day_50_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave86/cw86_08_final_farewell_simplex_loop_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave85/cw85_04_vespers_of_the_settling_dust_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave85/cw85_03_sacrament_of_the_hot_stone_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave82/cw82_06_ephedrine_tea_ma_huang_extract_plan.md` | 197,064 | 2,794 |
+
+Total: 1,379,448 -> 19,558 lines (~1,359,890 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-17-2026-09-28
+
+User-authorized continuation (second parallel session, eighteenth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch68 and actively contending). Primaries:
+`docs/expansions/prose_wave147/cw147_14_laughter_behind_the_hatch_static_plan.md`,
+`docs/expansions/prose_wave140/cw140_13_the_watch_beside_the_inner_hatch_plan.md`,
+`docs/expansions/wave18/expansion_91_the_margin_is_part_of_the_order_plan.md`,
+`docs/expansions/prose_wave141/cw141_20_the_pump_song_keeps_its_work_beat_plan.md`,
+`docs/expansions/prose_wave124/cw124_04_known_courage_plan.md`,
+`docs/expansions/prose_wave140/cw140_12_the_wall_is_not_a_witness_plan.md`,
+`docs/expansions/prose_wave150/cw150_20_three_numbers_and_no_hand_plan.md`.
+Spares: `cw139_01_water_at_the_reduced_mark`,
+`cw129_20_a_star_means_remembered`, `cw124_02_leave_no_one`.
+Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch70-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-69: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-17-2026-09-28` primaries/spares
+above (different wave numbers throughout). Boundary re-verified per file:
+all seven matched the standard pattern at marker line 2786
+(`keep_line = 2784`) — closing sentence, two blank lines, `====` separator,
+then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding
+identifiers spot-checked (e.g. `CW8004BLINDMONK`, `PLAN-B117-15`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave80/cw80_04_blind_monks_geophone_betrayal_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave50/cw50_04_the_white_coats_in_the_floodplain_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave49/cw49_02_the_promise_at_the_radio_tower_plan.md` | 197,064 | 2,794 |
+| `docs/expansions/prose_wave113/cw113_03_room_fixture_airlock_nozzles_the_bare_feeds_plan.md` | 196,936 | 2,794 |
+| `docs/expansions/prose_wave112/cw112_06_room_fixture_airlock_boot_crate_tape_uncut_plan.md` | 196,936 | 2,794 |
+| `docs/expansions/prose_wave102/cw102_04_room_history_bunk_three_folded_coat_plan.md` | 196,936 | 2,794 |
+| `docs/expansions/prose_wave100/cw100_02_journal_day_67_storm_survival_filters_held_plan.md` | 196,936 | 2,794 |
+
+Total: 1,378,936 -> 19,558 lines (~1,359,378 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-17-2026-09-28 (same
+session, 2026-09-28 11:08): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw147_14, cw140_13, wave18/expansion_91, cw141_20, cw124_04,
+cw140_12, cw150_20) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 7,464, 7,091, 584, 7,090, 3,145,
+7,091 and 7,466 respectively — the complete authored prose plan through
+each file's "Handoff"/closer section (wave18/expansion_91 retains its
+complete short-form editorial proposal, 584 lines; ~72 MB -> ~2.5 MB,
+~1.31M padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B162-198, PLAN-B162-199, PLAN-B108-05, PLAN-B162-127,
+PLAN-B147-218, PLAN-B163-067, PLAN-B163-059) confirmed unreferenced in
+code, data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch71-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-70: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-17-2026-09-28` (now fully
+resolved per its addendum above). Boundary re-verified per file: six matched
+the standard pattern at marker line 2786 (`keep_line = 2784`); one
+(`cw115_02`) at marker line 3150 (`keep_line = 3148`); one (`cw45_04`) at
+marker line 2755 (`keep_line = 2753`) — every case confirmed by direct
+inspection of the closing sentence, blank lines, `====` separator, then the
+first `## BATCH-NN ARCHITECTURAL EXPANSION` banner. Padding identifiers
+spot-checked (e.g. `CW7602GEIGERCOUNTE`, `PLAN-B113-36`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave76/cw76_02_geiger_counter_headstone_plan.md` | 196,814 | 2,794 |
+| `docs/expansions/prose_wave69/cw69_06_the_generator_heart_story_plan.md` | 196,814 | 2,794 |
+| `docs/expansions/prose_wave68/cw68_06_the_siren_is_hide_and_seek_plan.md` | 196,814 | 2,794 |
+| `docs/expansions/prose_wave67/cw67_02_the_bunker_as_seen_in_song_plan.md` | 196,814 | 2,794 |
+| `docs/expansions/prose_wave51/cw51_05_the_circle_beside_the_trap_plan.md` | 196,814 | 2,794 |
+| `docs/expansions/prose_wave115/cw115_02_the_count_that_went_up_plan.md` | 196,809 | 3,158 |
+| `docs/expansions/prose_wave45/cw45_04_the_interval_between_tones_plan.md` | 196,783 | 2,763 |
+
+Total: 1,377,662 -> 19,891 lines (~1,357,771 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-18-2026-09-28
+
+User-authorized continuation (second parallel session, nineteenth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch70 and actively contending). Primaries:
+`docs/expansions/prose_wave139/cw139_01_water_at_the_reduced_mark_plan.md`,
+`docs/expansions/prose_wave129/cw129_20_a_star_means_remembered_plan.md`,
+`docs/expansions/prose_wave124/cw124_02_leave_no_one_plan.md`,
+`docs/expansions/prose_wave158/cw158_19_the_description_is_not_the_person_plan.md`,
+`docs/expansions/prose_wave141/cw141_19_the_winter_run_carries_less_salt_plan.md`,
+`docs/expansions/wave29/expansion_150_the_count_happens_in_the_open_plan.md`,
+`docs/expansions/prose_wave161/cw161_15_the_lost_world_is_not_one_person_plan.md`.
+Spares: `cw141_05_the_card_fits_in_a_glove`,
+`cw143_05_the_brine_pans_have_a_boundary`, `cw141_04_the_slate_for_the_coming_week`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-18-2026-09-28 (same
+session, 2026-09-28 11:13): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw139_01, cw129_20, cw124_02, cw158_19, cw141_19,
+wave29/expansion_150, cw161_15) trimmed at their first `BATCH-NN
+ARCHITECTURAL EXPANSION` banner. Retained content lines: 7,088, 10,982,
+3,145, 7,469, 7,091, 1,379 and 7,469 respectively — the complete authored
+prose plan through each file's "Handoff"/closer section (cw129_20 retains
+its full multi-section proposal ~11,000 lines; wave29/expansion_150 retains
+its complete short-form editorial proposal; ~72 MB -> ~2.6 MB, ~1.31M
+padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B163-093, PLAN-B170-208, PLAN-B147-225, PLAN-B162-050,
+PLAN-B162-158, PLAN-B109-34, PLAN-B162-109) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch72-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-71: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-18-2026-09-28` (different wave
+numbers: 139/129/124/158/141/29/161 vs. this batch's 122/121/82/77/34).
+Boundary re-verified per file: three (`cw122_08`, `cw121_09`, `cw121_04`)
+matched the standard pattern at marker line 3150 (`keep_line = 3148`); three
+(`cw82_05`, `cw82_02`, `cw77_03`) at marker line 2786 (`keep_line = 2784`);
+one (`cw34_03`) used the longer 19-section authored template, closing
+"...an existing owner is identified for any implementation. If that owner
+or consumer is absent, retain the prose as a draft rather than inventing a
+route or system. Character counts are Unicode code-point counts of the saved
+Markdown files." at marker line 2541 (`keep_line = 2539`) — same underlying
+boundary pattern as `cw36_05`/`cw35_01`/`cw33_06`, confirmed by direct
+inspection rather than assumed. Padding identifiers spot-checked (e.g.
+`CW12208MANUALPL`, `PLAN-B140-099`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave122/cw122_08_manual_plan.md` | 196,755 | 3,158 |
+| `docs/expansions/prose_wave121/cw121_09_islanding_plan.md` | 196,755 | 3,158 |
+| `docs/expansions/prose_wave121/cw121_04_carrier_plan.md` | 196,755 | 3,158 |
+| `docs/expansions/prose_wave82/cw82_05_zinc_ointment_linseed_paste_plan.md` | 196,686 | 2,794 |
+| `docs/expansions/prose_wave82/cw82_02_prussian_blue_sump_pigment_plan.md` | 196,686 | 2,794 |
+| `docs/expansions/prose_wave77/cw77_03_ventilation_grate_memorial_plan.md` | 196,686 | 2,794 |
+| `docs/expansions/prose_wave34/cw34_03_the_ledger_that_does_not_cross_plan.md` | 196,563 | 2,549 |
+
+Total: 1,376,886 -> 20,405 lines (~1,356,481 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-19-2026-09-28
+
+User-authorized continuation (second parallel session, twentieth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch71 and actively contending). Primaries:
+`docs/expansions/prose_wave141/cw141_05_the_card_fits_in_a_glove_plan.md`,
+`docs/expansions/prose_wave143/cw143_05_the_brine_pans_have_a_boundary_plan.md`,
+`docs/expansions/prose_wave141/cw141_04_the_slate_for_the_coming_week_plan.md`,
+`docs/expansions/prose_wave127/cw127_05_kept_frozen_on_purpose_plan.md`,
+`docs/expansions/prose_wave152/cw152_11_trust_becomes_a_weapon_plan.md`,
+`docs/expansions/prose_wave131/cw131_06_well_take_quieter_plan.md`,
+`docs/expansions/prose_wave135/cw135_17_the_runner_settles_at_one_point_plan.md`.
+Spares: `cw135_11_the_key_under_the_handkerchiefs`,
+`cw139_08_the_archivist_keeps_the_receipt`, `cw140_08_the_pump_is_not_the_whole_person`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-19-2026-09-28 (same
+session, 2026-09-28 11:17): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw141_05, cw143_05, cw141_04, cw127_05, cw152_11, cw131_06,
+cw135_17) trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Retained content lines: 7,092, 7,480, 7,092, 8,214, 7,475, 10,600 and 8,883
+respectively — the complete authored prose plan through each file's
+"Handoff"/closer section (cw131_06 retains its full 19-section numbered
+prose plan ~10,600 lines; ~71 MB -> ~2.6 MB, ~1.27M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time,
+retained prefix byte-identical by md5, `git diff --check` clean on all
+seven, zero padding self-references, padding identifiers (PLAN-B163-099,
+PLAN-B162-239, PLAN-B162-236, PLAN-B170-320, PLAN-B163-092, PLAN-B170-226,
+PLAN-B170-134) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch73-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-72: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-19-2026-09-28` (different wave
+numbers: 141/143/127/152/131/135 vs. this batch's 116/121/40/42/39/34/117).
+Boundary re-verified per file by direct inspection of the closing sentence,
+blank lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner: three (`cw116_08`, `cw121_08`, `cw117_07`) at marker line
+3150 (`keep_line = 3148`); three (`cw40_05`, `cw42_04`, `cw39_03`) at marker
+lines 3676/3675/3674 (`keep_line = 3674/3673/3672`); one (`cw34_01`) used the
+longer 19-section authored template, closing "...an existing owner is
+identified for any implementation. If that owner or consumer is absent,
+retain the prose as a draft rather than inventing a route or system.
+Character counts are Unicode code-point counts of the saved Markdown
+files." at marker line 2543 (`keep_line = 2541`) — same underlying boundary
+pattern as `cw36_05`/`cw35_01`/`cw33_06`/`cw34_03`. Padding identifiers
+spot-checked (e.g. `PLAN-B121-27-CW11608ASQUAREO`, `PLAN-B120-28-CW3401THEROOMTH`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave116/cw116_08_a_square_of_sky_plan.md` | 196,559 | 3,158 |
+| `docs/expansions/prose_wave121/cw121_08_load_shedding_plan.md` | 196,528 | 3,158 |
+| `docs/expansions/prose_wave40/cw40_05_the_door_behind_the_door_plan.md` | 196,485 | 3,684 |
+| `docs/expansions/prose_wave42/cw42_04_the_iron_that_was_not_scrap_plan.md` | 196,484 | 3,683 |
+| `docs/expansions/prose_wave39/cw39_03_the_building_is_deciding_plan.md` | 196,483 | 3,682 |
+| `docs/expansions/prose_wave34/cw34_01_the_room_that_kept_the_test_plan.md` | 196,437 | 2,551 |
+| `docs/expansions/prose_wave117/cw117_07_the_bunk_was_not_reassigned_plan.md` | 196,404 | 3,158 |
+
+Total: 1,375,380 -> 23,074 lines (~1,352,306 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-20-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-first batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch72 and actively contending). Primaries:
+`docs/expansions/prose_wave135/cw135_11_the_key_under_the_handkerchiefs_plan.md`,
+`docs/expansions/prose_wave139/cw139_08_the_archivist_keeps_the_receipt_plan.md`,
+`docs/expansions/prose_wave140/cw140_08_the_pump_is_not_the_whole_person_plan.md`,
+`docs/expansions/prose_wave142/cw142_14_the_seal_gives_way_by_degrees_plan.md`,
+`docs/expansions/wave21/expansion_110_the_difference_in_the_pot_plan.md`,
+`docs/expansions/prose_wave146/cw146_20_the_label_outlasts_the_needle_plan.md`,
+`docs/expansions/prose_wave139/cw139_17_the_key_fits_nothing_here_yet_plan.md`.
+Spares: `cw141_14_the_solstice_is_a_reading_too`, `cw127_11_a_second_pace`,
+`cw135_07_the_cabinet_at_the_third_row`.
+Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch74-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-73: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+in-progress `claim-plan-bloat-reduction-parallel-batch-20-2026-09-28`
+(waves 135/139/140/142/wave21/146 vs. this batch's 117/74/57/52/41/40).
+Boundary re-verified per file by direct inspection of the closing sentence,
+blank lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner — all seven matched the standard template: `cw117_01` at
+marker line 3150 (`keep_line = 3148`); `cw74_01`, `cw57_03`, `cw52_03` at
+marker line 2786 (`keep_line = 2784`); `cw41_03` at marker line 3675
+(`keep_line = 3673`); `cw41_06`, `cw40_01` at marker line 3674
+(`keep_line = 3672`). Padding identifiers spot-checked (e.g.
+`PLAN-B121-25-CW11701THETHIEF`, `PLAN-B114-47-CW4001THESHELVESTE`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave117/cw117_01_the_thief_knows_this_wall_plan.md` | 196,404 | 3,158 |
+| `docs/expansions/prose_wave74/cw74_01_the_clicking_beetle_rhyme_plan.md` | 196,362 | 2,794 |
+| `docs/expansions/prose_wave57/cw57_03_the_steelworks_riverline_plan.md` | 196,362 | 2,794 |
+| `docs/expansions/prose_wave52/cw52_03_the_long_toll_in_the_gate_plan.md` | 196,362 | 2,794 |
+| `docs/expansions/prose_wave41/cw41_03_the_building_that_kept_the_names_plan.md` | 196,356 | 3,683 |
+| `docs/expansions/prose_wave41/cw41_06_the_quarry_turn_where_food_waited_plan.md` | 196,355 | 3,682 |
+| `docs/expansions/prose_wave40/cw40_01_the_shelves_tell_you_everything_plan.md` | 196,355 | 3,682 |
+
+Total: 1,374,556 -> 23,587 lines (~1,350,969 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-20-2026-09-28 (same
+session, 2026-09-28 11:22): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw135_11, cw139_08, cw140_08, cw142_14, wave21/expansion_110,
+cw146_20, cw139_17) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 8,822, 7,098, 7,098, 7,465, 820,
+7,477 and 7,086 respectively — the complete authored prose plan through
+each file's "Handoff"/closer section (wave21/expansion_110 retains its
+complete short-form editorial proposal, 820 lines; ~71 MB -> ~2.6 MB,
+~1.28M padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B170-066, PLAN-B162-094, PLAN-B162-065, PLAN-B162-265,
+PLAN-B108-18, PLAN-B162-195, PLAN-B162-201) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch75-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-74: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+prior claims (waves 135/139/140/142/wave21/146 in parallel-batch-20 vs. this
+batch's 38/83/78/32/126). Boundary re-verified per file by direct inspection
+of the closing sentence, blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner: `cw38_03` at marker line 3673
+(`keep_line = 3671`); `cw83_08`, `cw83_05`, `cw83_04`, `cw78_02` at marker
+line 2786 (`keep_line = 2784`); `cw32_03` used the shorter 19-section
+authored template (same closing sentence as `cw34_01`/`cw34_03`) at marker
+line 1694 (`keep_line = 1692`) — a genuinely shorter authored section, not a
+truncation error; `cw126_08` used the wave126 template, closing "This
+document is a game-content prose expansion plan. It is not an
+implementation plan for new features, and its candidate drafts are not yet
+canon or confirmed playable text." at marker line 3806 (`keep_line = 3804`),
+consistent with `cw126_09`/`cw126_05`/`cw126_02`/`cw126_06`. Padding
+identifiers spot-checked (e.g. `PLAN-B114-28-CW3803THEDISHTHATW`,
+`PLAN-B139-268-CW12608ONEROWUN`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave38/cw38_03_the_dish_that_would_not_face_down_plan.md` | 196,354 | 3,681 |
+| `docs/expansions/prose_wave83/cw83_08_subverted_keycard_flasher_plan.md` | 196,234 | 2,794 |
+| `docs/expansions/prose_wave83/cw83_05_modified_filter_cartridge_plan.md` | 196,234 | 2,794 |
+| `docs/expansions/prose_wave83/cw83_04_bootleg_morphine_ampoules_plan.md` | 196,234 | 2,794 |
+| `docs/expansions/prose_wave78/cw78_02_fluorescent_shadow_creep_plan.md` | 196,234 | 2,794 |
+| `docs/expansions/prose_wave32/cw32_03_the_ledger_wants_to_balance_plan.md` | 196,228 | 1,702 |
+| `docs/expansions/prose_wave126/cw126_08_one_row_under_plastic_plan.md` | 196,199 | 3,814 |
+
+Total: 1,373,717 -> 21,373 lines (~1,352,344 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-21-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-second batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch74 and actively contending). Primaries:
+`docs/expansions/prose_wave141/cw141_14_the_solstice_is_a_reading_too_plan.md`,
+`docs/expansions/prose_wave127/cw127_11_a_second_pace_plan.md`,
+`docs/expansions/prose_wave135/cw135_07_the_cabinet_at_the_third_row_plan.md`,
+`docs/expansions/prose_wave135/cw135_14_the_frost_crust_has_a_clock_plan.md`,
+`docs/expansions/prose_wave155/cw155_19_the_child_soldier_and_the_hand_me_down_maxim_plan.md`,
+`docs/expansions/prose_wave151/cw151_02_numbers_have_no_conscience_plan.md`,
+`docs/expansions/prose_wave158/cw158_02_a_valve_is_not_a_doctrine_plan.md`.
+Spares: `cw155_10_a_bolt_between_the_teeth`, `cw127_03_the_terms_under_the_beam`,
+`cw131_13_the_weather_has_a_column`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-21-2026-09-28 (same
+session, 2026-09-28 11:26): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw141_14, cw127_11, cw135_07, cw135_14, cw155_19, cw151_02,
+cw158_02) trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Retained content lines: 7,091, 8,214, 8,970, 9,161, 7,464, 7,474 and 7,474
+respectively — the complete authored prose plan through each file's
+"Handoff"/closer section (~71 MB -> ~2.7 MB, ~1.27M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time,
+retained prefix byte-identical by md5, `git diff --check` clean on all
+seven, zero padding self-references, padding identifiers (PLAN-B162-139,
+PLAN-B170-406, PLAN-B170-163, PLAN-B170-248, PLAN-B159-226, PLAN-B162-272,
+PLAN-B163-074) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch76-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-75: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-21-2026-09-28` (waves
+141/127/135/155/151/158 vs. this batch's 115/37/76/68/64/53). Boundary
+re-verified per file by direct inspection of the closing sentence, blank
+lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner — all seven matched the standard template: `cw115_05` at
+marker line 3150 (`keep_line = 3148`); `cw37_04` at a non-standard marker
+line 3073 (`keep_line = 3071`, confirmed by direct inspection rather than
+assumed — a slightly shorter authored "review voice distinction..."
+paragraph than the usual wording, same closing sentence and boundary
+structure); `cw76_06`, `cw68_03`, `cw68_01`, `cw64_03`, `cw53_05` at marker
+line 2786 (`keep_line = 2784`). Padding identifiers spot-checked (e.g.
+`PLAN-B121-06-CW11505THEDOGDE`, `PLAN-B111-05-CW3704THECARSWEREF`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave115/cw115_05_the_dog_decided_to_stay_plan.md` | 196,154 | 3,158 |
+| `docs/expansions/prose_wave37/cw37_04_the_cars_were_first_in_line_plan.md` | 196,010 | 3,081 |
+| `docs/expansions/prose_wave76/cw76_06_radio_antenna_memorial_plan.md` | 195,818 | 2,794 |
+| `docs/expansions/prose_wave68/cw68_03_the_filter_change_chant_plan.md` | 195,818 | 2,794 |
+| `docs/expansions/prose_wave68/cw68_01_the_bunker_as_body_story_plan.md` | 195,818 | 2,794 |
+| `docs/expansions/prose_wave64/cw64_03_the_greenhouse_drawing_plan.md` | 195,818 | 2,794 |
+| `docs/expansions/prose_wave53/cw53_05_the_records_below_water_plan.md` | 195,818 | 2,794 |
+
+Total: 1,371,254 -> 18,209 lines (~1,353,045 padding lines removed, ~65 MB ->
+~0.8 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch77-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-76: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent claims appeared in the
+ledger since batch76; no overlap by wave number against any recent lane
+claim (this batch's waves: 126/116/115/36/92/34/75). Boundary re-verified
+per file by direct inspection of the closing sentence, blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner:
+`cw126_03` used the wave126 template at marker line 3806 (`keep_line =
+3804`), consistent with prior wave126 instances; `cw116_04`, `cw115_04` at
+marker line 3150 (`keep_line = 3148`); `cw36_06` used a new 19-section
+closing-sentence wording ("This plan is complete as a content proposal when
+each selected passage traces to its cited source, existing character and
+system outcomes remain unchanged, and an existing owner is identified for
+placement. If reachability or the consumer is absent, keep the prose as a
+draft. Counts below use Python Unicode code-point lengths of the saved
+Markdown files.") at marker line 2892 (`keep_line = 2890`) — same underlying
+boundary structure as the other 19-section variants, confirmed by direct
+inspection; `cw92_01`, `cw75_04` at marker line 2786 (`keep_line = 2784`);
+`cw34_05` used the standard 19-section template (same as `cw34_01`/
+`cw34_03`) at marker line 2541 (`keep_line = 2539`). Padding identifiers
+spot-checked (e.g. `PLAN-B139-271-CW12603COUNTEDB`, `PLAN-B120-52-CW3606BREADFIRS`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave126/cw126_03_counted_by_touch_plan.md` | 195,739 | 3,814 |
+| `docs/expansions/prose_wave116/cw116_04_letters_in_pine_slats_plan.md` | 195,702 | 3,158 |
+| `docs/expansions/prose_wave115/cw115_04_pencil_has_a_history_plan.md` | 195,702 | 3,158 |
+| `docs/expansions/prose_wave36/cw36_06_bread_first_seed_by_rota_plan.md` | 195,700 | 2,900 |
+| `docs/expansions/prose_wave92/cw92_01_ceremony_treaty_market_plan.md` | 195,690 | 2,794 |
+| `docs/expansions/prose_wave34/cw34_05_the_knock_that_is_enough_plan.md` | 195,605 | 2,549 |
+| `docs/expansions/prose_wave75/cw75_04_the_three_mask_rule_song_plan.md` | 195,595 | 2,794 |
+
+Total: 1,369,733 -> 21,167 lines (~1,348,566 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-22-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-third batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch75 and actively contending). Primaries:
+`docs/expansions/prose_wave155/cw155_10_a_bolt_between_the_teeth_plan.md`,
+`docs/expansions/prose_wave127/cw127_03_the_terms_under_the_beam_plan.md`,
+`docs/expansions/prose_wave131/cw131_13_the_weather_has_a_column_plan.md`,
+`docs/expansions/prose_wave124/cw124_10_last_note_plan.md`,
+`docs/expansions/wave28/expansion_149_the_chart_stops_mid_sentence_plan.md`,
+`docs/expansions/prose_wave147/cw147_04_an_account_of_the_dust_incursion_plan.md`,
+`docs/expansions/prose_wave156/cw156_18_the_tunnel_mouth_is_the_better_evidence_plan.md`.
+Spares: `cw145_16_the_span_is_closed_by_what_fell`,
+`wave26/expansion_137_no_name_beside_turned_back`,
+`wave20/expansion_98_eight_beds_three_kinds_of_waiting`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-22-2026-09-28 (same
+session, 2026-09-28 11:31): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw155_10, cw127_03, cw131_13, cw124_10, wave28/expansion_149,
+cw147_04, cw156_18) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 7,476, 8,310, 10,600, 3,145,
+1,329, 7,469 and 7,478 respectively — the complete authored prose plan
+through each file's "Handoff"/closer section (cw131_13 retains its full
+19-section numbered prose plan; wave28/expansion_149 retains its complete
+short-form editorial proposal; ~71 MB -> ~2.7 MB, ~1.30M padding lines
+removed). Every file verified: worktree identical to `c8c1e453d` at trim
+time, retained prefix byte-identical by md5, `git diff --check` clean on
+all seven, zero padding self-references, padding identifiers (PLAN-B163-105,
+PLAN-B170-279, PLAN-B169-140, PLAN-B147-241, PLAN-B109-35, PLAN-B162-017,
+PLAN-B160-040) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch78-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-77: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-22-2026-09-28` (waves
+155/127/131/124/wave28/147/156 vs. this batch's 74/68/63/61/60/59/55).
+Boundary re-verified per file by direct inspection of the closing sentence,
+blank lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner — all seven matched the standard template at marker line
+2786 (`keep_line = 2784`). Padding identifiers spot-checked (e.g.
+`PLAN-B113-22-CW7402THEGREYMANOF`, `PLAN-B112-45-CW5501THECAMPAFTER`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave74/cw74_02_the_grey_man_of_the_vents_plan.md` | 195,595 | 2,794 |
+| `docs/expansions/prose_wave68/cw68_04_say_the_names_do_not_rush_plan.md` | 195,595 | 2,794 |
+| `docs/expansions/prose_wave63/cw63_04_the_quiet_radio_whisper_plan.md` | 195,595 | 2,794 |
+| `docs/expansions/prose_wave61/cw61_03_the_thief_knows_this_wall_plan.md` | 195,595 | 2,794 |
+| `docs/expansions/prose_wave60/cw60_05_the_radio_alcove_roster_plan.md` | 195,595 | 2,794 |
+| `docs/expansions/prose_wave59/cw59_05_the_lead_ledger_answers_plan.md` | 195,595 | 2,794 |
+| `docs/expansions/prose_wave55/cw55_01_the_camp_after_the_trees_plan.md` | 195,595 | 2,794 |
+
+Total: 1,369,165 -> 19,558 lines (~1,349,607 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch79-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-78: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent claims appeared in the
+ledger since batch78; no overlap by wave number against any recent lane
+claim (this batch's waves: 53/97/96/95/94/90/87). Boundary re-verified per
+file by direct inspection of the closing sentence, blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner —
+all seven matched the standard template at marker line 2786 (`keep_line =
+2784`). Padding identifiers spot-checked (e.g. `PLAN-B113-18-CW5301THEQUEUEBEFO`,
+`PLAN-B119-22-CW8701NPCYELENA`) confirmed unreferenced via `grep -rl` across
+`Assets/`, `src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/`
+(exit 1, no matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave53/cw53_01_the_queue_before_sunrise_plan.md` | 195,595 | 2,794 |
+| `docs/expansions/prose_wave97/cw97_06_ritual_exterior_door_tap_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave96/cw96_06_ritual_first_clean_sip_pause_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave95/cw95_04_room_history_soil_window_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave94/cw94_06_ritual_return_roll_call_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave90/cw90_04_npc_lost_patrol_sergeant_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave87/cw87_01_npc_yelena_quartermaster_plan.md` | 195,467 | 2,794 |
+
+Total: 1,368,997 -> 19,558 lines (~1,349,439 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-23-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-fourth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch77 and actively contending). Primaries:
+`docs/expansions/prose_wave145/cw145_16_the_span_is_closed_by_what_fell_plan.md`,
+`docs/expansions/wave26/expansion_137_no_name_beside_turned_back_plan.md`,
+`docs/expansions/wave20/expansion_98_eight_beds_three_kinds_of_waiting_plan.md`,
+`docs/expansions/wave30/expansion_160_arrows_without_signatures_plan.md`,
+`docs/expansions/prose_wave148/cw148_18_a_piano_chord_under_the_answer_plan.md`,
+`docs/expansions/prose_wave124/cw124_09_share_at_table_plan.md`,
+`docs/expansions/prose_wave135/cw135_03_the_chalk_line_is_still_chalk_plan.md`.
+Spares: `cw129_08_the_star_and_the_unrung_horn`,
+`cw135_10_five_minutes_before_the_gong`, `cw140_15_the_unknown_is_also_an_entry`.
+Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch80-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-79: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+in-progress `claim-plan-bloat-reduction-parallel-batch-23-2026-09-28`
+(waves 145/wave26/wave20/wave30/148/124/135 vs. this batch's 85/84/78).
+Boundary re-verified per file by direct inspection of the closing sentence,
+blank lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner — all seven matched the standard template at marker line
+2786 (`keep_line = 2784`). Padding identifiers spot-checked (e.g.
+`PLAN-B119-32-CW8506RITEOFTHE`, `PLAN-B116-57-CW7804TEETHGRIN`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave85/cw85_06_rite_of_the_glowing_hand_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave85/cw85_02_hymn_of_the_invisible_fire_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave85/cw85_01_rite_of_the_fading_needle_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave84/cw84_07_hydro_barons_aquifer_concern_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave84/cw84_05_stolen_nickel_cadmium_cell_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave78/cw78_06_mirror_shaving_disconnect_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave78/cw78_04_teeth_grinding_dorm_audit_plan.md` | 195,467 | 2,794 |
+
+Total: 1,368,269 -> 19,558 lines (~1,348,711 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-23-2026-09-28 (same
+session, 2026-09-28 11:35): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw145_16, wave26/expansion_137, wave20/expansion_98,
+wave30/expansion_160, cw148_18, cw124_09, cw135_03) trimmed at their first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines: 7,468,
+1,029, 839, 1,789, 7,464, 3,145 and 8,914 respectively — the complete
+authored prose plan through each file's "Handoff"/closer section (three
+wave-family files retain their complete short-form editorial proposals;
+~71 MB -> ~2.6 MB, ~1.28M padding lines removed). Every file verified:
+worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B162-068, PLAN-B108-15,
+PLAN-B109-02, PLAN-B109-43, PLAN-B162-042, PLAN-B147-212, PLAN-B170-033)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch81-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-80: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-23-2026-09-28` (waves
+145/wave26/wave20/wave30/148/124/135 vs. this batch's 61/53/49/47/44).
+Boundary re-verified per file by direct inspection of the closing sentence,
+blank lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner: `cw61_06`, `cw61_02`, `cw53_03`, `cw49_06`, `cw49_03` at
+marker line 2786 (`keep_line = 2784`); `cw47_06`, `cw44_02` at a
+non-standard marker line 2755 (`keep_line = 2753`, same closing sentence as
+the majority template, confirmed by direct inspection rather than assumed —
+consistent with the shorter-length variant previously seen in `cw45_04`).
+Padding identifiers spot-checked (e.g. `PLAN-B113-08-CW6106THEARITHMETI`,
+`PLAN-B115-05-CW4402THEDOORBEHIN`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave61/cw61_06_the_arithmetic_of_the_first_tin_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave61/cw61_02_the_quartermasters_addition_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave53/cw53_03_the_instruments_as_scripture_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave49/cw49_06_the_room_changed_by_the_last_wish_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave49/cw49_03_the_mirror_carp_in_the_brown_foam_plan.md` | 195,467 | 2,794 |
+| `docs/expansions/prose_wave47/cw47_06_the_message_that_announced_itself_plan.md` | 195,436 | 2,763 |
+| `docs/expansions/prose_wave44/cw44_02_the_door_behind_the_empty_crates_plan.md` | 195,436 | 2,763 |
+
+Total: 1,368,207 -> 19,496 lines (~1,348,711 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-24-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-fifth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch80 and actively contending). Primaries:
+`docs/expansions/prose_wave129/cw129_08_the_star_and_the_unrung_horn_plan.md`,
+`docs/expansions/prose_wave135/cw135_10_five_minutes_before_the_gong_plan.md`,
+`docs/expansions/prose_wave140/cw140_15_the_unknown_is_also_an_entry_plan.md`,
+`docs/expansions/prose_wave135/cw135_02_the_inventory_between_chimes_plan.md`,
+`docs/expansions/wave29/expansion_153_on_paper_the_debt_grows_quieter_plan.md`,
+`docs/expansions/prose_wave127/cw127_10_the_yard_that_does_not_bark_plan.md`,
+`docs/expansions/prose_wave147/cw147_05_closing_the_intake_has_a_daily_cost_plan.md`.
+Spares: `cw139_09_the_elder_does_not_ask_why`,
+`cw127_12_twenty_minutes_on_the_page`, `cw142_08_the_vacancy_sign_went_dark`.
+Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch82-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-81: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+in-progress claim (waves 129/135/140/wave29/127/147 vs. this batch's
+48/43/98). Boundary re-verified per file by direct inspection of the
+closing sentence, blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner: `cw48_06`, `cw48_05`,
+`cw48_04`, `cw48_03`, `cw48_01` at a non-standard marker line 2754
+(`keep_line = 2752`, standard closing sentence, shorter authored section
+confirmed by direct inspection); `cw43_06` at marker line 2722 (`keep_line =
+2720`, same closing sentence); `cw98_01` at the standard marker line 2786
+(`keep_line = 2784`). Padding identifiers spot-checked (e.g.
+`PLAN-B114-18-CW4806THEBLACKANDG`, `PLAN-B117-16-CW9801AUDIOLOGS`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave48/cw48_06_the_black_and_gold_mat_in_the_ditch_plan.md` | 195,435 | 2,762 |
+| `docs/expansions/prose_wave48/cw48_05_the_goats_below_the_highland_bluffs_plan.md` | 195,435 | 2,762 |
+| `docs/expansions/prose_wave48/cw48_04_the_boots_between_utility_and_grief_plan.md` | 195,435 | 2,762 |
+| `docs/expansions/prose_wave48/cw48_03_the_still_hour_after_shift_change_plan.md` | 195,435 | 2,762 |
+| `docs/expansions/prose_wave48/cw48_01_the_bird_under_the_folded_blanket_plan.md` | 195,435 | 2,762 |
+| `docs/expansions/prose_wave43/cw43_06_the_bridge_abutment_above_the_dark_plan.md` | 195,403 | 2,730 |
+| `docs/expansions/prose_wave98/cw98_01_audio_log_survivor_disappearance_day_140_plan.md` | 195,339 | 2,794 |
+
+Total: 1,368,417 -> 19,572 lines (~1,348,845 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-24-2026-09-28 (same
+session, 2026-09-28 11:40): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw129_08, cw135_10, cw140_15, cw135_02, wave29/expansion_153,
+cw127_10, cw147_05) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 10,991, 9,215, 7,091, 8,849,
+1,379, 8,214 and 7,466 respectively — the complete authored prose plan
+through each file's "Handoff"/closer section (cw129_08 retains its full
+multi-section proposal ~11,000 lines; wave29/expansion_153 retains its
+complete short-form editorial proposal; ~70 MB -> ~2.7 MB, ~1.28M padding
+lines removed). Every file verified: worktree identical to `c8c1e453d` at
+trim time, retained prefix byte-identical by md5, `git diff --check` clean
+on all seven, zero padding self-references, padding identifiers
+(PLAN-B169-402, PLAN-B170-111, PLAN-B162-132, PLAN-B170-094, PLAN-B109-33,
+PLAN-B170-044, PLAN-B161-003) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch83-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-82: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-24-2026-09-28` (waves
+129/135/140/wave29/127/147 vs. this batch's 95/93/86/85/80). Boundary
+re-verified per file by direct inspection of the closing sentence, blank
+lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner — all seven matched the standard template at marker line
+2786 (`keep_line = 2784`). Padding identifiers spot-checked (e.g.
+`PLAN-B119-08-CW9505SOCIALEVE`, `PLAN-B116-29-CW8003REBUILDER`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave95/cw95_05_social_event_privacy_boundary_breach_plan.md` | 195,339 | 2,794 |
+| `docs/expansions/prose_wave93/cw93_06_social_event_private_quarters_solace_plan.md` | 195,339 | 2,794 |
+| `docs/expansions/prose_wave93/cw93_03_journal_day_32_rationing_decision_plan.md` | 195,339 | 2,794 |
+| `docs/expansions/prose_wave86/cw86_03_magnetic_tape_loop_cherry_ripe_plan.md` | 195,339 | 2,794 |
+| `docs/expansions/prose_wave85/cw85_08_benediction_of_the_clean_count_plan.md` | 195,339 | 2,794 |
+| `docs/expansions/prose_wave85/cw85_07_procession_of_the_lead_reliquary_plan.md` | 195,339 | 2,794 |
+| `docs/expansions/prose_wave80/cw80_03_rebuilders_hydroponic_crop_failure_plan.md` | 195,339 | 2,794 |
+
+Total: 1,367,373 -> 19,558 lines (~1,347,815 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-25-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-sixth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch82 and actively contending). Primaries:
+`docs/expansions/prose_wave139/cw139_09_the_elder_does_not_ask_why_plan.md`,
+`docs/expansions/prose_wave127/cw127_12_twenty_minutes_on_the_page_plan.md`,
+`docs/expansions/prose_wave142/cw142_08_the_vacancy_sign_went_dark_plan.md`,
+`docs/expansions/prose_wave141/cw141_17_the_label_is_still_legible_plan.md`,
+`docs/expansions/prose_wave170/cw170_10_quiet_is_part_of_the_pour_plan.md`,
+`docs/expansions/prose_wave139/cw139_16_the_thaw_is_not_a_promise_plan.md`,
+`docs/expansions/prose_wave140/cw140_14_twelve_grams_on_the_sheet_plan.md`.
+Spares: `wave23/expansion_117_the_basin_that_did_not_green`,
+`cw127_09_two_voices_in_the_current`, `cw170_12_the_sound_everyone_knows`.
+Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch84-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-83: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+in-progress claim (waves 139/127/142/141/170/140 vs. this batch's
+119/118/116/36). Boundary re-verified per file by direct inspection of the
+closing sentence, blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner: `cw119_09`, `cw118_08`,
+`cw116_05`, `cw119_01`, `cw118_07` at marker line 3150 (`keep_line = 3148`);
+`cw36_03`, `cw36_01` used the same 19-section wording as `cw36_06` at marker
+line 2890 (`keep_line = 2888`). Padding identifiers spot-checked (e.g.
+`PLAN-B121-05-CW11909TRIAGEPR`, `PLAN-B120-51-CW3601THEGROUND`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave119/cw119_09_triage_protocol_plan.md` | 195,158 | 3,158 |
+| `docs/expansions/prose_wave118/cw118_08_the_first_broadcast_plan.md` | 195,158 | 3,158 |
+| `docs/expansions/prose_wave116/cw116_05_three_brass_knees_plan.md` | 195,158 | 3,158 |
+| `docs/expansions/prose_wave119/cw119_01_last_transmission_plan.md` | 195,030 | 3,158 |
+| `docs/expansions/prose_wave36/cw36_03_the_sentence_before_the_gallery_plan.md` | 194,931 | 2,898 |
+| `docs/expansions/prose_wave36/cw36_01_the_ground_kept_its_whales_plan.md` | 194,931 | 2,898 |
+| `docs/expansions/prose_wave118/cw118_07_the_last_game_plan.md` | 194,894 | 3,158 |
+
+Total: 1,365,260 -> 21,526 lines (~1,343,734 padding lines removed, ~65 MB ->
+~1.0 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-25-2026-09-28 (same
+session, 2026-09-28 11:45): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw139_09, cw127_12, cw142_08, cw141_17, cw170_10, cw139_16,
+cw140_14) trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Retained content lines: 7,098, 8,214, 7,463, 7,086, 7,476, 7,091 and 7,090
+respectively — the complete authored prose plan through each file's
+"Handoff"/closer section (~70 MB -> ~2.6 MB, ~1.27M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time,
+retained prefix byte-identical by md5, `git diff --check` clean on all
+seven, zero padding self-references, padding identifiers (PLAN-B162-227,
+PLAN-B170-069, PLAN-B162-168, PLAN-B162-111, PLAN-B162-247, PLAN-B162-249,
+PLAN-B162-206) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch85-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-84: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-25-2026-09-28` (waves
+139/127/142/141/170/140 vs. this batch's 34/35/63/57/56/31). Boundary
+re-verified per file by direct inspection of the closing sentence, blank
+lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner: `cw34_06`, `cw35_04`, `cw35_05` used the standard
+19-section template (same as `cw34_01`/`cw34_03`/`cw34_05`) at marker lines
+2543/2541/2538 (`keep_line = 2541/2539/2536`); `cw31_05` used the same
+19-section template at a shorter marker line 1694 (`keep_line = 1692`,
+same shorter-authored-section pattern as `cw32_03`); `cw63_02`, `cw57_04`,
+`cw56_04` at the standard non-19-section marker line 2786 (`keep_line =
+2784`). Padding identifiers spot-checked (e.g. `PLAN-B120-22-CW3406THEBENCHM`,
+`PLAN-B111-12-CW3105THEPLANTKEPT`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave34/cw34_06_the_benchmark_has_no_shelter_plan.md` | 194,840 | 2,551 |
+| `docs/expansions/prose_wave35/cw35_04_the_pass_returned_at_dawn_plan.md` | 194,838 | 2,549 |
+| `docs/expansions/prose_wave63/cw63_02_the_tree_that_ate_light_plan.md` | 194,739 | 2,794 |
+| `docs/expansions/prose_wave57/cw57_04_the_service_tunnel_six_plan.md` | 194,739 | 2,794 |
+| `docs/expansions/prose_wave56/cw56_04_the_radar_annex_listens_plan.md` | 194,739 | 2,794 |
+| `docs/expansions/prose_wave35/cw35_05_the_whiteboard_is_not_neutral_plan.md` | 194,707 | 2,546 |
+| `docs/expansions/prose_wave31/cw31_05_the_plant_kept_its_hours_plan.md` | 194,631 | 1,702 |
+
+Total: 1,363,233 -> 17,730 lines (~1,345,503 padding lines removed, ~65 MB ->
+~0.8 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-26-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-seventh batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch84 and actively contending). Primaries:
+`docs/expansions/wave23/expansion_117_the_basin_that_did_not_green_plan.md`,
+`docs/expansions/prose_wave127/cw127_09_two_voices_in_the_current_plan.md`,
+`docs/expansions/prose_wave170/cw170_12_the_sound_everyone_knows_plan.md`,
+`docs/expansions/prose_wave146/cw146_04_first_green_leaf_below_the_floor_plan.md`,
+`docs/expansions/prose_wave170/cw170_13_one_ladle_and_one_table_plan.md`,
+`docs/expansions/prose_wave135/cw135_18_the_delta_is_a_measured_boundary_plan.md`,
+`docs/expansions/wave24/expansion_122_the-trust-they-can-withdraw_plan.md`.
+Spares: `cw127_18_a_song_behind_the_sheet`, `cw147_11_two_titles_on_one_label`,
+`cw129_06_four_coats_at_the_rope`.
+Status: IN PROGRESS.
+
+## claim-plan-bloat-reduction-batch86-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-85: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+in-progress claim (waves 23/127/170/146/135/24 vs. this batch's
+91/89/81/121/35/32). Boundary re-verified per file by direct inspection of
+the closing sentence, blank lines, `====` separator, then the first
+`## BATCH-NN ARCHITECTURAL EXPANSION` banner: `cw91_01`, `cw89_08`,
+`cw89_07`, `cw81_06` at marker line 2786 (`keep_line = 2784`); `cw121_10` at
+marker line 3150 (`keep_line = 3148`); `cw35_02` used the standard
+19-section template (same as `cw34_01`/`cw35_04`/`cw35_05`) at marker line
+2541 (`keep_line = 2539`); `cw32_06` used the same 19-section template at a
+shorter marker line 1644 (`keep_line = 1642`, same shorter-authored-section
+pattern as `cw32_03`/`cw31_05`). Padding identifiers spot-checked (e.g.
+`PLAN-B119-36-CW9101NPCWHITEO`, `PLAN-B111-17-CW3206THENAMESCALL`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave91/cw91_01_npc_whiteout_traveler_plan.md` | 194,611 | 2,794 |
+| `docs/expansions/prose_wave89/cw89_08_npc_lighthouse_keeper_plan.md` | 194,611 | 2,794 |
+| `docs/expansions/prose_wave89/cw89_07_npc_greenhouse_keeper_plan.md` | 194,611 | 2,794 |
+| `docs/expansions/prose_wave81/cw81_06_unrationed_sugar_brick_plan.md` | 194,611 | 2,794 |
+| `docs/expansions/prose_wave121/cw121_10_gate_two_plan.md` | 194,595 | 3,158 |
+| `docs/expansions/prose_wave35/cw35_02_the_mill_that_kept_its_tools_plan.md` | 194,582 | 2,549 |
+| `docs/expansions/prose_wave32/cw32_06_the_names_called_by_another_office_plan.md` | 194,453 | 1,652 |
+
+Total: 1,362,074 -> 19,835 lines (~1,342,239 padding lines removed, ~65 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-26-2026-09-28 (same
+session, 2026-09-28 11:49): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave23/expansion_117, cw127_09, cw170_12, cw146_04, cw170_13,
+cw135_18, wave24/expansion_122) trimmed at their first `BATCH-NN
+ARCHITECTURAL EXPANSION` banner. Retained content lines: 979, 8,214, 7,476,
+7,469, 7,471, 9,035 and 533 respectively — the complete authored prose plan
+through each file's "Handoff"/closer section (two wave-family files retain
+their complete short-form editorial proposals; ~70 MB -> ~2.6 MB, ~1.28M
+padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B109-15, PLAN-B170-101, PLAN-B162-255, PLAN-B161-130,
+PLAN-B163-056, PLAN-B169-307, PLAN-B108-25) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch87-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-86: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-26-2026-09-28` (waves
+23/127/170/146/135/24 vs. this batch's 118/42/41/40/37). Boundary
+re-verified per file by direct inspection of the closing sentence, blank
+lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner: `cw118_01`, `cw118_10`, `cw118_03` at marker line 3150
+(`keep_line = 3148`); `cw42_06`, `cw41_02` at marker line 3673 (`keep_line =
+3671`); `cw40_04` at marker line 3672 (`keep_line = 3670`); `cw37_06` at
+marker line 3071 (`keep_line = 3069`) — all matched the standard closing
+sentence. Padding identifiers spot-checked (e.g. `PLAN-B120-53-CW11801THESEALI`,
+`PLAN-B110-35-CW3706THEBOTTOMISS`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave118/cw118_01_the_sealing_plan.md` | 194,430 | 3,158 |
+| `docs/expansions/prose_wave42/cw42_06_the_cairn_between_the_gusts_plan.md` | 194,192 | 3,681 |
+| `docs/expansions/prose_wave41/cw41_02_the_cache_under_the_tarp_plan.md` | 194,192 | 3,681 |
+| `docs/expansions/prose_wave40/cw40_04_the_line_holds_harder_plan.md` | 194,191 | 3,680 |
+| `docs/expansions/prose_wave37/cw37_06_the_bottom_is_still_a_promise_plan.md` | 194,162 | 3,079 |
+| `docs/expansions/prose_wave118/cw118_10_the_coordinates_plan.md` | 194,079 | 3,158 |
+| `docs/expansions/prose_wave118/cw118_03_the_ration_split_plan.md` | 194,079 | 3,158 |
+
+Total: 1,359,325 -> 23,595 lines (~1,335,730 padding lines removed, ~64 MB ->
+~1.1 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-27-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-eighth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch86 and actively contending). Primaries:
+`docs/expansions/prose_wave127/cw127_18_a_song_behind_the_sheet_plan.md`,
+`docs/expansions/prose_wave147/cw147_11_two_titles_on_one_label_plan.md`,
+`docs/expansions/prose_wave129/cw129_06_four_coats_at_the_rope_plan.md`,
+`docs/expansions/prose_wave140/cw140_03_watering_has_two_hours_plan.md`,
+`docs/expansions/prose_wave140/cw140_06_a_week_posted_in_pencil_plan.md`,
+`docs/expansions/wave18/expansion_88_a_floor_divided_in_daylight_plan.md`,
+`docs/expansions/prose_wave135/cw135_06_the_signal_was_recorded_plan.md`.
+Spares: `cw135_01_the_narrowing_at_twenty_eight`,
+`cw170_11_the_needle_holds_still`, `wave28/expansion_146_the_label_is_not_the_seed`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-27-2026-09-28 (same
+session, 2026-09-28 11:54): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw127_18, cw147_11, cw129_06, cw140_03, cw140_06,
+wave18/expansion_88, cw135_06) trimmed at their first `BATCH-NN
+ARCHITECTURAL EXPANSION` banner. Retained content lines: 8,214, 7,477,
+10,982, 7,088, 7,092, 584 and 8,914 respectively — the complete authored
+prose plan through each file's "Handoff"/closer section (cw129_06 retains
+its full multi-section proposal; wave18/expansion_88 retains its complete
+short-form editorial proposal; ~70 MB -> ~2.6 MB, ~1.28M padding lines
+removed). Every file verified: worktree identical to `c8c1e453d` at trim
+time, retained prefix byte-identical by md5, `git diff --check` clean on
+all seven, zero padding self-references, padding identifiers (PLAN-B170-238,
+PLAN-B162-263, PLAN-B170-151, PLAN-B162-211, PLAN-B162-238, PLAN-B108-07,
+PLAN-B170-085) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch88-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-87: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent lane's
+`claim-plan-bloat-reduction-parallel-batch-27-2026-09-28` (waves
+127/147/129/140/wave18/135 vs. this batch's 116/115/41/40/39/38). Boundary
+re-verified per file by direct inspection of the closing sentence, blank
+lines, `====` separator, then the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner: `cw116_06`, `cw115_09` at marker line 3150 (`keep_line =
+3148`); `cw41_01`, `cw40_06` at marker line 3675 (`keep_line = 3673`);
+`cw39_04`, `cw38_06` at marker line 3674 (`keep_line = 3672`); `cw39_02` at
+marker line 3673 (`keep_line = 3671`) — all matched the standard closing
+sentence. Padding identifiers spot-checked (e.g. `PLAN-B121-04-CW11606THECLICK`,
+`PLAN-B115-32-CW3902THEGLASSTHAT`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave116/cw116_06_the_click_ladder_plan.md` | 194,079 | 3,158 |
+| `docs/expansions/prose_wave115/cw115_09_the_middles_stay_plan.md` | 194,079 | 3,158 |
+| `docs/expansions/prose_wave41/cw41_01_the_chalk_code_left_for_you_plan.md` | 194,066 | 3,683 |
+| `docs/expansions/prose_wave40/cw40_06_chalk_marks_under_the_reserve_plan.md` | 194,066 | 3,683 |
+| `docs/expansions/prose_wave39/cw39_04_the_ledger_before_the_harvest_plan.md` | 194,065 | 3,682 |
+| `docs/expansions/prose_wave38/cw38_06_work_orders_for_forgetting_plan.md` | 194,065 | 3,682 |
+| `docs/expansions/prose_wave39/cw39_02_the_glass_that_carried_water_plan.md` | 194,064 | 3,681 |
+
+Total: 1,358,484 -> 24,727 lines (~1,333,757 padding lines removed, ~64 MB ->
+~1.1 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch89-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-88: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent claims appeared in the
+ledger since batch88; no overlap by wave number against any recent lane
+claim (this batch's waves: 38/119/31/117/75/37/55). Boundary re-verified
+per file by direct inspection of the closing sentence, blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner:
+`cw38_02` at marker line 3673 (`keep_line = 3671`); `cw119_07`, `cw117_08`
+at marker line 3150 (`keep_line = 3148`); `cw31_01` used the standard
+19-section template at marker line 1743 (`keep_line = 1741`); `cw75_05`,
+`cw55_04` at marker line 2786 (`keep_line = 2784`); `cw37_05` at marker line
+3073 (`keep_line = 3071`) — all matched the standard closing sentence.
+Padding identifiers spot-checked (e.g. `PLAN-B114-24-CW3802THEMARKEDPAR`,
+`PLAN-B110-33-CW3101THEAXLEKEEPS`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave38/cw38_02_the_marked_parts_of_the_road_plan.md` | 194,064 | 3,681 |
+| `docs/expansions/prose_wave119/cw119_07_no_visitors_plan.md` | 194,046 | 3,158 |
+| `docs/expansions/prose_wave31/cw31_01_the_axle_keeps_a_place_plan.md` | 193,952 | 1,751 |
+| `docs/expansions/prose_wave117/cw117_08_chalk_on_the_valves_plan.md` | 193,951 | 3,158 |
+| `docs/expansions/prose_wave75/cw75_05_the_red_light_freeze_game_plan.md` | 193,749 | 2,794 |
+| `docs/expansions/prose_wave37/cw37_05_at_the_far_end_of_their_jack_plan.md` | 193,720 | 3,081 |
+| `docs/expansions/prose_wave55/cw55_04_the_weather_station_on_the_ridge_plan.md` | 193,621 | 2,794 |
+
+Total: 1,357,103 -> 20,417 lines (~1,336,686 padding lines removed, ~64 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch90-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-89: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent claims appeared in the
+ledger since batch89; no overlap by wave number against any recent lane
+claim (this batch's waves: 52/49/46/86/33/75). Boundary re-verified per file
+by direct inspection of the closing sentence, blank lines, `====`
+separator, then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner:
+`cw52_04`, `cw49_04`, `cw86_05`, `cw75_06` at marker line 2786 (`keep_line =
+2784`); `cw46_03`, `cw46_01` at marker line 2756 (`keep_line = 2754`);
+`cw33_05` used the standard 19-section template at marker line 3248
+(`keep_line = 3246`) — all matched the standard closing sentence. Padding
+identifiers spot-checked (e.g. `PLAN-B113-33-CW5204THETOWNTHATR`,
+`PLAN-B120-12-CW3305THEROTAAT`) confirmed unreferenced via `grep -rl` across
+`Assets/`, `src/`, `Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/`
+(exit 1, no matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave52/cw52_04_the_town_that_remembers_its_wicks_plan.md` | 193,621 | 2,794 |
+| `docs/expansions/prose_wave49/cw49_04_the_whine_against_the_storm_grate_plan.md` | 193,621 | 2,794 |
+| `docs/expansions/prose_wave46/cw46_03_the_voice_that_changed_register_plan.md` | 193,591 | 2,764 |
+| `docs/expansions/prose_wave46/cw46_01_the_greenhouse_left_unlocked_plan.md` | 193,591 | 2,764 |
+| `docs/expansions/prose_wave86/cw86_05_backward_music_station_whistle_plan.md` | 193,493 | 2,794 |
+| `docs/expansions/prose_wave33/cw33_05_the_rota_at_the_salt_pans_plan.md` | 193,383 | 3,256 |
+| `docs/expansions/prose_wave75/cw75_06_the_missing_subfloor_plan.md` | 193,305 | 2,794 |
+
+Total: 1,354,605 -> 19,960 lines (~1,334,645 padding lines removed, ~64 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-2026-09-28
+
+User-authorized full integration of four trimmed (bloat-reduced ~2.8K-line)
+prose plans, integration only — no finalisation docs, no new partials, no
+commit, no test runs beyond JSON parse and `git diff --check` (text-only
+catalog edits; TEST_POLICY.md targeted-testing rule). Each plan's anchor
+record was verified live before editing: the source JSON exists, the record
+exists in it, and a non-prose-probe `src/` consumer renders that record's
+text field.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave95/cw95_04_room_history_soil_window_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw95_04_room_history_soil_window_plan.md`)
+- `docs/expansions/prose_wave48/cw48_03_the_still_hour_after_shift_change_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw48_03_the_still_hour_after_shift_change_plan.md`)
+- `docs/expansions/prose_wave121/cw121_08_load_shedding_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw121_08_load_shedding_plan.md`)
+- `docs/expansions/prose_wave42/cw42_01_the_needle_that_remembered_zero_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw42_01_the_needle_that_remembered_zero_plan.md`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_history_soil_window` vignette body + one bounded sentence)
+- `Assets/StreamingAssets/Data/events.json`
+  (`event_belief_quiet_comfort` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_dam_keeper_log_1` description + attributed listener annotation)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`electrical_substation` description + source-bounded shelf detail)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Verified live consumers (grep-verified, non-probe): `shelter_room_identities.json`
+→ `src/Journal/JournalCatalogData.cs`, `src/UI/ShelterPanel.cs`,
+`src/World/HoldfastInteriorView.cs`; `events.json` → `src/Host/EventsHostSession.cs`,
+`src/UI/EventDetailPanel.cs`, `src/UI/EventsLogPanel.cs`; `items.json` cassette
+description → `src/UI/InventoryDetailPanel.cs`, `src/Host/CassettePlaybackHostSession.cs`;
+`locations.json` → `src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`. The
+voltmeter detail is bounded to the live `final_wishes.json` record
+`wish_electrician_old_voltmeter` (`src/Host/Phase0HostSession.cs`). All existing
+record text preserved; no new state, trigger, route, mechanic, or save section.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-28-2026-09-28
+
+User-authorized continuation (second parallel session, twenty-ninth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified; the single PLAN-B109-28 hit was this session's own
+spare-listing in the prior claim, not an external dependency). Seven
+primaries plus three spares (race-abort protocol; lane at batch88 and
+actively contending). Primaries:
+`docs/expansions/prose_wave135/cw135_01_the_narrowing_at_twenty_eight_plan.md`,
+`docs/expansions/prose_wave170/cw170_11_the_needle_holds_still_plan.md`,
+`docs/expansions/wave28/expansion_146_the_label_is_not_the_seed_plan.md`,
+`docs/expansions/prose_wave127/cw127_19_green_pulse_five_days_plan.md`,
+`docs/expansions/wave22/expansion_112_the_slot_kept_at_its_hour_plan.md`,
+`docs/expansions/prose_wave144/cw144_05_strip_the_array_name_the_cost_plan.md`,
+`docs/expansions/wave27/expansion_138_the_reading_stays_outside_plan.md`.
+Spares: `cw140_05_the_ash_is_a_question`, `cw135_15_safe_for_this_cistern_sample`,
+`wave29/expansion_151_four_words_and_the_press`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-28-2026-09-28 (same
+session, 2026-09-28 11:58): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw135_01, cw170_11, wave28/expansion_146, cw127_19,
+wave22/expansion_112, cw144_05, wave27/expansion_138) trimmed at their
+first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines:
+8,699, 7,474, 1,329, 8,216, 780, 7,466 and 1,079 respectively — the
+complete authored prose plan through each file's "Handoff"/closer section
+(three wave-family files retain their complete short-form editorial
+proposals; ~70 MB -> ~2.6 MB, ~1.28M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B169-483, PLAN-B162-241,
+PLAN-B109-28, PLAN-B170-242, PLAN-B108-09, PLAN-B161-243, PLAN-B109-16)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch91-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-90: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap against the concurrent
+lane's recent claim (waves 135/170/wave28/127/wave22/144/wave27 vs. this
+batch's 75/74/72/69/66). Also noted, unrelated to this lane: another agent
+appended a `claim-trimmed-plan-integration-wave-2026-09-28` entry moving
+four already-trimmed plans into `docs/plans/integrated/content/` — no path
+overlap with this batch's seven files. Boundary re-verified per file by
+direct inspection of the closing sentence, blank lines, `====` separator,
+then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner — all seven
+matched the standard template at marker line 2786 (`keep_line = 2784`).
+Padding identifiers spot-checked (e.g. `PLAN-B112-33-CW7503THEFILTERGHO`,
+`PLAN-B111-40-CW6602THEBUNKERINS`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave75/cw75_03_the_filter_ghost_rhyme_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave75/cw75_02_the_vent_walker_ticking_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave74/cw74_03_the_iron_door_whisper_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave72/cw72_03_the_wall_tapping_game_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave69/cw69_01_the_flour_counting_song_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave66/cw66_06_the_chef_at_the_stove_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave66/cw66_02_the_bunker_in_section_plan.md` | 193,305 | 2,794 |
+
+Total: 1,353,135 -> 19,558 lines (~1,333,577 padding lines removed, ~64 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch92-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-91: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent claims appeared in the
+ledger since batch91; no overlap by wave number against any recent lane
+claim (this batch's waves: 65/63). Boundary re-verified per file by direct
+inspection of the closing sentence, blank lines, `====` separator, then the
+first `## BATCH-NN ARCHITECTURAL EXPANSION` banner — all seven matched the
+standard template at marker line 2786 (`keep_line = 2784`). Padding
+identifiers spot-checked (e.g. `PLAN-B111-50-CW6506THESENTRYWHO`,
+`PLAN-B111-32-CW6305THELASTWINDO`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave65/cw65_06_the_sentry_who_watches_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave65/cw65_04_eyes_behind_the_mask_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave65/cw65_03_there_is_now_a_henrietta_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave65/cw65_02_the_childs_useful_map_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave65/cw65_01_the_click_that_decides_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave63/cw63_06_the_name_under_the_bunk_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave63/cw63_05_the_last_window_glass_plan.md` | 193,305 | 2,794 |
+
+Total: 1,353,135 -> 19,558 lines (~1,333,577 padding lines removed, ~64 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch93-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-92: drawn from the shared
+`docs/expansions/prose_wave*` pool. No new concurrent claims appeared in the
+ledger since batch92; no overlap by wave number against any recent lane
+claim (this batch's waves: 63/62/61/60/58). Boundary re-verified per file by
+direct inspection of the closing sentence, blank lines, `====` separator,
+then the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner — all seven
+matched the standard template at marker line 2786 (`keep_line = 2784`).
+Padding identifiers spot-checked (e.g. `PLAN-B111-51-CW6303DEEPCOLDSHAR`,
+`PLAN-B113-02-CW5802THECOUNTTHAT`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave63/cw63_03_deep_cold_shared_breath_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave62/cw62_05_the_token_wall_ledger_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave62/cw62_02_for_whoever_walked_out_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave61/cw61_04_under_the_returned_tin_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave60/cw60_03_the_three_brass_knees_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave60/cw60_01_the_two_chalk_knuckles_plan.md` | 193,305 | 2,794 |
+| `docs/expansions/prose_wave58/cw58_02_the_count_that_changes_plan.md` | 193,305 | 2,794 |
+
+Total: 1,353,135 -> 19,558 lines (~1,333,577 padding lines removed, ~64 MB ->
+~0.9 MB). Every file verified: retained prefix byte-identical by md5 against
+`git show c8c1e453d:<path>`, `git diff --check` clean on all seven. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-29-2026-09-28
+
+User-authorized continuation (second parallel session, thirtieth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch90 and actively contending). Primaries:
+`docs/expansions/prose_wave140/cw140_05_the_ash_is_a_question_plan.md`,
+`docs/expansions/prose_wave135/cw135_15_safe_for_this_cistern_sample_plan.md`,
+`docs/expansions/wave29/expansion_151_four_words_and_the_press_plan.md`,
+`docs/expansions/prose_wave127/cw127_20_the_thirteenth_tick_plan.md`,
+`docs/expansions/prose_wave144/cw144_04_first_light_across_the_wire_plan.md`,
+`docs/expansions/wave30/expansion_161_the_receipt_on_the_dock_plan.md`,
+`docs/expansions/wave28/expansion_144_the_hiss_does_not_pause_plan.md`.
+Spares: `cw142_06_the_hot_lead_charm`, `cw127_13_the_blanket_between`,
+`cw127_16_a_hand_on_the_arm`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-29-2026-09-28 (same
+session, 2026-09-28 12:06): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw140_05, cw135_15, wave29/expansion_151, cw127_20, cw144_04,
+wave30/expansion_161, wave28/expansion_144) trimmed at their first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines: 7,092,
+9,267, 1,379, 8,214, 7,469, 1,792 and 1,329 respectively — the complete
+authored prose plan through each file's "Handoff"/closer section (three
+wave-family files retain their complete short-form editorial proposals;
+~70 MB -> ~2.6 MB, ~1.28M padding lines removed). Every file verified:
+worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B163-020, PLAN-B169-472,
+PLAN-B109-36, PLAN-B170-276, PLAN-B162-070, PLAN-B109-49, PLAN-B109-30)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-trimmed-plan-integration-wave-2-2026-09-28
+
+User-authorized full integration of four more trimmed (bloat-reduced
+~2.7-3.2K-line) prose plans, integration only — no finalisation docs, no new
+partials, no commit, no test runs beyond JSON parse and `git diff --check`
+(text-only catalog edits). Second wave this session, after
+`claim-trimmed-plan-integration-wave-2026-09-28` (CW95-04/CW48-03/CW121-08/
+CW42-01); the four below are disjoint from that batch and from all 13 records
+already in `docs/plans/integrated/content/`. Each anchor record was verified
+live before editing (source JSON exists, record exists in it, non-probe `src/`
+consumer renders the record's text field).
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave106/cw106_07_room_history_boiler_jacket_three_days_unlogged_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw106_07_room_history_boiler_jacket_three_days_unlogged_plan.md`)
+- `docs/expansions/prose_wave48/cw48_05_the_goats_below_the_highland_bluffs_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw48_05_the_goats_below_the_highland_bluffs_plan.md`)
+- `docs/expansions/prose_wave120/cw120_07_for_saturday_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw120_07_for_saturday_plan.md`)
+- `docs/expansions/prose_wave43/cw43_05_the_ridge_that_kept_the_horizon_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw43_05_the_ridge_that_kept_the_horizon_plan.md`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_history_boiler_jacket` body + one bounded sentence)
+- `Assets/StreamingAssets/Data/events.json`
+  (`event_migration_steppe_herds_arrival` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_fathers_tapes_1` description + attributed listener annotation)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`loc_gravel_backbone` description + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep (same four surfaces as wave 1):
+`shelter_room_identities.json` → `src/Journal/JournalCatalogData.cs`,
+`src/UI/ShelterPanel.cs`, `src/World/HoldfastInteriorView.cs`; `events.json` →
+`src/Host/EventsHostSession.cs`, `src/UI/EventDetailPanel.cs`,
+`src/UI/EventsLogPanel.cs`; `items.json` cassette description →
+`src/UI/InventoryDetailPanel.cs`, `src/Host/CassettePlaybackHostSession.cs`;
+`locations.json` → `src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`.
+All existing record text preserved; no new state, trigger, route, mechanic, or
+save section. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch94-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-93: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-29-2026-09-28` lane (waves
+140/135/29/127/144/30/28) or the unrelated
+`claim-trimmed-plan-integration-wave-*` lane: this batch covers waves
+33/98/97/96/95/94 only. Boundary re-verified per file: `cw33_03` uses the
+standard 19-section authored template, marker line 3246, keep_line 3244; the
+other six (`cw98_02`, `cw97_03`, `cw97_02`, `cw96_02`, `cw95_03`, `cw94_03`)
+use the standard closing-sentence template, marker line 2786, keep_line
+2784. Padding identifiers spot-checked (`PLAN-B120-19-CW3303THELINEPA`,
+`PLAN-B118-36-CW9403GLITCH24S`) confirmed unreferenced via `grep -rl` across
+`Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave33/cw33_03_the_line_pavel_wont_explain_plan.md` | 193,253 | 3,254 |
+| `docs/expansions/prose_wave98/cw98_02_journal_day_128_thief_found_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave97/cw97_03_glitch_27_pressure_flutter_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave97/cw97_02_journal_day_102_victory_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave96/cw96_02_journal_day_195_memory_loss_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave95/cw95_03_glitch_25_ground_loop_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave94/cw94_03_glitch_24_seal_cycles_plan.md` | 193,177 | 2,794 |
+
+Total: 1,352,315 -> 20,018 lines (~1,332,297 padding lines removed, ~63.5 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-30-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-first batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch93 and actively contending). Primaries:
+`docs/expansions/prose_wave142/cw142_06_the_hot_lead_charm_plan.md`,
+`docs/expansions/prose_wave127/cw127_13_the_blanket_between_plan.md`,
+`docs/expansions/prose_wave127/cw127_16_a_hand_on_the_arm_plan.md`,
+`docs/expansions/wave25/expansion_127_the_door_that_was_oiled_plan.md`,
+`docs/expansions/prose_wave145/cw145_03_tools_at_the_basement_door_plan.md`,
+`docs/expansions/prose_wave127/cw127_17_the_white_line_near_shore_plan.md`,
+`docs/expansions/prose_wave162/cw162_17_a_name_held_by_the_margin_plan.md`.
+Spares: `cw156_13_an_appeal_for_seeds_in_the_allotment_hour`,
+`cw140_09_the_last_of_the_pozzolan`, `cw144_25_responders_on_kilo_band`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-30-2026-09-28 (same
+session, 2026-09-28 12:14): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw142_06, cw127_13, cw127_16, wave25/expansion_127, cw145_03,
+cw127_17, cw162_17) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 7,473, 8,214, 8,214, 979, 7,466,
+8,214 and 7,467 respectively — the complete authored prose plan through
+each file's "Handoff"/closer section (wave25/expansion_127 retains its
+complete short-form editorial proposal; ~70 MB -> ~2.6 MB, ~1.28M padding
+lines removed). Every file verified: worktree identical to `c8c1e453d` at
+trim time, retained prefix byte-identical by md5, `git diff --check` clean
+on all seven, zero padding self-references, padding identifiers
+(PLAN-B163-124, PLAN-B170-161, PLAN-B170-329, PLAN-B109-25, PLAN-B162-039,
+PLAN-B169-476, PLAN-B162-058) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch95-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-94: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-30-2026-09-28` lane (waves
+142/127/25/145/162) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 91/88/86/84 only. Boundary re-verified per
+file (standard closing-sentence template, "This file is a complete prose
+expansion proposal...", confirmed by direct inspection at lines 2778-2786):
+marker line 2786, keep_line 2784 for all seven. Padding identifiers
+spot-checked (`PLAN-B119-30-CW9105NPCOLDWOM`, `PLAN-B115-40-CW8408QUIETHOUSERU`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave91/cw91_05_npc_old_woman_letters_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave91/cw91_02_npc_quiet_house_elder_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave88/cw88_04_npc_grandmother_loma_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave86/cw86_06_four_tone_flute_cadence_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave84/cw84_08_quiet_house_runner_report_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave84/cw84_06_century_seed_grain_vial_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave84/cw84_02_hand_wound_dynamo_spool_plan.md` | 193,177 | 2,794 |
+
+Total: 1,352,239 -> 19,558 lines (~1,332,681 padding lines removed, ~63.5 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch96-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-95: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-29/30-2026-09-28` lanes (waves
+140/135/29/127/144/30/28/142/25/145/162) or the unrelated
+`claim-trimmed-plan-integration-wave-*` lane: this batch covers waves
+83/81/79 only. Boundary re-verified per file (standard closing-sentence
+template, "This file is a complete prose expansion proposal...", confirmed
+by direct inspection at lines 2780-2786): marker line 2786, keep_line 2784
+for all seven. Padding identifiers spot-checked
+(`PLAN-B117-01-CW8307SMUGGLEDC`, `PLAN-B117-50-CW7901GARRISONT`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave83/cw83_07_smuggled_coffee_grounds_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave83/cw83_01_prison_tattoo_needle_rig_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave81/cw81_05_paraffin_candle_hoard_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave81/cw81_04_lead_counterfeit_slugs_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave81/cw81_01_copper_condenser_coil_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave79/cw79_04_warlord_raid_planning_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave79/cw79_01_garrison_toll_dispute_plan.md` | 193,177 | 2,794 |
+
+Total: 1,352,239 -> 19,558 lines (~1,332,681 padding lines removed, ~63.5 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-31-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-second batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch94 and actively contending). Primaries:
+`docs/expansions/prose_wave156/cw156_13_an_appeal_for_seeds_in_the_allotment_hour_plan.md`,
+`docs/expansions/prose_wave140/cw140_09_the_last_of_the_pozzolan_plan.md`,
+`docs/expansions/prose_wave144/cw144_25_responders_on_kilo_band_plan.md`,
+`docs/expansions/prose_wave143/cw143_17_counting_changes_when_the_page_turns_plan.md`,
+`docs/expansions/prose_wave146/cw146_01_it_smells_like_before_plan.md`,
+`docs/expansions/prose_wave145/cw145_12_room_fourteen_is_empty_plan.md`,
+`docs/expansions/prose_wave133/cw133_16_the_schedule_does_not_go_past_the_generator_plan.md`.
+Spares: `cw140_18_fourteen_presented_after_the_storm`,
+`wave27/expansion_139_the_last_entry_was_a_week_ago`,
+`cw138_02_the_crypt_accord_is_read_at_the_arch`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-31-2026-09-28 (same
+session, 2026-09-28 12:20): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw156_13, cw140_09, cw144_25, cw143_17, cw146_01, cw145_12,
+cw133_16) trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner.
+Retained content lines: 7,466, 7,098, 7,464, 7,469, 7,465, 7,463 and 7,145
+respectively — the complete authored prose plan through each file's
+"Handoff"/closer section (~68 MB -> ~2.5 MB, ~1.24M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time,
+retained prefix byte-identical by md5, `git diff --check` clean on all
+seven, zero padding self-references, padding identifiers (PLAN-B159-037,
+PLAN-B162-071, PLAN-B162-023, PLAN-B159-219, PLAN-B162-212, PLAN-B162-048,
+PLAN-B173-059) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch97-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-96: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-31-2026-09-28` lane (waves
+156/140/144/143/146/145/133) or the unrelated
+`claim-trimmed-plan-integration-wave-*` lane: this batch covers waves
+78/67/64/62/61/59 only. Boundary re-verified per file (standard
+closing-sentence template, "This file is a complete prose expansion
+proposal...", confirmed by direct inspection at lines 2780-2786): marker
+line 2786, keep_line 2784 for all seven. Padding identifiers spot-checked
+(`PLAN-B117-11-CW7805CALORICMA`, `PLAN-B114-07-CW5902THETWOCHALKS`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave78/cw78_05_caloric_math_paranoia_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave67/cw67_05_the_rhyme_at_the_mess_hall_door_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave64/cw64_04_the_generator_is_the_heart_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave62/cw62_06_quiet_hours_are_load_bearing_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave61/cw61_01_below_the_forbidden_frequencies_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave59/cw59_03_the_middles_in_the_corridor_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave59/cw59_02_the_two_chalks_of_the_hallway_plan.md` | 193,177 | 2,794 |
+
+Total: 1,352,239 -> 19,558 lines (~1,332,681 padding lines removed, ~63.5 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-3-2026-09-28
+
+User-authorized full integration of four more trimmed (bloat-reduced
+~2.6-3.2K-line) prose plans, integration only — no finalisation docs, no new
+partials, no commit, no test runs beyond JSON parse and `git diff --check`
+(text-only catalog edits). Third wave this session, after
+`claim-trimmed-plan-integration-wave-2026-09-28` and
+`claim-trimmed-plan-integration-wave-2-2026-09-28`; the four below are disjoint
+from both batches and from all 17 records already in
+`docs/plans/integrated/content/`. Each anchor record was verified live before
+editing (source JSON exists, record exists in it, non-probe `src/` consumer
+renders the record's text field).
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave96/cw96_04_room_history_a_chair_from_the_row_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw96_04_room_history_a_chair_from_the_row_plan.md`)
+- `docs/expansions/prose_wave49/cw49_02_the_promise_at_the_radio_tower_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw49_02_the_promise_at_the_radio_tower_plan.md`)
+- `docs/expansions/prose_wave122/cw122_04_the_transfer_list_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw122_04_the_transfer_list_plan.md`)
+- `docs/expansions/prose_wave38/cw38_04_the_logic_that_usually_holds_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw38_04_the_logic_that_usually_holds_plan.md`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_history_a_chair_from_the_row` body + one bounded sentence)
+- `Assets/StreamingAssets/Data/events.json`
+  (`event_grief_conflict_reckless_wish` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_field_hospital_7_3` description + attributed listener annotation)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`location_scrap_neuromancer_camp` description + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep (the same four surfaces verified in waves
+1-2): `shelter_room_identities.json` → `src/Journal/JournalCatalogData.cs`,
+`src/UI/ShelterPanel.cs`, `src/World/HoldfastInteriorView.cs`; `events.json` →
+`src/Host/EventsHostSession.cs`, `src/UI/EventDetailPanel.cs`,
+`src/UI/EventsLogPanel.cs`; `items.json` cassette description →
+`src/UI/InventoryDetailPanel.cs`, `src/Host/CassettePlaybackHostSession.cs`;
+`locations.json` → `src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`.
+All existing record text preserved; no new state, trigger, route, mechanic, or
+save section. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-32-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-third batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch96 and actively contending). Primaries:
+`docs/expansions/prose_wave140/cw140_18_fourteen_presented_after_the_storm_plan.md`,
+`docs/expansions/wave27/expansion_139_the_last_entry_was_a_week_ago_plan.md`,
+`docs/expansions/prose_wave138/cw138_02_the_crypt_accord_is_read_at_the_arch_plan.md`,
+`docs/expansions/prose_wave139/cw139_10_three_knocks_then_the_shift_bell_plan.md`,
+`docs/expansions/wave22/expansion_115_walk_until_the_lines_change_plan.md`,
+`docs/expansions/wave27/expansion_141_the_line_outlives_the_market_plan.md`,
+`docs/expansions/prose_wave143/cw143_20_the_coats_are_wrong_on_a_tuesday_plan.md`.
+Spares: `wave30/expansion_156_the_curtain_and_the_ledger`,
+`wave30/expansion_158_pairs_left_at_the_hairpins`,
+`wave20/expansion_102_what_the_route_charges_back`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-32-2026-09-28 (same
+session, 2026-09-28 12:31): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw140_18, wave27/expansion_139, cw138_02, cw139_10,
+wave22/expansion_115, wave27/expansion_141, cw143_20) trimmed at their
+first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines:
+7,093, 1,079, 6,245, 7,088, 780, 1,079 and 7,463 respectively — the
+complete authored prose plan through each file's "Handoff"/closer section
+(three wave-family files retain their complete short-form editorial
+proposals; ~68 MB -> ~2.5 MB, ~1.24M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B159-038, PLAN-B109-08,
+PLAN-B168-133, PLAN-B160-162, PLAN-B107-27, PLAN-B109-01, PLAN-B160-012)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch98-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-97: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-32-2026-09-28` lane (waves
+140/27/138/139/22/143) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 56/55/54 only. Boundary re-verified per file
+(standard closing-sentence template, "This file is a complete prose
+expansion proposal...", confirmed by direct inspection at lines 2780-2786):
+marker line 2786, keep_line 2784 for all seven. Padding identifiers
+spot-checked (`PLAN-B114-14-CW5602THESTUDIOAFT`,
+`PLAN-B114-22-CW5401THELIBRARYAF`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave56/cw56_02_the_studio_after_the_broadcast_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave56/cw56_01_the_reservoir_above_the_city_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave55/cw55_06_the_concourse_without_a_train_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave54/cw54_06_the_abattoir_without_a_shift_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave54/cw54_05_the_letters_that_never_left_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave54/cw54_03_the_blood_bank_with_no_patients_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave54/cw54_01_the_library_after_the_fire_plan.md` | 193,177 | 2,794 |
+
+Total: 1,352,239 -> 19,558 lines (~1,332,681 padding lines removed, ~63.5 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch99-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-98: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-32-2026-09-28` lane (waves
+140/27/138/139/22/143) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 53/51/50 only. Boundary re-verified per file
+(standard closing-sentence template, "This file is a complete prose
+expansion proposal...", confirmed by direct inspection at lines 2780-2786):
+marker line 2786, keep_line 2784 for all seven. Padding identifiers
+spot-checked (`PLAN-B114-44-CW5306THEMACHINETH`,
+`PLAN-B114-59-CW5006THEFISHTHATF`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave53/cw53_06_the_machine_that_kept_command_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave51/cw51_06_the_second_animal_in_the_cord_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave51/cw51_04_the_quiet_comb_in_the_quarry_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave51/cw51_03_the_kettle_over_the_culvert_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave51/cw51_02_the_flock_beneath_the_intake_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave51/cw51_01_the_bare_canes_after_the_moths_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave50/cw50_06_the_fish_that_floated_copper_plan.md` | 193,177 | 2,794 |
+
+Total: 1,352,239 -> 19,558 lines (~1,332,681 padding lines removed, ~63.5 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-4-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans
+(all drawn from the latest trim batches 82/84), integration only — no
+finalisation docs, no new partials, no commit, no test runs beyond JSON parse
+and `git diff --check` (text-only catalog edits). Fourth wave this session,
+after `claim-trimmed-plan-integration-wave-2026-09-28`,
+`claim-trimmed-plan-integration-wave-2-2026-09-28`, and
+`claim-trimmed-plan-integration-wave-3-2026-09-28`; the four below are disjoint
+from all three batches and from all 21 records already in
+`docs/plans/integrated/content/`. Each anchor record was verified live before
+editing (source JSON exists, record exists in it, non-probe `src/` consumer
+renders the record's text field). Parallel-batch-25 plans (waves
+139/127/142/141/170/140) were ruled out: their anchors
+(`radio_distress_signals_expansion.json` fragments, `survivor_profiles_expansion`,
+`found_objects_expansion`, `narrative_encounters`) have no verified live text
+surface (Rule 7 — no fake integration).
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave119/cw119_01_last_transmission_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw119_01_last_transmission_plan.md`)
+- `docs/expansions/prose_wave118/cw118_07_the_last_game_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw118_07_the_last_game_plan.md`)
+- `docs/expansions/prose_wave48/cw48_01_the_bird_under_the_folded_blanket_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw48_01_the_bird_under_the_folded_blanket_plan.md`)
+- `docs/expansions/prose_wave36/cw36_03_the_sentence_before_the_gallery_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw36_03_the_sentence_before_the_gallery_plan.md`)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_free_radio_4` description + attributed listener annotation;
+  `cassette_family_bunker_3` description + source-bounded closing observation)
+- `Assets/StreamingAssets/Data/events.json`
+  (`friction_stolen_keepsake` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`loc_avalanche_gallery` description + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep (the same surfaces verified in waves 1-3):
+`items.json` cassette description → `src/UI/InventoryDetailPanel.cs`,
+`src/Host/CassettePlaybackHostSession.cs`; `events.json` →
+`src/Host/EventsHostSession.cs`, `src/UI/EventDetailPanel.cs`,
+`src/UI/EventsLogPanel.cs`; `locations.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`. All existing record
+text preserved; no new state, trigger, route, mechanic, or save section.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch100-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-99: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-32-2026-09-28` lane (waves
+140/27/138/139/22/143) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 50/46/45 only. Boundary re-verified per file:
+`cw50_05`/`cw50_02`/`cw50_01` use the standard closing-sentence template at
+marker line 2786, keep_line 2784; `cw46_04`/`cw45_06`/`cw45_05`/`cw45_03`
+use the identical closing-sentence template but at a non-standard marker
+line 2756 (confirmed by direct inspection, not assumed), keep_line 2754.
+Padding identifiers spot-checked (`PLAN-B115-25-CW5005THECORRIDORC`,
+`PLAN-B114-20-CW4503THEWORKBENCH`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave50/cw50_05_the_corridor_cut_by_gunfire_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave50/cw50_02_the_sounder_in_the_river_mud_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave50/cw50_01_the_white_web_at_the_intake_plan.md` | 193,177 | 2,794 |
+| `docs/expansions/prose_wave46/cw46_04_the_fake_grange_hall_voice_plan.md` | 193,147 | 2,764 |
+| `docs/expansions/prose_wave45/cw45_06_the_blue_door_that_stayed_lit_plan.md` | 193,147 | 2,764 |
+| `docs/expansions/prose_wave45/cw45_05_the_three_who_could_not_walk_plan.md` | 193,147 | 2,764 |
+| `docs/expansions/prose_wave45/cw45_03_the_workbench_after_the_beam_plan.md` | 193,147 | 2,764 |
+
+Total: 1,352,619 -> 19,478 lines (~1,333,141 padding lines removed, ~63.5 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-33-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-fourth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch97 and actively contending). Primaries:
+`docs/expansions/wave30/expansion_156_the_curtain_and_the_ledger_plan.md`,
+`docs/expansions/wave30/expansion_158_pairs_left_at_the_hairpins_plan.md`,
+`docs/expansions/wave20/expansion_102_what_the_route_charges_back_plan.md`,
+`docs/expansions/wave14/expansion_73_a_coordinate_is_not_a_voice_plan.md`,
+`docs/expansions/prose_wave141/cw141_16_north_north_east_does_not_move_plan.md`,
+`docs/expansions/prose_wave127/cw127_02_a_name_repeated_plan.md`,
+`docs/expansions/wave26/expansion_134_the_grass_around_all_forty_plan.md`.
+Spares: `wave19/expansion_94_the_light_turns_before_dawn`,
+`wave21/expansion_108_two_versions_in_full_view`,
+`cw140_02_two_bunks_apart`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-33-2026-09-28 (same
+session, 2026-09-28 12:35): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave30/expansion_156, wave30/expansion_158,
+wave20/expansion_102, wave14/expansion_73, cw141_16, cw127_02,
+wave26/expansion_134) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 1,691, 1,641, 839, 1,730, 7,085,
+8,214 and 979 respectively — the complete authored prose plan through each
+file's "Handoff"/closer section (four wave-family files retain their
+complete short-form editorial proposals; ~68 MB -> ~2.5 MB, ~1.24M padding
+lines removed). Every file verified: worktree identical to `c8c1e453d` at
+trim time, retained prefix byte-identical by md5, `git diff --check` clean
+on all seven, zero padding self-references, padding identifiers
+(PLAN-B110-24, PLAN-B109-38, PLAN-B109-06, PLAN-B107-06, PLAN-B160-274,
+PLAN-B170-176, PLAN-B107-18) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch101-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-100: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-33-2026-09-28` lane (waves
+30/20/14/141/127/26) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 45/44/48/43 only. Boundary re-verified per
+file — all seven use the identical standard closing-sentence template
+("This file is a complete prose expansion proposal...") but each at its own
+non-standard marker line, confirmed by direct inspection rather than
+assumed: `cw45_02`/`cw44_03`/`cw44_01` marker 2756 (keep_line 2754);
+`cw44_06` marker 2755 (keep_line 2753); `cw48_02` marker 2754 (keep_line
+2752); `cw43_01` marker 2724 (keep_line 2722); `cw43_03` marker 2723
+(keep_line 2721). Padding identifiers spot-checked
+(`PLAN-B115-07-CW4502THEMANIFESTA`, `PLAN-B114-27-CW4303THEROOFABOVE`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave45/cw45_02_the_manifest_after_the_crew_plan.md` | 193,147 | 2,764 |
+| `docs/expansions/prose_wave44/cw44_03_the_tower_inside_the_mist_plan.md` | 193,147 | 2,764 |
+| `docs/expansions/prose_wave44/cw44_01_the_plea_that_kept_repeating_plan.md` | 193,147 | 2,764 |
+| `docs/expansions/prose_wave44/cw44_06_the_manual_at_the_intake_plan.md` | 193,146 | 2,763 |
+| `docs/expansions/prose_wave48/cw48_02_the_band_between_eleven_and_five_plan.md` | 193,145 | 2,762 |
+| `docs/expansions/prose_wave43/cw43_01_the_door_policy_with_no_door_plan.md` | 193,115 | 2,732 |
+| `docs/expansions/prose_wave43/cw43_03_the_roof_above_the_last_switch_plan.md` | 193,114 | 2,731 |
+
+Total: 1,352,461 -> 19,050 lines (~1,333,411 padding lines removed, ~63.5 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-34-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-fifth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch100 and actively contending). Primaries:
+`docs/expansions/wave19/expansion_94_the_light_turns_before_dawn_plan.md`,
+`docs/expansions/wave21/expansion_108_two_versions_in_full_view_plan.md`,
+`docs/expansions/prose_wave140/cw140_02_two_bunks_apart_plan.md`,
+`docs/expansions/prose_wave139/cw139_18_a_map_with_marks_but_no_legend_plan.md`,
+`docs/expansions/wave24/expansion_123_the-skill-that-fell-quiet_plan.md`,
+`docs/expansions/wave20/expansion_104_the_meeting_kept_its_hour_plan.md`,
+`docs/expansions/wave23/expansion_118_the_mark_beneath_the_bend_plan.md`.
+Spares: `cw135_05_eighty_five_seconds_under_ice`,
+`wave24/expansion_124_a-name-for-what-came-back`,
+`wave17/expansion_86_the_first_winter_changes`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-34-2026-09-28 (same
+session, 2026-09-28 12:39): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave19/expansion_94, wave21/expansion_108, cw140_02, cw139_18,
+wave24/expansion_123, wave20/expansion_104, wave23/expansion_118) trimmed
+at their first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content
+lines: 619, 740, 7,089, 7,085, 533, 839 and 979 respectively — the
+complete authored prose plan through each file's "Handoff"/closer section
+(five wave-family files retain their complete short-form editorial
+proposals; ~67 MB -> ~2.5 MB, ~1.23M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B107-25, PLAN-B107-21,
+PLAN-B163-007, PLAN-B161-098, PLAN-B108-24, PLAN-B109-12, PLAN-B109-14)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch102-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-101: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-34-2026-09-28` lane (waves
+19/21/140/139/24/20/23) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 33/86/76/75/73/71 only. Boundary re-verified
+per file: `cw33_01` uses the standard 19-section authored template, marker
+line 3344, keep_line 3342 (confirmed by direct inspection of section 19's
+closing text); the other six use the standard closing-sentence template,
+marker line 2786, keep_line 2784. Padding identifiers spot-checked
+(`PLAN-B120-49-CW3301THEQUEUEI`, `PLAN-B112-49-CW7104THELADYINTHE`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave33/cw33_01_the_queue_is_still_counted_plan.md` | 193,095 | 3,352 |
+| `docs/expansions/prose_wave86/cw86_01_lincolnshire_poacher_echo_plan.md` | 193,049 | 2,794 |
+| `docs/expansions/prose_wave76/cw76_05_ration_tin_memorial_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave75/cw75_01_the_outer_door_story_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave73/cw73_02_the_winter_counting_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave71/cw71_05_the_man_in_the_radio_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave71/cw71_04_the_lady_in_the_well_plan.md` | 192,870 | 2,794 |
+
+Total: 1,357,624 -> 20,322 lines (~1,337,302 padding lines removed, ~63.6 MB
+-> ~1.0 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch103-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-102: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-34-2026-09-28` lane (waves
+19/21/140/139/24/20/23) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 71/67/66/58/57 only. Boundary re-verified per
+file (standard closing-sentence template, "This file is a complete prose
+expansion proposal...", confirmed by direct inspection at lines 2780-2786):
+marker line 2786, keep_line 2784 for all seven. Padding identifiers
+spot-checked (`PLAN-B111-55-CW7103THEDOSEMETER`,
+`PLAN-B112-03-CW5706THEBURNEDPIN`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave71/cw71_03_the_dose_meter_rhyme_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave71/cw71_02_the_gate_keeper_song_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave71/cw71_01_the_candle_counting_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave67/cw67_01_crosses_to_remember_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave66/cw66_05_the_hatch_to_the_sky_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave58/cw58_03_the_third_bunk_cools_plan.md` | 192,870 | 2,794 |
+| `docs/expansions/prose_wave57/cw57_06_the_burned_pine_belt_plan.md` | 192,870 | 2,794 |
+
+Total: 1,350,090 -> 19,558 lines (~1,330,532 padding lines removed, ~63.2 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch104-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-103: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-34-2026-09-28` lane (waves
+19/21/140/139/24/20/23) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 90/88/84/83/34/31/35 only. Boundary
+re-verified per file: `cw90_06`/`cw88_06`/`cw84_01`/`cw83_02` use the
+standard closing-sentence template, marker line 2786, keep_line 2784;
+`cw34_02`/`cw31_04`/`cw35_03` use the standard 19-section authored
+template at non-standard marker lines (confirmed by direct inspection, not
+assumed): marker 2541/keep_line 2539, marker 1696/keep_line 1694, and
+marker 2538/keep_line 2536 respectively. Padding identifiers spot-checked
+(`PLAN-B118-16-CW9006NPCROADSI`, `PLAN-B120-23-CW3503THEROOMAB`) confirmed
+unreferenced via `grep -rl` across `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+and `Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave90/cw90_06_npc_roadside_trader_plan.md` | 192,742 | 2,794 |
+| `docs/expansions/prose_wave88/cw88_06_npc_victor_conscript_plan.md` | 192,742 | 2,794 |
+| `docs/expansions/prose_wave84/cw84_01_uninspected_lard_tin_plan.md` | 192,742 | 2,794 |
+| `docs/expansions/prose_wave83/cw83_02_siphon_hose_and_bulb_plan.md` | 192,742 | 2,794 |
+| `docs/expansions/prose_wave34/cw34_02_the_board_updated_for_nobody_plan.md` | 192,676 | 2,549 |
+| `docs/expansions/prose_wave31/cw31_04_the_timetable_beneath_the_ash_plan.md` | 192,659 | 1,704 |
+| `docs/expansions/prose_wave35/cw35_03_the_room_above_the_datum_plan.md` | 192,545 | 2,546 |
+
+Total: 1,349,848 -> 18,175 lines (~1,331,673 padding lines removed, ~63.2 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-35-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-sixth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch102 and actively contending). Primaries:
+`docs/expansions/prose_wave135/cw135_05_eighty_five_seconds_under_ice_plan.md`,
+`docs/expansions/wave24/expansion_124_a-name-for-what-came-back_plan.md`,
+`docs/expansions/wave17/expansion_86_the_first_winter_changes_plan.md`,
+`docs/expansions/prose_wave142/cw142_01_fourteen_days_then_the_count_plan.md`,
+`docs/expansions/wave21/expansion_107_the_figure_in_both_hands_plan.md`,
+`docs/expansions/prose_wave129/cw129_04_the_name_and_the_empty_span_plan.md`,
+`docs/expansions/prose_wave145/cw145_02_a_name_asked_for_once_plan.md`.
+Spares: `wave26/expansion_135_fire_laid_for_a_return`,
+`wave29/expansion_155_the_leaflet_never_left`,
+`cw156_17_two_heads_one_uneven_track`.
+Status: IN PROGRESS.
+
+## claim-trimmed-plan-integration-wave-5-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans
+(trim batches 80/81/82/84), integration only — no finalisation docs, no new
+partials, no commit, no test runs beyond JSON parse and `git diff --check`
+(text-only catalog edits). Fifth wave this session, after waves 1-4; the four
+below are disjoint from all prior batches and from all 25 records already in
+`docs/plans/integrated/content/`. Each anchor record was verified live before
+editing (source JSON exists, record exists in it, non-probe `src/` consumer
+renders the record's text field).
+
+Rejected this wave under Rule 7 (verified premise, no live text surface):
+- CW61-06 / CW61-02 (graffiti): their records exist ONLY in the root
+  `bunker_graffiti_postings.json`, while the live loader
+  (`BunkerGraffitiCatalog.LoadFromDirectory`) reads only
+  `narrative/bunker_graffiti_postings.json` + `narrative/graffiti_expansion.json`;
+  the cited records are absent from both live files.
+- CW84-05 (contraband): `ContrabandStashSystem` consumes the catalog but no
+  UI/host surface renders the authored prose.
+- CW86-03 (numbers-station ciphers) and CW90-04 / CW87-01 (survivor profiles):
+  loaded only by Core catalogs with no verified non-probe `src/` text consumer.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave78/cw78_04_teeth_grinding_dorm_audit_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw78_04_teeth_grinding_dorm_audit_plan.md`)
+- `docs/expansions/prose_wave119/cw119_09_triage_protocol_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw119_09_triage_protocol_plan.md`)
+- `docs/expansions/prose_wave49/cw49_03_the_mirror_carp_in_the_brown_foam_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw49_03_the_mirror_carp_in_the_brown_foam_plan.md`)
+- `docs/expansions/prose_wave43/cw43_06_the_bridge_abutment_above_the_dark_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw43_06_the_bridge_abutment_above_the_dark_plan.md`)
+- `Assets/StreamingAssets/Data/narrative/dweller_psychological_journals.json`
+  (`journal_psych_teeth_grinding_dorm_audit` prose + one bounded sentence)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_saint_maren_1` description + attributed listener annotation)
+- `Assets/StreamingAssets/Data/events.json`
+  (`event_migration_coastal_carp_run_begins` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`loc_rail_trestle_gorge` description + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep:
+`narrative/dweller_psychological_journals.json` → `DailySurvivalCatalog` →
+`src/Journal/JournalCatalogData.cs` (`catalogs.DailySurvival`) → journal
+surfaces; `items.json` cassette description →
+`src/UI/InventoryDetailPanel.cs`, `src/Host/CassettePlaybackHostSession.cs`;
+`events.json` → `src/Host/EventsHostSession.cs`, `src/UI/EventDetailPanel.cs`,
+`src/UI/EventsLogPanel.cs`; `locations.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`. All existing record
+text preserved; no new state, trigger, route, mechanic, or save section.
+Status: COMPLETE, uncommitted.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-35-2026-09-28 (same
+session, 2026-09-28 12:46): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw135_05, wave24/expansion_124, wave17/expansion_86, cw142_01,
+wave21/expansion_107, cw129_04, cw145_02) trimmed at their first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines: 8,972,
+533, 395, 7,465, 740, 10,991 and 7,460 respectively — the complete authored
+prose plan through each file's "Handoff"/closer section (three wave-family
+files retain their complete short-form editorial proposals; cw129_04
+retains its full multi-section proposal ~11,000 lines; ~67 MB -> ~2.4 MB,
+~1.22M padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B169-114, PLAN-B108-22, PLAN-B108-14, PLAN-B160-280,
+PLAN-B107-23, PLAN-B169-129, PLAN-B162-092) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch105-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-104: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-35-2026-09-28` lane (waves
+135/24/17/142/21/129/145) or the unrelated
+`claim-trimmed-plan-integration-wave-*` lane: this batch covers waves
+31/76/72/35/32 only. Boundary re-verified per file: `cw76_04`/`cw76_03`/
+`cw72_06` use the standard closing-sentence template, marker line 2786,
+keep_line 2784; `cw31_03`/`cw31_02`/`cw35_06`/`cw32_05` use the standard
+19-section authored template at non-standard marker lines (confirmed by
+direct inspection, not assumed): marker 1795/keep_line 1793, marker
+1695/keep_line 1693, marker 2538/keep_line 2536, and marker 1744/keep_line
+1742 respectively. Padding identifiers spot-checked
+(`PLAN-B112-26-CW7604COMPASSROSEG`, `PLAN-B111-23-CW3205THEBUTTONKEP`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave31/cw31_03_two_empty_shapes_on_the_cloth_plan.md` | 192,442 | 1,803 |
+| `docs/expansions/prose_wave76/cw76_04_compass_rose_grave_plan.md` | 192,372 | 2,794 |
+| `docs/expansions/prose_wave76/cw76_03_welding_rod_cross_plan.md` | 192,372 | 2,794 |
+| `docs/expansions/prose_wave72/cw72_06_the_quietest_child_plan.md` | 192,372 | 2,794 |
+| `docs/expansions/prose_wave31/cw31_02_clean_wire_through_the_hatch_plan.md` | 192,342 | 1,703 |
+| `docs/expansions/prose_wave35/cw35_06_warm_looking_from_a_distance_plan.md` | 192,289 | 2,546 |
+| `docs/expansions/prose_wave32/cw32_05_the_button_kept_for_south_plan.md` | 192,263 | 1,752 |
+
+Total: 1,346,452 -> 16,186 lines (~1,330,266 padding lines removed, ~63.0 MB
+-> ~0.9 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch106-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-105: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-35-2026-09-28` lane (waves
+135/24/17/142/21/129/145) or the unrelated
+`claim-trimmed-plan-integration-wave-*` lane: this batch covers waves
+89/32/118/115/40/39/123 only. Boundary re-verified per file: `cw89_02` uses
+the standard closing-sentence template, marker 2786/keep_line 2784;
+`cw32_02` uses the standard 19-section template, marker 1692/keep_line
+1690; `cw118_04`/`cw115_07`/`cw123_10` use the longer closing-sentence
+template, marker 3150/keep_line 3148; `cw40_02`/`cw39_05` use the longer
+closing-sentence template, marker 3675/3674, keep_line 3673/3672
+respectively — all confirmed by direct inspection of each boundary rather
+than assumed. Padding identifiers spot-checked
+(`PLAN-B119-46-CW8902NPCELECTR`, `PLAN-B114-42-CW3905THECOATINTHE`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave89/cw89_02_npc_electrician_plan.md` | 192,244 | 2,794 |
+| `docs/expansions/prose_wave32/cw32_02_file_open_past_the_return_date_plan.md` | 192,211 | 1,700 |
+| `docs/expansions/prose_wave118/cw118_04_the_final_entry_plan.md` | 192,210 | 3,158 |
+| `docs/expansions/prose_wave115/cw115_07_if_the_hatch_goes_plan.md` | 192,210 | 3,158 |
+| `docs/expansions/prose_wave40/cw40_02_the_sea_keeps_what_it_takes_plan.md` | 192,042 | 3,683 |
+| `docs/expansions/prose_wave39/cw39_05_the_coat_in_the_reflection_plan.md` | 192,041 | 3,682 |
+| `docs/expansions/prose_wave123/cw123_10_the_glass_falling_plan.md` | 192,024 | 3,158 |
+
+Total: 1,344,982 -> 21,173 lines (~1,323,809 padding lines removed, ~62.9 MB
+-> ~1.1 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-36-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-seventh batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch104 and actively contending). Primaries:
+`docs/expansions/wave26/expansion_135_fire_laid_for_a_return_plan.md`,
+`docs/expansions/wave29/expansion_155_the_leaflet_never_left_plan.md`,
+`docs/expansions/prose_wave156/cw156_17_two_heads_one_uneven_track_plan.md`,
+`docs/expansions/prose_wave135/cw135_08_the_scarf_in_the_manifest_plan.md`,
+`docs/expansions/wave21/expansion_111_the_page_left_face_up_plan.md`,
+`docs/expansions/wave17/expansion_85_hands_at_the_workbench_plan.md`,
+`docs/expansions/prose_wave135/cw135_19_trade_food_for_protection_plan.md`.
+Spares: `wave22/expansion_114_the_private_interval`,
+`cw147_18_the_wire_drifts_by_degrees`,
+`wave25/expansion_131_open_to_all_who_need_to_remember`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-36-2026-09-28 (same
+session, 2026-09-28 12:50): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave26/expansion_135, wave29/expansion_155, cw156_17, cw135_08,
+wave21/expansion_111, wave17/expansion_85, cw135_19) trimmed at their first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines: 1,029,
+1,529, 7,478, 8,812, 820, 411 and 9,154 respectively — the complete
+authored prose plan through each file's "Handoff"/closer section (four
+wave-family files retain their complete short-form editorial proposals;
+~67 MB -> ~2.4 MB, ~1.22M padding lines removed). Every file verified:
+worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B108-10, PLAN-B109-42,
+PLAN-B161-082, PLAN-B169-385, PLAN-B108-19, PLAN-B108-16, PLAN-B169-199)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch107-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-106: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-36-2026-09-28` lane (waves
+26/29/156/135/21/17) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 122/118/37/68 only. Boundary re-verified per
+file: `cw122_10`/`cw122_02`/`cw122_01`/`cw118_05`/`cw118_02` use the longer
+closing-sentence template, marker line 3150, keep_line 3148; `cw37_02` uses
+the same template with a minor closing-sentence wording variant ("Review
+voice distinction, factual boundaries, and branch attribution before
+content placement" — confirmed by direct inspection, same underlying
+boundary structure), marker line 3072, keep_line 3070; `cw68_02` uses the
+standard closing-sentence template, marker line 2786, keep_line 2784.
+Padding identifiers spot-checked (`PLAN-B139-058-CW12210TELEPHON`,
+`PLAN-B112-02-CW6802MASHALISTENI`) confirmed unreferenced via `grep -rl`
+across `Assets/`, `src/`, `Ashfall.Core.Tests/`, and
+`Assets/StreamingAssets/Data/` (exit 1, no matches). Provenance commit
+confirmed per file via `git log -1 --format=%h` — all seven: `c8c1e453d`.
+Race-safety check (`git status --porcelain` on the exact seven paths,
+immediately before writing) ran clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave122/cw122_10_telephone_spool_plan.md` | 191,896 | 3,158 |
+| `docs/expansions/prose_wave122/cw122_02_the_pharmacy_key_plan.md` | 191,896 | 3,158 |
+| `docs/expansions/prose_wave122/cw122_01_the_hardest_decision_plan.md` | 191,768 | 3,158 |
+| `docs/expansions/prose_wave118/cw118_05_the_first_week_plan.md` | 191,712 | 3,158 |
+| `docs/expansions/prose_wave118/cw118_02_the_first_death_plan.md` | 191,712 | 3,158 |
+| `docs/expansions/prose_wave37/cw37_02_no_wages_in_the_ore_plan.md` | 191,695 | 3,080 |
+| `docs/expansions/prose_wave68/cw68_02_masha_listening_plan.md` | 191,621 | 2,794 |
+
+Total: 1,342,300 -> 21,664 lines (~1,320,636 padding lines removed, ~62.8 MB
+-> ~1.1 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-batch108-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-107: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-36-2026-09-28` lane (waves
+26/29/156/135/21/17) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 66/62/60/59/52/122 only. Boundary re-verified
+per file: `cw66_03`/`cw62_04`/`cw60_06`/`cw60_02`/`cw59_01`/`cw52_01` use
+the standard closing-sentence template, marker line 2786, keep_line 2784;
+`cw122_09` uses the longer closing-sentence template, marker line 3150,
+keep_line 3148. Padding identifiers spot-checked
+(`PLAN-B113-24-CW6603THEBEEUNDERG`, `PLAN-B139-057-CW12209MUDLINEM`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave66/cw66_03_the_bee_under_glass_plan.md` | 191,621 | 2,794 |
+| `docs/expansions/prose_wave62/cw62_04_chalk_on_the_valves_plan.md` | 191,621 | 2,794 |
+| `docs/expansions/prose_wave60/cw60_06_the_square_of_sky_plan.md` | 191,621 | 2,794 |
+| `docs/expansions/prose_wave60/cw60_02_the_quiet_register_plan.md` | 191,621 | 2,794 |
+| `docs/expansions/prose_wave59/cw59_01_the_hatch_remembers_plan.md` | 191,621 | 2,794 |
+| `docs/expansions/prose_wave52/cw52_01_the_salted_tube_plan.md` | 191,621 | 2,794 |
+| `docs/expansions/prose_wave122/cw122_09_mudline_marks_plan.md` | 191,504 | 3,158 |
+
+Total: 1,341,230 -> 19,922 lines (~1,321,308 padding lines removed, ~62.6 MB
+-> ~1.0 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-37-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-eighth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch106 and actively contending). Primaries:
+`docs/expansions/wave22/expansion_114_the_private_interval_plan.md`,
+`docs/expansions/prose_wave147/cw147_18_the_wire_drifts_by_degrees_plan.md`,
+`docs/expansions/wave25/expansion_131_open_to_all_who_need_to_remember_plan.md`,
+`docs/expansions/wave27/expansion_142_the_chord_that_stops_mid_phrase_plan.md`,
+`docs/expansions/prose_wave140/cw140_10_the_bow_he_made_himself_plan.md`,
+`docs/expansions/prose_wave152/cw152_09_plant_it_deep_and_wait_plan.md`,
+`docs/expansions/wave17/expansion_84_a_calendar_of_people_plan.md`.
+Spares: `wave25/expansion_128_the_stretcher_left_facing_out`,
+`cw128_08_both_sides_of_the_page`,
+`wave22/expansion_113_the_morning_the_ledger_missed`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-37-2026-09-28 (same
+session, 2026-09-28 13:00): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave22/expansion_114, cw147_18, wave25/expansion_131,
+wave27/expansion_142, cw140_10, cw152_09, wave17/expansion_84) trimmed at
+their first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content
+lines: 780, 7,463, 979, 1,079, 7,098, 7,465 and 403 respectively — the
+complete authored prose plan through each file's "Handoff"/closer section
+(four wave-family files retain their complete short-form editorial
+proposals; ~66 MB -> ~2.4 MB, ~1.21M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B108-04, PLAN-B160-027,
+PLAN-B109-23, PLAN-B108-26, PLAN-B161-219, PLAN-B162-018, PLAN-B108-13)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-batch109-conservative-2026-09-28
+
+User-authorized continuation ("find and continue with the next 7 plans to
+trim bloated text! be conservative, keep unique material, don't completely
+remove and compress! list lines previously and now!"), docs-only, same
+conservative protocol as batches 38-108: drawn from the shared
+`docs/expansions/prose_wave*` pool. No overlap with the concurrent
+`claim-plan-bloat-reduction-parallel-batch-37-2026-09-28` lane (waves
+22/147/25/27/140/152/17) or the unrelated `claim-trimmed-plan-integration-wave-*`
+lane: this batch covers waves 87/33/76/74/70/65/64 only. Boundary
+re-verified per file: `cw87_02`/`cw76_01`/`cw74_05`/`cw70_03`/`cw65_05`/
+`cw64_06` use the standard closing-sentence template, marker line 2786,
+keep_line 2784; `cw33_04` uses the standard 19-section authored template at
+a non-standard marker line (confirmed by direct inspection), marker 3046,
+keep_line 3044. Padding identifiers spot-checked
+(`PLAN-B119-29-CW8702NPCTOMASE`, `PLAN-B111-45-CW6406THESUNDAYSPE`)
+confirmed unreferenced via `grep -rl` across `Assets/`, `src/`,
+`Ashfall.Core.Tests/`, and `Assets/StreamingAssets/Data/` (exit 1, no
+matches). Provenance commit confirmed per file via `git log -1
+--format=%h` — all seven: `c8c1e453d`. Race-safety check (`git status
+--porcelain` on the exact seven paths, immediately before writing) ran
+clean.
+
+Seven files trimmed:
+
+| File | Lines before | Lines after |
+|---|---|---|
+| `docs/expansions/prose_wave87/cw87_02_npc_tomas_engineer_plan.md` | 191,493 | 2,794 |
+| `docs/expansions/prose_wave33/cw33_04_the_fence_gets_paid_first_plan.md` | 191,285 | 3,054 |
+| `docs/expansions/prose_wave76/cw76_01_childs_shoe_cairn_plan.md` | 191,281 | 2,794 |
+| `docs/expansions/prose_wave74/cw74_05_the_red_siren_dance_plan.md` | 191,281 | 2,794 |
+| `docs/expansions/prose_wave70/cw70_03_the_door_knock_game_plan.md` | 191,281 | 2,794 |
+| `docs/expansions/prose_wave65/cw65_05_when_is_the_garden_plan.md` | 191,281 | 2,794 |
+| `docs/expansions/prose_wave64/cw64_06_the_sunday_special_plan.md` | 191,281 | 2,794 |
+
+Total: 1,338,183 -> 19,824 lines (~1,318,359 padding lines removed, ~62.5 MB
+-> ~1.0 MB). Every file verified: retained prefix byte-identical by md5
+against `git show c8c1e453d:<path>`, `git diff --check` clean on all seven.
+Embedded provenance notes cite `git show c8c1e453d:<path>`.
+Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-6-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans
+(trim batches 80/82/84), integration only — no finalisation docs, no new
+partials, no commit, no test runs beyond JSON parse and `git diff --check`
+(text-only catalog edits). Sixth wave this session, after waves 1-5; the four
+below are disjoint from all prior batches and from all 29 records already in
+`docs/plans/integrated/content/`. Each anchor record was verified live before
+editing (source JSON exists, record exists in it, non-probe `src/` consumer
+renders the record's text field). Remaining recent-batch candidates on
+unverified catalogs (spiritual_rituals, social events, wiretap, ciphers,
+survivor profiles) remain rejected per Rule 7.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave78/cw78_06_mirror_shaving_disconnect_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw78_06_mirror_shaving_disconnect_plan.md`)
+- `docs/expansions/prose_wave48/cw48_06_the_black_and_gold_mat_in_the_ditch_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw48_06_the_black_and_gold_mat_in_the_ditch_plan.md`)
+- `docs/expansions/prose_wave36/cw36_01_the_ground_kept_its_whales_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw36_01_the_ground_kept_its_whales_plan.md`)
+- `docs/expansions/prose_wave118/cw118_08_the_first_broadcast_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw118_08_the_first_broadcast_plan.md`)
+- `Assets/StreamingAssets/Data/narrative/dweller_psychological_journals.json`
+  (`journal_psych_mirror_shaving_disconnect` prose + one bounded sentence)
+- `Assets/StreamingAssets/Data/events.json`
+  (`event_eco_bioremediation_mat_discovery` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`location_ash_whale_carcass` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_free_radio_1` description + attributed listener annotation)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep (same surfaces as waves 1-5):
+`narrative/dweller_psychological_journals.json` → `DailySurvivalCatalog` →
+`src/Journal/JournalCatalogData.cs`; `events.json` →
+`src/Host/EventsHostSession.cs`, `src/UI/EventDetailPanel.cs`,
+`src/UI/EventsLogPanel.cs`; `locations.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`; `items.json`
+cassette description → `src/UI/InventoryDetailPanel.cs`,
+`src/Host/CassettePlaybackHostSession.cs`. All existing record text preserved;
+no new state, trigger, route, mechanic, or save section.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-38-2026-09-28
+
+User-authorized continuation (second parallel session, thirty-ninth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch108 and actively contending). Primaries:
+`docs/expansions/wave25/expansion_128_the_stretcher_left_facing_out_plan.md`,
+`docs/expansions/prose_wave128/cw128_08_both_sides_of_the_page_plan.md`,
+`docs/expansions/wave22/expansion_113_the_morning_the_ledger_missed_plan.md`,
+`docs/expansions/wave23/expansion_121_the_cap_holds_the_instrument_plan.md`,
+`docs/expansions/wave16/expansion_78_a_bowl_a_name_and_the_silence_plan.md`,
+`docs/expansions/prose_wave127/cw127_14_the_same_name_twice_plan.md`,
+`docs/expansions/wave30/expansion_157_the_key_behind_the_diploma_plan.md`.
+Spares: `wave14/expansion_71_the_card_that_cannot_answer`,
+`wave27/expansion_140_a_page_for_the_next_walker`,
+`wave20/expansion_97_what_the_route_charges_back`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-38-2026-09-28 (same
+session, 2026-09-28 13:04): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave25/expansion_128, cw128_08, wave22/expansion_113,
+wave23/expansion_121, wave16/expansion_78, cw127_14,
+wave30/expansion_157) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 979, 11,806, 780, 979, 1,554,
+8,214 and 1,741 respectively — the complete authored prose plan through
+each file's "Handoff"/closer section (five wave-family files retain their
+complete short-form editorial proposals; cw128_08 retains its full
+multi-section proposal ~11,800 lines; ~66 MB -> ~2.4 MB, ~1.21M padding
+lines removed). Every file verified: worktree identical to `c8c1e453d` at
+trim time, retained prefix byte-identical by md5, `git diff --check` clean
+on all seven, zero padding self-references, padding identifiers
+(PLAN-B109-19, PLAN-B175-104, PLAN-B108-06, PLAN-B109-04, PLAN-B107-29,
+PLAN-B169-413, PLAN-B110-26) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-39-2026-09-28
+
+User-authorized continuation (second parallel session, fortieth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/wave14/expansion_71_the_card_that_cannot_answer_plan.md`,
+`docs/expansions/wave27/expansion_140_a_page_for_the_next_walker_plan.md`,
+`docs/expansions/wave20/expansion_97_what_the_route_charges_back_plan.md`,
+`docs/expansions/wave12/expansion_67_the_two_names_at_low_slack_plan.md`,
+`docs/expansions/wave24/expansion_126_the-line-to-turn-back-on_plan.md`,
+`docs/expansions/wave20/expansion_99_the_meeting_kept_its_hour_plan.md`,
+`docs/expansions/wave23/expansion_119_truer_than_solid_ground_plan.md`.
+Spares: `wave21/expansion_109_the_roof_has_its_season`,
+`cw131_12_the_map_being_repainted`,
+`wave25/expansion_130_the_sky_kept_its_peace`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-39-2026-09-28 (same
+session, 2026-09-28 13:12): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave14/expansion_71, wave27/expansion_140,
+wave20/expansion_97, wave12/expansion_67, wave24/expansion_126,
+wave20/expansion_99, wave23/expansion_119) trimmed at their first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines: 2,474,
+1,079, 839, 2,050, 533, 839 and 979 respectively — the complete authored
+prose plan through each file's "Handoff"/closer section (all seven
+wave-family files retain their complete short-form editorial proposals;
+~66 MB -> ~0.6 MB, ~1.35M padding lines removed). Every file verified:
+worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B107-04, PLAN-B109-09,
+PLAN-B109-05, PLAN-B107-24, PLAN-B108-21, PLAN-B109-11, PLAN-B109-10)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-trimmed-plan-integration-wave-7-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans
+(trim batches 81/82), integration only — no finalisation docs, no new
+partials, no commit, no test runs beyond JSON parse and `git diff --check`
+(text-only catalog edits). Seventh wave this session, after waves 1-6; the
+four below are disjoint from all prior batches and from all 33 records already
+in `docs/plans/integrated/content/`. Each anchor record was verified live
+before editing (source JSON exists, record exists in it, non-probe `src/`
+consumer renders the record's text field). Rejected this wave under Rule 7:
+CW116-05 (records live only in the root non-loaded `bunker_graffiti_postings.json`),
+CW124-09 (memorials_expansion_05.json loads into MemorialSystem, but the
+verified consumers — cenotaph plaque ledger, shelter decor, epitaph host — do
+not render that catalog's authored text), CW148-18 (radio distress fragments,
+no live render surface).
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave49/cw49_06_the_room_changed_by_the_last_wish_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw49_06_the_room_changed_by_the_last_wish_plan.md`)
+- `docs/expansions/prose_wave48/cw48_04_the_boots_between_utility_and_grief_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw48_04_the_boots_between_utility_and_grief_plan.md`)
+- `docs/expansions/prose_wave49/cw49_05_the_shadow_that_waited_at_the_airlock_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw49_05_the_shadow_that_waited_at_the_airlock_plan.md`)
+- `docs/expansions/prose_wave44/cw44_02_the_door_behind_the_empty_crates_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw44_02_the_door_behind_the_empty_crates_plan.md`)
+- `Assets/StreamingAssets/Data/events.json`
+  (`narrative_final_wish_completed`, `event_grief_conflict_belongings_dispute`,
+  `event_expedition_stray_follows_home` bodyText + one bounded sentence each)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`raider_trap_location` description + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep (same surfaces as waves 1-6):
+`events.json` → `src/Host/EventsHostSession.cs`, `src/UI/EventDetailPanel.cs`,
+`src/UI/EventsLogPanel.cs`; `locations.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`. All existing record
+text preserved; no new state, trigger, route, mechanic, or save section.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-40-2026-09-28
+
+User-authorized continuation (second parallel session, forty-first batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/wave21/expansion_109_the_roof_has_its_season_plan.md`,
+`docs/expansions/prose_wave131/cw131_12_the_map_being_repainted_plan.md`,
+`docs/expansions/wave25/expansion_130_the_sky_kept_its_peace_plan.md`,
+`docs/expansions/wave20/expansion_105_counting_at_dawn_plan.md`,
+`docs/expansions/wave29/expansion_152_the_star_changes_hands_plan.md`,
+`docs/expansions/prose_wave133/cw133_15_the_figure_above_the_wolves_plan.md`,
+`docs/expansions/wave13/expansion_68_only_in_emergency_plan.md`.
+Spares: `cw135_04_the_third_hand_stops`, `cw147_15_the_east_ward_holds`,
+`wave2/expansion_18_the_underneath`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-40-2026-09-28 (same
+session, 2026-09-28 13:17): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave21/expansion_109, cw131_12, wave25/expansion_130,
+wave20/expansion_105, wave29/expansion_152, cw133_15,
+wave13/expansion_68) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 740, 10,600, 979, 839, 1,579,
+6,761 and 2,167 respectively — the complete authored prose plan through
+each file's "Handoff"/closer section (four wave-family files retain their
+complete short-form editorial proposals; cw131_12 retains its full
+multi-section proposal ~10,600 lines; ~65 MB -> ~2.0 MB, ~1.28M padding
+lines removed). Every file verified: worktree identical to `c8c1e453d` at
+trim time, retained prefix byte-identical by md5, `git diff --check` clean
+on all seven, zero padding self-references, padding identifiers
+(PLAN-B107-20, PLAN-B168-202, PLAN-B109-17, PLAN-B108-28, PLAN-B109-40,
+PLAN-B173-466, PLAN-B107-01) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-41-2026-09-28
+
+User-authorized continuation (second parallel session, forty-second batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave135/cw135_04_the_third_hand_stops_plan.md`,
+`docs/expansions/prose_wave147/cw147_15_the_east_ward_holds_plan.md`,
+`docs/expansions/wave2/expansion_18_the_underneath_plan.md`,
+`docs/expansions/wave6/expansion_37_the_quickening_plan.md`,
+`docs/expansions/prose_wave135/cw135_13_a_cup_on_a_stone_plan.md`,
+`docs/expansions/prose_wave127/cw127_01_names_for_a_cup_plan.md`,
+`docs/expansions/prose_wave125/cw125_10_every_life_matters_plan.md`.
+Spares: `wave20/expansion_100_counting_at_dawn`,
+`wave1/expansion_16_the_rebuilt_body`, `cw127_04_the_ping_above`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-41-2026-09-28 (same
+session, 2026-09-28 13:21): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw135_04, cw147_15, wave2/expansion_18, wave6/expansion_37,
+cw135_13, cw127_01, cw125_10) trimmed at their first `BATCH-NN
+ARCHITECTURAL EXPANSION` banner. Retained content lines: 8,965, 7,463,
+1,608, 1,699, 8,599, 8,310 and 4,515 respectively — the complete authored
+prose plan through each file's "Handoff"/closer section (two wave-family
+files retain their complete short-form editorial proposals; ~65 MB ->
+~2.4 MB, ~1.28M padding lines removed). Every file verified: worktree
+identical to `c8c1e453d` at trim time, retained prefix byte-identical by
+md5, `git diff --check` clean on all seven, zero padding self-references,
+padding identifiers (PLAN-B169-046, PLAN-B161-179, PLAN-B105-19,
+PLAN-B105-20, PLAN-B169-405, PLAN-B169-345, PLAN-B143-081) confirmed
+unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-42-2026-09-28
+
+User-authorized continuation (second parallel session, forty-third batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/wave20/expansion_100_counting_at_dawn_plan.md`,
+`docs/expansions/wave1/expansion_16_the_rebuilt_body_plan.md`,
+`docs/expansions/prose_wave127/cw127_04_the_ping_above_plan.md`,
+`docs/expansions/wave19/expansion_95_what_the_gallery_can_hold_plan.md`,
+`docs/expansions/prose_wave136/cw136_01_the_bee_is_here_plan.md`,
+`docs/expansions/wave1/expansion_12_the_second_generation_plan.md`,
+`docs/expansions/wave24/expansion_125_five-days-of-warning_plan.md`.
+Spares: `docs/expansions/prose_wave138/cw138_12_forty_pages_before_the_last_entry_plan.md`,
+`docs/expansions/wave13/expansion_69_the_date_in_the_catalog_plan.md`,
+`docs/expansions/wave16/expansion_80_a_map_held_in_one_head_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-42-2026-09-28 (same
+session, 2026-09-28 13:25): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave20/expansion_100, wave1/expansion_16, cw127_04,
+wave19/expansion_95, cw136_01, wave1/expansion_12,
+wave24/expansion_125) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 839, 1,081, 8,214, 619, 5,655,
+1,291 and 533 respectively — the complete authored prose plan through each
+file's "Handoff"/closer section (five wave-family files retain their
+complete short-form editorial proposals; ~63 MB -> ~1.2 MB, ~1.31M padding
+lines removed). Every file verified: worktree identical to `c8c1e453d` at
+trim time, retained prefix byte-identical by md5, `git diff --check` clean
+on all seven, zero padding self-references, padding identifiers
+(PLAN-B108-27, PLAN-B105-07, PLAN-B169-044, PLAN-B107-12, PLAN-B175-018,
+PLAN-B105-12, PLAN-B108-23) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-trimmed-plan-integration-wave-8-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans,
+integration only — no finalisation docs, no new partials, no commit, no test
+runs beyond JSON parse and `git diff --check` (text-only catalog edits).
+Eighth wave this session, after waves 1-7; the four below are disjoint from
+all prior batches and from all 37 records already in
+`docs/plans/integrated/content/`. The newest sequential trim batches (79-84)
+are now exhausted of live-surface candidates (remaining anchors rejected per
+Rule 7 in waves 4-7: root-only graffiti, contraband, memorials catalog text,
+radio distress fragments, wiretap, ciphers, survivor profiles, social events,
+spiritual rituals, audio-log condition system). This wave therefore draws
+from the newest remaining trims — parallel batches 23 and 24 (2026-09-28).
+Each anchor record was verified live before editing (source JSON exists,
+record exists in it, non-probe `src/` consumer renders the record's text
+field).
+
+Exact paths claimed:
+
+- `docs/expansions/wave26/expansion_137_no_name_beside_turned_back_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_expansion_137_no_name_beside_turned_back_plan.md`)
+- `docs/expansions/wave30/expansion_160_arrows_without_signatures_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_expansion_160_arrows_without_signatures_plan.md`)
+- `docs/expansions/prose_wave135/cw135_03_the_chalk_line_is_still_chalk_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw135_03_the_chalk_line_is_still_chalk_plan.md`)
+- `docs/expansions/prose_wave135/cw135_10_five_minutes_before_the_gong_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw135_10_five_minutes_before_the_gong_plan.md`)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`loc_shrine_switchback_waystation` and `loc_excavation_utility_tunnels`
+  descriptions + one bounded sentence each)
+- `Assets/StreamingAssets/Data/narrative/bunker_children_folklore.json`
+  (`folklore_children_ash_footprint_taboo` prose + one bounded sentence)
+- `Assets/StreamingAssets/Data/narrative/dweller_psychological_journals.json`
+  (`journal_psych_morning_muster_dread` prose + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep: `locations.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`;
+`narrative/bunker_children_folklore.json` and
+`narrative/dweller_psychological_journals.json` → `DailySurvivalCatalog`
+(line 188 / line 156 file order) → `src/Journal/JournalCatalogData.cs`
+(`catalogs.DailySurvival`) → journal surfaces. All existing record text
+preserved; no new state, trigger, route, mechanic, or save section.
+Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-43-2026-09-28
+
+User-authorized continuation (second parallel session, forty-fourth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/wave18/expansion_87_the_feeder_has_to_hold_plan.md`,
+`docs/expansions/wave15/expansion_74_press_side_stays_clear_plan.md`,
+`docs/expansions/wave26/expansion_133_the_seats_stay_folded_plan.md`,
+`docs/expansions/wave15/expansion_75_the_whole_rota_watches_plan.md`,
+`docs/expansions/wave26/expansion_136_the_labels_are_exact_plan.md`,
+`docs/expansions/prose_wave140/cw140_16_the_sun_on_the_ration_form_plan.md`,
+`docs/expansions/wave19/expansion_96_a_bowl_before_the_pass_plan.md`.
+Spares: `docs/expansions/wave28/expansion_147_the_mine_mouth_waits_plan.md`,
+`docs/expansions/prose_wave143/cw143_12_the_cups_are_set_out_empty_plan.md`,
+`docs/expansions/wave16/expansion_77_the_odds_on_the_board_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-43-2026-09-28 (same
+session, 2026-09-28 13:28): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave18/expansion_87, wave15/expansion_74,
+wave26/expansion_133, wave15/expansion_75, wave26/expansion_136,
+cw140_16, wave19/expansion_96) trimmed at their first `BATCH-NN
+ARCHITECTURAL EXPANSION` banner. Retained content lines: 584, 1,124, 979,
+1,171, 979, 7,086 and 619 respectively — the complete authored prose plan
+through each file's "Handoff"/closer section (six wave-family files retain
+their complete short-form editorial proposals; ~62 MB -> ~1.0 MB, ~1.30M
+padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B107-09, PLAN-B107-07, PLAN-B107-02, PLAN-B107-10,
+PLAN-B107-19, PLAN-B158-064, PLAN-B107-17) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-44-2026-09-28
+
+User-authorized continuation (second parallel session, forty-fifth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave135/cw135_20_initials_too_worn_to_read_plan.md`,
+`docs/expansions/wave18/expansion_89_the_date_with_no_crew_plan.md`,
+`docs/expansions/prose_wave140/cw140_17_the_envelope_still_holds_plan.md`,
+`docs/expansions/prose_wave144/cw144_27_day_155_after_the_ambush_plan.md`,
+`docs/expansions/wave25/expansion_129_keep_this_one_mira_plan.md`,
+`docs/expansions/wave19/expansion_92_the_salt_has_to_dry_plan.md`,
+`docs/expansions/wave29/expansion_154_plot_114_stays_114_plan.md`.
+Spares: `docs/expansions/wave19/expansion_93_a_town_on_the_siding_plan.md`,
+`docs/expansions/prose_wave129/cw129_13_the_fare_counted_twice_plan.md`,
+`docs/expansions/wave11/expansion_63_the_switching_book_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-44-2026-09-28 (same
+session, 2026-09-28 19:07): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw135_20, wave18/expansion_89, cw140_17, cw144_27,
+wave25/expansion_129, wave19/expansion_92, wave29/expansion_154) trimmed at
+their first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content
+lines: 9,169, 584, 7,085, 7,469, 979, 662 and 1,529 respectively — the
+complete authored prose plan through each file's "Handoff"/closer section
+(four wave-family files retain their complete short-form editorial
+proposals; ~63 MB -> ~1.7 MB, ~1.30M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B167-303, PLAN-B107-11,
+PLAN-B159-034, PLAN-B158-283, PLAN-B109-20, PLAN-B108-11, PLAN-B109-41)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-trimmed-plan-integration-wave-9-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans,
+integration only — no finalisation docs, no new partials, no commit, no test
+runs beyond JSON parse and `git diff --check` (text-only catalog edits).
+Ninth wave this session, after waves 1-8; the four below are disjoint from all
+prior batches and from all 41 records already in
+`docs/plans/integrated/content/`. Parallel trim batches 21/23/24 plus the
+earlier 2026-09-28 room-identity pool were re-audited; every alternate
+candidate was rejected under Rule 7 (verified no live text surface):
+weather_almanac_expansion, faction_war_journal, narrative_encounters,
+questline_master, crossing_factions, captive_interrogations,
+deep_lore_texts, dweller_medical_casebook, field_guide,
+scavenger_expedition_route_notes, memorials_expansion_05, audio-log
+condition system. Each selected anchor record was verified live before
+editing (source JSON exists, record exists in it, non-probe `src/` consumer
+renders the record's text field).
+
+Exact paths claimed:
+
+- `docs/expansions/wave29/expansion_153_on_paper_the_debt_grows_quieter_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_expansion_153_on_paper_the_debt_grows_quieter_plan.md`)
+- `docs/expansions/wave28/expansion_149_the_chart_stops_mid_sentence_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_expansion_149_the_chart_stops_mid_sentence_plan.md`)
+- `docs/expansions/wave20/expansion_98_eight_beds_three_kinds_of_waiting_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_expansion_98_eight_beds_three_kinds_of_waiting_plan.md`)
+- `docs/expansions/prose_wave104/cw104_05_room_history_suture_pack_opened_and_resealed_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw104_05_room_history_suture_pack_opened_and_resealed_plan.md`)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`loc_terrace_pumphouse`, `location_hospital_psych_wing`,
+  `loc_st_brigids_almshouse` descriptions + one bounded sentence each)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_history_suture_pack` body + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep: `locations.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`;
+`shelter_room_identities.json` → `src/Journal/JournalCatalogData.cs`,
+`src/UI/ShelterPanel.cs`, `src/World/HoldfastInteriorView.cs`. All existing
+record text preserved; no new state, trigger, route, mechanic, or save
+section. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-45-2026-09-28
+
+User-authorized continuation (second parallel session, forty-sixth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/wave12/expansion_66_the_unassigned_bed_plan.md`,
+`docs/expansions/wave15/expansion_76_forty_one_corrected_plan.md`,
+`docs/expansions/wave30/expansion_159_remain_in_shelter_plan.md`,
+`docs/expansions/prose_wave149/cw149_08_dmitri_shoveled_first_plan.md`,
+`docs/expansions/wave16/expansion_79_the_interval_kept_plan.md`,
+`docs/expansions/wave3/expansion_26_the_common_table_plan.md`,
+`docs/expansions/wave3/expansion_24_the_long_goodbye_plan.md`.
+Spares: `docs/expansions/wave16/expansion_81_the_line_paid_for_plan.md`,
+`docs/expansions/wave2/expansion_17_the_long_evening_plan.md`,
+`docs/expansions/wave11/expansion_64_the_cold_specimen_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-45-2026-09-28 (same
+session, 2026-09-28 19:10): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave12/expansion_66, wave15/expansion_76, wave30/expansion_159,
+cw149_08, wave16/expansion_79, wave3/expansion_26,
+wave3/expansion_24) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 2,250, 1,314, 1,742, 7,467,
+1,539, 1,625 and 1,612 respectively — the complete authored prose plan
+through each file's "Handoff"/closer section (six wave-family files retain
+their complete short-form editorial proposals; ~63 MB -> ~1.7 MB, ~1.32M
+padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B107-05, PLAN-B107-08, PLAN-B109-39, PLAN-B158-231,
+PLAN-B107-30, PLAN-B106-17, PLAN-B106-22) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-46-2026-09-28
+
+User-authorized continuation (second parallel session, forty-seventh batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave138/cw138_16_half_the_food_and_the_drawing_of_a_house_plan.md`,
+`docs/expansions/prose_wave129/cw129_19_the_sermon_retired_plan.md`,
+`docs/expansions/wave9/expansion_52_the_warm_ground_plan.md`,
+`docs/expansions/wave7/expansion_46_the_long_change_plan.md`,
+`docs/expansions/wave2/expansion_20_the_quiet_hand_plan.md`,
+`docs/expansions/wave2/expansion_19_the_bitter_air_plan.md`,
+`docs/expansions/wave9/expansion_54_the_uninvited_plan.md`.
+Spares: `docs/expansions/wave3/expansion_22_the_clean_flow_plan.md`,
+`docs/expansions/wave10/expansion_59_the_bone_shop_plan.md`,
+`docs/expansions/wave1/expansion_14_above_the_ash_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-46-2026-09-28 (same
+session, 2026-09-28 19:15): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw138_16, cw129_19, wave9/expansion_52, wave7/expansion_46,
+wave2/expansion_20, wave2/expansion_19, wave9/expansion_54) trimmed at
+their first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content
+lines: 6,261, 10,982, 1,673, 1,630, 1,591, 1,606 and 1,672 respectively —
+the complete authored prose plan through each file's "Handoff"/closer
+section (five wave-family files retain their complete short-form editorial
+proposals; cw129_19 retains its full multi-section proposal ~11,000 lines;
+~62 MB -> ~1.5 MB, ~1.30M padding lines removed). Every file verified:
+worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B165-251, PLAN-B168-215,
+PLAN-B106-20, PLAN-B105-16, PLAN-B106-23, PLAN-B105-18, PLAN-B106-10)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-47-2026-09-28
+
+User-authorized continuation (second parallel session, forty-eighth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/wave9/expansion_56_the_calendar_plan.md`,
+`docs/expansions/prose_wave137/cw137_10_justice_without_a_victory_speech_plan.md`,
+`docs/expansions/prose_wave131/cw131_20_three_paragraphs_of_non_recognition_plan.md`,
+`docs/expansions/wave3/expansion_25_the_iron_road_plan.md`,
+`docs/expansions/wave5/expansion_34_the_long_road_plan.md`,
+`docs/expansions/wave7/expansion_43_the_question_plan.md`,
+`docs/expansions/prose_wave132/cw132_03_forty_seven_arrivals_one_listener_plan.md`.
+Spares: `docs/expansions/wave8/expansion_51_the_machine_plan.md`,
+`docs/expansions/wave14/expansion_72_hold_until_plan.md`,
+`docs/expansions/prose_wave129/cw129_10_a_header_that_will_not_stay_dead_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-47-2026-09-28 (same
+session, 2026-09-28 19:20): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave9/expansion_56, cw137_10, cw131_20, wave3/expansion_25,
+wave5/expansion_34, wave7/expansion_43, cw132_03) trimmed at their first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines: 1,695,
+6,235, 8,683, 2,442, 1,746, 1,660 and 8,297 respectively — the complete
+authored prose plan through each file's "Handoff"/closer section (four
+wave-family files retain their complete short-form editorial proposals;
+~61 MB -> ~1.4 MB, ~1.30M padding lines removed). Every file verified:
+worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B106-18, PLAN-B173-017,
+PLAN-B172-163, PLAN-B119-10, PLAN-B106-07, PLAN-B106-08, PLAN-B172-157)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-48-2026-09-28
+
+User-authorized continuation (second parallel session, forty-ninth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave131/cw131_07_quiet_tolls_are_still_tolls_plan.md`,
+`docs/expansions/prose_wave138/cw138_15_the_river_is_the_name_on_the_form_plan.md`,
+`docs/expansions/prose_wave123/cw123_08_water_returns_plan.md`,
+`docs/expansions/prose_wave132/cw132_17_the_list_on_the_couriers_hand_plan.md`,
+`docs/expansions/prose_wave123/cw123_09_flat_surface_plan.md`,
+`docs/expansions/prose_wave132/cw132_15_the_order_in_which_we_fail_plan.md`,
+`docs/expansions/prose_wave133/cw133_07_the_most_movable_constraint_plan.md`.
+Spares: `docs/expansions/prose_wave133/cw133_10_the_signing_is_the_living_plan.md`,
+`docs/expansions/prose_wave131/cw131_08_six_hundred_days_no_name_plan.md`,
+`docs/expansions/prose_wave36/cw36_04_a_north_that_wont_stay_put_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-48-2026-09-28 (same
+session, 2026-09-28 19:26): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw131_07, cw138_15, cw123_08, cw132_17, cw123_09, cw132_15,
+cw133_07) trimmed at their first `BATCH-NN ARCHITECTURAL EXPANSION`
+banner. Retained content lines: 10,600, 6,242, 3,145, 7,145, 3,145, 6,761
+and 7,529 respectively — the complete authored prose plan through each
+file's "Handoff"/closer section (cw131_07 retains its full multi-section
+proposal ~10,600 lines; ~56 MB -> ~2.1 MB, ~1.20M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time,
+retained prefix byte-identical by md5, `git diff --check` clean on all
+seven, zero padding self-references, padding identifiers (PLAN-B172-393,
+PLAN-B166-030, PLAN-B138-135, PLAN-B172-374, PLAN-B138-143, PLAN-B173-054,
+PLAN-B172-268) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-trimmed-plan-integration-wave-10-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans,
+integration only — no finalisation docs, no new partials, no commit, no test
+runs beyond JSON parse and `git diff --check` (text-only catalog edits).
+Tenth wave this session, after waves 1-9; the four below are disjoint from all
+prior batches and from all 45 records already in
+`docs/plans/integrated/content/`. The newest parallel batches (21-24) are now
+exhausted of live-surface candidates, so this wave draws on the earlier
+2026-09-28 trim batches (waves 50, 107, 110, 120), chosen intentionally to
+spread the batch across all four verified-live render surfaces: room history,
+room fixture, cassette description, and event body. Every alternate candidate
+in the untouched wave-pool was rejected under Rule 7 (trim state verified but
+no live text surface, or record unreachable): the wave 113/114 untrimmed
+room-fixture plans (~178-180K lines remain untrimmed, not eligible), the
+remaining wave-111/112 untrimmed fixtures, and cassette families already
+consumed in waves 1-4/9. Each selected anchor record was verified live before
+editing (source JSON exists, record exists in it, non-probe `src/` consumer
+renders the record's text field).
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave107/cw107_05_room_history_a_frame_stayed_the_name_on_the_board_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw107_05_room_history_a_frame_stayed_the_name_on_the_board_plan.md`)
+- `docs/expansions/prose_wave110/cw110_06_room_fixture_workshop_swarf_grate_two_rewelds_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw110_06_room_fixture_workshop_swarf_grate_two_rewelds_plan.md`)
+- `docs/expansions/prose_wave120/cw120_10_attendance_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw120_10_attendance_plan.md`)
+- `docs/expansions/prose_wave50/cw50_04_the_white_coats_in_the_floodplain_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw50_04_the_white_coats_in_the_floodplain_plan.md`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_history_a_frame_stayed` body and `room_fixture_workshop_swarf_grate`
+  detail + one bounded sentence each)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_teachers_recordings_3` description + one attributed-listener
+  observation)
+- `Assets/StreamingAssets/Data/events.json`
+  (`event_migration_lowland_hare_eruption` bodyText + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep: `shelter_room_identities.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/ShelterPanel.cs`,
+`src/World/HoldfastInteriorView.cs`; `items.json` cassette description →
+`src/UI/InventoryDetailPanel.cs`, `src/Host/CassettePlaybackHostSession.cs`;
+`events.json` → `src/Host/EventsHostSession.cs`,
+`src/UI/EventDetailPanel.cs`, `src/UI/EventsLogPanel.cs`. Cassette transcript
+source `cassette_sets.json` was confirmed to feed
+`src/Host/CassettePlaybackHostSession.cs` item-id binding; the live rendered
+text is the items.json description. All existing record text preserved; no new
+state, trigger, route, mechanic, or save section. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-49-2026-09-28
+
+User-authorized continuation (second parallel session, fiftieth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave129/cw129_14_the_meter_and_the_sermon_plan.md`,
+`docs/expansions/prose_wave133/cw133_13_seven_checks_of_the_key_plan.md`,
+`docs/expansions/prose_wave34/cw34_04_an_account_at_lock_seven_plan.md`,
+`docs/expansions/prose_wave32/cw32_01_the_name_page_stays_torn_plan.md`,
+`docs/expansions/prose_wave31/cw31_06_the_roads_share_a_crater_plan.md`,
+`docs/expansions/wave17/expansion_83_the_long_alarm_plan.md`,
+`docs/expansions/wave17/expansion_82_the_far_hearth_plan.md`.
+Spares: `docs/expansions/prose_wave32/cw32_04_the_key_without_an_owner_plan.md`,
+`docs/expansions/prose_wave52/cw52_06_the_sand_filter_sentence_plan.md`,
+`docs/expansions/wave1/expansion_15_the_deep_root_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-49-2026-09-28 (same
+session, 2026-09-28 19:31): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw129_14, cw133_13, cw34_04, cw32_01, cw31_06,
+wave17/expansion_83, wave17/expansion_82) trimmed at their first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content lines: 10,982,
+7,145, 2,536, 1,737, 1,694, 395 and 395 respectively — the complete
+authored prose plan through each file's "Handoff"/closer section (two
+wave-family files retain their complete short-form editorial proposals;
+cw129_14 retains its full multi-section proposal ~11,000 lines; ~55 MB ->
+~1.2 MB, ~1.33M padding lines removed). Every file verified: worktree
+identical to `c8c1e453d` at trim time, retained prefix byte-identical by
+md5, `git diff --check` clean on all seven, zero padding self-references,
+padding identifiers (PLAN-B166-132, PLAN-B172-464, PLAN-B120-07,
+PLAN-B111-22, PLAN-B111-19, PLAN-B108-12, PLAN-B108-17) confirmed
+unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-50-2026-09-28
+
+User-authorized continuation (second parallel session, fifty-first batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave53/cw53_04_the_receipt_at_the_toll_plan.md`,
+`docs/expansions/prose_wave129/cw129_01_a_star_against_the_line_plan.md`,
+`docs/expansions/prose_wave125/cw125_02_names_lost_to_wind_plan.md`,
+`docs/expansions/wave10/expansion_61_the_salt_pan_plan.md`,
+`docs/expansions/prose_wave129/cw129_11_a_clean_trade_on_paper_plan.md`,
+`docs/expansions/prose_wave49/cw49_01_the_candle_in_the_duct_plan.md`,
+`docs/expansions/prose_wave125/cw125_05_vigilance_remains_plan.md`.
+Spares: `docs/expansions/wave9/expansion_55_the_quarter_plan.md`,
+`docs/expansions/wave8/expansion_48_the_pastime_plan.md`,
+`docs/expansions/wave8/expansion_47_the_brigade_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-50-2026-09-28 (same
+session, 2026-09-28 19:35): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw53_04, cw129_01, cw125_02, wave10/expansion_61, cw129_11,
+cw49_01, cw125_05) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 2,781, 10,982, 4,479, 1,692,
+10,982, 2,781 and 4,499 respectively — the complete authored prose plan
+through each file's "Handoff"/closer section (two cw129 files retain their
+full multi-section proposals ~11,000 lines; wave10/expansion_61 retains its
+complete short-form editorial proposal; ~54 MB -> ~2.3 MB, ~1.29M padding
+lines removed). Every file verified: worktree identical to `c8c1e453d` at
+trim time, retained prefix byte-identical by md5, `git diff --check` clean
+on all seven, zero padding self-references, padding identifiers
+(PLAN-B114-37, PLAN-B166-093, PLAN-B141-141, PLAN-B106-21, PLAN-B166-115,
+PLAN-B115-08, PLAN-B140-128) confirmed unreferenced in code, data, tests,
+and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-51-2026-09-28
+
+User-authorized continuation (second parallel session, fifty-second batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/wave5/expansion_33_the_weather_plan.md`,
+`docs/expansions/wave6/expansion_39_the_reagent_plan.md`,
+`docs/expansions/wave10/expansion_58_the_joinery_plan.md`,
+`docs/expansions/wave12/expansion_65_the_service_lane_plan.md`,
+`docs/expansions/wave7/expansion_44_the_outpost_plan.md`,
+`docs/expansions/prose_wave125/cw125_03_names_in_the_dark_plan.md`,
+`docs/expansions/prose_wave124/cw124_03_seeds_must_survive_plan.md`.
+Spares: `docs/expansions/prose_wave44/cw44_04_the_forty_seventh_day_plan.md`,
+`docs/expansions/expansion_06_the_muster_plan.md`,
+`docs/expansions/wave8/expansion_49_the_mirror_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-51-2026-09-28 (same
+session, 2026-09-28 19:38): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (wave5/expansion_33, wave6/expansion_39, wave10/expansion_58,
+wave12/expansion_65, wave7/expansion_44, cw125_03, cw124_03) trimmed at
+their first `BATCH-NN ARCHITECTURAL EXPANSION` banner. Retained content
+lines: 1,735, 1,727, 1,666, 1,963, 1,724, 4,505 and 3,145 respectively —
+the complete authored prose plan through each file's "Handoff"/closer
+section (five wave-family files retain their complete short-form editorial
+proposals; ~53 MB -> ~1.3 MB, ~1.29M padding lines removed). Every file
+verified: worktree identical to `c8c1e453d` at trim time, retained prefix
+byte-identical by md5, `git diff --check` clean on all seven, zero padding
+self-references, padding identifiers (PLAN-B106-05, PLAN-B106-02,
+PLAN-B105-28, PLAN-B107-03, PLAN-B105-17, PLAN-B141-189, PLAN-B142-090)
+confirmed unreferenced in code, data, tests, and other documents. Embedded
+provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-trimmed-plan-integration-wave-11-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans,
+integration only — no finalisation docs, no new partials, no commit, no test
+runs beyond JSON parse and `git diff --check` (text-only catalog edits).
+Eleventh wave this session, after waves 1-10; the four below are disjoint from
+all prior batches and from all 49 records already in
+`docs/plans/integrated/content/`. A full pool sweep of the remaining trimmed
+(<=4,000-line) 2026-09-28 plans was run, and candidates were selected from
+the earlier trim batches to span all four most-used verified-live render
+surfaces once each: a location row, a shelter room fixture, a cassette
+description, and an event body. Remaining untrimmed plans (~178-180K lines)
+are ineligible as not-yet-trimmed, and the DW/psych-journal/family surfaces
+were left untouched this wave to keep the batch disjoint. Each selected
+anchor record was verified live before editing (source JSON exists, record
+exists in it, non-probe `src/` consumer renders the record's text field).
+
+Exact paths claimed:
+
+- `docs/expansions/wave30/expansion_156_the_curtain_and_the_ledger_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_expansion_156_the_curtain_and_the_ledger_plan.md`)
+- `docs/expansions/prose_wave111/cw111_05_room_fixture_kitchen_flue_damper_welded_open_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw111_05_room_fixture_kitchen_flue_damper_welded_open_plan.md`)
+- `docs/expansions/prose_wave119/cw119_06_separate_entrance_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw119_06_separate_entrance_plan.md`)
+- `docs/expansions/prose_wave50/cw50_02_the_sounder_in_the_river_mud_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw50_02_the_sounder_in_the_river_mud_plan.md`)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`loc_shelter_infirmary` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_fixture_kitchen_flue_damper` detail + one bounded sentence)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_quarantine_tapes_2` description + one attributed-listener
+  observation)
+- `Assets/StreamingAssets/Data/events.json`
+  (`event_migration_ash_boar_sounder_crossing` bodyText + one bounded
+  sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep: `locations.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`;
+`shelter_room_identities.json` → `src/Journal/JournalCatalogData.cs`,
+`src/UI/ShelterPanel.cs`, `src/World/HoldfastInteriorView.cs`; `items.json`
+cassette description → `src/UI/InventoryDetailPanel.cs`,
+`src/Host/CassettePlaybackHostSession.cs`; `events.json` →
+`src/Host/EventsHostSession.cs`, `src/UI/EventDetailPanel.cs`,
+`src/UI/EventsLogPanel.cs`. All existing record text preserved; no new state,
+trigger, route, mechanic, or save section. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-52-2026-09-28
+
+User-authorized continuation (second parallel session, fifty-third batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave123/cw123_07_welcome_with_terms_plan.md`,
+`docs/expansions/wave4/expansion_27_the_thread_plan.md`,
+`docs/expansions/prose_wave128/cw128_03_04_12_in_the_glass_plan.md`,
+`docs/expansions/prose_wave123/cw123_05_coast_attempt_plan.md`,
+`docs/expansions/prose_wave128/cw128_16_the_line_left_open_plan.md`,
+`docs/expansions/wave11/expansion_62_the_cache_grid_plan.md`,
+`docs/expansions/prose_wave125/cw125_09_bunker_is_safe_plan.md`.
+Spares: `docs/expansions/prose_wave125/cw125_06_cold_took_them_plan.md`,
+`docs/expansions/prose_wave138/cw138_06_the_candle_lullaby_has_no_accompaniment_plan.md`,
+`docs/expansions/prose_wave138/cw138_09_the_treaties_stay_filed_under_resource_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-52-2026-09-28 (same
+session, 2026-09-28 19:43): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw123_07, wave4/expansion_27, cw128_03, cw123_05, cw128_16,
+wave11/expansion_62, cw125_09) trimmed at their first `BATCH-NN
+ARCHITECTURAL EXPANSION` banner. Retained content lines: 3,145, 1,672,
+11,801, 3,145, 11,799, 1,514 and 4,559 respectively — the complete authored
+prose plan through each file's "Handoff"/closer section (two cw128 files
+retain their full multi-section proposals ~11,800 lines;
+wave4/expansion_27 and wave11/expansion_62 retain complete short-form
+editorial proposals; ~53 MB -> ~1.2 MB, ~1.29M padding lines removed).
+Every file verified: worktree identical to `c8c1e453d` at trim time,
+retained prefix byte-identical by md5, `git diff --check` clean on all
+seven, zero padding self-references, padding identifiers (PLAN-B130-61,
+PLAN-B105-24, PLAN-B173-106, PLAN-B138-038, PLAN-B172-378, PLAN-B106-29,
+PLAN-B141-248) confirmed unreferenced in code, data, tests, and other
+documents. Embedded provenance notes cite `git show c8c1e453d:<path>`.
+
+## claim-plan-bloat-reduction-parallel-batch-53-2026-09-28
+
+User-authorized continuation (second parallel session, fifty-fourth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave155/cw155_09_session_17_has_fourteen_names_missing_from_the_first_sheet_plan.md`,
+`docs/expansions/prose_wave123/cw123_03_fields_remember_plan.md`,
+`docs/expansions/prose_wave125/cw125_01_price_of_trust_plan.md`,
+`docs/expansions/prose_wave141/cw141_18_the_intake_form_begins_with_symptoms_plan.md`,
+`docs/expansions/prose_wave118/cw118_09_the_warning_plan.md`,
+`docs/expansions/prose_wave138/cw138_14_the_pharmacy_shelf_is_already_empty_plan.md`,
+`docs/expansions/wave20/expansion_106_not_a_pool_plan.md`.
+Spares: `docs/expansions/prose_wave125/cw125_08_once_an_enemy_plan.md`,
+`docs/expansions/wave4/expansion_28_the_lesson_plan.md`,
+`docs/expansions/prose_wave138/cw138_19_seven_days_counted_without_ceremony_plan.md`.
+Status: IN PROGRESS.
+
+Addendum to claim-plan-bloat-reduction-parallel-batch-53-2026-09-28 (same
+session, 2026-09-28 19:47): execution COMPLETE, uncommitted, no spares
+needed (no lane collisions; race-abort guard engaged, no aborts). All seven
+primaries (cw155_09, cw123_03, cw125_01, cw141_18, cw118_09, cw138_14,
+wave20/expansion_106) trimmed at their first `BATCH-NN ARCHITECTURAL
+EXPANSION` banner. Retained content lines: 7,469, 3,145, 4,521, 7,093,
+3,145, 6,250 and 839 respectively — the complete authored prose plan
+through each file's "Handoff"/closer section (wave20/expansion_106 retains
+its complete short-form editorial proposal; ~53 MB -> ~1.1 MB, ~1.28M
+padding lines removed). Every file verified: worktree identical to
+`c8c1e453d` at trim time, retained prefix byte-identical by md5, `git diff
+--check` clean on all seven, zero padding self-references, padding
+identifiers (PLAN-B165-044, PLAN-B131-76, PLAN-B141-030, PLAN-B155-158,
+PLAN-B120-58, PLAN-B165-205, PLAN-B108-30) confirmed unreferenced in code,
+data, tests, and other documents. Embedded provenance notes cite
+`git show c8c1e453d:<path>`.
+
+## claim-trimmed-plan-integration-wave-12-2026-09-28
+
+User-authorized full integration of four more recently trimmed prose plans,
+integration only — no finalisation docs, no new partials, no commit, no test
+runs beyond JSON parse and `git diff --check` (text-only catalog edits).
+Twelfth wave this session, after waves 1-11; the four below are disjoint from
+all prior batches and from all 53 records already in
+`docs/plans/integrated/content/`. A substring-level pool sweep of the
+remaining trimmed (<=4,000-line) 2026-09-28 plans was run, which this time
+also surfaced the narrative catalogs (bunker children's folklore) missed by
+earlier exact-path filters. Selections span four verified-live render
+surfaces once each, including the folklore catalog (first use this session
+beyond wave 8): folklore prose, cassette description, location row, and
+shelter room fixture. Each selected anchor record was verified live before
+editing (source JSON exists, record exists in it, non-probe `src/` consumer
+renders the record's text field).
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave63/cw63_04_the_quiet_radio_whisper_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw63_04_the_quiet_radio_whisper_plan.md`)
+- `docs/expansions/prose_wave119/cw119_10_evening_count_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw119_10_evening_count_plan.md`)
+- `docs/expansions/prose_wave35/cw35_01_the_tower_that_holds_no_water_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw35_01_the_tower_that_holds_no_water_plan.md`)
+- `docs/expansions/prose_wave111/cw111_03_room_fixture_bunks_dosimeter_nail_top_of_watch_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw111_03_room_fixture_bunks_dosimeter_nail_top_of_watch_plan.md`)
+- `Assets/StreamingAssets/Data/narrative/bunker_children_folklore.json`
+  (`folklore_children_the_quiet_radio_whisper` prose + one bounded sentence)
+- `Assets/StreamingAssets/Data/items.json`
+  (`cassette_field_hospital_7_1` description + one attributed-listener
+  observation)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`loc_north_gate_water_tower` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_fixture_bunks_dosimeter_nail` detail + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+Live consumers re-verified by grep: `narrative/bunker_children_folklore.json`
+→ `Assets/Ashfall.Core/Narrative/DailySurvivalCatalog.cs` (loads at line 188)
+→ `src/Journal/JournalCatalogData.cs` (`catalogs.DailySurvival`);
+`items.json` cassette description → `src/UI/InventoryDetailPanel.cs`,
+`src/Host/CassettePlaybackHostSession.cs`; `locations.json` →
+`src/Journal/JournalCatalogData.cs`, `src/UI/MapPanel.cs`;
+`shelter_room_identities.json` → `src/Journal/JournalCatalogData.cs`,
+`src/UI/ShelterPanel.cs`, `src/World/HoldfastInteriorView.cs`. All existing
+record text preserved; no new state, trigger, route, mechanic, or save
+section. Status: COMPLETE, uncommitted.
+
+## claim-plan-bloat-reduction-parallel-batch-54-2026-09-28
+
+User-authorized continuation (second parallel session, fifty-fifth batch, 2026-09-28
+"continue with the next 7 plans"), docs-only, conservative protocol identical
+to prior batches: keep all unique authored content through each file's
+"Handoff"/closer section (the last genuine line before the first
+`BATCH-NN ARCHITECTURAL EXPANSION` banner), byte-identical prefix verified
+per file by md5 against the pre-trim commit, provenance note appended,
+`git diff --check` enforced, padding identifiers spot-checked (zero external
+references verified). Seven primaries plus three spares (race-abort
+protocol; lane at batch109 and actively contending). Primaries:
+`docs/expansions/prose_wave138/cw138_18_antlers_polished_for_the_common_room_plan.md`,
+`docs/expansions/prose_wave138/cw138_07_the_board_rewrites_prices_every_week_plan.md`,
+`docs/expansions/prose_wave123/cw123_04_book_found_pl
+## claim-cw103-05-06-08-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited: `shelter_room_identities.json` (can opener body, +2 sentences),
+`spiritual_rituals.json` (intake vent description, +1 sentence), `audio_logs_expansion_05.json` (memory-loss listening_note),
+`Plan49DepthPassWiringTests.cs` (+1 theory row). Verified: Plan49DepthPassWiringTests 6/6, Plan30SpiritualWorldTests 7/7,
+OralLorePlan155Tests run. Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw104-03-06-07-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited: `audio_logs_expansion_05.json` (two listening_notes),
+`journal_entries_expansion_05.json` (day-228 body, +1 sentence), `Plan49DepthPassWiringTests.cs` (+2 theory rows).
+Verified: Plan49DepthPassWiringTests and JournalCorpusTests focused runs. Plans renamed `INTEGRATED_*` and moved to
+`docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw104-08-cw105-01-02-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited: `spiritual_rituals.json` (hatch name taboo description, +1 sentence),
+`audio_logs_expansion_05.json` (two listening_notes), `Plan49DepthPassWiringTests.cs` (+2 theory rows).
+Verified: Plan49DepthPassWiringTests and Plan30SpiritualWorldTests focused runs. Plans renamed `INTEGRATED_*` and moved to
+`docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw105-04-06-cw126-04-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited: `journal_entries_expansion_05.json` (day-208 body, +2 sentences),
+`shelter_room_identities.json` (filter cartridge body, +2 sentences), `narrative_encounters_expansion.json`
+(`enc_false_broadcast` description, +1 sentence). Verified: JournalCorpusTests, OralLorePlan155Tests,
+NarrativeEncounterSystemTests focused runs. Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`.
+Status: COMPLETE. No commit.
+
+## claim-cw126-07-cw127-06-15-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited `narrative_encounters_expansion.json`: one sentence appended to
+each of `enc_library_cache`, `enc_hot_sign`, `enc_beggars` descriptions. Verified: NarrativeEncounterSystemTests 13/13.
+Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw128-01-02-05-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited `echoes.json`: one sentence appended to the bodyText of
+`echo_answering_machine`, `echo_childs_coat`, `echo_music_box`. Verified: EchoSystemTests, MoralChoiceEchoExpansionTests
+focused runs. Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw128-06-07-09-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited `echoes.json`: one sentence appended to the bodyText of
+`echo_crayon_drawing`, `echo_family_dog_collar`, `echo_birthday_cake`. Verified: EchoSystemTests, MoralChoiceEchoExpansionTests
+focused runs. Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw128-10-13-15-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited `echoes.json`: one sentence appended to the bodyText of
+`echo_reading_glasses`, `echo_the_nameplates`, `echo_the_frying_pan`. Verified: EchoSystemTests, MoralChoiceEchoExpansionTests
+focused runs. Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw128-17-18-20-prose-integration-2026-09-28
+
+User-authorized integration of three prose plans. Edited `echoes.json`: one sentence appended to the bodyText of
+`echo_dosimeter_pilgrim`, `echo_the_receipt`, `echo_the_second_chalk_count`. Verified: EchoSystemTests,
+MoralChoiceEchoExpansionTests focused runs. Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`.
+Status: COMPLETE. No commit.
+
+## claim-cw129-03-12-cw130-01-02-03-prose-integration-2026-09-28
+
+User-authorized integration of five prose plans. Edited: `faction_war_journal.json` (two bodies, +1 sentence each),
+`faction_war_radio.json` (three `listening_note` rows), `RadioBroadcastModels.cs` (optional `ListeningNote`),
+`RadioBroadcastCatalog.cs` (`LoadFactionWarRadioJson` reads it), `Plan49DepthPassWiringTests.cs` (+1 theory).
+Verified: Plan49DepthPassWiringTests 13/13, DataWiringIntegrationTests 8/8, FactionRadioBroadcastExpansionTests 22/22.
+Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-trimmed-plan-integration-wave-26-2026-09-28
+
+User directive: "find 4 recently trimmed plans to fully integrate, don't
+leave as partials, don't commit and don't overly test!" plus "Integrate
+plans not finalise them!" — integration only, no finalisation, no commit,
+no test-suite run.
+
+Twenty-sixth wave this session. Selected four more recently trimmed
+(2026-09-28 bloat-reduction batches 130, 127, 111, 110) prose plans, all
+still unbacked and disjoint from every prior wave's records. The
+one-distinct-live-surface-per-selection rule is held, so the wave spans four
+different render surfaces (shelter room fixture detail, journal book entry
+list, Journal codex Quiet-Hour row, Journal codex children's-folklore row).
+
+**Concurrency guard applied:** the parallel writer that is filling
+`docs/plans/integrated/content/` with an `INTEGRATED_` (uppercase) prefix was
+re-screened immediately before selection, and its slug set is now excluded
+from the candidate pool alongside this lane's lowercase `integrated_` set
+(109 lowercase + 35 uppercase records live there at scan time). `journal
+_entries_batch_3.json` and `items.json` are both exhausted of unclaimed
+verified-live anchors, so the four newest remaining selections come from the
+next catalog tier. Each chosen data record was re-checked against `git diff`
+on its catalog for fresh edits from the other lane before writing.
+
+**Rule 7 rejections carried forward and reconfirmed this wave:** the batch
+133 `memorials_expansion_05.json` plans (no panel renders the authored
+memorial `text`), the batch 110 `shelter_machine_identities.json` glitch
+plans (live render emits only `Machines[].display_name`), and the batch 129
+`spiritual_rituals.json` plans (no `src/UI` panel renders a ritual
+`description`).
+
+Each selected anchor record was verified live before editing (source JSON
+exists, record exists in it, non-probe `src/` consumer renders the record's
+text field):
+- `room_fixture_bunks_spare_socket` → `JournalCatalogData.LoadRoomHistories`
+  → `src/UI/ShelterPanel.cs` fixture `detail`.
+- `journal_day_168_black_flotilla_trade` → `JournalCorpusCatalogLoader
+  .LoadAmbient` (expansion_05) → `Text` → `JournalSystem
+  .BindAuthoredCorpus` → `JournalBookUI`.
+- `journal_psych_phantom_rain_memory` → `DailySurvivalCatalog
+  .LoadFromDirectory` (step 1 loads `dweller_psychological_journals.json`)
+  → `src/Journal/JournalCodex.cs` Quiet-Hour Journal row.
+- `folklore_children_the_sun_is_a_yellow_lamp` → `DailySurvivalCatalog
+  .LoadFromDirectory` (step 3 loads `bunker_children_folklore.json`) →
+  `src/Journal/JournalCodex.cs` children's-folklore row.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave114/cw114_02_room_fixture_bunks_spare_socket_the_socket_that_waited_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw114_02_room_fixture_bunks_spare_socket_the_socket_that_waited_plan.md`)
+- `docs/expansions/prose_wave107/cw107_02_journal_day_168_black_flotilla_trade_weight_of_the_deal_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw107_02_journal_day_168_black_flotilla_trade_weight_of_the_deal_plan.md`)
+- `docs/expansions/prose_wave78/cw78_03_phantom_rain_memory_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw78_03_phantom_rain_memory_plan.md`)
+- `docs/expansions/prose_wave63/cw63_01_the_sun_was_a_bulb_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw63_01_the_sun_was_a_bulb_plan.md`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_fixture_bunks_spare_socket` detail + one bounded sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json`
+  (`journal_day_168_black_flotilla_trade` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/narrative/dweller_psychological_journals.json`
+  (`journal_psych_phantom_rain_memory` prose + one bounded sentence)
+- `Assets/StreamingAssets/Data/narrative/bunker_children_folklore.json`
+  (`folklore_children_the_sun_is_a_yellow_lamp` prose + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+All existing record text preserved; no new state, trigger, route, mechanic,
+or save section. Status: COMPLETE, uncommitted.
+
+## claim-cw130-04-05-06-08-09-prose-integration-2026-09-28
+
+User-authorized integration of five prose plans. Edited `faction_war_radio.json` (five `listening_note` rows on
+radio_d487/d488/d490/d496/d504) and `Plan49DepthPassWiringTests.cs` (+5 theory rows) using the existing
+`UnifiedRadioBroadcast.ListeningNote` seam. Verified: Plan49DepthPassWiringTests 18/18, FactionRadioBroadcastExpansionTests 22/22.
+Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw130-10-12-13-14-17-prose-integration-2026-09-28
+
+User-authorized integration of five prose plans. Edited `faction_war_radio.json` (five `listening_note` rows on
+radio_d507/d516/d518/d522/d542) and `Plan49DepthPassWiringTests.cs` (+5 theory rows) via the existing
+`UnifiedRadioBroadcast.ListeningNote` seam. Verified: Plan49DepthPassWiringTests, FactionRadioBroadcastExpansionTests focused runs.
+Plans renamed `INTEGRATED_*` and moved to `docs/plans/integrated/content/`. Status: COMPLETE. No commit.
+
+## claim-cw130-18-cw131-03-prose-integration-2026-09-28
+
+User-authorized integration. Edited `faction_war_radio.json` (`listening_note` on radio_d546, radio_d579) and
+`Plan49DepthPassWiringTests.cs` (+2 rows) via `UnifiedRadioBroadcast.ListeningNote`. CW133-05/08/18 were found already
+integrated earlier (journal bodies, headers present, in `docs/plans/integrated/content/`); only renamed to the
+`INTEGRATED_` prefix. Verified: Plan49DepthPassWiringTests, FactionRadioBroadcastExpansionTests. Status: COMPLETE. No commit.
+
+## claim-trimmed-plan-integration-wave-27-2026-09-28
+
+User directive: "find 4 recently trimmed plans to fully integrate, don't
+leave as partials, don't commit and don't overly test!" plus "Integrate
+plans not finalise them!" — integration only, no finalisation, no commit,
+no test-suite run.
+
+Twenty-seventh wave this session. Selected four more recently trimmed
+(2026-09-28 bloat-reduction batches 129, 126, 109, 107) prose plans, all
+still unbacked and disjoint from every prior wave's records. The
+one-distinct-live-surface-per-selection rule is held, so the wave spans four
+different render surfaces (Journal Places room-history row, journal book
+entry list, Journal codex children's-folklore row, Journal Places location
+row and map detail).
+
+**Concurrency guard applied:** the parallel writer filling
+`docs/plans/integrated/content/` with an `INTEGRATED_` (uppercase) prefix was
+re-screened immediately before selection; its slug set is excluded alongside
+this lane's lowercase `integrated_` set (160 slugs excluded at scan time).
+With that exclusion, `journal_entries_batch_3.json` and `items.json` remain
+exhausted of unclaimed verified-live anchors. Each chosen data record was
+re-checked against `git diff` on its catalog for fresh edits from the other
+lane before writing.
+
+**Rule 7 rejections carried forward and reconfirmed this wave:** the batch
+133 `memorials_expansion_05.json` plans (no panel renders the authored
+memorial `text`), the batch 110 `shelter_machine_identities.json` glitch
+plans (live render emits only `Machines[].display_name`), and the batch 129
+`spiritual_rituals.json` plans (no `src/UI` panel renders a ritual
+`description`).
+
+Each selected anchor record was verified live before editing (source JSON
+exists, record exists in it, non-probe `src/` consumer renders the record's
+text field):
+- `room_history_generator_footings` → `JournalCatalogData.LoadRoomHistories`
+  → `src/Journal/JournalCodex.cs` row, also `src/UI/ShelterPanel.cs`.
+- `journal_day_235_technology_breakthrough` → `JournalCorpusCatalogLoader
+  .LoadAmbient` (expansion_05) → `Text` → `JournalSystem
+  .BindAuthoredCorpus` → `JournalBookUI`.
+- `folklore_children_the_red_siren_dance` → `DailySurvivalCatalog
+  .LoadFromDirectory` (step 3 loads `bunker_children_folklore.json`) →
+  `src/Journal/JournalCodex.cs` children's-folklore row.
+- `loc_excavation_mine_shaft` → `src/Journal/JournalCatalogData.cs`
+  (Locations) and `src/UI/MapPanel.cs` known-locations detail.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave106/cw106_05_room_history_generator_footings_not_load_scratch_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw106_05_room_history_generator_footings_not_load_scratch_plan.md`)
+- `docs/expansions/prose_wave106/cw106_04_journal_day_235_technology_breakthrough_clean_water_celebration_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw106_04_journal_day_235_technology_breakthrough_clean_water_celebration_plan.md`)
+- `docs/expansions/prose_wave74/cw74_05_the_red_siren_dance_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw74_05_the_red_siren_dance_plan.md`)
+- `docs/expansions/prose_wave37/cw37_02_no_wages_in_the_ore_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw37_02_no_wages_in_the_ore_plan.md`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_history_generator_footings` body + one bounded sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json`
+  (`journal_day_235_technology_breakthrough` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/narrative/bunker_children_folklore.json`
+  (`folklore_children_the_red_siren_dance` prose + one bounded sentence)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`loc_excavation_mine_shaft` description + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+All existing record text preserved; no new state, trigger, route, mechanic,
+or save section. Status: COMPLETE, uncommitted.
+
+## claim-relationship-decay-live-feed-2026-09-28
+
+User-authorized wiring pass ("wire the highest value"). Premise (verified): `TickRelationshipDecay` ran daily but nothing ever called
+`RecordInteraction`, so no pair existed to decay. Edited: `src/Main.RelationshipDecay.cs` (`RecordRelationshipInteraction`,
+`FeedRelationshipDecayFromConflict`), `src/Main.ShelterSocial.cs` (subscribes `OnConflictResolved` and `OnCaregivingBondDeepened`),
+`src/Host/NarrativeAssayLogCatalogLoader.cs` (added missing `using Ashfall.Core;` that broke the host build; unclaimed file),
+`Plan182RelationshipDecayIntegrationTests.cs` (+1 wiring test). No new state or save section (existing `relationship_decay` section).
+Verified: `dotnet build Ashfall.csproj` succeeded; Plan182 tests 7/7; RelationshipDecaySystemTests 5/5. Status: COMPLETE. No commit.
+
+## claim-weather-gate-dispatch-wiring-2026-09-29
+
+User-authorized wiring pass ("next island"). Premise (verified): `ExpeditionHostSession.ExtraGateBlock` was never assigned in `src/`, so the 18
+authored gates in `weather_route_gates.json` (Plan 48 Core catalog, forced-passage handling, dispatch-bar text) never blocked anything. Edited:
+`src/Main.Expeditions.cs` (assigns `ExtraGateBlock` from `WeatherRouteGateCatalog.EvaluateBlock`, current weather + held override items),
+`Ashfall.Core.Tests/World/WeatherRouteGateCatalogTests.cs` (+1 wiring/data test). No new state or save section (gate state is derived).
+Verified: `dotnet build Ashfall.csproj` succeeded; WeatherRouteGateCatalogTests 9/9; ForcePassageTests 3/3.
+Known limit: only the 3 destination gates (`location_*`/`loc_*` targets) match expedition location ids; the 15 `route_*` gates need a
+route-to-location mapping (not built). F19 debt weather-grace (`DebtRouteAccessResolver`, doc `WEATHER_GATE_DEBT_INTERACTION.md`) is NOT
+implemented in `LedgerDebtSystem` and no gate carries `weather_delay_debt`; left as a separate decision. Status: COMPLETE. No commit.
+
+## claim-weather-gate-route-location-map-2026-09-29
+
+User-authorized (user chose "Draft thematic map"). Premise verified: the 15 `route_*` weather gates target lore caravan routes with no runtime
+consumer and no link to expedition location ids. Authored `Assets/StreamingAssets/Data/weather_route_gate_locations.json` (11 routes -> 16
+existing dispatchable locations, each row with a stated basis). Edited: `Assets/Ashfall.Core/World/WeatherRouteGateCatalog.cs`
+(`BindRouteLocations`, `RoutesForLocation`, `EvaluateBlock` falls back to linked routes; loader binds the file),
+`Assets/Ashfall.Core/CatalogIntegrityValidator.cs` (link file must name a gated route and resolvable locations),
+`Ashfall.Core.Tests/World/WeatherRouteGateCatalogTests.cs` (+1 test). No new state or save section (derived).
+Left unlinked on purpose: route_06 / route_08 (`required_weather` seasonal-shortcut gates would lock linked locations outside blizzards),
+route_07 and route_15 (no evidence-based location). Verified: WeatherRouteGateCatalogTests 10/10, ForcePassageTests 3/3,
+CatalogIntegrityWeatherGateTests 10/10, LoaderWiringGateTests 4/4; `dotnet build Ashfall.csproj` succeeded. Status: COMPLETE. No commit.
+
+## claim-weather-delay-debt-f19-2026-09-29
+
+User-authorized ("next the weather delay!"; approval covers two new saved debt fields). Premise verified: F19 was documented but absent from
+`LedgerDebtSystem`, no gate carried `weather_delay_debt`, and `DebtRouteAccessResolver` had zero references. Edited:
+`Assets/Ashfall.Core/LedgerDebtSystem.cs` (`DebtContract.weatherDelayDaysUsed` / `lastWeatherDelayGateId`, `MaxWeatherGraceDays = 3`,
+`WeatherDelayGateProvider`, pause-with-cap in `TickDaily`, copy in `CopyContract`), `Assets/Ashfall.Core/World/DebtRouteAccessResolver.cs`
+(`FindBlockingGateId`), `Assets/StreamingAssets/Data/weather_route_gates.json` (flag on 3 gates: route_01/02/05),
+`src/Main.DebtCredit.cs` (provider set in `DebtLedgerDayOwner`, `ResolveDebtWeatherDelayGate`),
+`docs/weather/WEATHER_GATE_DEBT_INTERACTION.md` (status note), new `Ashfall.Core.Tests/World/WeatherGateDebtInteractionTests.cs` (7 cases).
+Saved shape: additive fields on the existing ledger contract (old saves default to 0 / empty). Verified: WeatherGateDebtInteractionTests 7/7,
+LedgerDebtSystemTests 22/22, DebtConsequenceIntegrationTests 24/24, WeatherGateEvaluatorTests 14/14, CatalogIntegrityWeatherGateTests 10/10,
+WeatherRouteGateCatalogTests 10/10; `dotnet build Ashfall.csproj` succeeded. Not flagged on purpose: route_08 (required_weather shortcut gate).
+Status: COMPLETE. No commit.
+
+## claim-retire-maritime-exploration-duplicate-2026-09-29
+
+User-authorized ("retire duplicates!"). Premise verified: `MaritimeExplorationSystem` (Plan 207, 750 lines) had no host, save section or panel and duplicated
+the live dive authority (`MaritimeDiveSystem` / `DiveSiteCatalog` / `MaritimeHostSession`) with its own site, equipment, expedition and hazard records; the
+closeout doc already called for one-owner reconciliation. Removed: `Assets/Ashfall.Core/Maritime/MaritimeExplorationSystem.cs`,
+`Ashfall.Core.Tests/Maritime/Plan207MaritimeExplorationIntegrationTests.cs`, the `MaritimeMalformedCatalog...` case in `CatalogLoaderHardeningTests.cs`, and its
+two rows in `docs/ci/port_contract_policy.json`. Its only data, `maritime_zones.json`, moved (not deleted) to `docs/archive/retired-data/` with a README.
+Also fixed a gap from the route-map step: added the missing `WeatherRouteGateCatalog.BindRouteLocations` policy row (`LIVE_VIA_CORE`). Port contract
+regenerated, gate PASS (306 seams, 0 errors). Verified: PortContractGateTests 8/8, CatalogLoaderHardeningTests 8/8, LoaderWiringGateTests 4/4,
+HostPortContractTests 6/6, Maritime dir 9/9; `dotnet build Ashfall.csproj` succeeded. Status: COMPLETE. No commit.
+
+## claim-trimmed-plan-integration-wave-28-2026-09-29
+
+User directive: "find 4 recently trimmed plans to fully integrate, don't
+leave as partials, don't commit and don't overly test!" plus "Integrate
+plans not finalise them!" — integration only, no finalisation, no commit,
+no test-suite run.
+
+Twenty-eighth wave this session. Selected four more recently trimmed
+(2026-09-28 bloat-reduction batches: worktree trim of cw126_01 11.4 MB ->
+743 KB; waves 102/168 at 2026-09-28) prose plans, all still unbacked and
+disjoint from every prior wave's records. The one-distinct-live-surface-
+per-selection rule is held, so the wave spans four different render
+surfaces (map/location row, journal book entry, narrative encounter, event
+detail/log).
+
+**Concurrency guard applied.** The parallel writer filling
+`docs/plans/integrated/content/` with an `INTEGRATED_` (uppercase) prefix
+was re-screened immediately before selection; its slug set is excluded
+alongside this lane's lowercase `integrated_` set (168 slugs excluded at
+scan time). The four data catalogs were re-checked against `git diff` for
+fresh edits from the other lane before writing; none of the four selected
+records appears in the concurrent staged diffs (that lane's staged edits
+touch `enc_false_broadcast`, `enc_hot_sign`, `friction_stolen_keepsake`,
+`event_belief_*`, `event_grief_conflict_belongings_dispute`, and others,
+not this wave's anchors).
+
+**Rule 7 rejections carried forward and reconfirmed this wave:** the batch
+133 `memorials_expansion_05.json` plans (no panel renders the authored
+memorial `text`), the batch 110 `shelter_machine_identities.json` glitch
+plans (live render emits only `Machines[].display_name`), the batch 129
+`spiritual_rituals.json` plans (no `src/UI` panel renders a ritual
+`description`), the root `bunker_graffiti_postings.json` records (catalog
+not loaded), and `radio_distress_signals.json` fragments (no live render
+surface).
+
+Each selected anchor record was verified live before editing (source JSON
+exists, record exists in it, non-probe `src/` consumer renders the record's
+text field):
+- `abandoned_hospital` -> `src/Journal/JournalCatalogData.cs`
+  (`LoadList<LocationDefinitionData>`, locations.json) -> `src/UI/MapPanel.cs`
+  known-locations detail.
+- `journal_day_292_power_restored` -> `JournalCorpusCatalogLoader`
+  (expansion_05) -> `Text` -> `JournalSystem.BindAuthoredCorpus` ->
+  `src/Main.Narrative.cs` -> `JournalBookUI`.
+- `enc_overturned_postal` -> `NarrativeEncounterSystem` ->
+  `src/Host/NarrativeHostSession.cs` / `src/Host/ExpeditionHostSession.cs`.
+- `fallout_storm` -> `src/Host/EventsHostSession.cs` (BodyText -> Description)
+  -> `src/UI/EventDetailPanel.cs`, `src/UI/EventsLogPanel.cs`.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave168/cw168_04_the_pharmacy_door_is_under_the_girders_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw168_04_the_pharmacy_door_is_under_the_girders_plan.md`)
+- `docs/expansions/prose_wave102/cw102_07_journal_day_292_power_restored_heat_returns_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw102_07_journal_day_292_power_restored_heat_returns_plan.md`)
+- `docs/expansions/prose_wave126/cw126_01_address_without_a_guarantee_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw126_01_address_without_a_guarantee_plan.md`)
+- `docs/expansions/prose_wave168/cw168_10_amber_light_before_the_ash_settles_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw168_10_amber_light_before_the_ash_settles_plan.md`)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`abandoned_hospital` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json`
+  (`journal_day_292_power_restored` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/narrative_encounters_expansion.json`
+  (`enc_overturned_postal` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/events.json`
+  (`fallout_storm` bodyText + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+All existing record text preserved; no new state, trigger, route, mechanic,
+or save section. Status: COMPLETE, uncommitted.
+
+## Claim: surface F19 debt pause + listening notes (2026-09-29)
+
+Paths touched (additive; shared files had prior uncommitted edits from others, preserved):
+- `Assets/Ashfall.Core/LedgerDebtSystem.cs` (`OnWeatherDelayApplied` event)
+- `Assets/Ashfall.Core/AudioConditionSystem.cs` (`AuthoredAudioLog.day`, `GetAudioLogsForDay`)
+- `Assets/Ashfall.Core/Radio/FactionRadioTypes.cs` (`RadioIntercept.ListeningNote`)
+- `src/Main.DebtCredit.cs` (journal line on each paused day)
+- `src/Main.Plan49DepthPass.cs`, `src/Main.CampaignOwners.cs` (`audio_logs` day owner, phase 5)
+- `src/Host/ExpansionHostSession.cs`, `src/Host/RadioHostSession.cs`, `src/Host/Plan49DepthPassHostSession.cs`
+- `src/UI/RadioPanel.cs` (listening-note label)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs`, `Ashfall.Core.Tests/World/WeatherGateDebtInteractionTests.cs`
+- `docs/audits/DEAD_CODE_WIRING_AUDIT_2026-09-28.md`
+
+No new state or save section: journal dedupes by key, so replays are idempotent.
+Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-29-2026-09-29
+
+User directive: "find 4 recently trimmed plans to fully integrate, don't
+leave as partials, don't commit and don't overly test!" plus "Integrate
+plans not finalise them!" — integration only, no finalisation, no commit,
+no test-suite run.
+
+Twenty-ninth wave this session. Selected four more recently trimmed
+(2026-09-28 bloat-reduction batches) prose plans, all still unbacked and
+disjoint from every prior wave's records. The one-distinct-live-surface-
+per-selection rule is held, so the wave spans four different render surfaces
+(map known-locations row, event detail/log, Journal Places room-history row,
+journal book entry).
+
+**Concurrency guard applied.** The parallel writer filling
+`docs/plans/integrated/content/` with an `INTEGRATED_` (uppercase) prefix
+was re-screened immediately before selection; its slug set is excluded
+alongside this lane's lowercase `integrated_` set (168 slugs excluded at
+scan time). The four data catalogs were re-checked against `git diff` for
+fresh edits from the other lane before writing; none of the four selected
+records is changed by the concurrent staged diffs (that lane's staged edits
+touch other records only).
+
+**Rule 7 rejections carried forward and reconfirmed this wave:** the batch
+133 `memorials_expansion_05.json` plans (no panel renders the authored
+memorial `text`), the batch 110 `shelter_machine_identities.json` glitch
+plans (live render emits only `Machines[].display_name`), the batch 129
+`spiritual_rituals.json` plans (no `src/UI` panel renders a ritual
+`description`), the root `bunker_graffiti_postings.json` records (catalog
+not loaded), and `radio_distress_signals.json` fragments (no live render
+surface).
+
+Each selected anchor record was verified live before editing (source JSON
+exists, record exists in it, non-probe `src/` consumer renders the record's
+text field):
+- `suburban_house` -> `src/Journal/JournalCatalogData.cs`
+  (`LoadList<LocationDefinitionData>`, locations.json) -> `src/UI/MapPanel.cs`
+  known-locations detail.
+- `filter_failure` -> `src/Host/EventsHostSession.cs` (BodyText -> Description)
+  -> `src/UI/EventDetailPanel.cs`, `src/UI/EventsLogPanel.cs`.
+- `vignette_water_pump_original_use` ->
+  `src/Journal/JournalCatalogData.cs` `LoadRoomHistories` (vignettes) ->
+  `src/Journal/JournalCodex.cs` AppendRoomHistoryRows.
+- `journal_day_148_training_success` -> `JournalCorpusCatalogLoader`
+  (expansion_05) -> `JournalSystem.BindAuthoredCorpus` ->
+  `src/Main.Narrative.cs` -> `JournalBookUI`.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave168/cw168_05_the_house_no_one_burned_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw168_05_the_house_no_one_burned_plan.md`)
+- `docs/expansions/prose_wave168/cw168_12_the_ventilation_complaint_starts_at_four_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw168_12_the_ventilation_complaint_starts_at_four_plan.md`)
+- `docs/expansions/prose_wave107/cw107_07_vignette_water_pump_original_use_before_the_lock_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw107_07_vignette_water_pump_original_use_before_the_lock_plan.md`)
+- `docs/expansions/prose_wave106/cw106_03_journal_day_148_training_success_hope_and_progress_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw106_03_journal_day_148_training_success_hope_and_progress_plan.md`)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`suburban_house` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/events.json`
+  (`filter_failure` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`vignette_water_pump_original_use` body + one bounded sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json`
+  (`journal_day_148_training_success` bodyText + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+All existing record text preserved; no new state, trigger, route, mechanic,
+or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 13 (2026-09-29)
+
+- `docs/expansions/prose_wave111/cw111_01_*`, `prose_wave107/cw107_04_*`, `prose_wave107/cw107_06_*`,
+  `prose_wave110/cw110_07_*`, `prose_wave118/cw118_06_the_cough_plan.md`
+  (each moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_medical_training_day_160` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_305_winter_preparations` + one sentence)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_family_bunker_2` description + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_history_four_pale_rectangles` body, `room_fixture_greenhouse_peat_troughs` detail, one sentence each)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 14 (2026-09-29)
+
+- `docs/expansions/prose_wave108/cw108_03_*`, `prose_wave106/cw106_02_*`, `prose_wave110/cw110_05_*`,
+  `prose_wave109/cw109_07_*`, `prose_wave109/cw109_03_*` (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (four `room_fixture_*` detail strings, one sentence each)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_fuel_expedition_day_270` `listening_note`)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 15 (2026-09-29)
+
+- `docs/expansions/prose_wave100/cw100_01_*`, `cw100_02_*`, `cw100_04_*`, `prose_wave109/cw109_01_*`,
+  `prose_wave118/cw118_09_the_warning_plan.md` (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_scavenger_radio_day_42` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_67_storm_survival` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_history_shelf_unit_d` body, `room_fixture_corridor_pencil_stub` detail; workshop_tool_shadow skipped: already extended by another lane)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_free_radio_2` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-30-2026-09-29
+
+User directive: "find 4 recently trimmed plans to fully integrate, don't
+leave as partials, don't commit and don't overly test!" plus "Integrate
+plans not finalise them!" — integration only, no finalisation, no commit,
+no test-suite run.
+
+Thirtieth wave this session. Selected four more recently trimmed
+(2026-09-28 bloat-reduction batches) prose plans, all still unbacked and
+disjoint from every prior wave's records. The one-distinct-live-surface-
+per-selection rule is held, so the wave spans four different render surfaces
+(map known-locations row, event detail/log, shelter interior room detail,
+journal book entry).
+
+**Concurrency guard applied.** The parallel writer filling
+`docs/plans/integrated/content/` with an `INTEGRATED_` (uppercase) prefix
+was re-screened immediately before selection; its slug set is excluded
+alongside this lane's lowercase `integrated_` set (172 slugs excluded at
+scan time). The four data catalogs were re-checked against `git diff` for
+fresh edits from the other lane before writing; none of the four selected
+records is changed by the concurrent staged diffs.
+
+**Rule 7 rejections carried forward and reconfirmed this wave:** the batch
+133 `memorials_expansion_05.json` plans (no panel renders the authored
+memorial `text`), the batch 110 `shelter_machine_identities.json` glitch
+plans (live render emits only `Machines[].display_name`), the batch 129
+`spiritual_rituals.json` plans (no `src/UI` panel renders a ritual
+`description`), the root `bunker_graffiti_postings.json` records (catalog
+not loaded), `radio_distress_signals.json` fragments (no live render
+surface), `narrative/journal_entries_batch_3.json` and `items.json`
+(exhausted of unclaimed verified-live anchors), plus the 2026-09-29 trim
+batch whose anchors live in catalogs with no verified live consumer in this
+lane (faction war communiques/dialogue/journal, ceremonies, year-of-ash,
+quest branches, bare `radio.json`, found objects, needle assays, weather
+gates).
+
+Each selected anchor record was verified live before editing (source JSON
+exists, record exists in it, non-probe `src/` consumer renders the record's
+text field):
+- `location_geo_thermal_plant_ruins` ->
+  `src/Journal/JournalCatalogData.cs` (`LoadList<LocationDefinitionData>`,
+  locations.json) -> `src/UI/MapPanel.cs` known-locations detail.
+- `scavenger_arrival` -> `src/Host/EventsHostSession.cs` (BodyText ->
+  Description) -> `src/UI/EventDetailPanel.cs`, `src/UI/EventsLogPanel.cs`.
+- `room_fixture_workshop_tool_shadow` ->
+  `Assets/Ashfall.Core/Shelter/RoomIdentity/ShelterRoomIdentityCatalog.cs`
+  `GetFixturesForRoom` (detail, art_visible) ->
+  `src/World/HoldfastInteriorView.cs` "Notable:" line.
+- `journal_day_268_fuel_crisis` -> `JournalCorpusCatalogLoader`
+  (expansion_05) -> `JournalSystem.BindAuthoredCorpus` ->
+  `src/Main.Narrative.cs` -> `JournalBookUI`.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave168/cw168_06_the_platform_is_not_the_ground_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw168_06_the_platform_is_not_the_ground_plan.md`)
+- `docs/expansions/prose_wave168/cw168_11_hands_raised_at_twenty_metres_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw168_11_hands_raised_at_twenty_metres_plan.md`)
+- `docs/expansions/prose_wave108/cw108_01_room_fixture_workshop_tool_shadow_the_shape_of_absence_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw108_01_room_fixture_workshop_tool_shadow_the_shape_of_absence_plan.md`)
+- `docs/expansions/prose_wave105/cw105_05_journal_day_268_fuel_crisis_dangerous_territory_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw105_05_journal_day_268_fuel_crisis_dangerous_territory_plan.md`)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`location_geo_thermal_plant_ruins` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/events.json`
+  (`scavenger_arrival` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_fixture_workshop_tool_shadow` detail + one bounded sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json`
+  (`journal_day_268_fuel_crisis` bodyText + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+All existing record text preserved; no new state, trigger, route, mechanic,
+or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 16 (2026-09-29)
+
+- `docs/expansions/prose_wave100/cw100_07_*`, `prose_wave101/cw101_02_*`, `prose_wave101/cw101_04_*`,
+  `prose_wave108/cw108_04_*`, `prose_wave119/cw119_05_case_definition_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_medical_alert_day_58` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_85_alex_recovery` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_history_tuner_warm` body, `room_fixture_main_battery_rack` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_quarantine_tapes_1` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 17 (2026-09-29)
+
+- `docs/expansions/prose_wave100/cw100_08_*`, `prose_wave101/cw101_08_*`, `prose_wave106/cw106_06_*`,
+  `prose_wave109/cw109_02_*`, `prose_wave118/cw118_10_the_coordinates_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_winter_preparations_day_290` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_285_power_crisis` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_history_cupola_breath` body, `room_fixture_filtration_steam_valve` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_free_radio_3` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 18 (2026-09-29)
+
+- `docs/expansions/prose_wave101/cw101_01_*`, `prose_wave103/cw103_04_*`, `prose_wave99/cw99_04_*`,
+  `prose_wave109/cw109_04_*`, `prose_wave119/cw119_04_save_the_seed_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_black_flotilla_offer_day_80` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_115_food_theft` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_history_bench_markings` body, `room_fixture_kitchen_table_scratches` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_greenhouse_tapes_3` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 19 (2026-09-29)
+
+- `docs/expansions/prose_wave101/cw101_07_*`, `prose_wave103/cw103_02_*`, `prose_wave92/cw92_03_*`,
+  `prose_wave109/cw109_05_*`, `prose_wave119/cw119_08_release_criteria_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_power_crisis_day_280` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_95_leadership_vote` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_history_the_first_filter_change` body, `room_fixture_airlock_bolted_chair` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_quarantine_tapes_4` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 20 (2026-09-29)
+
+- `docs/expansions/prose_wave102/cw102_06_*`, `prose_wave104/cw104_04_*`, `prose_wave93/cw93_05_*`,
+  `prose_wave109/cw109_06_*`, `prose_wave122/cw122_01_the_hardest_decision_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_technology_breakthrough_day_230` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_182_survivor_exile` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_history_the_basin_that_was_a_mixing_bowl` body, `room_fixture_radio_load_bulb` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_saint_maren_2` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-31-2026-09-29
+
+User directive: "find 4 recently trimmed plans to fully integrate, don't
+leave as partials, don't commit and don't overly test!" plus "Integrate
+plans not finalise them!" — integration only, no finalisation, no commit,
+no test-suite run.
+
+Thirty-first wave this session. Selected four more recently trimmed
+(2026-09-28 bloat-reduction batches) prose plans, all still unbacked and
+disjoint from every prior wave's records. The one-distinct-live-surface-
+per-selection rule is held, so the wave spans four different render surfaces
+(map known-locations row, shelter interior room detail, Journal codex
+psychology row, journal book entry).
+
+**Concurrency guard applied.** The parallel writer filling
+`docs/plans/integrated/content/` with an `INTEGRATED_` (uppercase) prefix
+was re-screened immediately before selection; its slug set is excluded
+alongside this lane's lowercase `integrated_` set (191 slugs excluded at
+scan time). Each chosen data record was re-checked against `git diff` on
+its catalog for fresh edits from the other lane before writing; none of the
+four selected records is changed by the concurrent staged diffs. One anchor
+(`journal_day_95_leadership_vote`) was claimed by a sibling lane mid-wave
+and was replaced before any edit was made.
+
+**Rule 7 rejections carried forward and reconfirmed this wave:** the batch
+133 `memorials_expansion_05.json` plans (no panel renders the authored
+memorial `text`), the batch 110 `shelter_machine_identities.json` glitch
+plans (live render emits only `Machines[].display_name`), the batch 129
+`spiritual_rituals.json` plans (no `src/UI` panel renders a ritual
+`description`), the root `bunker_graffiti_postings.json` records (catalog
+not loaded), `radio_distress_signals.json` fragments (no live render
+surface), `narrative/journal_entries_batch_3.json` and `items.json`
+(exhausted of unclaimed verified-live anchors), and the 2026-09-29 trim
+batch whose anchors live in catalogs with no verified live consumer in this
+lane (faction war communiques/dialogue/journal, ceremonies, year-of-ash,
+quest branches, bare `radio.json`, found objects, needle assays, weather
+gates).
+
+Each selected anchor record was verified live before editing (source JSON
+exists, record exists in it, non-probe `src/` consumer renders the record's
+text field):
+- `location_arcology_sector_4` ->
+  `src/Journal/JournalCatalogData.cs` (`LoadList<LocationDefinitionData>`,
+  locations.json) -> `src/UI/MapPanel.cs` known-locations detail.
+- `room_fixture_stores_humidity_gauge` ->
+  `Assets/Ashfall.Core/Shelter/RoomIdentity/ShelterRoomIdentityCatalog.cs`
+  `GetFixturesForRoom` (detail, art_visible) ->
+  `src/World/HoldfastInteriorView.cs` "Notable:" line.
+- `journal_psych_airlock_knocking_illusion` ->
+  `Assets/Ashfall.Core/Narrative/DailySurvivalCatalog.cs`
+  `LoadFromDirectory` (step 3 loads
+  `dweller_psychological_journals.json`) ->
+  `src/Journal/JournalCatalogData.cs` -> `src/Journal/JournalCodex.cs`
+  psychology row.
+- `journal_day_102_victory` -> `JournalCorpusCatalogLoader`
+  (expansion_05) -> `JournalSystem.BindAuthoredCorpus` ->
+  `src/Main.Narrative.cs` -> `JournalBookUI`.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave143/cw143_14_someone_still_answers_the_intercom_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw143_14_someone_still_answers_the_intercom_plan.md`)
+- `docs/expansions/prose_wave113/cw113_07_room_fixture_stores_humidity_gauge_the_red_line_below_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw113_07_room_fixture_stores_humidity_gauge_the_red_line_below_plan.md`)
+- `docs/expansions/prose_wave139/cw139_10_three_knocks_then_the_shift_bell_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw139_10_three_knocks_then_the_shift_bell_plan.md`)
+- `docs/expansions/prose_wave97/cw97_02_journal_day_102_victory_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw97_02_journal_day_102_victory_plan.md`)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`location_arcology_sector_4` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_fixture_stores_humidity_gauge` detail + one bounded sentence)
+- `Assets/StreamingAssets/Data/narrative/dweller_psychological_journals.json`
+  (`journal_psych_airlock_knocking_illusion` prose + one bounded sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json`
+  (`journal_day_102_victory` bodyText + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+All existing record text preserved; no new state, trigger, route, mechanic,
+or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 21 (2026-09-29)
+
+- `docs/expansions/prose_wave103/cw103_07_*`, `prose_wave107/cw107_03_*`, `prose_wave94/cw94_04_*`,
+  `prose_wave109/cw109_08_*`, `prose_wave120/cw120_02_red_signal_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_fuel_crisis_day_260` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_215_art_project` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_history_the_discrepancy` body, `room_fixture_pump_pressure_gauge` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_evacuation_train_2` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 22 (2026-09-29)
+
+- `docs/expansions/prose_wave106/cw106_01_*`, `prose_wave94/cw94_02_*`, `prose_wave110/cw110_01_*`,
+  `prose_wave110/cw110_02_*`, `prose_wave120/cw120_03_no_further_east_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_radiation_storm_day_120` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_45_scavenger_meeting` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_corridor_scrub_line`, `room_fixture_bunks_stencil_gaps` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_evacuation_train_3` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 23 (2026-09-29)
+
+- `docs/expansions/prose_wave105/cw105_03_*`, `prose_wave95/cw95_02_*`, `prose_wave110/cw110_03_*`,
+  `prose_wave110/cw110_04_*`, `prose_wave120/cw120_05_scheduled_programming_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_survivor_romance_day_250` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_175_technology_dangers` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_filtration_canister_notches`, `room_fixture_kitchen_portion_rings` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_station_14_1` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-32-2026-09-29
+
+User directive: "find 4 recently trimmed plans to fully integrate, don't
+leave as partials, don't commit and don't overly test!" plus "Integrate
+plans not finalise them!" — integration only, no finalisation, no commit,
+no test-suite run.
+
+Thirty-second wave this session. Selected four more recently trimmed
+(2026-09-28/29 bloat-reduction batches) prose plans, all still unbacked and
+disjoint from every prior wave's records. The one-distinct-live-surface-
+per-selection rule is held, so the wave spans four different render surfaces
+(map known-locations row, radio intercept listening note, shelter interior
+room detail, journal book entry).
+
+**Concurrency guard applied.** The parallel writer filling
+`docs/plans/integrated/content/` with an `INTEGRATED_` (uppercase) prefix
+was re-screened immediately before selection; its slug set is excluded
+alongside this lane's lowercase `integrated_` set (220 slugs excluded at
+scan time). Each chosen data record was re-checked against `git diff` on
+its catalog for fresh edits from the other lane before writing; none of the
+four selected records is changed by the concurrent staged diffs.
+
+**Rule 7 rejections carried forward and reconfirmed this wave:** the batch
+133 `memorials_expansion_05.json` plans (no panel renders the authored
+memorial `text`), the batch 110 `shelter_machine_identities.json` glitch
+plans (live render emits only `Machines[].display_name`), the batch 129
+`spiritual_rituals.json` plans (no `src/UI` panel renders a ritual
+`description`), the root `bunker_graffiti_postings.json` records (catalog
+not loaded), `radio_distress_signals.json` fragments (no live render
+surface), `narrative/journal_entries_batch_3.json` and `items.json`
+(exhausted of unclaimed verified-live anchors), and the 2026-09-29 trim
+batch whose anchors live in catalogs with no verified live consumer in this
+lane (faction war communiques/dialogue/journal, ceremonies, year-of-ash,
+quest branches, found objects, needle assays, weather gates).
+
+Each selected anchor record was verified live before editing (source JSON
+exists, record exists in it, non-probe `src/` consumer renders the record's
+text field):
+- `location_frozen_river_barge` ->
+  `src/Journal/JournalCatalogData.cs` (`LoadList<LocationDefinitionData>`,
+  locations.json) -> `src/UI/MapPanel.cs` known-locations detail.
+- `radio_broadcast_28` -> `Assets/Ashfall.Core/Radio/RadioBroadcastCatalog.cs`
+  `LoadBaseRadioJson` (message) -> `GetById` -> `src/Host/RadioHostSession.cs`
+  `PlayFactionBroadcast` (message into `RadioIntercept`) ->
+  `src/UI/RadioPanel.cs` intercept log.
+  **Correction (wave 33, same session):** the sentence was first placed in an
+  optional `listening_note` field; the base-radio loader does not map
+  `listening_note`, so it would not have rendered. The identical sentence was
+  moved into the rendered `message` and the inert field removed, keeping the
+  record fully live. All existing text preserved.
+- `room_fixture_pump_leather_cup` ->
+  `Assets/Ashfall.Core/Shelter/RoomIdentity/ShelterRoomIdentityCatalog.cs`
+  `GetFixturesForRoom` (detail, art_visible) ->
+  `src/World/HoldfastInteriorView.cs` "Notable:" line.
+- `journal_day_58_radiation_storm` -> `JournalCorpusCatalogLoader`
+  (expansion_05) -> `JournalSystem.BindAuthoredCorpus` ->
+  `src/Main.Narrative.cs` -> `JournalBookUI`.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave163/cw163_18_the_hold_is_a_working_space_not_a_set_piece_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw163_18_the_hold_is_a_working_space_not_a_set_piece_plan.md`)
+- `docs/expansions/prose_wave164/cw164_07_the_casualty_is_a_status_not_a_story_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw164_07_the_casualty_is_a_status_not_a_story_plan.md`)
+- `docs/expansions/prose_wave114/cw114_09_room_fixture_pump_leather_cup_the_leather_cup_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw114_09_room_fixture_pump_leather_cup_the_leather_cup_plan.md`)
+- `docs/expansions/prose_wave99/cw99_02_journal_day_58_radiation_storm_72_hours_to_prepare_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw99_02_journal_day_58_radiation_storm_72_hours_to_prepare_plan.md`)
+- `Assets/StreamingAssets/Data/locations.json`
+  (`location_frozen_river_barge` description + one bounded sentence)
+- `Assets/StreamingAssets/Data/radio.json`
+  (`radio_broadcast_28` message + one bounded closing sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_fixture_pump_leather_cup` detail + one bounded sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json`
+  (`journal_day_58_radiation_storm` bodyText + one bounded sentence)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+All existing record text preserved; no new state, trigger, route, mechanic,
+or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 24 (2026-09-29)
+
+- `docs/expansions/prose_wave107/cw107_01_*`, `prose_wave96/cw96_02_*`, `prose_wave111/cw111_04_*`,
+  `prose_wave111/cw111_06_*`, `prose_wave120/cw120_06_caller_list_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_survivor_exile_day_190` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_195_memory_loss` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_filtration_nameplate_tin`, `room_fixture_clinic_curtain_wire` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_station_14_3` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 25 (2026-09-29)
+
+- `docs/expansions/prose_wave93/cw93_02_*`, `prose_wave98/cw98_02_*`, `prose_wave111/cw111_07_*`,
+  `prose_wave112/cw112_01_*`, `prose_wave121/cw121_01_frequency_change_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_survivor_diary_day_50` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_128_thief_found` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_radio_mesh_panel`, `room_fixture_bunks_bolt_rings` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_station_14_2` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 26 (2026-09-29)
+
+- `docs/expansions/prose_wave104/cw104_01_*`, `prose_wave93/cw93_03_*`, `prose_wave112/cw112_02_*`,
+  `prose_wave112/cw112_05_*`, `prose_wave121/cw121_02_no_network_feed_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_black_flotilla_trade_day_130` `listening_note`)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_32_rationing_decision` + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_filtration_intake_stool`, `room_fixture_clinic_capped_drain` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_station_14_4` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (one theory row)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 27 (2026-09-29)
+
+- `docs/expansions/prose_wave94/cw94_01_*`, `prose_wave95/cw95_01_*`, `prose_wave112/cw112_06_*`,
+  `prose_wave112/cw112_07_*`, `prose_wave120/cw120_08_if_the_trains_stop_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_survivor_confession_day_88`, `audio_log_art_project_day_210` `listening_note`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_airlock_boot_crate`, `room_fixture_radio_log_book` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_fathers_tapes_2` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (two theory rows)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 28 (2026-09-29)
+
+- `docs/expansions/prose_wave97/cw97_01_*`, `prose_wave98/cw98_01_*`, `prose_wave113/cw113_01_*`,
+  `prose_wave113/cw113_02_*`, `prose_wave121/cw121_03_open_microphone_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_leadership_vote_day_105`, `audio_log_survivor_disappearance_day_140` `listening_note`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_filtration_hazmat_hook`, `room_fixture_workshop_busbar_leg` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_station_14_5` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (two theory rows)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## claim-trimmed-plan-integration-wave-33-2026-09-29
+
+User directive: "find 4 recently trimmed plans to fully integrate, don't
+leave as partials, don't commit and don't overly test!" plus "Integrate
+plans not finalise them!" — integration only, no finalisation, no commit,
+no test-suite run.
+
+Thirty-third wave this session. Selected four more recently trimmed
+(2026-09-28 bloat-reduction batches) prose plans, all still unbacked and
+disjoint from every prior wave's records. The one-distinct-live-surface-
+per-selection rule is held, so the wave spans four different render surfaces
+(faction-war radio listening note, year-of-ash radio intercept message,
+shelter interior room detail, journal book entry).
+
+**Wave-32 correction applied first (no partials rule).** `RadioBroadcastCatalog
+.LoadBaseRadioJson` maps only `message` (never `listening_note`); the
+`listening_note` seam is live only for the faction-war loader. Wave 32's
+`radio_broadcast_28` sentence was therefore moved verbatim into the rendered
+`message` and the inert field removed; the CW164-07 archived record and the
+wave-32 claim were updated to match. Verified after the move: sentence
+present in `message`, no `listening_note` key remains in radio.json, JSON
+parses.
+
+**Concurrency guard applied.** The parallel writer filling
+`docs/plans/integrated/content/` with an `INTEGRATED_` (uppercase) prefix
+was re-screened immediately before selection; its slug set is excluded
+alongside this lane's lowercase `integrated_` set (239 slugs excluded at
+scan time). Each chosen data record was re-checked against `git diff` on
+its catalog for fresh edits from the other lane before writing; none of the
+four selected records is changed by the concurrent staged diffs.
+
+**Rule 7 rejections carried forward and reconfirmed this wave:** the batch
+133 `memorials_expansion_05.json` plans (no panel renders the authored
+memorial `text`), the batch 110 `shelter_machine_identities.json` glitch
+plans (live render emits only `Machines[].display_name`), the batch 129
+`spiritual_rituals.json` plans (no `src/UI` panel renders a ritual
+`description`), the root `bunker_graffiti_postings.json` records (catalog
+not loaded), `radio_distress_signals.json` fragments (no live render
+surface), `narrative/journal_entries_batch_3.json` and `items.json`
+(exhausted of unclaimed verified-live anchors), the 2026-09-29 trim batch
+whose anchors live in catalogs with no verified live consumer in this lane,
+and `year_of_ash_events.json`/`verdict_radio.json` (loaded by the radio
+catalog but not yet verified against a live panel in this lane).
+
+Each selected anchor record was verified live before editing (source JSON
+exists, record exists in it, non-probe `src/` consumer renders the record's
+text field):
+- `radio_d493_toll_syndicate_rate_notice` ->
+  `Assets/Ashfall.Core/Radio/RadioBroadcastCatalog.cs` faction-war loader
+  (`listening_note` at line 423) -> `UnifiedRadioBroadcast` ->
+  `src/Host/RadioHostSession.cs` -> `src/UI/RadioPanel.cs`
+  "Listening note:" line.
+- `radio_deep_thaw_radon_advisory` ->
+  `Assets/Ashfall.Core/Radio/RadioBroadcastCatalog.cs`
+  `LoadYearOfAshRadioJson` (message) -> `GetById` ->
+  `src/Host/RadioHostSession.cs` `PlayFactionBroadcast` ->
+  `src/UI/RadioPanel.cs` intercept log.
+- `room_fixture_pump_flow_ledger` ->
+  `Assets/Ashfall.Core/Shelter/RoomIdentity/ShelterRoomIdentityCatalog.cs`
+  `GetFixturesForRoom` (detail, art_visible) ->
+  `src/World/HoldfastInteriorView.cs` "Notable:" line.
+- `journal_day_155_raider_ambush` -> `JournalCorpusCatalogLoader`
+  (expansion_05) -> `JournalSystem.BindAuthoredCorpus` ->
+  `src/Main.Narrative.cs` -> `JournalBookUI`.
+
+Exact paths claimed:
+
+- `docs/expansions/prose_wave130/cw130_07_honest_scale_fixed_price_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw130_07_honest_scale_fixed_price_plan.md`)
+- `docs/expansions/prose_wave156/cw156_14_the_advisory_ends_before_the_ventilation_note_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw156_14_the_advisory_ends_before_the_ventilation_note_plan.md`)
+- `docs/expansions/prose_wave114/cw114_10_room_fixture_pump_flow_ledger_two_hands_recorded_the_well_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw114_10_room_fixture_pump_flow_ledger_two_hands_recorded_the_well_plan.md`)
+- `docs/expansions/prose_wave144/cw144_27_day_155_after_the_ambush_plan.md`
+  (moved to `docs/plans/integrated/content/integrated_cw144_27_day_155_after_the_ambush_plan.md`)
+- `Assets/StreamingAssets/Data/faction_war_radio.json`
+  (`radio_d493_toll_syndicate_rate_notice` `listening_note`, one bounded
+  sentence)
+- `Assets/StreamingAssets/Data/year_of_ash_radio.json`
+  (`radio_deep_thaw_radon_advisory` message + one bounded sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json`
+  (`room_fixture_pump_flow_ledger` detail + one bounded sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json`
+  (`journal_day_155_raider_ambush` bodyText + one bounded sentence)
+- `Assets/StreamingAssets/Data/radio.json`
+  (`radio_broadcast_28` wave-32 correction: sentence moved into the rendered
+  `message`, inert `listening_note` removed)
+- `docs/plans/integrated/content/integrated_cw164_07_the_casualty_is_a_status_not_a_story_plan.md`
+  (archived record header updated to the corrected seam)
+- `WORKTREE_OWNERSHIP.md` (this claim), `.ai/state.md` (session record)
+
+All existing record text preserved; no new state, trigger, route, mechanic,
+or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 29 (2026-09-29)
+
+- `docs/expansions/prose_wave99/cw99_01_*`, `prose_wave96/cw96_01_*`, `prose_wave113/cw113_04_*`,
+  `prose_wave113/cw113_05_*`, `prose_wave121/cw121_04_carrier_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/audio_logs_expansion_05.json` (`audio_log_radio_signal_day_72`, `audio_log_technology_sharing_day_220` `listening_note`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_airlock_rag_nail`, `room_fixture_greenhouse_ballast_shield` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_station_14_6` description)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (two theory rows)
+
+Source text preserved; no new state, trigger, route or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 30 (2026-09-29)
+
+- `docs/expansions/prose_wave113/cw113_08_*`, `prose_wave114/cw114_04_*`, `prose_wave114/cw114_05_*`,
+  `prose_wave121/cw121_05_the_blue_cup_plan.md`, `prose_wave121/cw121_09_islanding_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_pump_well_collar`, `room_fixture_stores_bin_labels`, `room_fixture_main_generator_mount` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_fathers_tapes_3`, `cassette_dam_keeper_log_2` description)
+
+Source text preserved; no new state, trigger, route or save section. No test change (no audio-log note this round). Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 31 (2026-09-29)
+
+- `docs/expansions/prose_wave114/cw114_06_*`, `cw114_07_*`, `cw114_08_*`,
+  `prose_wave121/cw121_06_keep_this_one_plan.md`, `prose_wave121/cw121_10_gate_two_plan.md`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_fixture_main_inverter_panel`, `room_fixture_main_boiler_hatch`, `room_fixture_main_isolation_pad` detail)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_fathers_tapes_4`, `cassette_dam_keeper_log_3` description)
+
+Source text preserved; no new state, trigger, route or save section. `room_fixture_pump_flow_ledger` (cw114_10) skipped: record already changed by another lane. Status: COMPLETE, uncommitted.
+
+## Claim: integrate four trimmed prose plans, round 32 (2026-09-29)
+
+- `docs/expansions/prose_wave122/cw122_07_dispatch_is_gone_plan.md`, `cw122_08_manual_plan.md`, `cw122_02_the_pharmacy_key_plan.md`,
+  `cw122_05_night_shift_plan.md` (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/items.json` (`cassette_dam_keeper_log_4`, `cassette_dam_keeper_log_5`, `cassette_saint_maren_3`, `cassette_field_hospital_7_4` description)
+
+Source text preserved; no new state, trigger, route or save section. cw122_09 / cw122_10 not taken: they target
+`environmental_texts_expansion_05.json`, which has no live surface. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five radio prose plans, round 33 (2026-09-29)
+
+- `docs/expansions/prose_wave130/cw130_11_*`, `cw130_15_*`, `cw130_16_*`, `cw130_19_*`, `cw130_20_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/faction_war_radio.json` (`radio_d510`, `d525`, `d534`, `d547`, `d559` additive `listening_note`)
+- `Ashfall.Core.Tests/Content/Plan49DepthPassWiringTests.cs` (five theory rows)
+
+Messages untouched; note shown by `RadioPanel` (intercepts grid) via `RadioIntercept.ListeningNote`. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five echo prose plans, round 34 (2026-09-29)
+
+- `docs/expansions/prose_wave128/cw128_03_*`, `cw128_04_*`, `cw128_08_*`, `cw128_11_*`, `cw128_12_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/echoes.json` (`echo_wedding_ring`, `echo_frozen_postman`, `echo_unsent_letter`, `echo_post_it_fridge`, `echo_library_card` bodyText + one sentence each)
+
+Shown by the narrative-arc modal (Main.Echoes.cs). Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five encounter prose plans, round 35 (2026-09-29)
+
+- `docs/expansions/prose_wave126/cw126_02_*`, `cw126_03_*`, `cw126_05_*`, `cw126_06_*`, `cw126_08_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/narrative_encounters.json` (`enc_pianist` description + one sentence; primary copy wins over the expansion duplicate)
+- `Assets/StreamingAssets/Data/narrative_encounters_expansion.json` (`enc_roadside_trader`, `enc_two_camps`, `enc_locked_room`, `enc_greenhouse_keeper` description + one sentence each)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five encounter prose plans, round 36 (2026-09-29)
+
+- `docs/expansions/prose_wave126/cw126_09_*`, `cw126_10_*`, `prose_wave127/cw127_01_*`, `cw127_02_*`, `cw127_03_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/narrative_encounters_expansion.json` (`enc_dead_radio_operator`, `enc_last_train`, `enc_water_seller`, `enc_sick_child`, `enc_injured_scavenger` description + one sentence each; all expansion-only ids)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five encounter prose plans, round 37 (2026-09-29)
+
+- `docs/expansions/prose_wave127/cw127_04_*`, `cw127_05_*`, `cw127_07_*`, `cw127_08_*`, `cw127_09_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/narrative_encounters_expansion.json` (`enc_roof_access`, `enc_cold_storage`, `enc_clean_well`, `enc_whiteout_traveler`, `enc_flood_road` description + one sentence each; all expansion-only ids)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five encounter prose plans, round 38 (2026-09-29)
+
+- `docs/expansions/prose_wave127/cw127_10_*`, `cw127_11_*`, `cw127_12_*`, `cw127_13_*`, `cw127_14_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/narrative_encounters_expansion.json` (`enc_dogs_silent`, `enc_following_footsteps`, `enc_border_camp`, `enc_two_factions_trade`, `enc_two_graves` description + one sentence each; all expansion-only ids)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five encounter prose plans, round 39 (2026-09-29)
+
+- `docs/expansions/prose_wave127/cw127_16_*`, `cw127_17_*`, `cw127_18_*`, `cw127_19_*`, `cw127_20_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/narrative_encounters_expansion.json` (`enc_thief_child`, `enc_ice_fishermen`, `enc_quarantine_sign`)
+- `Assets/StreamingAssets/Data/narrative_encounters.json` (`enc_weather_station`, `enc_census_carrier_on_the_road`; primary copies)
+
+Source text preserved; no new state, choice, effect or save section. Wave 127 encounters complete. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 31 (2026-09-29)
+
+- `docs/expansions/prose_wave31/cw31_01_*`, `cw31_02_*`, `cw31_03_*`, `cw31_04_*`, `cw31_05_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_scavenger_camp`, `loc_automated_abattoir`, `ruined_garage`, `location_sub_level_4_transit`, `location_municipal_sewage` description + one sentence each; surgical edits, other lanes' unstaged changes in the file preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 31/32 (2026-09-29)
+
+- `docs/expansions/prose_wave31/cw31_06_*`, `prose_wave32/cw32_01_*`, `cw32_02_*`, `cw32_05_*`, `cw32_06_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_cut_radiation_zone_alpha`, `loc_school_gymnasium`, `loc_transit_authority_hq`, `loc_forward_roster_camp`, `loc_conscription_office` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 34 (2026-09-29)
+
+- `docs/expansions/prose_wave34/cw34_01_*`, `cw34_02_*`, `cw34_03_*`, `cw34_04_*`, `cw34_05_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`location_acoustic_testing_facility`, `loc_settlement_nine_rails`, `loc_settlement_ferry_crossing`, `loc_settlement_lock_seven`, `loc_settlement_st_nicholas` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 35 (2026-09-29)
+
+- `docs/expansions/prose_wave35/cw35_02_*`, `cw35_03_*`, `cw35_04_*`, `cw35_05_*`, `cw35_06_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_forestry_compound`, `loc_south_beacon_tower`, `loc_settlement_fort_karkov`, `loc_shelter_meeting`, `location_abandoned_ski_resort` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 34/43/44 (2026-09-29)
+
+- `docs/expansions/prose_wave34/cw34_06_*`, `prose_wave43/cw43_01_*`, `cw43_03_*`, `cw43_04_*`, `prose_wave44/cw44_01_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_iron_crest`, `loc_iron_garrison`, `loc_junction_box_rail`, `loc_sulfur_knob`, `raider_ambush_site` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed radio-distress prose plans, wave 44/45 (2026-09-29)
+
+- `docs/expansions/prose_wave44/cw44_05_*`, `cw44_06_*`, `prose_wave45/cw45_02_*`, `cw45_03_*`, `cw45_04_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`concert_hall_ruins`, `loc_water_station`, `convoy_echo7_cache`, `loc_recovery_yard`, `suburban_house` description + one sentence each; surgical edits, other lanes' unstaged changes preserved). `radio_distress_signals.json` untouched.
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed radio-distress prose plans, wave 45/46/47 (2026-09-29)
+
+- `docs/expansions/prose_wave45/cw45_05_*`, `cw45_06_*`, `prose_wave46/cw46_03_*`, `cw46_04_*`, `prose_wave47/cw47_01_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_forestry_compound`, `family_bunker_backyard_shed`, `loc_warehouse_district`, `loc_grange_hall`, `loc_bridge_seven` description + one sentence each; surgical edits, other lanes' unstaged changes preserved). `radio_distress_signals.json` untouched.
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed radio-distress prose plans, wave 46/47 round 2 (2026-09-29)
+
+- `docs/expansions/prose_wave46/cw46_01_*`, `cw46_05_*`, `cw46_06_*`, `prose_wave47/cw47_02_*`, `cw47_03_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_school_gymnasium` x2, `loc_conscription_office`, `checkpoint_kilo_armory`, `prewar_medical_cache` description + one sentence each; surgical edits, other lanes' unstaged changes preserved). `radio_distress_signals.json` untouched.
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed radio/event prose plans, wave 45/47/48 (2026-09-29)
+
+- `docs/expansions/prose_wave47/cw47_04_*`, `cw47_05_*`, `cw47_06_*`, `prose_wave45/cw45_01_*`, `prose_wave48/cw48_02_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`checkpoint_kilo_armory`, `location_silent_observatory`, `abandoned_hospital` description + one sentence each)
+- `Assets/StreamingAssets/Data/items.json` (`item_foundry_weather_canister` description + one sentence)
+- `Assets/StreamingAssets/Data/events.json` (`friction_forbidden_radio_listening` bodyText + one sentence)
+
+Surgical edits; other lanes' unstaged changes in these files preserved. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, wave 33 + CW46-02 (2026-09-29)
+
+- `docs/expansions/prose_wave33/cw33_01_*`, `cw33_02_*`, `cw33_03_*`, `cw33_04_*`, `prose_wave46/cw46_02_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_public_swimming_baths`, `loc_shelter_gate`, `loc_eastern_road`, `loc_settlement_tinkers_notch` description + one sentence each)
+- `Assets/StreamingAssets/Data/items.json` (`fuel` description + one sentence)
+
+Surgical edits; other lanes' unstaged changes in these files preserved. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 33/36/37 (2026-09-29)
+
+- `docs/expansions/prose_wave33/cw33_05_*`, `prose_wave36/cw36_02_*`, `cw36_05_*`, `cw36_06_*`, `prose_wave37/cw37_01_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_settlement_brine_pans`, `location_submerged_data_center`, `location_bio_remediation_lab`, `loc_settlement_silo_burrow`, `loc_excavation_metro_interchange` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 37/38 (2026-09-29)
+
+- `docs/expansions/prose_wave37/cw37_04_*`, `cw37_05_*`, `cw37_06_*`, `prose_wave38/cw38_02_*`, `cw38_03_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`highway_pileup`, `loc_warehouse_district`, `location_deep_core_borehole`, `location_uxo_highway_choke`, `location_radar_array_spire` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 38/39 (2026-09-29)
+
+- `docs/expansions/prose_wave38/cw38_05_*`, `cw38_06_*`, `prose_wave39/cw39_01_*`, `cw39_02_*`, `cw39_03_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`location_substation_omega`, `location_lethe_water_treatment`, `location_observatory_dome`, `location_submerged_arcology`, `location_concrete_batching_plant` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 39/40 (2026-09-29)
+
+- `docs/expansions/prose_wave39/cw39_04_*`, `cw39_05_*`, `cw39_06_*`, `prose_wave40/cw40_02_*`, `cw40_03_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`location_seed_vault_antechamber`, `location_mirror_factory`, `location_radio_telescope_array`, `loc_black_flotilla_outpost`, `loc_grain_exchange` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 40/41 (2026-09-29)
+
+- `docs/expansions/prose_wave40/cw40_04_*`, `cw40_05_*`, `cw40_06_*`, `prose_wave41/cw41_03_*`, `cw41_04_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_shelter_quarters`, `loc_cut_arsenal_ruin`, `loc_logistics_reserve_cache`, `collapsed_building`, `loc_excavation_storage_chamber` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 41/42 (2026-09-29)
+
+- `docs/expansions/prose_wave41/cw41_05_*`, `cw41_06_*`, `prose_wave42/cw42_04_*`, `cw42_05_*`, `cw42_06_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_excavation_civilian_shelter`, `location_quarry_overlook`, `loc_foundry_west_stacks`, `loc_signal_hill_tower`, `loc_wind_gap_ridge` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed location prose plans, wave 23 expansions 117-121 (2026-09-29)
+
+- `docs/expansions/wave23/expansion_117_*`, `expansion_118_*`, `expansion_119_*`, `expansion_120_*`, `expansion_121_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`)
+- `Assets/StreamingAssets/Data/locations.json` (`loc_dead_zone`, `loc_river_bend_outpost`, `loc_rusted_span_bridge`, `loc_old_crematory_stacks`, `loc_frozen_well_station` description + one sentence each; surgical edits, other lanes' unstaged changes preserved)
+
+Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+### Claim: integrate five trimmed location prose plans, wave 25 expansions 127-131
+- Paths: `Assets/StreamingAssets/Data/locations.json` (description text of `rural_gas_station`, `abandoned_hospital`, `suburban_house`, `location_silent_observatory`, `location_ash_dune_cemetery` only); `docs/expansions/wave25/expansion_127..131_*` -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed location prose plans, expansions 132-136
+- Paths: `Assets/StreamingAssets/Data/locations.json` (description text of `family_bunker_backyard_shed`, `loc_drowned_cinema`, `loc_apiary_rows`, `loc_snowline_station`, `loc_ice_core_store` only); `docs/expansions/wave26/expansion_132..136_*` -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed location prose plans, wave 27 expansions 138-142
+- Paths: `Assets/StreamingAssets/Data/locations.json` (description text of `loc_the_vessels_cell`, `old_library_cache`, `stranger_cache`, `loc_neutral_ground`, `concert_hall_ruins` only); `docs/expansions/wave27/expansion_138..142_*` -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed location prose plans, expansions 143, 144, 146, 148, 150
+- Paths: `Assets/StreamingAssets/Data/locations.json` (description text of `location_the_sump_cathedral`, `location_geo_thermal_plant_ruins`, `location_subterranean_seed_vault`, `loc_flooded_subway_depot`, `loc_grange_hall` only); `docs/expansions/wave27|28|29/expansion_143,144,146,148,150_*` -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed location prose plans, expansions 151, 152, 154, 155, 157
+- Paths: `Assets/StreamingAssets/Data/locations.json` (description text of `loc_cider_press`, `loc_ration_queue_plaza`, `loc_the_allotments`, `loc_printworks`, `hospital_pharmacy` only); `docs/expansions/wave29|30/expansion_151,152,154,155,157_*` -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, expansions 158, 159, 161, CW50-06, CW51-02
+- Paths: `Assets/StreamingAssets/Data/locations.json` (description text of `loc_pilgrim_switchbacks`, `loc_railway_span_44_alpha`, `loc_cold_store_atlantic` only); `Assets/StreamingAssets/Data/events.json` (bodyText of `event_eco_contaminated_run_toxic_carp`, `event_eco_ash_storm_grounds_flock` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, CW53-01..04 and CW51-03
+- Paths: `Assets/StreamingAssets/Data/codex_entries.json` (body text of `codex_regions_the_grid`, `_the_verge`, `_the_spine`, `_the_toll` only); `Assets/StreamingAssets/Data/events.json` (bodyText of `event_eco_scavenger_kettle_intercept` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, CW53-05/06, CW52-01/02, CW51-06
+- Paths: `Assets/StreamingAssets/Data/codex_entries.json` (body of `codex_regions_the_drown`, `codex_military_sealed_sites` only); `Assets/StreamingAssets/Data/crossing_quests.json` (briefing of `quest_crossing_the_salvaged_accord`, `quest_crossing_the_registry_dispute` only); `Assets/StreamingAssets/Data/events.json` (bodyText of `event_trapping_bycatch_entanglement` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, CW52-03/04/05 and CW41-01/02
+- Paths: `Assets/StreamingAssets/Data/crossing_quests.json` (briefing of `quest_crossing_the_long_toll` only); `Assets/StreamingAssets/Data/crossing_locations.json` (description of `loc_crossing_nightfire`, `loc_crossing_granary_pledge` only); `Assets/StreamingAssets/Data/locations.json` (description of `convoy_echo7_cache`, `checkpoint_kilo_armory` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, CW63-02/03/05 and CW64-01/02
+- Paths: `Assets/StreamingAssets/Data/narrative/bunker_children_folklore.json` (prose of `folklore_children_the_tree_that_ate_light`, `_deep_cold_lullaby`, `_the_last_window_glass` only); `Assets/StreamingAssets/Data/narrative/childrens_artwork_batch_2.json` (description of `art_b2_001`, `art_b2_002` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, CW64-03/04/05/06 and CW65-01
+- Paths: `Assets/StreamingAssets/Data/narrative/childrens_artwork_batch_2.json` (description of `art_b2_003`, `art_b2_005`, `art_b2_006`, `art_b2_008`, `art_b2_004` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, CW65-02..06
+- Paths: `Assets/StreamingAssets/Data/narrative/childrens_artwork_batch_2.json` (description of `art_b2_007`, `art_b2_009`, `art_b2_010`, `art_b2_011`, `art_b2_012` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, CW66-01..05
+- Paths: `Assets/StreamingAssets/Data/narrative/childrens_artwork_batch_2.json` (description of `art_b2_013`..`art_b2_017` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+### Claim: integrate five trimmed prose plans, CW66-06 and CW69-01..04
+- Paths: `Assets/StreamingAssets/Data/narrative/childrens_artwork_batch_2.json` (description of `art_b2_018` only); `Assets/StreamingAssets/Data/narrative/childrens_folklore_expansion.json` (prose of `folklore_children_the_flour_counting_song`, `_the_quiet_game_chant`, `_the_sun_drawing_game`, `_the_vent_monster` only); plan files -> `docs/plans/integrated/content/INTEGRATED_*`; `.ai/state.md`.
+
+## Claim: integrate five trimmed prose plans, round 40 (2026-09-29)
+
+- `docs/expansions/prose_wave143/cw143_10_*`, `prose_wave154/cw154_13_*`, `prose_wave155/cw155_16_*`, `prose_wave170/cw170_14_*`, `prose_wave159/cw159_03_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all five source trim claims — batch 25, 26, 30, 35, 51, 52 — were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/faction_radio_corpus.json` (`radio_faction_supply_request_clinic` message + one sentence)
+- `Assets/StreamingAssets/Data/year_of_ash_radio.json` (`radio_d9_protocol_null_carrier` message + one sentence)
+- `Assets/StreamingAssets/Data/journal_entries_expansion_05.json` (`journal_day_275_fuel_expedition_success` bodyText + one sentence)
+- `Assets/StreamingAssets/Data/shelter_room_identities.json` (`room_radio_tuner` one_line_history + one sentence; 30 words, inside the 10–36 validator band)
+- `Assets/StreamingAssets/Data/radio.json` (`radio_broadcast_08` message + one sentence)
+- `Ashfall.Core.Tests/FactionRadioBroadcastExpansionTests.cs` (one string literal updated so the off-channel negative assertion still compares against the live clinic message)
+
+Surgical exact-string edits; other lanes' unstaged changes in these files preserved. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.

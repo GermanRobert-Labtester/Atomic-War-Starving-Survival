@@ -157,7 +157,7 @@ namespace Ashfall.Core.Narrative
             string wellPath = Path.Combine(directoryPath, "artesian_well_contamination_logs.json");
             if (File.Exists(wellPath))
             {
-                var list = CatalogLocator.LoadWrappedList<WellContaminationEntry>(File.ReadAllText(wellPath), options);
+                var list = CatalogLocator.LoadWrappedList<WellContaminationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(wellPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -173,7 +173,7 @@ namespace Ashfall.Core.Narrative
             string biotaPath = Path.Combine(directoryPath, "cave_aquatic_biota_logs.json");
             if (File.Exists(biotaPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CaveBiotaEntry>(File.ReadAllText(biotaPath), options);
+                var list = CatalogLocator.LoadWrappedList<CaveBiotaEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(biotaPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -189,7 +189,7 @@ namespace Ashfall.Core.Narrative
             string steamPath = Path.Combine(directoryPath, "geothermal_steam_vent_diagnostics.json");
             if (File.Exists(steamPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SteamVentDiagnosticEntry>(File.ReadAllText(steamPath), options);
+                var list = CatalogLocator.LoadWrappedList<SteamVentDiagnosticEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(steamPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -205,7 +205,7 @@ namespace Ashfall.Core.Narrative
             string mineralPath = Path.Combine(directoryPath, "stalactite_mineral_assay_reports.json");
             if (File.Exists(mineralPath))
             {
-                var list = CatalogLocator.LoadWrappedList<StalactiteMineralAssayEntry>(File.ReadAllText(mineralPath), options);
+                var list = CatalogLocator.LoadWrappedList<StalactiteMineralAssayEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(mineralPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

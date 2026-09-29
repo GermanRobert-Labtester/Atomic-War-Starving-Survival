@@ -504,6 +504,16 @@ namespace AtomicWar.GodotApp
                         NarrativeEncounterCatalogLoader.Load(dataDir, fileIO, serializer));
                 }
 
+                // F6 §6.3/6.6/10 + F14 — micro-location encounters are authored
+                // in micro_locations.json through MicroLocationEncounterLoader,
+                // which stamps isMicroLocation and sourceFile on each definition.
+                // They resolve through the SAME narrative engine as the core and
+                // arc catalogs (one encounter authority); the loader only feeds it.
+                var microDefs = Ashfall.Core.Narrative.MicroLocationEncounterLoader.Load(
+                    dataDir, fileIO, serializer);
+                if (microDefs != null && microDefs.Count > 0)
+                    session._narrative.RegisterRange(microDefs);
+
                 var loaded = ExpeditionCatalogLoader.Load(dataDir, fileIO, serializer);
                 if (loaded != null && loaded.Count > 0)
                 {

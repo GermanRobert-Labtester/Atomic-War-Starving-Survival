@@ -150,6 +150,8 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
+            SetProcess(false);
+            VisibilityChanged += RefreshBannerProcessing;
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
@@ -1355,6 +1357,7 @@ namespace AtomicWar.GodotApp.UI
                 : $"[!] {surfaced.title} — {FormatSurvivorName(surfaced.trigger.survivorId)} [{phase}] # {surfaced.trigger.encounterCount}";
             _encounterBanner.Visible = true;
             _bannerTimer = BannerDuration;
+            RefreshBannerProcessing();
         }
 
         private void BuildAutoplayBanner()
@@ -1387,6 +1390,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Process(double delta)
         {
+            using var measurement = Host.FrameStartupProfiler.MeasureProcess(nameof(ExpeditionPanel));
             if (!Visible) return;
             if (!ExpeditionHostSession.UseEncounterModal && _encounterBanner != null && _encounterBanner.Visible)
             {
@@ -1394,8 +1398,15 @@ namespace AtomicWar.GodotApp.UI
                 if (_bannerTimer <= 0f)
                 {
                     _encounterBanner.Visible = false;
+                    SetProcess(false);
                 }
             }
+        }
+
+        private void RefreshBannerProcessing()
+        {
+            SetProcess(IsVisibleInTree() && Visible && _bannerTimer > 0f &&
+                _encounterBanner != null && _encounterBanner.Visible);
         }
 
         public override void _UnhandledInput(InputEvent @event)

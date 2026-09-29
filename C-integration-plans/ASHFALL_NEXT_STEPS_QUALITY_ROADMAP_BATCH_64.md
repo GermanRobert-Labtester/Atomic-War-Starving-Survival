@@ -336,7 +336,7 @@ All event bus tests pass; coverage ≥95% of `TypedEventBus` lines.
 
 ## Review Notes (Corrected)
 
-This batch was adversarially reviewed against the actual codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Corrections made:
+This batch was adversarially reviewed against the actual codebase at `.`. Corrections made:
 
 1. **`IEventBus`/`SimpleEventBus` existence and location — CONFIRMED with a location correction.** Both types genuinely exist, but in a single file: `Assets/Ashfall.Core/Events/IEventBus.cs`. There is no separate `SimpleEventBus.cs` file anywhere in the repo — Step 6's file-deletion list originally named one that doesn't exist. `Assets/Ashfall.Core/Events/` contains exactly one `.cs` file total.
 
@@ -358,7 +358,7 @@ This batch was adversarially reviewed against the actual codebase at `/home/robe
 
 ## Review Notes (Corrected) — Second Pass
 
-An independent second adversarial pass re-verified this plan, including the first pass's own "Review Notes," directly against the live repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. The first pass's corrections mostly held up, but several claims presented as confirmed were wrong or need real revision:
+An independent second adversarial pass re-verified this plan, including the first pass's own "Review Notes," directly against the live repository at `.`. The first pass's corrections mostly held up, but several claims presented as confirmed were wrong or need real revision:
 
 9. **CRITICAL — Step 6's "Update `Ports.cs`" instruction is factually wrong, not merely unverified.** The first pass flagged this as "verify before editing." This pass did verify it by reading `Ports.cs` directly: it contains exactly `IJsonSerializer`, `IFileIO`, `ILog`, `IClock`, `ISeededRng` — no `IEventBus`, and never has (the event-bus interface lives in a separate file, `Events/IEventBus.cs`, in a separate namespace, `Ashfall.Core.Events`). There is no line in `Ports.cs` for this batch to touch. Fixed: Step 6's `Ports.cs` bullet now states this plainly instead of deferring it as an open question.
 10. **CRITICAL — Step 6 undersold the blast radius of deleting `IEventBus`/`SimpleEventBus`.** The first pass correctly found that test files construct `SimpleEventBus`, but described the risk as being about test-file usage. Direct inspection of the actual constructor call sites shows `IEventBus`/`SimpleEventBus` is a required constructor dependency of three **production, non-test** Core classes: `DiveInstanceRunner`, `VerdictRadioSystem`, and `VerdictCensusBroadcast`. The test files that construct `SimpleEventBus` do so specifically to instantiate these production classes under test — they are not independent test-only usages. Deleting `IEventBus` per the original Step 6 plan would therefore not compile the production Core assembly, not just the test assembly. Fixed: Step 6 now names these three classes explicitly, raises this step's risk rating from Low to Medium, and requires an explicit decision (migrate these three in an added Step 5b, or formally keep `IEventBus` alive for their sake and descope Step 6's "delete entirely" goal for this batch).

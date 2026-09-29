@@ -597,7 +597,7 @@ namespace Ashfall.Core.Tests
 
             // supply_request_clinic transmits on 91.3 — far from the
             // safe_haven_community channel (112.3): must not join that pool.
-            string clinicMsg = "Clinic annex requests antibiotics, dressings, clean saline. We can cover lamp fuel or batteries in trade. Do not send food. We have food.";
+            string clinicMsg = "Clinic annex requests antibiotics, dressings, clean saline. We can cover lamp fuel or batteries in trade. Do not send food. We have food. No reply has come back on this channel yet.";
             Assert.False(EnginePoolContains(engine, "safe_haven_community", clinicMsg));
         }
 

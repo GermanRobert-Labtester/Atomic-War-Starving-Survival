@@ -11,6 +11,10 @@ using Godot;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
 
+using Ashfall.Core.Exploration;
+using Ashfall.Core.Inventory;
+using Ashfall.Core.Random;
+
 namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
@@ -73,5 +77,77 @@ namespace AtomicWar.GodotApp
             _personalBelongingsPanel = null!;
             _personalBelongings = null!;
         }
+
+        /// <summary>Returns one survivor's stable claim metadata.</summary>
+        public IReadOnlyList<PersonalBelonging> GetPersonalBelongings(string survivorId)
+        {
+            SetupSurvivorSocial();
+            return _survivorSocial?.Belongings.GetBelongingsForSurvivor(survivorId)
+                ?? Array.Empty<PersonalBelonging>();
+        }
+
+        /// <summary>
+        /// Claims an existing item definition as a survivor keepsake. Inventory
+        /// remains the physical stack authority; this records only the stable
+        /// survivor-to-item association and sentimental metadata.
+        /// </summary>
+        public bool ClaimPersonalBelonging(
+            string survivorId,
+            string itemId,
+            BelongingCategory category = BelongingCategory.Keepsake,
+            float sentimentalValue = 50f,
+            string description = "")
+        {
+            return EnsurePersonalBelongings().Claim(survivorId, itemId, category, sentimentalValue, description);
+        }
+
+        /// <summary>Transfers claim metadata; physical inventory remains shared.</summary>
+        public bool GiftPersonalBelonging(
+            string fromSurvivorId,
+            string toSurvivorId,
+            string belongingId,
+            string reason = "Gift")
+        {
+            return EnsurePersonalBelongings().Gift(fromSurvivorId, toSurvivorId, belongingId, reason);
+        }
+
+        public bool SetPersonalBelongingFavorite(
+            string survivorId,
+            string belongingId,
+            bool isFavorite = true)
+        {
+            return EnsurePersonalBelongings().SetFavorite(survivorId, belongingId, isFavorite);
+        }
+
+        public bool ReportPersonalBelongingLoss(
+            string survivorId,
+            string belongingId,
+            bool stolen = false)
+        {
+            return EnsurePersonalBelongings().ReportLoss(survivorId, belongingId, stolen);
+        }
+
+        /// <summary>
+        /// Called exactly once by SurvivorFateSystem for each death. The
+        /// deterministic roster order supplies a primary heir when one exists;
+        /// no inventory item is duplicated or removed.
+        /// </summary>
+        private void HandlePersonalBelongingsInheritance(SurvivorFateEvent fate)
+        {
+            if (fate == null || string.IsNullOrEmpty(fate.survivorId)) return;
+            SetupSurvivorSocial();
+            SetupSurvivors();
+            string heir = _survivors?.RosterState
+                .Where(s => s != null && s.IsAliveState && !string.Equals(s.Id, fate.survivorId, StringComparison.Ordinal))
+                .Select(s => s.Id)
+                .FirstOrDefault() ?? string.Empty;
+            if (string.IsNullOrEmpty(heir)) return;
+
+            _survivorSocial!.Belongings.DistributeInheritanceOnDeath(
+                fate.survivorId,
+                heir,
+                fate.day > 0 ? fate.day : _simDay);
+        }
+
     }
 }

@@ -28,6 +28,19 @@ namespace AtomicWar.GodotApp.UI
         private string _feedbackText = string.Empty;
         private bool _feedbackIsFailure;
 
+        // W2-06 Decision Point 1 · Path B — authored fermentation field log.
+        // The panel binds the engine (not the session), so the owning host
+        // supplies the revived corpus through a provider. Read-only: the panel
+        // renders these lines and keeps no state of its own.
+        private Func<System.Collections.Generic.IReadOnlyList<AssayLogLine>>? _fieldLogProvider;
+
+        /// <summary>Supplies the authored field-log lines. Null renders an empty state.</summary>
+        public void BindFieldLog(Func<System.Collections.Generic.IReadOnlyList<AssayLogLine>>? provider)
+        {
+            _fieldLogProvider = provider;
+            RefreshView();
+        }
+
         /// <summary>Operator identity for trait/skill snapshot (host-set).</summary>
         public string OperatorId { get; set; } = "player";
         /// <summary>Current campaign day (host-set, used for batch bookkeeping).</summary>
@@ -41,7 +54,11 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
-        public void Unbind() => _system = null;
+        public void Unbind()
+        {
+            _system = null;
+            _fieldLogProvider = null;
+        }
 
         public override void _Ready()
         {
@@ -196,6 +213,45 @@ namespace AtomicWar.GodotApp.UI
             {
                 foreach (var charge in state.staged_feedstock)
                     _detail.AddChild(AshfallUiHelpers.MakeDataRow(charge.item_id, $"{charge.units} units", AshfallUiHelpers.ColorInfo));
+            }
+
+            // ── Authored field log (W2-06 · DP1 · Path B) ───────────────────
+            // Revived from the authored assay/report catalogs through the IFileIO
+            // port by the owning host. Purely presentational: no cached state,
+            // no filtering, no fabrication — every authored line renders.
+            _detail.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detail.AddChild(AshfallUiHelpers.MakeSubsectionHeader("AUTHORED FIELD LOG"));
+
+            System.Collections.Generic.IReadOnlyList<AssayLogLine>? log = null;
+            try
+            {
+                log = _fieldLogProvider?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[BioFermentation] field log read failed: {ex.Message}");
+            }
+
+            if (log == null || log.Count == 0)
+            {
+                _detail.AddChild(AshfallUiHelpers.MakeEmptyState(
+                    "No authored fermentation field log was readable from the data directory.",
+                    title: "FIELD LOG ABSENT",
+                    actionHint: "Check Assets/StreamingAssets/Data/narrative/ for the assay catalogs."));
+            }
+            else
+            {
+                for (int i = 0; i < log.Count; i++)
+                {
+                    var line = log[i];
+                    if (line == null || string.IsNullOrEmpty(line.Prose)) continue;
+                    string label = string.IsNullOrEmpty(line.TimestampRelative)
+                        ? line.Label
+                        : $"{line.Label} · {line.TimestampRelative}";
+                    _detail.AddChild(AshfallUiHelpers.MakeDataRow(label, line.Prose, AshfallUiHelpers.ColorText));
+                    _detail.AddChild(AshfallUiHelpers.MakeDataRow(
+                        "    kind", line.Kind, AshfallUiHelpers.ColorMuted));
+                }
             }
 
             BuildActionRows();

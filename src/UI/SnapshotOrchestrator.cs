@@ -124,6 +124,7 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Process(double delta)
         {
+            using var measurement = Host.FrameStartupProfiler.MeasureProcess(nameof(SnapshotOrchestrator));
             if (_phase == Phase.Done) return;
 
             switch (_phase)

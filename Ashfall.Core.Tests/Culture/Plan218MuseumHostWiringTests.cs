@@ -141,7 +141,7 @@ namespace Ashfall.Core.Tests.Culture
             string sections = Source("Assets/Ashfall.Core/Save/SaveSectionRegistry.cs");
             string hostSession = Source("src/Host/ShelterMuseumHostSession.cs");
             string cliProbe = Source("src/Host/HostCli.ShelterMuseum.cs");
-            string dailyOrchestration = Source("src/Main.Plans46_49.cs");
+            string dailyOrchestration = Source("src/Main.SubsystemComposition.cs");
             string panel = Source("src/UI/ArchiveDeskPanel.cs");
             string bind = Source("src/Main.ShelterBatch3.cs");
 

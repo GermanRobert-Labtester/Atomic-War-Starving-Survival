@@ -726,7 +726,7 @@ Test categories:
 
 ## Review Notes (Corrected)
 
-Adversarial pass against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. All fixes above were applied in place; this section documents what was wrong, why, and what still needs a human decision.
+Adversarial pass against the live codebase at `.`. All fixes above were applied in place; this section documents what was wrong, why, and what still needs a human decision.
 
 ### Factual corrections applied
 

@@ -223,7 +223,7 @@ Given this, "batch script adds the field to all 165 files" is safe and low-risk 
 
 ## Review Notes (Corrected)
 
-This file was adversarially reviewed against the actual repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Findings:
+This file was adversarially reviewed against the actual repository at `.` and corrected in place. Findings:
 
 1. **Wrong top-level file count.** Original said "~130+ top-level JSON files, 12 with schema_version." The real top-level count is **98** (12 with, 86 without). The true grand total across the whole `Data/` tree (top-level + `narrative/` + `documents/` + `whitelists/`) is **296** files, **45** with `schema_version`, **251** without. Fixed throughout the header, rationale, Step 1, and the closing summary.
 

@@ -44,7 +44,7 @@
         "mythology",
         "bunker_culture"
       ],
-      "prose": "'The Sun was a bulb that lived in the blue, / A billion times bigger than Room Twenty-Two. / It burned without coal, it burned without wire, / And nobody choked when it made its warm fire.' Sung in unison by children who have never seen open sky or shadows cast by natural light."
+      "prose": "'The Sun was a bulb that lived in the blue, / A billion times bigger than Room Twenty-Two. / It burned without coal, it burned without wire, / And nobody choked when it made its warm fire.' Sung in unison by children who have never seen open sky or shadows cast by natural light. It is the truest thing they know about the surface, and none of it is quite a fact."
     },
     {
       "id": "folklore_children_the_iron_door_whisper",
@@ -89,7 +89,7 @@
         "conditioning",
         "play"
       ],
-      "prose": "Whenever the intermittent red rotating warning beacons pulse during a monthly seal test, the children immediately freeze into frozen statues. If a child blinks or moves before the horn sounds the all-clear waver, their playmates drag them into a pretend 'Decon Shower'."
+      "prose": "Whenever the intermittent red rotating warning beacons pulse during a monthly seal test, the children immediately freeze into frozen statues. If a child blinks or moves before the horn sounds the all-clear waver, their playmates drag them into a pretend 'Decon Shower'. The rule is not a drill; it is what a warning sounds like when the only people left to interpret it are too young to have been given the reason."
     },
     {
       "id": "folklore_children_the_tree_that_ate_light",
@@ -105,7 +105,7 @@
         "century_seed",
         "hope"
       ],
-      "prose": "A beloved myth that the little sapling in Level 4 is drinking up all the sadness from the bunker air, and when it grows forty feet tall, its branches will break through the sixty feet of reinforced concrete ceiling, letting in real green rain and sweet yellow apples for everyone."
+      "prose": "A beloved myth that the little sapling in Level 4 is drinking up all the sadness from the bunker air, and when it grows forty feet tall, its branches will break through the sixty feet of reinforced concrete ceiling, letting in real green rain and sweet yellow apples for everyone. Nobody who tells it says who told it first, and the sapling in Level 4 is not asked to prove it."
     },
     {
       "id": "folklore_children_dosimeter_counting_rhyme",
@@ -135,7 +135,7 @@
         "cold",
         "comfort"
       ],
-      "prose": "'The iron is biting, the blanket is thin, / Tuck the two elbows and pull your knees in. / Breathe on your brother, breathe on the sheet, / Morning comes early with porridge and heat.' Sung by elder siblings in the bottom tiers when the auxiliary heaters cycle down during sub-zero nights."
+      "prose": "'The iron is biting, the blanket is thin, / Tuck the two elbows and pull your knees in. / Breathe on your brother, breathe on the sheet, / Morning comes early with porridge and heat.' Sung by elder siblings in the bottom tiers when the auxiliary heaters cycle down during sub-zero nights. No record says who wrote it, only that the older children pass it down to the younger."
     },
     {
       "id": "folklore_children_the_outer_door_story",
@@ -240,7 +240,7 @@
         "static",
         "whisper"
       ],
-      "prose": "A belief that if you press your ear to the copper lead of the long-wire receiver while everyone in the bunker is holding their breath, the static says the names of every child born underground in alphabetical order."
+      "prose": "A belief that if you press your ear to the copper lead of the long-wire receiver while everyone in the bunker is holding their breath, the static says the names of every child born underground in alphabetical order. Nobody has heard a name come out of it yet, and so the list gets remembered by hand instead."
     },
     {
       "id": "folklore_children_ash_footprint_taboo",
@@ -255,7 +255,7 @@
         "ash",
         "operational_truth"
       ],
-      "prose": "'Step on the chalk, your boots are alive. / Step past the line, not one will survive.' Children refuse to step on any corridor flagstone that carries a faint grey rim from an expedition boot, treating the yellow line as an impassable chasm until the scrub team swabs it with lye."
+      "prose": "'Step on the chalk, your boots are alive. / Step past the line, not one will survive.' Children refuse to step on any corridor flagstone that carries a faint grey rim from an expedition boot, treating the yellow line as an impassable chasm until the scrub team swabs it with lye. The rhyme is not true, exactly; it is the part of the rule a child can carry."
     },
     {
       "id": "folklore_children_the_last_window_glass",
@@ -270,7 +270,7 @@
         "window",
         "memory"
       ],
-      "prose": "A legend passed down from an elder's sketch: 'The sky was a sheet of cold blue glass that went on for four hundred miles without a ceiling bolt. When birds flew, they did not bump their heads on the pipes.'"
+      "prose": "A legend passed down from an elder's sketch: 'The sky was a sheet of cold blue glass that went on for four hundred miles without a ceiling bolt. When birds flew, they did not bump their heads on the pipes.' The record does not say whether any teller has seen the sky it describes."
     },
     {
       "id": "folklore_children_name_under_the_bunk",
@@ -285,7 +285,7 @@
         "bunk",
         "grief"
       ],
-      "prose": "A secret ritual among orphans in Dormitory 4: when a guardian or bunk-mate dies, the child uses a rusty roofing nail to scratch the first letter of their name into the underside of the pine bunk slat, sealed with a dab of candle grease so the adults do not sand it off."
+      "prose": "A secret ritual among orphans in Dormitory 4: when a guardian or bunk-mate dies, the child uses a rusty roofing nail to scratch the first letter of their name into the underside of the pine bunk slat, sealed with a dab of candle grease so the adults do not sand it off. Nobody has admitted to scratching anything, and every slat in Dormitory 4 looks the same."
     }
   ]
 }

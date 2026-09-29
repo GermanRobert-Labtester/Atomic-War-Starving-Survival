@@ -169,7 +169,7 @@ namespace Ashfall.Core.Narrative
             string orbitalPath = Path.Combine(directoryPath, "orbital_kinetic_telemetry.json");
             if (File.Exists(orbitalPath))
             {
-                var list = CatalogLocator.LoadWrappedList<OrbitalKineticEntry>(File.ReadAllText(orbitalPath), options);
+                var list = CatalogLocator.LoadWrappedList<OrbitalKineticEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(orbitalPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -185,7 +185,7 @@ namespace Ashfall.Core.Narrative
             string dronePath = Path.Combine(directoryPath, "drone_carrier_blackboxes.json");
             if (File.Exists(dronePath))
             {
-                var list = CatalogLocator.LoadWrappedList<DroneCarrierBlackboxEntry>(File.ReadAllText(dronePath), options);
+                var list = CatalogLocator.LoadWrappedList<DroneCarrierBlackboxEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(dronePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -201,7 +201,7 @@ namespace Ashfall.Core.Narrative
             string cobaltPath = Path.Combine(directoryPath, "cobalt_arming_directives.json");
             if (File.Exists(cobaltPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CobaltDirectiveEntry>(File.ReadAllText(cobaltPath), options);
+                var list = CatalogLocator.LoadWrappedList<CobaltDirectiveEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(cobaltPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -217,7 +217,7 @@ namespace Ashfall.Core.Narrative
             string vaultPath = Path.Combine(directoryPath, "architect_vault_audits.json");
             if (File.Exists(vaultPath))
             {
-                var list = CatalogLocator.LoadWrappedList<ArchitectVaultAuditEntry>(File.ReadAllText(vaultPath), options);
+                var list = CatalogLocator.LoadWrappedList<ArchitectVaultAuditEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(vaultPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

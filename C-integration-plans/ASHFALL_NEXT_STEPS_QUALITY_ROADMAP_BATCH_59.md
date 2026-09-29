@@ -171,7 +171,7 @@ grep -rn "System\.Random\|Guid\.NewGuid" Assets/Ashfall.Core/ --include="*.cs" |
 
 ## Review Notes (Corrected)
 
-This batch was adversarially reviewed against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Findings:
+This batch was adversarially reviewed against the live codebase at `.`. Findings:
 
 1. **The batch's entire "fix" premise (original Steps 2–4) was false.** AGENTS.md's "Known offenders" list under Invariant 4 is stale documentation, not a current defect list. All four cited call sites were checked by direct file read and grep:
    - `FinalWishSystem.cs:66` → `public ISeededRng Rng;` (confirmed fixed).
@@ -191,7 +191,7 @@ This batch was adversarially reviewed against the live codebase at `/home/robert
 
 ## Review Notes (Corrected) — Second Pass
 
-A second independent adversarial pass re-verified every claim in this document against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`, deliberately not trusting the first pass's own "Review Notes" section without re-checking the underlying files directly. Findings:
+A second independent adversarial pass re-verified every claim in this document against the live codebase at `.`, deliberately not trusting the first pass's own "Review Notes" section without re-checking the underlying files directly. Findings:
 
 1. **All four "already fixed" citations re-confirmed by direct file read, exact line matches:**
    - `Assets/Ashfall.Core/Survivors/FinalWishSystem.cs:66` → `public ISeededRng Rng;` — confirmed exact line.

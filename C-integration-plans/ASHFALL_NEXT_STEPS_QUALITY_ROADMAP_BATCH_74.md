@@ -562,7 +562,7 @@ This batch is COMPLETE when:
 ## Review Notes (Corrected)
 
 Adversarial review performed against the actual repository at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` (source read directly for every
+`.` (source read directly for every
 named class; `dotnet test --list-tests` run to check the cited test count; `which`/`dotnet tool
 list -g` run to check profiler tooling availability). Corrections applied in place above; this
 section summarizes what changed and why.

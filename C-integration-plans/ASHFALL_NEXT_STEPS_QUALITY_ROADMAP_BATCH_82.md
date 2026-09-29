@@ -480,7 +480,7 @@ Design philosophy:
 
 ## Review Notes (Corrected)
 
-Adversarial review performed against the real codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` (Godot host). Findings and fixes applied in place above:
+Adversarial review performed against the real codebase at `.` (Godot host). Findings and fixes applied in place above:
 
 1. **Factual error — `StartingLevelSystem` does not gate complexity.** The original draft listed `StartingLevelSystem` under "Systems affected" as "(difficulty gating)" and under "Existing systems to leverage" as "configures initial difficulty; could gate system complexity." Read the full source (`Assets/Ashfall.Core/StartingLevel/StartingLevelSystem.cs`, 280 lines): it is a Day-1-only Holdfast simulation (ration policy, maintenance directives, radio protocol, room inspection, air filter degradation). There is no difficulty field, no complexity tier, and no API for gating other systems anywhere in the class. This was the most significant factual error in the plan — it would have led an implementer to go looking for a "difficulty gating" hook that doesn't exist. Removed `StartingLevelSystem` from the systems-affected list and corrected the Context section to state plainly that progressive disclosure is new work built in this batch (`PanelVisibilityManager`), not something reused from an existing system.
 

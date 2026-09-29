@@ -641,7 +641,7 @@ alert, tension music) are wanted — flagged per-row in the corrected Step 5 tab
 ## Review Notes (Corrected)
 
 This document was adversarially reviewed against the actual ASHFALL codebase
-(`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`). The original document's central
+(`.`). The original document's central
 claim — "no audio playback system exists beyond raw files in assets/audio/" — is **false**, and
 every step built on that false premise needed correction:
 

@@ -8,6 +8,7 @@
       "source": "Unattended Relay, Railway Span 44-Alpha",
       "message": "Station null. Target grid primed. Remain in shelter. Station null. Target grid primed. Remain in shelter.",
       "signalStrength": "S3",
+      "listening_note": "The loop has no day in it. It says the same two sentences to whoever is in range.",
       "isEmergency": false
     },
     {
@@ -17,6 +18,7 @@
       "source": "Central Garrison Continuity Office",
       "message": "Bulletin 481-C. Reports of irregular weighing practices at unregulated exchange points are noted and under continued observation. The Continuity Office reminds all trading concerns that the Garrison's forbearance is a courtesy extended, not a right assumed. Compliance inspections will resume at the Continuity Office's discretion.",
       "signalStrength": "S8",
+      "listening_note": "The bulletin names no one, and every trader who hears it can decide whether it means them.",
       "isEmergency": false
     },
     {
@@ -26,6 +28,7 @@
       "source": "Exchange Roster Wire",
       "message": "To our neighbors on both sides of the rope: the scale at the Exchange has never once favored a uniform, and the ledger is open to anyone who can read it, including the Continuity Office, who we notice has not asked to. Fair scales or broken fingers. The fingers get broken by consensus. Come count them yourselves.",
       "signalStrength": "S5",
+      "listening_note": "The invitation is meant as a challenge, and the wire does not say who is expected to accept.",
       "isEmergency": false
     },
     {
@@ -35,6 +38,7 @@
       "source": "Unidentified",
       "message": "Corrected totals for Sector grain movement, week ending the 483rd day: eleven hundred kilos logged by the Continuity Office, fourteen hundred and twenty actually moved. The difference did not go to the Exchange. Ask who it went to before you believe either bulletin on that board.",
       "signalStrength": "S2",
+      "listening_note": "The voice gives two numbers and no name. What it wants from the listener is a question, and it does not say who should be asked.",
       "isEmergency": false
     },
     {
@@ -44,6 +48,7 @@
       "source": "Central Garrison Continuity Office",
       "message": "Bulletin 488-B. The Continuity Office rejects unsigned claims of discrepancy in grain tonnage circulated on unlicensed frequencies. Sector logs are reconciled weekly and available for inspection at the Continuity Office by appointment. Residents repeating unverified figures do so at their own standing. The Office will not debate its ledgers with static.",
       "signalStrength": "S8",
+      "listening_note": "The bulletin answers a broadcast it will not name. It says the ledgers are open, and the listener is left to decide what that offer costs.",
       "isEmergency": false
     },
     {
@@ -53,6 +58,7 @@
       "source": "The Ash Sign, Shrine Transmission",
       "message": "The ash keeps its own ledger. It does not answer to the Continuity Office and it does not answer to the roster. What it burns, it chooses. What it leaves standing, it chooses. Come read the numbers at the cairn yourself before you trust a bulletin board written by hands that bleed.",
       "signalStrength": "S4",
+      "listening_note": "The cairn is offered as a place to read, and the transmission does not say what is written there.",
       "isEmergency": false
     },
     {
@@ -62,6 +68,7 @@
       "source": "Weighbridge Toll Office",
       "message": "Rate revision effective immediate. Crossing rate: two units standard goods or equivalent. No exceptions, no faction discount, no credit extended past the booth. The scale is honest. The price isn't negotiable. Come with what you owe or don't come.",
       "signalStrength": "S6",
+      "listening_note": "The notice says the scale is honest and leaves the price to argue for itself.",
       "isEmergency": false
     },
     {
@@ -71,6 +78,7 @@
       "source": "The Understory, civilian relay",
       "message": "Something hit empty ground out past the rail span last night and neither uniform in this district will own it. Funny thing, folks — for once the war did less damage doing something than either army manages doing nothing. We'll keep asking. You keep listening. That's the whole arrangement.",
       "signalStrength": "S3",
+      "listening_note": "The relay admits it does not know. It promises only to keep asking, and to be heard while it does.",
       "isEmergency": false
     },
     {
@@ -80,6 +88,7 @@
       "source": "Central Garrison Continuity Office",
       "message": "Notice 504-A. Labor quota for the coming quarter is revised upward per Continuity Decree Seven. All eligible residents are required to report to the Conscription Office within five days of list posting. Non-report will be classified as desertion in absentia, effective immediately.",
       "signalStrength": "S8",
+      "listening_note": "The notice fixes a number of days and a word for what follows. It does not say who will be counted as having heard it.",
       "isEmergency": true
     },
     {
@@ -89,6 +98,7 @@
       "source": "Exchange Roster Wire",
       "message": "Half our roster's stall-holders got quota notices this week, which means half our roster isn't at their stalls this week, which the Continuity Office apparently didn't factor into a labor decree written by people who've never weighed a sack of anything. The scale stays open regardless, short-handed or not. Come trade. Just don't expect a full counter.",
       "signalStrength": "S5",
+      "listening_note": "The wire admits the counter will be short and asks anyway. It does not say who is missing, only that the scale stays open.",
       "isEmergency": false
     },
     {
@@ -98,6 +108,7 @@
       "source": "The Understory, civilian relay",
       "message": "Two patrols stood on the rail span yesterday, rifles slung, staring at each other over a rumor of a train that never came. Nobody fired. We'd like to say that's because cooler heads prevailed. It's actually because the loudspeaker on that bridge has been telling everyone to remain in shelter for three years and somebody finally, briefly, listened.",
       "signalStrength": "S3",
+      "listening_note": "The relay wants to give a happy reason and gives a stranger one instead: somebody finally listened to the loudspeaker.",
       "isEmergency": false
     },
     {
@@ -107,6 +118,7 @@
       "source": "The Ash Sign, Shrine Transmission",
       "message": "The reading from the almshouse quarter has turned. We do not warn. We measure, and today the measure says: do not linger there. Take this as you take every number we give you — plainly, and without asking us to explain why the ash chooses what it chooses.",
       "signalStrength": "S4",
+      "listening_note": "The voice says it does not warn, and then it gives a number. What the listener does with the number is left to the listener.",
       "isEmergency": true
     },
     {
@@ -116,6 +128,7 @@
       "source": "Central Garrison Continuity Office",
       "message": "The Continuity Office confirms an ordnance impact at the former almshouse site. No Garrison unit logged a fire mission for that grid. Residents are advised the structure was long unoccupied and the loss is material only. Further comment is not warranted at this time.",
       "signalStrength": "S8",
+      "listening_note": "The bulletin calls the loss material and stops there. It does not say what the site held, or who last stood in it.",
       "isEmergency": false
     },
     {
@@ -125,6 +138,7 @@
       "source": "The Ash Sign, Shrine Transmission",
       "message": "The readings have not settled since the almshouse. We measure daily now instead of weekly, because daily is what the ground is asking for. We will not tell you what that means beyond what the numbers say: more grids are turning than at any point we have logged. Watch where you walk. We are watching too.",
       "signalStrength": "S4",
+      "listening_note": "The readings are now taken every day. The transmission gives no reason beyond the ground asking, and it does not say how long the asking will last.",
       "isEmergency": true
     },
     {
@@ -134,6 +148,7 @@
       "source": "Exchange Roster Wire",
       "message": "To the roster and everyone who trades with us: yes, we've put four people on the door with coats a little heavier than they used to be. It is not what we wanted and it is not permanent, and the scale still answers to consensus, not to whoever's carrying. We'd rather you heard that from us than guessed at it.",
       "signalStrength": "S5",
+      "listening_note": "The roster explains the coats before anyone can ask, and promises it is not permanent without saying how it would end.",
       "isEmergency": false
     },
     {
@@ -143,6 +158,7 @@
       "source": "Central Garrison Continuity Office",
       "message": "Order 534. In light of confirmed armed presence at the grain exchange, a Garrison inspection post is established at the entrance effective this bulletin. This measure preserves continuity of distribution for all district residents and is not, and should not be characterized as, an occupation.",
       "signalStrength": "S9",
+      "listening_note": "The order says twice what it is not. It does not say who asked for the post.",
       "isEmergency": true
     },
     {
@@ -152,6 +168,7 @@
       "source": "The Understory, civilian relay",
       "message": "We're not going to say where, because we don't know for certain, and we'd rather be wrong than wrong and specific. But more than one of you has called in the same feeling this week — that something's coming, soon, somewhere you queue. If you've got somewhere else to be for a few days, maybe be there.",
       "signalStrength": "S3",
+      "listening_note": "The relay says outright that it does not know. It would rather be wrong than specific, and it lets that stand.",
       "isEmergency": true
     },
     {
@@ -161,6 +178,7 @@
       "source": "Central Garrison Continuity Office",
       "message": "The Continuity Office confirms the loss at Ration Plaza was the direct result of a Rebuilders convoy improperly routed through a civilian gathering point during active hostilities. Casualties are regrettable and were entirely avoidable had proper routing protocol been observed by the responsible party.",
       "signalStrength": "S9",
+      "listening_note": "The communique names a cause and a culprit in the same breath. It does not name the people who were in the plaza.",
       "isEmergency": true
     },
     {
@@ -170,6 +188,7 @@
       "source": "Exchange Roster Wire",
       "message": "No convoy of ours has moved through Ration Plaza in a year and every trader on our roster can tell you why: it was never our route. What was two streets over until last month was a Garrison inspection post. We are not saying we know what was actually aimed at. We are saying the Continuity Office's story doesn't hold its own weight.",
       "signalStrength": "S5",
+      "listening_note": "The communique denies a route and names a story, and stops short of saying what was actually aimed at.",
       "isEmergency": true
     },
     {
@@ -179,6 +198,7 @@
       "source": "Unidentified, LIMA-NOVEMBER-SEVEN-FOUR",
       "message": "LN74 LN74 grid confirmed hold pattern extend three six repeat three six LN74 out.",
       "signalStrength": "S1",
+      "listening_note": "There is no voice in it, only a grid and a repeat. Whoever sent it did not say to whom.",
       "isEmergency": false
     },
     {
@@ -206,6 +226,7 @@
       "source": "The Ash Sign, Shrine Transmission",
       "message": "The shrine was struck yesterday. We will not pretend otherwise on this frequency, whatever gets said at the cairn itself. For three years the ash spared this ground and yesterday it didn't, and we do not have a verse for that yet. We are still measuring. We are asking you to be patient with us while we work out what the numbers are actually saying.",
       "signalStrength": "S4",
+      "listening_note": "The voice says it has no verse for this yet, and it does not invent one. It asks for patience and goes on measuring.",
       "isEmergency": true
     },
     {

@@ -4,7 +4,7 @@
     {
       "id": "enc_overturned_postal",
       "title": "The Overturned Postal Van",
-      "description": "An overturned postal van rusts on the ring road. The driver is mummified against the steering wheel. The rear doors are sheared open: scattered mail, three canvas supply packs, and one heavy, sealed manila envelope addressed to someone at the nearest settlement.",
+      "description": "An overturned postal van rusts on the ring road. The driver is mummified against the steering wheel. The rear doors are sheared open: scattered mail, three canvas supply packs, and one heavy, sealed manila envelope addressed to someone at the nearest settlement. The address was written by someone who believed there would still be someone to deliver it to.",
       "category": "Discovery",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 0.5,
@@ -118,7 +118,7 @@
     {
       "id": "enc_roadside_trader",
       "title": "The Roadside Trader",
-      "description": "A woman has pulled a wooden cart onto the highway shoulder. She has salt, two rusted tins of beans, and a working flashlight. She asks for medical supplies. She does not offer her name, and counts the barter goods entirely by touch. She is totally blind.",
+      "description": "A woman has pulled a wooden cart onto the highway shoulder. She has salt, two rusted tins of beans, and a working flashlight. She asks for medical supplies. She does not offer her name, and counts the barter goods entirely by touch. She is totally blind. She names her need and not herself.",
       "category": "Trade",
       "baseWeight": 3.0,
       "stealthWeightMultiplier": 1.0,
@@ -156,7 +156,7 @@
     {
       "id": "enc_water_seller",
       "title": "The Water Seller",
-      "description": "At a highway crossroads, a man is selling filtered water by the tin cup. The filter is real—charcoal and sand packed in PVC. His price is information: he wants the coordinates of any occupied settlements. He trades water for names.",
+      "description": "At a highway crossroads, a man is selling filtered water by the tin cup. The filter is real—charcoal and sand packed in PVC. His price is information: he wants the coordinates of any occupied settlements. He trades water for names. The water is real, and the price is names.",
       "category": "Trade",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -194,7 +194,7 @@
     {
       "id": "enc_false_broadcast",
       "title": "The False Broadcast",
-      "description": "A field radio sits on a cracked concrete counter, looping a broadcast: 'Come to the old school. We have food and medicine. We are many.' The transmission is crystal clear. Too clear. You monitored this exact frequency yesterday, and it was dead air.",
+      "description": "A field radio sits on a cracked concrete counter, looping a broadcast: 'Come to the old school. We have food and medicine. We are many.' The transmission is crystal clear. Too clear. You monitored this exact frequency yesterday, and it was dead air. The voice never pauses to breathe, and it never says whose voice it is.",
       "category": "Misinformation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -232,7 +232,7 @@
     {
       "id": "enc_two_camps",
       "title": "The Two Camps",
-      "description": "Two camps are pitched across a valley, both flying the same bleached white flag. One camp has cooking smoke. The other does not. A scout on the ridge says the smoking camp is a raider ambush; a scout from the smoking camp told you yesterday the ridge camp is a cannibal den. They can't both be telling the truth. But they could both be lying.",
+      "description": "Two camps are pitched across a valley, both flying the same bleached white flag. One camp has cooking smoke. The other does not. A scout on the ridge says the smoking camp is a raider ambush; a scout from the smoking camp told you yesterday the ridge camp is a cannibal den. They can't both be telling the truth. But they could both be lying. The flag is the only thing both camps agree on.",
       "category": "Misinformation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -270,7 +270,7 @@
     {
       "id": "enc_sick_child",
       "title": "The Sick Child",
-      "description": "A child sits in a blown-out doorway, alone. Their cough is a wet, rattling heave. There are no adults visible. The child is fever-delirious; they only point to the dark house behind them and repeat a single name.",
+      "description": "A child sits in a blown-out doorway, alone. Their cough is a wet, rattling heave. There are no adults visible. The child is fever-delirious; they only point to the dark house behind them and repeat a single name. The child says one name and points at one house.",
       "category": "Rescue",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -308,7 +308,7 @@
     {
       "id": "enc_injured_scavenger",
       "title": "The Pinned Scavenger",
-      "description": "A man lies in the rubble of a collapsed hardware store, his leg crushed beneath a steel I-beam. He is conscious and bleeding slowly. He has a full canvas pack. He promises you half the pack if you lever the beam off him. He says you can take the whole pack and leave him the water if you don't.",
+      "description": "A man lies in the rubble of a collapsed hardware store, his leg crushed beneath a steel I-beam. He is conscious and bleeding slowly. He has a full canvas pack. He promises you half the pack if you lever the beam off him. He says you can take the whole pack and leave him the water if you don't. The offer is stated plainly, and so is the alternative.",
       "category": "Rescue",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -346,7 +346,7 @@
     {
       "id": "enc_roof_access",
       "title": "The Roof Access",
-      "description": "A fire stairwell leading to a roof. The door is propped with a brick. From above, you hear the faint, high-pitched ping of a surviving radio beacon. The concrete stairs are severely degraded; the rebar is exposed, and the fourth step is gone entirely.",
+      "description": "A fire stairwell leading to a roof. The door is propped with a brick. From above, you hear the faint, high-pitched ping of a surviving radio beacon. The concrete stairs are severely degraded; the rebar is exposed, and the fourth step is gone entirely. The ping is steady, and the fourth step is not there.",
       "category": "Structural",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -384,7 +384,7 @@
     {
       "id": "enc_cold_storage",
       "title": "The Cold Storage",
-      "description": "An industrial freezer warehouse. The main sliding door is secured with a heavy chain. The links of the chain are bright, fresh steel, recently cut and re-padlocked. From inside, the low, vibrating hum of a working compressor can be heard. Whatever is inside is being kept frozen on purpose.",
+      "description": "An industrial freezer warehouse. The main sliding door is secured with a heavy chain. The links of the chain are bright, fresh steel, recently cut and re-padlocked. From inside, the low, vibrating hum of a working compressor can be heard. Whatever is inside is being kept frozen on purpose. The fresh chain and the working compressor point the same way: this was done on purpose.",
       "category": "Structural",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.5,
@@ -422,7 +422,7 @@
     {
       "id": "enc_hot_sign",
       "title": "The Hot Sign",
-      "description": "A metal hazard sign beside the highway, the radiation trefoil faded to pale pink. Your dosimeter begins ticking wildly as you pass—the sign itself is highly irradiated. Tucked beneath the sign in the center of the hotspot is a locked steel ammunition box.",
+      "description": "A metal hazard sign beside the highway, the radiation trefoil faded to pale pink. Your dosimeter begins ticking wildly as you pass—the sign itself is highly irradiated. Tucked beneath the sign in the center of the hotspot is a locked steel ammunition box. The box is only what the sign is standing over, and the ticking does not say what is inside.",
       "category": "Radiation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 0.5,
@@ -460,7 +460,7 @@
     {
       "id": "enc_clean_well",
       "title": "The Clean Well",
-      "description": "A hand-pump well in a deserted courtyard. The water runs clear. A logbook sits nearby, showing six months of daily radiation checks, all passing. The final entry, written three days ago in a frantic hand, reads: 'ONLY FOR THE LIVING.'",
+      "description": "A hand-pump well in a deserted courtyard. The water runs clear. A logbook sits nearby, showing six months of daily radiation checks, all passing. The final entry, written three days ago in a frantic hand, reads: 'ONLY FOR THE LIVING.' The water is clear, and the last line of the log is not about the water.",
       "category": "Radiation",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -498,7 +498,7 @@
     {
       "id": "enc_whiteout_traveler",
       "title": "The Whiteout Traveler",
-      "description": "A figure emerges through a driving snow squall, walking in the opposite direction. They are wearing a light pre-war jacket, completely unsuited for the freeze. They ask for directions to a town that was vaporized two years ago. Their voice is perfectly calm.",
+      "description": "A figure emerges through a driving snow squall, walking in the opposite direction. They are wearing a light pre-war jacket, completely unsuited for the freeze. They ask for directions to a town that was vaporized two years ago. Their voice is perfectly calm. They ask as if the town were still there.",
       "category": "Weather",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -536,7 +536,7 @@
     {
       "id": "enc_flood_road",
       "title": "The Flooded Road",
-      "description": "A burst water main has flooded the low ground ahead with freezing, fast-moving brown water. A scavenged sedan is stalled in the current, water rising past the door handles. A man is on the roof screaming. A child is trapped inside.",
+      "description": "A burst water main has flooded the low ground ahead with freezing, fast-moving brown water. A scavenged sedan is stalled in the current, water rising past the door handles. A man is on the roof screaming. A child is trapped inside. One voice is on the roof and one is inside the car.",
       "category": "Weather",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -574,7 +574,7 @@
     {
       "id": "enc_dogs_silent",
       "title": "The Silent Dogs",
-      "description": "You approach a fenced farmstead. Four emaciated dogs stand in the yard. They do not bark. They are not asleep—they are watching you, ears forward, tails rigid. A dog that barks is a warning. A dog that doesn't bark has been commanded to stay silent. Someone is watching from the house.",
+      "description": "You approach a fenced farmstead. Four emaciated dogs stand in the yard. They do not bark. They are not asleep—they are watching you, ears forward, tails rigid. A dog that barks is a warning. A dog that doesn't bark has been commanded to stay silent. Someone is watching from the house. The silence in the yard was asked for.",
       "category": "Fear",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 2.0,
@@ -612,7 +612,7 @@
     {
       "id": "enc_following_footsteps",
       "title": "The Following Footsteps",
-      "description": "On a long stretch of highway, you hear a second set of footsteps matching your pace. You stop; they stop. You walk; they walk. They have shadowed you for a mile. The crunch of boots on asphalt is too loud to be an animal, and too rhythmic to be a stumbling infected.",
+      "description": "On a long stretch of highway, you hear a second set of footsteps matching your pace. You stop; they stop. You walk; they walk. They have shadowed you for a mile. The crunch of boots on asphalt is too loud to be an animal, and too rhythmic to be a stumbling infected. Whatever it is keeps your pace exactly.",
       "category": "Fear",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.5,
@@ -650,7 +650,7 @@
     {
       "id": "enc_border_camp",
       "title": "The Border Camp",
-      "description": "A territorial checkpoint blocks the road. It is unmanned, but a steel drum fire is still smoking. The boom gate is raised. A clipboard logbook sits on a stool, recording the last three travelers. The final entry is twenty minutes ago. The guards left in a profound hurry.",
+      "description": "A territorial checkpoint blocks the road. It is unmanned, but a steel drum fire is still smoking. The boom gate is raised. A clipboard logbook sits on a stool, recording the last three travelers. The final entry is twenty minutes ago. The guards left in a profound hurry. The last entry is twenty minutes old, and the fire is still smoking.",
       "category": "Faction",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -688,7 +688,7 @@
     {
       "id": "enc_two_factions_trade",
       "title": "The Two Factions",
-      "description": "A tense parley between two hostile groups. They have summoned you as a neutral arbiter. The barter goods—ammunition and antibiotics—sit on a wool blanket between them. Neither side will touch the blanket first. They expect you to handle the goods, making you the physical guarantor of the exchange.",
+      "description": "A tense parley between two hostile groups. They have summoned you as a neutral arbiter. The barter goods—ammunition and antibiotics—sit on a wool blanket between them. Neither side will touch the blanket first. They expect you to handle the goods, making you the physical guarantor of the exchange. The blanket is the only thing between them, and it is yours to touch first.",
       "category": "Faction",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -726,7 +726,7 @@
     {
       "id": "enc_locked_room",
       "title": "The Locked Room",
-      "description": "An interior security door, locked from the outside. The brass key is still in the cylinder. From inside, you hear the slow drip of water and the loud, rhythmic ticking of a mechanical clock. The lock cylinder is heavily oiled. Someone locked this room and left the key for the next person.",
+      "description": "An interior security door, locked from the outside. The brass key is still in the cylinder. From inside, you hear the slow drip of water and the loud, rhythmic ticking of a mechanical clock. The lock cylinder is heavily oiled. Someone locked this room and left the key for the next person. The key was left in the cylinder for whoever comes next.",
       "category": "Mystery",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -764,7 +764,7 @@
     {
       "id": "enc_two_graves",
       "title": "The Two Graves",
-      "description": "Two fresh graves dug side-by-side in the permafrost. The wooden markers bear the exact same first name, the exact same date of death, but different surnames. A clean shovel leans against a dead birch tree. The digger is gone.",
+      "description": "Two fresh graves dug side-by-side in the permafrost. The wooden markers bear the exact same first name, the exact same date of death, but different surnames. A clean shovel leans against a dead birch tree. The digger is gone. The shovel is clean, and the digger is not here to be asked.",
       "category": "Mystery",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -802,7 +802,7 @@
     {
       "id": "enc_beggars",
       "title": "The Beggars at the Gate",
-      "description": "Three people stand at the outer perimeter fence. They are not injured or irradiated, merely starving. You have enough calories in the stockpile to maintain your crew's basal metabolic rate, calculated to the gram. The perimeter guard has his rifle lowered, looking to you for the call.",
+      "description": "Three people stand at the outer perimeter fence. They are not injured or irradiated, merely starving. You have enough calories in the stockpile to maintain your crew's basal metabolic rate, calculated to the gram. The perimeter guard has his rifle lowered, looking to you for the call. None of the three asks aloud, and the number stays in your head.",
       "category": "Ethical",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -840,7 +840,7 @@
     {
       "id": "enc_thief_child",
       "title": "The Thief Child",
-      "description": "A child is caught stealing from your transit packs. They have already eaten a handful of dried fruit. The child is rail-thin and crying. They belong to no known shelter. Your guard has a tight grip on the child's arm, waiting for orders.",
+      "description": "A child is caught stealing from your transit packs. They have already eaten a handful of dried fruit. The child is rail-thin and crying. They belong to no known shelter. Your guard has a tight grip on the child's arm, waiting for orders. The child has eaten already, and the order is yours to give.",
       "category": "Ethical",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -878,7 +878,7 @@
     {
       "id": "enc_library_cache",
       "title": "The Library Cache",
-      "description": "A public library, stripped to the studs. But behind a row of ruined encyclopedias, you find a survivor cache: iodine, a thermal blanket, and a ledger. The ledger is a log of travelers who have sheltered here, taking what they need and leaving what they can. The last entry is a week old.",
+      "description": "A public library, stripped to the studs. But behind a row of ruined encyclopedias, you find a survivor cache: iodine, a thermal blanket, and a ledger. The ledger is a log of travelers who have sheltered here, taking what they need and leaving what they can. The last entry is a week old. Nothing in it says the next name will be added, and nothing says it won't.",
       "category": "Discovery",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -916,7 +916,7 @@
     {
       "id": "enc_greenhouse_keeper",
       "title": "The Greenhouse Keeper",
-      "description": "A shattered municipal greenhouse. In one corner, thick plastic sheeting creates a warm microclimate. A woman is tending a single row of pale green seedlings. She leans on a double-barreled shotgun. She offers seedlings for mineral salt.",
+      "description": "A shattered municipal greenhouse. In one corner, thick plastic sheeting creates a warm microclimate. A woman is tending a single row of pale green seedlings. She leans on a double-barreled shotgun. She offers seedlings for mineral salt. The seedlings are hers to trade, and the shotgun stays within reach.",
       "category": "Observation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -954,7 +954,7 @@
     {
       "id": "enc_dead_radio_operator",
       "title": "The Dead Radio Operator",
-      "description": "A relay station. The operator is dead at the console, headphones still over their ears. The equipment is still drawing power. The logbook shows an entry from six hours ago. An automated distress loop is still broadcasting into the dead air.",
+      "description": "A relay station. The operator is dead at the console, headphones still over their ears. The equipment is still drawing power. The logbook shows an entry from six hours ago. An automated distress loop is still broadcasting into the dead air. The loop is still speaking, and no one is left in the room to hear it.",
       "category": "Observation",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,
@@ -992,7 +992,7 @@
     {
       "id": "enc_ice_fishermen",
       "title": "The Ice Fishermen",
-      "description": "Two figures are ice fishing in the center of a frozen lake. Three frozen fish lie on the ice beside them. They wave enthusiastically. They are standing on black ice, over the deep channel, while the white, solid ice hugs the shore. They don't seem to realize the ice under them is cracking with every step.",
+      "description": "Two figures are ice fishing in the center of a frozen lake. Three frozen fish lie on the ice beside them. They wave enthusiastically. They are standing on black ice, over the deep channel, while the white, solid ice hugs the shore. They don't seem to realize the ice under them is cracking with every step. They wave, and the ice under them is black.",
       "category": "Observation",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -1030,7 +1030,7 @@
     {
       "id": "enc_quarantine_sign",
       "title": "The Quarantine Sign",
-      "description": "A suburban house with a red QUARANTINE cross painted on a bedsheet hanging in the window. The paint is flaking and old. From inside, you hear a child singing a pre-war television jingle. The door is standing slightly open, unlatched.",
+      "description": "A suburban house with a red QUARANTINE cross painted on a bedsheet hanging in the window. The paint is flaking and old. From inside, you hear a child singing a pre-war television jingle. The door is standing slightly open, unlatched. The sign is old, the door is unlatched, and someone inside is singing.",
       "category": "Mystery",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 1.0,
@@ -1068,7 +1068,7 @@
     {
       "id": "enc_last_train",
       "title": "The Last Train",
-      "description": "A commuter train is idling on an elevated track, its doors open to the wind. The cabin is empty. The digital destination board is still lit, displaying a town that has been a radioactive crater for three years. The engine hums, but the tracks ahead are sheared entirely off the bridge.",
+      "description": "A commuter train is idling on an elevated track, its doors open to the wind. The cabin is empty. The digital destination board is still lit, displaying a town that has been a radioactive crater for three years. The engine hums, but the tracks ahead are sheared entirely off the bridge. The board and the engine are both still doing their jobs.",
       "category": "Discovery",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 1.0,

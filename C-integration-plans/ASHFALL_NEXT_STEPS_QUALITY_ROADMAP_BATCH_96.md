@@ -1153,7 +1153,7 @@ These 5 commands verify the codebase still builds and existing self-tests still 
 
 ## Review Notes (Corrected)
 
-This file was adversarially reviewed against the real codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Summary of what was wrong and what was fixed:
+This file was adversarially reviewed against the real codebase at `.` and corrected in place. Summary of what was wrong and what was fixed:
 
 ### Factual claims verified as accurate
 

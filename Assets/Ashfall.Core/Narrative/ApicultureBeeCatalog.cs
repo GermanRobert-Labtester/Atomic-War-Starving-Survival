@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string foundationPath = Path.Combine(directoryPath, "langstroth_hive_foundation_logs.json");
             if (File.Exists(foundationPath))
             {
-                var list = CatalogLocator.LoadWrappedList<LangstrothHiveFoundationEntry>(File.ReadAllText(foundationPath), options);
+                var list = CatalogLocator.LoadWrappedList<LangstrothHiveFoundationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(foundationPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string redLightPath = Path.Combine(directoryPath, "apiculture_red_light_audits.json");
             if (File.Exists(redLightPath))
             {
-                var list = CatalogLocator.LoadWrappedList<ApicultureRedLightEntry>(File.ReadAllText(redLightPath), options);
+                var list = CatalogLocator.LoadWrappedList<ApicultureRedLightEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(redLightPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string extractorPath = Path.Combine(directoryPath, "honey_extractor_balance_reports.json");
             if (File.Exists(extractorPath))
             {
-                var list = CatalogLocator.LoadWrappedList<HoneyExtractorBalanceEntry>(File.ReadAllText(extractorPath), options);
+                var list = CatalogLocator.LoadWrappedList<HoneyExtractorBalanceEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(extractorPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string waxPath = Path.Combine(directoryPath, "beeswax_rendering_dipping_assays.json");
             if (File.Exists(waxPath))
             {
-                var list = CatalogLocator.LoadWrappedList<BeeswaxRenderingDippingEntry>(File.ReadAllText(waxPath), options);
+                var list = CatalogLocator.LoadWrappedList<BeeswaxRenderingDippingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(waxPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

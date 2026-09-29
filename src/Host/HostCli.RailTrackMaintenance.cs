@@ -153,7 +153,7 @@ namespace AtomicWar.GodotApp
                 else GD.PrintErr($"[FAIL] Check 11: Schema gate incorrect (newerRejected={newerRejected}, legacyAccepted={legacyAccepted}).");
 
                 // Check 12: host wiring — dispatch hook + save section.
-                string rail = ReadRepoFile("src", "Main.Plans190_193.cs");
+                string rail = ReadRepoFile("src", "Main.Railway.Integration.cs");
                 string main = ReadRepoFile("src", "Main.RailTrackMaintenance.cs");
                 string registry = ReadRepoFile("Assets", "Ashfall.Core", "Save", "SaveSectionRegistry.cs");
                 if (rail.Contains("RecordRailRunFromTrain(_railway, trainId, segmentId)")

@@ -39,6 +39,10 @@ namespace Ashfall.Core
         /// payment moved; the balance is simply gone. The record is kept.</summary>
         public bool forgiven;
         public int forgivenDay = -1;
+        /// <summary>F19 — days the term was paused because the repayment route was weather-blocked (capped).</summary>
+        public int weatherDelayDaysUsed;
+        /// <summary>F19 — the weather gate that caused the most recent pause.</summary>
+        public string lastWeatherDelayGateId = string.Empty;
     }
 
     [Serializable]
@@ -70,6 +74,9 @@ namespace Ashfall.Core
         public event Action<DebtContract> OnContractForgiven;
         public event Action<DebtContract> OnContractRenegotiated;
         public event Action<DebtContract> OnForfeitTriggered;
+
+        /// <summary>F19 — fired each day a term is paused by a weather-blocked route: (contract, gateId).</summary>
+        public event Action<DebtContract, string>? OnWeatherDelayApplied;
         public event Action OnLedgerTampered;
         public event Action<LedgerDebtSystemState> OnStateChanged;
 
@@ -182,12 +189,34 @@ namespace Ashfall.Core
         /// Daily tick. Signed, unpaid contracts run their term down. At zero the
         /// forfeit is due — named up front, now collectable at the Lockup.
         /// </summary>
+        /// <summary>Anti-exploit cap on weather pause days per contract (F19).</summary>
+        public const int MaxWeatherGraceDays = 3;
+
+        /// <summary>
+        /// F19 — returns the weather gate id blocking this debt's repayment route
+        /// today (route-specific, delay-eligible), or null. Set by the host.
+        /// </summary>
+        public Func<DebtContract, string?>? WeatherDelayGateProvider { get; set; }
+
         public void TickDaily(int day)
         {
             for (int i = 0; i < _state.contracts.Count; i++)
             {
                 var c = _state.contracts[i];
                 if (c == null || !c.signed || c.paid || c.forfeited || c.forgiven) continue;
+                // F19 — a weather-blocked repayment route pauses the term, bounded by
+                // MaxWeatherGraceDays so a blizzard is never an indefinite shield.
+                if (c.weatherDelayDaysUsed < MaxWeatherGraceDays)
+                {
+                    string? gateId = WeatherDelayGateProvider?.Invoke(c);
+                    if (!string.IsNullOrEmpty(gateId))
+                    {
+                        c.weatherDelayDaysUsed++;
+                        c.lastWeatherDelayGateId = gateId!;
+                        OnWeatherDelayApplied?.Invoke(c, gateId!);
+                        continue;
+                    }
+                }
                 c.daysRemaining--;
                 if (c.daysRemaining <= 0)
                 {
@@ -340,7 +369,9 @@ namespace Ashfall.Core
             paid = c.paid,
             forfeited = c.forfeited,
             forgiven = c.forgiven,
-            forgivenDay = c.forgivenDay
+            forgivenDay = c.forgivenDay,
+            weatherDelayDaysUsed = c.weatherDelayDaysUsed,
+            lastWeatherDelayGateId = c.lastWeatherDelayGateId ?? string.Empty
         };
 
         private static LedgerDebtSystemState CopyState(LedgerDebtSystemState source)

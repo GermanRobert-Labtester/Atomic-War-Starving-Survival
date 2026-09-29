@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string escPath = Path.Combine(directoryPath, "deadbeat_escapement_wear_logs.json");
             if (File.Exists(escPath))
             {
-                var list = CatalogLocator.LoadWrappedList<DeadbeatEscapementWearEntry>(File.ReadAllText(escPath), options);
+                var list = CatalogLocator.LoadWrappedList<DeadbeatEscapementWearEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(escPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string pendPath = Path.Combine(directoryPath, "invar_pendulum_thermal_expansion.json");
             if (File.Exists(pendPath))
             {
-                var list = CatalogLocator.LoadWrappedList<InvarPendulumThermalEntry>(File.ReadAllText(pendPath), options);
+                var list = CatalogLocator.LoadWrappedList<InvarPendulumThermalEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(pendPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string springPath = Path.Combine(directoryPath, "mainspring_fatigue_rupture_audits.json");
             if (File.Exists(springPath))
             {
-                var list = CatalogLocator.LoadWrappedList<MainspringFatigueRuptureEntry>(File.ReadAllText(springPath), options);
+                var list = CatalogLocator.LoadWrappedList<MainspringFatigueRuptureEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(springPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string waterPath = Path.Combine(directoryPath, "water_clock_orifice_silt_records.json");
             if (File.Exists(waterPath))
             {
-                var list = CatalogLocator.LoadWrappedList<ClepsydraWaterClockEntry>(File.ReadAllText(waterPath), options);
+                var list = CatalogLocator.LoadWrappedList<ClepsydraWaterClockEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(waterPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

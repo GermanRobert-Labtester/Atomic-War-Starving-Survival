@@ -164,7 +164,7 @@ The risk is that the Holdfast demo/tutorial flow relies on these hardcoded mecha
 
 ## Review Notes (Corrected)
 
-This file was adversarially reviewed against the actual repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and the following corrections were made:
+This file was adversarially reviewed against the actual repository at `.` and the following corrections were made:
 
 1. **False claim — `InventorySystem` in Core.** The original Rationale claimed `NeedsSystem`, `RadiationSystem`, and `InventorySystem` in Core already provide the duplicated logic. There is no `InventorySystem` class in Core; `HoldfastRuntimeSession` uses `Trade.Inventory` (a `HoldfastTradeSession`-scoped object). Removed the false reference; inventory refactor is out of scope for this batch.
 

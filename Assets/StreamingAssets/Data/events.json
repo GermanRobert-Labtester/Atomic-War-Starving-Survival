@@ -4,21 +4,21 @@
     {
       "id": "fallout_storm",
       "title": "Fallout Storm",
-      "bodyText": "The sky turns a sickly amber, the colour of an old bruise, and the ash begins to fall like grey snow. It settles on the sandbags, the barrel tops, the metal of the outer hatch. By the time the wind picks up, the Geiger counter is screaming, needle pinned against the glass. The storm front is moving in from the west and it will sit on the ridge for hours. Filters will choke on the load, the intake will need watching, and no one goes out in this. You stand at the hatch window and watch the grey world disappear. The counter does not stop. You have time to decide what you are willing to spend to wait this one out: the spare filters, the fuel, or someone's life in the open.",
+      "bodyText": "The sky turns a sickly amber, the colour of an old bruise, and the ash begins to fall like grey snow. It settles on the sandbags, the barrel tops, the metal of the outer hatch. By the time the wind picks up, the Geiger counter is screaming, needle pinned against the glass. The storm front is moving in from the west and it will sit on the ridge for hours. Filters will choke on the load, the intake will need watching, and no one goes out in this. You stand at the hatch window and watch the grey world disappear. The counter does not stop. You have time to decide what you are willing to spend to wait this one out: the spare filters, the fuel, or someone's life in the open. By evening the light is gone, and the only measure left is how long the filters can be asked to hold.",
       "weight": 3.0,
       "minDay": 1
     },
     {
       "id": "scavenger_arrival",
       "title": "Scavenger at the Door",
-      "bodyText": "A gaunt figure stands twenty metres from the outer hatch, hands raised and empty. The coat is patched in three different colours, the pack hangs crooked on one shoulder, and the rifle slung across their back has tape wound around the stock and a cracked receiver that may or may not fire. They shout over the wind that they want to trade, nothing more: cloth, batteries, maybe news from the valley road. Their boots are mismatched and one sole flaps when they walk. They have not lowered their hands. The bunker has its own ration count and its own strangers policy. Whatever you decide, it happens through the slot or through the hatch, and there is no way to know which one it should be until it is too late.",
+      "bodyText": "A gaunt figure stands twenty metres from the outer hatch, hands raised and empty. The coat is patched in three different colours, the pack hangs crooked on one shoulder, and the rifle slung across their back has tape wound around the stock and a cracked receiver that may or may not fire. They shout over the wind that they want to trade, nothing more: cloth, batteries, maybe news from the valley road. Their boots are mismatched and one sole flaps when they walk. They have not lowered their hands. The bunker has its own ration count and its own strangers policy. Whatever you decide, it happens through the slot or through the hatch, and there is no way to know which one it should be until it is too late. Their hands are still up, and the hatch is still the only thing they are asking for.",
       "weight": 2.0,
       "minDay": 3
     },
     {
       "id": "filter_failure",
       "title": "Air Filter Failure",
-      "bodyText": "The grinding starts in the ventilation shaft at 4 AM, a slow metal-on-metal complaint that wakes everyone in the sleeping quarters. By the time you reach the maintenance alcove, the air filter has seized: the motor hums against a jammed impeller, and grey dust already coats the nearest ducts. The dosimeter in the alcove reads a few points higher than it did last night. Not much. Enough. Somewhere outside, the air is not clean, and the only thing standing between that air and the bunker is a seized cylinder of paper and wire. Shut the duct down and the room gets stale. Leave it running and it burns the motor out. Either way, you are working against the clock with what you have on hand.",
+      "bodyText": "The grinding starts in the ventilation shaft at 4 AM, a slow metal-on-metal complaint that wakes everyone in the sleeping quarters. By the time you reach the maintenance alcove, the air filter has seized: the motor hums against a jammed impeller, and grey dust already coats the nearest ducts. The dosimeter in the alcove reads a few points higher than it did last night. Not much. Enough. Somewhere outside, the air is not clean, and the only thing standing between that air and the bunker is a seized cylinder of paper and wire. Shut the duct down and the room gets stale. Leave it running and it burns the motor out. Either way, you are working against the clock with what you have on hand. The shaft will start again at four, and the bunker will be listening for it before it does.",
       "weight": 1.5,
       "minDay": 5
     },
@@ -3568,7 +3568,7 @@
     {
       "id": "friction_stolen_keepsake",
       "title": "The Missing Keepsake",
-      "bodyText": "The carved wooden bird that lived on the third bunk's pillow has been gone for three shifts. The child who carved it has not noticed yet. The adult whose pillow it stood against has noticed, and has started making the bunk with the blanket folded over the spot where it used to stand. Nobody has asked about it aloud, which is how everyone knows the whole corridor is thinking about it.",
+      "bodyText": "The carved wooden bird that lived on the third bunk's pillow has been gone for three shifts. The child who carved it has not noticed yet. The adult whose pillow it stood against has noticed, and has started making the bunk with the blanket folded over the spot where it used to stand. Nobody has asked about it aloud, which is how everyone knows the whole corridor is thinking about it. The bird was always small; the place it left is not.",
       "weight": 1.1,
       "minDay": 25,
       "choices": [
@@ -3603,7 +3603,7 @@
     {
       "id": "friction_forbidden_radio_listening",
       "title": "The Forbidden Dial",
-      "bodyText": "At two in the morning someone set the radio dial to 88.5 and did not log it. The shelter's frequency schedule closes that band between eleven at night and five, and the schedule is the kind of rule that exists because something happened once. The log sits blank for that hour, and the operator has left it blank on purpose, to see who comes to fill it.",
+      "bodyText": "At two in the morning someone set the radio dial to 88.5 and did not log it. The shelter's frequency schedule closes that band between eleven at night and five, and the schedule is the kind of rule that exists because something happened once. The log sits blank for that hour, and the operator has left it blank on purpose, to see who comes to fill it. Nobody has written down what happened the first time; the rule survived and the reason did not.",
       "weight": 1.2,
       "minDay": 30,
       "conditions": {
@@ -4272,7 +4272,7 @@
     {
       "id": "event_belief_quiet_comfort",
       "title": "The Still Hour",
-      "bodyText": "A quiet observance in the dormitory corner after shift change: the adherents sit together and breathe in time with the intake pulse and recite the names of former dwellers, and the names are the part the corridor stops walking past. Nerves the sedatives did not reach have started settling there, and the infirmary has noticed, and the infirmary has not objected.",
+      "bodyText": "A quiet observance in the dormitory corner after shift change: the adherents sit together and breathe in time with the intake pulse and recite the names of former dwellers, and the names are the part the corridor stops walking past. Nerves the sedatives did not reach have started settling there, and the infirmary has noticed, and the infirmary has not objected. For that hour the corridor is still without being empty, and nobody in it calls it treatment.",
       "weight": 1.2,
       "minDay": 12,
       "choices": [
@@ -4303,7 +4303,7 @@
     {
       "id": "event_belief_practice_dispute",
       "title": "The Candle in the Duct",
-      "bodyText": "A tallow stub burned in an air intake niche during the dawn vigil, and the machinist found it this morning and carried it, smoking, to the dormitory: the fat wasted, the soot in the duct, the risk written on the filter. The believers say the light was a memorial beacon for a lost shift. The machinist says the duct does not care what the light meant. Both are right, and the stub sits burned out on the table between them.",
+      "bodyText": "A tallow stub burned in an air intake niche during the dawn vigil, and the machinist found it this morning and carried it, smoking, to the dormitory: the fat wasted, the soot in the duct, the risk written on the filter. The believers say the light was a memorial beacon for a lost shift. The machinist says the duct does not care what the light meant. Both are right, and the stub sits burned out on the table between them. Both readings survived the morning, which is more than the stub did.",
       "weight": 1.0,
       "minDay": 18,
       "choices": [
@@ -4551,7 +4551,7 @@
     {
       "id": "event_grief_conflict_belongings_dispute",
       "title": "The Dead Man's Boots",
-      "bodyText": "The fallen scout left boots, insulated rubber, nearly new, and the expedition team wants them for the surface locker, because the boots are what boots are for, and the closest companion wants them kept in the footlocker, because the boots are also the last shape of the person who wore them. Both arguments are true. The boots sit between them, and the boots are not deciding.",
+      "bodyText": "The fallen scout left boots, insulated rubber, nearly new, and the expedition team wants them for the surface locker, because the boots are what boots are for, and the closest companion wants them kept in the footlocker, because the boots are also the last shape of the person who wore them. Both arguments are true. The boots sit between them, and the boots are not deciding. The boots cannot be only one thing, and the room keeps making room for both truths.",
       "weight": 1.0,
       "minDay": 16,
       "choices": [
@@ -4582,7 +4582,7 @@
     {
       "id": "event_grief_conflict_reckless_wish",
       "title": "The Unfinished Promise",
-      "bodyText": "A survivor asks for authorization to go to the radio tower on the ridge, the one the routes go around, because a fallen comrade promised to climb it and the promise is still out there, unkept. The route is the kind other routes go around. The one asking knows this. The asking is not about the route.",
+      "bodyText": "A survivor asks for authorization to go to the radio tower on the ridge, the one the routes go around, because a fallen comrade promised to climb it and the promise is still out there, unkept. The route is the kind other routes go around. The one asking knows this. The asking is not about the route. The promise outlived the person who made it, and it is still waiting to be finished.",
       "weight": 0.8,
       "minDay": 20,
       "choices": [
@@ -4613,7 +4613,7 @@
     {
       "id": "event_migration_steppe_herds_arrival",
       "title": "Highland Feral Goat Sighting",
-      "bodyText": "Scout lookouts on the surface blast berm report a line of shaggy, thick-horned feral goats descending from the highland bluffs toward the lower scrub basin. Their winter coats are heavy with grey frost, and their hooves kick up small dust plumes along the highway embankment. The herd offers a prime, temporary hunting window before wolves push them further south.",
+      "bodyText": "Scout lookouts on the surface blast berm report a line of shaggy, thick-horned feral goats descending from the highland bluffs toward the lower scrub basin. Their winter coats are heavy with grey frost, and their hooves kick up small dust plumes along the highway embankment. The herd offers a prime, temporary hunting window before wolves push them further south. The herd is only passing through; the window closes either way.",
       "weight": 2.0,
       "minDay": 60,
       "maxDay": 119,
@@ -4645,7 +4645,7 @@
     {
       "id": "event_migration_coastal_carp_run_begins",
       "title": "Estuary Mirror Carp Surge",
-      "bodyText": "The river water churns with heavy silver-scaled mirror carp pushing upriver against the spring thaw current. Their armored backs break the brown foam as they congregate in shallow gravel shoals. For the next several weeks, basket nets and weir traps along the riverbank can yield substantial fresh protein.",
+      "bodyText": "The river water churns with heavy silver-scaled mirror carp pushing upriver against the spring thaw current. Their armored backs break the brown foam as they congregate in shallow gravel shoals. For the next several weeks, basket nets and weir traps along the riverbank can yield substantial fresh protein. The abundance belongs to the season first; the shoal is moving either way.",
       "weight": 2.5,
       "minDay": 120,
       "maxDay": 199,
@@ -4677,7 +4677,7 @@
     {
       "id": "event_migration_moth_blight_front_descent",
       "title": "Ghost Moth Swarm Front",
-      "bodyText": "A warm humid wind carries a pale, undulating cloud of ghost moths inland across the lowlands. Thousands of fluttering wings beat against outer intake grates, leaving sticky white web fibers and powdery scales that quickly choke air filters and threaten outdoor cultivation beds.",
+      "bodyText": "A warm humid wind carries a pale, undulating cloud of ghost moths inland across the lowlands. Thousands of fluttering wings beat against outer intake grates, leaving sticky white web fibers and powdery scales that quickly choke air filters and threaten outdoor cultivation beds. The name a shelter gives the swarm decides how long it is allowed to stay.",
       "weight": 1.5,
       "minDay": 200,
       "maxDay": 239,
@@ -4709,7 +4709,7 @@
     {
       "id": "event_migration_ash_boar_sounder_crossing",
       "title": "Ash Boar Sounder Crossing",
-      "bodyText": "A dozen massive, bristled ash boars churn the river mudbank, rooting deep into acorn scrub and tearing apart rotting railway ties. Their heavy tusks gouge the soil, exposing buried cables and pre-war drainage pipes. A disciplined hunting party could harvest heavy pork rations, but a cornered sounder will crush unarmored scouts.",
+      "bodyText": "A dozen massive, bristled ash boars churn the river mudbank, rooting deep into acorn scrub and tearing apart rotting railway ties. Their heavy tusks gouge the soil, exposing buried cables and pre-war drainage pipes. A disciplined hunting party could harvest heavy pork rations, but a cornered sounder will crush unarmored scouts. Nothing they uncovered stays buried again until the boars move on.",
       "weight": 1.8,
       "minDay": 240,
       "maxDay": 365,
@@ -4741,7 +4741,7 @@
     {
       "id": "event_migration_iron_crow_pylon_roost",
       "title": "Iron Crow Railway Flyway",
-      "bodyText": "Hundreds of metallic-sheened crows descend onto the rusted steel transmission towers along the railway cut. Their rhythmic cawing echoes across the valley as they roost for the night before continuing south. Flocks of this size strip dead wood of grubs and clean the tracks of carrion, leaving clear signs of predator activity down the line.",
+      "bodyText": "Hundreds of metallic-sheened crows descend onto the rusted steel transmission towers along the railway cut. Their rhythmic cawing echoes across the valley as they roost for the night before continuing south. Flocks of this size strip dead wood of grubs and clean the tracks of carrion, leaving clear signs of predator activity down the line. They are not telling anyone anything on purpose; the line is readable because they were hungry, not because they were asked.",
       "weight": 1.2,
       "minDay": 240,
       "maxDay": 365,
@@ -4762,7 +4762,7 @@
     {
       "id": "event_migration_lowland_hare_eruption",
       "title": "Lowland Cotton Hare Population Boom",
-      "bodyText": "Following a mild thaw, cotton hares have multiplied across the southern floodplains. Their white summer coats flash across the heather as hundreds of young feed on succulent scrub shoots. Snares set along hedgerows can double their typical catch over the next week.",
+      "bodyText": "Following a mild thaw, cotton hares have multiplied across the southern floodplains. Their white summer coats flash across the heather as hundreds of young feed on succulent scrub shoots. Snares set along hedgerows can double their typical catch over the next week. The young are the first thing you hear moving in the heather, and the arithmetic comes second.",
       "weight": 2.0,
       "minDay": 120,
       "maxDay": 199,
@@ -4783,7 +4783,7 @@
     {
       "id": "event_eco_war_blocks_grazing_corridor",
       "title": "Faction Gunfire Blocks Migration Corridor",
-      "bodyText": "Mortar fire and fortified barricades at the highway junction have severed the traditional descent route for feral goat herds. Cut off from winter foraging, the starving animals are forced into dense predator-rich canyon defiles, causing herd numbers to plummet while ravenous wolf packs circle closer to perimeter watchposts.",
+      "bodyText": "Mortar fire and fortified barricades at the highway junction have severed the traditional descent route for feral goat herds. Cut off from winter foraging, the starving animals are forced into dense predator-rich canyon defiles, causing herd numbers to plummet while ravenous wolf packs circle closer to perimeter watchposts. The corridor remembers being a road, and the goats no longer ask it for one.",
       "weight": 1.2,
       "minDay": 60,
       "maxDay": 365,
@@ -4815,7 +4815,7 @@
     {
       "id": "event_eco_contaminated_run_toxic_carp",
       "title": "Toxic Slag Runoff Taints River Fish",
-      "bodyText": "A ruptured tailings dam upstream has discharged acidic heavy-isotope slurry into the river. Dead mirror carp float belly-up along the reeds, their gills stained bright copper. Any fish harvested without thorough decontamination will cause severe radiation sickness.",
+      "bodyText": "A ruptured tailings dam upstream has discharged acidic heavy-isotope slurry into the river. Dead mirror carp float belly-up along the reeds, their gills stained bright copper. Any fish harvested without thorough decontamination will cause severe radiation sickness. Nothing recorded says how far the slurry has carried or when the river will run clean.",
       "weight": 1.0,
       "minDay": 120,
       "maxDay": 365,
@@ -4836,7 +4836,7 @@
     {
       "id": "event_eco_blight_decimates_forage",
       "title": "Moth Blight Decimates Surface Forage",
-      "bodyText": "Caterpillar swarms from the recent moth bloom have stripped wild berry canes, willow saplings, and wild grain patches down to bare wood. With natural vegetation devastated, ground rodents are invading agricultural silos and shelter pantries searching for sustenance.",
+      "bodyText": "Caterpillar swarms from the recent moth bloom have stripped wild berry canes, willow saplings, and wild grain patches down to bare wood. With natural vegetation devastated, ground rodents are invading agricultural silos and shelter pantries searching for sustenance. The rodents came down out of the same emptied landscape the shelter stores against, and the store wall is the only place the two shortages are allowed to meet.",
       "weight": 1.1,
       "minDay": 200,
       "maxDay": 365,
@@ -4857,7 +4857,7 @@
     {
       "id": "event_eco_ash_storm_grounds_flock",
       "title": "Acidic Ash Storm Grounds Passage Flock",
-      "bodyText": "A violent fallout squall caught a flock of iron crows mid-flight, coating their feathers in corrosive gypsum sludge and forcing hundreds of grounded birds into the shelter's surface intake berm. Their distressed alarm calls are attracting scavenging rad dogs to the gate.",
+      "bodyText": "A violent fallout squall caught a flock of iron crows mid-flight, coating their feathers in corrosive gypsum sludge and forcing hundreds of grounded birds into the shelter's surface intake berm. Their distressed alarm calls are attracting scavenging rad dogs to the gate. Nothing recorded says how long the flock stays down or how many of the birds survive the night.",
       "weight": 1.0,
       "minDay": 1,
       "maxDay": 365,
@@ -4878,7 +4878,7 @@
     {
       "id": "event_eco_scavenger_kettle_intercept",
       "title": "Scavenger Kettle Circling Downwind",
-      "bodyText": "A spiral of crows and ash gulls is circling low over an overgrown culvert two kilometers down the rail line. Such kettles indicate a fresh carcass or an abandoned scavenger haul before ground predators have claimed it.",
+      "bodyText": "A spiral of crows and ash gulls is circling low over an overgrown culvert two kilometers down the rail line. Such kettles indicate a fresh carcass or an abandoned scavenger haul before ground predators have claimed it. The sign is a reading, not a finding: nothing recorded says what lies under the birds.",
       "weight": 1.5,
       "minDay": 1,
       "maxDay": 365,
@@ -4920,7 +4920,7 @@
     {
       "id": "event_eco_harvest_vacated_hornet_comb",
       "title": "Abandoned Slag Hornet Comb",
-      "bodyText": "Winter frost has killed off an exterior slag hornet colony in the quarry overhang. The papery carton hangs silent and cold, packed with uncontaminated comb wax and medicinal propolis resin ready for safe harvesting.",
+      "bodyText": "Winter frost has killed off an exterior slag hornet colony in the quarry overhang. The papery carton hangs silent and cold, packed with uncontaminated comb wax and medicinal propolis resin ready for safe harvesting. Whatever is taken from it will outlast the hands that built it.",
       "weight": 1.0,
       "minDay": 60,
       "maxDay": 365,
@@ -4941,7 +4941,7 @@
     {
       "id": "event_eco_bioremediation_mat_discovery",
       "title": "Bio-Remediation Fungal Mat Assay",
-      "bodyText": "In a damp concrete overflow drainage ditch, an unusual black-and-gold fungal mat has colonized mineral sludge. Preliminary dosimeter sweeps show the living mycelium is actively absorbing and concentrating radioactive isotopes from runoff water, leaving the outflow significantly cleaner.",
+      "bodyText": "In a damp concrete overflow drainage ditch, an unusual black-and-gold fungal mat has colonized mineral sludge. Preliminary dosimeter sweeps show the living mycelium is actively absorbing and concentrating radioactive isotopes from runoff water, leaving the outflow significantly cleaner. The same sentence holds the promise and the danger: what the mat absorbs, it keeps.",
       "weight": 1.2,
       "minDay": 30,
       "maxDay": 365,
@@ -4962,7 +4962,7 @@
     {
       "id": "event_trapping_bycatch_entanglement",
       "title": "Unexpected Quarry in the Snare",
-      "bodyText": "The morning patrol inspects the outer trap lines and finds an unexpected second quarry tangled alongside the primary catch. A hungry scavenger had attempted to raid the caught prey or trigger mechanism and became hopelessly snared in the heavy cordage. The carcass is intact, but untangling it without tearing the pelts or snapping the frame requires careful handling.",
+      "bodyText": "The morning patrol inspects the outer trap lines and finds an unexpected second quarry tangled alongside the primary catch. A hungry scavenger had attempted to raid the caught prey or trigger mechanism and became hopelessly snared in the heavy cordage. The carcass is intact, but untangling it without tearing the pelts or snapping the frame requires careful handling. Nothing recorded says what the second animal was after, or whether it would have worked itself free.",
       "weight": 1.5,
       "minDay": 3,
       "maxDay": 365,
@@ -4996,28 +4996,28 @@
     {
       "id": "trap_human_bootprints",
       "title": "Human Bootprints",
-      "bodyText": "A second trail crosses the approach to the trap: human bootprints, half-filled with ash. They stop beside the set, circle once, and head back toward the ruins. Nothing was taken. Someone only wanted to know where you were looking.",
+      "bodyText": "A second trail crosses the approach to the trap: human bootprints, half-filled with ash. They stop beside the set, circle once, and head back toward the ruins. Nothing was taken. Someone only wanted to know where you were looking. The circle holds no answer beyond the fact that someone looked; ash has already softened its edges.",
       "weight": 1.0,
       "minDay": 1
     },
     {
       "id": "event_drowning_pup_rescue",
       "title": "Flooded Culvert Whine",
-      "bodyText": "After heavy runoff fills the perimeter ditch, a sharp, choked whine cuts through the water noise. A soaked pup clings to a floating packing crate caught against the storm grate. Pulling it out costs warm towels and a ration bowl; driving it off saves food but leaves the bunker silent in a hollow way.",
+      "bodyText": "After heavy runoff fills the perimeter ditch, a sharp, choked whine cuts through the water noise. A soaked pup clings to a floating packing crate caught against the storm grate. Pulling it out costs warm towels and a ration bowl; driving it off saves food but leaves the bunker silent in a hollow way. The whine is the last part of it that gets remembered.",
       "weight": 1.2,
       "minDay": 12
     },
     {
       "id": "event_expedition_stray_follows_home",
       "title": "A Shadow on the Return Trail",
-      "bodyText": "Fifty paces behind the expedition party, a gaunt mongrel trails through the dust. It stops when the scouts stop; it sits when they check bearings. When the airlock opens, it waits at the threshold, ribs visible beneath scarred gray fur, watching the door.",
+      "bodyText": "Fifty paces behind the expedition party, a gaunt mongrel trails through the dust. It stops when the scouts stop; it sits when they check bearings. When the airlock opens, it waits at the threshold, ribs visible beneath scarred gray fur, watching the door. Nobody has said the word that would make it theirs; the dog has not asked for it.",
       "weight": 1.0,
       "minDay": 25
     },
     {
       "id": "narrative_final_wish_completed",
       "title": "A Last Wish Kept",
-      "bodyText": "The shelter did what was asked of it. The wish is kept now, and the keeping changed the room: voices run lower, and they are aimed at each other instead of at the walls. Nobody mentions the empty bunk. Everybody knows what it cost to honour the last of it, and that knowing is its own kind of company.",
+      "bodyText": "The shelter did what was asked of it. The wish is kept now, and the keeping changed the room: voices run lower, and they are aimed at each other instead of at the walls. Nobody mentions the empty bunk. Everybody knows what it cost to honour the last of it, and that knowing is its own kind of company. The room is quieter than it was, and nobody is keeping count of the quiet.",
       "weight": 1.0,
       "minDay": 10
     }

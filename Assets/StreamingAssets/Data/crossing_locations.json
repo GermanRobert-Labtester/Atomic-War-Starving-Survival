@@ -105,7 +105,7 @@
       "baseRadsPerHour": 22.0,
       "region": "region_crossing",
       "inspect": "Wyn Sabler's grain, mortgaged against a debt that's coming due. Visible, countable, exactly as much as it looks like.",
-      "description": "Wyn Sabler's grain, pledged against a debt that is coming due. Everyone at the Crossing can see exactly how much is in it, and most of them can tell you exactly how much is owed. The padlock is mostly theatre.",
+      "description": "Wyn Sabler's grain, pledged against a debt that is coming due. Everyone at the Crossing can see exactly how much is in it, and most of them can tell you exactly how much is owed. The padlock is mostly theatre. The Granary Wardens keep the communal crib for the seed needed ninety days ahead; this pledge is Wyn's, and no record joins the two.",
       "overlay_on_unlock": false,
       "recast_always": false
     },
@@ -117,7 +117,7 @@
       "baseRadsPerHour": 22.0,
       "region": "region_crossing",
       "inspect": "Where deals actually happen, after the Scalehouse closes. No one has ever formally claimed it belongs to the Underwrite. Nobody else sits there either.",
-      "description": "A fire that never quite goes out, and the place where deals actually get made after the Scalehouse closes. No one has ever formally claimed it belongs to the Underwrite. Nobody else sits there either.",
+      "description": "A fire that never quite goes out, and the place where deals actually get made after the Scalehouse closes. No one has ever formally claimed it belongs to the Underwrite. Nobody else sits there either. The Lamplighters answer for the street lanterns; no record says who feeds this fire.",
       "overlay_on_unlock": false,
       "recast_always": false
     },

@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string carPath = Path.Combine(directoryPath, "pneumatic_carrier_capsule_logs.json");
             if (File.Exists(carPath))
             {
-                var list = CatalogLocator.LoadWrappedList<PneumaticCarrierCapsuleEntry>(File.ReadAllText(carPath), options);
+                var list = CatalogLocator.LoadWrappedList<PneumaticCarrierCapsuleEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(carPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string divPath = Path.Combine(directoryPath, "pneumatic_tube_diverter_audits.json");
             if (File.Exists(divPath))
             {
-                var list = CatalogLocator.LoadWrappedList<PneumaticTubeDiverterEntry>(File.ReadAllText(divPath), options);
+                var list = CatalogLocator.LoadWrappedList<PneumaticTubeDiverterEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(divPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string blowPath = Path.Combine(directoryPath, "rootes_blower_vacuum_reports.json");
             if (File.Exists(blowPath))
             {
-                var list = CatalogLocator.LoadWrappedList<RootesBlowerVacuumEntry>(File.ReadAllText(blowPath), options);
+                var list = CatalogLocator.LoadWrappedList<RootesBlowerVacuumEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(blowPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string cylPath = Path.Combine(directoryPath, "pneumatic_cylinder_leather_assays.json");
             if (File.Exists(cylPath))
             {
-                var list = CatalogLocator.LoadWrappedList<PneumaticCylinderLeatherEntry>(File.ReadAllText(cylPath), options);
+                var list = CatalogLocator.LoadWrappedList<PneumaticCylinderLeatherEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(cylPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

@@ -1,6 +1,6 @@
 # Plan 116 — Deep Lore Locations Expansion: Subterranean Cartography, Scavenging Risk Matrices & Environmental Loot Stratification
 
-> **Master Expansion Authority File:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`
+> **Master Expansion Authority File:** `../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`
 > **Target Core Namespace:** `Ashfall.Core.Maritime` / `Ashfall.Core.Exploration`
 > **Architectural Boundary:** `Assets/Ashfall.Core/Maritime/` (`DeepLoreLocationCatalogLoader.cs`, `VariableLootNode.cs`, `LocationCatalog.cs`)
 > **Engine Free Compliance:** 100% `netstandard2.1` pure domain logic. Zero engine (`Godot` / `UnityEngine`) references.

@@ -284,7 +284,10 @@ namespace AtomicWar.GodotApp
                 var c = Ledger.Contracts[i];
                 if (c == null) continue;
                 sb.Append("\n  ").Append(c.debtorId).Append(": ").Append(c.principal).Append(" (").Append(c.daysRemaining).Append("d, ")
-                    .Append(c.signed ? "signed" : "draft").Append(")");
+                    .Append(c.signed ? "signed" : "draft");
+                if (c.weatherDelayDaysUsed > 0)
+                    sb.Append(", weather-paused ").Append(c.weatherDelayDaysUsed).Append('/').Append(LedgerDebtSystem.MaxWeatherGraceDays);
+                sb.Append(")");
             }
             return sb.ToString();
         }

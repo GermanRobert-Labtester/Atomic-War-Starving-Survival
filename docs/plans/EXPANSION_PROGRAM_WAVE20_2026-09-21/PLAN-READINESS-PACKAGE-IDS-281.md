@@ -230,7 +230,7 @@ verification:
 # SYSTEMIC DOMAIN: Expansion Package ID Registry, Claim Readiness Validation, Architectural Namespace Mapping, Foreman Authorization Pipeline
 # ==============================================================================
 
-> **Master Expansion Authority Concordance:** `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`
+> **Master Expansion Authority Concordance:** `../../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`
 > **Architectural Target:** Expansion Package ID Registry, Claim Readiness Validation, Architectural Namespace Mapping, Foreman Authorization Pipeline
 > **Primary Coordinator:** `PackageIdReadinessRegistryCoordinator` (`Ashfall.Core.Governance.PackageIds`)
 > **Data Authority:** `Assets/StreamingAssets/Data/package_id_readiness_manifest.json`
@@ -1852,7 +1852,7 @@ The following deterministic simulation trace documents operational stability and
 21. [x] **Deterministic Simulation Trace**: 600-day simulation trace produces bit-exact state parity.
 22. [x] **Faction Dialectic Alignment**: Reactions represent multi-faceted post-nuclear ideological tensions.
 23. [x] **Diegetic Realism**: Prose, logs, and flavor text maintain grounded, somber survival tone.
-24. [x] **Master Expansion Authority Concordance**: Full compliance with `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md` rules.
+24. [x] **Master Expansion Authority Concordance**: Full compliance with `../../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md` rules.
 25. [x] **Final Production Seal**: Ready for integration into release candidate builds with zero open blocking defects.
 
 ---
@@ -5506,7 +5506,7 @@ In accordance with post-polish precision engineering mandates, PLAN-B21-04-READI
 - **Deterministic Replay Guarantee**: Multi-run simulation hashes verify 100% bit-exact state reproduction across 600-day cycles.
 
 ### 15.3 Final Architectural Seal
-PLAN-B21-04-READINESSID-P281 is certified fully harmonized with the Master Expansion Authority (`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`). It pushes the architectural stability, narrative depth, and systemic simulation of ASHFALL into a comprehensive, release-grade state.
+PLAN-B21-04-READINESSID-P281 is certified fully harmonized with the Master Expansion Authority (`../../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`). It pushes the architectural stability, narrative depth, and systemic simulation of ASHFALL into a comprehensive, release-grade state.
 
 
 

@@ -85,6 +85,21 @@ namespace AtomicWar.GodotApp
                     _expansionHubDirty = true;
                 };
 
+                // F19 — tell the player when weather stops a repayment run and
+                // pauses a term (bounded; the journal is the event surface).
+                _expansions.Ledger.OnWeatherDelayApplied += (contract, gateId) =>
+                {
+                    int day = DebtCampaignDay();
+                    string creditor = string.IsNullOrEmpty(contract.creditorId) ? "the creditor" : contract.creditorId;
+                    _journal?.TryAddRawEntry(
+                        $"debt_weather_delay_{contract.debtorId}_{gateId}_{day}",
+                        $"Weather has closed the road to {creditor}. The term on {contract.debtorId}'s debt is paused " +
+                        $"({contract.weatherDelayDaysUsed}/{LedgerDebtSystem.MaxWeatherGraceDays} days of grace used).",
+                        null!,
+                        day);
+                    _expansionHubDirty = true;
+                };
+
                 // Keep the canonical duty authority aware of bounded debt
                 // labor. The bridge owns the persisted endDay record; the
                 // roster owns assignment refusal while that record is active.
@@ -144,6 +159,24 @@ namespace AtomicWar.GodotApp
             return _inventory.Inventory.CountById(ItemAliases.ToCanonical(itemId));
         }
 
+        private Ashfall.Core.World.RouteGateContextResolver? _debtRouteResolver;
+
+        /// <summary>
+        /// F19 — the delay-eligible weather gate currently blocking the route to
+        /// this debt's creditor, or null. Route-specific: a storm elsewhere never
+        /// pauses an unrelated debt. Gate state comes from current weather and
+        /// held override items; nothing here is saved.
+        /// </summary>
+        private string? ResolveDebtWeatherDelayGate(DebtContract debt)
+        {
+            var catalog = _world?.GateCatalog;
+            if (debt == null || catalog == null || _world?.Weather == null) return null;
+            _debtRouteResolver ??= new Ashfall.Core.World.RouteGateContextResolver();
+            return Ashfall.Core.World.DebtRouteAccessResolver.FindBlockingGateId(
+                debt, catalog.GetAll(), _debtRouteResolver, _world.Weather.Current,
+                item => (_inventory?.Inventory?.CountById(item) ?? 0) > 0);
+        }
+
         /// <summary>Phase-4 day owner: debt ages in the real campaign and the
         /// bounded labor windows close. Forfeits dispatch through the bridge into
         /// the canonical faction/raid/inventory systems.</summary>
@@ -157,6 +190,7 @@ namespace AtomicWar.GodotApp
                 _m.SetupExpansions();
                 if (_m._expansions == null || _m._expansions.DebtDispatcher == null) return;
                 _m.EnsureDebtConsequenceIntegration();
+                _m._expansions.Ledger.WeatherDelayGateProvider = _m.ResolveDebtWeatherDelayGate;
                 _m._expansions.Ledger.TickDaily(day);
                 _m._debtBridge?.TickDaily(day);
                 events.Add(new DayStateChangeEvent("debt_ledger_ticked", "debt_ledger", null, null, day));

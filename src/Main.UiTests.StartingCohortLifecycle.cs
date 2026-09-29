@@ -18,7 +18,7 @@ namespace AtomicWar.GodotApp
         /// Continue routes in an isolated save root without relying on the
         /// broader combat/trade journey.
         /// </summary>
-        private void RunStartingCohortLifecycleSelfTestAndQuit()
+        private async void RunStartingCohortLifecycleSelfTestAndQuit()
         {
             string tempDir = Path.Combine(
                 Path.GetTempPath(),
@@ -42,6 +42,7 @@ namespace AtomicWar.GodotApp
                 _saveLoadHost = new SaveLoadHostSession();
                 _saveLoadHost.Initialize(tempDir);
                 AddChild(_saveLoadHost);
+                _saveLoadPanel.Bind(_saveLoadHost);
 
                 var cohortCatalog = EnsureStartingCohortCatalog();
                 _startingCohortSetupPanel.Bind(
@@ -81,6 +82,9 @@ namespace AtomicWar.GodotApp
                 const string campaignMarker = "scrap_metal";
                 int campaignABaselineMarker = _inventory.Inventory.CountById(campaignMarker);
                 _inventory.Inventory.AddById(campaignMarker, 1);
+                OpenPlayerPanel("inventory");
+                Check(_lastCampaignPanelId == "inventory" && _inventoryOverlay.Visible,
+                    "actual inventory navigation becomes campaign resumption metadata");
                 Check(SaveAll(playCue: false), "campaign A saves before starting campaign B");
 
                 // Campaign B: this must create a new root, reset only memory,
@@ -90,6 +94,8 @@ namespace AtomicWar.GodotApp
                     "origin_machine_room",
                     "difficulty_sparing");
                 var campaignB = _saveLoadHost.ActiveSlotId!.Value;
+                Check(_lastCampaignPanelId == string.Empty,
+                    "fresh campaign clears the previous campaign's panel metadata");
                 Check(campaignB.Value == "slot_2", "second fresh campaign allocates slot_2");
                 Check(_saveLoadHost.GetSlots().Count >= 2,
                     "fresh campaign allocation preserves the previous slot root");
@@ -126,6 +132,8 @@ namespace AtomicWar.GodotApp
                 Check(
                     TryLoadAndRestoreGame(campaignA, out string restoreA),
                     $"campaign A remains loadable after campaign B: {restoreA}");
+                Check(_lastCampaignPanelId == "inventory" && _inventoryOverlay.Visible,
+                    "campaign A restore reopens its saved inventory route");
                 Check(
                     _survivors.Find("survivor_dr_sarah_chen") != null &&
                     _survivors.RosterState.Count == 3,
@@ -195,6 +203,54 @@ namespace AtomicWar.GodotApp
                     _inventory.Inventory.CountById("battery") == 4 &&
                     _inventory.Inventory.CountById("scrap_mechanical") == 6,
                     "direct New Game still defaults to Standard Holdfast supplies");
+
+                // Real Main recovery UI, in this probe's temporary slot only.
+                // Two saves leave an inventory-route generation in the backup.
+                OpenPlayerPanel("inventory");
+                Check(SaveAll(playCue: false) && SaveAll(playCue: false),
+                    "recovery fixture saves a complete primary and panel-bearing backup");
+                var recoverySlot = _saveLoadHost.ActiveSlotId!.Value;
+                int liveMarkerBeforeRecovery = _inventory.Inventory.CountById(campaignMarker);
+                string primaryPath = Path.Combine(tempDir, SaveSlotService.SavesBaseDir,
+                    "profile-default", "slot-" + recoverySlot.Value, SaveSlotService.AggregateFileName);
+                File.WriteAllText(primaryPath, "{ deliberately truncated isolated recovery fixture");
+                Check(!TryLoadAndRestoreGame(recoverySlot, out _),
+                    "corrupt primary refuses restore and offers explicit recovery");
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                var recoveryDialog = _backupRecoveryDialog;
+                Check(recoveryDialog != null && GodotObject.IsInstanceValid(recoveryDialog) &&
+                    recoveryDialog.Visible && recoveryDialog.GetOkButton().HasFocus(),
+                    "recovery confirmation is visible and keyboard focus starts on its action");
+                if (recoveryDialog != null && GodotObject.IsInstanceValid(recoveryDialog))
+                    recoveryDialog.GetCancelButton().EmitSignal(BaseButton.SignalName.Pressed);
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                Check(recoveryDialog == null || !GodotObject.IsInstanceValid(recoveryDialog),
+                    "cancel disposes the recovery dialog");
+                Check(_saveLoadHost.ActiveSlotId == recoverySlot &&
+                    _inventory.Inventory.CountById(campaignMarker) == liveMarkerBeforeRecovery &&
+                    !File.Exists(primaryPath),
+                    "cancel preserves the live session and does not promote the backup");
+
+                PromptBackupRecovery(recoverySlot);
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                recoveryDialog = _backupRecoveryDialog;
+                Check(recoveryDialog != null && GodotObject.IsInstanceValid(recoveryDialog) && recoveryDialog.Visible,
+                    "verified backup remains available after cancellation");
+                if (recoveryDialog != null && GodotObject.IsInstanceValid(recoveryDialog))
+                    recoveryDialog.GetOkButton().EmitSignal(BaseButton.SignalName.Pressed);
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                Check(recoveryDialog == null || !GodotObject.IsInstanceValid(recoveryDialog),
+                    "confirmation disposes the recovery dialog");
+                Check(File.Exists(primaryPath) && _saveLoadHost.LastLoadResult?.IsSuccess == true &&
+                    _inventory.Inventory.CountById(campaignMarker) == liveMarkerBeforeRecovery,
+                    "confirmation restores the verified backup through the real campaign load path");
+                int? recoveredManifestDay = _saveLoadHost.GetManifest(recoverySlot)?.currentDay;
+                Check(_lastCampaignPanelId == "inventory",
+                    $"recovery restores panel route (actual '{_lastCampaignPanelId}')");
+                Check(_inventoryOverlay.Visible,
+                    $"recovery opens the restored inventory panel (visible={_inventoryOverlay.Visible})");
+                Check(recoveredManifestDay == _simDay,
+                    $"recovery manifest day matches the campaign day ({recoveredManifestDay?.ToString() ?? "<missing>"} vs {_simDay})");
 
                 HostCli.EmitSummary(
                     "starting_cohort_lifecycle_selftest",

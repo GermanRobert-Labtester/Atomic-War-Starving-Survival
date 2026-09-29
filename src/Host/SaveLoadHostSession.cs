@@ -567,7 +567,7 @@ public partial class SaveLoadHostSession : Node
     /// Returns false when no slot is active or the atomic write fails; a
     /// builder rejection (unknown section key) propagates as a save failure.
     /// </summary>
-    public bool SaveEnvelopeFromPayloads(IReadOnlyDictionary<string, string> payloads)
+    public bool SaveEnvelopeFromPayloads(IReadOnlyDictionary<string, string> payloads, string? lastPanelId = null, int? currentDay = null)
     {
         if (_activeSlotId == null || _slotService == null)
         {
@@ -646,6 +646,12 @@ public partial class SaveLoadHostSession : Node
 
             manifest.profileId = _currentProfileId;
             manifest.slotId = _activeSlotId.Value;
+            if (currentDay.HasValue) manifest.currentDay = currentDay.Value;
+            if (lastPanelId != null)
+            {
+                manifest.manifestVersion = SaveManifest.CurrentManifestVersion;
+                manifest.lastPanelId = lastPanelId;
+            }
             manifest.lastSaveTick = DateTime.UtcNow.Ticks; // DETERMINISM_ALLOWLIST: Host save metadata timestamp
             manifest.lastSaveTimestamp = DateTime.UtcNow.ToString("o"); // DETERMINISM_ALLOWLIST: Host save metadata timestamp
             manifest.generationId = $"gen_{_activeSlotId.Value.Value}_{manifest.lastSaveTick}";
@@ -700,6 +706,13 @@ public partial class SaveLoadHostSession : Node
         var aggregateResult = _slotService.TryLoadAggregate(_currentProfileId, slotId);
         if (!aggregateResult.IsSuccess || aggregateResult.Envelope == null)
         {
+            var recovery = _slotService.FindRecoverableBackup(_currentProfileId, slotId);
+            if (recovery.IsSuccess && recovery.Envelope != null)
+            {
+                aggregateResult.RecoveryAvailable = true;
+                aggregateResult.RecoveryDay = recovery.Envelope.manifest.currentDay;
+                aggregateResult.UserMessage += " " + recovery.UserMessage;
+            }
             RestoreSelectionAfterFailedLoad(slotId);
             result = aggregateResult;
             LastLoadResult = result;
@@ -748,6 +761,10 @@ public partial class SaveLoadHostSession : Node
         foreach (string sectionName in restored)
             _restoredSections.Add(sectionName);
         ApplySlotRoot();
+        // A recovered generation may be older than the manifest projection.
+        // Refresh slot cards from the validated campaign authority only after
+        // its section projections and active slot have committed successfully.
+        TryWriteManifestProjection(aggregateResult.Envelope.manifest);
 
         result = aggregateResult;
         LastLoadResult = result;
@@ -1030,6 +1047,7 @@ public partial class SaveLoadHostSession : Node
             lastSaveTimestamp = source.lastSaveTimestamp,
             generationId = source.generationId,
             difficultyPresetId = source.difficultyPresetId,
+            lastPanelId = source.lastPanelId,
         };
     }
 
@@ -1113,10 +1131,18 @@ public partial class SaveLoadHostSession : Node
     /// Aggregate-first save: build an envelope directly from subsystem payloads
     /// without touching individual files.
     /// </summary>
-    public bool SaveAllDirect(IReadOnlyDictionary<string, string> sectionPayloads)
+    public bool SaveAllDirect(IReadOnlyDictionary<string, string> sectionPayloads, string? lastPanelId = null, int? currentDay = null)
     {
-        return SaveEnvelopeFromPayloads(sectionPayloads);
+        return SaveEnvelopeFromPayloads(sectionPayloads, lastPanelId, currentDay);
     }
+
+    public SaveLoadResult FindRecoverableBackup(SaveSlotId slotId) =>
+        _slotService?.FindRecoverableBackup(_currentProfileId, slotId) ??
+        SaveLoadResult.Fail(SaveLoadStatus.MissingSlot, "Save service is unavailable.");
+
+    public SaveLoadResult RecoverBackup(SaveSlotId slotId) =>
+        _slotService?.RecoverBackup(_currentProfileId, slotId) ??
+        SaveLoadResult.Fail(SaveLoadStatus.MissingSlot, "Save service is unavailable.");
 
     /// <summary>
     /// Load-from-envelope: restore all subsystems directly from the aggregate

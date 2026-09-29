@@ -762,7 +762,7 @@ data threaded in from outside the module, which the interface as currently draft
 ## Review Notes (Corrected)
 
 This document was adversarially reviewed against the actual ASHFALL codebase
-(`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`). Findings and fixes applied:
+(`.`). Findings and fixes applied:
 
 1. **`GameBootstrap` does not exist anywhere in the codebase** (confirmed by full-repo search —
    zero matches). The original plan's Motivation section, Phase 4 of the checklist, and the

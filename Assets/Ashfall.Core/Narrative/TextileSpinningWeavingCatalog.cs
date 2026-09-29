@@ -141,7 +141,7 @@ namespace Ashfall.Core.Narrative
         private static IReadOnlyList<T> Load<T>(string dir, string file)
         {
             var path = Path.Combine(dir, file);
-            var json = File.ReadAllText(path);
+            var json = Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(path);
             return CatalogLocator.LoadWrappedList<T>(json, _opts);
         }
 

@@ -42,7 +42,7 @@
     {
       "id": "enc_weather_station",
       "title": "Automated Weather Station",
-      "description": "A pre-war telemetry tower stands on a low hill, powered by a cracked solar array. A single green LED pulses every twelve seconds. The data logger contains five days of barometric pressure, wind speed, and fallout plume drift readings.",
+      "description": "A pre-war telemetry tower stands on a low hill, powered by a cracked solar array. A single green LED pulses every twelve seconds. The data logger contains five days of barometric pressure, wind speed, and fallout plume drift readings. The light pulses on its own, and the record goes back five days.",
       "category": "Discovery",
       "baseWeight": 3.0,
       "stealthWeightMultiplier": 0.5,
@@ -80,7 +80,7 @@
     {
       "id": "enc_pianist",
       "title": "The Pianist",
-      "description": "An old man plays a warped upright piano in the ruins of a roofless conservatory. The piano is horribly out of tune. The man is completely blind. He plays from muscle memory, his fingers stiff from the cold.",
+      "description": "An old man plays a warped upright piano in the ruins of a roofless conservatory. The piano is horribly out of tune. The man is completely blind. He plays from muscle memory, his fingers stiff from the cold. He plays on, out of tune, from memory.",
       "category": "Social",
       "baseWeight": 1.5,
       "stealthWeightMultiplier": 0.5,
@@ -118,7 +118,7 @@
     {
       "id": "enc_census_carrier_on_the_road",
       "title": "The Last Door on the Route",
-      "description": "A census carrier sits against a culvert with his back straight and his route book open on his knees, dead long enough that the weather has started on him. The book is complete: thirteen doors, each with a count, a date, and a tick. The thirteenth line has a tick and no count. The thirteenth line is your door.",
+      "description": "A census carrier sits against a culvert with his back straight and his route book open on his knees, dead long enough that the weather has started on him. The book is complete: thirteen doors, each with a count, a date, and a tick. The thirteenth line has a tick and no count. The thirteenth line is your door. The route book is finished except for one count.",
       "category": "Social",
       "baseWeight": 1.6,
       "stealthWeightMultiplier": 1.2,

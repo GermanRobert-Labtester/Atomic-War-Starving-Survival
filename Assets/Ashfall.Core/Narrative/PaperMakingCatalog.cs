@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string beaterPath = Path.Combine(directoryPath, "hollander_beater_pulping_logs.json");
             if (File.Exists(beaterPath))
             {
-                var list = CatalogLocator.LoadWrappedList<HollanderBeaterPulpingEntry>(File.ReadAllText(beaterPath), options);
+                var list = CatalogLocator.LoadWrappedList<HollanderBeaterPulpingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(beaterPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string mouldPath = Path.Combine(directoryPath, "deckle_mould_watermark_audits.json");
             if (File.Exists(mouldPath))
             {
-                var list = CatalogLocator.LoadWrappedList<DeckleMouldWatermarkEntry>(File.ReadAllText(mouldPath), options);
+                var list = CatalogLocator.LoadWrappedList<DeckleMouldWatermarkEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(mouldPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string pressPath = Path.Combine(directoryPath, "screw_press_felt_reports.json");
             if (File.Exists(pressPath))
             {
-                var list = CatalogLocator.LoadWrappedList<ScrewPressFeltEntry>(File.ReadAllText(pressPath), options);
+                var list = CatalogLocator.LoadWrappedList<ScrewPressFeltEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(pressPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string sizingPath = Path.Combine(directoryPath, "tub_sizing_gelatin_assays.json");
             if (File.Exists(sizingPath))
             {
-                var list = CatalogLocator.LoadWrappedList<TubSizingGelatinEntry>(File.ReadAllText(sizingPath), options);
+                var list = CatalogLocator.LoadWrappedList<TubSizingGelatinEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(sizingPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

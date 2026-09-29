@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string cryoPath = Path.Combine(directoryPath, "cryo_seed_ampoule_logs.json");
             if (File.Exists(cryoPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CryoSeedAmpouleEntry>(File.ReadAllText(cryoPath), options);
+                var list = CatalogLocator.LoadWrappedList<CryoSeedAmpouleEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(cryoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string ragdollPath = Path.Combine(directoryPath, "ragdoll_germination_assays.json");
             if (File.Exists(ragdollPath))
             {
-                var list = CatalogLocator.LoadWrappedList<RagdollGerminationEntry>(File.ReadAllText(ragdollPath), options);
+                var list = CatalogLocator.LoadWrappedList<RagdollGerminationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(ragdollPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string silicaPath = Path.Combine(directoryPath, "silica_gel_seed_desiccation_audits.json");
             if (File.Exists(silicaPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SilicaGelSeedDesiccationEntry>(File.ReadAllText(silicaPath), options);
+                var list = CatalogLocator.LoadWrappedList<SilicaGelSeedDesiccationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(silicaPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string heirloomPath = Path.Combine(directoryPath, "heirloom_seed_viability_reports.json");
             if (File.Exists(heirloomPath))
             {
-                var list = CatalogLocator.LoadWrappedList<HeirloomSeedViabilityEntry>(File.ReadAllText(heirloomPath), options);
+                var list = CatalogLocator.LoadWrappedList<HeirloomSeedViabilityEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(heirloomPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

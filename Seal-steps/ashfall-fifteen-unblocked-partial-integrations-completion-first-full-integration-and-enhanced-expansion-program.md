@@ -56,7 +56,7 @@ re-verify before editing, per AGENTS.md rule 7 ("use current evidence").
 ## A.1 The local game directory
 
 The inspected game directory is
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Layout that
+`.`. Layout that
 matters to this program:
 
 | Area | Role |

@@ -541,7 +541,7 @@ This batch is complete when:
 ## Review Notes (Corrected)
 
 This section records the adversarial review performed against the real codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`, what was found wrong, and what was fixed in place above.
+`.`, what was found wrong, and what was fixed in place above.
 
 ### Factual errors found and fixed
 

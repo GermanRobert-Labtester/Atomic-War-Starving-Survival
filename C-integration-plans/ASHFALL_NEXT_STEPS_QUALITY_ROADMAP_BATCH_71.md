@@ -266,7 +266,7 @@ Write a dedicated test class `TuningConfigValidationTests.cs` that validates any
 ## Review Notes (Corrected)
 
 This batch was adversarially reviewed against the real codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. The following factual
+`.`. The following factual
 errors, scope gaps, and vague criteria were found and fixed in place above:
 
 ### Factual errors (verified against source, cited file:line)

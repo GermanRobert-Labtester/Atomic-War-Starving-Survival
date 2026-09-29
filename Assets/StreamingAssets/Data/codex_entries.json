@@ -9,7 +9,7 @@
       "spoiler_tier": 0,
       "unlock_condition": "visit_location",
       "unlock_ref": "loc_ration_queue_plaza",
-      "body": "The pre-war city, named for its street plan and for the thing that stopped. Multi-storey buildings stand, most of them gutted by fire but structurally sound enough to shelter those who hold them. The water runs clean and the streets are swept. The labour that does both is conscripted. Ration queues form at 0600 without being told to. People obey out of a habit that predates the current order and would probably survive it.",
+      "body": "The pre-war city, named for its street plan and for the thing that stopped. Multi-storey buildings stand, most of them gutted by fire but structurally sound enough to shelter those who hold them. The water runs clean and the streets are swept. The labour that does both is conscripted. Ration queues form at 0600 without being told to. People obey out of a habit that predates the current order and would probably survive it. Nobody records who stood in the first line, or what it waited for before it became a habit.",
       "provenance": "canonical",
       "tags": [
         "sector_4",
@@ -24,7 +24,7 @@
       "spoiler_tier": 0,
       "unlock_condition": "visit_location",
       "unlock_ref": "loc_grange_hall",
-      "body": "Terraced farmland on the south slope, the only ground in Sector 4 that still produces calories. Run by a show of hands at a weekly council. It is the safest place in the sector and the most quietly frightening, because its safety is conditional on a vote that could go the other way. It is also the only region where a stranger is asked their name before they are asked their business.",
+      "body": "Terraced farmland on the south slope, the only ground in Sector 4 that still produces calories. Run by a show of hands at a weekly council. It is the safest place in the sector and the most quietly frightening, because its safety is conditional on a vote that could go the other way. It is also the only region where a stranger is asked their name before they are asked their business. The vote is counted in the open; nothing recorded says how many times it has gone the other way.",
       "provenance": "canonical",
       "tags": [
         "sector_4",
@@ -39,7 +39,7 @@
       "spoiler_tier": 0,
       "unlock_condition": "visit_location",
       "unlock_ref": "loc_ash_sign_shrine",
-      "body": "The highland ridge to the north. High, dry, and defensible. Pre-war science lived here: observatories, boreholes, a radio telescope, a salt mine repurposed for low-background measurement. The current occupants inherited a landscape of instruments and read them as scripture. Several can operate the instruments correctly. That is worse than if they could not.",
+      "body": "The highland ridge to the north. High, dry, and defensible. Pre-war science lived here: observatories, boreholes, a radio telescope, a salt mine repurposed for low-background measurement. The current occupants inherited a landscape of instruments and read them as scripture. Several can operate the instruments correctly. That is worse than if they could not. What the instruments still measure and what their readers make of it are kept apart in every account.",
       "provenance": "canonical",
       "tags": [
         "sector_4",
@@ -54,7 +54,7 @@
       "spoiler_tier": 0,
       "unlock_condition": "visit_location",
       "unlock_ref": "loc_weighbridge",
-      "body": "The interstate corridor to the east. Road and bridges. The price of passage is stated up front, the receipt is real, and nobody pretends the arrangement is anything other than what it is. Survivors who have dealt with both will tell you they would rather be robbed here than helped by the Garrison. Everything that moves between regions moves through here and pays.",
+      "body": "The interstate corridor to the east. Road and bridges. The price of passage is stated up front, the receipt is real, and nobody pretends the arrangement is anything other than what it is. Survivors who have dealt with both will tell you they would rather be robbed here than helped by the Garrison. Everything that moves between regions moves through here and pays. The receipt names the price and nothing else; no record says who keeps the books behind it.",
       "provenance": "canonical",
       "tags": [
         "sector_4",
@@ -69,7 +69,7 @@
       "spoiler_tier": 0,
       "unlock_condition": "visit_location",
       "unlock_ref": "loc_lock_gate_four",
-      "body": "The industrial flats to the west. When the lock gates lost power the river took back the land it had been kept off for ninety years, and it took it back with everything still standing. Streets became canals. Basements became depth. No faction claims it. The deepest pre-war records survived here precisely because nobody could reach them.",
+      "body": "The industrial flats to the west. When the lock gates lost power the river took back the land it had been kept off for ninety years, and it took it back with everything still standing. Streets became canals. Basements became depth. No faction claims it. The deepest pre-war records survived here precisely because nobody could reach them. The records are known to survive; no account says anyone has read them.",
       "provenance": "canonical",
       "tags": [
         "sector_4",
@@ -84,7 +84,7 @@
       "spoiler_tier": 1,
       "unlock_condition": "visit_location",
       "unlock_ref": "loc_missile_silo",
-      "body": "Four sites do not belong to any faction's territory. All four predate the factions and were never surrendered. They were simply left locked. A missile silo in the highlands. A drone hive near the interstate. An automated mortar pit with orders still pending. A core facility beneath the flooded district. The only institution that survived the Exchange with its chain of command fully intact is the one made of machinery.",
+      "body": "Four sites do not belong to any faction's territory. All four predate the factions and were never surrendered. They were simply left locked. A missile silo in the highlands. A drone hive near the interstate. An automated mortar pit with orders still pending. A core facility beneath the flooded district. The only institution that survived the Exchange with its chain of command fully intact is the one made of machinery. Whether the machines still keep their orders is not recorded; the sites are known by their locks, not by anyone who has seen inside.",
       "provenance": "restricted",
       "tags": [
         "military",

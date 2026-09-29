@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string wellPath = Path.Combine(directoryPath, "geothermal_steam_well_logs.json");
             if (File.Exists(wellPath))
             {
-                var list = CatalogLocator.LoadWrappedList<GeothermalSteamWellEntry>(File.ReadAllText(wellPath), options);
+                var list = CatalogLocator.LoadWrappedList<GeothermalSteamWellEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(wellPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string turbPath = Path.Combine(directoryPath, "turbine_blade_erosion_reports.json");
             if (File.Exists(turbPath))
             {
-                var list = CatalogLocator.LoadWrappedList<TurbineBladeErosionEntry>(File.ReadAllText(turbPath), options);
+                var list = CatalogLocator.LoadWrappedList<TurbineBladeErosionEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(turbPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string boilPath = Path.Combine(directoryPath, "boiler_feedwater_deaerator_audits.json");
             if (File.Exists(boilPath))
             {
-                var list = CatalogLocator.LoadWrappedList<BoilerFeedwaterDeaeratorEntry>(File.ReadAllText(boilPath), options);
+                var list = CatalogLocator.LoadWrappedList<BoilerFeedwaterDeaeratorEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(boilPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string trapPath = Path.Combine(directoryPath, "steam_trap_water_hammer_logs.json");
             if (File.Exists(trapPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SteamTrapWaterHammerEntry>(File.ReadAllText(trapPath), options);
+                var list = CatalogLocator.LoadWrappedList<SteamTrapWaterHammerEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(trapPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

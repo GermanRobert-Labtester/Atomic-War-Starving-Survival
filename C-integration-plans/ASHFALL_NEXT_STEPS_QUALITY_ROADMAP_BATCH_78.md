@@ -563,7 +563,7 @@ rather than force a pass by disabling the test.
 ## Review Notes (Corrected)
 
 This document was adversarially reviewed against the real codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Summary
+`.` and corrected in place. Summary
 of factual errors and structural risks found and fixed:
 
 1. **`CatalogIntegrityValidator.cs` line count was wrong.** Claimed 603 lines; actual file is

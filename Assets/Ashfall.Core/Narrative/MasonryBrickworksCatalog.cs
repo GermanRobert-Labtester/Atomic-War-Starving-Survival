@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string kilnPath = Path.Combine(directoryPath, "lime_kiln_calcination_logs.json");
             if (File.Exists(kilnPath))
             {
-                var list = CatalogLocator.LoadWrappedList<LimeKilnCalcinationEntry>(File.ReadAllText(kilnPath), options);
+                var list = CatalogLocator.LoadWrappedList<LimeKilnCalcinationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(kilnPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string mortarPath = Path.Combine(directoryPath, "pozzolan_mortar_formulations.json");
             if (File.Exists(mortarPath))
             {
-                var list = CatalogLocator.LoadWrappedList<PozzolanMortarRecipeEntry>(File.ReadAllText(mortarPath), options);
+                var list = CatalogLocator.LoadWrappedList<PozzolanMortarRecipeEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(mortarPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string refPath = Path.Combine(directoryPath, "refractory_firebrick_spalling_logs.json");
             if (File.Exists(refPath))
             {
-                var list = CatalogLocator.LoadWrappedList<RefractoryFirebrickSpallEntry>(File.ReadAllText(refPath), options);
+                var list = CatalogLocator.LoadWrappedList<RefractoryFirebrickSpallEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(refPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string adobePath = Path.Combine(directoryPath, "mudbrick_weathering_assays.json");
             if (File.Exists(adobePath))
             {
-                var list = CatalogLocator.LoadWrappedList<MudbrickWeatheringEntry>(File.ReadAllText(adobePath), options);
+                var list = CatalogLocator.LoadWrappedList<MudbrickWeatheringEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(adobePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

@@ -73,7 +73,8 @@ namespace Ashfall.Core.Tests.Communication
         {
             string host = File.ReadAllText(RepoFile("src/Host/InternalCommunicationHostSession.cs"));
             string main = File.ReadAllText(RepoFile("src/Main.InternalCommunication.cs"));
-            string plans = File.ReadAllText(RepoFile("src/Main.Plans46_49.cs"));
+            string plans = File.ReadAllText(RepoFile("src/Main.SubsystemComposition.cs"))
+                + File.ReadAllText(RepoFile("src/Main.ShelterSocialDynamics.Integration.cs"));
             string campaign = File.ReadAllText(RepoFile("src/Main.CampaignServices.cs"));
             string lifecycle = File.ReadAllText(RepoFile("src/Main.ExpandedShelterSystems.cs"));
 

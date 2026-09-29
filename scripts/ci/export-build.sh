@@ -2,7 +2,7 @@
 # export-build.sh — Plan VIII · Task 23 one-command Linux shipping export.
 # Stages: preflight → dotnet build → Godot import → export release →
 #         normalize artifact layout → version stamp → packaged parity →
-#         exported runtime smoke + selftests.
+#         exported runtime smoke + development harness against packaged data.
 # Fails on the first release-critical error (set -euo pipefail).
 #
 # Usage: scripts/ci/export-build.sh [--skip-smoke]
@@ -37,6 +37,20 @@ step "godot headless import"
 step "godot export release (Linux/X11)"
 scripts/ci/godot-export-linux.sh
 
+# Shipping assemblies must not accidentally restore host harness payloads.
+# These names are CLR metadata strings, independent of debug/PDB generation.
+step "shipping host symbol gate"
+SHIPPING_ASSEMBLY="builds/linux/data_Ashfall_linuxbsd_x86_64/Ashfall.dll"
+[[ -f "$SHIPPING_ASSEMBLY" ]] \
+  || { echo "EXPORT FAIL: shipping Ashfall.dll missing" >&2; exit 1; }
+# AssetRegistrySelfTest is also a retained Core action ID, and
+# SnapshotOrchestrator is a production runtime service. Gate on host-only
+# implementation symbols instead of these shared names.
+if LC_ALL=C grep -aEq 'RunDashboardUiTestAndQuit|RunDay1PlayableSelfTest|RunAssetRegistrySelfTest|RunAssetCoverageReport|SevenDayDeterministicSmokeTest|SnapshotCaptureHarness' "$SHIPPING_ASSEMBLY"; then
+  echo "EXPORT FAIL: development host symbols remain in shipping Ashfall.dll" >&2
+  exit 1
+fi
+
 # 5. Normalize artifact layout + version stamp ------------------------------
 step "version stamp"
 COMMIT="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
@@ -56,9 +70,11 @@ cat builds/linux/RELEASE_STAMP.txt
 step "packaged parity gate"
 "${GODOT_RUNNER[@]}" --path . -- --export-parity-selftest --parity-target "$DIR/builds/linux"
 
-# 7. Exported runtime smoke + selftests from the packaged artifact ----------
+# 7. Shipping boot + development probes against packaged data ---------------
+# ExportRelease excludes host selftest sources. The development assembly
+# remains the diagnostic harness and explicitly resolves the deployed Data.
 if [[ "$SKIP_SMOKE" -eq 0 ]]; then
-  step "exported runtime smoke + selftests (packaged data, not the repository)"
+  step "exported runtime smoke + development probes against packaged data"
   EXE="builds/linux/ashfall.x86_64"
   chmod +x "$EXE" 2>/dev/null || true
   run_exported() {
@@ -68,16 +84,20 @@ if [[ "$SKIP_SMOKE" -eq 0 ]]; then
   run_exported --quit-after 60 >/dev/null 2>&1 \
     || { echo "EXPORT FAIL: exported build did not boot headlessly" >&2; exit 1; }
   echo "boot smoke: OK (60 frames)"
-  run_exported --bridge-selftest >/dev/null
-  echo "bridge-selftest: OK"
-  run_exported --data-integrity-selftest >/dev/null \
+  run_development_probe() {
+    env ASHFALL_DATA="$DIR/builds/linux/Assets/StreamingAssets/Data" \
+      "${GODOT_RUNNER[@]}" --path "$DIR" -- "$@"
+  }
+  run_development_probe --bridge-selftest >/dev/null
+  echo "bridge-selftest (development harness): OK"
+  run_development_probe --data-integrity-selftest >/dev/null \
     || { echo "EXPORT FAIL: packaged data-integrity-selftest failed" >&2; exit 1; }
-  echo "data-integrity-selftest: OK"
-  run_exported --research-catalog-selftest >/dev/null \
+  echo "data-integrity-selftest (packaged data): OK"
+  run_development_probe --research-catalog-selftest >/dev/null \
     || { echo "EXPORT FAIL: packaged research-catalog-selftest failed" >&2; exit 1; }
-  echo "research-catalog-selftest: OK"
-  run_exported --export-parity-selftest >/dev/null
-  echo "export-parity-selftest (from package): OK"
+  echo "research-catalog-selftest (packaged data): OK"
+  run_development_probe --export-parity-selftest --parity-target "$DIR/builds/linux" >/dev/null
+  echo "export-parity-selftest (development harness): OK"
 fi
 
 step "DONE — builds/linux/ashfall.x86_64 (+ .pck + Assets/StreamingAssets/Data + RELEASE_STAMP.txt)"

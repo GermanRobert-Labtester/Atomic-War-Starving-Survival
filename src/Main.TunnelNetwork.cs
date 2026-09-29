@@ -11,6 +11,13 @@ using System;
 using Godot;
 using Ashfall.Core.Underground;
 
+using Ashfall.Core;
+using Ashfall.Core.Culture;
+using Ashfall.Core.Inventory;
+using Ashfall.Core.Survivors;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace AtomicWar.GodotApp
 {
     public partial class Main
@@ -110,5 +117,75 @@ namespace AtomicWar.GodotApp
 
             return tunnels.EvaluateSurfaceBypass(fromLocation.Trim(), toLocation.Trim());
         }
+        // -----------------------------------------------------------------
+        // Plan 167 — Underground Tunnel Network
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Read-only projection of discovered subterranean passages from the
+        /// authoritative WastelandMapSystem. No separate map graph is kept here.
+        /// </summary>
+        public IReadOnlyList<TunnelSegment> GetDiscoveredTunnelSegments()
+        {
+            SetupWorld();
+            return _world?.WastelandMap?.GetDiscoveredTunnels() ?? Array.Empty<TunnelSegment>();
+        }
+
+        /// <summary>
+        /// Evaluates whether an underground transit route is clear between two nodes.
+        /// </summary>
+        public (bool CanTraverse, float TravelTimeHours, string Reason) CanTraverseTunnel(string fromNodeId, string toNodeId)
+        {
+            SetupWorld();
+            return _world?.WastelandMap == null
+                ? (false, 0f, "World map unavailable.")
+                : _world.WastelandMap.CanTraverseTunnel(fromNodeId, toNodeId);
+        }
+
+        /// <summary>
+        /// Discovers a tunnel segment and updates the map presentation.
+        /// </summary>
+        public bool DiscoverTunnelSegment(string segmentId)
+        {
+            if (string.IsNullOrWhiteSpace(segmentId)) return false;
+            SetupWorld();
+            if (_world?.WastelandMap == null) return false;
+
+            bool discovered = _world.WastelandMap.DiscoverTunnel(segmentId.Trim());
+            if (discovered)
+            {
+                _worldDirty = true;
+                _mapPanel?.RefreshView();
+            }
+            return discovered;
+        }
+
+        /// <summary>
+        /// Repairs a damaged or collapsed tunnel segment using shelter scrap.
+        /// </summary>
+        public bool RepairTunnelSegment(string segmentId, float repairAmount = 50f)
+        {
+            if (string.IsNullOrWhiteSpace(segmentId)) return false;
+            SetupWorld();
+            SetupInventory();
+            if (_world?.WastelandMap == null) return false;
+
+            // Spend 1 scrap if available; repair proceeds even if improvised
+            if (_inventory?.Inventory != null && _inventory.Inventory.CountById("scrap") > 0)
+            {
+                var bill = new InventoryBill();
+                bill.AddCost("scrap", 1);
+                _inventory.Inventory.TryExecuteTransaction(bill);
+            }
+
+            bool repaired = _world.WastelandMap.RepairTunnel(segmentId.Trim(), repairAmount);
+            if (repaired)
+            {
+                _worldDirty = true;
+                _mapPanel?.RefreshView();
+            }
+            return repaired;
+        }
+
     }
 }

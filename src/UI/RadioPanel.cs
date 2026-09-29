@@ -39,6 +39,7 @@ namespace AtomicWar.GodotApp.UI
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
         private AshfallDataGrid? _interceptsGrid;
+        private Label? _interceptNoteLabel;
         private AshfallDataGrid? _stationsGrid;
         private VBoxContainer? _productionBox;
         private Label? _productionEventLabel;
@@ -177,6 +178,20 @@ namespace AtomicWar.GodotApp.UI
                 });
             }
             _interceptsGrid.SetRows(rows);
+
+            // The newest intercept that carries a listening note explains what the
+            // record cannot say; it never replaces the transmission text above.
+            string note = string.Empty;
+            if (_radioHost?.History != null)
+            {
+                for (int i = _radioHost.History.Count - 1; i >= 0 && note.Length == 0; i--)
+                    note = _radioHost.History[i].ListeningNote;
+            }
+            if (_interceptNoteLabel != null)
+            {
+                _interceptNoteLabel.Text = note.Length == 0 ? string.Empty : "Listening note: " + note;
+                _interceptNoteLabel.Visible = note.Length > 0;
+            }
         }
 
         private void BuildStationsGrid()
@@ -437,6 +452,10 @@ namespace AtomicWar.GodotApp.UI
             _interceptsGrid.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
             _interceptsGrid.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
             gridCol.AddChild(_interceptsGrid);
+            _interceptNoteLabel = AshfallUiHelpers.MakeMono(string.Empty);
+            _interceptNoteLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _interceptNoteLabel.Visible = false;
+            gridCol.AddChild(_interceptNoteLabel);
             topRow.AddChild(gridCol);
 
             // Plan 173 — PROGRAM PRODUCTION strip under tuner/intercepts.

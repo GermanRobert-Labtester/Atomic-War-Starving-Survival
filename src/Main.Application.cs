@@ -77,6 +77,7 @@ namespace AtomicWar.GodotApp
                     HostCli.PrintVersion(_dataDir);
                     GetTree().Quit(0);
                     return;
+#if ASHFALL_SELFTEST
                 case HostCliAction.ExpansionsSelfTest:
                     GetTree().Quit(HostCli.RunExpansionsSelfTest(_dataDir));
                     return;
@@ -1064,14 +1065,25 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.RecruitmentSelfTest:
                     GetTree().Quit(RecruitmentSelfTest.Run(_dataDir));
                     return;
+#else
+                case HostCliAction.UnsupportedDevelopmentCommand:
+                    GD.PrintErr("[Ashfall Godot] Development diagnostics are unavailable in this release. Use a development build.");
+                    GetTree().Quit(2);
+                    return;
+#endif
             }
             }
             catch (System.Exception ex)
             {
                 // A gate threw. Report FAIL against the action that was running and
                 // quit non-zero so this can never be scraped as PASS or hang.
+#if ASHFALL_SELFTEST
                 GetTree().Quit(HostCli.EmitUnhandledSelfTestFailure(
                     HostCli.SelfTestNameFor(cliAction), ex));
+#else
+                GD.PushError($"[Ashfall Godot] Startup failed: {ex.Message}");
+                GetTree().Quit(1);
+#endif
                 return;
             }
 
@@ -1236,9 +1248,9 @@ namespace AtomicWar.GodotApp
                 OpenPlayerPanel("weather_history");
                 GetViewport().SetInputAsHandled();
             }
-            else if (AshfallInputActions.IsJournal(@event))
+            else if (AshfallInputActions.IsJournal(@event) && _state == GameState.Playing)
             {
-                if (_state == GameState.Playing && _dashboard.Visible)
+                if (_dashboard.Visible)
                     OpenPlayerPanel("journal");
                 else
                     ToggleJournal();
@@ -1356,6 +1368,7 @@ namespace AtomicWar.GodotApp
             CatalogBootValidator.ThrowIfRequiredFailed(report);
         }
 
+#if ASHFALL_SELFTEST
         /// <summary>
         /// Snapshot regression driver. Mounts SnapshotOrchestrator into the
         /// tree (it needs process frames to render each panel in a SubViewport
@@ -1384,6 +1397,8 @@ namespace AtomicWar.GodotApp
                 orch.BeginDiff(SnapshotHarness.Targets, goldenRoot, captureRoot);
             }
         }
+
+#endif
 
         private void UpdateStatus()
         {

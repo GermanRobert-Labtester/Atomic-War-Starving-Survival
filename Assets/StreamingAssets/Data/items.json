@@ -474,7 +474,7 @@
     {
       "id": "fuel",
       "displayName": "Fuel",
-      "description": "A plastic jerrycan of fuel, sloshing heavy. Two kilos of diesel or kerosene, worth fourteen, and every liter has a story about who siphoned it and from what. Twenty cans stack in a corner of the bunker, and the corner becomes the warmest place in winter. Fuel is the only thing that turns cold into heat and rust into movement. People measure the winter in cans, not days.",
+      "description": "A plastic jerrycan of fuel, sloshing heavy. Two kilos of diesel or kerosene, worth fourteen, and every liter has a story about who siphoned it and from what. Twenty cans stack in a corner of the bunker, and the corner becomes the warmest place in winter. Fuel is the only thing that turns cold into heat and rust into movement. People measure the winter in cans, not days. One of the stories is a radio offer of twenty litres, unguarded near an overpass, for whoever came alone; it repeated word for word, and it was a raider lure.",
       "type": "Fuel",
       "stackMax": 20,
       "weight": 2.0,
@@ -5238,7 +5238,7 @@
     {
       "id": "item_foundry_weather_canister",
       "displayName": "Weather Canister Shell Body",
-      "description": "A sealed cast cylinder for outdoor instrument housings \u2014 barometers, anemometers, and recording thermometers. The Foundry makes these for the weather stations that survived the Exchange, most of which are still transmitting to nobody. The canister is waterproof and radiation-resistant. The instrument inside it may or may not be. The Foundry is responsible for the housing. The instrument is somebody else's problem.",
+      "description": "A sealed cast cylinder for outdoor instrument housings \u2014 barometers, anemometers, and recording thermometers. The Foundry makes these for the weather stations that survived the Exchange, most of which are still transmitting to nobody. The canister is waterproof and radiation-resistant. The instrument inside it may or may not be. The Foundry is responsible for the housing. The instrument is somebody else's problem. Some of those stations still speak: Weather Station Gamma reads plume drift aloud by text-to-speech to an empty band, and in its last transmission says its own battery is failing.",
       "type": "Material",
       "stackMax": 10,
       "weight": 12.0,
@@ -8558,7 +8558,7 @@
     {
       "id": "cassette_greenhouse_tapes_1",
       "displayName": "Cassette: Greenhouse Tapes I",
-      "description": "A cassette in a seed envelope instead of a case. The label reads Growth Trial in survey pencil. A woman's voice talks yield curves over the hum of grow-lights, pleased with a row of plants.",
+      "description": "A cassette in a seed envelope instead of a case. The label reads Growth Trial in survey pencil. A woman's voice talks yield curves over the hum of grow-lights, pleased with a row of plants. A pencil note in another hand reads: 'She said it out loud so she could get back to work. I know that feeling.'",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8578,7 +8578,7 @@
     {
       "id": "cassette_greenhouse_tapes_2",
       "displayName": "Cassette: Greenhouse Tapes II",
-      "description": "A cassette labelled Filtered Light. The same technician, flatter now, measuring a sun that reads forty percent under baseline. Wind behind the glass the whole way through.",
+      "description": "A cassette labelled Filtered Light. The same technician, flatter now, measuring a sun that reads forty percent under baseline. Wind behind the glass the whole way through. A later listener pencilled beneath it: 'She checked twice. I hear how tired she is now.'",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8598,7 +8598,7 @@
     {
       "id": "cassette_greenhouse_tapes_3",
       "displayName": "Cassette: Greenhouse Tapes III",
-      "description": "A cassette labelled Save the Seed. Envelopes are counted out loud, one hundred and twelve, names checked against a list. It ends with a promise about the cold box at the seed library annex.",
+      "description": "A cassette labelled Save the Seed. Envelopes are counted out loud, one hundred and twelve, names checked against a list. It ends with a promise about the cold box at the seed library annex. The tape does not say whether the promise was kept.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8618,7 +8618,7 @@
     {
       "id": "cassette_field_hospital_7_1",
       "displayName": "Cassette: Field Hospital 7 I",
-      "description": "A cassette labelled Intake in a nurse's precise hand. A tired voice counts forty-one cots twice and reports that the kettle still works.",
+      "description": "A cassette labelled Intake in a nurse's precise hand. A tired voice counts forty-one cots twice and reports that the kettle still works. A listener counted them a third time before stopping the tape.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8638,7 +8638,7 @@
     {
       "id": "cassette_field_hospital_7_2",
       "displayName": "Cassette: Field Hospital 7 II",
-      "description": "A cassette labelled Substitutions. Halved tablets, a sterilizer run on hope, and a surgeon who tells stories while he stitches.",
+      "description": "A cassette labelled Substitutions. Halved tablets, a sterilizer run on hope, and a surgeon who tells stories while he stitches. The stories are not a distraction from the shortage; they are the only part of the operation that runs on nothing.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8658,7 +8658,7 @@
     {
       "id": "cassette_field_hospital_7_3",
       "displayName": "Cassette: Field Hospital 7 III",
-      "description": "A cassette labelled The Transfer List. Fourteen names read twice, an X argued into a star, and a road described as re-prioritised.",
+      "description": "A cassette labelled The Transfer List. Fourteen names read twice, an X argued into a star, and a road described as re-prioritised. A later listener pencilled beneath the tape: 'Voss was right about the star. I have thought about that every day since.'",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8678,7 +8678,7 @@
     {
       "id": "cassette_field_hospital_7_4",
       "displayName": "Cassette: Field Hospital 7 IV",
-      "description": "A cassette labelled Night Shift. Recorded at four in the morning, when the arithmetic of one generator and three machines had already been done.",
+      "description": "A cassette labelled Night Shift. Recorded at four in the morning, when the arithmetic of one generator and three machines had already been done. The tape does not repeat the arithmetic.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8698,7 +8698,7 @@
     {
       "id": "cassette_field_hospital_7_5",
       "displayName": "Cassette: Field Hospital 7 V",
-      "description": "A cassette labelled Leave the Tags in a shakier hand. Forty-one names, treatment given, treatment owed, and an instruction about where help should go.",
+      "description": "A cassette labelled Leave the Tags in a shakier hand. Forty-one names, treatment given, treatment owed, and an instruction about where help should go. The names are the part of the ledger that outlives the building, and the instruction about help assumes there will still be someone left to give it.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8718,7 +8718,7 @@
     {
       "id": "cassette_evacuation_train_1",
       "displayName": "Cassette: Evacuation Train I",
-      "description": "A cassette labelled Departure Board. Platform noise, a whistle, and a conductor who notes that there are more people than tickets.",
+      "description": "A cassette labelled Departure Board. Platform noise, a whistle, and a conductor who notes that there are more people than tickets. He notes it and keeps reading the board anyway.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8738,7 +8738,7 @@
     {
       "id": "cassette_evacuation_train_2",
       "displayName": "Cassette: Evacuation Train II",
-      "description": "A cassette labelled Red Signal. Two hours at a light nobody is watching, eleven unticketed passengers, and a lamp kept lit on purpose.",
+      "description": "A cassette labelled Red Signal. Two hours at a light nobody is watching, eleven unticketed passengers, and a lamp kept lit on purpose. The tape does not say for whom the lamp was kept.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8758,7 +8758,7 @@
     {
       "id": "cassette_evacuation_train_3",
       "displayName": "Cassette: Evacuation Train III",
-      "description": "A cassette labelled No Further East. Control says pending. Three hundred people and a railway that is pending.",
+      "description": "A cassette labelled No Further East. Control says pending. Three hundred people and a railway that is pending. The word pending is all the tape gives for three hundred people.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8778,7 +8778,7 @@
     {
       "id": "cassette_evacuation_train_4",
       "displayName": "Cassette: Evacuation Train IV",
-      "description": "A cassette labelled End of the Line. A conductor promises to lock the carriages and hang the lamps where they'll be seen, and asks someone to explain the difference between stopping and running out of somewhere to go.",
+      "description": "A cassette labelled End of the Line. A conductor promises to lock the carriages and hang the lamps where they'll be seen, and asks someone to explain the difference between stopping and running out of somewhere to go. The lamps get hung before the question is answered.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8798,7 +8798,7 @@
     {
       "id": "cassette_station_14_1",
       "displayName": "Cassette: Station 14 I",
-      "description": "A cassette labelled Scheduled Programming. Announcements at six, agriculture at seven, and one strange minute cut into the weather.",
+      "description": "A cassette labelled Scheduled Programming. Announcements at six, agriculture at seven, and one strange minute cut into the weather. The tape does not explain the minute.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8818,7 +8818,7 @@
     {
       "id": "cassette_station_14_2",
       "displayName": "Cassette: Station 14 II",
-      "description": "A cassette labelled Frequency Change. A broadcaster who has filed four temporary notices in eleven years and kept count of which outlived the stations.",
+      "description": "A cassette labelled Frequency Change. A broadcaster who has filed four temporary notices in eleven years and kept count of which outlived the stations. The tape keeps the count and not the reasons.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8838,7 +8838,7 @@
     {
       "id": "cassette_station_14_3",
       "displayName": "Cassette: Station 14 III",
-      "description": "A cassette labelled Caller List. Names on one side and what people asked on the other, read between records.",
+      "description": "A cassette labelled Caller List. Names on one side and what people asked on the other, read between records. The tape does not say who answered.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8858,7 +8858,7 @@
     {
       "id": "cassette_station_14_4",
       "displayName": "Cassette: Station 14 IV",
-      "description": "A cassette labelled No Network Feed. The feed stopped at 4:51, mid-sentence, and the station decided that a quiet station is still a station.",
+      "description": "A cassette labelled No Network Feed. The feed stopped at 4:51, mid-sentence, and the station decided that a quiet station is still a station. The tape holds the quiet as well as the feed.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8878,7 +8878,7 @@
     {
       "id": "cassette_station_14_5",
       "displayName": "Cassette: Station 14 V",
-      "description": "A cassette labelled Open Microphone. Road conditions, a water notice, the Brandts' good news, and the times tables read like a bulletin.",
+      "description": "A cassette labelled Open Microphone. Road conditions, a water notice, the Brandts' good news, and the times tables read like a bulletin. The times tables are read in the same voice as the water notice.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8898,7 +8898,7 @@
     {
       "id": "cassette_station_14_6",
       "displayName": "Cassette: Station 14 VI",
-      "description": "A cassette labelled Carrier. Technical instructions for keeping a transmitter alive: the mast first, the fuse second, the operator last.",
+      "description": "A cassette labelled Carrier. Technical instructions for keeping a transmitter alive: the mast first, the fuse second, the operator last. The order of the instructions is the order of care.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8918,7 +8918,7 @@
     {
       "id": "cassette_fathers_tapes_1",
       "displayName": "Cassette: Father's Tapes I",
-      "description": "A cassette labelled For Saturday. A dripping tap, a promised washer, school shoes dried by the stove, and an order to eat something green.",
+      "description": "A cassette labelled For Saturday. A dripping tap, a promised washer, school shoes dried by the stove, and an order to eat something green. A later listener wrote under the label: 'He promised the tap and he promised Sunday. I kept both.'",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8938,7 +8938,7 @@
     {
       "id": "cassette_fathers_tapes_2",
       "displayName": "Cassette: Father's Tapes II",
-      "description": "A cassette labelled If the Trains Stop. Instructions about a blue biscuit tin, a ration card, and an aunt who raised three children on less.",
+      "description": "A cassette labelled If the Trains Stop. Instructions about a blue biscuit tin, a ration card, and an aunt who raised three children on less. The tin, the card and the aunt are all the tape offers as instruction.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8958,7 +8958,7 @@
     {
       "id": "cassette_fathers_tapes_3",
       "displayName": "Cassette: Father's Tapes III",
-      "description": "A cassette labelled The Blue Cup. A story about a cracked cup buried in a plant pot and watered for a month, told without a moral.",
+      "description": "A cassette labelled The Blue Cup. A story about a cracked cup buried in a plant pot and watered for a month, told without a moral. The tape does not add one.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8978,7 +8978,7 @@
     {
       "id": "cassette_fathers_tapes_4",
       "displayName": "Cassette: Father's Tapes IV",
-      "description": "A cassette labelled Keep This One. The next size of shoes, wool on top, an apology that isn't finished, and a plant by the window that should be watered anyway.",
+      "description": "A cassette labelled Keep This One. The next size of shoes, wool on top, an apology that isn't finished, and a plant by the window that should be watered anyway. The tape leaves the apology unfinished.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -8998,7 +8998,7 @@
     {
       "id": "cassette_dam_keeper_log_1",
       "displayName": "Cassette: Dam Keeper's Log I",
-      "description": "A cassette labelled Load Shedding. Four megawatts between two and six, a hand's width of water under the mark, and a good week defined as nothing on the board being red.",
+      "description": "A cassette labelled Load Shedding. Four megawatts between two and six, a hand's width of water under the mark, and a good week defined as nothing on the board being red. A later listener pencilled beneath the label: 'Nothing red is not the same as nothing wrong. He knew that too.'",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9018,7 +9018,7 @@
     {
       "id": "cassette_dam_keeper_log_2",
       "displayName": "Cassette: Dam Keeper's Log II",
-      "description": "A cassette labelled Islanding. Thirteen towns on one frequency, and a keeper who says the whole job is fifty hertz, on purpose.",
+      "description": "A cassette labelled Islanding. Thirteen towns on one frequency, and a keeper who says the whole job is fifty hertz, on purpose. The tape leaves it at that.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9038,7 +9038,7 @@
     {
       "id": "cassette_dam_keeper_log_3",
       "displayName": "Cassette: Dam Keeper's Log III",
-      "description": "A cassette labelled Gate Two. A leaking hydraulic pack, a seal kit signed out in August, and a four-hour watch kept off the record.",
+      "description": "A cassette labelled Gate Two. A leaking hydraulic pack, a seal kit signed out in August, and a four-hour watch kept off the record. The tape keeps it anyway.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9058,7 +9058,7 @@
     {
       "id": "cassette_dam_keeper_log_4",
       "displayName": "Cassette: Dam Keeper's Log IV",
-      "description": "A cassette labelled Dispatch Is Gone. The ring tone changed to nothing, so the log is the dispatch now.",
+      "description": "A cassette labelled Dispatch Is Gone. The ring tone changed to nothing, so the log is the dispatch now. The tape does not say who is listening.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9078,7 +9078,7 @@
     {
       "id": "cassette_dam_keeper_log_5",
       "displayName": "Cassette: Dam Keeper's Log V",
-      "description": "A cassette labelled Manual. Gates closed in sequence, the valley kept on penstock head, and the wheel formally handed to whoever comes after. The machinery is still running, slower.",
+      "description": "A cassette labelled Manual. Gates closed in sequence, the valley kept on penstock head, and the wheel formally handed to whoever comes after. The machinery is still running, slower. The handing-over is formal, and the machinery does not wait for it.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9098,7 +9098,7 @@
     {
       "id": "cassette_teachers_recordings_1",
       "displayName": "Cassette: Teacher's Recordings I",
-      "description": "A cassette labelled Geography Lesson. Rivers in the lower course, an atlas open at pages 40 to 44, and a promise that there will be a Thursday.",
+      "description": "A cassette labelled Geography Lesson. Rivers in the lower course, an atlas open at pages 40 to 44, and a promise that there will be a Thursday. A river is easy to teach because it does not need the children to be there for the lesson to be true.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9118,7 +9118,7 @@
     {
       "id": "cassette_teachers_recordings_2",
       "displayName": "Cassette: Teacher's Recordings II",
-      "description": "A cassette labelled Practical Arithmetic. Rations split by need with the working shown, because the working keeps you honest.",
+      "description": "A cassette labelled Practical Arithmetic. Rations split by need with the working shown, because the working keeps you honest. A child who cannot show the working has not divided anything; they have only agreed.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9138,7 +9138,7 @@
     {
       "id": "cassette_teachers_recordings_3",
       "displayName": "Cassette: Teacher's Recordings III",
-      "description": "A cassette labelled Attendance. A register read to stairwells, a blue book left on a desk, and a class dismissed for now.",
+      "description": "A cassette labelled Attendance. A register read to stairwells, a blue book left on a desk, and a class dismissed for now. A listener left it running to the end of the dismissal.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9158,7 +9158,7 @@
     {
       "id": "cassette_quarantine_tapes_1",
       "displayName": "Cassette: Quarantine Tapes I",
-      "description": "A cassette labelled Case Definition. A rash that starts at the wrists, a definition written in pencil, and wristbands at the entrance.",
+      "description": "A cassette labelled Case Definition. A rash that starts at the wrists, a definition written in pencil, and wristbands at the entrance. The definition is written in pencil so it can be corrected.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9178,7 +9178,7 @@
     {
       "id": "cassette_quarantine_tapes_2",
       "displayName": "Cassette: Quarantine Tapes II",
-      "description": "A cassette labelled Separate Entrance. Arrows on the floor, masks past the second arrow, and a pharmacy's whole stock of pale soap.",
+      "description": "A cassette labelled Separate Entrance. Arrows on the floor, masks past the second arrow, and a pharmacy's whole stock of pale soap. A listener kept the arrows in mind long after the tape stopped.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9198,7 +9198,7 @@
     {
       "id": "cassette_quarantine_tapes_3",
       "displayName": "Cassette: Quarantine Tapes III",
-      "description": "A cassette labelled No Visitors. A rule argued against for ten correct minutes, and messages written small on wristbands to fit more in.",
+      "description": "A cassette labelled No Visitors. A rule argued against for ten correct minutes, and messages written small on wristbands to fit more in. A listener read the wristbands before the rule had finished being argued.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9218,7 +9218,7 @@
     {
       "id": "cassette_quarantine_tapes_4",
       "displayName": "Cassette: Quarantine Tapes IV",
-      "description": "A cassette labelled Release Criteria. One test kit, a shelf of probably, and a signature where a reading should be. The definition stays in pencil.",
+      "description": "A cassette labelled Release Criteria. One test kit, a shelf of probably, and a signature where a reading should be. The definition stays in pencil. The reading is not on the tape.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9238,7 +9238,7 @@
     {
       "id": "cassette_checkpoint_kilo_1",
       "displayName": "Cassette: Checkpoint Kilo I",
-      "description": "A military-grade cassette tape. The label reads Day 1: The Sealing. A corporal's voice reports twelve personnel, air filtration nominal, waiting it out.",
+      "description": "A military-grade cassette tape. The label reads Day 1: The Sealing. A corporal's voice reports twelve personnel, air filtration nominal, waiting it out. A listener left it running to the end of the count.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9258,7 +9258,7 @@
     {
       "id": "cassette_checkpoint_kilo_2",
       "displayName": "Cassette: Checkpoint Kilo II",
-      "description": "A military-grade cassette tape. The label reads Day 12: The First Death. The corporal notes safe dosimeter readings despite unexplained loss.",
+      "description": "A military-grade cassette tape. The label reads Day 12: The First Death. The corporal notes safe dosimeter readings despite unexplained loss. A listener sat with the unexplained part longer than anyone asked them to.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9278,7 +9278,7 @@
     {
       "id": "cassette_checkpoint_kilo_3",
       "displayName": "Cassette: Checkpoint Kilo III",
-      "description": "A military-grade cassette tape. The label reads Day 30: The Ration Split. Background disputes over half rations and a suspect filter.",
+      "description": "A military-grade cassette tape. The label reads Day 30: The Ration Split. Background disputes over half rations and a suspect filter. A listener counted three coughs on the tape before giving up on the count.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9298,7 +9298,7 @@
     {
       "id": "cassette_checkpoint_kilo_4",
       "displayName": "Cassette: Checkpoint Kilo IV",
-      "description": "A military-grade cassette tape. The label reads Day 47: The Final Entry. Corporal Maren warns against trusting deceptive gauges over human lungs.",
+      "description": "A military-grade cassette tape. The label reads Day 47: The Final Entry. Corporal Maren warns against trusting deceptive gauges over human lungs. A listener stayed with it past the end of the entry for a voice that did not come.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9318,7 +9318,7 @@
     {
       "id": "cassette_saint_maren_1",
       "displayName": "Cassette: Saint Maren I",
-      "description": "A clinical cassette tape labelled Triage Protocol. Day Zero plus six hours; a doctor announces protocol Omega sorting by survival probability.",
+      "description": "A clinical cassette tape labelled Triage Protocol. Day Zero plus six hours; a doctor announces protocol Omega sorting by survival probability. A later listener stops the tape at 'I hate this' and leaves it there; that is where everyone stops it.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9338,7 +9338,7 @@
     {
       "id": "cassette_saint_maren_2",
       "displayName": "Cassette: Saint Maren II",
-      "description": "A clinical cassette tape labelled The Hardest Decision. Tearful recollections of triage prioritizing the young while comforting the rest.",
+      "description": "A clinical cassette tape labelled The Hardest Decision. Tearful recollections of triage prioritizing the young while comforting the rest. The tape keeps the choosing and the comfort in the same voice.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9358,7 +9358,7 @@
     {
       "id": "cassette_saint_maren_3",
       "displayName": "Cassette: Saint Maren III",
-      "description": "A clinical cassette tape labelled The Pharmacy Key. Final instructions revealing the key location behind a framed diploma in the doctor's office.",
+      "description": "A clinical cassette tape labelled The Pharmacy Key. Final instructions revealing the key location behind a framed diploma in the doctor's office. The tape does not say who was meant to find it.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9378,7 +9378,7 @@
     {
       "id": "cassette_family_bunker_1",
       "displayName": "Cassette: Martinez Family I",
-      "description": "A consumer cassette labelled The First Week. A father's voice over children's laughter describes waiting out the fallout in a basement bunker.",
+      "description": "A consumer cassette labelled The First Week. A father's voice over children's laughter describes waiting out the fallout in a basement bunker. A listener let the tape run out before anyone reached for it.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9398,7 +9398,7 @@
     {
       "id": "cassette_family_bunker_2",
       "displayName": "Cassette: Martinez Family II",
-      "description": "A consumer cassette labelled The Cough. Hoarse audio documenting fever, depleted iodine pills, and a hidden water cache in a backyard shed.",
+      "description": "A consumer cassette labelled The Cough. Hoarse audio documenting fever, depleted iodine pills, and a hidden water cache in a backyard shed. The tape holds the request; it does not hold a reply.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9418,7 +9418,7 @@
     {
       "id": "cassette_family_bunker_3",
       "displayName": "Cassette: Martinez Family III",
-      "description": "A consumer cassette labelled The Last Game. A small child's solitary voice recounting finishing a board game alone in the silent shelter.",
+      "description": "A consumer cassette labelled The Last Game. A small child's solitary voice recounting finishing a board game alone in the silent shelter. Whoever catalogued the tape left no note; the margin is blank, and that is the only comment anyone has added.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9438,7 +9438,7 @@
     {
       "id": "cassette_free_radio_1",
       "displayName": "Cassette: Free Radio I",
-      "description": "A broadcast tape labelled The First Broadcast. A young woman urges survivors that they are not alone and to stay sheltered from ash.",
+      "description": "A broadcast tape labelled The First Broadcast. A young woman urges survivors that they are not alone and to stay sheltered from ash. A later listener copied the words 'you're not alone' onto the ration board, where everyone could see them.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9458,7 +9458,7 @@
     {
       "id": "cassette_free_radio_2",
       "displayName": "Cassette: Free Radio II",
-      "description": "A broadcast tape labelled The Warning. Urgent advisory warning civilians against roving conscription patrols and masked search parties.",
+      "description": "A broadcast tape labelled The Warning. Urgent advisory warning civilians against roving conscription patrols and masked search parties. The tape carries the warning; it does not say who heard it.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9478,7 +9478,7 @@
     {
       "id": "cassette_free_radio_3",
       "displayName": "Cassette: Free Radio III",
-      "description": "A broadcast tape labelled The Coordinates. Slow recitation of hidden supply coordinates at an old municipal library.",
+      "description": "A broadcast tape labelled The Coordinates. Slow recitation of hidden supply coordinates at an old municipal library. The tape does not say who it was meant for.",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,
@@ -9498,7 +9498,7 @@
     {
       "id": "cassette_free_radio_4",
       "displayName": "Cassette: Free Radio IV",
-      "description": "A broadcast tape labelled The Last Transmission. A final sign-off affirming faith in surviving relays and quiet resilience across the wasteland.",
+      "description": "A broadcast tape labelled The Last Transmission. A final sign-off affirming faith in surviving relays and quiet resilience across the wasteland. A later listener wrote beneath the label: 'Keep listening. Keep hoping. Somebody did.'",
       "type": "Media",
       "stackMax": 1,
       "weight": 0.1,

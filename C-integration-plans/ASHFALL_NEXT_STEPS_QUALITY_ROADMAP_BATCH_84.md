@@ -23,7 +23,7 @@ The project tracks technical debt manually in `AGENTS.md` and `REPO_REVIEW_REPOR
 - Measure cyclomatic complexity hotspots
 - Identify high-churn files that need refactoring
 
-Key monitored files and their expected trajectories — **all baseline figures below were re-measured directly against the repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` for this review; several figures inherited from AGENTS.md were stale and are corrected here (see Review Notes at the end of this document for the full derivation of each correction):**
+Key monitored files and their expected trajectories — **all baseline figures below were re-measured directly against the repository at `.` for this review; several figures inherited from AGENTS.md were stale and are corrected here (see Review Notes at the end of this document for the full derivation of each correction):**
 
 | File/Metric | Current (corrected) | Originally stated | Target Direction |
 |-------------|---------|---------|-----------------|
@@ -477,7 +477,7 @@ None — this step generates a document, not executable gates; a bad quarterly r
 
 ## Review Notes (Corrected)
 
-This plan was adversarially reviewed against the real repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Findings:
+This plan was adversarially reviewed against the real repository at `.` and corrected in place. Findings:
 
 1. **`src/Main.cs` LOC was stale.** Original plan and AGENTS.md both cite "~6640." Verified directly via `wc -l src/Main.cs`: the real current count is **7014** — 374 lines past the stale figure. This matters concretely for Step 6's `MainCs_LOC_MustNotIncrease` test: implementing it with the stale baseline plus a 50-line tolerance (≤6690) against a real file of 7014 lines would fail on the very first CI run, with zero code changes in between. Corrected throughout the Motivation table, Step 3's baseline documentation, and Step 6's test.
 

@@ -544,7 +544,7 @@ implementable and safe as designed.
 ## Review Notes (Corrected)
 
 This batch was adversarially reviewed against the real codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`, with particular attention to
+`.`, with particular attention to
 whether a plan for a HIGH-risk, high-scope feature (mod support) was being treated with
 appropriate caution. The original draft rated this batch **Risk: Medium** and **7 steps** — both
 of those top-line numbers were wrong, and the body of the plan did not contain a single mention

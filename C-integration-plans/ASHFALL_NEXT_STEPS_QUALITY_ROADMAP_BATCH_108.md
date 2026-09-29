@@ -274,7 +274,7 @@ Make the architectural rules discoverable for new contributors and provide "pit 
 
 ## Review Notes (Corrected)
 
-This document was adversarially reviewed against the actual ASHFALL codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. The following factual errors were found and corrected in place above:
+This document was adversarially reviewed against the actual ASHFALL codebase at `.`. The following factual errors were found and corrected in place above:
 
 1. **"DutyRoster depends on Survivors + Expeditions + Expansions"** — false. `DutyRosterSystem` (`Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs:216-223`) has only `DutyRosterSystem()` and `DutyRosterSystem(int seedSalt)` constructors — zero system dependencies. This was the headline motivating example in the original doc and was fabricated or based on indirect/host-wiring coupling that isn't constructor coupling.
 2. **"Phase0HostSession depends on 5 systems"** — false. `Phase0HostSession` (`src/Host/Phase0HostSession.cs:170-172`) takes `(int seed = DefaultSeed, ChemicalDependencySystem dependency = null)` — 1 system dependency, optional. It's also in `src/Host/`, not `Assets/Ashfall.Core/`, so out of this batch's stated scope entirely.

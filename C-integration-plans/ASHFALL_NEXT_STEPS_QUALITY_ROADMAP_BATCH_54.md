@@ -251,7 +251,7 @@ Create `Ashfall.Core.Tests/FlagLedgerIntegrationTests.cs`:
 
 ## Review Notes (Corrected)
 
-This file was adversarially reviewed against the actual repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Findings:
+This file was adversarially reviewed against the actual repository at `.` and corrected in place. Findings:
 
 1. **The entire original code sample used a fictional API.** The real `IFlagLedger`/`InMemoryFlagLedger` (`Assets/Ashfall.Core/Flags/IFlagLedger.cs`, read in full) exposes `IsSet`, `Set`, `Clear`, `GetCounter`, `Increment`, `SetCounter` — the plan's `HasFlag`, `SetFlag`, `ClearFlag` method names do not exist anywhere in the codebase. Every step (1 through 6) has been rewritten to use the real method names, and the Rationale section now states the real interface verbatim so no future editor re-introduces the fictional names.
 

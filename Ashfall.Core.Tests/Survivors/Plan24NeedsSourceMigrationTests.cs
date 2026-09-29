@@ -113,7 +113,7 @@ namespace Ashfall.Core.Tests.Survivors
         // ── 3. Water/hygiene (PsychologicalArcSystem self-care withdrawal) ──
 
         /// <summary>
-        /// The production sink (Main.Plans162_165.cs arc behavior binding)
+        /// The production sink (Main.PsychologyArcs.Integration.cs arc behavior binding)
         /// routes WithdrawSelfCare to the shared seam exactly as mirrored
         /// here; this pins that contract at Core level.
         /// </summary>

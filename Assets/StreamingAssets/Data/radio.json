@@ -71,7 +71,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Civil Register, 88.5. The census carriers report movement on the outer road that does not match registered caravan schedules. The district authority has been notified. Until clearance is issued, all private travel east of the viaduct is suspended. This is a safety measure."
+      "message": "Civil Register, 88.5. The census carriers report movement on the outer road that does not match registered caravan schedules. This is a report of movement, nothing more. The district authority has been notified. Until clearance is issued, all private travel east of the viaduct is suspended. This is a safety measure."
     },
     {
       "id": "radio_broadcast_09",
@@ -251,7 +251,7 @@
       "maxDay": 60,
       "intelType": "Emergency",
       "confidence": 0.6,
-      "message": "Field intercept, 95.4. Night patrol reported contact with an armed group at the east trench line at approximately two in the morning. Exchange of fire lasted several minutes. One friendly casualty, condition unknown. The group withdrew east. Garrison is not pursuing in the dark. Light-discipline rules apply until morning."
+      "message": "Field intercept, 95.4. Night patrol reported contact with an armed group at the east trench line at approximately two in the morning. Exchange of fire lasted several minutes. One friendly casualty, condition unknown. The group withdrew east. Garrison is not pursuing in the dark. Light-discipline rules apply until morning. The casualty is first a status in the log and only later a name, and the morning report will carry the status."
     },
     {
       "id": "radio_broadcast_29",

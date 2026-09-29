@@ -442,7 +442,7 @@ touched.
 ## Review Notes (Corrected)
 
 This document was adversarially reviewed against the real codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and corrected in place. Summary
+`.` and corrected in place. Summary
 of factual errors found and fixed:
 
 1. **Color list was incomplete.** `Assets/Ashfall.Core/UI/Theme.cs` defines 18 color fields, not

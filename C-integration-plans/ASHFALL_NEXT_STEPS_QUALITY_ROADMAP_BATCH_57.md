@@ -352,7 +352,7 @@ godot --headless --path . -- --accessibility-selftest        # Exits 0
 
 ## Review Notes (Corrected)
 
-This plan was adversarially reviewed against the real codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. The following errors were found and fixed:
+This plan was adversarially reviewed against the real codebase at `.`. The following errors were found and fixed:
 
 1. **Panel count was imprecise.** "~85 UI panels" conflated two different real numbers: 83 files literally named `*Panel.cs`, and 97 total `.cs` files in `src/UI/` (the extra ~14 are shared widgets, modals, HUD overlays, and non-panel infrastructure — `AshfallUiHelpers`, `MainMenuBuilder`, `CombatHudOverlay`, `GameHudOverlay`, `DailyBriefingModal`, `OpeningProtocolModal`, `SnapshotHarness`, `SnapshotOrchestrator`, `UiBackgroundCarousel`, plus the 5 `Ashfall*` shells). Fixed: Context section now states both real numbers explicitly and Done-when criteria in Step 2 reference "83" directly instead of a vague "~85".
 2. **The five `Ashfall*` widget classes, `Ashfall.Core.UI.Theme`, its 7 named color members, and the `BarlowCondensed`/`ShareTechMono` font usage were all VERIFIED CORRECT** — no changes needed there, but the Context section now cites exact file:line evidence instead of asserting these claims without support. Also added a note that `src/UI/` code accesses the theme through a `DesignTheme` alias, not the fully-qualified `Ashfall.Core.UI.Theme` name — anyone grepping for the fully-qualified name in `src/UI/` (as Step 5's implementation would require) will find nothing and wrongly conclude the theme isn't used there.

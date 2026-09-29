@@ -12,7 +12,7 @@ namespace Ashfall.Core.Save;
 public class SaveManifest
 {
     /// <summary>Latest manifest field schema understood by this build.</summary>
-    public const int CurrentManifestVersion = 2;
+    public const int CurrentManifestVersion = 3;
 
     /// <summary>Manifest schema version. Increment when fields are added/removed.</summary>
     public int manifestVersion = 1;
@@ -61,6 +61,9 @@ public class SaveManifest
     /// host resolves that absence to the standard preset during restore.
     /// </summary>
     public string difficultyPresetId = string.Empty;
+
+    /// <summary>Last player panel route; empty on older saves or a fresh campaign.</summary>
+    public string lastPanelId = string.Empty;
 }
 
 /// <summary>

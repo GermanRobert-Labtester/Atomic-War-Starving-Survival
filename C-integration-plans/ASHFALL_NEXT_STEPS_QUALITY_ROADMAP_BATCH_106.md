@@ -680,7 +680,7 @@ godot --headless --path . -- --help   # Smoke: all verbs listed
 
 ## Review Notes (Corrected)
 
-Adversarial review performed against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. This document arrived already containing extensive inline "corrected" annotations and six separate "See Review Notes" cross-references — but no `## Review Notes` section actually existed anywhere in the file, meaning every one of those cross-references was pointing at nothing. That broken-reference pattern is itself the first defect fixed by this pass. Every number and file reference below was independently re-derived with `grep`/`find`/`wc`/`sed`, not taken from the document's own prior in-text claims.
+Adversarial review performed against the live codebase at `.`. This document arrived already containing extensive inline "corrected" annotations and six separate "See Review Notes" cross-references — but no `## Review Notes` section actually existed anywhere in the file, meaning every one of those cross-references was pointing at nothing. That broken-reference pattern is itself the first defect fixed by this pass. Every number and file reference below was independently re-derived with `grep`/`find`/`wc`/`sed`, not taken from the document's own prior in-text claims.
 
 ### Factual errors found and fixed
 

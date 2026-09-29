@@ -32,7 +32,7 @@ This document defines how survivor consent, surviving kin bonds, leadership over
 3. **No Knowledge Farming:** Each deceased survivor ID can be autopsied at most once (`completedSpecimenIds`). Subsequent attempts are blocked.
 
 <!-- Master Authority Integration Reference -->
-> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 > **Target Framework:** `Assets/Ashfall.Core/BodyMind/AutopsyConsent/` (`netstandard2.1`, Engine-Free Domain)
 > **Host Framework:** `src/Host/` (Godot 4.3+ Host Session Adapter)
 > **Authoritative Catalogs:** `Assets/StreamingAssets/Data/` (Authoritative Snake_Case JSON)

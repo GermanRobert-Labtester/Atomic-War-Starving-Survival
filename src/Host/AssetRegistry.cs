@@ -531,6 +531,7 @@ namespace AtomicWar.GodotApp
         }
     }
 
+#if ASHFALL_SELFTEST
     /// <summary>
     /// Headless self-test for AssetRegistry.
     /// Verifies that the top N referenced assets from catalogs actually exist.
@@ -1251,4 +1252,5 @@ namespace AtomicWar.GodotApp
             return ids;
         }
     }
+#endif
 }

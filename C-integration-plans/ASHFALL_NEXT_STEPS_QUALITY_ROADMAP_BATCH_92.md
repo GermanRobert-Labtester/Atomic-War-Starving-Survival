@@ -390,7 +390,7 @@ Follow Invariant 1 (zero engine coupling). Use IFileIO and IJsonSerializer ports
 ## Review Notes (Corrected)
 
 This batch was adversarially reviewed against the live codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Findings and fixes applied in place:
+`.`. Findings and fixes applied in place:
 
 **1. File-count claims were wrong and internally inconsistent (fixed):**
 The original draft mixed three different, uncorroborated numbers: "130+ definition files," "296 narrative JSON files" in the Depends-on line (actually referring to the narrative subset, but stated confusingly), "only 35 of ~280 have it today" for schema_version coverage, and a Step 3 goal of "35/280 to 280/280." A direct count against the live repository gives:

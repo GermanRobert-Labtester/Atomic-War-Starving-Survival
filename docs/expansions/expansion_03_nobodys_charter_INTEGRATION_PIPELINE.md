@@ -112,7 +112,7 @@ The bible's Appendix C Sprint 1. Establishes the region's identity and the **soc
 | `LedgerDebtSystem` (P4) | contract × vouch × backers × forfeit | different tool (sub-agent, diff + spec §5.3 only) | FAIL (8 findings) → 6 fixed in change-set (see Phase 4 gate notes); 2 deferred as tracked debt (Arbitration/Vouch twin de-fork; Duty Roster stream ids) |
 
 <!-- Master Authority Integration Reference -->
-> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 > **Target Framework:** `Assets/Ashfall.Core/Crossing/` (`netstandard2.1`, Engine-Free Domain)
 > **Host Framework:** `src/Crossing/` (Godot 4.3+ Host Session Adapter)
 > **Authoritative Catalogs:** `Assets/StreamingAssets/Data/` (Authoritative Snake_Case JSON)
@@ -3716,7 +3716,7 @@ namespace Ashfall.Core.Tests.Crossing
 
 **Execution Timestamp:** 2026-09-25T04:28:30+03:00
 **Harmonization Lead:** Antigravity High-Integrity Architecture Agent
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 12.1 Nobody's Charter Domain Model Alignment & Seam Harmonization
 Reconciled viaduct gate mechanics, vouch accords, and crossing locations against the Master Expansion Authority. Ensured strict decoupling from Unity legacy scripts and verified single-source data authority.
@@ -3733,7 +3733,7 @@ All toll rates, collateral scrap deposits, and timestamps enforce `CultureInfo.I
 
 **Execution Timestamp:** 2026-09-25T04:29:30+03:00
 **Harmonization Lead:** Antigravity Senior Systems Integrity Engineer
-**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+**Master Authority:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 
 ### 15.1 Concurrency & Boundary Hardening
 1. **Thread Safety**: Single-threaded domain coordinator executes safely on main simulation loop.

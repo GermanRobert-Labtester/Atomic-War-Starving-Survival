@@ -329,6 +329,8 @@ namespace Ashfall.Core.Radio
         public string SourceName { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
+        /// <summary>Optional editorial listening note; never replaces Message.</summary>
+        public string ListeningNote { get; set; } = string.Empty;
         public BroadcastGenre Genre { get; set; } = BroadcastGenre.CivilianNews;
         public SourceReliability Reliability { get; set; } = SourceReliability.Official;
         public BroadcastPriority Priority { get; set; } = BroadcastPriority.Routine;

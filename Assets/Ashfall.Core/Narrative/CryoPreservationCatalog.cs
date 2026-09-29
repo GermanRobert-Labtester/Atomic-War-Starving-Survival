@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string germPath = Path.Combine(directoryPath, "cryo_germplasm_viability_audits.json");
             if (File.Exists(germPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CryoGermplasmViabilityEntry>(File.ReadAllText(germPath), options);
+                var list = CatalogLocator.LoadWrappedList<CryoGermplasmViabilityEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(germPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string compPath = Path.Combine(directoryPath, "liquid_nitrogen_compressor_failures.json");
             if (File.Exists(compPath))
             {
-                var list = CatalogLocator.LoadWrappedList<LiquidNitrogenCompressorEntry>(File.ReadAllText(compPath), options);
+                var list = CatalogLocator.LoadWrappedList<LiquidNitrogenCompressorEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(compPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string permPath = Path.Combine(directoryPath, "permafrost_methane_eruption_logs.json");
             if (File.Exists(permPath))
             {
-                var list = CatalogLocator.LoadWrappedList<PermafrostMethaneEruptionEntry>(File.ReadAllText(permPath), options);
+                var list = CatalogLocator.LoadWrappedList<PermafrostMethaneEruptionEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(permPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string genPath = Path.Combine(directoryPath, "crop_genome_degradation_reports.json");
             if (File.Exists(genPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CropGenomeDegradationEntry>(File.ReadAllText(genPath), options);
+                var list = CatalogLocator.LoadWrappedList<CropGenomeDegradationEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(genPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

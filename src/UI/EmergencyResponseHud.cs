@@ -291,9 +291,14 @@ namespace AtomicWar.GodotApp.UI
             IsBound = false;
         }
 
-        public override void _Input(InputEvent @event)
+        // Unhandled phase, not `_Input` (a11y audit 2026-09-29, §9.2): `_Input`
+        // preempted stacked modals added later in the tree, so Esc closed the
+        // crisis HUD instead of the topmost modal. Tree-order unhandled
+        // propagation gives later siblings the first claim.
+        public override void _UnhandledKeyInput(InputEvent @event)
         {
-            if (Visible && AshfallInputActions.IsCloseOrCancel(@event))
+            if (!Visible || !@event.IsPressed() || @event.IsEcho()) return;
+            if (AshfallInputActions.IsCloseOrCancel(@event))
             {
                 Close();
                 GetViewport()?.SetInputAsHandled();

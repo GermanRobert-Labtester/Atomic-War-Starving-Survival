@@ -31,6 +31,8 @@ namespace AtomicWar.GodotApp
                 saveSectionKey: "campaign_day",
                 onReset: () =>
                 {
+                    _campaignDayHost?.Dispose();
+                    _campaignDayHost = null!;
                     _campaignDay = null!;
                     _dailyBriefing = null!;
                     _briefingPending = false;

@@ -818,7 +818,7 @@ Steps 2, 3, 4, 5 can proceed in parallel once Step 1 is complete. Steps 6 and 7 
 ## Review Notes (Corrected)
 
 This document was adversarially reviewed against the live codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and edited in place. Summary of findings:
+`.` and edited in place. Summary of findings:
 
 ### Factual corrections applied
 

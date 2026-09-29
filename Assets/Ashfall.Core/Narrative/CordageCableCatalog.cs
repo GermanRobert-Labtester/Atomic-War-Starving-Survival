@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string hempPath = Path.Combine(directoryPath, "hemp_fiber_hackling_logs.json");
             if (File.Exists(hempPath))
             {
-                var list = CatalogLocator.LoadWrappedList<HempFiberHacklingEntry>(File.ReadAllText(hempPath), options);
+                var list = CatalogLocator.LoadWrappedList<HempFiberHacklingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(hempPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string wirePath = Path.Combine(directoryPath, "wire_rope_stranding_assays.json");
             if (File.Exists(wirePath))
             {
-                var list = CatalogLocator.LoadWrappedList<WireRopeStrandingEntry>(File.ReadAllText(wirePath), options);
+                var list = CatalogLocator.LoadWrappedList<WireRopeStrandingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(wirePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string hawserPath = Path.Combine(directoryPath, "manila_hawser_breakage_reports.json");
             if (File.Exists(hawserPath))
             {
-                var list = CatalogLocator.LoadWrappedList<ManilaHawserBreakageEntry>(File.ReadAllText(hawserPath), options);
+                var list = CatalogLocator.LoadWrappedList<ManilaHawserBreakageEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(hawserPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string splicePath = Path.Combine(directoryPath, "rope_transmission_splicing_audits.json");
             if (File.Exists(splicePath))
             {
-                var list = CatalogLocator.LoadWrappedList<RopeTransmissionSplicingEntry>(File.ReadAllText(splicePath), options);
+                var list = CatalogLocator.LoadWrappedList<RopeTransmissionSplicingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(splicePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

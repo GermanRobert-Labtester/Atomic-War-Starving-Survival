@@ -608,7 +608,7 @@ dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj    # all pass including
 ## Review Notes (Corrected)
 
 This section records the adversarial review performed against the real codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`, what was found wrong, and what was fixed in place above. Read this alongside the inline corrections — the inline corrections are the actionable fixes; this section is the audit trail.
+`.`, what was found wrong, and what was fixed in place above. Read this alongside the inline corrections — the inline corrections are the actionable fixes; this section is the audit trail.
 
 ### Factual errors found and fixed
 

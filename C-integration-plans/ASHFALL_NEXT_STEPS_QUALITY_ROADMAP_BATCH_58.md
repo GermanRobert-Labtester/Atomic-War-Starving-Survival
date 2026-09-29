@@ -410,7 +410,7 @@ dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter Category=Bench
 
 ## Review Notes (Corrected)
 
-This batch was adversarially reviewed against the actual codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Corrections made:
+This batch was adversarially reviewed against the actual codebase at `.`. Corrections made:
 
 1. **`SaveChecksum.Compute()` reflection claim — CONFIRMED ACCURATE.** `Assets/Ashfall.Core/SaveChecksum.cs` genuinely walks `type.GetFields(BindingFlags.Public | BindingFlags.Instance)`, sorts ordinally by name, and writes a canonical self-delimiting string before SHA256 hashing. The original plan's characterization of this as a real, non-trivial reflection cost is correct and the profiling work in Steps 3 and 7 is well-targeted.
 

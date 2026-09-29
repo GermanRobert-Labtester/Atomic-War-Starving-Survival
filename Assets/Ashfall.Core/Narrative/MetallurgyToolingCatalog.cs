@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string slagPath = Path.Combine(directoryPath, "cupola_slag_leaching_records.json");
             if (File.Exists(slagPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CupolaSlagLeachingEntry>(File.ReadAllText(slagPath), options);
+                var list = CatalogLocator.LoadWrappedList<CupolaSlagLeachingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(slagPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string toolPath = Path.Combine(directoryPath, "carbide_tool_wear_audits.json");
             if (File.Exists(toolPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CarbideToolWearEntry>(File.ReadAllText(toolPath), options);
+                var list = CatalogLocator.LoadWrappedList<CarbideToolWearEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(toolPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string gearPath = Path.Combine(directoryPath, "gear_quenching_fault_logs.json");
             if (File.Exists(gearPath))
             {
-                var list = CatalogLocator.LoadWrappedList<GearQuenchingFaultEntry>(File.ReadAllText(gearPath), options);
+                var list = CatalogLocator.LoadWrappedList<GearQuenchingFaultEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(gearPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string bulletPath = Path.Combine(directoryPath, "bullet_alloy_assay_reports.json");
             if (File.Exists(bulletPath))
             {
-                var list = CatalogLocator.LoadWrappedList<BulletAlloyAssayEntry>(File.ReadAllText(bulletPath), options);
+                var list = CatalogLocator.LoadWrappedList<BulletAlloyAssayEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(bulletPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

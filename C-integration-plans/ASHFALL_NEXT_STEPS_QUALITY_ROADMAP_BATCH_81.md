@@ -361,7 +361,7 @@ The input system belongs partially in Core (action definitions, scheme data, con
 
 ## Review Notes (Corrected)
 
-Adversarial review performed against the real codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` (Godot host). Findings and fixes applied in place above:
+Adversarial review performed against the real codebase at `.` (Godot host). Findings and fixes applied in place above:
 
 1. **Factual error — input handling mechanism.** Original draft implied a partial/inconsistent mix of `Input.IsActionJustPressed(...)`-style calls and raw key checks, with `InputMap` "not used consistently." Verified via grep: `InputMap` has **zero** usages anywhere in `src/`, `project.godot` has **no `[input]` section**, and there is not a single `Input.IsAction*` call in the codebase. 100% of input handling is raw `InputEventKey.Keycode` comparisons inside `_UnhandledInput`/`_Input` overrides, confirmed across 84 files. Corrected the Context and Step 1 implementation accordingly, and removed the fabricated `if (Input.IsActionJustPressed("ui_accept"))` example that does not exist in this project.
 

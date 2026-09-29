@@ -1167,7 +1167,7 @@ Step 1 (design) ─── Step 4 (reconciler) ──┐    │
 ## Review Notes (Corrected)
 
 This document was adversarially reviewed against the live codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and edited in place. Summary of findings:
+`.` and edited in place. Summary of findings:
 
 ### Factual corrections applied
 

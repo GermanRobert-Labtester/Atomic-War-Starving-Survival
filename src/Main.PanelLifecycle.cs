@@ -260,6 +260,14 @@ namespace AtomicWar.GodotApp
                 AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(_journalBook);
                 _journalBook.Close();
             }
+
+            // The crisis HUD is intentionally NOT in OverlayPanelCatalog —
+            // closing it on a panel switch would lose an active crisis alert
+            // (its open path only fires on a new severe snapshot). Instead,
+            // re-raise it so panels opened after BuildUserInterface (lazy
+            // panels, modals) cannot draw above it (a11y audit 2026-09-29 §8).
+            if (_crisisHud != null && _crisisHud.Visible)
+                _crisisHud.MoveToFront();
         }
 
         private void CloseSettingsPanel()

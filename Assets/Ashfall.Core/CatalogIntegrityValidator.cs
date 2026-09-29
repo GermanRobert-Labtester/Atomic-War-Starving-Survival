@@ -766,6 +766,27 @@ namespace Ashfall.Core
                             }
                         }
                     }
+
+                    // Route-to-location links: every route must own a gate and
+                    // every location must resolve, or the link is dead data.
+                    string linkPath = Path.Combine(dataDirectory, Ashfall.Core.World.WeatherRouteGateCatalog.RouteLocationFileName);
+                    if (files.FileExists(linkPath))
+                    {
+                        var linkDoc = System.Text.Json.JsonSerializer.Deserialize<Ashfall.Core.World.WeatherRouteLocationFile>(
+                            files.ReadAllText(linkPath), SystemTextJsonSerializer.Options);
+                        var gateTargets = new HashSet<string>(StringComparer.Ordinal);
+                        foreach (var g in gateCatalog.GetAll()) gateTargets.Add(g.TargetId);
+                        foreach (var link in linkDoc?.links ?? new List<Ashfall.Core.World.WeatherRouteLocationLink>())
+                        {
+                            if (!gateTargets.Contains(link.route_id))
+                                report.Error($"weather_route_gate_locations.json: route '{link.route_id}' has no weather gate");
+                            foreach (var loc in link.location_ids)
+                            {
+                                if (!ctx.Registry.ContainsKey(loc))
+                                    report.Error($"weather_route_gate_locations.json: route '{link.route_id}' links unresolved location '{loc}'");
+                            }
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

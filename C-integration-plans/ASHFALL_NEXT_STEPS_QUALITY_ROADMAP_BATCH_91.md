@@ -305,7 +305,7 @@ interface. Follow Invariant 1 (zero engine coupling). Verify with dotnet build.
 ## Review Notes (Corrected)
 
 This batch was adversarially reviewed against the live codebase at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Findings and fixes applied in place:
+`.`. Findings and fixes applied in place:
 
 **1. Factual errors in Step 4's system list (fixed):**
 Three class names in the original draft do not exist anywhere in `Assets/Ashfall.Core/`:

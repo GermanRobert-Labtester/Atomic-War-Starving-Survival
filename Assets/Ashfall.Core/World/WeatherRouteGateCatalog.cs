@@ -38,6 +38,19 @@ namespace Ashfall.Core.World
         public Dictionary<string, float>? compound_event_modifier { get; set; }
     }
 
+    public sealed class WeatherRouteLocationLink
+    {
+        public string route_id { get; set; } = string.Empty;
+        public List<string> location_ids { get; set; } = new List<string>();
+        public string basis { get; set; } = string.Empty;
+    }
+
+    public sealed class WeatherRouteLocationFile
+    {
+        public int schema_version { get; set; } = 1;
+        public List<WeatherRouteLocationLink> links { get; set; } = new List<WeatherRouteLocationLink>();
+    }
+
     /// <summary>Outcome of evaluating one gate against current weather.</summary>
     public sealed class WeatherGateBlock
     {
@@ -84,6 +97,48 @@ namespace Ashfall.Core.World
         }
 
         public IReadOnlyList<WeatherGateDef> Gates => _gates;
+
+        public const string RouteLocationFileName = "weather_route_gate_locations.json";
+
+        // location id -> route gate targets that lie on it (authored thematic links).
+        private readonly Dictionary<string, List<string>> _routesByLocation =
+            new Dictionary<string, List<string>>(StringComparer.Ordinal);
+
+        /// <summary>Route gate targets linked to a dispatchable location, in file order.</summary>
+        public IReadOnlyList<string> RoutesForLocation(string locationId) =>
+            _routesByLocation.TryGetValue(locationId ?? string.Empty, out var r) ? r : Array.Empty<string>();
+
+        /// <summary>
+        /// Binds authored route-to-location links. Links naming a route with no
+        /// gate are ignored. Returns the number of location bindings added.
+        /// </summary>
+        public int BindRouteLocations(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return 0;
+            int added = 0;
+            try
+            {
+                var doc = System.Text.Json.JsonSerializer.Deserialize<WeatherRouteLocationFile>(json, SystemTextJsonSerializer.Options);
+                foreach (var link in doc?.links ?? new List<WeatherRouteLocationLink>())
+                {
+                    if (link == null || string.IsNullOrEmpty(link.route_id) || !_gatesByTarget.ContainsKey(link.route_id)) continue;
+                    foreach (var loc in link.location_ids ?? new List<string>())
+                    {
+                        if (string.IsNullOrEmpty(loc)) continue;
+                        if (!_routesByLocation.TryGetValue(loc, out var list))
+                            _routesByLocation[loc] = list = new List<string>();
+                        if (list.Contains(link.route_id)) continue;
+                        list.Add(link.route_id);
+                        added++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                CatalogDiagnostics.Warn("WeatherRouteGateCatalog", RouteLocationFileName, ex);
+            }
+            return added;
+        }
 
         public bool TryGetGatesForTarget(string targetId, out IReadOnlyList<WeatherGateDef> gates)
         {
@@ -145,6 +200,19 @@ namespace Ashfall.Core.World
         public WeatherGateBlock? EvaluateBlock(
             string targetId, string currentWeather, Func<string, bool> hasOverrideItem)
         {
+            var block = EvaluateTarget(targetId, currentWeather, hasOverrideItem);
+            if (block != null) return block;
+            foreach (var route in RoutesForLocation(targetId))
+            {
+                block = EvaluateTarget(route, currentWeather, hasOverrideItem);
+                if (block != null) return block;
+            }
+            return null;
+        }
+
+        private WeatherGateBlock? EvaluateTarget(
+            string targetId, string currentWeather, Func<string, bool> hasOverrideItem)
+        {
             if (!_gatesByTarget.TryGetValue(targetId ?? string.Empty, out var gates))
                 return null;
 
@@ -175,7 +243,10 @@ namespace Ashfall.Core.World
             try
             {
                 var parsed = CatalogLocator.LoadWrappedList<WeatherGateDef>(fileIO.ReadAllText(path), SystemTextJsonSerializer.Options);
-                return new WeatherRouteGateCatalog(parsed);
+                var catalog = new WeatherRouteGateCatalog(parsed);
+                string linkPath = fileIO.Combine(dataDir, RouteLocationFileName);
+                if (fileIO.FileExists(linkPath)) catalog.BindRouteLocations(fileIO.ReadAllText(linkPath));
+                return catalog;
             }
             catch (Exception ex)
             {

@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string hoistPath = Path.Combine(directoryPath, "ammo_hoist_jam_reports.json");
             if (File.Exists(hoistPath))
             {
-                var list = CatalogLocator.LoadWrappedList<AmmoHoistJamEntry>(File.ReadAllText(hoistPath), options);
+                var list = CatalogLocator.LoadWrappedList<AmmoHoistJamEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(hoistPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string munitionsPath = Path.Combine(directoryPath, "munitions_leaching_records.json");
             if (File.Exists(munitionsPath))
             {
-                var list = CatalogLocator.LoadWrappedList<MunitionsLeachingEntry>(File.ReadAllText(munitionsPath), options);
+                var list = CatalogLocator.LoadWrappedList<MunitionsLeachingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(munitionsPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string sonarPath = Path.Combine(directoryPath, "sonar_array_fault_logs.json");
             if (File.Exists(sonarPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SonarArrayFaultEntry>(File.ReadAllText(sonarPath), options);
+                var list = CatalogLocator.LoadWrappedList<SonarArrayFaultEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(sonarPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string breachPath = Path.Combine(directoryPath, "vault_seal_breach_logs.json");
             if (File.Exists(breachPath))
             {
-                var list = CatalogLocator.LoadWrappedList<VaultSealBreachEntry>(File.ReadAllText(breachPath), options);
+                var list = CatalogLocator.LoadWrappedList<VaultSealBreachEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(breachPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

@@ -343,7 +343,7 @@ godot --headless --path . -- --bridge-selftest
 ## Review Notes (Corrected)
 
 This plan was adversarially reviewed against the live repository at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` before editing. Findings:
+`.` before editing. Findings:
 
 1. **`Assets/_Game/` is confirmed fully deleted** (`ls Assets/` shows only `Ashfall.Core/`, `StreamingAssets/`, `art/`, `audio/`, `sprites/`, `ui/`, plus `.meta`/`.gdignore` files — no `_Game/` subdirectory, `ls Assets/_Game` errors with "No such file or directory"). The original plan's premise on this point was correct and is preserved.
 2. **`ProjectSettings/` and `Packages/` are NOT deleted** — the original Step 3 assumed these needed removing "if still present" but treated it as a mechanical cleanup. They are present (27 `.asset`/config files plus a nested `ProjectSettings/Packages/` directory, 29 top-level entries total, in `ProjectSettings/`; `manifest.json` + `packages-lock.json` in the top-level `Packages/`) and there is no evidence in the repo that they're safe to delete without an owner decision — rewritten as Step 3 with an explicit decision gate and upgraded risk rating. Both are also git-tracked (`git ls-files ProjectSettings/ Packages/` returns 34 tracked paths), confirming the Step 3 risk note that deletion is only cleanly reversible via `git checkout` while they remain tracked.

@@ -185,5 +185,19 @@ namespace Ashfall.Core.Tests.Survivors
             Assert.Equal(preAffinity + 25f, pair.Affinity);
             Assert.Equal(0, pair.DaysWithoutInteraction);
         }
+        [Fact]
+        public void HostWiring_FeedsDecayOwner_FromConflictResolutionAndCaregiving()
+        {
+            var dir = new System.IO.DirectoryInfo(System.IO.Directory.GetCurrentDirectory());
+            while (dir != null && !System.IO.File.Exists(System.IO.Path.Combine(dir.FullName, "src", "Main.RelationshipDecay.cs")))
+                dir = dir.Parent;
+            Assert.NotNull(dir);
+            string decay = System.IO.File.ReadAllText(System.IO.Path.Combine(dir!.FullName, "src", "Main.RelationshipDecay.cs"));
+            string social = System.IO.File.ReadAllText(System.IO.Path.Combine(dir.FullName, "src", "Main.ShelterSocial.cs"));
+            Assert.Contains("RecordInteraction(survivorA, survivorB, interactionType, affinityBonus, _simDay)", decay);
+            Assert.Contains("srSys.OnConflictResolved += FeedRelationshipDecayFromConflict;", social);
+            Assert.Contains("cgSys.OnCaregivingBondDeepened +=", social);
+            Assert.Contains("RecordRelationshipInteraction(caregiverId, patientId, \"caregiving\"", social);
+        }
     }
 }

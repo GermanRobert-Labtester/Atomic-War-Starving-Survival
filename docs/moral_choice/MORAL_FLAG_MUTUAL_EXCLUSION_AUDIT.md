@@ -12,7 +12,7 @@ The pairs are not globally exclusive. A campaign may respond to one distress cal
 `flag_sheltered_refugee` and `flag_expelled_survivor` are also incident-specific, not mathematical opposites. `flag_repaired_infrastructure` and `flag_sabotaged_rival` are unrelated acts and may coexist.
 
 <!-- Master Authority Integration Reference -->
-> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
+> **Master Expansion Authority File:** [newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md)
 > **Target Framework:** `Assets/Ashfall.Core/MoralChoice/Exclusion/` (`netstandard2.1`, Engine-Free Domain)
 > **Host Framework:** `src/Host/` (Godot 4.3+ Host Session Adapter)
 > **Authoritative Catalogs:** `Assets/StreamingAssets/Data/` (Authoritative Snake_Case JSON)

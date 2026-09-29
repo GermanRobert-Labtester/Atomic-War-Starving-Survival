@@ -18,6 +18,7 @@ namespace AtomicWar.GodotApp
     public partial class Main : Control
     {
         private CampaignDayCoordinator _campaignDay = null!;
+        private CampaignDayHostSession _campaignDayHost = null!;
         private DailyBriefingState _dailyBriefing = null!;
         private DailyBriefingModal _dailyBriefingModal = null!;
         private bool _briefingPending;
@@ -33,7 +34,8 @@ namespace AtomicWar.GodotApp
         private void SetupCampaignDay()
         {
             if (_campaignDay != null) return;
-            _campaignDay = new CampaignDayCoordinator();
+            _campaignDayHost = new CampaignDayHostSession(new CampaignDayCoordinator(), _eventBus);
+            _campaignDay = _campaignDayHost.Coordinator;
             RegisterProductionCampaignOwners();
             _dailyBriefing = new DailyBriefingState();
             LoadDailyBriefing();

@@ -113,16 +113,6 @@ public sealed class SkillProgressionSystem
         return _bySkillId.TryGetValue(id, out var s) ? s : null;
     }
 
-    /// <summary>
-    /// Skill definitions are authored in Assets/StreamingAssets/Data/skills.json.
-    /// Loaded through <see cref="SkillCatalogLoader.LoadAndRegister"/>.
-    /// </summary>
-    public void RegisterDefaultSkills()
-    {
-        // Production skill definitions live in Assets/StreamingAssets/Data/skills.json.
-        // This method is retained as a zero-op for backward compatibility.
-    }
-
     // ─── Awarding ────────────────────────────────────────────────────
 
     /// <summary>

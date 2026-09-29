@@ -372,7 +372,7 @@ godot --headless --path . -- --layout-compliance-report
 
 ## Review Notes (Corrected)
 
-Adversarial review performed against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Every number and file reference below was independently re-verified with `grep`/`find`, not taken from the plan's own prior self-corrections.
+Adversarial review performed against the live codebase at `.`. Every number and file reference below was independently re-verified with `grep`/`find`, not taken from the plan's own prior self-corrections.
 
 ### Factual errors found and fixed
 
@@ -406,7 +406,7 @@ Adversarial review performed against the live codebase at `/home/robertsrff/Musi
 
 ### Independent second-pass adversarial re-verification (this review)
 
-This document arrived with an existing "Review Notes (Corrected)" section claiming prior verification. Per the review mandate, none of those prior claims were taken on trust — every cited number and file path was re-derived from scratch against the live repo at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` before this pass made any further edit. Results:
+This document arrived with an existing "Review Notes (Corrected)" section claiming prior verification. Per the review mandate, none of those prior claims were taken on trust — every cited number and file path was re-derived from scratch against the live repo at `.` before this pass made any further edit. Results:
 
 - `find src/UI -maxdepth 1 -name '*Panel.cs' | wc -l` → 83, and `grep -rl 'class \w*Panel\s*:\s*Control' src/UI/ | wc -l` → 83, and a `diff` of the two file lists is empty (identical sets). The 83 count is confirmed exact by two independent methods with no divergence.
 - `grep -rl 'Position\s*=\s*new Vector2(' src/UI/` → exactly 1 file, `src/UI/UiBackgroundCarousel.cs` (not a panel). Confirmed.

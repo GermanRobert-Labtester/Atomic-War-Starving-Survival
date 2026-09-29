@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string treatPath = Path.Combine(directoryPath, "timber_creosote_treatment_logs.json");
             if (File.Exists(treatPath))
             {
-                var list = CatalogLocator.LoadWrappedList<TimberCreosoteTreatmentEntry>(File.ReadAllText(treatPath), options);
+                var list = CatalogLocator.LoadWrappedList<TimberCreosoteTreatmentEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(treatPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string shorePath = Path.Combine(directoryPath, "square_set_shoring_audits.json");
             if (File.Exists(shorePath))
             {
-                var list = CatalogLocator.LoadWrappedList<SquareSetShoringEntry>(File.ReadAllText(shorePath), options);
+                var list = CatalogLocator.LoadWrappedList<SquareSetShoringEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(shorePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string rotPath = Path.Combine(directoryPath, "timber_dry_rot_fruiting_records.json");
             if (File.Exists(rotPath))
             {
-                var list = CatalogLocator.LoadWrappedList<TimberDryRotFruitingEntry>(File.ReadAllText(rotPath), options);
+                var list = CatalogLocator.LoadWrappedList<TimberDryRotFruitingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(rotPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string mortPath = Path.Combine(directoryPath, "mortise_tenon_failure_reports.json");
             if (File.Exists(mortPath))
             {
-                var list = CatalogLocator.LoadWrappedList<MortiseTenonFailureEntry>(File.ReadAllText(mortPath), options);
+                var list = CatalogLocator.LoadWrappedList<MortiseTenonFailureEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(mortPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

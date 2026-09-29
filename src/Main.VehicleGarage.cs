@@ -9,6 +9,14 @@
 using Godot;
 using Ashfall.Core.Expeditions;
 
+using Ashfall.Core;
+using Ashfall.Core.Audio;
+using Ashfall.Core.Factions;
+using Ashfall.Core.Needs;
+using AtomicWar.GodotApp.Audio;
+using System;
+using System.IO;
+
 namespace AtomicWar.GodotApp
 {
     public partial class Main
@@ -50,5 +58,81 @@ namespace AtomicWar.GodotApp
                 _vehicleGaragePanel.RefreshView();
             }
         }
+        private VehicleGarageSystem? _vehicleGarage;
+
+        private bool _vehicleGarageDirty;
+
+        public VehicleGarageSystem? VehicleGarageSystem => _vehicleGarage;
+
+        // ── Plan 50: Vehicle Garage ───────────────────────────────────────
+
+        public VehicleGarageSystem EnsureVehicleGarage()
+        {
+            if (_vehicleGarage != null) return _vehicleGarage;
+
+            var rng = _campaignDay != null ? _campaignDay.Rng.Fork("vehicle_garage") : new SeededRng(50);
+            _vehicleGarage = new VehicleGarageSystem(null, rng);
+
+            string path = Path.Combine(_dataDir, "vehicle_modifications.json");
+            if (System.IO.File.Exists(path))
+            {
+                try
+                {
+                    string json = System.IO.File.ReadAllText(path);
+                    var catalog = VehicleGarageCatalogLoader.Load(json, new SystemTextJsonSerializer());
+                    _vehicleGarage.LoadCatalog(catalog);
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[Ashfall Godot] Failed to load vehicle_modifications.json: {ex.Message}");
+                }
+            }
+
+            string armorPath = Path.Combine(_dataDir, VehicleArmorGradeCatalogLoader.FileName);
+            if (System.IO.File.Exists(armorPath))
+            {
+                try
+                {
+                    string armorJson = System.IO.File.ReadAllText(armorPath);
+                    var loaded = VehicleArmorGradeCatalogLoader.LoadJson(armorJson, new SystemTextJsonSerializer());
+                    if (loaded.Catalog != null && !loaded.HasErrors)
+                        _vehicleGarage.LoadArmorCatalog(loaded.Catalog);
+                    else
+                        GD.PrintErr($"[Ashfall Godot] Failed to load {VehicleArmorGradeCatalogLoader.FileName}: {string.Join("; ", loaded.Errors)}");
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[Ashfall Godot] Failed to load {VehicleArmorGradeCatalogLoader.FileName}: {ex.Message}");
+                }
+            }
+
+            // Terrain is a read-only classification from the existing vehicle
+            // owner. The optional resolver keeps early pure-Core/bootstrap paths
+            // neutral while enforcing authored terrain gates in the live garage.
+            _vehicleGarage.VehicleTerrainResolver = id => _expeditions?.Vehicles.GetDefinition(id)?.terrain_type;
+            BindVehicleGarageArmorMaterialQuality();
+
+            var saved = VehicleGarageSaveStore.TryLoad();
+            if (saved != null)
+            {
+                _vehicleGarage.RestoreState(saved);
+            }
+
+            return _vehicleGarage;
+        }
+
+        private void SetupVehicleGarage() => EnsureVehicleGarage();
+
+        private void SaveVehicleGarage()
+        {
+            if (_vehicleGarage == null) return;
+            var state = _vehicleGarage.CaptureState();
+            string payload = VehicleGarageSaveStore.TryCapturePersisted(state);
+            if (CaptureSection(VehicleGarageSaveStore.SectionName, payload))
+            {
+                _vehicleGarageDirty = false;
+            }
+        }
+
     }
 }

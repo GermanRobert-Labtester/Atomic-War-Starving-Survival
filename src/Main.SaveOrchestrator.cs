@@ -84,7 +84,8 @@ namespace AtomicWar.GodotApp
         /// </summary>
         internal void FlushDirtyStoresForDayAdvance()
         {
-            SaveAll(playCue: false);
+            if (!SaveAll(playCue: false))
+                throw new InvalidOperationException("The campaign save failed; day advance cannot commit.");
         }
 
         /// <summary>
@@ -125,6 +126,8 @@ namespace AtomicWar.GodotApp
                     category: "system",
                     dedupeKey: "load_failed"
                 ));
+                if (result.RecoveryAvailable)
+                    PromptBackupRecovery(slotId);
                 return false;
             }
 
@@ -145,6 +148,17 @@ namespace AtomicWar.GodotApp
             CloseAllOverlayPanels();
 
             RestoreAllSubsystemsFromDisk();
+
+            // Only v3 authenticates panel metadata. Older manifests restore the
+            // dashboard, even if an unchecksummed extension field was present.
+            _lastCampaignPanelId = result.Envelope?.manifest.manifestVersion >= 3
+                ? result.Envelope.manifest.lastPanelId ?? string.Empty : string.Empty;
+            var resumePanel = Ashfall.Core.UI.PanelRegistry.Get(_lastCampaignPanelId);
+            if (resumePanel != null && resumePanel.IsPlayerNavigable && resumePanel.IsAvailable() &&
+                _lastCampaignPanelId != "save" && _lastCampaignPanelId != "settings")
+                OpenPlayerPanel(_lastCampaignPanelId);
+            else
+                _lastCampaignPanelId = string.Empty;
 
             if (_statusLabel != null)
                 _statusLabel.Text = message;
@@ -414,6 +428,35 @@ namespace AtomicWar.GodotApp
                 if (TryLoadAndRestoreGame(_saveLoadHost.ActiveSlotId.Value, out string msg))
                     return;
                 GD.PrintErr($"[Ashfall Godot] ContinueGame failed: {msg}");
+                if (_statusLabel != null) _statusLabel.Text = msg;
+                return;
+            }
+
+            // A fresh process has no selected slot. Resume the most recent real
+            // campaign (or offer its valid backup) before considering legacy files.
+            SaveSlotId? latestSlot = null;
+            long latestTick = long.MinValue;
+            if (_saveLoadHost != null)
+            {
+                foreach (var slot in _saveLoadHost.GetSlots())
+                {
+                    var card = _saveLoadHost.BuildSlotCard(slot);
+                    if (!card.HasValidSave && !_saveLoadHost.FindRecoverableBackup(slot).IsSuccess) continue;
+                    if (card.IsTerminalIronMan && !_saveLoadHost.FindRecoverableBackup(slot).IsSuccess) continue;
+                    long tick = _saveLoadHost.GetManifest(slot)?.lastSaveTick ?? 0;
+                    if (tick > latestTick) { latestSlot = slot; latestTick = tick; }
+                }
+                if (latestSlot.HasValue)
+                {
+                    TryLoadAndRestoreGame(latestSlot.Value, out string message);
+                    if (_statusLabel != null) _statusLabel.Text = message;
+                    return;
+                }
+                if (_saveLoadHost.GetSlots().Count > 0)
+                {
+                    if (_statusLabel != null) _statusLabel.Text = "No campaign can be continued. Open Save / Load to inspect available slots.";
+                    return;
+                }
             }
 
             _state = GameState.Playing;
@@ -437,6 +480,38 @@ namespace AtomicWar.GodotApp
             RestoreAllSubsystemsFromDisk();
 
             _statusLabel.Text = "Save loaded. The ledger continues.";
+        }
+
+        private string _lastCampaignPanelId = string.Empty;
+        private ConfirmationDialog? _backupRecoveryDialog;
+
+        private void PromptBackupRecovery(SaveSlotId slotId)
+        {
+            var preview = _saveLoadHost?.FindRecoverableBackup(slotId);
+            if (preview?.IsSuccess != true || preview.Envelope == null) return;
+            if (_backupRecoveryDialog != null && GodotObject.IsInstanceValid(_backupRecoveryDialog))
+                _backupRecoveryDialog.QueueFree();
+            var dialog = new ConfirmationDialog
+            {
+                Title = "Recover campaign",
+                DialogText = $"The current save cannot be loaded. Restore the verified backup from day {preview.Envelope.manifest.currentDay}? Progress after that save will be lost.",
+                OkButtonText = "Restore backup",
+                CancelButtonText = "Keep current session",
+            };
+            _backupRecoveryDialog = dialog;
+            AddChild(dialog);
+            dialog.Confirmed += () =>
+            {
+                var recovered = _saveLoadHost!.RecoverBackup(slotId);
+                string message = recovered.UserMessage;
+                bool loaded = recovered.IsSuccess && TryLoadAndRestoreGame(slotId, out message);
+                _saveLoadPanel?.ShowStatusMessage(message, !loaded);
+                if (_statusLabel != null) _statusLabel.Text = message;
+                UpdateContinueButton();
+                dialog.QueueFree();
+            };
+            dialog.Canceled += () => dialog.QueueFree();
+            dialog.PopupCentered(new Vector2I(560, 220));
         }
 
         private void SaveAll() => SaveAll(playCue: true);
@@ -715,7 +790,7 @@ namespace AtomicWar.GodotApp
                     return false;
                 }
 
-                bool committed = _saveLoadHost != null && _saveLoadHost.SaveAllDirect(_sectionPayloads);
+                bool committed = _saveLoadHost != null && _saveLoadHost.SaveAllDirect(_sectionPayloads, _lastCampaignPanelId, _simDay);
                 if (!committed)
                 {
                     string reason = _saveLoadHost == null

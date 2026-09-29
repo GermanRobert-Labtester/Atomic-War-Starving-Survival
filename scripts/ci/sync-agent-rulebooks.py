@@ -67,6 +67,13 @@ def sync_all(check_mode: bool = False):
         target_path = REPO_ROOT / filename
         expected = build_client_content(title, body, today)
 
+        # The Go owner consolidates clients as links to AGENTS.md. Never write
+        # through a symlink and accidentally replace that canonical authority.
+        if target_path.is_symlink():
+            if target_path.resolve() != CANONICAL_FILE.resolve():
+                drifted.append(f"{filename} (noncanonical symlink)")
+            continue
+
         if not target_path.exists():
             drifted.append(f"{filename} (missing)")
             if not check_mode:

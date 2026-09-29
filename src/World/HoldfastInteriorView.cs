@@ -572,7 +572,10 @@ namespace AtomicWar.GodotApp.World
                 var postings = _graffitiCatalog.GetPostingsForRoom(roomId, _currentDay);
                 if (postings != null && postings.Count > 0)
                 {
-                    var p = postings[0];
+                    // Entries are sorted by day, then posting ID. Surface the
+                    // latest eligible mark so new authored additions remain
+                    // observable in the room tooltip.
+                    var p = postings[postings.Count - 1];
                     string snippet = p.content.Length > 60 ? p.content.Substring(0, 57) + "..." : p.content;
                     sb.Append("\nWall Text: \"").Append(snippet).Append('"');
                 }

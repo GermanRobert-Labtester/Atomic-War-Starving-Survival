@@ -51,6 +51,8 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
+            SetProcess(false);
+            VisibilityChanged += RefreshProcessState;
             SetAnchorsPreset(LayoutPreset.FullRect);
 
             var fallback = new ColorRect
@@ -87,14 +89,16 @@ namespace AtomicWar.GodotApp.UI
                 _layerB.Modulate = new Color(1f, 1f, 1f, 0f);
                 StartCrossfade();
             }
+            RefreshProcessState();
         }
 
         public override void _Process(double delta)
         {
+            using var measurement = Host.FrameStartupProfiler.MeasureProcess(nameof(UiBackgroundCarousel));
             // Idle-cost guard: a hidden (or off-tree) carousel must not pay the
             // per-frame mouse query + layout churn. Parallax is visible-only;
             // the crossfade below already requires a visible multi-layer run.
-            if (!IsInsideTree() || !Visible)
+            if (!IsVisibleInTree())
                 return;
             if (_parallaxStrength > 0f)
                 UpdateParallax(delta);
@@ -180,6 +184,15 @@ namespace AtomicWar.GodotApp.UI
         {
             _transitionProgress = 0f;
             _transitioning = true;
+            RefreshProcessState();
+        }
+
+        private void RefreshProcessState()
+        {
+            bool hasTexture = (_layerA != null && _layerA.Texture != null) ||
+                              (_layerB != null && _layerB.Texture != null);
+            SetProcess(IsVisibleInTree() &&
+                (_transitioning || (_parallaxStrength > 0f && hasTexture)));
         }
 
         private void CompleteTransition()

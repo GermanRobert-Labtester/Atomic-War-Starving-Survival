@@ -623,7 +623,7 @@ public class ScenarioTests
 
 ## Review Notes (Corrected)
 
-This section documents the adversarial fact-check performed against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and lists every correction applied above.
+This section documents the adversarial fact-check performed against the live codebase at `.` and lists every correction applied above.
 
 ### Number correction
 

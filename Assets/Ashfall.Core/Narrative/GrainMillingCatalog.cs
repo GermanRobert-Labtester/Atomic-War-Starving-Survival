@@ -157,7 +157,7 @@ namespace Ashfall.Core.Narrative
             string millPath = resolve("burr_millstone_dressing_logs.json");
             if (File.Exists(millPath))
             {
-                var list = CatalogLocator.LoadWrappedList<BurrMillstoneDressingEntry>(File.ReadAllText(millPath), options);
+                var list = CatalogLocator.LoadWrappedList<BurrMillstoneDressingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(millPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -173,7 +173,7 @@ namespace Ashfall.Core.Narrative
             string silkPath = resolve("bolting_silk_mesh_reports.json");
             if (File.Exists(silkPath))
             {
-                var list = CatalogLocator.LoadWrappedList<BoltingSilkMeshEntry>(File.ReadAllText(silkPath), options);
+                var list = CatalogLocator.LoadWrappedList<BoltingSilkMeshEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(silkPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -189,7 +189,7 @@ namespace Ashfall.Core.Narrative
             string siloPath = resolve("grain_silo_weevil_audits.json");
             if (File.Exists(siloPath))
             {
-                var list = CatalogLocator.LoadWrappedList<GrainSiloWeevilEntry>(File.ReadAllText(siloPath), options);
+                var list = CatalogLocator.LoadWrappedList<GrainSiloWeevilEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(siloPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -205,7 +205,7 @@ namespace Ashfall.Core.Narrative
             string temperPath = resolve("mill_dampener_tempering_assays.json");
             if (File.Exists(temperPath))
             {
-                var list = CatalogLocator.LoadWrappedList<MillDampenerTemperingEntry>(File.ReadAllText(temperPath), options);
+                var list = CatalogLocator.LoadWrappedList<MillDampenerTemperingEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(temperPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

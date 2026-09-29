@@ -393,7 +393,7 @@ Step 3b is added by this review — the original table listed Step 6 as dependin
 ## Review Notes (Corrected)
 
 Adversarial review performed against the actual repository at
-`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` (source read directly,
+`.` (source read directly,
 `CoreInvariantSourceTests` executed, `dotnet test` run). Corrections applied in place above;
 this section summarizes what changed and why.
 

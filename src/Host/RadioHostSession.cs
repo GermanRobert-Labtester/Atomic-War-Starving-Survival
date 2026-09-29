@@ -370,7 +370,8 @@ namespace AtomicWar.GodotApp
                 broadcast.IsEmergency ? RadioEventKind.RaidWarning : RadioEventKind.InterceptChatter,
                 broadcast.Message ?? string.Empty,
                 Math.Clamp(broadcast.SignalStrength, 1, 9),
-                day > 0 ? day : Day);
+                day > 0 ? day : Day,
+                broadcast.ListeningNote);
 
             AppendIntercept(intercept);
             LastEvent = $"Faction broadcast received: {intercept.Callsign} on {intercept.FrequencyMhz:0.00} MHz.";

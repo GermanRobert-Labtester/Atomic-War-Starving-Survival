@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string sourdoughPath = Path.Combine(directoryPath, "sourdough_mother_acidity_logs.json");
             if (File.Exists(sourdoughPath))
             {
-                var list = CatalogLocator.LoadWrappedList<SourdoughMotherAcidityEntry>(File.ReadAllText(sourdoughPath), options);
+                var list = CatalogLocator.LoadWrappedList<SourdoughMotherAcidityEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(sourdoughPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string brewingPath = Path.Combine(directoryPath, "brewers_yeast_krausen_audits.json");
             if (File.Exists(brewingPath))
             {
-                var list = CatalogLocator.LoadWrappedList<BrewersYeastKrausenEntry>(File.ReadAllText(brewingPath), options);
+                var list = CatalogLocator.LoadWrappedList<BrewersYeastKrausenEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(brewingPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string silagePath = Path.Combine(directoryPath, "silage_lactic_pit_reports.json");
             if (File.Exists(silagePath))
             {
-                var list = CatalogLocator.LoadWrappedList<SilageLacticPitEntry>(File.ReadAllText(silagePath), options);
+                var list = CatalogLocator.LoadWrappedList<SilageLacticPitEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(silagePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string crockPath = Path.Combine(directoryPath, "fermentation_crock_airlock_assays.json");
             if (File.Exists(crockPath))
             {
-                var list = CatalogLocator.LoadWrappedList<FermentationCrockAirlockEntry>(File.ReadAllText(crockPath), options);
+                var list = CatalogLocator.LoadWrappedList<FermentationCrockAirlockEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(crockPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

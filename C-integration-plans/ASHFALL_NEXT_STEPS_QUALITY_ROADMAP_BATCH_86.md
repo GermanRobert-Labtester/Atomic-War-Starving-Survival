@@ -596,7 +596,7 @@ This batch migrates 10 of the **38 verified** Setup methods (corrected from the 
 
 ## Review Notes (Corrected)
 
-This plan was adversarially reviewed against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Summary of what changed and why:
+This plan was adversarially reviewed against the live codebase at `.`. Summary of what changed and why:
 
 1. **Every headline number in the Motivation section was wrong and has been corrected with verified figures:** `src/Main.cs` is **7014 lines** (not 6640, via `wc -l`), has **38 `SetupXxx` methods** (not 31, via `grep -c "void Setup"`), **~29 named `SaveXxx` methods plus a `SaveAll` orchestrator** (not 24, via `grep -n "void Save[A-Z]"`), and **17 `FlushXxxIfDirty` methods** (this one was already correct). The test-suite baseline is **~2120 tests** (`grep -rc "\[Fact\]\|\[Theory\]" Ashfall.Core.Tests/`), used throughout the corrected Done-when sections instead of leaving test counts unquantified.
 2. **The "82+ systems" and "31 Setup methods" figures were never reconciled with each other in the original draft** (Step 4 said "82+ systems," the header said "31 SetupXxx methods" — implying either multiple systems per Setup method, which is plausible but never stated, or an inconsistency). This review does not have a verified system count and explicitly flags "82+" as unverified everywhere it appeared, rather than propagating it. **Before Step 4 is executed, produce a real enumerated list from reading all 38 Setup methods** — this is now a stated prerequisite, not an assumption.

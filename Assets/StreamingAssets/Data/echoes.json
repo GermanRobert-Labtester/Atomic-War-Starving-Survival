@@ -4,7 +4,7 @@
         {
             "id": "echo_answering_machine",
             "title": "Unspooled Magnetic Tape",
-            "bodyText": "An answering machine, half-buried in the ash, its red diagnostic light blinking a weak, desperate heartbeat on a failing solar cell. The tape holds fourteen messages. Thirteen are just the sound of the wind and automated disconnect tones. The final message is a woman's voice, remarkably calm, repeating a set of coordinates over and over until the tape runs out. The coordinates belong to a crater lake that didn't exist before the war.",
+            "bodyText": "An answering machine, half-buried in the ash, its red diagnostic light blinking a weak, desperate heartbeat on a failing solar cell. The tape holds fourteen messages. Thirteen are just the sound of the wind and automated disconnect tones. The final message is a woman's voice, remarkably calm, repeating a set of coordinates over and over until the tape runs out. The coordinates belong to a crater lake that didn't exist before the war. The tape does not say whether anyone ever went to the water.",
             "weight": 1.4,
             "minDay": 31,
             "conditions": {
@@ -51,7 +51,7 @@
         {
             "id": "echo_childs_coat",
             "title": "The Child's Coat",
-            "bodyText": "Caught in a chain-link fence, a small red winter coat, zipped halfway. The hood is up. There's no one inside it, but the front is dark with the kind of blood that has been in the sun for a year. The stitching is intact. The label reads age 6.",
+            "bodyText": "Caught in a chain-link fence, a small red winter coat, zipped halfway. The hood is up. There's no one inside it, but the front is dark with the kind of blood that has been in the sun for a year. The stitching is intact. The label reads age 6. The zipper stops where a hand stopped it, and it stays there.",
             "weight": 1.6,
             "minDay": 31,
             "conditions": {
@@ -99,7 +99,7 @@
         {
             "id": "echo_wedding_ring",
             "title": "The Wedding Ring in the Glass",
-            "bodyText": "Two photographs fused to the glass of a picture frame by heat. A man and a woman on a beach. The wedding band is still inside the frame, rolled against the inner edge, scratched where the bride-to-be tried to pry it out. The inside is engraved: 04.12 \u2014 FOREVER, L.",
+            "bodyText": "Two photographs fused to the glass of a picture frame by heat. A man and a woman on a beach. The wedding band is still inside the frame, rolled against the inner edge, scratched where the bride-to-be tried to pry it out. The inside is engraved: 04.12 \u2014 FOREVER, L. The inscription is dated, initialled, and still legible.",
             "weight": 1.0,
             "minDay": 31,
             "conditions": {
@@ -158,7 +158,7 @@
         {
             "id": "echo_frozen_postman",
             "title": "The Frozen Postman",
-            "bodyText": "A postal van, door open, engine dead. The driver is in the seat, hands still on the wheel, frosted glasses on. The mailbag is unzipped. Most of it is past-due bills and pharmacy ads. One envelope is unsealed, hand-addressed in pencil: To whoever finds this. There is no return address.",
+            "bodyText": "A postal van, door open, engine dead. The driver is in the seat, hands still on the wheel, frosted glasses on. The mailbag is unzipped. Most of it is past-due bills and pharmacy ads. One envelope is unsealed, hand-addressed in pencil: To whoever finds this. There is no return address. The van has kept the envelope as it found it: unsealed and addressed to you.",
             "weight": 1.2,
             "minDay": 31,
             "conditions": {
@@ -217,7 +217,7 @@
         {
             "id": "echo_music_box",
             "title": "The Music Box",
-            "bodyText": "In a nursery that was never finished, a wooden ballerina turns on a brass key. The varnish has yellowed. The key is stiff but still works. The first phrase of F\u00fcr Elise. Forty-seven seconds, then a tiny mechanical sigh. You stand there with the wind at your back.",
+            "bodyText": "In a nursery that was never finished, a wooden ballerina turns on a brass key. The varnish has yellowed. The key is stiff but still works. The first phrase of F\u00fcr Elise. Forty-seven seconds, then a tiny mechanical sigh. You stand there with the wind at your back. When the sigh ends, the room is quieter than it was before the key turned.",
             "weight": 1.5,
             "minDay": 31,
             "conditions": {
@@ -280,7 +280,7 @@
         {
             "id": "echo_crayon_drawing",
             "title": "The Crayon Drawing",
-            "bodyText": "A kindergarten wall, mostly collapsed. Where the plaster is still up, crayon suns, blue stick-figure families, a yellow dog. One drawing, bigger than the rest, is in careful letters: I love you Mommy. There is a brown hand-print in the corner with a name. T-HeM.",
+            "bodyText": "A kindergarten wall, mostly collapsed. Where the plaster is still up, crayon suns, blue stick-figure families, a yellow dog. One drawing, bigger than the rest, is in careful letters: I love you Mommy. There is a brown hand-print in the corner with a name. T-HeM. The letters are careful because someone was taking their time, and the wall does not say who watched.",
             "weight": 1.0,
             "minDay": 31,
             "conditions": {
@@ -348,7 +348,7 @@
         {
             "id": "echo_family_dog_collar",
             "title": "The Family Dog",
-            "bodyText": "A leather dog collar under a porch step. The buckle is still in the open position. The bone-shaped tag, brass, is engraved BUDDY. No dog. No body. The leather is the kind of leather that was rubbed soft by a hand.",
+            "bodyText": "A leather dog collar under a porch step. The buckle is still in the open position. The bone-shaped tag, brass, is engraved BUDDY. No dog. No body. The leather is the kind of leather that was rubbed soft by a hand. The name is on the tag, and nothing else here says whose hand it belonged to.",
             "weight": 0.8,
             "minDay": 31,
             "conditions": {
@@ -403,7 +403,7 @@
         {
             "id": "echo_unsent_letter",
             "title": "The Unsent Letter",
-            "bodyText": "On a kitchen table under an overturned coffee mug, a single page, lined, written in pencil. 'Dear Tom, I know we said things we can't take back. The world ended last week, in case you missed it. I'm sorry. I forgive you. I hope you got out.' No address. No stamp. The pencil is still on the page.",
+            "bodyText": "On a kitchen table under an overturned coffee mug, a single page, lined, written in pencil. 'Dear Tom, I know we said things we can't take back. The world ended last week, in case you missed it. I'm sorry. I forgive you. I hope you got out.' No address. No stamp. The pencil is still on the page. The letter was never sent, and it forgives all the same.",
             "weight": 1.1,
             "minDay": 31,
             "conditions": {
@@ -588,7 +588,7 @@
         {
             "id": "echo_birthday_cake",
             "title": "Degraded Caloric Cache",
-            "bodyText": "A ruptured cryogenic storage unit. Inside, a high-sugar carbohydrate mass rests on a cardboard base. Eight wax cylinders are embedded in the surface. The mass has undergone severe fungal colonization and is biologically hazardous.",
+            "bodyText": "A ruptured cryogenic storage unit. Inside, a high-sugar carbohydrate mass rests on a cardboard base. Eight wax cylinders are embedded in the surface. The mass has undergone severe fungal colonization and is biologically hazardous. Whatever was counted in wax is all the record there is of the count.",
             "weight": 0.9,
             "minDay": 31,
             "conditions": {
@@ -703,7 +703,7 @@
         {
             "id": "echo_reading_glasses",
             "title": "Optical Refraction Lenses",
-            "bodyText": "A pair of wire-framed glass lenses designed to correct localized optical degradation. The prescription data has been filed off the temple piece. Three bound paper volumes nearby indicate the user relied heavily on visual data processing.",
+            "bodyText": "A pair of wire-framed glass lenses designed to correct localized optical degradation. The prescription data has been filed off the temple piece. Three bound paper volumes nearby indicate the user relied heavily on visual data processing. The books are open to no page in particular, and the lenses do not say what they were last used to read.",
             "weight": 0.7,
             "minDay": 31,
             "conditions": {
@@ -753,7 +753,7 @@
         {
             "id": "echo_library_card",
             "title": "Defunct Bureaucratic Token",
-            "bodyText": "A laminated plastic card indicating access rights to a centralized information repository. A red ink stamp indicates a return deadline three days post-Exchange. A piece of solidified synthetic rubber is stuck to the back.",
+            "bodyText": "A laminated plastic card indicating access rights to a centralized information repository. A red ink stamp indicates a return deadline three days post-Exchange. A piece of solidified synthetic rubber is stuck to the back. The deadline stamped on it is three days after the Exchange, and the card outlasted it.",
             "weight": 0.6,
             "minDay": 31,
             "conditions": {
@@ -813,7 +813,7 @@
         {
             "id": "echo_post_it_fridge",
             "title": "The Post-it on the Fridge",
-            "bodyText": "A yellow square on a fridge door that is now part of a wall. In blue pen, in a careful hand: Ran out of milk. Will be home by 6. Love you. \u2014 Dad. The fridge is open. The milk is gone. Six o'clock has come and gone a thousand times.",
+            "bodyText": "A yellow square on a fridge door that is now part of a wall. In blue pen, in a careful hand: Ran out of milk. Will be home by 6. Love you. \u2014 Dad. The fridge is open. The milk is gone. Six o'clock has come and gone a thousand times. The promise is still on the door.",
             "weight": 1.3,
             "minDay": 31,
             "conditions": {
@@ -874,7 +874,7 @@
         {
             "id": "echo_the_nameplates",
             "title": "The Nameplates",
-            "bodyText": "A tin behind the filtration stack, the kind that held boiled sweets. Fourteen brass nameplates inside, each with two screw holes and a surname. None of the surnames belong to anyone here. Somebody took them down in the first week and could not make themselves throw them away, and neither could anyone since.",
+            "bodyText": "A tin behind the filtration stack, the kind that held boiled sweets. Fourteen brass nameplates inside, each with two screw holes and a surname. None of the surnames belong to anyone here. Somebody took them down in the first week and could not make themselves throw them away, and neither could anyone since. Fourteen names is a small number to keep, and nobody here has said why it stayed that way.",
             "weight": 1.2,
             "minDay": 5,
             "conditions": {
@@ -975,7 +975,7 @@
         {
             "id": "echo_the_frying_pan",
             "title": "Abandoned Caloric Consumption Station",
-            "bodyText": "A cold cooking surface holds an oxidized iron pan containing carbonized organic matter. On the adjacent table, eating utensils are symmetrically aligned. The primary consumption space is occupied; the secondary is empty. Operations ceased mid-cycle.",
+            "bodyText": "A cold cooking surface holds an oxidized iron pan containing carbonized organic matter. On the adjacent table, eating utensils are symmetrically aligned. The primary consumption space is occupied; the secondary is empty. Operations ceased mid-cycle. The second place is set as carefully as the first.",
             "weight": 1.2,
             "minDay": 15,
             "conditions": {
@@ -1081,7 +1081,7 @@
         {
             "id": "echo_dosimeter_pilgrim",
             "title": "Discarded Radiation Telemetry Unit",
-            "bodyText": "A personal dosimeter hangs from a marker post. The display indicates a lethal cumulative dose. Beside the post, a pair of boots and a folded thermal layer. The biological unit that deposited them is unaccounted for.",
+            "bodyText": "A personal dosimeter hangs from a marker post. The display indicates a lethal cumulative dose. Beside the post, a pair of boots and a folded thermal layer. The biological unit that deposited them is unaccounted for. The layer is folded, and nothing here says whether anyone meant to come back for it.",
             "weight": 1.3,
             "minDay": 50,
             "conditions": {
@@ -1134,7 +1134,7 @@
         {
             "id": "echo_the_receipt",
             "title": "Expired Transit Documentation",
-            "bodyText": "A terminated biological unit rests against a culvert. In the primary thermal layer pocket is a waxed paper receipt indicating paid transit across a bridge four kilometers in the opposite direction. The unit expended resources for a transit it did not utilize.",
+            "bodyText": "A terminated biological unit rests against a culvert. In the primary thermal layer pocket is a waxed paper receipt indicating paid transit across a bridge four kilometers in the opposite direction. The unit expended resources for a transit it did not utilize. The receipt says the fare was paid, and it says nothing about why the bridge was the one chosen.",
             "weight": 1.2,
             "minDay": 20,
             "conditions": {
@@ -1249,7 +1249,7 @@
         {
             "id": "echo_the_second_chalk_count",
             "title": "Graphite Tally Marks",
-            "bodyText": "Fourteen vertical graphite lines intersected by diagonals, grouped in fives. A spatial gap separates a secondary grouping of six lines. The secondary lines exhibit variable pressure, suggesting declining physical stability in the unit marking them.",
+            "bodyText": "Fourteen vertical graphite lines intersected by diagonals, grouped in fives. A spatial gap separates a secondary grouping of six lines. The secondary lines exhibit variable pressure, suggesting declining physical stability in the unit marking them. The gap between the groups is left as it was found.",
             "weight": 1.3,
             "minDay": 60,
             "conditions": {

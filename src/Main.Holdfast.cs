@@ -52,10 +52,14 @@ namespace AtomicWar.GodotApp
             if (save != null)
             {
                 _core.RestoreSave(save);
-                SetupCampaignDay();
-                // Calendar-led: the reconciled calendar is authoritative; the
-                // holdfast clock follows it.
-                _core.Clock.SetDay(_campaignDay.Calendar.CurrentDay);
+            }
+
+            SetupCampaignDay();
+            // The demo session starts at day 90. Fresh and restored campaigns
+            // both project the canonical calendar before any state is saved.
+            _core.Clock.SetDay(_campaignDay.Calendar.CurrentDay);
+            if (save != null)
+            {
                 _holdfastDirty = false; // restore just raised state-change events
                 GD.Print($"[Ashfall Godot] Holdfast S1 state restored (day {_core.Clock.Day}).");
             }
@@ -135,7 +139,7 @@ namespace AtomicWar.GodotApp
             // Plan 39 — one measured soak sample per day advance (release-gate
             // evidence). The canonical coordinator remains the only day owner.
             var soakWatch = System.Diagnostics.Stopwatch.StartNew();
-            var args = _campaignDay.Advance(day, new CampaignDayPersistenceAdapter(this));
+            var args = _campaignDayHost.Advance(day, new CampaignDayPersistenceAdapter(this));
             soakWatch.Stop();
             if (args != null && args.Succeeded)
             {
@@ -153,8 +157,8 @@ namespace AtomicWar.GodotApp
 
         /// <summary>
         /// Validation-only seam for headless probes. Keep the coordinator's
-        /// single direct Advance call in this lifecycle owner so the source
-        /// gate continues to enforce one daily-advance authority.
+        /// direct coordinator seam in this lifecycle owner. WorldPlaytest temporarily
+        /// replaces the coordinator with its isolated production-owner probe.
         /// </summary>
         internal DayAdvancedEventArgs? AdvanceCampaignDayForValidation(int day)
         {
@@ -278,7 +282,7 @@ namespace AtomicWar.GodotApp
             int targetDay = _campaignDay.Calendar.CurrentDay + 1;
 
             // Single entry point: CampaignDayCoordinator owns the advance, re-entrancy gate, and order.
-            var args = _campaignDay.Advance(targetDay, new CampaignDayPersistenceAdapter(this));
+            var args = _campaignDayHost.Advance(targetDay, new CampaignDayPersistenceAdapter(this));
             if (args == null)
             {
                 ShowAdvanceFeedback($"Day {targetDay} advance rejected (already in flight or stale day).", FeedbackSeverity.Warning);
@@ -306,7 +310,14 @@ namespace AtomicWar.GodotApp
                 ShowBriefingForDay(_simDay, args);
 
                 var settings = AtomicWar.GodotApp.Settings.UserSettingsStore.Current;
-                if (settings.AutoSaveOnDay) SaveAll();
+                // The coordinator already committed the campaign before briefing.
+                // Preserve the optional save confirmation without rotating it twice.
+                if (settings.AutoSaveOnDay)
+                {
+                    _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
+                    FeedbackMessages.Emit(new FeedbackEvent(
+                        key: "save_success", category: "system", dedupeKey: "save_success"));
+                }
             }
             finally
             {

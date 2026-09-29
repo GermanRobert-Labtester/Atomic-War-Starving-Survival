@@ -56,6 +56,7 @@ namespace AtomicWar.GodotApp
             // owner. The relation ledger remains the authority for affinity
             // and mediation history.
             srSys.OnConflictResolved += ApplyInterpersonalConflictMorale;
+            srSys.OnConflictResolved += FeedRelationshipDecayFromConflict;
             _survivorRelations = new SurvivorRelationsHostSession(srSys);
             // Bands are live gameplay authority (they gate caregiving/training/morale
             // modifiers) and the state owns them, so bind AFTER restore: authored
@@ -550,6 +551,38 @@ namespace AtomicWar.GodotApp
             var exState = ExcavationSaveStore.TryLoad() ?? new ExcavationState();
             var exSys = new ExcavationSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Shelter, 0, 2), new GodotLog());
             exSys.RestoreState(exState);
+
+            // Authored deep-strata excavation sites live in excavation_sites.json
+            // and are read through ExcavationCatalogLoader. Before this, AddSite
+            // had no production caller at all, so the whole system was
+            // unreachable: the authored sites never became gameplay.
+            //
+            // The authored def has no room_blueprint_id column; the authored
+            // site_id is therefore used for both. Registering only what a save
+            // does not already contain keeps this idempotent across save/load
+            // (AddSite itself refuses a duplicate site_id).
+            try
+            {
+                var excavationSites = Ashfall.Core.Excavation.ExcavationCatalogLoader.Load(_dataDir ?? "");
+                if (excavationSites != null)
+                {
+                    foreach (var site in excavationSites)
+                    {
+                        if (site == null || string.IsNullOrEmpty(site.site_id)) continue;
+                        if (exState.sites.Exists(s => s.siteId == site.site_id)) continue;
+                        exSys.AddSite(
+                            site.site_id,
+                            site.site_id,
+                            site.required_progress,
+                            site.structural_risk);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[Excavation] authored site catalog load failed: {ex.Message}");
+            }
+
             _excavation = new ExcavationHostSession(exSys);
             if (_excavationPanel != null && _excavationPanel.IsInsideTree())
                 RemoveChild(_excavationPanel);
@@ -636,6 +669,8 @@ namespace AtomicWar.GodotApp
                 }
                 return _survivors?.RadStateFor(id)?.HasAcuteRadiationSickness == true;
             };
+            cgSys.OnCaregivingBondDeepened += (caregiverId, patientId, _) =>
+                RecordRelationshipInteraction(caregiverId, patientId, "caregiving", 1f);
             cgSys.AdjustAffinity = (caregiverId, patientId, delta) =>
                 _survivorRelationsCore?.ModifyAffinity(caregiverId, patientId, delta);
             cgSys.ApplyFatigueDelta = (id, delta) =>

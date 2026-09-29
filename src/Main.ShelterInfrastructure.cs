@@ -582,7 +582,14 @@ namespace AtomicWar.GodotApp
             // policy reads the live market; the closure is null-safe because
             // the economy session may not be set up yet when it is bound.
             SetupEconomy();
-            var network = new WaystationNetworkSystem();
+            // The network's authored station corpus is waystations.json, read
+            // through WaystationCatalogLoader. Without this the network silently
+            // falls back to a hardcoded default set, so every authored waystation
+            // (keeper, specialty, stock, condition) is unreachable. A save still
+            // wins: RestoreState below overrides per-station instance state.
+            var waystationCatalog = Ashfall.Core.Waystation.WaystationCatalogLoader.Load(_dataDir ?? "");
+            var network = new WaystationNetworkSystem(
+                waystationCatalog != null && waystationCatalog.Count > 0 ? waystationCatalog : null);
             if (wsState.network != null)
                 network.RestoreState(wsState.network);
             if (_economy?.Catalog != null)

@@ -29,6 +29,7 @@ using System.Collections.Generic;
 
 namespace AtomicWar.GodotApp
 {
+#if ASHFALL_SELFTEST
     public enum HostCliAction
     {
         Interactive,
@@ -354,6 +355,15 @@ namespace AtomicWar.GodotApp
         CampaignActionLogSelfTest,
         ChronicConditionSelfTest
     }
+#else
+    public enum HostCliAction
+    {
+        Interactive,
+        Help,
+        Version,
+        UnsupportedDevelopmentCommand
+    }
+#endif
 
     /// <summary>
     /// User-args after Godot's `--`. Extra flags sit beside --ice-road-selftest;
@@ -401,6 +411,7 @@ namespace AtomicWar.GodotApp
 
             if (args == null || args.Length == 0)
                 return HostCliAction.Interactive;
+#if ASHFALL_SELFTEST
             if (Has(args, "--wildlife-harvest-selftest") || Has(args, "--the-wild-selftest"))
                 return HostCliAction.WildlifeHarvestSelfTest;
             if (Has(args, "--storm-forecast-selftest") || Has(args, "--the-weather-selftest"))
@@ -1051,12 +1062,32 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.LoanSharkSelfTest;
             if (Has(args, "--campaign-action-log-selftest") || Has(args, "--action-log-selftest"))
                 return HostCliAction.CampaignActionLogSelfTest;
+#else
+            if (Has(args, "--host-help") || Has(args, "--help"))
+                return HostCliAction.Help;
+            if (Has(args, "--version") || Has(args, "-v"))
+                return HostCliAction.Version;
+            // A development command must never fall through to an apparently
+            // successful interactive boot in a package without the harness.
+            foreach (string arg in args)
+            {
+                if (!arg.StartsWith("--", StringComparison.Ordinal)) continue;
+                int equals = arg.IndexOf('=');
+                string option = equals < 0 ? arg : arg.Substring(0, equals);
+                if (option.Contains("selftest", StringComparison.OrdinalIgnoreCase)
+                    || option.Contains("uitest", StringComparison.OrdinalIgnoreCase)
+                    || option.Contains("snapshot", StringComparison.OrdinalIgnoreCase)
+                    || option == "--runtime-scale")
+                    return HostCliAction.UnsupportedDevelopmentCommand;
+            }
+#endif
             return HostCliAction.Interactive;
         }
 
         public static void PrintHelp()
         {
             GD.Print("ASHFALL Godot host flags (after --):");
+#if ASHFALL_SELFTEST
 
             GD.Print("\n--- Core & System Gates ---");
             GD.Print("  --7-day-smoke-selftest / --seven-day-smoke-selftest / --deterministic-smoke-selftest / --deterministic-smoke-run 7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates");
@@ -1415,8 +1446,30 @@ namespace AtomicWar.GodotApp
             GD.Print("  --tunnel-selftest / --tunnel-network-selftest  Tunnel network compatibility probes");
             GD.Print("  --visitors-selftest  Visitor integration compatibility probes");
             GD.Print("\n--- General & Information ---");
+            GD.Print("  --power-load-shedding-selftest / --grid-shedding-selftest / --brownout-selftest  Power load shedding integration probes");
+            GD.Print("  --spiritual-ritual-selftest / --ritual-calendar-selftest  Ritual calendar integration probes");
+            GD.Print("  --trauma-bond-selftest / --trauma-bonds-selftest  Trauma bond integration probes");
+            GD.Print("  --migration-consequence-selftest / --migration-consequences-selftest  Migration consequence integration probes");
+            GD.Print("  --voluntary-register-selftest / --volunteers-selftest  Voluntary register integration probes");
+            GD.Print("  --world-evolution-selftest / --evolution-events-selftest  World evolution event integration probes");
+            GD.Print("  --the-network-selftest   Informant network integration alias");
+            GD.Print("  --the-underneath-selftest   Subsidence integration alias");
             GD.Print("  --host-help / --help     This list");
             GD.Print("  --version / -v           Show build, data schema, and save schema versions");
+#else
+            GD.Print("  --host-help / --help          Show host options");
+            GD.Print("  --version / -v                Show game and data versions");
+            GD.Print("  --user-data-dir <path>        Override campaign/settings directory");
+            GD.Print("  --log-dir <path>              Override log directory");
+            GD.Print("  --starting-supplies-profile <id>  Select an authored starting-store profile");
+#endif
+        }
+
+        private static bool Has(string[] args, string flag)
+        {
+            for (int i = 0; i < args.Length; i++)
+                if (args[i] == flag) return true;
+            return false;
         }
 
         /// <summary>

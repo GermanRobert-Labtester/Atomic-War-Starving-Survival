@@ -54,11 +54,14 @@ namespace AtomicWar.GodotApp.UI
             _skipButton.Disabled = false;
             _scroll.ScrollVertical = 0;
             Visible = true;
+            RefreshProcessState();
             QueueRedraw();
         }
 
         public override void _Ready()
         {
+            SetProcess(false);
+            VisibilityChanged += RefreshProcessState;
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
@@ -131,11 +134,13 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Process(double delta)
         {
+            using var measurement = Host.FrameStartupProfiler.MeasureProcess(nameof(DailyBriefingModal));
             if (!Visible || _complete || _report == null) return;
             if (_revealedChars >= _totalChars)
             {
                 _complete = true;
                 _bodyLabel.Text = _cachedFullText;
+                SetProcess(false);
                 return;
             }
             _revealTimerMs += delta * 1000.0;
@@ -146,7 +151,15 @@ namespace AtomicWar.GodotApp.UI
             _bodyLabel.Text = _revealedChars >= _cachedFullText.Length
                 ? _cachedFullText
                 : _cachedFullText.Substring(0, _revealedChars);
+            if (_revealedChars >= _totalChars)
+            {
+                _complete = true;
+                SetProcess(false);
+            }
         }
+
+        private void RefreshProcessState()
+            => SetProcess(IsVisibleInTree() && Visible && !_complete && _report != null);
 
         public override void _UnhandledInput(InputEvent @event)
         {
@@ -190,6 +203,7 @@ namespace AtomicWar.GodotApp.UI
             _bodyLabel.Text = _cachedFullText;
             _skipButton.Disabled = true;
             _ackLabel.Text = "REVEALED // PRESS [ENTER] / [SPACE] / [ACK] TO CONTINUE";
+            SetProcess(false);
         }
 
         private void Acknowledge()
@@ -203,6 +217,7 @@ namespace AtomicWar.GodotApp.UI
             int day = _report.Day;
             Visible = false;
             _report = null;
+            SetProcess(false);
             OnAcknowledged?.Invoke(day);
         }
 

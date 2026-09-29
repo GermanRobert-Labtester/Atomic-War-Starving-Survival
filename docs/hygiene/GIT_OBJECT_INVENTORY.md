@@ -303,7 +303,7 @@ Deletion is cosmetic. Recommend deleting **Unity-era and auto-generated** branch
 | Worktree | SHA | Status |
 |---|---|---|
 
-| /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War 8081faaf [main] |
+| . 8081faaf [main] |
 
 **0 prunable worktree(s)** — these are detached worktrees at
 `/tmp/ashfall-clean` and `/tmp/aw-p4` that no longer have a branch reference.

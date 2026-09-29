@@ -1,0 +1,17 @@
+{
+  "FeedbackPanel": {
+    "calls": 4506,
+    "totalMs": 17.922266,
+    "meanMs": 0.003977422547714159
+  },
+  "ExpeditionPanel": {
+    "calls": 4506,
+    "totalMs": 35.812189,
+    "meanMs": 0.007947667332445627
+  },
+  "UiBackgroundCarousel": {
+    "calls": 9012,
+    "totalMs": 157.888086,
+    "meanMs": 0.01751976098535286
+  }
+}

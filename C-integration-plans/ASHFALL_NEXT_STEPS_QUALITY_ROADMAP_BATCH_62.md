@@ -300,7 +300,7 @@ godot --headless --path . -- --data-integrity-selftest
 
 ## Review Notes (Corrected)
 
-This batch was adversarially reviewed against the live codebase at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`. Findings:
+This batch was adversarially reviewed against the live codebase at `.`. Findings:
 
 1. **The batch's entire premise was false.** `GameBootstrap` does not exist anywhere in the current tree. A `file_search` for `GameBootstrap` returns zero source files; a full-tree grep returns hits only in historical planning/audit markdown files (`ASHFALL_GAME_MASTER_DOCUMENT.md`, `CODE_AUDIT_REPORT.md`, `INTEGRATION_MASTER_PLAN.md`, `AUDIT_FINDINGS_AND_FIX_PLAN.md`, old `docs/superpowers/plans/2026-08-09-first-playable.md`), every one of which describes the Unity-era `Assets/_Game/Core/GameBootstrap.*.cs` structure. Per AGENTS.md's own rules, `Assets/_Game/` has been fully deleted as part of the Unity→Godot migration. AGENTS.md's own Invariant 5 / Expansion System sections still describe `GameBootstrap` as if current — that documentation is stale and should be flagged to the user/project maintainer separately from this batch.
 2. **This batch was rewritten wholesale**, per the task instructions, to retarget the real equivalent structure: `src/Main.cs`, the active Godot host orchestrator. Confirmed by direct inspection: one file, 7014 lines, `public partial class Main : Control`, zero sibling `Main.*.cs` partials (there is no 82-file sprawl — the problem is a single oversized file, a different shape of problem than the original plan described).

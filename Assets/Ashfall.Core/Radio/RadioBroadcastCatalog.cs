@@ -420,6 +420,7 @@ namespace Ashfall.Core.Radio
                         int dayTrigger = elem.TryGetProperty("dayTrigger", out var dProp) ? dProp.GetInt32() : 480;
                         string source = elem.TryGetProperty("source", out var sProp) ? sProp.GetString() ?? "" : "Faction Net";
                         string msg = elem.TryGetProperty("message", out var mProp) ? mProp.GetString() ?? "" : "";
+                        string note = elem.TryGetProperty("listening_note", out var nProp) ? nProp.GetString() ?? "" : "";
 
                         Register(new UnifiedRadioBroadcast
                         {
@@ -431,6 +432,7 @@ namespace Ashfall.Core.Radio
                             StationId = RadioStationCatalog.StationGarrisonOverlord,
                             SourceName = source,
                             Message = msg,
+                            ListeningNote = note,
                             Genre = BroadcastGenre.FactionWar,
                             Reliability = SourceReliability.Partisan,
                             Priority = BroadcastPriority.Important,

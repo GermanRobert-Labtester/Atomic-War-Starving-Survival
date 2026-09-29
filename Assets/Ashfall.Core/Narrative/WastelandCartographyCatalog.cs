@@ -148,7 +148,7 @@ namespace Ashfall.Core.Narrative
             string topoPath = Path.Combine(directoryPath, "surface_radiation_topo_sheets.json");
             if (File.Exists(topoPath))
             {
-                var list = CatalogLocator.LoadWrappedList<RadiationTopoSheetEntry>(File.ReadAllText(topoPath), options);
+                var list = CatalogLocator.LoadWrappedList<RadiationTopoSheetEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(topoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -164,7 +164,7 @@ namespace Ashfall.Core.Narrative
             string routePath = Path.Combine(directoryPath, "scavenger_expedition_route_notes.json");
             if (File.Exists(routePath))
             {
-                var list = CatalogLocator.LoadWrappedList<ScavengerRouteNoteEntry>(File.ReadAllText(routePath), options);
+                var list = CatalogLocator.LoadWrappedList<ScavengerRouteNoteEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(routePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -180,7 +180,7 @@ namespace Ashfall.Core.Narrative
             string mudPath = Path.Combine(directoryPath, "canyon_mudflow_hazard_reports.json");
             if (File.Exists(mudPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CanyonMudflowReportEntry>(File.ReadAllText(mudPath), options);
+                var list = CatalogLocator.LoadWrappedList<CanyonMudflowReportEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(mudPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -196,7 +196,7 @@ namespace Ashfall.Core.Narrative
             string limPath = Path.Combine(directoryPath, "crater_lake_limnology_records.json");
             if (File.Exists(limPath))
             {
-                var list = CatalogLocator.LoadWrappedList<CraterLakeLimnologyEntry>(File.ReadAllText(limPath), options);
+                var list = CatalogLocator.LoadWrappedList<CraterLakeLimnologyEntry>(Ashfall.Core.Performance.CatalogReadProfiler.ReadAllText(limPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

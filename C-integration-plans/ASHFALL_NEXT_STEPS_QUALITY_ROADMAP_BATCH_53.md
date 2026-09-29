@@ -221,7 +221,7 @@ Document:
 
 ## Review Notes (Corrected)
 
-This file was adversarially reviewed against the actual repository at `/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War` and the following corrections were made:
+This file was adversarially reviewed against the actual repository at `.` and the following corrections were made:
 
 1. **Wrong catch count — VerdictCatalogLoader.cs.** Original plan: "3 bare `catch { }` blocks." Verified via direct read and grep: there is exactly 1 truly-empty `catch { }` (line 166), plus 3 `catch { return result; }` blocks (lines 51, 105, 141) that have a body and thus don't match "bare catch with no body" literally, though they're equally silent (no logging). Corrected the plan's scope to cover all 4 silent catches in this file, and renamed the category from "bare catch" to "silent catch" throughout to avoid the ambiguity that caused the undercount.
 

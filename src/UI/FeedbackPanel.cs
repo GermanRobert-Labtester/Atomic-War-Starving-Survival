@@ -36,6 +36,8 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _Ready()
         {
+            // The queue is event-driven; there is no work until a toast exists.
+            SetProcess(false);
             // Position toast stack at top-right, just below the top HUD
             SetAnchorsPreset(LayoutPreset.TopRight);
             // Explicit offsets — deterministic top-right placement independent of
@@ -202,10 +204,12 @@ namespace AtomicWar.GodotApp.UI
 
             _toastStack.AddChild(card);
             _activeToasts.Add(activeToast);
+            SetProcess(true);
         }
 
         public override void _Process(double delta)
         {
+            using var measurement = Host.FrameStartupProfiler.MeasureProcess(nameof(FeedbackPanel));
             float dt = (float)delta;
             for (int i = _activeToasts.Count - 1; i >= 0; i--)
             {
@@ -237,6 +241,7 @@ namespace AtomicWar.GodotApp.UI
                 var next = _pendingQueue.Dequeue();
                 CreateToastCard(next);
             }
+            SetProcess(_activeToasts.Count != 0);
         }
 
         public void ClearAllToasts()
@@ -250,6 +255,7 @@ namespace AtomicWar.GodotApp.UI
             }
             _activeToasts.Clear();
             _pendingQueue.Clear();
+            SetProcess(false);
         }
     }
 }

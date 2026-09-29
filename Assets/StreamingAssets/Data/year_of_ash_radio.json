@@ -36,7 +36,7 @@
       "frequency": "96.100 MHz",
       "dayTrigger": 225,
       "source": "Detachment 9 Automated Signal Loop",
-      "message": "STATION NULL. STATION NULL. MESSAGE 088 / AUTH CODE: LIMA-NOVEMBER-SEVEN-FOUR. TARGET GRID 44-ALPHA RAILWAY BRIDGE REMAINS PRIMED. STAND-DOWN TIMERS WILL NOT RESET WITHOUT SECTOR GENERAL ORDER 1. ANY ATTEMPT BY CIVILIAN OR MILITIA UNITS TO TRANSIT THE CUT WILL TRIGGER CHARGES. THIS IS AN AUTOMATED SYSTEM. REMAIN IN SHELTER.",
+      "message": "STATION NULL. STATION NULL. MESSAGE 088 / AUTH CODE: LIMA-NOVEMBER-SEVEN-FOUR. TARGET GRID 44-ALPHA RAILWAY BRIDGE REMAINS PRIMED. STAND-DOWN TIMERS WILL NOT RESET WITHOUT SECTOR GENERAL ORDER 1. ANY ATTEMPT BY CIVILIAN OR MILITIA UNITS TO TRANSIT THE CUT WILL TRIGGER CHARGES. MESSAGE 088 WILL BE KEPT UNTIL SECTOR GENERAL ORDER 1 IS RECEIVED. THIS IS AN AUTOMATED SYSTEM. REMAIN IN SHELTER.",
       "signalStrength": "S8",
       "isEmergency": true
     },
@@ -55,7 +55,7 @@
       "frequency": "142.850 MHz",
       "dayTrigger": 300,
       "source": "Civil Meteorological Service",
-      "message": "URGENT RADON INFILTRATION WARNING: Rapid permafrost thaw across Sector 4 and 8 bedrock is releasing high concentrations of Radon-222 gas into sub-level basements and unsealed shelters. Readings exceed 1,200 Bq/m³ in valley bottoms. Run charcoal scrubbers continuously. Seal all floor fissures with hydraulic cement or vulcanized silicone. Evacuate unventilated sumps immediately.",
+      "message": "URGENT RADON INFILTRATION WARNING: Rapid permafrost thaw across Sector 4 and 8 bedrock is releasing high concentrations of Radon-222 gas into sub-level basements and unsealed shelters. Readings exceed 1,200 Bq/m³ in valley bottoms. Run charcoal scrubbers continuously. Seal all floor fissures with hydraulic cement or vulcanized silicone. Evacuate unventilated sumps immediately. The advisory ends before it says how long the thaw will keep the gas coming.",
       "signalStrength": "S9",
       "isEmergency": true
     },

@@ -16,6 +16,7 @@
     },
     {
       "id": "gate_highland_supply_blizzard",
+      "weather_delay_debt": true,
       "gate_type": "route",
       "target": "route_05_the_spoil_heap_coke_and_steel_route",
       "blocked_weather": [
@@ -42,6 +43,7 @@
     },
     {
       "id": "gate_lake_edge_blizzard",
+      "weather_delay_debt": true,
       "gate_type": "route",
       "target": "route_02_the_canal_barge_waterway_run",
       "blocked_weather": [
@@ -146,6 +148,7 @@
     },
     {
       "id": "gate_exposed_highway_fallout",
+      "weather_delay_debt": true,
       "gate_type": "route",
       "target": "route_01_the_iron_line_garrison_express",
       "blocked_weather": [

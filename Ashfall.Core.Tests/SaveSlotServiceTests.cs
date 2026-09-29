@@ -382,6 +382,7 @@ public class SaveSlotServiceTests
 
         string slotRoot = service.GetSlotRoot(profile, slot);
         Assert.True(File.Exists(Path.Combine(slotRoot, "campaign.json")));
+        Assert.True(File.Exists(service.GetBackupPath(profile, slot, 1)));
     }
 
     [Fact]

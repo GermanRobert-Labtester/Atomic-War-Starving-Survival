@@ -175,5 +175,55 @@ namespace Ashfall.Core.Tests.World
             // covered by the data-integrity selftest)
             Assert.NotEmpty(hospital.choices);
         }
+        [Fact]
+        public void HostWiring_AssignsExtraGateBlock_FromAuthoredCatalog_AndDestinationGateBlocksUnderItsWeather()
+        {
+            var dir = new System.IO.DirectoryInfo(System.IO.Directory.GetCurrentDirectory());
+            while (dir != null && !System.IO.File.Exists(System.IO.Path.Combine(dir.FullName, "src", "Main.Expeditions.cs")))
+                dir = dir.Parent;
+            Assert.NotNull(dir);
+            string main = System.IO.File.ReadAllText(System.IO.Path.Combine(dir!.FullName, "src", "Main.Expeditions.cs"));
+            Assert.Contains("_expeditions.ExtraGateBlock = locationId =>", main);
+            Assert.Contains("WeatherRouteGateCatalog.LoadFromDirectory", main);
+
+            string data = System.IO.Path.Combine(dir.FullName, "Assets", "StreamingAssets", "Data");
+            var catalog = WeatherRouteGateCatalog.LoadFromDirectory(data, new FileSystemIO());
+            var block = catalog.EvaluateBlock("location_silent_observatory", "Blizzard", _ => false);
+            Assert.NotNull(block);
+            Assert.Null(catalog.EvaluateBlock("location_silent_observatory", "Clear", _ => false));
+        }
+        [Fact]
+        public void RouteLocationLinks_BlockLinkedLocations_ForRouteGates_AndSkipSeasonalShortcutRoutes()
+        {
+            var dir = new System.IO.DirectoryInfo(System.IO.Directory.GetCurrentDirectory());
+            while (dir != null && !System.IO.File.Exists(System.IO.Path.Combine(dir.FullName, "src", "Main.Expeditions.cs")))
+                dir = dir.Parent;
+            Assert.NotNull(dir);
+            string data = System.IO.Path.Combine(dir!.FullName, "Assets", "StreamingAssets", "Data");
+            var catalog = WeatherRouteGateCatalog.LoadFromDirectory(data, new FileSystemIO());
+
+            // route_05 (Blizzard) reaches the foundry location; other weather is open.
+            var block = catalog.EvaluateBlock("loc_foundry_west_stacks", "Blizzard", _ => false);
+            Assert.NotNull(block);
+            Assert.Equal("gate_highland_supply_blizzard", block!.GateId);
+            Assert.Null(catalog.EvaluateBlock("loc_foundry_west_stacks", "Clear", _ => false));
+
+            // Seasonal-shortcut routes (required_weather) are deliberately unlinked.
+            Assert.Empty(catalog.RoutesForLocation("loc_electrical_maintenance_exchange"));
+            Assert.Null(catalog.EvaluateBlock("loc_electrical_maintenance_exchange", "Clear", _ => false));
+
+            // Every link resolves to a real gate and a real location.
+            var locations = System.Text.Json.JsonDocument.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(data, "locations.json")))
+                .RootElement.GetProperty("locations").EnumerateArray().Select(e => e.GetProperty("id").GetString()).ToHashSet();
+            var doc = System.Text.Json.JsonSerializer.Deserialize<WeatherRouteLocationFile>(
+                System.IO.File.ReadAllText(System.IO.Path.Combine(data, WeatherRouteGateCatalog.RouteLocationFileName)),
+                SystemTextJsonSerializer.Options)!;
+            Assert.NotEmpty(doc.links);
+            foreach (var link in doc.links)
+            {
+                Assert.True(catalog.TryGetGatesForTarget(link.route_id, out _), link.route_id);
+                foreach (var loc in link.location_ids) Assert.Contains(loc, locations);
+            }
+        }
     }
 }
