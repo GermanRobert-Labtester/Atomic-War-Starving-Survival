@@ -57,7 +57,7 @@ namespace AtomicWar.GodotApp.UI
 
             var fallback = new ColorRect
             {
-                Color = new Color(0.035f, 0.043f, 0.047f, 1f),
+                Color = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Ink),
                 MouseFilter = MouseFilterEnum.Ignore
             };
             fallback.SetAnchorsPreset(LayoutPreset.FullRect);

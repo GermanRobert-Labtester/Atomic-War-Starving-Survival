@@ -1,5 +1,171 @@
 # ASHFALL Worktree Ownership
 
+## claim-ui-a11y-final-color-2026-09-29
+
+User-authorized implementation ("Continue with a larger batch of doing more UI
+correction and UI precision work!", 2026-09-29) — ninth package in the
+a11y-audit fix series: final raw color-literal sweep on UI chrome + central
+label text-overrun seam. **Plan:**
+`.ai/plans/ui-a11y-final-color-literals-2026-09-29.md` (STATUS: APPROVED BY
+USER). **Exact paths:** `src/UI/EmergencyResponseHud.cs`,
+`src/UI/BlackProjectsArchivePanel.cs`, `src/UI/ExpeditionPanel.cs`,
+`src/UI/UiBackgroundCarousel.cs`, `src/UI/BackdropArt.cs`,
+`src/World/RoomHotspotView.cs`, `src/UI/AshfallUiHelpers.cs` (FinishLabel seam
++ MakeButton ClipText), `Ashfall.Core.Tests/UI/UiA11yFinalColorGateTests.cs`
+(new). Deliberately untouched: MapLocationMarkerView/HoldfastInteriorView
+(sprite/lighting art modulates), SnapshotOrchestrator (tooling),
+GameDashboardPanel:327 (adjudicated item 11), MapDetailPanel:227 (§3 visual
+lane). Shared paths intentionally untouched.
+
+## claim-chatgpt-item-art-tranche-38-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{dog_tags,photo_album,childs_drawing,teddy_bear,creased_receipt,undelivered_mail,item_document_military_map,item_document_broadcast_transcript,item_document_vandalized_propaganda,item_document_handwritten_warning,item_document_maintenance_record,item_document_shelter_rejection_list,item_document_ration_theft_ledger,item_document_water_notice,item_document_repair_note}.jpg`
+files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
+sources under `docs/visual/sources/tranche38/`, plus
+`.ai/plans/ashfall-chatgpt-item-art-tranche-38-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: ACTIVE.
+
+## claim-chatgpt-item-art-tranche-37-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_collectible_rejection_letter,item_collectible_military_patch,item_collectible_prayer_book,item_collectible_match_program,item_collectible_exchange_day_newspaper,item_collectible_local_newspaper,item_collectible_road_map,item_collectible_topo_map,item_collectible_survivor_map,item_document_evacuation_list,item_document_ration_record,item_document_blood_trail_note,item_document_barricade_placement,item_document_sealed_door_warning,item_document_family_photograph}.jpg`
+files and their matching `.jpg.import` sidecars, fifteen exact-name editable
+SVG sources under `docs/visual/sources/tranche37/`, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-37-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-chatgpt-item-art-tranche-36-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_collectible_family_portrait,item_collectible_unit_photograph,item_collectible_civil_defense_poster,item_collectible_propaganda_poster,item_collectible_concert_poster,item_collectible_pre_war_novel,item_collectible_science_magazine,item_collectible_water_treatment_handbook,item_collectible_air_filter_manual,item_collectible_dosimeter_guide,item_collectible_unit_log_fragment,item_collectible_deployment_order,item_collectible_casualty_list,item_collectible_mothers_letter,item_collectible_soldiers_letter}.jpg`
+files and their matching `.jpg.import` sidecars, fifteen exact-name editable
+SVG sources under `docs/visual/sources/tranche36/`, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-36-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-chatgpt-item-art-tranche-35-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_medical_precursor_base,item_sterile_solvent_pack,item_chem_hyper_stim,item_chem_dulcimer_tincture,item_chem_clarity_salts,item_chem_haze_resin,item_chem_fungal_antibiotic,item_chem_spore_sedative,item_chem_choke_spore_toxin,item_oxidizer_reagent_flask,item_manual_generator_maintenance,item_manual_field_medicine,item_manual_rough_repairs,item_manual_seismology,item_undertakers_register}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+five editable local SVG sources under `docs/visual/sources/tranche35/`
+(`item_manual_generator_maintenance`, `item_manual_field_medicine`,
+`item_manual_rough_repairs`, `item_manual_seismology`,
+`item_undertakers_register`), plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-35-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-chatgpt-item-art-tranche-34-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{chemical_solvent,item_foundry_cast_shot,item_foundry_casing_blanks,item_liquid_bleach_carboy,item_metallurgy_iron_ingot,item_metallurgy_copper_ingot,item_metallurgy_steel_billet,item_metallurgy_solder_stock,item_metallurgy_spring_steel_billet,item_metallurgy_shielding_plate,item_tablet_binder,item_tablet_coating_base,paper_stock,microfiche_film,acetate_blank_disc}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-34-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-ui-a11y-accent-tokens-2026-09-29
+
+User-authorized implementation ("Continue doing more UI correction and UI
+precision work!", 2026-09-29) — eighth package in the a11y-audit fix series:
+audit §2b/§2c remaining hardcoded-accent sweep. **Plan:**
+`.ai/plans/ui-a11y-accent-tokens-2026-09-29.md` (STATUS: APPROVED BY USER).
+**Exact paths (7 src/UI files):** `EmergencyResponseHud.cs` (severity-modulate
+arms + row/log accents → Critical/Warning/Pale; tinted crisis backdrop
+untouched), `SaveLoadPanel.cs`, `SurvivorDeathLegacyPanel.cs`,
+`TimeCapsulePanel.cs`, `RelationshipDecayPanel.cs`, `PersonalQuestPanel.cs`,
+`ShelterPanel.cs` (MakeDataRow palette) — 38 hand-rolled accent literals →
+`AshfallUiHelpers.ToColor(DesignTheme.X)`; 6 files gained the
+`DesignTheme` using alias; new
+`Ashfall.Core.Tests/UI/UiA11yAccentTokenGateTests.cs` (7 gates); governance
+(this row, `.ai/state.md`, the plan). **Deliberately untouched:** Core, the
+HUD tinted backdrop, all data/save paths.
+
+## claim-chatgpt-item-art-tranche-33-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_metallurgy_heavy_i_beam,item_metallurgy_shoring_plate,item_metallurgy_gear_blank,item_metallurgy_shaft_stock,item_metallurgy_tool_blank,item_industrial_oxidizer_reagent,item_battery_electrolyte_concentrate,item_foundry_pickling_reagent,item_battery_maintenance_fluid,item_nitrogen_supply,item_linear_breach_section,item_sealed_packaging_foil,item_silo_pest_treatment,item_rock_salt_sack,item_caustic_soda_flakes}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-33-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-chatgpt-item-art-tranche-32-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_industrial_cell_anode,item_ebpvd_ceramic_target_ingot,item_electron_gun_tungsten_filament,item_mcraly_bond_coat_powder,item_coated_combustor_tile,item_coated_diesel_injector,item_ebpvd_vacuum_pump_seal,item_hardened_flail_chain,item_armored_blast_shield,item_pdms_silicone_kit,item_assay_reagent_pack,item_microfluidic_cartridge_general,item_aeroponic_medicinal_root,item_aeroponic_food_leaf,item_insect_larvae_meal}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-32-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-ui-a11y-scrim-token-2026-09-29
+
+User-authorized implementation ("Continue doing more UI correction and UI
+precision work!", 2026-09-29) — seventh package in the a11y-audit fix series:
+audit §2d scrim-token consolidation. **Plan:**
+`.ai/plans/ui-a11y-scrim-token-2026-09-29.md` (STATUS: APPROVED BY USER).
+**Exact paths:** `Assets/Ashfall.Core/UI/Theme.cs` (1 additive token
+`InkPanelStrong`), `src/UI/AshfallUiHelpers.cs` (1 accessor `PanelScrim()`),
+58 src/UI panel files (mechanical replacement of near-grey scrim literals —
+`new Color(0.0[2-7]f ×3, 0.85–0.96 alpha)` — with `AshfallUiHelpers.PanelScrim()`;
+site set = the plan's grep pattern), new
+`Ashfall.Core.Tests/UI/UiA11yScrimTokenGateTests.cs` (zero-leftover regex
+gate), governance (this row, `.ai/state.md`, the plan). **Deliberately
+untouched:** tinted scrims (crisis red, amber banner, classified red),
+sub-0.85 stack-dependent overlays (MapDetailPanel 0.74, carousel overlays),
+§2c token-derived composites, all other Core tokens, data/save paths.
+
+## claim-chatgpt-item-art-tranche-31-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{camo_ash_cloak,camo_ghillie_shroud,camo_night_stalker_suit,night_optics_goggles,item_aviation_fuel_canister,item_aircraft_airframe_spares,item_decryption_keycard_prewar,item_comm_codebook_alpha,item_logistics_cipher_sheet,dog_tags_personal,stolen_ration_cache,iron_shackles,item_warlord_trophy,sedative_draught,gene_therapy_retroviral_vial}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-31-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-chatgpt-item-art-tranche-30-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_sludge_cake,item_tailings_drum,item_decor_trophy_beetle_carapace,item_decor_trophy_molerat_skull,item_decor_trophy_crow_feathers,item_decor_trophy_pheasant_plume,item_decor_trophy_gulden_wolf,item_decor_trophy_kestrel_wings,item_archive_index_cylinder,concrete_rubble,empty_toner_cartridge,mineral_chunk,organic_residue,item_foundry_weather_canister,item_brined_legume_mash}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-30-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-ui-a11y-sidebar-hover-overflow-2026-09-29
+
+User-authorized implementation ("Continue doing more UI correction and UI
+precision work!", 2026-09-29) — sixth package in the a11y-audit fix series:
+audit §9.5 (last unimplemented P2) + §7 hover + §6 overflow remainder.
+**Plan:** `.ai/plans/ui-a11y-sidebar-hover-overflow-2026-09-29.md` (STATUS:
+APPROVED BY USER). **Exact paths:** `src/UI/AshfallSidebar.cs` (nav rows
+PanelContainer→flat Button with per-row normal/hover/pressed/focus
+styleboxes, Pressed→Select; SetRowHighlight mutates `normal`),
+`src/UI/AshfallDataGrid.cs` (selectable-row MouseEntered/Exited hover,
+restore via ApplyRowStyle), `src/Economy/TradeScreenGodotPanel.cs` (3 label
+sites ClipText+TrimEllipsis), `src/UI/AshfallMetricCard.cs` (`_valueLbl`),
+`src/UI/SurvivorsPanel.cs` (name label), `src/UI/GameDashboardPanel.cs`
+(gauge names), new `Ashfall.Core.Tests/UI/UiA11ySidebarHoverOverflowGateTests.cs`,
+governance (this row, `.ai/state.md`, the plan). **Deliberately untouched:**
+Core, ItemList/SpinBox/RichTextLabel hover theming (engine-limited, recorded
+in plan), all data/save paths.
+
 ## claim-ui-a11y-target-sizes-2026-09-29
 
 User-authorized implementation ("Continue doing more work!", 2026-09-29) —
@@ -28,10 +194,10 @@ Core tokens, data/save paths.
 User-authorized fifteen-item visual continuation. Root owns exact new
 `assets/art/{item_official_ballot_box,item_pemmican,item_travel_ration,item_vibration_dampening_mount,item_iron_pyrite_ore,item_industrial_acid_carboy,item_neutralizer_lime_bag,item_grain_flour,item_oxygen_supply,item_titanium_breaching_shield,item_coated_turbine_blade,sandbags,item_worn_pet_collar,item_pharmacist_ledger,item_grandfathers_soldering_iron}.jpg`
 files and their matching `.jpg.import` sidecars, plus
-`.ai/plans/ashfall-chatgpt-item-art-tranche-29-2026-09-29.md`, additive
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-29-2026-09-29.md`, additive
 entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
 `.ai/state.md`, and this claim. No catalog, source, or existing art edits.
-Status: IN PROGRESS, no commit.
+Status: COMPLETE, no commit.
 
 ## claim-chatgpt-item-art-tranche-28-2026-09-29
 

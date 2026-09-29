@@ -327,7 +327,7 @@ namespace AtomicWar.GodotApp.UI
             var panel = new PanelContainer();
             var sb = new StyleBoxFlat
             {
-                BgColor = new Color(0.12f, 0.04f, 0.04f, 0.85f),
+                BgColor = new Color(DesignTheme.Critical.r * 0.15f, DesignTheme.Critical.g * 0.15f, DesignTheme.Critical.b * 0.15f, 0.85f),
                 BorderColor = AshfallUiHelpers.ColorWarning,
             };
             sb.SetBorderWidthAll(2);

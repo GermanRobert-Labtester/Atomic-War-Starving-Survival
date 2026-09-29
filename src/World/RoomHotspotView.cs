@@ -46,7 +46,7 @@ namespace AtomicWar.GodotApp.World
             {
                 Size = new Vector2(130, 44),
                 Position = new Vector2(-65, -22),
-                Color = new Color(0.08f, 0.1f, 0.12f, 0.75f)
+                Color = new Color(Ashfall.Core.UI.Theme.SurfaceCard.r, Ashfall.Core.UI.Theme.SurfaceCard.g, Ashfall.Core.UI.Theme.SurfaceCard.b, 0.75f)
             };
             AddChild(Background);
 
@@ -98,13 +98,13 @@ namespace AtomicWar.GodotApp.World
 
         private void OnMouseEntered()
         {
-            Background.Color = new Color(0.18f, 0.25f, 0.32f, 0.9f);
-            Label.AddThemeColorOverride("font_color", new Color(0.95f, 0.85f, 0.4f));
+            Background.Color = new Color(Ashfall.Core.UI.Theme.Lethe.r * 0.5f, Ashfall.Core.UI.Theme.Lethe.g * 0.5f, Ashfall.Core.UI.Theme.Lethe.b * 0.5f, 0.9f);
+            Label.AddThemeColorOverride("font_color", new Color(Ashfall.Core.UI.Theme.Hot.r, Ashfall.Core.UI.Theme.Hot.g, Ashfall.Core.UI.Theme.Hot.b));
         }
 
         private void OnMouseExited()
         {
-            Background.Color = new Color(0.08f, 0.1f, 0.12f, 0.75f);
+            Background.Color = new Color(Ashfall.Core.UI.Theme.SurfaceCard.r, Ashfall.Core.UI.Theme.SurfaceCard.g, Ashfall.Core.UI.Theme.SurfaceCard.b, 0.75f);
             Label.RemoveThemeColorOverride("font_color");
         }
 

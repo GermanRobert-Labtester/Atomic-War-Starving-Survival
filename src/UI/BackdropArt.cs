@@ -90,7 +90,7 @@ namespace AtomicWar.GodotApp.UI
             var dim = new ColorRect
             {
                 Name = "PlaceholderBackdropDim",
-                Color = new Color(0.04f, 0.05f, 0.06f, Math.Clamp(dimAlpha, 0f, 1f)),
+                Color = new Color(Ashfall.Core.UI.Theme.Ink.r, Ashfall.Core.UI.Theme.Ink.g, Ashfall.Core.UI.Theme.Ink.b, Math.Clamp(dimAlpha, 0f, 1f)),
                 MouseFilter = Control.MouseFilterEnum.Ignore
             };
             dim.SetAnchorsPreset(Control.LayoutPreset.FullRect);

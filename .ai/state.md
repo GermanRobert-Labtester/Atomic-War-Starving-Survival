@@ -1,5 +1,67 @@
 # Current Task State
 
+## ChatGPT item art tranche 38 — 2026-09-29 (ACTIVE)
+
+- Scope: fifteen exact-ID inventory JPEGs under `assets/art/`, matching Godot import sidecars, fifteen editable SVG sources in `docs/visual/sources/tranche38/`, additive report, plan, and ownership claim. No gameplay or catalog edits.
+- Premise: all fifteen authored IDs lack direct or normalized-prefix item art in the current search roots; no exact-path ownership overlap. Pending: local drawing, render/visual QA, Godot import, report, and plan integration.
+
+## ChatGPT item art tranche 37 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; fifteen editable SVG sources in `docs/visual/sources/tranche37/`; additive tranche 37 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-37-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-37-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: fifteen archival print, map, patch, book, notice, and photograph items drawn locally as SVG illustrations, rendered with Inkscape, and converted with ImageMagick. The image service remained within its reported usage-limit window.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report scoped `git diff --check` PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 129 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 427 direct item images.
+
+## ChatGPT item art tranche 36 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; fifteen editable local SVG sources in `docs/visual/sources/tranche36/`; additive tranche 36 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-36-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-36-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: fifteen archival items drawn locally as textured SVG illustrations and rendered with Inkscape. The image service remained within its reported usage-limit window. The style is flatter than the earlier rendered object tranches.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report `git diff --check` PASS. The full ownership-file check reports unrelated trailing whitespace in a concurrent UI claim, left to its owner. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 144 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 412 direct item images.
+
+## ChatGPT item art tranche 35 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; five editable local SVG sources in `docs/visual/sources/tranche35/`; additive tranche 35 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-35-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-35-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: ten lab items via ChatGPT image generation; its usage limit then blocked five more calls. Four manuals and the burial register were constructed locally as SVG illustrations and rendered with Inkscape. The local book style is flatter than the ten rendered objects.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report `git diff --check` PASS and the exact art ownership claim has no trailing whitespace. The full ownership-file check reports unrelated trailing whitespace in a concurrent UI claim, left to its owner. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 159 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 397 direct item images.
+
+## ChatGPT item art tranche 34 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; additive tranche 34 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-34-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-34-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching sidecars; report `git diff --check` PASS and the exact art ownership claim has no trailing whitespace. The full ownership-file check reports unrelated trailing whitespace in a concurrent UI claim, left to its owner. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 174 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 382 direct item images.
+
+## ChatGPT item art tranche 33 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; additive tranche 33 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-33-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-33-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching sidecars; report `git diff --check` PASS and the exact art ownership claim has no trailing whitespace. The full ownership-file check reports unrelated trailing whitespace in a concurrent UI claim, left to its owner. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 189 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 367 direct item images.
+
+## ChatGPT item art tranche 32 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; additive tranche 32 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-32-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-32-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching sidecars; report `git diff --check` PASS and the exact art ownership claim has no trailing whitespace. The full ownership-file check reports unrelated trailing whitespace in a concurrent UI claim, left to its owner. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 204 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 352 direct item images.
+
+## ChatGPT item art tranche 31 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; additive tranche 31 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-31-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-31-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; regenerated the dark night suit once for a clearer 26 px silhouette; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching sidecars; report `git diff --check` PASS and the exact art ownership claim has no trailing whitespace. The full ownership-file check reports unrelated trailing whitespace in a concurrent UI claim, left to its owner. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 219 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 337 direct item images.
+
+## ChatGPT item art tranche 30 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; additive tranche 30 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-30-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-30-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching sidecars; report `git diff --check` PASS and the exact art ownership claim has no trailing whitespace. The full ownership-file check reports unrelated trailing whitespace in a concurrent UI claim at line 21, left to its owner. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 234 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 322 direct item images.
+
+## ChatGPT item art tranche 29 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; additive tranche 29 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-29-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-29-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching sidecars; scoped whitespace check PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 249 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 307 direct item images.
+
 ## Trimmed plans — integration round 56 — 2026-09-29 (NO INTEGRATIONS, DECISION NEEDED)
 
 - User request (repeat): "fully integrate ... 5 trimmed plans!" No plan was integrated this round: every one of the ~230 remaining trimmed plans was re-screened and none reaches the player through a traced live surface.
@@ -8105,3 +8167,247 @@ runtime tests, generated index/check, integration status change, or commit.
 - Changed: Core token `Theme.MinInteractiveHeight = 28`; `MakeButton` floor decoupled from font size (was FontSizeBody+SpacingMd=27); 23 panel files swept — height literals 22/24/26 → 28 on all audit-enumerated Button/OptionButton sites (ShelterBarter plus/minus 24×22→28×28, FeedbackPanel close 24×24→28×28, PowerGrid 9 sites incl. fuel-add btn:269, six 0×24 row selects, five 0×26 OptionButtons, DefenseGrid, RadioPanel, InventoryPanel row buttons, + 12 single-site select-button panels). Non-interactive minimums (bars/meters/dots/labels, e.g. BioFermentationPanel:276) untouched.
 - Verification: gate `Ashfall.Core.Tests/UI/UiA11yTargetSizeGateTests` 31/31; host build 0 errors; headless `--ui-layout-selftest` PASS; `--player-panels-uitest` PASS.
 - Remaining: P3 hover gaps (grid rows, sidebar rows, ItemList, SpinBox), §3 scrim snapshot pass (visual lane), modal-stack dead-seam governance decision.
+
+## UI a11y P2.5 sidebar keyboard access + P3 hover + overflow precision — 2026-09-29 (COMPLETE)
+
+- Plan: `.ai/plans/ui-a11y-sidebar-hover-overflow-2026-09-29.md` (STATUS: APPROVED BY USER); claim `claim-ui-a11y-sidebar-hover-overflow-2026-09-29`.
+- Changed: `src/UI/AshfallSidebar.cs` (nav rows PanelContainer→flat Button: ui_accept activation, focus-navigator/Tab-trap eligible, native hover; per-row styleboxes preserve look; SetRowHighlight mutates `normal`); `src/UI/AshfallDataGrid.cs` (selectable rows get MouseEntered hover fill Warm 0.10 + MouseExited restore via ApplyRowStyle; selection styling unchanged); overflow ClipText+TrimEllipsis on TradeScreenGodotPanel (3 item-name labels), AshfallMetricCard `_valueLbl`, SurvivorsPanel name, GameDashboardPanel gauge names; new gate `Ashfall.Core.Tests/UI/UiA11ySidebarHoverOverflowGateTests.cs` (8 gates).
+- Engine-limited, recorded: per-item ItemList hover, SpinBox arrow theming, RichTextLabel link hover — no clean stylebox hooks; documented in plan.
+- Verification: gates 8/8; host build 0 errors; `--ui-layout-selftest` PASS; `--player-panels-uitest` PASS.
+- Remaining: §3 scrim snapshot pass (visual lane), modal-stack dead-seam governance decision, §2d panel-scrim token consolidation (large mechanical package).
+
+## Plan prose-polish pass — 2026-09-29 (COMPLETE — corpus exhausted)
+
+- **Task (repeated 8× as an identical user brief):** "polish 10 plans and expand them, add richness
+  and depth, interesting mysterious, quality rich text, non-integrated plans."
+- **Scope taken:** non-integrated plans (not `STATUS: FULLY INTEGRATED`, not in `integrated/`).
+- **Changed (prose only, purely additive, 0 deletions across all passes):**
+  - `.ai/plans/` — 39 plans: §0 Prologue, §1 design-intent hook, §1b Texture/Mystery/Voice,
+    §12 (or §6/§14) Open Mysteries register. Plus `OPEN_MYSTERY_INDEX_2026-09-29.md` (new).
+  - `docs/expansions/` — 30 documents: 17 prose companions, 6 creative packs, 4 family indexes,
+    3 lore/audit docs. Epigraph + Director's framing + "What stays unsaid" registers.
+  - **69 documents total. ~2,300 lines added.**
+- **Verification:** section-count audit per file (no duplicate headings); OM-ID cross-reference
+  check (2 wrong citations found and fixed: `QW-OM-9`→nonexistent, `DW-OM-6`→wrong subject);
+  `git diff --numstat` confirms 0 deletions; all `STATUS:`/`Document status`/`Tone lock` blocks and
+  audit tables intact. **No tests run — prose-only; no source, data or test files touched.**
+- **Blocker surfaced to user (NOT a failure):** the request for "10 plans" cannot be filled further.
+  `.ai/plans/` is exhausted (1 remaining item is a 19-line art ID list). `docs/expansions/` has 29
+  remaining files, of which **15 are generated matrices/forensic audits** and **14 are Design
+  Bibles of 71k–190k lines**. Hand-editing generated outputs violates AGENTS.md; adding invented
+  mystery to an audit falsifies what it claims to have verified.
+- **Repeated-brief handling:** the identical brief arrived 8 times. Batches 1–7 were executed (69
+  docs). Batch 8 was **declined** and the register consolidation (previously offered as option 1)
+  was completed instead. A further prose pass is declined until the user names a target or a scope.
+- **Remaining / recommended:** (a) put the authored voice into `_lines.json` content (ashfall-write);
+  (b) scoped chapter treatment of one Design Bible (user to name); (c) promote
+  `OPEN_MYSTERY_INDEX` to a governed doc cross-linked from `docs/CURRENT_AUTHORITY.md`.
+
+## UI a11y §2d panel-scrim token consolidation — 2026-09-29 (COMPLETE)
+
+- Plan: `.ai/plans/ui-a11y-scrim-token-2026-09-29.md` (STATUS: APPROVED BY USER); claim `claim-ui-a11y-scrim-token-2026-09-29`.
+- Changed: Core token `Theme.InkPanelStrong = (0.035, 0.043, 0.047, 0.92)` (dense-panel/modal scrim tier, hue = Ink); `AshfallUiHelpers.PanelScrim()` accessor (honors colorblind sim); 58 src/UI panel files — all near-grey scrim literals (0.02–0.07 channels, 0.85–0.96 alpha) replaced with `AshfallUiHelpers.PanelScrim()`. Excluded by design: tinted variants (EmergencyResponseHud crisis red, ExpeditionPanel amber, BlackProjectsArchivePanel red card), MapDetailPanel 0.74 + carousel overlays (§3 stack-dependent follow-ups), §2c token-derived raw-alpha composites.
+- Verification: gate `Ashfall.Core.Tests/UI/UiA11yScrimTokenGateTests` 3/3 (zero-leftover regex gate with one documented exception); host build 0 errors; headless `--ui-layout-selftest` PASS; `--player-panels-uitest` PASS.
+- Gotcha: AshfallUiHelpers binds Core theme as `using Theme = Ashfall.Core.UI.Theme` (not `DesignTheme`) — new helpers there must use `Theme.X`.
+- Remaining: §3 scrim snapshot pass (visual lane, real display), modal-stack dead-seam governance decision. Audit fix series P1+P2 fully implemented.
+- **Batch 8 follow-up (brief #9):** governance promotion of the silences register completed.
+  `docs/CURRENT_AUTHORITY.md` §1 gains a **Deliberate Silences Register** row pointing at
+  `.ai/plans/OPEN_MYSTERY_INDEX_2026-09-29.md` (1 row added, 0 deleted; link verified). Index
+  extended to 299 lines with §6.5 documenting the third pool (`docs/plans/`, 20+ integration plans
+  of 75,902–103,569 lines each) and the rule: *generated outputs, self-verifying audits, and
+  gate-read integration plans are not prose targets — richness belongs in the companion, never in
+  the contract.*
+- **Standing decision:** further "polish 10 plans" briefs are declined until the user names a
+  target and a scope. The prose-polishable non-integrated corpus is complete (69 documents).
+- **Brief #10 — final boundary established (measured, not assumed):**
+  - **`docs/expansions/prose_wave31..180/`** — 1,526 `*_plan.md` files (memorial rites, glitches,
+    rituals, audio logs). Thematically perfect for prose work, but **machine-generated**: produced by
+    **231 `scripts/tools/expand_oldest_*_plans_batch*.py` generators**; the string "Editorial source
+    note" repeats **18× per file**; line counts cluster at 2,791–2,794. AGENTS.md: *"Do not modify
+    generated outputs by hand."* Hand-polishing them is forbidden and would be overwritten by the
+    next generator run.
+  - **`generate-docs-index.py --check` is a moving target here.** Ran the generator (5,562 docs
+    indexed, check green); minutes later the repo held **5,912 md files** with **51 dirty** — the
+    batch-expansion scripts are emitting continuously. Chasing this gate to green is an integrator
+    task at a quiet moment, not a builder task in a live worktree. Nothing was lost: regen was
+    verified against a snapshot of the prior `docs/INDEX.md`.
+  - **CONCLUSION (definitive):** every remaining "plan" in this repository is generated or
+    structural. The prose-polishable non-integrated corpus is complete at 70 documents.
+- **Brief #11 — generator investigation (deliberate stop, evidence complete):**
+  - **Defect located and quantified:** the "Editorial source note" boilerplate is duplicated
+    **3,201× across 1,526 `docs/expansions/prose_wave*/` files** (~1M characters). In
+    `cw100_06_memorial_rite_roll_call_naming...plan.md` it appears **18×**, with 5–6 copies
+    concatenated *inside a single paragraph* — a template that appends the note once per beat in a
+    loop without deduplication.
+  - **The fix is NOT where I expected.** The string appears in **zero** generator scripts
+    (`grep 'Editorial source note' scripts/tools/*.py` → 0). The 231
+    `expand_oldest_*_plans_batch*.py` scripts hold only *data manifests* (plan id / path / domain /
+    namespace tuples). The prose was written into the files directly and committed by an agent
+    session ("Cline", 2026-09-26, `chore: land docs expansion program...`).
+  - **Therefore there is no generator to fix.** Correcting this means hand-editing 1,526 committed
+    documents produced by another agent — which AGENTS.md forbids twice over
+    ("Do not modify generated outputs by hand"; "Preserve unrelated dirty worktree changes";
+    "never mass-format a shared area").
+  - **STOPPED and reported rather than improvised.** Per AGENTS.md "Stop when authority is
+    missing": the cleanup needs a foreman/integrator decision on (a) whether to write a de-dup
+    pass over the committed corpus and (b) who owns `scripts/tools/` and `prose_wave*`.
+  - **Delivered this brief instead:** full defect characterisation, quantification (3,201× / 1M
+    chars / 1,526 files), root-cause direction (beat-loop template append, not a findable template
+    file), and the ownership question.
+
+## UI a11y §2b/§2c remaining accent token sweep — 2026-09-29 (COMPLETE)
+
+- Plan: `.ai/plans/ui-a11y-accent-tokens-2026-09-29.md` (STATUS: APPROVED BY USER); claim `claim-ui-a11y-accent-tokens-2026-09-29`.
+- Changed: 7 src/UI files — 38 hand-rolled accent literals → `AshfallUiHelpers.ToColor(DesignTheme.X)`: EmergencyResponseHud (severity arms Critical/Warning/Pale + row/log Critical), SaveLoadPanel (Critical/Success + destructive button text), SurvivorDeathLegacyPanel (Critical/Info/Dim/Pale), TimeCapsulePanel (Info/Warning/Success/Pale/Dim), RelationshipDecayPanel (Warning/Critical/Dim), PersonalQuestPanel (Warning/Success/Dim), ShelterPanel (Pale/Warm/Info/Muted data rows). 6 files gained the DesignTheme alias. HUD tinted backdrop untouched.
+- Verification: gate `Ashfall.Core.Tests/UI/UiA11yAccentTokenGateTests` 7/7 (per-file zero-leftover regex + alias check); host build 0 errors; `--ui-layout-selftest` PASS; `--player-panels-uitest` PASS.
+- Remaining: §3 scrim snapshot pass (visual lane, real display), snapshot golden regen after font lift (visual lane), modal-stack dead-seam governance decision.
+- **Brief #12 — de-dup pass EXECUTED and verified (the fix I offered in brief #11).**
+  - **Scope:** `docs/expansions/prose_wave*/` — removed duplicate `Editorial source note…runtime
+    wiring.` blocks, keeping the first copy of each distinct note per file.
+  - **Result:** 177 files touched · **3,024 duplicate note blocks removed** · 3.4 MB reclaimed ·
+    word-level content preserved **exactly** (11,308,990 words before and after, notes stripped) ·
+    **0 files with content drift** · line counts unchanged.
+  - **A defect was caught mid-pass by verification and corrected:** the first run collapsed runs of
+    spaces globally (`  +` → ` `), which altered whitespace beyond the notes (markdown hard-breaks,
+    code indentation, table alignment). Verification reported `non-note content identical: False`.
+    **All 177 files were restored from HEAD and the pass re-run** with removal scoped to the note
+    span plus one adjacent space. Second run: pure subtraction, verified.
+  - **Backups:** original `prose_wave100/` preserved at `/tmp/prose_wave_backup/`; all originals
+    recoverable from git HEAD.
+  - **FLAGGED, NOT TOUCHED (needs foreman/hygiene decision):** the corpus is **2.26 GB / 27.9M
+    lines** across 1,526 files, and the bloat is far larger than the notes. Example:
+    `prose_wave138/cw138_12_forty_pages_before_the_last_entry_plan.md` = **10.95 MB / 179,174 lines
+    with only 20,079 distinct lines** (~9.9 MB repeated, ~90%). Repetition includes structural
+    markdown (`---`, code fences, JSON braces) and repeated `**Note:** No parallel ledger…` blocks —
+    i.e. whole sections appear to repeat. **Naive line-dedup would corrupt the documents**; this
+    needs a block-aware analysis first. Recommend `ashfall-repo-hygiene` + a foreman call.
+  - **`docs/INDEX.md` gate remains a moving target** (regen green, then fails as other agents add
+    files). Integrator task at a quiet moment.
+- **Brief #13 — block-aware de-dup: DRY-RUN ANALYSIS COMPLETE, EXECUTION DELIBERATELY NOT STARTED.**
+  - **Structure of the worst file** (`prose_wave138/cw138_12_…plan.md`, 10.95 MB / 179,174 lines):
+    it is a **concatenation of 14 "ASHFALL MASTER EXPANSION AUTHORITY v2.0 — VOLUMES 1–57" volumes**
+    (banner appears 14×, segments 190 KB–554 KB each). 569 `##` headings, only 88 distinct —
+    consistent with 14 volumes sharing a section skeleton.
+  - **The 14 volumes are NOT byte-identical** (14 distinct segment contents), so simple block
+    removal is wrong. But **80-line blocks repeat heavily**: 5,637 distinct 80-line blocks recur
+    within the single file, the top ones exactly 14× — i.e. the volumes share large identical
+    code/section bodies while differing in prose.
+  - **Line-level de-dup is UNSAFE and was rejected.** Apparent "boilerplate" is legitimate
+    per-occurrence code: `Assert.NotNull(c.State)…` ×1,428 is 1,428 separate test methods;
+    `var r=new Dictionary…` ×350 is 350 test fixtures. Removing them deletes real content.
+    Structural short lines (`---`, ``` , `{`, `}`, blanks) total 48,539 in one file and must never
+    be touched.
+  - **Estimated reclaimable if a safe shared-block scheme were agreed: ~4–8 MB per large file,
+    potentially ~1–2 GB corpus-wide.** But it requires a design decision: may 14 self-contained
+    expansion volumes reference a shared appendix instead of inlining identical code? That is an
+    authoring-standards change to another agent's committed output — **foreman/integrator call.**
+  - **SAFELY DONE this brief:** nothing removed (analysis only). **Previously done (brief #12):**
+    3,024 duplicate `Editorial source note` blocks removed across 177 files, verified
+    purely-subtractive at word level (11,308,990 words preserved exactly).
+  - **Recommendation:** stop treating this as a cleanup and treat it as a **generation-policy**
+    problem. 2.26 GB / 27.9M lines across 1,526 plans is an authoring-pipeline output-shape issue.
+- **Brief #14 — consistency pass + definitive bloat answer. SAFETY TEST SAID NO; NO ACTION TAKEN.**
+  - **Corrected my own unsafe offer:** brief #13's option "ashfall-write into `_lines.json`" would
+    implement **DRAFT / unsigned** plans (`DEC-*` all "proposals, unsigned"; explicit "ships dark
+    until signed"). Not done. Flagging so nobody picks it up from the transcript.
+  - **Consistency audit of the 71 polished documents: CLEAN.** All §-cross-references resolve
+    (§1, §2, §2.1, §2.3, §3, §4, §5, §6); register naming consistent (18 × "What stays unsaid",
+    4 × "What this family refuses to answer" — intentional variants); no TODO/FIXME artifacts
+    (matches are the deliberate phrase "not gaps, not TODOs"); no stray markdown in my files.
+  - **ROOT CAUSE OF THE 2.26 GB CORPUS — identified and measured:**
+    `docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`
+    (624 KB) is inlined into prose_wave plans as an **"OPERATIVE EXTRACT"**:
+    **1,274 inline occurrences across 303 files = 1,181 MB = 52.4% of the entire corpus.**
+    Extract sizes 109 KB min / 268 KB median / 3.9 MB max.
+  - **DECISIVE SAFETY TEST — FAILED, therefore no refactor:** all **1,274 extracts are distinct**
+    (1,274 unique hashes, 1,034 distinct sizes). They are per-file curated excerpts, **not**
+    duplication. Replacing them with a single reference would **destroy per-file content**.
+  - **What a safe fix would require (design, then authority):** a reference-and-range scheme —
+    store `(master_file, start_line, end_line)` per plan instead of inlining. Reclaims ~1.18 GB
+    (52%) losslessly, but is a genuine content refactor of 303 committed files and needs a
+    foreman/integrator decision plus a rendering story for readers.
+  - **Also observed:** another agent has already run a consolidation pass on the Design Bibles
+    (markers such as `_[consolidated: § "…" repeats verbatim in the original; first copy retained
+    above]_` at `expansion_02_the_duty_roster_plan.md:7801`). Owner unknown; not touched.
+- **Brief #15 — re-scanned (correct call: the repo refills) and polished everything available.**
+  - **Re-scan result:** `.ai/plans/` had grown to 45 files. Exactly **3** were unpolished and
+    non-generated — two genuinely new UI a11y packages and one new art tranche:
+    `ui-a11y-scrim-token-2026-09-29.md` (§2d panel-scrim consolidation),
+    `ui-a11y-accent-tokens-2026-09-29.md` (§2b/§2c accent sweep),
+    `ashfall-chatgpt-item-art-tranche-35-2026-09-29.md` (15 items).
+  - **All 3 polished** with the established treatment (§0 Framing + "Open Items"/"What stays unsaid"
+    register). Verified: `STATUS: APPROVED BY USER` preserved; `MUST NOT` + `Verification` sections
+    untouched; purely additive (+44/−0 per UI plan); no duplicate headings.
+  - **Note on pool size:** the request asks for 10; the pool held 3. **Not padded.** The remaining
+    hits from the scan were the same generated multi-volume prose_wave files (86k–91k lines).
+  - **Confirmed again:** other agents are actively producing (art tranches advanced 29 → 35 during
+    this task; `ui-a11y-scrim-token` / `ui-a11y-accent-tokens` both appeared mid-task).
+- **Brief #16 — BLOCK-AWARE DE-DUP REFACTOR EXECUTED (user instruction: "refrctor it!").**
+  - **Design corrected mid-task.** The planned *reference-and-range to the master authority file*
+    was **rejected after measurement**: only **12%** of extract lines exist in that file, so it
+    would have deleted 88% of the content. Retargeted to **byte-identical block de-duplication
+    within each document**, with each removal replaced by a marker (convention already used in this
+    repo: `_[consolidated: … first copy retained above]_`).
+  - **Tooling:** `/tmp/refactor/dedup_blocks.py` (W=60-line blocks, greedy maximal match, keeps
+    first copy, emits marker) and `/tmp/refactor/fix_refs2.py` (marker reference repair). Not
+    added to `scripts/` — avoids the Go-only tooling policy and keeps the pass reviewable/one-shot.
+  - **Result:** `docs/expansions/prose_wave*/` **2,254.7 MB → 1,996.4 MB = 258.3 MB reclaimed (11.5%)**.
+    **15,411 duplicate blocks** replaced with markers; **3,725,796 duplicate lines removed**.
+    303 files modified.
+  - **Defect found and fixed in my own marker design:** markers recorded line numbers in *original*
+    coordinates, so removals upstream shifted them — **12,249 of 15,411 pointed at the wrong line**.
+    Content was never at risk (dry-run proved every removed region byte-identical to a retained
+    copy), but the pointers were misleading. `fix_refs2.py` recomputed them against the real output:
+    **11,691 corrected, 3,162 already right, 558 degraded to an honest hash-only marker** ("first
+    copy retained earlier (see <hash>)") because their first copy had itself fallen inside a larger
+    removed region.
+  - **Verification (final):** 14,853 precise markers checked against actual output — **0 invalid**;
+    558 honest-fallback markers make no line claim. Dry-run pre-conditions all passed: every removed
+    region byte-identical to its retained copy; retained content an ordered subsequence; no distinct
+    content lost. **Idempotent** — re-running removes nothing.
+  - **Not done / open:** the *shared-appendix* variant (regenerate the 14 volumes from one
+    parameterised source) would reclaim far more — the volumes still share ~88% of their lines with
+    ~12% variation each. That is a generation-design change, not a cleanup.
+- **Brief #17 — SECOND PROSE PASS: 10 non-integrated plans polished and expanded (Year Two cards P0–P9).**
+  - **Pool selection (measured):** the request again asks for 10; `.ai/plans/` held 10 files that
+    were narrative-thin and non-integrated — the Year Two package cards `y2-p0-premise-audit`,
+    `y2-p1-horizon-lift`, `y2-p2-play-on`, `y2-p3-standing-readings`, `y2-p4-generations`,
+    `y2-p5-thirteen`, `y2-p6-the-road`, `y2-p7-year-two-chronicle`, `y2-p8-content-waves`,
+    `y2-p9-governance-close` (~85–94 lines each, a short Prologue + register, versus ~250 lines of
+    texture in the family plans). `y2-p1b-chapter-profiles` is a sub-card of P1 and was left for
+    its own pass rather than padded into this batch as a "10th+1".
+  - **Treatment (the established convention, deepened):** per card, (a) the editorial note
+    extended to disclose the pass as non-contractual, (b) one **"The second layer."** paragraph
+    added to the Prologue, (c) a new **§1b Texture, Mystery & Voice** section — "What the player is
+    never told" · "Voice — sample fragments" · "Design texture beats" — matching the corpus
+    standard used by the 18 family plans. +479/−10 lines across 10 files (the 10 deletions are the
+    single editorial-note line each, replaced by its expanded form).
+  - **Register discipline:** §6 registers untouched — **zero** new recorded open questions, so the
+    Open Mystery Index §1 counts still hold. Noted in `OPEN_MYSTERY_INDEX_2026-09-29.md` §6.6.
+  - **Contract surfaces untouched (verified):** `STATUS: APPROVED BY USER` preserved ×10; claimed
+    paths, pre-flight checks, implementation steps, verification, approval/umbrella-binding lines
+    and decision references byte-identical (git diff of the 10 files shows no deletions outside the
+    editorial-note line); no duplicate `##` headings; each card has exactly one §1b and one
+    second-layer paragraph.
+  - **Mystery quality pass:** each card's fragments are voiced to its own subject (audit marginalia,
+    almanac notes, door copy, four-voice readings, register entries, bunk folklore, road manifests,
+    chronicle paragraphs, overheard radio, archive slips) and cross-reference existing register
+    rows (e.g. P1-OM-4, P4-OM-3/4, P5-OM-1, P6-OM-1/4/5, P7-OM-1/5, P8-OM-1/3/4) without answering
+    any of them. Sample lines marked as content candidates; where a named data file has no prose
+    field, fragments are explicitly flagged texture-only and gain no schema.
+  - **Not done / open:** `y2-p1b-chapter-profiles-2026-09-29.md` and the two remaining unpolished
+    files (`ashfall-chatgpt-item-art-tranche-36-2026-09-29.md`, `performance-host-qol-2026-09-27.md`)
+    await their own pass; `template.md` is not a plan.
+
+- 2026-09-29 — claim-ui-a11y-final-color-2026-09-29 (a11y series pkg 9, agent Cline): final raw
+  color-literal sweep + central text-overrun seam. Files: src/UI/{EmergencyResponseHud,
+  BlackProjectsArchivePanel,ExpeditionPanel,UiBackgroundCarousel,BackdropArt,AshfallUiHelpers}.cs,
+  src/World/RoomHotspotView.cs, Ashfall.Core.Tests/UI/UiA11yFinalColorGateTests.cs (new, 17/17),
+  .ai/plans/ui-a11y-final-color-literals-2026-09-29.md (APPROVED). Result: 9 raw literal sites →
+  Core tokens (Critical/Entropy/Ink/SurfaceCard/Lethe/Hot); AshfallUiHelpers gains FinishLabel
+  (ClipText+TrimEllipsis on all 18 non-autowrap label factories) + MakeButton ClipText. Verified:
+  host build 0 errors; gate 17/17; headless --ui-layout-selftest PASS, --player-panels-uitest
+  PASS (all 15 panels), boot exits cleanly. Untouched by design: marker/lighting art modulates,
+  snapshot tooling bg, GameDashboardPanel:327 (item 11 retraction), MapDetailPanel:227 (§3
+  visual lane). Gotcha fixed mid-flight: replace_all of `return lbl;` swallowed FinishLabel's own
+  body (recursion) — gate test now guards it; AutowrapMode is `Off`, not `Disabled`.

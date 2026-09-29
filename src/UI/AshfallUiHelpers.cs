@@ -90,6 +90,23 @@ namespace AtomicWar.GodotApp.UI
         // ── Typography ──────────────────────────────────────────────────
         // Maps directly to Theme.cs font-size tokens.
 
+        /// <summary>
+        /// Shared exit seam for every label factory (a11y precision 2026-09-29).
+        /// Godot Labels default to clip_text=false, so long text silently draws
+        /// past its rect and collides with neighboring controls. Non-autowrap
+        /// labels truncate with an ellipsis at their rect instead; autowrap
+        /// labels keep wrapping and are untouched.
+        /// </summary>
+        private static Label FinishLabel(Label lbl)
+        {
+            if (lbl.AutowrapMode == TextServer.AutowrapMode.Off)
+            {
+                lbl.ClipText = true;
+                lbl.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+            }
+            return lbl;
+        }
+
         public static Label MakeTitle(string text, int fontSize = Theme.FontSizeH1)
         {
             var lbl = new Label
@@ -101,7 +118,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", fontSize);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Warm));
             ApplyFont(lbl, FontBarlowSemiBold);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeSectionHeader(string text)
@@ -114,7 +131,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeH3);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Pale));
             ApplyFont(lbl, FontBarlowSemiBold);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeSubsectionHeader(string text)
@@ -123,7 +140,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeSmall);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Muted));
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeBody(string text, bool autowrap = true)
@@ -134,7 +151,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Pale));
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeSmall(string text, bool autowrap = false)
@@ -145,7 +162,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeSmall);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Pale));
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeMono(string text)
@@ -154,7 +171,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeMono);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Pale));
             ApplyFont(lbl, FontShareTechMono);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeLabel(string text)
@@ -163,7 +180,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeLabel);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Dim));
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeLabel(string text, int fontSize, (float r, float g, float b, float a) colorToken)
@@ -172,7 +189,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", fontSize);
             lbl.AddThemeColorOverride("font_color", ToColor(colorToken));
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeLabel(string text, int fontSize, Color color)
@@ -181,7 +198,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", fontSize);
             lbl.AddThemeColorOverride("font_color", color);
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         /// <summary>
@@ -195,7 +212,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", fontSize);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Pale));
             ApplyFont(lbl, bold ? FontBarlowSemiBold : FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeMetadata(string text, bool autowrap = false)
@@ -209,7 +226,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeLabel);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Muted));
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeWarning(string text)
@@ -218,7 +235,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Entropy));
             ApplyFont(lbl, FontBarlowSemiBold);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeCritical(string text)
@@ -227,7 +244,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Critical));
             ApplyFont(lbl, FontBarlowSemiBold);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         // ── Semantic Color Properties ──────────────────────────────────
@@ -262,7 +279,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
             lbl.AddThemeColorOverride("font_color", ColorSuccess);
             ApplyFont(lbl, FontBarlowSemiBold);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeInfo(string text)
@@ -271,7 +288,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
             lbl.AddThemeColorOverride("font_color", ColorInfo);
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         public static Label MakeRadiation(string text, bool acute = false)
@@ -280,7 +297,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
             lbl.AddThemeColorOverride("font_color", acute ? ColorRadiationAcute : ColorRadiation);
             ApplyFont(lbl, FontBarlowSemiBold);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         // ── Spacing & Layout ────────────────────────────────────────────
@@ -529,6 +546,11 @@ namespace AtomicWar.GodotApp.UI
             {
                 Text = text,
                 Disabled = disabled,
+                // Overflow precision (a11y 2026-09-29): content-sized buttons are
+                // unaffected; in fixed-width rows the label truncates with an
+                // ellipsis instead of drawing past the button rect.
+                ClipText = true,
+                TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
                 // Interactive target size (a11y audit 2026-09-29 §5d/§9.10):
                 // fixed 28px floor, not font-coupled — FontSizeBody + SpacingMd
                 // computed 27px and drifted with typography changes.
@@ -670,7 +692,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
             lbl.AddThemeColorOverride("font_color", ToColor(Theme.Dim));
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         /// <summary>
@@ -684,7 +706,7 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", fontSize);
             lbl.AddThemeColorOverride("font_color", ToColor(colorToken));
             ApplyFont(lbl, FontBarlowRegular);
-            return lbl;
+            return FinishLabel(lbl);
         }
 
         /// <summary>

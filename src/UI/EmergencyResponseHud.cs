@@ -123,7 +123,7 @@ namespace AtomicWar.GodotApp.UI
             if (_backdrop != null)
             {
                 _backdrop.Color = snapshot.Severity >= CrisisSeverity.Severe
-                    ? new Color(0.12f, 0.02f, 0.02f, 0.95f)
+                    ? new Color(DesignTheme.Critical.r * 0.12f, DesignTheme.Critical.g * 0.12f, DesignTheme.Critical.b * 0.12f, 0.95f)
                     : AshfallUiHelpers.PanelScrim();
             }
 

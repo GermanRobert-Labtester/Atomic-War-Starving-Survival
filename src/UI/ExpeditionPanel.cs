@@ -1370,7 +1370,7 @@ namespace AtomicWar.GodotApp.UI
             _encounterBanner.Visible = false;
             AddChild(_encounterBanner);
 
-            var bg = new ColorRect { Color = new Color(0.10f, 0.07f, 0.04f, 0.94f) };
+            var bg = new ColorRect { Color = new Color(Ashfall.Core.UI.Theme.Entropy.r * 0.12f, Ashfall.Core.UI.Theme.Entropy.g * 0.12f, Ashfall.Core.UI.Theme.Entropy.b * 0.12f, 0.94f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             _encounterBanner.AddChild(bg);
 
