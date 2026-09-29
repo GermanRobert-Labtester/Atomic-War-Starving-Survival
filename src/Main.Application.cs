@@ -1287,7 +1287,7 @@ namespace AtomicWar.GodotApp
                 OpenPlayerPanel("events_log");
                 GetViewport().SetInputAsHandled();
             }
-            else if (_state == GameState.Playing && AtomicWar.GodotApp.UI.AshfallFocusNavigator.HandleNavInput(this, @event))
+            else if (_state == GameState.Playing && AtomicWar.GodotApp.UI.AshfallFocusNavigator.HandleNavInput(TopmostVisibleOverlayPanel() ?? (Control)this, @event))
             {
                 GetViewport().SetInputAsHandled();
             }

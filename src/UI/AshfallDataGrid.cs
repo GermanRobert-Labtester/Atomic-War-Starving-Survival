@@ -370,6 +370,10 @@ public partial class AshfallDataGrid : PanelContainer
         {
             Text = (col.Header ?? string.Empty).ToUpperInvariant(),
             CustomMinimumSize = new Vector2(col.MinWidth, 0),
+            // Overflow precision (a11y audit 2026-09-29 §6): long headers
+            // truncate at the column edge instead of bleeding into the next.
+            ClipText = true,
+            TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
             HorizontalAlignment = col.Alignment switch
             {
                 ColumnAlign.Right => HorizontalAlignment.Right,
@@ -413,6 +417,11 @@ public partial class AshfallDataGrid : PanelContainer
         {
             Text = cell.Text ?? string.Empty,
             VerticalAlignment = VerticalAlignment.Center,
+            // Overflow precision (a11y audit 2026-09-29 §6): long cell values
+            // (item names, survivor names, tags) ellipsize at the allocated
+            // column width instead of bleeding into the neighbouring column.
+            ClipText = true,
+            TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
             HorizontalAlignment = col.Alignment switch
             {
                 ColumnAlign.Right => HorizontalAlignment.Right,

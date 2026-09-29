@@ -75,7 +75,11 @@ public partial class AshfallDashboardShell : PanelContainer
         _titleLabel = new Label
         {
             Text = string.IsNullOrEmpty(title) ? "—" : title.ToUpperInvariant(),
-            HorizontalAlignment = HorizontalAlignment.Left
+            HorizontalAlignment = HorizontalAlignment.Left,
+            // Overflow precision (a11y audit 2026-09-29 §6): long shell titles
+            // ellipsize instead of running into the right-docked close button.
+            ClipText = true,
+            TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
         };
         _titleLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeH2);
         _titleLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));

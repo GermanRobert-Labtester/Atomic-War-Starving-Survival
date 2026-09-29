@@ -288,6 +288,43 @@ namespace AtomicWar.GodotApp
                 _crisisHud.MoveToFront();
         }
 
+        /// <summary>
+        /// Topmost visible overlay panel — later-built panels draw above
+        /// earlier ones, so the last catalog entry wins — skipping panels
+        /// already mid-close. Null when the dashboard surface is exposed.
+        /// Scope authority for arrow navigation and the Tab trap
+        /// (a11y audit 2026-09-29 §5b/§9.3).
+        /// </summary>
+        private Control? TopmostVisibleOverlayPanel()
+        {
+            var catalog = OverlayPanelCatalog();
+            for (int i = catalog.Length - 1; i >= 0; i--)
+            {
+                var panel = catalog[i];
+                if (panel != null && panel.Visible && !AtomicWar.GodotApp.UI.UiMotion.IsClosing(panel))
+                    return panel;
+            }
+            return null;
+        }
+
+        public override void _Input(InputEvent @event)
+        {
+            // Modal Tab trap (a11y audit 2026-09-29 §9.3): with an overlay
+            // open, Tab must cycle inside that overlay instead of escaping
+            // into background chrome. The viewport consumes Tab for engine
+            // focus-next before the unhandled phase, so this runs in the
+            // input phase — but only while an overlay is open; with nothing
+            // open the engine default is preserved. Panels that self-handle
+            // Tab via ashfall_next_tab (combat target cycling, briefing
+            // skip) are excluded so their own handlers stay live.
+            if (_state != GameState.Playing) return;
+            if (@event is not InputEventKey key || !key.Pressed || key.Echo || key.Keycode != Key.Tab) return;
+            if (TopmostVisibleOverlayPanel() is not { } topmost) return;
+            if (topmost is CombatPanel or DailyBriefingModal) return;
+            if (AshfallFocusPolicy.TrapFocus(topmost, @event))
+                GetViewport()?.SetInputAsHandled();
+        }
+
         private void CloseSettingsPanel()
         {
             if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(_settingsPanel))
