@@ -580,7 +580,7 @@ namespace Ashfall.Core.Tests
             Assert.Equal("military_remnants", patrol.FactionId);
 
             // Every appended broadcast message must be selectable from its faction pool.
-            string patrolMsg = "Patrol Two, check-in from the north service road. Culvert is clear. Bridge approach is blocked again. We are cutting east through the pump station.";
+            string patrolMsg = "Patrol Two, check-in from the north service road. Culvert is clear. Bridge approach is blocked again. We are cutting east through the pump station. One check-in logged.";
             Assert.True(EnginePoolContains(engine, "military_remnants", patrolMsg),
                 "Patrol broadcast message missing from military_remnants chatter pool.");
 

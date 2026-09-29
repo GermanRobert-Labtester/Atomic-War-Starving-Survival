@@ -13,11 +13,99 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_plague_year_plan.md`. Family index: `docs/expansions/expansion_world_moves_without_you_index.md`.
 > Not a claim. Fictional pathogens only (the four already authored). No clinical instruction content.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `plague_year_lines.json` rows; they belong in data, never in code.
+> **Fictional pathogens only — the four already authored. No clinical, diagnostic or treatment
+> instruction content anywhere in text or data.**
+
+---
+
+## 0. Prologue — The Count
+
+> *"The sickness did not come to the shelter. It came to the region, and the shelter is only a
+> place inside a region."*
+
+Every survival game models disease as a status effect on a person. This one models it as a
+**weather system over a map** — a region passing through Rumour, Confirmed, Spreading, Waning,
+Ended, while a shelter sits inside it and decides how much of the world to let through the door.
+
+The Gate Protocol is the only dial. Open, Screen, Sealed. It is not a difficulty slider and it is
+not a moral axis. It is a single persisted knob that says how much of *other people's emergency*
+you are willing to make your own — and the answer is written on a change-day and cannot be taken
+back quietly.
+
+**Tone & register.** Epidemiological, public, unsentimental. The vocabulary is the bulletin board:
+*rumour, told, seen, confirmed, spreading, cordon, count*. Never clinical, never instructive, never
+gratuitous. The four authored pathogens are fictional and must stay fictional. The dread here is
+not the body; it is the notice pinned to the gate.
+
+**Mystery & texture.** Spillover produces **Rumour only** (DEC-PY-04) — the model can suspect and
+never confirm. Confirmation is a thing the *world* does and the player learns about second-hand.
+That asymmetry is the plan's epistemology: you are always one bulletin behind. §12 keeps what the
+spillover came from permanently unsaid.
+
 ## 1. Goal & Outcome
+
+> *Design intent: the outbreak is never your fault and always your problem. The dial does not
+> decide whether people suffer — only whether you are standing near them when they do.*
+
 - **Goal:** Take disease out of the walls: a **Regional Outbreak Watch** (Rumour → Confirmed → Spreading → Waning → Ended) fed by seeded zoonotic spillover, reaching the shelter through four existing-pattern vectors (gate, wagon, berth, table); one persisted **Gate Protocol** dial (Open/Screen/Sealed); outbreak-triggered cordons through the existing embargo authority; one strain per season across a full year.
 - **Outcome (observable):** on a fixed seed, a deep-winter spillover becomes a Rumour, then Confirmed in a region; a petition carrying the strain arrives; with Protocol *Screen* the case is offered isolation and consumes the existing daily care burden; a cordon blocks a route and adds a decaying medical price shock; save/load mid-outbreak preserves every stage.
 - **Non-Goals:** no second disease/medical/quarantine authority; no new pathogen in v1; no new save section; no new routed panel; no real-world analogues; no child-endangerment set-pieces; no change to `DiseaseSystem` infection/immunity rules; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**The stage ladder is a public vocabulary.**
+
+Rumour → Confirmed → Spreading → Waning → Ended should be readable by anyone from the Board
+without a tooltip. Those five words are the plan's entire UI and they are deliberately ordinal,
+not numeric. A stage is a rumour with confidence attached. Never print a percentage.
+
+**The four vectors are four kinds of knock.**
+
+Gate, wagon, berth, table — a person arriving, goods arriving, a boat arriving, and a meal already
+shared. They should read as four escalating *faits accomplis*, and each one is authored as an
+`IDiseaseOutbreakSource` contract (E4), which means each one is a promise the game can break and
+be caught breaking.
+
+**What the player is never told.**
+
+- Where the spillover came from. `SpilloverModel` computes reservoir pressure × contact pressure.
+  It names no animal, no place, no index case.
+- Whether *Screen* is compassion or arithmetic. It consumes the existing daily care burden and the
+  plan declines to weigh that.
+- What the strain did before it was a season. DEC-PY-01 maps four strains to four seasons and says
+  nothing about the fifth season or the ones before.
+- Why one strain per season. A year has four. The plan observes the fit and does not explain it.
+
+**Voice — sample fragments (content candidates for `plague_year_lines.json`).**
+
+> "Board notice: the region is Confirmed. The Board does not say confirmed where. The Board says
+> confirmed, and that is enough to change the gate."
+
+> "Screen today. Two petitions offered isolation, one accepted. The care burden is on the ward
+> sheet and the ward sheet is not a moral document."
+
+> "Cordon on the north route. Medical prices will spike and decay. Everything here decays. That is
+> the only kindness in the design."
+
+> "The Count records one. The Count records only what is counted, and we both know what that
+> means."
+
+**Design texture beats.**
+
+- **Rumour never exposes the stage exactly (PY-P6).** The presenter must blur; *Seen* equals state
+  and nothing else does. The blur is the player's job to resolve.
+- **Weather embargoes stay bit-identical (§6.5).** The additive trigger kind is invisible to the
+  old rules. If a player can tell the difference, the seam has leaked.
+- **Sealed is not evil.** It blocks petitions and freight dwell via read-only flags. Give it the
+  same plain wording as Open. Judgement belongs to the player and to nobody in the writing.
+- **Every disease death has a Count line (§6.7).** The Count is the plan's memorial and its only
+  lyricism. Keep it to one line per death, forever.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -142,3 +230,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: a vector cannot be expressed as an `IDiseaseOutbreakSource`; embargo extension requires a new authority; the gate has no existing owner; any change alters `DiseaseSystem` infection/immunity rules; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the outbreak larger than the watch that meters it. Any future plan that answers one must name
+the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| PY-OM-1 | What was the index case? | `SpilloverModel` computes pressure, never a source. Naming an animal or a place converts a hazard into a culprit. | Never — tone-locked; no real-world analogue (§Non-Goals). |
+| PY-OM-2 | Why is there one strain per season? | DEC-PY-01 maps four strains to four seasons. The fit is observed, not explained. | Never — the artefact reads as pattern. |
+| PY-OM-3 | Who wrote `IDiseaseOutbreakSource`'s contract? | E4's contract rejects diseases outside itself. A contract implies a drafter; the plan declines to name one. | Never — architecture and atmosphere both depend on it. |
+| PY-OM-4 | What happened to the regions that ended their outbreak? | PY-P8 exposes "emptied by the Year" to the Board. *Emptied* is doing work the plan refuses to define. | *The Living Region*, if it ever authors regional depopulation. |
+| PY-OM-5 | Is the quarantine coordinator's containment bonus luck or care? | E5 models a containment bonus as a number. Whether it reflects skill, luck or equipment is not asserted. | Never — a rule, not a gap. |
+| PY-OM-6 | Does the Count include the people who left? | §6.7 says every disease death has a Count line. It does not say the Count is a census. | Never — the ambiguity is the memorial's honesty. |

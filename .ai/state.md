@@ -1,5 +1,156 @@
 # Current Task State
 
+## Trimmed plans — integration round 56 — 2026-09-29 (NO INTEGRATIONS, DECISION NEEDED)
+
+- User request (repeat): "fully integrate ... 5 trimmed plans!" No plan was integrated this round: every one of the ~230 remaining trimmed plans was re-screened and none reaches the player through a traced live surface.
+- Screens run: (a) pool ids vs. `LocalizationService.cs` (no remaining plan id has localization strings to mirror); (b) pool source files vs. files already integrated in rounds 40-55 (no overlap); (c) `narrative_discovery_manifest.json` (only the 4 already-integrated/held ids matched; all now integrated); (d) new consumer traces this round, all negative: `numbers_station_ciphers` (no consumer; record has `prose`, plan names `description`), `world_evolution_events` (host exposes Events, nothing renders description), `codex_entries` (BuildCodexProjection has no UI caller), `propaganda_campaigns` (no UI), `orbital_harrow_events` `radio_hook_text` (unused), earlier-rejected `survivors`/`characters`/`year_of_ash_survivors`/`quests_npc_arcs`/`memorials_expansion_05`/`seasonal_events`/`trauma`/`prewar_archives`/`crossing_*`/`year_of_ash_locations`/`locations_expansion3`/`verdict_radio` (Plan 94 verbatim contract)/`journal_entries_batch_3` (no producer).
+- The only way to keep going is to relax the standard used in rounds 40-55 ("the edited field is displayed to the player by a traced live consumer") to "the record is loaded by a live loader". That is a scope decision for the user/foreman, so nothing was edited.
+- Nothing changed in data, code, plans or claims this round.
+
+## ChatGPT item art tranche 28 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; additive tranche 28 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-28-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-28-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching sidecars; scoped whitespace check PASS. The Go `validate-config` subcommand requires an explicit schema and was not applicable to this catalog. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 264 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 292 direct item images.
+
+## Five trimmed plans — integration round 55 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded clause each, folded into the last sentence): cw143_18 `micro_frozen_bus` (EN+DE), cw150_06 `micro_crashed_truck` (EN+DE), cw151_08 `micro_improvised_grave` (EN), cw160_10 `micro_drainage_pipe` (EN), cw160_11 `micro_rail_siding` (EN); all in `micro_locations.json` description, mirrored in `LocalizationService.cs` strings so JSON == EN for every micro record.
+- Same method as round 54 (JSON + localization mirror, no fourth sentence because `MicroLocationStorytellingIntegrityTests` caps descriptions at 3). Rail siding claim re-verified: it sits in batch23 (COMPLETE); the IN PROGRESS text there refers to other, skipped files. No test or Godot self-test pins these strings (`Main.UiTests.Expeditions` only requires the panel body to contain the JSON description, which stays true).
+- All seven micro-location plans from the pool are now integrated (rounds 54-55).
+- Verified: micro_locations.json parses; JSON==EN for all 7 micro records; `git diff --check` clean; `scripts/run_test.sh` MicroLocationStorytellingIntegrityTests 5/5, LocalizationServiceTests 8/8, LocalizationPilotTests 4/4, MicroLocationCatalogLoaderTests 14/14, MicroLocationCatalogFixtureTests 6/6, MicroLocationHazardIntegrationTests 13/13, MicroLocationEthicsIntegrationTests 10/10.
+- Claim: `Claim: integrate trimmed prose plans, round 55` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 54 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw136_08 -> `narrative/cobalt_liturgies.json` `liturgy_cobalt_rite_of_the_lead_shroud`; cw151_20/cw157_16 -> `narrative/wasteland_grave_epitaphs.json` `epitaph_scav_rusted_license_plate`/`epitaph_scav_spent_casing_cairn` (all `prose`, discovery-manifest listed -> JournalCodex); cw160_09 -> `micro_locations.json` `micro_roadside_memorial`; cw169_19 -> `micro_ruined_greenhouse` (`description`).
+- Way around the round 41 micro-location block: the description is shadowed by `discovery.<id>.description` EN (and DE for roadside) strings in `LocalizationService.cs`, so both were edited to stay identical to the JSON (`Main.UiTests.Expeditions` also requires the panel body to contain the JSON description). `MicroLocationStorytellingIntegrityTests` caps descriptions at 3 sentences, so each new clause was folded into the last sentence with ", and ..." instead of a new sentence; a first attempt with a fourth sentence failed that test and was reworked. German self-test still finds "Geschmolzene Talgreste".
+- Still open micro-location plans (same method applies, per-record vetting needed): frozen_bus (Godot self-test length >= 190 chars only), crashed_truck, improvised_grave, drainage_pipe (DE string exists? check), rail_siding (claim status read as IN PROGRESS, re-verify).
+- Rejected again (Rule 7): `survivors.json` bio (the_pharmacist/the_vet are archetypes 4 and 5; the live journal seed unlocks only the first three, and no other producer of `survivor_met_*` exists), `characters.json` bio (only ids read), `year_of_ash_survivors.json` backstory (LoadSurvivors has no caller), `quests_npc_arcs.json` (ExpansionQuestHostSession does not render description/synopsis), `memorials_expansion_05.json` (GetMemorialText has no UI caller), `verdict_radio.json` (Plan 94 baseline-verbatim contract), `dose`/other files already noted.
+- Verified: three data JSON files parse; JSON == EN localization for both micro records; `git diff --check` clean; `scripts/run_test.sh` MicroLocationStorytellingIntegrityTests 5/5, LocalizationServiceTests 8/8, LocalizationPilotTests 4/4, MicroLocationCatalogLoaderTests 14/14, MicroLocationGreenhouseIntegrationTests 13/13, MicroLocationCatalogFixtureTests 6/6, FringeCultsCatalogTests 5/5, FringeCultRuntimeActivationTests 7/7.
+- Claim: `Claim: integrate trimmed prose plans, round 54` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 53 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw142_05/cw148_04/cw160_07/cw160_08 -> `dose_locations.json` `loc_the_childrens_baseline_board`/`loc_the_dose_room`/`loc_the_register_hall`/`loc_surface_observation_post` description; cw136_13 -> `narrative/salt_mine_inscriptions.json` `salt_mine_brine_spring_warning` prose.
+- New live surfaces traced: dose location `description` -> DoseContentCatalogLoader -> DoseLedgerHostSession.Content -> DoseGeographyPanel "FIELD NOTE" (tests assert ids, sector and description length >= 20 only); salt-mine prose -> NarrativeDiscoveryCatalog (Abyssal adapter, manifest id `disc_salt_mine_brine_spring_warning`) -> JournalCodex body.
+- Vetted and left for a later round (all claims COMPLETE, manifest-listed, no pins): cw136_08 `liturgy_cobalt_rite_of_the_lead_shroud`, cw151_20 `epitaph_scav_rusted_license_plate`, cw157_16 `epitaph_scav_spent_casing_cairn` (prose via FringeCult adapter).
+- Rejections (Rule 7): every other `narrative/*` pool file is absent from `narrative_discovery_manifest.json` and from any src/Core consumer (ammo hoist, apiculture, awl, beeswax, mudbrick, heirloom seed, numbers station, rad pathology, timber, dweller medical, documents, etc.); `locations_expansion3.json` (only ExpeditionCatalogLoader, which ignores description; not in GameCatalog/MapPanel); `thirdonary_quests.json` `discovery` (no renderer found).
+- Verified: two JSON files parse; `git diff --check` clean; `scripts/run_test.sh` Plan81DoseLocationsExpansionTests 11/11, DoseContentCatalogTests 8/8, NarrativeDiscoverySystemTests 7/7, AbyssalAnomaliesCatalogTests 12/12, AbyssalAnomaliesRuntimeActivationTests 6/6.
+- Claim: `Claim: integrate trimmed prose plans, round 53` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 52 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw163_03/cw163_04 -> `narrative/bone_degreasing_prep_logs.json` `bone_degreasing_001`/`_006` log_text; cw142_16/cw142_19 -> `narrative/antler_horn_sawing_records.json` `antler_horn_004`/`_001` log_text; cw136_14 -> `narrative/geophone_hymnals.json` `hymnal_geophone_dirge_of_the_p_wave` prose.
+- New live surface traced (correcting earlier rounds' blanket rejection of `narrative/*` discovery catalogs): JournalCatalogData.Load -> NarrativeDiscoveryCatalog.LoadFromFiles (narrative_discovery_manifest.json producers, e.g. loc_automated_abattoir / room_workshop) -> BoneHorn/FringeCult source adapters (BodyText from the record prose) -> JournalCodex.AppendNarrativeDiscoveryRows -> journal codex row body. No `discovery.<id>` localization copies exist for these ids; tests assert only ids/labels and the substring "old shed" (preserved).
+- Still rejected (Rule 7): faction_war_dialogue/communiques/journal (no consumer of the snippets), mudbrick/beeswax/awl/timber/apiculture/ammo-hoist/etc. assay files (only NarrativeAssayLogCatalogs fermentation/water specs are wired; other families not traced to the codex here), found_objects_expansion, documents_batch_*, quest_narrative_documents, faction_directives, bunker notices (no loader references).
+- Verified: three JSON files parse; `git diff --check` clean; `scripts/run_test.sh` BoneHornCarvingCatalogTests 9/9, BoneHornRuntimeActivationTests 8/8, FringeCultsCatalogTests 5/5, FringeCultRuntimeActivationTests 7/7, NarrativeDiscoverySystemTests 7/7.
+- Claim: `Claim: integrate trimmed prose plans, round 52` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 51 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw136_07 -> `muster_faction_culture.json` `culture_marks_on_the_doorframe` body; cw148_15/cw149_12/cw152_20 -> `narrative/vinyl_record_archive.json` records 03/04/06 `dweller_resonance_notes`; cw144_08 -> `final_wishes.json` `wish_reporter_attribution_sealed` wish_description.
+- New live surfaces traced: culture `body` -> FactionCultureCodexPanel entry body; vinyl `dweller_resonance_notes` -> Main.ShelterSocial loader `description` -> VinylMoralePanel "Notes:" preview; `wish_description` -> Phase0HostSession finalWishDescription -> Phase0Panel active-wish card. No test pins the changed text (tests use ids only). Note: `{name}` placeholder in wish_description is not substituted by Phase0HostSession (pre-existing; untouched, not in scope).
+- Rejections (Rule 7): `environmental_atmosphere_expansion.json` (location ids flooded_subway_depot/abandoned_ski_resort/geothermal_plant_ruins exist in no location catalog), `communication_templates.json` description (not rendered), `barter_rules.json` rule description (ShelterBarterPanel description is the trader def, not the rule), `scavenging_tables.json` (no description consumer), `crossing_factions.json` `signature_quote` (not traced to a crossing-faction render; FactionDetailPanel uses the core faction catalog).
+- Verified: three JSON files parse; `git diff --check` clean; `scripts/run_test.sh` FinalWishCatalogLoaderTests 7/7, FactionCultureCodexTests 4/4, FinalWishPlan65CatalogTests 7/7, VinylMoraleSystemTests 9/9, VinylAcquisitionIntegrationTests 7/7.
+- Claim: `Claim: integrate trimmed prose plans, round 51` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Six trimmed plans — integration round 50 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw147_01 -> `agriculture_items.json` `item_pest_treatment_dust`; cw152_08 -> `foundry_items.json` `item_foundry_plowshare`; cw151_03 -> `crossing_items.json` `item_calibration_weight`; cw151_16 -> `verdict_items.json` `evidence_geophone_hymn` (all `description`); cw161_09 -> `narrative_encounters_npc_arcs.json` `enc_arc_mara_route`; cw161_10 -> `enc_arc_ilze_clinic`. Six because all six cleared vetting.
+- New live surfaces traced: item `description` -> ItemInspectionModel.BaseDescription (fallback when `item_description_texts.json` has no entry; none of the four ids do) -> InventoryDetailPanel; NPC-arc encounters -> NarrativeEncounterSystem.Load (ArcFileName) -> ExpeditionEncounterBridge (same path as narrative_encounters.json; no localization key, no duplicate id in the primary or expansion files).
+- Rejections (Rule 7): `trophies.json` (ShelterDecorPanel shows the decor ITEM description from items.json, not the trophy record), `field_guide.json` (journal bridge shows common name only), `holdfast_npcs.json`, `contagion_events.json`, `propaganda_campaigns.json`, `orbital_harrow_events.json` `radio_hook_text` (no description consumer), `moral_choice_chains.json` branch `description` (only display name is rendered), `narrative/*` discovery catalogs (only ContentUtilizationRuntimeCollector reads them), `narrative/journal_entries_batch_3.json` (re-verified: none of its knowledge_keys is referenced anywhere outside the file, so no entry can surface).
+- Verified: five JSON files parse; `git diff --check` clean; `scripts/run_test.sh` AgricultureSystemTests 23/23, FoundryExpansionProductTests 5/5, CrossingItemsPlan126Tests 7/7, VerdictSystemTests 54/54, NpcArcDataTests 12/12, ExpeditionEncounterBridgeTests 11/11.
+- Claim: `Claim: integrate trimmed prose plans, round 50` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 49 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw161_19 -> `achievements.json` `conflict_arbitrator` description (AchievementsPanel row); cw170_20 -> `comms_targets.json` `comms_target_weather_beacon_alpha` description (CommsArrayTransceiverPanel detail); cw136_18 -> `narrative/journals_expansion.json` `journal_qm_02_loma_arrival` bodyText (JournalCorpus LoadAmbient -> JournalBookUI); cw150_09 -> `moral_choice_quests_branching.json` `quest_moral_chain_mercy_03` discovery (MoralChoiceBranchQuestCatalogLoader -> MoralChoiceModal); cw144_07 -> `ideological_events.json` `event_theological_dispute` description (IdeologicalFriction events -> PfglOctetBoardPanels open confrontations).
+- New live surfaces traced: achievement description, comms target description, journals_expansion ambient bodyText, moral branch chain discovery, ideological event description. The code default template in `IdeologicalFrictionEvents.LoadDefaultTemplates` duplicates the old JSON text; it is only a no-JSON fallback and no test pins it, so it was left untouched (JSON is authority).
+- Rejections (Rule 7, this round): `year_of_ash_locations.json` (YearOfAshCatalogLoader.LoadLocations has no caller; ExpeditionCatalogLoader ignores description), `prewar_archives.json` (no description consumer), `captive_interrogations.json` (no src consumer), `seasonal_events.json` (`description` is not copied into ActiveSeasonalEvent; only name/impact_summary), `psychological_trauma.json` (no UI), `survivors.json` bio, `personal_belongings.json` (panel shows template names only), `sound_ranging_catalog.json`, `standing_record_quests.json`/`repeatable_quests.json` (no briefing render), `crossing_locations.json` (not fed to MapPanel or crossing panels), `environmental_texts_expansion_05.json` (round 48).
+- Verified: five JSON files parse; `git diff --check` clean; `scripts/run_test.sh` IdeologicalFrictionSystemTests 11/11, JournalCorpusTests 7/7, MoralChoiceBranchGossipTests 36/36, Plan149AchievementIntegrationTests 6/6, CommsArraySystemTests 12/12.
+- Claim: `Claim: integrate trimmed prose plans, round 49` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Six trimmed plans — integration round 48 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw149_18 -> `radio_distress_signals.json` `fu_401_9_answered` text; cw160_19 -> `fu_401_9_rescue_success`; cw160_20 -> `fu_88_3_rescue_success`; cw167_18 -> `radio_distress_signals_expansion.json` `fu_455_7_answered`; cw167_19 -> `fu_455_7_rescue_success`; cw167_20 -> `fu_555_0_rescue_success`. Six because all six cleared vetting.
+- New live surface traced: distress follow-up `text` -> DistressFollowUpScheduler.OnFollowUpFired -> `RadioHostSession.LastEvent` ("Follow-up transmission from <id>: <text>") -> RadioPanel. Earlier ledger note "distress fragments: no live render" concerned `message_fragments`, not follow-up `text`. CF-P1 seal is SEALED (2026-09-19); no active claim. Population replay reads text from the JSON at test time, so no literal to update.
+- Rejections (Rule 7): `environmental_texts_expansion_05.json` (locations `bunker_perimeter`/`dock_area` exist in no location catalog; `tech_cache` is shadowed by atmosphere text) — env plans cw160_01/03/04/cw170_07 not integrated.
+- Verified: both JSON files parse; `git diff --check` clean; `scripts/run_test.sh` DistressFollowUpTests 39/39, DistressFollowUpPopulationReplayTests 46/46, DistressSignalTasks912ReplayTests 5/5.
+- Claim: `Claim: integrate trimmed prose plans, round 48` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Six trimmed plans — integration round 47 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw149_09 -> `moral_choice_quests.json` `quest_moral_share_family` discovery; cw151_13 -> `quest_moral_share_elder`; cw152_12 -> `quest_moral_share_injured`; cw153_13 -> `radio.json` `radio_broadcast_05` message; cw157_18 -> `narrative_encounters.json` `enc_dead_letter_office` description; cw158_18 -> `enc_glass_blower_of_the_rim` description. Six rather than five because all six cleared vetting.
+- Correction to the round 46 rejection note: the claim naming cw157_18/cw158_18 is batch23 (Status COMPLETE); the IN PROGRESS text referred to other, skipped files. Encounter tests use inline fixtures and IDs only; no localization key exists for either encounter.
+- Vetted: trim claims COMPLETE; no test pins the changed text; no localization copy; live consumers unchanged (MoralChoiceModal, RadioPanel via RadioBroadcastCatalog, ExpeditionEncounterBridge).
+- Pool status: only journal/document/codex-type plans remain without a traced consumer or localization check; the verified-surface pool is now exhausted.
+- Verified: three JSON files parse; `git diff --check` clean; `scripts/run_test.sh` MoralChoiceSystemTests 22/22, ExpeditionEncounterBridgeTests 11/11, FactionRadioBroadcastExpansionTests 22/22.
+- Claim: `Claim: integrate trimmed prose plans, round 47` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 46 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw164_11 -> `travel_encounters.json` `enc_travel_salt_caravan_breakdown`; cw164_12 -> `enc_travel_militia_roadblock`; cw143_01 -> `ceremonies.json` `ceremony_remembrance_vigil`; cw159_04 -> `faction_radio_corpus.json` `radio_faction_patrol_north_culvert` (with the `FactionRadioBroadcastExpansionTests` pool-membership literal updated in the same change); cw150_08 -> `moral_choice_quests.json` `quest_moral_share_water` discovery.
+- New live surfaces traced this round: travel encounter `description` -> `ExpeditionEncounterBridge` dto -> expedition panel (localized only when a `discovery.<id>.description` key exists; none does for these ids, so catalog text shows); `CeremonyFestivalPanel` renders `def.Description`; `MoralChoiceModal` renders quest `Discovery`.
+- Rejections (re-traced): cw157_18 (`enc_dead_letter_office`) — a claim naming it is IN PROGRESS; cw158_18 — IN PROGRESS claim; endings.json plans (cw162_09/10) — their working field `description` does not exist in the records (only `summary`/`epilogue_text`), premise wrong; medical_texts (cw149_07) — `AfflictionsPanel` truncates the diagnosis summary to 70 chars and the current text is 63, so an added sentence would never show; trade_texts `profile` and crossing_encounters — no traced UI consumer.
+- Test-build blocker worked around: another session's new untracked `Ashfall.Core.Tests/UI/UiA11yP2FocusContrastGateTests.cs` briefly failed to compile (missing `using System.Linq`). Left untouched (not my file); ran the scoped runner with `DefaultItemExcludes` in my own shell env to exclude only that file. The owning session fixed it a few minutes later.
+- Verified: four JSON files parse; sentences confirmed at record level with jq; `git diff --check` clean; `scripts/run_test.sh` FactionRadioBroadcastExpansionTests 22/22, ExpeditionEncounterBridgeTests 11/11, TravelEncounterPatrolVariantTests 5/5; each moved plan body byte-identical (`cmp`) under the header. Not checked in-game. Not committed.
+- Claim: `Claim: integrate five trimmed prose plans, round 46` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 45 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw136_12 -> `campaign_epilogues.json` `epilogue_demographics_persevering`; cw144_01 -> `epilogue_demographics_thriving`; cw154_10 -> `epilogue_technology_makeshift`; cw155_20 -> `epilogue_sustenance_harvest`; cw158_15 -> `narrative_encounters.json` `enc_the_surveyor_still_working`.
+- Rule 7 / contract rejections this round (all re-traced, not assumed): verdict radio plans (cw136_17, cw142_12, cw164_17, cw164_18) — their records are in `VerdictRadioExpansionTests.Baseline_13_Broadcasts_Preserved_Verbatim`; the test only asserts non-empty fields but the Plan 94 contract says baseline text stays verbatim. `journal_entries_batch_3.json` (32 plans) — loads into JournalCorpus but no producer emits any `journal_raw_b3_*` key (only cross-references from other narrative docs). `personal_quests.json` — panel renders stage description, not the `summary` these plans target. `world_evolution_events.json` and `weather_route_gates.json` — description/recast_text have no traced UI consumer. `year_of_ash_events.json` — consumed only for calendar multipliers. `characters.json` bio — the codex people rows read survivor archetypes, not this file. `micro_locations` — localization copies (see round 41).
+- Verified: both JSON files parse; sentences confirmed at record level with jq; `git diff --check` clean; `scripts/run_test.sh` CampaignEpilogueEngineTests 4/4, PatrolExpeditionReachabilityTests 3/3, NarrativeEncounterSystemTests 13/13; each moved plan body byte-identical (`cmp`) under the header. Not checked in-game. Not committed.
+- Remaining verified pool: cw159_04 (corpus; needs its test literal updated with the edit), other endings.json / travel_encounters / crossing_encounters plans need a fresh consumer + localization trace.
+- Claim: `Claim: integrate five trimmed prose plans, round 45` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 44 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw142_09 -> `radio_intercepts.json` `radio_intercept_sos_quarry_shelter_02`; cw154_20 -> `radio_intercept_pumphouse_distress_11`; cw145_13 -> `radio_intercept_meridian_supply_column_01`; cw150_14 -> `radio.json` `radio_broadcast_01`; cw142_07 -> `radio.json` `radio_broadcast_02`.
+- Correction to round 43: the three intercept plans skipped there (cw142_09, cw154_20, cw145_13) were not actually blocked. Tests reference those ids only for bearing/decryption logic (or via inline fixture JSON); none asserts the real message text. Re-verified by grep before editing and by focused runs afterwards.
+- Verified: both JSON files parse; sentences confirmed at record level with jq; `git diff --check` clean; `scripts/run_test.sh` ShelterRadioStationTests 8/8, RadioBroadcastCatalogTests 4/4, FactionRadioBroadcastExpansionTests 22/22; each moved plan body byte-identical (`cmp`) under the header. Not checked in-game. Not committed.
+- Remaining candidate pool (trimmed, unclaimed, verified-surface): epilogue plans cw136_12, cw144_01; corpus cw159_04 is pinned by a positive test (needs the literal updated with the edit). Other catalogs need a fresh consumer trace first.
+- Claim: `Claim: integrate five trimmed prose plans, round 44` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 43 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- New live surface this round: `radio_intercepts.json`. Traced: `Main.RadioStation.Integration.cs` -> `ShelterRadioStationSystem.LoadCatalog` -> `RadioIntelligencePanel` ("MESSAGE: {def.Message}" once decrypted) and `decodedIntelligenceLogs`.
+- Integrated (one bounded, source-only sentence each): cw146_14 -> `radio_intercept_dead_hand_silo_beacon_03`; cw147_16 -> `radio_intercept_weather_ionosphere_bulletin_04`; cw150_16 -> `radio_intercept_orbital_harrow_early_warning_05`; cw152_13 -> `radio_intercept_spoofed_distress_trap_08`; cw155_11 -> `radio_intercept_grain_silo_cache_12`.
+- Blockers worked around (no partials): `cw142_09`, `cw154_20`, `cw145_13` skipped because tests reference their intercept ids (edit-risk); the five chosen ones have no test pins by id or text. `radio.json` / corpus / year_of_ash_radio / epilogue plans that remained were exhausted of unpinned, unclaimed candidates, hence the new surface.
+- Verified: `radio_intercepts.json` parses; sentences confirmed at record level with jq; `git diff --check` clean (5 lines changed); `scripts/run_test.sh` ShelterRadioStationTests 8/8; each moved plan body byte-identical (`cmp`) under the header. Not checked in-game. Not committed.
+- Known limit: saves that already decoded an intercept keep the old text in `decodedIntelligenceLogs`.
+- Claim: `Claim: integrate five trimmed prose plans, round 43` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 42 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw150_04 -> `faction_radio_corpus.json` `radio_faction_patrol_missing_siding`; cw159_06 -> `faction_radio_corpus.json` `radio_faction_propaganda_work_order`; cw154_12 -> `year_of_ash_radio.json` `radio_cult_ash_sign_liturgy`; cw159_01 -> `radio.json` `radio_broadcast_06`; cw147_02 -> `campaign_epilogues.json` `epilogue_governance_iron_order`.
+- Blockers worked around (no partials): `cw137_10` skipped (its epilogue plan sits under an IN PROGRESS claim, WORKTREE_OWNERSHIP.md ~line 12802) and replaced by `cw147_02`; `cw159_04` (`radio_faction_patrol_north_culvert`) skipped because `FactionRadioBroadcastExpansionTests` asserts its exact message is present in the chatter pool, so an edit would break a positive assertion; replaced by `cw159_06`.
+- Verified: four JSON files parse; sentences confirmed at record level with jq; `git diff --check` clean; `scripts/run_test.sh` FactionRadioBroadcastExpansionTests 22/22, YearOfAshTests 26/26, CampaignEpilogueEngineTests 4/4; each moved plan body byte-identical (`cmp`) under the header. Not checked in-game. Not committed.
+- Claim: `Claim: integrate five trimmed prose plans, round 42` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
+## Five trimmed plans — integration round 41 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- User request (repeat): "fully integrate, don't leave as partials ... 5 trimmed plans!" with `INTEGRATED_` rename, FULLY INTEGRATED header, move to the integrated folder.
+- Integrated (one bounded, source-only sentence each): cw142_02 -> `campaign_epilogues.json` `epilogue_sustenance_famine`; cw146_02 -> `campaign_epilogues.json` `epilogue_demographics_desolation`; cw159_05 -> `faction_radio_corpus.json` `radio_faction_supply_request_filters`; cw142_18 -> `year_of_ash_radio.json` `radio_bunker_19_distress_call`; cw159_02 -> `radio.json` `radio_broadcast_07`.
+- Blocker worked around (no partials): the first plan choices `cw150_06` (`micro_crashed_truck`) and `cw160_09` (`micro_roadside_memorial`) were dropped because micro-location descriptions are also hard-registered in `LocalizationService` (`discovery.micro_*.description`, English + German); editing only the JSON would leave the shown text and the localization copy out of sync. Replaced with the two epilogue plans, whose `narrative` has no localization copy and renders through `CampaignEpilogueEngine` chapter `NarrativeText` -> `EpiloguePanel`. War-journal plans (`faction_war_journal.json`) skipped: no `src/` consumer traced (Rule 7).
+- Verified: four JSON files parse; sentences confirmed at record level with jq; `git diff --check` clean; `scripts/run_test.sh` FactionRadioBroadcastExpansionTests 22/22, YearOfAshTests 26/26, CampaignEpilogueEngineTests 4/4; each moved plan body byte-identical (`cmp`) under the header. Not checked in-game. Not committed.
+- Claim: `Claim: integrate five trimmed prose plans, round 41` in WORKTREE_OWNERSHIP.md (COMPLETE, uncommitted).
+
 ## Five prose plans — method-C conservative trim — batch 57 — 2026-09-29 (COMPLETE, NO COMMIT)
 
 - User request: "find 5 bloated plans to trim, please don't overtrim and overcompress, remove repetitive and ununique plus boring prose from prose plans and polish all 10 plans!" — executed as 5 per the explicit count (batch 48/54–56 precedent). Batch 57: the single-mention class was down to 2 files, so the batch = final 2 single-mention spares (cw135_16, cw134_18) + 3 two-mention files under a verified minor class extension (every mention is an unused ranked spare of a COMPLETE claim — per-mention verification of claim status + spare non-use; no live claim references them).
@@ -7824,6 +7975,18 @@ runtime tests, generated index/check, integration status change, or commit.
 - Verification: all fifteen JPEGs are opaque 512×512; 64 px and 26 px contact sheets inspected; `jq empty Assets/StreamingAssets/Data/items.json` exited 0; `godot --headless --path . --import` exited 0; matching sidecars present. No gameplay tests needed for art-only additions.
 - Remaining: no in-game screenshot of these exact items; roughly 324 item IDs still lack direct/prefix art candidates by the prior static method. No commit.
 
+## ChatGPT item art tranche 25 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: fifteen new `assets/art/{item_collectible_vinyl_chamber_record,item_collectible_vinyl_civil_broadcast,item_collectible_vinyl_folk_compilation,item_collectible_field_medicine_handbook,item_collectible_diesel_service_manual,item_collectible_radio_repair_guide,item_collectible_civil_defense_badge,item_collectible_transit_badge,item_collectible_trade_guild_patch,item_collectible_childs_doll,item_collectible_music_box,item_collectible_prayer_beads,item_collectible_team_pennant,item_collectible_civic_token,item_collectible_folk_craft}.jpg` files; Godot generated matching `.jpg.import` sidecars. Updated visual report, ownership claim, and integrated plan record.
+- Verification: all fifteen JPEGs are opaque 512×512; 64 px and 26 px contact sheets inspected; `jq empty Assets/StreamingAssets/Data/items.json` exited 0; `godot --headless --path . --import` exited 0; matching sidecars present. No gameplay tests needed for art-only additions.
+- Remaining: no in-game screenshot of these exact items; roughly 309 item IDs still lack direct/prefix art candidates by the prior static method. No commit.
+
+## ChatGPT item art tranche 26 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: fifteen new `assets/art/{item_ecm_jammer_module,item_hydraulic_ram_assembly,item_fog_mesh_roll,item_powered_mist_assist_module,item_reinforced_support_cable,item_radar_display_tube,item_hydraulic_actuator,item_iff_beacon,item_low_noise_sensor_amplifier,item_geophone_probe,item_bedrock_sensor_rig,item_mine_flail_module,item_hydraulic_drive_motor,item_aquifer_isolation_module,item_surgical_arm_servo}.jpg` files; Godot generated matching `.jpg.import` sidecars. Updated visual report, ownership claim, and integrated plan record.
+- Verification: all fifteen JPEGs are opaque 512×512; 64 px and 26 px contact sheets inspected; `jq empty Assets/StreamingAssets/Data/items.json` exited 0; `godot --headless --path . --import` exited 0; matching sidecars present. No gameplay tests needed for art-only additions.
+- Remaining: no in-game screenshot of these exact items; roughly 294 item IDs still lack direct/prefix art candidates by the prior static method. No commit.
+
 ## Method-C conservative prose-plan trim batch 58 — 2026-09-29 (COMPLETE, NO COMMIT)
 
 - Changed: five `docs/expansions/prose_wave*/cw*_plan.md` files trimmed by the batch-53-reconstructed Go tool (method C): cw131_18 (169,657→69,341 lines), cw161_09 (172,620→70,491), cw161_10 (172,620→70,491), cw163_03 (172,596→70,420), cw163_04 (172,596→70,467). Total ~860K→351K lines (~59%), ~25.8 MB saved. Ownership claim `claim-plan-trim-conservative-method-C-expansion-batch58-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`.
@@ -7842,3 +8005,96 @@ runtime tests, generated index/check, integration status change, or commit.
 - Changed: five bloated generated-expansion plans trimmed (method C): cw160_10 (172,624→70,495 lines), docs/world/PLAN_121_GPR_AUTHORITY_MAP (53,458→37,101), docs/implementation/PLAN142_TIMESTAMP_POLICY (53,108→35,956), docs/implementation/PLAN143_ATOMICITY_POLICY (53,050→34,963), docs/medical/PLAN112_AUTOPSY_INTEGRATION (52,515→34,428). Total ~485K→213K lines, ~8.1 MB saved. Ownership claim `claim-plan-trim-conservative-method-C-expansion-batch59-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`.
 - Verification: tool `--verify` PASS per file (no distinct original line lost; banners intact); authored-prefix SHA-256 equal per file; banner counts equal (14/11); `### Tranche` counts equal (280/220); scoped `git diff --check` PASS. Originals + SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-b59-20260929/`.
 - Selection: cw160_10 = b58's last verified stale two-mention spare; the four docs-tier files = newly surveyed 0-mention (fixed-string), git-clean, untrimmed fresh pool with no live-claim coverage. Live screens re-run: 15 prose_wave clean files + wave tier remain owned by IN-PROGRESS parallel-batch claims; C2_planintegration[3]/[6]/[7] owned by open editorial claims; INTEGRATED_cw* already consolidated. ~9 fresh-tier candidates remain (PLAN156_SAVE_COMPATIBILITY, PLAN112_EXISTING_7_INVENTORY, PLAN28/PLAN10/PLAN33 reports, PLAN10_REGRESSION_MATRIX, PLAN128_BASELINE, two docs/remediation audit plans). No production changes, no tests, no commit.
+
+## Method-C conservative prose-plan trim batch 60 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: five fresh-tier bloated generated-expansion plans trimmed (method C): docs/content/PLAN156_SAVE_COMPATIBILITY (52,504→34,320 lines), docs/medical/PLAN112_EXISTING_7_INVENTORY (52,120→34,389), docs/ecology/PLAN28_COMPLETION_REPORT (52,097→34,463), docs/combat/PLAN10_COMPLETION_REPORT (51,316→33,294), docs/progression/PLAN33_BASELINE (51,092→33,117). Total ~259K→170K lines (~35%, conservative), ~4.8 MB saved. Ownership claim `claim-plan-trim-conservative-method-C-expansion-batch60-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`.
+- Verification: tool `--verify` PASS per file (no distinct original line lost; banners intact); authored-prefix SHA-256 equal per file; banner counts equal (11); `### Tranche` counts equal (220); scoped `git diff --check` PASS. Originals + SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-b60-20260929/`.
+- Selection: all five files 0-mention (fixed-string), git-clean, untrimmed fresh tier; pre-selection re-audit re-run — prose_wave/wave tier still root-owned by IN-PROGRESS parallel-batch claims (spot-verified), INTEGRATED_cw* already consolidated. 4 fresh-tier candidates remain (PLAN10_REGRESSION_MATRIX, PLAN128_BASELINE, two docs/remediation audit plans) — one more 4-file batch possible, then IN-PROGRESS claims must complete. No production changes, no tests, no commit.
+
+## Method-C conservative prose-plan trim batch 61 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: five fresh-tier bloated generated-expansion plans trimmed (method C): docs/combat/PLAN10_REGRESSION_MATRIX (51,064→33,427 lines), docs/holdfast/PLAN128_BASELINE (51,058→33,963), docs/expeditions/PLAN32_BASELINE (50,964→33,086), docs/bodymind/PLAN27_COMPLETION_REPORT (50,662→33,025), docs/progression/PLAN33_REGRESSION_MATRIX (50,525→32,791). Total ~254K→166K lines (~35%, conservative), ~5.1 MB saved. Ownership claim `claim-plan-trim-conservative-method-C-expansion-batch61-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`.
+- Verification: tool `--verify` PASS per file (no distinct original line lost; banners intact); authored-prefix SHA-256 equal per file; banner counts equal (11); `### Tranche` counts equal (220); scoped `git diff --check` PASS. Originals + SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-b61-20260929/`.
+- Selection: top 5 by size of the full re-surveyed fresh tier. Survey correction: the b59 survey output was head-truncated and missed several hundred additional 0-mention, git-clean, untrimmed ~47-49K-line plans across docs/* subdirectories; the b60 handoff's "4 files remain" was wrong — the pool is large. prose_wave/wave tier still root-owned by IN-PROGRESS parallel-batch claims; prose_wave136/137 clean files are already-consolidated committed trims. No production changes, no tests, no commit.
+
+## Method-C conservative prose-plan trim batch 62 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: five fresh-tier bloated generated-expansion plans trimmed (method C): docs/PLANS_50_53_AUTHORITY_MAP (50,331→32,403 lines), docs/progression/PLAN26_CLOSEOUT (50,320→33,516), docs/combat/PLAN10_BASELINE (50,197→32,714), docs/spiritual/PLAN30_BASELINE (50,140→32,657), docs/social/PLAN12_SOCIAL_STATE_MAP (49,619→30,425). Total ~251K→162K lines (~36%, conservative), ~5.4 MB saved. Ownership claim `claim-plan-trim-conservative-method-C-expansion-batch62-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`.
+- Verification: tool `--verify` PASS per file (no distinct original line lost; banners intact); authored-prefix SHA-256 equal per file; banner counts equal (11); `### Tranche` counts equal (220); scoped `git diff --check` PASS. Originals + SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-b62-20260929/`.
+- Selection: top 5 by size from a fresh full survey; all 0-mention (fixed-string), git-clean, untrimmed. prose_wave/wave tier still root-owned by IN-PROGRESS parallel-batch claims (spot-verified); no refills. No production changes, no tests, no commit.
+
+## Method-C trimmed-plan polish batch 1 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 10 already-trimmed plans polished with insert-only `## TRIM & POLISH RECORD — 2026-09-29` sections (placed just before the first BATCH banner): cw131_18, cw163_03 (b58); cw160_10, PLAN_121_GPR (b59); PLAN156_SAVE, PLAN28 (b60); PLAN10_REGRESSION_MATRIX, PLAN32_BASELINE (b61); PLANS_50_53_AUTHORITY_MAP, PLAN12_SOCIAL_STATE_MAP (b62). +32/33 lines each (324 total, ~0.1% — slight expansion per user).
+- Content quality: each record is file-specific — unique subject summary from the document's own header, exact post-trim shape (lines/banners/tranches/pointers), trim batch + pre-trim size, backup-path provenance, reading-order guidance. No boilerplate repetition beyond one short shared pointer-mechanics paragraph.
+- Verification: insert-only proven via tool `--verify` (every pre-polish distinct line survives); banners/tranches unchanged; exactly 1 record block per file; scoped `git diff --check` PASS. Pre-polish snapshots + SHA-256 manifest at `/tmp/ashfall-plan-polish-b1-20260929/`.
+- Ownership: all 10 files are this session's method-C b58–b62 outputs (COMPLETE claims, uncommitted); no other claim touches them. No production changes, no tests, no commit.
+
+## Method-C trimmed-plan polish batch 2 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 10 more already-trimmed plans polished with insert-only `## TRIM & POLISH RECORD — 2026-09-29` sections (before first BATCH banner): cw161_09, cw161_10, cw163_04 (b58); PLAN142_TIMESTAMP_POLICY, PLAN143_ATOMICITY_POLICY, PLAN112_AUTOPSY_INTEGRATION (b59); PLAN112_EXISTING_7_INVENTORY, PLAN10_COMPLETION_REPORT, PLAN33_BASELINE (b60); PLAN128_BASELINE (b61). +32/33 lines each (327 total, ~0.1%).
+- Incident + resolution: one scripted heredoc quoting defect executed backticks inside the PLAN142 block before insertion; PLAN142 restored byte-identical from the pre-polish backup and regenerated cleanly; final state verified.
+- Verification: insert-only proven via tool `--verify` per file (every pre-polish distinct line survives); banners/tranches unchanged; exactly 1 record per file; scoped `git diff --check` PASS. Pre-polish snapshots + SHA-256 manifest at `/tmp/ashfall-plan-polish-b2-20260929/`.
+- Remaining for polish batch 3: PLAN27_COMPLETION_REPORT, PLAN33_REGRESSION_MATRIX, PLAN26_CLOSEOUT, PLAN10_BASELINE, PLAN30_BASELINE (5 files). No production changes, no tests, no commit.
+
+## Method-C trimmed-plan polish batch 3 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: the final 5 already-trimmed plans polished with insert-only `## TRIM & POLISH RECORD — 2026-09-29` sections (before first BATCH banner): PLAN27_COMPLETION_REPORT, PLAN33_REGRESSION_MATRIX (b61); PLAN26_CLOSEOUT, PLAN10_BASELINE, PLAN30_BASELINE (b62). +33 lines each (165 total, ~0.1% — matches b1/b2 record shape).
+- Content quality: each record is file-specific — unique subject summary from the document's own header, exact post-trim shape (lines/banners/tranches/pointers), trim batch + pre-trim size, backup-path provenance, reading-order guidance.
+- Verification: insert-only proven via subsequence check (every pre-polish line survives, in order); banners (11) / Tranches (220) / pointer counts unchanged per file; exactly 1 record per file; scoped `git diff --check` PASS. Pre-polish snapshots + SHA-256 manifest at `/tmp/ashfall-plan-polish-b3-20260929/`.
+- Ownership: claim `claim-plan-polish-method-C-trimmed-b3-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`. Trimmed pool b58–b62 now fully polished (batches 1–3, 25 files); no batch 4 remains. No production changes, no tests, no commit.
+
+## UI a11y P2 focus restore + contrast hygiene — 2026-09-29 (COMPLETE)
+
+- Plan: `.ai/plans/ui-a11y-p2-focus-contrast-2026-09-29.md` (STATUS: APPROVED BY USER); claim `claim-ui-a11y-p2-focus-contrast-2026-09-29`.
+- Changed: `src/UI/AshfallFocusPolicy.cs` (additive GetRecordedOpener/RestoreFocusDeferred/FocusFirstDeferred/IsInsideAny); `src/Main.PanelLifecycle.cs` (CloseAllOverlayPanels now does ONE deferred topmost-opener restore after the loop, with deterministic dashboard-first-focusable fallback when the opener lives inside a closed panel — per-panel sync restore removed); GeigerCalibrationPanel/SafeCrackModal/BrineExtractionPanel/TriangulationPanel (Colors.Red/Green/Yellow/White → Critical/Success/Warning/Pale tokens + DesignTheme alias); new gate `Ashfall.Core.Tests/UI/UiA11yP2FocusContrastGateTests.cs` (6 gates).
+- Audit correction: §2a/§9.11 finding (GameDashboardPanel 0.22 alpha "deselected route icon") RETRACTED — the site is the intentionally dimmed dashboard background; route selection uses Pale/Hot token font colors. Report updated.
+- Verification: host build 0 errors/18 warnings; scoped run full log at /home/robertsrff/ashfall_scoped_p2_2026-09-29.log; headless boot pending at write time.
+- Remaining: P1.3 (modal Tab trap / nav scope) is the last open P1 and needs its own package; P2.7 FontSizeLabel 11→12, P2.10 target sizes, P3 hover/z-order polish unstarted.
+
+## Method-C trimmed-plan polish batch 4 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 10 committed-tier trimmed plans polished with insert-only `## TRIM & POLISH RECORD — 2026-09-29` sections (before first BATCH banner), extending the family beyond the closed uncommitted b58–b62 pool: PLAN_118_FISCHER_TROPSCH_CLOSEOUT, PLAN_118_SYNTHETIC_LUBE_BALANCE (b9); PLANS_166_169_AUTHORITY_MATRIX, PLAN33_SAVE_COMPATIBILITY (b10); PLAN_167_ESPIONAGE_CLOSEOUT, PLAN26_BALANCE_AUDIT (b11); JOURNAL_UI_PLAN, PLAN26_SAVE_CONTRACT (b12); PLAN112_SAVE_COMPATIBILITY, PLAN_119_SENSOR_CHARACTERIZATION (b13). +33 lines each (330 total, ~0.1%).
+- Selection screens: trim claims b9–b13 all COMPLETE; 0 non-trim / IN-PROGRESS claim mentions per file; git-clean at claim time; prose_wave + expansion tier excluded (root-owned by the IN-PROGRESS parallel bloat-reduction lane); docs/plans governance and editorial-claim roots excluded.
+- Provenance: this tier's /tmp trim backups are gone; pre-trim line counts recovered from git history (`1fc3fd071` precedes the trim landing `6e34c20bb`); records cite that recovery path.
+- Verification: insert-only proven via subsequence check per file; banners (11/10) / Tranches (20) / pointer counts unchanged; exactly 1 record per file; scoped `git diff --check` PASS. Pre-polish snapshots + SHA-256 manifest at `/tmp/ashfall-plan-polish-b4-20260929/`; inserter script with structure assertions also there.
+- Ownership: claim `claim-plan-polish-method-C-trimmed-b4-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`. No production changes, no tests, no commit.
+
+## Method-C trimmed-plan polish batch 5 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 10 more committed-tier trimmed plans polished with insert-only `## TRIM & POLISH RECORD — 2026-09-29` sections (before first BATCH banner): PLAN27_REGRESSION_MATRIX, PLANS_166_169_SAVE_MIGRATION_MATRIX (b9); PLAN41_SAVE_COMPATIBILITY, PLAN23_REGRESSION_MATRIX (b10); PLAN54_SAVE_CONTRACT, PLAN30_REGRESSION_MATRIX (b11); PLAN26_REGRESSION_MATRIX, PLAN33_CLOSEOUT (b12); PLAN_120_CARBON_COMPOSITES_CLOSEOUT, SKILL_PROGRESSION_CORE_PORT_PLAN (b13). +33 lines each (330 total, ~0.1%). Single clean pass, no rewrites.
+- Selection screens (re-run): trim claims b9–b13 COMPLETE; 0 non-trim / IN-PROGRESS claim mentions per file; git-clean at claim time; prose_wave + expansion tier and docs/plans integrated/governance roots excluded.
+- Provenance: pre-trim line counts recovered from git history (`1fc3fd071` precedes the trim landing `6e34c20bb`); records cite that path.
+- Verification: insert-only proven via subsequence check per file; banners (11/10) / Tranches (20) / pointer counts unchanged; exactly 1 record per file; scoped `git diff --check` PASS. Pre-polish snapshots + SHA-256 manifest + inserter script at `/tmp/ashfall-plan-polish-b5-20260929/`.
+- Ownership: claim `claim-plan-polish-method-C-trimmed-b5-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`. Cumulative family: batches 1–5, 50 files, 1,639 inserted lines. No production changes, no tests, no commit.
+
+## Method-C trimmed-plan polish batch 6 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 10 more committed-tier trimmed plans polished with insert-only `## TRIM & POLISH RECORD — 2026-09-29` sections (before first BATCH banner): PLAN27_SAVE_COMPATIBILITY, PLAN136_REGRESSION_MATRIX (b9); PLAN_147_MINE_FLAIL_CLOSEOUT, STANDING_RECORD_CORE_PORT_PLAN (b10); PLAN30_SAVE_COMPATIBILITY, LOCALIZATION_PLAN (b11); PLAN41_REGRESSION_MATRIX, PLAN10_SAVE_COMPATIBILITY (b12); RESEARCH_CORE_PORT_PLAN, PLAN_121_GPR_CHARACTERIZATION (b13). +33 lines each (330 total, ~0.1%). Single clean pass, no rewrites.
+- Selection screens (re-run): trim claims b9–b13 COMPLETE; 0 non-trim / IN-PROGRESS claim mentions per file; git-clean at claim time; prose_wave + expansion tier, docs/plans governance, integrated sealed archives excluded.
+- Provenance: pre-trim line counts recovered from git history (`1fc3fd071` precedes the trim landing `6e34c20bb`); records cite that path.
+- Verification: insert-only proven via subsequence check per file; banners (11/10) / Tranches (20) / pointer counts unchanged; exactly 1 record per file; scoped `git diff --check` PASS. Pre-polish snapshots + SHA-256 manifest + inserter script at `/tmp/ashfall-plan-polish-b6-20260929/`.
+- Ownership: claim `claim-plan-polish-method-C-trimmed-b6-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`. Cumulative family: batches 1–6, 60 files, 1,969 inserted lines; 16 clean domain candidates remain. No production changes, no tests, no commit.
+
+## UI a11y P3 nav scope + Tab trap + overflow precision — 2026-09-29 (COMPLETE)
+
+- Plan: `.ai/plans/ui-a11y-p3-nav-overflow-2026-09-29.md` (STATUS: APPROVED BY USER); claim `claim-ui-a11y-p3-nav-overflow-2026-09-29`.
+- Changed: `src/Main.PanelLifecycle.cs` (TopmostVisibleOverlayPanel helper + Main._Input Tab trap; CombatPanel/DailyBriefingModal excluded — they self-handle ashfall_next_tab); `src/Main.Application.cs` (arrow-nav scope root = topmost open overlay); `src/UI/AshfallDataGrid.cs` (header+cell labels ClipText/TrimEllipsis — long values ellipsize at the column instead of bleeding); `src/UI/AshfallDashboardShell.cs` (title ellipsizes before the close button); new gate `Ashfall.Core.Tests/UI/UiA11yP3NavOverflowGateTests.cs` (5 gates).
+- Closes the LAST open P1 from the audit (§9.3) without wiring ModalManager/ModalStackController — the dead seam is left for a separate governance decision.
+- Verification: host build 0 errors/18 warnings; scoped gates green; headless `--player-panels-uitest` PASS 22/22 gates exit 0.
+- Remaining: P2.7 FontSizeLabel 11→12 (visual package, snapshot baselines may need regen), P2.10 sub-28px target sizes (~52 controls), P3 hover/z-order polish, §3 stack-dependent scrim contrast snapshot pass.
+
+## ChatGPT item art tranche 27 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; additive tranche 27 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-27-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-27-2026-09-29.md`. No Core, host, catalog, or existing art edits.
+- Verification: ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed 64 px and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 new sidecars; scoped whitespace check PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 279 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 277 direct item images.
+
+## UI a11y P2.7 FontSizeLabel 11→12 — 2026-09-29 (COMPLETE)
+
+- Plan: `.ai/plans/ui-a11y-fontsize-lift-2026-09-29.md` (STATUS: APPROVED BY USER); claim `claim-ui-a11y-fontsize-lift-2026-09-29`.
+- Changed: `Assets/Ashfall.Core/UI/Theme.cs` single token `FontSizeLabel` 11→12 with comment (lifts 282 MakeMetadata sites, MakeLabel(string) default, ~32 direct references incl. VerdictPanel/TradeScreenGodotPanel/metric cards). Third token in the tier to land at 12 (grid headers, sidebar hints precedented).
+- Verification: AccessibilitySourceAuditTests 6/6 (floor `>=11` passes at 12) + TradeThemeAndEconomyTests 5/5 via scripts/run_test.sh (scoped runner has no mapping for Theme.cs — full run suppressed per TEST_POLICY); host build 0 errors; headless `--ui-layout-selftest` PASS Failures: 0 exit 0; boot check 0 error lines.
+- Follow-up (visual lane, not claimed): stored snapshots/ goldens drift visually; `--ui-snapshot-uitest`/`--ui-snapshot-regenerate` need a real display.
+- Remaining: P2.10 sub-28px target sizes (~52 controls), P3 hover gaps, §3 scrim snapshot pass, modal-stack dead-seam governance decision.

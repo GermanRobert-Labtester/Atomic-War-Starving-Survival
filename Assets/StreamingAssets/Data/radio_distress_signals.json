@@ -95,8 +95,8 @@
       "revealed_items": ["military_mre", "water_purification_tablets", "field_surgical_kit", "ammo_762"],
       "narrative_id": "narrative_radio_convoy_echo7",
       "follow_up_signals": [
-        { "id": "fu_401_9_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Scout traffic near sector 41: an expedition team has sighted the hazard marker on the disabled convoy truck.", "audio_cue": "radio_distress_beacon" },
-        { "id": "fu_401_9_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Convoy Echo-7 cache secured: MRE rations and surgical supplies recovered from the sealed cargo bed.", "audio_cue": "radio_distress_beacon" }
+        { "id": "fu_401_9_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.85, "text": "Scout traffic near sector 41: an expedition team has sighted the hazard marker on the disabled convoy truck. That is all the scout channel carried.", "audio_cue": "radio_distress_beacon" },
+        { "id": "fu_401_9_rescue_success", "trigger_condition": "rescue_success", "delay_days": 4, "clarity": 0.95, "text": "Convoy Echo-7 cache secured: MRE rations and surgical supplies recovered from the sealed cargo bed. The recovery is logged as received.", "audio_cue": "radio_distress_beacon" }
       ]
     },
     {
@@ -122,7 +122,7 @@
       "narrative_id": "narrative_radio_trapped_mechanic",
       "follow_up_signals": [
         { "id": "fu_88_3_answered", "trigger_condition": "answered", "delay_days": 2, "clarity": 0.9, "text": "A second voice on the depot band: someone is moving near the entrance. If that is you, Daria — hold on." },
-        { "id": "fu_88_3_rescue_success", "trigger_condition": "rescue_success", "delay_days": 5, "clarity": 0.95, "text": "Daria sends word from the shelter: the leg is set, she is walking on a crutch, and she has already claimed a workbench." }
+        { "id": "fu_88_3_rescue_success", "trigger_condition": "rescue_success", "delay_days": 5, "clarity": 0.95, "text": "Daria sends word from the shelter: the leg is set, she is walking on a crutch, and she has already claimed a workbench. Daria asks that no more be made of it." }
       ]
     },
     {

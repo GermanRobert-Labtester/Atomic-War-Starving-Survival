@@ -13,11 +13,97 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_long_siege_plan.md`. Family index: `docs/expansions/expansion_shelter_under_pressure_index.md`.
 > Not a claim. **Does not touch Expansion 36 (*The Watch*)** — `NightWatchHostSession`, `NightWatchOperationsState`, patrol readiness and sound ranging are read-only inputs. The defense owner (`DefenseSystem`) gains one additive nested DTO field and **no logic change**.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `siege_lines.json` / `siege_terms.json` rows; they belong in data, never
+> in code.
+
+---
+
+## 0. Prologue — Two Clocks
+
+> *"A raid wants something and leaves. A siege wants you to have been here, and stays."*
+
+Every other combat in this game resolves in an afternoon. A siege is what happens when the enemy
+discovers patience. There are two clocks and neither is yours: **supply** and **resolve** — theirs —
+and behind them a third thing the plan calls *patience*, which is simply how long a doctrine can
+stand being bored outside a wall.
+
+Five pressures, one per day, seeded: Probe, Starve, Noise, Parley, Sap. Each one touches an
+existing surface and nothing else. There is no battle here. There is a schedule being kept by
+someone who is in no hurry, and a shelter that has to decide, every morning, which clock to spend.
+
+**Tone & register.** Bureaucratic dread. The vocabulary is the staff table: *doctrine, patience,
+supply, resolve, rung, terms, runner, sally*. Prose should read like a log kept by someone who
+understands that the interesting question is not *will we hold* but *what will we have agreed to by
+the time this ends*. Never write a battle scene. Write a week.
+
+**Mystery & texture.** The three starter doctrines — **Toll, Quiet Ring, Diggers** (DEC-LS-08) —
+are the plan's three ways of being feared. Each has its own patience and its own temper. Which one
+arrives is not a difficulty setting; it is a character walking up to your gate. §12 keeps the
+besiegers' reasons permanently out of reach.
+
 ## 1. Goal & Outcome
+
+> *Design intent: the player should be able to feel a siege in their admin. The dread is not the
+> fighting — it is the eleventh consecutive morning of reading a board.*
+
 - **Goal:** Represent a *siege* as a multi-day state — identity, doctrine, camp, and two clocks — that calls the **existing** raid resolver once per day at seeded strength, reads defenders' stores, water, morale and wire state from their real owners, and ends in one of five authored ways. Only the besiegers' supply, resolve and patience are new state.
 - **Outcome (observable):** on a fixed seed a siege begins after a repelled raid when a doctrine row and aggression allow; each day applies exactly one seeded pressure (Probe/Starve/Noise/Parley/Sap) through an existing surface; besieger resolve falls with supply and failed pressure; a runner, a sally and a parley each change the correct clock; the siege ends Lifted/Relieved/Negotiated/Ground down/Fallen; the raid path with no doctrine rows behaves identically to today; save/load mid-siege round-trips.
 - **Non-Goals:** no change to `ResolvePreCombatRaid`, raid strength, trap arithmetic, or any Watch/perimeter state; no new combat engine; no new faction system; no new save section; no new routed panel; no outposts (Year Two owns `OutpostPressureModel`); no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; raid parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**One pressure per day (DEC-LS-03) is the plan's literary rhythm.**
+
+Probe, Starve, Noise, Parley, Sap — exactly one a day, at most one resolver call. That constraint
+is what makes a siege readable as a *narrative* rather than a damage table. Each morning the board
+says what kind of day it is going to be, and the shelter answers with one decision. Five verbs,
+seven days, and the shape of a week becomes the shape of a story.
+
+**The five endings are five different kinds of tired.**
+
+Lifted, Relieved, Negotiated, Ground down, Fallen. Note that only one of them is defeat and only
+one is victory. The other three are settlements — arrangements made by exhausted people. LS-P6
+routes each through existing owners, which means each ending is a *transaction*, not a cutscene.
+
+**What the player is never told.**
+
+- Who the besiegers are. DEC-LS-01 says a siege starts from a repelled raid **by authored doctrine
+  only**. Identity is a row; motive is not authored and must not be improvised.
+- What the Diggers are digging for. The name is doctrine (DEC-LS-08). Sap is a signal to *The Deep
+  Works* and nothing more.
+- Why a runner came back. `siege_runner_outcomes.json` supplies seeded outcomes. Whether the runner
+  talked is a question for *The Quiet War*, and this plan hands it over without comment.
+- Whether *Fallen* was inevitable. DEC-LS-06 requires a **visible run of days** before it can happen.
+  That visibility is the only mercy in the design.
+
+**Voice — sample fragments (content candidates for `siege_lines.json` / `siege_terms.json`).**
+
+> "Day four. Noise again. They have learned that we do not sleep, which cost them nothing to learn
+> and costs us everything to know."
+
+> "Parley at the gate. The terms are reasonable. That is the part I cannot get past."
+
+> "Sap. The Watch heard it before we did. The Watch hears everything and is not authorised to
+> decide anything."
+
+> "Supply is a number. Resolve is not a number. We print them on the same board and I have started
+> to resent the board."
+
+**Design texture beats.**
+
+- **Announce before acting, always (LS-P3/DEC-LS-05).** Defender clocks are read-only projections.
+  The player must never lose to something they were not shown.
+- **At most one resolver call per siege day (§6.3).** This is the plan's respect for the existing raid
+  arithmetic — and its narrative spine. Do not add a second roll.
+- **Difficulty scales patience and probe strength, never the resolver (DEC-LS-10).** Harder sieges
+  are longer sieges. That is far worse and far fairer.
+- **A siege is not a raid.** The moment this plan starts to look like combat, it has failed its
+  own Non-Goals.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -144,3 +230,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: a siege would need to change resolver arithmetic or Watch state; no dispatch-gate option exists that avoids editing `ExpeditionSystem` logic; morale/sleep have no public read; the besieger cannot be authored without a new faction system; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the siege larger than the board that meters it. Any future plan that answers one must name the
+signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| LS-OM-1 | Why do sieges begin only after a *repelled* raid? | DEC-LS-01 is a rule and a piece of characterisation: the besieger has already learned something about you. The rule is not explained and should not be. | Never — locked by decision. |
+| LS-OM-2 | What are the Diggers digging for? | DEC-LS-08 names a doctrine; sap is a *Deep Works* signal and nothing more. Intent is deliberately unauthored. | *The Deep Works*, jointly, if countermine is ever authored. |
+| LS-OM-3 | Why do the terms sound reasonable? | `siege_terms.json` supplies terms; LS-P6 routes Negotiated through treaty/debt owners. Whether the offer is sincere is not modelled. | Never — a rule, not a gap. |
+| LS-OM-4 | Did the runner talk? | `siege_runner_outcomes.json` is seeded; DEC-LS-09 hands any leak to *The Quiet War* through its public seam only. | The Quiet War, at its discretion. |
+| LS-OM-5 | What is "patience", measured in? | LS-P1 stores it as state alongside supply and resolve. Its unit is never defined and must not be. | Never — texture by omission. |
+| LS-OM-6 | Who keeps the doctrine rows? | Three starter doctrines are authored (DEC-LS-08). Their authorship, and why they are exactly three, is unrecorded. | Never — the artefact reads as canon. |

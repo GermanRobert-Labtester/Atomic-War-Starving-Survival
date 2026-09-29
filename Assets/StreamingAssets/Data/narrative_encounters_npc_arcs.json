@@ -35,7 +35,7 @@
     {
       "id": "enc_arc_mara_route",
       "title": "Wreckage on the Cut Road",
-      "description": "A wagon sits hip-deep in a collapsed cut road crust, harness still on. The factor who owns it is camped on the wreck with a rifle across her knees, guarding cargo she cannot move. She looks up at your column and starts naming prices before you are close enough to see her face clearly.",
+      "description": "A wagon sits hip-deep in a collapsed cut road crust, harness still on. The factor who owns it is camped on the wreck with a rifle across her knees, guarding cargo she cannot move. She looks up at your column and starts naming prices before you are close enough to see her face clearly. The rifle stays across her knees while she talks.",
       "category": "Discovery",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,
@@ -66,7 +66,7 @@
     {
       "id": "enc_arc_ilze_clinic",
       "title": "The Almshouse Inventory",
-      "description": "Eight beds, two occupied by sleep and six by endurance. The physician walks you past the shelves without stopping so you can see for yourself how little is on them, then names a list of what she needs and what it costs, at prices you could check.",
+      "description": "Eight beds, two occupied by sleep and six by endurance. The physician walks you past the shelves without stopping so you can see for yourself how little is on them, then names a list of what she needs and what it costs, at prices you could check. She does not lower her voice.",
       "category": "Social",
       "baseWeight": 2.5,
       "stealthWeightMultiplier": 1.0,

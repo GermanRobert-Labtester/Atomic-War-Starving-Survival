@@ -13,11 +13,97 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_living_region_plan.md`. Family index: `docs/expansions/expansion_world_moves_without_you_index.md`.
 > Nothing here is claimed, implemented, or committed. The foreman must add the `INTEGRATION_PLANS.md` entry and `WORKTREE_OWNERSHIP.md` claims per package. Decisions DEC-LR-01…10 are **proposals**, unsigned.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `regional_pulse_lines.json` rows; they belong in data, never in code.
+
+---
+
+## 0. Prologue — The Region
+
+> *"The war does not visit the shelter. The war is the weather the shelter is standing in."*
+
+Twelve settlements exist in the data today as fixed points on a map: names, coordinates,
+threat levels, attitudes. They are not places yet. A place is what a name becomes when something
+is *happening* to it while you are looking somewhere else.
+
+The Living Region is the plan that turns a map into a **situation**. Steady, Strained, Failing,
+Emptied, Swollen — five rungs, each with a cause tag, each changing on its own schedule and in its
+own direction. And the only way the player learns any of it is by hearsay: *Heard*, *Told*,
+*Seen*. Three grades of not-quite-knowing.
+
+**Tone & register.** Reportorial, distant, humane. The register is the bulletin board and the
+traveller's account: what someone said, what someone confirmed, what someone saw. Prose should
+hunger for certainty without supplying it. The world is not withholding; the world is *far away*,
+and distance is the only censor this plan needs.
+
+**Mystery & texture.** The Pulse projector takes an immutable snapshot and returns pillar states,
+a rung, and a cause. It has no theory of the war and will not acquire one. DEC-LR-03 caps the
+ladder at five rungs with **no "Thriving"** — which is the plan's quietest and most unsettling
+authorial decision. Nothing gets better. It only stops getting worse.
+
 ## 1. Goal & Outcome
+
+> *Design intent: the player should be able to name three settlements they have never visited and
+> worry about one of them. That is the entire feature.*
+
 - **Goal:** Twelve authored settlements gain a small, persisted, war-aware condition (Steady / Strained / Failing / Emptied / Swollen); refugee waves move conserved population between regions and petition the shelter's gate; prices nudge through the market's existing shock seam; the player learns it all through graded news (Heard / Told / Seen).
 - **Outcome (observable):** on a fixed seed, a scripted war-tension rise produces a wave, a rung change, a price nudge and a gate petition, in that order, identically on replay and after a save/load round-trip.
 - **Non-Goals:** no new economy/price/ownership/population authority; no new save section; no new routed panel; no change to FactionWar outcomes; no restoration of retired code (Rule 10); no Year One pacing change when ship-dark; no Unity.
 - **"Done" means:** every acceptance row in §6 passes via `bin/run-scoped-tests`; ship-dark parity test passes; the handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**The five rungs are a sentence with no verbs.**
+
+Steady / Strained / Failing / Emptied / Swollen. Note that *Emptied* is not the bottom and
+*Swollen* is not the top. Both are arrivals, not ends. A settlement can be Swollen with refugees
+and Strained by the same fact. Let the panel allow two rungs to be true in the reader's head even
+when the data holds one.
+
+**Heard / Told / Seen is the plan's epistemology.**
+
+LR-P7 requires wrong-by-one *Heard* lines with a later correcting *Told* line. That correction is
+the single most human mechanic in this family: the world does not lie to you, it just gets to you
+late and slightly wrong, and then — to its credit — corrects itself. Keep the correction visible
+in the surface. Do not silently overwrite.
+
+**What the player is never told.**
+
+- Why a settlement is Failing. The **cause tag** is always set on a rung change (§6.6) — but a cause
+  is a category, not an explanation. `war`, `scarcity`, `plague` describe pressures, not decisions.
+- Where the refugees go after the gate. LR-P6 offers open / ration / refuse / redirect and then
+  stops. Stores decide feasibility; nobody records the rest.
+- Whether the war is being won. `FactionWarSystem` is read-only here and the Pulse never asks it.
+- What the four unmapped region vocabularies were for (E5). One mapping file is added and nothing
+  is deleted.
+
+**Voice — sample fragments (content candidates for `regional_pulse_lines.json`).**
+
+> "Heard: the Iron Basin is Strained. Heard is not known. We are telling you anyway because you
+> asked."
+
+> "Told: correction on Ash Flats. Not Strained — Failing, since the eleventh. We are sorry. We were
+> wrong by one and we have been wrong by one before."
+
+> "Seen: Emptied. I walked through it. There is no word for what a place is when the rung is
+> correct and the word is not enough."
+
+> "Swollen is not thriving. Swollen is what it looks like when everyone else's Failing arrives at
+> once."
+
+**Design texture beats.**
+
+- **Five rungs and no "Thriving" (DEC-LR-03).** This is the plan's thesis in a single enum. Do not
+  extend it. A world with no word for *better* is the world this game is set in.
+- **Population is conserved (LR-P4).** The property test is an ethic: nobody is created, nobody
+  vanishes. A wave is a movement, not a spawn.
+- **Every rung change has a cause tag and a Board line (§6.6).** Even bad news deserves to be
+  attributable. That rule is the plan's fairness guarantee.
+- **Prices nudge and decay to exactly neutral (LR-P5).** Economics in this world are weather —
+  they pass through.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -147,3 +233,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: E11 has no existing owner (a second gate system would be needed); population conservation cannot be expressed through the engine's API without a second store; the vocabulary map needs a new region concept; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the region larger than the twelve points that meter it. Any future plan that answers one must
+name the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| LR-OM-1 | Why is there no "Thriving" rung? | DEC-LR-03 is a design rule, and it is also the plan's entire worldview. Adding one would be a tone change, not a feature. | Never — locked by decision. |
+| LR-OM-2 | Where do redirected refugees go? | LR-P6 ends at the gate. Stores decide feasibility; the ledger conserves population and does not narrate destinations. | Never — conservation is the point. |
+| LR-OM-3 | What were the four unmapped region vocabularies for? | E5 is a real inconsistency. One mapping file is added and **nothing is deleted**. The old vocabularies survive untranslated. | Never — the artefact reads as history. |
+| LR-OM-4 | Is `Emptied` a state or a verdict? | The rung derives from inputs with five-day hysteresis. Whether anyone in the fiction uses the word as a judgement is not authored. | *The Record Keepers*, if a Board line is ever archived. |
+| LR-OM-5 | Does the Pulse know about the shelter? | Its inputs are regional and its outputs are per-settlement. The shelter is a gate and a market, never an input. | Never — a rule, not a gap. |
+| LR-OM-6 | Why do *Heard* lines get it wrong by exactly one? | LR-P7 requires it. The bias is authored as a mechanism and never as a character flaw in whoever is reporting. | Never — texture by omission. |

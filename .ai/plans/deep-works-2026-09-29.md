@@ -13,11 +13,90 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_deep_works_plan.md`. Family index: `docs/expansions/expansion_shelter_under_pressure_index.md`.
 > Not a claim. `SubterraneanSystem`, `TunnelNetworkSystem`, `ExcavationHazardSystem` and `ShelterExpansionSystem` keep their meaning. This plan **connects them** through their public APIs and adds one small *held-drift* ledger. It adds no hazard, oxygen, flood, excavation or resource model.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `works_lines.json` rows; they belong in data, never in code.
+
+---
+
+## 0. Prologue — Breakthrough
+
+> *"The shaft went down. This is about going sideways — into rock nobody surveyed, under a sky
+> nobody remembers."*
+
+There is a sound a shelter makes when it stops being a building and becomes a settlement: the
+first time somebody says *the works* and means somewhere other than the room they are standing in.
+A drift is not a room. A drift is a **decision to keep a place** — to timber it, pump it, roster a
+gang to it, and accept that it will one day be more expensive to hold than to abandon.
+
+The Deep Works is the plan about that expense. Breakthrough is cheap and celebrated; holding is
+weekly and dull and fatal. The underground does not resist you. It simply keeps its own books, and
+the books are written in a hand that is not yours.
+
+**Tone & register.** Industrial, procedural, weary. The vocabulary is the pit and the shift
+gang: *bulkhead, schedule, gang, shoring, spoil, pump time*. Prose should feel like a works
+diary kept by someone competent and tired. Dread arrives as arithmetic — a roof that is one
+decision weaker than it was last week — not as spectacle.
+
+**Mystery & texture.** The generated underground has ten nodes and no author. Nobody drew this
+network; it was inferred from surface anchors and it never quite agrees with them. Held drifts are
+the only place in the game where the player asserts *ownership* over terrain that was never
+surveyed. §12 keeps the questions that ownership raises permanently open.
+
 ## 1. Goal & Outcome
+
+> *Design intent: holding a drift should feel like keeping a promise made to a hole in the ground.
+> The verbs are boring on purpose. The day you skip one is the day the story turns.*
+
 - **Goal:** Let the player **break through** from the shelter shaft into a generated subterranean node and **hold** it: a linked drift with one **job** (Exit / Cistern / Store / Diggings), a weekly **Schedule** (props, air, drainage, gang), a **bulkhead** already in the game, an optional under-ash **tunnel segment**, and a **collapse-on-purpose** verb.
 - **Outcome (observable):** on a fixed seed with shaft level ≥ a node's depth tier, a breakthrough project (crew, timber, days, stability cost) completes and marks the node Held with its bulkhead sealed; first opening reads the node's air class once and sets a methane reading on the sector whose id equals the node id; a Diggings gang draws seeded loot from the node's own scavenging table at a capped rate; deferred upkeep lets the existing seeded collapse roll run against a weaker roof and, on collapse, starts the existing rescue clock on the gang; an Exit drift registers a tunnel segment whose traversal and bypass come from the tunnel owner; collapse-on-purpose seals the drift permanently; no held drift → the underground behaves identically to today; save/load round-trips.
 - **Non-Goals:** no new hazard/oxygen/flood/excavation model; no change to expedition entry into the dark; no new resource; no new save section; no new routed panel; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**The Works Book.**
+
+Name the ledger in the UI. A *Works Book* is a physical object — ruled, initials, crossings-out,
+the smear where somebody wrote in the damp. It is the only place in the shelter where a decision
+to abandon something is recorded as a fact rather than a feeling. Let the book show history:
+`sealed`, `collapsed on purpose`, `never opened again`. The player will read their own failures
+back to themselves in a clerk's hand.
+
+**What the player is never told.**
+
+- Why the node ids match the hazard sector ids so exactly. The plan *observes* the coincidence
+  (E7: sector id = node id) and never explains it. Keep it that way.
+- Where the air in a `foul` node has been. It is foul by classification, not by cause.
+- Whether the ten nodes are ten places or one place described ten ways.
+- What `TryCollapseNode` is actually for. The verb exists because a works engineer would need it.
+  That is the whole justification and no more should be added.
+
+**Voice — sample fragments (content candidates for `works_lines.json`).**
+
+> "Schedule week 6: timber 4, pump time 2, gang 3. Nothing went wrong. That is not the same as
+> nothing changing."
+
+> "Bulkhead sealed 11 days. Opened it once. Methane reading took the sector from green to a colour
+> I do not have a name for."
+
+> "We called it the Diggings because calling it the Listening made people nervous."
+
+> "Collapse on purpose, day 44. Signed. Nobody argued. Nobody signed twice."
+
+**Design texture beats.**
+
+- **Skipped weeks must not announce themselves.** "Skipped weeks change nothing directly" (P5) is
+  the plan's most atmospheric mechanic. Decay should be *discovered*, never broadcast.
+- **One job at a time is a character constraint.** It says: this is a small shelter with a small
+  gang, not a mining corporation. Do not soften it with queueing.
+- **Collapse-on-purpose is the heaviest verb in the game.** It is permanent, it yields no salvage,
+  and it cannot be undone by `TryClearBlockage`. Give it the longest confirmation beat of any
+  command in the UI and the plainest wording.
+- **The rescue clock is the emotional payoff.** A collapse with a gang inside is the only time this
+  plan raises its voice. Everything else is set-up for that one day.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -150,3 +229,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: additive fields break the subterranean save checksum with no versioned path; the breakthrough would need a second construction pipeline; a job cannot function without a parallel resource or a second flood/hazard model; `TryCollapseNode` cannot be atomic through the owner; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the underground larger than the ledger that records it. Any future plan that answers one must
+name the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| DW-OM-1 | Why does every hazard sector lazily accept *any* string id? | E7's lazily-created sectors make the node-id coincidence possible without asserting it was designed. Explaining it would authorise a second map. | Never — architecture and atmosphere both depend on it. |
+| DW-OM-2 | Who cut the first tunnel into the generated network? | Discovery is from surface anchors only (E5). The network pre-existed every anchor the player has found. | A canon owner, if the underground is ever given a history. |
+| DW-OM-3 | Where does the spoil go? | The plan models bulkheads, shoring and pump time. It does not model spoil. Its absence is the point — this is a shelter, not a quarry. | Never — DEC-DW-03's boundary. |
+| DW-OM-4 | Why is `ExpansionTunnel = 2` unused and already named? | DEC-DW-03 proposes to spend it. It will not be explained why the enum anticipated this exact plan. | Never — an artefact that reads as foreshadowing. |
+| DW-OM-5 | Is the cistern water worse than the deep well's? | E15 asks for an intake port and nothing more. Water quality is the water owner's business and it has not spoken. | Water owner, if it ever exposes a quality input. |
+| DW-OM-6 | What does a gang hear when the roof takes its first load? | `OnCaveIn` emits a fact. It does not emit an account. Accounts are *The Record Keepers*' concern. | The Record Keepers, via a read-only Place hook. |

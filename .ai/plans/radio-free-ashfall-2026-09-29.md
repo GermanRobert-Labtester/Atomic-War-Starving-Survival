@@ -13,11 +13,96 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_radio_free_ashfall_plan.md`. Family index: `docs/expansions/expansion_new_ways_to_play_index.md`.
 > Not a claim. Soft dependencies on *The Living Region* (canonical regions, graded news) ship dark until they exist.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `radio_free_lines.json` rows; they belong in data, never in code.
+
+---
+
+## 0. Prologue — Sign-On
+
+> *"You are not the news. You are the voice at the hour when there is no other voice."*
+
+There are six stations still transmitting into the ash. None of them belong to you. They have
+personas, schedules, reliability ratings and audiences that predate the shelter — and every one of
+them is, in some way, selling something.
+
+Your station is the seventh. It has three physical properties and one moral one: a call sign, a
+frequency, a power tier — and a *truth grade*. Everything else is consequence. Broadcast
+something honest and a region's affinity rises and nothing happens. Broadcast something false and
+nothing happens, and then, later, a great deal happens.
+
+**Tone & register.** Intimate, late-night, faintly conspiratorial. The register is a person alone
+in a room speaking into a machine that may or may not be reaching anyone. Prose should be
+monologue-shaped: second person, present tense, low volume. The mailbag is where the world talks
+back and it should always arrive slightly wrong — a letter too warm, a request too specific.
+
+**Mystery & texture.** The Signature is the plan's shadow. Every minute on air makes the shelter
+more *legible* to something that direction-finds. The warning always precedes the probe (§6.6),
+which means the player is never ambushed — only warned, and then answered. That is worse. §12
+keeps the identity of whatever is listening permanently open.
+
 ## 1. Goal & Outcome
+
+> *Design intent: the microphone is a weapon that only fires at the user. Reach is the reward and
+> reach is also the exposure.*
+
 - **Goal:** Give the shelter one persistent broadcast identity (call sign, frequency, power), a schedule grid, per-region audience affinity, a Voice Trust ledger, a broadcast Signature that hostile direction-finding can act on, and a listener mailbag — all on top of the existing program-production, PsyOps, triangulation and door/visitor systems.
 - **Outcome (observable):** on a fixed seed the player books a bulletin into their own slot; a region's affinity rises; a false-graded bulletin is later revealed and Voice Trust falls; Signature crosses a faction's resolve threshold and a probe (jamming or visitor) arrives through the existing PsyOps/door path; save/load mid-schedule preserves everything.
 - **Non-Goals:** no edits to the six authored stations or their slots; no second propaganda/PsyOps system; no new save section; no new routed panel; no real-time audio; no change to distress-signal trust; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**Voice Trust is the plan's conscience.**
+
+Bounded 0–100 like the distress ledger (DEC-RF-03), but *separate* — and the write-count test
+protects that separation. Let the panel show the two ledgers on the same screen and never let a
+player confuse them. Distress trust is about whether the world is telling you the truth. Voice
+Trust is about whether you are.
+
+**The truth grade is chosen at booking (DEC-RF-04).**
+
+`true / spun / false` is set by the player's own script and revealed later by the world. This is
+the plan's moral engine: nobody forces a lie, and every lie has a latency. Spin is the interesting
+case — it decays after a short window, which means spin is a *loan* against a truth someone else
+will eventually publish.
+
+**What the player is never told.**
+
+- Who jammed you. A probe arrives through the existing PsyOps path; attribution is not modelled
+  and must not be narrated.
+- How many listeners there are. Affinity is per-region and is not a headcount. Never print one.
+- Whether the six authored stations are human. They have personas and reliability, which is
+  exactly as much as can be said.
+- What the mailbag knows. Letters are drawn deterministically and mapped to existing choices; they
+  are never evidence, only address.
+
+**Voice — sample fragments (content candidates for `radio_free_lines.json`).**
+
+> "This is the shelter. We are still here. That is the whole bulletin and it is enough for tonight."
+
+> "A letter came in from a place we have never traded with, asking after a person we have never
+> named on air. We are reading it twice."
+
+> "Signature is up again. Someone is counting our minutes. If you are hearing this, one of us is
+> being heard back."
+
+> "We said the outbreak was Confirmed and it was only Told. Trust is down eleven points and it
+> should be."
+
+**Design texture beats.**
+
+- **A warning line always precedes a probe.** The player must never feel cheated. The fear is in
+  the notice period.
+- **Missed slots decay affinity.** A station that goes quiet is not neutral — it is *forgotten*.
+  That decay is the plan's most human mechanic.
+- **The mailbag only exists when affinity > 0 (DEC-RF-09).** Silence should be a legible state with
+  its own line on the panel.
+- **Relay broadcasting is custody, not ownership (DEC-RF-08).** Transmitting from a waystation
+  should feel borrowed.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -141,3 +226,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: an own-station slot requires editing the authored station catalog; Voice Trust would need writes into the distress ledger; consequences would need a new arrival system; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the airwaves larger than the seven voices that use them. Any future plan that answers one must
+name the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| RF-OM-1 | Who is direction-finding? | DEC-RF-05 routes consequences through PsyOps jamming and door visitors only. Attribution is never modelled and never narrated. | Never — tone-locked; a named faction would end the dread. |
+| RF-OM-2 | Are the six authored stations broadcasting from anywhere? | E1 gives them personas and reliability. It does not give them locations. Six stations with no transmitter site is a fact the game declines to explain. | Never — the artefact is the atmosphere. |
+| RF-OM-3 | What was the frequency band used for before? | DEC-RF-01 makes your station an *additional* identity. Its prior occupancy is not asserted. | A future comms-owner plan, if it ever authors band history. |
+| RF-OM-4 | Why does Voice Trust have the same bounds as distress trust? | DEC-RF-03 says "same bounded pattern". Whether that is a convention or a coincidence is deliberately unspecified. | Never — a rule, not a gap. |
+| RF-OM-5 | Do the letters come from people? | The mailbag is seeded and deterministic (P5) and maps to existing choices. The plan does not model senders and will not. | Never — DEC-RF-09's boundary. |
+| RF-OM-6 | What is a "signal interceptor" when it is at home? | The bridge to *The Quiet War*'s profile is real and unresolved. Resolving it in one plan would steal the other's silence. | QW + RF jointly, in one shared pass. |

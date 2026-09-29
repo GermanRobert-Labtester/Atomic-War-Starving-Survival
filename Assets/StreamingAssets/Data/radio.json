@@ -8,7 +8,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Civil Register, 88.5. Good morning. Dust advisory in effect through midday \u2014 close your intake valves before you boil water. Sector nine water station opens at the sixth hour. Bring your card. The queue will close at capacity. That is all."
+      "message": "Civil Register, 88.5. Good morning. Dust advisory in effect through midday \u2014 close your intake valves before you boil water. The advisory ends at midday. Sector nine water station opens at the sixth hour. Bring your card. The queue will close at capacity. That is all."
     },
     {
       "id": "radio_broadcast_02",
@@ -17,7 +17,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Civil Register, 88.5. A reminder from the Bureau of Dose Records: quarterly thyroid readings are mandatory for all registered adults. Unrecorded persons cannot claim medical priority. The clinic in the east annex opens tomorrow at dawn. Bring your dose card."
+      "message": "Civil Register, 88.5. A reminder from the Bureau of Dose Records: quarterly thyroid readings are mandatory for all registered adults. Unrecorded persons cannot claim medical priority. The clinic in the east annex opens tomorrow at dawn. Bring your dose card. Readings are due four times a year."
     },
     {
       "id": "radio_broadcast_03",
@@ -44,7 +44,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Civil Register, 88.5. A cold front is moving in from the north ridge. Temperature is expected to drop eight degrees by nightfall. All outer shelters should verify heating fuel and seal their exhaust dampers before dark. We do not expect this to be a long cold. We have been wrong before."
+      "message": "Civil Register, 88.5. A cold front is moving in from the north ridge. Temperature is expected to drop eight degrees by nightfall. All outer shelters should verify heating fuel and seal their exhaust dampers before dark. We do not expect this to be a long cold. We have been wrong before. This is the estimate as it stands."
     },
     {
       "id": "radio_broadcast_06",
@@ -53,7 +53,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Civil Register, 88.5. Notice from the district authority: movement through the eastern checkpoint is suspended pending clearance of a road obstruction. Travelers with Garrison transit papers should report to the south gate. All others wait. We will announce when the road is clear."
+      "message": "Civil Register, 88.5. Notice from the district authority: movement through the eastern checkpoint is suspended pending clearance of a road obstruction. Travelers with Garrison transit papers should report to the south gate. All others wait. We will announce when the road is clear. The eastern checkpoint remains closed."
     },
     {
       "id": "radio_broadcast_07",
@@ -62,7 +62,7 @@
       "maxDay": 30,
       "intelType": "Civilian",
       "confidence": 0.85,
-      "message": "Civil Register, 88.5. Fuel convoy to the outer ring departs at first light. If you have a depot requisition stamped in the last ten days, report to the motor yard before the sixth hour. Unsigned manifests will not be loaded. The convoy does not make return trips."
+      "message": "Civil Register, 88.5. Fuel convoy to the outer ring departs at first light. If you have a depot requisition stamped in the last ten days, report to the motor yard before the sixth hour. Unsigned manifests will not be loaded. The line closes when the convoy departs. The convoy does not make return trips."
     },
     {
       "id": "radio_broadcast_08",

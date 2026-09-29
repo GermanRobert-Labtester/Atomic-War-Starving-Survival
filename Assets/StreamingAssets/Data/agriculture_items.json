@@ -13,7 +13,7 @@
     {
       "id": "item_pest_treatment_dust",
       "displayName": "Pest Treatment Dust",
-      "description": "A paper sachet of harsh mineral dust. It kills the swarm and stings the hands, and the plants endure it the way everything here endures.",
+      "description": "A paper sachet of harsh mineral dust. It kills the swarm and stings the hands, and the plants endure it the way everything here endures. It is handed over folded shut.",
       "type": "Material",
       "stackMax": 15,
       "weight": 0.2,

@@ -22,7 +22,7 @@
         "revealed_location_id": "loc_diesel_tank_farm"
       },
       "expiry_days": 4,
-      "message": "Bravo route is choked with white-hot ash. We just lost two rigs to melt-throughs. Rerouting the surviving tankers to the deep bulk storage. If we don't make it, burn the manifest.",
+      "message": "Bravo route is choked with white-hot ash. We just lost two rigs to melt-throughs. Rerouting the surviving tankers to the deep bulk storage. If we don't make it, burn the manifest. Two rigs. That is the count so far.",
       "tags": [
         "military",
         "logistics",
@@ -47,7 +47,7 @@
         "revealed_location_id": "loc_recovery_yard"
       },
       "expiry_days": 3,
-      "message": "MAYDAY. The intake fan just screamed and died\u2014we're buried under thirty feet of frozen sludge. Seven of us coughing in the sub-level. Oxygen's thinning. (coughing) We can't clear the hatch...",
+      "message": "MAYDAY. The intake fan just screamed and died\u2014we're buried under thirty feet of frozen sludge. Seven of us coughing in the sub-level. Oxygen's thinning. (coughing) We can't clear the hatch... Thirty feet of it. Can anyone hear us?",
       "tags": [
         "distress",
         "emergency",
@@ -74,7 +74,7 @@
         "revealed_location_id": "loc_ordnance_shoulder"
       },
       "expiry_days": 0,
-      "message": "AUTOMATED TELEMETRY: Silo doors forced. Micro-fractures in primary concrete casing. Sub-level three ordnance bays unsealed. Radiation spikes detected in retrieval corridors.",
+      "message": "AUTOMATED TELEMETRY: Silo doors forced. Micro-fractures in primary concrete casing. Sub-level three ordnance bays unsealed. Radiation spikes detected in retrieval corridors. Casing integrity: compromised.",
       "tags": [
         "military",
         "automated",
@@ -99,7 +99,7 @@
         "revealed_location_id": "loc_low_background_lab"
       },
       "expiry_days": 2,
-      "message": "ATMOSPHERIC ALERT: Sky is boiling green. Severe geomagnetic cascade expected in two hours. Expect massive static across all bands. The northern passes are entirely blacked out.",
+      "message": "ATMOSPHERIC ALERT: Sky is boiling green. Severe geomagnetic cascade expected in two hours. Expect massive static across all bands. The northern passes are entirely blacked out. This is a forecast, not a confirmation.",
       "tags": [
         "weather",
         "science",
@@ -127,7 +127,7 @@
         "revealed_location_id": "loc_summit_relay"
       },
       "expiry_days": 1,
-      "message": "DEORBIT WARNING: Six kinetic rods separated from orbit-tether. Thermal bloom detected. Thirty seconds to upper-crust impact. All remaining personnel, brace for seismic shear.",
+      "message": "DEORBIT WARNING: Six kinetic rods separated from orbit-tether. Thermal bloom detected. Thirty seconds to upper-crust impact. All remaining personnel, brace for seismic shear. Repeat: six rods.",
       "tags": [
         "orbital",
         "harrow",
@@ -206,7 +206,7 @@
         "revealed_location_id": "loc_motel_verity"
       },
       "expiry_days": 3,
-      "message": "(Sobbing) Please, is anyone on this frequency? We're at the old motel... we have kids here, we have generator parts to trade, we just need iodine... please, they're starting to bleed...",
+      "message": "(Sobbing) Please, is anyone on this frequency? We're at the old motel... we have kids here, we have generator parts to trade, we just need iodine... please, they're starting to bleed... (Static.)",
       "tags": [
         "trap",
         "danger",
@@ -286,7 +286,7 @@
         "revealed_location_id": "loc_pump_station_nine"
       },
       "expiry_days": 2,
-      "message": "The water's black and it smells like sulfur. It just swallowed the secondary pumps. We're running on fumes. Sealing the bulkhead and praying the blast door holds the pressure...",
+      "message": "The water's black and it smells like sulfur. It just swallowed the secondary pumps. We're running on fumes. Sealing the bulkhead and praying the blast door holds the pressure... Black water, no pumps.",
       "tags": [
         "distress",
         "flood",
@@ -311,7 +311,7 @@
         "revealed_location_id": "loc_grain_silo"
       },
       "expiry_days": 4,
-      "message": "We cracked the secondary elevator. Half a ton of viable winter rye, sealed in vacuum glass. We're choking on the dust though. Will trade fifty kilos for pristine carbon filters. No raiders.",
+      "message": "We cracked the secondary elevator. Half a ton of viable winter rye, sealed in vacuum glass. We're choking on the dust though. Will trade fifty kilos for pristine carbon filters. No raiders. Half a ton behind the secondary elevator, say again.",
       "tags": [
         "trade",
         "food",

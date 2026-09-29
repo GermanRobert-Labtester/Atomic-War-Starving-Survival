@@ -5,7 +5,7 @@
     {
       "id": "micro_roadside_memorial",
       "title": "Roadside Memorial",
-      "description": "Melted tallow stubs sit inside rusted rationing tins around a bent highway marker. A photograph was torn away, leaving only a bloodstained corner pinned beneath a stone. The wax has frozen into pale, grey discs.",
+      "description": "Melted tallow stubs sit inside rusted rationing tins around a bent highway marker. A photograph was torn away, leaving only a bloodstained corner pinned beneath a stone. The wax has frozen into pale, grey discs, and the tins have been set in a rough circle.",
       "category": "Discovery",
       "baseWeight": 0.8,
       "stealthWeightMultiplier": 1.0,
@@ -33,7 +33,7 @@
     {
       "id": "micro_crashed_truck",
       "title": "Crashed Supply Truck",
-      "description": "A military logistics rig lies crushed in the frozen ditch, its windshield shattered outward. Torn radiation warning tags cling to the twisted rear doors. The cargo area was scavenged long ago, but one crate lies split open in the frost.",
+      "description": "A military logistics rig lies crushed in the frozen ditch, its windshield shattered outward. Torn radiation warning tags cling to the twisted rear doors. The cargo area was scavenged long ago, but one crate lies split open in the frost, and nobody has closed it.",
       "category": "Discovery",
       "baseWeight": 0.6,
       "stealthWeightMultiplier": 1.0,
@@ -70,7 +70,7 @@
     {
       "id": "micro_frozen_bus",
       "title": "Frozen Evacuation Bus",
-      "description": "The transit doors are frozen wide open, letting the ash-laden wind howl through the cabin. A child's single shoe sits upright beneath a luggage rack. The windows are obscured by thick, greasy frost on the inside.",
+      "description": "The transit doors are frozen wide open, letting the ash-laden wind howl through the cabin. A child's single shoe sits upright beneath a luggage rack. The windows are obscured by thick, greasy frost on the inside, and nothing has been wiped clear.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -105,7 +105,7 @@
     {
       "id": "micro_improvised_grave",
       "title": "Improvised Grave",
-      "description": "A shallow mound of frozen earth, hastily reinforced with chunks of shattered concrete. A name is violently gouged into a piece of broken siding, along with a date from the first winter of the ashfall.",
+      "description": "A shallow mound of frozen earth, hastily reinforced with chunks of shattered concrete. A name is violently gouged into a piece of broken siding, along with a date from the first winter of the ashfall, and both are cut to the same depth.",
       "category": "Discovery",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -177,7 +177,7 @@
     {
       "id": "micro_drainage_pipe",
       "title": "Drainage Pipe",
-      "description": "Rags and irradiated blankets have been pushed deep into this dark concrete culvert. Words are gouged into the wall just beyond the reach of the freezing rain, the letters uneven and going downhill. The smell of copper and unwashed bodies lingers.",
+      "description": "Rags and irradiated blankets have been pushed deep into this dark concrete culvert. Words are gouged into the wall just beyond the reach of the freezing rain, the letters uneven and going downhill. The smell of copper and unwashed bodies lingers, and the blankets lie well back from the drip.",
       "category": "Discovery",
       "baseWeight": 0.7,
       "stealthWeightMultiplier": 1.0,
@@ -212,7 +212,7 @@
     {
       "id": "micro_rail_siding",
       "title": "Rail Siding",
-      "description": "Rusted wheelsets have sunk deep into the irradiated ballast. A maintenance ledger hangs from the side of a derailed freight car, the final pages written in frantic, shaky handwriting before ending abruptly.",
+      "description": "Rusted wheelsets have sunk deep into the irradiated ballast. A maintenance ledger hangs from the side of a derailed freight car, the final pages written in frantic, shaky handwriting before ending abruptly, and the ledger has not been moved.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,
@@ -283,7 +283,7 @@
     {
       "id": "micro_ruined_greenhouse",
       "title": "Ruined Greenhouse",
-      "description": "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—the paint around its lock is scarred by crowbar marks that stop short of success.",
+      "description": "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—the paint around its lock is scarred by crowbar marks that stop short of success, and the scars are old.",
       "category": "Discovery",
       "baseWeight": 0.5,
       "stealthWeightMultiplier": 1.0,

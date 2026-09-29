@@ -87,7 +87,7 @@
       "display_name": "The Price of Kindness",
       "category": "share",
       "trigger": "Your shelter's food stores are raided because you helped someone who reported your location.",
-      "discovery": "The storage room is half-empty. Boot prints in the dust. The lock wasn't forced — someone had the combination. The family you sheltered last week knew where you kept it. They told someone. Your people are hungry now, and they're looking at you like you caused it.",
+      "discovery": "The storage room is half-empty. Boot prints in the dust. The lock wasn't forced — someone had the combination. The family you sheltered last week knew where you kept it. They told someone. Your people are hungry now, and they're looking at you like you caused it. Nobody in the room says whose prints they are.",
       "location_id": "loc_shelter_storage",
       "min_day": 35,
       "max_day": 0,

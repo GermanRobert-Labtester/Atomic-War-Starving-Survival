@@ -13,11 +13,98 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_record_keepers_plan.md`. Family index: `docs/expansions/expansion_shelter_under_pressure_index.md`.
 > Not a claim. The journal, memorial and Shelter Archive (a **projection**) keep their meaning; this plan adds **one custody overlay** beside the archive desk and one optional overlay parameter on the projector. It introduces **no author, no slant, no second archive**.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `keeper_report_lines.json` rows; they belong in data, never in code.
+> DEC-RK-02 governs: no author and no slant is introduced anywhere, in prose or in source.
+
+---
+
+## 0. Prologue — The Keeper's Report
+
+> *"An archive is not a memory. It is what a shelter agreed to keep, and the shape of everything
+> it could not."*
+
+The Shelter Archive is a projection. It is built from two living sources — the journal and the
+memorial wall — and it has never contained anything else. What it does not contain is not
+missing; it is **Gapped**.
+
+This plan gives records a body. Paper fades at a rate written on the ink. Slate survives damp and
+does not survive a drum. An oral account lives exactly as long as the person carrying it and one
+day less. And the Keeper — the same archivist who already sits at the desk — is the only thing
+between a fact and a tag in a timeline.
+
+**Tone & register.** Archival, humane, quietly mournful. The prose is a report written by someone
+who has decided to be precise because feeling would be unaffordable. Prefer the inventory voice:
+medium, place, condition, copies, state. Never editorialise a loss. The record's condition is the
+eulogy.
+
+**Mystery & texture.** The plan introduces **no author and no slant** (DEC-RK-02) — which means
+the only narrator available is *damage*. Damage has no motive and no politics, and that is exactly
+why it is frightening. §12 keeps open the questions that custody raises and deliberately refuses
+to answer.
+
 ## 1. Goal & Outcome
+
+> *Design intent: a well-kept record should feel like a person who refused to let something be
+> forgotten. A Gap should feel like the exact shape of what was lost.*
+
 - **Goal:** Give records **custody and risk**: each tracked record has a medium, place, condition, copies and state (Intact/Faded/Damaged/Lost); an archive-desk **Keeper** (the existing archivist) slows decay and can **copy**; losses become dated **Gaps** in the archive timeline; oral accounts use existing Memory Decay clarity; a **Reading** and a **Dispute** are player verbs; a well-kept record adds weight to a tribunal.
 - **Outcome (observable):** on a fixed seed a Paper record in a damp room moves Intact → Faded → Damaged → Lost per the ink's `fade_rate_per_day` and the room's modifier; an empty Keeper chair accelerates decay; a copy on a durable medium in a second place resets condition and survives a loss in the first; a Lost record appears as a tagged Gap in the projected archive timeline; a memorial page is always recopiable from the memorial owner; `JusticeSystem.AddEvidence` receives a clue weighted from condition; no Keeper and no custody rows → every record behaves exactly as today; save/load round-trips.
 - **Non-Goals:** no new archive/journal/memorial/knowledge store; no author or slant; no change to retention semantics or protected obligations; no new memory-decay maths; no player-authored text; no new save section; no new routed panel; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**The Gap is the plan's best invention.**
+
+A Gap is a *tagged Event* (`gap`, `cause:*`, `medium:*`) — technically trivial and emotionally
+the whole point. Let gaps be readable as prose in the Chronicle: a date, a medium, a cause, and
+nothing else. An archive that shows what it is missing is the only kind of archive that deserves
+to be trusted.
+
+**Condition is a sentence.**
+
+Intact / Faded / Damaged / Lost is four words a Keeper can say out loud. Keep the words short,
+keep them visible, and never let them be a percentage. A percentage invites optimisation. Four
+words invite care.
+
+**What the player is never told.**
+
+- What was on the record that was lost. The ledger holds `recordKey`, medium, place, condition,
+  state — and **no record body text** (RK-P1). The loss is structural and the plan never gossips.
+- Whether a Strike that was discovered was discovered because it was careless. RK-P7 applies a
+  bounded cost. It does not assign a motive to the discoverer.
+- Whether the memorial wall could itself be damaged. DEC-RK-06 says pages are *never permanently
+  lost* and recopy from the wall. How the wall survives is not modelled and must not be narrated.
+- Whether the Keeper is honest. The chair is a duty roster entry. The plan gives it no character
+  and will not.
+
+**Voice — sample fragments (content candidates for `keeper_report_lines.json`).**
+
+> "Keeper's report, day 61. Paper in the west room: Faded. The damp is doing what the fire did not
+> finish."
+
+> "Two copies exist. One is here. One is somewhere else, and I have written down where, which is
+> the only reason either of them is safe."
+
+> "Oral account, bearer deceased. Not transcribed. The Gap is dated today and it will be dated
+> forever."
+
+> "The chair was empty for nine days. Nothing was lost. Everything is worse."
+
+**Design texture beats.**
+
+- **Condition never rises except by a copy.** That conservation rule (§6.3) is the plan's physics
+  and its ethics. Do not add a "repair" verb.
+- **Memorials are the one unconditional good.** They always recopy (DEC-RK-06). In a plan about
+  loss, one thing must be safe — and it should be the names.
+- **Evidence weight is capped and Gaps add none (DEC-RK-10).** An archive cannot testify to what it
+  does not hold. Make the UI say so plainly.
+- **A Dispute is three verbs and one scar.** Amend, Append, Strike. Strike creates a Gap and a risk
+  of discovery — the only place in this plan where a person is to blame.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -147,3 +234,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: a Gap cannot be represented without changing `ArchiveEntryType` or the projector's contract; memorial protection cannot be guaranteed; the overlay would need a second record store; retention would need to change; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the archive larger than the archive desk that meters it. Any future plan that answers one must
+name the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| RK-OM-1 | What did the Lost record say? | RK-P1 forbids record body text in the ledger. The Gap is the *shape* of the loss, and the shape is the whole design. | Never — architecture and ethics both depend on it. |
+| RK-OM-2 | Why is the memorial wall durable? | DEC-RK-06 guarantees recopy without explaining the substrate. One thing must be safe; the reason is left to the shelter's own mythology. | Never — tone-locked. |
+| RK-OM-3 | Was the Strike discovered by care or by luck? | RK-P7 applies a bounded cost with no motive model. Attribution would make the archive a detective story. | Never — DEC-RK-02's boundary. |
+| RK-OM-4 | Who keeps the Keeper? | The chair is `archivistId` off the duty roster (E4). The plan gives the Keeper no character and no successor. | A future duty-roster plan, if the chair ever has a lineage. |
+| RK-OM-5 | Do the four media predate the shelter? | DEC-RK-04 authorises Paper, Slate, Drum, Oral and stops. Their provenance is not asserted. | *The Reconstruction Tree*, if capability is ever distinguished from accounts in the fiction. |
+| RK-OM-6 | What is a well-kept record worth at the end of the world? | RK-P8 feeds `recordQuality` into the epilogue as **presentation only** (DEC-RK-09). The plan declines to make it a score. | Never — a rule, not a gap. |

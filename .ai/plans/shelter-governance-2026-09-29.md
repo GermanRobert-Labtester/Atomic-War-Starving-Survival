@@ -13,11 +13,101 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_shelter_governance_plan.md`. Family index: `docs/expansions/expansion_new_ways_to_play_index.md`.
 > Not a claim. Reader-and-router over five existing governance owners; none is merged or replaced.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `assembly_lines.json` / `precedents.json` rows; they belong in data,
+> never in code. DEC-SG-10 governs: no real-world ideology labels anywhere.
+
+---
+
+## 0. Prologue — The Sitting
+
+> *"A shelter does not need a government. It needs a room where it is possible to lose an argument
+> and still stay inside."*
+
+There are already five political authorities in this game — approval and legitimacy, policy
+scopes, bloc grievance, trials and verdicts, leadership and challenge. They are all working. None
+of them talk to each other. That is not a bug; it is what a shelter looks like when it is governed
+by institutions that were each invented to solve exactly one emergency.
+
+The Assembly is the room. It adds no authority (DEC-SG-01) — it only gives the five a shared
+vocabulary, a book of statutes, a court with names, and a ladder of dissent that is **announced
+one sitting ahead** before it is ever climbed.
+
+**Tone & register.** Procedural, legal, faintly exhausted. The vocabulary is the chamber: *sitting,
+scope, statute, motion, rung, precedent, reception*. Prose should read like minutes kept by someone
+who has sat through too many of these and still takes them seriously. Never use a real ideology,
+party or label — DEC-SG-10 forbids it, and the fiction is stronger for the omission.
+
+**Mystery & texture.** The opposition ladder — murmur → petition → walkout → sit-in → schism or
+challenge — is the plan's slow-burning fuse. Every rung is announced first (DEC-SG-05), which
+means the player always sees the shape of the trouble before the trouble. The dread is in the
+seeing. §12 keeps the questions of *who* and *why* permanently between the lines.
+
 ## 1. Goal & Outcome
+
+> *Design intent: politics here is not about power. It is about the cost of being right in a room
+> where everyone is tired and everyone is counting.*
+
 - **Goal:** Make five governance authorities feel like one **Assembly**: one scope vocabulary; a statute book the shelter enacts/repeals; trials with named roles that shape verdict *reception*; an announced **opposition ladder** (murmur → petition → walkout → sit-in → schism or challenge) driven by existing bloc grievance; precedents; a legitimacy-versus-fear ledger.
 - **Outcome (observable):** on a fixed seed, enacting an opposed statute raises a bloc's grievance; crossing a threshold announces then triggers a walkout that reduces named duty output through the duty roster; a concession lowers grievance; a schism removes named survivors as a new faction; state survives save/load.
 - **Non-Goals:** no new political/legal authority; no change to trial verdict rules; no new save section; no new routed panel; no real-world ideology labels; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**The scope map is the plan's quiet revelation.**
+
+E5 is the finding underneath everything: the bloc vocabulary has ~21 words and the policy system
+has 3, matched by exact string. Most of what people in this shelter care about can be *named* by a
+bloc and *cannot be expressed* by a policy. SG-P1 fixes the mapping without renaming either file
+(DEC-SG-03) — and the fix is, in the fiction, simply the moment the Assembly learns to hear what
+its own people have been saying.
+
+**Roles shape reception, never the verdict (DEC-SG-04).**
+
+This is the plan's ethical spine and its best test (§6.3, invariance). A trial's outcome belongs to
+`JusticeSystem` and is untouched. What the Assembly changes is *what the verdict feels like to
+receive* — legitimacy, fear, and whether the room accepts it. That distinction must be legible in
+the UI.
+
+**What the player is never told.**
+
+- Who the opposition leader is *against*. `OppositionLadder` names a named survivor and a rung. It
+  does not authorise a motive and must not invent one.
+- Whether a precedent is binding. `PrecedentLedger` records tags and applies bounded, decaying
+  modifiers. The word "precedent" carries legal weight the engine does not assert.
+- Why `guardDeficiency` is passed as 0 (E2). DEC-SG-08 offers to fix it. Until signed, the number
+  stands as an unexplained artefact.
+- What happens after a schism. SG-P4 conserves survivors through existing departure paths and then
+  stops. The departed are not tracked and must not be.
+
+**Voice — sample fragments (content candidates for `assembly_lines.json`).**
+
+> "Sitting 22. The motion carried. Two blocs registered grievance, which is the same as saying two
+> sets of people are now keeping a different count."
+
+> "The walkout is announced for the next sitting. That is the rule. It is also why we slept badly
+> tonight instead of next week."
+
+> "Precedent recorded. It will matter for a while. It will stop mattering, which is the part no one
+> writes down."
+
+> "The verdict is the verdict. What we are discussing now is whether anyone will believe us when we
+> read it out."
+
+**Design texture beats.**
+
+- **Announce one sitting ahead, always (DEC-LS-05 / DEC-SG-05).** Fairness here is a scheduling rule.
+  The player is never surprised by a rung, only by how fast it came.
+- **Ship-dark parity (§6.2) is a promise about scope.** Five owners, unchanged. The Assembly is a
+  lens, not an organ.
+- **Survivor conservation across schism (§6.5).** People leave; they are not deleted. The
+  arithmetic is the ethic.
+- **Execution stays rare and authored (DEC-SG-10).** No new lethal punishment. A tone rule with
+  mechanical teeth.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -146,3 +236,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: the scope map cannot be expressed without editing bloc or policy files; a trial's verdict changes under roles; schism cannot conserve survivors through existing departure paths; the ladder needs a new duty/faction authority; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the Assembly larger than the room that holds it. Any future plan that answers one must name
+the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| SG-OM-1 | What do the blocs actually believe? | `shelter_governance_blocs.json` supplies scope words (~21 of them) and grievance basis points. Doctrine is not authored and DEC-SG-10 forbids real-world labels. | Never — tone-locked. |
+| SG-OM-2 | Why does `guardDeficiency` arrive as 0? | E2 is a live gap. DEC-SG-08 offers to fix it through an integrator-owned seam; until signed, the zero stands unexplained. | The foreman, when DEC-SG-08 is signed. |
+| SG-OM-3 | Is a precedent binding? | SG-P6 applies bounded, decaying modifiers. The legal weight of the word is asserted by the fiction and not by the engine. | Never — a rule, not a gap. |
+| SG-OM-4 | Where do the schism's departed go? | SG-P4 conserves survivors through existing departure paths and then stops. The departed are not tracked by design. | *The Living Region*, if a settlement ever receives a party. |
+| SG-OM-5 | Why are there exactly four laws? | E7 notes Hoarding and Desertion have none; SG-P2 adds two and eight more. The gap is real and its origin is not recorded. | Never — the artefact reads as history. |
+| SG-OM-6 | Who decides who sits on a jury? | Court roles are assigned from survivors with an `INT` random stream for draws. No fiction of appointment is authored. | Never — texture by omission. |

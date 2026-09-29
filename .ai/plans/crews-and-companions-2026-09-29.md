@@ -13,11 +13,97 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_crews_and_companions_plan.md`. Family index: `docs/expansions/expansion_new_ways_to_play_index.md`.
 > Not a claim. `ExpeditionSystem` is used in many places; this plan **adds a coordinator beside it** and does not change its one-expedition-per-survivor rule.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `party_quarrels.json` / `camp_rituals.json` / `companion_party_moments.json`
+> rows; they belong in data, never in code.
+
+---
+
+## 0. Prologue — The Party
+
+> *"A shelter is what you are willing to leave. A party is who you are willing to leave it with."*
+
+An expedition is a ledger entry: a survivor, a location, a stamina cost, an outcome. A **party** is
+what happens when four of those entries decide to be about each other. Nothing in the engine
+requires it. That is exactly why it matters.
+
+The road in this world does not have encounters so much as it has *appointments* — and a party is
+the decision to keep them in company. There is a hound that will not leave the lead's heels, a
+medic who sleeps badly and works anyway, a hauler who has not spoken since the third day, and a
+fire that is either a camp or a ritual depending on who is still awake to call it one.
+
+**Tone & register.** Warm, worn, unsentimental. The vocabulary is the trail: *watch, pace, rations,
+bond, quarrel, camp*. Prose should feel like a conversation carried on at walking pace — half
+finished sentences, the same joke told badly twice, a long silence that is not unfriendly. Never
+write the party as a unit. Write it as four people and two animals who happen to be going the same
+way.
+
+**Mystery & texture.** The plan's real subject is the **road bond** — the write that happens when
+something extreme occurs and the relationship system records it without being asked. Bonds are not
+rewards and are not earned; they are *damage with witnesses*. §12 keeps open the questions that a
+group of people and animals walking into the ash will always raise and never answer.
+
 ## 1. Goal & Outcome
+
+> *Design intent: a party of one is an expedition. A party of two is a promise. Everything in this
+> plan is about the difference.*
+
 - **Goal:** A **party** = up to 4 survivors + up to 2 companions travelling together, implemented as *N ordinary expeditions plus a small party coordinator*: shared destination/pace/outcome, roles, a cohesion number, seeded injury/loss distribution, camp rituals, and road-bond writes through existing social systems. Provide one **crew contract** other plans read.
 - **Outcome (observable):** on a fixed seed a party of three plus a hound dispatches to a catalog location; exactly **one** encounter is rolled per tick for the party (not per member); a medic role changes an injury outcome; camp raises cohesion; an event writes a trauma bond through the existing system; a lost companion produces the existing grief effect; a party of one behaves identically to today; save/load mid-trip preserves everything.
 - **Non-Goals:** no change to `ExpeditionSystem`'s one-per-survivor rule or start path; no new stamina/inventory/health authority; no new save section; no new routed panel; no boats/wagons (crew *contract* only); no squad tactics; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; solo-expedition parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**Cohesion is not morale.**
+
+Cohesion is 0–100 and derived from relationships and shared history. It is a *weather report on a
+small group* — and like a weather report it should be legible, unarguable, and slightly too late to
+act on. Low cohesion enables quarrels. It does not cause them. Keep that distinction visible in the
+panel: cohesion describes, it does not prescribe.
+
+**Animals are members, not equipment.**
+
+DEC-CC-07 says a companion never starts alone and the handler must be present. Lean all the way
+into that in the writing. A hound with a role and a temper and a bond is a character; a hound with
+a pack-capacity bonus is a container. `companion_party_moments.json` should carry the former.
+
+**What the player is never told.**
+
+- Why followers' encounter chance is exactly 0 and not merely low. The plan suppresses the roll via
+  the existing hook (DEC-CC-04). Whether the road is *quieter* or merely *unobserved* is left alone.
+- Who the road bond is between. `TraumaBondSystem` records a write. It does not record who was
+  looking at whom when it happened.
+- Whether the party's name is the party's idea or the player's. `Party.name` is free text and the
+  plan declines to attribute authorship.
+- What a lost companion's grief is *for*. It is the existing effect, unmodified. Never narrate past
+  it.
+
+**Voice — sample fragments (content candidates for `party_quarrels.json` / `camp_rituals.json`).**
+
+> "Camp, day six. We said the words because we have always said the words. It was the only thing
+> today that did not change."
+
+> "The quarrel was about the watch order. It was not about the watch order."
+
+> "The goat will not drink here. Three of us have stopped arguing with the goat."
+
+> "He carried the pack the whole way and did not say so, which is how you find out who a person is
+> on a road where nothing else is interesting."
+
+**Design texture beats.**
+
+- **One encounter roll per party per tick is the plan's whole architecture — and its best story
+  device.** It says: *this happened to us*, not *this happened to me four times*.
+- **Roles are verbs, not classes.** Pathfinder, hauler, watch, medic each feed an existing hook.
+  Name them in the UI as things people *do*.
+- **Loss is drawn, not chosen (DEC-CC-05).** The seeded weighted draw is the plan's cruellest
+  honest feature. Do not let the UI pre-announce it.
+- **A party of one must be invisible.** Solo parity is a test in §6.2 — and it is also a promise that
+  nothing here is mandatory.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -146,3 +232,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: E11 shows follower encounter suppression cannot be done through the existing hooks; hook ownership conflicts with another setter; a party would require a second start path or a change to `ExpeditionSystem` logic; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the road larger than the party walking it. Any future plan that answers one must name the
+signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| CC-OM-1 | Where did the five companion species come from? | E4 authorises species, roles, bond and grief. It never authorises provenance. A hound with a backstory is a quest; a hound with a bond is a companion. | Never — texture by omission. |
+| CC-OM-2 | Why is a follower's encounter chance exactly zero? | DEC-CC-04 suppresses the roll through the existing hook. Whether the road is quieter or merely unobserved is left to the player. | Never — the abstraction is the design. |
+| CC-OM-3 | Who names the party? | `Party.name` is free text and authorship is not recorded. | Never — a rule, not a gap. |
+| CC-OM-4 | What is a road bond between a person and an animal? | CC-P7 routes writes through existing social APIs. Whether the relationship system knows the difference is not asserted. | The social owners, if they ever expose a bond kind. |
+| CC-OM-5 | Do parties that never came back have names? | 75 locations exist (E10); expeditions that failed are not archived as parties. The road keeps no roll of honour. | *The Record Keepers*, if a memorial ever accepts a party. |
+| CC-OM-6 | Why do camp rituals work? | CC-P4 gives cohesion deltas through camp choice machinery. The mechanism is bounded; the meaning is not authored. | Never — DEC-CC-09's boundary. |

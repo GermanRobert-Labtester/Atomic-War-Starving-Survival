@@ -13,11 +13,98 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_faith_and_schism_plan.md`. Family index: `docs/expansions/expansion_new_pressures_and_places_index.md`.
 > Not a claim. `ZealotrySystem` (Plan 175), the ritual calendar (Expansion 13, integrated), `IdeologicalFrictionSystem`, `BeliefStanceBridge`, `MoraleContagionSystem` and the governance blocs each keep their meaning. This plan **makes the escalation ladder consequential and reachable** and adds authored sect rows and a partition rule. It introduces no second belief, ritual or conflict authority.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `schism_lines.json` rows; they belong in data, never in code. DEC-FS-10
+> governs: fictional movements only, both halves authored as reasonable.
+
+---
+
+## 0. Prologue — The Question
+
+> *"A faith is a story a shelter agrees to keep telling. A schism is the moment somebody notices
+> the story has a hole in it — and keeps the hole."*
+
+Nothing here is a real religion and nothing here is a real argument. What the plan stages is the
+small, terrible mechanics of *disagreement under scarcity*: two people who agree on every fact and
+still cannot share a bunk.
+
+The Question is the plan's heart. A movement asks its own blind spot out loud — once, formally,
+with a season on the clock — and the player answers. Whatever they answer, the answer becomes a
+position, and positions have owners, and owners have rooms, and rooms have bunks. That is the
+whole catastrophe: it starts with seating.
+
+**Tone & register.** Earnest, weighty, and fair. The narrator is never ironic about belief.
+Every movement is authored as *reasonable* — including the one that splits away. Prose should give
+both halves their best sentence. The horror of a schism is not that someone is wrong; it is that
+everyone can count.
+
+**Mystery & texture.** The escalation ladder is deliberately unreachable at its last rung (E3:
+Schism is clamped). Whether that clamp is a guard or a wound is a governance question (DEC-FS-05)
+and the plan refuses to prejudge it. That refusal is the plan's tone in miniature: *we do not know
+whether the ceiling was built to protect you.*
+
 ## 1. Goal & Outcome
+
+> *Design intent: a ladder whose rungs bite. Each stage should cost something the player can name
+> before the split costs something they cannot.*
+
 - **Goal:** (a) Make each rung of `ZealotEscalationStage` apply a bounded, table-driven effect through its existing owner; (b) let a movement **split** into an authored **sect** through a seeded, deterministic partition rule, preceded by an authored **Question** the player can answer; (c) give the player real verbs (answer, mediate, joint rite, grant a room, bunk by creed, edict, exile); (d) expose pilgrims/missionaries at the gate and bounded outward effects.
 - **Outcome (observable):** on a fixed seed a movement whose Leader's dissent ≥ 60 (or Devout average ≥ 50) at *Ostracism*+ for four days with a season-old unanswered Question partitions into parent and sect (each ≥ 2 believers) by a seeded weighted draw, changing belief ids only through the belief owner's public method; each rung applies its table effect and no other; answering the Question delays the split; bunk-by-creed reduces roommate friction through the friction owner; with no sect rows and no effect table the ladder and rites behave identically to today; save/load mid-schism round-trips.
 - **Non-Goals:** no real religion or proselytising language; no change to conversion, fervor decay or ritual cooldown maths; no change to morale-contagion schism or governance bloc logic; no auto-combat (assault threat is an *offer* to the encounter authority); no new save section; no new routed panel; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**The Question as a literary device.**
+
+Three Questions, one per movement, each naming a blind spot the movement itself cannot see. The
+player answers with a stance — not a solution. An unanswered Question is not a pending task; it is
+a *season of weather* on the community, and when the season ends the community has changed shape.
+The question should be short enough to quote and hard enough to avoid.
+
+**Both halves are reasonable.**
+
+DEC-FS-10 is a writing constraint with teeth: author the sect's creed with the same care as the
+parent's. A sect that reads as a villain is a failure of authoring. The partition rule is seeded
+and weighted — the draw decides *who leaves*, never *who was right*.
+
+**What the player is never told.**
+
+- Whether the Leader's dissent was caused by the Question or merely correlated with it. The rule is
+  a threshold, not a motive.
+- Whether bunk-by-creed is kindness or segregation. It lowers friction and raises isolation by
+  data, and the data refuses to adjudicate.
+- What the Devout believe that the Adherents do not. Role is a mechanical field. Doctrine is not
+  authored at that resolution and must not be.
+- Whether the schism was preventable. Sixty days is a long time to answer a question. The plan does
+  not say the answer would have mattered.
+
+**Voice — sample fragments (content candidates for `schism_lines.json`).**
+
+> "The Question has been on the board for one hundred and nine days. It has stopped being a
+> question. It has become a season."
+
+> "They asked for a room. We gave them the east room. We called it generosity and they called it
+> distance, and we were both describing the same door."
+
+> "The rite was joint. The singing was not."
+
+> "Two believers left on the ninth. Two remained on the ninth. The set is conserved. Nothing else
+> is."
+
+**Design texture beats.**
+
+- **Stage effects must feel like consequences of the last stage, not new content.** Argument →
+  Ostracism → Work refusal is a *tightening*, and the panel should show the ladder as one object.
+- **The partition is arithmetic and grief at once.** Show the numbers (≥2 each side) plainly and
+  the names softly. Do not gamify the draw.
+- **Assault threat is an offer, never a fight (DEC-FS-04).** The player must be able to look away.
+  That restraint is what separates a tone piece from a spectacle.
+- **Exile is the only verb with no return path.** Give it the longest confirmation beat in the
+  panel and the plainest wording.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -147,3 +234,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: the stage cap proves deliberate and no alternative path to a split exists; a partition would need to create or delete survivors; effects require writes outside owners' public APIs; a sect cannot be authored without editing the static table per sect and P0 rejects a one-time extension; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep belief larger than the ledger that meters it. Any future plan that answers one must name the
+signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| FS-OM-1 | Why is `ZealotEscalationStage.Schism` clamped unreachable? | E3/DEC-FS-05 make this a governance question, not a bug. The ceiling may be a guard or a wound; the plan refuses to prejudge it. | Foreman, after P0 proves intent either way. |
+| FS-OM-2 | What is the Question each movement cannot ask itself? | Authored Questions name a *blind spot*, not a doctrine. Filling the doctrine in would make the sect a caricature. | Never — DEC-FS-10's boundary. |
+| FS-OM-3 | Do the ritual calendar's 19 rites predate the movements? | Expansion 13 owns the ledger and has already integrated. Sequence is not asserted anywhere. | Expansion 13's owner, if rite provenance is ever authored. |
+| FS-OM-4 | Is `MoraleContagionSystem`'s schism the same event seen twice? | DEC-FS-06 says they never fire from one cause on one day. It does not say they are unrelated. Ambiguity is the point. | Never — a rule, not a gap. |
+| FS-OM-5 | Why do the opposing pairs live in a static table? | E5 is an artefact. The plan offers `conflicts_with[]` as a fix and does not explain why the world's enmities were ever hard-coded. | Never — the artefact reads as canon. |
+| FS-OM-6 | Do pilgrims come because of the schism, or were they already on the road? | FS-P6 makes claims *tied to movement ids* and nothing more. Causation is not modelled and must not be narrated. | The Quiet War's gate adapter, at its own discretion. |

@@ -26,7 +26,7 @@
       "frequency": "104.200 MHz",
       "dayTrigger": 210,
       "source": "Voice of the Vitrified Crater",
-      "message": "Do not scrape the soot from your windowpanes, brothers. The ash is the veil of His mercy. The ice came because the world was unclean and required a cold sheet. On the three-hundredth day, the water will run black from the hills. Drink of the black water and be sealed. Those who hide in concrete with brass locks are already dead; their tombs are only warm.",
+      "message": "Do not scrape the soot from your windowpanes, brothers. The ash is the veil of His mercy. The ice came because the world was unclean and required a cold sheet. On the three-hundredth day, the water will run black from the hills. Drink of the black water and be sealed. Those who hide in concrete with brass locks are already dead; their tombs are only warm. Let the ash lie. It is the veil.",
       "signalStrength": "S4",
       "isEmergency": false,
       "audio_cue": "radio_vo_kind_hatch"
@@ -64,7 +64,7 @@
       "frequency": "142.850 MHz",
       "dayTrigger": 215,
       "source": "Bunker 19 (High Granite)",
-      "message": "MAYDAY MAYDAY. Bunker 19 calling any station on 142.850. Our intake flue is completely iced shut. Indoor temperature is minus sixteen. Generator died four hours ago. We have eighteen women and children in the annex. If anyone has heating elements or a cutting torch, we are at Mile Marker 14 on the old pass road. Please acknowledge...",
+      "message": "MAYDAY MAYDAY. Bunker 19 calling any station on 142.850. Our intake flue is completely iced shut. Indoor temperature is minus sixteen. Generator died four hours ago. We have eighteen women and children in the annex. If anyone has heating elements or a cutting torch, we are at Mile Marker 14 on the old pass road. Please acknowledge... Repeat, the intake flue is iced shut.",
       "signalStrength": "S3",
       "isEmergency": true,
       "audio_cue": "radio_vo_kind_parley"

@@ -290,7 +290,7 @@
       "archetype_id": "the_reporter",
       "wish_type": "deliver_letter",
       "wish_title": "Attribution Sealed",
-      "wish_description": "{name} flattens an envelope typed on scrap paper against their lap. 'Mara needs to read what actually happened to the water convoy,' they say. 'No rumors. Just the cargo numbers.'",
+      "wish_description": "{name} flattens an envelope typed on scrap paper against their lap. 'Mara needs to read what actually happened to the water convoy,' they say. 'No rumors. Just the cargo numbers.' The envelope stays flat against their lap.",
       "steps": [
         {
           "step_id": "receive_typed_dispatch",

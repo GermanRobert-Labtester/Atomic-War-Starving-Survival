@@ -6,7 +6,7 @@
       "material_type": "deer_antler",
       "saw_tool_id": "st_hacksaw_blade_01",
       "blank_shape_cut": "tine_section",
-      "log_text": "Antler tine found on the surface — old shed, dry and fully mineralised. Cut four tine sections with the hacksaw blade mounted in a wooden frame. Antler saws slowly but cleanly. The tine section at mid-length is the densest — reserved for an awl blank."
+      "log_text": "Antler tine found on the surface — old shed, dry and fully mineralised. Cut four tine sections with the hacksaw blade mounted in a wooden frame. Antler saws slowly but cleanly. The tine section at mid-length is the densest — reserved for an awl blank. The offcuts are swept up and kept."
     },
     {
       "id": "antler_horn_002",
@@ -27,7 +27,7 @@
       "material_type": "goat_horn",
       "saw_tool_id": "st_hacksaw_blade_02",
       "blank_shape_cut": "flattened_plate",
-      "log_text": "Horn softened in boiling water for twenty minutes, then split longitudinally and pressed flat between boards under heavy weight while still hot. Dried flat. The resulting plate is almost uniform thickness — good for combs and needle cases. Horn plates take carving well."
+      "log_text": "Horn softened in boiling water for twenty minutes, then split longitudinally and pressed flat between boards under heavy weight while still hot. Dried flat. The resulting plate is almost uniform thickness — good for combs and needle cases. Horn plates take carving well. The boards come off only when the plate is dry."
     },
     {
       "id": "antler_horn_005",

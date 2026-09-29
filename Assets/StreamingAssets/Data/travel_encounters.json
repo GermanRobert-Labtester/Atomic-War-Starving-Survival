@@ -154,7 +154,7 @@
       "base_weight": 2.5,
       "stance_weights": { "Cautious": 1.0, "Balanced": 1.0, "Aggressive": 0.8, "Scavenging": 1.5, "Rapid": 0.7 },
       "season_tags": ["all"],
-      "description": "A three-runner salt sled from Brine-Pan Hollow has thrown its wooden axle. Two armed haulers stand guard while the driver frantically jacks the frame.",
+      "description": "A three-runner salt sled from Brine-Pan Hollow has thrown its wooden axle. Two armed haulers stand guard while the driver frantically jacks the frame. Until the axle is mended, nothing on this sled is going anywhere.",
       "choices": [
         { "choice_id": "choice_offer_mechanical_help", "text": "Use spare mechanical scrap to help repair the broken axle runner.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 3, "guilt_delta": 0 },
         { "choice_id": "choice_barter_salt_on_spot", "text": "Trade clean water and dry rations for a discounted drum of curing salt.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0 },
@@ -171,7 +171,7 @@
       "base_weight": 2.0,
       "stance_weights": { "Cautious": 0.8, "Balanced": 1.0, "Aggressive": 1.6, "Scavenging": 0.9, "Rapid": 1.1 },
       "season_tags": ["all"],
-      "description": "Four militia guards behind sandbag revetments flag your party down, demanding identity papers and inspecting baggage for contraband munitions.",
+      "description": "Four militia guards behind sandbag revetments flag your party down, demanding identity papers and inspecting baggage for contraband munitions. The inspection begins before anyone asks your business.",
       "choices": [
         { "choice_id": "choice_show_standing_papers", "text": "Present faction credentials and submit peacefully to inspection.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 1, "guilt_delta": 0 },
         { "choice_id": "choice_pay_road_toll", "text": "Pay the transit levy in copper scrap or salt cartridges.", "is_nonviolent": true, "is_avoidance": false, "morale_delta": 0, "guilt_delta": 0 },

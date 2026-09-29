@@ -6325,6 +6325,39 @@ All systems comply with `netstandard2.1` pure domain rules, zero engine dependen
 
 
 ================================================================================
+## TRIM & POLISH RECORD — 2026-09-29
+
+> This record was added by the batch-9 method-C trim (landed in commit
+> `6e34c20bb`) and the 2026-09-29 polish pass (polish batch 6). It is the
+> only content the polish pass introduced; every other line below is
+> carried verbatim from the document's authored and generated origins.
+
+**What this document is.** The Plan 136 regression verification matrix:
+the mandatory verification gate table — per-gate commands, thresholds,
+and purposes guarding the content domain against catalog drift and
+regression, pinned by the exact filters and result rows recorded
+below.
+
+**Why it is smaller than its original.** The generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions repeated many leaf sections
+byte-identically. Conservative method-C consolidation kept the first copy
+of each distinct section in place and replaced later byte-identical
+repeats with a one-line pointer of the form `> _[consolidated: § "…"]_`.
+Nothing was rewritten, merged, or summarized: every distinct line
+survives, and each pointer names the heading whose first copy is retained.
+
+**Shape after trim.** 32,952 lines (from 53,480 before trim); 11 `BATCH-`
+banners; 20 `### Tranche` containers; 391 consolidation pointers.
+
+**Recovering the full original.** The byte-exact pre-trim original is
+preserved in git history: commit `1fc3fd071` directly precedes the trim
+landing in `6e34c20bb`. This file's authored prefix was verified
+byte-identical after the trim.
+
+**Reading order.** The gate table above is the operative content. The
+BATCH regions below serve as a generated appendix: unique sections
+read in place; a pointer routes you to the retained first copy
+of anything repeated.
 ## BATCH-120 ARCHITECTURAL EXPANSION — PLAN-B120-03-PLAN136REGRESSI
 ### Domain: Plan136 Regression Matrix
 ================================================================================

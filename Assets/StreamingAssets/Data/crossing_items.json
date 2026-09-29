@@ -16,7 +16,7 @@
     {
       "id": "item_calibration_weight",
       "displayName": "Calibration Weight",
-      "description": "A cast iron slug of exact mass, kept because keeping it exact makes everything else arguable in a straight line. The scale never lies; whoever holds the weight is reminded that lying is what human beings do instead.",
+      "description": "A cast iron slug of exact mass, kept because keeping it exact makes everything else arguable in a straight line. The scale never lies; whoever holds the weight is reminded that lying is what human beings do instead. It sits on the counter beside the scale.",
       "type": "Tool",
       "stackMax": 1,
       "weight": 2.0,

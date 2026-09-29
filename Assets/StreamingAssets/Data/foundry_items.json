@@ -14,7 +14,7 @@
     {
       "id": "item_foundry_plowshare",
       "displayName": "Plowshare Set",
-      "description": "A cast iron plowshare and moldboard. Agricultural continuity: the glasshouse allotments and the Verge rows trade seed and stores for these.",
+      "description": "A cast iron plowshare and moldboard. Agricultural continuity: the glasshouse allotments and the Verge rows trade seed and stores for these. The exchange is counted in seed and stores, not coin.",
       "type": "Tool",
       "stackMax": 5,
       "weight": 8.0,

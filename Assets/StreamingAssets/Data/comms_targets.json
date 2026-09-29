@@ -9,7 +9,7 @@
       "frequency_khz": 14220,
       "band": "HF",
       "required_power_watts": 150,
-      "description": "Unattended meteorological reporting transmitter broadcasting continuous barometric and wind telemetries.",
+      "description": "Unattended meteorological reporting transmitter broadcasting continuous barometric and wind telemetries. It reports without listening.",
       "has_satellite_window": false,
       "is_strategic": false,
       "revealed_faction_id": ""

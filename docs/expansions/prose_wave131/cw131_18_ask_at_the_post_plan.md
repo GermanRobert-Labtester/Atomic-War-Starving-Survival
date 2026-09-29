@@ -8685,6 +8685,38 @@ Accept this plan as a prose bank for `comm_d599_forward_roster_crates` only afte
 
 
 ================================================================================
+## TRIM & POLISH RECORD — 2026-09-29
+
+> This record was added by the batch-58 method-C trim and the 2026-09-29
+> polish pass. It is the only content either pass introduced; every other
+> line below is carried verbatim from the document's authored and generated
+> origins.
+
+**What this plan is.** A prose-first expansion plan for the faction-war
+communiqué corpus: six movements × eight source-specific focal points ×
+four literary forms, banked as 192 candidate passages grounded in existing
+authored records.
+
+**Why it is smaller than its original.** The generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions repeated many leaf sections
+byte-identically. Conservative method-C consolidation kept the first copy
+of each distinct section in place and replaced later byte-identical
+repeats with a one-line pointer of the form `> _[consolidated: § "…"]_`.
+Nothing was rewritten, merged, or summarized: every distinct line
+survives, and each pointer names the heading whose first copy is retained.
+
+**Shape after trim.** 69,340 lines (from 169,656 before trim); 13 `BATCH-`
+banners; 260 `### Tranche` containers; 4,565 consolidation pointers.
+
+**Recovering the full original.** The byte-exact pre-trim original and its
+SHA-256 manifest are preserved at `/tmp/ashfall-plan-trim-methodc-b58-20260929/`
+and in git history; this file's authored prefix was verified
+byte-identical after the trim.
+
+**Reading order.** Read the authored proposal above first — batch brief,
+canon fit, non-goals, and the prose bank. Then treat the BATCH regions as
+a reference shelf: unique sections read in place; a pointer simply routes
+you to the retained first copy of anything repeated.
 ## BATCH-171 ARCHITECTURAL EXPANSION — PLAN-B171-285-CW13118ASKATTHE
 ### Domain: Cw131 18 Ask At The Post Plan
 ================================================================================

@@ -13,11 +13,98 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_drowned_coast_plan.md`. Family index: `docs/expansions/expansion_world_moves_without_you_index.md`.
 > Not a claim. Sits **on top of** `PLAN-MARITIME-DEEPWATER-27` (PROPOSED, unclaimed) and Expansion 09 — see DEC-DC-01.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `coast_lines.json` rows; they belong in data, never in code. DEC-DC-07:
+> no retired maritime code or data is restored, in prose or in source.
+
+---
+
+## 0. Prologue — The Waterline
+
+> *"The sea did not rise. The land remembered what it used to be, and went back to it, one winter
+> at a time."*
+
+The coast is not a destination. It is a **schedule**. Four days of tide, six windows, a berth that
+is dry on Tuesday and a berth that is a memory by the following thaw. Everything maritime in this
+world is a matter of timing, and timing is the one thing a shelter with a day-advance cannot
+negotiate.
+
+A harbour here is six small polities with dues. A boat is a hull number and a fuel line and a
+favourite. A dive is a window that opens and does not wait. And the waterline is a slow, published,
+unreadable-in-advance arithmetic that quietly converts *berth* into *shoreline* and never converts
+it back.
+
+**Tone & register.** Salt, weather, and clerks. The prose should smell of wet rope and harbour
+masters' offices: dues, berths, charts, standing, the paperwork of who may tie up where. No
+adventure language. The romance of the sea is entirely the player's, and the ledger declines to
+confirm it.
+
+**Mystery & texture.** The waterline is a pure function of season and storms (DEC-DC-04) and only
+its losses persist. That is the plan's quiet thesis: *the coast is the one antagonist that never
+attacks and never relents.* Lost berths never return. The five movements will carry people past
+places that used to be where boats were. §12 holds what the tide does not explain.
+
 ## 1. Goal & Outcome
+
+> *Design intent: a maritime campaign where the schedule is the antagonist. Every voyage is a
+> window, and every window is closing.*
+
 - **Goal:** Turn the existing water machinery (5 hulls, tide, 14 dive sites, Flotilla standing, District 8 dock) into a campaign: persisted owned vessels, harbours with dues/berths/standing, tide-scheduled voyages, a deterministic waterline that drowns berths, and five authored movements.
 - **Outcome (observable):** on a fixed seed a player-owned skiff leaves a held berth on a tide-legal day, spends fuel, rolls a seeded piracy check, arrives, dives an authored site whose window is open, returns; the vessel, its hull/fuel/port, and the berth's waterline state survive save/load.
 - **Non-Goals:** no new map/expedition/dive system; **no restoration of the retired `MaritimeExplorationSystem` or `maritime_zones.json`** (archived under `docs/archive/retired-data/`); no new save section; no new routed panel; no change to District 8's four decisions; no real nautical data; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**The two-day announcement is a promise.**
+
+DEC-DC-08 requires it. Treat it as the plan's moral centre: the coast may be implacable but it is
+never *surprising*. A player who loses a berth and was warned two days earlier loses a berth to the
+world. A player who loses a berth without warning loses it to the design. Never let the announcement
+slip.
+
+**Charts are knowledge, not items (DEC-DC-05).**
+
+A chart is a thing you *know*: a tide window, a hazard, a name for a rock. Keep that distinction
+legible in the atlas — a charted site shows its next open window; an uncharted site shows the word
+`unknown` and nothing else. Never a hint. Never a teaser.
+
+**What the player is never told.**
+
+- Why the waterline curve differs per harbour. Six curves, six authored shapes, no stated cause.
+- Whether District 8's four decisions affect the waterline. The plan reads District 8 and does not
+  write it (E9) — but it does not say the coast is indifferent either.
+- What the `keeper_thread_id` on a dive site is keeping.
+- Whether the Flotilla's standing and the harbours' standing are the same measurement. They are
+  read from different owners and the plan declines to reconcile them.
+
+**Voice — sample fragments (content candidates for `coast_lines.json`).**
+
+> "Berth 4 is awash. Berth 4 has been awash since the equinox. The harbour master still calls it
+> Berth 4."
+
+> "Window opens in two days and closes in one. That is not a schedule. That is an appointment with
+> a tide that does not know we are coming."
+
+> "The chart says the channel runs east of the marker. The chart is nine years old and the marker
+> is not there any more."
+
+> "Dues paid in harbour-valued goods. The harbour decides what is valuable. That is the entire
+> constitution of this place."
+
+**Design texture beats.**
+
+- **A lost berth never returns (P4).** This is the plan's one-way valve and its emotional truth.
+  Do not soften it with repairs or reclamation.
+- **Refused departures must return a cause.** "Tide", "weather", "fuel", "crew", "berth" are five
+  different stories. The planner's verdict is where the fiction lives.
+- **Ice is a modality, not a rescue (P6).** "Walkable/road" and "closed" should read as two kinds of
+  silence.
+- **Movements I–V are journeys, not quests.** Each should end somewhere the coast has *changed*
+  between the start gate and the end marker.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -144,3 +231,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: vessel persistence needs a second store; E3 shows two independent naval authorities and unification touches a claimed path; any task would restore retired maritime code/data; a dive change is needed beyond gating; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the coast larger than the six harbours that meter it. Any future plan that answers one must
+name the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| DC-OM-1 | What are the six waterline curves measuring? | DEC-DC-04 makes the model pure and per-harbour. Six shapes, no cause. Explaining them turns a slow antagonist into a puzzle. | Never — texture by omission. |
+| DC-OM-2 | Who was the `keeper_thread_id` on a dive site? | E5's field is real and unread in the fiction. It is allowed to remain an artefact that reads as a name. | *The Record Keepers*, if a site ever becomes a Place. |
+| DC-OM-3 | Are the Black Flotilla and the harbours the same polity? | E10 and P2 read from different standing owners. The plan deliberately does not reconcile them. | Foreman, if a shared standing seam is ever proposed. |
+| DC-OM-4 | Why does the coast keep five movements and not four? | Movements I–V are authored as a chain. The fifth is a coda; numbering it V rather than IV is a choice nobody recorded. | Never — the artefact reads as history. |
+| DC-OM-5 | What did `MaritimeExplorationSystem` know? | E11/E12 retire it; DEC-DC-07 forbids restoration *and* forbids the prose from using it as lore. Its contents are sealed with it. | Never — retired by governance. |
+| DC-OM-6 | Does the waterline know about the shelter? | It is a pure function of season and storms. It has no inputs about people. That indifference is the point. | Never — a rule, not a gap. |

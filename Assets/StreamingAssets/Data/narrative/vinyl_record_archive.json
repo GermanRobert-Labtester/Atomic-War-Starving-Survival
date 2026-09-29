@@ -41,7 +41,7 @@
       "daily_morale_modifier": 8,
       "broadcast_frequency_mhz": 88.4,
       "needle_audio_texture": "Lush wide dynamic range, deep resonant piano chords blooming over solemn woodwind harmonies.",
-      "dweller_resonance_notes": "Brought down into the bunker by Librarian Galina. Plays during severe radiation storms to drown out the shudder of the blast valves.",
+      "dweller_resonance_notes": "Brought down into the bunker by Librarian Galina. Plays during severe radiation storms to drown out the shudder of the blast valves. The record is kept in its sleeve between storms.",
       "tags": ["classical", "rachmaninoff", "piano", "symphony", "galina", "masterpiece"]
     },
     {
@@ -55,7 +55,7 @@
       "daily_morale_modifier": 6,
       "broadcast_frequency_mhz": 88.4,
       "needle_audio_texture": "Bouncing walking upright bass, silky brush drumwork, velvet accordion chords and muted brass solos.",
-      "dweller_resonance_notes": "Stoker Nadia sings along while turning the boiler draft damper. It makes the twenty-four dwellers in Cubicle Block B smile before sleep.",
+      "dweller_resonance_notes": "Stoker Nadia sings along while turning the boiler draft damper. It makes the twenty-four dwellers in Cubicle Block B smile before sleep. The damper is turned in time with the chorus.",
       "tags": ["jazz", "accordion", "trumpet", "swing", "nadia", "canteen"]
     },
     {
@@ -83,7 +83,7 @@
       "daily_morale_modifier": 7,
       "broadcast_frequency_mhz": 88.4,
       "needle_audio_texture": "Crystal clear high frequencies, shimmering harp arpeggios, breathless wooden flute vibrato.",
-      "dweller_resonance_notes": "Elena plays this in the Hydroponic Greenhouse. She swears the winter rye sprouts grow three millimeters faster under harp notes.",
+      "dweller_resonance_notes": "Elena plays this in the Hydroponic Greenhouse. She swears the winter rye sprouts grow three millimeters faster under harp notes. It is Elena's claim, and she keeps to it.",
       "tags": ["classical", "debussy", "harp", "flute", "elena", "greenhouse"]
     },
     {

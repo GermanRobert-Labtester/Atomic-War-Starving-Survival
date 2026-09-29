@@ -39,7 +39,46 @@ CLAUDE.md requires this read order; this plan has **not** edited any of these fi
 
 ---
 
+---
+
+## 0b. Prologue — The Long Thaw (texture; not a claim, not authority)
+
+> *"The war ended the way a fever ends. Not with a morning. With a long, ambiguous week in which
+> nobody could tell you whether the sweating had stopped or merely moved."*
+
+**Editorial note.** This section and §1b are narrative texture and writing guidance only. They
+change no authority, no claimed path, no acceptance criterion and no verification step. §14 is a
+register of deliberately unanswered questions. Sample lines are content candidates for
+`year_two_chapter.json` / `year_two_radio.json` rows; they belong in data, never in code.
+
+Day 360 is a door and there are only two things to do with a door. **SEAL HERE** is not a failure
+state — it is the game keeping its first promise, bit-identically, forever. **PLAY ON** is the
+other thing, and it is not an epilogue. It is a decision to be present for a *thaw*, which is the
+least dramatic and most demanding thing a world can do to the people living in it.
+
+The Long Thaw is a year of paperwork, apprenticeship, distance and weather. Nine Chronicles, none
+of which is an ending in the way Year One ended. Children become apprentices. Apprentices become
+the people who decide things on the night of a Rite of Passage that the chapter stops just short
+of. A second shelter acquires bunks and a real location. A road acquires cost. And Standing —
+A, B, C, and the strange fourth grade called **D, The Late Call** — keeps a quarterly account of
+what the shelter is now understood to be.
+
+**Tone & register.** Domestic, institutional, quietly monumental. The vocabulary is the household
+and the archive: *hearth, bunk, standing, reading, rite, charter, road, reckoning*. Prose should
+feel like the minutes of a community that has survived something and now has to live with having
+survived it. Never write a climax. The chapter's whole thesis is that there isn't one.
+
+**Mystery & texture.** Three things are deliberately held back: what the Reckoning *was* in the
+mechanics of the world rather than the story of the shelter; what Standing D is waiting for; and
+what happens on the night after the last line the chapter writes. See §14.
+
+---
+
 ## 1. Goal & Outcome
+
+> *Design intent: Year One asks whether you can keep people alive. Year Two asks what they will
+> agree to be, now that they are alive. There is no mechanical answer to that and the plan does
+> not invent one.*
 
 - **Goal:** Let a running campaign **play on after the Reckoning** into a second 360-day chapter (Days 361–720), with (I) a live *Standing* derived from the resolved verdict, (II) a *generations* arc that carries children to apprentices to acting successors and ends the night before the first Rite of Passage, and (III) an *outposts network* (a second shelter, waystations as the road, outposts as positions) in which distance costs something and defense is real — using **only existing owners** plus three nested additive state structures.
 
@@ -55,6 +94,57 @@ CLAUDE.md requires this read order; this plan has **not** edited any of these fi
   - No Chapter Three (Days 721+). No formal *ratified* successor from a raised child inside the chapter (impossible by the F7 age floor; by design).
   - No Unity. No new routed panel (DEC-Y2-08). No Python/shell tools for the eight Go-only concerns (CLAUDE.md tooling policy).
   - No restoring deprecated APIs. No graphic depiction of harm to children.
+
+---
+
+## 1b. Texture, Mystery & Voice
+
+**Nine Chronicles and none is a verdict.**
+
+The Chronicle is derived from the resolved verdict and the year's Standing, but it is a *portrait*,
+not a score. Let each of the nine read as a paragraph someone could read aloud in a room without
+anyone flinching. P7 owns the id and the determinism; the prose owns the mercy.
+
+**Generations is the heart; the Rite is the horizon.**
+
+The chapter ends **the night before the first Rite of Passage** and that stopping point is a
+design decision with a sound structural justification (the F7 age floor makes a ratified successor
+impossible by design) — but it is also the most literary thing in the program. A community is
+always about to hand something over. Let that feeling stand unresolved.
+
+**What the player is never told.**
+
+- What Standing **D — The Late Call** means. It is a real grade (P3) that resolves into A/B/C. Until
+  it resolves it is a piece of vocabulary the shelter is living inside.
+- Whether the second shelter is a return or a departure. *Thirteen* binds bunks to a real location
+  and stops there. Custody of meaning is not asserted.
+- Why the Road costs what it costs. P6 gives supply runs, pressure and relief. The arithmetic is
+  authored; its fairness is not discussed.
+- What the Rite of Passage would have been. The chapter stops the night before. By design.
+
+**Voice — sample fragments (content candidates for `year_two_chapter.json` / `year_two_radio.json`).**
+
+> "Day 400. Standing: C. We are not being punished and we are not being praised. We are being
+> described, which is harder."
+
+> "The apprentice repaired the pump without asking. I have written it in the book because nobody
+> else will and because in ten years the book is what there will be."
+
+> "Quarterly reading, second of the year, in the second voice. The readings do not agree with each
+> other. That is why there are four."
+
+> "The road is open. The road costs. Both of those are true and only one of them is on the sheet."
+
+**Design texture beats.**
+
+- **Legacy profiles are bit-identical (§1 Non-Goals).** A Day-360 SEAL HERE must be *exactly* today's
+  game. That is the program's honesty guarantee and its most reassuring promise.
+- **Distance costs something.** The outposts network is the chapter's only new form of pain, and it
+  must be paid in time and supply, never in invented resources.
+- **No graphic harm to children, ever.** This is a hard rule (§Non-Goals) and it is also why the
+  Generations arc works: it is about capability, not peril.
+- **No Chapter Three.** The program ends at Day 720 with a seal. Resist every instinct to gesture
+  beyond it — the silence after the last line is the point.
 
 ---
 
@@ -541,3 +631,18 @@ Sweep findings use: `finding_id | severity | confidence | path:line | current ev
   6. Days ≤ 360 timeline golden identical to pre-change.
 - [ ] Godot runtime session (if needed) at **15 FPS** unless the user requests otherwise. No Unity.
 - [ ] Do not commit until the user asks; when committing, end the message with the attribution line required by the session reminder.
+
+## 14. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the Long Thaw larger than the nine Chronicles that meter it. Any future plan that answers one
+must name the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| Y2-OM-1 | What is Standing **D — The Late Call** waiting for? | P3 makes it a real grade that resolves into A/B/C. Until it resolves it is vocabulary the shelter is living inside, and that is the design. | Never — locked by the program's own structure. |
+| Y2-OM-2 | What happens the night after the chapter's last line? | The program ends at Day 720 with a single seal (§1 Non-Goals: no Chapter Three). The silence after the last line is the point. | Never — scope-locked. |
+| Y2-OM-3 | What would the first Rite of Passage have been? | The chapter stops **the night before** it. By design (F7 age floor). Writing the rite would spend the program's best silence. | Never — a rule, not a gap. |
+| Y2-OM-4 | Is the second shelter a return or a departure? | P5 binds 12 bunks to a real location (Allocation 13) and stops there. Custody of meaning is not asserted. | *The Record Keepers*, if a hearth is ever archived as a Place. |
+| Y2-OM-5 | Why four quarterly readings in four voices? | P3 authors four voices and never reconciles them. The disagreement is the instrument. | Never — texture by omission. |
+| Y2-OM-6 | What was the Reckoning? | It is a boundary the game crosses and a day the player chose. Its meaning in the world's mechanics, as opposed to the shelter's story, is never authored. | Never — a rule, not a gap. |

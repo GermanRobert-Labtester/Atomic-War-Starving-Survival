@@ -13,11 +13,97 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_ration_wars_plan.md`. Family index: `docs/expansions/expansion_shelter_under_pressure_index.md`.
 > Not a claim. Ration conflict, rationing tiers, kitchen and justice each have an owner; this plan **adds a reader/reconciler and one small expected-portion seam** and creates no second food, resentment or law authority.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `pantry_book_lines.json` / `quartermaster_voices.json` / `hard_table_events.json`
+> rows; they belong in data, never in code.
+
+---
+
+## 0. Prologue — The Book
+
+> *"Everyone can count. That is the whole problem, and the whole solution."*
+
+Hunger in this game is already modelled, exhaustively: tiers, protocols, priority groups,
+portioning, desperation events. What is not modelled is the thing that actually breaks a shelter —
+the arithmetic of *who got what*. Not the food. The arithmetic.
+
+The Pantry Ledger is a line of subtraction and nothing more: opening + received − served − spoiled
+− closing = **unexplained**. It does not accuse anyone. It does not know anything the inventory
+owner does not already know. It simply refuses to let the difference go unremarked, and in a
+shelter of adults that is enough.
+
+**Tone & register.** Domestic, forensic, quietly furious. The vocabulary is the kitchen and the
+counting house: *portion, expected, served, spoiled, unexplained, Book, Count*. Prose should feel
+like a kitchen argument that has been going on for weeks and has finally acquired a column of
+figures. Never moralise about food. The numbers do that work.
+
+**Mystery & texture.** E3b is the plan's great quiet discovery: priority bonuses of Critical 1.30,
+High 1.15 and Standard 1.0 all clamp to **1.0** — the conflict meter literally cannot tell them
+apart. That is not a bug this plan reports; it is a *fact about the shelter's own instruments* that
+the Table Rule exists to correct. §12 keeps who else has noticed out of scope.
+
 ## 1. Goal & Outcome
+
+> *Design intent: resentment is not caused by hunger. It is caused by a mismatch between what you
+> got and what you believe the rule to be. This plan authors the rule.*
+
 - **Goal:** Make the pantry a political object: (a) a data-driven **Table Rule** that defines each survivor's *expected* portion so resentment is measured against the rule instead of the mean; (b) an optional **quartermaster post** and a daily **Pantry Ledger** (opening + received − served − spoiled − closing = *unexplained*); (c) **Audit** and public **Count** verbs that move legitimacy; (d) a staircase of **Hard Table events** before the desperation menu.
 - **Outcome (observable):** on a fixed seed, changing the Table Rule from Equal to By-work changes a labourer's fairness deviation and resentment growth exactly per the data; a quartermaster in post with pressure ≥ threshold produces a seeded skim that genuinely removes units from a store and appears as `unexplained` in the Book; an Audit reveals the true figure; a Count changes legitimacy through the existing owner; no post and no rule → identical resentment, theft and serving behaviour to today; save/load mid-week round-trips.
 - **Non-Goals:** no new food/inventory/serving log; no change to tier arithmetic, priority groups, protocols or `desperation_events.json`; no second resentment meter; no law rows (Shelter Governance owns Hoarding); no new save section; no new routed panel; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**Expected is the plan's most dangerous word.**
+
+RW-P1 gives each survivor an *expected* portion so resentment is measured against a rule rather
+than against the mean. That single substitution is the whole design: the mean is a statistic, but a
+rule is a **promise someone made**. Announce rule changes with a delay and a three-day surcharge
+(DEC-RW-04) — the surcharge is the price of changing a promise in public.
+
+**`unexplained` is not an accusation.**
+
+The Book's final column names a quantity, not a person. RW-P2 requires that a clean week shows
+`unexplained == 0`. The plan's discipline is that the ledger never infers, never attributes, and
+never remembers intent. Attribution is a *verb the player performs* — via Audit, then Count.
+
+**What the player is never told.**
+
+- Who skimmed. RW-P3 makes a skim a **real withdrawal** through the inventory port — or drops the
+  mechanic entirely if E13 fails. Either way, motive is not modelled and must not be narrated.
+- Whether the quartermaster's miscount is dishonest. A miscount changes *reported* only. The plan
+  offers no way to distinguish error from theft except by Audit.
+- What the Hard Table events are *leading to*. RW-P5 requires they always precede
+  `desperation_events`, which are never softened (DEC-RW-07). The staircase is authored and its
+  landing is not.
+- Why the tiers clamp the way they do (E3b). The plan corrects the outcome when a rule is active and
+  leaves the underlying arithmetic alone.
+
+**Voice — sample fragments (content candidates for `pantry_book_lines.json` / `quartermaster_voices.json`).**
+
+> "Book, day 41. Opening 60. Received 0. Served 58. Spoiled 1. Closing 0. Unexplained 1. I am
+> writing it down because not writing it down is how this starts."
+
+> "The rule says By-work. The rule said Equal last week. Neither of those is what people are angry
+> about."
+
+> "Audit: one half survivor-day. The figure is now known. What we do with it is a different column."
+
+> "Count. The Count is weekly and legitimacy is table-driven, which is the politest sentence in
+> this book."
+
+**Design texture beats.**
+
+- **Ship-dark parity is a tone promise (§6.2).** No rule, no post → identical resentment, theft and
+  serving behaviour. This plan must never *introduce* a grievance.
+- **An honestly announced shortage costs less than a discovered one (RW-P4).** That asymmetry is
+  the plan's entire political theory, and it should be visible in the numbers.
+- **Conservation holds everywhere (§6.3).** A skim is a transfer, a feast is a spend, and nothing
+  is ever conjured. The Book is checkable and that is why anyone believes it.
+- **Desperation is never softened (DEC-RW-07).** Hard Table events come first; they do not replace.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -147,3 +233,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: withdrawals carry no reason **and** the fallback scope cannot balance; hoarding can only be implemented as a parallel stockpile; legitimacy has no public write API; the expected-portion seam would require changing tier or priority arithmetic; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the pantry larger than the ledger that meters it. Any future plan that answers one must name
+the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| RW-OM-1 | Who skimmed? | RW-P3 withdraws real units and RW-P2 reports a quantity, never a person. Attribution is a player verb (Audit, Count), never a system output. | Never — a rule, not a gap. |
+| RW-OM-2 | Why do Critical/High/Standard all clamp to 1.0? | E3b is a live arithmetic fact the plan corrects *only when a rule is active*. The cause is left in place deliberately. | A balance pass that must say so in its register. |
+| RW-OM-3 | What is the Book written in? | `pantry_book_lines.json` supplies lines; the medium is never authored. *The Record Keepers* owns custody and has not spoken. | The Record Keepers, if the Book is ever a Place. |
+| RW-OM-4 | Where does a hoard go? | DEC-RW-05 makes it a real transfer to personal belongings *or drops the mechanic entirely*. If E13 fails, the question is unaskable. | Plan 210's owner, if belongings can hold consumables. |
+| RW-OM-5 | Is a quartermaster trusted before they are appointed? | DEC-RW-06 makes it a duty-roster post, not a role row. The plan supplies no reputation and will not. | Never — texture by omission. |
+| RW-OM-6 | Why are there exactly five Table Rules? | DEC-RW-04 authorises five and stops. The number is a scope decision that reads as a history of arguments. | Never — the artefact reads as canon. |

@@ -6,7 +6,7 @@
       "event_type": "confrontation",
       "belief_pair": ["religious_faith", "atheist_rationalist"],
       "title": "Theological Clash in the Bunks",
-      "description": "{actor} and {target} erupted into a bitter dispute over whether the nuclear deluge was divine wrath or atomic incompetence.",
+      "description": "{actor} and {target} erupted into a bitter dispute over whether the nuclear deluge was divine wrath or atomic incompetence. Neither will say who spoke first.",
       "base_probability": 0.25,
       "affinity_threshold": -50.0,
       "consequences_description": "Mediation required: choose a side, stay neutral, or enforce secular neutrality."

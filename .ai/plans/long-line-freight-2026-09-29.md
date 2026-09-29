@@ -13,11 +13,99 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_long_line_freight_plan.md`. Family index: `docs/expansions/expansion_world_moves_without_you_index.md`.
 > Not a claim. Foreman adds the ledger entry and per-package claims. **Name collision with Expansion 11 "The Long Line" (telephone trunk) — DEC-LF-01 first.**
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `trade_ledger_lines.json` / `trade_wayside_events.json` rows; they belong
+> in data, never in code.
+
+---
+
+## 0. Prologue — The Long Line
+
+> *"A road is a rumour. A route is a rumour with a tariff and a season."*
+
+There are ten routes in this world and all of them end. The season closes at Day 280 to 360 and
+the company that thought it was permanent discovers it was always a **year**.
+
+Freight is not trading. Trading is a decision; freight is a *commitment* — a manifest leaving with
+a driver's name against it, a wagon whose wear is being spent somewhere you cannot see, cargo that
+is neither here nor there for four to twelve days. The Long Line is the plan about that
+meanwhile: the interval in which the shelter has already paid and has not yet learned.
+
+**Tone & register.** Ledger-plain and road-weary. The vocabulary is the depot office: *manifest,
+leg, tariff, wear, rung, charter, house mark*. Prose should be written like margin notes in a
+freight book — terse, dated, occasionally honest. Never glamorise the road. The road is an
+administrative fact with weather attached.
+
+**Mystery & texture.** The company rungs — Contract → Charter → House → Line — are derived, never
+bought (LF-P3). You cannot purchase a house name; you can only become one. And the season table is
+the plan's hidden antagonist: a company that reads as permanent is simply a company that has not
+yet met a year it could not close. §12 keeps the rest open.
+
+**Note on naming.** Expansion 11 *The Long Line* is a telephone trunk — a proposal, unimplemented,
+with no `Ashfall.Core.LongLine` and no `long_line` section registered (E12). The collision is real
+and unresolved. Until DEC-LF-01 is decided, treat every occurrence of the name as provisional.
+That provisional quality is not a defect; it is, for once, exactly how a road gets named.
+
 ## 1. Goal & Outcome
+
+> *Design intent: the interesting part of a freight run is the ten days when nothing can be done.
+> Everything in this plan is built to make that interval matter.*
+
 - **Goal:** Make a trade-route run a resolved journey (legs, weather, war, crew, wagon, cargo) inside the *existing* route authority, and give the shelter a derived company rung (Contract → Charter → House → Line) with rolling stock, crews and depot nodes.
 - **Outcome (observable):** on a fixed seed a Chartered route dispatches a run with a driver and wagon, resolves at arrival to `OnTime / Late / Failed` with cargo delivered short or whole, moves goods through the inventory owner, writes one ledger line, and survives save/load mid-run.
 - **Non-Goals:** no second route/caravan/economy authority; no new save section; no new routed panel; no new routes in v1; no real-time convoy minigame; no change to contracts without a Charter (ship-dark); no merge with Expansion 11 without DEC-LF-01; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**Resolve at arrival (DEC-LF-02) is a narrative decision.**
+
+The legs are summarised and only wayside events interrupt. That means the player learns the run's
+story *after* it is over, from paperwork. Lean into this. The ledger line is the only surviving
+witness and it is written by whoever is still employed.
+
+**The House name cannot be bought.**
+
+LF-P3 keeps in `company` only what cannot be recomputed: house name, mark id, wagon list, in-flight
+runs, ledger tail. That is a portrait of an institution — five fields and a mark. Let the mark be
+something a player would recognise at distance on a wagon door.
+
+**What the player is never told.**
+
+- Who is driving. `One driver + optional escort` (DEC-LF-05) is a role, and the run resolves without
+  a voice. A killed driver is recorded through the death/legacy seam and is never narrated here.
+- What the wayside is. `trade_wayside_events.json` supplies events; the wayside has no geography and
+  must not be given any.
+- Whether a rival house exists. DEC-LF-10 makes rivals **presentation only**, drawn over existing NPC
+  arrivals. They may be real. The plan will not say.
+- Why the season closes where it does. 280–360 is authored per route (E5) and per year (LF-P8). No
+  calendar explanation is offered and none should be.
+
+**Voice — sample fragments (content candidates for `trade_ledger_lines.json`).**
+
+> "Run 14, On Time. Cargo whole. Nothing happened, which the ledger records as a success and I
+> record as eleven days."
+
+> "Run 15, Late. Weather on the second leg. The driver is fine. The driver is always fine in this
+> book."
+
+> "Charter granted. We now have a mark. We had a mark before; now people are willing to draw it."
+
+> "Season ends in forty days. Nothing we own stops existing. It only stops belonging to this year."
+
+**Design texture beats.**
+
+- **Cargo conservation is the fiction's spine (§6.4).** Out − lost = delivered, and the player can
+  check the arithmetic. Nothing makes a freight game honest like a balanced book.
+- **Un-Chartered contracts keep the old path bit-for-bit (DEC-LF-07).** Ship-dark parity is also a
+  tone promise: the plan does not impose itself.
+- **One ledger line per resolved run (§6.6).** Never zero, never two. A run has exactly one
+  sentence in the company's memory.
+- **The season table is the antagonist.** Per-year `season_end_day` (DEC-LF-06) is the difference
+  between a company that survives Year Two and one that quietly stops.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -141,3 +229,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: DEC-LF-01 is unresolved and ids would collide; the resolver would need its own cargo store; the vehicle seam cannot represent a wagon without a parallel catalog; the tick change would alter un-Chartered behaviour; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the road larger than the ten routes that meter it. Any future plan that answers one must name
+the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| LF-OM-1 | Who named it The Long Line? | DEC-LF-01 leaves the collision with Expansion 11 unresolved. The name is provisional and the fiction declines to canonise a name the governance has not settled. | Foreman, when DEC-LF-01 is signed. |
+| LF-OM-2 | What is the wayside? | `trade_wayside_events.json` supplies events with no geography. Giving the wayside a place would turn a leg into a map. | Never — DEC-LF-02's boundary. |
+| LF-OM-3 | Do rival houses exist? | DEC-LF-10 makes rivals presentation only over existing NPC arrivals. Their reality is not asserted either way. | Never — a rule, not a gap. |
+| LF-OM-4 | What happens to the wagon between legs? | Wear is applied per leg and repair is an existing workshop job. The in-between is unmodelled and must stay so. | Never — the abstraction is the design. |
+| LF-OM-5 | Why does the season close between Day 280 and 360? | E5 authors it per route; LF-P8 authors it per year. No calendar explanation is offered anywhere. | Never — texture by omission. |
+| LF-OM-6 | Is a house mark earned or inherited? | LF-P3 derives the rung and stores the mark. Whether the mark has a history is not modelled. | *The Record Keepers*, if a charter is ever archived. |

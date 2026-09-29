@@ -774,14 +774,14 @@
        "trigger_condition": "answered",
        "delay_days": 2,
        "clarity": 0.9,
-       "text": "Crew two is out from under the mezzanine. The row is shored with their own jacks and somebody's belt."
+       "text": "Crew two is out from under the mezzanine. The row is shored with their own jacks and somebody's belt. Nothing else has come over the channel."
      },
      {
        "id": "fu_455_7_rescue_success",
        "trigger_condition": "rescue_success",
        "delay_days": 4,
        "clarity": 0.95,
-       "text": "The salvage crew sends three pairs of working hands to the shelter as thanks. They would not stay for thanks."
+       "text": "The salvage crew sends three pairs of working hands to the shelter as thanks. They would not stay for thanks. They were gone before anyone could answer."
      }
    ]
   },
@@ -833,7 +833,7 @@
        "trigger_condition": "rescue_success",
        "delay_days": 4,
        "clarity": 0.95,
-       "text": "Ilga is free. The river nomads remember who paid the debt, and the memory travels faster than the river."
+       "text": "Ilga is free. The river nomads remember who paid the debt, and the memory travels faster than the river. The nomads do not say how far the word has gone."
      }
    ]
   },

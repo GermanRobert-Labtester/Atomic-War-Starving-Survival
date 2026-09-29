@@ -437,16 +437,16 @@ namespace Ashfall.Core.Localization
         {
             RegisterString("discovery.micro_roadside_memorial.title", "Roadside Memorial");
             RegisterTranslation("de", "discovery.micro_roadside_memorial.title", "Straßenrand-Gedenkstätte");
-            RegisterString("discovery.micro_roadside_memorial.description", "Melted tallow stubs sit inside rusted rationing tins around a bent highway marker. A photograph was torn away, leaving only a bloodstained corner pinned beneath a stone. The wax has frozen into pale, grey discs.");
-            RegisterTranslation("de", "discovery.micro_roadside_memorial.description", "Geschmolzene Talgreste sitzen in verrosteten Rationsdosen um einen verbogenen Pfahl. Ein Foto wurde weggerissen, nur eine blutbefleckte Ecke blieb unter einem Stein zurück. Das Wachs ist zu blassen, grauen Scheiben erstarrt.");
+            RegisterString("discovery.micro_roadside_memorial.description", "Melted tallow stubs sit inside rusted rationing tins around a bent highway marker. A photograph was torn away, leaving only a bloodstained corner pinned beneath a stone. The wax has frozen into pale, grey discs, and the tins have been set in a rough circle.");
+            RegisterTranslation("de", "discovery.micro_roadside_memorial.description", "Geschmolzene Talgreste sitzen in verrosteten Rationsdosen um einen verbogenen Pfahl. Ein Foto wurde weggerissen, nur eine blutbefleckte Ecke blieb unter einem Stein zurück. Das Wachs ist zu blassen, grauen Scheiben erstarrt, und die Dosen stehen in einem groben Kreis.");
             RegisterString("discovery.micro_roadside_memorial.choice.leave_memorial", "Leave it untouched.");
             RegisterTranslation("de", "discovery.micro_roadside_memorial.choice.leave_memorial", "Unberührt lassen.");
             RegisterString("discovery.micro_roadside_memorial.choice.take_offering", "Take the candle stubs and any small offering left behind.");
             RegisterTranslation("de", "discovery.micro_roadside_memorial.choice.take_offering", "Die Kerzenreste und alle kleinen Opfergaben mitnehmen.");
             RegisterString("discovery.micro_crashed_truck.title", "Crashed Supply Truck");
             RegisterTranslation("de", "discovery.micro_crashed_truck.title", "Abgestürzter Versorgungslaster");
-            RegisterString("discovery.micro_crashed_truck.description", "A military logistics rig lies crushed in the frozen ditch, its windshield shattered outward. Torn radiation warning tags cling to the twisted rear doors. The cargo area was scavenged long ago, but one crate lies split open in the frost.");
-            RegisterTranslation("de", "discovery.micro_crashed_truck.description", "Ein militärischer Logistiktransporter liegt zerschmettert im gefrorenen Graben, die Windschutzscheibe nach außen geborsten. Zerrissene Strahlungswarnschilder klammern sich an die verbogenen Hecktüren. Der Laderaum wurde längst geplündert, aber eine Kiste liegt aufgebrochen im Frost.");
+            RegisterString("discovery.micro_crashed_truck.description", "A military logistics rig lies crushed in the frozen ditch, its windshield shattered outward. Torn radiation warning tags cling to the twisted rear doors. The cargo area was scavenged long ago, but one crate lies split open in the frost, and nobody has closed it.");
+            RegisterTranslation("de", "discovery.micro_crashed_truck.description", "Ein militärischer Logistiktransporter liegt zerschmettert im gefrorenen Graben, die Windschutzscheibe nach außen geborsten. Zerrissene Strahlungswarnschilder klammern sich an die verbogenen Hecktüren. Der Laderaum wurde längst geplündert, aber eine Kiste liegt aufgebrochen im Frost, und niemand hat sie wieder geschlossen.");
             RegisterString("discovery.micro_crashed_truck.choice.search_truck_cargo", "Search the split crate and cab for salvage.");
             RegisterTranslation("de", "discovery.micro_crashed_truck.choice.search_truck_cargo", "Die aufgebrochene Kiste und das Fahrerhaus nach Brauchbarem durchsuchen.");
             RegisterString("discovery.micro_crashed_truck.choice.search_truck_cab", "Investigate the cab for documents or personal effects.");
@@ -455,8 +455,8 @@ namespace Ashfall.Core.Localization
             RegisterTranslation("de", "discovery.micro_crashed_truck.choice.ignore_truck", "Weitergehen. Jemand hat bereits alles Brauchbare mitgenommen.");
             RegisterString("discovery.micro_frozen_bus.title", "Frozen Evacuation Bus");
             RegisterTranslation("de", "discovery.micro_frozen_bus.title", "Gefrorener Evakuierungsbus");
-            RegisterString("discovery.micro_frozen_bus.description", "The transit doors are frozen wide open, letting the ash-laden wind howl through the cabin. A child's single shoe sits upright beneath a luggage rack. The windows are obscured by thick, greasy frost on the inside.");
-            RegisterTranslation("de", "discovery.micro_frozen_bus.description", "Die Bustüren sind weit aufgefroren, sodass der aschebeladene Wind durch die Kabine heult. Der Einzelschuh eines Kindes steht aufrecht unter einer Gepäckablage. Die Fenster sind auf der Innenseite von dickem, schmierigem Frost überzogen.");
+            RegisterString("discovery.micro_frozen_bus.description", "The transit doors are frozen wide open, letting the ash-laden wind howl through the cabin. A child's single shoe sits upright beneath a luggage rack. The windows are obscured by thick, greasy frost on the inside, and nothing has been wiped clear.");
+            RegisterTranslation("de", "discovery.micro_frozen_bus.description", "Die Bustüren sind weit aufgefroren, sodass der aschebeladene Wind durch die Kabine heult. Der Einzelschuh eines Kindes steht aufrecht unter einer Gepäckablage. Die Fenster sind auf der Innenseite von dickem, schmierigem Frost überzogen, und nichts wurde freigewischt.");
             RegisterString("discovery.micro_frozen_bus.choice.search_bus_luggage", "Search the luggage rack for supplies.");
             RegisterTranslation("de", "discovery.micro_frozen_bus.choice.search_bus_luggage", "Die Gepäckablage nach Vorräten durchsuchen.");
             RegisterString("discovery.micro_frozen_bus.choice.leave_bus", "Leave the bus undisturbed.");
@@ -464,7 +464,7 @@ namespace Ashfall.Core.Localization
             RegisterString("discovery.micro_frozen_bus.choice.read_bus_tag", "Check the transit tag on the dashboard for a destination.");
             RegisterTranslation("de", "discovery.micro_frozen_bus.choice.read_bus_tag", "Die Transitmarke auf dem Armaturenbrett nach einem Bestimmungsort prüfen.");
             RegisterString("discovery.micro_improvised_grave.title", "Improvised Grave");
-            RegisterString("discovery.micro_improvised_grave.description", "A shallow mound of frozen earth, hastily reinforced with chunks of shattered concrete. A name is violently gouged into a piece of broken siding, along with a date from the first winter of the ashfall.");
+            RegisterString("discovery.micro_improvised_grave.description", "A shallow mound of frozen earth, hastily reinforced with chunks of shattered concrete. A name is violently gouged into a piece of broken siding, along with a date from the first winter of the ashfall, and both are cut to the same depth.");
             RegisterString("discovery.micro_improvised_grave.choice.respect_grave", "Pay respects and move on.");
             RegisterString("discovery.micro_improvised_grave.choice.inspect_grave_marker", "Read the name and date scratched into the plank.");
             RegisterString("discovery.micro_improvised_grave.choice.disturb_grave", "Check beneath the stones for any buried belongings.");
@@ -474,12 +474,12 @@ namespace Ashfall.Core.Localization
             RegisterString("discovery.micro_collapsed_bridge.choice.inspect_bridge_structure", "Examine the collapsed span for salvageable steel or cable.");
             RegisterString("discovery.micro_collapsed_bridge.choice.avoid_bridge", "Find a way around. The structure looks unstable.");
             RegisterString("discovery.micro_drainage_pipe.title", "Drainage Pipe");
-            RegisterString("discovery.micro_drainage_pipe.description", "Rags and irradiated blankets have been pushed deep into this dark concrete culvert. Words are gouged into the wall just beyond the reach of the freezing rain, the letters uneven and going downhill. The smell of copper and unwashed bodies lingers.");
+            RegisterString("discovery.micro_drainage_pipe.description", "Rags and irradiated blankets have been pushed deep into this dark concrete culvert. Words are gouged into the wall just beyond the reach of the freezing rain, the letters uneven and going downhill. The smell of copper and unwashed bodies lingers, and the blankets lie well back from the drip.");
             RegisterString("discovery.micro_drainage_pipe.choice.crawl_pipe", "Crawl inside and check the blankets for supplies.");
             RegisterString("discovery.micro_drainage_pipe.choice.read_pipe_warning", "Read the warning scratched into the concrete.");
             RegisterString("discovery.micro_drainage_pipe.choice.ignore_pipe", "Leave it alone. Someone may come back.");
             RegisterString("discovery.micro_rail_siding.title", "Rail Siding");
-            RegisterString("discovery.micro_rail_siding.description", "Rusted wheelsets have sunk deep into the irradiated ballast. A maintenance ledger hangs from the side of a derailed freight car, the final pages written in frantic, shaky handwriting before ending abruptly.");
+            RegisterString("discovery.micro_rail_siding.description", "Rusted wheelsets have sunk deep into the irradiated ballast. A maintenance ledger hangs from the side of a derailed freight car, the final pages written in frantic, shaky handwriting before ending abruptly, and the ledger has not been moved.");
             RegisterString("discovery.micro_rail_siding.choice.search_rail_car", "Search the freight car for industrial salvage.");
             RegisterString("discovery.micro_rail_siding.choice.read_rail_ledger", "Read the maintenance ledger.");
             RegisterString("discovery.micro_rail_siding.choice.ignore_rail", "The car has been picked over. Move on.");
@@ -489,7 +489,7 @@ namespace Ashfall.Core.Localization
             RegisterString("discovery.micro_dead_livestock.choice.inspect_livestock_tags", "Inspect the ear tags for farm identification.");
             RegisterString("discovery.micro_dead_livestock.choice.avoid_livestock", "Keep your distance. The contamination risk is not worth it.");
             RegisterString("discovery.micro_ruined_greenhouse.title", "Ruined Greenhouse");
-            RegisterString("discovery.micro_ruined_greenhouse.description", "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—the paint around its lock is scarred by crowbar marks that stop short of success.");
+            RegisterString("discovery.micro_ruined_greenhouse.description", "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—the paint around its lock is scarred by crowbar marks that stop short of success, and the scars are old.");
             RegisterString("discovery.micro_ruined_greenhouse.choice.take_greenhouse_seeds", "Take the labeled seed trays.");
             RegisterString("discovery.micro_ruined_greenhouse.choice.open_greenhouse_cabinet", "Force the sealed cabinet open.");
             RegisterString("discovery.micro_ruined_greenhouse.choice.leave_greenhouse", "Leave the greenhouse for whoever finds it next.");

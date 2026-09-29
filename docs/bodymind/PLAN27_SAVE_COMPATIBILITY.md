@@ -6409,6 +6409,39 @@ Cryptographic verification requires absolute byte determinism. In cross-platform
 
 
 ================================================================================
+## TRIM & POLISH RECORD — 2026-09-29
+
+> This record was added by the batch-9 method-C trim (landed in commit
+> `6e34c20bb`) and the 2026-09-29 polish pass (polish batch 6). It is the
+> only content the polish pass introduced; every other line below is
+> carried verbatim from the document's authored and generated origins.
+
+**What this document is.** The Plan 27 save compatibility contract for the
+Body & the Mind domain: the persistence rules of the engine-free Core
+(`Assets/Ashfall.Core/BodyMind/Persistence/`) and the Godot host save
+adapter in `src/Host/`, over authoritative snake_case catalogs, under
+the master expansion authority reference.
+
+**Why it is smaller than its original.** The generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions repeated many leaf sections
+byte-identically. Conservative method-C consolidation kept the first copy
+of each distinct section in place and replaced later byte-identical
+repeats with a one-line pointer of the form `> _[consolidated: § "…"]_`.
+Nothing was rewritten, merged, or summarized: every distinct line
+survives, and each pointer names the heading whose first copy is retained.
+
+**Shape after trim.** 33,062 lines (from 53,736 before trim); 11 `BATCH-`
+banners; 20 `### Tranche` containers; 391 consolidation pointers.
+
+**Recovering the full original.** The byte-exact pre-trim original is
+preserved in git history: commit `1fc3fd071` directly precedes the trim
+landing in `6e34c20bb`. This file's authored prefix was verified
+byte-identical after the trim.
+
+**Reading order.** The save-compat sections above are the operative
+content. The BATCH regions below serve as a generated appendix: unique
+sections read in place; a pointer routes you to the retained first copy
+of anything repeated.
 ## BATCH-110 ARCHITECTURAL EXPANSION — PLAN-B110-11-PLAN27SAVECOMPATIB
 ### Domain: Plan27 Save Compatibility
 ================================================================================

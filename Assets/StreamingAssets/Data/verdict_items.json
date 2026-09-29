@@ -8,7 +8,7 @@
       "tradeValue": 12,
       "category": "story_item",
       "tier": "Old-World",
-      "description": "Under the Allotments, the array keeps time like a metronome that farms: a tap at ploughing, a tap at harvest, a tap at the well-house door. The machine reads the ground and hears a farm. It has never been to the farm.",
+      "description": "Under the Allotments, the array keeps time like a metronome that farms: a tap at ploughing, a tap at harvest, a tap at the well-house door. The machine reads the ground and hears a farm. It has never been to the farm. The taps are written down as they arrive.",
       "mechanical_effects": {
         "enrolled_evidence": 1
       },

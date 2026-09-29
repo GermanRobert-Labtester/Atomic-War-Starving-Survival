@@ -13,11 +13,97 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_reconstruction_tree_plan.md`. Family index: `docs/expansions/expansion_new_ways_to_play_index.md`.
 > Not a claim. Existing research completes and stays known exactly as today unless a node is flagged bearer-dependent.
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `reconstruction_lines.json` rows; they belong in data, never in code.
+
+---
+
+## 0. Prologue — What We Knew
+
+> *"A technique is not stored in a book. A book is only the place a technique agreed to wait."*
+
+Research in this game is currently permanent: unlock a node, keep it forever, and 19 read sites
+quietly return `true` for the rest of the campaign. That is how a *game* works. It is not how a
+*shelter* works.
+
+The Reconstruction Tree asks a single uncomfortable question and answers it mechanically: what
+happens when the last person who could do a thing stops being able to do it? There are three kinds
+of **bearer** — a person, a page, and a practice — and a node is only as secure as its least
+survivable holder. When the second-to-last bearer dies, the node goes Fragile. When the grace
+period runs out, it goes Lapsed. And the capability check — for the first time in the campaign —
+returns **false**.
+
+**Tone & register.** Scholarly, elegiac, precise. The vocabulary is the workshop and the library:
+*discipline, bearer, page-hold, fragment, trial, relearn*. Prose should sound like a librarian who
+has realised the catalogue is shorter than the shelves. Never write nostalgia. Write inventory.
+
+**Mystery & texture.** The ~24 authored **lost nodes** are knowledge that was already gone before
+the campaign began. Fragments for them surface through existing seams — archive, salvage, dive,
+elder, radio letter — which means the plan never *places* history, it only finds residue. DEC-RT-05
+is the plan's kindness: a lapsed node never deletes its unlock record. The shelter forgets how to
+do a thing; it never forgets that it once could.
+
 ## 1. Goal & Outcome
+
+> *Design intent: loss here is opt-in and reversible. That is what makes it bearable to play and
+> unbearable to think about.*
+
 - **Goal:** Add **opt-in** knowledge fragility on top of the research authority: derive *bearers* (people, pages, practice) for flagged nodes; mark them Secure/Fragile/Lapsed; add ~24 authored **lost nodes** with fragment sets; let a **reconstruction project** (fragments + reconstructor + trial) rebuild them; make relearning of a lapsed node faster.
 - **Outcome (observable):** on a fixed seed a flagged node goes Secure → Fragile when its last-but-one bearer dies, → Lapsed after the grace period; the capability check for that node returns false; fragments recovered through an existing source make a reconstruction startable; a trial resolves deterministically (success/lesson/failed/catastrophic); the node returns; save/load preserves all states.
 - **Non-Goals:** no second research system; no lapse for unflagged nodes; no new currency; no new save section; no new routed panel; no change to unlock bridge semantics; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**Three kinds of bearer is the plan's whole philosophy.**
+
+A **person** dies. A **page** burns. A **practice** lapses from disuse. These are three different
+rhythms of forgetting and RT-P1 models all three without ever storing a copy of anyone's skill
+state (§11). Give each one a distinct visual signature in the Knowledge Ledger: a person is a name,
+a page is a place, a practice is a date.
+
+**Fragments are not quest items.**
+
+RT-P3 stores `{ fragmentId, nodeId, foundDay, source }` and reuses the existing acquisition source
+enum. A fragment has no weight, no value, no description. It is a *citation*. That austerity is
+deliberate: the player is assembling a proof, not a hoard.
+
+**What the player is never told.**
+
+- What the 24 lost nodes *were* before they were lost. They are authored as fragment sets and
+  prerequisites. Their pre-collapse history is not written and must not be.
+- Whether a trial will fail. RT-P5 rolls success / lesson / failed / catastrophic with a seeded fork
+  and reuses the tech-salvage **catastrophic chance** field. The number is visible; the outcome is
+  not.
+- Who the last bearer was. `KnowledgeBearerProjector` derives holds from skills, pages and practice
+  stamps. It returns a status, never a name.
+- Why grace is two seasons (DEC-RT-03). The period is authored. It is not a rule of nature.
+
+**Voice — sample fragments (content candidates for `reconstruction_lines.json`).**
+
+> "Node 14, Fragile. One bearer left and he is not teaching. The grace period is two seasons. I have
+> started counting seasons differently."
+
+> "Fragments: 3 of 5. The fourth came from a dive and the fifth from a letter, which tells you what
+> kind of shelter this is now."
+
+> "Trial: lesson. We failed and we learned exactly one thing. The ledger records which thing."
+
+> "Lapsed. We still have the unlock record. It says we could. It does not say we can."
+
+**Design texture beats.**
+
+- **Opt-in per node (`bearer_dependent`) is non-negotiable.** Unflagged nodes must never lapse. The
+  player chooses where fragility lives.
+- **Ship-dark parity (§6.2) is the plan's honesty test.** No flags → identical capability read sites.
+  Nothing here is imposed.
+- **A lesson is a bounded bonus, not a reroll (RT-P5).** Failure teaches exactly one thing and the
+  ledger says which. That is the plan's most humane mechanic.
+- **Teaching is the point.** RT-P6 lets a taught apprentice secure a Fragile node within one tick.
+  The Tree is not a scavenger hunt; it is an argument for schools.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -138,3 +224,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: the overlay cannot be limited to flagged nodes; any of the 19 read sites cannot tolerate a false capability; bearers would need stored copies of skill/manual state; parallel projects require a second research owner; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the lost knowledge larger than the tree that meters it. Any future plan that answers one must
+name the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| RT-OM-1 | Who was the last bearer? | `KnowledgeBearerProjector` returns a status, never a name. Naming a person would turn a loss into a quest. | Never — a rule, not a gap. |
+| RT-OM-2 | What were the 24 lost nodes before they were lost? | RT-P4 authors fragment sets and prerequisites only. Their pre-collapse history is deliberately un-written. | A canon owner, if lost-node provenance is ever authored. |
+| RT-OM-3 | Why does a practice lapse? | DEC-RT-08 makes the practice signal a recent-use stamp, not a new activity system. Its decay is a mechanism with no stated cause. | Never — texture by omission. |
+| RT-OM-4 | What does a *catastrophic* trial destroy? | RT-P5 applies exactly one authored consequence and reuses the tech-salvage chance field. The consequence is content, not doctrine. | Content waves, individually signed. |
+| RT-OM-5 | Why is grace two seasons? | DEC-RT-03 authors the period. It is not offered as a rule of nature and must not be read as one. | Never — locked by decision. |
+| RT-OM-6 | Were the lost nodes ever known to anyone alive? | Fragments surface through existing seams and are never placed. The plan finds residue and declines to say whose. | Never — the artefact is the atmosphere. |

@@ -86,7 +86,7 @@
       "id": "conflict_arbitrator",
       "name": "Conflict Arbitrator",
       "category": "social",
-      "description": "Mediate and peacefully resolve 3 interpersonal or ideological disputes.",
+      "description": "Mediate and peacefully resolve 3 interpersonal or ideological disputes. It is a record of disputes closed, not of who was right.",
       "condition_type": "disputes_resolved",
       "target_threshold": 3.0,
       "epilogue_tag": "peacemaker"

@@ -1,7 +1,7 @@
-# ASHFALL Visual Production Report — 2026-09-29 (Twenty-Four Tranches)
+# ASHFALL Visual Production Report — 2026-09-29 (Twenty-Eight Tranches)
 
-Sections 1–20 record tranches 1–8. The tranche 9–24 addenda at the end
-record the latest 185 assets and supersede their cumulative counts.
+Sections 1–20 record tranches 1–8. The tranche 9–28 addenda at the end
+record the latest 245 assets and supersede their cumulative counts.
 
 ## 1. Git SHA
 
@@ -11,7 +11,7 @@ Baseline `b31915ea2`; uncommitted visual tranche.
 
 | Tool | Availability | Used for |
 |---|---|---|
-| ChatGPT image generation | Available; model version not exposed | 232 item images across twenty-four tranches |
+| ChatGPT image generation | Available; model version not exposed | 292 item images across twenty-eight tranches |
 | ImageMagick | Available | 512 px JPEG processing and 64/26 px visual checks |
 | Godot 4.7.1 mono | Available | Headless import |
 
@@ -691,4 +691,160 @@ not captured.
 Cumulative direct item art added in these twenty-four tranches: 232. Under
 the prior static candidate-path method, roughly 643 of 967 item IDs now have
 direct or prefix art candidates and roughly 324 remain. These estimates
+exclude aliases.
+
+## Tranche 25 — fifteen records, manuals, and keepsake inventory assets
+
+All fifteen IDs are authored in `Assets/StreamingAssets/Data/items.json` and
+had no direct or normalized-prefix art in the current `AssetRegistry` item
+search roots. The 512×512 opaque JPEGs continue the isolated, tactile item
+style. Each has a Godot-generated `.jpg.import` sidecar.
+
+| Catalog ID | New runtime file |
+|---|---|
+| `item_collectible_vinyl_chamber_record` | `assets/art/item_collectible_vinyl_chamber_record.jpg` |
+| `item_collectible_vinyl_civil_broadcast` | `assets/art/item_collectible_vinyl_civil_broadcast.jpg` |
+| `item_collectible_vinyl_folk_compilation` | `assets/art/item_collectible_vinyl_folk_compilation.jpg` |
+| `item_collectible_field_medicine_handbook` | `assets/art/item_collectible_field_medicine_handbook.jpg` |
+| `item_collectible_diesel_service_manual` | `assets/art/item_collectible_diesel_service_manual.jpg` |
+| `item_collectible_radio_repair_guide` | `assets/art/item_collectible_radio_repair_guide.jpg` |
+| `item_collectible_civil_defense_badge` | `assets/art/item_collectible_civil_defense_badge.jpg` |
+| `item_collectible_transit_badge` | `assets/art/item_collectible_transit_badge.jpg` |
+| `item_collectible_trade_guild_patch` | `assets/art/item_collectible_trade_guild_patch.jpg` |
+| `item_collectible_childs_doll` | `assets/art/item_collectible_childs_doll.jpg` |
+| `item_collectible_music_box` | `assets/art/item_collectible_music_box.jpg` |
+| `item_collectible_prayer_beads` | `assets/art/item_collectible_prayer_beads.jpg` |
+| `item_collectible_team_pennant` | `assets/art/item_collectible_team_pennant.jpg` |
+| `item_collectible_civic_token` | `assets/art/item_collectible_civic_token.jpg` |
+| `item_collectible_folk_craft` | `assets/art/item_collectible_folk_craft.jpg` |
+
+ImageMagick metadata confirms fifteen opaque 512×512 JPEGs. Contact sheets
+were inspected at 64 px and the inventory's 26 px icon size. Records,
+manuals, badges, and keepsakes have distinct materials and silhouettes; no
+readable text or real insignia was observed in the source sheet. `jq empty
+Assets/StreamingAssets/Data/items.json` exited 0. `godot --headless --path
+. --import` exited 0; matching sidecars are present. Direct filenames make
+the images available through `AssetRegistry.GetItem` without code changes.
+A live inventory screenshot of these exact items was not captured.
+
+Cumulative direct item art added in these twenty-five tranches: 247. Under
+the prior static candidate-path method, roughly 658 of 967 item IDs now have
+direct or prefix art candidates and roughly 309 remain. These estimates
+exclude aliases.
+
+## Tranche 26 — fifteen industrial and sensing inventory assets
+
+All fifteen IDs are authored in `Assets/StreamingAssets/Data/items.json` and
+had no direct or normalized-prefix art in the current `AssetRegistry` item
+search roots. The 512×512 opaque JPEGs continue the isolated, tactile item
+style. Each has a Godot-generated `.jpg.import` sidecar.
+
+| Catalog ID | New runtime file |
+|---|---|
+| `item_ecm_jammer_module` | `assets/art/item_ecm_jammer_module.jpg` |
+| `item_hydraulic_ram_assembly` | `assets/art/item_hydraulic_ram_assembly.jpg` |
+| `item_fog_mesh_roll` | `assets/art/item_fog_mesh_roll.jpg` |
+| `item_powered_mist_assist_module` | `assets/art/item_powered_mist_assist_module.jpg` |
+| `item_reinforced_support_cable` | `assets/art/item_reinforced_support_cable.jpg` |
+| `item_radar_display_tube` | `assets/art/item_radar_display_tube.jpg` |
+| `item_hydraulic_actuator` | `assets/art/item_hydraulic_actuator.jpg` |
+| `item_iff_beacon` | `assets/art/item_iff_beacon.jpg` |
+| `item_low_noise_sensor_amplifier` | `assets/art/item_low_noise_sensor_amplifier.jpg` |
+| `item_geophone_probe` | `assets/art/item_geophone_probe.jpg` |
+| `item_bedrock_sensor_rig` | `assets/art/item_bedrock_sensor_rig.jpg` |
+| `item_mine_flail_module` | `assets/art/item_mine_flail_module.jpg` |
+| `item_hydraulic_drive_motor` | `assets/art/item_hydraulic_drive_motor.jpg` |
+| `item_aquifer_isolation_module` | `assets/art/item_aquifer_isolation_module.jpg` |
+| `item_surgical_arm_servo` | `assets/art/item_surgical_arm_servo.jpg` |
+
+ImageMagick metadata confirms fifteen opaque 512×512 JPEGs. Contact sheets
+were inspected at 64 px and the inventory's 26 px icon size. Mesh, cable,
+sensors, radio modules, and hydraulic parts retain distinct silhouettes.
+`jq empty Assets/StreamingAssets/Data/items.json` exited 0. `godot
+--headless --path . --import` exited 0; matching sidecars are present.
+Direct filenames make the images available through `AssetRegistry.GetItem`
+without code changes. A live inventory screenshot of these exact items was
+not captured.
+
+Cumulative direct item art added in these twenty-six tranches: 262. Under
+the prior static candidate-path method, roughly 673 of 967 item IDs now have
+direct or prefix art candidates and roughly 294 remain. These estimates
+exclude aliases.
+
+## Tranche 27 — fifteen shelter daily-life inventory assets
+
+All fifteen IDs are authored in `Assets/StreamingAssets/Data/items.json` and
+had no direct or normalized-prefix art in the current `AssetRegistry` item
+search roots. The opaque 512×512 JPEGs use the established isolated, tactile
+style. Each has a Godot-generated `.jpg.import` sidecar.
+
+| Catalog ID | New runtime file |
+|---|---|
+| `item_heavy_wool_coat` | `assets/art/item_heavy_wool_coat.jpg` |
+| `item_thermal_parka` | `assets/art/item_thermal_parka.jpg` |
+| `item_insulated_boots` | `assets/art/item_insulated_boots.jpg` |
+| `item_improvised_burn_barrel` | `assets/art/item_improvised_burn_barrel.jpg` |
+| `item_portable_kerosene_heater` | `assets/art/item_portable_kerosene_heater.jpg` |
+| `item_acoustic_guitar` | `assets/art/item_acoustic_guitar.jpg` |
+| `item_harmonica` | `assets/art/item_harmonica.jpg` |
+| `item_playing_cards` | `assets/art/item_playing_cards.jpg` |
+| `item_carved_figurine` | `assets/art/item_carved_figurine.jpg` |
+| `item_wasteland_sketch` | `assets/art/item_wasteland_sketch.jpg` |
+| `slate_and_chalk` | `assets/art/slate_and_chalk.jpg` |
+| `school_primer` | `assets/art/school_primer.jpg` |
+| `item_flatbread` | `assets/art/item_flatbread.jpg` |
+| `item_vegetable_soup` | `assets/art/item_vegetable_soup.jpg` |
+| `item_dried_herb_packets` | `assets/art/item_dried_herb_packets.jpg` |
+
+ImageMagick metadata confirms fifteen opaque 512×512 JPEGs. Contact sheets
+were inspected at 64 px and the inventory's 26 px icon size; the two coats,
+two heat sources, paper items, and food retain distinct silhouettes.
+`jq empty Assets/StreamingAssets/Data/items.json` exited 0.
+`godot --headless --path . --import` exited 0 and all matching import
+sidecars are present. Exact filenames make these images available through
+`AssetRegistry.GetItem` without code changes. A live inventory screenshot
+of these exact items was not captured.
+
+Cumulative direct item art added in these twenty-seven tranches: 277. Under
+the prior static candidate-path method, roughly 688 of 967 item IDs now have
+direct or prefix art candidates and roughly 279 remain. These estimates
+exclude aliases.
+
+## Tranche 28 — fifteen medical, rail, and cultivation inventory assets
+
+All fifteen IDs are authored in `Assets/StreamingAssets/Data/items.json` and
+had no direct or normalized-prefix art in the current `AssetRegistry` item
+search roots. The opaque 512×512 JPEGs use the established isolated, tactile
+style. Each has a Godot-generated `.jpg.import` sidecar.
+
+| Catalog ID | New runtime file |
+|---|---|
+| `scalpel` | `assets/art/scalpel.jpg` |
+| `forceps` | `assets/art/forceps.jpg` |
+| `surgical_suture` | `assets/art/surgical_suture.jpg` |
+| `surgical_saw` | `assets/art/surgical_saw.jpg` |
+| `prosthetic_wooden_arm` | `assets/art/prosthetic_wooden_arm.jpg` |
+| `prosthetic_wooden_leg` | `assets/art/prosthetic_wooden_leg.jpg` |
+| `bionic_arm_prototype` | `assets/art/bionic_arm_prototype.jpg` |
+| `bionic_leg_prototype` | `assets/art/bionic_leg_prototype.jpg` |
+| `train_coal` | `assets/art/train_coal.jpg` |
+| `steel_rail_segment` | `assets/art/steel_rail_segment.jpg` |
+| `railroad_ties` | `assets/art/railroad_ties.jpg` |
+| `fungus_spores_common` | `assets/art/fungus_spores_common.jpg` |
+| `fungus_spores_bioluminescent` | `assets/art/fungus_spores_bioluminescent.jpg` |
+| `fungus_spores_medicinal` | `assets/art/fungus_spores_medicinal.jpg` |
+| `harvested_mushrooms_subterranean` | `assets/art/harvested_mushrooms_subterranean.jpg` |
+
+ImageMagick metadata confirms fifteen opaque 512×512 JPEGs. Contact sheets
+were inspected at 64 px and the inventory's 26 px icon size. The surgical
+tools, wood and metal limbs, rail supplies, and distinct fungal cultures
+retain identifiable forms. `jq empty Assets/StreamingAssets/Data/items.json`
+exited 0. `godot --headless --path . --import` exited 0 and all matching
+sidecars are present. Exact filenames make these images available through
+`AssetRegistry.GetItem` without code changes. A live inventory screenshot
+of these exact items was not captured.
+
+Cumulative direct item art added in these twenty-eight tranches: 292. Under
+the prior static candidate-path method, roughly 703 of 967 item IDs now have
+direct or prefix art candidates and roughly 264 remain. These estimates
 exclude aliases.

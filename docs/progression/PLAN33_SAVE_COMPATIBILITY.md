@@ -3745,6 +3745,39 @@ All systems comply with `netstandard2.1` pure domain rules, zero engine dependen
 
 
 ================================================================================
+## TRIM & POLISH RECORD — 2026-09-29
+
+> This record was added by the batch-10 method-C trim (landed in commit
+> `6e34c20bb`) and the 2026-09-29 polish pass (polish batch 4). It is the
+> only content the polish pass introduced; every other line below is
+> carried verbatim from the document's authored and generated origins.
+
+**What this document is.** The Plan 33 save compatibility and wire
+contract: how `SkillProgressionSystem` captures and restores state via
+`SkillProgressionSaveState` — active and dormant skill ID lists,
+matching discipline XP string/float lists, and persisted expert
+discipline locks.
+
+**Why it is smaller than its original.** The generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions repeated many leaf sections
+byte-identically. Conservative method-C consolidation kept the first copy
+of each distinct section in place and replaced later byte-identical
+repeats with a one-line pointer of the form `> _[consolidated: § "…"]_`.
+Nothing was rewritten, merged, or summarized: every distinct line
+survives, and each pointer names the heading whose first copy is retained.
+
+**Shape after trim.** 30,398 lines (from 51,072 before trim); 11 `BATCH-`
+banners; 20 `### Tranche` containers; 391 consolidation pointers.
+
+**Recovering the full original.** The byte-exact pre-trim original is
+preserved in git history: commit `1fc3fd071` directly precedes the trim
+landing in `6e34c20bb`. This file's authored prefix was verified
+byte-identical after the trim.
+
+**Reading order.** The wire-contract sections above are the operative
+content. The BATCH regions below serve as a generated appendix: unique
+sections read in place; a pointer routes you to the retained first copy
+of anything repeated.
 ## BATCH-110 ARCHITECTURAL EXPANSION — PLAN-B110-14-PLAN33SAVECOMPATIB
 ### Domain: Plan33 Save Compatibility
 ================================================================================

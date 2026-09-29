@@ -13,11 +13,96 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_the_underworld_plan.md`. Family index: `docs/expansions/expansion_new_pressures_and_places_index.md`.
 > Not a claim. `BlackMarketSystem` (Plan 211), `FactionBountySystem`, `MercenarySystem`, `LoanSharkEnforcerEngine`, `BlackMarketHeatAttentionEngine` and the contraband engine keep their meaning. This plan **adds people (brokers), a small in-transit run record, and hunters that consume risk numbers nobody reads today**. It creates no second market, bounty, debt or heat authority. **No real-world crime instruction anywhere in data or text.**
 
+> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
+> are content candidates for `underworld_trail_lines.json` rows; they belong in data, never in code.
+> Nothing in these additions may be read as real-world instruction — DEC-UW-10 governs.
+
+---
+
+## 0. Prologue — The Quiet Counter
+
+> *"Nobody in this world trades goods. They trade the gap between what a thing is worth and what a
+> person can bear to pay for it today."*
+
+The market did not end when the bombs fell. It went *downstairs*. What the shelter calls the black
+market is really three syndicates wearing one coat — the Quiet Counter, the Ash Market, the Cold
+Ledger — and the difference between them is not what they sell but what they remember about you.
+
+A broker is not a shopkeeper. A broker is a **person who knows what your name is worth in three
+districts**, and who will lend you that knowledge at a cut. A run is not an expedition. A run is
+a manifest leaving with somebody's cousin. And a hunter is not a soldier. A hunter is what a
+number looks like when it finally stands up.
+
+**Tone & register.** Dry, laconic, transactional. Everyone in this plan speaks in prices and
+caveats. The prose should feel overheard rather than narrated — no moralising, no glamour, no
+Robin Hood. The fiction is entirely invented: three fictional syndicates, fictional territories,
+fictional currencies of trust. Nothing here is a method; it is a *cost table with a face*.
+
+**Mystery & texture.** Four engines already run in the dark with no gameplay caller (E5, E6, E8).
+That is the plan's real mystery: the machinery of consequence has been here all along, patient and
+unread. Feeding it is not a feature addition — it is waking something up. Keep that framing in the
+writing: the hunters were always possible. The player simply became legible.
+
 ## 1. Goal & Outcome
+
+> *Design intent: the underworld should never feel like a menu of crimes. It should feel like
+> borrowing against a reputation you did not know you had.*
+
 - **Goal:** (a) **Brokers**: authored people bound to a syndicate, met through the existing contact-discovery call, with a visible cut and a standing; (b) **Runs**: a manifest leaves inventory through atomic billing, resolves on its due day against a read-only **Scrutiny** number, and pays or fails through existing settlement paths; (c) **Hunters**: an active mark plus risk from the enforcer and the live heat starts a four-leg trail (Word, Road, Door, Standoff) with pay, deal, hide, counter-bounty, lead-off, fight and hand-over answers; (d) a **read-only combined debt view** across the two loan ledgers.
 - **Outcome (observable):** on a fixed seed a defaulted loan with an active mark and enforcer risk draws a hunter whose trail advances by leg each day; paying through the existing repay call clears the mark through the bounty owner's own resolve; a counter-bounty posts through `MercenarySystem.PostBounty` unchanged; a run's goods leave and return atomically (delivered, seized or burned) with survivors and items conserved; scrutiny reads embargo/patrol/war/heat and writes none; with no broker, run or hunter rows the black market, bounty and loan behaviour is identical to today; save/load mid-trail round-trips.
 - **Non-Goals:** no real-world crime instruction; no change to premiums, heat, loan or bounty arithmetic; no merge of the two debt ledgers; no automatic combat; no new save section; no new routed panel; no Unity.
 - **"Done":** §6 acceptance passes via `bin/run-scoped-tests`; ship-dark parity holds; handoff lists untouched shared paths.
+
+## 1b. Texture, Mystery & Voice
+
+**Brokers as people, not menus.**
+
+`secret` and `temper` are the two fields that make a broker a character. Never resolve `secret` in
+play. It is the reason a cut is 8% and not 30%, and the moment you narrate it, the number becomes
+a quest reward. Let temper be observable — a broker who raises the cut after a bad week is doing
+characterisation with arithmetic.
+
+**The four legs of the trail.** Word, Road, Door, Standoff is a *sonata form*. Each leg should read
+escalating in proximity: a rumour in the third person, a sighting at distance, a face at the
+threshold, and finally a conversation with consequences. Never skip a leg — the dread lives in
+the sequence, not the destination.
+
+**What the player is never told.**
+
+- Which of the three syndicates filed the mark. `FactionBountySystem` records a faction id; the
+  trail never prints it.
+- Whether the hunter was hired or is working a private grievance. Both are consistent with the
+  numbers and the plan refuses to choose.
+- What the Cold Ledger is *for*. A syndicate whose name describes its method is not obliged to
+  describe its purpose.
+- Whether the combined debt view is complete. It lists both ledgers. It does not promise those are
+  all the ledgers.
+
+**Voice — sample fragments (content candidates for `underworld_trail_lines.json`).**
+
+> "Word: somebody is asking after the shelter's face. Not the shelter. The face."
+
+> "Road: two sets of tracks on the east approach, one of them walking backwards for a while."
+
+> "Door: he did not knock. He waited until the watch changed and then he was simply standing there."
+
+> "Standoff: he asked for the man, not the goods. That is the part I keep turning over."
+
+> "The Quiet Counter takes no interest. That is why their interest costs more."
+
+**Design texture beats.**
+
+- **Scrutiny writes nothing.** A number that only reads is a number the player can trust. Make the
+  panel say so in one plain line.
+- **A run's goods are conserved, always.** Delivered, seized or burned — never *gone*. The
+  arithmetic is the fiction: if the player can add it up, they can forgive it.
+- **The hunter targets the face, never a child (DEC-UW-08).** This is a tone rule with mechanical
+  teeth. It also makes leadership feel like exposure, which is the correct feeling.
+- **Counter-bounty is a mirror, not a fix.** Posting one should feel like answering a letter in the
+  same handwriting.
+
+---
 
 ## 2. Evidence table (verified 2026-09-29; re-verify at P0 — Rule 7)
 
@@ -146,3 +231,18 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 
 ## 11. Stop conditions (Rule 10)
 Stop and report if: the attention engine cannot be fed without inventing a second heat; a hunter cannot be triggered without a new bounty authority; the shelter's face cannot be read; goods in transit cannot be conserved through owner transactions; any path overlaps a live claim.
+
+## 12. Open Mysteries & Deliberate Silence (lore register — no authority, no claimed path)
+
+These questions are **intentionally unanswered** — not gaps, not TODOs, not deferred work. They
+keep the underworld beneath the level the player can audit. Any future plan that answers one must
+name the signed decision that permits it.
+
+| # | Question | Why it stays open | Who may answer it (later, signed) |
+|---|---|---|---|
+| UW-OM-1 | What is the Cold Ledger keeping books *of*? | The three syndicates are differentiated by method (E1). Purpose is deliberately unauthored so each campaign can read its own. | Never — texture by omission. |
+| UW-OM-2 | Why does `faction_the_smugglers_court` exist in `CrossingCatalog` and nowhere else? | E11 is a real orphan. It is allowed to remain one; the coast is bigger than the coastlines we mapped. | *The Drowned Coast*, if a harbour ever needs a jurisdiction. |
+| UW-OM-3 | Who taught the hunters the four-leg form? | Archetypes are authored (~6). Their training is not. Naming a school turns dread into lore. | Never — tone-locked by DEC-UW-10. |
+| UW-OM-4 | Are there other debt ledgers besides the two? | DEC-UW-04 keeps two and adds a read-only view. The view is *labelled by source* — it does not assert totality. | Never — a rule, not a gap. |
+| UW-OM-5 | Why was `CheckEnforcerRaidTrigger` written before anyone called it? | E6's uncalled methods read like a prepared consequence. The plan wakes them; it does not explain who prepared them. | Never — the artefact is the atmosphere. |
+| UW-OM-6 | Does a broker ever *want* the player to default? | `temper` implies it; `secret` forbids proving it. Both readings survive. | Never — DEC-UW-01's boundary. |

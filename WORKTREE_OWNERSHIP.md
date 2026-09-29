@@ -1,5 +1,566 @@
 # ASHFALL Worktree Ownership
 
+## claim-chatgpt-item-art-tranche-28-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{scalpel,forceps,surgical_suture,surgical_saw,prosthetic_wooden_arm,prosthetic_wooden_leg,bionic_arm_prototype,bionic_leg_prototype,train_coal,steel_rail_segment,railroad_ties,fungus_spores_common,fungus_spores_bioluminescent,fungus_spores_medicinal,harvested_mushrooms_subterranean}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-28-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-ui-a11y-fontsize-lift-2026-09-29
+
+User-authorized implementation ("Continue with more work!", 2026-09-29) —
+fourth package in the a11y-audit fix series: audit §4/§9.7.
+**Plan:** `.ai/plans/ui-a11y-fontsize-lift-2026-09-29.md` (STATUS: APPROVED
+BY USER). **Exact paths:** `Assets/Ashfall.Core/UI/Theme.cs` (single token:
+`FontSizeLabel` 11→12, lifts 282+ MakeMetadata sites and ~32 direct
+references), governance (this row, `.ai/state.md`, the plan). **Note:**
+stored `snapshots/` goldens will visually drift; snapshot regen/diff actions
+are `headless_compatible: false` and belong to the visual lane (follow-up,
+not claimed here). **Deliberately untouched:** all other typography tokens
+(`DiegeticHintSize` unused in src/UI, left as is), per-site overrides, data/save paths.
+
+## claim-ui-a11y-p3-nav-overflow-2026-09-29
+
+User-authorized implementation ("Continue with more UI work especially UI
+precision and correction as well as UI functionality!", 2026-09-29) — third
+package in the a11y-audit fix series; closes the last open P1 (§9.3).
+**Plan:** `.ai/plans/ui-a11y-p3-nav-overflow-2026-09-29.md` (STATUS: APPROVED
+BY USER). **Exact paths:** `src/Main.PanelLifecycle.cs` (additive
+`TopmostVisibleOverlayPanel()` helper + `Main._Input` modal Tab trap with
+CombatPanel/DailyBriefingModal exclusions), `src/Main.Application.cs`
+(arrow-nav scope root = topmost open overlay, 1 line), `src/UI/AshfallDataGrid.cs`
+(header + cell labels ClipText/TrimEllipsis), `src/UI/AshfallDashboardShell.cs`
+(title ClipText/TrimEllipsis), new
+`Ashfall.Core.Tests/UI/UiA11yP3NavOverflowGateTests.cs`, governance (this row,
+`.ai/state.md`, the plan). **Deliberately untouched:** Core,
+`ModalManager`/`ModalStackController` wiring (dead seam left for a separate
+governance decision — the focused-topmost helper plus `TrapFocus` covers the
+live trap), Tab behavior when no overlay is open, font-size tokens (P2.7 is a
+separate visual package), all data/save paths.
+
+## claim-chatgpt-item-art-tranche-27-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_heavy_wool_coat,item_thermal_parka,item_insulated_boots,item_improvised_burn_barrel,item_portable_kerosene_heater,item_acoustic_guitar,item_harmonica,item_playing_cards,item_carved_figurine,item_wasteland_sketch,slate_and_chalk,school_primer,item_flatbread,item_vegetable_soup,item_dried_herb_packets}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-27-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, no commit.
+
+## claim-plan-polish-method-C-trimmed-b6-2026-09-29
+
+User-authorized polish pass — repeated "polish 10 already trimmed plans and
+expand the plans ever so slightly adding on quality and polish!" — sixth
+batch of the trimmed-plan polish family (same insert-only contract as
+b1–b5), continuing the committed trimmed tier. Scope: a unique 33-line
+`## TRIM & POLISH RECORD — 2026-09-29` section inserted immediately before
+the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner of each file. Each
+record is file-specific (unique "what this document is" summary drawn from
+the document's own header, exact post-trim shape — lines, banners, tranches,
+pointer count — trim batch, pre-trim line count recovered from git history,
+recovery path, reading-order lines). No existing line was modified, deleted,
+or reordered; nothing was de-consolidated. Ten domain plans from the
+committed method-C trim tier (batches 9–13, landed in commit `6e34c20bb`;
+claims COMPLETE; re-screened this batch: 0 non-trim claim mentions,
+0 IN-PROGRESS mentions, git-clean, unpolished at claim time;
+prose_wave/expansion tier, docs/plans governance, and integrated sealed
+archives excluded):
+
+- `docs/bodymind/PLAN27_SAVE_COMPATIBILITY.md` (b9)
+- `docs/content/PLAN136_REGRESSION_MATRIX.md` (b9)
+- `docs/expeditions/PLAN_147_MINE_FLAIL_CLOSEOUT.md` (b10)
+- `docs/systems/STANDING_RECORD_CORE_PORT_PLAN.md` (b10)
+- `docs/spiritual/PLAN30_SAVE_COMPATIBILITY.md` (b11)
+- `docs/i18n/LOCALIZATION_PLAN.md` (b11)
+- `docs/shelter/PLAN41_REGRESSION_MATRIX.md` (b12)
+- `docs/combat/PLAN10_SAVE_COMPATIBILITY.md` (b12)
+- `docs/systems/RESEARCH_CORE_PORT_PLAN.md` (b13)
+- `docs/world/PLAN_121_GPR_CHARACTERIZATION.md` (b13)
+
+Edit-time rechecks (SHA vs pre-polish snapshot, git-clean, no existing
+record) applied before each write via a one-off inserter script kept at
+`/tmp/ashfall-plan-polish-b6-20260929/insert_records.py` (33-line structure
+assertions; single clean pass, no rewrites). Pre-polish snapshots + SHA-256
+manifest at `/tmp/ashfall-plan-polish-b6-20260929/`. Provenance: pre-trim
+originals byte-recoverable in git history (commit `1fc3fd071` precedes the
+trim landing `6e34c20bb`); each record cites that path. Verification per
+file: every pre-polish line survives (subsequence check — insert-only
+proven), banner counts unchanged (11 or 10), `### Tranche` counts
+unchanged (20), pointer counts unchanged per file, exactly one record
+block, +33 lines each (~0.1% — family-consistent), scoped
+`git diff --check` PASS. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Total insertion: 330 lines across 10 files.
+Cumulative family: batches 1–6, 60 files, 1,969 inserted lines. 16 clean
+domain-tier candidates remain (b14/b15-heavy: ui, narrative, orbital,
+research, water, shelter, world, bodymind, spiritual, combat families);
+the prose_wave/expansion tier stays ineligible pending the IN-PROGRESS
+parallel lane's disposition.
+
+## claim-plan-polish-method-C-trimmed-b5-2026-09-29
+
+User-authorized polish pass — repeated "polish 10 already trimmed plans and
+expand the plans ever so slightly adding on quality and polish!" — fifth
+batch of the trimmed-plan polish family (same insert-only contract as
+b1–b4), continuing the committed trimmed tier after batch 4. Scope: a
+unique 33-line `## TRIM & POLISH RECORD — 2026-09-29` section inserted
+immediately before the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner
+of each file. Each record is file-specific (unique "what this document is"
+summary drawn from the document's own header, exact post-trim shape —
+lines, banners, tranches, pointer count — trim batch, pre-trim line count
+recovered from git history, recovery path, reading-order lines). No
+existing line was modified, deleted, or reordered; nothing was
+de-consolidated. Ten domain plans from the committed method-C trim tier
+(batches 9–13, landed in commit `6e34c20bb`; claims COMPLETE; re-screened
+this batch: 0 non-trim claim mentions, 0 IN-PROGRESS mentions, git-clean,
+unpolished at claim time; prose_wave/expansion tier and docs/plans
+integrated/governance roots excluded as before):
+
+- `docs/bodymind/PLAN27_REGRESSION_MATRIX.md` (b9)
+- `docs/saves/PLANS_166_169_SAVE_MIGRATION_MATRIX.md` (b9)
+- `docs/shelter/PLAN41_SAVE_COMPATIBILITY.md` (b10)
+- `docs/maritime/PLAN23_REGRESSION_MATRIX.md` (b10)
+- `docs/combat/PLAN54_SAVE_CONTRACT.md` (b11)
+- `docs/spiritual/PLAN30_REGRESSION_MATRIX.md` (b11)
+- `docs/progression/PLAN26_REGRESSION_MATRIX.md` (b12)
+- `docs/progression/PLAN33_CLOSEOUT.md` (b12)
+- `docs/shelter/PLAN_120_CARBON_COMPOSITES_CLOSEOUT.md` (b13)
+- `docs/systems/SKILL_PROGRESSION_CORE_PORT_PLAN.md` (b13)
+
+Edit-time rechecks (SHA vs pre-polish snapshot, git-clean, no existing
+record) applied before each write via a one-off inserter script kept at
+`/tmp/ashfall-plan-polish-b5-20260929/insert_records.py` (33-line structure
+assertions; single clean pass, no rewrites). Pre-polish snapshots +
+SHA-256 manifest at `/tmp/ashfall-plan-polish-b5-20260929/`. Provenance:
+pre-trim originals byte-recoverable in git history (commit `1fc3fd071`
+precedes the trim landing `6e34c20bb`); each record cites that path.
+Verification per file: every pre-polish line survives (subsequence check —
+insert-only proven), banner counts unchanged (11 or 10), `### Tranche`
+counts unchanged (20), pointer counts unchanged per file, exactly one
+record block, +33 lines each (~0.1% — family-consistent), scoped
+`git diff --check` PASS. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Total insertion: 330 lines across 10 files.
+Cumulative family: batches 1–5, 50 files, 1,639 inserted lines. ~65 clean
+domain-tier candidates remain for future batches; the large
+prose_wave/expansion tier stays ineligible pending the IN-PROGRESS
+parallel lane's disposition.
+
+## claim-plan-polish-method-C-trimmed-b4-2026-09-29
+
+User-authorized polish pass — repeated "polish 10 already trimmed plans and
+expand the plans ever so slightly adding on quality and polish!" — fourth
+batch of the trimmed-plan polish family (same insert-only contract as
+b1–b3), extended to the committed trimmed tier after batches 1–3 closed
+the uncommitted b58–b62 pool. Scope: a unique 33-line
+`## TRIM & POLISH RECORD — 2026-09-29` section inserted immediately
+before the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner of each
+file. Each record is file-specific (unique "what this document is"
+summary drawn from the document's own header, exact post-trim shape —
+lines, banners, tranches, pointer count — trim batch, pre-trim line count
+recovered from git history, recovery path, reading-order lines). No
+existing line was modified, deleted, or reordered; nothing was
+de-consolidated. Ten domain plans from the committed method-C trim tier
+(batches 9–13, landed in commit `6e34c20bb`; claims COMPLETE; verified 0
+non-trim claim mentions, 0 IN-PROGRESS mentions, git-clean, unpolished
+at claim time; prose_wave/expansion tier excluded — root-owned by the
+IN-PROGRESS parallel bloat-reduction lane; docs/plans governance and
+editorial-claim roots excluded):
+
+- `docs/shelter/PLAN_118_FISCHER_TROPSCH_CLOSEOUT.md` (b9)
+- `docs/shelter/PLAN_118_SYNTHETIC_LUBE_BALANCE.md` (b9)
+- `docs/architecture/PLANS_166_169_AUTHORITY_MATRIX.md` (b10)
+- `docs/progression/PLAN33_SAVE_COMPATIBILITY.md` (b10)
+- `docs/factions/PLAN_167_ESPIONAGE_CLOSEOUT.md` (b11)
+- `docs/progression/PLAN26_BALANCE_AUDIT.md` (b11)
+- `docs/ui/JOURNAL_UI_PLAN.md` (b12)
+- `docs/progression/PLAN26_SAVE_CONTRACT.md` (b12)
+- `docs/medical/PLAN112_SAVE_COMPATIBILITY.md` (b13)
+- `docs/radio/PLAN_119_SENSOR_CHARACTERIZATION.md` (b13)
+
+Edit-time rechecks (SHA vs pre-polish snapshot, git-clean, no existing
+record) applied before each write via a one-off inserter script kept at
+`/tmp/ashfall-plan-polish-b4-20260929/insert_records.py` (structure
+assertions caught and prevented three malformed records before any
+write). Pre-polish snapshots + SHA-256 manifest at
+`/tmp/ashfall-plan-polish-b4-20260929/`. Provenance note: this tier's
+/tmp trim backups are gone; pre-trim originals are byte-recoverable in
+git history (commit `1fc3fd071` precedes the trim landing `6e34c20bb`),
+and each record cites that path. Verification per file: every pre-polish
+line survives (subsequence check — insert-only proven), banner counts
+unchanged (11 or 10), `### Tranche` counts unchanged (20), pointer counts
+unchanged per file, exactly one record block, +33 lines each (~0.1% —
+family-consistent), scoped `git diff --check` PASS. No production changes,
+runtime tests, or commit. Status: COMPLETE, uncommitted. Total insertion:
+330 lines across 10 files. ~424 further committed trimmed files remain
+unpolished (mostly prose_wave/expansion tier root-owned by the IN-PROGRESS
+parallel lane — not eligible without that lane's disposition).
+
+## claim-ui-a11y-p2-focus-contrast-2026-09-29
+
+User-authorized implementation ("Continue with more UI work!", 2026-09-29) —
+second package in the a11y-audit fix series. **Plan:**
+`.ai/plans/ui-a11y-p2-focus-contrast-2026-09-29.md` (STATUS: APPROVED BY
+USER). **Exact paths:** `src/UI/AshfallFocusPolicy.cs` (additive
+`GetRecordedOpener`/`RestoreFocusDeferred`/`FocusFirstDeferred`/`IsInsideAny`),
+`src/Main.PanelLifecycle.cs` (CloseAllOverlayPanels single deferred
+topmost-opener restore + dashboard fallback, per-panel sync restore removed),
+`src/UI/GeigerCalibrationPanel.cs`, `src/UI/SafeCrackModal.cs`,
+`src/UI/BrineExtractionPanel.cs`, `src/UI/TriangulationPanel.cs`
+(Color primaries → Critical/Success/Warning/Pale tokens + DesignTheme alias),
+new `Ashfall.Core.Tests/UI/UiA11yP2FocusContrastGateTests.cs`, governance
+(this row, `.ai/state.md`, the plan, audit-report correction). **Note:**
+`src/UI/GameDashboardPanel.cs` was audited but deliberately NOT edited — the
+reported 0.22-alpha finding was retracted (it is the intentionally dimmed
+dashboard background, not a UI-component state). **Deliberately untouched:**
+Core, ModalManager/ModalStackController wiring (P1.3 is a separate package),
+all data/save paths.
+
+## claim-chatgpt-item-art-tranche-26-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_ecm_jammer_module,item_hydraulic_ram_assembly,item_fog_mesh_roll,item_powered_mist_assist_module,item_reinforced_support_cable,item_radar_display_tube,item_hydraulic_actuator,item_iff_beacon,item_low_noise_sensor_amplifier,item_geophone_probe,item_bedrock_sensor_rig,item_mine_flail_module,item_hydraulic_drive_motor,item_aquifer_isolation_module,item_surgical_arm_servo}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-26-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, uncommitted. Fifteen opaque 512×512 JPEGs and matching Godot
+import sidecars added; 64 px and 26 px strips inspected; catalog JSON parsed;
+headless Godot import passed. No live inventory screenshot captured.
+
+## claim-plan-polish-method-C-trimmed-b3-2026-09-29
+
+User-authorized polish pass — "yes continue with the 5!" — third and
+final batch of the trimmed-plan polish family (same insert-only contract
+as claim-plan-polish-method-C-trimmed-b1/b2). Scope: a unique ~32-line
+`## TRIM & POLISH RECORD — 2026-09-29` section inserted immediately
+before the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner of each
+file. Each record is file-specific (unique "what this document is"
+summary drawn from the document's own header, exact post-trim shape —
+lines, banners, tranches, pointer count — trim batch, pre-trim line
+count, backup path, reading-order line). No existing line was modified,
+deleted, or reordered; nothing was de-consolidated. The five remaining
+b61–b62 trimmed files (this session's COMPLETE, uncommitted trim outputs;
+no foreign claim touches them):
+
+- `docs/bodymind/PLAN27_COMPLETION_REPORT.md` (b61)
+- `docs/progression/PLAN33_REGRESSION_MATRIX.md` (b61)
+- `docs/progression/PLAN26_CLOSEOUT.md` (b62)
+- `docs/combat/PLAN10_BASELINE.md` (b62)
+- `docs/spiritual/PLAN30_BASELINE.md` (b62)
+
+Edit-time rechecks (still the session's uncommitted trim output, no
+foreign edits) applied before each write; pre-polish snapshots + SHA-256
+manifest at `/tmp/ashfall-plan-polish-b3-20260929/`. Verification per
+file: every pre-polish distinct line survives (subsequence check —
+insert-only proven), banner counts unchanged (11), `### Tranche` counts
+unchanged (220), pointer counts unchanged (2,606/2,637/2,412/2,629/2,629),
+exactly one record block per file, +33 lines each (~0.1% — "ever so
+slight", matching the b1/b2 family's +32/33 record shape), scoped
+`git diff --check` PASS. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Total insertion: 165 lines across 5 files.
+The b58–b62 trimmed pool is now fully polished (batches 1–3, 25 files
+ total); no trimmed files remain for a batch 4.
+
+## claim-plan-polish-method-C-trimmed-b2-2026-09-29
+
+User-authorized polish pass — "polish 10 already trimmed plans and expand
+the plans ever so slightly adding on quality and polish!" — second batch
+of the trimmed-plan polish family (same insert-only contract as
+claim-plan-polish-method-C-trimmed-b1). Scope: a unique ~32-line
+`## TRIM & POLISH RECORD — 2026-09-29` section inserted immediately
+before the first `## BATCH-NN ARCHITECTURAL EXPANSION` banner of each
+file. Each record is file-specific (unique "what this document is"
+summary drawn from the document's own header, exact post-trim shape —
+lines, banners, tranches, pointer count — trim batch, pre-trim line
+count, backup path, reading-order line). No existing line was modified,
+deleted, or reordered; nothing was de-consolidated. Ten of the fifteen
+remaining b58–b62 trimmed files (this session's COMPLETE, uncommitted
+trim outputs; no foreign claim touches them):
+
+- `docs/expansions/prose_wave161/cw161_09_the_wagon_is_still_in_the_road_crust_plan.md` (b58)
+- `docs/expansions/prose_wave161/cw161_10_six_beds_are_endurance_not_capacity_plan.md` (b58)
+- `docs/expansions/prose_wave163/cw163_04_ivory_color_is_an_observation_not_a_grade_plan.md` (b58)
+- `docs/implementation/PLAN142_TIMESTAMP_POLICY.md` (b59)
+- `docs/implementation/PLAN143_ATOMICITY_POLICY.md` (b59)
+- `docs/medical/PLAN112_AUTOPSY_INTEGRATION.md` (b59)
+- `docs/medical/PLAN112_EXISTING_7_INVENTORY.md` (b60)
+- `docs/combat/PLAN10_COMPLETION_REPORT.md` (b60)
+- `docs/progression/PLAN33_BASELINE.md` (b60)
+- `docs/holdfast/PLAN128_BASELINE.md` (b61)
+
+Process note: an initial scripted generation pass had a shell-heredoc
+ quoting defect that executed backticks inside one block before insertion
+(PLAN142); the file was restored byte-identical from the pre-polish
+backup and the record regenerated cleanly — final state verified. Edit-
+time rechecks applied before each write; pre-polish snapshots + SHA-256
+manifest at `/tmp/ashfall-plan-polish-b2-20260929/`. Verification per
+file: every pre-polish distinct line survives (tool `--verify` OK —
+insert-only proven), banner counts unchanged (14 or 11), `### Tranche`
+counts unchanged (280 or 220), exactly one record block per file, +32/33
+lines each (~0.1% — "ever so slight"), scoped `git diff --check` PASS.
+No production changes, runtime tests, or commit. Status: COMPLETE,
+uncommitted. Total insertion: 327 lines across 10 files. Five trimmed
+files remain for a possible polish batch 3 (docs/bodymind/
+PLAN27_COMPLETION_REPORT.md, docs/progression/
+PLAN33_REGRESSION_MATRIX.md, docs/progression/PLAN26_CLOSEOUT.md,
+docs/combat/PLAN10_BASELINE.md, docs/spiritual/PLAN30_BASELINE.md).
+
+## claim-plan-polish-method-C-trimmed-b1-2026-09-29
+
+User-authorized polish pass — "polish 10 already trimmed plans and expand
+the plans ever so slightly adding on quality and polish!" — first batch
+of the trimmed-plan polish family. Scope: strictly insert-only edits; a
+unique ~32-line `## TRIM & POLISH RECORD — 2026-09-29` section was
+inserted immediately before the first `## BATCH-NN ARCHITECTURAL
+EXPANSION` banner of each file (placement keeps it at the end of the
+authored prefix, visible before the generated regions). Each record is
+file-specific (unique "what this document is" summary drawn from the
+document's own header, its exact post-trim shape — lines, banners,
+tranches, pointer count — its trim batch, pre-trim line count, and its
+backup path). Shared mechanics wording is kept to one short pointer-guide
+paragraph. No existing line of any file was modified, deleted, or
+reordered; nothing was de-consolidated or expanded back. The ten files
+are all plans trimmed by this session's method-C batches b58–b62 (2 per
+batch), whose COMPLETE claims are owned by this session and remain
+uncommitted-dirty; no other claim touches them (verified 0 additional
+fixed-string mentions for each beyond the trim claims' result lines):
+
+- `docs/expansions/prose_wave131/cw131_18_ask_at_the_post_plan.md` (b58)
+- `docs/expansions/prose_wave163/cw163_03_the_needle_blank_after_three_days_plan.md` (b58)
+- `docs/expansions/prose_wave160/cw160_10_the_blankets_were_pushed_beyond_the_light_plan.md` (b59)
+- `docs/world/PLAN_121_GPR_AUTHORITY_MAP.md` (b59)
+- `docs/content/PLAN156_SAVE_COMPATIBILITY.md` (b60)
+- `docs/ecology/PLAN28_COMPLETION_REPORT.md` (b60)
+- `docs/combat/PLAN10_REGRESSION_MATRIX.md` (b61)
+- `docs/expeditions/PLAN32_BASELINE.md` (b61)
+- `docs/PLANS_50_53_AUTHORITY_MAP.md` (b62)
+- `docs/social/PLAN12_SOCIAL_STATE_MAP.md` (b62)
+
+Edit-time rechecks (still the session's uncommitted trim output, no
+foreign edits) applied before each write; pre-polish snapshots + SHA-256
+manifest at `/tmp/ashfall-plan-polish-b1-20260929/`. Verification per
+file: every pre-polish distinct line survives (tool `--verify` OK —
+insert-only proven), banner counts unchanged (13/14/11), `### Tranche`
+heading counts unchanged (260/280/220), exactly one record block per
+file, +32/+33 lines each (~0.1% — "ever so slight" per the user), scoped
+`git diff --check` PASS. No production changes, runtime tests, or
+commit. Status: COMPLETE, uncommitted. Total insertion: 324 lines across
+10 files. The remaining b58–b62 trimmed pool (~15 more files) is
+available for further polish batches on request.
+
+## claim-plan-trim-conservative-method-C-expansion-batch62-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+sixty-second batch in the method-C family (executed as 5 files per the
+explicit count, batch 48/54–61 precedent). Continues the b61-surveyed
+fresh tier of 0-mention, git-clean, untrimmed generated-expansion plans
+across docs/* domain subdirectories; the five largest remaining were
+taken this batch, ranked by size from a fresh full (non-truncated)
+survey. Live-claim screens re-run: the 15 clean single-mention
+prose_wave files and the wave*/expansion_* tier remain root-owned by
+claim-plan-bloat-reduction-parallel-batch-42…53 (IN PROGRESS,
+spot-verified unchanged) — skipped untouched; already-consolidated
+committed trims (prose_wave136/137, INTEGRATED_*) trim-refuse; open
+editorial-claim roots (C2_planintegration[3]/[6]/[7], docs/plans
+1-mention tier) skipped; game_repository_remediation__plan.md claimed by
+the IN PROGRESS deep-audit claim — skipped. All five selected files
+have 0 ledger mentions under fixed-string matching, no directory-level
+claim coverage, and no load-bearing references (only static
+batch-expander/scanner tooling lists). All were git-clean and quiet at
+claim time; edit-time rechecks (git-clean + mention recheck) applied
+before each write; trimmer is the batch-53-reconstructed tool (validated
+byte-exact against three known pairs):
+
+- `docs/PLANS_50_53_AUTHORITY_MAP.md`
+- `docs/progression/PLAN26_CLOSEOUT.md`
+- `docs/combat/PLAN10_BASELINE.md`
+- `docs/spiritual/PLAN30_BASELINE.md`
+- `docs/social/PLAN12_SOCIAL_STATE_MAP.md`
+
+No spares used. Standing exclusions unchanged: deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–61 files
+now dirty; roots of IN PROGRESS / open editorial claims excluded;
+in-flight sibling trims excluded by the git-clean filter.
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b62-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+PLANS_50_53_AUTHORITY_MAP 50,331 → 32,403; PLAN26_CLOSEOUT 50,320 →
+33,516; PLAN10_BASELINE 50,197 → 32,714; PLAN30_BASELINE 50,140 →
+32,657; PLAN12_SOCIAL_STATE_MAP 49,619 → 30,425. Total 250,607 →
+161,715 lines (~36%, conservative per the user's no-overtrim
+instruction); 13,360 byte-identical repeat copies replaced by
+`consolidated: §` pointers; ~5.4 MB saved. Each file's authored prefix
+retained byte-identically (SHA-256 prefix check per file: 05495094…,
+ce64d306…, c769c27f…, 78f3b572…, ee8173e2…). Verified per file via the
+tool's `--verify` mode (every distinct original line value survives; no
+distinct line lost; BATCH banners intact) plus independent checks:
+banner counts equal (11 each), `### Tranche` container headings equal
+(220 each), authored-prefix SHA-256 equal, scoped `git diff --check`
+PASS. The fresh-tier pool remains large (hundreds of ~47–49K-line
+0-mention files across docs/* subdirectories plus the two smaller
+docs/remediation audit plans); future batches should re-rank by size
+with the full survey and continue this class.
+
+## claim-chatgpt-item-art-tranche-25-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{item_collectible_vinyl_chamber_record,item_collectible_vinyl_civil_broadcast,item_collectible_vinyl_folk_compilation,item_collectible_field_medicine_handbook,item_collectible_diesel_service_manual,item_collectible_radio_repair_guide,item_collectible_civil_defense_badge,item_collectible_transit_badge,item_collectible_trade_guild_patch,item_collectible_childs_doll,item_collectible_music_box,item_collectible_prayer_beads,item_collectible_team_pennant,item_collectible_civic_token,item_collectible_folk_craft}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-25-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, uncommitted. Fifteen opaque 512×512 JPEGs and matching Godot
+import sidecars added; 64 px and 26 px strips inspected; catalog JSON parsed;
+headless Godot import passed. No live inventory screenshot captured.
+
+## claim-plan-trim-conservative-method-C-expansion-batch61-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+sixty-first batch in the method-C family (executed as 5 files per the
+explicit count, batch 48/54–60 precedent). This batch's full re-survey
+(widened past the earlier head-truncated output) discovered that the
+b59/b60 fresh tier extends far beyond the 4-file handoff: several
+hundred additional 0-mention, git-clean, untrimmed ~47–51K-line
+generated-expansion plans across docs/* domain subdirectories (combat,
+holdfast, expeditions, bodymind, progression, and ~25 more). The five
+largest of that pool were taken this batch, ranked by size. Live-claim
+screens re-run: the 15 clean single-mention prose_wave files and the
+wave*/expansion_* tier remain root-owned by
+claim-plan-bloat-reduction-parallel-batch-42/43/44/45/46/47/48/49/50/51/52/53
+(IN PROGRESS, spot-verified unchanged) — skipped untouched;
+prose_wave136/137 clean files are already-consolidated committed trims;
+C2_planintegration[3]/[6]/[7] and the docs/plans 1-mention tier are
+root-owned by open editorial/parallel claims — skipped; INTEGRATED_*
+copies already consolidated; game_repository_remediation__plan.md claimed
+by the IN PROGRESS deep-audit claim — skipped. All five selected files
+have 0 ledger mentions under fixed-string matching, no directory-level
+claim coverage, and no load-bearing references (only static
+batch-expander/scanner tooling lists, the same class that generated
+them). All were git-clean and quiet at claim time; edit-time rechecks
+(git-clean + mention recheck) applied before each write; trimmer is the
+batch-53-reconstructed tool (validated byte-exact against three known
+pairs):
+
+- `docs/combat/PLAN10_REGRESSION_MATRIX.md`
+- `docs/holdfast/PLAN128_BASELINE.md`
+- `docs/expeditions/PLAN32_BASELINE.md`
+- `docs/bodymind/PLAN27_COMPLETION_REPORT.md`
+- `docs/progression/PLAN33_REGRESSION_MATRIX.md`
+
+No spares used. Standing exclusions unchanged: deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–60 files
+now dirty; roots of IN PROGRESS / open editorial claims excluded;
+in-flight sibling trims excluded by the git-clean filter.
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b61-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+PLAN10_REGRESSION_MATRIX 51,064 → 33,427; PLAN128_BASELINE 51,058 →
+33,963; PLAN32_BASELINE 50,964 → 33,086; PLAN27_COMPLETION_REPORT
+50,662 → 33,025; PLAN33_REGRESSION_MATRIX 50,525 → 32,791. Total
+254,273 → 166,292 lines (~35%, conservative per the user's no-overtrim
+instruction); 13,024 byte-identical repeat copies replaced by
+`consolidated: §` pointers; ~5.1 MB saved. Each file's authored prefix
+retained byte-identically (SHA-256 prefix check per file: 0ba1a2a0…,
+28c568a9…, 823ecce9…, 2bedd17b…, 84bc0da3…). Verified per file via the
+tool's `--verify` mode (every distinct original line value survives; no
+distinct line lost; BATCH banners intact) plus independent checks:
+banner counts equal (11 each), `### Tranche` container headings equal
+(220 each), authored-prefix SHA-256 equal, scoped `git diff --check`
+PASS. The remaining fresh-tier pool is large (several hundred
+~47–49K-line 0-mention files across docs/* subdirectories plus the two
+smaller docs/remediation audit plans); future batches should re-rank by
+size with the full (non-truncated) survey.
+
+## claim-plan-trim-conservative-method-C-expansion-batch60-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+sixtieth batch in the method-C family (executed as 5 files per the
+explicit count, batch 48/54–59 precedent). Continues the b59-surveyed
+fresh tier of 0-mention, git-clean, untrimmed generated-expansion plans
+outside docs/plans and docs/expansions (docs/content, docs/medical,
+docs/ecology, docs/combat, docs/progression). Pre-selection re-audit
+re-run: the 15 clean single-mention prose_wave files and the
+wave*/expansion_* tier remain root-owned by
+claim-plan-bloat-reduction-parallel-batch-42/43/44/45/46/47/48/49/50/51/52/53
+(IN PROGRESS, spot-verified unchanged) — skipped untouched; the
+INTEGRATED_cw* copies are already consolidated (trim-refusing); no new
+spare refills. All five were git-clean and quiet at claim time with 0
+ledger mentions under fixed-string matching and no directory-level claim
+coverage; edit-time rechecks (git-clean + mention recheck) applied before
+each write; trimmer is the batch-53-reconstructed tool (validated
+byte-exact against three known pairs):
+
+- `docs/content/PLAN156_SAVE_COMPATIBILITY.md`
+- `docs/medical/PLAN112_EXISTING_7_INVENTORY.md`
+- `docs/ecology/PLAN28_COMPLETION_REPORT.md`
+- `docs/combat/PLAN10_COMPLETION_REPORT.md`
+- `docs/progression/PLAN33_BASELINE.md`
+
+No spares used. Standing exclusions unchanged: deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–59 files
+now dirty; roots of IN PROGRESS / open editorial claims excluded;
+in-flight sibling trims excluded by the git-clean filter.
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. Full pre-trim originals + SHA-256 manifest at
+`/tmp/ashfall-plan-trim-methodc-b60-20260929/` and recoverable from git
+history. No production changes, runtime tests, or commit.
+Status: COMPLETE, uncommitted. Trim results (Go tool line counts):
+PLAN156_SAVE_COMPATIBILITY 52,504 → 34,320; PLAN112_EXISTING_7_INVENTORY
+52,120 → 34,389; PLAN28_COMPLETION_REPORT 52,097 → 34,463;
+PLAN10_COMPLETION_REPORT 51,316 → 33,294; PLAN33_BASELINE 51,092 →
+33,117. Total 259,129 → 169,583 lines (~35%, conservative per the
+user's no-overtrim instruction); 12,796 byte-identical repeat copies
+replaced by `consolidated: §` pointers; ~4.8 MB saved. Each file's
+authored prefix retained byte-identically (SHA-256 prefix check per
+file: 233b810d…, 75d72eb9…, 6da969d8…, 3af2f0e3…, 70aed489…). Verified
+per file via the tool's `--verify` mode (every distinct original line
+value survives; no distinct line lost; BATCH banners intact) plus
+independent checks: banner counts equal (11 each), `### Tranche`
+container headings equal (220 each), authored-prefix SHA-256 equal,
+scoped `git diff --check` PASS. Fresh-tier eligible 0-mention candidates
+remain for one more 4-file batch (PLAN10_REGRESSION_MATRIX,
+PLAN128_BASELINE, and the two smaller docs/remediation/plans audit
+plans); after that, further batches need IN PROGRESS claims to complete
+or foreman/user direction.
+
 ## claim-plan-trim-conservative-method-C-expansion-batch59-2026-09-29
 
 User-authorized conservative trim (method C) — "find 5 bloated plans to
@@ -95,7 +656,7 @@ all data/save paths, all other `src/UI/*`.
 User-authorized fifteen-item visual continuation. Root owns exact new
 `assets/art/{trap_improvised_wire,trap_box,trap_fish,trap_body_grip,trap_snare,trap_deadfall,trap_pit,trap_net,trap_cage,trap_bird_snare,item_decor_trophy_ash_hound_pelt,item_fur_mittens,item_boiled_roots,item_collectible_hunting_magazine,item_vacuum_seal_canner}.jpg`
 files and their matching `.jpg.import` sidecars, plus
-`.ai/plans/ashfall-chatgpt-item-art-tranche-24-2026-09-29.md`, additive
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-24-2026-09-29.md`, additive
 entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
 `.ai/state.md`, and this claim. No catalog, source, or existing art edits.
 Status: COMPLETE, uncommitted. Fifteen opaque 512×512 JPEGs and matching Godot
@@ -14292,3 +14853,152 @@ Source text preserved; no new state, choice, effect or save section. Status: COM
 - `Ashfall.Core.Tests/FactionRadioBroadcastExpansionTests.cs` (one string literal updated so the off-channel negative assertion still compares against the live clinic message)
 
 Surgical exact-string edits; other lanes' unstaged changes in these files preserved. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 41 (2026-09-29)
+
+- `docs/expansions/prose_wave142/cw142_02_*`, `prose_wave146/cw146_02_*`, `prose_wave159/cw159_05_*`, `prose_wave142/cw142_18_*`, `prose_wave159/cw159_02_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/campaign_epilogues.json` (`epilogue_sustenance_famine`, `epilogue_demographics_desolation` narrative + one sentence each)
+- `Assets/StreamingAssets/Data/faction_radio_corpus.json` (`radio_faction_supply_request_filters` message + one sentence)
+- `Assets/StreamingAssets/Data/year_of_ash_radio.json` (`radio_bunker_19_distress_call` message + one sentence)
+- `Assets/StreamingAssets/Data/radio.json` (`radio_broadcast_07` message + one sentence)
+
+Surgical exact-string edits. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 42 (2026-09-29)
+
+- `docs/expansions/prose_wave150/cw150_04_*`, `prose_wave159/cw159_06_*`, `prose_wave154/cw154_12_*`, `prose_wave159/cw159_01_*`, `prose_wave147/cw147_02_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/faction_radio_corpus.json` (`radio_faction_patrol_missing_siding`, `radio_faction_propaganda_work_order` message + one sentence each)
+- `Assets/StreamingAssets/Data/year_of_ash_radio.json` (`radio_cult_ash_sign_liturgy` message + one sentence)
+- `Assets/StreamingAssets/Data/radio.json` (`radio_broadcast_06` message + one sentence)
+- `Assets/StreamingAssets/Data/campaign_epilogues.json` (`epilogue_governance_iron_order` narrative + one sentence)
+
+Surgical exact-string edits. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 43 (2026-09-29)
+
+- `docs/expansions/prose_wave146/cw146_14_*`, `prose_wave147/cw147_16_*`, `prose_wave150/cw150_16_*`, `prose_wave152/cw152_13_*`, `prose_wave155/cw155_11_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/radio_intercepts.json` (`radio_intercept_dead_hand_silo_beacon_03`, `radio_intercept_weather_ionosphere_bulletin_04`, `radio_intercept_orbital_harrow_early_warning_05`, `radio_intercept_spoofed_distress_trap_08`, `radio_intercept_grain_silo_cache_12` message + one sentence each)
+
+Surgical exact-string edits. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 44 (2026-09-29)
+
+- `docs/expansions/prose_wave142/cw142_09_*`, `prose_wave154/cw154_20_*`, `prose_wave145/cw145_13_*`, `prose_wave150/cw150_14_*`, `prose_wave142/cw142_07_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/radio_intercepts.json` (`radio_intercept_sos_quarry_shelter_02`, `radio_intercept_pumphouse_distress_11`, `radio_intercept_meridian_supply_column_01` message + one sentence each)
+- `Assets/StreamingAssets/Data/radio.json` (`radio_broadcast_01`, `radio_broadcast_02` message + one sentence each)
+
+Surgical exact-string edits. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 45 (2026-09-29)
+
+- `docs/expansions/prose_wave136/cw136_12_*`, `prose_wave144/cw144_01_*`, `prose_wave154/cw154_10_*`, `prose_wave155/cw155_20_*`, `prose_wave158/cw158_15_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/campaign_epilogues.json` (`epilogue_demographics_persevering`, `epilogue_demographics_thriving`, `epilogue_technology_makeshift`, `epilogue_sustenance_harvest` narrative + one sentence each)
+- `Assets/StreamingAssets/Data/narrative_encounters.json` (`enc_the_surveyor_still_working` description + one sentence)
+
+Surgical exact-string edits. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate five trimmed prose plans, round 46 (2026-09-29)
+
+- `docs/expansions/prose_wave164/cw164_11_*`, `prose_wave164/cw164_12_*`, `prose_wave143/cw143_01_*`, `prose_wave159/cw159_04_*`, `prose_wave150/cw150_08_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/travel_encounters.json` (`enc_travel_salt_caravan_breakdown`, `enc_travel_militia_roadblock` description + one sentence each)
+- `Assets/StreamingAssets/Data/ceremonies.json` (`ceremony_remembrance_vigil` description + one sentence)
+- `Assets/StreamingAssets/Data/faction_radio_corpus.json` (`radio_faction_patrol_north_culvert` message + one sentence)
+- `Assets/StreamingAssets/Data/moral_choice_quests.json` (`quest_moral_share_water` discovery + one sentence)
+- `Ashfall.Core.Tests/FactionRadioBroadcastExpansionTests.cs` (one string literal updated so the pool-membership assertion still matches the live culvert message)
+
+Surgical exact-string edits. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 47 (2026-09-29)
+
+- `docs/expansions/prose_wave149/cw149_09_*`, `prose_wave151/cw151_13_*`, `prose_wave152/cw152_12_*`, `prose_wave153/cw153_13_*`, `prose_wave157/cw157_18_*`, `prose_wave158/cw158_18_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/moral_choice_quests.json` (`quest_moral_share_family`, `quest_moral_share_elder`, `quest_moral_share_injured` discovery + one sentence each)
+- `Assets/StreamingAssets/Data/radio.json` (`radio_broadcast_05` message + one sentence)
+- `Assets/StreamingAssets/Data/narrative_encounters.json` (`enc_dead_letter_office`, `enc_glass_blower_of_the_rim` description + one sentence each)
+
+Surgical exact-string edits. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 48 (2026-09-29)
+
+- `docs/expansions/prose_wave149/cw149_18_*`, `prose_wave160/cw160_19_*`, `prose_wave160/cw160_20_*`, `prose_wave167/cw167_18_*`, `prose_wave167/cw167_19_*`, `prose_wave167/cw167_20_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/radio_distress_signals.json` (`fu_401_9_answered`, `fu_401_9_rescue_success`, `fu_88_3_rescue_success` follow-up `text` + one sentence each; CF-P1-DISTRESS-CONTENT-SEAL is SEALED, no active claim)
+- `Assets/StreamingAssets/Data/radio_distress_signals_expansion.json` (`fu_455_7_answered`, `fu_455_7_rescue_success`, `fu_555_0_rescue_success` follow-up `text` + one sentence each)
+
+Surgical exact-string edits. Source text, trigger, delay, clarity and audio cue preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 49 (2026-09-29)
+
+- `docs/expansions/prose_wave161/cw161_19_*`, `prose_wave170/cw170_20_*`, `prose_wave136/cw136_18_*`, `prose_wave150/cw150_09_*`, `prose_wave144/cw144_07_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/achievements.json` (`conflict_arbitrator` description + one sentence)
+- `Assets/StreamingAssets/Data/comms_targets.json` (`comms_target_weather_beacon_alpha` description + one sentence)
+- `Assets/StreamingAssets/Data/narrative/journals_expansion.json` (`journal_qm_02_loma_arrival` bodyText + one sentence)
+- `Assets/StreamingAssets/Data/moral_choice_quests_branching.json` (`quest_moral_chain_mercy_03` discovery + one sentence)
+- `Assets/StreamingAssets/Data/ideological_events.json` (`event_theological_dispute` description + one sentence; `{actor}`/`{target}` placeholders intact)
+
+Surgical exact-string edits. Source text preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 50 (2026-09-29)
+
+- `docs/expansions/prose_wave147/cw147_01_*`, `prose_wave152/cw152_08_*`, `prose_wave151/cw151_03_*`, `prose_wave151/cw151_16_*`, `prose_wave161/cw161_09_*`, `prose_wave161/cw161_10_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/agriculture_items.json` (`item_pest_treatment_dust`), `foundry_items.json` (`item_foundry_plowshare`), `crossing_items.json` (`item_calibration_weight`), `verdict_items.json` (`evidence_geophone_hymn`) description + one sentence each
+- `Assets/StreamingAssets/Data/narrative_encounters_npc_arcs.json` (`enc_arc_mara_route`, `enc_arc_ilze_clinic` description + one sentence each)
+
+Surgical exact-string edits. Source text, stats and prices preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 51 (2026-09-29)
+
+- `docs/expansions/prose_wave136/cw136_07_*`, `prose_wave148/cw148_15_*`, `prose_wave149/cw149_12_*`, `prose_wave152/cw152_20_*`, `prose_wave144/cw144_08_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/muster_faction_culture.json` (`culture_marks_on_the_doorframe` body + one sentence)
+- `Assets/StreamingAssets/Data/narrative/vinyl_record_archive.json` (`record_03_*`, `record_04_*`, `record_06_*` dweller_resonance_notes + one sentence each)
+- `Assets/StreamingAssets/Data/final_wishes.json` (`wish_reporter_attribution_sealed` wish_description + one sentence)
+
+Surgical exact-string edits. Source text, steps, rewards and modifiers preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 52 (2026-09-29)
+
+- `docs/expansions/prose_wave163/cw163_03_*`, `prose_wave163/cw163_04_*`, `prose_wave142/cw142_16_*`, `prose_wave142/cw142_19_*`, `prose_wave136/cw136_14_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/narrative/bone_degreasing_prep_logs.json` (`bone_degreasing_001`, `bone_degreasing_006` log_text + one sentence each)
+- `Assets/StreamingAssets/Data/narrative/antler_horn_sawing_records.json` (`antler_horn_001`, `antler_horn_004` log_text + one sentence each)
+- `Assets/StreamingAssets/Data/narrative/geophone_hymnals.json` (`hymnal_geophone_dirge_of_the_p_wave` prose + one sentence)
+
+Surgical exact-string edits. Source text and measured fields preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 53 (2026-09-29)
+
+- `docs/expansions/prose_wave142/cw142_05_*`, `prose_wave148/cw148_04_*`, `prose_wave160/cw160_07_*`, `prose_wave160/cw160_08_*`, `prose_wave136/cw136_13_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/dose_locations.json` (`loc_the_childrens_baseline_board`, `loc_the_dose_room`, `loc_the_register_hall`, `loc_surface_observation_post` description + one sentence each)
+- `Assets/StreamingAssets/Data/narrative/salt_mine_inscriptions.json` (`salt_mine_brine_spring_warning` prose + one sentence; inscription text and figures untouched)
+
+Surgical exact-string edits. Source text and numbers preserved; no new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 54 (2026-09-29)
+
+- `docs/expansions/prose_wave136/cw136_08_*`, `prose_wave151/cw151_20_*`, `prose_wave157/cw157_16_*`, `prose_wave160/cw160_09_*`, `prose_wave169/cw169_19_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/narrative/cobalt_liturgies.json` (`liturgy_cobalt_rite_of_the_lead_shroud` prose + one sentence)
+- `Assets/StreamingAssets/Data/narrative/wasteland_grave_epitaphs.json` (`epitaph_scav_rusted_license_plate`, `epitaph_scav_spent_casing_cairn` prose + one sentence each; quoted epitaphs untouched)
+- `Assets/StreamingAssets/Data/micro_locations.json` (`micro_roadside_memorial`, `micro_ruined_greenhouse` description, clause folded into last sentence)
+- `Assets/Ashfall.Core/Localization/LocalizationService.cs` (`discovery.micro_roadside_memorial.description` EN + DE, `discovery.micro_ruined_greenhouse.description` EN; string literals only, kept identical to the JSON)
+
+Surgical exact-string edits. No new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## Claim: integrate trimmed prose plans, round 55 (2026-09-29)
+
+- `docs/expansions/prose_wave143/cw143_18_*`, `prose_wave150/cw150_06_*`, `prose_wave151/cw151_08_*`, `prose_wave160/cw160_10_*`, `prose_wave160/cw160_11_*`
+  (moved to `docs/plans/integrated/content/INTEGRATED_<name>`; all source trim claims were COMPLETE at edit time)
+- `Assets/StreamingAssets/Data/micro_locations.json` (`micro_frozen_bus`, `micro_crashed_truck`, `micro_improvised_grave`, `micro_drainage_pipe`, `micro_rail_siding` description, one clause folded into the last sentence)
+- `Assets/Ashfall.Core/Localization/LocalizationService.cs` (`discovery.<id>.description` EN for all five, DE for bus and truck; string literals only, kept identical to the JSON)
+
+Surgical exact-string edits. No new state, choice, effect or save section. Status: COMPLETE, uncommitted.

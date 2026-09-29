@@ -4,7 +4,7 @@
     {
       "id": "enc_dead_letter_office",
       "title": "The Dead Letter Office",
-      "description": "An overturned postal van rusts on the ring road. The driver is mummified against the steering wheel. The rear doors are sheared open: scattered mail, three canvas supply packs, and one heavy, sealed manila envelope addressed to someone at the Scavenger Camp.",
+      "description": "An overturned postal van rusts on the ring road. The driver is mummified against the steering wheel. The rear doors are sheared open: scattered mail, three canvas supply packs, and one heavy, sealed manila envelope addressed to someone at the Scavenger Camp. The mail has not been sorted since the van stopped.",
       "category": "Discovery",
       "baseWeight": 2.0,
       "stealthWeightMultiplier": 0.5,
@@ -232,7 +232,7 @@
     {
       "id": "enc_glass_blower_of_the_rim",
       "title": "The Man Who Works the Crater Glass",
-      "description": "He melts the fused valley floor in a brick furnace and draws it out into lenses, beads, and one long rod he will not explain. The rim has asked for him three times and he has refused three times, which is why the furnace is banked and the door is barred. He sells. He does not go.",
+      "description": "He melts the fused valley floor in a brick furnace and draws it out into lenses, beads, and one long rod he will not explain. The rim has asked for him three times and he has refused three times, which is why the furnace is banked and the door is barred. He sells. He does not go. The furnace ticks as it cools.",
       "category": "Discovery",
       "baseWeight": 1.3,
       "stealthWeightMultiplier": 1.2,
@@ -270,7 +270,7 @@
     {
       "id": "enc_the_surveyor_still_working",
       "title": "The Surveyor at the Boundary",
-      "description": "An old man is running a line across the ash with a theodolite and a chain, marking boundaries for parcels whose owners are eleven years dead. He is not mad and he will tell you so, then explain that the plat has to be accurate for whoever comes back, and that the coming back is not his department.",
+      "description": "An old man is running a line across the ash with a theodolite and a chain, marking boundaries for parcels whose owners are eleven years dead. He is not mad and he will tell you so, then explain that the plat has to be accurate for whoever comes back, and that the coming back is not his department. The chain runs out behind him across the ash.",
       "category": "Social",
       "baseWeight": 1.4,
       "stealthWeightMultiplier": 1.3,

@@ -7,7 +7,7 @@
       "sector": "bunker",
       "riskLevel": 0,
       "radiationUsv": 0.02,
-      "description": "A bolted-down table, four chairs, a fan that turns by hand. One chair keeps the red pencil. The papers on the table are the reason anyone descends the corridor at all."
+      "description": "A bolted-down table, four chairs, a fan that turns by hand. One chair keeps the red pencil. The papers on the table are the reason anyone descends the corridor at all. The fan stops when the hand stops."
     },
     {
       "id": "loc_the_calibration_bench",
@@ -23,7 +23,7 @@
       "sector": "bunker",
       "riskLevel": 0,
       "radiationUsv": 0.02,
-      "description": "A chalkboard in the children's corridor, numbers in children's chalk and adults' fingers, half-erased guesses and one date. The midwife writes in pencil so the truth can change its mind quietly."
+      "description": "A chalkboard in the children's corridor, numbers in children's chalk and adults' fingers, half-erased guesses and one date. The midwife writes in pencil so the truth can change its mind quietly. The date is the one thing nobody has rubbed out."
     },
     {
       "id": "loc_the_register_hall",
@@ -31,7 +31,7 @@
       "sector": "bunker",
       "riskLevel": 0,
       "radiationUsv": 0.02,
-      "description": "The administrative center of the Dose Ledger institution, where dispute queues, appeal requests, and roster clearance checks converge before Dr. Vel's desk."
+      "description": "The administrative center of the Dose Ledger institution, where dispute queues, appeal requests, and roster clearance checks converge before Dr. Vel's desk. Every queue in it ends at the same desk."
     },
     {
       "id": "loc_the_screening_station",
@@ -55,7 +55,7 @@
       "sector": "surface",
       "riskLevel": 2,
       "radiationUsv": 1.75,
-      "description": "A cupola of poured concrete with a viewing slit worn smooth by elbows. Its roof seams were caulked with sheet lead, and the caulking has begun to fail."
+      "description": "A cupola of poured concrete with a viewing slit worn smooth by elbows. Its roof seams were caulked with sheet lead, and the caulking has begun to fail. The slit is wide enough for one face at a time."
     },
     {
       "id": "loc_contaminated_water_access",
