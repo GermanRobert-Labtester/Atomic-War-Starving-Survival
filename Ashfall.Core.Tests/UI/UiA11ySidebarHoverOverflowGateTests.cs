@@ -68,7 +68,6 @@ namespace Ashfall.Core.Tests
         [InlineData("Economy/TradeScreenGodotPanel.cs", "Vector2(100, 0) };")]
         [InlineData("Economy/TradeScreenGodotPanel.cs", "Vector2(120, 0) };")]
         [InlineData("Economy/TradeScreenGodotPanel.cs", "Vector2(140, 0) };")]
-        [InlineData("UI/AshfallMetricCard.cs", "VerticalAlignment = VerticalAlignment.Center\n        };")]
         [InlineData("UI/SurvivorsPanel.cs", "nameLbl.CustomMinimumSize = new Vector2(140, 0);\n                row.AddChild(nameLbl);")]
         [InlineData("UI/GameDashboardPanel.cs", "name.CustomMinimumSize = new Vector2(74, 0);\n            row.AddChild(name);")]
         public void FixedWidthLabels_ClipWithEllipsis(string path, string oldShape)
@@ -78,6 +77,17 @@ namespace Ashfall.Core.Tests
             string src = ReadSrc("src", path.Replace('/', Path.DirectorySeparatorChar));
             Assert.DoesNotContain(oldShape, src);
             Assert.Contains("TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis", src);
+        }
+
+        [Fact]
+        public void MetricCardValue_EllipsizesWithinCard()
+        {
+            string block = Slice(
+                ReadSrc("src", "UI", "AshfallMetricCard.cs"),
+                "_valueLbl = new Label",
+                "_valueLbl.AddThemeFontSizeOverride");
+            Assert.Contains("ClipText = true", block);
+            Assert.Contains("TextServer.OverrunBehavior.TrimEllipsis", block);
         }
     }
 }

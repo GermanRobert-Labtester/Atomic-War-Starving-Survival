@@ -6,6 +6,37 @@ precision work!" (2026-09-29). Sixth package in the audit-fix series: the one
 remaining unimplemented P2 item (§9.5 functionality) plus the P3 hover
 feedback gaps (§7/§9.13) and the remaining fixed-width overflow sites (§6).
 
+> **Editorial polish (prose pass, non-contractual):** the Framing section below is commentary on
+> intent and craft only. It changes no scope, no ownership, no fix and no acceptance criterion.
+> **MUST NOT** below remains binding — including the recorded engine limitations.
+
+---
+
+## 0. Framing — The Control That Wasn't There
+
+> *"A row you can see and cannot reach is not a control. It is a picture of a control."*
+
+The sidebar navigation rows are `PanelContainer + Label` with a mouse-only `GuiInput`. They look
+exactly like buttons. They respond to a mouse. And to a keyboard or a controller they are **not
+merely hard to use — they do not exist**: `FindFocusableControls` collects the Button family only,
+so the focus navigator cannot see them at all.
+
+The fix is one architectural move: convert the row to a flat `Button` with per-row styleboxes
+mirroring today's look exactly. In a single step that yields keyboard activation, navigator and
+Tab-trap eligibility, *and* hover feedback. Three defects, one root cause, one change — which is
+what it looks like when the accessibility problem is structural rather than cosmetic.
+
+**Tone & register.** Observant, structural, slightly indignant on the player's behalf. The
+vocabulary is the widget tree: *row, container, stylebox, focus ring, navigator, hover, clip*. Prose
+should read like someone who has watched a player tab past a menu they can see.
+
+**The interesting honesty.** Three hover gaps are recorded as **engine-limited** and left alone:
+per-item `ItemList` hover (Godot has no hovered-item stylebox), `SpinBox` arrow theming, and
+`RichTextLabel` link hover. The plan does not fake a workaround and does not pretend the gap
+closed. Some things the engine will not give you, and saying so is the work.
+
+---
+
 ## Bounded outcome
 
 1. **Sidebar nav rows become keyboard-reachable (P2.5).** Rows are
@@ -52,3 +83,17 @@ feedback gaps (§7/§9.13) and the remaining fixed-width overflow sites (§6).
 1. `dotnet build Ashfall.csproj` — 0 errors.
 2. Gate tests via `scripts/run_test.sh` + adjacent UI gates.
 3. `--ui-layout-selftest` + `--player-panels-uitest` headless runtime probes.
+
+## Open Items & Deliberate Limits (register — not acceptance criteria)
+
+Drawn from this plan's **MUST NOT** list and its engine-limited notes. Not defects — recorded
+boundaries. Any later pass that raises one must re-check the row type and the clip sites.
+
+| # | Open item | Why it is deliberately open | Who may resolve it (later, separately verified) |
+|---|---|---|---|
+| UI4-OM-1 | **Godot has no hovered-item `ItemList` stylebox.** | Engine-limited and recorded. Per-item hover is not faked and the gap is not pretended closed. | An engine change or a custom-drawn replacement list. |
+| UI4-OM-2 | `SpinBox` arrow theming and `RichTextLabel` link hover. | Also engine-limited, also recorded. | Same — engine, not plan. |
+| UI4-OM-3 | Why were the rows mouse-only in the first place? | `PanelContainer + Label` with `GuiInput` is a plausible way to draw a row. That it reads as a control is exactly the problem; the origin is not recorded. | Never — texture by omission. |
+| UI4-OM-4 | Does making the row a `Button` change anything a mouse player sees? | Per-row styleboxes **mirror today's look exactly** (Ink 0.40 / Warm 0.12 / Warm 0.20 / shared focus ring). Visual parity is asserted, not snapshot-verified here. | The visual lane's snapshot goldens. |
+| UI4-OM-5 | How many other controls are pictures of controls? | This package fixes the sites the audit enumerated. `FindFocusableControls` collects Button-family only — a structural rule that can hide others. | A sweep of non-Button interactive containers. |
+| UI4-OM-6 | Does hover feedback help anyone who cannot hover? | Hover is delivered alongside keyboard activation deliberately. The three of them arrive together or not at all. | Never — a rule, not a gap. |

@@ -279,6 +279,24 @@ public partial class AshfallDataGrid : PanelContainer
             // visible focus style + FocusMode.All via the shared focus policy,
             // with ui_accept (Enter/Space) mirroring the left-click activation.
             AshfallFocusPolicy.ApplyFocusVisibleStyle(panel);
+            // Hover feedback (a11y audit 2026-09-29 §7): pointer-only
+            // affordance for selectable rows. Selection styling stays owned
+            // by RefreshRowHighlights/ApplyRowStyle.
+            panel.MouseEntered += () =>
+            {
+                if (SelectedIndex == captured) return;
+                var hoverSb = new StyleBoxFlat
+                {
+                    BgColor = new Color(DesignTheme.Warm.r, DesignTheme.Warm.g, DesignTheme.Warm.b, 0.10f),
+                };
+                hoverSb.SetBorderWidthAll(0);
+                panel.AddThemeStyleboxOverride("panel", hoverSb);
+            };
+            panel.MouseExited += () =>
+            {
+                if (SelectedIndex == captured) return;
+                ApplyRowStyle(panel, row);
+            };
             panel.GuiInput += evt =>
             {
                 if (evt is InputEventMouseButton mb && mb.Pressed && mb.ButtonIndex == MouseButton.Left)

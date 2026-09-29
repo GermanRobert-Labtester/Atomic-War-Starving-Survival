@@ -147,6 +147,10 @@ namespace AtomicWar.GodotApp.UI
                 row.AddChild(icon);
                 var nameLbl = AshfallUiHelpers.MakeSmall(displayName);
                 nameLbl.CustomMinimumSize = new Vector2(140, 0);
+                // Overflow precision (a11y audit 2026-09-29 §6): long display
+                // names clip at the row column instead of pushing the stats.
+                nameLbl.ClipText = true;
+                nameLbl.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
                 row.AddChild(nameLbl);
                 var statsText = AshfallUiHelpers.MakeMono(
                     $"HP {survivor.Health:0} · HUN {survivor.Hunger:0} · THI {survivor.Thirst:0} · " +

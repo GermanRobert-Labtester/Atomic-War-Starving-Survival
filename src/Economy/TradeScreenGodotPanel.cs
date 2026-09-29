@@ -405,7 +405,7 @@ namespace AtomicWar.GodotApp.Economy
                 };
                 row.AddChild(iconRect);
 
-                var lbl = new Label { Text = name, CustomMinimumSize = new Vector2(100, 0) };
+                var lbl = new Label { Text = name, CustomMinimumSize = new Vector2(100, 0), ClipText = true, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis };
                 lbl.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);
                 lbl.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Pale));
                 row.AddChild(lbl);
@@ -811,7 +811,7 @@ namespace AtomicWar.GodotApp.Economy
                 };
                 offerRow.AddChild(icon1);
 
-                var lblGood1 = new Label { Text = good.displayName, CustomMinimumSize = new Vector2(120, 0) };
+                var lblGood1 = new Label { Text = good.displayName, CustomMinimumSize = new Vector2(120, 0), ClipText = true, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis };
                 lblGood1.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
                 offerRow.AddChild(lblGood1);
 
@@ -838,7 +838,7 @@ namespace AtomicWar.GodotApp.Economy
                 askRow.AddChild(icon2);
 
                 float price = _session.Market.GetPrice(good.id);
-                var lblGood2 = new Label { Text = $"{good.displayName} ({price:0.00})", CustomMinimumSize = new Vector2(140, 0) };
+                var lblGood2 = new Label { Text = $"{good.displayName} ({price:0.00})", CustomMinimumSize = new Vector2(140, 0), ClipText = true, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis };
                 lblGood2.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
                 askRow.AddChild(lblGood2);
 

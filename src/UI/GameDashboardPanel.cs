@@ -756,6 +756,10 @@ namespace AtomicWar.GodotApp.UI
             var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
             var name = AshfallUiHelpers.MakeLabel(label);
             name.CustomMinimumSize = new Vector2(74, 0);
+            // Overflow precision (a11y audit 2026-09-29 §6): pinned 74px gauge
+            // names clip instead of colliding with the meter.
+            name.ClipText = true;
+            name.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
             row.AddChild(name);
 
             bar = new ProgressBar

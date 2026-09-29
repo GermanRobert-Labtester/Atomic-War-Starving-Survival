@@ -73,7 +73,11 @@ public partial class AshfallMetricCard : PanelContainer
         _valueLbl = new Label
         {
             Text = value ?? string.Empty,
-            VerticalAlignment = VerticalAlignment.Center
+            VerticalAlignment = VerticalAlignment.Center,
+            // Overflow precision (a11y audit 2026-09-29 §6): mono values on
+            // narrow cards ellipsize instead of spilling out of the card.
+            ClipText = true,
+            TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
         };
         _valueLbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeMono);
         _valueLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
