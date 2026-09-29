@@ -194,6 +194,9 @@ namespace AtomicWar.GodotApp.UI
             // real theme (raw buttons/inputs in panels otherwise fell through
             // to Godot's default theme in this isolated SubViewport).
             AshfallUiTheme.InstallOn(root);
+            // Same a11y defaults walk as ShowPanelLifecycle so floors and
+            // label clipping match the live UI (a11y pkg 10/11, 2026-09-29).
+            AshfallUiTheme.EnforceControlDefaults(root);
             sub.AddChild(root);
 
             var bg = new ColorRect { Color = new Color(0.10f, 0.09f, 0.07f, 1.0f) };

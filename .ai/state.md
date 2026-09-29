@@ -1,9 +1,23 @@
 # Current Task State
 
-## ChatGPT item art tranche 41 — 2026-09-29 (ACTIVE)
+## ChatGPT item art tranche 43 — 2026-09-29 (ACTIVE)
 
-- Scope: fifteen exact-ID inventory JPEGs under `assets/art/`, matching Godot import sidecars, fifteen editable SVG sources in `docs/visual/sources/tranche41/`, additive report, plan, and ownership claim. No gameplay or catalog edits.
-- Premise: all fifteen authored IDs lack direct or normalized-prefix item art in the current search roots; no semantic alias or exact-path ownership overlap. `potassium_iodide` excluded because prefixed art already exists. Pending: local drawing, render/visual QA, Godot import, report, and plan integration.
+- Scope: fifteen exact-ID inventory JPEGs under `assets/art/`, matching Godot import sidecars, fifteen editable SVG sources in `docs/visual/sources/tranche43/`, additive report, plan, and ownership claim. No gameplay or catalog edits.
+- Premise: all fifteen authored IDs lack direct or normalized-prefix item art in the current search roots; no semantic alias or exact-path ownership overlap. Pending: local drawing, render/visual QA, Godot import, report, and plan integration.
+
+## ChatGPT item art tranche 42 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; fifteen editable SVG sources in `docs/visual/sources/tranche42/`; additive tranche 42 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-42-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-42-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: fifteen cassette archives spanning twelve series drawn locally as SVG illustrations, rendered with Inkscape, and converted to runtime JPEGs with ImageMagick.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed full-size, 64 px, and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report scoped `git diff --check` PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 54 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 502 direct item images.
+
+## ChatGPT item art tranche 41 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: 15 new exact-ID 512×512 opaque JPEG inventory illustrations and 15 Godot-generated `.jpg.import` sidecars under `assets/art/`; fifteen editable SVG sources in `docs/visual/sources/tranche41/`; additive tranche 41 in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md`; ownership claim `claim-chatgpt-item-art-tranche-41-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-41-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Production: five worn document or metal variants and ten cassette archives drawn locally as SVG illustrations, rendered with Inkscape, and converted to runtime JPEGs with ImageMagick. `potassium_iodide` was excluded because prefixed art already exists.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 (opaque 512×512); reviewed full-size, 64 px, and inventory 26 px contact sheets; `jq empty Assets/StreamingAssets/Data/items.json` PASS; `godot --headless --path . --import` PASS with 15 matching JPEG sidecars; report scoped `git diff --check` PASS. A live inventory screenshot was not captured.
+- Remaining: under the prior static candidate-path method, roughly 69 of 967 authored item IDs lack direct/prefix art candidates. The cumulative tranche total is 487 direct item images.
 
 ## ChatGPT item art tranche 40 — 2026-09-29 (COMPLETE, NO COMMIT)
 
@@ -8512,3 +8526,103 @@ runtime tests, generated index/check, integration status change, or commit.
   record after foreign prose pass touched the doc). Verified: host build 0 errors;
   --ui-layout-selftest PASS, --player-panels-uitest PASS, boot clean. NOTE: pkg-9 plan doc and
   this one received foreign prose-factory framing passes mid-session — substance re-edited on top.
+- **Brief #20 — SECOND PROSE PASS, BATCH 4: 10 plans polished and expanded (pool refilled mid-task).**
+  - **Pool selection (measured):** batch 3 closed the narrative families, so this batch took the
+    least-expanded non-integrated plans: 3 NEW composites (`evenings-and-memory-work` 955L,
+    `paper-and-power-and-the-treaty-table` 1173L, `works-below-and-machine-in-the-walls` 1025L —
+    all "first full draft to be expanded and finalised"), the Year Two umbrella
+    (`year-two-the-long-thaw` 648L), 2 NEW ui-a11y packages (`ui-a11y-final-color-literals`,
+    `ui-a11y-target-size-sweep2` — bare, no framing), and the 4 Performance & QoL cards
+    (`performance-build-files`, `performance-host-files`, `performance-qol-save-files`,
+    `performance-host-qol-2026-09-27`).
+  - **Treatment:** composites — editorial-note list + **1c**, "The second layer." Prologue
+    paragraph, **§1c objects & held silences** scoped against their own §7b/§8b/§10b/§14b/§15b
+    texture sections. Umbrella — second layer + §1c before §2. UI packages — new **§0 Framing**
+    ("The Last Colour": tokens as grammar, the declined sprite-tint sweep as the professional
+    act; "The Floor": 28px as "a promise made to fingers", recorded skip exceptions as
+    credibility) + second layer + texture commentary. Perf cards — second-layer paragraph +
+    *Texture (second prose pass)* block in Framing/Prologue, each explicitly "register below
+    unchanged".
+  - **Register discipline:** **zero** new recorded open questions anywhere — perf registers still
+    5 rows each (PB/PH/PS), umbrella §14 untouched (68 table rows incl. headers), composite
+    §19/§25 registers untouched, UI packages' Non-goals/skip lists treated as their existing
+    register and explicitly not enlarged. Index note §6.9.
+  - **Contract surfaces untouched (verified):** STATUS preserved ×10; acceptance, contract,
+    ownership, verification, outcome tables and claimed paths byte-identical — tracked-file git
+    diff for this batch is **0 deleted lines** (purely insertive; the untracked new files have no
+    diff by definition); one second-layer paragraph per file; no duplicate `##` headings.
+  - **Repo refilled mid-task again:** `war-of-words-and-long-inquest-2026-09-29.md` (new
+    composite) and `ashfall-chatgpt-item-art-tranche-41` arrived during this batch;
+    tranches 40 and 36–39 were integrated to `integrated/visual/` by the tranche lane. Deferred
+    to the next pass along with `template.md` (not a plan).
+  - **Testing:** prose-only — no code, data or schema touched; per `TEST_POLICY.md` no test run.
+- **Brief #21 — SECOND PROSE PASS, BATCH 5: 10 plans polished and expanded (a11y series closed).**
+  - **Pool selection (measured):** the remaining least-expanded non-integrated plans numbered
+    exactly 10 — the new composite `war-of-words-and-long-inquest` (1199L, "first full draft to be
+    expanded and finalised"), `ashfall-chatgpt-item-art-tranche-41`, and the 8 UI a11y cards with
+    pass-1 only (`p1-input-correctness`, `p2-focus-contrast`, `p3-nav-overflow`, `scrim-token`,
+    `sidebar-hover-overflow`, `target-sizes`, `accent-tokens`, `fontsize-lift`). `template.md`
+    excluded (not a plan).
+  - **Treatment:** composite — editorial-note list + **1c**, second layer (rumour = story with a
+    route; finding = fact with chain of custody), **§1c objects & held silences** (pamphlet with
+    the thumbprint; exhibit tags that "refuse to summarise"; the Silence line "not a teaser — the
+    case's honesty"). Tranche-41 — new §0 Framing "Fifteen Voices in a Sleeve" + second layer +
+    texture, Visual specification/Verification untouched. A11y cards — second-layer paragraph +
+    *Texture (second prose pass)* block appended inside each existing Framing, themed per card
+    (listening is a design decision / focus is "you are nowhere" / an ellipsis is an admission /
+    fifty-eight acts of unrecorded authorship / a picture of a control / the extra pixel /
+    a dictionary closing / one integer).
+  - **Register discipline:** **zero** new recorded open questions — a11y registers 5–6 rows each
+    (verified counts unchanged), composite §25 untouched, tranche limits = its Visual
+    spec/Verification ("deliberately unenlarged"). Index note §6.10 records corpus-wide pass
+    completion and the re-scan-first protocol for future arrivals.
+  - **Contract surfaces untouched (verified):** STATUS preserved ×10; zero deleted lines in
+    tracked files for this batch (purely insertive); one second-layer paragraph per file; no
+    duplicate `##` headings. One defect self-caught and fixed: the tranche-41 epigraph lost its
+    closing `*` on first write and was repaired in the next call.
+  - **Process note:** one edit call mistakenly mixed anchors from three different a11y files;
+    the atomic matcher rejected it (nothing applied) and the calls were redone per-file. Verified
+    afterwards: all 8 cards exactly one second-layer block each.
+  - **Mid-task integration:** the tranche lane moved `ashfall-chatgpt-item-art-tranche-41` to
+    `.ai/plans/integrated/visual/` during verification — polish carried over intact (62L, Framing
+    + second layer present in the integrated copy).
+  - **Testing:** prose-only — no code, data or schema touched; per `TEST_POLICY.md` no test run.
+  - **Not done / open:** `template.md` (not a plan). Pool otherwise empty at time of writing; the
+    repository refills, so the next brief should re-scan before assuming scarcity.
+- **Brief #22 — SECOND PROSE PASS, BATCH 6: 10 prose companions polished and expanded.**
+  - **Pool selection (measured):** `.ai/plans/` re-scan found only `template.md` (not a plan) —
+    the plan corpus is fully passed. Widened to `docs/expansions/`, where the prose companions had
+    pass-2 registers but no second-layer depth. The principled set of exactly 10 = **the companions
+    of batch 2's ten plans** (The Deep, Deep Works, Long Siege, Ration Wars, Record Keepers, Living
+    Region, Long Line: Freight, Plague Year, Drowned Coast, The Sky), keeping each plan and its
+    design bible at equal depth. Excluded (standing rule §6.5): generated volumes, audits, and
+    integration plans read by gates.
+  - **Treatment:** one insertion per bible, immediately before its "What stays unsaid" register —
+    **"The deeper layer — objects, scenes & held silences (second prose pass)"** with a second-layer
+    paragraph, three artifact fragments, two micro-scenes, two held silences. Content deliberately
+    non-duplicative of the paired plan's §1c AND the bible's own register (e.g. The Deep bible gets
+    the laminated instrument card and the Forced-pencil descent plan, not the plan's scrubber
+    schedule; the siege bible gets the sentry rota and terms fold, not the plan's board columns).
+  - **Register discipline:** all ten "What stays unsaid" registers unchanged — **zero** new recorded
+    questions; each block says "the register below is unchanged" and its silences defer to it.
+  - **Contract surfaces untouched (verified):** document status/proposal headers, audit tables
+    (LIVE/GAP/PROPOSED/VERIFY), boundaries, content plans and risk tables byte-identical — git
+    diff shows **0 deleted lines** across the ten files (purely insertive); one deeper-layer
+    section and one second-layer paragraph per bible; no duplicate `##` headings.
+  - **Testing:** prose-only — no code, data or schema touched; per `TEST_POLICY.md` no test run.
+  - **Not done / open:** batch-3 companions (7), creative packs (6), family indexes (4), the year-two
+    umbrella companion, `template.md`. Future batches should re-scan for arrivals first, then
+    continue the companion corpus in the same pairing order.
+
+- 2026-09-29 — claim-ui-theme-coverage-2026-09-29 (a11y series pkg 11, agent Cline): theme
+  coverage for control types whose type-specific styleboxes/icons resolved to Godot's light
+  default art despite class-chain text fallback — ProgressBar bg/fill/fonts (16 direct sites),
+  CheckBox/CheckButton flat check icons, OptionButton arrow (50 sites), SpinBox updown (13),
+  TabContainer/TabBar tab chrome (2), RichTextLabel fonts/colors (6). All in
+  AshfallUiTheme.Build() from existing tokens, no new tokens, per-node overrides still win.
+  Plus SnapshotOrchestrator now runs EnforceControlDefaults beside InstallOn (capture parity
+  with live UI). Files: src/UI/AshfallUiTheme.cs, src/UI/SnapshotOrchestrator.cs,
+  Ashfall.Core.Tests/UI/UiThemeCoverageGateTests.cs (new, 8/8 — gotcha: gate for loop-set
+  items must assert the loop, literal per-type strings don't exist in source).
+  Verified: host build 0 errors; --ui-layout-selftest PASS, --player-panels-uitest PASS,
+  boot clean.

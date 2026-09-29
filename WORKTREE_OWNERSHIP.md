@@ -1,5 +1,41 @@
 # ASHFALL Worktree Ownership
 
+## claim-ui-theme-coverage-2026-09-29
+
+User-authorized implementation ("Continue with a larger batch of doing more UI
+correction and UI precision work!", 2026-09-29) — eleventh package in the
+a11y-audit fix series: theme coverage for the control types whose text
+inherits via class fallback but whose styleboxes/icons resolved to Godot's
+light default art (ProgressBar, CheckBox/CheckButton, OptionButton, SpinBox,
+TabContainer/TabBar, RichTextLabel) + snapshot-orchestrator defaults walk for
+capture parity. **Plan:** `.ai/plans/ui-theme-coverage-2026-09-29.md`
+(STATUS: APPROVED BY USER). **Exact paths:** `src/UI/AshfallUiTheme.cs`
+(Build() extensions), `src/UI/SnapshotOrchestrator.cs` (one walk call),
+`Ashfall.Core.Tests/UI/UiThemeCoverageGateTests.cs` (new). Shared paths
+intentionally untouched.
+
+## claim-chatgpt-item-art-tranche-43-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{cassette_field_hospital_7_5,cassette_evacuation_train_4,cassette_station_14_6,cassette_fathers_tapes_3,cassette_fathers_tapes_4,cassette_dam_keeper_log_3,cassette_dam_keeper_log_5,cassette_teachers_recordings_3,cassette_quarantine_tapes_4,cassette_checkpoint_kilo_3,cassette_checkpoint_kilo_4,cassette_saint_maren_3,cassette_family_bunker_3,cassette_free_radio_3,cassette_free_radio_4}.jpg`
+files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
+sources under `docs/visual/sources/tranche43/`, plus
+`.ai/plans/ashfall-chatgpt-item-art-tranche-43-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: ACTIVE.
+
+## claim-chatgpt-item-art-tranche-42-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{cassette_greenhouse_tapes_3,cassette_field_hospital_7_3,cassette_field_hospital_7_4,cassette_evacuation_train_3,cassette_station_14_3,cassette_station_14_4,cassette_fathers_tapes_2,cassette_dam_keeper_log_2,cassette_teachers_recordings_2,cassette_quarantine_tapes_2,cassette_quarantine_tapes_3,cassette_checkpoint_kilo_2,cassette_saint_maren_2,cassette_family_bunker_2,cassette_free_radio_2}.jpg`
+files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
+sources under `docs/visual/sources/tranche42/`, plus
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-42-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
+Status: COMPLETE, no commit.
+
 ## claim-ui-a11y-target-size-sweep2-2026-09-29
 
 User-authorized implementation ("Continue with a larger batch of doing more UI
@@ -19,10 +55,10 @@ User-authorized fifteen-item visual continuation. Root owns exact new
 `assets/art/{item_document_casualty_list,item_document_evacuation_route_map,item_document_civil_defense_poster,item_document_child_drawing,item_dog_tags_scavenged,cassette_greenhouse_tapes_2,cassette_field_hospital_7_2,cassette_evacuation_train_2,cassette_station_14_2,cassette_teachers_recordings_1,cassette_quarantine_tapes_1,cassette_checkpoint_kilo_1,cassette_saint_maren_1,cassette_family_bunker_1,cassette_free_radio_1}.jpg`
 files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
 sources under `docs/visual/sources/tranche41/`, plus
-`.ai/plans/ashfall-chatgpt-item-art-tranche-41-2026-09-29.md`, additive
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-41-2026-09-29.md`, additive
 entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
 `.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
-Status: ACTIVE.
+Status: COMPLETE, no commit.
 
 ## claim-chatgpt-item-art-tranche-40-2026-09-29
 

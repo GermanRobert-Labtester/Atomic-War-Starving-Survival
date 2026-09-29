@@ -221,6 +221,63 @@ namespace AtomicWar.GodotApp.UI
             theme.SetStylebox("grabber_highlight", "ScrollBar", Flat(warm));
             theme.SetStylebox("grabber_pressed", "ScrollBar", Flat(hot));
 
+            // ── ProgressBar (a11y series pkg 11, 2026-09-29) ──
+            // ProgressBar's class chain never reaches Button/LineEdit, so its
+            // background/fill styleboxes resolved to Godot's light default art
+            // on every direct `new ProgressBar` site.
+            theme.SetStylebox("background", "ProgressBar", Flat(new Color(ink.R, ink.G, ink.B, 0.85f), line));
+            theme.SetStylebox("fill", "ProgressBar", Flat(warm));
+            theme.SetColor("font_color", "ProgressBar", pale);
+            theme.SetColor("font_background_color", "ProgressBar", muted);
+            theme.SetFontSize("font_size", "ProgressBar", DesignTheme.FontSizeBody);
+            SetFontIfAvailable(theme, "ProgressBar", AshfallUiHelpers.FontBarlowSemiBold);
+
+            // ── CheckBox / CheckButton ──
+            // Text entries fall back to Button; the check icons are
+            // type-specific and previously showed Godot's default art.
+            var checkIcon = MakeFlatTexture(14, hot, ink);
+            var uncheckedIcon = MakeFlatTexture(14, new Color(ink.R, ink.G, ink.B, 0.65f), line);
+            foreach (var type in new[] { "CheckBox", "CheckButton" })
+            {
+                theme.SetIcon("checked", type, checkIcon);
+                theme.SetIcon("unchecked", type, uncheckedIcon);
+                theme.SetIcon("radio_checked", type, checkIcon);
+                theme.SetIcon("radio_unchecked", type, uncheckedIcon);
+            }
+
+            // ── OptionButton / SpinBox ──
+            // Styleboxes fall back to Button/LineEdit; the arrows do not.
+            theme.SetIcon("arrow", "OptionButton", MakeFlatTexture(10, hot, hot));
+            theme.SetIcon("updown", "SpinBox", MakeFlatTexture(12, warm, line));
+
+            // ── TabContainer / TabBar ──
+            var tabSelected = Flat(new Color(warm.R, warm.G, warm.B, 0.30f), hot);
+            var tabUnselected = Flat(new Color(ink.R, ink.G, ink.B, 0.65f), line);
+            theme.SetStylebox("panel", "TabContainer", Flat(new Color(ink.R, ink.G, ink.B, 0.90f), lineSoft));
+            theme.SetStylebox("tab_selected", "TabContainer", tabSelected);
+            theme.SetStylebox("tab_unselected", "TabContainer", tabUnselected);
+            theme.SetColor("font_selected_color", "TabContainer", pale);
+            theme.SetColor("font_unselected_color", "TabContainer", muted);
+            theme.SetFontSize("font_size", "TabContainer", DesignTheme.FontSizeBody);
+            SetFontIfAvailable(theme, "TabContainer", AshfallUiHelpers.FontBarlowSemiBold);
+            theme.SetStylebox("tab_selected", "TabBar", tabSelected);
+            theme.SetStylebox("tab_unselected", "TabBar", tabUnselected);
+            theme.SetColor("font_selected_color", "TabBar", pale);
+            theme.SetColor("font_unselected_color", "TabBar", muted);
+            theme.SetFontSize("font_size", "TabBar", DesignTheme.FontSizeBody);
+            SetFontIfAvailable(theme, "TabBar", AshfallUiHelpers.FontBarlowSemiBold);
+
+            // ── RichTextLabel ──
+            theme.SetColor("default_color", "RichTextLabel", pale);
+            theme.SetFontSize("normal_font_size", "RichTextLabel", DesignTheme.FontSizeBody);
+            theme.SetFontSize("bold_font_size", "RichTextLabel", DesignTheme.FontSizeBody);
+            theme.SetFontSize("mono_font_size", "RichTextLabel", DesignTheme.FontSizeMono);
+            SetFontIfAvailable(theme, "RichTextLabel", AshfallUiHelpers.FontBarlowRegular);
+            if (AshfallUiHelpers.FontBarlowSemiBold != null)
+                theme.SetFont("bold_font", "RichTextLabel", AshfallUiHelpers.FontBarlowSemiBold);
+            if (AshfallUiHelpers.FontShareTechMono != null)
+                theme.SetFont("mono_font", "RichTextLabel", AshfallUiHelpers.FontShareTechMono);
+
             return theme;
         }
 
