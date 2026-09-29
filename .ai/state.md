@@ -7818,8 +7818,27 @@ runtime tests, generated index/check, integration status change, or commit.
 - Verification: all fifteen JPEGs are opaque 512×512; 64 px and 26 px contact sheets inspected; `jq empty Assets/StreamingAssets/Data/items.json` exited 0; `godot --headless --path . --import` exited 0; matching sidecars present. No gameplay tests needed for art-only additions.
 - Remaining: no in-game screenshot of these exact items; roughly 339 item IDs still lack direct/prefix art candidates by the prior static method. No commit.
 
+## ChatGPT item art tranche 24 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: fifteen new `assets/art/{trap_improvised_wire,trap_box,trap_fish,trap_body_grip,trap_snare,trap_deadfall,trap_pit,trap_net,trap_cage,trap_bird_snare,item_decor_trophy_ash_hound_pelt,item_fur_mittens,item_boiled_roots,item_collectible_hunting_magazine,item_vacuum_seal_canner}.jpg` files; Godot generated matching `.jpg.import` sidecars. Updated visual report, ownership claim, and integrated plan record.
+- Verification: all fifteen JPEGs are opaque 512×512; 64 px and 26 px contact sheets inspected; `jq empty Assets/StreamingAssets/Data/items.json` exited 0; `godot --headless --path . --import` exited 0; matching sidecars present. No gameplay tests needed for art-only additions.
+- Remaining: no in-game screenshot of these exact items; roughly 324 item IDs still lack direct/prefix art candidates by the prior static method. No commit.
+
 ## Method-C conservative prose-plan trim batch 58 — 2026-09-29 (COMPLETE, NO COMMIT)
 
 - Changed: five `docs/expansions/prose_wave*/cw*_plan.md` files trimmed by the batch-53-reconstructed Go tool (method C): cw131_18 (169,657→69,341 lines), cw161_09 (172,620→70,491), cw161_10 (172,620→70,491), cw163_03 (172,596→70,420), cw163_04 (172,596→70,467). Total ~860K→351K lines (~59%), ~25.8 MB saved. Ownership claim `claim-plan-trim-conservative-method-C-expansion-batch58-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`.
 - Verification: tool `--verify` PASS per file (no distinct original line lost; BATCH banners intact); authored-prefix SHA-256 equal per file; banner counts equal (13/14); `### Tranche` counts equal (260/280); scoped `git diff --check` PASS. Originals + SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-b58-20260929/`.
 - Selection: all five files git-clean, every ledger mention an unused ranked spare of a COMPLETE claim (cw163_03: b27+b62; cw163_04: b27+b60; cw131_18: editorial b56; cw161_09/cw161_10: method-C b23). One two-mention spare remains (cw160_10). No production changes, no tests, no commit.
+
+## UI a11y P1 input-correctness fixes — 2026-09-29 (COMPLETE)
+
+- Plan: `.ai/plans/ui-a11y-p1-input-correctness-2026-09-29.md` (STATUS: APPROVED BY USER); claim `claim-ui-a11y-p1-input-correctness-2026-09-29`.
+- Changed: `src/Main.UiHandlers.cs` (OpenMoralChoiceModal now calls CloseAllOverlayPanels first — removes live 1–5 double-consumption with CombatPanel); `src/Main.Application.cs` (J hotkey gated on GameState.Playing like siblings); `src/UI/EmergencyResponseHud.cs` (Esc moved from `_Input` to `_UnhandledKeyInput` with pressed/echo guard so stacked modals close first); `src/Main.PanelLifecycle.cs` (CloseAllOverlayPanels re-raises visible crisis HUD via MoveToFront — catalog membership deliberately NOT added, would lose active alert on panel switch; recorded divergence from audit §9.2); new static gate `Ashfall.Core.Tests/UI/UiA11yP1InputGateTests.cs` (4 gates).
+- Verification: host build 0 errors/18 warnings (baseline); headless boot `--quit-after 2` exit 0, Errors: 0; scoped run 59 targets (first run 58/59 — failure target lost to log truncation, full-log rerun in progress; UiA11yP1InputGateTests 4/4 PASS).
+- Remaining: Core `Shortcut="1"` strings in CrisisPresentationCoordinator have no HUD consumer (Space works via focus+ui_accept); number-shortcut wiring intentionally skipped (would create new combat-panel collision). PanelLifecycle touched under stale PFGL claim — documented in claim row.
+
+## Method-C conservative prose-plan trim batch 59 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: five bloated generated-expansion plans trimmed (method C): cw160_10 (172,624→70,495 lines), docs/world/PLAN_121_GPR_AUTHORITY_MAP (53,458→37,101), docs/implementation/PLAN142_TIMESTAMP_POLICY (53,108→35,956), docs/implementation/PLAN143_ATOMICITY_POLICY (53,050→34,963), docs/medical/PLAN112_AUTOPSY_INTEGRATION (52,515→34,428). Total ~485K→213K lines, ~8.1 MB saved. Ownership claim `claim-plan-trim-conservative-method-C-expansion-batch59-2026-09-29` prepended to `WORKTREE_OWNERSHIP.md`.
+- Verification: tool `--verify` PASS per file (no distinct original line lost; banners intact); authored-prefix SHA-256 equal per file; banner counts equal (14/11); `### Tranche` counts equal (280/220); scoped `git diff --check` PASS. Originals + SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-b59-20260929/`.
+- Selection: cw160_10 = b58's last verified stale two-mention spare; the four docs-tier files = newly surveyed 0-mention (fixed-string), git-clean, untrimmed fresh pool with no live-claim coverage. Live screens re-run: 15 prose_wave clean files + wave tier remain owned by IN-PROGRESS parallel-batch claims; C2_planintegration[3]/[6]/[7] owned by open editorial claims; INTEGRATED_cw* already consolidated. ~9 fresh-tier candidates remain (PLAN156_SAVE_COMPATIBILITY, PLAN112_EXISTING_7_INVENTORY, PLAN28/PLAN10/PLAN33 reports, PLAN10_REGRESSION_MATRIX, PLAN128_BASELINE, two docs/remediation audit plans). No production changes, no tests, no commit.

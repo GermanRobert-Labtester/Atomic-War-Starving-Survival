@@ -1,5 +1,107 @@
 # ASHFALL Worktree Ownership
 
+## claim-plan-trim-conservative-method-C-expansion-batch59-2026-09-29
+
+User-authorized conservative trim (method C) — "find 5 bloated plans to
+trim, please don't overtrim and overcompress, remove repetitive and
+ununique plus boring prose from prose plans and polish all 10 plans!" —
+fifty-ninth batch in the method-C family (executed as 5 files per the
+explicit count, batch 48/54–58 precedent). The b58 prose_wave spare class
+was down to one file (cw160_10), so this batch takes it plus a newly
+surveyed fresh tier of 0-mention, git-clean, untrimmed generated-expansion
+plans outside docs/plans and docs/expansions (docs/world, docs/implementation,
+docs/medical). cw160_10's every mention is an unused ranked spare of a
+COMPLETE claim (method-C b23 DONE + editorial b110 COMPLETE, "no
+substitution from the spare list was needed"; verified per mention). The
+four fresh-tier files have 0 ledger mentions under fixed-string matching
+(bracket-basename regex escapes corrected this batch), no directory-level
+claim coverage, and no production/tooling load-bearing references (only
+static batch-candidate scanner lists, same class as previously trimmed
+files). Live-claim screens re-run this batch: all 15 clean single-mention
+prose_wave files and the wave*/expansion_* tier remain root-owned by
+claim-plan-bloat-reduction-parallel-batch-42/43/44/45/46/47/48/49/50/51/52/53
+(IN PROGRESS) — skipped untouched; C2_planintegration[3]/[6]/[7] are
+root-owned by open editorial claims b48/b48/b46 — skipped; INTEGRATED_cw*
+copies already carry ~4.5K pointers (trim-refusing, already consolidated);
+game_repository_remediation__plan.md is claimed by the IN PROGRESS
+deep-audit-repair claim — skipped. All five were git-clean and quiet at
+claim time; edit-time rechecks (git-clean + mention recheck) applied before
+each write; trimmer is the batch-53-reconstructed tool (validated
+byte-exact against three known pairs):
+
+- `docs/expansions/prose_wave160/cw160_10_the_blankets_were_pushed_beyond_the_light_plan.md`
+- `docs/world/PLAN_121_GPR_AUTHORITY_MAP.md`
+- `docs/implementation/PLAN142_TIMESTAMP_POLICY.md`
+- `docs/implementation/PLAN143_ATOMICITY_POLICY.md`
+- `docs/medical/PLAN112_AUTOPSY_INTEGRATION.md`
+
+No spares used. Standing exclusions unchanged: deep-audit ×4; W2-06;
+PLAN-READINESS-281 + PLAN-ORPHAN-SEAL-01 + CLAIM_READINESS_INDEX;
+PLAN_24_CLOSEOUT; wave*/expansion_* tier in
+claim-plan-bloat-reduction-parallel-batch-42/44/45/47; batch-28–58 files
+now dirty; spares and roots of IN PROGRESS / open editorial claims
+excluded; in-flight sibling trims excluded by the git-clean filter.
+
+Method C (conservative — keeps unique material; no wholesale removal, no
+lossy compression): authored content retained verbatim; only
+byte-identical repeat leaf-section copies in the generated `BATCH-NN
+ARCHITECTURAL EXPANSION` regions are removed (each marked by a
+`consolidated: §` pointer); `### Tranche` container headings retained
+for navigation; all unique `BATCH-` headers and distinct section
+headings/bodies preserved. The docs/* tier files reduce ~30–35% (11
+banners/220 tranches, fewer generated duplicates) — deliberately
+conservative per the user's no-overtrim instruction. Full pre-trim
+originals + SHA-256 manifest at `/tmp/ashfall-plan-trim-methodc-b59-20260929/`
+and recoverable from git history. No production changes, runtime tests,
+or commit. Status: COMPLETE, uncommitted. Trim results (Go tool line
+counts): cw160_10_the_blankets_were_pushed_beyond_the_light 172,624 →
+70,495; PLAN_121_GPR_AUTHORITY_MAP 53,458 → 37,101; PLAN142_TIMESTAMP_POLICY
+53,108 → 35,956; PLAN143_ATOMICITY_POLICY 53,050 → 34,963;
+PLAN112_AUTOPSY_INTEGRATION 52,515 → 34,428. Total 484,755 → 212,943
+lines (~56% for cw160_10; ~33% docs tier; 441,567 lines removed);
+14,520 byte-identical repeat copies replaced by `consolidated: §`
+pointers; ~8.1 MB saved. Each file's authored prefix retained
+byte-identically (SHA-256 prefix check per file: a2e470c4…, 70bb3466…,
+3470c5a3…, c56cde44…, b2357ec6…). Verified per file via the tool's
+`--verify` mode (every distinct original line value survives; no distinct
+line lost; BATCH banners intact) plus independent checks: banner counts
+equal (14 or 11), `### Tranche` container headings equal (280 or 220),
+authored-prefix SHA-256 equal, scoped `git diff --check` PASS. Fresh-tier
+eligible 0-mention candidates remain for further batches (~9 files:
+PLAN156_SAVE_COMPATIBILITY, PLAN112_EXISTING_7_INVENTORY,
+PLAN28_COMPLETION_REPORT, PLAN10_COMPLETION_REPORT, PLAN33_BASELINE,
+PLAN10_REGRESSION_MATRIX, PLAN128_BASELINE, plus the two smaller
+docs/remediation/plans audit plans).
+
+## claim-ui-a11y-p1-input-correctness-2026-09-29
+
+User-authorized implementation ("some more UI work!", 2026-09-29) of the P1
+input-correctness fixes from `docs/ui/ACCESSIBILITY_REPORT_2026-09-29.md`.
+**Plan:** `.ai/plans/ui-a11y-p1-input-correctness-2026-09-29.md` (STATUS:
+APPROVED BY USER). **Exact paths:** `src/Main.UiHandlers.cs` (exclusive-open
+seam in `OpenMoralChoiceModal`), `src/Main.Application.cs` (J hotkey Playing
+gate), `src/UI/EmergencyResponseHud.cs` (Esc `_Input`→`_UnhandledKeyInput`),
+`src/Main.PanelLifecycle.cs` (crisis-HUD re-raise in `CloseAllOverlayPanels` —
+this file sat in the stale, already-shipped PFGL-CODEX-LUNA6-OCTET Phase A
+row; change is a 4-line additive block), new
+`Ashfall.Core.Tests/UI/UiA11yP1InputGateTests.cs`, governance (this row,
+`.ai/state.md`, the plan). **Deliberately untouched:** Core (incl.
+`CrisisPresentationCoordinator`), `OverlayPanelCatalog` membership for the
+crisis HUD (would lose an active alert on panel switch — recorded divergence),
+all data/save paths, all other `src/UI/*`.
+
+## claim-chatgpt-item-art-tranche-24-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+`assets/art/{trap_improvised_wire,trap_box,trap_fish,trap_body_grip,trap_snare,trap_deadfall,trap_pit,trap_net,trap_cage,trap_bird_snare,item_decor_trophy_ash_hound_pelt,item_fur_mittens,item_boiled_roots,item_collectible_hunting_magazine,item_vacuum_seal_canner}.jpg`
+files and their matching `.jpg.import` sidecars, plus
+`.ai/plans/ashfall-chatgpt-item-art-tranche-24-2026-09-29.md`, additive
+entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
+`.ai/state.md`, and this claim. No catalog, source, or existing art edits.
+Status: COMPLETE, uncommitted. Fifteen opaque 512×512 JPEGs and matching Godot
+import sidecars added; 64 px and 26 px strips inspected; catalog JSON parsed;
+headless Godot import passed. No live inventory screenshot captured.
+
 ## claim-plan-trim-conservative-method-C-expansion-batch58-2026-09-29
 
 User-authorized conservative trim (method C) — "find 5 bloated plans to

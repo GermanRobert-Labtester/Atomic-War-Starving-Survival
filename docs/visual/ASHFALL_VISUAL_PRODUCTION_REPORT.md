@@ -1,7 +1,7 @@
-# ASHFALL Visual Production Report — 2026-09-29 (Twenty-Three Tranches)
+# ASHFALL Visual Production Report — 2026-09-29 (Twenty-Four Tranches)
 
-Sections 1–20 record tranches 1–8. The tranche 9–23 addenda at the end
-record the latest 170 assets and supersede their cumulative counts.
+Sections 1–20 record tranches 1–8. The tranche 9–24 addenda at the end
+record the latest 185 assets and supersede their cumulative counts.
 
 ## 1. Git SHA
 
@@ -11,7 +11,7 @@ Baseline `b31915ea2`; uncommitted visual tranche.
 
 | Tool | Availability | Used for |
 |---|---|---|
-| ChatGPT image generation | Available; model version not exposed | 217 item images across twenty-three tranches |
+| ChatGPT image generation | Available; model version not exposed | 232 item images across twenty-four tranches |
 | ImageMagick | Available | 512 px JPEG processing and 64/26 px visual checks |
 | Godot 4.7.1 mono | Available | Headless import |
 
@@ -652,4 +652,43 @@ A live inventory screenshot of these exact items was not captured.
 Cumulative direct item art added in these twenty-three tranches: 217. Under
 the prior static candidate-path method, roughly 628 of 967 item IDs now have
 direct or prefix art candidates and roughly 339 remain. These estimates
+exclude aliases.
+
+## Tranche 24 — fifteen trapping and field-survival inventory assets
+
+All fifteen IDs are authored in `Assets/StreamingAssets/Data/items.json` and
+had no direct or normalized-prefix art in the current `AssetRegistry` item
+search roots. The 512×512 opaque JPEGs continue the isolated, tactile item
+style. Each has a Godot-generated `.jpg.import` sidecar.
+
+| Catalog ID | New runtime file |
+|---|---|
+| `trap_improvised_wire` | `assets/art/trap_improvised_wire.jpg` |
+| `trap_box` | `assets/art/trap_box.jpg` |
+| `trap_fish` | `assets/art/trap_fish.jpg` |
+| `trap_body_grip` | `assets/art/trap_body_grip.jpg` |
+| `trap_snare` | `assets/art/trap_snare.jpg` |
+| `trap_deadfall` | `assets/art/trap_deadfall.jpg` |
+| `trap_pit` | `assets/art/trap_pit.jpg` |
+| `trap_net` | `assets/art/trap_net.jpg` |
+| `trap_cage` | `assets/art/trap_cage.jpg` |
+| `trap_bird_snare` | `assets/art/trap_bird_snare.jpg` |
+| `item_decor_trophy_ash_hound_pelt` | `assets/art/item_decor_trophy_ash_hound_pelt.jpg` |
+| `item_fur_mittens` | `assets/art/item_fur_mittens.jpg` |
+| `item_boiled_roots` | `assets/art/item_boiled_roots.jpg` |
+| `item_collectible_hunting_magazine` | `assets/art/item_collectible_hunting_magazine.jpg` |
+| `item_vacuum_seal_canner` | `assets/art/item_vacuum_seal_canner.jpg` |
+
+ImageMagick metadata confirms fifteen opaque 512×512 JPEGs. Contact sheets
+were inspected at 64 px and the inventory's 26 px icon size. The ten trap
+types retain different mechanisms and silhouettes; the pit trap uses a small
+ground cutaway. `jq empty Assets/StreamingAssets/Data/items.json` exited 0.
+`godot --headless --path . --import` exited 0; matching sidecars are present.
+Direct filenames make the images available through `AssetRegistry.GetItem`
+without code changes. A live inventory screenshot of these exact items was
+not captured.
+
+Cumulative direct item art added in these twenty-four tranches: 232. Under
+the prior static candidate-path method, roughly 643 of 967 item IDs now have
+direct or prefix art candidates and roughly 324 remain. These estimates
 exclude aliases.
