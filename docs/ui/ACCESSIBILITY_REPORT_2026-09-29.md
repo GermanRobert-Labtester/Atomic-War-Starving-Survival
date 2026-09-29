@@ -114,6 +114,34 @@ existing snapshot renders before approving any of these as pass/fail;
 the fix (raising scrim alpha to ≥0.9 or tokenizing) should be chosen
 per-surface, not globally.
 
+> **§3 CLOSED 2026-09-29** (a11y pkg 17, plan
+> `.ai/plans/ui-scrim-contrast-2026-09-29.md`, gate
+> `Ashfall.Core.Tests/UI/UiScrimContrastGateTests.cs`). Method: backdrop
+> art cannot exceed sRGB white, so compositing each Ink scrim over a
+> pure-white backdrop gives a worst-case contrast bound (correct WCAG
+> gamma; note the initial scratch pass used a wrong threshold and
+> understated the failures). Results:
+>
+> - **Fixed — raised to Ink 0.90** (every token ≥ 4.96:1 worst-case):
+>   MapDetailPanel scene scrim 0.74→0.90 (Muted was 2.74:1),
+>   ExpeditionPanel art dim 0.82→0.90 (Dim was 3.78:1),
+>   GameOverPanel carousel overlay 0.80→0.90 (Dim was 3.44:1 — the
+>   panel-less title/cause/stats/hint column renders directly on it).
+> - **False positive — MainMenuPanel**: the claim that menu
+>   status/version labels render over the 0.55 carousel overlay is
+>   wrong; the entire menu column sits inside `MakePanel(520, 0)` with
+>   its own scrim. Worst-case over the raw 0.55 overlay would be 2.02:1
+>   even for Warm, so the backing panel is load-bearing and now
+>   gate-tripwired. No code change needed.
+> - **Passed as-is**: GameHudOverlay meters (Ink 0.90; Muted 4.88:1
+>   worst-case), Expedition encounter banner (Entropy-tint 0.94; Warm
+>   8:1), compound translucent chrome (metric card 0.72 → status rail
+>   0.55 → sidebar row 0.40 — ink layers only darken; Dim 5.84:1 at the
+>   lightest layer).
+>
+> All closures are enforced by `UiScrimContrastGateTests` (worst-case
+> math against live Core tokens + per-surface alpha tripwires).
+
 ## 4. Typography
 
 No font size below 11 exists and no literal <12 override exists

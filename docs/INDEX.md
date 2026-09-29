@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5571 | **Total Characters:** 6,974,738,335 | **Last Verified:** 2026-09-29
-**Oversized (>= 100,000 characters):** 3549 documents carrying 6,944,215,514 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5580 | **Total Characters:** 6,975,043,126 | **Last Verified:** 2026-09-29
+**Oversized (>= 100,000 characters):** 3549 documents carrying 6,944,235,102 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5516 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5525 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 53 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3549 documents, 6,944,215,514 characters
+## Oversized Document Register (>= 100,000 characters) — 3549 documents, 6,944,235,102 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -49,17 +49,17 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 10,493,958 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01.md) |
 | 10,434,497 | [`docs/plans/PLAN_24_CLOSEOUT.md`](plans/PLAN_24_CLOSEOUT.md) |
 | 5,679,582 | [`docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md`](plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md) |
-| 5,622,183 | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) |
+| 5,623,298 | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) |
 | 5,593,003 | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) |
-| 5,585,636 | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) |
-| 5,560,226 | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) |
-| 5,540,901 | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) |
+| 5,586,721 | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) |
+| 5,561,233 | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) |
+| 5,541,963 | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) |
 | 5,530,140 | [`docs/plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md`](plans/FLAGSHIP_MISSING_ASSET_GENERATION_INTEGRATION_PLAN.md) |
-| 5,528,836 | [`docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`](plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md) |
+| 5,529,912 | [`docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`](plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md) |
 | 5,468,345 | [`docs/plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md`](plans/FACTION_WAR_COMMUNIQUE_SURFACE_INTEGRATION_PLAN.md) |
 | 5,446,683 | [`docs/plans/PLANS_138_141_FLAGSHIP_FULL_INTEGRATION_PLAN.md`](plans/PLANS_138_141_FLAGSHIP_FULL_INTEGRATION_PLAN.md) |
 | 5,443,482 | [`docs/plans/PARTIAL_15_PRODUCTION_UNBLOCK_INTEGRATION_PLAN.md`](plans/PARTIAL_15_PRODUCTION_UNBLOCK_INTEGRATION_PLAN.md) |
-| 5,435,949 | [`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`](plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md) |
+| 5,436,845 | [`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`](plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md) |
 | 5,423,855 | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`](plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md) |
 | 5,408,591 | [`docs/plans/CROP_ROSTER_INTEGRATION_PLAN.md`](plans/CROP_ROSTER_INTEGRATION_PLAN.md) |
 | 5,406,668 | [`docs/plans/PLANS_142_145_WAVE1_SHARED_CONTRACTS_PLAN.md`](plans/PLANS_142_145_WAVE1_SHARED_CONTRACTS_PLAN.md) |
@@ -410,8 +410,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 4,742,419 | [`docs/plans/PLAN_B74_GEOTHERMAL_ORC_CLOSEOUT.md`](plans/PLAN_B74_GEOTHERMAL_ORC_CLOSEOUT.md) |
 | 4,742,285 | [`docs/expansions/prose_wave136/cw136_05_a_stairwell_that_keeps_an_echo_plan.md`](expansions/prose_wave136/cw136_05_a_stairwell_that_keeps_an_echo_plan.md) |
 | 4,742,145 | [`docs/plans/flagship_b5_b8/PHASE6_WATER_SOURCE_BRINE.md`](plans/flagship_b5_b8/PHASE6_WATER_SOURCE_BRINE.md) |
+| 4,741,950 | [`docs/plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`](plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md) |
 | 4,741,279 | [`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-CRISIS-DISASTER-RESPONSE-80_APPENDIX-A_ORPHAN_DOSSIERS.md`](plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-CRISIS-DISASTER-RESPONSE-80_APPENDIX-A_ORPHAN_DOSSIERS.md) |
-| 4,740,789 | [`docs/plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`](plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md) |
 | 4,738,731 | [`docs/expansions/prose_wave132/cw132_14_we_went_plan.md`](expansions/prose_wave132/cw132_14_we_went_plan.md) |
 | 4,737,612 | [`docs/expansions/prose_wave136/cw136_20_someone_added_beneath_the_sign_plan.md`](expansions/prose_wave136/cw136_20_someone_added_beneath_the_sign_plan.md) |
 | 4,737,254 | [`docs/plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-GENERATIONAL-MILESTONE-TRUTH-160_APPENDIX-A_SCAFFOLD.md`](plans/EXPANSION_PROGRAM_WAVE12_2026-09-21/PLAN-GENERATIONAL-MILESTONE-TRUTH-160_APPENDIX-A_SCAFFOLD.md) |
@@ -2176,12 +2176,12 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 537,264 | [`docs/plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_16_30_CLOSEOUT_2026-09-24.md`](plans/FIFTEEN_PARTIAL_AUTHORITY_INTEGRATION_PLANS_16_30_CLOSEOUT_2026-09-24.md) |
 | 536,170 | [`docs/plans/integrated/content/INTEGRATED_cw119_05_case_definition_plan.md`](plans/integrated/content/INTEGRATED_cw119_05_case_definition_plan.md) |
 | 534,416 | [`docs/plans/UNBLOCK_EXPANSION32_33_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION32_33_INTEGRATION_PLAN.md) |
+| 534,096 | [`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md) |
+| 533,998 | [`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md) |
 | 533,498 | [`docs/plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-AUTOMATED-QA-CAMPAIGNS-74.md`](plans/EXPANSION_PROGRAM_WAVE7_2026-09-21/PLAN-AUTOMATED-QA-CAMPAIGNS-74.md) |
-| 533,089 | [`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md) |
-| 533,012 | [`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md) |
+| 532,587 | [`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md) |
+| 532,400 | [`docs/plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md) |
 | 531,851 | [`docs/plans/integrated/content/integrated_cw119_07_no_visitors_plan.md`](plans/integrated/content/integrated_cw119_07_no_visitors_plan.md) |
-| 531,563 | [`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md) |
-| 531,448 | [`docs/plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md) |
 | 530,015 | [`docs/plans/integrated/content/integrated_cw119_06_separate_entrance_plan.md`](plans/integrated/content/integrated_cw119_06_separate_entrance_plan.md) |
 | 527,581 | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-NARRATIVE-ARC-EVENT-TRUTH-176.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-NARRATIVE-ARC-EVENT-TRUTH-176.md) |
 | 526,940 | [`piagentsplans/82-verdict-locations-expansion.md`](../piagentsplans/82-verdict-locations-expansion.md) |
@@ -2189,7 +2189,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 524,994 | [`docs/plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md) |
 | 524,304 | [`piagentsplans/54-combat-catalog-expansion.md`](../piagentsplans/54-combat-catalog-expansion.md) |
 | 523,665 | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) |
-| 520,927 | [`docs/plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md) |
+| 521,956 | [`docs/plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md) |
 | 516,365 | [`docs/world/MAP_EVOLUTION_CONTRACT.md`](world/MAP_EVOLUTION_CONTRACT.md) |
 | 508,889 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md`](plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md) |
 | 507,586 | [`docs/spiritual/SPIRITUAL_AUTHORITY_MAP.md`](spiritual/SPIRITUAL_AUTHORITY_MAP.md) |
@@ -3533,8 +3533,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 115,862 | [`docs/plans/integrated/encounters/INTEGRATED_PLAN_KNOCK-WHITELIST-TRUTH-155.md`](plans/integrated/encounters/INTEGRATED_PLAN_KNOCK-WHITELIST-TRUTH-155.md) |
 | 115,792 | [`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-REFERENCE-INTEGRITY-34_APPENDIX-A_REFERENCE_GRAPH.md`](plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-REFERENCE-INTEGRITY-34_APPENDIX-A_REFERENCE_GRAPH.md) |
 | 115,523 | [`docs/plans/integrated/economy/INTEGRATED_PLAN_TRADE-TELL-TRUTH-248.md`](plans/integrated/economy/INTEGRATED_PLAN_TRADE-TELL-TRUTH-248.md) |
+| 114,074 | [`docs/plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md) |
 | 113,584 | [`docs/plans/story-expansion-batch-2/iron-road-and-siege-year-2026-09-29.md`](plans/story-expansion-batch-2/iron-road-and-siege-year-2026-09-29.md) |
-| 113,014 | [`docs/plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md) |
 | 109,563 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-BODY-INDUSTRY-05_APPENDIX-A_ORPHAN_DOSSIERS.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-BODY-INDUSTRY-05_APPENDIX-A_ORPHAN_DOSSIERS.md) |
 | 109,328 | [`docs/plans/integrated/memorials/INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md`](plans/integrated/memorials/INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md) |
 | 108,799 | [`docs/plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md) |
@@ -3546,23 +3546,23 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 107,417 | [`docs/plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md`](plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md) |
 | 107,253 | [`docs/plans/UNBLOCK_C3_PLANS_174_175_INTEGRATION_PLAN.md`](plans/UNBLOCK_C3_PLANS_174_175_INTEGRATION_PLAN.md) |
 | 106,633 | [`docs/plans/UNBLOCK_OLDEST_PLAN165_166_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN165_166_INTEGRATION_PLAN.md) |
+| 106,296 | [`docs/plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md) |
+| 106,217 | [`docs/plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md) |
 | 106,177 | [`docs/plans/UNBLOCK_OLDEST_BATCH11_PLANS_147_148_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH11_PLANS_147_148_INTEGRATION_PLAN.md) |
 | 105,975 | [`docs/plans/PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md`](plans/PLAYER_FACING_REALTIME_COMBAT_IMPLEMENTATION_LOG.md) |
 | 105,760 | [`docs/plans/UNBLOCK_OLDEST_PLAN171_174_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN171_174_INTEGRATION_PLAN.md) |
-| 105,251 | [`docs/plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md) |
-| 105,206 | [`docs/plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md) |
+| 105,601 | [`docs/plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md) |
+| 105,242 | [`docs/plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md) |
 | 105,205 | [`docs/plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md) |
 | 105,003 | [`docs/plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md) |
-| 104,610 | [`docs/plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md) |
+| 104,746 | [`docs/plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md) |
 | 104,335 | [`docs/plans/UNBLOCK_PLAN143_AFFLICTION_BRIDGE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN143_AFFLICTION_BRIDGE_INTEGRATION_PLAN.md) |
-| 104,254 | [`docs/plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md) |
+| 104,112 | [`docs/plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md) |
 | 104,008 | [`docs/plans/UNBLOCK_PLAN200_PERSONAL_QUESTS_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN200_PERSONAL_QUESTS_INTEGRATION_PLAN.md) |
 | 103,787 | [`docs/plans/integrated/survivors/INTEGRATED_PLAN_151_WORKING_ANIMALS.md`](plans/integrated/survivors/INTEGRATED_PLAN_151_WORKING_ANIMALS.md) |
 | 103,779 | [`docs/plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md`](plans/SHELTER_OPERATIONS_BOARD_INTEGRATION_PLAN.md) |
-| 103,670 | [`docs/plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md) |
 | 103,385 | [`docs/plans/integrated/medical/INTEGRATED_PLAN_172_RADIATION_MUTATION.md`](plans/integrated/medical/INTEGRATED_PLAN_172_RADIATION_MUTATION.md) |
 | 103,133 | [`docs/plans/integrated/audio/INTEGRATED_PLAN_173_RADIO_PRODUCTION.md`](plans/integrated/audio/INTEGRATED_PLAN_173_RADIO_PRODUCTION.md) |
-| 103,095 | [`docs/plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md) |
 | 103,005 | [`docs/plans/story-expansion-batch-2/paper-and-power-and-the-treaty-table-2026-09-29.md`](plans/story-expansion-batch-2/paper-and-power-and-the-treaty-table-2026-09-29.md) |
 | 102,860 | [`docs/plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md) |
 | 102,372 | [`docs/plans/story-expansion-batch-2/second-nature-and-ruins-of-the-before-2026-09-29.md`](plans/story-expansion-batch-2/second-nature-and-ruins-of-the-before-2026-09-29.md) |
@@ -6110,13 +6110,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION25_29_INTEGRATION_PLAN.md) | 105,205 | **UNBLOCK — Expansion 25 (The Iron Road) & Expansion 29 (The Glass): Host Integration** — **Status:** HOST INTEGRATION COMPLETE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md) | 524,994 | **UNBLOCK-EXPANSION-30-31 — Readiness Plan (The Press + The Kiln)** — **Date:** 2026-09-24 |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION32_33_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION32_33_INTEGRATION_PLAN.md) | 534,416 | **UNBLOCK — Expansion 32 (The Wild) & Expansion 33 (The Weather): Host Integration** — **Status:** HOST INTEGRATION COMPLETE 2026-09-24 (integrator, user-authorized). |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md) | 520,927 | **UNBLOCK — Expansion 35: The Habit / Chemical Dependency Taper & Withdrawal** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md) | 113,014 | **UNBLOCK — Expansion 36: The Watch / Night Watch Patrol Readiness** — **Status:** COMPLETE — user-authorized full host integration sealed 2026-09-24 |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md) | 105,206 | **UNBLOCK — Expansion 37: The Quickening / Antenatal & Neonatal Health** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md) | 104,254 | **UNBLOCK — Expansion 38: The Ward / Clinical Triage & Sterile Supply** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md) | 105,251 | **UNBLOCK — Expansion 39: The Reagent / Chemical Synthesis Safety** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md) | 531,563 | **UNBLOCK — Expansion 40: The Wheel / Mechanical Power Driveline & Machine Tools** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md) | 533,089 | **UNBLOCK — Expansion 41: The Quiet / Sleep Quality, Soundproofing & Shelter Crowding** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION35_THE_HABIT_INTEGRATION_PLAN.md) | 521,956 | **UNBLOCK — Expansion 35: The Habit / Chemical Dependency Taper & Withdrawal** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md) | 114,074 | **UNBLOCK — Expansion 36: The Watch / Night Watch Patrol Readiness** — **Status:** COMPLETE — user-authorized full host integration sealed 2026-09-24 |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION37_THE_QUICKENING_INTEGRATION_PLAN.md) | 106,296 | **UNBLOCK — Expansion 37: The Quickening / Antenatal & Neonatal Health** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION38_THE_WARD_INTEGRATION_PLAN.md) | 105,242 | **UNBLOCK — Expansion 38: The Ward / Clinical Triage & Sterile Supply** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION39_THE_REAGENT_INTEGRATION_PLAN.md) | 106,217 | **UNBLOCK — Expansion 39: The Reagent / Chemical Synthesis Safety** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION40_THE_WHEEL_INTEGRATION_PLAN.md) | 532,587 | **UNBLOCK — Expansion 40: The Wheel / Mechanical Power Driveline & Machine Tools** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION41_THE_QUIET_INTEGRATION_PLAN.md) | 534,096 | **UNBLOCK — Expansion 41: The Quiet / Sleep Quality, Soundproofing & Shelter Crowding** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md`](plans/expansion_wave1/EXPANSION_PLAN_17_QUEST_CONTENT_AND_LIFECYCLE_ARCHITECTURE.md) | 508,889 | **Expansion-series Plan 17 — Quest Content and Lifecycle Architecture** — **Status:** Design proposal; documentation only. No implementation ownership is claimed. |
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md`](plans/expansion_wave1/EXPANSION_PLAN_18_EXPEDITION_LOCATION_SELECTION.md) | 475,116 | **Expansion-series Plan 18 — Expedition Location Selection** — **Status:** Architecture proposal; documentation only. |
 | 🟢 `CURRENT` | [`docs/plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md`](plans/expansion_wave1/EXPANSION_PLAN_19_AUTHORED_GENERATED_WORLD_CONTENT_BOUNDARIES.md) | 463,129 | **Expansion-series Plan 19 — Authored and Generated World Content Boundaries** — **Status:** Architecture and content proposal; documentation only. |
@@ -6189,7 +6189,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/ui/ACCESSIBILITY_AUDIT.md`](ui/ACCESSIBILITY_AUDIT.md) | 5,332 | **ASHFALL — UI Accessibility & Readability Baseline Audit** — **Audit Reference:** Plan 14 Task 14B / `ashfall-ui-access` |
 | 🟢 `CURRENT` | [`docs/ui/ACCESSIBILITY_DEFECT_MATRIX.md`](ui/ACCESSIBILITY_DEFECT_MATRIX.md) | 3,372 | **ASHFALL — ACCESSIBILITY DEFECT MATRIX (PLAN 80 / TASK B21)** — **Audit Target:** Top Dashboard & Overlay Panels (Baseline Assessment) |
 | 🟢 `CURRENT` | [`docs/ui/ACCESSIBILITY_REPORT.md`](ui/ACCESSIBILITY_REPORT.md) | 12,578 | **ASHFALL UI accessibility and usability audit — 2026-09-05** — Read-only companion to UI panels forensic report and 178-panel/141-route inventory. Scope: shared theme/components, n... |
-| 🟢 `CURRENT` | [`docs/ui/ACCESSIBILITY_REPORT_2026-09-29.md`](ui/ACCESSIBILITY_REPORT_2026-09-29.md) | 19,707 | **ASHFALL UI accessibility and usability audit — 2026-09-29** — Read-only audit of `src/UI/` (~267 files), `src/Main*.cs` seams, and |
+| 🟢 `CURRENT` | [`docs/ui/ACCESSIBILITY_REPORT_2026-09-29.md`](ui/ACCESSIBILITY_REPORT_2026-09-29.md) | 21,262 | **ASHFALL UI accessibility and usability audit — 2026-09-29** — Read-only audit of `src/UI/` (~267 files), `src/Main*.cs` seams, and |
 | 🟢 `CURRENT` | [`docs/ui/ASSET_GALLERY.md`](ui/ASSET_GALLERY.md) | 4,519 | **ASSET GALLERY** — This gallery lists all UI snapshots for ASHFALL: Atomic War - Starving Survival. |
 | 🟢 `CURRENT` | [`docs/ui/COMBAT_LANE2_DEFECTS.md`](ui/COMBAT_LANE2_DEFECTS.md) | 4,778 | **ASHFALL — Combat UI Lane-2 Defects & Fit Audit (Plan 62 / B3)** — **Document ID:** DOC-UI-COMBAT-LANE2-DEFECTS |
 | 🟢 `CURRENT` | [`docs/ui/CONTENT_REACHABILITY_2026-09-26.md`](ui/CONTENT_REACHABILITY_2026-09-26.md) | 1,295 | **Content Reachability Sweep — 2026-09-26** — Registry-loaded is not player-reachable. This sweep checks whether each |
@@ -6366,7 +6366,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2992 documents)
+## 9. General Project Guides & Archive Reference (3001 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -7085,6 +7085,15 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_COMPLETION_REPORT.md`](cartography/PLAN85_COMPLETION_REPORT.md) | 3,179,333 | **Plan 85 — Completion Report** — - **baseline damaged-map zone count:** 6 (repository truth; plan assumed 3 — delta rule §1.12 applied) |
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_FRAGMENT_LIFECYCLE.md`](cartography/PLAN85_FRAGMENT_LIFECYCLE.md) | 3,179,396 | **Plan 85 — Fragment Lifecycle** — Damaged-map fragments are **not inventory items**. `fragment_id` is a catalog/state key. There are no fragment item d... |
 | 🟢 `CURRENT` | [`docs/cartography/PLAN85_REGRESSION_MATRIX.md`](cartography/PLAN85_REGRESSION_MATRIX.md) | 3,141,449 | **Plan 85 — Regression Matrix** — **New — `Ashfall.Core.Tests/World/DamagedMapSystemTests.cs` (13 tests):** catalog structure (12 zones, unique ids, co... |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/README.md`](chatgpt-claude-assisted/README.md) | 4,891 | **ChatGPT–Claude Assisted Draft Plans** — **State:** eight documentation drafts across two directions. These are proposals, not approved implementation plans, ... |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/green-return-1-land-condition.md`](chatgpt-claude-assisted/green-return-1-land-condition.md) | 26,485 | **GR-1 — Land Condition and Recovery Baseline** — STATUS: DRAFT — proposal for review only; no approval, claim, or implementation is implied. |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/green-return-2-recovery-trajectories.md`](chatgpt-claude-assisted/green-return-2-recovery-trajectories.md) | 24,831 | **GR-2 — Recovery Trajectories and Field Evidence** — STATUS: DRAFT — proposal for review; depends on GR-1 premise review; no approval or ownership claim. |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/green-return-3-wildlife-corridors.md`](chatgpt-claude-assisted/green-return-3-wildlife-corridors.md) | 24,179 | **GR-3 — Wildlife Corridors and Return Pressure** — STATUS: DRAFT — proposal for review; depends on GR-1 and GR-2 premise audits; no approval or claim. |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/green-return-4-stewardship-map.md`](chatgpt-claude-assisted/green-return-4-stewardship-map.md) | 27,113 | **GR-4 — Stewardship Choices and Map Readout** — STATUS: DRAFT — proposal for review; depends on GR-1 through GR-3 premise audits; no approval or ownership claim. |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/trading-house-1-charter-ledger.md`](chatgpt-claude-assisted/trading-house-1-charter-ledger.md) | 43,774 | **TH-1 — Charter, Membership, and House Ledger** — STATUS: DRAFT — evidence-backed proposal for review; no ownership claim, path claim, implementation approval, or comm... |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/trading-house-2-consignments.md`](chatgpt-claude-assisted/trading-house-2-consignments.md) | 51,703 | **TH-2 — Consignments and Exchange Clearing** — STATUS: DRAFT — evidence-backed proposal for review; depends conceptually on TH-1; no ownership claim, path claim, im... |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/trading-house-3-credit.md`](chatgpt-claude-assisted/trading-house-3-credit.md) | 36,613 | **TH-3 — Credit Exposure and Settlement** — STATUS: DRAFT — proposal for review; depends on TH-1 and TH-2; no ownership claim, approval, or implementation author... |
+| 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/trading-house-4-production-closeout.md`](chatgpt-claude-assisted/trading-house-4-production-closeout.md) | 40,929 | **TH-4 — Production Commitments and Closeout** — STATUS: DRAFT — proposal for review; depends on TH-1 through TH-3; no ownership claim, approval, or implementation au... |
 | 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | 46,149 | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-09-27<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | 3,486 | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md`](collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md) | 3,650 | **ASHFALL Collectibles — 100-Run Scavenging Balance Report** — **Generated** for Tasks 5–8 Wave F · Harness: `CollectibleBalanceCharacterizationTests` |
@@ -7773,7 +7782,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/phantoms/PHANTOM_MEMORY_RUNTIME_CONTRACT.md`](phantoms/PHANTOM_MEMORY_RUNTIME_CONTRACT.md) | 4,384 | **Phantom Memory Runtime Contract** — - Data: `Assets/StreamingAssets/Data/phantom_triggers.json` |
 | 🟢 `CURRENT` | [`docs/phantoms/PHANTOM_TRIGGER_CATEGORY_INVENTORY.md`](phantoms/PHANTOM_TRIGGER_CATEGORY_INVENTORY.md) | 2,210 | **Phantom Trigger Category Inventory** — The category authority is `PhantomMemoryEngine.GetCategoryFromId`. It |
 | 🟢 `CURRENT` | [`docs/phantoms/PLAN_111_PHANTOM_BASELINE_MATRIX.md`](phantoms/PLAN_111_PHANTOM_BASELINE_MATRIX.md) | 3,185,411 | **Plan 111 Phantom Baseline Matrix** — The repository already contained 11 entries when Plan 111 was reconciled. |
-| 🟢 `CURRENT` | [`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`](plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md) | 5,435,949 | **ASHFALL — Unblocker Plan for the Blocked Plan Queue (2026-09-19)** — **Role:** read-only planning pass, no production/data/test change. |
+| 🟢 `CURRENT` | [`docs/plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md`](plans/BLOCKED_PLANS_UNBLOCKER_PLAN_2026-09-19.md) | 5,436,845 | **ASHFALL — Unblocker Plan for the Blocked Plan Queue (2026-09-19)** — **Role:** read-only planning pass, no production/data/test change. |
 | 🟢 `CURRENT` | [`docs/plans/C1_planintegration.md`](plans/C1_planintegration.md) | 4,868,616 | **C1 — Flagship Integration Plan: Economy, Weather & Shelter Feedback Loops** — Plan 14 is not a content-addition pass. It is an **integration closure pass**. |
 | 🟢 `CURRENT` | [`docs/plans/C1_planintegration[2].md`](plans/C1_planintegration[2].md) | 4,904,268 | **C1 — Flagship Integration Plan [2]: Honest Navigation, Campaign Authority & Panel Lifecycle Integrity** — This plan closes a continuity defect in the player-facing UI layer: routed surfaces imply that gameplay capability ex... |
 | 🟢 `CURRENT` | [`docs/plans/C1_planintegration[3].md`](plans/C1_planintegration[3].md) | 4,899,146 | **C1 — Flagship Integration Plan [3]: Ending Continuity, Generational State & Repository Truth** — A long-form survival campaign is only continuous if the ending is a faithful projection of the campaign that preceded... |
@@ -7788,16 +7797,16 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/C2_planintegration[5].md`](plans/C2_planintegration[5].md) | 4,912,768 | **C2 — Flagship Integration Plan [5]: Protection Wears Out, One Condition Authority, Decisions Read It** — ASHFALL already tells the player that gas masks, hazmat suits, weapons, vehicles, and shelter machinery wear out. The... |
 | 🟢 `CURRENT` | [`docs/plans/C2_planintegration[6].md`](plans/C2_planintegration[6].md) | 4,804,184 | **C2 — Flagship Integration Plan [6]: Power as a Dependency, Player Load Shedding, and Recoverable Failure Cascades** — ASHFALL already has a capable bunker electricity simulator. |
 | 🟢 `CURRENT` | [`docs/plans/C2_planintegration[7].md`](plans/C2_planintegration[7].md) | 4,816,339 | **C2 — Flagship Integration Plan [7]: One Language of Strings, Localization Seam, Extraction, and Typography** — ASHFALL already has a partial localization implementation. The historical |
-| 🟢 `CURRENT` | [`docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`](plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md) | 5,528,836 | **CF-P1-DISTRESS-CONTENT-SEAL — Integration Plan (Plan 02 / "Plan 01" of the 2026-09-19 execution program)** — Seal the distress-signal follow-up and audio-cue **content** that landed in the |
-| 🟢 `CURRENT` | [`docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`](plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md) | 4,903 | **CF-P28 — One manifest bootstrap for fresh and restored campaigns** — **Package:** `CF-P28-ONE-BOOTSTRAP-PATH` · completion-first Plan 10 · C2[9]. |
-| 🟢 `CURRENT` | [`docs/plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md`](plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md) | 4,241 | **CF-P5 — Merchant restock decision reconciliation** — **Package:** `CF-P5-RESTOCK-RECONCILE` · completion-first Plan 03 / roster 02. |
-| 🟢 `CURRENT` | [`docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md`](plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md) | 6,119 | **CF-P6 — Vehicle armor grades** — **Package:** `CF-P6-VEHICLE-ARMOR-GRADES` · completion-first Plan 04. |
+| 🟢 `CURRENT` | [`docs/plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`](plans/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md) | 5,529,912 | **CF-P1-DISTRESS-CONTENT-SEAL — Integration Plan (Plan 02 / "Plan 01" of the 2026-09-19 execution program)** — *(Post-hoc, non-contractual editorial block added during a later review pass. It changes no scope, |
+| 🟢 `CURRENT` | [`docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`](plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md) | 5,996 | **CF-P28 — One manifest bootstrap for fresh and restored campaigns** — **Package:** `CF-P28-ONE-BOOTSTRAP-PATH` · completion-first Plan 10 · C2[9]. |
+| 🟢 `CURRENT` | [`docs/plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md`](plans/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md) | 5,298 | **CF-P5 — Merchant restock decision reconciliation** — **Package:** `CF-P5-RESTOCK-RECONCILE` · completion-first Plan 03 / roster 02. |
+| 🟢 `CURRENT` | [`docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md`](plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md) | 7,099 | **CF-P6 — Vehicle armor grades** — **Package:** `CF-P6-VEHICLE-ARMOR-GRADES` · completion-first Plan 04. |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_ENTRY_MATRIX.md`](plans/CONTRABAND_ENTRY_MATRIX.md) | 4,732,614 | **CONTRABAND ENTRY MATRIX — Plan 147 Task A.1/A.2** — Complete inventory of all 20 records in |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_ITEM_IDENTITY_MATRIX.md`](plans/CONTRABAND_ITEM_IDENTITY_MATRIX.md) | 4,762,327 | **CONTRABAND ITEM IDENTITY MATRIX — Plan 147 Task A.3/A.4** — Identity classification per record. A contraband record is **not automatically |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_MECHANICS_AUTHORITY_MATRIX.md`](plans/CONTRABAND_MECHANICS_AUTHORITY_MATRIX.md) | 4,915,401 | **CONTRABAND MECHANICS AUTHORITY MATRIX — Plan 147 Task A.5** — One row per authored mechanics key (45 total: 14 typed + 31 silently-dropped), |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_STASH_LOCATION_MATRIX.md`](plans/CONTRABAND_STASH_LOCATION_MATRIX.md) | 4,761,367 | **CONTRABAND STASH LOCATION MATRIX — Plan 147 Task A.7 / Task B.7** — Every `hidden_stash_location` value is classified **DESCRIPTIVE — no location |
 | 🟢 `CURRENT` | [`docs/plans/CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md`](plans/CONTRABAND_TRADE_AND_ARBITRAGE_AUDIT.md) | 4,900,262 | **CONTRABAND TRADE AND ARBITRAGE AUDIT — Plan 147 Task A.7 (prices) / Task C.2–C.3** — **Finding:** the repo has **no scrip currency runtime**. "Scrip" appears in |
-| 🟢 `CURRENT` | [`docs/plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`](plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md) | 4,740,789 | **CORE GAME MECHANICS — GAP-SEAL MASTER INTEGRATION PLAN** — **Program id:** `CORE-MECH-2026-09-25` |
+| 🟢 `CURRENT` | [`docs/plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md`](plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md) | 4,741,950 | **CORE GAME MECHANICS — GAP-SEAL MASTER INTEGRATION PLAN** — **Program id:** `CORE-MECH-2026-09-25` |
 | 🟢 `CURRENT` | [`docs/plans/CORE_MECHANICS_PLAYER_FACING_PORTFOLIO_PRECISION_FULL_INTEGRATION_HANDOFF.md`](plans/CORE_MECHANICS_PLAYER_FACING_PORTFOLIO_PRECISION_FULL_INTEGRATION_HANDOFF.md) | 702,952 | **ASHFALL TWO-PLAN PORTFOLIO — PRECISION PASS + FULL-INTEGRATION HANDOFF** — **Document type:** coordination and implementation handoff; this is not a third subject plan |
 | 🟢 `CURRENT` | [`docs/plans/CROP_ROSTER_INTEGRATION_PLAN.md`](plans/CROP_ROSTER_INTEGRATION_PLAN.md) | 5,408,591 | **Crop Roster Integration Plan** — **Date:** 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md`](plans/CROSSING_HARDENING_IMPLEMENTATION_LOG.md) | 207,196 | **Crossing Hardening Implementation Log** — - Added an optional projection from Crossing choices to the existing campaign |
@@ -7867,11 +7876,11 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAN_24_CLOSEOUT.md`](plans/PLAN_24_CLOSEOUT.md) | 10,434,497 | **Plan 24 — Survivor Fitness, Needs, Labor, and Medical Journey: CLOSEOUT** — **Status:** CLOSED — both signature items resolved 2026-09-18 |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md`](plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md) | 5,593,003 | **Plan 25 Integration Plan — Faction Ecology & the Muster** — Turn ASHFALL's political systems from isolated reputation surfaces into a traceable late-game spine: |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`](plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md) | 5,098,880 | **Plan 37 — Hands On The Wheel: Input, Focus & Controller Reality** — **Status:** FULLY IMPLEMENTED & INTEGRATED (2026-09-19). All phases P1–P7 delivered, |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) | 5,540,901 | **Plan 42 — A Voice for Each of Them: Survivor Voice Integration Plan** — **Package:** `C2[18]` / Plan 42 — Deterministic Survivor Voice, Delivery Contracts, and Social Speech |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) | 5,560,226 | **PLAN 46 — PLAYABLE METRICS INTEGRATION PLAN** — Deliver the measurement layer ASHFALL currently lacks, in three dependency-ordered deliveries, exactly as scoped by t... |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md`](plans/PLAN_42_SURVIVOR_VOICE_INTEGRATION_PLAN.md) | 5,541,963 | **Plan 42 — A Voice for Each of Them: Survivor Voice Integration Plan** — **Package:** `C2[18]` / Plan 42 — Deterministic Survivor Voice, Delivery Contracts, and Social Speech |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md`](plans/PLAN_46_PLAYABLE_METRICS_INTEGRATION_PLAN.md) | 5,561,233 | **PLAN 46 — PLAYABLE METRICS INTEGRATION PLAN** — *(Post-hoc, non-contractual editorial block. It changes no scope, claim, evidence row, decision, |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md`](plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md) | 4,936,257 | **PLAN 48 / C2[21] — Release Craft Closeout** — Plan 48 (C2[21]) — *Release Craft: Versioning, Changelog, and the Hotfix Path* — |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) | 5,585,636 | **PLAN 48 (C2[21]) — Release Craft: Versioning, Changelog & Hotfix Path — Integration Plan** — Make an ASHFALL release a **computed, gated, reproducible event** instead of a manual act of |
-| 🟢 `CURRENT` | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) | 5,622,183 | **Plan 53 / E1 — Ambition Governance & Expansion Intake: Integration Plan** — Convert ASHFALL's accumulated plan corpus — three numbering namespaces, no universal status markers, demonstrably sta... |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md`](plans/PLAN_48_RELEASE_CRAFT_INTEGRATION_PLAN.md) | 5,586,721 | **PLAN 48 (C2[21]) — Release Craft: Versioning, Changelog & Hotfix Path — Integration Plan** — *(Post-hoc, non-contractual editorial block. It changes no scope, claim, evidence row, decision, |
+| 🟢 `CURRENT` | [`docs/plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md`](plans/PLAN_53_AMBITION_GOVERNANCE_INTEGRATION_PLAN.md) | 5,623,298 | **Plan 53 / E1 — Ambition Governance & Expansion Intake: Integration Plan** — *(Post-hoc, non-contractual editorial block. It changes no scope, claim, evidence row, decision, |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md`](plans/PLAN_B66_B69_HOST_WIRING_CLOSEOUT.md) | 4,791,751 | **PLANS B66–B69 — HOST WIRING & CROSS-PLAN SCENARIOS CLOSEOUT** — **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship` |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B66_B69_RENUMBERING.md`](plans/PLAN_B66_B69_RENUMBERING.md) | 840,540 | **PLANS B66–B69 — FLAGSHIP WAVE (renumbered 2026-09-06)** — **Owner decision:** the flagship wave formerly proposed as "Plans 66–69" is |
 | 🟢 `CURRENT` | [`docs/plans/PLAN_B66_METALLURGY_CLOSEOUT.md`](plans/PLAN_B66_METALLURGY_CLOSEOUT.md) | 4,683,723 | **PLAN B66 CLOSEOUT — Subterranean Heavy Manufacturing & Metallurgical Smelting** — **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship` |
@@ -7915,13 +7924,13 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_PLAN171_174_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN171_174_INTEGRATION_PLAN.md) | 105,760 | **UNBLOCK — Plans 171 & 174: Dynamic Quest Generation + Mechanical Origin Seam** — **Status:** DONE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN181_INTEGRATION_PLAN.md) | 105,003 | **UNBLOCK — Plan 181: Difficulty Settings System Host Integration** — **Status:** HOST INTEGRATION COMPLETE 2026-09-24 (integrator, user-authorized). |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN143_AFFLICTION_BRIDGE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN143_AFFLICTION_BRIDGE_INTEGRATION_PLAN.md) | 104,335 | **UNBLOCK — Plan 143: Medical Afflictions → Quest & Work Bridge** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md) | 104,610 | **UNBLOCK — Plan 162: ShelterArchiveSystem / Shelter History & Archive** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md) | 533,012 | **UNBLOCK — Plan 177: DreamSystem / Dream & Sleep Event System** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN162_SHELTER_ARCHIVE_INTEGRATION_PLAN.md) | 105,601 | **UNBLOCK — Plan 162: ShelterArchiveSystem / Shelter History & Archive** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN177_DREAM_SYSTEM_INTEGRATION_PLAN.md) | 533,998 | **UNBLOCK — Plan 177: DreamSystem / Dream & Sleep Event System** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md) | 102,860 | **UNBLOCK — Plan 184: AccessibilitySettingsSystem / Accessibility Options System** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md) | 531,448 | **UNBLOCK — Plan 185: MemoryDecaySystem / Memory & Knowledge Decay** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md) | 532,400 | **UNBLOCK — Plan 185: MemoryDecaySystem / Memory & Knowledge Decay** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN200_PERSONAL_QUESTS_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN200_PERSONAL_QUESTS_INTEGRATION_PLAN.md) | 104,008 | **UNBLOCK — Plan 200: PersonalQuestSystem / Survivor Personal Quests & Character Arcs** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md) | 103,670 | **UNBLOCK — Plan 202: InterpersonalConflictSystem / Interpersonal Conflict & Grievance** — **Status:** SEALED — user-authorized full host integration completed |
-| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md) | 103,095 | **UNBLOCK — Plan 216: ExerciseSystem / Survivor Exercise & Physical Training** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN202_INTERPERSONAL_CONFLICT_INTEGRATION_PLAN.md) | 104,746 | **UNBLOCK — Plan 202: InterpersonalConflictSystem / Interpersonal Conflict & Grievance** — **Status:** SEALED — user-authorized full host integration completed |
+| 🟢 `CURRENT` | [`docs/plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md) | 104,112 | **UNBLOCK — Plan 216: ExerciseSystem / Survivor Exercise & Physical Training** — **Status:** SEALED — user-authorized full host integration completed |
 | 🟢 `CURRENT` | [`docs/plans/UNBLOCK_RESIDUALS_PLANS_24_31_INTEGRATION_PLAN.md`](plans/UNBLOCK_RESIDUALS_PLANS_24_31_INTEGRATION_PLAN.md) | 394,676 | **Unblock Residuals — Plans 24 + 31 Integration Plan** — **Package:** `UNBLOCK-RESIDUALS-PLANS-24-31` |
 | 🟢 `CURRENT` | [`docs/plans/UNCLAIMED_CORPUS_CENSUS.md`](plans/UNCLAIMED_CORPUS_CENSUS.md) | 4,834,538 | **ASHFALL — Unclaimed Corpus Census (Wave 10 Part 1 / Task A1)** — Enumerated **131** files (each once). Source baseline + mandatory order extracted from each header. |
 | 🟢 `CURRENT` | [`docs/plans/VERDICT_HARDENING_IMPLEMENTATION_LOG.md`](plans/VERDICT_HARDENING_IMPLEMENTATION_LOG.md) | 828,024 | **Verdict Hardening Implementation Log** — - Added `VerdictEvidenceChain` in Core. |

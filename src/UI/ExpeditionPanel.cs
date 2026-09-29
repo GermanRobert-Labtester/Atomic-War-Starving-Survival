@@ -168,7 +168,7 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // Placeholder expedition-departure backdrop (days 1–7, intact shelter mouth).
-            BackdropArt.Apply(this, BackdropArt.ExpeditionDeparture, 0.82f);
+            BackdropArt.Apply(this, BackdropArt.ExpeditionDeparture, 0.90f); // A11Y §3: dim 0.82 let bright art under the Dim summary fall to ~3.8:1
 
             var scroll = new ScrollContainer();
             scroll.SetAnchorsPreset(LayoutPreset.FullRect);

@@ -27,7 +27,7 @@ namespace AtomicWar.GodotApp
             // ── Rotating background ──
             // Reuse the same crossfade behavior as the entry menu, but keep
             // the game-over palette to the medical/inventory surfaces.
-            AddChild(new UiBackgroundCarousel(UiAssetManifest.GameOverBackgrounds, 0.80f));
+            AddChild(new UiBackgroundCarousel(UiAssetManifest.GameOverBackgrounds, 0.90f)); // A11Y §3: 0.80 left the panel-less Muted/Dim labels at ~3.5:1 worst-case
 
             // ── Center content ──
             var center = new CenterContainer();
