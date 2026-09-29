@@ -5,6 +5,38 @@ STATUS: APPROVED BY USER
 Authorization: user requested all three plans implemented without commits on
 2026-09-27, then explicitly reassigned overlapping older claims to this integration.
 
+> **Editorial polish (prose pass, non-contractual):** the Prologue and texture notes below are
+> narrative texture and writing guidance only. They change no acceptance criterion, no claimed path,
+> no decision and no verification step. All binding criteria remain in **Acceptance** above.
+
+---
+
+## 0. Prologue — The Measurement
+
+> *"A number you did not take is a number somebody will invent. Take the number."*
+
+This is the least narrative plan in the repository and, in its way, the most honest. It begins with
+the instruction **measure first** and ends with a list of things the measurement could not explain,
+recorded without being smoothed.
+
+Four bodies of work: performance, release weight, host decomposition, and save/navigation QoL. And
+running through all of them a single discipline — the *before* is captured before the *after* is
+authored, the golden is taken before the edit, and every claimed gain is either measured or
+explicitly declined. Where the captures were noisy, the file says so. Where a number fell, it gives
+the byte count and refuses to call it a victory.
+
+**Tone & register.** Laboratory-plain. The vocabulary is the instrumentation: *capture, baseline,
+after, frame-tail, mean interval, RID, PCK, probe*. Prose should read like a lab notebook kept by
+someone who would rather report an unexplained result than a flattering one.
+
+**Mystery & texture.** The *Completion evidence* block already contains its own unexplained
+colours: **unexplained long stalls** in the after profile, **noisy captures, not claimed gains**,
+and a startup comparison that is *not used as a before comparison* because the older PCK came from
+a different snapshot. Those are not failures to fix. They are the honest edge of what was knowable
+on 2026-09-27, and the register at the end keeps them visible.
+
+---
+
 ## Acceptance
 
 1. Record honest startup/frame and assembly measurements before/after; optimize
@@ -95,3 +127,20 @@ Assets/Ashfall.Core/Performance/CatalogReadProfiler.cs
 - **Host decomposition:** plan-numbered partials were renamed by actual domain, same-domain files consolidated, the Main ownership map produced, CLI panel selftests split, and `CampaignDayHostSession` now reuses the existing day coordinator. Current host build passed with 0 errors (18 warnings); equivalent member/token audit found 688 members unchanged. `BioFermentationHostSession` received its missing `System.Collections.Generic` import after the focused compile exposed it.
 - **Save and navigation QoL:** canonical save slot rotation keeps three validated generations, exposes explicit backup recovery, and persists last panel/current campaign day through schema v3 while retaining v1/v2 compatibility. Scoped save tests passed 7/7; crash-kill probe verified an interrupted temp write leaves the committed primary and three backups valid, then explicit recovery restores the prior payload/day/panel; starting-cohort lifecycle, seven-day smoke (10/10), and runtime-scale (6/6) selftests passed. Six duplicate agent rulebooks now point to `AGENTS.md`; four completed coordination records are archived; README and docs index were updated. `generate-docs-index.py --check` verified 5,523 documents.
 - **Limits:** no full suite was run. The five-minute profiles used llvmpipe and 15 FPS rather than a 60 FPS GPU-backed player target; the after profile had unexplained long stalls. No simulation, determinism contract, or eager-catalog behavior was changed. No commit was made.
+
+## Open Questions & Unexplained Measurements (register — not acceptance criteria)
+
+These are **honest unresolved items drawn from this plan's own Limits section**. They are not
+defects to fix and not hidden work. They are the edge of what was knowable on 2026-09-27, kept
+visible so nobody mistakes a noisy capture for a result. Any future pass that resolves one must say
+so explicitly and re-measure.
+
+| # | Open item | What is actually known | Who may resolve it (later, re-measured) |
+|---|---|---|---|
+| PERF-OM-1 | **Unexplained long stalls in the after profile.** | Observed during the 300-second after capture. Cause not established; not attributed to any change. | A dedicated profiling pass with a hypothesis, not a repeat capture. |
+| PERF-OM-2 | Startup 10.11s → 11.63s and mean frame 66.675ms → 109.142ms. | Explicitly recorded as **noisy captures, not claimed gains**. No regression is asserted. | A controlled capture on a GPU-backed 60 FPS target. |
+| PERF-OM-3 | The before/after PCK comparison was abandoned. | The older PCK came from a different source/data snapshot and is **not used as a before comparison**. | A clean re-export from an identical snapshot. |
+| PERF-OM-4 | Profiles ran on llvmpipe at the enforced 15 FPS cap. | Not a 60 FPS GPU-backed player target. All frame numbers are therefore provisional. | A hardware-backed session if one becomes available. |
+| PERF-OM-5 | Catalog reads 2.266 ms → 2.069 ms. | Measured across the startup set. **No lazy loading was justified** — a deliberate non-change. | Only on evidence that the measured set is unrepresentative. |
+| PERF-OM-6 | Nonfatal MCP editor-plugin parse and missing localization/art warnings on exported startup. | Logged, not diagnosed. Export smoke otherwise passed (60-frame boot, 427/427 packaged-data). | The owning plugin / asset pipeline. |
+| PERF-OM-7 | 18 host build warnings remain after the decomposition. | 0 errors; 688 members unchanged by the equivalent member/token audit. Warnings are unowned. | Whoever owns the host build's warning budget. |

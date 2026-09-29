@@ -106,7 +106,11 @@ public partial class AshfallSidebar : PanelContainer
     {
         if (item == null || _list == null) return;
 
-        var row = new PanelContainer();
+        // Keyboard-reachable nav row (a11y audit 2026-09-29 §9.5): a flat
+        // Button instead of a mouse-only PanelContainer — ui_accept activates,
+        // the focus navigator and modal Tab trap can reach it, and hover is a
+        // native state. Per-row stylebox instances mirror the previous look.
+        var row = new Button { Text = string.Empty };
         row.Name = $"row_{item.Id}";
         row.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         var sb = new StyleBoxFlat
@@ -114,7 +118,21 @@ public partial class AshfallSidebar : PanelContainer
             BgColor = new Color(DesignTheme.Ink.r, DesignTheme.Ink.g, DesignTheme.Ink.b, 0.40f),
         };
         sb.SetBorderWidthAll(0);
-        row.AddThemeStyleboxOverride("panel", sb);
+        row.AddThemeStyleboxOverride("normal", sb);
+        var hoverSb = new StyleBoxFlat
+        {
+            BgColor = new Color(DesignTheme.Warm.r, DesignTheme.Warm.g, DesignTheme.Warm.b, 0.12f),
+        };
+        hoverSb.SetBorderWidthAll(0);
+        row.AddThemeStyleboxOverride("hover", hoverSb);
+        var pressedSb = new StyleBoxFlat
+        {
+            BgColor = new Color(DesignTheme.Warm.r, DesignTheme.Warm.g, DesignTheme.Warm.b, 0.20f),
+        };
+        pressedSb.SetBorderWidthAll(0);
+        row.AddThemeStyleboxOverride("pressed", pressedSb);
+        row.AddThemeStyleboxOverride("focus", AshfallFocusPolicy.MakeFocusVisibleStyleBox());
+        row.Pressed += () => Select(item.Id);
 
         string tooltipText = !string.IsNullOrEmpty(item.Tooltip) ? item.Tooltip : (!string.IsNullOrEmpty(item.Hint) ? item.Hint : string.Empty);
         if (!string.IsNullOrEmpty(tooltipText))
@@ -164,15 +182,6 @@ public partial class AshfallSidebar : PanelContainer
             rowVbox.AddChild(hint);
         }
 
-        row.GuiInput += evt =>
-        {
-            if (evt is InputEventMouseButton mb && mb.Pressed && mb.ButtonIndex == MouseButton.Left)
-            {
-                Select(item.Id);
-                AcceptEvent();
-            }
-        };
-
         _list.AddChild(row);
     }
 
@@ -181,9 +190,9 @@ public partial class AshfallSidebar : PanelContainer
         if (_list == null) return;
         foreach (var child in _list.GetChildren())
         {
-            if (child is PanelContainer row && row.Name == $"row_{id}")
+            if (child is Button row && row.Name == $"row_{id}")
             {
-                var sb = row.GetThemeStylebox("panel") as StyleBoxFlat;
+                var sb = row.GetThemeStylebox("normal") as StyleBoxFlat;
                 if (sb == null) continue;
                 if (active)
                 {
