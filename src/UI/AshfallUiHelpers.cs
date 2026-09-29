@@ -752,6 +752,14 @@ namespace AtomicWar.GodotApp.UI
 
         // ── Color Conversion ────────────────────────────────────────────
 
+        /// <summary>
+        /// Canonical dense-panel/modal scrim background (a11y audit 2026-09-29
+        /// §2d): the one authority for full-rect panel backdrops, replacing
+        /// ~58 hand-rolled near-grey literals. Honors colorblind simulation
+        /// via <see cref="ToColor"/> like every other token consumer.
+        /// </summary>
+        public static Color PanelScrim() => ToColor(Theme.InkPanelStrong);
+
         public static Color ToColor((float r, float g, float b, float a) token)
         {
             // Plan 184 — preference-aware CVD simulation; Theme constants stay unchanged.

@@ -35,6 +35,14 @@ namespace Ashfall.Core.UI
         /// <summary>Semi-transparent panel background. rgba(9,11,12,0.86).</summary>
         public static readonly (float r, float g, float b, float a) InkPanel = (0.035f, 0.043f, 0.047f, 0.86f);
 
+        /// <summary>
+        /// Dense-panel/modal scrim tier — same hue as Ink at 0.92 alpha.
+        /// Added 2026-09-29 (UI accessibility audit §2d): ~58 panels
+        /// hand-rolled near-grey scrims at 0.85–0.96 alpha; this token is the
+        /// consolidation authority (0.92 = the observed mode).
+        /// </summary>
+        public static readonly (float r, float g, float b, float a) InkPanelStrong = (0.035f, 0.043f, 0.047f, 0.92f);
+
         /// <summary>Default border — warm tan at 27% opacity.</summary>
         public static readonly (float r, float g, float b, float a) Line = (0.851f, 0.769f, 0.596f, 0.27f);
 

@@ -168,7 +168,7 @@ namespace AtomicWar.GodotApp.UI
             // Dimmed background overlay
             var overlay = new ColorRect
             {
-                Color = new Color(0.02f, 0.02f, 0.03f, 0.92f)
+                Color = AshfallUiHelpers.PanelScrim()
             };
             overlay.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(overlay);

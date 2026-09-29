@@ -141,7 +141,7 @@ public partial class SurvivalWorkstationPanel : Control, IBindablePanel
         SetAnchorsPreset(LayoutPreset.FullRect);
         Visible = false;
 
-        var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.90f) };
+        var bg = new ColorRect { Color = AshfallUiHelpers.PanelScrim() };
         bg.SetAnchorsPreset(LayoutPreset.FullRect);
         AddChild(bg);
 

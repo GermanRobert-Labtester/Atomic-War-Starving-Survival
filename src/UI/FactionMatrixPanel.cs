@@ -279,7 +279,7 @@ public partial class FactionMatrixPanel : Control, IBindablePanel
         SetAnchorsPreset(LayoutPreset.FullRect);
         Visible = false;
 
-        var bg = new ColorRect { Color = new Color(0.04f, 0.04f, 0.05f, 0.92f) };
+        var bg = new ColorRect { Color = AshfallUiHelpers.PanelScrim() };
         bg.SetAnchorsPreset(LayoutPreset.FullRect);
         AddChild(bg);
 

@@ -50,7 +50,7 @@ namespace AtomicWar.GodotApp.UI
             // Dark semi-transparent scrim backdrop
             var scrim = new ColorRect
             {
-                Color = new Color(0.02f, 0.02f, 0.04f, 0.88f)
+                Color = AshfallUiHelpers.PanelScrim()
             };
             scrim.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(scrim);

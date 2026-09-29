@@ -406,7 +406,7 @@ namespace AtomicWar.GodotApp.UI
             var transcriptPanel = new PanelContainer();
             var sb = new StyleBoxFlat
             {
-                BgColor = new Color(0.04f, 0.05f, 0.04f, 0.95f),
+                BgColor = AshfallUiHelpers.PanelScrim(),
                 BorderColor = AshfallUiHelpers.ToColor(DesignTheme.LineSoft),
             };
             sb.SetBorderWidthAll(1);

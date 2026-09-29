@@ -63,7 +63,7 @@ public partial class VerdictDashboardPanel : Control
         SetAnchorsPreset(LayoutPreset.FullRect);
         Visible = false;
 
-        var bg = new ColorRect { Color = new Color(0.04f, 0.04f, 0.05f, 0.95f) };
+        var bg = new ColorRect { Color = AshfallUiHelpers.PanelScrim() };
         bg.SetAnchorsPreset(LayoutPreset.FullRect);
         AddChild(bg);
 

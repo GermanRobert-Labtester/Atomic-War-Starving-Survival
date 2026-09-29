@@ -1291,7 +1291,7 @@ namespace AtomicWar.GodotApp.UI
             _encounterModal.Visible = false;
             AddChild(_encounterModal);
 
-            var backdrop = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.85f) };
+            var backdrop = new ColorRect { Color = AshfallUiHelpers.PanelScrim() };
             backdrop.SetAnchorsPreset(LayoutPreset.FullRect);
             _encounterModal.AddChild(backdrop);
 

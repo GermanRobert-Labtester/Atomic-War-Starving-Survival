@@ -40,7 +40,7 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.03f, 0.04f, 0.05f, 0.95f) };
+            var bg = new ColorRect { Color = AshfallUiHelpers.PanelScrim() };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 

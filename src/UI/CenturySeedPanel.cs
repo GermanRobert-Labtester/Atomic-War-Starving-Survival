@@ -87,7 +87,7 @@ namespace AtomicWar.GodotApp.UI
         {
             var backdrop = new ColorRect
             {
-                Color = new Color(0.04f, 0.05f, 0.06f, 0.95f)
+                Color = AshfallUiHelpers.PanelScrim()
             };
             backdrop.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(backdrop);

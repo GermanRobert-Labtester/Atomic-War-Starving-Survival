@@ -129,7 +129,7 @@ namespace AtomicWar.GodotApp.UI
             Visible = false;
 
             // Dark semi-transparent background overlay
-            var bg = new ColorRect { Color = new Color(0.04f, 0.04f, 0.05f, 0.92f) };
+            var bg = new ColorRect { Color = AshfallUiHelpers.PanelScrim() };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 

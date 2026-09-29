@@ -123,7 +123,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _backdrop.Color = snapshot.Severity >= CrisisSeverity.Severe
                     ? new Color(0.12f, 0.02f, 0.02f, 0.95f)
-                    : new Color(0.04f, 0.04f, 0.06f, 0.95f);
+                    : AshfallUiHelpers.PanelScrim();
             }
 
             // 2. Countdown
