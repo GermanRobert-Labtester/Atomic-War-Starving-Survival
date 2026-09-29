@@ -182,6 +182,11 @@ public partial class AshfallSidebar : PanelContainer
             rowVbox.AddChild(hint);
         }
 
+        // Godot Buttons are not containers: a Button child never contributes
+        // to the button's minimum size (unlike the old PanelContainer rows),
+        // so without this the row collapses to the stylebox margins and the
+        // row labels pile up on one line (snapshot regression 2026-09-29).
+        row.CustomMinimumSize = new Vector2(0, rowMargin.GetCombinedMinimumSize().Y);
         _list.AddChild(row);
     }
 

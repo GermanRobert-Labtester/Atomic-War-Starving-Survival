@@ -89,5 +89,22 @@ namespace Ashfall.Core.Tests
             Assert.Contains("ClipText = true", block);
             Assert.Contains("TextServer.OverrunBehavior.TrimEllipsis", block);
         }
+
+        [Fact]
+        public void SidebarButtonRows_SizeFromTheirContent()
+        {
+            // Godot Buttons are not containers: a MarginContainer/label child
+            // never contributes to the row Button's minimum size. Without the
+            // explicit content-derived floor, every sidebar row collapses to
+            // its stylebox margins and the row labels pile up on one line
+            // (caught by the 2026-09-29 snapshot regen after the P2.5
+            // Button conversion; goldens had been captured pre-conversion).
+            string block = Slice(
+                ReadSrc("src", "UI", "AshfallSidebar.cs"),
+                "var row = new Button { Text = string.Empty };",
+                "_list.AddChild(row);");
+            Assert.Contains("row.CustomMinimumSize = new Vector2(0, rowMargin.GetCombinedMinimumSize().Y);",
+                block);
+        }
     }
 }

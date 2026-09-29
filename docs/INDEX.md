@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5562 | **Total Characters:** 6,973,936,243 | **Last Verified:** 2026-09-29
-**Oversized (>= 100,000 characters):** 3544 documents carrying 6,943,669,975 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5571 | **Total Characters:** 6,974,738,335 | **Last Verified:** 2026-09-29
+**Oversized (>= 100,000 characters):** 3549 documents carrying 6,944,215,514 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5507 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5516 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 53 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3544 documents, 6,943,669,975 characters
+## Oversized Document Register (>= 100,000 characters) — 3549 documents, 6,944,215,514 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1528,8 +1528,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,451,925 | [`docs/expansions/prose_wave131/cw131_12_the_map_being_repainted_plan.md`](expansions/prose_wave131/cw131_12_the_map_being_repainted_plan.md) |
 | 1,450,693 | [`docs/expansions/prose_wave138/cw138_02_the_crypt_accord_is_read_at_the_arch_plan.md`](expansions/prose_wave138/cw138_02_the_crypt_accord_is_read_at_the_arch_plan.md) |
 | 1,445,845 | [`docs/expansions/prose_wave135/cw135_20_initials_too_worn_to_read_plan.md`](expansions/prose_wave135/cw135_20_initials_too_worn_to_read_plan.md) |
+| 1,437,800 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,436,412 | [`docs/expansions/prose_wave129/cw129_14_the_meter_and_the_sermon_plan.md`](expansions/prose_wave129/cw129_14_the_meter_and_the_sermon_plan.md) |
-| 1,435,990 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,435,680 | [`docs/expansions/prose_wave129/cw129_11_a_clean_trade_on_paper_plan.md`](expansions/prose_wave129/cw129_11_a_clean_trade_on_paper_plan.md) |
 | 1,435,000 | [`docs/expansions/prose_wave129/cw129_01_a_star_against_the_line_plan.md`](expansions/prose_wave129/cw129_01_a_star_against_the_line_plan.md) |
 | 1,434,462 | [`docs/expansions/prose_wave138/cw138_05_children_count_the_marks_plan.md`](expansions/prose_wave138/cw138_05_children_count_the_marks_plan.md) |
@@ -3527,17 +3527,20 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 118,152 | [`docs/plans/UNBLOCK_OLDEST_BATCH5_PLANS_55_58_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH5_PLANS_55_58_INTEGRATION_PLAN.md) |
 | 117,484 | [`C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md`](../C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md) |
 | 117,203 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-G_HOST_INTEGRATION_POINTS.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-G_HOST_INTEGRATION_POINTS.md) |
+| 116,728 | [`docs/plans/story-expansion-batch-2/convoy-wars-and-inside-a-house-2026-09-29.md`](plans/story-expansion-batch-2/convoy-wars-and-inside-a-house-2026-09-29.md) |
 | 116,209 | [`docs/plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md`](plans/EXPANSION_PROGRAM_WAVE19_2026-09-21/PLAN-CONTENT-ACCEPTANCE-FAMILY-TRUTH-274.md) |
 | 115,909 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-V_MASTER_WORKLIST.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-ORPHAN-SEAL-01_APPENDIX-V_MASTER_WORKLIST.md) |
 | 115,862 | [`docs/plans/integrated/encounters/INTEGRATED_PLAN_KNOCK-WHITELIST-TRUTH-155.md`](plans/integrated/encounters/INTEGRATED_PLAN_KNOCK-WHITELIST-TRUTH-155.md) |
 | 115,792 | [`docs/plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-REFERENCE-INTEGRITY-34_APPENDIX-A_REFERENCE_GRAPH.md`](plans/EXPANSION_PROGRAM_WAVE4_2026-09-21/PLAN-REFERENCE-INTEGRITY-34_APPENDIX-A_REFERENCE_GRAPH.md) |
 | 115,523 | [`docs/plans/integrated/economy/INTEGRATED_PLAN_TRADE-TELL-TRUTH-248.md`](plans/integrated/economy/INTEGRATED_PLAN_TRADE-TELL-TRUTH-248.md) |
+| 113,584 | [`docs/plans/story-expansion-batch-2/iron-road-and-siege-year-2026-09-29.md`](plans/story-expansion-batch-2/iron-road-and-siege-year-2026-09-29.md) |
 | 113,014 | [`docs/plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION36_NIGHT_WATCH_INTEGRATION_PLAN.md) |
 | 109,563 | [`docs/plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-BODY-INDUSTRY-05_APPENDIX-A_ORPHAN_DOSSIERS.md`](plans/EXPANSION_PROGRAM_2026-09-21/PLAN-VERTICAL-BODY-INDUSTRY-05_APPENDIX-A_ORPHAN_DOSSIERS.md) |
 | 109,328 | [`docs/plans/integrated/memorials/INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md`](plans/integrated/memorials/INTEGRATED_PLAN_MORTUARY-MEMORIAL-TRUTH-123.md) |
 | 108,799 | [`docs/plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH10_PLANS_141_145_INTEGRATION_PLAN.md) |
 | 108,261 | [`docs/plans/UNBLOCK_OLDEST_BATCH12_PLANS_150_152_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_BATCH12_PLANS_150_152_INTEGRATION_PLAN.md) |
 | 108,101 | [`docs/expansions/expansion_03_the_standing_record_creative_pack.md`](expansions/expansion_03_the_standing_record_creative_pack.md) |
+| 108,040 | [`docs/plans/story-expansion-batch-2/war-of-words-and-long-inquest-2026-09-29.md`](plans/story-expansion-batch-2/war-of-words-and-long-inquest-2026-09-29.md) |
 | 107,861 | [`docs/plans/integrated/expeditions/INTEGRATED_PLAN_EXPEDITION-FAMILY-TRUTH-269.md`](plans/integrated/expeditions/INTEGRATED_PLAN_EXPEDITION-FAMILY-TRUTH-269.md) |
 | 107,432 | [`docs/plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md`](plans/UNBLOCK_OLDEST_PLAN167_169_INTEGRATION_PLAN.md) |
 | 107,417 | [`docs/plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md`](plans/PLAN_211_INTERNAL_COMMUNICATION_INTEGRATION_LOG.md) |
@@ -3560,7 +3563,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 103,385 | [`docs/plans/integrated/medical/INTEGRATED_PLAN_172_RADIATION_MUTATION.md`](plans/integrated/medical/INTEGRATED_PLAN_172_RADIATION_MUTATION.md) |
 | 103,133 | [`docs/plans/integrated/audio/INTEGRATED_PLAN_173_RADIO_PRODUCTION.md`](plans/integrated/audio/INTEGRATED_PLAN_173_RADIO_PRODUCTION.md) |
 | 103,095 | [`docs/plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN216_EXERCISE_INTEGRATION_PLAN.md) |
+| 103,005 | [`docs/plans/story-expansion-batch-2/paper-and-power-and-the-treaty-table-2026-09-29.md`](plans/story-expansion-batch-2/paper-and-power-and-the-treaty-table-2026-09-29.md) |
 | 102,860 | [`docs/plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN184_ACCESSIBILITY_SETTINGS_INTEGRATION_PLAN.md) |
+| 102,372 | [`docs/plans/story-expansion-batch-2/second-nature-and-ruins-of-the-before-2026-09-29.md`](plans/story-expansion-batch-2/second-nature-and-ruins-of-the-before-2026-09-29.md) |
 | 101,405 | [`Seal-steps/Completed/531842_ASHFALL_WAVE8_IMPLEMENTATION_UNBLOCKER_PLAN.md`](../Seal-steps/Completed/531842_ASHFALL_WAVE8_IMPLEMENTATION_UNBLOCKER_PLAN.md) |
 
 ---
@@ -3891,7 +3896,7 @@ The following documents share identical or near-identical filenames across root,
 | 🔵 `GENERATED` | [`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`](saves/SAVE_STORE_CONTRACT_MATRIX.md) | 73,025 | **ASHFALL — Save-Store Contract Matrix & Completeness Authority** — **Last Verified:** 2026-09-28<br> |
 | 🟡 `HISTORICAL` | [`docs/archive/PLAN78_SAVE_CONTRACT.md`](archive/PLAN78_SAVE_CONTRACT.md) | 1,758,607 | **Archive Desk Save Contract** — `ArchiveDeskState` (captured via `ArchiveDeskSystem.CaptureState()` and stored in `ArchiveDeskSaveStore`): |
 
-## 4. Expansions (01–10 Master Plans & Context) (2242 documents)
+## 4. Expansions (01–10 Master Plans & Context) (2243 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -6128,6 +6133,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/integrated/spiritual/INTEGRATED_PLAN_EXPANSION13_THE_FAITHFUL_AND_THE_FRACTURED.md`](plans/integrated/spiritual/INTEGRATED_PLAN_EXPANSION13_THE_FAITHFUL_AND_THE_FRACTURED.md) | 6,543 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `SpiritualRitualCalendarEngine` is sealed and tested but has **no host seam**: |
 | 🟢 `CURRENT` | [`docs/plans/integrated/systems/INTEGRATED_FOUR_TRACK_EXPANSION_BATCH3_PALLIATIVE_WATER_FORECAST_CURRICULUM_2026-09-26.md`](plans/integrated/systems/INTEGRATED_FOUR_TRACK_EXPANSION_BATCH3_PALLIATIVE_WATER_FORECAST_CURRICULUM_2026-09-26.md) | 6,453 | **FOUR-TRACK EXPANSION-BATCH 3 — Palliative Care / Water Quality / Forecast Reliability / Curriculum** — **STATUS: APPROVED BY USER** |
 | 🟢 `CURRENT` | [`docs/plans/integrated/systems/INTEGRATED_FOUR_TRACK_EXPANSION_BATCH4_COMMON_TABLE_MUSTER_SOIL_ACTIONLOG_2026-09-26.md`](plans/integrated/systems/INTEGRATED_FOUR_TRACK_EXPANSION_BATCH4_COMMON_TABLE_MUSTER_SOIL_ACTIONLOG_2026-09-26.md) | 8,827 | **FOUR-TRACK EXPANSION BATCH 4 — Common Table Nutrition / Emergency Muster / Soil Reclamation / Campaign Action Log** — **STATUS: APPROVED BY USER** |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/STORY_EXPANSION_BATCH_2_INDEX_2026-09-29.md`](plans/story-expansion-batch-2/STORY_EXPANSION_BATCH_2_INDEX_2026-09-29.md) | 5,060 | **Story Expansion Batch 2 — Index (subjects 17–32)** — - **Derive, don't store.** Each subject layers derived read models over owners that already exist and adds one small ... |
 | 🟢 `CURRENT` | [`docs/plans/unblockers/UNBLOCK-05_EXPANSION_WAVES_C3_EN_GATE.md`](plans/unblockers/UNBLOCK-05_EXPANSION_WAVES_C3_EN_GATE.md) | 721,056 | **ASHFALL — UNBLOCK PROGRAM · PLAN 5** — **Status:** planning deliverable only. Read-only pass. No production, data, test, |
 | 🟢 `CURRENT` | [`docs/quests/PLAN_101_DOSE_QUESTS_EXPANSION_CLOSEOUT.md`](quests/PLAN_101_DOSE_QUESTS_EXPANSION_CLOSEOUT.md) | 2,713,851 | **Plan 101 — Dose Quests Expansion: Closeout Report** — **Document ID:** `docs/quests/PLAN_101_DOSE_QUESTS_EXPANSION_CLOSEOUT.md` |
 | 🟢 `CURRENT` | [`docs/radiation/PLAN_81_DOSE_LOCATIONS_EXPANSION_CLOSEOUT.md`](radiation/PLAN_81_DOSE_LOCATIONS_EXPANSION_CLOSEOUT.md) | 2,791,764 | **Plan 81 — Final Regression & Closeout Report** — Repository audit found the closeout claims above **not present in the committed tree**: `dose_locations.json` held on... |
@@ -6360,7 +6366,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2984 documents)
+## 9. General Project Guides & Archive Reference (2992 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -6956,7 +6962,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,435,990 | **ASHFALL Worktree Ownership** — User-authorized fifteen-item visual continuation. Root owns exact new |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,437,800 | **ASHFALL Worktree Ownership** — User-authorized fifteen-item visual continuation. Root owns exact new |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
@@ -8608,6 +8614,14 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/integrated/world/INTEGRATED_PLAN_XP08_F6_MIGRATION_CONSEQUENCE.md`](plans/integrated/world/INTEGRATED_PLAN_XP08_F6_MIGRATION_CONSEQUENCE.md) | 7,416 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `MigrationConsequenceEngine` is sealed and tested and its input authority |
 | 🟢 `CURRENT` | [`docs/plans/integrated/world/INTEGRATED_W4_02_WORLD_TRAVEL_EXPLORATION_D16_ROUTE_HAZARD.md`](plans/integrated/world/INTEGRATED_W4_02_WORLD_TRAVEL_EXPLORATION_D16_ROUTE_HAZARD.md) | 265,086 | **FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED** — `MapRouteHazardEvaluator` was authored and unit-tested but never consumed: the |
 | 🟢 `CURRENT` | [`docs/plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md`](plans/plan_12c_shelter_decor_final_IMPLEMENTATION_LOG.md) | 833,766 | **Plan 12C Final — Shelter Interior & Memorial Wall** — Finish the deferred player-facing Plan 12C lane without creating a second |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/convoy-wars-and-inside-a-house-2026-09-29.md`](plans/story-expansion-batch-2/convoy-wars-and-inside-a-house-2026-09-29.md) | 116,728 | **Feature / Task Plan: Movement and War II — Convoy Wars (armoured vehicles, escort and raid) & Inside a House (rank, orders and loyalty crises)** — Prepend header at the top saying: |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/evenings-and-memory-work-2026-09-29.md`](plans/story-expansion-batch-2/evenings-and-memory-work-2026-09-29.md) | 77,507 | **Feature / Task Plan: The Shelter as a Place II — What We Do With the Evenings (culture, festivals and recreation as survival) & Memory Work (how the shelter mourns and remembers)** — Prepend header at the top saying: |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/iron-road-and-siege-year-2026-09-29.md`](plans/story-expansion-batch-2/iron-road-and-siege-year-2026-09-29.md) | 113,584 | **Feature / Task Plan: Movement and War I — The Iron Road (a restoration campaign) & Siege Year (a campaign arc over the Long Siege engine)** — Prepend header at the top saying: |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/other-beginnings-and-the-hard-road-2026-09-29.md`](plans/story-expansion-batch-2/other-beginnings-and-the-hard-road-2026-09-29.md) | 91,640 | **Feature / Task Plan: Land, Ruins and Starts II — Other Beginnings (start as garrison outpost, relief station, caravan or hospital) & The Hard Road (challenge modes)** — Prepend header at the top saying: |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/paper-and-power-and-the-treaty-table-2026-09-29.md`](plans/story-expansion-batch-2/paper-and-power-and-the-treaty-table-2026-09-29.md) | 103,005 | **Feature / Task Plan: Power, Paper and Place I — Paper and Power (permits, forged papers and audits) & The Treaty Table (negotiate treaties, embargoes and tolls)** — Prepend header at the top saying: |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/second-nature-and-ruins-of-the-before-2026-09-29.md`](plans/story-expansion-batch-2/second-nature-and-ruins-of-the-before-2026-09-29.md) | 102,372 | **Feature / Task Plan: Land, Ruins and Starts I — The Second Nature (mutated wildlife, new crops and a food web) & Ruins of the Before (hand-built sites to explore and salvage)** — Prepend header at the top saying: |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/war-of-words-and-long-inquest-2026-09-29.md`](plans/story-expansion-batch-2/war-of-words-and-long-inquest-2026-09-29.md) | 108,040 | **Feature / Task Plan: Power, Paper and Place II — The War of Words (propaganda and rumours move regions) & The Long Inquest (a slow mystery about what happened before)** — Prepend header at the top saying: |
+| 🟢 `CURRENT` | [`docs/plans/story-expansion-batch-2/works-below-and-machine-in-the-walls-2026-09-29.md`](plans/story-expansion-batch-2/works-below-and-machine-in-the-walls-2026-09-29.md) | 82,346 | **Feature / Task Plan: The Shelter as a Place I — The Works Below (power, water and pipes as a system the player understands) & The Machine in the Walls (the shelter's own systems become a character)** — Prepend header at the top saying: |
 | 🟢 `CURRENT` | [`docs/plans/unblockers/UNBLOCK-01_BODY-INTEGRITY_SCHEMA_F14_XP06.md`](plans/unblockers/UNBLOCK-01_BODY-INTEGRITY_SCHEMA_F14_XP06.md) | 721,417 | **ASHFALL — UNBLOCK PROGRAM · PLAN 1** — **Status:** planning deliverable only. Read-only pass. No production, data, test, |
 | 🟢 `CURRENT` | [`docs/plans/unblockers/UNBLOCK-02_FUNDS_TRADE_F13_XP04_XP08.md`](plans/unblockers/UNBLOCK-02_FUNDS_TRADE_F13_XP04_XP08.md) | 254,682 | **ASHFALL — UNBLOCK PROGRAM · PLAN 2** — **VERIFIED Core:** `Assets/Ashfall.Core/Economy/LoanSharkEnforcerEngine.cs`. **VERIFIED or absent host:** src/Host/Bl... |
 | 🟢 `CURRENT` | [`docs/plans/unblockers/UNBLOCK-03_SEMANTIC_VOICE_STRING_FREEZE_D11_D22_PLAN424649.md`](plans/unblockers/UNBLOCK-03_SEMANTIC_VOICE_STRING_FREEZE_D11_D22_PLAN424649.md) | 177,481 | **ASHFALL — UNBLOCK PROGRAM · PLAN 3** — **Status:** planning deliverable only. Read-only pass. No production, data, test, |
