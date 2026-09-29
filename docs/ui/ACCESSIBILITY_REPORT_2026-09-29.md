@@ -262,6 +262,16 @@ defaults; SpinBox arrows are unstyled. Only 2 files in `src/UI` use
 
 ## 9. Ranked fixes
 
+> **Implementation status (2026-09-29):** items 1, 2, and 6 are implemented
+> (plan `.ai/plans/ui-a11y-p1-input-correctness-2026-09-29.md`, gate test
+> `Ashfall.Core.Tests/UI/UiA11yP1InputGateTests.cs`). Item 2's catalog
+> membership was replaced by a re-raise in `CloseAllOverlayPanels` — adding
+> the HUD to the catalog would close (and lose) an active crisis alert on
+> every panel switch. The advertised Core `Shortcut` strings were left
+> dormant: the HUD never reads them, Space already activates the focused
+> ack button, and digit wiring would create a new collision with
+> CombatPanel 1–5.
+
 **P1 — correctness of input/alerts (player can lose commands or miss crises):**
 
 1. Route `OpenMoralChoiceModal` through the exclusive-open seam
