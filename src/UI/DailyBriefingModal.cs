@@ -27,6 +27,11 @@ namespace AtomicWar.GodotApp.UI
         private Button _ackButton = null!;
         private Button _skipButton = null!;
         private ScrollContainer _scroll = null!;
+        private HFlowContainer _linkRow = null!;
+
+        // Audit §5b: RTL meta links are mouse-only; keyboard/controller
+        // players reach the same routes through this button row (pkg 14).
+        private const int MaxDeepLinkButtons = 8;
 
         private DailyBriefingReport? _report;
         private string _cachedFullText = string.Empty;
@@ -53,9 +58,36 @@ namespace AtomicWar.GodotApp.UI
             _ackButton.Disabled = false;
             _skipButton.Disabled = false;
             _scroll.ScrollVertical = 0;
+            RebuildDeepLinkRow(report);
             Visible = true;
             RefreshProcessState();
             QueueRedraw();
+        }
+
+        private void RebuildDeepLinkRow(DailyBriefingReport report)
+        {
+            foreach (var child in _linkRow.GetChildren())
+                child.QueueFree();
+
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            int added = 0;
+            foreach (var sec in report.Sections ?? new List<DailyBriefingSection>())
+            {
+                if (sec == null || sec.Entries == null) continue;
+                foreach (var entry in sec.Entries)
+                {
+                    if (added >= MaxDeepLinkButtons) break;
+                    string route = entry?.DeepLinkRoute ?? string.Empty;
+                    if (string.IsNullOrEmpty(route) || !seen.Add(route)) continue;
+                    string captured = route;
+                    var btn = AshfallUiHelpers.MakeButton($"GOTO {captured}", () => OnDeepLinkRequested?.Invoke(captured));
+                    btn.TooltipText = $"Open {captured} (keyboard-accessible deep link)";
+                    _linkRow.AddChild(btn);
+                    added++;
+                }
+                if (added >= MaxDeepLinkButtons) break;
+            }
+            _linkRow.Visible = added > 0;
         }
 
         public override void _Ready()
@@ -114,6 +146,12 @@ namespace AtomicWar.GodotApp.UI
             _bodyLabel.AddThemeFontSizeOverride("normal_font_size", DesignTheme.FontSizeBody);
             _bodyLabel.AddThemeColorOverride("default_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             _scroll.AddChild(_bodyLabel);
+
+            _linkRow = new HFlowContainer();
+            _linkRow.AddThemeConstantOverride("h_separation", 8);
+            _linkRow.AddThemeConstantOverride("v_separation", 8);
+            _linkRow.Visible = false;
+            vbox.AddChild(_linkRow);
 
             var footer = new HBoxContainer();
             footer.AddThemeConstantOverride("separation", 8);
