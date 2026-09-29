@@ -269,7 +269,7 @@ namespace AtomicWar.GodotApp.UI
             if (phase == (int)BioFermentationPhase.SterilizedReady)
             {
                 // Process selection (display names only — no raw process ids).
-                _processSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 26) };
+                _processSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 28) };
                 foreach (var process in _system.Processes.Values.OrderBy(p => p.display_name, StringComparer.Ordinal))
                     _processSelect.AddItem(process.display_name);
                 var selectRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
@@ -346,7 +346,7 @@ namespace AtomicWar.GodotApp.UI
                     if (!uniqueFeedstocks.Contains(feed))
                         uniqueFeedstocks.Add(feed);
 
-            _feedstockSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 26) };
+            _feedstockSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 28) };
             foreach (var feed in uniqueFeedstocks)
             {
                 var owner = _system.Processes.Values.FirstOrDefault(p => p.feedstock_item_ids.Contains(feed));

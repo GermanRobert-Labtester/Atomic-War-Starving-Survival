@@ -276,7 +276,7 @@ public partial class DefenseGridPanel : Control
                         RefreshView();
                     });
                     resetBtn.TooltipText = "Rearm the triggered alert device. No cost.";
-                    resetBtn.CustomMinimumSize = new Vector2(0, 26);
+                    resetBtn.CustomMinimumSize = new Vector2(0, 28);
                     row.AddChild(resetBtn);
                 }
                 var armBtn = AshfallUiHelpers.MakeButton(sector.alarm_armed ? "DISARM" : "ARM", () =>
@@ -285,7 +285,7 @@ public partial class DefenseGridPanel : Control
                     RefreshView();
                 });
                 armBtn.TooltipText = "Toggle the sector's alert device standby.";
-                armBtn.CustomMinimumSize = new Vector2(0, 26);
+                armBtn.CustomMinimumSize = new Vector2(0, 28);
                 row.AddChild(armBtn);
 
                 _detailBox.AddChild(row);

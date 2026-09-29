@@ -188,6 +188,10 @@ namespace Ashfall.Core.UI
 
         // ── Panel sizing (px) ───────────────────────────────────────────
 
+        // Comfortable minimum for any interactive control (a11y audit
+        // 2026-09-29 §5d/§9.10): buttons/option buttons must be >= 28px tall.
+        public const int MinInteractiveHeight = 28;
+
         public const int PanelMaxWidth = 420;
         public const int PanelMinWidthNarrow = 260;
         public const int PanelMinWidthStandard = 340;

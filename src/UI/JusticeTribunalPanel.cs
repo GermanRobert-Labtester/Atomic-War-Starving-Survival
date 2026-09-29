@@ -181,7 +181,7 @@ namespace AtomicWar.GodotApp.UI
             // ── Actions ──
             _detail.AddChild(AshfallUiHelpers.MakeSeparator());
             _detail.AddChild(AshfallUiHelpers.MakeSubsectionHeader("REPORT A CRIME"));
-            _crimeSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 26) };
+            _crimeSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 28) };
             string[] crimes = { "Theft", "Assault", "Hoarding", "Sabotage", "Desertion" };
             foreach (var c in crimes) _crimeSelect.AddItem(c);
             _detail.AddChild(_crimeSelect);

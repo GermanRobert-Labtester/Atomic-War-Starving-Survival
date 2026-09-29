@@ -194,7 +194,7 @@ namespace AtomicWar.GodotApp.UI
 
             // Close button
             var btnClose = AshfallUiHelpers.MakeButton("×", () => DismissToast(activeToast));
-            btnClose.CustomMinimumSize = new Vector2(24, 24);
+            btnClose.CustomMinimumSize = new Vector2(28, 28);
             btnClose.TooltipText = "Dismiss";
             hbox.AddChild(btnClose);
 

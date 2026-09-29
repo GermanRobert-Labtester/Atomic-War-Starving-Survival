@@ -647,7 +647,7 @@ public partial class GreenhousePanel : Control
                 var seedBtn = AshfallUiHelpers.MakeButton(label,
                     () => OnActionRequested?.Invoke($"plant:{def.SeedItemId}", _selectedIndex),
                     disabled);
-                seedBtn.CustomMinimumSize = new Vector2(0, 24);
+                seedBtn.CustomMinimumSize = new Vector2(0, 28);
                 seedBtn.SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.Fill;
                 seedRow.AddChild(seedBtn);
                 _detailBox.AddChild(seedRow);

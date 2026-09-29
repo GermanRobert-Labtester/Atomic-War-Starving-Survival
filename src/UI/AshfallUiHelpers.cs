@@ -529,7 +529,10 @@ namespace AtomicWar.GodotApp.UI
             {
                 Text = text,
                 Disabled = disabled,
-                CustomMinimumSize = new Vector2(0, Theme.FontSizeBody + Theme.SpacingMd)
+                // Interactive target size (a11y audit 2026-09-29 §5d/§9.10):
+                // fixed 28px floor, not font-coupled — FontSizeBody + SpacingMd
+                // computed 27px and drifted with typography changes.
+                CustomMinimumSize = new Vector2(0, Theme.MinInteractiveHeight)
             };
             btn.AddThemeFontSizeOverride("font_size", Theme.FontSizeBody);
             ApplyFont(btn, FontBarlowSemiBold);

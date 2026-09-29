@@ -237,7 +237,7 @@ namespace AtomicWar.GodotApp.UI
                         _selectedManualId = manual.manual_id;
                         RefreshView();
                     });
-                    selectBtn.CustomMinimumSize = new Vector2(0, 24);
+                    selectBtn.CustomMinimumSize = new Vector2(0, 28);
                     cardVbox.AddChild(selectBtn);
 
                     _manualList.AddChild(card);

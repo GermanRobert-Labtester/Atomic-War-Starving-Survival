@@ -137,7 +137,7 @@ namespace AtomicWar.GodotApp.UI
                 PowerGridRoomPriority p = s_priorities[i];
                 var btn = AshfallUiHelpers.MakeButton(p.ToString().ToUpperInvariant(),
                     () => OnPriorityChanged?.Invoke(r.RoomId, p));
-                btn.CustomMinimumSize = new Vector2(56, 24);
+                btn.CustomMinimumSize = new Vector2(56, 28);
                 if (p == pri) btn.Disabled = true;
                 priRow.AddChild(btn);
             }
@@ -148,7 +148,7 @@ namespace AtomicWar.GodotApp.UI
             if (tripped)
             {
                 var resetBtn = AshfallUiHelpers.MakeButton("RESET", () => OnBreakerResetRequested?.Invoke(r.RoomId));
-                resetBtn.CustomMinimumSize = new Vector2(60, 24);
+                resetBtn.CustomMinimumSize = new Vector2(60, 28);
                 resetBtn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
                 row.AddChild(resetBtn);
             }
@@ -157,7 +157,7 @@ namespace AtomicWar.GodotApp.UI
                 var state = AshfallUiHelpers.MakeButton(
                     legacyPowered ? "ON" : "OFF",
                     () => OnRoomToggled?.Invoke(r.RoomId));
-                state.CustomMinimumSize = new Vector2(60, 24);
+                state.CustomMinimumSize = new Vector2(60, 28);
                 state.AddThemeColorOverride("font_color",
                     AshfallUiHelpers.ToColor(legacyPowered ? DesignTheme.Pale : DesignTheme.Warm));
                 row.AddChild(state);
@@ -210,7 +210,7 @@ namespace AtomicWar.GodotApp.UI
             // the host route; the panel only raises the request).
             var bankBtn = AshfallUiHelpers.MakeButton("INSTALL BATTERY BANK",
                 () => OnBatteryBankInstallRequested?.Invoke());
-            bankBtn.CustomMinimumSize = new Vector2(220, 26);
+            bankBtn.CustomMinimumSize = new Vector2(220, 28);
             vbox.AddChild(bankBtn);
 
             // Alpha feature — load-shed drill: rehearse the emergency shedding
@@ -221,7 +221,7 @@ namespace AtomicWar.GodotApp.UI
                 _session.RunLoadShedDrill();
                 RefreshView();
             });
-            drillBtn.CustomMinimumSize = new Vector2(220, 26);
+            drillBtn.CustomMinimumSize = new Vector2(220, 28);
             drillBtn.TooltipText = "Drop standard rooms to low priority and watch what survives. Rehearsal, not an emergency.";
             vbox.AddChild(drillBtn);
 
@@ -229,7 +229,7 @@ namespace AtomicWar.GodotApp.UI
             // by the host route; the panel only raises the request).
             var serviceBtn = AshfallUiHelpers.MakeButton("SERVICE GENERATOR",
                 () => OnGeneratorServiceRequested?.Invoke());
-            serviceBtn.CustomMinimumSize = new Vector2(220, 26);
+            serviceBtn.CustomMinimumSize = new Vector2(220, 28);
             vbox.AddChild(serviceBtn);
 
             // B5–B8 expansion (§27): emergency priority presets — the brownout
@@ -237,11 +237,11 @@ namespace AtomicWar.GodotApp.UI
             var presetRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
             var shedBtn = AshfallUiHelpers.MakeButton("EMERGENCY: PRESERVE LIFE SUPPORT",
                 () => OnEmergencyPresetRequested?.Invoke("shed"));
-            shedBtn.CustomMinimumSize = new Vector2(280, 26);
+            shedBtn.CustomMinimumSize = new Vector2(280, 28);
             presetRow.AddChild(shedBtn);
             var defaultsBtn = AshfallUiHelpers.MakeButton("RESTORE DEFAULTS",
                 () => OnEmergencyPresetRequested?.Invoke("defaults"));
-            defaultsBtn.CustomMinimumSize = new Vector2(180, 26);
+            defaultsBtn.CustomMinimumSize = new Vector2(180, 28);
             presetRow.AddChild(defaultsBtn);
             vbox.AddChild(presetRow);
 
@@ -266,7 +266,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 var btn = AshfallUiHelpers.MakeButton($"+{amt:0}",
                     () => OnFuelAdded?.Invoke(amt));
-                btn.CustomMinimumSize = new Vector2(60, 24);
+                btn.CustomMinimumSize = new Vector2(60, 28);
                 fuelRow.AddChild(btn);
             }
             vbox.AddChild(fuelRow);

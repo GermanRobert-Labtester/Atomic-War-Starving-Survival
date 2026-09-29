@@ -663,7 +663,7 @@ namespace AtomicWar.GodotApp.UI
                         _productionHost.StartPrep(tid, DefaultPresenterId, day);
                         RefreshView();
                     });
-                    startBtn.CustomMinimumSize = new Vector2(110, 26);
+                    startBtn.CustomMinimumSize = new Vector2(110, 28);
                     row.AddChild(startBtn);
                     _productionBox.AddChild(row);
                 }
@@ -695,7 +695,7 @@ namespace AtomicWar.GodotApp.UI
                     _productionHost?.CancelJob(jid);
                     RefreshView();
                 });
-                cancelBtn.CustomMinimumSize = new Vector2(90, 26);
+                cancelBtn.CustomMinimumSize = new Vector2(90, 28);
                 row.AddChild(cancelBtn);
                 _productionBox.AddChild(row);
             }

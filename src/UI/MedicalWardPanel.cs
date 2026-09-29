@@ -252,7 +252,7 @@ namespace AtomicWar.GodotApp.UI
                     _selectedBedId = bed.BedId;
                     RefreshView();
                 });
-                btnSelect.CustomMinimumSize = new Vector2(0, 24);
+                btnSelect.CustomMinimumSize = new Vector2(0, 28);
                 cardVbox.AddChild(btnSelect);
 
                 _bedGrid.AddChild(bedCard);

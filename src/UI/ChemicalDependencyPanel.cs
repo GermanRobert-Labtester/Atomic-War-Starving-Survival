@@ -273,7 +273,7 @@ namespace AtomicWar.GodotApp.UI
                             _selectedItemId = dep.itemId;
                             RefreshView();
                         });
-                        selectBtn.CustomMinimumSize = new Vector2(0, 24);
+                        selectBtn.CustomMinimumSize = new Vector2(0, 28);
                         cardVbox.AddChild(selectBtn);
                     }
 

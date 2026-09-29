@@ -269,9 +269,9 @@ namespace AtomicWar.GodotApp.UI
             if (_system == null) return;
             _detail.AddChild(AshfallUiHelpers.MakeSubsectionHeader("NEW BED"));
 
-            _strainSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 26) };
+            _strainSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 28) };
             foreach (var s in _system.Strains.Values) _strainSelect.AddItem(s.display_name);
-            _substrateSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 26) };
+            _substrateSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 28) };
             foreach (var s in _system.Substrates.Values) _substrateSelect.AddItem(s.display_name);
 
             var selectRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);

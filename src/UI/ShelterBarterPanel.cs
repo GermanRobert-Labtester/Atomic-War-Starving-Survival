@@ -742,7 +742,7 @@ namespace AtomicWar.GodotApp.UI
                         RefreshView();
                     }
                 }, disabled: currentReq <= 0);
-                minusBtn.CustomMinimumSize = new Vector2(24, 22);
+                minusBtn.CustomMinimumSize = new Vector2(28, 28);
                 counterBox.AddChild(minusBtn);
 
                 var qtyLbl = AshfallUiHelpers.MakeMetadata(currentReq.ToString());
@@ -762,7 +762,7 @@ namespace AtomicWar.GodotApp.UI
                         RefreshView();
                     }
                 }, disabled: !isAtAirlock || currentReq >= available);
-                plusBtn.CustomMinimumSize = new Vector2(24, 22);
+                plusBtn.CustomMinimumSize = new Vector2(28, 28);
                 counterBox.AddChild(plusBtn);
 
                 row.AddChild(counterBox);
@@ -893,7 +893,7 @@ namespace AtomicWar.GodotApp.UI
                         RefreshView();
                     }
                 }, disabled: currentOffer <= 0);
-                minusBtn.CustomMinimumSize = new Vector2(24, 22);
+                minusBtn.CustomMinimumSize = new Vector2(28, 28);
                 counterBox.AddChild(minusBtn);
 
                 var qtyLbl = AshfallUiHelpers.MakeMetadata(currentOffer.ToString());
@@ -913,7 +913,7 @@ namespace AtomicWar.GodotApp.UI
                         RefreshView();
                     }
                 }, disabled: currentOffer >= available);
-                plusBtn.CustomMinimumSize = new Vector2(24, 22);
+                plusBtn.CustomMinimumSize = new Vector2(28, 28);
                 counterBox.AddChild(plusBtn);
 
                 row.AddChild(counterBox);

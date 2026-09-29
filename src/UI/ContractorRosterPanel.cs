@@ -231,7 +231,7 @@ namespace AtomicWar.GodotApp.UI
                         _host.Dismiss(c.contractorId);
                         RefreshView();
                     });
-                    btnDismiss.CustomMinimumSize = new Vector2(0, 24);
+                    btnDismiss.CustomMinimumSize = new Vector2(0, 28);
                     cardVbox.AddChild(btnDismiss);
 
                     _contractorList.AddChild(card);
@@ -263,7 +263,7 @@ namespace AtomicWar.GodotApp.UI
                         _selectedOfferId = offer.offerId;
                         RefreshView();
                     });
-                    btnSelect.CustomMinimumSize = new Vector2(0, 24);
+                    btnSelect.CustomMinimumSize = new Vector2(0, 28);
                     cardVbox.AddChild(btnSelect);
 
                     _contractorList.AddChild(card);

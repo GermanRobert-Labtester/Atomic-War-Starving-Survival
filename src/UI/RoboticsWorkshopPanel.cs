@@ -208,7 +208,7 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                _directiveSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 26) };
+                _directiveSelect = new OptionButton { CustomMinimumSize = new Vector2(0, 28) };
                 foreach (var dir in DirectiveDisplay.KnownDirectives)
                     _directiveSelect.AddItem(dir.display);
                 for (int i = 0; i < DirectiveDisplay.KnownDirectives.Count; i++)

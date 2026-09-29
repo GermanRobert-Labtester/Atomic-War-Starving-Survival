@@ -215,7 +215,7 @@ namespace AtomicWar.GodotApp.UI
                         _selectedSurvivorId = sv.survivorId;
                         RefreshView();
                     });
-                    selectBtn.CustomMinimumSize = new Vector2(0, 24);
+                    selectBtn.CustomMinimumSize = new Vector2(0, 28);
                     cardVbox.AddChild(selectBtn);
 
                     _survivorList.AddChild(card);

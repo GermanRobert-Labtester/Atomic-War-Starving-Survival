@@ -97,7 +97,7 @@ namespace AtomicWar.GodotApp.UI
                     slot.Amount <= 1 ? AshfallUiHelpers.ToColor(DesignTheme.Warm) : AshfallUiHelpers.ToColor(DesignTheme.Hot));
                 row.AddChild(count);
                 var selectBtn = new Button { Text = "SELECT" };
-                selectBtn.CustomMinimumSize = new Vector2(64, 24);
+                selectBtn.CustomMinimumSize = new Vector2(64, 28);
                 string itemId = slot.Item.id;
                 selectBtn.Pressed += () => OnItemSelected?.Invoke(itemId);
                 row.AddChild(selectBtn);
@@ -105,7 +105,7 @@ namespace AtomicWar.GodotApp.UI
                 if (_salvageHost != null && _salvageHost.CanTeardown(itemId))
                 {
                     var salvageBtn = new Button { Text = "SALVAGE" };
-                    salvageBtn.CustomMinimumSize = new Vector2(82, 24);
+                    salvageBtn.CustomMinimumSize = new Vector2(82, 28);
                     string preview = _salvageHost.PreviewLine(itemId);
                     salvageBtn.TooltipText = string.IsNullOrEmpty(preview)
                         ? "Break one unit down into its parts at the bench."
