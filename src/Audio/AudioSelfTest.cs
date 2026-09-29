@@ -1083,11 +1083,6 @@ namespace AtomicWar.GodotApp.Audio
                     AudioServer.GetBusEffectCount(radioBusIdx) >= 2, ref pass, ref fail);
             }
 
-            // Verify modal manager audio wiring doesn't throw
-            var modalMgr = new ModalManager();
-            Check("ModalManager instantiates and wires modal audio triggers safely",
-                modalMgr != null, ref pass, ref fail);
-
             // ── 10. Phase 2: Dynamic Soundscapes & Expedition Logistics ───────
             GD.Print("[AudioSelfTest] --- Phase 2: Expedition Logistics & Trauma Soundscapes ---");
             var expEmitted = new List<string>();

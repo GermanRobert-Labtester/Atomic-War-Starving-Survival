@@ -12,9 +12,6 @@ namespace AtomicWar.GodotApp.UI
     /// </summary>
     public static class AshfallFocusNavigator
     {
-        private static double _stickRepeatCooldown;
-        private const double StickRepeatCadenceSeconds = 0.15;
-
         /// <summary>
         /// Move focus within root in the given direction.
         /// Finds the nearest focusable whose center lies in the requested half-plane,
@@ -102,31 +99,6 @@ namespace AtomicWar.GodotApp.UI
                 return MoveDirection(scopeRoot, new Vector2I(1, 0));
 
             return false;
-        }
-
-        /// <summary>
-        /// Converts held stick/dpad motion into repeated directional steps on a 150ms cadence.
-        /// </summary>
-        public static void TickStickRepeat(Control scopeRoot, double delta)
-        {
-            if (scopeRoot == null || !GodotObject.IsInstanceValid(scopeRoot) || !scopeRoot.Visible)
-                return;
-
-            _stickRepeatCooldown -= delta;
-            if (_stickRepeatCooldown > 0)
-                return;
-
-            Vector2I dir = Vector2I.Zero;
-            if (Input.IsActionPressed(AshfallInputActions.NavUp)) dir.Y -= 1;
-            if (Input.IsActionPressed(AshfallInputActions.NavDown)) dir.Y += 1;
-            if (Input.IsActionPressed(AshfallInputActions.NavLeft)) dir.X -= 1;
-            if (Input.IsActionPressed(AshfallInputActions.NavRight)) dir.X += 1;
-
-            if (dir != Vector2I.Zero)
-            {
-                MoveDirection(scopeRoot, dir);
-                _stickRepeatCooldown = StickRepeatCadenceSeconds;
-            }
         }
     }
 }

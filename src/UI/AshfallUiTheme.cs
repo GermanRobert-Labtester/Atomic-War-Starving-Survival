@@ -230,6 +230,25 @@ namespace AtomicWar.GodotApp.UI
             theme.SetStylebox("grabber_highlight", "ScrollBar", Flat(warm));
             theme.SetStylebox("grabber_pressed", "ScrollBar", Flat(hot));
 
+            // ── Tooltips ──
+            // Without these, tooltips render Godot's light default bubble on
+            // ink panels (pkg 13, 2026-09-29).
+            theme.SetStylebox("panel", "TooltipPanel", Flat(new Color(ink.R, ink.G, ink.B, 0.97f), line));
+            theme.SetColor("font_color", "TooltipLabel", pale);
+            theme.SetFontSize("font_size", "TooltipLabel", DesignTheme.FontSizeBody);
+            SetFontIfAvailable(theme, "TooltipLabel", AshfallUiHelpers.FontBarlowRegular);
+
+            // ── Separators (HSeparator/VSeparator inherit) ──
+            theme.SetStylebox("separator", "HSeparator", Flat(lineSoft));
+            theme.SetStylebox("separator", "VSeparator", Flat(lineSoft));
+
+            // ── Label (base type) ──
+            // Factory labels override per-label; this brands the ~359 direct
+            // `new Label` sites that bypass the factory seam (pkg 13).
+            theme.SetColor("font_color", "Label", pale);
+            theme.SetFontSize("font_size", "Label", DesignTheme.FontSizeBody);
+            SetFontIfAvailable(theme, "Label", AshfallUiHelpers.FontBarlowRegular);
+
             // ── ProgressBar (a11y series pkg 11, 2026-09-29) ──
             // ProgressBar's class chain never reaches Button/LineEdit, so its
             // background/fill styleboxes resolved to Godot's light default art

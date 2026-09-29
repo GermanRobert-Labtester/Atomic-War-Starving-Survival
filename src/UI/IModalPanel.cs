@@ -21,7 +21,7 @@ namespace AtomicWar.GodotApp.UI
 
         /// <summary>
         /// Optional preferred control to focus upon opening.
-        /// If null, ModalManager focuses the first available interactive child.
+        /// If null, host focus policy focuses the first available interactive child.
         /// </summary>
         Control? InitialFocusControl { get; }
     }
