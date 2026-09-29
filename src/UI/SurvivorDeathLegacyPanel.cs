@@ -6,6 +6,7 @@ using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -123,7 +124,7 @@ namespace AtomicWar.GodotApp.UI
                     Text = "No deceased survivors recorded. The memorial wall remains unwritten.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                emptyLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f));
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                 _deathsContainer.AddChild(emptyLabel);
             }
             else
@@ -135,7 +136,7 @@ namespace AtomicWar.GodotApp.UI
                     cardStack.AddThemeConstantOverride("separation", 4);
 
                     var nameLabel = new Label { Text = $"{d.SurvivorName} (Day {d.DeathDay})" };
-                    nameLabel.AddThemeColorOverride("font_color", new Color(0.95f, 0.5f, 0.5f));
+                    nameLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
                     cardStack.AddChild(nameLabel);
 
                     var causeLabel = new Label { Text = $"Cause: {d.Cause} | Loc: {(string.IsNullOrEmpty(d.LocationAtDeath) ? "Shelter" : d.LocationAtDeath)}" };
@@ -144,14 +145,14 @@ namespace AtomicWar.GodotApp.UI
                     if (!string.IsNullOrEmpty(d.LastWords))
                     {
                         var wordsLabel = new Label { Text = $"Last Words: \"{d.LastWords}\"", AutowrapMode = TextServer.AutowrapMode.WordSmart };
-                        wordsLabel.AddThemeColorOverride("font_color", new Color(0.85f, 0.85f, 0.85f));
+                        wordsLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
                         cardStack.AddChild(wordsLabel);
                     }
 
                     if (!string.IsNullOrEmpty(d.Circumstances))
                     {
                         var circLabel = new Label { Text = $"Note: {d.Circumstances}", AutowrapMode = TextServer.AutowrapMode.WordSmart };
-                        circLabel.AddThemeColorOverride("font_color", new Color(0.7f, 0.7f, 0.7f));
+                        circLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                         cardStack.AddChild(circLabel);
                     }
 
@@ -171,7 +172,7 @@ namespace AtomicWar.GodotApp.UI
                     Text = "No last wills on file. Survivors can record wills to designate heirs for their personal gear and valuables.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                emptyLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f));
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                 _willsContainer.AddChild(emptyLabel);
             }
             else
@@ -183,7 +184,7 @@ namespace AtomicWar.GodotApp.UI
                     cardStack.AddThemeConstantOverride("separation", 4);
 
                     var hdr = new Label { Text = $"Will of {w.SurvivorId} (Registered Day {w.CreatedDay})" };
-                    hdr.AddThemeColorOverride("font_color", w.IsValid ? new Color(0.4f, 0.85f, 0.95f) : new Color(0.6f, 0.6f, 0.6f));
+                    hdr.AddThemeColorOverride("font_color", w.IsValid ? AshfallUiHelpers.ToColor(DesignTheme.Info) : AshfallUiHelpers.ToColor(DesignTheme.Dim));
                     cardStack.AddChild(hdr);
 
                     if (w.Beneficiaries.Count > 0)

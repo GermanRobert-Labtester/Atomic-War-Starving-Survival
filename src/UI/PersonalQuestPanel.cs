@@ -6,6 +6,7 @@ using Ashfall.Core;
 using Ashfall.Core.Quests;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -127,7 +128,7 @@ namespace AtomicWar.GodotApp.UI
                     Text = "No active personal quests. Survivors unlock personal arcs as their traits and shelter bonds develop.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                emptyLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f));
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                 _activeQuestsContainer.AddChild(emptyLabel);
             }
             else
@@ -151,7 +152,7 @@ namespace AtomicWar.GodotApp.UI
                     }
 
                     var titleLabel = new Label { Text = title };
-                    titleLabel.AddThemeColorOverride("font_color", new Color(0.95f, 0.85f, 0.4f));
+                    titleLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warning));
                     cardStack.AddChild(titleLabel);
 
                     var descLabel = new Label { Text = stageDesc, AutowrapMode = TextServer.AutowrapMode.WordSmart };
@@ -189,7 +190,7 @@ namespace AtomicWar.GodotApp.UI
                     Text = "No completed character arcs recorded yet.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                emptyLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f));
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                 _completedQuestsContainer.AddChild(emptyLabel);
             }
             else
@@ -207,7 +208,7 @@ namespace AtomicWar.GodotApp.UI
                     }
 
                     var titleLabel = new Label { Text = title };
-                    titleLabel.AddThemeColorOverride("font_color", new Color(0.4f, 0.9f, 0.5f));
+                    titleLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Success));
                     cardStack.AddChild(titleLabel);
 
                     var statusLabel = new Label

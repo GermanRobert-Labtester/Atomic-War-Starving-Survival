@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.Audio;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -113,10 +114,10 @@ namespace AtomicWar.GodotApp.UI
             // Severity color modulation
             Color accentColor = snapshot.Severity switch
             {
-                CrisisSeverity.Terminal or CrisisSeverity.Catastrophic or CrisisSeverity.Critical => new Color(1f, 0.3f, 0.3f),
-                CrisisSeverity.Severe => new Color(1f, 0.6f, 0.2f),
-                CrisisSeverity.Warning or CrisisSeverity.Elevated => new Color(1f, 0.85f, 0.3f),
-                _ => Colors.White
+                CrisisSeverity.Terminal or CrisisSeverity.Catastrophic or CrisisSeverity.Critical => AshfallUiHelpers.ToColor(DesignTheme.Critical),
+                CrisisSeverity.Severe => AshfallUiHelpers.ToColor(DesignTheme.Warning),
+                CrisisSeverity.Warning or CrisisSeverity.Elevated => AshfallUiHelpers.ToColor(DesignTheme.Warning),
+                _ => AshfallUiHelpers.ToColor(DesignTheme.Pale)
             };
             if (_severityHeader != null) _severityHeader.Modulate = accentColor;
             if (_backdrop != null)
@@ -164,7 +165,7 @@ namespace AtomicWar.GodotApp.UI
                     string trendStr = !string.IsNullOrEmpty(metric.Trend) ? $" {metric.Trend}" : "";
                     lbl.Text = $"{metric.Label}: {metric.ValueText}{trendStr}";
                     if (metric.IsFailing)
-                        lbl.Modulate = new Color(1f, 0.4f, 0.4f);
+                        lbl.Modulate = AshfallUiHelpers.ToColor(DesignTheme.Critical);
                     _metricGrid.AddChild(lbl);
                 }
             }
@@ -184,7 +185,7 @@ namespace AtomicWar.GodotApp.UI
                     var row = new HBoxContainer();
                     var nameLbl = new Label { Text = $"• {aff.Name} ({aff.Role}):", SizeFlagsHorizontal = SizeFlags.ExpandFill };
                     var statusLbl = new Label { Text = aff.Status };
-                    if (aff.IsCritical) statusLbl.Modulate = new Color(1f, 0.4f, 0.4f);
+                    if (aff.IsCritical) statusLbl.Modulate = AshfallUiHelpers.ToColor(DesignTheme.Critical);
 
                     row.AddChild(nameLbl);
                     row.AddChild(statusLbl);
@@ -240,7 +241,7 @@ namespace AtomicWar.GodotApp.UI
                         AutowrapMode = TextServer.AutowrapMode.WordSmart
                     };
                     if (entry.IsError)
-                        logLbl.Modulate = new Color(1f, 0.5f, 0.5f);
+                        logLbl.Modulate = AshfallUiHelpers.ToColor(DesignTheme.Critical);
                     _eventLog.AddChild(logLbl);
                 }
             }

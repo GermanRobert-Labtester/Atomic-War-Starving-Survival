@@ -6,6 +6,7 @@ using Ashfall.Core;
 using Ashfall.Core.Communication;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -198,7 +199,7 @@ namespace AtomicWar.GodotApp.UI
                     Text = "No time capsules buried or cached yet. Survivors can cache artifacts, letters, and memories for future generations.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                emptyLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f));
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                 _capsulesContainer.AddChild(emptyLabel);
             }
             else
@@ -210,7 +211,7 @@ namespace AtomicWar.GodotApp.UI
                     cardStack.AddThemeConstantOverride("separation", 4);
 
                     var nameLabel = new Label { Text = $"{c.CapsuleName} (By {c.CreatorId}, Day {c.CreatedDay})" };
-                    nameLabel.AddThemeColorOverride("font_color", c.IsOpen ? new Color(0.5f, 0.8f, 0.9f) : new Color(0.95f, 0.85f, 0.4f));
+                    nameLabel.AddThemeColorOverride("font_color", c.IsOpen ? AshfallUiHelpers.ToColor(DesignTheme.Info) : AshfallUiHelpers.ToColor(DesignTheme.Warning));
                     cardStack.AddChild(nameLabel);
 
                     string statusStr = c.IsOpen ? $"OPENED on Day {c.OpenedDay} by {c.OpenedBy}" : $"SEALED [{c.ConditionType}]";
@@ -223,7 +224,7 @@ namespace AtomicWar.GodotApp.UI
                     if (!string.IsNullOrEmpty(c.Message))
                     {
                         var msgLabel = new Label { Text = $"Note: \"{c.Message}\"", AutowrapMode = TextServer.AutowrapMode.WordSmart };
-                        msgLabel.AddThemeColorOverride("font_color", new Color(0.8f, 0.8f, 0.8f));
+                        msgLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
                         cardStack.AddChild(msgLabel);
                     }
 
@@ -263,7 +264,7 @@ namespace AtomicWar.GodotApp.UI
                     Text = "No legacy messages queued. Survivors can write sealed letters to deliver on specific dates, death, or milestones.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                emptyLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f));
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                 _messagesContainer.AddChild(emptyLabel);
             }
             else
@@ -275,7 +276,7 @@ namespace AtomicWar.GodotApp.UI
                     cardStack.AddThemeConstantOverride("separation", 4);
 
                     var hdr = new Label { Text = $"From {m.AuthorId} to {m.RecipientId} (Day {m.CreatedDay})" };
-                    hdr.AddThemeColorOverride("font_color", m.IsDelivered ? new Color(0.4f, 0.9f, 0.5f) : new Color(0.9f, 0.7f, 0.4f));
+                    hdr.AddThemeColorOverride("font_color", m.IsDelivered ? AshfallUiHelpers.ToColor(DesignTheme.Success) : AshfallUiHelpers.ToColor(DesignTheme.Warning));
                     cardStack.AddChild(hdr);
 
                     var contentLabel = new Label { Text = $"\"{m.Content}\"", AutowrapMode = TextServer.AutowrapMode.WordSmart };

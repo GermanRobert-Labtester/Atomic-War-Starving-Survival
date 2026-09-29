@@ -6,6 +6,7 @@ using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -124,7 +125,7 @@ namespace AtomicWar.GodotApp.UI
                     Text = "No relationship bonds tracked yet. As survivors work, dine, and bunk together, social bonds form.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                emptyLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f));
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                 _bondsContainer.AddChild(emptyLabel);
             }
             else
@@ -137,7 +138,7 @@ namespace AtomicWar.GodotApp.UI
 
                     var nameLabel = new Label { Text = $"{p.SurvivorA} & {p.SurvivorB} [{p.Bond}]" };
                     nameLabel.AddThemeFontSizeOverride("font_size", 14);
-                    nameLabel.AddThemeColorOverride("font_color", new Color(0.95f, 0.85f, 0.4f));
+                    nameLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warning));
                     cardStack.AddChild(nameLabel);
 
                     var statsLabel = new Label
@@ -162,7 +163,7 @@ namespace AtomicWar.GodotApp.UI
                     Text = "No social drift recorded. Relationships remain stable.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                emptyLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f));
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                 _driftContainer.AddChild(emptyLabel);
             }
             else
@@ -175,7 +176,7 @@ namespace AtomicWar.GodotApp.UI
 
                     var hdr = new Label { Text = $"Day {ev.Day}: {ev.DriftType} ({ev.SurvivorA} & {ev.SurvivorB})" };
                     hdr.AddThemeFontSizeOverride("font_size", 14);
-                    hdr.AddThemeColorOverride("font_color", new Color(0.95f, 0.5f, 0.4f));
+                    hdr.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
                     cardStack.AddChild(hdr);
 
                     var descLabel = new Label { Text = ev.Description, AutowrapMode = TextServer.AutowrapMode.WordSmart };

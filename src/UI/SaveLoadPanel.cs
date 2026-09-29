@@ -5,6 +5,7 @@ using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Save;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -73,7 +74,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _statusMessageLabel.Text = message;
                 _statusMessageLabel.Visible = !string.IsNullOrWhiteSpace(message);
-                var color = isError ? new Color(1f, 0.4f, 0.4f) : new Color(0.53f, 1f, 0.67f);
+                var color = isError ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Success);
                 _statusMessageLabel.AddThemeColorOverride("font_color", color);
             }
         }
@@ -127,7 +128,7 @@ namespace AtomicWar.GodotApp.UI
                     {
                         var selected = new Label { Text = "< active" };
                         selected.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-                        selected.AddThemeColorOverride("font_color", new Color(0.53f, 1f, 0.67f));
+                        selected.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Success));
                         hbox.AddChild(selected);
                     }
 
@@ -168,7 +169,7 @@ namespace AtomicWar.GodotApp.UI
                             RefreshView();
                         });
                         if (armed)
-                            btnDelete.AddThemeColorOverride("font_color", new Color(1f, 0.45f, 0.4f));
+                            btnDelete.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
                         btnDelete.CustomMinimumSize = new Vector2(90, 32);
                         hbox.AddChild(btnDelete);
                     }
@@ -289,7 +290,7 @@ namespace AtomicWar.GodotApp.UI
             btnReset.CustomMinimumSize = new Vector2(160, 40);
             btnReset.Disabled = !_selectedSlotId.HasValue;
             if (_pendingReset)
-                btnReset.AddThemeColorOverride("font_color", new Color(1f, 0.45f, 0.4f));
+                btnReset.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
             _actionButtons.AddChild(btnReset);
 
             var btnImport = AshfallUiHelpers.MakeButton("IMPORT LEGACY", () =>

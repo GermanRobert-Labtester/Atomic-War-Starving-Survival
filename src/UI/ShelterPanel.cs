@@ -155,10 +155,10 @@ namespace AtomicWar.GodotApp.UI
             float skyAverage = AverageSkyBleed(skySave);
             float exteriorRad = _worldHost.Weather.OutdoorRadModifier;
 
-            _statusList.AddChild(AshfallUiHelpers.MakeDataRow("Living Residents", $"{living}/{_survivorsHost.RosterState.Count}", new Color(0.9f, 0.9f, 0.9f)));
-            _statusList.AddChild(AshfallUiHelpers.MakeDataRow("Shielded Sectors", $"{materialSave.RoomIds?.Length ?? 0} Rooms", new Color(0.83f, 0.67f, 0.38f)));
-            _statusList.AddChild(AshfallUiHelpers.MakeDataRow("Sky Armor Grid", $"{skySave.cells?.Count ?? 0} Cells", new Color(0.43f, 0.64f, 0.66f)));
-            _statusList.AddChild(AshfallUiHelpers.MakeDataRow("External Atmosphere", $"{_worldHost.Weather.Current}".ToUpperInvariant(), new Color(0.58f, 0.56f, 0.52f)));
+            _statusList.AddChild(AshfallUiHelpers.MakeDataRow("Living Residents", $"{living}/{_survivorsHost.RosterState.Count}", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+            _statusList.AddChild(AshfallUiHelpers.MakeDataRow("Shielded Sectors", $"{materialSave.RoomIds?.Length ?? 0} Rooms", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+            _statusList.AddChild(AshfallUiHelpers.MakeDataRow("Sky Armor Grid", $"{skySave.cells?.Count ?? 0} Cells", AshfallUiHelpers.ToColor(DesignTheme.Info)));
+            _statusList.AddChild(AshfallUiHelpers.MakeDataRow("External Atmosphere", $"{_worldHost.Weather.Current}".ToUpperInvariant(), AshfallUiHelpers.ToColor(DesignTheme.Muted)));
 
             // ── Wall Markings & Ambient Scratches (Plan 145) ──
             if (_graffitiCatalog != null)
