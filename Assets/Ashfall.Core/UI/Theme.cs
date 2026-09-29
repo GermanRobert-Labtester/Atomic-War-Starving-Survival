@@ -173,7 +173,11 @@ namespace Ashfall.Core.UI
         public const int FontSizeBody = 15;
         public const int FontSizeSmall = 12;
         public const int FontSizeMono = 13;
-        public const int FontSizeLabel = 11;
+        // Raised 11 → 12 (a11y audit 2026-09-29 §4/§9.7): the compact-label
+        // floor fed 282+ MakeMetadata sites; 11px BarlowCondensed was at the
+        // readability floor for sustained ledgers. Precedent: grid headers and
+        // sidebar hints were raised 11→12 in place on 2026-09-26.
+        public const int FontSizeLabel = 12;
 
         // ── Diegetic HUD typography (matches USS) ───────────────────────
 
