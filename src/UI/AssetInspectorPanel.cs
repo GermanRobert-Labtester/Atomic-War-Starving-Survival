@@ -30,7 +30,7 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
 
-        private enum Cat { Items, Portraits, Locations, Factions }
+        private enum Cat { Items, Portraits, Locations, Factions, Art }
 
         /// <summary>One inspected entry: identity + resolved-asset status.</summary>
         private readonly struct EntryRow
@@ -80,6 +80,7 @@ namespace AtomicWar.GodotApp.UI
             (Cat.Portraits, "Portraits"),
             (Cat.Locations, "Locations"),
             (Cat.Factions, "Factions"),
+            (Cat.Art, "Art Status"),
         };
 
         private readonly Dictionary<Cat, List<EntryRow>> _rowsByCat = new();
@@ -139,7 +140,11 @@ namespace AtomicWar.GodotApp.UI
             foreach (var (cat, _) in Categories)
             {
                 var rows = new List<EntryRow>();
-                if (Directory.Exists(dataDir))
+                if (cat == Cat.Art)
+                {
+                    LoadArtStatus(rows);
+                }
+                else if (Directory.Exists(dataDir))
                 {
                     var seen = new HashSet<string>(StringComparer.Ordinal);
                     foreach (string glob in CatalogGlobs[cat])
@@ -150,6 +155,53 @@ namespace AtomicWar.GodotApp.UI
                 }
                 rows.Sort((a, b) => string.CompareOrdinal(a.Id, b.Id));
                 _rowsByCat[cat] = rows;
+            }
+        }
+
+        // Sprite collections tracked by their PLACEHOLDER_MANIFEST.json so the
+        // dev can see which art is still placeholder vs baked final.
+        private static readonly string[] ArtCollections = { "Characters", "Shelter", "Surface" };
+
+        private static void LoadArtStatus(List<EntryRow> rows)
+        {
+            string root = ProjectSettings.GlobalizePath("res://");
+            foreach (string collection in ArtCollections)
+            {
+                string manifest = Path.Combine(root, "assets", "sprites", collection, "PLACEHOLDER_MANIFEST.json");
+                if (!File.Exists(manifest)) continue;
+                ReadManifest(manifest, collection, rows);
+            }
+        }
+
+        private static void ReadManifest(string file, string collection, List<EntryRow> rows)
+        {
+            JsonDocument doc;
+            try
+            {
+                doc = JsonDocument.Parse(File.ReadAllText(file));
+            }
+            catch (Exception ex_CATDIAG)
+            {
+                CatalogDiagnostics.Warn(file, "Art manifest parse", ex_CATDIAG);
+                return;
+            }
+            using (doc)
+            {
+                if (!doc.RootElement.TryGetProperty("files", out JsonElement arr) ||
+                    arr.ValueKind != JsonValueKind.Array)
+                    return;
+                foreach (JsonElement e in arr.EnumerateArray())
+                {
+                    if (e.ValueKind != JsonValueKind.Object) continue;
+                    string? fname = FirstString(e, "file");
+                    if (string.IsNullOrWhiteSpace(fname)) continue;
+                    bool placeholder = e.TryGetProperty("placeholder", out JsonElement p) &&
+                                       p.ValueKind == JsonValueKind.True;
+                    string replacedBy = FirstString(e, "replaced_by", "label_in_image") ?? "(none)";
+                    // HasArt == final (not placeholder); Kind carries the collection
+                    // so BuildThumb can load res://assets/sprites/{Kind}/{Id}.
+                    rows.Add(new EntryRow(fname, collection, collection, replacedBy, !placeholder));
+                }
             }
         }
 
@@ -379,8 +431,11 @@ namespace AtomicWar.GodotApp.UI
                 counts.Add($"{label} {ok}/{rows.Count}");
             }
 
+            string metric = _activeCat == Cat.Art
+                ? $"final: {resolved}   ·   placeholder: {missing}"
+                : $"art resolved: {resolved}   ·   fallback / missing: {missing}";
             _summaryLabel.Text =
-                $"{_activeCat}: {all.Count}   ·   art resolved: {resolved}   ·   fallback / missing: {missing}   ·   showing: {_visible.Count}\n" +
+                $"{_activeCat}: {all.Count}   ·   {metric}   ·   showing: {_visible.Count}\n" +
                 "Coverage by category — " + string.Join("   ·   ", counts);
         }
 
@@ -426,7 +481,10 @@ namespace AtomicWar.GodotApp.UI
             v.AddChild(kind);
 
             // Status line (no Colors.Red / Colors.Green — theme tokens only).
-            var status = new Label { Text = row.HasArt ? "ART OK" : "MISSING — fallback" };
+            string statusText = _activeCat == Cat.Art
+                ? (row.HasArt ? "FINAL" : "PLACEHOLDER")
+                : (row.HasArt ? "ART OK" : "MISSING — fallback");
+            var status = new Label { Text = statusText };
             status.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
             status.AddThemeColorOverride(
                 "font_color",
@@ -445,6 +503,13 @@ namespace AtomicWar.GodotApp.UI
                 StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
                 ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize
             };
+            if (_activeCat == Cat.Art)
+            {
+                // Show the actual sprite art so placeholder vs final is visible.
+                rect.Texture = AshfallUiHelpers.TryLoadTexture($"res://assets/sprites/{row.Kind}/{row.Id}")
+                            ?? AshfallUiHelpers.TryLoadTexture(AssetRegistry.FallbackIconPath);
+                return rect;
+            }
             AssetResult res = Resolve(_activeCat, row.Id);
             if (res.IsValid && res.Texture != null)
             {

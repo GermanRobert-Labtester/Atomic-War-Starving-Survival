@@ -3,7 +3,7 @@
   "metadata_schema_version": 1,
   "generated_by": "scripts/ci/generate-plan-register.py",
   "repository": {
-    "head": "eb7fa8cd66cc4eecaa95933e7a18861eb42f339f",
+    "head": "b87752e91cc1b6933ce594e1a72a3e4c052e1097",
     "branch": "integration/all-latest-2026-09-24"
   },
   "config_path": "scripts/ci/plan_governance_config.json",

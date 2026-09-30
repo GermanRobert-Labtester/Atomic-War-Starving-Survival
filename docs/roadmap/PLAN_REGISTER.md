@@ -4,7 +4,7 @@
 This file is generated from plan front matter and repository state. The JSON sibling is the integration substrate; do not edit either artifact by hand.
 
 - Register schema: `1`
-- Repository HEAD: `eb7fa8cd66cc4eecaa95933e7a18861eb42f339f`
+- Repository HEAD: `b87752e91cc1b6933ce594e1a72a3e4c052e1097`
 - Plans: **621**
 - Namespaces: `integration` 245, `next_steps` 242, `piagents` 134
 - Metadata state: `COMPLETE` 621

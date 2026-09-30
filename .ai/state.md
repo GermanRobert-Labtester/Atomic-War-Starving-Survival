@@ -9334,3 +9334,54 @@ Verification:
   load-failed=0 (the 6 "unique missing" are intentional synthetic negative probes).
 
 Every authored item now renders real art instead of the placeholder. No commit.
+
+## Pass 5 — Player-facing missing-UI sweep + placeholder audit — 2026-09-30
+
+MISSING-UI SWEEP: CLEAN. Evidence: PanelRouteGate 21/21, PanelCatalogCompleteness
+3/3, PlayerSurfaceCoverage 8/8, PlayerSurfaceLiveness 5/5 (37 gate tests PASS).
+All 223 registered PanelRegistry routes are wired to real, non-blank surfaces
+(UiTruthfulness gate = 0 blank; ProductionUiNoFabricatedFallback = 0 fake). The
+`—` values in panels are honest empty-states (correct), not fake data to swap.
+No player-facing UI is missing via dead/stub routes.
+
+PLACEHOLDER AUDIT (authoritative PLACEHOLDER_MANIFEST.json):
+- Shelter (35 assets): FINAL — 0 placeholder (Blender-baked).
+- Surface (12 assets): PLACEHOLDER — wasteland_sky / surface_hatch_approach /
+  expedition_departure × {day1_7, dawn, dusk, night}.
+- Characters (4 assets): PLACEHOLDER — char_base_sheet{,_rust,_olive,_bone}.png.
+=> 16 placeholder art assets remain. Checked generated_AIassets (item/location/
+portrait/faction) + assets/art: NO matching scene/phase/character-sheet art to
+swap in. These require ART PRODUCTION (Shelter used bake-shelter-stage.py Blender
+pipeline; Surface/Characters need the same OR ashfall-design/foundry AI bake).
+NOT swapped here: forcing mismatched art is worse than the honest placeholder,
+and art production/visual-verify is out of a code pass's scope.
+
+Empty "content script" classes (PharmaLabPanelContent etc.) inspected: these are
+by-design scene-root anchor classes (real UI lives in the .tscn bound via
+SceneBinder), NOT placeholder content.
+
+Actionable handoff: 16 Surface/Character placeholder art assets → art pipeline
+(ashfall-design / ashfall-foundry skills). No commit.
+
+## Pass 5b — Developer Session inspector: Art Status category — 2026-09-30
+
+Extended `AssetInspectorPanel` with a 5th "Art Status" category that reads the
+three `PLACEHOLDER_MANIFEST.json` files (Characters, Shelter, Surface) and lists
+every sprite with its placeholder-vs-final state + the actual art thumbnail
+(res://assets/sprites/{collection}/{file}), so the dev can SEE which assets still
+need swapping and track swaps to FINAL. Rows: Characters 4 (all placeholder),
+Shelter 35 (all FINAL), Surface 12 (all placeholder) = 51 sprites, 16 PLACEHOLDER
+(amber) / 35 FINAL (cyan). Status text + summary are category-aware (FINAL vs
+PLACEHOLDER). Tooltip shows `replaced_by` / `label_in_image` provenance.
+
+File: `src/UI/AssetInspectorPanel.cs` (Art category + manifest reader).
+
+Verification:
+- `dotnet build Ashfall.csproj`: 0 errors.
+- Source gates PASS: NoFabricatedFallback 4/4, AccessibilitySourceAudit 6/6,
+  PanelSubscriptionHygiene 1/1, PanelLiveRefresh 2/2.
+- Runtime `--ui-layout-selftest` PASS (0 failures; UiControllerParity 61/61).
+- Manifest schema validated (placeholder=bool; parser + counts confirmed).
+
+The Developer Session (main-menu DEV SESSION) now surfaces: items/portraits/
+locations/factions asset resolution AND art placeholder-vs-final status. No commit.
