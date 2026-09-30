@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-37"
+TITLE: "Plan 37 — Excavation Sites, Archaeology and Deep-Strata Reachability"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/37-excavation-sites-catalog.md"
+INFERRED: true
+---
 # Plan 37 — Excavation Sites, Archaeology and Deep-Strata Reachability
 
 > **Rebuild status:** COMPLETE 8-SITE CATALOG — CORE LOADER AND EXCAVATION UI EXIST; NORMAL-PLAY CRAWLABILITY IS THE RESIDUAL

@@ -1,5 +1,19 @@
 # PLAN 158 COMPLETION REPORT — Cordage, Cable & Technical Textiles (2026-09-09)
 
+## 0. Framing — What Binds (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded report remains the authority.)*
+
+> "Cordage and cable: two technologies of holding things together, one made of twist and one of
+> drawn metal."
+
+Technical textiles are civilisation's most modest infrastructure — rope, cloth, wire — and the
+report gives them the same rigour as any flagship. Nothing in a shelter is held together by
+ambition; it is held together by *cord*.
+
+- **The unglamorous materials are the ones everything else is built from**, which is why they
+  finish first and get remembered last.
+
 ## Record counts by family
 
 | Family | Source file | Records | Truth class |

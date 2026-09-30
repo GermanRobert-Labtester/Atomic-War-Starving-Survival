@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-32"
+TITLE: "Plan 32 — One Map, Three Notions of Place"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_32_One_Map_Three_Notions_Of_Place.md"
+INFERRED: true
+---
 # Plan 32 — One Map, Three Notions of Place
 
 > **Wave:** Continuity Wave 4 — *The World Beyond the Gate*

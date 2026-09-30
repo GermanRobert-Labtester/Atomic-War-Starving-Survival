@@ -32,6 +32,24 @@ The program succeeds when “present,” “loaded,” “queried,” or “name
 
 ---
 
+## 0. Framing — Content That Answers Back (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Content is alive when it remembers."
+
+Living content, consequence and utilization are one idea in three tenses: what the player did,
+what it changed, and what can be done with it. Content that cannot be *used* is set dressing;
+content that does not *consequence* is a cutscene. The plan's ambition is the middle thing —
+authored material that the simulation can answer.
+
+- **Utilization is the test of life**: if nothing can touch it, it was never part of the world.
+- **Consequence is memory with an owner** — the state remembers, and the content refers to what
+  the state knows.
+
+---
+
 ## 1. Historical Baseline to Re-measure
 
 The source reports the following historical metrics from `artifacts/content-utilization.json`:

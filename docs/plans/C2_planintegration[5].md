@@ -72,6 +72,23 @@ The flagship outcome is:
 
 ---
 
+## 0. Framing — Wear (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Everything that protects you is being spent."
+
+Protection that never wears out is not protection; it is scenery. This plan gives condition a
+single authority so that wear means one thing everywhere — the filter, the coat, the seal and the
+wall all degrade in the same grammar, and the player can learn to read one language of decay.
+
+- **One condition authority is a promise that the player will never be lied to twice** about the
+  same wearing-out.
+- **Wear is the game's quietest clock** — it ticks in materials, not minutes.
+
+---
+
 # 1. Source Truth
 
 The supplied Plan 21 establishes these critical facts:

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-0E934EED16A1"
+TITLE: "Plan 172 — Radiation Mutation System"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_172_Radiation_Mutation_System.md"
+INFERRED: true
+---
 # Plan 172 — Radiation Mutation System
 
 ## Goal

@@ -64,6 +64,24 @@ The flagship player-facing outcome is:
 
 ---
 
+## 0. Framing — The Envelope (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A shelter is a promise about what stays outside."
+
+Environmental exposure and shelter shielding are the two halves of that promise: one measures
+what the world is doing to the body, the other measures what the walls are doing about it. The
+plan's discipline is that both halves speak through existing owners — the envelope is drawn, not
+invented.
+
+- **Exposure is a journey, not a state** — dose arrives over time and the record must carry the
+  route, not just the total.
+- **Shielding is geometry with consequences**: every gap in the envelope is somebody's bad night.
+
+---
+
 # 1. Source Truth
 
 The source plan identifies the current critical defect:

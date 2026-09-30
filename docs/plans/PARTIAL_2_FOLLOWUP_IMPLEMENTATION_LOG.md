@@ -1,5 +1,18 @@
 # Partial-plan follow-up implementation log — Plans 185 and 162
 
+## 0. Framing — Following Up (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Follow-up is where a promise proves it was not a performance."
+
+Memory Decay and the Shelter Archive arrive in one log — the two plans about *remembering*,
+finished by the same hand on the same day. The pairing is the kind of coincidence a corpus should
+keep, not smooth over.
+
+- **Follow-through is the least photographed work in the programme** and the only reason the
+  programme's word means anything.
+
 Date: 2026-09-19
 Authority: direct user request following `PARTIAL_15_PRODUCTION_UNBLOCK_INTEGRATION_PLAN.md`
 

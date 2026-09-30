@@ -6,6 +6,24 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — The Private Chapter (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "A personal quest is the game asking one person a question instead of asking everyone."
+
+Character arcs are where the shelter stops being a headcount. Each arc is derived from a survivor's
+own history and carried at the scale of a single life — which is the only scale at which a
+campaign can be said to have *people* in it rather than personnel.
+
+- **Arcs grow from what the survivor already is** — seeds, not scripts; the biography is data and
+  the telling is content.
+- **One person's story, kept small, out-weighs a faction's story told loudly.** The plan knows
+  which one the player will remember.
+
+---
+
 ## Outcome
 
 Make `PersonalQuestSystem` (DEC-341) the live personal quest and character arc authority

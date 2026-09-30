@@ -5,6 +5,25 @@
 **Source of expansion direction:** `docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`. Its live-source-first, four-tier architecture, information-flow, and anti-duplication rules govern the addenda.
 **Status:** planning architecture and editorial pass complete; no production feature, host route, catalog row, or test has been added by this package.
 
+## 0. Framing — Ten Documents, One Wave (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes; the recorded closeout remains the authority.)*
+
+> "A documentation closeout is where work stops being a claim and becomes a record."
+
+Branch, transport, social, weather, labour and the Ward: ten plans that describe a shelter's
+whole ordinary life, closed out together because they were always one subject — how a place
+keeps going. The closeout's care is in the *roles*: which document is authority, which is
+proposal, which is memory.
+
+- **A wave of plans is only a programme if the corpus knows what each one is for** — the roles
+  table below is that knowledge, written down.
+- **Closing documents is an act of respect toward future readers**, who will otherwise have to
+  guess.
+
+---
+
 ## Deliverables and document roles
 
 The historical contract, implementation log, closeout, authority map, design bible, or generated appendix at the head of each file is retained as dated evidence. A marked 2026-09-24 addendum gives the current premise, one bounded first package, explicit ownership and save route, phased integration sequence, a C# contract sketch, a reachability register where current JSON exists, candidate scene/edge-case reviews, and a source-specific editorial review. The matrix is **candidate planning material**, not newly approved game canon or a commitment to implement every case.

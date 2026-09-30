@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-09331352A86E"
+TITLE: "Plan 157 — Communications and Radio Network — Antenna Custody, Real Signals, and Bounded Player Operations"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_157_Communications_Radio_Network_Infrastructure.md"
+INFERRED: true
+---
 # Plan 157 — Communications and Radio Network — Antenna Custody, Real Signals, and Bounded Player Operations
 
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.

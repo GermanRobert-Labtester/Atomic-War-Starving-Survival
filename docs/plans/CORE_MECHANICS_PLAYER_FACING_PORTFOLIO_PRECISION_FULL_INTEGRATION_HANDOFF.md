@@ -1,5 +1,19 @@
 # ASHFALL TWO-PLAN PORTFOLIO — PRECISION PASS + FULL-INTEGRATION HANDOFF
 
+## 0. Framing — The Handoff (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; no scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A handoff is where one person's context becomes a team's map."
+
+Precision pass and full-integration handoff in one document: the moment accumulated understanding
+is *transferred* rather than kept. The worktree is heavily dirty and the handoff says so —
+honesty about the ground is the first duty of anyone passing it on.
+
+- **Context that is not written down evaporates between sessions**; this file is the
+  desiccation protocol.
+
 **Document type:** coordination and implementation handoff; this is not a third subject plan
 **Evidence date:** 2026-09-25 working-tree pass
 **Repository branch:** `integration/all-latest-2026-09-24`

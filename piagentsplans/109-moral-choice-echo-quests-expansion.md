@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-109"
+TITLE: "Plan 109 — Moral Choice Echoes: Sixty-Quest Chain Corpus, Exactly-Once Delivery, and Existing Quest Ownership"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/109-moral-choice-echo-quests-expansion.md"
+INFERRED: true
+---
 # Plan 109 — Moral Choice Echoes: Sixty-Quest Chain Corpus, Exactly-Once Delivery, and Existing Quest Ownership
 
 > **Rebuild status:** TERMINAL 60-ECHO CONTENT + REACHABILITY/PERSISTENCE AUDIT

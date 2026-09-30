@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-21
+PLAN_ID: "E1-21"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 21
-STATUS: READY_FOR_EXECUTION_WHEN_FACTION_AND_REGIONAL_TREATY_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 197 — Faction Diplomacy & Treaty System"
 SEQUENCE_FILENAME: "E1_planintegration[21].md"
 PREVIOUS_FILENAME: "E1_planintegration[20].md"
 NEXT_FILENAMES:
   - "E1_planintegration[22].md"
   - "E1_planintegration[23].md"
-CATEGORY: LINK+FACTIONS+DIPLOMACY+TREATIES+MISSIONS+GEOPOLITICS
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create formal diplomacy, treaty negotiation, diplomatic missions, obligation tracking, and treaty enforcement by composing existing FactionStanceEngine, FactionBranchCoordinator, RegionalTreatySystem, HoldfastTradeSession, Combat, Expedition, E1-3 information, E1-19 trade-route, debt, and survivor-role authorities without introducing a second standing/reputation graph, duplicate treaty owner, combat gate, or economic settlement engine."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -27,6 +27,24 @@ SAVE_RISK: VERY_HIGH
 GEOPOLITICAL_RISK: VERY_HIGH
 EXPLOIT_RISK: VERY_HIGH
 CONTENT_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [21] — Faction Diplomacy, Treaty Negotiation, Envoys, Obligations, Violations, Alliances, and Geopolitical State"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[21].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [21] — Faction Diplomacy, Treaty Negotiation, Envoys, Obligations, Violations, Alliances, and Geopolitical State

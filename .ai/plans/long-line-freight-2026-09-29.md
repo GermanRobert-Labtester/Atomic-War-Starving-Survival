@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_long_line_freight_plan.md`. Family index: `docs/expansions/expansion_world_moves_without_you_index.md`.
 > Not a claim. Foreman adds the ledger entry and per-package claims. **Name collision with Expansion 11 "The Long Line" (telephone trunk) — DEC-LF-01 first.**
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `trade_ledger_lines.json` / `trade_wayside_events.json` rows; they belong
 > in data, never in code.
@@ -41,6 +41,13 @@ administrative fact with weather attached.
 bought (LF-P3). You cannot purchase a house name; you can only become one. And the season table is
 the plan's hidden antagonist: a company that reads as permanent is simply a company that has not
 yet met a year it could not close. §12 keeps the rest open.
+
+**The second layer.** The ten days when nothing can be done are the plan's real subject. In that
+interval the shelter owns nothing — not the wagon, not the cargo, not the driver — only the
+*entry*, which is a promise somebody made before the leaving. Freight is the art of being
+responsible for things you cannot reach, and the ledger line is the only instrument that makes
+such responsibility feel like a fact. And because the entry outlives the wagon, the company is the
+only thing on the road that can be trusted and the only thing that can betray you on paper.
 
 **Note on naming.** Expansion 11 *The Long Line* is a telephone trunk — a proposal, unimplemented,
 with no `Ashfall.Core.LongLine` and no `long_line` section registered (E12). The collision is real
@@ -104,6 +111,63 @@ something a player would recognise at distance on a wagon door.
   sentence in the company's memory.
 - **The season table is the antagonist.** Per-year `season_end_day` (DEC-LF-06) is the difference
   between a company that survives Year Two and one that quietly stops.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Manifest, run 15: one crate short at arrival. The crate is not on the ledger. The ledger's arithmetic is."
+
+> "Wagon door, painted mark. The mark was painted before the Charter. The Charter changed who is willing to paint it."
+
+> "Season table, Year Two: one route closes at 280. Somebody has written 'next year' beside it. 'Next year' is not a column."
+
+**Scenes the player may piece together.**
+
+> "The run resolves at arrival and the story arrives as paperwork. The driver's name is against the manifest and there is no other line about the driver anywhere in the book."
+
+> "A rival house's wagon passes on the second leg. It may be real. The ledger declines to comment and so does the plan."
+
+**Held silences (texture, not register rows).**
+
+- Why the provisional name persists. DEC-LF-01 is unsigned; the road is named the way roads are named — provisionally, then permanently, without anyone deciding. Texture only.
+- What the wayside implies about geography. `trade_wayside_events.json` supplies events and the wayside has no geography; the impression that it must lie somewhere is left standing on purpose.
+
+**Fourth pass — the meanwhile (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `trade_ledger_lines.json` / `trade_wayside_events.json`.
+The name collision with Expansion 11 stands unresolved; DEC-LF-01 governs.)*
+
+**The shape of the polish.** Freight prose is margin prose: terse, dated, occasionally honest. The
+ten-day meanwhile is the plan's subject, so the writing should live in the tense of *already paid,
+not yet known* — everything in the future perfect. The ledger line is the only surviving witness and
+it is written by whoever is still employed, which is why every line is one sentence long.
+
+**What the shelter leaves lying around.**
+
+> "Ledger margin, run 12: 'eleven days.' The margin is the only place the book admits to time."
+
+> "Charter seal, pressed once. The impression is in the ledger and the seal is on a shelf and the
+> shelf is not in the book."
+
+> "Waybill, second copy requested by nobody. The company keeps two of everything now. The second
+> copy is the one that survives."
+
+**Held silences (texture, not register rows).**
+
+- Who is still employed to write the ledger line. Resolve-at-arrival paperwork is written by
+  whoever remains (§1b); the hand is anonymous and must stay so. Texture only.
+- Whether a wayside event happened to this run or to the road. The wayside has no geography (held
+  silence above); the ledger declines to locate anything and must keep declining.
 
 ---
 

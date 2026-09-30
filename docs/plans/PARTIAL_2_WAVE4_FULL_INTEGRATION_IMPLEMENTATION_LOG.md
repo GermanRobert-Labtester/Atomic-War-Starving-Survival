@@ -1,5 +1,17 @@
 # Partial Wave 4 — Plans 216 + 202 Integration Log
 
+## 0. Framing — Bodies and Friction (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Exercise is maintenance of the self. Conflict is wear between selves."
+
+Plans 216 and 202 are the physical and the social body of the shelter, integrated under one log:
+one keeps people in practice, the other keeps them honest with each other. Both are daily
+systems, and daily systems are where a simulation earns the word *life*.
+
+- **Neither system fires once and shines** — both accrue, which is exactly why they share a wave.
+
 Date: 2026-09-19
 Status: implemented and verified by the integrator
 

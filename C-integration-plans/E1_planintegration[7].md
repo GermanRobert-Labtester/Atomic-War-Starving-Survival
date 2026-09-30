@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-7
+PLAN_ID: "E1-7"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 7
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 148 — Ideological Friction → Events & Quests"
 SEQUENCE_FILENAME: "E1_planintegration[7].md"
 PREVIOUS_FILENAME: "E1_planintegration[6].md"
 NEXT_FILENAMES:
   - "E1_planintegration[8].md"
   - "E1_planintegration[9].md"
-CATEGORY: LINK+SOCIAL_EVENTS+BELIEF_CONFLICT+QUESTS+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Turn existing ideological-friction signals into explainable social events, mediation choices, bounded belief evolution, and quest hooks without duplicating relations, autonomy, governance, faction, or moral-choice authority."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -22,6 +22,24 @@ RUNTIME_RISK: HIGH
 SAVE_RISK: MEDIUM_HIGH
 NARRATIVE_RISK: HIGH
 PLAYER_FRICTION_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [7] — Ideological Friction, Confrontation Events, Mediation, Belief Evolution, and Shelter Schisms"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[7].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [7] — Ideological Friction, Confrontation Events, Mediation, Belief Evolution, and Shelter Schisms

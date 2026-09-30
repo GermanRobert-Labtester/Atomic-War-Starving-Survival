@@ -5,6 +5,25 @@
 **Evidence:** `--wildlife-harvest-selftest` 12/12, `--storm-forecast-selftest`
 12/12; host + Core builds 0 errors.
 
+## 0. Framing — Wild and Weather (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "The wild is what grows without asking. The weather is what changes without apologising."
+
+Harvest quotas and weather are the two systems the shelter cannot argue with — one a conversation
+with an ecosystem, the other the only mechanic permitted to be *indifferent*. The plan gives both
+an owner without domesticating either, which is the correct posture toward things larger than a
+roster.
+
+- **A quota is a negotiation the ecosystem did not attend.** Keeping that asymmetry visible is the
+  plan's fairness.
+- **Weather owes the player nothing, and saying so plainly is a kindness** — expectations set are
+  expectations managed.
+
+---
+
 ## Premise (verified in source before editing)
 
 Both engines are **signed pure-domain authorities** with tests (DEC-86 = 5/5,

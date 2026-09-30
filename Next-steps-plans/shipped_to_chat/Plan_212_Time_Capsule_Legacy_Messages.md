@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-9668B52FC879"
+TITLE: "Plan 212 — Time Capsules and Legacy Messages — Safe Discovery, Delivery, and Bereavement"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_212_Time_Capsule_Legacy_Messages.md"
+INFERRED: true
+---
 # Plan 212 — Time Capsules and Legacy Messages — Safe Discovery, Delivery, and Bereavement
 
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.

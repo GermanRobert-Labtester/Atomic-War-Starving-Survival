@@ -10,6 +10,13 @@
 
 ---
 
+> *"A technique is not stored in a book. A book is only the place a technique agreed to wait."*
+>
+> Research in this game is permanent: unlock a node, keep it forever. That is how a *game* works. It
+> is not how a *shelter* works.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -21,6 +28,16 @@ The research tree in ASHFALL is a shopping list. Sixty-two nodes across six cate
 The world the game describes is one in which the opposite is true. **Knowledge is a thing people carry, and people die.** A water engineer who is the only one who knows how to service the still is not a statistic; she is a single point of failure with a name. The Reconstruction Tree makes that true in play: knowledge has **bearers**, **fragments**, and a **fragile middle**, and *rebuilding what was lost* is a campaign, not a queue.
 
 The player's promise: **you will come to count what the shelter knows the way you count food — and to know who to keep alive, who to make teach, and what to write down before it is too late.**
+
+There are three kinds of **bearer** — a person, a page, and a practice — and a node is only as
+secure as its least survivable holder. A person dies. A page burns. A practice lapses from disuse.
+Three rhythms of forgetting, and the second-to-last bearer is the one who matters: when they go,
+the node goes Fragile, and when the grace period runs out the capability check returns **false** for
+the first time in the campaign.
+
+Loss here is opt-in and reversible — which is exactly what makes it bearable to play and unbearable
+to think about. A lapsed node never deletes its unlock record. The shelter forgets how to do a
+thing; it never forgets that it once could.
 
 ### 1.2 Pillars
 
@@ -135,3 +152,58 @@ No second research authority. No lapse for unflagged nodes. No new currency. No 
 - **Bookkeeping burden.** *Bound:* one Knowledge Ledger view; the numbers are derived, not entered.
 - **Duplicate systems** (skills vs bearers). *Bound:* bearers are *read from* the skill/manual authorities; nothing stored twice.
 - **Existing saves.** *Bound:* ship-dark parity is an acceptance test.
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** A technique is not stored in a book; a book is where a technique agreed to
+wait. Forgetting here is a *change of address* — person to page, page to practice, practice to
+nothing — quiet, dated, and nobody's fault, which is exactly what makes it unbearable. The
+Knowledge Ledger is the shelter admitting its competence is a population, and populations decline.
+
+**What the expansion leaves lying around.**
+
+> "Page-hold slip: a place, not a name. A page can burn, and the burn has a date."
+
+> "Reconstruction desk: fragments are citations and weigh nothing. The player is assembling a proof, not a hoard."
+
+> "Relearn note: faster the second time. The unlock record remembers that it once could — DEC-RT-05, the kindest rule in the file."
+
+**Scenes the player may piece together.**
+
+> "The trial returns: lesson. One thing learned. The column that records which thing is otherwise empty, forever."
+
+> "A taught apprentice secures a Fragile node within one tick. The Tree is not a scavenger hunt; it is an argument for schools."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What a *catastrophic* looks like in the room. Exactly one authored consequence is drawn; the scene is content's job, never doctrine.
+- Why grace feels like two seasons from inside. The period is authored; the counting is folklore and stays folklore.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Who the last bearer was.** The projector returns a status, never a name. Naming a person would
+turn a loss into a quest.
+
+**What the lost nodes were before they were lost.** Authored as fragment sets and prerequisites only.
+Their pre-collapse history is deliberately unwritten.
+
+**Why a practice lapses.** A recent-use stamp, not a new activity system. Its decay is a mechanism
+with no stated cause.
+
+**What a catastrophic trial destroys.** Exactly one authored consequence, drawn from the salvage
+chance field. The consequence is content, not doctrine.
+
+**Were the lost nodes ever known to anyone alive.** Fragments surface through existing seams and are
+never placed. The expansion finds residue and declines to say whose.

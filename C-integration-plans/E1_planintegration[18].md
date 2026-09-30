@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-18
+PLAN_ID: "E1-18"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 18
-STATUS: READY_FOR_EXECUTION_WHEN_WATER_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 189 — Water Source Management & Contamination Network"
 SEQUENCE_FILENAME: "E1_planintegration[18].md"
 PREVIOUS_FILENAME: "E1_planintegration[17].md"
 NEXT_FILENAMES:
   - "E1_planintegration[19].md"
   - "E1_planintegration[20].md"
-CATEGORY: LINK+WATER+SOURCES+CONTAMINATION+INFRASTRUCTURE+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create a canonical source/network layer for discoverable water origins, hydraulic connectivity, source availability, sampling knowledge, and source-selection intent while preserving WaterTreatment, LocationEvolution, Disease, Weather, Inventory, Power, Greenhouse, Expedition, and E1-17 Maintenance as the owners of their respective state and consequences."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -27,6 +27,24 @@ SAVE_RISK: VERY_HIGH
 BALANCE_RISK: HIGH
 MICROMANAGEMENT_RISK: HIGH
 DATA_MODEL_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [18] — Water Sources, Contamination Networks, Source Discovery, Testing, Hydraulic Routing, and Strategic Supply"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[18].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [18] — Water Sources, Contamination Networks, Source Discovery, Testing, Hydraulic Routing, and Strategic Supply

@@ -16,6 +16,26 @@
 
 ---
 
+## 0. Framing — The Crate and the Changelog (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, evidence row, decision,
+acceptance criterion, verification step or recorded status; the §26 closeout evidence remains the
+authority for anything this package executed.)*
+
+> "A version number is a promise that something changed on purpose."
+
+Release craft is the discipline of making change *addressable*: a tag you can name, a changelog
+you can read, a hotfix path that opens like a normal door. The plan's own numbering collision —
+two things called "Plan 48" — is the corpus teaching its own lesson in provenance, in real time,
+on the document that fixes exactly that class of confusion.
+
+- **The changelog is a letter to a stranger who will arrive after the fire.** Everything in it is
+  written for someone with no context and no patience, which is the correct reader.
+- **The hotfix path is the door marked for emergencies that must open normally.** A recovery route
+  nobody has rehearsed is a rumour of a route.
+
+---
+
 # 1. Objective
 
 Make an ASHFALL release a **computed, gated, reproducible event** instead of a manual act of

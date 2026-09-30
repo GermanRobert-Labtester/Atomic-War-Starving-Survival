@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-3580577BE629"
+TITLE: "Plan 196 — Food Type and Temperature Spoilage — Sealed Preservation Custody"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_196_Food_Type_Differentiation_Temperature_Spoilage.md"
+INFERRED: true
+---
 # Plan 196 — Food Type and Temperature Spoilage — Sealed Preservation Custody
 
 ## Current evidence and integration architecture — 2026-09-24

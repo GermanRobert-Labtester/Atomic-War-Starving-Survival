@@ -1,5 +1,17 @@
 # Partial-plan production unblock implementation log — two more plans
 
+## 0. Framing — Two More (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A queue drains one honest pair at a time."
+
+"Two more plans" is the correct unit of progress in a corpus this size — small enough to verify,
+large enough to matter. The unglamorous title is the point: the work is the routine, and the
+routine is what compounds.
+
+- **Volume is a by-product of rhythm**, never a substitute for it.
+
 Date: 2026-09-19
 Authority: direct user request following `PARTIAL_15_PRODUCTION_UNBLOCK_INTEGRATION_PLAN.md`
 

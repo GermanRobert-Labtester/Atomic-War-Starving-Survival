@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-123"
+TITLE: "Plan 123 — Rebel Faction Branches, PoNR Flags and Mutual-Exclusion Outcomes"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/123-rebel-faction-branch-expansion.md"
+INFERRED: true
+---
 # Plan 123 — Rebel Faction Branches, PoNR Flags and Mutual-Exclusion Outcomes
 
 > **Rebuild status:** COMPLETE 15-BRANCH CATALOG/STATE LOOP — FACTION-BRANCH REACHABILITY AND MIGRATION AUDIT

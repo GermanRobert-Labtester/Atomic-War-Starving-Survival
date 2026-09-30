@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-30"
+TITLE: "Plan 30 — Ritual, Faith & Meaning: The Spiritual World in Subterranean Survival"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/30-ritual-faith-meaning.md"
+INFERRED: true
+---
 # Plan 30 — Ritual, Faith & Meaning: The Spiritual World in Subterranean Survival
 
 > **Authority Document Reference:** Ashfall Master Expansion Authority v2.0 (Volumes 30, 35, 41, 54)

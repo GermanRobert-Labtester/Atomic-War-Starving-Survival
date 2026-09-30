@@ -1,5 +1,18 @@
 # Plan 220 & Plan 205 Integration Log — Shelter Atmosphere & Noise Discipline
 
+## 0. Framing — The Air and the Noise (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Noise discipline is politeness enforced by physics."
+
+Atmosphere is what the shelter breathes; noise is what it says while breathing. Integrating the
+two in one log is right: both are *media* — things that pass through rooms and affect everyone
+inside them, whether or not they were consulted.
+
+- **Air and sound are the two systems nobody notices until they fail** — which is exactly why
+  they deserve owners.
+
 Date: 2026-09-19
 Status: Implemented and Verified (Sealed)
 

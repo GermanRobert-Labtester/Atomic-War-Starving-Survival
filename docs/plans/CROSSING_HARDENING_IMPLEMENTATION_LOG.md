@@ -1,5 +1,16 @@
 # Crossing Hardening Implementation Log
 
+## 0. Framing — The Crossing (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A crossing is a seam where the world changes hands."
+
+Hardening a crossing means making the seam hold under the traffic it actually gets — not the
+traffic its designers imagined. The log's PASS is a claim that the seam held under measurement.
+
+- **A hardening log is a promise that the easy failure was removed first.**
+
 ## Phase 1 — State and consequence boundary
 
 Status: PASS

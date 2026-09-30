@@ -1,5 +1,89 @@
 # ASHFALL Worktree Ownership
 
+## claim-year-two-p4b-elders-2026-09-30
+
+DEFERRED; CLAIM RELEASED. User declined authored age changes and requested another plan. All P4b implementation/test changes from this attempt precisely reverted; P4a preserved. Plan unsealed at `.ai/plans/y2-p4b-elders-2026-09-30.md`; fresh-campaign age prerequisite unresolved.
+
+## claim-year-two-p4a-apprentice-pipeline-2026-09-30
+
+User-authorized acceptance repair (2026-09-30): extend this claim to `Assets/Ashfall.Core/CatalogIntegrityValidator.cs` (chapter-profile enum classification only), `Assets/Ashfall.Core/Endgame/ChapterProfileCatalog.cs` (enum contract validation), `Assets/StreamingAssets/Data/year_two_chapter.json` (authored terminal ID correction), `Ashfall.Core.Tests/CatalogIntegrityValidatorTests.cs` and `Ashfall.Core.Tests/Endgame/ChapterProfileTests.cs` (focused regression cases), and generated `docs/INDEX.md` through its existing generator. Prior P1B/P2 claims are COMPLETE; no live overlap found. Outcome: eight integrity errors eliminated without weakened reference checks or gameplay/save changes, then accept/mark/archive P4a. Status: COMPLETE; paths released.
+
+Current status: COMPLETE / FULLY INTEGRATED; paths released. P4a and its user-authorized eight-error acceptance repair are FULLY INTEGRATED. Catalog integrity PASS: 0 errors across 430 catalogs, five documented distress primary-wins warnings. Scoped regression tests PASS 51/51; host build zero warnings/errors; Go JSON validator PASS 714/714; Year Two runtime check PASS 7/7. Existing apprenticeship/Plan55 tests and panel lifecycle acceptance also passed. Read-only review clear. Plan marked with repeated FULLY INTEGRATED headers and immediately archived at `.ai/plans/integrated/campaign/INTEGRATED_y2-p4a-apprentice-pipeline-2026-09-30.md`. P3/full P4 remain unsealed; no commit/full suite.
+
+Claim extension: `src/Host/EndgameHostSession.cs` — missing System.Collections.Generic import only; prerequisite P2 compilation repair discovered by current build. All endgame behavior remains read-only.
+
+User-authorized next available plan; approved umbrella P4 permits four sequential subpackages. P2 accepted. P3 blocked by missing lease service owner and parameters. Integrator owns `.ai/plans/y2-p4a-apprentice-pipeline-2026-09-30.md` and archive, `Assets/Ashfall.Core/ApprenticeshipSystem.cs`, `src/Host/ApprenticeshipHostSession.cs`, `src/UI/ApprenticeshipPanel.cs`, `src/Main.ShelterSocial.cs` (apprenticeship setup only), `src/Main.SurvivorFate.cs` (existing death handler only), `Assets/StreamingAssets/Data/apprenticeship_catalog.json`, `Ashfall.Core.Tests/Generations/YearTwoApprenticeLadderTests.cs`, task state and bounded integration ledger entry. Earlier apprenticeship/shared-skill claims are completed; foreign changes preserved. Core builder owns Core/catalog/test paths; integrator owns host/UI/Main. Status: COMPLETE; paths released. Acceptance: five umbrella 4a criteria, focused tests, build, data validation, runtime audit; full P4 remains unsealed.
+
+## claim-year-two-p2-play-on-2026-09-30
+
+User-authorized one-plan continuation: Package P2 — Play On (chapter mechanism) (`.ai/plans/y2-p2-play-on-2026-09-29.md`).
+Owned paths:
+- `Assets/StreamingAssets/Data/year_two_chapter.json` (new constants)
+- `Assets/Ashfall.Core/Endgame/EndgameSystem.cs` (chapter state, chapter records, ContinueChapter, terminal ending check)
+- `src/Host/EndgameHostSession.cs` (ContinueChapter host seam)
+- `src/Main.Endgame.cs` (chapter threshold check, final seal guard)
+- `src/UI/ChroniclePanel.cs` (PLAY ON / SEAL HERE dual buttons & chapter view)
+- `Assets/Ashfall.Core/HostCliRegistry.cs` (`--year-two-chapter-selftest`)
+- `Ashfall.Core.Tests/Endgame/YearTwoPlayOnTests.cs` (new test suite)
+- `.ai/state.md` and plan archival path.
+All other systems read-only. Status: COMPLETE / FULLY INTEGRATED. Focused tests: YearTwoPlayOnTests (9/9 PASS), EndgameSystemTests (9/9 PASS), Plan145UnifiedEndingHostIntegrationTests (5/5 PASS), Plan175MetaProgressionHostIntegrationTests (12/12 PASS). Fast JSON schema validation 714/714 PASS. Plan marked FULLY INTEGRATED and moved to .ai/plans/integrated/campaign/INTEGRATED_y2-p2-play-on-2026-09-29.md.
+
+## claim-plan37-live-keybinding-reset-2026-09-30
+
+User-authorized continuation; integrator claims `src/Settings/KeyBindingApplicator.cs`, `src/Settings/UserSettings.cs`, `src/UI/SettingsPanel.cs` (three audio preview callbacks only), `src/Host/HostCli.Command.RunSettingsSelfTest.cs`, `.ai/plans/plan37-live-keybinding-reset.md` and archive `.ai/plans/integrated/ui/plan37-live-keybinding-reset.md`, task state, this claim and bounded integration ledger entry. No active claim overlaps these production paths. Acceptance: existing focused settings recovery tests, build and settings-selftest verify live reset with non-key bindings preserved; auditor confirms draft semantics. Whole Plan 37 and Year Two paths remain read-only. Status: COMPLETE / FULLY INTEGRATED; paths released. Recovery20/20, host build0errors, settings-selftest0failures and audit/whitespace PASS. Plan archived at `.ai/plans/integrated/ui/plan37-live-keybinding-reset.md`.
+
+## claim-year-two-p1b-chapter-profiles-2026-09-30
+
+User-authorized one-plan continuation: Package P1B — Storyline Chapter Profiles & branch-aware Year One ending (`.ai/plans/y2-p1b-chapter-profiles-2026-09-29.md`).
+Owned paths:
+- `Assets/StreamingAssets/Data/chapter_profiles.json` (new)
+- `Assets/Ashfall.Core/Endgame/ChapterProfileCatalog.cs` (new)
+- `Assets/Ashfall.Core/Endgame/ChapterProfileResolver.cs` (new)
+- `Assets/Ashfall.Core/Verdict/ReckoningClock.cs` (new)
+- `Assets/Ashfall.Core/Verdict/ReckoningSystem.cs` (additive profile thresholds)
+- `Assets/Ashfall.Core/Endgame/EndgameSystem.cs` (profile id in state, additive)
+- `Assets/Ashfall.Core/CatalogIntegrityValidator.cs` (standing-modifier validation rule for 135 branch endings)
+- `src/Host/VerdictHostSession.cs` (ReckoningClock adapter at boundary)
+- `Ashfall.Core.Tests/Endgame/ChapterProfileTests.cs` (new)
+- `Ashfall.Core.Tests/Verdict/ReckoningClockTests.cs` (new)
+- `.ai/state.md` and plan archival path.
+All other systems read-only. Status: COMPLETE / FULLY INTEGRATED. Focused tests: ChapterProfileTests (13/13 PASS), ReckoningClockTests (7/7 PASS), EndgameSystemTests (9/9 PASS), RitesReckoningEvidenceTests (11/11 PASS). Fast JSON schema validation 713/713 PASS. Plan marked FULLY INTEGRATED and moved to .ai/plans/integrated/campaign/INTEGRATED_y2-p1b-chapter-profiles-2026-09-29.md.
+
+## claim-plan48-changelog-residual-2026-09-30
+
+User-authorized one-plan continuation; integrator owns `scripts/release/generate_changelog.py`, `.ai/plans/plan48-changelog-generation-residual.md` and `.ai/plans/integrated/tooling/plan48-changelog-generation-residual.md`, this claim, `.ai/state.md`, and the bounded residual entry in `INTEGRATION_PLANS.md`. Original Plan 48 is DONE, but current generator succeeds as a no-op. Acceptance: isolated git fixture proves generation, idempotency, outside-region preservation and invalid-input no-write; read-only audit. All other release/CI/gameplay/save files and live CHANGELOG.md are read-only. Status: COMPLETE / RELEASED. Generator CLI fixture checks and live --check passed; auditor findings repaired and re-review clear. Marked and immediately archived residual plan; no project commit or live changelog write. See .ai/state.md for evidence and scope limits.
+
+## claim-cf-p6-vehicle-armor-grades-closeout-2026-09-30
+
+User-authorized continuation to fully integrate the next available plan. Root
+integrator owns this claim, `.ai/state.md`, `INTEGRATION_PLANS.md`,
+`docs/INDEX.md`, and archival of
+`docs/plans/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md` to
+`docs/plans/integrated/expeditions/CF_P6_VEHICLE_ARMOR_GRADES_INTEGRATION_PLAN.md`.
+Premise rechecked before documentation edits: DEC-95 is SIGNED; the current
+`vehicle_armor_grades.json` catalog and `VehicleArmorGradeCatalog` / existing
+`VehicleGarageSystem` owner expose the four authored grades and install/reforge
+seam; existing Plan 50 UI/host and save integration are present. The earlier
+CF-P6 implementation claim is already DONE, so this closeout changes no
+production code, data, test, or host path. Those remain read-only. The dirty
+`src/Host/ExpeditionHostSession.cs` path is explicitly outside this claim.
+Verification: `bin/run-scoped-tests Ashfall.Core.Tests/Expeditions/Plan213VehicleArmorGradeTests.cs`
+PASS 21/21; `bin/run-scoped-tests
+Ashfall.Core.Tests/Expeditions/Plan50VehicleGarageIntegrationTests.cs` PASS
+5/5; `godot --headless --path . -- --vehicle-garage-selftest` PASS 27/27.
+Plan marked and archived at the owned path; docs index regenerated (5,600 documents) and `python3 scripts/ci/generate-docs-index.py --check` PASS. Status: COMPLETE. No commit.
+
+## claim-chatgpt-item-art-tranche-45-2026-09-29
+
+User-authorized fifteen-item visual continuation. Root owns exact new
+assets/art/{item_escort_challenge_ribbon,item_rejection_notice,item_crossing_map,item_black_market_pouch,item_charter_draft,item_pocket_dosimeter,item_dose_register_book,item_cohort_baseline_card,item_deserter_coalition_forged_papers,item_long_walk_route_ledger,item_cold_count_provenance_seal,item_unsigned_debt_ledger_page,item_amnesty_petition_dossier,item_water_allocation_writ,item_diesel_fuel}.jpg
+files and matching .jpg.import sidecars, fifteen exact-name editable SVG
+sources under docs/visual/sources/tranche45/, plus
+.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-45-2026-09-29.md, additive
+entries in docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md and
+.ai/state.md, and this claim. No catalog, runtime source, or existing art edits.
+Status: COMPLETE, no commit.
+
 ## claim-ui-lifecycle-bypass-2026-09-29
 
 User-authorized implementation ("Continue with a larger batch of doing more UI
@@ -8,12 +92,14 @@ a11y-audit fix series: all 36 bare `<panel>.Visible = true` opens across 29
 `src/Main.*.cs` partials routed through `ShowPanelLifecycle` (defaults walk +
 AnimateOpen + EnsureInitialFocus), plus a LineEdit 28px floor in
 `AshfallUiTheme.EnforceControlDefaults`. **Plan:**
-`.ai/plans/ui-lifecycle-bypass-2026-09-29.md` (STATUS: APPROVED BY USER).
+`.ai/plans/integrated/ui/ui-lifecycle-bypass-2026-09-29.md` (FULLY INTEGRATED).
 **Exact paths:** the 29 Main.* partials touched (see commit pathspec),
 `src/UI/AshfallUiTheme.cs`, `Ashfall.Core.Tests/UI/UiLifecycleBypassGateTests.cs`
 (new). Excluded receivers: `_mainMenu`, `_dashboard`, `_gameOver`,
 `_gameUiContainer`, `_hudOverlay`, `_feedbackPanel`, `_confirmationModal`,
-crisis HUD. Shared paths intentionally untouched.
+crisis HUD. Shared paths intentionally untouched. Status: COMPLETE; implementation
+commit `7fb37c2f9`, focused gate 2/2, host build 0 errors, UI layout and
+player-panel headless probes PASS, boot clean. Plan sealed and archived 2026-09-29.
 
 ## claim-chatgpt-item-art-tranche-44-2026-09-29
 
@@ -21,10 +107,10 @@ User-authorized fifteen-item visual continuation. Root owns exact new
 `assets/art/{cassette_station_14_5,cassette_dam_keeper_log_4,item_greenhouse_trowel,item_greenhouse_hand_cultivator,item_greenhouse_compost,item_greenhouse_ash_fertilizer,item_greenhouse_fish_emulsion,item_greenhouse_insecticidal_soap,item_greenhouse_sticky_traps,item_greenhouse_pest_mesh,item_greenhouse_line_filter,item_greenhouse_catchment_kit,item_greenhouse_glass_pane,item_greenhouse_uv_sheeting,item_greenhouse_shade_cloth}.jpg`
 files and matching `.jpg.import` sidecars, fifteen exact-name editable SVG
 sources under `docs/visual/sources/tranche44/`, plus
-`.ai/plans/ashfall-chatgpt-item-art-tranche-44-2026-09-29.md`, additive
+`.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-44-2026-09-29.md`, additive
 entries in `docs/visual/ASHFALL_VISUAL_PRODUCTION_REPORT.md` and
 `.ai/state.md`, and this claim. No catalog, runtime source, or existing art edits.
-Status: IN PROGRESS, no commit.
+Status: COMPLETE, no commit.
 
 ## claim-ui-theme-coverage-2026-09-29
 
@@ -34,11 +120,14 @@ a11y-audit fix series: theme coverage for the control types whose text
 inherits via class fallback but whose styleboxes/icons resolved to Godot's
 light default art (ProgressBar, CheckBox/CheckButton, OptionButton, SpinBox,
 TabContainer/TabBar, RichTextLabel) + snapshot-orchestrator defaults walk for
-capture parity. **Plan:** `.ai/plans/ui-theme-coverage-2026-09-29.md`
-(STATUS: APPROVED BY USER). **Exact paths:** `src/UI/AshfallUiTheme.cs`
+capture parity. **Plan:** `.ai/plans/integrated/ui/ui-theme-coverage-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `src/UI/AshfallUiTheme.cs`
 (Build() extensions), `src/UI/SnapshotOrchestrator.cs` (one walk call),
 `Ashfall.Core.Tests/UI/UiThemeCoverageGateTests.cs` (new). Shared paths
-intentionally untouched.
+intentionally untouched. Status: COMPLETE; implementation commit
+`5a3c184f4`, focused `UiThemeCoverageGateTests` 8/8, host build 0 errors,
+`--ui-layout-selftest` and `--player-panels-uitest` PASS, boot clean. Plan sealed
+and archived 2026-09-29.
 
 ## claim-chatgpt-item-art-tranche-43-2026-09-29
 
@@ -68,12 +157,14 @@ User-authorized implementation ("Continue with a larger batch of doing more UI
 correction and UI precision work!", 2026-09-29) — tenth package in the
 a11y-audit fix series: 28px interactive-target floor + fixed-width label
 clipping for ALL directly-constructed controls via one central seam.
-**Plan:** `.ai/plans/ui-a11y-target-size-sweep2-2026-09-29.md` (STATUS:
-APPROVED BY USER). **Exact paths:** `src/UI/AshfallUiTheme.cs`
+**Plan:** `.ai/plans/integrated/ui/ui-a11y-target-size-sweep2-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `src/UI/AshfallUiTheme.cs`
 (EnforceControlDefaults walk), `src/Main.PanelLifecycle.cs`
 (ShowPanelLifecycle hook), `src/Main.UiPanels.cs` (deferred boot sweep),
 `Ashfall.Core.Tests/UI/UiA11yTargetSizeSweep2GateTests.cs` (new). Shared
-paths intentionally untouched.
+paths intentionally untouched. Status: COMPLETE; focused
+`UiA11yTargetSizeSweep2GateTests` 3/3, host build 0 errors, UI layout and
+player-panel probes PASS, boot clean. Plan sealed and archived 2026-09-29.
 
 ## claim-chatgpt-item-art-tranche-41-2026-09-29
 
@@ -114,8 +205,8 @@ User-authorized implementation ("Continue with a larger batch of doing more UI
 correction and UI precision work!", 2026-09-29) — ninth package in the
 a11y-audit fix series: final raw color-literal sweep on UI chrome + central
 label text-overrun seam. **Plan:**
-`.ai/plans/ui-a11y-final-color-literals-2026-09-29.md` (STATUS: APPROVED BY
-USER). **Exact paths:** `src/UI/EmergencyResponseHud.cs`,
+`.ai/plans/integrated/ui/ui-a11y-final-color-literals-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `src/UI/EmergencyResponseHud.cs`,
 `src/UI/BlackProjectsArchivePanel.cs`, `src/UI/ExpeditionPanel.cs`,
 `src/UI/UiBackgroundCarousel.cs`, `src/UI/BackdropArt.cs`,
 `src/World/RoomHotspotView.cs`, `src/UI/AshfallUiHelpers.cs` (FinishLabel seam
@@ -123,7 +214,9 @@ USER). **Exact paths:** `src/UI/EmergencyResponseHud.cs`,
 (new). Deliberately untouched: MapLocationMarkerView/HoldfastInteriorView
 (sprite/lighting art modulates), SnapshotOrchestrator (tooling),
 GameDashboardPanel:327 (adjudicated item 11), MapDetailPanel:227 (§3 visual
-lane). Shared paths intentionally untouched.
+lane). Shared paths intentionally untouched. Status: COMPLETE; focused
+`UiA11yFinalColorGateTests` 17/17, host build 0 errors, UI layout and
+player-panel probes PASS, boot clean. Plan sealed and archived 2026-09-29.
 
 ## claim-chatgpt-item-art-tranche-38-2026-09-29
 
@@ -187,7 +280,7 @@ Status: COMPLETE, no commit.
 User-authorized implementation ("Continue doing more UI correction and UI
 precision work!", 2026-09-29) — eighth package in the a11y-audit fix series:
 audit §2b/§2c remaining hardcoded-accent sweep. **Plan:**
-`.ai/plans/ui-a11y-accent-tokens-2026-09-29.md` (STATUS: APPROVED BY USER).
+`.ai/plans/integrated/ui/ui-a11y-accent-tokens-2026-09-29.md` (FULLY INTEGRATED).
 **Exact paths (7 src/UI files):** `EmergencyResponseHud.cs` (severity-modulate
 arms + row/log accents → Critical/Warning/Pale; tinted crisis backdrop
 untouched), `SaveLoadPanel.cs`, `SurvivorDeathLegacyPanel.cs`,
@@ -197,7 +290,9 @@ untouched), `SaveLoadPanel.cs`, `SurvivorDeathLegacyPanel.cs`,
 `DesignTheme` using alias; new
 `Ashfall.Core.Tests/UI/UiA11yAccentTokenGateTests.cs` (7 gates); governance
 (this row, `.ai/state.md`, the plan). **Deliberately untouched:** Core, the
-HUD tinted backdrop, all data/save paths.
+HUD tinted backdrop, all data/save paths. Status: COMPLETE; focused gate 7/7,
+host build 0 errors, UI layout and player-panel probes PASS. Plan sealed and
+archived 2026-09-29.
 
 ## claim-chatgpt-item-art-tranche-33-2026-09-29
 
@@ -224,7 +319,7 @@ Status: COMPLETE, no commit.
 User-authorized implementation ("Continue doing more UI correction and UI
 precision work!", 2026-09-29) — seventh package in the a11y-audit fix series:
 audit §2d scrim-token consolidation. **Plan:**
-`.ai/plans/ui-a11y-scrim-token-2026-09-29.md` (STATUS: APPROVED BY USER).
+`.ai/plans/integrated/ui/ui-a11y-scrim-token-2026-09-29.md` (FULLY INTEGRATED).
 **Exact paths:** `Assets/Ashfall.Core/UI/Theme.cs` (1 additive token
 `InkPanelStrong`), `src/UI/AshfallUiHelpers.cs` (1 accessor `PanelScrim()`),
 58 src/UI panel files (mechanical replacement of near-grey scrim literals —
@@ -234,7 +329,9 @@ site set = the plan's grep pattern), new
 gate), governance (this row, `.ai/state.md`, the plan). **Deliberately
 untouched:** tinted scrims (crisis red, amber banner, classified red),
 sub-0.85 stack-dependent overlays (MapDetailPanel 0.74, carousel overlays),
-§2c token-derived composites, all other Core tokens, data/save paths.
+§2c token-derived composites, all other Core tokens, data/save paths. Status:
+COMPLETE; `UiA11yScrimTokenGateTests` 3/3, host build 0 errors, UI layout and
+player-panel probes PASS. Plan sealed and archived 2026-09-29.
 
 ## claim-chatgpt-item-art-tranche-31-2026-09-29
 
@@ -261,8 +358,8 @@ Status: COMPLETE, no commit.
 User-authorized implementation ("Continue doing more UI correction and UI
 precision work!", 2026-09-29) — sixth package in the a11y-audit fix series:
 audit §9.5 (last unimplemented P2) + §7 hover + §6 overflow remainder.
-**Plan:** `.ai/plans/ui-a11y-sidebar-hover-overflow-2026-09-29.md` (STATUS:
-APPROVED BY USER). **Exact paths:** `src/UI/AshfallSidebar.cs` (nav rows
+**Plan:** `.ai/plans/integrated/ui/ui-a11y-sidebar-hover-overflow-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `src/UI/AshfallSidebar.cs` (nav rows
 PanelContainer→flat Button with per-row normal/hover/pressed/focus
 styleboxes, Pressed→Select; SetRowHighlight mutates `normal`),
 `src/UI/AshfallDataGrid.cs` (selectable-row MouseEntered/Exited hover,
@@ -272,14 +369,16 @@ sites ClipText+TrimEllipsis), `src/UI/AshfallMetricCard.cs` (`_valueLbl`),
 (gauge names), new `Ashfall.Core.Tests/UI/UiA11ySidebarHoverOverflowGateTests.cs`,
 governance (this row, `.ai/state.md`, the plan). **Deliberately untouched:**
 Core, ItemList/SpinBox/RichTextLabel hover theming (engine-limited, recorded
-in plan), all data/save paths.
+in plan), all data/save paths. Status: COMPLETE; focused gate 8/8, host build
+0 errors, UI layout and player-panel probes PASS. Plan sealed and archived
+2026-09-29.
 
 ## claim-ui-a11y-target-sizes-2026-09-29
 
 User-authorized implementation ("Continue doing more work!", 2026-09-29) —
 fifth package in the a11y-audit fix series: audit §5d/§9.10.
-**Plan:** `.ai/plans/ui-a11y-target-sizes-2026-09-29.md` (STATUS: APPROVED BY
-USER). **Exact paths:** `Assets/Ashfall.Core/UI/Theme.cs` (1 additive token
+**Plan:** `.ai/plans/integrated/ui/ui-a11y-target-sizes-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `Assets/Ashfall.Core/UI/Theme.cs` (1 additive token
 `MinInteractiveHeight = 28`), `src/UI/AshfallUiHelpers.cs` (MakeButton floor
 28px, decoupled from font size), 23 swept panel files (height literals → 28,
 widths preserved except ShelterBarter 24×22→28×28 and FeedbackPanel
@@ -295,7 +394,9 @@ SumpFloodingPanel, TravelingCaravanPanel; new
 `Ashfall.Core.Tests/UI/UiA11yTargetSizeGateTests.cs`; governance (this row,
 `.ai/state.md`, the plan). **Deliberately untouched:** non-interactive
 minimum sizes (progress bars, meters, dots, swatches, labels), all other
-Core tokens, data/save paths.
+Core tokens, data/save paths. Status: COMPLETE; `UiA11yTargetSizeGateTests`
+31/31, host build 0 errors, UI layout and player-panel probes PASS. Plan sealed
+and archived 2026-09-29.
 
 ## claim-chatgpt-item-art-tranche-29-2026-09-29
 
@@ -321,22 +422,25 @@ Status: COMPLETE, no commit.
 
 User-authorized implementation ("Continue with more work!", 2026-09-29) —
 fourth package in the a11y-audit fix series: audit §4/§9.7.
-**Plan:** `.ai/plans/ui-a11y-fontsize-lift-2026-09-29.md` (STATUS: APPROVED
-BY USER). **Exact paths:** `Assets/Ashfall.Core/UI/Theme.cs` (single token:
+**Plan:** `.ai/plans/integrated/ui/ui-a11y-fontsize-lift-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `Assets/Ashfall.Core/UI/Theme.cs` (single token:
 `FontSizeLabel` 11→12, lifts 282+ MakeMetadata sites and ~32 direct
 references), governance (this row, `.ai/state.md`, the plan). **Note:**
 stored `snapshots/` goldens will visually drift; snapshot regen/diff actions
 are `headless_compatible: false` and belong to the visual lane (follow-up,
 not claimed here). **Deliberately untouched:** all other typography tokens
 (`DiegeticHintSize` unused in src/UI, left as is), per-site overrides, data/save paths.
+Status: COMPLETE; focused targets 11/11, host build 0 errors, UI layout PASS,
+and the later golden rebaseline matched 32/32 snapshots. Plan sealed and
+archived 2026-09-29.
 
 ## claim-ui-a11y-p3-nav-overflow-2026-09-29
 
 User-authorized implementation ("Continue with more UI work especially UI
 precision and correction as well as UI functionality!", 2026-09-29) — third
 package in the a11y-audit fix series; closes the last open P1 (§9.3).
-**Plan:** `.ai/plans/ui-a11y-p3-nav-overflow-2026-09-29.md` (STATUS: APPROVED
-BY USER). **Exact paths:** `src/Main.PanelLifecycle.cs` (additive
+**Plan:** `.ai/plans/integrated/ui/ui-a11y-p3-nav-overflow-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `src/Main.PanelLifecycle.cs` (additive
 `TopmostVisibleOverlayPanel()` helper + `Main._Input` modal Tab trap with
 CombatPanel/DailyBriefingModal exclusions), `src/Main.Application.cs`
 (arrow-nav scope root = topmost open overlay, 1 line), `src/UI/AshfallDataGrid.cs`
@@ -347,7 +451,9 @@ CombatPanel/DailyBriefingModal exclusions), `src/Main.Application.cs`
 `ModalManager`/`ModalStackController` wiring (dead seam left for a separate
 governance decision — the focused-topmost helper plus `TrapFocus` covers the
 live trap), Tab behavior when no overlay is open, font-size tokens (P2.7 is a
-separate visual package), all data/save paths.
+separate visual package), all data/save paths. Status: COMPLETE; scoped gates
+green, host build 0 errors, `--player-panels-uitest` PASS 22/22. Plan sealed
+and archived 2026-09-29.
 
 ## claim-chatgpt-item-art-tranche-27-2026-09-29
 
@@ -510,8 +616,8 @@ parallel lane — not eligible without that lane's disposition).
 
 User-authorized implementation ("Continue with more UI work!", 2026-09-29) —
 second package in the a11y-audit fix series. **Plan:**
-`.ai/plans/ui-a11y-p2-focus-contrast-2026-09-29.md` (STATUS: APPROVED BY
-USER). **Exact paths:** `src/UI/AshfallFocusPolicy.cs` (additive
+`.ai/plans/integrated/ui/ui-a11y-p2-focus-contrast-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `src/UI/AshfallFocusPolicy.cs` (additive
 `GetRecordedOpener`/`RestoreFocusDeferred`/`FocusFirstDeferred`/`IsInsideAny`),
 `src/Main.PanelLifecycle.cs` (CloseAllOverlayPanels single deferred
 topmost-opener restore + dashboard fallback, per-panel sync restore removed),
@@ -524,7 +630,8 @@ new `Ashfall.Core.Tests/UI/UiA11yP2FocusContrastGateTests.cs`, governance
 reported 0.22-alpha finding was retracted (it is the intentionally dimmed
 dashboard background, not a UI-component state). **Deliberately untouched:**
 Core, ModalManager/ModalStackController wiring (P1.3 is a separate package),
-all data/save paths.
+all data/save paths. Status: COMPLETE; focused gate 6/6, host build 0 errors,
+and headless boot exited 0. Plan sealed and archived 2026-09-30.
 
 ## claim-chatgpt-item-art-tranche-26-2026-09-29
 
@@ -945,8 +1052,8 @@ docs/remediation/plans audit plans).
 
 User-authorized implementation ("some more UI work!", 2026-09-29) of the P1
 input-correctness fixes from `docs/ui/ACCESSIBILITY_REPORT_2026-09-29.md`.
-**Plan:** `.ai/plans/ui-a11y-p1-input-correctness-2026-09-29.md` (STATUS:
-APPROVED BY USER). **Exact paths:** `src/Main.UiHandlers.cs` (exclusive-open
+**Plan:** `.ai/plans/integrated/ui/ui-a11y-p1-input-correctness-2026-09-29.md`
+(FULLY INTEGRATED). **Exact paths:** `src/Main.UiHandlers.cs` (exclusive-open
 seam in `OpenMoralChoiceModal`), `src/Main.Application.cs` (J hotkey Playing
 gate), `src/UI/EmergencyResponseHud.cs` (Esc `_Input`→`_UnhandledKeyInput`),
 `src/Main.PanelLifecycle.cs` (crisis-HUD re-raise in `CloseAllOverlayPanels` —
@@ -956,7 +1063,9 @@ row; change is a 4-line additive block), new
 `.ai/state.md`, the plan). **Deliberately untouched:** Core (incl.
 `CrisisPresentationCoordinator`), `OverlayPanelCatalog` membership for the
 crisis HUD (would lose an active alert on panel switch — recorded divergence),
-all data/save paths, all other `src/UI/*`.
+all data/save paths, all other `src/UI/*`. Status: COMPLETE; focused gate
+4/4, host build 0 errors, and headless boot exited 0. Plan sealed and archived
+2026-09-30.
 
 ## claim-chatgpt-item-art-tranche-24-2026-09-29
 
@@ -6616,7 +6725,7 @@ and acceptance criteria; no implementation or integration-status change.
 
 `claim-performance-host-qol-2026-09-27`: root is foreman/integrator. User explicitly
 reassigned older overlapping claims in this session. Preserve their current edits.
-Root owns `.ai/state.md`, `.ai/plans/performance-host-qol-2026-09-27.md`, this ledger,
+Root owns `.ai/state.md`, `.ai/plans/integrated/performance/performance-host-qol-2026-09-27.md`, this ledger,
 `INTEGRATION_PLANS.md`, `export_presets.cfg`, `src/UI/FeedbackPanel.cs`, `UiBackgroundCarousel.cs`,
 `DailyBriefingModal.cs`, `ExpeditionPanel.cs`, `SnapshotOrchestrator.cs`, new
 `src/Host/FrameStartupProfiler.cs`, `scenes/Main.tscn`, and `docs/perf/` measurement
@@ -6701,7 +6810,7 @@ claim of permanent subsystem ownership.
 
 | claim-oldest-15-piagents-quality-rebase-2026-09-25 | `OLDEST-15-PIAGENTS-PLAN-QUALITY-REBASE` | Planner / integrator (user-authorized 2026-09-25) | **Planning:** `piagentsplans/06-narrative-depth-trilogy.md`, `piagentsplans/28-wildlife-ecology.md`, `piagentsplans/13-economy-survival-loop.md`, `piagentsplans/09-medical-disease-depth.md`, `piagentsplans/02-loader-bare-catch-hardening.md`, `piagentsplans/22-foundry-greenhouse-production.md`, `piagentsplans/01-needs-radiation-save-roundtrip-tests.md`, `piagentsplans/24-radio-signals-airwaves.md`, `piagentsplans/27-body-and-mind.md`, `piagentsplans/76-expedition-destinations-expansion.md`, `piagentsplans/03-schema-version-data-sweep.md`, `piagentsplans/26-knowledge-research-skills.md`, `piagentsplans/87-relic-recipes-expansion.md`, `piagentsplans/04-relic-blueprint-expansion.md`, `piagentsplans/10-combat-expedition-depth.md`; **Governance:** `WORKTREE_OWNERSHIP.md`, `INTEGRATION_PLANS.md`. Read-only authority: `docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`. | **COMPLETE — user-authorized transfer/supersede (2026-09-25).** The exact 15 paths were rebuilt from current source/data/test evidence after superseding their prior generated sections. Final range: 150,217–157,632 characters; 2,315,192 total. Two precision passes removed stale/fictional paths, broad-keyword evidence drift, overbroad authority clauses, and file-list-only test handoffs. Evidence QA: 559 embedded source hashes current; 130 script commands resolve; structural verifier 0 findings; `git diff --check` clean. No production, data, save, test, generated-index, or UI changes. `generate-docs-index.py --check` reports the pre-existing shared `docs/INDEX.md` drift; regeneration remains with its integrator because that dirty generated path is outside this claim. Unrelated `piagentsplans` edits and untracked expansion scripts remained outside the claim and were not reverted or reused as authority. |
 
-| claim-pfgl-codex-luna6-octet-2026-09-25 | `PFGL-CODEX-LUNA6-OCTET` | Integrator (user-authorized plan refinement and implementation, 2026-09-25) | **Planning:** `Next-steps-plans/Plan_195_Survivor_Specialization_Roles.md`, `Plan_213_Survivor_Barter_Informal_Economy.md`, `Plan_211_Internal_Communication_Network.md`, `Plan_218_Shelter_Museum_Historical_Archive.md`, `Plan_41_Memory_That_Acts_Heirlooms_Eulogies_Generations.md`, `Plan_150_Romance_Family_Dynamics_System.md`, `Plan_160_Expedition_Colony_Outpost_System.md`, `Plan_148_Ideological_Friction_Events_Quests.md`; source reference `docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md` READ ONLY. **Phase A — player boards:** `src/Main.PfglOctetBoards.cs` (new), `src/UI/PfglOctetBoardPanels.cs` (new), `src/UI/GameDashboardPanel.cs`, `src/Main.PlayerSurfaces.cs`, `src/Main.PanelLifecycle.cs`, `Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs`, `Assets/Ashfall.Core/UI/PlayerSurfaceManifest.cs`; **Tests:** `Ashfall.Core.Tests/UI/PfglOctetBoardRouteTests.cs` (new); **Generated:** `docs/player_surface_manifest.json`, `scripts/ci/generate-architecture-map.py`, `docs/architecture/ARCHITECTURE_TEST_MAP.md`. Explicitly excluded: `src/Main.CampaignOwners.cs` while `claim-c1-plan24-survivor-ledger` owns that active path; no 5-core orphan host/save code is claimed by Phase A. | ACTIVE — 2026-09-25: current-truth revisions recorded for all eight plans; the three board routes are implemented. `PfglOctetBoardRouteTests` passed 2/2 and `PlayerSurfaceCoverageGateTests` passed 8/8; the player-surface manifest and architecture map are generated and current (266 subsystems). Phase A host acceptance is blocked by unrelated dirty navigation compilation in `src/Main.PlayerSurfaces.cs` (`Ashfall.Core.World.WeatherKind` is unresolved); an earlier build also exposed errors in active C1-owned `src/Main.Expeditions.cs`. The five Core-only host/save integrations are not yet claimed: C1 owns overlapping survivor, expedition, duty-roster, and campaign-owner seams; barter and museum also require a transaction-safe physical item custody bridge. Plan character counts remain tracked, not treated as quality. |
+| claim-pfgl-codex-luna6-octet-2026-09-25 | `PFGL-CODEX-LUNA6-OCTET` | Integrator (user-authorized plan refinement and implementation, 2026-09-25) | **Planning paths transferred by user authorization to E1C on 2026-09-30:** `Next-steps-plans/Plan_148_Ideological_Friction_Events_Quests.md`, `Plan_150_Romance_Family_Dynamics_System.md`, `Plan_160_Expedition_Colony_Outpost_System.md`, `Plan_195_Survivor_Specialization_Roles.md`, `Plan_211_Internal_Communication_Network.md`, `Plan_213_Survivor_Barter_Informal_Economy.md`, `Plan_218_Shelter_Museum_Historical_Archive.md`, and current-inventory addition `Plan_41_Memory_That_Acts_Heirlooms_Eulogies_Generations.md` (all matched copies in `Next-steps-plans/shipped_to_chat/` are included in the same metadata migration). Source reference `docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md` READ ONLY. **Phase A — player boards:** `src/Main.PfglOctetBoards.cs` (new), `src/UI/PfglOctetBoardPanels.cs` (new), `src/UI/GameDashboardPanel.cs`, `src/Main.PlayerSurfaces.cs`, `src/Main.PanelLifecycle.cs`, `Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs`, `Assets/Ashfall.Core/UI/PlayerSurfaceManifest.cs`; **Tests:** `Ashfall.Core.Tests/UI/PfglOctetBoardRouteTests.cs` (new); **Generated:** `docs/player_surface_manifest.json`, `scripts/ci/generate-architecture-map.py`, `docs/architecture/ARCHITECTURE_TEST_MAP.md`. Explicitly excluded: `src/Main.CampaignOwners.cs` while `claim-c1-plan24-survivor-ledger` owns that active path; no 5-core orphan host/save code is claimed by Phase A. | ACTIVE — 2026-09-25: current-truth revisions recorded for all eight plans; the three board routes are implemented. `PfglOctetBoardRouteTests` passed 2/2 and `PlayerSurfaceCoverageGateTests` passed 8/8; the player-surface manifest and architecture map are generated and current (266 subsystems). Phase A host acceptance is blocked by unrelated dirty navigation compilation in `src/Main.PlayerSurfaces.cs` (`Ashfall.Core.World.WeatherKind` is unresolved); an earlier build also exposed errors in active C1-owned `src/Main.Expeditions.cs`. The five Core-only host/save integrations are not yet claimed: C1 owns overlapping survivor, expedition, duty-roster, and campaign-owner seams; barter and museum also require a transaction-safe physical item custody bridge. Plan character counts remain tracked, not treated as quality. |
 
 
 | claim-core-mech-w1-foodborne-2026-09-25 | `CORE-MECH-W1-FOODBORNE-DISEASE-BRIDGE` (Wave 1 of `CORE-MECH-2026-09-25`) | Integrator (user-authorized full integration 2026-09-25) | **Plan:** `docs/plans/CORE_GAME_MECHANICS_GAP_SEAL_MASTER_INTEGRATION_PLAN.md` (W1, appendices J.1/AA.1/AW.1/BD.1/BV/CE) | **DONE/SEALED 2026-09-25:** foodborne bridge complete at MECHANIC tier. Data: additive `exposure_sources` row `spoiled_preserved_stock` → `disease_typhoid_waterborne` (base 0.35) in `disease_catalog.json`. Core: new pure `Assets/Ashfall.Core/Disease/FoodborneExposureMath.cs` (spoiled-share + clamped probability; no state, no rng, engine-free). Host: `HoldfastRuntimeSession.FoodConsumed` one-shot-per-meal seam (additive, not raised for water/blocked eats). Main: `src/Main.Plans62_65.cs` wires the single translation point — preservation spoilage → `DiseaseSystem.TryExpose` with the catalog row's base probability, immunity never bypassed, fail-closed on absent owners/rows, truthful journal fact. No new save section (pin 266 unchanged), no preservation/disease math edits, no UI/panel claim taken (surface deferred per AL.1 honesty precedent). Evidence: `FoodborneExposureBridgeTests` 10/10 (alone first); `DiseaseSystemTests` 16/16; Shelter suite 829/829; `CatalogIntegrityValidatorTests` 10/10; `--data-integrity-selftest` PASS (425 catalogs, 0 errors); host build 0 errors / 0 warnings. Balance: direction asserted (spoiled ⇒ exposure, clean/discard ⇒ none); magnitude pending W12. |
@@ -6866,8 +6975,9 @@ claim of permanent subsystem ownership.
 | claim-partial-wave6-plans-167-219-2026-09-19 | `PARTIAL-WAVE6-PLANS-167-219` | Foreman / integrator (user-authorized implementation) | **Core:** `Assets/Ashfall.Core/Culture/CulturalArchiveVaultSystem.cs`, `Assets/Ashfall.Core/World/WastelandMapSystem.cs`; **Host:** `src/Main.Plans167_219.cs`, `src/Main.FlagshipInstitutions.cs`, `src/Main.PlayerSurfaces.cs`, `src/Main.UiPanels.cs`; **UI:** `src/UI/SurvivorDetailPanel.cs`, `src/UI/MapPanel.cs`; **Tests:** `Ashfall.Core.Tests/Culture/Plan219DocumentationIntegrationTests.cs`, `Ashfall.Core.Tests/Underground/Plan167TunnelNetworkIntegrationTests.cs`; **Docs:** `docs/plans/PARTIAL_2_WAVE6_FULL_INTEGRATION_IMPLEMENTATION_LOG.md`, `docs/plans/PARTIAL_REMAINING_PLACEHOLDER_2026-09-19.md` | **DONE 2026-09-19:** Plans 167 (Underground Tunnel Network) and 219 (Survivor Documentation) fully integrated. All 15 partial plans from PARTIAL_15_PRODUCTION_UNBLOCK_INTEGRATION_PLAN.md are now 100% complete. Builds 0/0; all 50 fast CI gates PASS. |
 | claim-c2-plan37-input-focus-controller-2026-09-19 | `C2[15]/PLAN-37-INPUT-FOCUS-CONTROLLER` | Foreman / integrator (user-authorized implementation) | **Host:** `src/Host/AshfallInputActions.cs`, `src/Main.Application.cs`, `src/Main.GameFlow.cs`, `src/Main.PlayerSurfaces.cs`, `src/Settings/KeyBindingApplicator.cs`, `src/Settings/UserSettings.cs`; **UI:** `src/UI/AshfallFocusNavigator.cs`, `src/UI/AshfallFocusPolicy.cs`, `src/UI/ModalManager.cs`, `src/UI/SettingsPanel.cs`, `src/UI/AshfallUiHelpers.cs`, `src/UI/TutorialPanel.cs`, `src/UI/OnboardingHintPanel.cs`; **Core:** `Assets/Ashfall.Core/Settings/UserSettingsData.cs`, `Assets/Ashfall.Core/Settings/UserSettingsCodec.cs`, `Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs`; **Tests:** `Ashfall.Core.Tests/Tooling/InputMapGateTests.cs`, `Ashfall.Core.Tests/Tooling/InputMapContractTests.cs`, `Ashfall.Core.Tests/Settings/UserSettingsRecoveryTests.cs`; **CI/Docs:** `scripts/ci/input-map-gate.sh`, `scripts/ci/generate-keyboard-map.py`, `docs/ui/KEYBOARD.md`, `docs/ui/INPUT_AND_NAVIGATION_AUDIT.md`, `docs/ACCESSIBILITY.md`, `docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`, `docs/ci/CI_GATE_MANIFEST.json`, `docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md` | **DONE 2026-09-19:** Plan 37 Hands On The Wheel: Input, Focus & Controller Reality fully implemented and integrated. 22-action contract table, spatial AshfallFocusNavigator, factory visible focus style, ModalManager Core adapter, joypad bindings in project.godot, UserSettingsData v2 key_bindings + KeyBindingApplicator + SettingsPanel INPUT section, dynamic prompts, generated KEYBOARD.md, Gate 54 (input_map_contract) PASS. Build 0 warnings/0 errors. |
 | claim-c2-21-release-craft-2026-09-19 | `C2[21]/PLAN-48-RELEASE-CRAFT` | Foreman / integrator (user-authorized implementation) | **Docs:** `docs/releases/{VERSIONING.md, PROCESS.md, HOTFIX.md, TEMPLATE.md, SUPPORT.md, POSTMORTEM_TEMPLATE.md, HOTFIX_REHEARSAL_v1.1.1.md}`; **Scripts:** `scripts/release/{prepare-release.sh, generate_changelog.py, hotfix.sh}`, `scripts/ci/{version-gate.py, release-gate.sh}`; **Core:** `Assets/Ashfall.Core/ReleaseVersion.cs`; **Host:** `src/Host/HostCli.cs`; **Versions:** `project.godot`, `Directory.Build.props`, `export_presets.cfg`; **Tests:** `Ashfall.Core.Tests/Release/ReleaseVersionContractTests.cs`, `Ashfall.Core.Tests/Save/SaveSupportWindowTests.cs`; **Fixtures:** `artifacts/golden_saves/historical/`; **Changelog:** `CHANGELOG.md`; **CI:** `docs/ci/CI_GATE_MANIFEST.json`, `.github/workflows/{build.yml, release.yml, hotfix.yml}`; **Claims/Skills:** `docs/architecture/CLAIMS.json`, `.agents/skills/ashfall-release-captain/SKILL.md`; **Closeout:** `docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md` | **DONE 2026-09-19:** All 6 phases complete. ReleaseVersion.cs 32/32 PASS; version-gate.py PASS; SaveSupportWindowTests 15/15 PASS; prepare-release.sh + release-gate.sh + hotfix.sh + release.yml + hotfix.yml delivered; CHANGELOG.md [1.1.0] backfilled; hotfix iron rule proven; 28/28 claims verified; verify-fast 53/53. |
-| claim-e1-plan53-2026-09-19 | `E1/PLAN-53-AMBITION-GOVERNANCE` | Foreman / integrator (user-authorized implementation) | **E1A:** `scripts/ci/plan_governance_config.json`, `scripts/ci/generate-plan-register.py` (baseline mode), `docs/roadmap/e1/E1_BASELINE.md`, `docs/roadmap/e1/e1_baseline.json`, `docs/roadmap/e1/E1A_IMPLEMENTATION_LOG.md`; **E1B:** `scripts/ci/plan_corpus_lib.py`, `scripts/ci/generate-plan-register.py`, `scripts/ci/fixtures/plan_governance/`, `docs/roadmap/PLAN_REGISTER.md`, `docs/roadmap/PLAN_REGISTER.json`, `docs/roadmap/e1/E1B_IMPLEMENTATION_LOG.md`, `Ashfall.Core.Tests/Tooling/PlanGovernanceContractTests.cs`; **Governance:** `WORKTREE_OWNERSHIP.md` and phase-boundary package records. Runtime source, game data, save, and UI paths are explicitly excluded. | **ACTIVE 2026-09-19:** E1A and E1B are complete at report-only scope; E1C metadata migration is the next bounded phase. |
-| claim-cf-p1-distress-content-seal-2026-09-19 | `CF-P1-DISTRESS-CONTENT-SEAL` | Foreman / integrator (user-authorized implementation) | **Core:** `Assets/Ashfall.Core/CatalogIntegrityValidator.cs` (distress follow-up rules only); **Data:** `Assets/StreamingAssets/Data/radio_distress_signals.json` (three authored follow-up removals only); **Tests:** `Ashfall.Core.Tests/Radio/DistressFollowUpTests.cs`, `Ashfall.Core.Tests/Radio/DistressFollowUpPopulationReplayTests.cs`; **Host:** `src/Audio/AudioSelfTest.cs` (distress cue cross-reference only); **Docs:** `docs/radio/DISTRESS_SIGNAL_PR3_CLOSEOUT.md`; **Governance:** this claim row and package ledger row. Mechanism, save, scheduler, trust, resolver, registry, expansion catalog, and generated indexes were explicitly untouched. | **DONE 2026-09-19:** validator 39/39; population replay 46/46; build 0/0; data-integrity 0 errors + 5 pinned warnings; audio selftest 645/645; content-utilization CI/deep-chain PASS. |
+| claim-e1-plan53-2026-09-19 | `E1/PLAN-53-AMBITION-GOVERNANCE` | Foreman / integrator (user-authorized implementation) | **E1A:** `scripts/ci/plan_governance_config.json`, `scripts/ci/generate-plan-register.py` (baseline mode), `docs/roadmap/e1/E1_BASELINE.md`, `docs/roadmap/e1/e1_baseline.json`, `docs/roadmap/e1/E1A_IMPLEMENTATION_LOG.md`; **E1B:** `scripts/ci/plan_corpus_lib.py`, `scripts/ci/generate-plan-register.py`, `scripts/ci/fixtures/plan_governance/`, `docs/roadmap/PLAN_REGISTER.md`, `docs/roadmap/PLAN_REGISTER.json`, `docs/roadmap/e1/E1B_IMPLEMENTATION_LOG.md`, `Ashfall.Core.Tests/Tooling/PlanGovernanceContractTests.cs`; **E1C:** `scripts/ci/migrate-plan-metadata.py`, `scripts/ci/generate-docs-index.py`, `docs/roadmap/e1/E1C_EXECUTION_BASELINE.json`, `docs/roadmap/e1/E1_METADATA_MIGRATION_REPORT.{md,json}`, `docs/roadmap/e1/E1C_IMPLEMENTATION_LOG.md`, 621 current plan documents; **Governance:** `WORKTREE_OWNERSHIP.md` and phase-boundary package records. Runtime source, game data, save, and UI paths are explicitly excluded. | **ACTIVE 2026-09-19:** E1A, E1B, and E1C are complete. E1C metadata migration covered 621 current paths; E1A history remains preserved. The remaining human metadata review queue is recorded in `E1_METADATA_MIGRATION_REPORT.json`; next Plan 53 phase: E1E duplicate-topic clustering and live-capability mapping. |
+| claim-e1-plan53-e1c-metadata-migration-2026-09-30 | `E1/PLAN-53/E1C-METADATA-MIGRATION` | Foreman / integrator (user-authorized 2026-09-30; ownership and inventory reconciliation explicitly authorized 2026-09-30) | **Tool/tests:** `scripts/ci/migrate-plan-metadata.py`, `scripts/ci/generate-docs-index.py` (front-matter-aware streaming index generation), `Ashfall.Core.Tests/Tooling/PlanGovernanceContractTests.cs`; **Corpus:** current 621-path inventory captured in `docs/roadmap/e1/E1C_EXECUTION_BASELINE.json`, with E1A historical reconciliation; **Reports:** `docs/roadmap/e1/E1C_EXECUTION_BASELINE.json`, `docs/roadmap/e1/E1_METADATA_MIGRATION_REPORT.{md,json}`, `docs/roadmap/e1/E1C_IMPLEMENTATION_LOG.md`; **Generated/governance:** `docs/roadmap/PLAN_REGISTER.{md,json}`, `docs/INDEX.md`, `.ai/plans/integrated/governance/INTEGRATED_plan53-e1c-metadata-migration-2026-09-30.md`, `.ai/state.md`, `INTEGRATION_PLANS.md`, this ledger. **Transferred from PFGL to E1C:** seven E1A-held plan documents plus `Plan_41_Memory_That_Acts_Heirlooms_Eulogies_Generations.md`; all current copies included. | **COMPLETE — 2026-09-30:** all 621 current paths migrated; register 621/621 complete with zero validation errors; body hashes unchanged; no duplicate IDs or inferred `DONE`; second run is a no-op. The 621-entry inferred-field review queue is disclosed in the migration report. |
+| claim-cf-p1-distress-content-seal-2026-09-19 | `CF-P1-DISTRESS-CONTENT-SEAL` | Foreman / integrator (user-authorized implementation) | **Core:** `Assets/Ashfall.Core/CatalogIntegrityValidator.cs` (distress follow-up rules only); **Data:** `Assets/StreamingAssets/Data/radio_distress_signals.json` (three authored follow-up removals only); **Tests:** `Ashfall.Core.Tests/Radio/DistressFollowUpTests.cs`, `Ashfall.Core.Tests/Radio/DistressFollowUpPopulationReplayTests.cs`; **Host:** `src/Audio/AudioSelfTest.cs` (distress cue cross-reference only); **Docs:** `docs/radio/DISTRESS_SIGNAL_PR3_CLOSEOUT.md`; **Plan archive:** `docs/plans/integrated/radio/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`; **Governance:** this claim row and package ledger row. Mechanism, save, scheduler, trust, resolver, registry, expansion catalog, and generated indexes were explicitly untouched. | **DONE/FULLY INTEGRATED 2026-09-30 (content sealed 2026-09-19):** validator 39/39; population replay 46/46 (both scoped targets rerun 2026-09-30); build 0/0; data-integrity 0 errors + 5 pinned warnings; audio selftest 645/645; content-utilization CI/deep-chain PASS. |
 | claim-quad-d-183-118-121-96-2026-09-26 | `QUAD-D-183-118-121-96` | Integrator (user-authorized package 2026-09-26) | **183:** `src/Host/ChemicalPlumeHostSession.cs`, `src/Main.ChemicalPlume.cs`, `src/Host/HostCli.ChemicalPlume.cs`, section `chemical_plume`; **118:** `src/Host/OilseedPressingHostSession.cs`, `src/Main.OilseedPressing.cs`, `src/Host/HostCli.OilseedPressing.cs`, section `oilseed_pressing`; **121:** `src/Host/VerdictAccusationHostSession.cs`, `src/Main.VerdictAccusation.cs`, `src/Host/HostCli.VerdictAccusation.cs`, section `verdict_accusation`; **96:** `src/Host/LoanSharkHostSession.cs`, `src/Main.LoanShark.cs`, `src/Host/HostCli.LoanShark.cs`, section `loan_shark`; shared: `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`, `Assets/Ashfall.Core/HostCliRegistry.cs`, `src/Host/HostCli.cs`, `src/Main.Application.cs`, `src/Main.SaveOrchestrator.cs`, `src/Main.Lifecycle.cs`, `src/Main.ExpandedShelterSystems.cs`, `scripts/ci/generate-architecture-map.py`; plan archivals. | **DONE/FULLY INTEGRATED 2026-09-26:** probes 7/7 (183), 6/6 (118), 5/5 (121), 7/7 (96); clean `--no-incremental` host build 0 errors. |
 | claim-quad-c-155-156-160-28-2026-09-26 | `QUAD-C-155-156-160-28` | Integrator (user-authorized package 2026-09-26) | **155:** `Assets/Ashfall.Core/Encounters/OrphanKnockWhitelist.cs`, `src/Host/KnockWhitelistHostSession.cs`, `src/Main.KnockWhitelist.cs`, `src/Host/HostCli.KnockWhitelist.cs`; **156:** `src/Host/JourneyDiagnosticsHostSession.cs`, `src/Main.JourneyDiagnostics.cs`, `src/Host/HostCli.JourneyDiagnostics.cs`; **160:** `Assets/Ashfall.Core/Survivors/ChildDevelopmentSystem.cs` (additive recorder), `src/Host/SecondGenerationMilestoneHostSession.cs`, `src/Main.SecondGenerationMilestones.cs`, `src/Host/HostCli.SecondGenerationMilestones.cs`; **cloud-seeding:** `src/Host/CloudSeedingHostSession.cs`, `src/Main.CloudSeeding.cs`, `src/Host/HostCli.CloudSeeding.cs`, save section `cloud_seeding`; shared: `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`, `Assets/Ashfall.Core/HostCliRegistry.cs`, `src/Host/HostCli.cs`, `src/Main.Application.cs`, `src/Main.SaveOrchestrator.cs`, `src/Main.Lifecycle.cs`, `src/Main.ExpandedShelterSystems.cs`, `Ashfall.Core.Tests/Tooling/MainTriadDriftGateTests.cs`, `scripts/ci/generate-architecture-map.py`; plan archivals. | **DONE/FULLY INTEGRATED 2026-09-26:** probes 6/6 (155), 6/6 (156), 7/7 (160), 7/7 (cloud seeding); clean `--no-incremental` host build 0 errors. Foreign-lane notes: concurrent lanes were mid-write in `Main.CampaignOwners.cs`/`HostCli.SoilReclamationProfile.cs` (self-resolved); architecture-map missing nodes belong to those lanes. |
 | claim-quad-b-167-248-270-269-2026-09-26 | `QUAD-B-167-248-270-269` | Integrator (user-authorized concurrent package 2026-09-26) | **167:** new `src/Host/PharmaceuticalTabletHostSession.cs`, `src/Main.PharmaceuticalTablet.cs`, `src/Host/HostCli.PharmaceuticalTablet.cs`, save section `pharmaceutical_tablet`; **248:** new `src/Host/TradeTellHostSession.cs`, `src/Main.TradeTell.cs`, `src/Host/HostCli.TradeTell.cs` (derived, no save); **270:** new `src/Host/EconomyFamilyHostSession.cs`, `src/Main.EconomyFamily.cs`, `src/Host/HostCli.EconomyFamily.cs`, save section `economy_family`; **269:** new `src/Host/ExpeditionFamilyHostSession.cs`, `src/Main.ExpeditionFamily.cs`, `src/Host/HostCli.ExpeditionFamily.cs` (pure, no save); **supporting:** `src/Host/SurgicalGraftHostSession.cs`, `src/Main.SurgicalGraft.cs`, `src/Host/HostCli.SurgicalGraft.cs`, save section `surgical_graft`; shared: `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`, `Assets/Ashfall.Core/HostCliRegistry.cs`, `src/Host/HostCli.cs`, `src/Main.Application.cs`, `src/Main.SaveOrchestrator.cs`, `src/Main.Lifecycle.cs`, `src/Main.ExpandedShelterSystems.cs`, `Ashfall.Core.Tests/Tooling/MainTriadDriftGateTests.cs` (allowlist dispositions), `scripts/ci/generate-architecture-map.py` (3 nodes); plan archivals. | **DONE/FULLY INTEGRATED 2026-09-26:** probes 11/11 (167), 10/10 (248), 9/9 (270), 8/8 (269), 10/10 (surgical graft, supporting); host build 0 errors. Foreign-lane notes: concurrent `Main.Letters.cs` mid-write error self-resolved without intervention; `SaveSectionRegistry` carries the concurrent lane's `apprenticeship_curriculum` section whose graph node is theirs to add. |
@@ -15309,3 +15419,41 @@ Surgical exact-string edits. No new state, choice, effect or save section. Statu
 - `Assets/Ashfall.Core/Localization/LocalizationService.cs` (`discovery.<id>.description` EN for all five, DE for bus and truck; string literals only, kept identical to the JSON)
 
 Surgical exact-string edits. No new state, choice, effect or save section. Status: COMPLETE, uncommitted.
+
+## claim-ui-precision-pkg13-pkg14-2026-09-29
+
+User-authorized ("Continue with a larger batch of doing more UI correction and UI precision work"). Premise verified in source: AshfallUiTheme.Build() had no TooltipPanel/TooltipLabel/HSeparator/VSeparator/base-Label entries; ModalManager (134 lines, sole ref = AudioSelfTest smoke check), Core ModalStackController<,> (+ its 190-line test) and AshfallFocusNavigator.TickStickRepeat (zero callers) were dead/superseded by ShowPanelLifecycle (pkg 12 gate) + Main._Input Tab trap (P3); DailyBriefingModal RTL [url] deep links were mouse-only (audit §5b). Edited: `src/UI/AshfallUiTheme.cs` (tooltip/separator/Label chrome entries inside Build()), `src/UI/IModalPanel.cs` (stale doc ref), `src/Audio/AudioSelfTest.cs` (smoke check removed), `src/UI/DailyBriefingModal.cs` (HFlowContainer GOTO button row rebuilt per report from unique DeepLinkRoute values, cap 8, hidden when empty, rides OnDeepLinkRequested seam), new `Assets/Ashfall.Core/UI/IModalPanel.cs` (contract split out of ModalStackController.cs); deleted `src/UI/ModalManager.cs`, `Assets/Ashfall.Core/UI/ModalStackController.cs`, `Ashfall.Core.Tests/UI/ModalStackControllerTests.cs`, TickStickRepeat; new gates `Ashfall.Core.Tests/UI/UiChromeDeadSeamGateTests.cs` (9/9: theme rows inside Build(), ModalManager/ModalStackController regrowth ban, dead tick removal) and `Ashfall.Core.Tests/UI/UiBriefingDeepLinkGateTests.cs` (1/1). Verified: `dotnet build Ashfall.csproj` 0 errors; `--ui-layout-selftest` 0 FAIL; `--player-panels-uitest` 22/22; `--audio-selftest` 649/649; headless boot clean. Plans archived at `.ai/plans/integrated/ui/ui-chrome-deadseam-2026-09-29.md` and `.ai/plans/integrated/ui/ui-briefing-deeplinks-2026-09-29.md`. Commits: 9e259f917 (pkg 13), e3320c963 (pkg 14). Status: COMPLETE.
+
+## claim-ui-visual-lane-pkg16-17-2026-09-29
+
+User-authorized ("Continue working on remaining UI"). Closed both open visual-lane items from the a11y series. (1) Pkg 16, commit b67728a11: the first golden regen since 2026-09-26 exposed a live layout regression — every AshfallSidebar row collapsed to stylebox margins and labels piled up (root cause: P2.5 02c48fa92 converted rows to `new Button` with a MarginContainer child; Godot Buttons are not containers, children don't contribute min size). Fix: `row.CustomMinimumSize = (0, rowMargin.GetCombinedMinimumSize().Y)` in AddRow; gate fact SidebarButtonRows_SizeFromTheirContent in UiA11ySidebarHoverOverflowGateTests 9/9. (2) Commit a5a176065: snapshot goldens rebaselined under xvfb (32/32 match, 0 drift; absorbs font lift, pkg 11/13 theme chrome, P2.5 sidebar conversion, pkg 16 fix). (3) Pkg 17, commit 89dffa25b: §3 scrim contrast CLOSED via worst-case composited math (correct WCAG gamma; scratch pass with wrong threshold initially understated failures). Raised MapDetail 0.74→0.90, Expedition art dim 0.82→0.90, GameOver overlay 0.80→0.90 (all tokens ≥4.96:1 worst-case); MainMenu §3 row corrected as false positive (menu column lives in MakePanel(520,0)); compound chrome + GameHud + Entropy banner pass as-is. Gate UiScrimContrastGateTests 6/6; audit report §3 closure block appended. Edited: src/UI/AshfallSidebar.cs, src/UI/MapDetailPanel.cs, src/UI/ExpeditionPanel.cs, src/UI/GameOverPanel.cs, Ashfall.Core.Tests/UI/{UiA11ySidebarHoverOverflowGateTests,UiScrimContrastGateTests}.cs, docs/ui/ACCESSIBILITY_REPORT_2026-09-29.md, snapshots/*. Verified: build 0 errors; ui-layout-selftest 0 FAIL; player-panels-uitest 22/22; ui-snapshot-uitest 32/32; boot clean. Plans archived at .ai/plans/integrated/ui/{ui-sidebar-row-collapse,ui-scrim-contrast}-2026-09-29.md. Status: COMPLETE.
+
+## claim-plans-62-64-65-runtime-wiring-2026-09-29
+
+User-authorized ("Improve the architecture overall" → chose "Wire Plans 62/64/65"). Paths: `src/Main.CampaignOwners.cs`, `src/Main.SubsystemComposition.cs`, `src/Main.Lifecycle.cs`, `src/Main.Expeditions.cs`, `Assets/Ashfall.Core/Campaign/DayEventVocabulary.cs`, `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` (line 110 setup-name only), `docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md`, `scripts/ci/generate-architecture-map.py` (encounter_choice setup name), `docs/architecture/ARCHITECTURE_TEST_MAP.md` (regenerated), `.ai/plans/integrated/campaign/plans-62-64-65-runtime-wiring-2026-09-29.md`. Status: COMPLETE (uncommitted). Extended same session by composition-gap seal (plan .ai/plans/integrated/campaign/composition-gap-seal-2026-09-29.md): + `src/Main.AdvancedShelterSystems.cs`, `src/Main.SurvivorLetterDelivery.cs`, `src/Main.ShelterAcoustics.Integration.cs`, `src/Main.RunFlatTire.cs`, `Ashfall.Core.Tests/UI/CompositionRootArchitectureGateTests.cs`. COMPLETE (uncommitted).
+
+## claim-naval-dedup-encounter-choice-ledger-2026-09-29
+
+User-authorized. Paths: `src/Host/ExpeditionHostSession.cs`, `src/Main.NavalExpeditions.Integration.cs` (deleted), `src/Main.Expeditions.cs`, `src/Main.Lifecycle.cs`, `src/UI/ExpeditionPanel.cs`, `src/Host/HostCli.Command.RunExpeditionSelfTest.cs`, `docs/architecture/MAIN_DECOMPOSITION_MAP.md` (line 30), `docs/architecture/ARCHITECTURE_TEST_MAP.md` (regenerated). Plan `.ai/plans/integrated/campaign/naval-dedup-encounter-choice-ledger-2026-09-29.md`. Status: COMPLETE (uncommitted).
+
+## claim-travel-combat-escalation-fieldguide-2026-09-30
+
+User-authorized ("continue with the next open!"). Paths: `src/Host/ExpeditionHostSession.cs`, `src/Main.Expeditions.cs`, `src/Main.EcologicalInfestations.cs`, `src/Host/HostCli.Command.RunExpeditionSelfTest.cs`, `Assets/Ashfall.Core/Narrative/NarrativeEncounterSystem.cs` (additive field), `Assets/Ashfall.Core/Expeditions/ExpeditionEncounterBridge.cs`, `docs/combat/PATROL_RAID_BINDINGS.md`. Plan `.ai/plans/integrated/combat/travel-combat-escalation-fieldguide-2026-09-30.md`. Status: COMPLETE (uncommitted).
+
+## claim-cf-p28-current-acceptance-closeout-2026-09-30
+
+User-authorized continuation ("continue with next plan 1 integration"). Integrator owns only `docs/plans/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`, its archive destination `docs/plans/integrated/architecture/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md`, the CF-P28 row in `INTEGRATION_PLANS.md`, the closeout pointer in `docs/plans/UNCLAIMED_CORPUS_CENSUS.md`, this claim, `.ai/state.md` task entry, and generated `docs/INDEX.md`. Production and probe source changes already in the worktree are read-only. Acceptance: current bootstrap/manifest/triad scoped tests pass; current host build succeeds; composition-root and real-campaign-journey probes pass at 15 FPS; then mark and immediately archive the plan. Status: COMPLETE / FULLY INTEGRATED. Verification: scoped 22/22, incremental build 0/0, composition-root and real-campaign-journey PASS at 15 FPS, both exit 0. Plan marked and immediately archived; runtime shutdown diagnostics recorded in the archive.
+## claim-plan37-current-acceptance-closeout-2026-09-30
+
+User-authorized one-plan continuation. Integrator claims the Plan 37 closeout only: `docs/plans/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`, archive destination `docs/plans/integrated/ui/PLAN_37_INPUT_FOCUS_CONTROLLER_INTEGRATION_PLAN.md`, its census row in `docs/plans/UNCLAIMED_CORPUS_CENSUS.md`, an acceptance entry in `INTEGRATION_PLANS.md`, this claim, `.ai/state.md`, and generated `docs/INDEX.md`. Production source is read-only. Acceptance: focused input/settings and current UI-owner tests, current host build and UI-layout/controller-parity probe pass; document superseded owners and hardware limitation; mark and immediately archive. Status: BLOCKED / RELEASED. Input gates passed 10/10; settings and current-owner tests cannot compile unrelated YearOfAshTimelineSystem climate API mismatches (lines 125–131). Host build succeeded with 14 warnings, but concurrent Core changes prevent consistent acceptance. Auditor also flagged live joypad delivery through _UnhandledKeyInput for verification. No production edits, no archival, no completion claim; see .ai/state.md.
+
+### claim-save-authority-2026-09-30 — SAVE-CAMPAIGN-JSON-SOLE-AUTHORITY
+User-authorized ("continue working on the still opened"). Paths: 83 `src/Main*.cs` Save methods (TrySave line removed), `src/Main.SaveOrchestrator.cs` (restore-list setups), `src/Main.Expeditions.cs`, `src/Main.InternalCommunication.cs`, `src/Main.UiTests.RealCampaignJourney.cs`, `Ashfall.Core.Tests/Tooling/MainTriadDriftGateTests.cs`, `docs/architecture/ARCHITECTURE_TEST_MAP.md` (regenerated). Plan `.ai/plans/integrated/save/campaign-json-sole-authority-2026-09-30.md`. Status: COMPLETE (uncommitted).
+
+## claim-hostcli-null-hazard-repair-2026-09-30
+
+User-authorized ("Search for bugs, errors, warnings, silent bugs, missing tool calls etc and diagnose plus repair"). Full-rebuild warning inventory (host 14, Core 0, tests 0): 7 benign CS0162 constant-folded contract-name checks (left, documented) and 7 CS8602 self-test null-deref sites — one defect class: Check(x != null) prints FAIL but the verbs then dereferenced x anyway, so a premise failure died mid-probe in the catch-all as "Unexpected probe exception" instead of per-check FAILs. Repaired 11 deref sites across HostCli.{Barter,CaravanItemValue,CombatDoctrine,EconomyFamily,LoanShark,PlayerSurfaceManifest,VoluntaryRegister}.cs with targeted guards / honest early-abort guards / non-null lambda locals. PatrolEncounterIntegrity.cs CS8602 left (foreign uncommitted WIP). Sweeps clean: zero swallowed catches under src/+Core; event wiring verified (OnDeepLinkRequested subscribed at Main.Campaign.cs:117; QuestDetail OnMoralChoiceSelected = documented standalone fallback; CaravanBarter OnSetActiveFaction = deliberate; Greenhouse/Foundry/DutyRoster events = dormant notifications with internal selection behavior). Verified: build 0 errors, warnings = 7 CS0162 + 1 foreign; all seven touched verbs PASS headless (7/7, 9/9, 10/10, 9/9, 7/7, 9/9, 11/11, zero probe exceptions); boot 0 script errors. Plan archived at .ai/plans/integrated/ui/hostcli-null-hazard-repair-2026-09-30.md. Commit: ea641a768. Status: COMPLETE.
+
+## claim-ui-pass2-encounter-focus-2026-09-30
+
+User-authorized ("continue with another pass" — bug-hunt pass 2). Repair: ExpeditionPanel's nested encounter modal (the single repo-wide bypass of the pkg-12 bare-.Visible=true class outside Main.*) surfaced mid-session with no keyboard focus; fixed via shared seams — OpenWithFocus(_encounterModal, opener: this) on open, FocusFirstDeferred(this) when the encounter queue drains (full Close() unchanged; Main owns that restore). Known limit documented: modal not in OverlayPanelCatalog, so the Main Tab trap doesn't bind inside it. Pass-2 sweeps clean: Core determinism/purity (no System.Random/Guid/wall-clock outside IWallClock), data integrity 0 errors/430 catalogs, double-subscription flags = correct rebind idiom, no TODO markers. Verified: build 0 errors; expedition/expedition-playtest/expedition-encounter-bridge selftests PASS; day1 PASS; seven-day-slice 25/25; layout 0 FAIL; panels 22/22; snapshots 32/32. INCIDENT + REPAIR: initial commit 21f424127 absorbed a foreign uncommitted hunk (LastChoiceWasDuplicate guard) from src/UI/ExpeditionPanel.cs via pathspec add while its definition stayed in foreign ExpeditionHostSession WIP — committed tree would not compile standalone. Amended to eb7fa8cd6 with only my hunks; foreign hunk restored to the worktree uncommitted; foreign symbol verified absent from HEAD. Plan archived at .ai/plans/integrated/ui/ui-pass2-encounter-focus-2026-09-30.md. Commit: eb7fa8cd6. Status: COMPLETE.

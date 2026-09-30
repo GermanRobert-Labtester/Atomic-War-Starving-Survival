@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-30"
+TITLE: "Plan 30 — The War Runs Without You: An Autonomous Outside World"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_30_War_Runs_Without_You_Autonomous_World.md"
+INFERRED: true
+---
 # Plan 30 — The War Runs Without You: An Autonomous Outside World
 
 > **Wave:** Continuity Wave 4 — *The World Beyond the Gate* (Plans 30–34)

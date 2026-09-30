@@ -73,6 +73,27 @@ CLI probe alone stops at VERIFIED. This program requires MECHANIC SEAL for its c
 
 ---
 
+## 0. Framing — The Sealing Programme (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, wave contract, decision,
+acceptance criterion, verification step or recorded status; the pass history and wave records
+remain the authority.)*
+
+> "A gap admitted is a gap already half-closed."
+
+Twelve waves, each carrying the same skeleton — reality → delta → flow → failure → tests → files →
+Definition of Done — is not repetition; it is *care made uniform*. A sealing programme earns trust
+by refusing to let any wave be more vague than its neighbours, and its vocabulary gate is the
+sharpest edge in it: semantic drift is refused because words like "implemented" and "integrated"
+are load-bearing, and a corpus that loosens them forgets what it has done.
+
+- **A gap seal is a promise with a test attached.** The seal framework bound to every wave is the
+  difference between a fix and a fix that stays fixed.
+- **The evidence HEAD and the save pin are the programme's fingerprints.** Every claim in this
+  document is dated, numbered and re-runnable — memory in the only form that survives review.
+
+---
+
 ## 1. Objective
 
 Deliver the highest-value **core game mechanics gaps** as sealed, player-felt loops by extending the current owners, in this order of player consequence:

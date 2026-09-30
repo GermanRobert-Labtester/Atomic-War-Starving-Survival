@@ -17,6 +17,23 @@ Core authority with canonical owners and a registered save section. It does
 
 ---
 
+## 0. Framing — Oldest First (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Triage by age is the only fair queue a corpus has."
+
+Batch 5 takes the two longest-waiting partials — Plans 55 and 58 — and gives them the same
+ceremony any new feature would receive: premise audit first, seam second, tests named before code.
+Age is the selection rule because age is the only argument no stakeholder can make for free.
+
+- **The oldest plans are the most expensive to ignore** — every month of waiting adds a month of
+  drift between the plan and the source it describes.
+- **A batch of two is a promise about attention.** Small batches are how a queue actually drains.
+
+---
+
 ## 1. Premise audit (current source, 2026-09-23)
 
 | Claim | Current evidence | Verdict |

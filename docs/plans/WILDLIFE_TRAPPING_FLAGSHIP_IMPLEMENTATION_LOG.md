@@ -1,5 +1,19 @@
 # Wildlife Trapping Flagship Implementation Log
 
+## 0. Framing — The Trap Line (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Trapping is the oldest negotiation with the wild: you leave a question in the woods and come
+> back for the answer."
+
+Wildlife trapping gives the shelter a harvest that *cannot be scheduled* — a quota asked of an
+ecosystem that did not attend the meeting. The log records the machinery; the woods keep the
+secrets.
+
+- **A trap is a device for being patient at scale** — and patience is the one resource this
+  system truly models.
+
 Date: 2026-09-10
 
 ## Phase 0 — Contract audit

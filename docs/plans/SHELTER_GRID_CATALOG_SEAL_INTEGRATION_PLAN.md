@@ -7,6 +7,24 @@
 
 ---
 
+## 0. Framing — The Seal on the Catalog (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A sealed catalog is a vocabulary that has stopped drifting."
+
+Grid G1–G3 seals the construction vocabulary — every blueprint, cost and capacity frozen and
+verified — and that seal is what licenses every later plan to *cite* a building and mean it. The
+value of a seal is not rigidity; it is that disagreements about the grid can finally be about the
+future instead of the past.
+
+- **Sealing is governance by freezing meaning.** A citable fact is worth more than a flexible one.
+- **A sealed catalog is the calmest artefact in the corpus**: nothing grows in it, and everything
+  grows from it.
+
+---
+
 # 1. Objective
 
 Make `power_grid.json` the actual runtime authority for shelter power-room definitions, fix the room-ID mismatch that starves the Plan 168 fluid network of power every campaign day, and restore the quarantined catalog test as a real regression gate.

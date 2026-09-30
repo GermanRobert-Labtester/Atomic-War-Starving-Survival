@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-AF271245E843"
+TITLE: "Plan 22 — One Food Authority: Kitchen Nutrition, Pantry Ledger, and Consumption — Authoritative Kitchen Pipeline, Pantry Inventory Storage, Meal Preparation, Therapeutic Nutrition, and Satiety"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_22_One_Food_Authority_Consumption.md"
+INFERRED: true
+---
 # Plan 22 — One Food Authority: Kitchen Nutrition, Pantry Ledger, and Consumption — Authoritative Kitchen Pipeline, Pantry Inventory Storage, Meal Preparation, Therapeutic Nutrition, and Satiety
 
 ## 1. Objective and bounded outcome

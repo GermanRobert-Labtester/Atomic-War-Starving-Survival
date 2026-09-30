@@ -1,5 +1,33 @@
 # ASHFALL: THE YEAR OF ASH (DAYS 180–360) — Grand Lore Bible & Master Creative Pack
 
+> *"A year is long enough for ten factions to learn that they disagree, and short enough that none
+> of them gets to finish the argument."*
+>
+> **Director's framing.** Days 180 to 360 are the middle of a war nobody is winning. This document
+> is not a plot — it is a *weather report on ten positions*, sixty places, thirty-six voices on the
+> radio, thirty-six people who might have joined you, and five ways it could have ended. Read it as
+> the record of a period, written by someone who was inside it.
+>
+> **What stays unsaid here:** who fired first; which of the six dossiers is accurate; whether the
+> radio transmissions were received by anyone. The epilogues are labelled *definitive* and there are
+> five of them, which should tell you everything about how much the word is worth.
+>
+> **The second layer (second prose pass — texture only).** A weather report on ten positions,
+> written by someone who was inside it. This document is not a plot; it is the record of a period —
+> sixty places, thirty-six voices on the radio, thirty-six people who might have joined you — and
+> its five *definitive* epilogues tell you everything about how much the word is worth.
+>
+> **What the pack leaves lying around.**
+>
+> "Who fired first is unsaid. Whichever dossier you believe is a choice the pack lets you keep."
+>
+> "The radio transmissions may never have been received. The voices are preserved anyway."
+>
+> "Minus thirty-eight degrees and fuel freezing into cloudy wax: the compact evaporated before the agriculture did."
+>
+> *(The silences above are unchanged and remain this pack's register.)*
+
+
 **Internal id:** `expansion_05_the_year_of_ash`
 **Kind:** Shippable prose & definitive narrative resolution. Companion to `docs/expansions/expansion_05_the_year_of_ash_plan.md` and `docs/lore/06_REBUILDERS_AND_BLACK_OPS.md`.
 **Voice lock:** Cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.

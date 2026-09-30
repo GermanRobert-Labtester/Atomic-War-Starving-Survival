@@ -1,5 +1,18 @@
 # PLAN B67 CLOSEOUT — Radio Signal Cryptanalysis & Triangulation Intercept Grid
 
+## 0. Framing — Intercept (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "Cryptanalysis is listening with a pencil."
+
+Triangulation and intercept turn the airwaves into geometry — a signal is a *place* before it is a
+message. The closeout records the grid that lets the shelter know where a voice is coming from,
+without ever promising to know what it means.
+
+- **Bearing, not meaning** — the plan is careful about the difference, and the difference is the
+  mystery.
+
 **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship`
 **Scope:** audit-then-extend, per the Wave 0 reconnaissance. The intercept
 grid already ships as **Plans 46–49**; B67's audit reconciled it against the

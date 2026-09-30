@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — Weather in a Small Town (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "Grievance is a debt between people that no ledger records until it is paid."
+
+Conflict and grievance is the plan that treats friction as *weather* over a small population:
+caused, legible, and nobody's villain. There is no second emotional authority here — the system
+routes through the existing social owners, because a shelter of twelve people does not need a
+conflict engine so much as it needs a shared vocabulary for saying that something is wrong.
+
+- **Conflict is a state with a cause and no culprit.** The design's fairness lives in that gap:
+  the model describes pressure and leaves the characterisation to the household.
+- **Grievance that can be spoken is grievance that can be settled.** Naming the state is already
+  half the intervention — the plan knows it and never overplays it.
+
+---
+
 ## Outcome
 
 Make `InterpersonalConflictSystem` (DEC-342) the live survivor relationship conflict, grievance accumulation,

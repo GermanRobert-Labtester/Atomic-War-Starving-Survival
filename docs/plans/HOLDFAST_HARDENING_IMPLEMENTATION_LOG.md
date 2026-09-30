@@ -1,5 +1,18 @@
 # Holdfast Hardening Implementation Log
 
+## 0. Framing — The Holdfast (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A holdfast is a name for staying put, engineered."
+
+Hardening the holdfast is the work of making *staying* reliable: the shelter's centre of gravity
+checked against every force that would rather it moved. Status: PASS is the quietest possible way
+to say the centre held.
+
+- **Hardening is maintenance against hypotheticals**, and hypotheticals are where future bugs
+  are born.
+
 ## Phase 1 — Quest reachability
 
 Status: PASS

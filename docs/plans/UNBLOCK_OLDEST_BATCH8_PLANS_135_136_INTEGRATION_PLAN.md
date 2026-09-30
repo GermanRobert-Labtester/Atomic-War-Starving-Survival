@@ -8,6 +8,22 @@
 
 ---
 
+## 0. Framing — The Pair (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Two plans enter a batch as strangers and leave as neighbours."
+
+Plans 135 and 136 are the eighth such pairing, and the ceremony never varies: premise audit,
+shared seams named, claims disjoint. The repetition *is* the quality — a programme keeps its
+manners on the eleventh attempt or it keeps nothing.
+
+- **Consistency is the cheapest form of trust.** Same steps, same evidence, same boundaries.
+- **The batch is small on purpose**: attention is the resource these plans were starved of.
+
+---
+
 ## 1. Scope and Selection
 
 The user requested audit, unblocking, and full integration of the next batch of partial plans:

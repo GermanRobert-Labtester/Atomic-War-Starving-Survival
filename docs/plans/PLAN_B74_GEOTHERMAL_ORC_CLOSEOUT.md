@@ -1,5 +1,17 @@
 # Plan B74 — Geothermal ORC closeout
 
+## 0. Framing — Heat (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "Geothermal is the shelter discovering that it lives on a stove."
+
+ORC power from the ground's own warmth is the least dramatic energy in the game — no fuel convoys,
+no wind, just a gradient and a working fluid. Implemented and closed in the same plain voice the
+heat deserves.
+
+- **The quietest power is the most dependable**, and this closeout is appropriately quiet.
+
 Status: implemented in the current Godot host.
 
 ## Delivered

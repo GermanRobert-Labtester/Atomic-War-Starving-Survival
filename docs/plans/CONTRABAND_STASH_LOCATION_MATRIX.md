@@ -1,5 +1,18 @@
 # CONTRABAND STASH LOCATION MATRIX — Plan 147 Task A.7 / Task B.7
 
+## 0. Framing — The Stash (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded matrix remains the authority.)*
+
+> "A stash is a secret with a floor plan."
+
+Location is what turns hidden goods into *place* — a cache implies a hider, a hider implies a
+habit, and a habit implies a map nobody was supposed to draw. The matrix draws it anyway, in the
+same table format as everything else, which is the corpus's way of staying honest about its own
+secrets.
+
+- **Every secret in this game has coordinates**, and the coordinates are gameplay.
+
 ## Decision
 
 Every `hidden_stash_location` value is classified **DESCRIPTIVE — no location

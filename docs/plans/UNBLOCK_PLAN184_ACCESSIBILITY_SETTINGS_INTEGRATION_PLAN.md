@@ -6,6 +6,23 @@
 from user preference composition, profile application, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — The Options Menu as Policy (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "Accessibility settings are the game admitting its defaults were an opinion."
+
+Every option in this system is a small confession that one size was never going to fit — and a
+promise that the player may redraw the boundary. The settings are policy in the best sense: written,
+public, and changeable by the person they affect.
+
+- **Defaults are opinions; settings are the correction mechanism.**
+- **An option is only real if it survives the save** — persistence is what separates a preference
+  from a wish.
+
+---
+
 ## Outcome
 
 Make `AccessibilitySettingsSystem` (DEC-339) the live profile and options authority

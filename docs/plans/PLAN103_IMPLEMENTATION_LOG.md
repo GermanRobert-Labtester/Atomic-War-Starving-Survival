@@ -1,5 +1,18 @@
 # Plan 103 Implementation Log
 
+## 0. Framing — The Receipt (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Evidence is the part of the work that survives the work."
+
+The code will be refactored and the design will be revised, but the log stays: what was claimed,
+what was tested, what was true on the day. Plan 103's receipt is filed where the next person can
+find it, which is the whole art of this genre.
+
+- **A log is written for a reader who has not been born yet** — the one who will be grateful the
+  evidence was kept short.
+
 ## Phase 0 — Runtime contract and baseline
 
 Status: PASS

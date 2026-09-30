@@ -6,6 +6,24 @@ Scope: shared foundations only — authority matrix, catalog schemas, `SensorThr
 
 ---
 
+## 0. Framing — The Handshake (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A shared contract is a promise made before anyone needs it."
+
+Wave 1 defines the seams first so that four builders can work without meeting: the contract *is*
+the meeting. PR 1 is the handshake photographed — the moment parallel work becomes compatible
+instead of merely simultaneous.
+
+- **Define the seam, then build both sides.** Every hour spent on the contract is an hour the
+  integration does not have to spend in surgery.
+- **A contract is the only document in a wave that both sides must be able to lose** — if neither
+  can, it is not an agreement yet.
+
+---
+
 # 1. Objective
 
 Establish the four systems' shared contracts so Waves 2–5 can be implemented as independent, parallel-safe vertical slices without re-litigating ownership, naming, save shape, or determinism rules.

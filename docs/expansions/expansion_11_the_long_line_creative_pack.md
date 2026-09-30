@@ -1,4 +1,32 @@
 # ASHFALL — Expansion Proposal 11: THE LONG LINE
+
+> *"The busy hour is the one in which everything is normal. That is why we remember it."*
+>
+> **Director's framing.** The Long Line is a story about infrastructure told by people who do not
+> understand their own infrastructure. There is a ring. There is a custodial faction called the
+> Linekeepers who maintain it and will not say what it carried. There is a section titled *What
+> actually happened*, which is the most ominous two words in this entire corpus.
+>
+> **What stays unsaid here:** what the ring was for; who built it; whether "the busy hour" is a
+> memory or a repeating state. This pack is a proposal with a secret at the middle of it, and the
+> secret is not going to be opened by writing more words around it.
+>
+> **The second layer (second prose pass — texture only).** A story about infrastructure told by
+> people who do not understand their own infrastructure — which is the truest thing this corpus
+> says about technology. The pack is a proposal with a secret at the middle of it, and it has the
+> discipline to leave *What actually happened* short: the two most ominous words in the corpus earn
+> their menace by stopping.
+>
+> **What the pack leaves lying around.**
+>
+> "The Linekeepers maintain the ring and will not say what it carried. Their custodianship is the entire characterisation."
+>
+> "Whether the busy hour is a memory or a repeating state — the pack declines, and the decline is the horror."
+>
+> "One line remains, and the argument is who is allowed to interrupt everyone else."
+>
+> *(The silences above are unchanged and remain this pack's register.)*
+
 ## Master Story, Lore, Location & Questline Creative Pack
 
 **Proposed internal id:** `expansion_11_the_long_line`

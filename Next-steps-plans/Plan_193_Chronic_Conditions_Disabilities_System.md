@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-957FDBA382C4"
+TITLE: "Plan 193 — Chronic Conditions and Accommodations — Clinical Attribution, Function, and Respectful Care"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_193_Chronic_Conditions_Disabilities_System.md"
+INFERRED: true
+---
 # Plan 193 — Chronic Conditions and Accommodations — Clinical Attribution, Function, and Respectful Care
 
 ## Current evidence and integration architecture — 2026-09-24

@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-12
+PLAN_ID: "E1-12"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 12
-STATUS: READY_FOR_EXECUTION_WHEN_HOST_AUDIO_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 169 — Audio Accessibility & Mix Legibility"
 SEQUENCE_FILENAME: "E1_planintegration[12].md"
 PREVIOUS_FILENAME: "E1_planintegration[11].md"
 NEXT_FILENAMES:
   - "E1_planintegration[13].md"
   - "E1_planintegration[14].md"
-CATEGORY: PRESENTATION+ACCESSIBILITY+AUDIO_MIX+SETTINGS
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Make critical audio cues legible, controllable, and accessible through host-side routing, visual equivalents, mix ducking, diagnostics, and user settings without creating simulation-owned audio state."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -24,6 +24,24 @@ RUNTIME_RISK: MEDIUM
 ACCESSIBILITY_RISK: HIGH
 MIX_REGRESSION_RISK: HIGH
 SAVE_RISK: LOW
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [12] — Audio Accessibility, Mix Legibility, Critical-Cue Equivalence, Ducking, Diagnostics, and User Preferences"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[12].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [12] — Audio Accessibility, Mix Legibility, Critical-Cue Equivalence, Ducking, Diagnostics, and User Preferences

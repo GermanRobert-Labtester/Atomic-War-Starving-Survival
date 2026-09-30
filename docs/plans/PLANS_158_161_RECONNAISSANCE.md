@@ -1,5 +1,16 @@
 # Plans 158–161 — Repository Reconnaissance (Phase A Exit Gate)
 
+## 0. Framing — The Exit Gate (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded document remains the authority.)*
+
+> "An exit gate is a promise that the survey ends and the work begins."
+
+Phase A does not drift into Phase B; it *passes a gate*. Naming the transition is how a plan keeps
+its reconnaissance from becoming a lifestyle.
+
+- **Gates are the punctuation of projects** — and this corpus writes its commas in evidence.
+
 **Stream authority:** [PLANS_158_161_MASTER_PLAN.md](PLANS_158_161_MASTER_PLAN.md)
 (ModularVehicleSystem · MacroWeatherSystem · TradeRouteSystem · SuccessionSystem)
 

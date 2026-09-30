@@ -20,6 +20,25 @@ releases.
 
 ---
 
+## 0. Framing — The Queue at the Gate (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, signature bundle,
+decision, acceptance criterion or recorded status.)*
+
+> "A blocked plan is a decision wearing a delay."
+
+This is governance as unblocking: not more process, but the *smallest* sets of signatures —
+bundles — that let real work start. The plan's intelligence is its granularity. It refuses to
+queue whole features behind whole debates; it asks which named decisions are the actual gate,
+and it asks for exactly those.
+
+- **A signature bundle is a keyring, not a gate.** The point of a named decision is that it can be
+  signed by one person in one line, and that line unblocks a queue.
+- **A governance plan's deliverable is permission.** Everything else in the document is the
+  receipt that the permission was earned.
+
+---
+
 ## 1. Objective
 
 Turn the ASHFALL plan queue's blocked items into either (a) a signed decision

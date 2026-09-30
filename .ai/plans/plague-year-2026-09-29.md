@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_plague_year_plan.md`. Family index: `docs/expansions/expansion_world_moves_without_you_index.md`.
 > Not a claim. Fictional pathogens only (the four already authored). No clinical instruction content.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `plague_year_lines.json` rows; they belong in data, never in code.
 > **Fictional pathogens only — the four already authored. No clinical, diagnostic or treatment
@@ -44,6 +44,13 @@ not the body; it is the notice pinned to the gate.
 never confirm. Confirmation is a thing the *world* does and the player learns about second-hand.
 That asymmetry is the plan's epistemology: you are always one bulletin behind. §12 keeps what the
 spillover came from permanently unsaid.
+
+**The second layer.** The plan's quiet cruelty is that the region never reports on itself; the
+region *is* the report. Rumour, Confirmed, Spreading — these are not measurements of disease but
+measurements of attention, and the shelter's dial decides only how much attention it is willing to
+pay with its hands. The Gate Protocol is therefore the most honest difficulty knob ever designed:
+it changes nothing about the sickness and everything about the player. And behind every bulletin
+is the ruled space the next one will occupy.
 
 ## 1. Goal & Outcome
 
@@ -104,6 +111,71 @@ be caught breaking.
   same plain wording as Open. Judgement belongs to the player and to nobody in the writing.
 - **Every disease death has a Count line (§6.7).** The Count is the plan's memorial and its only
   lyricism. Keep it to one line per death, forever.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Gate card: Protocol — Screen. The card is laminated, which means somebody expected to change it often, and somebody did not."
+
+> "Ward sheet, one line: isolation offered, accepted. The sheet is not a moral document. It has been read as one."
+
+> "Count line: one. The Count is one line per death and the ink is the same on every line."
+
+**Scenes the player may piece together.**
+
+> "A rumour arrives before the bulletin. The shelter acts on the rumour. The correction arrives after the acting."
+
+> "The cordon is on the north route and the notice names no region. The gate changes anyway."
+
+**Held silences (texture, not register rows).**
+
+- What the fifth season would have carried. DEC-PY-01 maps four strains to four seasons; the fifth season is not asked about and must not be. Texture only.
+- Who reads the Count years later. One line per death, forever (§6.7); the reader is not modelled and the Count must never be given one.
+
+**Third pass — three fragments (texture only; §12 register unchanged).**
+
+> "Protocol change-day: dated, initialled, laminated. The lamination is optimism."
+
+> "Rumour, then Confirmed. The shelter acted in between. That is what a rumour is for."
+
+> "One strain, one season. The fit is neat, and the neatness is unexplained."
+
+**Fourth pass — the bulletin behind the bulletin (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `plague_year_lines.json`. Fictional pathogens only — the
+four already authored. No clinical, diagnostic or treatment instruction content.)*
+
+**The shape of the polish.** The bulletin board is the plan's entire stage, and its power is
+format: five ordinal words, one pin, and a notice that arrives already dry. Everything the shelter
+knows about sickness it knows in the past tense. The prose should keep that tense discipline —
+never *is Confirmed*, always *was Confirmed by the time we read it* — so that the reader lives the
+same one-bulletin-behind life the shelter does.
+
+**What the shelter leaves lying around.**
+
+> "Board notice, printed the same hour as its correction. Two notices, one pin. The pin is older
+> than both."
+
+> "Cordon notice names no region. The gate changes anyway. The gate has changed on less."
+
+> "Count line: one. Below it, ruled and empty: the space for the next line, ruled in advance."
+
+**Held silences (texture, not register rows).**
+
+- Who prints the bulletins. The Board is a surface, not a person; the press is not modelled and
+  the notices arrive already dry. Texture only.
+- Whether the region knows it is being counted. The Count is the shelter's memorial (§6.7); the
+  region keeps its own arithmetic and does not share it.
 
 ---
 

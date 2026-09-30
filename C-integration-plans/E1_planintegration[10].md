@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-10
+PLAN_ID: "E1-10"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 10
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 160 — Expedition Colony & Outpost System"
 SEQUENCE_FILENAME: "E1_planintegration[10].md"
 PREVIOUS_FILENAME: "E1_planintegration[9].md"
 NEXT_FILENAMES:
   - "E1_planintegration[11].md"
   - "E1_planintegration[12].md"
-CATEGORY: LINK+EXPEDITIONS+OUTPOSTS+SUPPLY+TERRITORY
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Extend expeditions into one persistent fixed-site presence by composing existing site, route, caravan, roster, inventory, production, defense, faction, market, communications, governance, and save authorities."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -23,6 +23,24 @@ RUNTIME_RISK: VERY_HIGH
 SAVE_RISK: VERY_HIGH
 BALANCE_RISK: VERY_HIGH
 SCOPE_RISK: EXTREME
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [10] — Expedition Outposts, Fixed Forward Presence, Supply Lines, Territorial Reach, and Colony-Scale Growth"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[10].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [10] — Expedition Outposts, Fixed Forward Presence, Supply Lines, Territorial Reach, and Colony-Scale Growth

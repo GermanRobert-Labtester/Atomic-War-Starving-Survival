@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-23
+PLAN_ID: "E1-23"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 23
-STATUS: READY_FOR_EXECUTION_WHEN_DEATH_INVENTORY_AND_MEMORIAL_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 206 — Survivor Death, Legacy & Inheritance System"
 SEQUENCE_FILENAME: "E1_planintegration[23].md"
 PREVIOUS_FILENAME: "E1_planintegration[22].md"
 NEXT_FILENAMES:
   - "E1_planintegration[24].md"
   - "E1_planintegration[25].md"
-CATEGORY: LINK+SURVIVORS+DEATH+ESTATE+MEMORIAL+LEGACY
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create immutable death provenance, estate/will instructions, transactional inheritance settlement, memorial integration, and bounded legacy consequences while preserving SurvivorFate/Health/Combat/Disease/Aging as death-cause authorities, Inventory as item owner, Relations/Psychology/Needs as emotional-social authorities, Quest as quest lifecycle owner, Leadership/Governance as succession owner, and E1-5 as cross-campaign legacy owner."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -28,6 +28,24 @@ SAVE_RISK: VERY_HIGH
 INVENTORY_CONSERVATION_RISK: VERY_HIGH
 NARRATIVE_SAFETY_RISK: HIGH
 EXPLOIT_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [23] — Survivor Death Records, Wills, Estates, Inheritance, Memorials, Grief Handoffs, and In-Campaign Legacy"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[23].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [23] — Survivor Death Records, Wills, Estates, Inheritance, Memorials, Grief Handoffs, and In-Campaign Legacy

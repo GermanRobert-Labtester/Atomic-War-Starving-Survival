@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-EFDEED74307E"
+TITLE: "Plan 177 — Dream and Sleep Events — One Sleep Fact, Private Memory, and Safe Mental-Health Composition"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_177_Dream_Sleep_Event_System.md"
+INFERRED: true
+---
 # Plan 177 — Dream and Sleep Events — One Sleep Fact, Private Memory, and Safe Mental-Health Composition
 
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.

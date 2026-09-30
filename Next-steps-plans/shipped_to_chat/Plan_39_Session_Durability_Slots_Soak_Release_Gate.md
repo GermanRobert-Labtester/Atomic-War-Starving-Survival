@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-39"
+TITLE: "Plan 39 — Session Durability: Saves, Slots, Soak, and the Release Gate"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_39_Session_Durability_Slots_Soak_Release_Gate.md"
+INFERRED: true
+---
 # Plan 39 — Session Durability: Saves, Slots, Soak, and the Release Gate
 
 > **Wave:** Continuity Wave 5 — *The Human Interface* (closing plan)

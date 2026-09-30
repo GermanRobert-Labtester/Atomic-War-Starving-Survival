@@ -1,5 +1,17 @@
 # Plan 24 — Survivor Fitness, Needs, Labor, and Medical Journey: CLOSEOUT
 
+## 0. Framing — The Body's Ledger (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "A survivor's body is four ledgers wearing one coat."
+
+Fitness, needs, labour and medicine: the complete accounting of a person, closed out as one
+journey. The plan's title says *journey*, not *stats* — which is the whole ethic: the body is
+something the shelter *travels through a life with*.
+
+- **One person, four systems, one closeout** — the arithmetic of care, finally balanced.
+
 **Status:** CLOSED — both signature items resolved 2026-09-18
 **Wave:** 8 (implementation unblocker), 2026-09-17; signatures 2026-09-18
 **Package:** user-authorized integrator package (`C1_planintegration[5]`),

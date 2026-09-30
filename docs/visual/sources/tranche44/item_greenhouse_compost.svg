@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 512 512"><defs>
+ <radialGradient id="bg"><stop stop-color="#303738"/><stop offset="1" stop-color="#0d1214"/></radialGradient>
+ <linearGradient id="plastic" x2="1" y2="1"><stop stop-color="#273439"/><stop offset=".48" stop-color="#7d8984"/><stop offset="1" stop-color="#273236"/></linearGradient>
+ <linearGradient id="steel" x2="1" y2=".3"><stop stop-color="#526669"/><stop offset=".37" stop-color="#d9ded2"/><stop offset=".72" stop-color="#96aaa5"/><stop offset="1" stop-color="#45585c"/></linearGradient>
+ <linearGradient id="wood" x2="1" y2="0"><stop stop-color="#57402b"/><stop offset=".4" stop-color="#be8c5d"/><stop offset="1" stop-color="#5e3927"/></linearGradient>
+ <linearGradient id="bottle" x2="1" y2="0"><stop stop-color="#233f42"/><stop offset=".48" stop-color="#7c9990"/><stop offset="1" stop-color="#2c4d4b"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="15"/></filter>
+ <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".54" numOctaves="3" seed="44"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".15"/></feComponentTransfer></filter>
+ </defs>
+ <rect width="512" height="512" fill="url(#bg)"/>
+ <ellipse cx="257" cy="425" rx="175" ry="30" fill="#000" opacity=".63" filter="url(#blur)"/>
+ <desc>ASHFALL inventory art item_greenhouse_compost; fictional handmade object illustration.</desc>
+
+ <path d="M159 146q100-29 197 0l27 241q-118 42-254 0z" fill="#77644b" stroke="#342e28" stroke-width="11"/>
+ <path d="M165 151q101-38 191 0l-11 47q-80 21-172 0z" fill="#a28a65" stroke="#584a3a" stroke-width="7"/>
+ <path d="M157 199q91 29 199 0" fill="none" stroke="#c7b28b" stroke-width="7"/>
+ <path d="M179 243q58-28 138 0l24 96q-86 38-171-4z" fill="#483e2d" stroke="#baa47c" stroke-width="7"/>
+ <path d="M207 259q45 8 89 0m-87 61q43 13 88 0" stroke="#8e8766" stroke-width="7"/>
+ <path d="M245 315q-27-23-12-50 21 2 23 24 3-34 34-39 7 40-34 62" fill="#8c9b6b" stroke="#3c4c3b" stroke-width="6"/>
+ <circle cx="200" cy="346" r="6" fill="#b1996c"/><circle cx="226" cy="360" r="5" fill="#94846a"/><circle cx="314" cy="350" r="8" fill="#a18c65"/>
+
+ <rect width="512" height="512" filter="url(#grain)" opacity=".11"/>
+ </svg>

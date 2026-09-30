@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-215"
+TITLE: "Plan 215 — Crisis Rationing — Existing Economy Policy Overlay Completion"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_215_Shelter_Resource_Rationing_Crisis_Management.md"
+INFERRED: true
+---
 # Plan 215 — Crisis Rationing — Existing Economy Policy Overlay Completion
 
 > **Planning revision — 2026-09-24.** The evidence and decision gates in this section govern the older inventory below. VERIFIED means inspected in current source; PROPOSAL means a path for a future claimed package. This document is not an implementation claim.

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-E8044DFCC16A"
+TITLE: "Plan 155 — Black Market & Underground Economy — Residual Integration"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_155_Black_Market_Underground_Economy.md"
+INFERRED: true
+---
 # Plan 155 — Black Market & Underground Economy — Residual Integration
 
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then

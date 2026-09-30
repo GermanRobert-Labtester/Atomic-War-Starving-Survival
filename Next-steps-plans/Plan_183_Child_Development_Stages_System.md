@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-51BBD20D725D"
+TITLE: "Plan 183 — Child Development Stages — Canonical Generational Projection"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_183_Child_Development_Stages_System.md"
+INFERRED: true
+---
 # Plan 183 — Child Development Stages — Canonical Generational Projection
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then
 AGENTS.md, then

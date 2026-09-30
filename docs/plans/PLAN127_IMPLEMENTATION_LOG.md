@@ -1,5 +1,17 @@
 # Plan 127 Implementation Log
 
+## 0. Framing — The Same Manners (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "By Plan 127 the ceremony has not slipped — which is the only reason to trust Plan 200."
+
+Late-numbered plans inherit the trust built by early ones and spend it slowly. This log shows the
+same evidence-first posture as the rest of the family: no shortcuts earned by familiarity.
+
+- **Familiarity is where process usually dies.** Here it simply repeats itself, which is the
+  point.
+
 ## Phase 1 — Runtime and authority audit
 
 **Status:** PASS

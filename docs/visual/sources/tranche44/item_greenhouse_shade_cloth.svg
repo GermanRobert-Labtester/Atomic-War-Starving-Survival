@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 512 512"><defs>
+ <radialGradient id="bg"><stop stop-color="#303738"/><stop offset="1" stop-color="#0d1214"/></radialGradient>
+ <linearGradient id="plastic" x2="1" y2="1"><stop stop-color="#273439"/><stop offset=".48" stop-color="#7d8984"/><stop offset="1" stop-color="#273236"/></linearGradient>
+ <linearGradient id="steel" x2="1" y2=".3"><stop stop-color="#526669"/><stop offset=".37" stop-color="#d9ded2"/><stop offset=".72" stop-color="#96aaa5"/><stop offset="1" stop-color="#45585c"/></linearGradient>
+ <linearGradient id="wood" x2="1" y2="0"><stop stop-color="#57402b"/><stop offset=".4" stop-color="#be8c5d"/><stop offset="1" stop-color="#5e3927"/></linearGradient>
+ <linearGradient id="bottle" x2="1" y2="0"><stop stop-color="#233f42"/><stop offset=".48" stop-color="#7c9990"/><stop offset="1" stop-color="#2c4d4b"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="15"/></filter>
+ <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".54" numOctaves="3" seed="44"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".15"/></feComponentTransfer></filter>
+ </defs>
+ <rect width="512" height="512" fill="url(#bg)"/>
+ <ellipse cx="257" cy="425" rx="175" ry="30" fill="#000" opacity=".63" filter="url(#blur)"/>
+ <desc>ASHFALL inventory art item_greenhouse_shade_cloth; fictional handmade object illustration.</desc>
+
+ <path d="M121 219q58-62 167-64l105 52q-22 85-55 171-130 36-228-39z" fill="#596b59" stroke="#34463d" stroke-width="12"/>
+ <path d="M132 222q76-35 163-42l75 37q-22 78-48 139-113 22-193-33z" fill="#80927a" stroke="#b3baa4" stroke-width="8"/>
+ <path d="M145 240q89-28 191 3m-199 26q87-20 184 5m-177 26q81-15 169 7m-154 25q71-10 143 5" fill="none" stroke="#405a4c" stroke-width="9" opacity=".8"/>
+ <path d="M172 211l-20 115m51-127-18 139m47-148-8 158m44-164-1 163m37-149 8 134" stroke="#c2c8ad" stroke-width="7" opacity=".75"/>
+ <path d="M121 223q48-62 162-71 47 17 110 54" fill="none" stroke="#374e41" stroke-width="15"/>
+ <path d="M118 344q106 57 225 32" fill="none" stroke="#a9ae91" stroke-width="12"/>
+
+ <rect width="512" height="512" filter="url(#grain)" opacity=".11"/>
+ </svg>

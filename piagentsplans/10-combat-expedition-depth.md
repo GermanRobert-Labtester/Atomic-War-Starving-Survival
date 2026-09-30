@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-10"
+TITLE: "Plan 10 — Combat, Expedition, Bestiary, Armory, and Fleet Architecture"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/10-combat-expedition-depth.md"
+INFERRED: true
+---
 # Plan 10 — Combat, Expedition, Bestiary, Armory, and Fleet Architecture
 
 > **Rebuild status:** COMPLETE ORIGINAL SCOPE — CURRENT AUTHORITY AND REALTIME-EXPANSION MAINTENANCE PLAN

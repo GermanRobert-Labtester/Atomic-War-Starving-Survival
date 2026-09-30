@@ -1,5 +1,18 @@
 # PLANS B66–B69 — HOST WIRING & CROSS-PLAN SCENARIOS CLOSEOUT
 
+## 0. Framing — The Wiring (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "Cross-plan scenarios are where architecture stops being a diagram and becomes an afternoon."
+
+Four heavy systems — smelting, intercept, seismic, cryo — wired into the host and tested against
+each other, which is the only real test of an architecture. The closeout records the day the
+quartet stopped being four plans and started being one workshop.
+
+- **Scenarios that cross plans are the corpus's integration exams**, and this one was sat under
+  supervision.
+
 **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship`
 
 ## Delivered

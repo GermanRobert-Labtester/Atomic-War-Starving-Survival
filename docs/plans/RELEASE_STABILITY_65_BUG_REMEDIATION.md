@@ -1,5 +1,18 @@
 # ASHFALL Release Stability Remediation Plan — 65 Bugs
 
+## 0. Framing — Sixty-Five (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; no scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Sixty-five bugs is not a number. It is sixty-five afternoons nobody else will have to lose."
+
+A remediation plan is triage in document form: each defect named, ranked, and given a route back
+to health. The number is large; the method is small — one bug, one owner, one test, and no
+rhetoric.
+
+- **Stability is the least visible feature and the first one players notice.**
+
 > **Status:** PLAN (approved for implementation). Mode: stability/correctness first.
 > **Scope:** Burn down 65 evidence-backed stability/correctness defects that threaten release trust.
 > **Out of scope:** New content expansions, art remasters, speculative feature invention, Unity work, building 30 new shelter systems to "fill" stubs.

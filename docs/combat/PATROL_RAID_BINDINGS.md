@@ -18,16 +18,18 @@ lurker, owl → spore_predator, bristleback → charger, bear → apex);
 
 Wiring: `TravelEncounterCombatBinder` (Core) escalates a hostile travel
 choice (`!is_nonviolent && !is_avoidance`) to combat composition;
-`ExpeditionHostSession.ResolveTravelChoiceWithCombat` resolves data
-outcomes + raises `OnTravelEncounterCombatTriggered`; the Main handoff
+`ExpeditionHostSession.EncounterApplyChoice` (the live expedition-panel
+path) resolves data outcomes through the bridge, then raises
+`OnTravelEncounterCombatTriggered` once per resolution; the Main handoff
 starts the catalog fight. The Iron Raiders raid event
 (`IronRaidersSystem.OnRaidExecuted` — "a combat/loss event with no
 dialogue") now spawns the raid crew as the shelter-defense fight.
 Pinned by `Plan45Phase2BindingTests` (22 tests).
 
-Remaining honest seam: the travel-encounter UI surface (the wasteland-
-inhabitants layer is exercised by selftests; the panel binding is the last
-step to player-visible creature fights).
+Update 2026-09-30: the orphaned `ResolveTravelChoiceWithCombat` (no
+callers) was folded into `EncounterApplyChoice`, so hostile choices made in
+the expedition panel now start the fight; travel choices also apply their
+`unlocks_field_guide_id`. Pinned by `--expedition-selftest` M10c.
 
 ## Status update (Plan 45 phase 1 — patrol bindings are LIVE)
 

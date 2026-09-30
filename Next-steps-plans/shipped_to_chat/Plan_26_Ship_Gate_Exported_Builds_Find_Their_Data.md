@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-26"
+TITLE: "Plan 26 — The Ship Gate: Exported Builds That Actually Find Their Data"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_26_Ship_Gate_Exported_Builds_Find_Their_Data.md"
+INFERRED: true
+---
 # Plan 26 — The Ship Gate: Exported Builds That Actually Find Their Data
 
 > **Wave:** Continuity Wave 3 — *Ship It Intact*

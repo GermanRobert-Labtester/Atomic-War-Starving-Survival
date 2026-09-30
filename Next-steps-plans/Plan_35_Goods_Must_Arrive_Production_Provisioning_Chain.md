@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-5F437801954B"
+TITLE: "Plan 35 — Goods Must Arrive: The Production-to-Provisioning Chain — Universal Delivery Contracts, InventoryBill Standardization, Warehouse Logistics, and Producer-to-Consumer Integrity"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_35_Goods_Must_Arrive_Production_Provisioning_Chain.md"
+INFERRED: true
+---
 # Plan 35 — Goods Must Arrive: The Production-to-Provisioning Chain — Universal Delivery Contracts, InventoryBill Standardization, Warehouse Logistics, and Producer-to-Consumer Integrity
 
 ## 1. Objective and bounded outcome

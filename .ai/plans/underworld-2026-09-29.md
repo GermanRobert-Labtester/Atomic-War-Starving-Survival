@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_the_underworld_plan.md`. Family index: `docs/expansions/expansion_new_pressures_and_places_index.md`.
 > Not a claim. `BlackMarketSystem` (Plan 211), `FactionBountySystem`, `MercenarySystem`, `LoanSharkEnforcerEngine`, `BlackMarketHeatAttentionEngine` and the contraband engine keep their meaning. This plan **adds people (brokers), a small in-transit run record, and hunters that consume risk numbers nobody reads today**. It creates no second market, bounty, debt or heat authority. **No real-world crime instruction anywhere in data or text.**
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `underworld_trail_lines.json` rows; they belong in data, never in code.
 > Nothing in these additions may be read as real-world instruction — DEC-UW-10 governs.
@@ -43,6 +43,14 @@ fictional currencies of trust. Nothing here is a method; it is a *cost table wit
 That is the plan's real mystery: the machinery of consequence has been here all along, patient and
 unread. Feeding it is not a feature addition — it is waking something up. Keep that framing in the
 writing: the hunters were always possible. The player simply became legible.
+
+**The second layer.** Every debt in this plan is denominated in the same currency: *being known*.
+The broker knows what your name is worth; the mark makes your face a commodity; the hunter is what
+happens when the knowledge acquires a courier. The engines were never switched off — E5, E6 and E8
+ran in the dark with nothing to read them — and the plan's darkest implication is that the
+consequences were always assembled, waiting for a subject to be about. The cut is the fee for
+staying illegible one more week — and the arithmetic of the cut is the only place in this world
+where anonymity still has a printed price.
 
 ## 1. Goal & Outcome
 
@@ -101,6 +109,65 @@ the sequence, not the destination.
   teeth. It also makes leadership feel like exposure, which is the correct feeling.
 - **Counter-bounty is a mirror, not a fix.** Posting one should feel like answering a letter in the
   same handwriting.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Broker's ledger: one column of cuts, one column of names. The columns are not adjacent, and the distance between them is the whole arrangement."
+
+> "Run manifest, three crates out. A cousin's name is against the manifest. The manifest does not say whose cousin."
+
+> "Mark notice, filed with no faction stamp visible. The stamp is on the back. Nobody turns it over."
+
+**Scenes the player may piece together.**
+
+> "Road: two sets of tracks on the east approach, one of them walking backwards for a while. Nobody in the shelter has read that line aloud twice."
+
+> "The Quiet Counter takes no interest. Their interest arrives as arithmetic a week later, and arithmetic is hard to argue with."
+
+**Held silences (texture, not register rows).**
+
+- What the Cold Ledger is saving for. A syndicate named for its method is not obliged to narrate its purpose; the cut table never carries a footnote. Texture only.
+- Whether the four dormant engines were left running on purpose. They ran unread for a long time (E5/E6/E8); whether anyone meant to wake them is not modelled and must not be.
+
+**Fourth pass — the cut and the name (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `underworld_trail_lines.json`. Nothing here is instruction;
+DEC-UW-10 governs.)*
+
+**The shape of the polish.** The underworld's prose should always read as overheard bookkeeping.
+The syndicates do not argue; they quote. And the strangest fact in the plan is the one nobody
+writes down: the cut never changes when the goods do. What varies is the name beside the cut, and
+the name is the only entry in the ledger no one ever audits.
+
+**What the shelter leaves lying around.**
+
+> "Cut table, Quiet Counter: 8% against a name. The name is not written on the table. The table
+> only works if it is not."
+
+> "Manifest outcome: burned. The word is on the manifest. The word is the only part of the crate
+> that came back."
+
+> "He asked for the man, not the goods. The goods are still in the yard, which is how we know the
+> question was the transaction."
+
+**Held silences (texture, not register rows).**
+
+- Whether the three syndicates ever sit at one table. They wear one coat (§0); the coat is
+  observed and its tailor is not. Texture only.
+- What a hunter does on the days the trail does not advance. Word, Road, Door, Standoff are four
+  recorded days; the days between them are not empty, they are simply not ours, and they must
+  stay that way.
 
 ---
 

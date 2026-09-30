@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-CF12FE9B287D"
+TITLE: "Plan 25 — Localization / One Language of Strings — Unified String Translation Tables, Locale Overlays, PO/JSON Decoupling, and String Reachability"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_25_Localization_One_Language_Of_Strings.md"
+INFERRED: true
+---
 # Plan 25 — Localization / One Language of Strings — Unified String Translation Tables, Locale Overlays, PO/JSON Decoupling, and String Reachability
 
 ## 1. Objective and bounded outcome

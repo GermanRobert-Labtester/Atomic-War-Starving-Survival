@@ -4,6 +4,25 @@
 
 ---
 
+## 0. Framing — The Summary and the Word (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "The summary is the plan's handshake. The sections are its word."
+
+Plans 141 and 145 open with a summary because a plan of this size owes its reader a door — and
+then keep every promise behind it: seams named, claims disjoint, verification bounded. The
+executive summary is not a substitute for the document; it is an invitation to trust it far
+enough to read it.
+
+- **A summary that overpromises poisons the sections beneath it.** This one is careful to say
+  *host integration*, not *the future*.
+- **Full host integration is the phrase that matters**: reachable from composition, simulation,
+  persistence and probe — or not done.
+
+---
+
 ## 1. Executive Summary
 
 This package permanently unblocks and executes full Godot host integration for the two oldest unblocked plans in Batch 10:

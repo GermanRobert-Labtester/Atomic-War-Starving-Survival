@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-51"
+TITLE: "Plan 51 — Environmental Storytelling Document Pack & Diegetic Narrative Archive Architecture"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/51-environmental-storytelling-documents.md"
+INFERRED: true
+---
 # Plan 51 — Environmental Storytelling Document Pack & Diegetic Narrative Archive Architecture
 
 > **Authority Document Reference:** Ashfall Master Expansion Authority v2.0 (Volumes 6, 17, 35, 51, 55)

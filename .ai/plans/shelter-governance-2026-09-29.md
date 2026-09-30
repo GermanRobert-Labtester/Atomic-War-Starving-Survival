@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_shelter_governance_plan.md`. Family index: `docs/expansions/expansion_new_ways_to_play_index.md`.
 > Not a claim. Reader-and-router over five existing governance owners; none is merged or replaced.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `assembly_lines.json` / `precedents.json` rows; they belong in data,
 > never in code. DEC-SG-10 governs: no real-world ideology labels anywhere.
@@ -43,6 +43,14 @@ party or label — DEC-SG-10 forbids it, and the fiction is stronger for the omi
 challenge — is the plan's slow-burning fuse. Every rung is announced first (DEC-SG-05), which
 means the player always sees the shape of the trouble before the trouble. The dread is in the
 seeing. §12 keeps the questions of *who* and *why* permanently between the lines.
+
+**The second layer.** The Assembly's true invention is not the statute book or the court; it is the
+habit of *announcing trouble early enough to be believed about it*. Every rung of the ladder is a
+decision made in public one sitting before it is climbed, and that single scheduling rule is what
+separates politics from weather in this shelter. The five authorities still do not talk to each
+other. The room simply makes it possible for them to be heard *by the people they govern* — which
+is the only reconciliation any of them will ever get. And a heard grievance is the only kind that
+stays a grievance instead of becoming weather.
 
 ## 1. Goal & Outcome
 
@@ -106,6 +114,64 @@ the UI.
   arithmetic is the ethic.
 - **Execution stays rare and authored (DEC-SG-10).** No new lethal punishment. A tone rule with
   mechanical teeth.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Statute book: enacted, repealed, re-enacted. The same page carries three dates in the margin and one hand."
+
+> "Sitting 22 minutes. Two blocs registered grievance. The minutes are neutral. The counting is not."
+
+> "Precedent tag, decaying. Somebody has pinned it above a desk where it will matter for a while — and the pin will outlast the mattering."
+
+**Scenes the player may piece together.**
+
+> "The walkout is announced for the next sitting. That is the rule. We slept badly tonight instead of next week, which the rule does not mention."
+
+> "A verdict is read aloud. The verdict is untouched. What changes is the room's receipt of it, and the room can feel itself changing."
+
+**Held silences (texture, not register rows).**
+
+- What the opposition is *against*. `OppositionLadder` names a survivor and a rung and authorises no motive; the grievance has a face and no speech. Texture only.
+- What the room looks like after a schism takes its named survivors out of it. They leave through existing departure paths and are not tracked (SG-P4); the empty chairs are not furniture and must never be furnished.
+
+**Fourth pass — the habit of announcing trouble (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `assembly_lines.json` / `precedents.json`. DEC-SG-10
+governs: no real-world ideology labels anywhere.)*
+
+**The shape of the polish.** Minutes prose: someone who has sat through too many of these and still
+takes them seriously. The mystery of the Assembly is not who holds power but who keeps the record —
+because the record is where an announced rung becomes a promise, and a promise is what makes the
+ladder political rather than meteorological. Short declarative sentences. Dates in the margin.
+
+**What the shelter leaves lying around.**
+
+> "Sitting 23 minutes: one page. The previous sittings ran to three. Nobody has marked the
+> difference."
+
+> "Motion, withdrawn. The withdrawal is dated and unsigned. A withdrawal is the only motion that
+> leaves no vote."
+
+> "Reception note, trial 6: 'the room accepted it.' Four words. The verdict is not reprinted; the
+> room is."
+
+**Held silences (texture, not register rows).**
+
+- What is said in the corridor between sittings. The Assembly is the room (§0); the corridor is not
+  modelled and the murmur rung is its only permitted voice. Texture only.
+- Why the statute book keeps repealed laws on the same page. Enacted, repealed, re-enacted — one
+  hand, three dates (§1c); the book remembers on purpose and who decided that is not authored.
 
 ---
 

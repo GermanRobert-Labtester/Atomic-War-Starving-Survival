@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — The Taper (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "A taper is a schedule kept on behalf of someone who cannot yet keep it themselves."
+
+Dependency is modelled the way this corpus models everything worth trusting: as chemistry with a
+timetable. Withdrawal is the body's own ledger settling accounts in doses and days, and the plan's
+dignity is that it never dramatises — no villains, no spectacle, just the arithmetic of getting
+free, kept honestly by people who count the days for someone else.
+
+- **"No `PARTIAL` closeout" is a promise about reachability**, not compilation: the engine is only
+  signed once campaign, simulation, persistence and probe can all find it.
+- **The diagnostic probe is the habit's mirror.** A system that can be interrogated about itself
+  is one that cannot lie quietly to the roster.
+
+---
+
 ## Outcome
 
 Make `DependencyTaperWithdrawalEngine` (DEC-88) the live calculation authority

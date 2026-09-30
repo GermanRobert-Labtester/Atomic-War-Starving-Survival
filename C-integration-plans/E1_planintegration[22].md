@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-22
+PLAN_ID: "E1-22"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 22
-STATUS: READY_FOR_EXECUTION_WHEN_WASTE_HEALTH_AND_INFRASTRUCTURE_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 201 — Shelter Sanitation & Waste Management System"
 SEQUENCE_FILENAME: "E1_planintegration[22].md"
 PREVIOUS_FILENAME: "E1_planintegration[21].md"
 NEXT_FILENAMES:
   - "E1_planintegration[23].md"
   - "E1_planintegration[24].md"
-CATEGORY: LINK+SHELTER+SANITATION+WASTE+HYGIENE+ENVIRONMENT
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create persistent shelter waste streams, sanitation service capacity, processing/containment logistics, hygiene exposure context, and sanitation-risk read models while preserving Disease, Needs, Ventilation, Water, Maintenance, Power, Kitchen, Medical, Greenhouse, Inventory, Construction, and contamination authorities as the owners of their own state and consequences."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -28,6 +28,24 @@ SAVE_RISK: VERY_HIGH
 BALANCE_RISK: HIGH
 MICROMANAGEMENT_RISK: VERY_HIGH
 BIOHAZARD_MODEL_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [22] — Shelter Sanitation, Waste Streams, Sewage, Hygiene, Processing, Containment, and Environmental Health"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[22].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [22] — Shelter Sanitation, Waste Streams, Sewage, Hygiene, Processing, Containment, and Environmental Health

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-105"
+TITLE: "Plan 105 — Trade Specialties, Profession Milestones and Crafted-Item Learning"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/105-trade-specialties-expansion.md"
+INFERRED: true
+---
 # Plan 105 — Trade Specialties, Profession Milestones and Crafted-Item Learning
 
 > **Rebuild status:** COMPLETE 16-ITEM CATALOG — CORE SYSTEM, LOADER, HOST REGISTRATION AND SAVE ARE PRESENT

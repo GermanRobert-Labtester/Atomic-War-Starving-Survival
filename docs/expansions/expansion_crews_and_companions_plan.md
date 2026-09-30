@@ -10,6 +10,14 @@
 
 ---
 
+> *"A shelter is what you are willing to leave. A party is who you are willing to leave it with."*
+>
+> An expedition is a ledger entry: a survivor, a location, a stamina cost, an outcome. A **party** is
+> what happens when four of those entries decide to be about each other. Nothing in the engine
+> requires it. That is exactly why it matters.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -21,6 +29,15 @@ An expedition in ASHFALL is one person. The system says so in a comment: *one ex
 Crews and Companions turns the walk into a **party**. Two, three, four people — and up to two animals — go out **together**, with roles, with a shared pool of nerve and stamina, with a way of arguing at camp and a way of not talking about what happened. The road writes into the people: bonds form and fray, someone sleeps badly, someone stops volunteering. The animals are not gear. They are *members*, with a handler, a temper, and a way of being lost.
 
 The promise: **you will send people out together and learn who they are by who comes back, and in what order.**
+
+Write the party as four people and two animals who happen to be going the same way — never as a
+unit. Half-finished sentences, the same joke told badly twice, a long silence that is not
+unfriendly. The road in this world does not have encounters so much as *appointments*, and a party
+is the decision to keep them in company.
+
+The real subject is the **road bond**: the write that happens when something extreme occurs and the
+relationship system records it without being asked. Bonds are not rewards and are not earned. They
+are *damage with witnesses*.
 
 ### 1.2 Pillars
 
@@ -156,3 +173,57 @@ No rewrite of the expedition system. No new stamina/inventory/health authority. 
 - **One-per-survivor is broken by accident.** *Bound:* the coordinator only *groups*; each survivor still has exactly one `ExpeditionState`.
 - **Animal death as cheap drama.** *Bound:* authored, rare, weighted by bond; grief through the existing system.
 - **Save size / compatibility.** *Bound:* additive nested DTO; a party of one writes nothing extra.
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** A party of one is an expedition; a party of two is a promise. The road bond
+is damage with witnesses — not earned, not rewarded; it happens to people who happened to be
+walking together when the world did something. Nothing in the engine requires company. That is
+exactly why it registers as grace.
+
+**What the expansion leaves lying around.**
+
+> "Ration split, four ways and two animals. The split is arithmetic, and the arithmetic is affection."
+
+> "Camp words, said because they have always been said. The words have outlived the remembering of who started them."
+
+> "Leash, coiled by the fire. The hound's role is a verb in the roster and a temper in the camp."
+
+**Scenes the player may piece together.**
+
+> "One encounter roll for the party: *this happened to us*, not *this happened to me four times*."
+
+> "A lost companion produces the existing grief effect. The expansion narrates nothing past it, and never will."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the five species were doing before the shelter. Provenance is unauthored; a hound with a backstory is a quest, and this expansion wants companions.
+- Whether the road is quieter for followers or merely unobserved. The abstraction is the design.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Where the five companion species came from.** Species, roles, bond and grief are authored.
+Provenance is not. A hound with a backstory is a quest; a hound with a bond is a companion.
+
+**Why a follower's encounter chance is exactly zero.** Whether the road is quieter, or merely
+unobserved, is left to the player. The abstraction is the design.
+
+**Who names the party.** `Party.name` is free text and authorship is not recorded.
+
+**What a road bond is between a person and an animal.** Writes route through the existing social
+APIs. Whether the relationship system knows the difference is not asserted.
+
+**What the parties that never came back were called.** The road keeps no roll of honour. Expeditions
+that failed are not archived as parties.

@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-11
+PLAN_ID: "E1-11"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 11
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 164 — Nuclear Winter Progression System"
 SEQUENCE_FILENAME: "E1_planintegration[11].md"
 PREVIOUS_FILENAME: "E1_planintegration[10].md"
 NEXT_FILENAMES:
   - "E1_planintegration[12].md"
   - "E1_planintegration[13].md"
-CATEGORY: LINK+CLIMATE+WEATHER+CAMPAIGN_PROGRESSION+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create a deterministic long-horizon climate envelope that evolves across campaign time and drives existing weather, thermal, radiation, daylight, expedition, agriculture, power, and forecasting systems without duplicating them."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -23,6 +23,24 @@ RUNTIME_RISK: HIGH
 SAVE_RISK: MEDIUM_HIGH
 BALANCE_RISK: VERY_HIGH
 CONTENT_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [11] — Nuclear Winter Progression, Seasonal Climate Envelope, Long-Horizon Environmental Escalation, and Adaptation"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[11].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [11] — Nuclear Winter Progression, Seasonal Climate Envelope, Long-Horizon Environmental Escalation, and Adaptation

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-50"
+TITLE: "Plan 50 — Distress Signal Assessment, Triage and Rescue Decision Runtime"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/50-radio-distress-signal-expansion.md"
+INFERRED: true
+---
 # Plan 50 — Distress Signal Assessment, Triage and Rescue Decision Runtime
 
 > **Rebuild status:** SUBSTANTIALLY INTEGRATED TRIAGE/RESCUE RUNTIME — RESIDUAL REACHABILITY AND SAFETY AUDIT

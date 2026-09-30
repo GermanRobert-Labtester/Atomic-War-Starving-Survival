@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-5"
+TITLE: "Plan 05 — Vinyl Record Catalog and Cultural Broadcast Reachability"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/05-vinyl-record-catalog.md"
+INFERRED: true
+---
 # Plan 05 — Vinyl Record Catalog and Cultural Broadcast Reachability
 
 > **Rebuild status:** COMPLETE 30-RECORD CONTENT LOOP — REACHABILITY AND MAINTENANCE PLAN

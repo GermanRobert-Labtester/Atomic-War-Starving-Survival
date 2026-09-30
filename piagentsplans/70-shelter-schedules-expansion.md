@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-70"
+TITLE: "Plan 70 — Shelter Schedules, Circadian Phase and Power-Aware Duty Rhythm"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/70-shelter-schedules-expansion.md"
+INFERRED: true
+---
 # Plan 70 — Shelter Schedules, Circadian Phase and Power-Aware Duty Rhythm
 
 > **Rebuild status:** COMPLETE 12-SCHEDULE CATALOG/HOST LOOP — PHASE, HOUR AND POWER REACHABILITY AUDIT

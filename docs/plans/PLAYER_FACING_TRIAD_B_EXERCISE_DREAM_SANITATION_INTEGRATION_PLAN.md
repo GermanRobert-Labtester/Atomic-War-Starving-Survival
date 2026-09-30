@@ -32,6 +32,24 @@ Triad B covers three **host-sealed, player-thin** survivor-wellbeing loops whose
 
 ---
 
+## 0. Framing — The Unseen Triad (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Exercise, dreaming and sanitation: three systems nobody screenshots and everybody lives in."
+
+The triad of bodily life is the game admitting that a body is a *daily project*. None of these
+systems fires once and shines; all of them reward routine — and their combined output is mood,
+which the player experiences as what they are willing to tolerate before breakfast.
+
+- **Routine is the mechanic.** The triad measures the unglamorous half of survival: the part that
+  is done on ordinary days.
+- **These systems are legible in aggregate and invisible in detail** — which is exactly how real
+  health works.
+
+---
+
 ## 1. Objective
 
 Make Triad B **player-operable and mechanically real** by extending the three existing owners — never by adding parallel ledgers:

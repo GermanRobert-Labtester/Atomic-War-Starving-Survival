@@ -1,13 +1,13 @@
 ---
-PLAN_ID: E1
+PLAN_ID: "E1"
 PLAN_FAMILY: planintegration
-STATUS: READY_FOR_EXECUTION
+STATUS: "READY"
 SOURCE_PLAN: "Plan 53 — Ambition Audit & Expansion Intake"
 SEQUENCE_FILENAME: "E1_planintegration.md"
 NEXT_FILENAMES:
   - "E1_planintegration[2].md"
   - "E1_planintegration[3].md"
-CATEGORY: PROCESS+LINK+GOVERNANCE
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Convert plan sprawl into an evidence-gated, machine-readable, execution-oriented roadmap."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -15,6 +15,24 @@ NO_HISTORY_DELETION: true
 RUNTIME_RISK: LOW
 DOCUMENTATION_RISK: MEDIUM
 GOVERNANCE_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 — Flagship Plan Integration: Ambition Governance, Rails Readiness, and Evidence-Gated Execution"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration.md"
+INFERRED: true
 ---
 
 # E1 — Flagship Plan Integration: Ambition Governance, Rails Readiness, and Evidence-Gated Execution

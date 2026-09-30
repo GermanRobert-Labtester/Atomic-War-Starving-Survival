@@ -1,5 +1,18 @@
 # PLAN B69 CLOSEOUT — Cryogenic Sample Preservation & Genetic Cultivar Seed Vault
 
+## 0. Framing — The Vault (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "A seed vault is a letter to a gardener who is not born yet."
+
+Cryogenic preservation is the shelter's most patient artefact: samples kept cold for a future the
+keepers will not see. The closeout is a receipt for a promise with no due date — the rarest kind,
+and the most human.
+
+- **Preservation is hope with a freezer attached** — the plan keeps the temperature and the hope
+  in separate ledgers.
+
 **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship`
 **Scope:** core vault slice — 18-cultivar data authority, the canister/
 viability/breach state machine, and canonical greenhouse/pharma handoffs.

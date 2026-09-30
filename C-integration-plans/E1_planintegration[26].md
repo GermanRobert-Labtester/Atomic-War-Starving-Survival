@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-26
+PLAN_ID: "E1-26"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 26
-STATUS: READY_FOR_EXECUTION_WHEN_ARCHIVE_INVENTORY_MEMORIAL_AND_CULTURE_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 218 — Shelter Museum & Historical Archive System"
 SEQUENCE_FILENAME: "E1_planintegration[26].md"
 PREVIOUS_FILENAME: "E1_planintegration[25].md"
 NEXT_FILENAMES:
   - "E1_planintegration[27].md"
   - "E1_planintegration[28].md"
-CATEGORY: LINK+CULTURE+MUSEUM+ARCHIVE+ARTIFACTS+MEMORIAL
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create physical historical curation and exhibition over canonical Inventory items, Plan 162 archive records, Memorial/E1-23 death history, E1-9 rooms/display fixtures, E1-17 condition, E1-20 staffing, Needs/Psychology, Art & Culture, Time Capsules, and Genealogy without duplicating item ownership, historical truth, morale, preservation condition, or survivor identity."
 PREMISE_VERIFICATION_REQUIRED: true
 ONE_AUTHORITY_PER_FACT: true
@@ -26,6 +26,24 @@ PROVENANCE_RISK: VERY_HIGH
 ITEM_CONSERVATION_RISK: VERY_HIGH
 CONTENT_SCALE_RISK: HIGH
 UI_SCALE_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [26] — Shelter Museum, Historical Curation, Artifact Provenance, Exhibition Space, Preservation, and Public Memory"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[26].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [26] — Shelter Museum, Historical Curation, Artifact Provenance, Exhibition Space, Preservation, and Public Memory

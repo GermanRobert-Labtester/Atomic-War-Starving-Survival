@@ -10,6 +10,15 @@
 
 ---
 
+> *"The sickness did not come to the shelter. It came to the region, and the shelter is only a
+> place inside a region."*
+>
+> Every survival game models disease as a status effect on a person. This one models it as a
+> **weather system over a map** — while a shelter sits inside it and decides how much of the world
+> to let through the door.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -21,6 +30,16 @@ Disease in ASHFALL is currently a thing that happens **inside the walls**. It ha
 The Plague Year is about the **door**. It moves the disease out into the region and back in through the ways people actually arrive — a family at the gate, a wagon at the depot, a boat at the berth, a butchered animal on the table — and it makes the shelter's real question *political*: **who gets in, who gets told, who gets blamed, and who pays for the beds?**
 
 There are four authored strains in the data today. This expansion gives them a calendar: **one strain per season**, a full turn of the seasonal cycle — a *Plague Year*. The player will not "beat" it. They will decide, week by week, what kind of shelter to be while it passes.
+
+The **Gate Protocol** is the only dial: Open, Screen, Sealed. It is not a difficulty slider and it
+is not a moral axis. It is a single persisted knob saying how much of *other people's emergency*
+you are willing to make your own — and the answer is written on a change-day and cannot be taken
+back quietly.
+
+Notice the epistemology underneath the whole design. Spillover produces **Rumour only** — the model
+can suspect and never confirm. Confirmation is a thing the *world* does, and the player learns about
+it second-hand. You are always one bulletin behind, and *Heard* is wrong by exactly one before
+*Told* corrects it. The world does not lie to you. It just gets to you late.
 
 ### 1.2 Pillars
 
@@ -185,3 +204,62 @@ No new pathogen in v1. No second disease authority. No new save section (nested 
 - **The Protocol becomes a chore.** *Bound:* one dial, one change-day; effects are read at existing decision points.
 - **Tone.** *Bound:* the Count does not editorialise; no graphic depiction.
 - **Difficulty spikes.** *Bound:* outbreak severity respects the existing difficulty authority (VERIFY hook in P0).
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** The plan models disease as weather over a map, and the Gate Protocol is the
+only dial — which changes nothing about the sickness, only how much of *other people's emergency*
+you are willing to make your own. The answer is written on a change-day and cannot be taken back
+quietly. That is the most honest difficulty knob ever designed: it grades the player, not the
+plague.
+
+**What the expansion leaves lying around.**
+
+> "Gate card, Protocol — Screen. Laminated; somebody expected to change it often. Somebody did not."
+
+> "Ward sheet, one line: isolation offered, accepted. Not a moral document. It has been read as one."
+
+> "Count line: one. The Count is one line per death and the ink is the same on every line."
+
+**Scenes the player may piece together.**
+
+> "A rumour arrives before the bulletin. The shelter acts on the rumour. The correction arrives after the acting."
+
+> "The cordon notice names no region. The gate changes anyway."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the fifth season would have carried. Four strains map to four seasons; the fifth season is not asked about and must not be.
+- What the regions that ended their outbreaks look like now. 'Emptied by the Year' reaches the Board and stops at the Board.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**What the index case was.** The spillover model computes reservoir pressure × contact pressure. It
+names no animal, no place, no patient zero. Naming a culprit converts a hazard into a villain.
+
+**Whether *Screen* is compassion or arithmetic.** It consumes the existing daily care burden. This
+expansion declines to weigh that.
+
+**Why there is one strain per season.** Four strains map to four seasons. The fit is observed and
+never explained.
+
+**Who wrote the outbreak-source contract.** A contract that rejects anything outside itself implies a
+drafter. This expansion declines to name one.
+
+**What happened to the regions that ended their outbreak.** "Emptied by the Year" reaches the Board.
+*Emptied* is doing work the expansion refuses to define.
+
+**Whether the Count includes the people who left.** Every disease death has a Count line. The Count
+is not a census and never claims to be.

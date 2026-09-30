@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-E3563E8692FB"
+TITLE: "Plan 28 — The Orchestration Spine: Registration and Lifecycle You Cannot Forget — Declarative Subsystem Descriptors, Triad Parity Enforcement, Campaign Day Sequencing, and Main Partial Orchestration"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_28_Orchestration_Spine_Registration_And_Lifecycle.md"
+INFERRED: true
+---
 # Plan 28 — The Orchestration Spine: Registration and Lifecycle You Cannot Forget — Declarative Subsystem Descriptors, Triad Parity Enforcement, Campaign Day Sequencing, and Main Partial Orchestration
 
 ## 1. Objective and bounded outcome

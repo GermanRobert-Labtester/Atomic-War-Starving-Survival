@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-E723FED8C5D9"
+TITLE: "Plan 219 — Photography and Documentation — Complete Capture, Archive, and UI Loop"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_219_Survivor_Photography_Documentation.md"
+INFERRED: true
+---
 # Plan 219 — Photography and Documentation — Complete Capture, Archive, and UI Loop
 
 > **Planning revision — 2026-09-24.** The evidence and decision gates in this section govern the older inventory below. VERIFIED means inspected in current source; PROPOSAL means a path for a future claimed package. This document is not an implementation claim.

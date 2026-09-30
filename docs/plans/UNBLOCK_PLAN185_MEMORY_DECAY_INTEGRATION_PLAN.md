@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — What Is Not Rehearsed (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "What is not rehearsed does not vanish. It thins."
+
+Memory and knowledge decay is the corpus returning to its most patient theme: forgetting modelled
+not as theft but as a rate. Nothing is taken cruelly; clarity simply moves — from a person to a
+page, from a page to a habit — and the plan's mercy is that the thinning is *legible*, so that a
+shelter can grieve accurately and intervene early.
+
+- **Decay is a rate, not a verdict.** A system that fades by authored steps can be argued with;
+  one that vanishes can only be mourned.
+- **The diagnostic probe can ask a memory how it is** — and receive a number, never the memory
+  itself. Measurement here is a form of respect.
+
+---
+
 ## Outcome
 
 Make `MemoryDecaySystem` (DEC-340) the live cognition authority for survivor knowledge decay,

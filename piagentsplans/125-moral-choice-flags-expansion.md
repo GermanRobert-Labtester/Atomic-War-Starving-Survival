@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-125"
+TITLE: "Plan 125 — Moral Choice Flags, Ethical Memory and Downstream Gate Semantics"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/125-moral-choice-flags-expansion.md"
+INFERRED: true
+---
 # Plan 125 — Moral Choice Flags, Ethical Memory and Downstream Gate Semantics
 
 > **Rebuild status:** COMPLETE 25-FLAG DATA LOOP — PRODUCER/FLAG-OWNER AND REACHABILITY AUDIT

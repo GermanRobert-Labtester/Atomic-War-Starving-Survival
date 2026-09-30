@@ -1,5 +1,17 @@
 # PLANS 66–69 FLAGSHIP RECONNAISSANCE (Wave 0)
 
+## 0. Framing — Wave Zero (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded document remains the authority.)*
+
+> "The wave before the first wave is where the plan-number collisions are found."
+
+Reconnaissance's first finding is a naming collision — exactly the class of problem that only
+surfaces when somebody looks before building. Wave 0 is the corpus's habit of apologising to the
+future in advance.
+
+- **Collisions found in the survey never become bugs in the field.** That is the whole trade.
+
 **Branch:** `feat/asset-pipeline-flagship` (heavy concurrent modification — see Baseline)
 **Status:** Reconnaissance complete. Implementation NOT started.
 **Verdict:** ⚠️ The plan requires re-scoping before implementation. Plan numbers 66–69 are already taken, and large parts of the proposed mechanics already exist in shipped systems.

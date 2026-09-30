@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — The Procedure (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "Chemistry is a conversation with materials that do not negotiate."
+
+Synthesis safety is the plan that makes procedure a first-class outcome: a synthesis may fail
+safely or fail loudly, and the difference is authored, not improvised. The reagent bench keeps
+its own minutes — yields, steps, conditions — and the game's quiet argument is that at a bench
+like this, discipline *is* the safety equipment.
+
+- **Yield is a fact; the route to it is a contract.** The plan refuses to let a good result launder
+  a bad procedure.
+- **The bench is the shelter's least dramatic risk.** No raid ever knocked a beaker off a shelf;
+  the hazard here is entirely human, which is why the rules read like manners.
+
+---
+
 ## Outcome
 
 Make `ChemicalReagentSynthesisEngine` (DEC-334) the live calculation authority

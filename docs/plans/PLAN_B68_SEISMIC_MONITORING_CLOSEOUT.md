@@ -1,5 +1,17 @@
 # PLAN B68 CLOSEOUT — Geological Faultline Seismic Monitoring & Shock Dampeners
 
+## 0. Framing — The Faultline (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "Seismology is the art of measuring patience in rock."
+
+Monitoring and dampeners give the shelter its oldest negotiation: the ground was here first and
+will be here last. The closeout's instruments measure something that never argues back — only
+waits.
+
+- **The rock keeps its own schedule**, and this plan is the shelter's calendar for it.
+
 **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship`
 **Scope:** Core monitoring expansion slice. Host wiring (tick registration,
 orbital→`InjectKineticShock` call, seismic UI) remains a follow-up — the

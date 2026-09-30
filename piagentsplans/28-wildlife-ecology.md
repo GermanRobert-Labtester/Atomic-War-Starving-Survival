@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-28"
+TITLE: "Plan 28 — Wildlife Observation, Infestations, and Food-Web Integration"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/28-wildlife-ecology.md"
+INFERRED: true
+---
 # Plan 28 — Wildlife Observation, Infestations, and Food-Web Integration
 
 > **Rebuild status:** CORE INTEGRATION LARGELY PRESENT — FORECAST, MARKET, AND PLAYER-SURFACE AUDIT REMAINS

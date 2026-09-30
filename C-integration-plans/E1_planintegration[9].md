@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-9
+PLAN_ID: "E1-9"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 9
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 156 — Shelter Expansion & Physical Renovation"
 SEQUENCE_FILENAME: "E1_planintegration[9].md"
 PREVIOUS_FILENAME: "E1_planintegration[8].md"
 NEXT_FILENAMES:
   - "E1_planintegration[10].md"
   - "E1_planintegration[11].md"
-CATEGORY: LINK+SHELTER_TOPOLOGY+CONSTRUCTION+INFRASTRUCTURE+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Make shelter growth spatial, persistent, visible, and strategically meaningful by adding construction/topology rails while preserving existing room, duty, thermal, power, ventilation, storage, defense, inventory, and survivor authorities."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -22,6 +22,24 @@ RUNTIME_RISK: HIGH
 SAVE_RISK: VERY_HIGH
 BALANCE_RISK: HIGH
 SCOPE_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [9] — Shelter Expansion, Construction, Renovation, Topology, Infrastructure, and Visible Physical Growth"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[9].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [9] — Shelter Expansion, Construction, Renovation, Topology, Infrastructure, and Visible Physical Growth

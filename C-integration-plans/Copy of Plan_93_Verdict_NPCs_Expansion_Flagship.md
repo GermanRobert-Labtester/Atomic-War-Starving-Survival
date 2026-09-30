@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-5C4331FBB5F0"
+TITLE: "Plan 93 — Verdict NPCs Expansion: 6 → 15 Investigation-Site NPCs"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/Copy of Plan_93_Verdict_NPCs_Expansion_Flagship.md"
+INFERRED: true
+---
 # Plan 93 — Verdict NPCs Expansion: 6 → 15 Investigation-Site NPCs
 
 > **Flagship implementation plan**

@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — What the Walls Do to People (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "A shelter's true luxury is a night nobody hears."
+
+Sleep quality, soundproofing, crowding: this is the plan that measures what the walls do to the
+people inside them. Quiet is a resource manufactured by construction and spent by proximity, and
+the plan is scrupulous about the distinction — soundproofing buys *silence*, which is a property
+of rooms, and sleep, which is a property of people, is only ever bought indirectly.
+
+- **Crowding is arithmetic with a mood attached.** The numbers are plain; the mood is prose's job,
+  and the plan keeps the seam between them visible.
+- **The night is the shelter's least governed hour.** Everything here happens while nothing
+  happens — which is exactly why it deserves an owner.
+
+---
+
 ## Outcome
 
 Make `SleepAcousticRestEngine` (DEC-336) the live calculation authority

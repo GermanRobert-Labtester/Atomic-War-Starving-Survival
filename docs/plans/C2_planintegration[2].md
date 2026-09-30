@@ -55,6 +55,24 @@ The flagship outcome is:
 
 ---
 
+## 0. Framing — Understood, Not Tested (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Legibility is the difference between a game that teaches and a game that tests."
+
+Cause, guidance and confirmation are the three courtesies: say *why* something happened, say
+*what might help*, and *ask before* acting on the player's behalf. Together they turn a
+simulation the player suffers from into a world the player argues with.
+
+- **Erratum handling is honesty at scale** — a corpus that corrects itself in public can be
+  trusted when it is certain.
+- **A confirmation dialog is a small act of consent**, and consent is the correct posture for
+  anything irreversible.
+
+---
+
 # 1. Source Truth and Erratum Handling
 
 ## 1.1 Recorded source evidence

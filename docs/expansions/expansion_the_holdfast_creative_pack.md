@@ -1,5 +1,32 @@
 # ASHFALL: THE HOLDFAST — Creative Pack
 
+> *"A holdfast is not a fortress. It is a decision to be findable."*
+>
+> **Director's framing.** The Holdfast is the place where the world keeps its paperwork — the Cut,
+> the Saltworks, the Cluster, the Shelf — and the people who run it: a Registrar-General, a Census
+> Clerk Grade III, a Shift Lead, a Cutter. Four jobs, four voices, one institution that has decided
+> the way to survive is to *know exactly how many of you there are*.
+>
+> **What stays unsaid here:** what the Registrar-General is registering *for*; whether the census is
+> a safeguard or a selection; why a Cutter is on the staff. Every voice bible in this pack is a
+> person who believes the system is necessary. None of them is asked whether it is kind.
+>
+> **The second layer (second prose pass — texture only).** Four jobs, four voices, one institution
+> that decided the way to survive is to *know exactly how many of you there are*. Every voice bible
+> believes the system is necessary and none is asked whether it is kind — the restraint is the
+> dread. A census is a safeguard and a selection, and the same clipboard holds both.
+>
+> **What the pack leaves lying around.**
+>
+> "Census Clerk Grade III. The grade is in the title; the person is in the voice."
+>
+> "A Cutter is on the staff. Why is unsaid here, and the unsaid is load-bearing."
+>
+> "Each card names one object a player could steal, weigh, or refuse to touch — even the paperwork rooms keep their small moral offers."
+>
+> *(The silences above are unchanged and remain this pack's register.)*
+
+
 **Internal id:** `expansion_the_holdfast`
 **Kind:** Shippable prose. Additive to `docs/expansions/expansion_the_holdfast_plan.md`. Does not rewrite the bible.
 **Voice lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.

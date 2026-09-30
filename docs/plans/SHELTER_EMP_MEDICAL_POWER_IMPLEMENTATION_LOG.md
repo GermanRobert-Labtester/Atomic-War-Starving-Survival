@@ -1,5 +1,18 @@
 # SHELTER EMP & MEDICAL POWER — IMPLEMENTATION LOG
 
+## 0. Framing — The Pulse, Recorded (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "An EMP log is a shelter's shortest autobiography: everything it relied on, listed at once."
+
+The implementation records the day the ward's dependence on the grid became checkable — which
+machines, which circuits, which consequences. Hardening is autobiography in the passive voice:
+the shelter describing what it cannot do without.
+
+- **The pulse asks every circuit what it was doing.** This log is the set of answers, filed in
+  advance.
+
 Plan: `docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`
 Branch: `feat/asset-pipeline-flagship`. Note: the G1–G3 wave
 (SHELTER_GRID_CATALOG_SEAL) is present in the working tree but NOT yet committed

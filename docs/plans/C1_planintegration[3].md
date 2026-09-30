@@ -35,6 +35,24 @@ Plan 19 closes three kinds of continuity:
 
 ---
 
+## 0. Framing — What Continues (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "An ending is only honest if it knows what it is ending for."
+
+Ending continuity and generational state answer the quiet question every save file asks: what
+survives the run? The invariants below are the plan's answer — some things must not bend at the
+seam between campaigns, or the second year is a different game wearing the first one's name.
+
+- **Release-blocking invariants are promises to the future player**, written while the present one
+  can still be surprised.
+- **Generational state is how a run admits it was lived in** — continuity is memory with a
+types.
+
+---
+
 ## 1. Release-Blocking Invariants
 
 ### INV-19.1 — The ending is a projection, never an input form

@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_reconstruction_tree_plan.md`. Family index: `docs/expansions/expansion_new_ways_to_play_index.md`.
 > Not a claim. Existing research completes and stays known exactly as today unless a node is flagged bearer-dependent.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `reconstruction_lines.json` rows; they belong in data, never in code.
 
@@ -43,6 +43,13 @@ the campaign began. Fragments for them surface through existing seams — archiv
 elder, radio letter — which means the plan never *places* history, it only finds residue. DEC-RT-05
 is the plan's kindness: a lapsed node never deletes its unlock record. The shelter forgets how to
 do a thing; it never forgets that it once could.
+
+**The second layer.** Forgetting in this plan is never an event; it is a *change of address*. A
+technique moves from a person to a page, from a page to a practice, from a practice to nothing —
+and each move is quiet, dated, and nobody's fault, which is precisely what makes it unbearable.
+The Knowledge Ledger is the shelter's admission that its own competence is a population, and
+populations decline. And a population that knows it is declining starts, quietly, to keep two of
+everything.
 
 ## 1. Goal & Outcome
 
@@ -102,6 +109,63 @@ deliberate: the player is assembling a proof, not a hoard.
   ledger says which. That is the plan's most humane mechanic.
 - **Teaching is the point.** RT-P6 lets a taught apprentice secure a Fragile node within one tick.
   The Tree is not a scavenger hunt; it is an argument for schools.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Fragment 4 of 5: a citation with a source enum and nothing else. It weighs nothing. It is heavier than the toolkit."
+
+> "Practice stamp, lapsed. The date is the last day anybody did it twice. Nobody marked the date; the stamp is simply what stopped."
+
+> "Unlock record, intact (DEC-RT-05). It says we could. It does not say we can."
+
+**Scenes the player may piece together.**
+
+> "The second-to-last bearer taught nobody on a Tuesday that looked like every other Tuesday. The node went Fragile on the Wednesday, and the ledger names no one."
+
+> "The trial returns: lesson. One thing learned. The ledger records which thing, in a column that is otherwise empty, forever."
+
+**Held silences (texture, not register rows).**
+
+- What the ~24 lost nodes were *for*. They are authored as fragment sets and prerequisites; their pre-collapse history is not written and must not be. Texture only.
+- Why the shelter counts seasons the way it does. Grace is two seasons (DEC-RT-03) — authored, not natural; the counting is folklore and the plan does not explain the folklore.
+
+**Fourth pass — the place a technique agreed to wait (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `reconstruction_lines.json`.)*
+
+**The shape of the polish.** The register is a librarian who has realised the catalogue is shorter
+than the shelves: inventory, never nostalgia. Every fragment is a citation and every citation is
+somebody's afternoon, but the prose may only show the citation. What makes the plan's loss
+unbearable is its politeness — each move of a technique from person to page to nothing is dated,
+signed, and nobody's fault.
+
+**What the shelter leaves lying around.**
+
+> "Fragment 2 of 5: from an elder. The elder is not recorded on the fragment. The source enum is."
+
+> "Page-hold, transferred. The transfer date is a Wednesday. Nothing about the technique changed on
+> the Wednesday."
+
+> "Relearn log: faster the second time. The log does not say what the first time cost; the ledger
+> is not the place for it."
+
+**Held silences (texture, not register rows).**
+
+- What the last lesson actually was. A lesson records which thing (§1b) in a column otherwise
+  empty forever; the emptiness is doing the elegy and must keep doing it. Texture only.
+- Whether the ~24 lost nodes know each other. They are authored as fragment sets and their shared
+  past is not written; the tree draws no line between them that the player did not.
 
 ---
 

@@ -7,6 +7,23 @@
 
 ---
 
+## 0. Framing — When Things Break, In Order (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A failure effect is a promise about how a collapse will be told."
+
+Failure routed through existing owners is failure with manners: legible, ordered, attributable —
+never a surprise number in the dark. And quarantine construction is the plan's coldest verb: a
+wall built out of decisions, whose material is *absence*.
+
+- **Every failure names the owner that reports it.** Bad news arrives on the same rails as good
+  news, which is the only way anyone learns to trust either.
+- **A quarantine is an absence with a door in it** — and doors have rosters, timings and costs.
+
+---
+
 # 1. Objective
 
 1. Give every authored `fx_*` failure-effect ID either a live state consumer or a

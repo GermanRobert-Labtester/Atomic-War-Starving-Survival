@@ -1,5 +1,17 @@
 # Plans 198–201 — Integration Closeout & Follow-Up Register
 
+## 0. Framing — The Follow-Up Register (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "A follow-up register is where a closeout admits it is not the end."
+
+Closing work and *listing what remains* in the same document is the corpus's most honest gesture:
+completion with an appendix of promises. The register is the difference between finished and
+forgotten.
+
+- **Every follow-up row is a small contract with the future** — dated, named, and waiting.
+
 **Status:** Player-facing integration complete (commits `231595b8` + this follow-up commit).
 **Scope delivered:** CBRN hazard warfare (198), communications arrays (199), ceremonies (200), robotics (201) — Core systems, catalogs, save stores, host orchestration, UI bodies, routes, and end-to-end verification.
 

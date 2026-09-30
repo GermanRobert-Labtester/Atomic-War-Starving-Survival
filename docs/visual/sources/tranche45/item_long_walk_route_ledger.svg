@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 512 512"><defs>
+ <radialGradient id="bg"><stop stop-color="#303638"/><stop offset="1" stop-color="#0d1214"/></radialGradient>
+ <linearGradient id="metal" x2="1" y2=".2"><stop stop-color="#485a5e"/><stop offset=".35" stop-color="#ced8cb"/><stop offset=".72" stop-color="#8eaaa6"/><stop offset="1" stop-color="#3e5457"/></linearGradient>
+ <linearGradient id="wax" x2="1" y2="0"><stop stop-color="#4d3e33"/><stop offset=".45" stop-color="#9e8061"/><stop offset="1" stop-color="#493b31"/></linearGradient>
+ <linearGradient id="can" x2="1" y2=".2"><stop stop-color="#263b40"/><stop offset=".52" stop-color="#77918c"/><stop offset="1" stop-color="#293d43"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="15"/></filter>
+ <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" seed="45"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".16"/></feComponentTransfer></filter>
+ </defs>
+ <rect width="512" height="512" fill="url(#bg)"/>
+ <ellipse cx="256" cy="429" rx="177" ry="30" fill="#000" opacity=".62" filter="url(#blur)"/>
+ <desc>ASHFALL inventory art item_long_walk_route_ledger; fictional handmade prop illustration.</desc>
+
+ <g transform="rotate(8 259 255)">
+  <rect x="150" y="105" width="221" height="306" rx="13" fill="#80694c" stroke="#3d403b" stroke-width="11"/>
+  <path d="M169 112v290" stroke="#c2b18c" stroke-width="10"/>
+  <rect x="194" y="139" width="149" height="87" rx="3" fill="#cfc5a6" stroke="#695a47" stroke-width="7"/>
+  <path d="M212 161h110m-110 23h83m-83 23h99" stroke="#666e64" stroke-width="7"/>
+  <path d="M209 276q42-61 67-20 28 25 58-20m-123 98q52-17 109 6" fill="none" stroke="#c7b68f" stroke-width="9" stroke-dasharray="14 9"/>
+  <circle cx="209" cy="276" r="11" fill="#9c6553"/><circle cx="334" cy="236" r="11" fill="#9c6553"/>
+  <path d="M174 387h182" stroke="#3f4540" stroke-width="10"/>
+ </g>
+ <rect width="512" height="512" filter="url(#grain)" opacity=".10"/>
+ </svg>

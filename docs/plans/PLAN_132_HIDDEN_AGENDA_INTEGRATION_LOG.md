@@ -1,5 +1,18 @@
 # Plan 132 (C2[26]) — Survivor Hidden Agendas & Betrayal Arc Full Integration Log
 
+## 0. Framing — The Hidden Column (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A hidden agenda is a promise kept in a different ledger."
+
+Betrayal arcs give the roster a second column nobody may read — and the integration's ethic is
+that the *player* is never cheated: suspicion must be possible, proof must be earned, and the
+game must never wink. Secrecy in fiction; fairness in mechanics.
+
+- **A hidden agenda that cannot be discovered is not drama; it is a trap.** This log records the
+  discovery seams, which are the load-bearing half.
+
 **Date:** 2026-09-20
 **Corpus Key:** `C2[26]`
 **Status:** SEALED

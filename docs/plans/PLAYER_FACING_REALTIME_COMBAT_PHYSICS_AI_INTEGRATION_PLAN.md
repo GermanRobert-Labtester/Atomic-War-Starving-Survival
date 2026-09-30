@@ -28,6 +28,23 @@ This plan redesigns the encounter clock into a **deterministic fixed-tick real-t
 
 ---
 
+## 0. Framing — The Tetrad (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Real-time combat is four arguments conducted in one second."
+
+Input, physics, AI and feel argue continuously, and the plan refuses to tune one leg in isolation
+— a fair fight with wrong latency is still a wrong fight. The tetrad's honesty is that the enemy's
+intelligence is bounded by what the simulation can *truthfully* know, and no more.
+
+- **Latency is a design material**, not an implementation detail the player politely ignores.
+- **An AI that knows too much is not difficulty; it is leakage.** The tetrad keeps every advantage
+  on the record.
+
+---
+
 ## 1. Objective
 
 Deliver a player-operable **real-time tactical firefight** in Godot where:

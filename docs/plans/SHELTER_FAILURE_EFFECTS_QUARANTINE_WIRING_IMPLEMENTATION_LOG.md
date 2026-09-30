@@ -1,5 +1,18 @@
 # SHELTER FAILURE EFFECTS & QUARANTINE WIRING — IMPLEMENTATION LOG
 
+## 0. Framing — Bad News, Given an Address (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A failure log is bad news given a permanent address."
+
+Cascade effects and quarantine wiring were implemented so that when things break, they break
+*in order, on record, through owners* — failure with manners, as ever. The log is the map of the
+dominoes, drawn before any of them fell.
+
+- **Wiring failure routes is the least glamorous resilience work** and the only kind that shows up
+  exactly when it is needed.
+
 Plan: `docs/plans/SHELTER_FAILURE_EFFECTS_QUARANTINE_WIRING_INTEGRATION_PLAN.md`
 Branch: `feat/asset-pipeline-flagship`. G1–G3 and G4–G5 waves are in-tree, uncommitted
 (commit deferred pending concurrent-stream landing — see their journals).

@@ -1,5 +1,18 @@
 # Plan B75 — Ballistics workbench closeout
 
+## 0. Framing — The Bench (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "A workbench is where intent acquires tolerances."
+
+The ballistics bench is a workshop, not a battlefield — the plan is careful to keep it a place of
+*craft*: measurements, materials, and the plain arithmetic of what a shelter can make with its
+hands. Manufacturing, in this world, is a domestic skill.
+
+- **The bench measures; the world decides.** The closeout keeps the boundary where the design put
+  it.
+
 Status: implemented in the current Godot host.
 
 ## Delivered

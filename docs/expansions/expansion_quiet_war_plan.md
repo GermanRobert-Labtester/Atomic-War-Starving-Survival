@@ -11,6 +11,14 @@
 
 ---
 
+> *"Everyone who comes to the door has a story. That is not the same as having a life."*
+>
+> There is a moment — before the bolts are drawn — when the shelter is entirely certain about a
+> stranger, and entirely wrong. This expansion never tells you which moment that is. It teaches you
+> to be wrong *consistently*, and then it lets you find out what that consistency cost.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -24,6 +32,16 @@ Someone knocks. The camera shows a man in stripped winter gear holding a coughin
 The Quiet War joins them. Every visitor now has a **Claim** (what they say) and a **Truth** (what they are), and the player's only tools are the ones a real shelter has: **time, questions, paper, a watcher, and each other's word.** Some people are exactly who they say. Some are worse. Most are neither — they are frightened people with one lie each.
 
 The promise: **you will learn to be wrong about someone, and to decide what being wrong is allowed to cost.**
+
+What is actually at stake is not espionage. It is the slow, corrosive discovery that the player's
+own judgement is a **measurable, wear-prone instrument** — that the shelter has been running an
+uncontrolled experiment on its own capacity to read a face, and that some of the people it already
+let inside were never theirs.
+
+Notice what the tools are: **time, questions, paper, a watcher, and each other's word.** No
+scanner. No probability readout. No tag that says *agent*. A real shelter does not have those, and
+the moment one is added the interview room becomes a menu. Every verb in §3.3 is something a person
+can actually do to another person at a threshold in winter.
 
 ### 1.2 Pillars
 
@@ -158,3 +176,59 @@ No replacement of Airlock/Door/Visitor/CI systems. No new save section (nested, 
 - **Paranoia becomes the only strategy.** *Bound:* false accusations cost more than false admissions on average; honest visitors are the majority by construction.
 - **Three front-door systems collide.** *Bound:* P0 names one decision point and one stay owner.
 - **Demo roster** (F2) makes claims about non-real survivors. *Bound:* P0 gate.
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** Reading a person is a craft that wears out as it is used — and this
+expansion's discipline is that the game never knows more than the evidence supports. Neither does
+the desk. Tells accumulate; none is diagnostic; certainty is a habit the reader brings, and the
+file stays thin on purpose.
+
+**What the expansion leaves lying around.**
+
+> "Permit file: the name is spelled *right* this time. That is the tell, and it is not in the manual."
+
+> "Interview sheet: the pause before question 3 has been measured. The measurement is not evidence."
+
+> "Turn-away slip, filed. The shelter declining to know is also an act, and it is recorded as one."
+
+**Scenes the player may piece together.**
+
+> "Three days of tells accumulate and none of them is diagnostic. On the fourth day the file is thin and the certainty is not."
+
+> "A defector's record is produced. The record is a state. Nobody in this expansion will call it a conversion."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the visitor's three days were like before the door. Only the tells arrive; the history stays on the road.
+- Whether the reader is ever measured. The player's judgement is wear-prone by design; nobody keeps a file on the file-keeper.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Who trains the infiltrators.** Naming a sponsor turns a pressure system into a plot. The ten
+profiles imply an apparatus without describing one.
+
+**Whether the "signal interceptor" is a person or a technique.** Ambiguity is what makes the
+*Radio Free Ashfall* bridge interesting. Resolving it would remove the dread from both expansions.
+
+**Whether the three days of tells reflect the truth or rehearse it.** Both readings are supported
+by the data. Choosing one would make tells diagnostic instead of cumulative — and the whole design
+depends on them being cumulative.
+
+**What happens to a detainee after the camera stops.** The plan routes to existing custody APIs and
+deliberately does not narrate past them.
+
+**Whether there was ever a real defector.** `AcceptDefector` produces a record. The game never
+asserts sincerity, only state.

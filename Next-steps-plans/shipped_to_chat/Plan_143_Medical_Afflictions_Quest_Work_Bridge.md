@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-D9EAE566FF40"
+TITLE: "Plan 143 — Medical Afflictions → Quest & Work Bridge"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_143_Medical_Afflictions_Quest_Work_Bridge.md"
+INFERRED: true
+---
 # Plan 143 — Medical Afflictions → Quest & Work Bridge
 
 **Status:** INTEGRATED / SEALED (Full host, duty roster, survivor fitness, quest, UI, and CLI self-test integration completed).

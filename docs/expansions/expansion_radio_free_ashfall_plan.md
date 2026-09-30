@@ -10,6 +10,14 @@
 
 ---
 
+> *"You are not the news. You are the voice at the hour when there is no other voice."*
+>
+> Six stations are still transmitting into the ash and none of them belong to you. They have
+> personas, schedules, reliability ratings and audiences that predate the shelter — and every one of
+> them is, in some way, selling something.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -21,6 +29,15 @@ Every voice on the dial in ASHFALL belongs to someone else. Civil Defense reads 
 Radio Free Ashfall turns the listener into the **station**. Not a job, an identity: a call sign the region learns, a frequency you had to find room for, a schedule you keep or break, listeners who write back, and a hard fact that follows every broadcaster — **a transmitter is a lamp, and lamps are found.**
 
 The fantasy is not "be popular". It is **be believed**: to be the voice a settlement three days east checks before it opens its gate, and to know what that belief costs to keep.
+
+Your station is the seventh. It has three physical properties and one moral one: a call sign, a
+frequency, a power tier — and a **truth grade**. Everything else is consequence. Broadcast
+something honest and a region's affinity rises and nothing happens. Broadcast something false and
+nothing happens, and then, later, a great deal happens.
+
+And beneath all of it runs the **Signature**. Every minute on air makes the shelter more *legible*
+to something that direction-finds. The warning always precedes the probe — which means the player
+is never ambushed, only warned and then answered. That is worse.
 
 ### 1.2 Pillars
 
@@ -143,3 +160,58 @@ No edits to the six authored stations. No second propaganda system. No new save 
 - **Signature punishes without warning.** *Bound:* a visible Signature band, and a warning line before any faction acts.
 - **A second trust system.** *Bound:* one Voice Trust, same 0–100 pattern, no cross-writes to the distress ledger.
 - **Tone drift** to glorified propaganda. *Bound:* the game never rewards false grades beyond a short window.
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** Reach is the reward and reach is also the exposure. A broadcast spends
+safety to buy company, and the plan's arithmetic refuses to pretend those are different
+resources — every minute on air is a minute somebody out there is less alone and the shelter is
+more findable. The seventh station has three physical properties and one moral one.
+
+**What the expansion leaves lying around.**
+
+> "Call sign card. Three physical properties and one moral one; the card holds the three."
+
+> "Frequency dial, marked where the six stations sit. The marks are positions, not places."
+
+> "Mailbag: one letter unanswered. The mailbag only exists when affinity > 0; the empty state has its own line."
+
+**Scenes the player may piece together.**
+
+> "A missed slot decays affinity. A station that goes quiet is not neutral — it is forgotten, which is the plan's most human mechanic."
+
+> "The warning line goes out at 21:40. Nobody moves fast. The fear is entirely in the notice period."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the marginal listener hears when the signal is only half there. Affinity is not a headcount; the halfway audience is unmodelled and must stay so.
+- Whether the six stations ever mention each other. Personas, not a network — no group chat will ever be authored.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Who is direction-finding.** Consequences route through existing PsyOps jamming and door visitors.
+Attribution is never modelled and never narrated. A named faction would end the dread.
+
+**Where the six authored stations are broadcasting from.** They have personas and reliability. They
+do not have locations. Six stations with no transmitter site is a fact the game declines to explain.
+
+**What the frequency band was used for before.** Your station is an *additional* identity. Its prior
+occupancy is not asserted.
+
+**Whether the letters come from people.** The mailbag is seeded, deterministic, and maps to existing
+choices. The expansion does not model senders and will not.
+
+**Why Voice Trust has the same bounds as distress trust.** Same pattern, separate ledger. Whether
+that is convention or coincidence is deliberately unspecified.

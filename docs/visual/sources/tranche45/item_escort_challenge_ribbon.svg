@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 512 512"><defs>
+ <radialGradient id="bg"><stop stop-color="#303638"/><stop offset="1" stop-color="#0d1214"/></radialGradient>
+ <linearGradient id="metal" x2="1" y2=".2"><stop stop-color="#485a5e"/><stop offset=".35" stop-color="#ced8cb"/><stop offset=".72" stop-color="#8eaaa6"/><stop offset="1" stop-color="#3e5457"/></linearGradient>
+ <linearGradient id="wax" x2="1" y2="0"><stop stop-color="#4d3e33"/><stop offset=".45" stop-color="#9e8061"/><stop offset="1" stop-color="#493b31"/></linearGradient>
+ <linearGradient id="can" x2="1" y2=".2"><stop stop-color="#263b40"/><stop offset=".52" stop-color="#77918c"/><stop offset="1" stop-color="#293d43"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="15"/></filter>
+ <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" seed="45"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".16"/></feComponentTransfer></filter>
+ </defs>
+ <rect width="512" height="512" fill="url(#bg)"/>
+ <ellipse cx="256" cy="429" rx="177" ry="30" fill="#000" opacity=".62" filter="url(#blur)"/>
+ <desc>ASHFALL inventory art item_escort_challenge_ribbon; fictional handmade prop illustration.</desc>
+
+ <path d="M140 155q32-24 57 11l187 162q25 24-2 49l-21 17-113-92q-27 33-75 17l-59-16q-26-8-18-32l36-101z" fill="#83877f" stroke="#343d40" stroke-width="11"/>
+ <path d="M156 165q20-8 35 13l182 161-19 23-113-97q-29 31-61 16l-50-13z" fill="#a6a99d" stroke="#d2d1b8" stroke-width="5"/>
+ <path d="M183 194l50 42m-61-16 52 43m-66-10 48 41" stroke="#465254" stroke-width="12" stroke-linecap="round"/>
+ <circle cx="257" cy="257" r="10" fill="#465254"/><circle cx="282" cy="278" r="10" fill="#465254"/><circle cx="308" cy="299" r="10" fill="#465254"/>
+ <path d="M358 366l27 21-34 27-34-29" fill="#7c8179" stroke="#313b3e" stroke-width="8"/>
+
+ <rect width="512" height="512" filter="url(#grain)" opacity=".10"/>
+ </svg>

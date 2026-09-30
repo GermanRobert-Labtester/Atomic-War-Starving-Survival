@@ -72,6 +72,15 @@ survived it. Never write a climax. The chapter's whole thesis is that there isn'
 mechanics of the world rather than the story of the shelter; what Standing D is waiting for; and
 what happens on the night after the last line the chapter writes. See §14.
 
+**The second layer.** The Long Thaw is the least dramatic thing a world can do to the people in it,
+and that is why it needs a whole program. Year One asked whether the shelter could be kept alive;
+Year Two asks what the shelter agrees to *be* now that it is alive — and the program's answer is
+entirely structural: twelve bunks bound to a place, four readings that disagree, apprentices who
+are not rushed, a road that costs days, and a last page that describes instead of judging. The
+bit-identical legacy promise is what licenses all of it. A game that keeps its first promise earns
+the right to ask its players for a second year. And the asking is made in the smallest possible
+voice — a bunk, a reading, a date on a wall — because a thaw is never announced; it is noticed.
+
 ---
 
 ## 1. Goal & Outcome
@@ -145,6 +154,63 @@ always about to hand something over. Let that feeling stand unresolved.
   Generations arc works: it is about capability, not peril.
 - **No Chapter Three.** The program ends at Day 720 with a seal. Resist every instinct to gesture
   beyond it — the silence after the last line is the point.
+
+---
+
+## 1c. The Deeper Layer — objects & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §14's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions.)*
+
+**What the year leaves lying around.**
+
+> "Standing sheet, third quarter: D. The word is on the sheet and in the corridor within the hour."
+
+> "Rite of Passage, prepared and unheld. The chapter stops the night before, and the preparation is the ending."
+
+> "Allocation 13, named in the ledger and called something else at the table."
+
+**Scenes the player may piece together.**
+
+> "The apprentice repaired the pump without asking. It is written in the book, because in ten years the book is what there will be."
+
+> "Day 720. One seal. The paragraph is read aloud in a room where nobody flinches."
+
+**Held silences (texture, not register rows).**
+
+- Who keeps the second winter's almanac. P1 authors values, never a keeper; the weather office has no staff and must not acquire any. Texture only.
+- Whether the hearth's folk name is ever said aloud twice. Folklore, not state (`definitions never persisted`); the repetition is the player's, and the game does not count it.
+
+**Third pass — the long week (texture only; §14 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §14's register is unchanged; the
+fragments below are content candidates for `year_two_chapter.json` / `year_two_radio.json` and
+deliberate silences, not new recorded questions.)*
+
+**The shape of the polish.** The register is the minutes of a community that has survived something
+and now has to live with having survived it. Never a climax. The prose should carry its mysteries
+as *dates*: what the Reckoning was, what Standing D waits for, and what happens after the last line
+— three questions the program holds open by simply continuing to keep books.
+
+**What the year leaves lying around.**
+
+> "Day 362. Nobody has named it yet. The naming will happen later, in a kitchen, and the almanac
+> will record it as weather."
+
+> "Standing sheet, quarter four: the grade is unchanged. Nobody has ever written 'unchanged' on a
+> sheet of this kind before."
+
+> "Reading day, sealed copy. The paragraph is read aloud in a room where nobody flinches. The
+> flinch was in the waiting."
+
+**Held silences (texture, not register rows).**
+
+- What the fever moved to. The prologue's metaphor is a week nobody can read (§0b); the sweating is
+  not tracked and the metaphor must not be made clinical. Texture only.
+- Who rings anything at all in Year Two. Year One ended without a bell; the second year has no
+  ringer and the silence is the tone.
 
 ---
 

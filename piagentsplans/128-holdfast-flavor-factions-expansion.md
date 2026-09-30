@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-128"
+TITLE: "Plan 128 — Holdfast Flavor Factions, Dispatch Voices and Transaction Boundaries"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/128-holdfast-flavor-factions-expansion.md"
+INFERRED: true
+---
 # Plan 128 — Holdfast Flavor Factions, Dispatch Voices and Transaction Boundaries
 
 > **Rebuild status:** COMPLETE 8-FACTION FLAVOR LOOP — FACTION/ITEM AUTHORITY AND DISPATCH REACHABILITY AUDIT

@@ -43,6 +43,24 @@ The flagship objective is not “the panel animates and the numbers move.” It 
 
 ---
 
+## 0. Framing — Starting From What Is (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "The forensic audit is a plan touching the ground before it stands on it."
+
+146–149 build advanced industry and expeditions — and the first section of the document is not
+design but *survey*. The audit is the difference between architecture and wishful thinking: a
+verified starting state means every later sentence can be checked against the repository rather
+than against hope.
+
+- **Verify, then design.** The order is unglamorous and non-negotiable.
+- **Industry is the shelter's second language**, spoken in torque, tonnes and travel days — and
+  like any second language, it is learned by naming things precisely.
+
+---
+
 # 1. Repository Forensic Audit — Verified Starting State
 
 ## 1.1 Plan 146 prerequisite names are not all live under the supplied identities

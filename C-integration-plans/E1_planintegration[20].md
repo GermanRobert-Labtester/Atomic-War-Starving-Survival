@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-20
+PLAN_ID: "E1-20"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 20
-STATUS: READY_FOR_EXECUTION_WHEN_SKILL_CERTIFICATION_AND_DUTY_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 195 — Survivor Specialization Roles"
 SEQUENCE_FILENAME: "E1_planintegration[20].md"
 PREVIOUS_FILENAME: "E1_planintegration[19].md"
 NEXT_FILENAMES:
   - "E1_planintegration[21].md"
   - "E1_planintegration[22].md"
-CATEGORY: LINK+SURVIVORS+ROLES+SKILLS+DUTY+IDENTITY
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create formal survivor role appointments and specialist identity by projecting canonical skills, certifications, experience, duty eligibility, and authored responsibilities into typed role capabilities without introducing a second skill tree, duplicate XP ledger, hidden auto-action scheduler, or parallel survivor-stat authority."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -27,6 +27,24 @@ SAVE_RISK: HIGH
 BALANCE_RISK: VERY_HIGH
 CHARACTER_IDENTITY_RISK: HIGH
 MICROMANAGEMENT_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [20] — Survivor Specialization Roles, Appointments, Capability Adapters, Responsibilities, Mastery, and Identity"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[20].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [20] — Survivor Specialization Roles, Appointments, Capability Adapters, Responsibilities, Mastery, and Identity

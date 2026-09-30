@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-4
+PLAN_ID: "E1-4"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 4
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 136 — Wildlife Trapping → Food Pipeline & Cooking System"
 SEQUENCE_FILENAME: "E1_planintegration[4].md"
 PREVIOUS_FILENAME: "E1_planintegration[3].md"
 NEXT_FILENAMES:
   - "E1_planintegration[5].md"
   - "E1_planintegration[6].md"
-CATEGORY: LINK+FOOD_PIPELINE+PRODUCTION+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Close the trapping dead-end by integrating catch yields into canonical inventory/needs authorities, then add the smallest justified cooking layer."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -22,6 +22,24 @@ RUNTIME_RISK: MEDIUM_HIGH
 SAVE_RISK: MEDIUM_HIGH
 BALANCE_RISK: HIGH
 CONTENT_RISK: MEDIUM
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [4] — Wildlife Trapping, Inventory Delivery, Food Safety, Cooking, Nutrition, and Preservation Rails"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[4].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [4] — Wildlife Trapping, Inventory Delivery, Food Safety, Cooking, Nutrition, and Preservation Rails

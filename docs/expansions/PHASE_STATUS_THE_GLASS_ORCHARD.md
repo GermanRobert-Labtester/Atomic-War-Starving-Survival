@@ -1,5 +1,20 @@
 # PHASE STATUS — THE GLASS ORCHARD (Expansion 05 / XI)
 
+> *"Thirty live entries, twelve crops, one seed at a time. The orchard is not a metaphor; it is a
+> cultivation engine with a blight roll."*
+>
+> **Framing.** The Glass Orchard is the shelter's argument with its own climate — grow lights,
+> planter boxes, lead glass, apiculture, and a `TreatBlight` command that consumes something real.
+> Note the phrasing in the audit: *"definitions first, consumption second."* Supplies exist before
+> anything eats them. That is the correct order and it is also, faintly, a story about a people who
+> stock a pantry they have not yet learned to cook from.
+>
+> **What stays unsaid here:** why `DefaultPlanterBoxCount` is 4 and grow-light hours are 6 before
+> Plan 22 made them data-driven; why a `greenhouse_foundry` day owner couples two unrelated
+> processes into one tick. Both are recorded as **unresolved assumptions** and both are exactly the
+> kind of artefact that reads, decades later, as tradition.
+
+
 Audit date: post-Plan 91 (greenhouse item catalog expansion to 30 live entries).
 Method: `ashfall-expansion-phase` read-only audit — current source outranks plans.
 Scope of this pass: **Plan 91 supply-ecosystem integration cleanliness** plus the

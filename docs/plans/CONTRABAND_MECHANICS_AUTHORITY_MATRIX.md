@@ -1,5 +1,18 @@
 # CONTRABAND MECHANICS AUTHORITY MATRIX — Plan 147 Task A.5
 
+## 0. Framing — Jurisdiction (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded matrix remains the authority.)*
+
+> "Every shadow market has a bright map of who owns what."
+
+Authority over contraband is spread across engines the way authority over a port is spread across
+offices — and this matrix is the desk directory. One authority per concern, even in crime; the
+corpus keeps its manners everywhere.
+
+- **Jurisdiction is the unglamorous half of every mechanic**, and the half that prevents two
+  systems from convicting the same crate.
+
 One row per authored mechanics key (45 total: 14 typed + 31 silently-dropped),
 each classified **LIVE-MAPPED**, **PRESENTATION-ONLY**, **DESCRIPTIVE (risk
 flavor)** or **NON-EXECUTABLE / DEFERRED**, with the single owning authority or

@@ -43,6 +43,25 @@ current integration ledger is still marked COMPLETE (presented for
 acceptance), and no Plan 25 package is registered. A foreman must accept this
 plan and assign disjoint claims before implementation begins.
 
+## 0. Framing — One Language of Strings (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A string that cannot be translated is a door with no handle."
+
+A localization seam is really a discipline about *where words live*: one language of strings,
+one seam, and every player-facing sentence addressable from the outside. The plan's gain is not
+translation today but *translatability* — the difference between a game that can travel and one
+that is stuck at home.
+
+- **One vocabulary of strings is the same kindness as one authority of hunger**: coherence the
+  player feels without being able to name.
+- **The seam is a promise to future readers in every language**, including the one it was written
+  in.
+
+---
+
 # 1. Objective
 
 ## 1.1 Bounded outcome

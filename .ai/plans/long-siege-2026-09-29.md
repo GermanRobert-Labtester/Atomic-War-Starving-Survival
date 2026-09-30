@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_long_siege_plan.md`. Family index: `docs/expansions/expansion_shelter_under_pressure_index.md`.
 > Not a claim. **Does not touch Expansion 36 (*The Watch*)** — `NightWatchHostSession`, `NightWatchOperationsState`, patrol readiness and sound ranging are read-only inputs. The defense owner (`DefenseSystem`) gains one additive nested DTO field and **no logic change**.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `siege_lines.json` / `siege_terms.json` rows; they belong in data, never
 > in code.
@@ -42,6 +42,13 @@ the time this ends*. Never write a battle scene. Write a week.
 are the plan's three ways of being feared. Each has its own patience and its own temper. Which one
 arrives is not a difficulty setting; it is a character walking up to your gate. §12 keeps the
 besiegers' reasons permanently out of reach.
+
+**The second layer.** Patience is the rarest military asset and the most domestic one — it is
+simply the ability to keep a schedule where someone else can see it. The plan's dread is
+bureaucratic because the besiegers are, in their way, colleagues: they too are keeping a board,
+marking days, spending a clock. Both sides of the wall are doing paperwork. Only one side chose
+the calendar. And the morning after the calendar was chosen, the wall is the only thing in the
+siege that has not been scheduled.
 
 ## 1. Goal & Outcome
 
@@ -102,6 +109,63 @@ routes each through existing owners, which means each ending is a *transaction*,
   are longer sieges. That is far worse and far fairer.
 - **A siege is not a raid.** The moment this plan starts to look like combat, it has failed its
   own Non-Goals.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Board, day 7: supply printed in one hand, resolve in another. The board has two column widths and only one of them is a number."
+
+> "Terms sheet, unsigned. Reasonable on every line. Somebody has scored the fold twice and the sheet has been opened at least three times."
+
+> "Runner's chit, returned. The chit is a receipt for a conversation and says nothing about the conversation."
+
+**Scenes the player may piece together.**
+
+> "The eleventh morning. The board is read at the same hour as on the first morning. Nothing about the siege has changed except the reading of it."
+
+> "The Quiet Ring posts no sentries during the Noise rung. The Watch hears it and is not authorised to decide anything, which is the plan's whole politics in one entry."
+
+**Held silences (texture, not register rows).**
+
+- What the besiegers eat. Their supply is a clock, not a store; no camp larder is modelled and none should ever be described. Texture only.
+- Why the parley terms are always reasonable. The terms table is authored to be tempting; who wrote them and for whom is not authored and must not be improvised.
+
+**Fourth pass — the eleventh morning (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `siege_lines.json` / `siege_terms.json`.)*
+
+**The shape of the polish.** A siege log is written by someone who has stopped being frightened and
+started being punctual, and that is the register: the dread has been filed into columns. Keep the
+prose on the far side of panic — a week, not a battle — so that the only thing that escalates is
+the reader's awareness that the board is being read at the same hour every morning.
+
+**What the shelter leaves lying around.**
+
+> "Board, day 11: supply printed in one hand, resolve in another. Day 12 has been ruled but not
+> filled. Ruling a day is a kind of confidence."
+
+> "Terms sheet, second reading. The fold has been scored three times now. The terms have not
+> changed; the scoring has."
+
+> "Water line, crossed out and re-entered below. The crossing-out is neat. Neat crossings-out are a
+> doctrine too."
+
+**Held silences (texture, not register rows).**
+
+- What the besiegers' board looks like. Ours has two column widths (§1c); theirs is not modelled
+  and its existence is an inference the plan refuses to confirm. Texture only.
+- What the shelter does with a schedule that is drawn and not patterned (DEC-LS-03). The pressures
+  are seeded; the shelter reads them as doctrine anyway and the plan stays out of the argument.
 
 ---
 

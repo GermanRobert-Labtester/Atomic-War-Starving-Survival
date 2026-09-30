@@ -8,6 +8,22 @@
 
 ---
 
+## 0. Framing — The Residuals (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A residual is the small debt a finished feature leaves in the doorway."
+
+Plans 24 and 31 are done in every way that matters except the last one: the loose threads that a
+completion report cannot see and a player eventually will. Residual work is the unglamorous
+maintenance of *promises already made* — and it is where a corpus proves it meant them.
+
+- **Residuals are not scope creep; they are scope honouring.**
+- **The last five percent is where trust lives**, because it is the part nobody was watching.
+
+---
+
 ## 1. Executive Summary & Objective
 
 This integration package resolves and seals the two long-standing blocked residuals:

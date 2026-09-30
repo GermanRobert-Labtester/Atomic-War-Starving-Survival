@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-6
+PLAN_ID: "E1-6"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 6
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 144 — Survivor Autonomy & Initiative"
 SEQUENCE_FILENAME: "E1_planintegration[6].md"
 PREVIOUS_FILENAME: "E1_planintegration[5].md"
 NEXT_FILENAMES:
   - "E1_planintegration[7].md"
   - "E1_planintegration[8].md"
-CATEGORY: LINK+SURVIVOR_AGENCY+DECISION_POLICY+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Give survivors legible initiative and refusal through a bounded decision/proposal layer that consumes canonical state and delegates effects to existing authorities."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -21,6 +21,24 @@ RUNTIME_RISK: HIGH
 SAVE_RISK: MEDIUM
 BALANCE_RISK: HIGH
 PLAYER_FRICTION_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [6] — Survivor Autonomy, Initiative, Refusal, Preferences, Goals, and Explainable Agency"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[6].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [6] — Survivor Autonomy, Initiative, Refusal, Preferences, Goals, and Explainable Agency

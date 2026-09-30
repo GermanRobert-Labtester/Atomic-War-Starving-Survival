@@ -1,5 +1,17 @@
 # CONTRABAND SAVE COMPATIBILITY — Plan 147 Task A / Task C.4, C.11–C.12
 
+## 0. Framing — What Survives (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded matrix remains the authority.)*
+
+> "A save file is the only courtroom where every session is retried."
+
+Compatibility work is jurisprudence: old states must still be findable, still be *named* the same,
+and still be guilty or innocent under the new law. The matrix is the corpus promising that
+yesterday's smuggler is still in tomorrow's ledger.
+
+- **Migration without loss is the quietest form of respect a codebase can pay its players.**
+
 ## 1. State surface
 
 `ContrabandStashSystem` owns exactly one persisted state:

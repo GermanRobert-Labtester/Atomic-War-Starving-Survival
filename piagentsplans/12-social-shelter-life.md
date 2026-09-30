@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-12"
+TITLE: "Plan 12 — Social & Shelter Life: Generational Lineage, Cohort Apprenticeship, Ideological Friction & Ration Politics"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/12-social-shelter-life.md"
+INFERRED: true
+---
 # Plan 12 — Social & Shelter Life: Generational Lineage, Cohort Apprenticeship, Ideological Friction & Ration Politics
 
 **Package:** `PLAN-12-SOCIAL-SHELTER-LIFE`

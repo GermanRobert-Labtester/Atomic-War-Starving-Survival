@@ -5,6 +5,24 @@
 **Evidence:** `--rail-track-maintenance-selftest` 12/12, `--glassworks-selftest`
 12/12; host + Core builds 0 errors.
 
+## 0. Framing — Iron and Glass (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Two materials, two temperaments: iron bends slowly, glass remembers everything."
+
+The Iron Road's rail maintenance is measured in tonnes and wear; The Glass is the shelter's most
+fragile vocabulary — surfaces, clarity, the risk of shattering. Paired in one host integration,
+they are the same craft at two scales: keeping the things that carry weight and the things that
+admit light.
+
+- **Premise verified in source before editing** is this corpus's catechism, and here it is kept
+  literally: the survey precedes the seam.
+- **One plan measures in tonnes, one in surfaces** — and the shelter needs both to be a place.
+
+---
+
 ## Premise (verified in source before editing)
 
 Both engines are **signed pure-domain authorities** with tests (DEC-80 = 5/5,

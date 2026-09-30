@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-E66961D88D4A"
+TITLE: "Plan 29 — One Truth: Documentation, Canon, and Agent Instructions — Instruction Authority Synchronization, Architecture Map Integrity, Triad Parity Enforcement, and CI Gate Alignment"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_29_One_Truth_Docs_Canon_Agent_Instructions.md"
+INFERRED: true
+---
 # Plan 29 — One Truth: Documentation, Canon, and Agent Instructions — Instruction Authority Synchronization, Architecture Map Integrity, Triad Parity Enforcement, and CI Gate Alignment
 
 ## 1. Objective and bounded outcome

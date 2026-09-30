@@ -1,5 +1,17 @@
 # Partial-plan production unblock implementation log — follow-up
 
+## 0. Framing — The First Follow-Up (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "The first follow-up teaches the corpus the shape of every follow-up after it."
+
+This log establishes the cadence the later waves inherit: premise checked, seam named, work
+bounded, evidence recorded. The second outing of a routine is where the routine becomes a
+tradition — or quietly stops.
+
+- **A follow-up log is a ratchet**: each one makes the next reversal of progress harder.
+
 Date: 2026-09-19
 Authority: direct user request following `PARTIAL_15_PRODUCTION_UNBLOCK_INTEGRATION_PLAN.md`
 

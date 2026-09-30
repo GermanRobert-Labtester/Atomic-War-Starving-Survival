@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-815D3EA4CCF9"
+TITLE: "Plan 179 — Psychology & Phobia — Collision Audit and Safe Integration"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_179_Unified_Psychology_Phobia_System.md"
+INFERRED: true
+---
 # Plan 179 — Psychology & Phobia — Collision Audit and Safe Integration
 
 ## Current-evidence architecture decision (2026-09-24; supersedes stale instructions below)

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "C2-8"
+TITLE: "C2 — Flagship Integration Plan [8]: Ship Gate, Single Data Path Authority, Real Export Smoke, and Performance Budgets"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/C2_planintegration[8].md"
+INFERRED: true
+---
 # C2 — Flagship Integration Plan [8]: Ship Gate, Single Data Path Authority, Real Export Smoke, and Performance Budgets
 
 > **Deliverable:** `C2_planintegration[8].md`

@@ -1,5 +1,18 @@
 # ASHFALL — Oldest Partial / Non-Integrated Plans Audit (2026-09-23)
 
+## 0. Framing — The Oldest Twenty (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded audit remains the authority.)*
+
+> "An audit of the oldest plans is the corpus visiting its debts."
+
+Twenty of the longest-waiting partials, measured against current source rather than their own
+claims — because age is not evidence, and the audit exists to say so. The list is unglamorous and
+decisive: it is the queue, seen honestly for once.
+
+- **Age earns a plan attention, not belief** — belief is re-earned against the source, every
+  time.
+
 **Role:** read-only audit produced for the foreman/user, in support of the
 next integrator batch.
 **Status:** REFERENCE — this document is **not a claim**, grants no path

@@ -1,5 +1,17 @@
 # ASHFALL — Unblocked Plans Audit (2026-09-19)
 
+## 0. Framing — What Opened (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded audit remains the authority.)*
+
+> "An unblocked-plans audit is a record of gates found unlocked."
+
+The executive finding is the corpus's season turning: prerequisites sealed, decisions signed, and
+a queue that can finally move. Audits like this one are how a programme notices its own spring.
+
+- **Unblocking is never an event; it is the accumulation of signatures** — and the audit dates
+  the moment they added up.
+
 **Auditor role:** read-only queue audit requested by the foreman (user).
 **Repo state audited:** branch `Zcode_Branch`, HEAD `fc73a306` (2026-09-19 02:27)
 plus the current uncommitted worktree (the 2026-09-18/19 completion-first

@@ -1,5 +1,18 @@
 # ORPHAN-SEAL-PRIORITY-W1 — Duplicate-Authority Boundaries & Wiring Record
 
+## 0. Framing — The Fences (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded boundary record remains the authority.)*
+
+> "A boundary record is a fence with a deed."
+
+Duplicate authorities — two prisoner systems, two of other things — settled into one owner each,
+in writing. Boundary work is the corpus's zoning office: dull, sovereign, and the reason nobody
+builds two courthouses.
+
+- **Where two systems overlap, the player is the one who pays.** The fences exist so the player
+  never gets the bill.
+
 **Date:** 2026-09-23 · **Owner:** Integrator (user-authorized) · **Claim:**
 `claim-orphan-seal-priority-w1-2026-09-23` in `WORKTREE_OWNERSHIP.md`.
 

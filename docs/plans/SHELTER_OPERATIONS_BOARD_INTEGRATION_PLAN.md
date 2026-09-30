@@ -4,6 +4,23 @@
 **Claim:** `claim-shelter-operations-board-2026-09-25`
 **Authority:** User-approved `skill_crafting`; existing shelter, inventory, survivor, outpost, celebration, and save owners remain authoritative.
 
+## 0. Framing — The Board (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A board is a shelter agreeing to be legible to itself."
+
+The operations board gathers only what the owners already know. It holds no authority and invents
+no state — it is a window, not a hand — and its honesty is structural: anything on it can be
+walked back to the system that reported it.
+
+- **Projection only.** A board that decides is a second authority wearing a clipboard.
+- **The board's trust is its checkability** — every row is a citation, and the citation is the
+  point.
+
+---
+
 ## Delivered
 
 - Added the routed `shelter_operations` board for construction, excavation, renovation, upgrades, crews, capacity projection, outposts, garrisons, supplies, and cycle-scoped holidays.

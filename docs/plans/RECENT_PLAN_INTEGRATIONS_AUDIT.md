@@ -1,5 +1,16 @@
 # Recent Plan Integrations — Programmatic Audit
 
+## 0. Framing — Believing Code (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded audit remains the authority.)*
+
+> "Ledger claims are not trusted; files are."
+
+The programmatic audit checks integrations the only way integrations can be checked — against the
+codebase itself. A registry of claims is a novel; a grep of the source is a photograph.
+
+- **Verification by measurement, not by memo** — the audit's whole method in five words.
+
 **Generated:** 2026-09-26
 
 **Method:** programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)

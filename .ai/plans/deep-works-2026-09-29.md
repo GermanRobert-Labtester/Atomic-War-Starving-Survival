@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_deep_works_plan.md`. Family index: `docs/expansions/expansion_shelter_under_pressure_index.md`.
 > Not a claim. `SubterraneanSystem`, `TunnelNetworkSystem`, `ExcavationHazardSystem` and `ShelterExpansionSystem` keep their meaning. This plan **connects them** through their public APIs and adds one small *held-drift* ledger. It adds no hazard, oxygen, flood, excavation or resource model.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `works_lines.json` rows; they belong in data, never in code.
 
@@ -42,6 +42,14 @@ decision weaker than it was last week — not as spectacle.
 network; it was inferred from surface anchors and it never quite agrees with them. Held drifts are
 the only place in the game where the player asserts *ownership* over terrain that was never
 surveyed. §12 keeps the questions that ownership raises permanently open.
+
+**The second layer.** Ownership of unsurveyed ground is the strangest kind of property the shelter
+acquires. A held drift answers to a schedule now, and the schedule is the shelter's — but the
+ground was keeping its own books before anyone arrived, and it has not stopped. Every shoring
+timber is a sentence written into rock that never agreed to be a page. The works diary records
+what the gang did. It cannot record what the drift was doing before, and the distance between
+those two ledgers is the plan's whole weather. The Book is written in a hand that is not the ground's, and the
+ground does not countersign.
 
 ## 1. Goal & Outcome
 
@@ -95,6 +103,65 @@ back to themselves in a clerk's hand.
   command in the UI and the plainest wording.
 - **The rescue clock is the emotional payoff.** A collapse with a gang inside is the only time this
   plan raises its voice. Everything else is set-up for that one day.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Shoring inspection slip: timber 4, sound. The slip is dated to a week the Works Book says was skipped."
+
+> "Spoil tally, day 33. Two more barrows than the diggings produced. The tally is in the Book and the Book is not questioned on this page."
+
+> "Bulkhead plate, stamped with a number that is also a sector number. No requisition explains the coincidence and none has been filed asking."
+
+**Scenes the player may piece together.**
+
+> "A drift that was sealed on purpose has a schedule anyway. The Book keeps it for a place nobody goes, in a hand that does not change."
+
+> "The Diggings made a sound on the second Tuesday. The gang completed the shift. The entry ends there, and ending there took effort."
+
+**Held silences (texture, not register rows).**
+
+- Who taught the shelter to timber. The shoring is standard; the standard came from somewhere; the manual is not in the data and must not be added. Texture only.
+- Whether the ten nodes were ever one excavation. The anchor mismatch (E7) is observed and left unexplained — the survey that would settle it does not exist and will not be authored here.
+
+**Fourth pass — the book that was already keeping (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `works_lines.json` and gain no schema where no prose field
+exists.)*
+
+**The shape of the polish.** A works diary is the least magical object in the shelter and its
+most frightening one, because it is the only document here that is written by people who expect
+to be believed. Ruled lines, initials, a tally that balances. And the drift answers in the same
+format — spoil in, spoil out — so that the whole argument between the shelter and the ground is
+conducted in columns, politely, forever.
+
+**What the shelter leaves lying around.**
+
+> "Works Book, page 44: collapse on purpose. The page before it is blank, and the blank is ruled,
+> and the ruling is older than the Book."
+
+> "Day 34 spoil tally: two fewer than the diggings drew. The Book does not correct itself; the
+> Book accumulates."
+
+> "Ventilation requisition, node 6. Filed a fortnight before the breakthrough. Requisitions are
+> filed in order, and this one was."
+
+**Held silences (texture, not register rows).**
+
+- Whether *the works* is plural because there is more than one of them. The phrase is the
+  shelter's own and the shelter did not consult the ground before adopting it. Texture only.
+- What the pump time is billing in a drift that is dry. The schedule charges it; the schedule is
+  not a hydrology and must never become one.
 
 ---
 

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-52"
+TITLE: "Plan 52 — The Sound of Scarcity: Ambience, Music, and Silence as State"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_52_Sound_of_Scarcity_Ambience_Music_Silence.md"
+INFERRED: true
+---
 # Plan 52 — The Sound of Scarcity: Ambience, Music, and Silence as State
 
 > **Wave:** Continuity Wave 8 — *The Presented Game*

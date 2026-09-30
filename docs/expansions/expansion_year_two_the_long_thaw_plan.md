@@ -17,6 +17,15 @@ Nothing here restores retired architecture, adds a parallel owner, or asks Core 
 
 ---
 
+> *"The war ended the way a fever ends. Not with a morning. With a long, ambiguous week in which
+> nobody could tell you whether the sweating had stopped or merely moved."*
+>
+> Day 360 is a door and there are only two things to do with a door. **SEAL HERE** is not a failure
+> state — it is the game keeping its first promise, bit-identically, forever. **PLAY ON** is the
+> other thing, and it is not an epilogue. It is a decision to be present for a *thaw*.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -32,6 +41,16 @@ Three things change when the game refuses to end at the Reckoning:
 1. **The ending becomes a beginning with a standing.** Whatever the count became — accepted, held, or leased — is a live condition of the world for 360 more days, not an epilogue paragraph. (Pillar I, *Play On*.)
 2. **The people become the point.** Children who arrived as line items grow into apprentices; apprentices take a mentor's keys; the founders, who have been carrying everything, get a year of being replaceable. (Pillar II, *Generations*.)
 3. **The shelter gets a horizon.** For a year the whole story has been about one door. Year Two is about a second door, and the road between them, and who walks it in the dark. (Pillar III, *The Outposts Network*.)
+
+A thaw is the least dramatic and most demanding thing a world can do to the people living in it.
+Year Two is a year of paperwork, apprenticeship, distance and weather: children become apprentices,
+apprentices become the people who decide things, a second shelter acquires bunks and a real
+location, a road acquires cost, and Standing — A, B, C, and the strange fourth grade called **D,
+The Late Call** — keeps a quarterly account of what the shelter is now understood to be.
+
+Three things are deliberately held back and must stay held: what the Reckoning *was* in the
+mechanics of the world rather than the story of the shelter; what Standing D is waiting for; and
+what happens on the night after the last line the chapter writes.
 
 ### 1.2 The one sentence each pillar answers
 
@@ -856,3 +875,64 @@ All files: schema-valid, snake_case, through `CatalogIntegrityValidator`. **Pres
 ## Appendix B — Files read for this audit
 
 `Assets/Ashfall.Core/Verdict/{ReckoningSystem,VerdictEndingEvaluator}.cs` · `Assets/Ashfall.Core/Endgame/{EndgameSystem,EpilogueMatrixRuntime,UnifiedEndingResolver}.cs` · `Assets/Ashfall.Core/Campaign/CampaignCalendar.cs` · `Assets/Ashfall.Core/YearOfAsh/YearOfAshTimelineSystem.cs` · `Assets/Ashfall.Core/Survivors/{ChildDevelopmentSystem,GenerationalSystem}.cs` · `Assets/Ashfall.Core/Generations/SecondGenerationMilestoneEngine.cs` · `Assets/Ashfall.Core/{ApprenticeshipSystem,GenerationalLineageExtension}.cs` · `Assets/Ashfall.Core/Legacy/GenerationalSuccessionEngine.cs` · `Assets/Ashfall.Core/Settlements/OutpostSettlementSystem.cs` · `Assets/Ashfall.Core/Waystation/WaystationNetworkSystem.cs` · `src/Main.{Endgame,OutpostSettlement,CampaignOwners,Holdfast}.cs` · `src/Host/{OutpostSettlementHostSession,SecondGenerationMilestoneHostSession,ShelterOperationsHostSession}.cs` · `src/YearOfAsh/YearOfAshHostSession.cs` · `src/UI/ChroniclePanel.cs` · `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` · `Assets/StreamingAssets/Data/{outposts,waystations,endings,verdict_data,life_stages,survivor_life_stages,duty_roster_locations,duty_roster_quests,codex_entries,characters,holdfast_quests}.json` · `docs/endgame/ENDGAME_V1.md` · `docs/expansions/expansion_08_the_verdict_plan.md` · `docs/expansions/wave7/expansion_44_the_outpost_plan.md` · `docs/expansions/wave17/expansion_82_the_far_hearth_plan.md` · `docs/plans/ORPHAN_SEAL_PRIORITY_W1_BOUNDARIES.md` · `docs/shelter/BUNKER_ORIGIN_CONTINUITY.md` · `docs/ashfall-master-world-bible-and-expansion-authority.md` · `docs/plans/PLAN_25_FACTION_ECOLOGY_INTEGRATION_PLAN.md` (Muster/war timing).
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** Year One asked whether the shelter could be kept alive. Year Two asks what
+the shelter agrees to *be* — and the program's answer is entirely structural: bunks bound to a
+place, readings that disagree, apprentices who are not rushed, a road that costs days, and a last
+page that describes instead of judging. The Long Thaw is the least dramatic thing a world can do
+to the people in it, and that is why it needs a whole program. The bit-identical legacy promise
+licenses all of it: a game that keeps its first promise earns the right to ask its players for a
+second year.
+
+**What the expansion leaves lying around.**
+
+> "Calendar page, Day 361. The weather was authored before the day existed; the almanac has no staff."
+
+> "Reading sheet: four voices, one quarter. The sheet is dated. The voices are not named."
+
+> "Twelve bunks and an address. The ledger says Allocation 13. The table says something else."
+
+**Scenes the player may piece together.**
+
+> "The apprentice repaired the pump without asking. It is written in the book, because in ten years the book is what there will be."
+
+> "Day 720. One seal. A paragraph read aloud in a room where nobody flinches — and no second seal, and no appeal."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the shelter agrees to be. The program's question is structural and its answer is deliberately left to the people at the table.
+- Who keeps the quarterly custom after the program stops describing it. Cadence becomes custom in the fiction; the continuation is unauthored and stays so.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**What Standing D — The Late Call — is waiting for.** It is a real grade that resolves into A/B/C.
+Until it resolves it is vocabulary the shelter is living inside.
+
+**What happens the night after the last line.** The program ends at Day 720 with a single seal. No
+Chapter Three. The silence after the last line is the point.
+
+**What the first Rite of Passage would have been.** The chapter stops **the night before** it, by
+design. Writing the rite would spend the program's best silence.
+
+**Is the second shelter a return or a departure.** Twelve bunks bound to a real location and stopped
+there. Custody of meaning is not asserted.
+
+**Why four quarterly readings in four voices.** Four voices, never reconciled. The disagreement is
+the instrument.
+
+**What the Reckoning was.** A boundary the game crosses and a day the player chose. Its meaning in
+the world's mechanics, as opposed to the shelter's story, is never authored.

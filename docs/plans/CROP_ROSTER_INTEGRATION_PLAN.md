@@ -6,6 +6,23 @@
 
 ---
 
+## 0. Framing — The Roster of Living Things (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Seeds are the only inventory that is also a calendar."
+
+A crop roster turns farming from a button into a timetable: named varieties, seasons, yields —
+authored diversity instead of procedural abundance. It is what lets the kitchen plan, the year
+mean something, and a failed harvest be *news* rather than a number.
+
+- **A roster is a promise of variety**, and variety is what makes weather matter to a pantry.
+- **The season does the deciding; the roster only keeps score** — which is the correct division of
+  labour between a calendar and a catalogue.
+
+---
+
 # 1. Objective
 
 Honest agricultural roster without new parallel authorities:

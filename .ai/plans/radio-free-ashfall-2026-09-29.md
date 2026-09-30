@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_radio_free_ashfall_plan.md`. Family index: `docs/expansions/expansion_new_ways_to_play_index.md`.
 > Not a claim. Soft dependencies on *The Living Region* (canonical regions, graded news) ship dark until they exist.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `radio_free_lines.json` rows; they belong in data, never in code.
 
@@ -41,6 +41,13 @@ back and it should always arrive slightly wrong — a letter too warm, a request
 more *legible* to something that direction-finds. The warning always precedes the probe (§6.6),
 which means the player is never ambushed — only warned, and then answered. That is worse. §12
 keeps the identity of whatever is listening permanently open.
+
+**The second layer.** A broadcast is the only act in the shelter that spends safety to buy
+company. Every minute on air is a minute somebody out there is less alone and the shelter is more
+*findable* — and the plan's arithmetic refuses to pretend those are different resources. The
+seventh station has three physical properties and one moral one, and the moral one is a grade the
+player gives their own words and the world eventually marks. Reach is company and company is
+exposure, and the board meters both in the same units.
 
 ## 1. Goal & Outcome
 
@@ -101,6 +108,73 @@ will eventually publish.
   its own line on the panel.
 - **Relay broadcasting is custody, not ownership (DEC-RF-08).** Transmitting from a waystation
   should feel borrowed.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Schedule grid: one slot booked, one slot left blank on purpose. The blank is the only slot that costs nothing to keep."
+
+> "Mailbag letter, warm paper, wrong questions. The letter is never evidence. The letter is an address."
+
+> "Signature meter, and a pencilled tally in the margin beside it. Somebody is counting our minutes by hand."
+
+**Scenes the player may piece together.**
+
+> "We said Confirmed and it was only Told. Trust down eleven. We read the correction at the same hour as the error, which is the only dignity the format allows."
+
+> "A warning line at 21:40. The probe at 21:52. The twelve minutes are the product."
+
+**Held silences (texture, not register rows).**
+
+- Whether the six authored stations hear each other. They have personas and reliability and no network is modelled; never give them a group chat. Texture only.
+- What direction-finding does with a signature between probes. The intervals are real (§6.6) and what fills them is not authored. Leave the gap exactly as wide as it is.
+
+**Third pass — three fragments (texture only; §12 register unchanged).**
+
+> "Slot booked: 21:00. Slot kept: 21:00. Two different facts; the panel shows the first."
+
+> "Affinity: 3. That is not three listeners. It is three regions not being indifferent."
+
+> "We read the correction at the same hour as the error. Trust is down. It should be."
+
+**Fourth pass — the hour with no other voice (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `radio_free_lines.json`.)*
+
+**The shape of the polish.** Late-night monologue is a grammatical commitment: second person,
+present tense, low volume, and a sentence that ends before it is finished because the hour is.
+The mailbag is the only place where the world answers in writing, and every letter should be
+slightly wrong in the way that a stranger's kindness is slightly wrong — too warm, too specific,
+too sure of the address it was sent to.
+
+**What the shelter leaves lying around.**
+
+> "Mailbag, letter three: 'we hear you on Tuesdays.' We broadcast Tuesdays. We have never said
+> which day we broadcast."
+
+> "Signature log, margin tally. The tally is in pencil; everything else on the sheet is in ink."
+
+> "Sign-off, 22:04. The meter shows the quiet afterward, and the meter is the only listener we
+> control."
+
+**Held silences (texture, not register rows).**
+
+- Whether the seventh station had a listener before its first affinity point. Affinity is
+  per-region and not a headcount (§1b); the first listener is not modelled and must not be.
+  Texture only.
+- What the six stations say about the seventh while the carrier is down. They have personas and
+  reliability and no network is modelled (held silence above); whatever is said between
+  broadcasts is not authored and must not be.
 
 ---
 

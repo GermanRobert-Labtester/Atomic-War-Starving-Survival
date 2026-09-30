@@ -1,5 +1,18 @@
 # PLAN 22 IMPLEMENTATION LOG — Greenhouse Runtime Item Consumption
 
+## 0. Framing — The Greenhouse Ledger (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A greenhouse is a promise kept in fertilizer."
+
+Runtime consumption closes the loop between what the glass house *costs* and what it *gives* —
+fertilizer, pest control, repair items, all finally spent against a real harvest. A growing thing
+that consumes nothing is a decoration; a growing thing with a ledger is agriculture.
+
+- **Conservation at the glass**: every unit in is accounted for, which is what makes the harvest
+  believable.
+
 Plan: `docs/plans/PLAN_22_GREENHOUSE_RUNTIME_ITEM_CONSUMPTION.md`
 ## Phase A — Soil fertility loop
 

@@ -1,5 +1,18 @@
 # Plans 130–133 Implementation Log
 
+## 0. Framing — The Four Owners (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "'The four owners exist and are engine-free' is this corpus's favourite sentence shape."
+
+Engine-free owners are the architecture's quiet triumph: pure domain logic that any host can
+carry, verified here in one wave of four. The log records the moment the boundary held under
+construction rather than in diagrams.
+
+- **Four at once, each verified against the same rule** — the boundary is a habit, not a
+  statement.
+
 ## Phase 1 — Core systems
 
 Status: PASS

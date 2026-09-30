@@ -1,5 +1,20 @@
 # C2[4] / Plan 20 — Baseline Exposure Audit (Premise Corrections)
 
+## 0. Framing — The First Photograph (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes; the recorded audit evidence remains the authority.)*
+
+> "A baseline is a photograph of the truth, taken before the surgery."
+
+The audit is read-only by design: the numbers are captured *before* anyone is allowed to be
+right about them. That ordering is the whole ethic of premise correction — the world is measured
+first, and the plan is amended to match, never the reverse.
+
+- **A premise correction is a plan apologising to the source**, which is the only apology this
+  corpus takes seriously.
+- **43/43, 327/327, PASS** — the photograph is sharp so that later arguments can be short.
+
 > Date: 2026-09-15. Evidence-first read-only sweep completed before any 20A edit,
 > per `AGENTS.md` rule 7 (*use current evidence*) and `C2_planintegration[4].md` §5.
 > Focused verification at time of audit: Radiation 43/43, EnvironmentalExposureJourneyTests 1/1,

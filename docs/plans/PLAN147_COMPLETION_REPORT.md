@@ -1,5 +1,18 @@
 # PLAN 147 COMPLETION REPORT — sessions of 2026-09-06 (×4)
 
+## 0. Framing — Four Sessions (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded report remains the authority.)*
+
+> "A completion report dated across four sessions is a week of somebody's life in the passive
+> voice."
+
+Contraband — entries, identities, stashes, spreads — finished in four working sessions and
+counted afterward in tables. The report's restraint is the corpus's house style: the work was
+loud, the record is quiet.
+
+- **Four sessions, one afternoon of counting** — the correct ratio of work to paperwork.
+
 ## Scope honesty statement
 
 Session 1 delivered **Task A in full** and the **§13 minimal vertical slice**

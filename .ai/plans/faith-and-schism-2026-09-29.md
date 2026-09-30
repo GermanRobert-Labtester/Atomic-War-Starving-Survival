@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_faith_and_schism_plan.md`. Family index: `docs/expansions/expansion_new_pressures_and_places_index.md`.
 > Not a claim. `ZealotrySystem` (Plan 175), the ritual calendar (Expansion 13, integrated), `IdeologicalFrictionSystem`, `BeliefStanceBridge`, `MoraleContagionSystem` and the governance blocs each keep their meaning. This plan **makes the escalation ladder consequential and reachable** and adds authored sect rows and a partition rule. It introduces no second belief, ritual or conflict authority.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `schism_lines.json` rows; they belong in data, never in code. DEC-FS-10
 > governs: fictional movements only, both halves authored as reasonable.
@@ -43,6 +43,13 @@ everyone can count.
 Schism is clamped). Whether that clamp is a guard or a wound is a governance question (DEC-FS-05)
 and the plan refuses to prejudge it. That refusal is the plan's tone in miniature: *we do not know
 whether the ceiling was built to protect you.*
+
+**The second layer.** A schism is not a failure of agreement; it is a success of *attention*. Two
+people who agree on every fact can still end up in different rooms, because the facts were never
+the problem — the shape of the silence around the facts was. The plan stages disagreement under
+scarcity with such fairness that the player is never invited to choose a right side, only to
+notice that the choosing has already begun without them. The hole in the story is kept the way a
+family keeps a chair nobody sits in.
 
 ## 1. Goal & Outcome
 
@@ -103,6 +110,73 @@ and weighted — the draw decides *who leaves*, never *who was right*.
   That restraint is what separates a tone piece from a spectacle.
 - **Exile is the only verb with no return path.** Give it the longest confirmation beat in the
   panel and the plainest wording.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "The Question, on the board 109 days. The chalk has been replaced twice. The question has not."
+
+> "Room grant: the east room. Two signatures describing the same door in two vocabularies. Both are filed."
+
+> "Rite sheet: joint rite, two song lists. The lists do not overlap. Nobody wrote a complaint."
+
+**Scenes the player may piece together.**
+
+> "The draw is seeded and weighted and takes eleven minutes. It decides who leaves. It has never decided anything else, and the room knows the difference."
+
+> "Two believers left on the ninth. Two remained on the ninth. The set is conserved. The arithmetic is the only thing that is."
+
+**Held silences (texture, not register rows).**
+
+- What the movement's blind spot looks like from inside. The Question names it; naming is the mechanic; the seeing is not modelled and must not be. Texture only.
+- Whether the clamped last rung is a guard or a wound (E3 / DEC-FS-05). The plan refuses to prejudge and the ceiling stays unexplained — that refusal is the tone, and it is load-bearing.
+
+**Third pass — three fragments (texture only; §12 register unchanged).**
+
+> "The Question has a season on the clock. Seasons end. That is the only deadline anyone here has ever kept."
+
+> "Bunk by creed: friction down, isolation up. Both numbers are true and neither is a verdict."
+
+> "The rite programme is stapled at the corner. The staple is newer than both pages."
+
+**Fourth pass — the hole kept on purpose (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `schism_lines.json`. DEC-FS-10 governs: fictional movements
+only, both halves authored as reasonable.)*
+
+**The shape of the polish.** Fairness is this plan's method and its dread. Every artefact below is
+signed twice — once by each half — and the two signatures never contradict each other, which is
+exactly what makes them unbearable. Prose should never let one vocabulary win: if the parent calls
+it generosity, the sect must be allowed to call it distance, in the same sentence, in the same
+font.
+
+**What the shelter leaves lying around.**
+
+> "The Question, day 110. Someone has written underneath it. The writing is not an answer, and it
+> has not been erased."
+
+> "Rite sheet: joint. Two song lists. A third hand has numbered the verses so both lists arrive at
+> the last line together."
+
+> "Room grant: generous. Docket: east. Both words are dated the same day and neither has been
+> amended."
+
+**Held silences (texture, not register rows).**
+
+- Whether the Question was ever answerable. Sixty days is a long time to answer a question (§1b);
+  the plan stages the season and refuses to say there was a door in the wall. Texture only.
+- What the hole in the story looks like after the sect has gone. The schism keeps the hole (§0);
+  the keeping is authored and the shape is not, and it must not be.
 
 ---
 

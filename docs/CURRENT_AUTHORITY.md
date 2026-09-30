@@ -14,6 +14,7 @@
 | **Test and Debt Policy** | [`TEST_POLICY.md`](../TEST_POLICY.md)<br>[`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | Targeted test selection, aggregation/quarantine rules, and the current accepted/blocked/retired debt register. |
 | **Migration Status** | [`docs/GODOT_MIGRATION_STATUS.md`](GODOT_MIGRATION_STATUS.md) | 100% complete migration record; documents the removal of `Assets/_Game/` and the bridge shim. |
 | **Code Index** | [`docs/ASHFALL_CODE_INDEX.md`](ASHFALL_CODE_INDEX.md) | Comprehensive map of systems across Core (`Ashfall.Core.*`) and Godot Host (`AtomicWar.GodotApp.*`). |
+| **Deliberate Silences Register** | [`OPEN_MYSTERY_INDEX_2026-09-29.md`](../.ai/plans/OPEN_MYSTERY_INDEX_2026-09-29.md) | Cross-reference of **69 plan and prose documents** recording questions that are *intentionally unanswered* — load-bearing tone rules and locked decisions, **not** defects. **Read this before "fixing" an inconsistency.** Entries marked `Rules, Not Gaps` must never be closed; entries in §3 are shared between plans and are only safe while *no* neighbour fills them. |
 
 ---
 

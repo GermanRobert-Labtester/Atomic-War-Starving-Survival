@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-27
+PLAN_ID: "E1-27"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 27
-STATUS: READY_FOR_EXECUTION_AFTER_PLAN50_51_AUTHORITY_RECON
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 50/51 Follow-up — Garage UI, Vehicle Terrain Physics, Counter-Intelligence UI, Faction Retaliation"
 SEQUENCE_FILENAME: "E1_planintegration[27].md"
 PREVIOUS_FILENAME: "E1_planintegration[26].md"
 NEXT_FILENAMES:
   - "E1_planintegration[28].md"
   - "E1_planintegration[29].md"
-CATEGORY: UI+VEHICLES+EXPEDITIONS+ESPIONAGE+FACTIONS+COMBAT
+CATEGORY: "PROCESS"
 PREMISE_VERIFICATION_REQUIRED: true
 ONE_AUTHORITY_PER_FACT: true
 SECOND_INVENTORY_LEDGER_FORBIDDEN: true
@@ -26,6 +26,24 @@ UI_MUST_BE_READ_MODEL_PLUS_COMMANDS: true
 RUNTIME_RISK: VERY_HIGH
 SAVE_RISK: VERY_HIGH
 DETERMINISM_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [27] — Garage UI, Vehicle Terrain Physics, Counter-Intelligence Dashboard, and Faction Retaliation Operations"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[27].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [27] — Garage UI, Vehicle Terrain Physics, Counter-Intelligence Dashboard, and Faction Retaliation Operations

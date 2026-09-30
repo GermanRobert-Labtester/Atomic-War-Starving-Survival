@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-F5D3BD53FB2C"
+TITLE: "Plan 142 — Clothing & Warmth Gear Progression — Thermal Insulation Layers, Environmental Cold Mitigation, Wetness Penalties, and Condition Degradation"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_142_Clothing_Warmth_Gear_Progression.md"
+INFERRED: true
+---
 # Plan 142 — Clothing & Warmth Gear Progression — Thermal Insulation Layers, Environmental Cold Mitigation, Wetness Penalties, and Condition Degradation
 
 ## Current-evidence architecture decision (2026-09-24; supersedes stale instructions below)

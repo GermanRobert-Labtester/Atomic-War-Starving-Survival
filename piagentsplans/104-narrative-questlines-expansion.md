@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-104"
+TITLE: "Plan 104 — Narrative Questlines, Survivor Arcs and Save-Backed Branches"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/104-narrative-questlines-expansion.md"
+INFERRED: true
+---
 # Plan 104 — Narrative Questlines, Survivor Arcs and Save-Backed Branches
 
 > **Rebuild status:** COMPLETE 12 QUESTLINES — CORE CATALOG, SYSTEM, HOST SESSION, SAVE AND UI EXIST

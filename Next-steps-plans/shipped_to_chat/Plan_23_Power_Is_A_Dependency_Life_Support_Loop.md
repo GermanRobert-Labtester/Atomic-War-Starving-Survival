@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-23"
+TITLE: "Plan 23 — Power Is a Dependency — Existing Grid and Life-Support Consumers"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_23_Power_Is_A_Dependency_Life_Support_Loop.md"
+INFERRED: true
+---
 # Plan 23 — Power Is a Dependency — Existing Grid and Life-Support Consumers
 
 > Integration plan revision: 2026-09-24. Source of truth: current repository source and data, then AGENTS.md, then [docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md](../../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md). This document is a planning artifact. It does not claim paths or authorize a competing implementation package.

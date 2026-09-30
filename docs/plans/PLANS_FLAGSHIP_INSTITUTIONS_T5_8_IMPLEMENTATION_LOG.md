@@ -1,5 +1,18 @@
 # Flagship Institutions (Tasks 5–8) — Implementation Log
 
+## 0. Framing — Institutions (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "An institution is a habit that has acquired a filing system."
+
+Cultural archive vaults, diplomatic summits, sky defense, psyops: the shelter's organs of
+*continuity* — the things that outlive any single occupant. Institutions are how a holdfast stops
+being a group project and starts being a place.
+
+- **Built to outlast their builders**, which is the only definition of institution that matters
+  here.
+
 CulturalArchiveVaultSystem · DiplomaticSummitSystem · SkyDefenseBatterySystem · PsychologicalSanatoriumSystem
 
 ---

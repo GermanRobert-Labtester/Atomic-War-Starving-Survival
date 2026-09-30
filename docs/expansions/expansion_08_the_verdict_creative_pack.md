@@ -1,5 +1,33 @@
 # ASHFALL: THE VERDICT — MASTER CREATIVE PACK
 
+> *"Everyone in this shelter will be judged by someone who has to live with them afterwards."*
+>
+> **Director's framing.** The Verdict is not a trial. It is the moment a community discovers it has
+> an opinion about itself and cannot retract it. This pack supplies the raw material — the fourteen
+> doors, the Reckoning tapes, the word-ladder of what people left on walls, the barks of people in
+> corridors, and the cult's limestone exchange — and none of it argues a case. It only establishes
+> that someone was there and said something.
+>
+> **What stays unsaid here:** what the Reckoning was calling *about*; whether the graffiti was
+> written before or after; whose voice is on the tapes. The word-ladder is a corpus of world
+> history assembled by survivors, which means it is a corpus of *rumours with punctuation*.
+>
+> **The second layer (second prose pass — texture only).** The Verdict is not a trial; it is the
+> moment a community discovers it has an opinion about itself and cannot retract it. The pack
+> supplies raw material — fourteen doors, tapes, a word-ladder of what people left on walls — and
+> none of it argues a case. It only establishes that someone was there and said something.
+>
+> **What the pack leaves lying around.**
+>
+> "A knock with a rhythm that is practiced and unhurried: three, three, one. The pattern is the characterisation."
+>
+> "Whose voice is on the tapes is unsaid. The mends on both cuffs were done for size, not wear — that much the pack will tell you."
+>
+> "The fourteen doors are hours 14–24: the knock belongs to the night, and the night belongs to whoever is still awake."
+>
+> *(The silences above are unchanged and remain this pack's register.)*
+
+
 **Internal id:** `expansion_08_the_verdict`
 **Kind:** Shippable prose corpus + narrative resolution. Companion to `docs/expansions/expansion_08_the_verdict_plan.md`.
 **Voice lock:** Cold, exhausted, human, restrained. Specificity over adjectives. No line tells the player how to feel. No magic. No chosen one. No evil machines. Dry, situational, character-earned humor only.

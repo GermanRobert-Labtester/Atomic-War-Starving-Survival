@@ -1,5 +1,17 @@
 # Ten-document expansion and integration architecture closeout — 2026-09-24
 
+## 0. Framing — The Other Ten (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "Architecture closeout is where a wave's documents learn to be citable."
+
+Ten expansion documents dated and closed together — the paperwork end of a creative wave, where
+ambition is converted into reference. A closeout of documents is an act of care toward every
+future plan that will quote them.
+
+- **Dated together, closed together, citable forever** — the archive's unit of respect.
+
 ## Scope and source hierarchy
 
 This documentation package expands the ten paths requested in the active user message. It draws design direction from `docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md` and checks current Core, Godot host, save registry, and data paths before stating an architecture premise. It changes documentation only. Historical creative packs, audits, and closeouts remain dated artifacts; their old completion and coverage claims are not asserted as current verification.

@@ -69,6 +69,24 @@ Every implemented workstream must satisfy all applicable requirements below:
 
 ---
 
+## 0. Framing — Feedback (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A feedback loop is how a shelter learns the name of its own actions."
+
+Economy, weather and shelter response are three instruments pointed at one behaviour: the
+campfire raised the price of wood somewhere, and the roof cost a season. This plan's work is to
+make those echoes *visible* — so that cause and consequence share a vocabulary instead of
+coinciding.
+
+- **A visible loop is a teachable loop**; a hidden one is just luck with an explanation later.
+- **Three owners, one conversation** — integration here means letting each system keep its own
+  ledger while the player reads one story.
+
+---
+
 ## 1. Evidence Baseline and Existing Integration Gaps
 
 The implementation plan assumes the following repository baseline.

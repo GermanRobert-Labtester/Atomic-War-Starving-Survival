@@ -1,5 +1,19 @@
 # Plans 78–81 Flagship Closeout — Decontamination Airlocks, Geodetic Survey, Kinetic Storage & Chemical Reconnaissance
 
+## 0. Framing — Boundaries and Distances (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "An airlock is a boundary. A survey is a distance. Both are ways of saying where the shelter
+> ends."
+
+Decontamination at the door, geodesy at the horizon, storage in between, chemistry in the field:
+four plans about the shelter's *edges*, closed as one wave. A place is defined by its thresholds,
+and this closeout inventories exactly those.
+
+- **The edges are where a shelter negotiates with everything beyond it** — doors, horizons,
+  containers and questions.
+
 **Status:** Core, data, persistence, host wiring, and Wave-5 test matrix complete. Wave-6 UI panels deferred to `google-stitch` (flagged in `AGENTS.md`).
 **Plan class:** Major systemic integration / infrastructure expansion / environmental survival hardening
 **Execution:** Evidence-first, deterministic, data-driven, persistence-safe, CI-gated, presentation-decoupled

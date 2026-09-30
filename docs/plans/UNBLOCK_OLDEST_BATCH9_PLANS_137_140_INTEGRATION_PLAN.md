@@ -8,6 +8,23 @@
 
 ---
 
+## 0. Framing — Sustained Triage (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A queue drained in pairs stays honest. A queue drained in a rush becomes a cull."
+
+Plans 137 and 140 — the ninth batch, and the point where programmes usually get careless. This one
+doesn't: the premise audit still runs before the seam, the selection is still argued in writing,
+and the stop conditions are still sharp.
+
+- **The middle of a queue is where discipline is actually tested** — beginnings are watched and
+  endings are celebrated, but middles are merely kept.
+- **Two at a time, indefinitely, beats twenty at a time, once.**
+
+---
+
 ## 1. Scope and Selection
 
 The user requested audit, unblocking, and full integration of the next batch of partial plans:

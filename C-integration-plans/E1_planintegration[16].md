@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-16
+PLAN_ID: "E1-16"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 16
-STATUS: READY_FOR_EXECUTION_WHEN_RELATION_AND_INTERACTION_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 182 — Relationship Decay & Drift System"
 SEQUENCE_FILENAME: "E1_planintegration[16].md"
 PREVIOUS_FILENAME: "E1_planintegration[15].md"
 NEXT_FILENAMES:
   - "E1_planintegration[17].md"
   - "E1_planintegration[18].md"
-CATEGORY: LINK+RELATIONSHIPS+SOCIAL_MEMORY+DRIFT+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Add gradual relationship maintenance, neglect drift, and reconciliation by applying deterministic temporal policies to canonical SurvivorRelations state using real interaction evidence, without creating a second relationship ledger, social scheduler, morale system, or memory system."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -24,6 +24,24 @@ SAVE_RISK: HIGH
 BALANCE_RISK: HIGH
 PLAYER_FRICTION_RISK: HIGH
 PERFORMANCE_RISK: MEDIUM
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [16] — Relationship Decay, Social Drift, Maintenance, Reconciliation, and Long-Term Bond Dynamics"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[16].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [16] — Relationship Decay, Social Drift, Maintenance, Reconciliation, and Long-Term Bond Dynamics

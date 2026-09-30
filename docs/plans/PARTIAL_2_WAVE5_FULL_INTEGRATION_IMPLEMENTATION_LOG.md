@@ -1,5 +1,17 @@
 # Partial Wave 5 — Plans 163 + 210 Integration Log
 
+## 0. Framing — Maps and Things (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Cartography is how a shelter holds the outside. Belongings are how a person holds the inside."
+
+Plan 163 draws the world; Plan 210 draws the self — both are acts of *arrangement*, of deciding
+what belongs where. Integrated together they frame the shelter between its map and its pockets,
+which is where every survivor actually lives.
+
+- **Two kinds of ownership, one discipline**: both plans persist only what cannot be recomputed.
+
 Date: 2026-09-19
 Status: implemented and verified by the integrator
 

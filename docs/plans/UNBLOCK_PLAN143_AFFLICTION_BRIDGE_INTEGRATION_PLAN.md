@@ -5,6 +5,23 @@
 **Package:** `UNBLOCK-PLAN-143-AFFLICTION-BRIDGE`
 **Scope rule:** no `PARTIAL` closeout. The Medical Afflictions to Quest and Work Bridge is fully integrated across Core, Host Session, Duty Roster System, Survivor Fitness Evaluation, UI Panels, and Host CLI self-test.
 
+## 0. Framing — The Bridge (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "An affliction that cannot change your work or your quests is only a number."
+
+Plan 143 builds exactly the missing span: medical afflictions crossing into the quest and work
+systems, so that a diagnosis becomes a *consequence* instead of a status icon. A bridge is the
+right metaphor — the affliction stays owned by medicine, and only its weight is carried across.
+
+- **Cross-system meaning without cross-system ownership**: the bridge moves consequences, never
+  authority.
+- **The span is what turns survival statistics into biography.**
+
+---
+
 ## Outcome
 
 Eliminated the partial/blockade state where `AfflictionQuestWorkBridge` and `affliction_bridge_rules.json` existed in pure Core without host integration. Bound the catalog and canonical live affliction IDs to the existing duty assignment and quest availability owners, then surfaced truthful reasons in the existing medical and work/quest panels while preserving single-owner domain boundaries (Rule 5):

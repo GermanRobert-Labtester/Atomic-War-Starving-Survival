@@ -1,5 +1,17 @@
 # Integration Log: Plans 200, 212, 206, and 182 Full Production Sealing
 
+## 0. Framing — Sealing (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Production sealing is the difference between done and demonstrably done."
+
+Four plans crossed the line from *implemented* to *sealed*: reachable, persisted, verified, and
+named in the record. Sealing is the corpus's verb for keeping its word — and four at once is a
+statement that the discipline scales.
+
+- **A seal is a promise with witnesses**, which is why the log lists them.
+
 **Date:** 2026-09-20
 **Scope:**
 1. **Plan 200 (`C2[40]`): Survivor Personal Quests & Character Arcs**

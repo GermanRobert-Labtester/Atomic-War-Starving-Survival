@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-49"
+TITLE: "Plan 49 — Micro-Location Discovery & Mid-Route Travel Encounter Architecture"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/49-micro-location-discovery.md"
+INFERRED: true
+---
 # Plan 49 — Micro-Location Discovery & Mid-Route Travel Encounter Architecture
 
 > **Authority Document Reference:** Ashfall Master Expansion Authority v2.0 (Volumes 16, 32, 35, 49, 50)

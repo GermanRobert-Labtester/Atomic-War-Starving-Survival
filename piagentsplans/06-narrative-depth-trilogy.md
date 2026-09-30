@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-6"
+TITLE: "Plan 06 — Narrative Depth: Letters, Echo/Cassettes, and the Year-of-Ash War Arc"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/06-narrative-depth-trilogy.md"
+INFERRED: true
+---
 # Plan 06 — Narrative Depth: Letters, Echo/Cassettes, and the Year-of-Ash War Arc
 
 > **Rebuild status:** SUBSTANTIALLY INTEGRATED — REMAINING PLAYER-SURFACE AND CONTINUITY AUDIT

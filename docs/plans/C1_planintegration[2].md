@@ -36,6 +36,24 @@ The plan is complete when the UI surface registry represents **capability truth*
 
 ---
 
+## 0. Framing — Honest Navigation (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "An honest map is one that admits where it is guessing."
+
+Navigation, campaign authority and paths: the plan's ethic is that the player is never shown a
+certainty the simulation does not hold. A route is a claim, a campaign clock is a claim, and the
+UI's job is to say which claims are load-bearing — so that being lost is a condition of the world,
+not a defect of the interface.
+
+- **Authority is singular by discipline**: one clock, one map, one truth about where the shelter
+  stands.
+- **Honesty in navigation is generosity** — the player can plan against a known uncertainty.
+
+---
+
 ## 1. Source Evidence Baseline
 
 The source plan identifies three separate defect classes.

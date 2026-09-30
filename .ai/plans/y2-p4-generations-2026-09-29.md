@@ -12,10 +12,15 @@ STATUS: APPROVED BY USER
 
 > Approval: user, 2026-09-29, "I authorise the each seperate plan!" (umbrella: `.ai/plans/year-two-the-long-thaw-2026-09-29.md`). Derived from umbrella §5 (card P4); acceptance criteria, paths, and stop conditions there are binding. **Start gate:** predecessor package handoff accepted by the foreman, exact paths claimed in `WORKTREE_OWNERSHIP.md`, `.ai/state.md` read. Rule 10 stop conditions apply.
 
-> **Editorial polish (prose pass, non-contractual):** the Prologue and texture notes below are
+> **Editorial polish (prose pass, non-contractual):** the Prologue, §1b and texture notes below are
 > narrative texture and writing guidance only. They change no acceptance criterion, no claimed path,
 > no decision and no verification step. All binding criteria remain in the umbrella
 > (`year-two-the-long-thaw-2026-09-29.md`) §5/§6/§8.
+>
+> **Second prose pass (2026-09-29, non-contractual):** the Prologue gains one *second layer*
+> paragraph and a new **§1b Texture, Mystery & Voice** section, matching the corpus standard used by
+> the family plans. Same rule as above: narrative texture only. §6's register is unchanged — the
+> new fragments are texture, not new recorded questions (the Open Mystery Index counts still hold).
 
 ---
 
@@ -43,6 +48,13 @@ meaningful as the filled ones.
 genealogy register is not an absence of data — it is a decision that was made and deliberately not
 recorded. §6 keeps open what the gap means.
 
+**The second layer.** A registry is the only kind of book where the blanks are the literature. The
+card's mechanic — *register / leave-unwritten* — quietly asserts that a person's last act of
+self-definition is a right and not a feature, and the game honours both answers equally. The
+intergenerational arc is easily mistaken for a progression ladder; it is not one. Nothing about
+apprenticeship pays out. What the chapter models is *competence passing between people*, and the
+only score it keeps is the one nobody is allowed to total.
+
 ---
 
 ## 1. Goal & Outcome
@@ -53,6 +65,67 @@ recorded. §6 keeps open what the gap means.
 - **Goal:** Children→apprentices→acting successors; elder handover; quarterly Council; register/leave-unwritten choice. No new ladder; consent is real.
 - **Non-Goals:** No ratified successor from a raised child before Day 721; GenerationalSuccessionEngine 365 d/yr clock is not read; no new role ledger.
 - **Start gate:** P2 accepted (4c also needs P0 DEC-Y2-07; 4d needs DEC-Y2-10)
+
+---
+
+## 1b. Texture, Mystery & Voice
+
+*(Second prose pass. Narrative texture and writing guidance only — no authority, no claimed path,
+no acceptance criterion. §6's register is unchanged; the fragments below are content candidates
+and deliberate silences, not new recorded questions.)*
+
+**What the player is never told.**
+
+- Who keeps the register. A role exists; a person does not have to. The book is kept by whoever is willing to keep it, and that is never narrated.
+- What an apprentice is told the night they become an acting successor — or whether that night differs in any way from every night before it.
+- Whether the Council has a room. *Quarterly* is authored; a place is not (P4-OM-3). Deliberation stays unmodelled and the fiction must not furnish it.
+- What an elder's final wish is *for* (P4-OM-4). The fiction inherits the heirloom's weight and never its explanation.
+
+**Voice — sample fragments** (content candidates for the P8 prose surfaces; the apprenticeship
+catalogue keeps catalog rows and gains no prose field).
+
+> "Name: entered. Consent: given. The line is short because the decision was not."
+
+> "Left unwritten, at the survivor's request. The page is not empty; the page is a decision."
+
+> "The apprentice asked what happens after the handover. The elder said: you find out, which is the only answer that has ever been true."
+
+> "Council, second quarter. Designations recorded. Deliberation not recorded — by custom, and by rule."
+
+**Design texture beats.**
+
+- **Leave-unwritten is a dignified verb.** Never render non-registration as missing content, a tooltip, or a nudge. Both answers are complete answers.
+- **Day 721 is a horizon, not a delay.** No ratified successor from a raised child before it (F7 age floor). The fiction must never imply the shelter is waiting for one.
+- **Children are capability, never peril.** Hard rule — no depiction of harm — and it is exactly why the arc reads as hope rather than tension.
+- **The register does not reconcile.** Names, blanks and designations coexist without being resolved into a hierarchy. The book is not a scoreboard and must never become one.
+
+**Third pass — the blank column (texture only; §6's register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §6's register is unchanged; the fragments
+below are content candidates and deliberate silences, not new recorded questions.)*
+
+**The shape of the polish.** A registry is the only kind of book where the blanks are the
+literature. The card's verb — *Leave Unwritten* — is a form of authorship by restraint, and the
+prose should treat every empty line as a sentence the shelter chose not to say about itself.
+
+**What the registry leaves lying around.**
+
+> "Registry line, left unwritten. The blank is the literature; the ruled line beneath it is the
+> audience."
+
+> "An apprentice is a technique with a face and a deadline."
+
+> "Succession entry: prepared, unheld. The preparation is the inheritance."
+
+**Held silences (texture, not register rows).**
+
+- What the register would say if it were filled. Leave Unwritten is the card's whole verb; the
+  filling is content's job and must never become the engine's. Texture only.
+- Who inherits an unwritten line. Succession exists and is host-wired; the inheritance of blanks
+  is folklore, and folklore is kept by saying-so.
+
+---
 
 ## 2. Claimed Paths & Affected Files
 (Proposed; the foreman records the claim. `INT` = integrator-owned shared seam.)

@@ -1,17 +1,35 @@
 ---
-PLAN_ID: E1-2
+PLAN_ID: "E1-2"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 2
-STATUS: READY_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 58 — The Continuation: Outposts, Waystations, and a Second Holdfast"
 DRIVE_FILENAME: "E1_planintegration[2].md"
 PREVIOUS_FILENAME: "E1_planintegration.md"
 NEXT_FILENAME: "E1_planintegration[3].md"
-CATEGORY: LINK+CONTINUATION+SAVE_INTEGRATION
+CATEGORY: "PROCESS"
 INTAKE_REQUIRED: true
 ONE_AUTHORITY_PER_FACT: true
 NO_SECOND_CAMPAIGN_AUTHORITY: true
 NO_NG_PLUS_POWER_BONUS: true
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [2] — Outposts, Waystations, and a Second Holdfast"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[2].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [2] — Outposts, Waystations, and a Second Holdfast

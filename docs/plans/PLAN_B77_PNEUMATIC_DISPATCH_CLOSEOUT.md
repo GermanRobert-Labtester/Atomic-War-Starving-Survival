@@ -1,5 +1,18 @@
 # Plan B77 — Pneumatic dispatch closeout
 
+## 0. Framing — The Tube (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "A pneumatic tube is a promise that a message will arrive before an argument does."
+
+Dispatch by air pressure is the most cheerful technology in the shelter and the most telling: a
+place that installs tubes has decided that messages matter. The closeout is a small salute to
+infrastructure whose whole purpose is *speed of word*.
+
+- **The tube is a line drawn between rooms**, and lines between rooms are how a holdfast becomes a
+  building.
+
 Status: implemented in the current Godot host.
 
 ## Delivered

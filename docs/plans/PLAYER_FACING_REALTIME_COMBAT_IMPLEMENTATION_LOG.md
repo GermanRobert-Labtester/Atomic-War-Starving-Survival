@@ -1,5 +1,18 @@
 # PFGL-RT-COMBAT-TETRAD — Implementation Log
 
+## 0. Framing — The Tetrad, Settled (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "The log is where four arguments are settled in writing."
+
+Input, physics, AI and feel were designed to argue in one second of play; this file is where they
+agreed in advance. A combat system's integration log is really a treaty — each leg's rights
+enumerated, each seam named before the first frame is rendered.
+
+- **Performance is a combat mechanic**, and the log treats the frame budget as part of the
+  design.
+
 **Package:** `PFGL-RT-COMBAT-TETRAD-2026-09-25`
 **DEC:** `DEC-358` SIGNED
 **Evidence HEAD at start:** `1678c074`

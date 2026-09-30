@@ -8,6 +8,23 @@
 
 ---
 
+## 0. Framing — The Things That Run Out (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Civilisation is mostly replacement parts."
+
+Canisters, patch kits, medicine, bills of lading for the body: consumables are the game's quietest
+pressure, because their meaning is their expiry. The shared item-tag is the unglamorous hero here
+— one dictionary entry so that *consumable* means the same thing in every system that says it.
+
+- **A shared tag is a dictionary entry**, and vocabulary that drifts between systems is how
+  balance bugs are born.
+- **The bill for living is paid in small items, weekly** — never dramatic, always due.
+
+---
+
 # 1. Objective
 
 One consumption semantics layer for consumable bills (repair parts, replacement

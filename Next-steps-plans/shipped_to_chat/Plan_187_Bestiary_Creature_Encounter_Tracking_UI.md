@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-69A59904C1F0"
+TITLE: "Plan 187 — Bestiary UI — Wildlife Knowledge and Encounter Provenance"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_187_Bestiary_Creature_Encounter_Tracking_UI.md"
+INFERRED: true
+---
 # Plan 187 — Bestiary UI — Wildlife Knowledge and Encounter Provenance
 
 ## Current evidence and integration architecture — 2026-09-24

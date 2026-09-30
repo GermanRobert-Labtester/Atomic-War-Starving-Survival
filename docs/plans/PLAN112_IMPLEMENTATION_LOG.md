@@ -1,5 +1,16 @@
 # Plan 112 implementation log
 
+## 0. Framing — What Is True (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "The log does not say who stayed late. The log says what is true."
+
+Implementation logs keep biography out and fact in — which is precisely what makes them useful a
+year later, when nobody remembers the afternoon but everybody needs the finding.
+
+- **Impersonal is not cold; it is portable.** Facts travel between teams; stories do not.
+
 ## Phase 1 — Runtime and baseline reconciliation
 
 **Status:** PASS

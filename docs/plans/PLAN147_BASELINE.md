@@ -1,5 +1,17 @@
 # PLAN 147 — BASELINE (Task A recon, 2026-09-06)
 
+## 0. Framing — Task A (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded baseline remains the authority.)*
+
+> "Reconnaissance is the plan's first draft of the truth."
+
+Task A's baseline measures the contraband world exactly as it stands — every entry, identity and
+stash in its pre-surgery state — so that every later claim can be a *diff* rather than an opinion.
+
+- **Baseline first, ambition second.** The order is the difference between engineering and
+  wishing.
+
 ## Mission recap
 
 Turn the 20-entry `Assets/StreamingAssets/Data/narrative/bunker_contraband_barter.json`

@@ -1,5 +1,17 @@
 # Flagship XII (collectibles) — Implementation Log
 
+## 0. Framing — Things Kept (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A collectible is an object that has been promoted to memory."
+
+Collectible *narrative quality* is the phrase that matters: not more things, but things worth
+keeping. The log records the moment the shelf stopped being loot and started being testimony.
+
+- **A collection is autobiography in objects** — the player curates what the run will be
+  remembered by.
+
 Plan: Flagship Integration Plan XII — Collectible Narrative Quality,
 Journal/Codex Content, Faction Intel & Localization Readiness.
 Date: 2026-09-05. Branch: `feat/asset-pipeline-flagship`.

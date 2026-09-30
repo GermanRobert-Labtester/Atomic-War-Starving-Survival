@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-5
+PLAN_ID: "E1-5"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 5
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 140 — Generational Legacy & Campaign Inheritance"
 SEQUENCE_FILENAME: "E1_planintegration[5].md"
 PREVIOUS_FILENAME: "E1_planintegration[4].md"
 NEXT_FILENAMES:
   - "E1_planintegration[6].md"
   - "E1_planintegration[7].md"
-CATEGORY: LINK+LEGACY+CONTINUATION+SAVE_BOUNDARY
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create a bounded multi-generational legacy layer that carries records, lineage, memory, and optional narrative conditions across campaigns without silently converting ASHFALL into a power-stacking New Game+."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -22,6 +22,24 @@ RUNTIME_RISK: HIGH
 SAVE_RISK: VERY_HIGH
 BALANCE_RISK: VERY_HIGH
 SCOPE_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [5] — Generational Legacy, Campaign Memory, Lineage, and Bounded Inheritance"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[5].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [5] — Generational Legacy, Campaign Memory, Lineage, and Bounded Inheritance

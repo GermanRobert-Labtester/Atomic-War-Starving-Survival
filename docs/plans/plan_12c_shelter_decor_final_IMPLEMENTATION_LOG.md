@@ -1,5 +1,18 @@
 # Plan 12C Final — Shelter Interior & Memorial Wall
 
+## 0. Framing — Interior (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A memorial wall is where a shelter keeps its names. An interior is where it keeps its people."
+
+The deferred Plan 12C lane closes without creating a second anything — the plan's own words —
+and the restraint suits the subject. Interiors are the game's softest architecture: light,
+furniture, the wall with the names on it, and the deliberate refusal to make any of it a system.
+
+- **Decoration that stays out of the ledgers is decoration that stays out of the way of grief** —
+  which is where it belongs.
+
 ## Scope
 
 Finish the deferred player-facing Plan 12C lane without creating a second

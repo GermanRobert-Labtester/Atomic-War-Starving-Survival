@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-122"
+TITLE: "Plan 122 — Military Faction Branches, Martial Duty Dilemmas and Combined Save Safety"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/122-military-faction-branch-expansion.md"
+INFERRED: true
+---
 # Plan 122 — Military Faction Branches, Martial Duty Dilemmas and Combined Save Safety
 
 > **Rebuild status:** COMPLETE 15-BRANCH CATALOG/STATE LOOP — MILITARY BRANCH REACHABILITY AND MIGRATION AUDIT

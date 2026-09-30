@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-4"
+TITLE: "Plan 04 — Workshop Relic Blueprint Catalog and Reverse-Engineering Contract"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/04-relic-blueprint-expansion.md"
+INFERRED: true
+---
 # Plan 04 — Workshop Relic Blueprint Catalog and Reverse-Engineering Contract
 
 > **Rebuild status:** COMPLETE DATA EXPANSION — CURRENT INTEGRATION AND CATALOG MAINTENANCE PLAN

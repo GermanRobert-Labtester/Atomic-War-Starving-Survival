@@ -1,6 +1,21 @@
 // SPDX-License-Identifier: MIT
 # C2[2] Closure Report — Legibility, Cause, Guidance, and Confirmation
 
+## 0. Framing — Closure (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes; the recorded closure remains the authority.)*
+
+> "A closure report counts a plan's promises, not its intentions."
+
+Executed in a single builder session under the directive to implement *non-stale parts only* —
+the rare instruction that dates itself honestly. Even the license header at the top of the file
+is in on the joke: this document is evidence, and evidence should carry its provenance where
+everyone can see it.
+
+- **"Non-stale parts only" is Rule 7 in four words** — current evidence decides, always.
+- **Closure is where a plan's scope finally becomes a receipt.**
+
 > Plan: `C2_planintegration[2].md` (Plan 17 — Legibility: Cause, Effect, and
 > Guidance). Continuity Wave 1. Executed 2026-09-15 in a single builder
 > session under the foreman's "implement non-stale parts only" directive.

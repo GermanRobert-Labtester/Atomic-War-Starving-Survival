@@ -5,6 +5,23 @@
 **Evidence:** `--tunnel-network-selftest` 12/12, `--audio-accessibility-selftest` 12/12,
 host + Core builds 0 errors / 0 warnings.
 
+## 0. Framing — Under and Over (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "One plan digs beneath the shelter. The other makes sure everyone can hear it."
+
+The tunnel network and audio accessibility are a strangely perfect pair: one expands the world
+the player can *reach*, the other expands the players who can reach it. Both are about passages —
+of rock in one case, of sound in the other — and both fail the same way when they are narrow.
+
+- **Tunnels are geography with a cost**; the plan gives the underground continuity without giving
+  it a voice it shouldn't have.
+- **Audio accessibility is captions, cues and clarity** — the engineering of being included.
+
+---
+
 ## Premise (verified in source before editing)
 
 Both plans were listed as partials with **0 host references**.

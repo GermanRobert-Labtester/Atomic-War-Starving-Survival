@@ -6,6 +6,23 @@
 
 ---
 
+## 0. Framing — The Ecology of Powers (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Factions are not teams. They are weather systems with opinions."
+
+Ecology means every faction has a budget of attention — what it wants, what it can afford, what it
+has noticed about the shelter — and the Muster is the shelter's answer to being one animal among
+many: standing converted into bodies, reputation converted into hands.
+
+- **An ecology cannot be won, only farmed.** The plan gives the region metabolism, not a
+  scoreboard.
+- **The Muster is where standing stops being a number** and starts being people at the gate.
+
+---
+
 ## 1. Objective
 
 Turn ASHFALL's political systems from isolated reputation surfaces into a traceable late-game spine:

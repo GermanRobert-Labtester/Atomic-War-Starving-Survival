@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-84"
+TITLE: "Plan 84 — Muster Witnesses & Tribunal Testimonies"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/84-muster-witnesses-expansion.md"
+INFERRED: true
+---
 # Plan 84 — Muster Witnesses & Tribunal Testimonies
 
 > **Rebuild status:** CURRENT-EVIDENCE PLAN — POST-250K DEEP POLISH AND FINAL PRECISION PASS INCLUDED

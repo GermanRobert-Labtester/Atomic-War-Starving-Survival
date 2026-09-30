@@ -11,6 +11,15 @@
 
 ---
 
+> *"A faith is a story a shelter agrees to keep telling. A schism is the moment somebody notices the
+> story has a hole in it — and keeps the hole."*
+>
+> Nothing here is a real religion and nothing here is a real argument. What this expansion stages is
+> the small, terrible mechanics of *disagreement under scarcity*: two people who agree on every fact
+> and still cannot share a bunk.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -24,6 +33,16 @@ The last rung is never reached. The ladder is capped one step below it. And the 
 Faith and Schism is the expansion where **belief becomes a way a shelter can come apart.** The rungs bite. A movement that has been asked the same unanswerable question for too long *splits* — into two authored halves that both believe they are the true one, and that share bunks, a mess hall and a ration line. The player cannot make the disagreement go away. They can decide how the shelter lives with it.
 
 The promise: **you will lead people who each believe they are right about something that cannot be proved, and you will choose what that costs.**
+
+The **Question** is the heart of it. A movement asks its own blind spot out loud — once, formally,
+with a season on the clock — and the player answers. Whatever they answer becomes a *position*, and
+positions have owners, and owners have rooms, and rooms have bunks. That is the whole catastrophe.
+It starts with seating.
+
+Every movement is authored as **reasonable**, including the one that splits away. That is not
+fairness for its own sake: a schism whose sect reads as a villain is a failure of authoring. The
+partition rule is seeded and weighted — the draw decides *who leaves*, never *who was right*. Give
+each half its best sentence.
 
 ### 1.2 Pillars
 
@@ -183,3 +202,59 @@ No real religion; no new belief authority, ritual ledger or conflict authority; 
 | Double schism with morale contagion | Explicit precedence rule (DEC-FS-06). |
 | Static table edits | Data-driven conflict pairs (DEC-FS-03). |
 | Tone | Fictional movements only; no proselytising language. |
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** A faith is a story a shelter agrees to keep telling; a schism is the moment
+somebody keeps the hole. Both halves are authored as reasonable — a sect that reads as a villain
+is a failure of authoring — and the seeded draw decides *who leaves*, never who was right. The
+horror is not that someone is wrong. It is that everyone can count.
+
+**What the expansion leaves lying around.**
+
+> "Question board, 109 days. The chalk has been replaced twice. The question has not."
+
+> "Joint rite programme: two song lists stapled together by someone who wanted them to be one list."
+
+> "Edict, drafted and not issued. The drawer is the document's whole future."
+
+**Scenes the player may piece together.**
+
+> "They asked for a room. We gave the east room. We called it generosity and they called it distance, and both were describing the same door."
+
+> "Exile has the longest confirmation beat in the panel and the plainest wording. The plainness is the mercy."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the movement's blind spot looks like from inside. The Question names it; the naming is the mechanic; the seeing is unmodelled.
+- Whether the nineteen rites were ever one calendar. The sequence reads as tradition; it is documented as nothing.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Why the escalation ladder is clamped unreachable at Schism.** The ceiling may be a guard or a
+wound. This document refuses to prejudge it — that refusal is the expansion's tone in miniature: we
+do not know whether the ceiling was built to protect you.
+
+**What each movement cannot ask about itself.** The authored Questions name a *blind spot*, not a
+doctrine. Filling the doctrine in would make the sect a caricature.
+
+**Whether the ritual calendar predates the movements.** Nineteen rites exist and their sequence is
+not asserted anywhere. The order reads as tradition; it is not documented as history.
+
+**Whether belief schism and morale schism are the same event seen twice.** They are ruled never to
+fire from one cause on one day. That is not the same as saying they are unrelated.
+
+**Why opposing pairs live in a static in-code table.** The world's enmities were hard-coded. The
+plan offers `conflicts_with[]` as a fix and declines to explain the origin.

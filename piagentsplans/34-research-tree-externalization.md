@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-34"
+TITLE: "Plan 34 — Research Knowledge Catalog, Unlock Bridge and Save-Safe Externalization"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/34-research-tree-externalization.md"
+INFERRED: true
+---
 # Plan 34 — Research Knowledge Catalog, Unlock Bridge and Save-Safe Externalization
 
 > **Rebuild status:** COMPLETE 62-NODE RESEARCH AUTHORITY — DAG, UNLOCK AND CONSUMER MAINTENANCE

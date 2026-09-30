@@ -1,5 +1,16 @@
 # Remaining partial-plan placeholders
 
+## 0. Framing — The Placeholder (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded register remains the authority.)*
+
+> "A placeholder is a promise that the rest is remembered."
+
+This file is the corpus's conscience in miniature: the deferred partials, listed so they cannot
+quietly disappear. A placeholder is not neglect — neglect would be *not writing them down*.
+
+- **The register is a promise, and promises are the only currency the future accepts.**
+
 Date: 2026-09-19
 Status: ALL PARTIAL PLANS INTEGRATED — 15 of 15 fully integrated.
 

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-38"
+TITLE: "Plan 38 — The Year Turns: Seasons, Deadlines, and a Clock With Teeth"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_38_The_Year_Turns_Seasons_Deadlines_Clock.md"
+INFERRED: true
+---
 # Plan 38 — The Year Turns: Seasons, Deadlines, and a Clock With Teeth
 
 > **Wave:** Continuity Wave 5 — *The Human Interface*

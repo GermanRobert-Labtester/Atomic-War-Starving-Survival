@@ -11,6 +11,15 @@
 
 ---
 
+> *"We dug down for water and found a door that had been closed from the other side."*
+>
+> There is no monster at the bottom of the shaft. There is a **procedure** — four levels, each with
+> a Rule, a Tell and a Toll, kept by something that reads a ledger. The horror of The Deep is not
+> that you will meet it. It is that you will *understand* it, and that understanding is what it has
+> been charging for all along.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -24,6 +33,17 @@ Meanwhile the game keeps a second, quieter depth in its data. Seven **architect 
 The Deep is the expansion where **the shaft turns out not to be the bottom.** When you dig to the floor of your own shelter you find a seal that you did not pour. Behind it are four sealed levels — the builders' levels — that were sealed on purpose, by someone, for a reason that is a *rule*, not a ghost. Each level has one anomaly: **a Rule** (what it does, whether or not you are watching), **a Tell** (how an instrument shows it before it hurts), and **a Toll** (what it costs to keep it open). You can go down in shifts. You can read the level before you open it, or you can open it blind and pay. You can hold it, reseal it, or lose it and spend a bad week getting it back.
 
 The promise: **nothing down there is trying to hurt you; it is just true, and the truth has a price per shift.**
+
+Below the shaft is not a ruin. A ruin implies abandonment, and abandonment implies that whoever
+was there has gone. These levels were *closed*: curtain, scrubbers, archive, vats — a sequence, a
+procedure, an order of operations that somebody carried out and either did not finish or finished
+too well. Something is still keeping the schedule. A weekly purge has a cadence, and a cadence
+implies attention.
+
+Read the three-line form carefully. The **Rule** is what is forbidden. The **Tell** is what proves
+the Rule is still enforced. The **Toll** is what it costs to break it anyway. Three lines, equal in
+weight, parallel in syntax — and after the first level the player knows the shape of the poem and
+reads the fourth one differently.
 
 ### 1.2 Pillars
 
@@ -192,3 +212,61 @@ No monsters or combat below; no procedural maps; no vault access mapping; no new
 | Slot contest with The Deep Works | No construction project; own ledger (DEC-TD-02) |
 | Sleeper handled carelessly | Ship dark; one choice; no method detail; sensitivity flagged (DEC-TD-07) |
 | Tolls tuned into a chore | Per-level cap; a "hold cost" preview before committing; Resealed is always cheap |
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** The bible's central promise — *nothing down there is trying to hurt you; it
+is just true, and the truth has a price per shift* — is the corpus ethic in one sentence: horror
+priced per shift is measurable, bounded and recoverable, and that is exactly why the dread
+survives. The player can always afford one more reading. One more reading is how understanding
+sneaks up on you.
+
+**What the expansion leaves lying around.**
+
+> "Instrument card, Level 2: filter differential 1,850 Pa. The card is laminated; the numbers are older than the lamination."
+
+> "Descent plan: five keys, one marked *Forced* in pencil. Pencil is the shelter's admission that it might change its mind."
+
+> "A wheel on the seal — poured by hands that intended an opening. The wheel is the argument that the seal was a door all along."
+
+**Scenes the player may piece together.**
+
+> "Zero point four to two point one. That is not an answer; that is a weather report. The crew write the range on the wall and go down anyway."
+
+> "The archive's clock is wrong by a number that changes. The keeper of the time stops trusting the shelter's clock, and later she is right about something else."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the sibling shelter's paper says in full. Audit copies are ordinary stock, records and one hint; the document behind the document is never transcribed and must not be.
+- What the third hour of a shift feels like. Crew-days are the currency; the experience of paying them belongs to the prose surfaces and nowhere else.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Who built the levels, and to whose drawings.** "Built to the same drawings" as the narrative-only
+vault is as close to an answer as this document will get. Naming an architect converts dread into
+exposition.
+
+**Why the shaft caps at depth five.** A cap that is explained is a difficulty slider. A cap that is
+not is a horizon.
+
+**What the vats purge.** A weekly purge has a cadence. A cadence implies a product. The product is
+never named and must never be named.
+
+**Whether the Sleeper is asleep, absent, or waiting.** Three readings survive; one does not. This
+document will not choose.
+
+**Whether a level *wants* to be opened.** The mechanics model seals, rules and tolls. They model no
+intent. Reads of intent belong to the player — and, occasionally, to *Faith and Schism*'s data
+hooks. Never to this owner.

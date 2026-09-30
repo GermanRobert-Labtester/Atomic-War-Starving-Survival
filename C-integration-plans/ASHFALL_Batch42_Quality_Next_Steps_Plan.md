@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-8D3D18E8DE6C"
+TITLE: "ASHFALL: 2D Atomic-War Survival — Quality Next Steps Roadmap (Batch 42)"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/ASHFALL_Batch42_Quality_Next_Steps_Plan.md"
+INFERRED: true
+---
 # ASHFALL: 2D Atomic-War Survival — Quality Next Steps Roadmap (Batch 42)
 
 **Generated:** 2026-08-19<br>

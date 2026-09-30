@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-24
+PLAN_ID: "E1-24"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 24
-STATUS: READY_FOR_EXECUTION_WHEN_MESSAGE_EVENT_TOPOLOGY_AND_NOTIFICATION_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 211 — Internal Communication Network"
 SEQUENCE_FILENAME: "E1_planintegration[24].md"
 PREVIOUS_FILENAME: "E1_planintegration[23].md"
 NEXT_FILENAMES:
   - "E1_planintegration[25].md"
   - "E1_planintegration[26].md"
-CATEGORY: LINK+SHELTER+COMMUNICATION+MESSAGING+LEADERSHIP+SOCIAL
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create shelter-local communication artifacts, channel infrastructure, delivery/receipt state, publication rules, and message-oriented UI while preserving canonical event, leadership, duty, schedule, relations, memorial, security, external-information, accessibility, topology, power, and maintenance authorities."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -30,6 +30,24 @@ SAVE_RISK: HIGH
 NOISE_RISK: VERY_HIGH
 SOCIAL_SIMULATION_RISK: HIGH
 UI_SCALE_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [24] — Internal Shelter Communication, Bulletin Boards, Intercom, Mail, Notices, Requests, Receipts, and Community Information Flow"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[24].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [24] — Internal Shelter Communication, Bulletin Boards, Intercom, Mail, Notices, Requests, Receipts, and Community Information Flow

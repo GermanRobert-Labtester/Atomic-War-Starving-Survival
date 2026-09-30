@@ -1,10 +1,315 @@
 # Current Task State
 
-## ChatGPT item art tranche 44 — 2026-09-29 (IN PROGRESS)
+## Plan 53 E1C metadata migration — FULLY INTEGRATED (2026-09-30)
 
-- Target: two final unresolved `items.json` cassettes and all thirteen unresolved `greenhouse_items.json` art candidates; exact IDs and owned paths are in `.ai/plans/ashfall-chatgpt-item-art-tranche-44-2026-09-29.md` and `WORKTREE_OWNERSHIP.md`.
-- Evidence: the previous 928/967 and 39-remaining aggregate estimate was stale. Current registry-aware static scan found 724 primary IDs, 722 with candidates; greenhouse has 34 IDs, 21 with candidates. The 967 denominator is the Godot report's aggregate item catalog count. No source/catalog edits planned.
-- Remaining: draw SVGs, export 15 JPEGs, inspect contact sheets, import in Godot, rescan candidates, update report and close plan/claim/state.
+- User explicitly authorized Plan 53, current-inventory reconciliation, and ownership reassignment. Transferred seven E1A plan paths and the additionally claimed Plan 41 current-inventory path (including matching `shipped_to_chat` copies) from PFGL to E1C in `WORKTREE_OWNERSHIP.md`.
+- Captured E1C execution baseline: 621 current plan paths with preserved pre-migration hashes and post-migration expected hashes; preserved E1A's 609-path snapshot unchanged. Reconciliation records 601 retained paths, eight missing historical paths with non-identical shipped copies and both hashes, and twenty current additions.
+- Migrated all 621 plans with `scripts/ci/migrate-plan-metadata.py`. Reviewed dry-run digests: initial metadata proposal `e928ed8601a982ebe87e30cb62f6f88b92a02207bdb97eafc4553a65900901ad`; stable-ID collision correction `f08174d4d64aa111c068794984c0715a38a5c41cda3885d264dacc77e2632f25`. Final report confirms 621 changed, body hashes unchanged, zero duplicate IDs, zero inferred `DONE`, and zero source drift. All uncertain field decisions remain visible in a 621-entry human review queue; inferred categories are provisionally `PROCESS` and every migrated record is marked `INFERRED: true`.
+- Regenerated canonical register: 621/621 `COMPLETE`, validation errors 0. Regenerated docs index: 5,609 documents; streaming generator handles the large Markdown corpus and skips front matter when extracting summaries.
+- Verification: migrator self-test PASS; post-write migrator run changed=0/source drift=0; `generate-plan-register.py --write` and `--check` PASS; `generate-docs-index.py` and `--check` PASS; `bin/run-scoped-tests Ashfall.Core.Tests/Tooling/PlanGovernanceContractTests.cs` PASS 5/5. No full suite or commit.
+- Evidence: `docs/roadmap/e1/E1C_IMPLEMENTATION_LOG.md`, `docs/roadmap/e1/E1C_EXECUTION_BASELINE.json`, and `docs/roadmap/e1/E1_METADATA_MIGRATION_REPORT.{md,json}`. E1C phase plan was marked FULLY INTEGRATED and archived; Plan 53 remains active for later E1 phases.
+
+## UI pass 2 — encounter-modal focus + sweeps — 2026-09-30 (COMPLETE)
+
+- Changed: commit eb7fa8cd6 (amended from 21f424127) — ExpeditionPanel encounter modal gets keyboard focus via AshfallFocusPolicy.OpenWithFocus/FocusFirstDeferred; the single repo-wide bypass of the pkg-12 bare-.Visible=true class outside Main.*. Plan archived .ai/plans/integrated/ui/ui-pass2-encounter-focus-2026-09-30.md; claim claim-ui-pass2-encounter-focus-2026-09-30.
+- Pass-2 sweeps clean: Core determinism/purity, data integrity 0 errors/430 catalogs, rebind idiom correct, no TODO markers; probes PASS (3x expedition, day1, seven-day 25/25, layout, panels, snapshots 32/32).
+- INCIDENT (repaired): first commit 21f424127 absorbed a foreign hunk (LastChoiceWasDuplicate) from ExpeditionPanel.cs via pathspec add while its definition stayed in foreign ExpeditionHostSession WIP → committed tree would not compile standalone. Amended to eb7fa8cd6 (my 5 lines only); foreign hunk restored to worktree; `git grep LastChoiceWasDuplicate HEAD` empty. LESSON: before `git add <file>` on a shared-dirty file, `git diff <file>` and confirm every hunk is yours.
+
+## Plan37 live keybinding reset — FULLY INTEGRATED (2026-09-30)
+
+Complete bounded package verified and sealed: absent/empty key overrides restore canonical live keys on APPLY; draft key reset stays pending; audio previews do not apply pending keybindings; controller events, safe-mode, non-rebindable actions and settings save/cancel ownership preserved. Existing claimed implementation audited against current source. `bin/run-scoped-tests Ashfall.Core.Tests/Settings/UserSettingsRecoveryTests.cs` PASS20/20; `dotnet build Ashfall.csproj --no-restore -v:minimal` PASS0errors/7existingwarnings; `godot --headless --path . --max-fps 15 -- --settings-selftest` PASS0failures. Scoped whitespace/auditor clear. Plan repeatedly marked FULLY INTEGRATED and immediately archived at `.ai/plans/integrated/ui/plan37-live-keybinding-reset.md`; claim released. No commit/full suite. User starting-age instruction honored: P4b attempt precisely reverted, P4a preserved, P5 audit-only. Whole Plan37 controller acceptance not recertified by this residual.
+
+## Year Two P4b — DEFERRED / IMPLEMENTATION REVERTED (2026-09-30)
+
+User declined starting-age changes and requested another plan. Precisely reverted this attempt's P4b production/test additions; preserved P4a and other dirty work. Aging remains unchanged; fresh-campaign elder reachability blocks P4b. Plan unsealed at `.ai/plans/y2-p4b-elders-2026-09-30.md`; claim released. P5 audited only: missing Standing C relay/serve owner blocks acceptance6, no edits. Next selected approved Plan37 live keybinding-reset residual, resuming the existing root integrator claim; no competing worker.
+
+## Year Two P4a apprentice pipeline — FULLY INTEGRATED (2026-09-30)
+
+P4a and its user-authorized eight-error acceptance repair are FULLY INTEGRATED. Catalog integrity PASS: 0 errors across 430 catalogs, five documented distress primary-wins warnings. Scoped regression tests PASS 51/51; host build zero warnings/errors; Go JSON validator PASS 714/714; Year Two runtime check PASS 7/7. Existing apprenticeship/Plan55 tests and panel lifecycle acceptance also passed. Read-only review clear. Plan marked with repeated FULLY INTEGRATED headers and immediately archived at `.ai/plans/integrated/campaign/INTEGRATED_y2-p4a-apprentice-pipeline-2026-09-30.md`. P3/full P4 remain unsealed; no commit/full suite.
+
+Changed paths: apprenticeship Core/catalog, host/session/panel and bounded Main lifecycle seams; EndgameHostSession import; CatalogIntegrityValidator, ChapterProfileCatalog, year_two_chapter metadata; focused existing validator/profile tests and new apprentice tests; bounded governance and generated docs index. Foreign dirty work preserved. Remaining errors: none in package acceptance. Generic panel gate did not exercise a populated vocational fixture; canonical consent/save/death behavior verified by focused tests and runtime wiring audit.
+
+## Plan integration — Year Two P2 Play On (Chapter Mechanism) (2026-09-30)
+
+- Integrated package `y2-p2-play-on-2026-09-29.md` (Year Two: The Long Thaw P2 — Play On chapter mechanism) under approved umbrella `year-two-the-long-thaw-2026-09-29.md` and ratified decisions DEC-Y2-02, DEC-Y2-08, DEC-Y2-12, DEC-Y2-13.
+- Authored data catalog `Assets/StreamingAssets/Data/year_two_chapter.json` (schema_version 1):
+  - Declares chapter constants: default_chapter_one_reading_day (360), default_chapter_two_end_day (720), button labels ("PLAY ON", "SEAL HERE"), tooltips, terminal ending categories/IDs, and chapters list.
+- Extended `Assets/Ashfall.Core/Endgame/EndgameSystem.cs`:
+  - Added `ChapterRecord` DTO with `chapterIndex`, `chapterTitle`, `readingDay`, `endingId`, `endingTitle`, `sealedDay`, `profileId`, `epilogueReport`.
+  - Updated `EndgameSaveState` to schema 2 with `chapterIndex`, `chapters`, `hasPlayedOn`.
+  - Added `OnChapterContinued` event, `ChapterIndex`, `Chapters`, `HasPlayedOn` properties.
+  - Implemented `IsTerminalEnding()` checking extinction, zero survivors, frozen silence, or catastrophic failure definitions.
+  - Implemented `CanPlayOn` predicate (requires Epilogue phase, unsealed, chapterIndex < 2, and non-terminal ending).
+  - Implemented `ContinueChapter()` transition: archives Year One report into `chapters[0]`, increments `chapterIndex` to 2, sets `hasPlayedOn = true`, returns phase to `Active`, clears active epilogue, with zero completion history or generational legacy side effects.
+  - Added `TriggerEnding(CampaignEvaluationContext, ChapterProfileDef?, string?)` overload and `EvaluateEndingWithProfile` alias.
+  - Preserved bit-identical legacy `SealCampaign` behavior (idempotent, final seal executes once).
+  - Updated `CaptureState` and `RestoreState` with clean report cloning and schema 1 upgrade compatibility.
+- Extended `src/Host/EndgameHostSession.cs`:
+  - Exposed `ChapterIndex`, `Chapters`, `HasPlayedOn`, `CanPlayOn`, `ChapterContinued` event.
+  - Wired `ContinueChapter()` forwarding to `_system.ContinueChapter()`.
+  - Added `GetCurrentProfile()` and `GetTargetReadingDay()` calculating 720 for Chapter 2 and reading_day (default 360) for Chapter 1.
+- Updated `src/Main.Endgame.cs`:
+  - Updated `CheckAndTriggerEndgame`: checks `_endgame.GetTargetReadingDay()` so Day 360 (Chapter 1) or Day 720 (Chapter 2) triggers endgame.
+  - Passes current profile to `TriggerEnding(ctx, profile)`.
+  - Preserved completion history and generational legacy archiving so they execute strictly upon final `OnCampaignSealed`.
+- Updated `src/UI/ChroniclePanel.cs`:
+  - Dual action buttons: `SEAL HERE` and `PLAY ON`.
+  - `PLAY ON` button enabled only when `phase == EndgamePhase.Epilogue && CanPlayOn`.
+  - Added chapter status card to status rail.
+  - Added `CHAPTER ARCHIVE` container presenting prior completed chapters.
+- Registered host CLI `--year-two-chapter-selftest`:
+  - Added `YearTwoChapterSelfTest` enum member and descriptor in `Assets/Ashfall.Core/HostCliRegistry.cs`.
+  - Added argument parsing in `src/Host/HostCli.cs`.
+  - Authored host CLI test probe in `src/Host/HostCli.YearTwoChapter.cs`.
+  - Wired dispatch in `src/Main.Application.cs`.
+- Authored unit test suite:
+  - `Ashfall.Core.Tests/Endgame/YearTwoPlayOnTests.cs` (9 tests: default chapter 1 active, day 360 living enables CanPlayOn, extinction forbids Play On, frozen silence forbids Play On, ContinueChapter transitions to chapter 2 and archives prior chapter with zero side-effects, chapter 2 forbids further Play On, SealCampaign seals without playing on and re-seal is rejected, save state round-trip preserves chapter 2, schema 1 upgrade).
+- Verification:
+  - `bin/run-scoped-tests Ashfall.Core.Tests/Endgame/YearTwoPlayOnTests.cs Ashfall.Core.Tests/Endgame/EndgameSystemTests.cs`: PASS 18/18 (0 failed).
+  - `bin/run-scoped-tests Ashfall.Core.Tests/Endgame/Plan145UnifiedEndingHostIntegrationTests.cs Ashfall.Core.Tests/Endgame/Plan175MetaProgressionHostIntegrationTests.cs`: PASS 17/17 (0 failed).
+  - `bin/ashfall-dev validate-json`: 714 files checked, 0 violations.
+- Mandatory plan closeout:
+  - Prepended `# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED` and `> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**`.
+  - Renamed and moved plan to `.ai/plans/integrated/campaign/INTEGRATED_y2-p2-play-on-2026-09-29.md`.
+  - Claim updated in `WORKTREE_OWNERSHIP.md`.
+
+## Plan integration — Year Two P1B Storyline Chapter Profiles & Branch-Aware Year One Ending (2026-09-30)
+
+- Integrated package `y2-p1b-chapter-profiles-2026-09-29.md` (Year Two: The Long Thaw P1B — Storyline Chapter Profiles & branch-aware Year One ending) under approved umbrella `year-two-the-long-thaw-2026-09-29.md` and decisions DEC-Y2-02, DEC-Y2-09, DEC-Y2-12, DEC-Y2-13.
+- Authored data catalog `Assets/StreamingAssets/Data/chapter_profiles.json` (schema_version 1):
+  - Declares `profile_base_v1` (legacy bit-identical baseline: reckoning_offset=0, knowing=160, culpable=210, counted=240, reading=360, waive_evidence=-1, fixed_day close rule).
+  - Declares 5 family profiles: `profile_military`, `profile_rebel`, `profile_independent`, `profile_muster`, and `profile_standing_d` (waives evidence gate at day 320, settle window 14, floor 300, ceiling 400).
+  - Authored standing modifiers with non-zero weights and canonical display names.
+  - Authored branch ending modifiers guaranteeing 100% resolution for all 135 faction branch endings across military, rebel, and independent catalogs without orphans.
+- Authored Core domain catalog & validator `Assets/Ashfall.Core/Endgame/ChapterProfileCatalog.cs`:
+  - `LoadFromJson`, `Validate()`, `TryGetProfile`, `GetProfileOrDefault`, `ResolveStandingModifier`, and `EvaluateCloseDay`.
+- Authored pure deterministic resolver `Assets/Ashfall.Core/Endgame/ChapterProfileResolver.cs`:
+  - `ResolveProfileId(ChapterProfileResolutionContext)` resolving archetype profiles without mutating state or using RNG; cleanly falls back to `profile_base_v1`.
+- Authored boundary clock adapter `Assets/Ashfall.Core/Verdict/ReckoningClock.cs`:
+  - `ToVerdictDay` and `ToCampaignDay` implementing linear bidirectional translation: `verdictDay = campaignDay - offset`.
+- Extended `Assets/Ashfall.Core/Verdict/ReckoningSystem.cs`:
+  - Added configurable timing thresholds: `_knowingDay`, `_culpableDay`, `_countedDay`, and `_waiveEvidenceGateAfterDay`.
+  - Added `ConfigureTiming(...)` and `ConfigureFromProfile(ChapterProfileDef?)`.
+  - Updated `Poll` to honor `_waiveEvidenceGateAfterDay` for entering Culpable phase without machine-log evidence when configured.
+- Extended `Assets/Ashfall.Core/Endgame/EndgameSystem.cs`:
+  - Added `profileId` property to `EndgameSaveState` and `EndgameSystem` (`SetProfileId`).
+  - Updated `CaptureState` and `RestoreState` to persist `profileId`.
+  - Added `EvaluateEnding(CampaignEvaluationContext, ChapterProfileDef?, string?)` overload supporting branch endings and standing modifier resolution while preserving exact legacy matrix fallback.
+- Integrated `CatalogIntegrityValidator.cs`:
+  - Added `ValidateChapterProfilesCatalog` verifying `chapter_profiles.json` structure, schema, and that all 135 faction branch endings resolve to a standing modifier under each profile.
+- Wired boundary clock adapter into `src/Host/VerdictHostSession.cs`:
+  - Added `ReckoningOffset` property and `SetReckoningOffset(int)`.
+  - Applied `ReckoningClock.ToVerdictDay(day, ReckoningOffset)` in `AdvanceDay` and `TickRadio`.
+- Authored comprehensive test suites:
+  - `Ashfall.Core.Tests/Endgame/ChapterProfileTests.cs` (13 tests: catalog loading, profile properties, 135 branch endings resolution, archetype resolution, close rules, endgame evaluation with profiles, save state round-trip).
+  - `Ashfall.Core.Tests/Verdict/ReckoningClockTests.cs` (7 tests: bidirectional offset translation, profile offset application, phase threshold adjustments, waive evidence gate, offset integration with ReckoningSystem).
+- Verification:
+  - `bin/run-scoped-tests Ashfall.Core.Tests/Endgame/ChapterProfileTests.cs Ashfall.Core.Tests/Verdict/ReckoningClockTests.cs`: PASS 20/20 (0 failed).
+  - `bin/run-scoped-tests Ashfall.Core.Tests/Endgame/EndgameSystemTests.cs Ashfall.Core.Tests/Verdict/RitesReckoningEvidenceTests.cs`: PASS 20/20 (0 failed).
+  - `bin/ashfall-dev validate-json`: 713 files checked, 0 violations.
+  - `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`: 0 warnings, 0 errors.
+- Mandatory plan closeout:
+  - Prepend `# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED` and `> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**`.
+  - Renamed and moved plan to `.ai/plans/integrated/campaign/INTEGRATED_y2-p1b-chapter-profiles-2026-09-29.md`.
+  - Claim updated in `WORKTREE_OWNERSHIP.md`.
+
+## Plan 48 changelog-generation residual — COMPLETE (2026-09-30)
+
+- Integrated the existing generator's successful no-op generation mode in `scripts/release/generate_changelog.py`. Current `prepare-release.sh` caller already uses this CLI; no caller or release-flow changes needed.
+- Validated ancestor base..HEAD range, canonical ASCII semver, and markers/target headings before atomic writes; stable commit categories with hash evidence; bounded save/data/mod changed-path review prompts. Human text outside generated markers, CRLF style and file mode preserved.
+- Actual CLI verification in `/tmp/ashfall-plan48-changelog.lWuVqu` passed generation, idempotency, markerless insertion, marker checking, CRLF/outside-region preservation, empty-subject handling, and invalid-ref/version/ambiguous-heading refusal without writes. Live generator `--check` and scoped `git diff --check` passed. Read-only auditor re-review found no remaining must-fix items.
+- Marked repeated FULLY INTEGRATED and immediately archived `.ai/plans/integrated/tooling/plan48-changelog-generation-residual.md`. Claim released complete. No project commits/tags/pushes, live changelog writes, full suite or runtime probes. Isolated fixture commits were used solely as generation inputs.
+- This closes one bounded residual; whole historical Plan 48 ceremony remains outside this certification. Plan 37 blockers below remain open. No unrelated Year Two edits.
+
+## Plan integration — Year Two P1 Horizon Lift (2026-09-30)
+
+- Integrated package `y2-p1-horizon-lift-2026-09-29.md` (Year Two: The Long Thaw P1 — Horizon Lift).
+- Authored data catalog `Assets/StreamingAssets/Data/year_two_climate.json` (schema_version 1, 4 quarters covering Days 361 to 720 with linear, late_snap, winter_trough curves, continuous coverage without gaps or overlaps).
+- Authored Core domain catalog & validator `Assets/Ashfall.Core/YearOfAsh/YearTwoClimateCatalog.cs` (`LoadFromJson`, `Validate()`, `TryGetPhaseForDay`, `EvaluateDay`).
+- Lifted timeline clamp and integrated catalog into `Assets/Ashfall.Core/YearOfAsh/YearOfAshTimelineSystem.cs`:
+  - Added `YearOfAshPhase.Phase7_TheLongThaw = 3`.
+  - Added `activeClimatePhaseId` and `yearTwoQuarter` fields to `YearOfAshTimelineState`.
+  - Added `EffectiveEndDay` (720 when catalog is bound and valid; 360 legacy otherwise).
+  - Preserved bit-identical Year One (Days 180–360) calculation.
+  - Days 361–720 evaluate dynamic ambient temperature, ash opacity, radon rate, and thermal stress from catalog curves.
+  - Save/restore preserves legacy saves (`currentDay <= 360`) and mid-chapter Year Two state (`currentDay > 360`).
+- Wired catalog loading in `src/YearOfAsh/YearOfAshHostSession.cs` (`Create()` loads and binds `year_two_climate.json`).
+- Authored test suite `Ashfall.Core.Tests/YearOfAsh/YearTwoHorizonTests.cs` (6 tests: bit-identical Year 1 replay, 4 distinguishable Year 2 quarters across 361–720, changing subsystem inputs, catalog gap/overlap/invalid curve validation, legacy & mid-chapter save/restore round-trip, uncataloged timeline clamp).
+- Verification:
+  - `bin/run-scoped-tests Ashfall.Core.Tests/YearOfAsh/YearTwoHorizonTests.cs` PASS 6/6 (0 fails, 3.76s).
+  - `bin/run-scoped-tests Ashfall.Core.Tests/YearOfAshTests.cs` PASS 26/26 (0 fails, 3.58s).
+  - `bin/run-scoped-tests Ashfall.Core.Tests/YearOfAsh/Plan146IceRoadIntegrationTests.cs` PASS 9/9 (0 fails, 3.56s).
+  - `bin/ashfall-dev validate-json Assets/StreamingAssets/Data/year_two_climate.json` PASS (712 files checked, 0 violations).
+  - `dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` PASS (0 errors, 0 warnings).
+- Marked plan FULLY INTEGRATED with required headers, renamed to `INTEGRATED_y2-p1-horizon-lift-2026-09-29.md`, and archived to `.ai/plans/integrated/campaign/`.
+
+## Plan 37 current acceptance closeout — BLOCKED (2026-09-30)
+
+- Read AGENTS.md and coordination authorities; Plan 53's active ownership was preserved. Selected the already-DONE Plan 37 for current verification and archival closeout.
+- Documentation-only claim: `claim-plan37-current-acceptance-closeout-2026-09-30` in WORKTREE_OWNERSHIP.md. No production edits or plan archival performed.
+- `bin/run-scoped-tests Ashfall.Core.Tests/Tooling/InputMapGateTests.cs Ashfall.Core.Tests/Tooling/InputMapContractTests.cs Ashfall.Core.Tests/Settings/UserSettingsRecoveryTests.cs Ashfall.Core.Tests/Tooling/UiChromeDeadSeamGateTests.cs`: last path was incorrect and unmapped; first sandbox run aborted on test socket permissions. Escalated rerun: InputMapGateTests 4/4 and InputMapContractTests 6/6 PASS; settings target could not compile.
+- Correct owner target `bin/run-scoped-tests Ashfall.Core.Tests/UI/UiChromeDeadSeamGateTests.cs` also could not compile. Both failures originate in `Assets/Ashfall.Core/YearOfAsh/YearOfAshTimelineSystem.cs:125–131`: phase `id` missing; `EvaluateDay` requires an out ClimateSample; boolean return incorrectly treated as a sample. This is outside the claimed scope; no workaround or competing repair attempted.
+- `dotnet build Ashfall.csproj --no-restore` succeeded (14 warnings, 0 errors), but test compilations observed different concurrent Core state. No runtime probe executed against that mixed evidence. Logs: `/tmp/plan37-{scoped-escalated,owner-tests,build}-20260930.log`.
+- Read-only auditor identified an additional acceptance question: `_UnhandledKeyInput` handlers in Main.Application/SettingsPanel do not prove actual joypad-event delivery; direct synthesized method calls are insufficient for universal controller-parity claims. TickStickRepeat and ModalManager were intentionally retired by later UI work. Preserve current lifecycle authority; do not restore them to satisfy historical plan prose.
+- Auditor found a material original P6 gap: `src/UI/SettingsPanel.cs:453–478` removes/clears working overrides for reset, while `src/Settings/KeyBindingApplicator.cs:23–77` only applies nonempty overrides. RESET → APPLY can retain the previous custom key in live InputMap until restart. Existing reset helpers restore defaults but the panel does not invoke them. This finding is static, pending a bounded repair and focused runtime verification.
+- Remaining: owner/user resolve Year Two API mismatch, approve/claim the bounded live-reset repair, and clarify/verify live joypad dispatch; then focused settings/current-owner tests and runtime acceptance. Plan 37 remains unarchived and is not newly certified FULLY INTEGRATED.
+
+## Plan integration — Year Two P0 Premise Audit & Reality Evidence (2026-09-30)
+
+- Integrated package `y2-p0-premise-audit-2026-09-29.md` (Year Two: The Long Thaw P0).
+- Source premise: re-verified all 21 facts (F1–F21) at path:line in active repository; zero contradictions found.
+- Census: analyzed every 360-day constant across Core, src, tests, and data; categorized into runtime clamps, content windows, inert defaults, and geometric/setting constants.
+- Host seams named: Verdict host session (`src/Host/VerdictHostSession.cs`), role owner (`SurvivorRoleSystem`), expedition dispatch host (`ExpeditionHostSession`), registration authority (`VoluntaryRegisterSystem`).
+- Extracted F16b flag IDs (`mutation_schedule_refused`, `mutation_roster_blank`, `mutation_schedule_living`).
+- Identified retro-binding locations for the 4 legacy outposts and Thirteen in `locations.json`.
+- Drafted storyline chapter profiles table (legacy + 5 families) for Package P1B.
+- Authored `docs/plans/year_two/Y2_PREMISE_EVIDENCE.md` and `docs/plans/year_two/Y2_DECISION_PACKET.md` with ratified decisions DEC-Y2-01 through DEC-Y2-14.
+- Verification: `git diff --check docs/plans/year_two/` PASS (0 findings).
+- Marked plan FULLY INTEGRATED with required headers, renamed to `INTEGRATED_y2-p0-premise-audit-2026-09-29.md`, and archived to `.ai/plans/integrated/campaign/`.
+
+## CF-P28 current acceptance closeout — 2026-09-30 (COMPLETE, uncommitted)
+
+- Supersedes the earlier CF-P28 blocked entry below: the current real-campaign-journey probe passes, so its prior save/reset/Continue failure no longer blocks this package.
+- Source premise: fresh ComposeCampaign and restore both call the existing manifest executor. No production or probe source changed by this closeout.
+- Verification: scoped BootstrapPathParityGateTests 6/6, SubsystemManifestTests 7/7, MainTriadDriftGateTests 9/9; incremental host build 0 errors/0 warnings; composition-root (222 panels, manifest stability, idempotency and campaign isolation) and real-campaign-journey both PASS/exit 0 at 15 FPS. Initial sandbox attempts failed due socket/read-only log/cache access; approved reruns passed. Logs: /tmp/cf-p28-{scoped,build,composition,journey}-20260930-escalated.log.
+- Marked FULLY INTEGRATED and immediately moved plan to docs/plans/integrated/architecture/CF_P28_ONE_BOOTSTRAP_PATH_INTEGRATION_PLAN.md; reconciled CF-P28 ledger/census pointers and released the closeout claim. Docs index regenerated and checked at closeout.
+- Limitation: deferred-focus !is_inside_tree diagnostics and runtime resource/ObjectDB leaks remain visible at shutdown and outside the bootstrap acceptance contract. No full suite or commit.
+
+## Plan integration — CF-P28 one bootstrap path (2026-09-30)
+
+- Rechecked the fresh/restore manifest path and corrected the composition-root probe's field classifier in its claimed file (`src/Main.UiTests.CompositionRoot.cs`): UI-typed fields and campaign event-binding tokens are excluded from service identity checks. This lets the probe distinguish presentation lifecycle from composed service replacement.
+- Focused verification: `bin/run-scoped-tests Ashfall.Core.Tests/Tooling/BootstrapPathParityGateTests.cs` PASS 6/6; `bin/run-scoped-tests Ashfall.Core.Tests/Orchestration/SubsystemManifestTests.cs` PASS 7/7; `bin/run-scoped-tests Ashfall.Core.Tests/Tooling/MainTriadDriftGateTests.cs` PASS 7/7. `dotnet build Ashfall.csproj --no-restore` completed with 0 errors (14 warnings). At 15 FPS, `--composition-root-selftest` PASS: 222 panels, campaign isolation, fallback no-ops, and manifest stability all pass.
+- **Not closed/archived:** at 15 FPS, `--real-campaign-journey-selftest` FAILs on save/re-save/Continue projection behavior: sections including `encounter_choice`, `counter_intelligence`, `informant_network`, `recon_telemetry`, `food_preservation`, and `prewar_archives` are dropped or reported absent while derived files exist. This crosses the claim's explicit boundary (`Main.SaveOrchestrator.cs`, save schemas/projections untouched) and is outside the bootstrap change. Do not mark/archive CF-P28 as fully integrated until the save projection owner is separately claimed and repaired, then rerun the journey probe. Composition probe also reports deferred-focus `!is_inside_tree()` errors after its PASS; the focus owner is outside this claim.
+- No changes to save owners, schemas, or the unrelated dirty `src/Host/ExpeditionHostSession.cs`; do not archive CF-P28 or update its ledger status to complete while the required real journey probe is red.
+
+## Plan integration — CF-P6 vehicle armor grades (2026-09-30)
+
+- Revalidated signed DEC-95 and the existing Plan 50 garage authority. Four authored tiers, Core install/reforge and wear behavior, host binding, UI commands, and legacy save support are present. No production change was needed.
+- Fresh verification: `bin/run-scoped-tests Ashfall.Core.Tests/Expeditions/Plan213VehicleArmorGradeTests.cs` PASS 21/21; `bin/run-scoped-tests Ashfall.Core.Tests/Expeditions/Plan50VehicleGarageIntegrationTests.cs` PASS 5/5; `godot --headless --path . -- --vehicle-garage-selftest` PASS 27/27.
+- Added a fresh premise/ownership claim, marked the plan FULLY INTEGRATED, and archived it to `docs/plans/integrated/expeditions/`.
+- Updated `INTEGRATION_PLANS.md`; regenerated `docs/INDEX.md` (5,600 documents) and `python3 scripts/ci/generate-docs-index.py --check` passed. Unrelated dirty `src/Host/ExpeditionHostSession.cs` remained untouched.
+
+## Plan integration — CF-P5 restock decision reconciliation (2026-09-30)
+
+- Reconfirmed DEC-05 Option C and DEC-97 ratification; current production behavior remains the separate F13-C allocation path, and the reconciliation authorizes no gameplay changes.
+- Scoped verification: `bin/run-scoped-tests Ashfall.Core.Tests/Economy/Plan147RestockPriorityTests.cs` PASS 6/6.
+- Added the required FULLY INTEGRATED header and archived the plan at `docs/plans/integrated/economy/CF_P5_RESTOCK_RECONCILE_INTEGRATION_PLAN.md`; adjusted relative references for the new location.
+- Updated the live integration ledger. Regenerated `docs/INDEX.md` (5,598 documents); `python3 scripts/ci/generate-docs-index.py --check` passes. No production files changed.
+
+## Plan integration — CF-P1 distress content seal (2026-09-30)
+
+- Revalidated the existing sealed implementation from current source/plan evidence; no production files needed changes.
+- Scoped verification: `bin/run-scoped-tests Ashfall.Core.Tests/Radio/DistressFollowUpTests.cs` PASS 39/39; `bin/run-scoped-tests Ashfall.Core.Tests/Radio/DistressFollowUpPopulationReplayTests.cs` PASS 46/46.
+- Added the required FULLY INTEGRATED header and moved the plan to `docs/plans/integrated/radio/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`.
+- Updated the integration and ownership ledgers. Regenerated `docs/INDEX.md` (5,596 documents) and confirmed `python3 scripts/ci/generate-docs-index.py --check` passes. No full suite, host build, or runtime gates rerun; their 2026-09-19 results remain historical evidence.
+
+## Plan closeout — performance, host ownership, and campaign recovery (2026-09-30)
+
+- Confirmed the parent package is recorded COMPLETE in `WORKTREE_OWNERSHIP.md` and its full acceptance evidence is recorded at the top of `INTEGRATION_PLANS.md`.
+- Added the required repeated FULLY INTEGRATED header and archived `.ai/plans/performance-host-qol-2026-09-27.md` to `.ai/plans/integrated/performance/`.
+- Updated the ownership ledger archive path. Documentation-only closeout; no implementation or tests rerun.
+
+## Plan closeout — UI input correctness (2026-09-30)
+
+- Sealed approved package 1, `ui-a11y-p1-input-correctness-2026-09-29`, and moved its plan into `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Recorded evidence: `UiA11yP1InputGateTests` 4/4, host build 0 errors, and headless boot exited 0.
+- Updated `WORKTREE_OWNERSHIP.md` to point to the archive and record COMPLETE. Documentation-only closeout; tests not rerun.
+
+## Plan closeout — UI focus restore and contrast (2026-09-30)
+
+- Sealed approved package 2, `ui-a11y-p2-focus-contrast-2026-09-29`, and moved its plan into `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Current verification: `bin/run-scoped-tests Ashfall.Core.Tests/UI/UiA11yP2FocusContrastGateTests.cs` passed 6/6 after sandbox socket denial required an approved outside-sandbox rerun; `godot --headless --path . --quit-after 2` exited 0 with interactive boot complete.
+- Updated `WORKTREE_OWNERSHIP.md` to point at the archive and record COMPLETE. No production code changed in this closeout.
+
+## Plan closeout — UI navigation scope and overflow (2026-09-29)
+
+- Sealed approved package 3, `ui-a11y-p3-nav-overflow-2026-09-29`, and moved the plan into `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Evidence recorded: focused gates green, host build 0 errors, `--player-panels-uitest` 22/22 PASS.
+- Updated `WORKTREE_OWNERSHIP.md` to point to the archive and record COMPLETE. Documentation-only closeout; tests not rerun.
+
+## Plan closeout — UI label font size (2026-09-29)
+
+- Sealed approved package 4, `ui-a11y-fontsize-lift-2026-09-29`, and moved its plan to `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Evidence recorded: AccessibilitySourceAuditTests 6/6, TradeThemeAndEconomyTests 5/5, host build 0 errors, UI layout and boot PASS. The later golden rebaseline matched 32/32 snapshots, including this font change.
+- Updated `WORKTREE_OWNERSHIP.md` to point to the archive and record COMPLETE. Documentation-only closeout; tests not rerun.
+
+## Plan closeout — UI target sizes (2026-09-29)
+
+- Sealed approved package 5, `ui-a11y-target-sizes-2026-09-29`, and moved its plan into `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Recorded evidence: `UiA11yTargetSizeGateTests` 31/31; host build 0 errors; `--ui-layout-selftest` and `--player-panels-uitest` PASS.
+- Updated `WORKTREE_OWNERSHIP.md` to point at the archive and record COMPLETE. Documentation-only closeout; tests not rerun.
+
+## Plan closeout — UI sidebar, hover, and overflow (2026-09-29)
+
+- Sealed approved package 6, `ui-a11y-sidebar-hover-overflow-2026-09-29`, and moved the plan into `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Evidence recorded: `UiA11ySidebarHoverOverflowGateTests` 8/8; host build 0 errors; `--ui-layout-selftest` and `--player-panels-uitest` PASS.
+- Updated `WORKTREE_OWNERSHIP.md` to point to the archive and record COMPLETE. Documentation-only closeout; tests not rerun.
+
+## Plan closeout — UI scrim token (2026-09-29)
+
+- Sealed approved package 7, `ui-a11y-scrim-token-2026-09-29`, and moved its plan into `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Recorded evidence: `UiA11yScrimTokenGateTests` 3/3; host build 0 errors; `--ui-layout-selftest` and `--player-panels-uitest` PASS.
+- Updated `WORKTREE_OWNERSHIP.md` to point to the archive and record COMPLETE. Documentation-only closeout; tests not rerun.
+
+## Plan closeout — UI accent tokens (2026-09-29)
+
+- Sealed approved package 8, `ui-a11y-accent-tokens-2026-09-29`, and moved its plan into `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Recorded evidence: `UiA11yAccentTokenGateTests` 7/7; host build 0 errors; `--ui-layout-selftest` and `--player-panels-uitest` PASS.
+- Updated `WORKTREE_OWNERSHIP.md` to point to the archive and record COMPLETE. Documentation-only closeout; tests not rerun.
+
+## Plan closeout — UI final color literals (2026-09-29)
+
+- Sealed approved package 9, `ui-a11y-final-color-literals-2026-09-29`, and moved the plan to `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Evidence recorded for implementation: `UiA11yFinalColorGateTests` 17/17, host build 0 errors, UI layout and player-panel probes PASS, boot clean.
+- Updated `WORKTREE_OWNERSHIP.md` to point at the archived plan and record COMPLETE. Documentation-only closeout; tests not rerun.
+
+## Plan closeout — UI target-size sweep 2 (2026-09-29)
+
+- Sealed approved package 10, `ui-a11y-target-size-sweep2-2026-09-29`, and moved its plan to `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Evidence recorded for the implementation: `UiA11yTargetSizeSweep2GateTests` 3/3; host build 0 errors; `--ui-layout-selftest`, `--player-panels-uitest`, and boot PASS.
+- Updated `WORKTREE_OWNERSHIP.md` to point to the archive and record COMPLETE. Documentation closeout only; no tests rerun.
+
+## Plan closeout — UI theme coverage (2026-09-29)
+
+- Sealed the approved, implemented plan `ui-theme-coverage-2026-09-29` and moved it to `.ai/plans/integrated/ui/` with the required FULLY INTEGRATED header.
+- Evidence: implementation commit `5a3c184f4`; `UiThemeCoverageGateTests` 8/8; host build 0 errors; `--ui-layout-selftest` and `--player-panels-uitest` PASS; boot clean (recorded in the package handoff).
+- Updated `WORKTREE_OWNERSHIP.md` to point at the archive and record COMPLETE. Documentation closeout only; no tests rerun.
+
+## Plan closeout — UI lifecycle bypass (2026-09-29)
+
+- Sealed the already implemented and verified approved plan `ui-lifecycle-bypass-2026-09-29` with the required FULLY INTEGRATED header and moved it to `.ai/plans/integrated/ui/`.
+- Current evidence: implementation commit `7fb37c2f9`; `UiLifecycleBypassGateTests` 2/2; host build 0 errors; `--ui-layout-selftest`, `--player-panels-uitest`, and headless boot PASS (as recorded in the package handoff).
+- Governance updated: `WORKTREE_OWNERSHIP.md` now points to the archive and records COMPLETE. No production files or tests changed in this closeout; no tests rerun.
+
+## Bug sweep + HostCli null-hazard repair — 2026-09-30 (COMPLETE)
+
+- Changed: pkg 18 commit ea641a768 — 11 CS8602 null-deref sites repaired across 7 HostCli self-test verbs (defect class: Check(x != null) prints FAIL then the verb dereferenced x anyway → premise failure died in the catch-all as "Unexpected probe exception"). Early-abort guards in PlayerSurfaceManifest + CaravanItemValue; targeted guards elsewhere; `var catalog = itemCatalog!` pattern for lambdas (closures see declared nullability, not flow state). Plan archived .ai/plans/integrated/ui/hostcli-null-hazard-repair-2026-09-30.md; claim claim-hostcli-null-hazard-repair-2026-09-30.
+- Sweep results: Core/tests 0 warnings; remaining host warnings = 7 benign CS0162 (const-folded contract-name checks, else-branch is the intentional FAIL path) + 1 CS8602 in FOREIGN WIP PatrolEncounterIntegrity.cs (untouched). Zero swallowed catches. Event wiring verified (OnDeepLinkRequested subscribed; moral-choice fallback + stance-rail deliberate + 3 dormant notification events documented).
+- Verified: all 7 touched verbs PASS headless (7/7, 9/9, 10/10, 9/9, 7/7, 9/9, 11/11, zero probe exceptions); boot 0 script errors.
+
+## UI visual-lane pkgs 16+17 + golden rebaseline — 2026-09-29 (COMPLETE)
+
+- Changed: pkg 16 commit b67728a11 (AshfallSidebar rows size from content — Button children don't drive min size; P2.5 regression caught by regen; gate fact 9/9); commit a5a176065 (snapshots/ goldens rebaselined under xvfb, 32/32 match); pkg 17 commit 89dffa25b (§3 scrim contrast CLOSED: MapDetail 0.74→0.90, Expedition 0.82→0.90, GameOver 0.80→0.90, MainMenu false positive corrected, gate UiScrimContrastGateTests 6/6, audit report §3 closure block). Plans archived in .ai/plans/integrated/ui/; claim claim-ui-visual-lane-pkg16-17-2026-09-29.
+- Verification: build 0 errors; ui-layout-selftest 0 FAIL; player-panels-uitest 22/22; ui-snapshot-uitest 32/32 match; boot clean.
+- A11y series state: ALL audit lanes now closed (P1, P2, colors, scrims, typography, target sizes, theme coverage, lifecycle, keyboard links, §3 contrast, golden regen, dead seams). Gotchas recorded: xvfb-run is required for snapshot goldens (headless yields blank frames); git lfs smudge recovers old goldens (git show gives raw pointer); Godot Buttons ignore child min sizes; WCAG gamma threshold is 0.03928 (a 0.5075 typo in scratch math understated contrast failures ~2x).
+
+## UI precision pkgs 13+14 — 2026-09-29 (COMPLETE)
+
+- Changed: a11y pkg 13 commit 9e259f917 (Theme.Build tooltip/separator/base-Label chrome; deleted dead ModalManager + Core ModalStackController + TickStickRepeat + their test; AudioSelfTest smoke check removed; gate UiChromeDeadSeamGateTests 9/9) and pkg 14 commit e3320c963 (DailyBriefingModal keyboard GOTO deep-link button row via OnDeepLinkRequested; gate UiBriefingDeepLinkGateTests 1/1). Plans archived in .ai/plans/integrated/ui/; claim claim-ui-precision-pkg13-pkg14-2026-09-29 in WORKTREE_OWNERSHIP.md.
+- Verification: dotnet build Ashfall.csproj 0 errors; --ui-layout-selftest 0 FAIL; --player-panels-uitest 22/22; --audio-selftest 649/649; headless boot clean.
+- Still open (visual lane): §3 stack-dependent scrim contrast pass on a real display; snapshot-golden regen after FontSizeLabel 11→12 + this chrome/Label theme drift. Code-level: per-site FinishLabel adoption for ~359 raw `new Label` sites is now optional polish (theme default covers font/color).
+
+## ChatGPT item art tranche 45 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: fifteen new exact-ID opaque 512×512 JPEGs and fifteen Godot .jpg.import sidecars under assets/art/; fifteen editable SVGs in docs/visual/sources/tranche45/; additive visual report; ownership claim claim-chatgpt-item-art-tranche-45-2026-09-29; integrated plan at .ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-45-2026-09-29.md. No Core, host, catalog, UI, or existing art edits.
+- Evidence: fourteen genuinely unillustrated Black Flotilla, Crossing, dose, and Year of Ash IDs plus one distinct Holdfast diesel can now resolve. Godot's runtime asset coverage rose from 938/967 to 953/967 aggregate item IDs. Fourteen Holdfast IDs still fail lookup despite semantically matching unprefixed art.
+- Verification: Inkscape export PASS 15/15; ImageMagick metadata PASS 15/15 opaque 512×512; contact sheets inspected at 170, 64, and 26 px; jq empty five catalogs PASS; first sandboxed Godot import exited 0 but failed to write the linked .godot cache, so runtime load failed; approved writable-cache Godot import PASS with fifteen cache files; rerun asset coverage PASS at 953/967; scoped git diff --check PASS; project.godot clean. No live inventory screenshot or gameplay tests (art-only).
+
+## ChatGPT item art tranche 44 — 2026-09-29 (COMPLETE, NO COMMIT)
+
+- Changed: fifteen new exact-ID opaque 512×512 JPEGs and fifteen Godot `.jpg.import` sidecars under `assets/art/`; fifteen editable SVGs in `docs/visual/sources/tranche44/`; additive report; ownership claim `claim-chatgpt-item-art-tranche-44-2026-09-29`; integrated plan at `.ai/plans/integrated/visual/ashfall-chatgpt-item-art-tranche-44-2026-09-29.md`. No Core, host, catalog, UI, or existing art edits.
+- Evidence: 724 primary `items.json` IDs and 34 greenhouse IDs now have static item lookup candidates. The previous 39-remaining estimate across the 967-ID aggregate item catalog was stale; Godot's actual coverage report now resolves 938/967 and lists 29 other missing item IDs.
+- Verification: Inkscape export PASS 15/15; ImageMagick PASS 15/15 opaque 512×512; contact sheets inspected at 170, 64, and 26 px; `jq empty` both catalogs PASS; `godot --headless --path . --import` PASS with fifteen sidecars; `godot --headless --path . -- --asset-coverage-report` PASS (approved outside sandbox after sandboxed run aborted opening user log); scoped `git diff --check` PASS; `project.godot` clean. Live inventory screenshot not captured. No gameplay tests (art-only).
 
 ## ChatGPT item art tranche 43 — 2026-09-29 (COMPLETE, NO COMMIT)
 
@@ -8703,3 +9008,329 @@ runtime tests, generated index/check, integration status change, or commit.
   .ai/plans/ui-lifecycle-bypass-2026-09-29.md (APPROVED). Verified: host build 0 errors;
   --ui-layout-selftest PASS, --player-panels-uitest PASS, boot clean. NOTE: worktree carries
   heavy foreign WIP (628 files) — commit is strict-pathspec; do not blanket-add.
+- **Brief #25 — SECOND PROSE PASS, BATCH 9: ARRIVALS PASS — pool held 3; NOT PADDED.**
+  - **Pool selection (measured):** re-scan found exactly 3 in-scope unpolished plans, all arrivals
+    since batch 8: `other-beginnings-and-the-hard-road-2026-09-29.md` (928L composite — "Land,
+    Ruins and Starts II", subjects 31/32: Other Beginnings + The Hard Road),
+    `ui-lifecycle-bypass-2026-09-29.md` (46L, a11y series package 12),
+    `STORY_EXPANSION_BATCH_2_INDEX_2026-09-29.md` (43L index over the eight batch-2 composites).
+  - **Treatment:** composite — note list + **1c**, second layer (consent and memory; "it never
+    sneers at a broken vow and never congratulates a kept one — the only kind of remembering a
+    person could bear to live inside"), §1c objects (charge-board margin words "in small type and
+    nobody is scolded"; the cage key "not offered, and the game will not say why"; the relief
+    register whose last entry "is not missing. It is unwritten"; the day-41 slip). UI card — §0
+    Framing "The Lights Were Off" (36 sites = "one defect photographed thirty-six times"; the
+    static gate as the real deliverable). Index — "the batch as a shape" ("derive, don't store";
+    "216 openings exist unnamed. The batch names four and declines to name the rest").
+  - **Request asked for 10; the pool held 3. NOT PADDed** (precedent: brief #15). Explicitly
+    declined targets: (a) `ashfall-chatgpt-item-art-tranche-44` — integrated to
+    `integrated/visual/` by the tranche lane mid-batch, before the polish window; receipts are out
+    of the "non-integrated" scope; (b) `docs/plans/expansion_wave1/` + `EXPANSION_PROGRAM_WAVE*` —
+    the word-count-inflation corpus (README: "Continue each plan toward the requested 200,000-word
+    target"; plans at 200k–370k words via "synchronized continuation waves"). Briefs #10–16
+    measured this bloat at 2.26 GB and reclaimed 258.3 MB; adding rich text to it would re-create
+    the problem the corpus rules exist to prevent; (c) implementation logs, matrices, audits,
+    catalogs, status docs — excluded per index §6.5; (d) `template.md` — not a plan.
+  - **Register discipline:** **zero** new recorded questions; §25 registers and the index's
+    recorded silences unchanged; additions labelled texture-only. Verified: zero deleted lines in
+    tracked diff (purely insertive; the composite/index are untracked files), one second-layer
+    block per file, no duplicate `##` headings, STATUS preserved (composite DRAFT; UI card
+    APPROVED; index STATUS-free by design).
+  - **Testing:** prose-only — no code, data or schema touched; per `TEST_POLICY.md` no test run.
+  - **CORPUS STATUS:** everything in scope is at pass-2 depth (43 plans + 17 companions + 6 packs
+    + 4 family indexes across briefs #17–25). Future briefs: re-scan, treat arrivals only, and do
+    not pad — report the true pool size.
+- **Brief #26 — SECOND PROSE PASS, BATCH 10: EMPTY POOL — no in-scope targets; NOT PADDed.**
+  - **Scan evidence (all zones):** `.ai/plans/` holds only `template.md` (not a plan); zero unpolished
+    files otherwise. `docs/expansions/` sub-5k remainder is entirely excluded categories:
+    implementation blueprints (`expansion_07_the_dose_IMPLEMENTATION`, `expansion_03_nobodys_charter_
+    INTEGRATION_PIPELINE`), matrices (`EXPANSION_CONTENT_MATRIX`, `EXPANSION_REGRESSION_MATRIX`,
+    `EXPANSION_REWARD_MATRIX`, `expansion_08_verdict_INTEGRATION_MATRIX`, `CROSSING_STATE_FLOW`),
+    audits (`VERDICT_DEPTH_AUDIT`, `CROSSING_DEPTH_AUDIT`), catalogs/status
+    (`EXPANSIONS_MASTER_CATALOG`, `EXPANSION_QUEST_COVERAGE`, `PHASE_STATUS_THE_GLASS_ORCHARD`,
+    `EXPANSION_FLAG_PROVENANCE`), and the implemented-phase preflight map
+    (`expansion_10_the_silent_foundry_PHASE0`). Repo-wide `^STATUS: DRAFT|APPROVED` sweep under 20k
+    lines returns only `expansion_wave1/PLAN_01–16` and `wave2–4_integration/W*-*` — the
+    word-inflation and gate-read corpora (briefs #10–16, index §6.5). `docs/roadmap` registers and
+    `docs/process` plans are foreman/governance ledgers (rule 7: not mine to restyle).
+  - **Request asked for 10; the pool held 0. NOTHING DONE — deliberately.** Every alternative was
+    weighed and declined: padding pass-2 files with a third layer would be repetition (the exact
+    inflation the corpus rules prohibit); `docs/lore/` world-bible docs are not plans (scope needs
+    the user's word); wave corpora are the bloat machine; ledgers are foreman-owned.
+  - **Offered to the user/foreman instead (awaiting direction):** (a) widen scope to the
+    `docs/lore/` creative corpus; (b) an approved depth pass (worked scenes) on named plans;
+    (c) the brief-16 open *shared-appendix* regeneration refactor (the 14 volumes share ~88% of
+    their lines — parameterised regeneration would reclaim far more than the 258 MB already
+    recovered); (d) hold and treat arrivals as they land.
+  - **Cumulative corpus status (briefs #17–25):** 43 plans + 17 prose companions + 6 creative packs
+    + 4 family indexes at pass-2 depth; all registers untouched; all diffs purely insertive.
+- **Brief #27 — THIRD PROSE PASS, BATCH 11: 10 plans — slight additions + text polish.**
+  - **Interpretation (why this batch exists):** the recurring brief carries two asks — "slightly
+    adding on quality rich text" AND "polishing the existing text". Passes 1–2 (briefs #17–25) were
+    purely additive; the user re-issued the brief after the empty-pool report, which reads as
+    standing direction to keep enriching slightly rather than to stop. This pass does both, bounded:
+    small, non-repetitive additions + genuine line-polish. Bloat discipline held — additions are
+    fragment-scale (3 per plan), never repetition; registers untouched; contracts untouched.
+  - **Pool/selection:** tranche-45 arrived and was **integrated by the lane before its window
+    opened** (second time: also tranche-44) — noted; tranches now integrate faster than a batch
+    cycle, so future tranche polish must be the very first action of a cycle. The 10 plans were
+    chosen for family spread: NPP (the-deep, the-sky), SUP (record-keepers, ration-wars), NWP
+    (quiet-war, radio-free-ashfall, faith-and-schism), WMWY (living-region, plague-year,
+    drowned-coast).
+  - **Work done:** each plan's §1c gained "Third pass — three fragments (texture only; §12 register
+    unchanged)" — 30 fragments total, all non-duplicative of passes 1–2 (e.g. TD: "Shift log, 03:00:
+    'air normal.' The handwriting is normal. The hour is not." · SK: "Long enough to move a bed. Not
+    long enough to move a life." · RW: "Unexplained: 0. A clean week reads like a held breath." ·
+    DC: "Readiness does not move the tide."). Text review of existing prose found it largely at
+    quality already; genuine touches only where friction was real (the-deep requisition fragment
+    re-cut to two clean beats; quiet-war second-layer cadence comma; one stray blank line removed).
+    **Polish that degrades was deliberately not applied** — the review verdict is itself the polish
+    half of the ask where lines were already at weight.
+  - **Verified:** 1 third-pass block per plan, no duplicate `##` headings, §12 registers unchanged
+    (6 rows each — Open Mystery Index §1 counts hold), no contract surfaces touched; deletions for
+    this batch = 4 prose lines (3 polish edits + 1 blank), all narrative texture only.
+  - **Testing:** prose-only — per `TEST_POLICY.md` no test run.
+  - **Queue for next cycle:** treat arrivals immediately (tranche lane race); if empty, repeat this
+    bounded third-pass pattern on the next 10 plans (remaining family plans + composites), polish +
+    slight additions, registers untouched.
+
+## ChatGPT–Claude assisted plan drafts — 2026-09-29 (BOUNDED PASS COMPLETE)
+
+- **Changed:** added `docs/chatgpt-claude-assisted/README.md` and eight DRAFT plans: four for The Green Return and four for The Trading House. No existing plan, source, data, integration ledger, or ownership claim was changed.
+- **Evidence / duplicate check:** no exact prior plan titles or target directory existed. Adjacent coverage was found and scoped out: LocationEvolution, SoilReclamationProfile, Greenhouse soil reporting, the irradiated-soil quest, Living Region, Second Nature, Reconstruction Tree; MarketSystem, HoldfastTradeSession, route/contract systems, TradeCreditCoordinator, LedgerDebtSystem, black-market settlement, Contract Board 109, and Long Line Freight. The new plans require P0 premise verification before implementation.
+- **Plan structure:** each draft has the 25 sections required by `ashfall-plan` and is marked DRAFT with no approval or path claim. Current files are 4.8–5.6k words each for Green Return and 8.8–12.1k words for Trading House (approximate; counts may shift with final edits). This is below the user's requested 25–30k tokens per plan. Further expansion stopped at the repository's 20-minute task limit to avoid padding/repeating existing owner contracts.
+- **Verification:** documentation-only; no tests run. `rg -n '[[:blank:]]+$' docs/chatgpt-claude-assisted` returned no matches. A scoped `git diff --check` was attempted; Git's fsmonitor IPC failed. No completion claim for the requested per-plan token target.
+
+## Bug-chase pass (build-warning sweep) — 2026-09-29 (PARTIAL, uncommitted)
+
+- Fixed: `src/Main.SurvivorLetterDelivery.cs` set `StateChangedHook` on the still-null `_survivorLetterDelivery` (NRE on every setup) → now `session.StateChangedHook`. `src/Host/SurvivorLetterDeliveryHostSession.cs`: hook was never invoked; all mutators (MarkFound/Address/Assign/Deliver/Withhold/MarkUnanswered) now signal it on effective change. Removed 3 duplicate `using`s (PatrolRadioHostSession, RationConflictHostSession, HostCli.PatrolEncounterIntegrity).
+- Verified: `dotnet build Ashfall.csproj` 0 errors, warnings 18→14. No headless run / no scoped test covers the host session.
+- Left (not fixed): CS0162 tautological const-name checks in 6 HostCli probes (ChronicCondition, Genealogy, PharmaceuticalTablet, ShelterMuseum, SurgicalGraft, SurvivorRoles); CS8602 null derefs inside try/catch in probe files. Not touched: shared probe manifests/check counts.
+
+## Bug-chase pass 2 (dead setup methods) — 2026-09-29 (PARTIAL, uncommitted)
+
+- Fixed: `src/Main.Expeditions.cs` merged dead `SetupEncounterChoice` into `SetupEncounterChoiceResolver` (previously: no save → resolver never created; restored resolver never got OnResolved→dirty hook). `SaveSectionRegistry.cs:110` setup name now `SetupEncounterChoiceResolver`. Verified: host build 0 errors/14 warnings; CompositionRootArchitectureGateTests 3/3; SaveSectionRegistryTests 5/5. Note `_encounterChoice` still has no Resolve() caller in host (feature itself unconsumed).
+- BLOCKER for foreman: `Main.SetupPlans62To65` and `TickPlans62To65` (+ `TickPlans50To53`) are never invoked, so FoodPreservationSystem (Plan 64), PrewarArchiveDecryptionSystem (62), CampaignEpilogueEngine (65) are never constructed at runtime; `Main.Cascade` ColdStorageUnpowered reads null forever. Docs (PLAN_196 authority map, DEC-215/232) describe them as live. Proper wiring = new phase-N campaign-day owner with IPreDaySnapshotRestore + day-event vocabulary + save matrix; gameplay-affecting (spoilage consumes inventory). Not started: needs foreman signature/claim.
+
+## Plans 62/64/65 runtime wiring — 2026-09-29 (COMPLETE, uncommitted)
+
+- Resolves pass-2 blocker. New phase-2 day owner `plans_62_65` (snapshot/restore) in Main.CampaignOwners.cs; SetupPlans62To65 FoodConsumed bridge made idempotent; ResetPlans62To65 added to lifecycle; `food_preservation_ticked` heartbeat + parity-matrix row; arch-map generator encounter_choice name fixed + map regenerated (Constructed 308→311).
+- Verified: build 0 err; 8 scoped suites green (76 tests); --7-day-smoke 10/10; --real-campaign-journey PASS.
+- Remaining: `TickPlans50To53` still uncalled; EncounterChoiceResolver has no host Resolve() caller; coordinator retry does not roll back inventory (pre-existing).
+
+## ChatGPT–Claude assisted plan drafts — 2026-09-29 (CONTINUED PASS COMPLETE)
+
+- **Changed:** added `docs/chatgpt-claude-assisted/README.md` and eight DRAFT plans: GR-1 through GR-4 and TH-1 through TH-4. Continued expansion after the user explicitly overrode the 20-minute task cap; no source, gameplay data, active integration plan, or ownership ledger was changed.
+- **Evidence/duplicate check:** exact direction-title plans and the target folder were absent at initial search. Adjacent owners and proposals are called out in README and plan boundaries. Additional audits covered Cartography/InSAR, the DRAFT wildland/fire plan's generic wildlife-corridor-journal template, and the production trade-flow document whose named runtime/catalog paths were absent from current Core/host/data searches. No exact duplicate plan was found; overlapping scope is explicitly excluded or gated by P0 review.
+- **Final word counts:** GR-1 11,195; GR-2 12,342; GR-3 13,004; GR-4 11,283; TH-1 19,470; TH-2 20,396; TH-3 19,418; TH-4 17,183. At a rough 1.5 tokens/word, the Trading House plans are near/within the requested 25–30k token range; Green Return plans remain below it. Further length without new evidence/decisions would risk repetition, so README records that limit transparently.
+- **Verification:** all eight plans retain `STATUS: DRAFT` and 25 numbered sections each. `rg -n '[[:blank:]]+$' docs/chatgpt-claude-assisted .ai/state.md` returned no matches; `git -c core.fsmonitor=false diff --check` exited 0. Docs-only; no tests run.
+
+## Composition gap seal — 2026-09-29 (COMPLETE, uncommitted)
+
+- Wired TickPlans50To53 (plans_50_53 owner), TickAdvancedShelterSystems (advanced_shelter owner), nuclear lifecycle tick; 9 missing resets; removed 5 dead members; new gate EveryMainSetupTickResetMethod_HasACallSite.
+- Verified: build 0 err; 11 scoped suites (107 tests) green; journey + 7-day smoke PASS.
+- Open for foreman: EncounterChoiceResolver retirement (duplicate ledger), naval dual owner (DC-P0), ~95 uncalled Flush*IfDirty, coordinator inventory rollback.
+
+## Naval dedup + encounter-choice ledger — 2026-09-29 (COMPLETE, uncommitted)
+
+- Naval: ExpeditionHostSession is sole owner, loads naval_vessels.json; Main copy deleted. Encounter choices: EncounterChoiceResolver is the persisted at-most-once guard in EncounterApplyChoice; reset added.
+- Verified: build 0 err; 5 scoped suites green; --expedition-selftest PASS (new M10b), journey + 7-day smoke PASS.
+- Open: ResolveTravelChoiceWithCombat uncalled; drowned-coast plan F4 row stale; CatalogPathForbiddenGate pre-existing red (2 files not touched).
+
+## Travel combat escalation + field-guide unlock — 2026-09-30 (COMPLETE, uncommitted)
+
+- Hostile travel/patrol choices now start combat via EncounterApplyChoice; orphan ResolveTravelChoiceWithCombat removed; travel field-guide unlocks now applied (were dropped by the bridge).
+- Verified: build 0 err; 5 scoped suites green; --expedition-selftest M10c PASS; journey + 7-day smoke PASS.
+- Still open: ~95 uncalled Flush*IfDirty; coordinator retry inventory rollback; CatalogPathForbiddenGate pre-existing red (NarrativeAssayLogCatalogs.cs, BioFermentationPanel.cs); drowned-coast plan F4 row stale.
+
+## Open-items sweep — 2026-09-30 (uncommitted)
+
+- FIXED: CatalogPathForbiddenGateTests 2/2 (was red): NarrativeAssayLogCatalogs.cs header comment reworded; BioFermentationPanel.cs empty-state hint no longer shows a developer file path ("The assay notebooks are missing from this installation."). LocalizationRatchetTests is RED (608 > baseline 603) but pre-existing: per-file literal counts in src/UI are identical between HEAD and worktree (606 by grep at both); not caused by this session.
+- HELD (racing): docs/expansions/expansion_drowned_coast_plan.md F4 row — file has 75 uncommitted prose lines from another active pass; premise resolved (single naval owner, see .ai/plans/integrated/campaign/naval-dedup-...).
+- HELD (save-architecture decision): Flush*IfDirty. CaptureSection only stages into _sectionPayloads, which SaveAll clears and recaptures, but many Save* methods ALSO write per-file checksummed stores directly (SaveStore.TrySave → TryWriteAtomic). Two persistence paths per system; the _Process per-frame flush list gives mid-day durability only for per-file systems. Deleting/wiring flushes = choosing one save path. Foreman decision.
+- HELD (design package): coordinator retry inventory rollback. Snapshotting inventory alone would LOSE output of non-restorable inventory producers (crafting, greenhouse, rations, kitchen…) on retry; correct fix requires every inventory-mutating owner to implement IPreDaySnapshotRestore together.
+
+## Save authority: campaign.json sole — 2026-09-30 (COMPLETE, uncommitted)
+
+- Fixed Continue failing closed after a mid-day save or a re-save: removed 83 direct per-file writes, rebuilt 9 lazily-built sections on Continue, removed 2 dirty-skip guards. 2 new gates + journey probes.
+- Verified: build 0 err; MainTriadDrift 9/9, CompositionRootArchitecture 4/4, Plan211 5/5; journey (incl. save→load→save→load), 7-day smoke, expedition selftests PASS; architecture map --check OK.
+- Open: Flush*IfDirty now only stage payloads SaveAll discards (debloat candidate); 129 host-session Save() overrides uncalled (dead code); coordinator inventory rollback; Drowned Coast F4 row (racing); LocalizationRatchet red (pre-existing).
+
+## Per-frame flush removal — 2026-09-30 (IN PROGRESS, uncommitted, host build blocked by another agent)
+
+- Removed the 33-call `Flush*IfDirty` block from `Main._Process` (`src/Main.Application.cs`): Save* only stages into the SaveAll buffer, which SaveAll clears; day advance already runs a full SaveAll. Replaced 2 gates that pinned the list with `ProcessLoop_DoesNotRunPerFrameFlushes` (MainTriadDrift 8/8).
+- NOT yet verified: host build and journey/7-day selftests. Build currently fails on `src/Host/EndgameHostSession.cs` (missing `using System.Collections.Generic` in another agent's uncommitted play-on edit, not mine). Re-run build + `--real-campaign-journey-selftest` + `--7-day-smoke-selftest` once that compiles.
+- Follow-up: the now-uncalled `Flush*IfDirty` methods can be deleted (Flush gate `FlushMethods_HaveDirtyGuard...` still passes).
+
+## UI audit + Developer Session Item & Asset Inspector — 2026-09-30 (this task)
+
+Plan: `.ai/plans/ui-audit-dev-item-asset-inspector.md` (STATUS: APPROVED BY USER).
+User request: audit/repair UI, wire inventory assets, and add a start-game
+developer session to inspect all items and their assets.
+
+Audit findings (evidence):
+- Inventory art wiring already healthy: 953/969 authored item IDs resolve
+  `assets/art/item_*.jpg|png`; 16 generic items rely on `AssetRegistry` aliases
+  / fallback icon by design. `MakeItemIcon` + `AssetRegistry.GetItem` already
+  probe the art tree. No wiring fix required.
+- Motion (`UiMotion`) and settings (`SettingsPanel`) already feature-rich.
+
+Delivered: `ItemAssetInspectorPanel` (read-only dev overlay) enumerating every
+item from the authoritative `*items*.json` catalogs + resolved-asset status
+(via `AssetRegistry.GetItem`), with search + missing-only filter. Wired to a
+debug-gated "DEV SESSION" entry in `MainMenuPanel`, opened from the start menu.
+Not registered as a player route (avoids manifest/live-count gates).
+
+Files: `src/UI/ItemAssetInspectorPanel.cs` (new), `src/UI/MainMenuPanel.cs`,
+`src/Main.UiPanels.cs`, `src/Main.PanelLifecycle.cs`.
+
+Verification:
+- `dotnet build Ashfall.csproj`: 0 errors.
+- UI gates PASS: ProductionUiNoFabricatedFallback 4/4, AccessibilitySourceAudit
+  6/6, PanelSubscriptionHygiene 1/1, PanelLiveRefresh 2/2,
+  CompositionRootArchitecture 4/4, PanelRouteGate 21/21, PanelCatalogCompleteness
+  3/3, PlayerSurfaceCoverage 8/8, PlayerSurfaceLiveness 5/5.
+- Runtime: `godot --headless -- --ui-layout-selftest` PASS (0 failures;
+  UiControllerParity 61/61 pad-dismiss).
+
+Limitations / deferred (too large for one tranche; see final report):
+broad animation polish across all panels, general missing-UI additions, and a
+full settings-menu functionality audit were scoped as a roadmap, not all
+implemented here. No gameplay/Core/save changes. No commit made.
+
+## Bug-chase repair loop — 2026-09-30 (COMPLETE, uncommitted)
+
+- Verified the two prior unverified passes: per-frame flush removal + campaign.json sole save authority both pass --real-campaign-journey-selftest and --7-day-smoke-selftest (10/10 gates).
+- FIXED (P2-1, regression-proven then fixed): ExpeditionHostSession persistent at-most-once ledger key mismatch — SurfacingKeyFor stored the pending leg key ({loc}@d{day}#{leg}) but a replay after ClearPending computes the leg-less fallback, so a fresh session (bridge guard gone) could double-apply encounter consequences. Now SurfacingKeysFor records/checks all stable key forms (leg key + leg-less pending keys + caller fallback); popup-path replay refused. New M10d selftest gate (fresh-session replay) RED before fix, GREEN after. --expedition-selftest 43/43.
+- FIXED (P2-2): CatalogIntegrityValidator 135-branch-endings check was vacuous (ResolveStandingModifier never returns empty). Now errors when the resolved modifier id is not in the catalog's StandingModifiers registry. CatalogIntegrityValidatorTests 17/17; --data-integrity-selftest 430/430.
+- FIXED (P2-8): four in-code default MentorshipDefs lacked target_skill_id (vocational accepts would fail with unknown_mentorship if apprenticeship_catalog.json failed to load); filled from catalog values.
+- FIXED: LocalizationRatchetTests stale baseline 603 -> verified current 612 (≈8 committed growth + 1 worktree; recount verified HEAD-vs-worktree), ratchet re-armed.
+- Audited via subagent sweep of all dirty Core/Host diffs: no P1s. Left (documented, not fixed): EndgameSystem.EvaluateEndingWithProfile zero callers + dead ChapterRecord.sealedDay/profileId (foreign uncommitted stream, don't touch); VerdictHostSession reckoning plumbing (ConfigureFromProfile/SetReckoningOffset) unwired in production + ReckoningOffset not captured/restored (design decision, needs foreman); apprenticeship cancelled+actingEligible pairs retained forever (deliberate retention, bounded by children count); RunSettingsSelfTest Shift-held exposure (headless only); ~33 dead Flush*IfDirty methods + 129 uncalled host Save() overrides (debloat, foreman decision on save path).
+- Verification: build 0 err; scoped 4/4 targets (152 Endgame tests); journey, 7-day smoke, expedition (43/43), data-integrity (430/430) all PASS.
+
+## Pass 2 — Developer Session generalized to all asset categories — 2026-09-30
+
+Expanded the dev inspector from items-only to all asset categories (items,
+portraits, locations, factions) with a category selector + per-category coverage
+counts. Renamed `ItemAssetInspectorPanel` -> `AssetInspectorPanel`.
+Audit result this pass: Settings menu functionality is already complete and live
+(ReducedMotion -> UiMotion.CanAnimate, LargeFonts/HighContrast -> ContentScaleFactor,
+Locale -> AshfallLocalization, audio, keybindings, atomic persist, --settings-selftest
+covers it) — no repair needed. Pivoted to the user's "and etc!" (all assets).
+
+Reader is truthful: pinned Portraits/Locations/Factions to the authoritative
+catalog files (AssetCoverageScanner manifest) so unrelated files carrying a
+*_id field are excluded. Verified entry counts offline: Items 969, Portraits 265,
+Locations 372, Factions 57 (real ids).
+
+Files: `src/UI/AssetInspectorPanel.cs` (renamed+generalized),
+`src/Main.UiPanels.cs`, `src/Main.PanelLifecycle.cs` (refs updated).
+
+Verification:
+- `dotnet build Ashfall.csproj`: 0 errors.
+- Source gates PASS: NoFabricatedFallback 4/4, AccessibilitySourceAudit 6/6,
+  PanelSubscriptionHygiene 1/1, PanelLiveRefresh 2/2, PanelRouteGate 21/21.
+- Runtime: `godot --headless -- --ui-layout-selftest` PASS (0 failures;
+  UiControllerParity 61/61). (Occasional 180s timeout is Godot reimport
+  flakiness, not a failure.)
+
+No commit. Deferred (roadmap): broad animation polish across all panels; a
+systematic player-facing missing-UI coverage sweep vs PanelRegistry.
+
+## Pass 3 — Animation polish — 2026-09-30
+
+Audit finding: `UiMotion.AttachButtonFx` (hover/press/focus scale micro-Motion)
+was fully built but **never wired in production** — only called by the self-test,
+so every button in the game lacked the polish. Also front-of-house overlays
+(Settings / StartingCohort / GameOver) set `Visible=true` on open but ran
+`AnimateClose` on exit (asymmetric transitions).
+
+Repairs (bounded):
+- `AshfallUiHelpers.MakeButton` now calls `UiMotion.AttachButtonFx(btn)` — game-
+  wide, consistent button micro-interactions (idempotent, visual-only, returns to
+  1.0, no-ops under ReducedMotion/headless).
+- Symmetric open transitions via `UiMotion.AnimateOpen` added to
+  `SettingsPanel.Open`, `StartingCohortSetupPanel.Open`, `GameOverPanel.ShowGameOver`.
+
+Files: `src/UI/AshfallUiHelpers.cs`, `src/UI/SettingsPanel.cs`,
+`src/UI/StartingCohortSetupPanel.cs`, `src/UI/GameOverPanel.cs`.
+
+Verification:
+- `dotnet build Ashfall.csproj`: 0 errors.
+- Source gates PASS: NoFabricatedFallback 4/4, AccessibilitySourceAudit 6/6,
+  PanelSubscriptionHygiene 1/1, PanelLiveRefresh 2/2, PanelRouteGate 21/21.
+- Runtime `godot --headless -- --ui-layout-selftest` PASS (0 failures): UiMotion
+  headless open/close no-op guards, "button FX attaches idempotently",
+  "headless button FX is a no-op", UiControllerParity 61/61.
+
+Note: `AnimateOpen` on these overlays matches the established `ShowPanelLifecycle`
+pattern (position/scale/alpha entrance). Deferred: extending symmetric open to the
+~20 panels that self-`Open()` with `Visible=true` (most already animate via
+`ShowPanelLifecycle`; only unrouted ones need it) — a follow-up sweep.
+No commit.
+
+## Pass 3b — Animation follow-up (architecture correction + lazy-button FX) — 2026-09-30
+
+Key discovery: open animation is ALREADY centralized/automatic.
+`RegisterOpenMotionRecursive(this, isHostRoot:true)` (end of BuildUserInterface)
+walks the tree and (a) attaches `UiMotion.AttachButtonFx` to every Button and
+(b) registers `VisibilityChanged -> AnimateOpen + EnsureInitialFocus` on every
+overlay root + IBindablePanel/IModalPanel. `ShowPanelLifecycle` is only the
+FALLBACK for lazy panels (built after that walk). The two cover DISJOINT sets,
+so there is no double-fire and the "asymmetric self-Open() panels" premise from
+Pass 3 was WRONG — those panels already animate via the hook.
+
+Actions:
+- REVERTED Pass-3's explicit AnimateOpen in SettingsPanel/StartingCohortSetup/
+  GameOver (redundant with the hook -> would double-fire / 8px drift).
+- Completed the real remaining gap: lazily-built panels contain raw `new Button`
+  (e.g. _btnHarvest, _btnBurial, _startBtn) that missed BOTH the setup walk AND
+  MakeButton. Added `UiMotion.AttachAllButtonFx(Control)` (recursive, idempotent)
+  and call it from `ShowPanelLifecycle`. Kept `MakeButton -> AttachButtonFx`.
+  Net button-FX coverage is now complete (setup walk + MakeButton + ShowPanelLifecycle).
+
+Files: `src/UI/UiMotion.cs`, `src/Main.PanelLifecycle.cs` (added),
+`src/UI/AshfallUiHelpers.cs` (kept), Settings/Cohort/GameOver (reverted to original).
+
+Verification:
+- `dotnet build Ashfall.csproj`: 0 errors.
+- Gates PASS: NoFabricatedFallback 4/4, AccessibilitySourceAudit 6/6,
+  PanelSubscriptionHygiene 1/1, UiA11yP1 4/4, UiA11yP2 6/6.
+- Runtime `--ui-layout-selftest` PASS (0 failures): UiMotion button FX idempotent,
+  headless no-op, open/close no-op guards, UiControllerParity 61/61.
+
+Honest note: the large "add AnimateOpen to ~20 self-Open() panels" sweep is NOT
+needed (they animate via the centralized hook) — declined to make that risky
+multi-file change. No commit.
+
+## Bug-chase repair loop pass 2 — 2026-09-30 (COMPLETE, uncommitted)
+
+- Warning sweep: CS8602 count 2 -> 0 (both derefs of nullable `catalog` in HostCli.PatrolEncounterIntegrity.cs guarded with ?. ??/!); remaining warnings = 6 benign CS0162 const-probe tautologies (documented, pre-existing).
+- FIXED (M): YearOfAshHostSession.Create swallowed year_two_climate.json load/validation failure (log-and-continue) -> an unbound climate catalog falls back EffectiveEndDay to 360 and RestoreState would silently clamp a Year Two save back to day 360, losing up to 360 days of timeline. Now throws InvalidOperationException like the adjacent warlord block (fail loud; data-integrity 430/430 proves shipped data valid).
+- Verified: --patrol-encounter-integrity-selftest 11/11, --settings-selftest PASS, --year-two-chapter-selftest 7/7, --real-campaign-journey-selftest PASS.
+- HELD for foreman (elevated by pass-2 audit): Chapter-Profile feature chain implemented+tested+shipped but unreachable in game — ResolveProfileId/SetProfileId/ConfigureFromProfile have zero production callers, so profiles are permanently profile_base_v1 and chapter_profiles.json timing/faction data is inert. Wiring = composition-root call at campaign commit + persistence for ConfigureTiming state (save-schema addition). Needs signature.
+- Documented, not fixed: apprenticeship actingEligible retention is a UI-label-only stub mechanic; minor zero-caller members (EvaluateEndingWithProfile, ChapterContinued event, ChapterProfiles accessor, Naval accessor, Y2 catalog readers) — additive, harmless, mostly foreign-stream code.
+
+## Pass 4 — Inventory asset wiring (close the placeholder gap) — 2026-09-30
+
+Closed the real "wiring in inventory assets" gap: 16 authored item ids carried
+the `item_` prefix but their art is stored under the bare stem (id
+`item_antibiotics` -> `antibiotics.jpg`). AssetRegistry only prefix-ADDs
+(bare -> item_X), never prefix-strips, so those 16 fell back to the placeholder
+icon. Wired 16 explicit deterministic aliases in `AssetRegistry.ItemIdAliases`:
+14 bare-stem (`item_X` -> `X`), plus `item_compost_humus` ->
+`item_greenhouse_compost` and `item_pest_treatment_dust` -> `item_blight_treatment`
+(semantic matches). Alias is applied once at candidate-generation (direct-stem
+filename resolution per candidate), so no alias chaining issue
+(`item_mechanical_parts` -> `mechanical_parts.jpg`).
+
+File: `src/Host/AssetRegistry.cs` (ItemIdAliases only).
+
+Verification:
+- `dotnet build Ashfall.csproj`: 0 errors.
+- `--asset-coverage-report`: 1661/1661 resolved, **0 missing** (items 967/967,
+  portraits 265/265, locations 372/372, factions 57/57).
+- `--asset-registry-selftest` (gate): PASS, checked=55 passed=55 missing=0,
+  load-failed=0 (the 6 "unique missing" are intentional synthetic negative probes).
+
+Every authored item now renders real art instead of the placeholder. No commit.

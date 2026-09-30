@@ -1,5 +1,17 @@
 # CONTRABAND ITEM IDENTITY MATRIX — Plan 147 Task A.3/A.4
 
+## 0. Framing — Identity (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded matrix remains the authority.)*
+
+> "An item's identity is the difference between cargo and evidence."
+
+Every smuggled thing has two descriptions: what it is and what it is called. The identity matrix
+keeps both columns honest, because in this world the second column is the one that gets you
+caught.
+
+- **One object, two truths, one table** — the grammar of every customs desk ever invented.
+
 Identity classification per record. A contraband record is **not automatically
 an inventory item**: each row is classified as ITEM-BACKED (link to existing
 canonical id), SERVICE/DOCUMENT (typed action/discovery reward — no item),

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-64DCD51067EE"
+TITLE: "Plan 197 — Faction Diplomacy and Treaties — Bilateral Commitments, Envoy Facts, and Owner-Safe Consequences"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_197_Faction_Diplomacy_Treaty_System.md"
+INFERRED: true
+---
 # Plan 197 — Faction Diplomacy and Treaties — Bilateral Commitments, Envoy Facts, and Owner-Safe Consequences
 
 ## Current evidence and integration architecture — 2026-09-24

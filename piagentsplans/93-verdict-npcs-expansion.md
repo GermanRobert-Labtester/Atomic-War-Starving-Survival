@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-93"
+TITLE: "Plan 93 — Verdict Investigation NPCs, Dialogue Gates and One-Shot State"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/93-verdict-npcs-expansion.md"
+INFERRED: true
+---
 # Plan 93 — Verdict Investigation NPCs, Dialogue Gates and One-Shot State
 
 > **Rebuild status:** COMPLETE 18-NPC CATALOG/DATA LOOP — SITE REACHABILITY AND DIALOG CONSEQUENCE AUDIT

@@ -71,6 +71,23 @@ The plans must reinforce one another:
 
 ---
 
+## 0. Framing — The Flagship (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Guardrails are how a flagship stays one ship instead of becoming a weather system."
+
+138–141 arrive as one voyage, and the global architecture guardrails go first because features are
+cheap and seams are not. The flagship's real cargo is shared contract: four plans that could each
+have grown their own navy, agreeing instead to sail in formation.
+
+- **Guardrails first, features second** — the order is the design.
+- **Integration is choreography, not accumulation.** Things that merely coexist are not
+  integrated; things that keep each other's promises are.
+
+---
+
 # 1. Global Architecture Guardrails
 
 ## 1.1 One authority per concern

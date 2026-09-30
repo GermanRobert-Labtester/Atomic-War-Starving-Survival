@@ -10,6 +10,26 @@
 
 ---
 
+## 0. Framing — What Exists, What Is Still True (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, evidence row, decision,
+acceptance criterion, verification step or recorded status; where this document records executed
+work, the recorded evidence remains the authority.)*
+
+> "Tribal knowledge is a plan that has not been written down yet."
+
+Three numbering namespaces and no universal status markers: the corpus is a library with three
+catalogues and no librarian. This package does not write another book — it hires the librarian.
+Registers, premise verifiers, duplicate clusters and an intake gate are all one idea in four
+costumes: *memory that survives its authors*.
+
+- **The identity collision is recorded, not "fixed."** Naming what cannot be repaired is the
+  programme's first act of honesty, and the one its future self will be grateful for.
+- **The intake checker is a door with a checklist.** Governance is a bouncer who reads: duplicate
+  search receipt, ready rails, named authority, metric, acceptance target — or nothing opens.
+
+---
+
 # 1. Objective
 
 Convert ASHFALL's accumulated plan corpus — three numbering namespaces, no universal status markers, demonstrably stale premises, and repeated duplicate-capability proposals — into an evidence-gated, machine-readable, execution-oriented governance pipeline, exactly as scoped by the E1 corpus document's sixteen sub-items E1A–E1P.

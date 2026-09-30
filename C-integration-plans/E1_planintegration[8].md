@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-8
+PLAN_ID: "E1-8"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 8
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 152 — Vehicle Customization & Mobile Base"
 SEQUENCE_FILENAME: "E1_planintegration[8].md"
 PREVIOUS_FILENAME: "E1_planintegration[7].md"
 NEXT_FILENAMES:
   - "E1_planintegration[9].md"
   - "E1_planintegration[10].md"
-CATEGORY: LINK+VEHICLES+EXPEDITIONS+MOBILE_CAMP+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Turn vehicles into persistent configurable expedition assets and bounded mobile camps while preserving canonical ownership of fuel, cargo, survivor needs, combat, repair, research, and expedition state."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -22,6 +22,24 @@ RUNTIME_RISK: HIGH
 SAVE_RISK: HIGH
 BALANCE_RISK: VERY_HIGH
 SCOPE_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [8] — Vehicle Customization, Expedition Support, Mobile Camps, Convoys, and Persistent Vehicle Assets"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[8].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [8] — Vehicle Customization, Expedition Support, Mobile Camps, Convoys, and Persistent Vehicle Assets

@@ -8,6 +8,24 @@
 
 ---
 
+## 0. Framing — Late Batch, Same Manners (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "The eleventh batch keeps the manners of the first — and that is what makes this a programme
+> rather than a spree."
+
+Plans 147 and 148 are waited on by the same ceremony as Plans 55 and 58 were: premise audit,
+selection argued, seams disjoint. Nothing about the routine has decayed, which is the strongest
+signal in the file that the queue is actually being drained.
+
+- **Freshness of premise is re-checked every time**, because a plan that was true in March is not
+  thereby true now.
+- **The batch never grows.** Two is not a limit of capacity; it is a limit of care.
+
+---
+
 ## 1. Scope and Selection
 
 Per `docs/plans/OLDEST_PARTIAL_PLANS_AUDIT_20_2026-09-23.md`, following the full integration of Plans 141 and 145, the next two oldest partial plans with 0 host references are:

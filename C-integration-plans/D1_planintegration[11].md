@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "D1-11"
+TITLE: "D1 Flagship Integration Plan [11]"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/D1_planintegration[11].md"
+INFERRED: true
+---
 # D1 Flagship Integration Plan [11]
 ## Plan 174 — Procedural Survivor Backstories & Origin Mechanics
 

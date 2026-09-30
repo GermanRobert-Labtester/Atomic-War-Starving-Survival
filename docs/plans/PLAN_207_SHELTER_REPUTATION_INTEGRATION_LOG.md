@@ -1,5 +1,18 @@
 # Plan 207 (C1[39]) — Shelter Reputation & External Perception Full Integration Log
 
+## 0. Framing — Reputation (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Reputation is a rumour with a long memory."
+
+External perception gives the shelter a self it cannot see directly — the version of the
+holdfast that walks ahead of it into every negotiation. The integration keeps that image derived,
+never stored as vanity: reputation is what the *others* believe, and belief has its own ledger.
+
+- **You are known by what you did, in the order people heard about it** — and the log fixes both
+  the deeds and the ordering.
+
 **Date:** 2026-09-20
 **Corpus Key:** `C1[39]`
 **Status:** SEALED

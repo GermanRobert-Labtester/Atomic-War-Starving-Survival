@@ -1,5 +1,18 @@
 # Plan IV — Ledger Debt Consequences, Trade Credit & Headless Integration — Implementation Log
 
+## 0. Framing — Debt (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Debt is a promise with a schedule attached."
+
+Ledger debt consequences and trade credit give the economy its past tense: what was borrowed is
+now owed, and the ledger remembers in a currency of consequences. Headless integration means the
+whole arrangement can be proven without a screen — arithmetic first, ceremony never.
+
+- **Credit is trust with interest** — and this log records the moment the shelter's word acquired
+  a due date.
+
 **Plan:** ASHFALL Flagship Integration Plan IV (F1/F2/F3)
 **Status:** IMPLEMENTED — debt-focused gates pass; the wrapper expansion selftest is blocked by missing imported Godot assets in this checkout.
 **Verification date:** 2026-09-06

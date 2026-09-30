@@ -1,4 +1,17 @@
 # Plans 202–205 Flagship Reconnaissance — Authority Map
+
+## 0. Framing — Who Decides (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded document remains the authority.)*
+
+> "An authority map is a census of who decides."
+
+The flagship recon's headline — two of four domains already exist — is the corpus's favourite
+kind of finding: the work is smaller and the risk is lower than the ambition suggested. Discovering
+you own half of what you need is the surveyor's small joy.
+
+- **Finding existing authority is cheaper than building new authority**, in every currency the
+  programme counts.
 ## Plastic Fuel Recovery · Perimeter Defense · Mushroom Cultivation · Cargo Airdrop
 
 > **RENUMBERING NOTE (mandatory):** The original roadmap document proposed "Plans 102–105".

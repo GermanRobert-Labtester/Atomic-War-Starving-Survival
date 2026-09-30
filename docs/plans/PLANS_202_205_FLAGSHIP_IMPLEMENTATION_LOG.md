@@ -1,5 +1,18 @@
 # Plans 202–205 Flagship Integration Log — Shelter Resilience & Long-Range Logistics
 
+## 0. Framing — Kept and Sent (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Resilience is what the shelter keeps. Logistics is what it sends."
+
+Waste-plastic fuel recovery, perimeter extension, and long-range movement: a flagship about
+*self-sufficiency reaching outward*. The pairing is one question in two directions — how much can
+we hold, and how far can we go — answered in a single sealed log.
+
+- **Recovery and reach are the same instinct**: nothing is waste and nowhere is unreachable, if
+  the ledger says so.
+
 **Flagship:** waste-plastic fuel recovery (202), perimeter defense extension (203),
 subterranean mushroom cultivation extension (204), cargo airdrop recovery (205).
 **Plan class:** Major flagship full-integration roadmap (renumbered from the

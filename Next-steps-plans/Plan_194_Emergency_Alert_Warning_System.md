@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-97211BD47424"
+TITLE: "Plan 194 — Emergency Alerts and Warnings — Verified Producers, One Escalation Clock, and Accessible Response"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_194_Emergency_Alert_Warning_System.md"
+INFERRED: true
+---
 # Plan 194 — Emergency Alerts and Warnings — Verified Producers, One Escalation Clock, and Accessible Response
 
 ## Current evidence and integration architecture — 2026-09-24

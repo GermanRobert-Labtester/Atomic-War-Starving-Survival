@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — The Boring Investment (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "A body kept in practice is a tool kept sharp — and nobody thanks the whetstone."
+
+Exercise and physical training is the daily, unglamorous, decisive investment: the plan makes the
+maintenance of people look exactly like the maintenance of equipment, and that resemblance is the
+point. A shelter that services its machines and skips its bodies has simply chosen which inventory
+it believes in.
+
+- **Repetition is the entire mechanic.** Nothing here fires once; everything here accrues — which
+  is what makes it a *practice* rather than an event.
+- **Training is a schedule, and schedules are the shelter's native language.** The system fits the
+  roster the way a chore does, and its rewards arrive in the same currency as its costs: days.
+
+---
+
 ## Outcome
 
 Make `ExerciseSystem` (DEC-343) the live physical fitness, workout routine execution,

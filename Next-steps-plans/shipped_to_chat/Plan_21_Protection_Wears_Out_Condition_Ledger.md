@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-D19846F78084"
+TITLE: "Plan 21 — Protection Wears Out (Condition Ledger) — Equipment Wear Per Use, Degradation Curves, Environmental Erosion, and Repair Logistics"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_21_Protection_Wears_Out_Condition_Ledger.md"
+INFERRED: true
+---
 # Plan 21 — Protection Wears Out (Condition Ledger) — Equipment Wear Per Use, Degradation Curves, Environmental Erosion, and Repair Logistics
 
 ## 1. Objective and bounded outcome

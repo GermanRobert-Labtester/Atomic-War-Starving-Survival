@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-67"
+TITLE: "Plan 67 — Cassette Sets, Playback Progress and Audio-Discovery Reachability"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/67-cassette-sets-expansion.md"
+INFERRED: true
+---
 # Plan 67 — Cassette Sets, Playback Progress and Audio-Discovery Reachability
 
 > **Rebuild status:** COMPLETE 12-SET CATALOG — LOADER AND PLAYBACK CORE EXIST; NORMAL-PLAY AUDIO ROUTE MUST BE AUDITED

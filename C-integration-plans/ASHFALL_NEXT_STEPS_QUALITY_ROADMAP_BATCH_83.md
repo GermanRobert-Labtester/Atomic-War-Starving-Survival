@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "INT-ROADMAP-BATCH-83"
+TITLE: "ASHFALL — Quality Roadmap Batch 83"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/ASHFALL_NEXT_STEPS_QUALITY_ROADMAP_BATCH_83.md"
+INFERRED: true
+---
 # ASHFALL — Quality Roadmap Batch 83
 
 ## Theme: Automated Balance Testing — Statistical Simulation for Game Design Validation

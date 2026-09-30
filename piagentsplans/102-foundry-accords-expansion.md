@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-102"
+TITLE: "Plan 102 — Foundry Accords, Treaty Consequences and Signing Authority"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/102-foundry-accords-expansion.md"
+INFERRED: true
+---
 # Plan 102 — Foundry Accords, Treaty Consequences and Signing Authority
 
 > **Rebuild status:** COMPLETE 18-TREATY CATALOG — LIVE FOUNDRY CONSUMER AND REACHABILITY REQUIRE PRECISION

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-959C67546E3C"
+TITLE: "Plan 175 — Meta Progression & New Game+ Orchestration — Cross-Run Profile Persistence, Prestige Currency Valuation, Unlockable Boons, and New Game+ Bootstrap"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_175_Meta_Progression_New_Game_Plus.md"
+INFERRED: true
+---
 # Plan 175 — Meta Progression & New Game+ Orchestration — Cross-Run Profile Persistence, Prestige Currency Valuation, Unlockable Boons, and New Game+ Bootstrap
 
 ## 1. Objective and bounded outcome

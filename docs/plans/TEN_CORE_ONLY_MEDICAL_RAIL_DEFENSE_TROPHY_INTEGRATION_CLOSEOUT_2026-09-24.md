@@ -1,5 +1,18 @@
 # Items 21–30 integration-plan closeout
 
+## 0. Framing — Ten More (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "A corpus counts on its fingers and does not round up."
+
+Medical, rail, defense, trophy: items 21–30 of the integration queue, each one verified in its
+core-only form and closed without ceremony. The plain title is a promise of completeness — ten
+rows, ten receipts.
+
+- **Core-only is the strictest promise in the architecture**, and the easiest to keep honest:
+  no engine, no excuses.
+
 **Date:** 2026-09-24
 **Scope:** ten user-requested subject expansions, planning and editorial work only.
 **Expansion source:** `docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`, checked against current Core, Godot host, JSON, and governance files.

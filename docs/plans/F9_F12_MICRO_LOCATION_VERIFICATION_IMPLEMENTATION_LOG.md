@@ -1,5 +1,18 @@
 # F9–F12 Micro-Location Verification Wave — Implementation Log
 
+## 0. Framing — Small Places (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A micro-location is a room the game agrees to remember."
+
+Persistence, determinism, utilization and reward-economy for the smallest places in the world —
+the corners that make a map feel inhabited. Verification waves like this one are where the corpus
+proves it keeps even the rooms nobody screenshots.
+
+- **The small places are load-bearing for the feeling of a world**, and the log gives them the
+  same rigour as the big systems.
+
 Plan: Flagship Micro-Location Persistence, Determinism, Utilization & Reward-Economy Verification (Tasks F9–F12).
 
 ## Phase 0 — Architecture Reconnaissance (Wave A)

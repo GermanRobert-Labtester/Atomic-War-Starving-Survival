@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-14
+PLAN_ID: "E1-14"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 14
-STATUS: READY_FOR_EXECUTION_WHEN_PLAN_34_AND_PLAN_149_CONTRACTS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 175 — Meta Profile & New Game+ Orchestration"
 SEQUENCE_FILENAME: "E1_planintegration[14].md"
 PREVIOUS_FILENAME: "E1_planintegration[13].md"
 NEXT_FILENAMES:
   - "E1_planintegration[15].md"
   - "E1_planintegration[16].md"
-CATEGORY: LINK+META_PROFILE+REWARDS+NEW_GAME_PLUS+SETTINGS_BOUNDARY
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create exactly one product-level cross-campaign reward/profile authority that imports finalized Plan 34 completion records and Plan 149 completed-achievement ids once, persists currency/prestige/unlocks outside campaign slots, and emits explicit new-campaign bootstrap selections without duplicating achievement or difficulty logic."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -25,6 +25,24 @@ RUNTIME_RISK: MEDIUM_HIGH
 SAVE_RISK: VERY_HIGH
 BALANCE_RISK: VERY_HIGH
 MIGRATION_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [14] — Meta Profile, Verified Completion Import, Achievement Rewards, Prestige, Currency, and New Game+ Bootstrap"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[14].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [14] — Meta Profile, Verified Completion Import, Achievement Rewards, Prestige, Currency, and New Game+ Bootstrap

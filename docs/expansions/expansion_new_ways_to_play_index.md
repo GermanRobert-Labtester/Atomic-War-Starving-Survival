@@ -12,6 +12,13 @@ Covers subjects 8–12 of the user's list. Sibling sets: Year Two (Days 361–72
 
 All five are `STATUS: DRAFT — awaiting user approval`. No per-package derived plans were written.
 
+> *"A new way to play is not a new button. It is a reason to press one of the ones you already have."*
+>
+> Read these five together and a pattern appears: every one of them is **a verb the shelter already
+> had, given somebody to point at**. Broadcasting existed; now it has a call sign. Vetting existed;
+> now it has a visitor. Research existed; now it has *bearers* who can die. The machinery is not
+> new. The stakes of pulling the handle are.
+
 ## 1. What these five have in common
 Unlike subjects 4–7, **the machinery mostly exists**: radio has a production system, PsyOps and triangulation; research has fragments-in-waiting (salvage, archives, decay); governance has *five* owners; espionage has agents, informants and vetting; companions have care and grief. Each plan therefore **connects existing owners and adds one small ledger** — none adds a second authority.
 
@@ -98,3 +105,41 @@ Not a ledger entry, not a claim, not an approval. The foreman records `INTEGRATI
 
 ## 11. Related (added later 2026-09-29)
 Director's picks P1–P4 (*The Ration Wars*, *The Long Siege*, *The Record Keepers*, *The Deep Works*) are in `docs/expansions/expansion_shelter_under_pressure_index.md`; subjects 13–16 (*Faith and Schism*, *The Underworld*, *The Deep*, *The Sky*) are in `docs/expansions/expansion_new_pressures_and_places_index.md`. They add a third consumer of the expedition host file (`ExpeditionHostSession.cs`: Long Siege dispatch gate, alongside CC and DC) and consume Shelter Governance's Hoarding statute (Ration Wars).
+
+---
+
+## The deeper layer — the family as a shape (second prose pass)
+
+*(Second prose pass, non-contractual: texture and writing guidance only — not a claim, not an
+authorization. The shared-silences register below is unchanged; the fragments are content
+candidates, not new recorded questions.)*
+
+**The second layer.** A new way to play is not a new button; it is a reason to press one of the
+ones you already have. Every one of the five is a verb the shelter already had, given somebody to
+point at. The machinery is not new. The stakes of pulling the handle are.
+
+**What the family leaves between its members.**
+
+> "Broadcasting existed; now it has a call sign. Vetting existed; now it has a visitor. Research existed; now it has bearers who can die."
+
+> "One gate, three systems, five consumers, one adapter — agreed once, shared by four families."
+
+> "The signal interceptor: one person, or a technique. Both plans touch it. Neither may resolve it."
+
+*(Texture only. The silences below are the register; nothing here adds to them.)*
+
+---
+
+## What this family refuses to answer (shared silences — cross-expansion)
+
+These are **shared across the five plans** and are only safe while *neither* side fills them. See
+also `.ai/plans/OPEN_MYSTERY_INDEX_2026-09-29.md` §3.
+
+- **The "signal interceptor"** — one person, or a technique? *Radio Free Ashfall* and *The Quiet
+  War* both touch it. Resolving it in one plan steals the other's dread.
+- **The shared gate adapter** at the shelter door — agreed once here (§4), used by four families.
+  No second gate, ever.
+- **Whether a broadcast is a copy or a voice.** *The Record Keepers* treats broadcast as a copy
+  medium; *Radio Free Ashfall* treats it as identity. Both are true and neither is settled.
+- **What a fragment is worth.** *The Reconstruction Tree* treats fragments as contested
+  intelligence; *The Quiet War* may trade or steal them. Custody stays with the ledger.

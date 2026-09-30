@@ -11,6 +11,15 @@
 
 ---
 
+> *"The sea did not rise. The land remembered what it used to be, and went back to it, one winter at
+> a time."*
+>
+> The coast is not a destination. It is a **schedule**: four days of tide, six windows, a berth that
+> is dry on Tuesday and a memory by the following thaw. Everything maritime here is a matter of
+> timing, and timing is the one thing a shelter with a day-advance cannot negotiate.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -22,6 +31,16 @@ The corpus already has a sea: fourteen dive sites, five hulls from a drum-raft t
 The Drowned Coast is the campaign that makes water a home ground. You begin with a raft you should not trust. You end holding — or losing — the last working harbour on a coast that is going under a little every winter. Between those two, the loop is the same one the water forces on everyone:
 
 **read the tide → choose a boat → decide what the harbour will let you do → go → come back changed (or don't).**
+
+A harbour here is six small polities with dues. A boat is a hull number and a fuel line and a
+favourite. A dive is a window that opens and does not wait. And the **waterline** is a slow,
+published, unreadable-in-advance arithmetic that quietly converts *berth* into *shoreline* and
+never converts it back.
+
+This is the one antagonist in the game that never attacks and never relents. The two-day
+announcement before any waterline step is therefore the expansion's moral centre: the coast may be
+implacable, but it is never *surprising*. A player who loses a berth they were warned about loses it
+to the world. A player who loses one without warning loses it to the design.
 
 ### 1.2 Pillars
 
@@ -159,3 +178,59 @@ No new map, expedition or dive system. No restoring the retired system. No new s
 - **The dive system that "exists" isn't the live one.** *Bound:* DC-P0 F8 check; the plan adds no dive code before it is settled.
 - **The waterline punishes without warning.** *Bound:* every step is announced two days ahead (Board line with the cause).
 - **Content tone drift toward horror spectacle.** *Bound:* voice lock; the sea is cold, not cruel.
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** The waterline is the only antagonist in this corpus with no intentions at
+all — and the one that takes things permanently. The two-day announcement is the coast's single
+courtesy and its moral centre: the coast may be implacable but it is never *surprising*. This
+expansion teaches a skill no other system demands — losing on a schedule, with notice, without
+villainy.
+
+**What the expansion leaves lying around.**
+
+> "Berth book: Berth 4, dues paid. Maintained for a berth that is awash. The book is the last place Berth 4 exists."
+
+> "Chart, nine years old. A rock is named. The name is the only part of the chart that is still true."
+
+> "Dive window slip: opens Tuesday, closes Wednesday. A receipt for a window nobody can hold open."
+
+**Scenes the player may piece together.**
+
+> "The announcement is read aloud at the gate. Two days' notice, and then the water decides."
+
+> "A movement passes the old boat ground. Nobody points. The chart stays in someone's bag and stays there."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the dive windows are windows *onto*. Tide windows open and do not wait; what they frame is the diver's, never the model's.
+- Why ice is a modality and not a rescue. Walkable and closed are two kinds of silence, and neither is an answer.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**What the six waterline curves are measuring.** Pure function, per harbour, six authored shapes, no
+stated cause. Explaining them turns a slow antagonist into a puzzle.
+
+**Who the `keeper_thread_id` on a dive site was.** The field is real and unread in the fiction. It is
+allowed to remain an artefact that reads like a name.
+
+**Whether the Black Flotilla and the harbours are the same polity.** They are read from different
+standing owners and this expansion deliberately does not reconcile them.
+
+**Why there are five movements and not four.** The fifth is a coda. Numbering it V rather than IV is
+a choice nobody recorded.
+
+**What the retired maritime exploration system knew.** It is retired and sealed. Its contents are
+sealed with it, and this document will not use it as lore.

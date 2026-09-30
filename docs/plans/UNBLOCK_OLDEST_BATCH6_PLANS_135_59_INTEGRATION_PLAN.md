@@ -9,6 +9,22 @@
 
 ---
 
+## 0. Framing — Which Two, and Why (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Choosing two plans is a design decision wearing a calendar's clothes."
+
+The heading says the quiet part out loud: *which two plans, and why*. Selection is where a batch
+earns its name — Plans 135 and 59 are not arbitrary picks but a pairing judged on premise
+freshness, shared seams and what the corpus can absorb at once.
+
+- **A documented selection rule is auditable; an undocumented one is a mood.**
+- **Pairs are chosen to be neighbours**, not merely to be next.
+
+---
+
 ## 1. Which two plans, and why
 
 The 20-plan audit (`docs/plans/OLDEST_PARTIAL_PLANS_AUDIT_20_2026-09-23.md`)

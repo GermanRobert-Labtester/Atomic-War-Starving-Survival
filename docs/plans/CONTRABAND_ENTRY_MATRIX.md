@@ -1,5 +1,15 @@
 # CONTRABAND ENTRY MATRIX — Plan 147 Task A.1/A.2
 
+## 0. Framing — The Entry (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded matrix remains the authority.)*
+
+> "Contraband is legality with a timestamp."
+
+The entry matrix decides what crosses a threshold and under which name — the paperwork of the
+shadows, kept in the same tables as everything else. A hidden economy that cannot be tabulated is
+not hidden; it is merely messy.
+
 Complete inventory of all 20 records in
 `Assets/StreamingAssets/Data/narrative/bunker_contraband_barter.json`
 (schema v1), with every non-default mechanics field each entry actually

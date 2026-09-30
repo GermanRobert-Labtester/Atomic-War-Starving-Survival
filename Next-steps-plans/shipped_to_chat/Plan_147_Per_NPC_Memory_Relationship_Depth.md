@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-B04FFBCED033"
+TITLE: "Plan 147 — Per-NPC Memory & Relationship Depth — Discrete Episodic Recollections, Emotional Valence Curves, Trauma Recalls, and Dialogue Seams"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_147_Per_NPC_Memory_Relationship_Depth.md"
+INFERRED: true
+---
 # Plan 147 — Per-NPC Memory & Relationship Depth — Discrete Episodic Recollections, Emotional Valence Curves, Trauma Recalls, and Dialogue Seams
 
 ## 1. Objective and bounded outcome

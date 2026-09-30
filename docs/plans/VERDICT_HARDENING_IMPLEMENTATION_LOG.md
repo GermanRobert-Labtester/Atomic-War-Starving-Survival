@@ -1,5 +1,17 @@
 # Verdict Hardening Implementation Log
 
+## 0. Framing — The Verdict (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A verdict is the last sentence of an argument and the first sentence of a history."
+
+Verdict hardening protects the moment where evidence becomes consequence — the seam at which a
+campaign stops being ambiguous. Anything fragile there does not merely fail; it fails *at the
+exact point where failure means the wrong story is recorded*.
+
+- **The hardest seams are the ones where meaning is minted**, which is why this log exists.
+
 ## Phase 1 — Evidence producer/consumer seam
 
 Status: PASS

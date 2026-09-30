@@ -1,5 +1,17 @@
 # Partial Wave 6 — Plans 167 + 219 Integration Log
 
+## 0. Framing — Passage (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Every system about passage is really a system about time."
+
+The sixth wave is about movement between places — tunnels cut through rock, routes cut through a
+year — and its logs inherit the same grammar as every wave before it: bounded claims, named seams,
+evidence at the top of the file where it belongs.
+
+- **By the sixth wave, the routine *is* the quality** — nothing about the ceremony has slipped.
+
 Date: 2026-09-19
 Status: implemented and verified by the integrator
 

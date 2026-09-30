@@ -1,5 +1,18 @@
 # SHELTER GRID CATALOG SEAL — IMPLEMENTATION LOG
 
+## 0. Framing — The Seal, Executed (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A sealed catalog in a log is a vocabulary kept."
+
+The G1–G3 grid catalog went from *authoritative* to *sealed* — frozen, verified, citable. The
+log records the moment the shelter's construction language stopped drifting, which every later
+plan gets to take for granted.
+
+- **Sealing is the corpus's act of punctuation**: the sentence is finished, and it may now be
+  quoted.
+
 Plan: `docs/plans/SHELTER_GRID_CATALOG_SEAL_INTEGRATION_PLAN.md`
 Branch: `feat/asset-pipeline-flagship` (pre-existing uncommitted work from a concurrent
 stream present in the tree; none of it touched or staged by this wave).

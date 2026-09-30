@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-4277602613B3"
+TITLE: "Plan 191 — Item Inspection and Appraisal — Retired Standalone Proposal, Current Owner Contract"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_191_Item_Identification_Appraisal_System.md"
+INFERRED: true
+---
 # Plan 191 — Item Inspection and Appraisal — Retired Standalone Proposal, Current Owner Contract
 
 > **STATUS: RETIRED (2026-09-17, C3).** This revision documents current inspection and barter appraisal and preserves the signed retirement. It is not an implementation authorization. Reopen only through a new signed inventory-instance owner, save contract and consumed reveal surface. See `docs/plans/wave8_part2/C3_DECISION.md`.

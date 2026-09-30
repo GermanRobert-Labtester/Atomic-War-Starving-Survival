@@ -12,10 +12,15 @@ STATUS: APPROVED BY USER
 
 > Approval: user, 2026-09-29, "I authorise the each seperate plan!" (umbrella: `.ai/plans/year-two-the-long-thaw-2026-09-29.md`). Derived from umbrella §5 (card P8); acceptance criteria, paths, and stop conditions there are binding. **Start gate:** predecessor package handoff accepted by the foreman, exact paths claimed in `WORKTREE_OWNERSHIP.md`, `.ai/state.md` read. Rule 10 stop conditions apply.
 
-> **Editorial polish (prose pass, non-contractual):** the Prologue and texture notes below are
+> **Editorial polish (prose pass, non-contractual):** the Prologue, §1b and texture notes below are
 > narrative texture and writing guidance only. They change no acceptance criterion, no claimed path,
 > no decision and no verification step. All binding criteria remain in the umbrella
 > (`year-two-the-long-thaw-2026-09-29.md`) §5/§6/§8.
+>
+> **Second prose pass (2026-09-29, non-contractual):** the Prologue gains one *second layer*
+> paragraph and a new **§1b Texture, Mystery & Voice** section, matching the corpus standard used by
+> the family plans. Same rule as above: narrative texture only. §6's register is unchanged — the
+> new fragments are texture, not new recorded questions (the Open Mystery Index counts still hold).
 
 ---
 
@@ -40,6 +45,13 @@ improvised.
 phrases, names and customs the player is never given a glossary for. §6 keeps open what the waves
 are not permitted to explain.
 
+**The second layer.** The four waves are the program's only act of pure writing, and the
+*existing-loaders* rule is what keeps writing honest: every sentence must arrive through a door
+that is already built. That constraint is easier to resent than it looks and more literary than it
+sounds — a story that can only be told where a story can already be found is a story that respects
+the shape of the world it joins. The unexplained idioms are the same ethic in miniature. A world
+you can fully gloss is a world that has been reduced to its documentation.
+
 ---
 
 ## 1. Goal & Outcome
@@ -50,6 +62,68 @@ are not permitted to explain.
 - **Goal:** Prose-led quests, radio, encounters, keeper follow-ups per quarter, integrated only through existing loaders.
 - **Non-Goals:** No new mechanics; nothing outside `minDay ≥ profile chapter-open day` and ≤ chapter end; no explained idioms; no depicted harm to children.
 - **Start gate:** W1: P1+P1B+P2+P3 · W2: P4c+P5 · W3: P6 · W4: P4b/c+P7
+
+---
+
+## 1b. Texture, Mystery & Voice
+
+*(Second prose pass. Narrative texture and writing guidance only — no authority, no claimed path,
+no acceptance criterion. §6's register is unchanged; the fragments below are content candidates
+and deliberate silences, not new recorded questions.)*
+
+**What the player is never told.**
+
+- What the idioms mean. They are overheard, never glossed (P8-OM-1). The player understands them the way one understands weather — from the sentence around them.
+- Who is on the year-two radio (P8-OM-4). Whether P3's four voices ever speak there is permitted to stay unresolved, and neither answer may be written into the data.
+- What the keeper follow-ups follow up *from* (P8-OM-3). Their antecedent belongs to another family's records; this card inherits the weight, never the explanation.
+- Whether the waves are felt in-fiction as seasons. The cadence is real to the pipeline and unauthored to the world. Let it be overheard, not announced.
+
+**Voice — sample fragments** (content candidates for `year_two_quests.json` /
+`year_two_radio.json` / `narrative_encounters_year_two.json`).
+
+> "Radio, second quarter. The voice uses a word we do not have. Understand it from the sentence around it, the way you understand weather."
+
+> "Encounter: a walker with a ledger. The ledger is the encounter; the walker is how it arrives."
+
+> "Keeper follow-up: the record remembers the question, the keeper remembers the asking. The follow-up is about the difference."
+
+> "There is no fifth quarter. There is only the last week of the fourth, which everyone quietly treats like one."
+
+**Design texture beats.**
+
+- **Content that cannot reach an existing loader does not ship.** Not a limitation on writing; a discipline on placement. The story goes where the world already listens.
+- **Idioms are overheard.** Never add a glossary, a tooltip, or a codex entry that explains one — this is a hard Non-Goal with real teeth.
+- **Waves are delivery schedules that read as seasons.** One per quarter; cadence as atmosphere. Never announce the schedule inside the fiction.
+- **Bounds are moral bounds.** `minDay` windows keep the writing inside the chapter it belongs to: nothing leaks back into Year One and nothing gestures past Day 720.
+
+**Third pass — the greenfield (texture only; §6's register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §6's register is unchanged; the fragments
+below are content candidates and deliberate silences, not new recorded questions.)*
+
+**The shape of the polish.** Almost nothing has been authored past Day 360, and the emptiness is
+not neglect — it is a canvas admitting it is blank. Content waves are the programme's promise that
+the thaw will have *weather* in it: ordinary days, small observances, the texture of a year that
+refuses to be an epilogue.
+
+**What the waves leave lying around.**
+
+> "A content wave is a promise that the thaw will have weather in it — not events, weather."
+
+> "Day 400, unadorned. The calendar is not the content; the calendar is what the content agrees to
+> happen inside."
+
+> "Ship-dark means the year passes plain. The plain year is a valid reading and stays playable."
+
+**Held silences (texture, not register rows).**
+
+- What fills the days no wave reaches. Unadorned time is playable time (ship-dark parity); the
+  quiet must remain a legitimate season, not a gap to be filled. Texture only.
+- Whether the waves will be felt as authored. Content is authored and the calendar is not; the
+  seam is the same one every author leaves, and it should stay the width of a signature.
+
+---
 
 ## 2. Claimed Paths & Affected Files
 (Proposed; the foreman records the claim. `INT` = integrator-owned shared seam.)

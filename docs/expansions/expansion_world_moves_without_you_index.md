@@ -11,6 +11,15 @@ Covers four expansions (subjects 4–7 of the user's list). Year Two (Days 361�
 
 All four are `STATUS: DRAFT — awaiting user approval`. Per-package derived plans (Year Two style) are **not** written: the user's earlier "I authorise the each seperate plan" was given for Year Two; this sheet does not assume it extends here.
 
+> *"The world does not wait for you to look at it. That is the whole design, and it is the hardest
+> thing in this family to build."*
+>
+> Four expansions about **events that proceed whether or not the player is watching**: a region that
+> fails on its own schedule, a route that closes, a plague that spreads by vector and not by
+> decision, a coast that drowns its own harbours. None of them is aimed at the player. All of them
+> arrive at the player anyway. The shared feeling is not threat — it is *lateness*. You find out
+> after it matters.
+
 ## 1. The one idea they share
 The region already has five clocks: weather, wildlife, migration, faction war, embargo. Each expansion **reads them together and adds one small owner-respecting layer**; none adds a second economy, disease, expedition, or map authority.
 
@@ -80,3 +89,43 @@ Not a ledger entry, not a claim, not an approval. The foreman records the `INTEG
 
 ## 10. Update (later 2026-09-29 pass) — the gate is three systems, and five plans need it
 The "stranger at the door" owner (LR E11, PY E13) was located: `AirlockSecuritySystem` (decision point: Admit / Inspect / Quarantine / TurnAway / Defend), `DoorEncounterSystem` (80 authored knocks), `VisitorIntegrationSystem` (the stay, `SourceVisitorId` handoff). **One shared gate adapter** is now needed by LR-P6, PY-P3/P4, *The Quiet War* QW-P2, *Radio Free Ashfall* RF-P4 (signature visitors) and *Crews and Companions* (returning parties). Design it once, in `docs/expansions/expansion_new_ways_to_play_index.md` §4. Related: `docs/expansions/expansion_new_ways_to_play_index.md` for subjects 8–12.
+
+---
+
+## The deeper layer — the family as a shape (second prose pass)
+
+*(Second prose pass, non-contractual: texture and writing guidance only — not a claim, not an
+authorization. The shared-silences register below is unchanged; the fragments are content
+candidates, not new recorded questions.)*
+
+**The second layer.** The shared feeling of this family is not threat — it is *lateness*. You find
+out after it matters. The hardest thing here to build is the honesty of a world that is not aimed
+at the player and arrives anyway: the world is not ignoring you, it is not considering you either.
+Five clocks run — weather, wildlife, migration, war, embargo — and none of them is yours.
+
+**What the family leaves between its members.**
+
+> "A cough at the Ferry is a rumour. The Toll road is cut. The salt wagon is late for a reason. Cape Beacon closes its lamp."
+
+> "Thaw: the meltwater carries the second strain along the same roads that carried the first news."
+
+> "War tension is an input. The war is never a subject. That is what makes the family work."
+
+*(Texture only. The silences below are the register; nothing here adds to them.)*
+
+---
+
+## What this family refuses to answer (shared silences — cross-expansion)
+
+Shared across all four and only safe while *none* of them fills it. See
+`.ai/plans/OPEN_MYSTERY_INDEX_2026-09-29.md` §3.
+
+- **Where the redirected people go.** *The Living Region* conserves population at the gate;
+  *The Plague Year* counts its dead. Neither ledger follows anyone past its own boundary.
+- **Whether the world knows the shelter is there.** Regional pulse, route state, outbreak stage and
+  waterline are all pure or read-only with respect to the player. The world is not ignoring you. It
+  is not considering you either.
+- **What caused the war that moves all of this.** War tension is an input. The war is never a
+  subject. That is deliberate and it is what makes the family work.
+- **Why everything here is *late*.** The shared feeling is lateness and no mechanism explains it.
+  The world reports; the player arrives second.

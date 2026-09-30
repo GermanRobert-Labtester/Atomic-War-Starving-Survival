@@ -5,6 +5,24 @@
 **Evidence:** `--dynamic-quest-selftest` 12/12, `--origin-mechanics-selftest` 12/12,
 host + Core builds 0 errors / 0 warnings.
 
+## 0. Framing — Made and Born (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "One plan asks what happens next. The other asks how it began."
+
+Dynamic quest generation and the mechanical origin seam are the future tense and the past tense of
+the same story system: one produces what the shelter *will* face from the state it is in, the other
+binds what it *was* into what it can become. Together they make a campaign read like a life rather
+than a playlist.
+
+- **Generated quests must be derived, never stored** — the state is the seed and the quest is the
+  bloom.
+- **An origin seam is how a beginning keeps paying rent** on every later day.
+
+---
+
 ## Premise (verified in source before editing)
 
 - **Plan 171** — `DynamicQuestGenerator` and its authored

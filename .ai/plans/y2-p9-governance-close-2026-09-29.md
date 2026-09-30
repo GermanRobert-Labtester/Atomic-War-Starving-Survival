@@ -12,10 +12,15 @@ STATUS: APPROVED BY USER
 
 > Approval: user, 2026-09-29, "I authorise the each seperate plan!" (umbrella: `.ai/plans/year-two-the-long-thaw-2026-09-29.md`). Derived from umbrella §5 (card P9); acceptance criteria, paths, and stop conditions there are binding. **Start gate:** predecessor package handoff accepted by the foreman, exact paths claimed in `WORKTREE_OWNERSHIP.md`, `.ai/state.md` read. Rule 10 stop conditions apply.
 
-> **Editorial polish (prose pass, non-contractual):** the Prologue and texture notes below are
+> **Editorial polish (prose pass, non-contractual):** the Prologue, §1b and texture notes below are
 > narrative texture and writing guidance only. They change no acceptance criterion, no claimed path,
 > no decision and no verification step. All binding criteria remain in the umbrella
 > (`year-two-the-long-thaw-2026-09-29.md`) §5/§6/§8.
+>
+> **Second prose pass (2026-09-29, non-contractual):** the Prologue gains one *second layer*
+> paragraph and a new **§1b Texture, Mystery & Voice** section, matching the corpus standard used by
+> the family plans. Same rule as above: narrative texture only. §6's register is unchanged — the
+> new fragments are texture, not new recorded questions (the Open Mystery Index counts still hold).
 
 ---
 
@@ -41,6 +46,14 @@ discipline: generated outputs are never edited by hand. The index of everything 
 learned is itself a generated artefact, which means the record of the work is not authored by the
 people who did it. That is correct, and it is also slightly strange. §6 leaves it there.
 
+**The second layer.** Sealing is the program's only irreversible administrative act, and its
+emotional charge comes from a fact nobody says out loud: an unsealed plan is not neutral. It stays
+in the active pile making a quiet claim on the next agent's attention, promising work that may
+already be done. Moving a finished family to the archive in the same session is therefore not
+tidiness — it is telling the truth about the state of the world in the only language the workflow
+has. The archive does not applaud. It records, and a record is what survives the people who made
+it.
+
 ---
 
 ## 1. Goal & Outcome
@@ -51,6 +64,67 @@ people who did it. That is correct, and it is also slightly strange. §6 leaves 
 - **Goal:** Stale docs fixed, debt rows filed, ledger entry written, plan sealed and archived.
 - **Non-Goals:** No new code.
 - **Start gate:** P7 and W1–W4 accepted
+
+---
+
+## 1b. Texture, Mystery & Voice
+
+*(Second prose pass. Narrative texture and writing guidance only — no authority, no claimed path,
+no acceptance criterion. §6's register is unchanged; the fragments below are content candidates
+and deliberate silences, not new recorded questions.)*
+
+**What the player is never told.**
+
+- Where the archive is. A folder is a place, if enough people treat it as one. `integrated/<category>/` is the address; the destination is never narrated.
+- Who reads a sealed plan next. Ideally nobody; it is evidence, not instruction. The seal's audience is the future, which does not RSVP.
+- Whether closing a file changes anything in the world. It does not, and the restraint is the point. P9 is the one card whose entire drama is offstage.
+- What the ledger entry means to the people who did the work. The card writes it and refuses to sentimentalise it. The work knows what it cost; the ledger does not need to.
+
+**Voice — sample fragments** (texture only — P9 writes documents; generated outputs are never
+hand-edited).
+
+> "Ledger entry, final line: work completed, plans sealed, family archived. The line is short because the work was long."
+
+> "Moved to integrated/ in the same session it was finished. A finished thing left in the active pile is a rumour about work."
+
+> "Stale documents fixed. Debt rows filed where they belong. Nothing deleted; everything accounted for."
+
+> "Run the generator; do not hand-edit the output. The rule is boring, and it is the reason the record outlives us."
+
+**Design texture beats.**
+
+- **Same-session archiving is a refusal of ambiguity.** The header is written, then the file moves. Immediately — even in the session that finished it.
+- **Seal, then move.** `FULLY INTEGRATED` at the top of the plan, then `integrated/<category>/`. Order matters: the mark is what makes the move honest.
+- **Generated outputs go through their generator.** `--check` exists; the docs index is not authored by hand and must never be edited as prose.
+- **Close cleanly or leave evidence.** The one failure mode worse than no plan is a finished plan still pretending to be work.
+
+**Third pass — the closing of the books (texture only; §6's register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §6's register is unchanged; the fragments
+below are content candidates and deliberate silences, not new recorded questions.)*
+
+**The shape of the polish.** Governance close is the least glamorous motion in the programme and
+its most custodial: dates in margins, ledgers squared, claims returned. Prose should keep the
+clerk's register — a closed book is not a resolved one, it is a book that has promised to stop
+changing.
+
+**What the close leaves lying around.**
+
+> "The last governance act of a year is usually a date written in a margin."
+
+> "A closed register is not a resolved one; it is a register that has promised to stop changing."
+
+> "Handoff note: the debts are listed. The list is the kindness."
+
+**Held silences (texture, not register rows).**
+
+- What the programme owes the next programme. Handoff is the only inheritance here; the debts are
+  written down and the writing is the whole of the payment this plan can make. Texture only.
+- Whether a closed book is ever opened again. Archives exist; the reopening is not authored and
+  must not be.
+
+---
 
 ## 2. Claimed Paths & Affected Files
 (Proposed; the foreman records the claim. `INT` = integrator-owned shared seam.)

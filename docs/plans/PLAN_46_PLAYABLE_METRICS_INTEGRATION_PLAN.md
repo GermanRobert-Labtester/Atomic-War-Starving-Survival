@@ -10,6 +10,25 @@
 
 ---
 
+## 0. Framing — The Number You Did Not Take (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, evidence row, decision,
+acceptance criterion, verification step or recorded status.)*
+
+> "Measure the player, or the player will be measured by your guesses."
+
+Difficulty decided from evidence is the least romantic kind of design and the most respectful: it
+assumes the players are real people whose behaviour is worth recording before it is interpreted.
+The measurement layer is infrastructure for humility — local metrics first, reproducible balance
+second, and every claim tied to a capture that can be re-run.
+
+- **A metric without a reproducible capture is a rumour with a decimal point.** The plan's value
+  is not the numbers; it is the *protocol* that keeps them honest.
+- **Measurement-driven difficulty is a promise not to guess out loud.** The game will change its
+  mind only where the evidence says so — and say which evidence.
+
+---
+
 # 1. Objective
 
 Deliver the measurement layer ASHFALL currently lacks, in three dependency-ordered deliveries, exactly as scoped by the source plan:

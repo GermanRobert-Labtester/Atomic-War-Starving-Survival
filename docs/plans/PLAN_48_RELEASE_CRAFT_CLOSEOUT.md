@@ -1,5 +1,18 @@
 # PLAN 48 / C2[21] — Release Craft Closeout
 
+## 0. Framing — Shipped (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "A release closeout is the crate's bill of lading."
+
+Versions, tags, changelog, hotfix path — the machinery of *shipping* — closed out in the same
+week it was built. Release craft is the discipline of making change addressable, and its own
+release is addressed here.
+
+- **The tooling of release deserves a release**, which is the kind of recursion this corpus
+  enjoys.
+
 > **Status:** COMPLETE
 > **Completed:** 2026-09-19
 > **Branch:** `feat/unblock-cf-p28-and-plan-implementation`

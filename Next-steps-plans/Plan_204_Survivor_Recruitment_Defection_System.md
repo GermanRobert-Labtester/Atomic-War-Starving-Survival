@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-1FE4C21B51C7"
+TITLE: "Plan 204 — Recruitment and Defection — Known Candidates, Consent, and One Roster Handoff"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_204_Survivor_Recruitment_Defection_System.md"
+INFERRED: true
+---
 # Plan 204 — Recruitment and Defection — Known Candidates, Consent, and One Roster Handoff
 
 > **Planning revision — 2026-09-24.** The evidence and decision gates in this section govern the older inventory below. VERIFIED means inspected in current source; PROPOSAL means a path for a future claimed package. This document is not an implementation claim.

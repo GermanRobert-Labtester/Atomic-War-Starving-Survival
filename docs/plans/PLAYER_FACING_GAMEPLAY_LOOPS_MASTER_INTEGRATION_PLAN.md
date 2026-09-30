@@ -59,6 +59,23 @@ In an ordinary campaign session (CLI probe optional for CI, required for package
 
 ---
 
+## 0. Framing — The Loop (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A gameplay loop is a promise that the next hour resembles this one — on purpose."
+
+Loops are where systems become play. The master plan's true subject is not the features but the
+*returning*: the verb the player performs again willingly, with slightly better tools and slightly
+worse weather. Everything else in the game is scaffolding for that return.
+
+- **A loop must be worth repeating before it is worth expanding.** Growth without return is
+  content; return without growth is a chore.
+- **The player's willingness to come back is the only acceptance test that cannot be faked.**
+
+---
+
 # 1. Objective
 
 Make the highest-value already-authored survival, social, economy, and crisis loops **player-operable** inside the Godot host by extending current owners, registering truthful routes where needed, and sealing only true Core orphans that still have zero host reachability.

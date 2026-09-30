@@ -9,6 +9,24 @@
 
 ---
 
+## 0. Framing — Arriving and Leaving (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Recruitment and defection are the same door, used in both directions."
+
+A shelter's population is not a resource that accumulates; it is a *conversation* that can end.
+This plan gives both tenses an owner — who comes to the gate and who walks out of it — and keeps
+them honest by routing through the existing social and faction owners rather than a new headcount
+machine.
+
+- **The door swings both ways and the ledger records both.** Arrival and departure deserve equal
+  ceremony.
+- **Defection is not failure; it is information** about what the shelter has become.
+
+---
+
 ## 1. Executive Summary & Objective
 
 Promote `RecruitmentSystem` from a true Core orphan (0 references in `src/`) to a fully integrated, save-safe, deterministic, and player-operable host feature in ASHFALL.

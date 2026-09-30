@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-39B5E7D69FB0"
+TITLE: "Plan 189 — Water Sources and Contamination — Measured Intakes, One Treatment Path, and Honest Switching"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_189_Water_Source_Management_Contamination_Network.md"
+INFERRED: true
+---
 # Plan 189 — Water Sources and Contamination — Measured Intakes, One Treatment Path, and Honest Switching
 
 ## Current evidence and integration architecture — 2026-09-24

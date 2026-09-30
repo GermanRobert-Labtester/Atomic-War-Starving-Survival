@@ -1,5 +1,18 @@
 # Plan 131 Holdfast Audit Implementation Log
 
+## 0. Framing — The Mirror (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "An audit is the corpus checking its own work in a mirror."
+
+The canonical-faction audit looks at the holdfast's loyalties and asks whether the record matches
+the reality — a separately requested look, granted and logged. Audits are the corpus's immune
+system: unglamorous, occasional, decisive.
+
+- **An audit finding is not an accusation; it is a coordinate** — where the map disagrees with
+  the ground.
+
 ## Scope
 
 This log covers the separately requested Holdfast canonical-faction audit. The

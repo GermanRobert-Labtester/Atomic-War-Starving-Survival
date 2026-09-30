@@ -10,6 +10,14 @@
 
 ---
 
+> *"The war does not visit the shelter. The war is the weather the shelter is standing in."*
+>
+> Twelve settlements exist in the data today as fixed points on a map. They are not places yet. A
+> place is what a name becomes when something is *happening* to it while you are looking somewhere
+> else.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -21,6 +29,16 @@ Today the region is a stage set that is repainted once a day. Wildlife packs mig
 The Living Region makes the settlements answer the war. Not with a new simulation — the corpus already has five clocks (weather, wildlife, migration, faction war, embargo). What is missing is the thing that *reads them together and remembers*: a settlement that has been short of water for nine days is **Failing**, not "priced at 1.3×"; a column of people leaving the Toll arrives, eleven days later and a third smaller, at the gate of a camp that was built for sixty.
 
 The player's promise: **you will hear the region change before you see it, see it before you can fix it, and what you do at the gate is remembered by the people who came through it.**
+
+Five rungs — Steady, Strained, Failing, Emptied, Swollen — and notice that *Emptied* is not the
+bottom and *Swollen* is not the top. Both are arrivals, not ends. A settlement can be Swollen with
+refugees and Strained by the same fact. And there is **no "Thriving"** anywhere in the ladder,
+which is the quietest and most unsettling decision in the whole family. Nothing gets better. It
+only stops getting worse.
+
+The only way the player learns any of it is hearsay: **Heard / Told / Seen**. Three grades of
+not-quite-knowing. The world does not lie to you — it just gets to you late and slightly wrong,
+and then, to its credit, corrects itself.
 
 ### 1.2 Design pillars
 
@@ -183,3 +201,61 @@ No new save section (state nests in the migration owner, DEC-LR-02). No new pane
 - **Population conservation drift.** Mitigation: property test — total population weight is constant across waves.
 - **Region-map mistakes** silently starve a settlement. Mitigation: integrity validator requires every settlement and every price region to resolve.
 - **News grade leak** (view showing truth). Mitigation: presenter tests on the three grades.
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** A place becomes a place when something happens to it while you are looking
+elsewhere. The graded news is the plan's epistemology — *Heard, Told, Seen*: three distances from
+someone else's suffering, never closed, corrected late and slightly wrong, which is the most human
+mechanic in the corpus. The world does not lie to you. It gets to you late.
+
+**What the expansion leaves lying around.**
+
+> "Bulletin, corner: Heard — Strained. Later, in a different pencil: not Strained. Both lines stay."
+
+> "Wave tally: forty arrived. Conserved arithmetic. The names were never on it."
+
+> "Gate petition, folded twice. Four answers possible. The petition has already been read twice."
+
+**Scenes the player may piece together.**
+
+> "A settlement moves Strained → Swollen in one entry and the Board does not comment. The Board's job is rungs, not grief."
+
+> "The *Seen* line is written by someone who walked through it. The *Seen* lines are short."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the four unmapped vocabularies called their places. One mapping file is added and nothing deleted; the old words survive untranslated and unpronounced.
+- Whether the region ever looks back at the shelter. The Pulse's inputs are regional; the shelter is a gate and a market, never an input.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Why there is no "Thriving" rung.** A design rule and a worldview at the same time. Adding one
+would be a tone change, not a feature.
+
+**Where redirected refugees go.** The ledger ends at the gate and *conserves* population without
+following anyone. Conservation is the point.
+
+**What the four unmapped region vocabularies were for.** One mapping file is added and **nothing is
+deleted**. The old vocabularies survive untranslated.
+
+**Whether *Emptied* is a state or a verdict.** The rung derives from inputs. Whether anyone in the
+fiction uses the word as a judgement is not authored.
+
+**Why *Heard* is wrong by exactly one.** The bias is authored as a mechanism, never as a character
+flaw in whoever is reporting.
+
+**Whether the Pulse knows about the shelter.** Its inputs are regional. The shelter is a gate and a
+market, never an input.

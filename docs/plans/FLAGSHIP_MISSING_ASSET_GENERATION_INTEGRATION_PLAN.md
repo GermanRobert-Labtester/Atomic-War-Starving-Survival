@@ -1,3 +1,21 @@
+## 0. Framing — The Missing Picture (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "An empty asset slot is a sentence the game cannot finish."
+
+An authored row without its picture is a word the dictionary forgot. Generation fills the holes
+without inventing canon: what is produced is honestly a *stand-in*, marked as one, so that the
+registry can say exactly what is missing instead of pretending the page is full.
+
+- **Generated art is a promise to replace, not a claim of authorship.** The placeholder admits it
+  is a placeholder — which is the only kind that can be trusted.
+- **The registry decides what is missing, not anyone's mood.** Completeness is a diff against the
+catalogue, and the catalogue is the arbiter.
+
+---
+
 # 1. Objective
 
 Deliver a release-grade ASHFALL asset library through one flagship, dependency-ordered production program, with audio as the first and highest-priority workstream.

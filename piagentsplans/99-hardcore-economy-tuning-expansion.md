@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-99"
+TITLE: "Plan 99 — Hardcore Economy Tuning, Scarcity and Price-Shock Contracts"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/99-hardcore-economy-tuning-expansion.md"
+INFERRED: true
+---
 # Plan 99 — Hardcore Economy Tuning, Scarcity and Price-Shock Contracts
 
 > **Rebuild status:** COMPLETE 8/8/6 TUNING CATALOG — LOADER AND PROVIDER ARE CURRENT; BALANCE TUNING IS NOT ROW GROWTH

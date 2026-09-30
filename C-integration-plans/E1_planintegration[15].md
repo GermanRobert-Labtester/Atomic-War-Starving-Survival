@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-15
+PLAN_ID: "E1-15"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 15
-STATUS: READY_FOR_EXECUTION_WHEN_PSYCHOLOGY_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 179 — Unified Psychology & Phobia System"
 SEQUENCE_FILENAME: "E1_planintegration[15].md"
 PREVIOUS_FILENAME: "E1_planintegration[14].md"
 NEXT_FILENAMES:
   - "E1_planintegration[16].md"
   - "E1_planintegration[17].md"
-CATEGORY: LINK+PSYCHOLOGY+TRAUMA+PHOBIAS+THERAPY+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create one longitudinal psychological integration layer that unifies evidence from six existing trauma systems into survivor-facing profiles, phobia/coping/recovery arcs, and authority-safe behavioral consequences without duplicating crisis, needs, relationships, autonomy, skills, dreams, aging, or survivor trait state."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -25,6 +25,24 @@ SAVE_RISK: HIGH
 BALANCE_RISK: HIGH
 NARRATIVE_RISK: HIGH
 PLAYER_FRICTION_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [15] — Unified Psychology, Trauma Integration, Phobias, Coping, Therapy, Personality Development, and Long-Term Recovery"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[15].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [15] — Unified Psychology, Trauma Integration, Phobias, Coping, Therapy, Personality Development, and Long-Term Recovery

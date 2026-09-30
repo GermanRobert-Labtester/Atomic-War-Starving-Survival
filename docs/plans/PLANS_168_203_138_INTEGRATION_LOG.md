@@ -1,5 +1,17 @@
 # ASHFALL — Plans 168, 203, and 138 Full Integration Log
 
+## 0. Framing — Three at Once (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Three plans in one log is a claim that the seams between them were real."
+
+Full integration of a trio is where shared contracts get their proof: if three features can be
+sealed in one pass without touching each other's authority, the architecture is doing its job
+silently, which is the only way architecture ever succeeds.
+
+- **Parallel plans, disjoint claims, one date at the top** — the grammar of honest batch work.
+
 > **Date:** 2026-09-20
 > **Status:** SEALED & FULLY INTEGRATED
 > **Plans Integrated:**

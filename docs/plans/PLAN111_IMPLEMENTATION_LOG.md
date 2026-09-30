@@ -1,5 +1,17 @@
 # Plan 111 Implementation Log
 
+## 0. Framing — The Argument Won (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Every PASS is a small argument the repository won against entropy."
+
+Plan 111's log is one of the quiet victories: a scope kept, seams respected, tests green where
+they were promised. The log does not celebrate; it *records*, and the recording is the
+celebration.
+
+- **Discipline is cumulative** — each green run makes the next one more likely.
+
 ## Phase 1 — Runtime and data audit
 
 **Status:** PASS

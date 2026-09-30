@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_record_keepers_plan.md`. Family index: `docs/expansions/expansion_shelter_under_pressure_index.md`.
 > Not a claim. The journal, memorial and Shelter Archive (a **projection**) keep their meaning; this plan adds **one custody overlay** beside the archive desk and one optional overlay parameter on the projector. It introduces **no author, no slant, no second archive**.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `keeper_report_lines.json` rows; they belong in data, never in code.
 > DEC-RK-02 governs: no author and no slant is introduced anywhere, in prose or in source.
@@ -43,6 +43,13 @@ eulogy.
 the only narrator available is *damage*. Damage has no motive and no politics, and that is exactly
 why it is frightening. §12 keeps open the questions that custody raises and deliberately refuses
 to answer.
+
+**The second layer.** Custody is what a memory becomes when somebody accepts being responsible for
+it. The plan's melancholy is structural: everything here lives in the interval between *a thing
+happened* and *a thing is gone*, and the Keeper's entire profession is making that interval as
+long as politeness and paper allow. The Gaps are not what went wrong. The Gaps are the archive
+keeping its promise to be honest about its own limits. The Gaps are the archive's only lyric, and
+they are written in the same hand as everything else.
 
 ## 1. Goal & Outcome
 
@@ -103,6 +110,73 @@ words invite care.
   does not hold. Make the UI say so plainly.
 - **A Dispute is three verbs and one scar.** Amend, Append, Strike. Strike creates a Gap and a risk
   of discovery — the only place in this plan where a person is to blame.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Custody card: Paper, west room, Faded. The card itself is paper. It is kept in the west room."
+
+> "Copy notice: second medium, second place. The notice is the only record of where the second place is."
+
+> "Gap tag: cause damp, medium oral. The tag is dated. The account is not."
+
+**Scenes the player may piece together.**
+
+> "The Keeper's report is nine words about a room and one word about the room's weather. Nobody has asked the Keeper anything else, and the report does not volunteer it."
+
+> "The memorial wall is always recopiable and nobody has explained the wall. Somebody should be asked. The plan declines to be that somebody."
+
+**Held silences (texture, not register rows).**
+
+- What fades first in an oral account. Clarity is borrowed from Memory Decay and the words themselves are never stored (RK-P1). Which words went first is not recorded and must not be authored. Texture only.
+- Whether the projected timeline misses its own Gaps. The projection tags them; whether it grieves them is not modelled. Let the tags be the whole of it.
+
+**Third pass — three fragments (texture only; §12 register unchanged).**
+
+> "Ink fade rate: printed on the sheet. The printer did not know they were writing a prognosis."
+
+> "Copy 2 lives in a place the notice calls 'elsewhere.' The notice is precise about everything else."
+
+> "The Keeper dates every Gap. The dating is the only comfort the format allows."
+
+**Fourth pass — the condition of the condition (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `keeper_report_lines.json`. DEC-RK-02 governs: no author
+and no slant is introduced anywhere, in prose or in source.)*
+
+**The shape of the polish.** The inventory voice is the plan's mercy: medium, place, condition,
+copies, state — five columns that will hold anything, including grief, without ever naming it.
+The polish should deepen the inventory, never decorate it. A record's condition is its eulogy and
+the eulogy is four words long. The one place where the format strains — a Gap with a ruled cause
+and no cause written — is where the plan's whole sorrow lives, and it must stay a strain in the
+paper, not a sentence about it.
+
+**What the shelter leaves lying around.**
+
+> "Custody card: Paper, west room, Faded. The card is paper. The card is in the west room. Somebody
+> has begun a second card, elsewhere, for the first."
+
+> "Gap tag with the cause field left blank. The field is ruled. The Keeper left the rule empty and
+> dated the tag, and the format accepted it."
+
+> "Keeper's report, day 62. One word longer than yesterday's. The extra word is 'still.'"
+
+**Held silences (texture, not register rows).**
+
+- Who keeps custody of the custody cards. The format has no clause for its own condition; the
+  second card is a kindness with no owner and must not be given one. Texture only.
+- Whether an empty chair is recorded in the book it stops maintaining. The roster is kept by
+  someone and the someone is not the Keeper (§1b); leave the entry where it is.
 
 ---
 

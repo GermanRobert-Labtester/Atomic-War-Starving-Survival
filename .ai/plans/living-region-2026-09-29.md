@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_living_region_plan.md`. Family index: `docs/expansions/expansion_world_moves_without_you_index.md`.
 > Nothing here is claimed, implemented, or committed. The foreman must add the `INTEGRATION_PLANS.md` entry and `WORKTREE_OWNERSHIP.md` claims per package. Decisions DEC-LR-01…10 are **proposals**, unsigned.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `regional_pulse_lines.json` rows; they belong in data, never in code.
 
@@ -41,6 +41,13 @@ and distance is the only censor this plan needs.
 a rung, and a cause. It has no theory of the war and will not acquire one. DEC-LR-03 caps the
 ladder at five rungs with **no "Thriving"** — which is the plan's quietest and most unsettling
 authorial decision. Nothing gets better. It only stops getting worse.
+
+**The second layer.** The three grades of hearsay — *Heard, Told, Seen* — are also three distances
+from someone else's suffering. The plan never closes that distance and never pretends to. What the
+Board offers is not knowledge but *attentiveness*: the willingness to worry accurately about a
+place you will never visit. The war is weather; the Board is the window it is weather seen
+through. Worrying accurately is the only aid this plan ever delivers, and it is enough to change
+what the shelter does with its hands.
 
 ## 1. Goal & Outcome
 
@@ -102,6 +109,71 @@ in the surface. Do not silently overwrite.
   attributable. That rule is the plan's fairness guarantee.
 - **Prices nudge and decay to exactly neutral (LR-P5).** Economics in this world are weather —
   they pass through.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Board, corner: Ash Flats — Heard, Strained. Under it, later, in a different pencil: not Strained."
+
+> "Wave tally: 40 arrived. The tally is conserved arithmetic. The names are not on it and were never going to be."
+
+> "Petition at the gate, folded twice. The gate answers four ways and the petition has already been read twice."
+
+**Scenes the player may piece together.**
+
+> "A settlement goes from Strained to Swollen in one entry and the Board does not comment. The Board's job is rungs, not grief."
+
+> "The Seen line is written by someone who walked through it. The Seen lines are short."
+
+**Held silences (texture, not register rows).**
+
+- Why there is no *Thriving* rung beyond DEC-LR-03. The enum is the thesis; whether the world agrees with it is not consulted and must not be. Texture only.
+- Who writes the corrections. A *Told* line overturns a *Heard* line from someone equally far away; the plan credits no one and the bulletin must never be given a face.
+
+**Third pass — three fragments (texture only; §12 register unchanged).**
+
+> "Heard: Failing. Told: Failing since the eleventh. The second line is longer and no kinder."
+
+> "Population conserved. The wave arrives at the gate as arithmetic and leaves as someone's decision."
+
+> "The Board's rung is a word. Words can be read aloud at a gate without starting anything."
+
+**Fourth pass — three distances from someone else's suffering (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `regional_pulse_lines.json`.)*
+
+**The shape of the polish.** The Board's grammar is the plan's whole ethics: a rung is a word, a
+grade is a distance, and the prose should never let the two blur. *Heard* is third person and far;
+*Told* is second person and late; *Seen* is first person and short. Keep that person discipline and
+the reader will feel the distance closing without ever arriving.
+
+**What the shelter leaves lying around.**
+
+> "Board, bottom corner: a place name with no rung beside it. The name was written first. The rung
+> is still being rumoured."
+
+> "Seen line, one visit only. Whoever walked through it has not walked through anywhere else the
+> Board knows about."
+
+> "Correction, dated later than the thing it corrects. The Board's honesty has a lag, and the lag
+> is published with the honesty."
+
+**Held silences (texture, not register rows).**
+
+- Where the Board is kept. It has a corner, two pencils and no room; the wall is not described and
+  must not be. Texture only.
+- What the war does on the days no line arrives. The Pulse is an immutable snapshot (§0); the days
+  between snapshots are the region's own and must stay unreported.
 
 ---
 

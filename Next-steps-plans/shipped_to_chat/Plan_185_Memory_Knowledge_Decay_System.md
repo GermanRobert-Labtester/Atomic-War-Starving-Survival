@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-D2FCF44407DC"
+TITLE: "Plan 185 — Memory & Knowledge Decay System — Cognitive Degradation, Trauma Forgetfulness, Skill Erosion, and Archive Preservation Protocols"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_185_Memory_Knowledge_Decay_System.md"
+INFERRED: true
+---
 # Plan 185 — Memory & Knowledge Decay System — Cognitive Degradation, Trauma Forgetfulness, Skill Erosion, and Archive Preservation Protocols
 
 ## 1. Objective and bounded outcome

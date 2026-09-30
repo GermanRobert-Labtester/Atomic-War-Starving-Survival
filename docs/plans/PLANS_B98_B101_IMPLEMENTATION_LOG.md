@@ -1,5 +1,17 @@
 # Plans B98–B101 Implementation Log
 
+## 0. Framing — The Safe Slice (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A safe slice is a promise that the work can stop at any line and still be true."
+
+The log opens with a matrix — current authority, missing seam, safe slice — which is the corpus
+at its most surgical: nothing is built until the *shape of the interruption* is designed. Work
+that can be paused safely is work that can be trusted.
+
+- **The slice is the unit of safety**: small enough to abandon, complete enough to matter.
+
 ## Authority and divergence matrix
 
 | Plan | Current authority | Missing seam | Safe slice |

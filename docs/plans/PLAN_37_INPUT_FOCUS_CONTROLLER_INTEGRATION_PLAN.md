@@ -14,6 +14,24 @@ worktree, 2026-09-19 session state.
 
 ---
 
+## 0. Framing — Hands on the Wheel (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Every input device is a different pair of hands asking the same question."
+
+Input, focus and controller reality is the plan that takes those hands seriously. Focus is where a
+player *stands* inside a screen; input is who the game listens to; parity is the discipline of
+never making one pair of hands apologise for the others.
+
+- **Parity is measured, not asserted** — a claim of controller support is a claim about tested
+  paths, not about ports.
+- **A game that only respects the keyboard has quietly chosen its players.** This plan declines to
+  choose.
+
+---
+
 # 1. Objective
 
 Make ASHFALL's declared input layer true end-to-end on the fixed 1920×1080

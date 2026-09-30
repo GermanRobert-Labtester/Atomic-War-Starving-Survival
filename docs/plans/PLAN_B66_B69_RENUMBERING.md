@@ -1,5 +1,18 @@
 # PLANS B66–B69 — FLAGSHIP WAVE (renumbered 2026-09-06)
 
+## 0. Framing — The Renumbering (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded document remains the authority.)*
+
+> "A renumbering is the corpus counting wrong on purpose once, and correcting itself in public."
+
+The wave kept its identity and changed its address — a small editorial act with large
+consequences for citation, and exactly the sort of correction that only an honest archive both
+makes and records.
+
+- **Names carry history; numbers carry order.** When they conflict, order wins and history is
+  kept in a footnote.
+
 **Owner decision:** the flagship wave formerly proposed as "Plans 66–69" is
 renumbered to **B66–B69**. The 66–69 number block is retired for new work —
 it is consumed by shipped closeouts (guilt sources 66, cassette sets 67,

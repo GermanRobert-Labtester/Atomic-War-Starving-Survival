@@ -2,6 +2,24 @@
 
 User-authorized integrator package, 2026-09-16.
 
+## 0. Framing — The Record of Work (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes; the recorded log remains the authority.)*
+
+> "A log is the memory of labour, kept so the loudest retelling cannot claim it."
+
+Plan 24's log is the corpus doing its memory work: what was touched, what was verified, in what
+order, against which evidence. Implementation logs are unglamorous and irreplaceable — they are
+the difference between a history and a rumour of one.
+
+- **The package contract above is a promise in both directions** — what the work may do, and what
+  it must never wander into.
+- **Verified steps are the only kind worth writing down**, because unverified steps are notes for
+  the next bug.
+
+---
+
 ## Package contract
 
 - Outcome: integrate the survivor fitness, needs-effect, worker-identity, medical-journey, caregiving, and death-adjacent seams against existing authorities.

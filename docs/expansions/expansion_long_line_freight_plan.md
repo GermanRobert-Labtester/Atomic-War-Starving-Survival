@@ -12,6 +12,13 @@
 
 ---
 
+> *"A road is a rumour. A route is a rumour with a tariff and a season."*
+>
+> There are ten routes in this world and all of them end. The season closes at Day 280 to 360, and
+> the company that thought it was permanent discovers it was always a **year**.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -21,6 +28,15 @@
 The shelter can already sign a trade route. It pays a tariff, and once the cadence comes round the route is recorded as **on time**. It has never been late for a reason, because nothing can go wrong: there is no wagon to break, no driver to lose, no road to close. The trade contract is a subscription, not a business.
 
 The Long Line: Freight turns the subscription into a company. The player's shelter becomes a **House** — a name on the side of a wagon — with rolling stock, crews, depots, a reputation with the people at both ends of a route, and a ledger that says, in the player's own accounting, what they owe and who is owed. The fantasy is not "be rich". It is **be the one who keeps the road open**: to be the reason a settlement three days east still has salt in a bad month, and to know it, because a driver's letter tells you.
+
+Freight is not trading. Trading is a decision; freight is a *commitment* — a manifest leaving with a
+driver's name against it, a wagon whose wear is being spent somewhere you cannot see, cargo that is
+neither here nor there for four to twelve days. The Long Line is about that meanwhile: the interval
+in which the shelter has already paid and has not yet learned.
+
+And the company rungs — Contract → Charter → House → Line — are **derived, never bought**. You
+cannot purchase a house name; you can only become one. The season table is the hidden antagonist: a
+company that reads as permanent is simply one that has not yet met a year it could not close.
 
 ### 1.2 Pillars
 
@@ -162,3 +178,62 @@ No new economy. No new save section (nested in `trade_routes`, DEC-LF-03). No re
 - **Runs break old saves.** Bound: contracts without a Charter continue on the old on-time path bit-for-bit (ship-dark parity).
 - **Crews become micromanagement.** Bound: one driver + optional escort per run in v1.
 - **Name confusion with Expansion 11.** Bound: `long_line_freight` ids and DEC-LF-01.
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** Freight is responsibility for things you cannot reach. In the ten days when
+nothing can be done, the shelter owns only the *entry* — a promise somebody made before the
+leaving — and the ledger line is the run's only surviving witness, written by whoever is still
+employed. A house mark cannot be bought; it can only be earned into existence, which is the
+slowest kind of wealth this world has.
+
+**What the expansion leaves lying around.**
+
+> "Manifest, run 15: one crate short at arrival. The crate is not on the ledger. The ledger's arithmetic is."
+
+> "Wagon door: the mark, painted before the Charter. The Charter changed who is willing to paint it."
+
+> "Season table, Year Two: closes at 280. Somebody has written 'next year' beside it. 'Next year' is not a column."
+
+**Scenes the player may piece together.**
+
+> "Run 14, On Time. Nothing happened, which the ledger records as a success and the driver records as eleven days."
+
+> "A rival house's wagon passes on the second leg. It may be real. The ledger declines to comment and so does this document."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the wagon carries between legs. Wear is applied per leg and repair is a workshop job; the in-between is unmodelled and must stay so.
+- Whether the mark predates the company. Earned or inherited is unasserted; the paint is older than the Charter either way.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Who named it The Long Line.** The name collides with an unrelated Expansion 11 and is provisional.
+The fiction declines to canonise a name the governance has not settled.
+
+**What the wayside is.** Events are supplied with no geography. Giving the wayside a place would
+turn a leg into a map.
+
+**Do rival houses exist.** Rivals are presentation only, drawn over existing NPC arrivals. Their
+reality is not asserted either way.
+
+**What happens to the wagon between legs.** Wear is applied per leg; repair is a workshop job. The
+in-between is unmodelled and must stay so.
+
+**Why the season closes between Day 280 and 360.** Authored per route and then per year. No calendar
+explanation is offered anywhere.
+
+**Is a house mark earned or inherited.** The rung is derived and the mark is stored. Whether the mark
+has a history is not modelled.

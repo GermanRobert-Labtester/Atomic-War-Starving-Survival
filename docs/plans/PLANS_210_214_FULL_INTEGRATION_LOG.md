@@ -1,5 +1,17 @@
 # Plans 210 + 214 — Full Integration Log
 
+## 0. Framing — The Pair, Completed (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A date at the top of a log is when the truth was checked."
+
+Two plans, one integration, one afternoon of evidence — the corpus's smallest complete unit of
+progress. Nothing about the file is remarkable, which is exactly what a healthy pipeline looks
+like from the inside.
+
+- **Ordinary logs are the point**: drama here would mean something went wrong.
+
 Date: 2026-09-23
 Status: implemented and verified on the current worktree
 Scope: close the "Partial — Core-only" gap on two signed Core authorities by

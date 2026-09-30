@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-19
+PLAN_ID: "E1-19"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 19
-STATUS: READY_FOR_EXECUTION_WHEN_TRADE_ROUTE_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 192 — Player Trade Route Establishment"
 SEQUENCE_FILENAME: "E1_planintegration[19].md"
 PREVIOUS_FILENAME: "E1_planintegration[18].md"
 NEXT_FILENAMES:
   - "E1_planintegration[20].md"
   - "E1_planintegration[21].md"
-CATEGORY: LINK+TRADE+CARAVANS+MARKETS+FACTIONS+ROUTES
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Enable player-established trade corridors and scheduled caravans by composing existing world-route, caravan/vehicle, inventory, market, faction, debt, expedition, information, combat/defense, and outpost authorities without introducing a second economy, route topology, reputation system, combat resolver, or cargo ledger."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -26,6 +26,24 @@ SAVE_RISK: VERY_HIGH
 ECONOMY_RISK: VERY_HIGH
 EXPLOIT_RISK: VERY_HIGH
 MICROMANAGEMENT_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [19] — Player Trade Routes, Caravan Scheduling, Agreements, Route Risk, Market Handoffs, and Trade-Network Strategy"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[19].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [19] — Player Trade Routes, Caravan Scheduling, Agreements, Route Risk, Market Handoffs, and Trade-Network Strategy

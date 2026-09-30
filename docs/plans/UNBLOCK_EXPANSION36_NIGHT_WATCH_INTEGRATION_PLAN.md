@@ -6,6 +6,26 @@
 from campaign composition, daily simulation, persistence, a real player command
 surface, and focused runtime verification.
 
+## 0. Framing — The Watch in the Dark (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "The night is not dangerous because of what is in it. It is dangerous because of who is awake
+> for it."
+
+Patrol readiness is tiredness turned into an accountable fact: a number derived from sleep,
+bodies and rota, and — at last — a **real player command surface** to act on. Readiness you can
+only observe is weather; readiness you can order is a watch. The plan's restraint is that the
+dark keeps its texture: sound is *ranged*, never narrated.
+
+- **A command surface is what separates a simulation from a responsibility.** The player is not
+  shown the night; the player is asked who will face it.
+- **Sound ranging measures without explaining.** The Watch hears everything and is not authorised\
+  to decide anything — that division of labour is the whole politics of the dark.
+
+---
+
 ## Outcome
 
 Make `NightWatchPatrolReadinessEngine` the live readiness/read-model authority

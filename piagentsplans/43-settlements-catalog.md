@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-43"
+TITLE: "Plan 43 — Settlement Gazetteer, Allegiance and Living Community Reachability"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/43-settlements-catalog.md"
+INFERRED: true
+---
 # Plan 43 — Settlement Gazetteer, Allegiance and Living Community Reachability
 
 > **Rebuild status:** COMPLETE 12-SETTLEMENT CATALOG — SETTLEMENT CATALOG AND TERRITORY CROSS-VALIDATION EXIST; DIRECT TRAVEL REMAINS A DISTINCT OWNER QUESTION

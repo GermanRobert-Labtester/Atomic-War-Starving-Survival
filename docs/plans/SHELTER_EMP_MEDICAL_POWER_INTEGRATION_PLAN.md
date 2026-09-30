@@ -10,6 +10,23 @@ the failure-effect vocabulary remains decorative; this wave wires real state ins
 
 ---
 
+## 0. Framing — The Machines That Keep People (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Medical power is the last electricity anyone wants to spend."
+
+G4–G5 makes an old truth explicit: the ward's calm is a property of the grid. EMP exposure and
+medical power are one story told in two vocabularies — the pulse asks every circuit at once what
+it was doing, and the answer, for the first time, is on file.
+
+- **Dependency made visible before it is tested** is the whole ethic of hardening.
+- **An EMP is a question with no follow-up.** The plan's work is done in advance: knowing which
+  machines were keeping whom alive.
+
+---
+
 # 1. Objective
 
 An EMP storm or orbital impact must deterministically trip shelter breakers and drain

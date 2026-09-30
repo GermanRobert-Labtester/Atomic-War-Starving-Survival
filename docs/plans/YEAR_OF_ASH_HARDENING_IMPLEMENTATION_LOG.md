@@ -1,5 +1,17 @@
 # Year of Ash Hardening Implementation Log
 
+## 0. Framing — The Year (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Weather written down is still weather."
+
+The Year of Ash is the campaign's calendar, thermometer and mood in one ledger — and hardening it
+means making the year itself dependable: seasons that arrive, days that count, a timeline that
+can be replayed and land in the same place twice.
+
+- **A deterministic calendar is the quiet backbone of every other claim about the world.**
+
 ## Phase 1 — Deterministic timeline state
 
 Status: PASS

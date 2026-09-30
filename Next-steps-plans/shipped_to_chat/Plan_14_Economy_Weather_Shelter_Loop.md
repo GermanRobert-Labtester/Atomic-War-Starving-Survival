@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-2B20A22E8B1E"
+TITLE: "Plan 14 — Economy, Weather, and Shelter Loop — Weather-Restricted Caravan Trade, Commodity Embargoes, Microclimate Shelter Heat, and Resource Scarcity"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_14_Economy_Weather_Shelter_Loop.md"
+INFERRED: true
+---
 # Plan 14 — Economy, Weather, and Shelter Loop — Weather-Restricted Caravan Trade, Commodity Embargoes, Microclimate Shelter Heat, and Resource Scarcity
 
 ## 1. Objective and bounded outcome

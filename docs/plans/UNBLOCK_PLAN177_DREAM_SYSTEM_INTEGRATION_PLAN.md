@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — The Unmanaged Room (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "A dream is the shelter's only unmanaged room."
+
+Sleep events are the game's one authored interior: deterministic draws, never mood, and a strict
+ledger separation — the *sleeper* is state, the *dream* is content, and neither is allowed to
+explain the other. The system records what the night produces and declines to interpret it, which
+is the only contract under which dreams stay interesting.
+
+- **Determinism protects the mystery.** A seeded dream can be trusted to be the same strange thing
+  on replay, which is what lets it be strange at all in a deterministic game.
+- **Waking logic never consults the dream.** The moment a dream becomes evidence, it becomes a
+  mechanic — and the plan keeps it weather.
+
+---
+
 ## Outcome
 
 Make `DreamSystem` (DEC-338) the live calculation and narrative authority

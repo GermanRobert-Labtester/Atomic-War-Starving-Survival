@@ -23,6 +23,25 @@ Both engines are **static/stateless**: they mutate a state object handed to them
 (`TypeTrayState`, `KilnBatchState`) and return plain results. Neither owns a
 campaign-lifetime ledger, so neither can survive save/load. That is the real gap.
 
+## 0. Framing — The Press and the Kiln (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A press decides what is true on paper. A kiln decides what survives the fire."
+
+Printing and firing are the two oldest information technologies, and the plan's diagnosis is
+precise: without a campaign-lifetime ledger, neither can outlive a save file. Craft that does not
+persist is not craft — it is a performance. The readiness work is therefore about *memory* first
+and machinery second.
+
+- **Persistence is the difference between a feature and a rumour of one.** The gap named above is
+  the whole job.
+- **Press and kiln together make record and artefact** — the two forms a shelter's culture can
+  actually take.
+
+---
+
 ## 1. Authority boundaries (one authority per concern)
 
 ### Expansion 30 — The Press

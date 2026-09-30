@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-49"
+TITLE: "Plan 49 — Depth Passes: Pouring the Dead Content Onto the New Rails"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_49_Depth_Passes_Dead_Content_Onto_The_Rails.md"
+INFERRED: true
+---
 # Plan 49 — Depth Passes: Pouring the Dead Content Onto the New Rails
 
 > **Wave:** Continuity Wave 7 — *Content on Rails & the Measurement Layer* (closing plan)

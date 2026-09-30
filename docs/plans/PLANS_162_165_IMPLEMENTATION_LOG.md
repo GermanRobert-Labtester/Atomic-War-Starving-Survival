@@ -1,5 +1,18 @@
 # Plans 162–165 — Implementation Log
 
+## 0. Framing — The Journal (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A journal per discipline is how parallel work stays honest."
+
+Kept in the implementer's own order, with its companion authority map beside it, this log is a
+specimen of the corpus's best habit: work recorded *as it happened*, claim by claim, so that the
+map and the ground never drift apart without someone noticing.
+
+- **Journals beat summaries** because they preserve sequence — and sequence is what future
+  debugging needs.
+
 Journal per ashfall-implement discipline. Companion authority map:
 `PLANS_162_165_RECONNAISSANCE.md`. Spec: pasted flagship integration plan
 (Plans 162–165), 2026-09-05.

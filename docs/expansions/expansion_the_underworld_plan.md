@@ -11,6 +11,15 @@
 
 ---
 
+> *"Nobody in this world trades goods. They trade the gap between what a thing is worth and what a
+> person can bear to pay for it today."*
+>
+> The market did not end when the bombs fell. It went *downstairs*. What the shelter calls the
+> underworld is three syndicates wearing one coat — and the difference between them is not what
+> they sell, but what they remember about you.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -26,6 +35,17 @@ And nothing is ever *smuggled*. Goods do not cross a border against anyone's wis
 The Underworld is the expansion where **the shadow economy has people in it and consequences that walk up to the door.** You meet a broker, a person with a cut and a temper and a secret. You take a run — a manifest, a road, a checkpoint — and you find out what "risk premium" means when the person carrying it is one of yours. And when you default, or fence the wrong thing to the wrong hand, or simply become visible, someone who has been paid to find you starts to find you: first a rumour, then a stranger on the road, then a knock.
 
 The promise: **every debt has a collector, every run has a checkpoint, and every deal has a person you will have to face again.**
+
+Read the three kinds of person in this expansion and notice what they have in common. A **broker**
+is not a shopkeeper; they are someone who knows what your name is worth in three districts and will
+lend you that knowledge at a cut. A **run** is not an expedition; it is a manifest leaving with
+somebody's cousin. And a **hunter** is not a soldier; a hunter is what a number looks like when it
+finally stands up and walks to your gate.
+
+The machinery of consequence has been here all along. Four engines run in the dark today with no
+gameplay caller — the attention engine, the enforcer raid trigger, the contraband executor, the
+bounty reader. Feeding them is not a feature addition. It is **waking something up** that has been
+patient and unread since it was written.
 
 ### 1.2 Pillars
 
@@ -180,3 +200,59 @@ No real-world crime instruction; no new market, bounty or debt authority; no cha
 | Ledger confusion | Combined view is read-only and labelled by source. |
 | Run bookkeeping | One manifest, one due day, one outcome. |
 | Duplicate authority | Bounty, debt and market remain with their owners. |
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** Every debt in this expansion is denominated in *being known*: the broker
+knows what your name is worth, the mark makes your face a commodity, the hunter is what happens
+when the knowledge acquires a courier. The consequence engines ran unread in the dark for a long
+time. Feeding them is not a feature addition — it is waking something up.
+
+**What the expansion leaves lying around.**
+
+> "Cut percentage, one column, no name. The ledger keeps books of the ledger."
+
+> "A hunter's kit is never itemised — the four-leg form suggests practice, practice suggests a teacher, and the expansion stops at the first sentence."
+
+> "Loan ledger B, beside loan ledger A. The combined view is labelled by source and promises nothing."
+
+**Scenes the player may piece together.**
+
+> "Word arrives in the third person; by the Door leg the sentence is in the second person. Grammar as escalation."
+
+> "A broker raises the cut after a bad week. Characterisation with arithmetic — and arithmetic does not perjure itself."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What a default looks like from the broker's side of the counter. `temper` implies it; `secret` forbids proving it.
+- Whether the mark outlives the debt. The resolve path clears the mark; nothing anywhere says the remembering stops.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**What the Cold Ledger is keeping books *of*.** The three syndicates are differentiated by method.
+Purpose is deliberately unauthored so each campaign can read its own into it.
+
+**Who taught the hunters the four-leg form.** Archetypes are authored. Their training is not.
+Naming a school turns dread into lore.
+
+**Are there other debt ledgers besides the two?** The combined view is *labelled by source*. It does
+not assert totality. It never promises those are all the ledgers.
+
+**Why `CheckEnforcerRaidTrigger` was written before anyone called it.** An uncalled method that
+models a consequence reads like a prepared one. This expansion wakes it. It does not explain who
+prepared it.
+
+**Does a broker ever *want* you to default?** `temper` implies it; `secret` forbids proving it.
+Both readings survive and neither is rewarded.

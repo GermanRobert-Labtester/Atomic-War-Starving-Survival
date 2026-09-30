@@ -1,5 +1,17 @@
 # Plan B76 — Aeroponics closeout
 
+## 0. Framing — Air and Root (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "Aeroponics is agriculture that has given up on the ground."
+
+Growing food in mist is the shelter's most vertical act of hope — harvests suspended in air,
+roots reaching for nothing in particular. The closeout keeps the engineering plain and lets the
+image do the wondering.
+
+- **No soil, no season, no field** — only a promise kept in vapour, and a ledger that says so.
+
 Status: implemented in the current Godot host.
 
 ## Delivered

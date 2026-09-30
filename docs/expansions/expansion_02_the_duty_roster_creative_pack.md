@@ -1,5 +1,33 @@
 # ASHFALL: THE DUTY ROSTER — Creative Pack
 
+> *"Someone has to decide who digs tonight. That decision is the whole of politics."*
+>
+> **Director's framing.** The Stack, the Approach, the Overflow — three places and five people with
+> names: Kess Adler, Hadi Morrow, Tamsin Rook, Ansel Duth, Len Quill. This is the smallest possible
+> cast and the largest possible subject. A duty roster is a list of who owes what to whom, and in a
+> shelter with more work than hands, that list *is* the constitution.
+>
+> **What stays unsaid here:** who wrote the roster first; what happens to the person whose name is
+> not on it; why the Overflow is called that. Each voice bible is someone who has made their peace
+> with an unfair distribution and can explain exactly why this particular unfairness is necessary.
+>
+> **The second layer (second prose pass — texture only).** Five named people and three rooms: the
+> smallest possible cast and the largest possible subject. Every voice bible here has made their
+> peace with an unfair distribution — and the pack's cruelty is that all of their explanations are
+> *good*. The roster is a list of who owes what to whom, and in a shelter with more work than hands,
+> that list is the constitution.
+>
+> **What the pack leaves lying around.**
+>
+> "The chart in the quest's title is blank because the chart is the argument."
+>
+> "Someone's name is not on the roster. What happens to them is unsaid here, and the silence is doing the work of a scene."
+>
+> "Each card names one object you could steal, weigh, or refuse — every room keeps its own small verdict available."
+>
+> *(The silences above are unchanged and remain this pack's register.)*
+
+
 **Internal id:** `expansion_the_duty_roster`
 **Kind:** Shippable prose. Additive to `docs/expansions/expansion_02_the_duty_roster_plan.md`. Does not rewrite the bible.
 **Voice lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.

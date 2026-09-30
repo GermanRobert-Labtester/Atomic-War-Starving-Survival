@@ -2,6 +2,23 @@
 
 **Date:** 2026-09-24. **Scope:** documentation and integration architecture only. No Core, Godot host, save codec, catalog, or gameplay route was changed. The historical text in each target remains above its dated addendum. This closeout does not assert that the fifteen systems are integrated or that any proposed review case is canon.
 
+## 0. Framing — The Closeout (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes; the recorded closeout remains the authority.)*
+
+> "A closeout is a plan's obituary, written by its author, while everyone is still alive."
+
+Fifteen partial-authority plans laid down in one wave — and the closeout's job is to say, without
+flattery, what each document is *for*. A planning corpus survives on such notes: the difference
+between a living document and a fossil is somebody writing down which is which.
+
+- **Document roles are the corpus's self-knowledge.** Fifteen plans are only a programme if
+  something knows how they fit.
+- **Closing out is not closing**: the architecture below stays open for the builders who cite it.
+
+---
+
 ## Requested deliverables
 
 The fifteen named subjects now each have a separate 250,000-character-plus addendum. Thirteen existing documents carry them; the Standing Record depth audit and Spiritual authority map each carry two independently marked subjects. Each addendum includes a current-evidence correction, bounded outcome, non-goals, authority/data/host/save diagram, API checklist, C# interface sketch, phased implementation gates, accessibility and determinism requirements, content review register, source-specific editorial review, and a final architecture handoff. The addenda are reproducible through `tools/generators/gen_requested_fifteen_authority_plans.py` followed by `tools/generators/polish_requested_fifteen_authority_plans.py` in this programme directory.

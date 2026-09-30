@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-13
+PLAN_ID: "E1-13"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 13
-STATUS: READY_FOR_EXECUTION_WHEN_BIOLOGY_AND_AUTHORITY_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 172 — Radiation Mutation System"
 SEQUENCE_FILENAME: "E1_planintegration[13].md"
 PREVIOUS_FILENAME: "E1_planintegration[12].md"
 NEXT_FILENAMES:
   - "E1_planintegration[14].md"
   - "E1_planintegration[15].md"
-CATEGORY: LINK+RADIATION+SURVIVOR_TRAITS+LONG_TERM_CONSEQUENCES+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Add a bounded fictional radiation-mutation layer that consumes canonical exposure history and projects persistent survivor traits through existing health, lifecycle, disease, reproduction, social, research, and presentation authorities without replacing them."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -23,6 +23,24 @@ RUNTIME_RISK: HIGH
 SAVE_RISK: HIGH
 BALANCE_RISK: VERY_HIGH
 CONTENT_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [13] — Radiation Mutation, Persistent Survivor Change, Inheritance Boundaries, Social Consequences, and Fictional Biology"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[13].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [13] — Radiation Mutation, Persistent Survivor Change, Inheritance Boundaries, Social Consequences, and Fictional Biology

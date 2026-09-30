@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-AA448DEC2320"
+TITLE: "Plan 41 — Memory That Acts: Heirlooms, Eulogies, and Generations — Heirloom Catalogs, Procedural Eulogies, Wall Carvings, Confessions, Echoes, and Memorial Acts"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_41_Memory_That_Acts_Heirlooms_Eulogies_Generations.md"
+INFERRED: true
+---
 # Plan 41 — Memory That Acts: Heirlooms, Eulogies, and Generations — Heirloom Catalogs, Procedural Eulogies, Wall Carvings, Confessions, Echoes, and Memorial Acts
 
 ## PFGL Codex Luna 6 execution revision — heirlooms slice only — 2026-09-25

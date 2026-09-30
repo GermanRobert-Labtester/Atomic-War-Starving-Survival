@@ -1,5 +1,16 @@
 # Plan 129 Foundry Production Closeout
 
+## 0. Framing — The Foundry (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "A foundry is a promise that the shelter will need what it cannot scavenge."
+
+Foundry production closes as the moment the holdfast accepted a future tense: furnaces built for
+parts that do not exist yet. Production lines are the architecture of *anticipation*.
+
+- **To build a factory is to believe in tomorrow in the most literal way available.**
+
 ## Outcome
 
 Plan 129 is complete against the reconciled live baseline:

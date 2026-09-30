@@ -1,5 +1,17 @@
 # Plans 02–09 Flagship Consolidated Remaining Work — Closeout Report
 
+## 0. Framing — The Remainder (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded report remains the authority.)*
+
+> "Remaining work, consolidated, is a promise that nothing was quietly dropped."
+
+The sweepings of eight flagship plans gathered into one report and closed — the corpus refusing
+to let a remainder become a rumour. Consolidation is bookkeeping with an ethic: every loose end
+in the register or none of them were real.
+
+- **A remainder listed is a remainder owned**; a remainder omitted is a bug wearing a date.
+
 **Document ID:** PLANS-02-09-FLAGSHIP-CLOSEOUT
 **Status:** COMPLETE & VERIFIED
 **Date:** 2026-09-01

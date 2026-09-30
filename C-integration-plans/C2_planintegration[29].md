@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "C2-29"
+TITLE: "C2 — Flagship Integration Plan [29]: Clothing Warmth, Layered Cold Protection, Wetness, and Nuclear-Winter Gear Progression"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/C2_planintegration[29].md"
+INFERRED: true
+---
 # C2 — Flagship Integration Plan [29]: Clothing Warmth, Layered Cold Protection, Wetness, and Nuclear-Winter Gear Progression
 
 > **Deliverable:** `C2_planintegration[29].md`

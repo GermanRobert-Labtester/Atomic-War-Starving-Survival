@@ -1,5 +1,17 @@
 # PLAN 147 REGRESSION MATRIX — risk → test register
 
+## 0. Framing — Fear, Organised (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded matrix remains the authority.)*
+
+> "A regression matrix is fear, organised."
+
+Every row is a way the system could break, paired with the test that would notice. A risk → test
+register is the corpus's insurance policy, written in the only currency insurers accept: named
+fears with named witnesses.
+
+- **Unlisted risks are not absent; they are unowned.** The matrix is where they get owners.
+
 All tests live in
 `Ashfall.Core.Tests/Narrative/ContrabandPlan147Tests.cs` (28 tests) unless
 noted. The pre-existing shape tests

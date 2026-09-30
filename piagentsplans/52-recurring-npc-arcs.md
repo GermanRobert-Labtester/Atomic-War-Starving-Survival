@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-52"
+TITLE: "Plan 52 — Recurring NPC Temporal Arcs & Dynamic Relationship Architecture"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/52-recurring-npc-arcs.md"
+INFERRED: true
+---
 # Plan 52 — Recurring NPC Temporal Arcs & Dynamic Relationship Architecture
 
 > **Authority Document Reference:** Ashfall Master Expansion Authority v2.0 (Volumes 6, 20, 35, 52, 57)

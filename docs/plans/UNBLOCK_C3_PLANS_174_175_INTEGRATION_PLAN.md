@@ -8,6 +8,24 @@
 
 ---
 
+## 0. Framing — The Missing Sentence (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Every blocked plan is waiting for one honest sentence — usually the one naming who may decide."
+
+C3's 174 and 175 are plans with their mechanics already reasoned and their *authority* still
+outstanding. This document does the unglamorous work of naming exactly what is missing, so that a
+signature — when it comes — unlocks real work instead of more discussion.
+
+- **Context and motivation first**: a decision made without them is a coin with the date rubbed
+  off.
+- **The plan routes around nothing.** It waits for the real gate, which is faster than any
+  detour.
+
+---
+
 ## 1. Context & Motivation
 In previous roadmap sweeps, C3 Plan 174 and C3 Plan 175 were held under:
 - C3 Plan 174 HOLD: "Mechanical-origin seam decision; BackstorySystem exists in Core with 0 host refs"

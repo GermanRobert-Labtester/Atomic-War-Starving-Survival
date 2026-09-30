@@ -1,5 +1,17 @@
 # Plan 102 Implementation Log
 
+## 0. Framing — The Number and the Work (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A plan number is a promise that somebody once sat down and thought this through."
+
+Plan 102 survives as a number, a status and a trail of evidence — which is more than most
+ambitions ever get. The log is the part of the plan that outlives the planning.
+
+- **Status: PASS is two words that cost somebody an afternoon.** The words are not the work; they
+  are the receipt for it.
+
 ## Phase 0 — Reconnaissance
 
 Status: PASS

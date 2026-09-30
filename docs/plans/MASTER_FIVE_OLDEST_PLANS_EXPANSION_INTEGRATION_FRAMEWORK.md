@@ -1,5 +1,19 @@
 # Master Integration Framework & Code Architecture: The 5 Oldest Foundation Plans
 
+## 0. Framing — The Framework (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; no scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A framework is an argument about order, dressed as scaffolding."
+
+The five oldest foundation plans synthesised into one architecture — the corpus laying its own
+bedrock, deliberately, where age would otherwise have left rubble. Foundations chosen *after*
+the house exists are the only kind worth trusting, because they were chosen with evidence.
+
+- **Executive vision without architecture is a wish; architecture without vision is a maze.**
+  This document insists on both.
+
 **Package:** `MASTER-EXPANSION-FIVE-OLDEST-PLANS`
 **Document Class:** Architectural Synchronization Authority & Multi-System Integration Framework
 **Authority Level:** Canonical Production Framework

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-119"
+TITLE: "Plan 119 — Batch 8: Moral Echoes, Disease Expansion & Quests: Pathogen Vectors, Terminal Quarantine & Moral Dilemma Crises"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/119-batch8-roadmap-moral-echoes-disease-expansion-quests.md"
+INFERRED: true
+---
 # Plan 119 — Batch 8: Moral Echoes, Disease Expansion & Quests: Pathogen Vectors, Terminal Quarantine & Moral Dilemma Crises
 
 > **Master Expansion Authority File:** `../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`

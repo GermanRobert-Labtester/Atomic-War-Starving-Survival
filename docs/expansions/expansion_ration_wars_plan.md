@@ -10,6 +10,13 @@
 
 ---
 
+> *"Everyone can count. That is the whole problem, and the whole solution."*
+>
+> Hunger is already modelled, exhaustively. What is not modelled is the thing that actually breaks a
+> shelter — the arithmetic of *who got what*. Not the food. The arithmetic.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -21,6 +28,16 @@ The shelter already knows how to be hungry. It has seven ration tiers from Full 
 What it does not have is **a table**. Nobody stands at the end of the line with a ladle and a book. Nobody decides what *fair* means — the code decides for them: fair is the arithmetic mean. A carpenter who carried timber all day and a child who slept through it are, to the resentment meter, owed the same. And when the stores are short, nothing in the game can be *wrong by a little* — a tin can go missing, but nobody can be seen to have taken it, or to have counted badly, or to have counted honestly and been disbelieved.
 
 The Ration Wars is the expansion where **the pantry becomes politics**. You choose the rule of the table. Someone keeps the book. Once a week the book is read aloud in the mess hall, and the number at the bottom is either the number everyone expected or it is not. The player's real job in a bad winter is not to find calories. It is to keep a room of hungry people believing that the count is true.
+
+The Pantry Ledger is a line of subtraction and nothing more: opening + received − served − spoiled −
+closing = **unexplained**. It does not accuse anyone. It does not know anything the inventory owner
+does not already know. It simply refuses to let the difference go unremarked — and in a shelter of
+adults that is enough.
+
+**Expected** is the most dangerous word in the expansion. Resentment measured against a *mean* is a
+statistic; resentment measured against a *rule* is a promise someone made and broke. And the
+Book's final column names a quantity, never a person. Attribution is a verb the *player* performs:
+Audit, then Count.
 
 ### 1.2 Pillars
 
@@ -165,3 +182,61 @@ No new food type, inventory, stockpile or serving log; no change to tier arithme
 | Bookkeeping fatigue | The Book is a daily line and a weekly Count; never a spreadsheet. |
 | Feels like punishment for being hungry | The staircase is a story of small choices; every step has a way to be kind. |
 | Overlap with Governance | Hoarding law consumed, not authored; soft dependency. |
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** Resentment is not caused by hunger but by a mismatch between what you got and
+what you believe the rule to be — so the Table Rule is the shelter's attempt to write its promise
+down, giving disagreement an address. And the Book's final column refuses to accuse: it holds the
+question open on a page everyone can see, which is the only courtroom this world can afford.
+
+**What the expansion leaves lying around.**
+
+> "Rule card change, dated. The three-day surcharge is marked in the margin as 'the price of changing a promise in public'."
+
+> "Portion ladle, worn at one edge. The wear is not a mechanic. The wear is a witness."
+
+> "Count sheet, week 3: everyone signed. One signature smaller than the others. No comment."
+
+**Scenes the player may piece together.**
+
+> "A clean week shows `unexplained == 0`. Nobody celebrates; the relief is entirely in the arithmetic."
+
+> "The Hard Table events precede the desperation menu and do not soften it. The staircase is authored. Its landing is not."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the five Table Rules were argued over. The number reads as a history of arguments; the arguments themselves are not recorded and must not be.
+- Whether the Book's columns are read aloud at the Count. The Count is a verb; a reading would be a performance, and performances are unmodelled.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Who skimmed.** The ledger reports a quantity, never a person. Attribution is a player verb, never
+a system output.
+
+**Why Critical, High and Standard all clamp to the same value.** A live arithmetic fact this
+expansion corrects only when a rule is active. The cause is left in place deliberately.
+
+**What the Book is written in.** The medium is never authored. *The Record Keepers* owns custody and
+has not spoken.
+
+**Where a hoard goes.** A real transfer to personal belongings, *or the mechanic is dropped
+entirely*. If the destination cannot hold it, the question becomes unaskable.
+
+**Is a quartermaster trusted before they are appointed.** A duty-roster post, not a role. The
+expansion supplies no reputation and will not.
+
+**Why there are exactly five Table Rules.** Authorised and stopped. The number reads as a history of
+arguments.

@@ -9,6 +9,26 @@
 
 ---
 
+## 0. Framing — A Voice for Each of Them (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, evidence row, decision,
+acceptance criterion, verification step or recorded status.)*
+
+> "One hundred and twenty-nine survivors is a crowd. One hundred and twenty-nine voices is a
+> place."
+
+The design's quiet genius is that the voice is a *pure function* of (speaker × state × day event ×
+knowledge class): nothing is improvised, and yet every line is bounded by what its speaker could
+plausibly know. Determinism here is not a constraint on characterisation — it is what makes
+characterisation testable, and therefore safe to author at scale.
+
+- **A keyed catalog is a cast list with manners.** Every survivor speaks from data; the data may
+  be extended, audited and disagreed with — unlike a writer's mood.
+- **Knowledge class is the politest worldbuilding rule in the game**: what a survivor says is
+  bounded by what they have been told, and the silence between two survivors is authored too.
+
+---
+
 # 1. Objective
 
 Give ASHFALL's 129 authored survivors a deterministic voice: a data-authored,

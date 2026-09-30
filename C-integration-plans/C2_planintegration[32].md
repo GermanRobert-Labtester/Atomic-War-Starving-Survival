@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "C2-32"
+TITLE: "C2 — Flagship Integration Plan [32]: Survivor Education, Knowledge Transfer, Apprenticeship Continuity, and Multi-Generation Learning"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/C2_planintegration[32].md"
+INFERRED: true
+---
 # C2 — Flagship Integration Plan [32]: Survivor Education, Knowledge Transfer, Apprenticeship Continuity, and Multi-Generation Learning
 
 > **Deliverable:** `C2_planintegration[32].md`

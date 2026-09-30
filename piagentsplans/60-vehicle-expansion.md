@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-60"
+TITLE: "Plan 60 — Vehicle Roster, Expedition Logistics and Garage Reachability"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/60-vehicle-expansion.md"
+INFERRED: true
+---
 # Plan 60 — Vehicle Roster, Expedition Logistics and Garage Reachability
 
 > **Rebuild status:** PARTIAL 8 CURRENT VEHICLES — SYSTEM, CATALOG AND GARAGE EXIST; TARGETED ROW/REACHABILITY AUDIT REMAINS

@@ -11,6 +11,14 @@ Covers the four **director's own picks**, labelled **P1–P4** (no subject list 
 
 All four are `STATUS: DRAFT — awaiting user approval`. No per-package derived plans were written.
 
+> *"The first twelve expansions widened the world. These four turned around and looked at the
+> building."*
+>
+> Pressure is not damage. Pressure is what happens to a *community* when it has to keep deciding
+> under conditions that do not improve: who eats, who remembers, who digs, who holds the gate
+> through a season. None of these four adds a monster and none adds a battle. They add a
+> **calendar**.
+
 ## 1. What these four have in common
 The first twelve subjects widened the *world* and the *ways to play*. These four turn inward: **they are about the shelter as an institution under strain** — how it feeds people, defends itself over time, remembers itself, and grows downward. Each one **connects existing owners and adds one small ledger**; none adds a second authority.
 
@@ -90,3 +98,42 @@ Late autumn: the Toll digs in on the east ridge and the road to the salt depot c
 
 ## 10. What this sheet is not
 Not a ledger entry, not a claim, not an approval. The foreman records `INTEGRATION_PLANS.md` entries and `WORKTREE_OWNERSHIP.md` claims; the user sets `STATUS: APPROVED BY USER` on any plan that should ship.
+
+---
+
+## The deeper layer — the family as a shape (second prose pass)
+
+*(Second prose pass, non-contractual: texture and writing guidance only — not a claim, not an
+authorization. The shared-silences register below is unchanged; the fragments are content
+candidates, not new recorded questions.)*
+
+**The second layer.** The first twelve expansions widened the world; these four turned around and
+looked at the building. Pressure is not damage — it is what happens to a community that must keep
+deciding under conditions that do not improve: who eats, who remembers, who digs, who holds the
+gate. None adds a monster or a battle. They add a *calendar*.
+
+**What the family leaves between its members.**
+
+> "Days 212 to 219 have no account, and the bulkhead held."
+
+> "The Book is opened in the mess hall; the records go out through the east drift. Both are acts of remembering."
+
+> "A siege is a schedule, a drift is a promise, a Gap is a wound with a date on it, and a half-table is arithmetic."
+
+*(Texture only. The silences below are the register; nothing here adds to them.)*
+
+---
+
+## What this family refuses to answer (shared silences — cross-expansion)
+
+These are **shared across the four plans** and are only safe while *neither* side fills them. See
+also `.ai/plans/OPEN_MYSTERY_INDEX_2026-09-29.md` §3.
+
+- **Whether a siege is a battle or a schedule.** *The Long Siege* owns the action; *The Deep Works*
+  owns the drift. Neither may narrate the other's side of a countermine.
+- **What the Pantry Book is written in.** *The Ration Wars* keeps a ledger; *The Record Keepers*
+  owns custody. Medium and slant belong to the Keeper and are never invented here.
+- **Whether a Gap is a fact or a wound.** *The Record Keepers* tags it and stops. *Shelter
+  Governance* may order a Strike; the Keeper may refuse. That refusal is not explained.
+- **What the shelter is holding *up*.** *The Deep Works* props a roof; *The Long Siege* tests one.
+  The load-bearing question is deliberately never asked.

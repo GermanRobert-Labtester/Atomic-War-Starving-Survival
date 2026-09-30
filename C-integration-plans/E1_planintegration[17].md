@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-17
+PLAN_ID: "E1-17"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 17
-STATUS: READY_FOR_EXECUTION_WHEN_SHELTER_COMPONENT_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 186 — Shelter Maintenance & Degradation System"
 SEQUENCE_FILENAME: "E1_planintegration[17].md"
 PREVIOUS_FILENAME: "E1_planintegration[16].md"
 NEXT_FILENAMES:
   - "E1_planintegration[18].md"
   - "E1_planintegration[19].md"
-CATEGORY: LINK+SHELTER+MAINTENANCE+DEGRADATION+INFRASTRUCTURE
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Make shelter infrastructure age, wear, fail, and require maintenance through persistent component condition and real work/resource transactions, while keeping Thermal, Power, Water, Ventilation, Radiation, Inventory, Duty, Construction, and Disaster systems authoritative for their own state and consequences."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -27,6 +27,24 @@ SAVE_RISK: VERY_HIGH
 BALANCE_RISK: HIGH
 MICROMANAGEMENT_RISK: VERY_HIGH
 CASCADE_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [17] — Shelter Maintenance, Component Wear, Inspection, Repair, Replacement, Failure Handoffs, and Infrastructure Aging"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[17].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [17] — Shelter Maintenance, Component Wear, Inspection, Repair, Replacement, Failure Handoffs, and Infrastructure Aging

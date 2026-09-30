@@ -1,5 +1,17 @@
 # Production-island wiring log
 
+## 0. Framing — The Islands (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Islands of production, wired together, are an economy. Unwired, they are rumours of one."
+
+The wiring log is exactly what its title says: connections made, seams tested, nothing invented.
+Islands were built on purpose — one authority per concern — and this is the day they were told
+about each other.
+
+- **Wiring is integration in its most literal form**: current flowing where it could not before.
+
 **Date:** 2026-09-19
 **Branch:** `Zcode_Branch`
 **Authorization:** user — execute the open (LIVE) ranked plans; do not start Plan 30 / 32B / 32C / 34; do not merge closed PRs #53/#55.

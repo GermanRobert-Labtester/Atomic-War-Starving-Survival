@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-18"
+TITLE: "Plan 18 — Expansion Deepening: Holdfast, Standing Record, Crossing & Verdict"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/18-expansion-deepening.md"
+INFERRED: true
+---
 # Plan 18 — Expansion Deepening: Holdfast, Standing Record, Crossing & Verdict
 
 > **Rebuild status:** CURRENT-EVIDENCE PLAN — POST-250K DEEP POLISH AND FINAL PRECISION PASS INCLUDED

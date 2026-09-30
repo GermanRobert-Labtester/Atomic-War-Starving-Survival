@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-1"
+TITLE: "Plan 01 — NeedsSystem & RadiationSystem Save Round-Trip Assurance"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/01-needs-radiation-save-roundtrip-tests.md"
+INFERRED: true
+---
 # Plan 01 — NeedsSystem & RadiationSystem Save Round-Trip Assurance
 
 > **Rebuild status:** COMPLETE CORE TEST CONTRACT — MAINTENANCE AND REBASE PLAN

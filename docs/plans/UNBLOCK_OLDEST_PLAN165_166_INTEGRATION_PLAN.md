@@ -5,6 +5,24 @@
 **Evidence:** `--mod-support-selftest` 12/12, `--shelter-identity-selftest` 12/12,
 host + Core builds 0 errors / 0 warnings.
 
+## 0. Framing — Names and Extensions (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Identity is what a shelter answers to. Modding is what it agrees to listen to."
+
+Plans 165 and 166 face opposite directions and describe the same boundary: one asks how the game
+may be *changed*, the other asks what must never change for the shelter to still be itself. A mod
+data contract and a shelter identity are both answers to the question — where does the game end
+and the world begin?
+
+- **A contract for modders is a promise that extension will not be betrayal.**
+- **Identity is the set of things no mod is asked to preserve** — which is why it must be written
+  down before anyone is invited in.
+
+---
+
 ## Premise (verified in source before editing)
 
 Both were listed as partials with **0 host references**.

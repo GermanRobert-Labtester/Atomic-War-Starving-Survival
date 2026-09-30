@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — A Projection of What Survived (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.*)
+
+> "History is a projection built from whatever survived the filing."
+
+The shelter archive is a *projection* over living sources, and that word is the whole design: it
+does not author the past, it assembles it from what the journal and the wall still hold. History
+that can be queried is history that can be argued with — and a shelter that argues with its own
+record is a shelter that has decided the record matters.
+
+- **The archive projects; it never invents.** Every line is attributable, and attribution is what
+  separates history from folklore.
+- **An empty archive is also a fact.** What is not held is not nothing — it is the shape of what
+  was lost, and the projection is honest about its own gaps.
+
+---
+
 ## Outcome
 
 Make `ShelterArchiveSystem` (DEC-337) the live chronicling and history authority

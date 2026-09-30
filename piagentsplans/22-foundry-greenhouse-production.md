@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-22"
+TITLE: "Plan 22 — Foundry, Greenhouse, Preservation, and Labor Decision Integration"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/22-foundry-greenhouse-production.md"
+INFERRED: true
+---
 # Plan 22 — Foundry, Greenhouse, Preservation, and Labor Decision Integration
 
 > **Rebuild status:** CORE AUTHORITIES PRESENT — BOUNDED COMMISSION/FOOD-SECURITY INTEGRATION REMAINS

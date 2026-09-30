@@ -1,5 +1,18 @@
 # Partial-plan production unblock implementation log
 
+## 0. Framing — The Plain Title (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A log with no adjectives in its title has usually done the most work."
+
+The plainest document in the family — no plan numbers, no wave, just the record of production
+unblocking as such. Documents like this are the corpus's connective tissue: nobody cites them
+everybody relies on them.
+
+- **Anonymity in a log is a sign the work was routine — which is the highest praise process
+  work can receive.**
+
 Date: 2026-09-19
 Authority: direct user request following `PARTIAL_15_PRODUCTION_UNBLOCK_INTEGRATION_PLAN.md`
 

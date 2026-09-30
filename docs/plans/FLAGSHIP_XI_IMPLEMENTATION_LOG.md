@@ -1,5 +1,18 @@
 # Flagship Integration Plan XI — Implementation Log
 
+## 0. Framing — Four Names (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Everything in a shelter is contagious: morale, sickness, tunnels — even rumour."
+
+Morale contagion, pathogen outbreak, subterranean networks, PsyOps: four systems that all model
+*propagation*, which is why they belong to one flagship. The log is the record of four spreading
+things taught to share a grammar.
+
+- **One wave, one verb: things that pass between people** — and one discipline about who owns
+  each passage.
+
 Plans 154–157: Morale Contagion · Pathogen Outbreak · Subterranean Networks · PsyOps.
 
 ---

@@ -1,5 +1,19 @@
 # PLAN 22 — Greenhouse Runtime Consumption of Fertilizer / Pest / Repair Items
 
+## 0. Framing — The Glass House (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; no scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Consumption is what makes growth real."
+
+The plan's constraint — the greenhouse must consume, on the owner's own lifecycle — turns a
+beautification into agriculture. Anything that grows for free is decoration; anything that eats
+is livestock, and the difference is a ledger line.
+
+- **Cost is the fiction's spine**: what the glass house eats is what makes what it grows worth
+  counting.
+
 > **Mission:** Make The Glass Orchard's runtime actually consume the supply
 > ecosystem that Plan 91 authored — soil amendments, pest-control supplies,
 > water-management kits, and structural repair materials — through additive

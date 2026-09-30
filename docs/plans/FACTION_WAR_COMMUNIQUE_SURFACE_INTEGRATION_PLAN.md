@@ -11,6 +11,24 @@ forensic pass, this session) plus targeted follow-up evidence.
 
 ---
 
+## 0. Framing — The War, Reported (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A communiqué is a war asking to be believed."
+
+The faction war has always had state; this surface gives it a *voice* — clipped, official,
+self-interested. A dispatch is a fact with a sponsor, and the sponsor is half the message: the
+player is not asked to trust the bulletin, only to read who signed it.
+
+- **The surface reports; it never adjudicates.** Ownership of the war stays with its engine, and
+  the prose stays with the sender.
+- **Register is information.** How a war talks tells you what it wants the shelter to do, which is
+  never quite what it needs.
+
+---
+
 # 1. Objective
 
 Make the 40 authored faction-war communiqués perceivable by the player as a day-gated,

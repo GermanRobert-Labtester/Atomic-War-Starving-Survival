@@ -11,6 +11,15 @@
 
 ---
 
+> *"Something is still working up there. It is not aiming. It does not have to."*
+>
+> There is no enemy in the sky. There is a **process** — an inventory of spent hardware in decaying
+> orbits, still obeying schedules written before the schedules' authors stopped existing. The
+> Harrow is what a war looks like forty years after anybody fought it: thermodynamics with a
+> timetable.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -26,6 +35,15 @@ And **nothing in a campaign ever schedules an impact.** The only callers are sel
 The Sky is the expansion that **gives the roof a weather and the sky a schedule.** Storms wear the roof by the numbers the armour catalogue already carries. A worn column fails; a failed column exposes the rooms beneath it; the shelter patches, tarps, argues and pays. And over the campaign a **countdown** of twelve authored passes — strays, clusters, blackouts, a dead-hand ping that will not stop repeating — walks toward one terminal pass, on one day, over one column of your roof. You brace it, clear the top, fire at it, or simply sit under a foot of concrete and count.
 
 The promise: **you always knew where the roof was thin. Now something is going to check.**
+
+Everything in this expansion is arithmetic arriving late. A roof is a column with a condition, and
+a condition is a day count. A countdown board is not a warning system — it is a *ledger of what has
+already been decided elsewhere*, arriving on a delay of between two and twenty days.
+
+And beneath the twelve debris events sits a silence the expansion refuses to fill. The instrument
+telemetry records something spanning `DAY_0001` to `DAY_5110 POST_BURST` and eighty-four thousand
+megajoules. It is **never a schedule source** and never a permission. There is a bigger thing in
+the record and it is not coming for you. The Harrow is merely what is left.
 
 ### 1.2 Pillars
 
@@ -185,3 +203,60 @@ No tower-defence rework; no Olympus compression; no new damage number; no injuri
 | The roof becomes a chore | Storm wear is slow; a Worn column is playable; repair is a choice |
 | Two armour instances | P0 audit; the world-owned instance only |
 | Olympus timestamps misread | Context only; VERIFY clock; never a schedule source |
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** Nothing in the sky is angry; something in the sky is *keeping a schedule*.
+The countdown board is a ledger of decisions made elsewhere arriving on a delay — and the four
+disagreeing catalogue rows complete the portrait: a civilisation that still files paperwork about
+its own demolition, and corrects none of it. The most frightening line in this expansion is a
+two-day-old number on a board.
+
+**What the expansion leaves lying around.**
+
+> "Countdown sheet, pinned where everyone eats: track Unconfirmed, day six."
+
+> "Brace receipt: paid in full. It says what it cost. It does not say what it bought."
+
+> "Catalogue row and evaluator row, printed side by side, neither corrected (DEC-SK-03)."
+
+**Scenes the player may piece together.**
+
+> "A false alarm resolves at dawn. No salvage. The corridor empties. Nobody says anything, which is the best line on the board."
+
+> "One pending slot on the board, and the slot is filled. The schedule is not a promise."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the twelve debris events are the remainder of. The far horizon is telemetry, never a permission — and what it was for stays there.
+- What the roof sounds like the night before an Impact Day. The model wears columns; the listening is prose's job and the ledger will not hold it.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**What Olympus was, and why it stops at `DAY_5110 POST_BURST`.** The telemetry is *never a
+permission*. It stays out of the schedule entirely. The silence is the far horizon.
+
+**Who authored `is_false_positive`.** Two of twelve events exist to cost the player attention. A
+designed false alarm implies a designer, and this expansion declines to name one.
+
+**Why the catalogue prints values the evaluator does not use.** Four rows disagree — scrap overlay
+12 vs 2 MJ, steel hull 45 vs 18, canopy 8 vs 1.2, sandbag 5 vs 4. The disagreement is resolved *as
+a decision*, not by a silent edit. The cause is not repaired and the paper is allowed to lie.
+
+**Whether "terminal" describes the schedule or the shelter.** The pass day lives in branch data.
+The word is never defined in the fiction and must not be.
+
+**What a "revealed site" is.** Whether it relates to the impact or merely coincides with it is not
+asserted. Excavation owners may speak. This document will not.

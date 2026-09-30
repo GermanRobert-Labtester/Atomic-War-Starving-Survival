@@ -8,6 +8,22 @@
 
 ---
 
+## 0. Framing — The Twelfth Pair (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "The end of a queue is where discipline usually slips. This batch declines to slip."
+
+Plans 150 and 152 close out the oldest wave under the identical contract as the first pair. The
+value of finishing *this* way — measured, evidenced, bounded — is that the queue's end leaves
+behind a record instead of a rumour.
+
+- **How a queue ends teaches the corpus how the next queue will be treated.**
+- **Same steps, same sharpness**: the last pair deserves the first pair's patience.
+
+---
+
 ## 1. Scope and Selection
 
 The two remaining `Ready (Core-only)` entries from the oldest-partials queue. Both

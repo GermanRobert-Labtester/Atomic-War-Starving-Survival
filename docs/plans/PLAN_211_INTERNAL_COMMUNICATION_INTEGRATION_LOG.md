@@ -1,5 +1,18 @@
 # Plan 211 — Internal Communication Network Integration Log
 
+## 0. Framing — The House Telephone (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Internal communication is how a shelter hears itself think."
+
+The communication network turns scattered knowledge into shared knowledge — and the log's
+"first vertical slice fully integrated" is the moment the shelter stopped being twelve private
+conversations and started having a *house line*.
+
+- **Communication is the cheapest resilience a shelter can buy** and the first thing everyone
+  forgets to value.
+
 **Package:** `PFGL-PLAN211-INTERNAL-COMMUNICATION`
 **Claim:** `claim-pfgl-plan211-internal-communication-2026-09-25`
 **Date:** 2026-09-25

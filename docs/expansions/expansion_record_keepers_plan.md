@@ -10,6 +10,15 @@
 
 ---
 
+> *"An archive is not a memory. It is what a shelter agreed to keep, and the shape of everything it
+> could not."*
+>
+> The Shelter Archive is a projection. It is built from two living sources — the journal and the
+> memorial wall — and it has never contained anything else. What it does not contain is not
+> missing. It is **Gapped**.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -23,6 +32,17 @@ What none of it has is **a keeper and a risk.** Every record is safe by default,
 The Record Keepers is the expansion where **the shelter's memory becomes something it has to look after.** A record lives on a medium, in a place, in the care of someone. Paper fades. Damp reaches the storage bay. A breach takes a shelf. A bearer dies with a story nobody wrote down. And when something is lost, it does not vanish; it leaves a dated hole the shelter knows about — *"Days 212–219: pages lost to the flood."* — and that hole is, in its way, the most honest thing in the archive.
 
 The promise: **you will keep the record, and the record will tell the truth about what you failed to keep.**
+
+This expansion gives records a **body**. Paper fades at a rate written on the ink. Slate survives
+damp and does not survive a drum. An oral account lives exactly as long as the person carrying it
+and one day less. And the Keeper — the same archivist who already sits at the desk — is the only
+thing standing between a fact and a tag in a timeline.
+
+There is **no author and no slant** here, and that is the strongest decision in the document. The
+only narrator available is *damage* — and damage has no motive, no politics and no grudge, which
+is exactly why it is frightening. A Gap is a tagged entry carrying a date, a medium and a cause,
+and nothing else. An archive that shows what it is missing is the only kind of archive that
+has earned being trusted.
 
 ### 1.2 Pillars
 
@@ -171,3 +191,61 @@ No new archive, journal, memorial or knowledge store; no invented author or slan
 | Duplication of the projection | The overlay is read by the projector; the archive stays a projection. |
 | Tribunal overreach | Clue weight is capped by data; a Gap adds nothing. |
 | Feels punitive | Every loss has a cheaper alternative earlier in the staircase. |
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** Custody is memory with a responsible adult. The plan's Gaps are the archive
+keeping its promise to be honest — a hole in a timeline is not a missing feature but a *shape*,
+recorded as carefully as whatever surrounds it. Four words — Intact, Faded, Damaged, Lost — and a
+Keeper who makes the interval between a thing happening and a thing being gone as long as paper
+and politeness allow.
+
+**What the expansion leaves lying around.**
+
+> "Fade rate, printed on the ink. The ink's own prognosis."
+
+> "Copy notice: second medium, second place. The notice is the only record of where the second place is."
+
+> "Keeper's chair, empty nine days. The decay rate changed on day one. Nobody wrote that down."
+
+**Scenes the player may piece together.**
+
+> "A Gap is a date, a medium, a cause, and nothing else. Read in the Chronicle it is a sentence with three words missing, and the reader supplies them."
+
+> "The memorial wall recopies whatever is asked of it. Nobody has explained the wall, and this expansion declines to be that somebody."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the damp in the west room sounds like. Condition is a word, not a sensor; the atmosphere is prose's job and the ledger will not lend it a microphone.
+- Whether the timeline's Gaps are ordered by date or by wound. The projection tags them; ordering is a display concern and is unauthored.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**What the Lost record said.** The custody ledger holds a key, a medium, a place, a condition and a
+state — and **no record body text**. The Gap is the *shape* of the loss, and the shape is the entire
+design.
+
+**Why the memorial wall is durable.** Pages are never permanently lost and always recopy from the
+wall. One thing must be safe in a plan about loss; the reason is left to the shelter's own
+mythology.
+
+**Whether a discovered Strike was discovered by care or by luck.** A bounded cost is applied with no
+motive model. Attribution would turn an archive into a detective story.
+
+**Who keeps the Keeper.** The chair is an archivist off the duty roster. It has no character, no
+successor and no lineage here.
+
+**What a well-kept record is worth at the end of the world.** Record quality reaches the epilogue as
+**presentation only**. This expansion declines to make it a score.

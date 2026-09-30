@@ -1,5 +1,33 @@
 # ASHFALL: THE STANDING RECORD — Creative Pack
 
+> *"A standing record is a list of what a place says about itself. It is not a list of what happened."*
+>
+> **Director's framing.** Ten locations, each with a name that is already a small novel: Kilometre
+> 19. Transit Authority. Municipal Archive. Ministry. Weighbridge. Grange Hall. The Allotments.
+> Bridge Seven. Bus Reversal Loop. Lock Gate Four. These are the places where a society kept its
+> own account — and the Ministry and Lock Gate Four are marked **SPINE**, which is to say the record
+> bends around them.
+>
+> **What stays unsaid here:** what the standing record was *for*; who was entitled to read it; and
+> why two of these ten places are load-bearing while the other eight are merely true. A document
+> that has a spine has an author who decided which parts had to hold.
+>
+> **The second layer (second prose pass — texture only).** Ten places with names that are already
+> small novels, and two of them marked **SPINE** — the record bends around them. A document with a
+> spine has an author who decided which parts had to hold, and this pack's quiet subject is that
+> authorship: what a society keeps is an argument about what it believes it is.
+>
+> **What the pack leaves lying around.**
+>
+> "Kilometre 19. Transit Authority. Ministry. Weighbridge. Eight places merely true; two load-bearing."
+>
+> "Each room names one object to steal, weigh, or refuse to touch — the grammar of the whole corpus in one instruction."
+>
+> "What the standing record was *for* is unsaid; who was entitled to read it is unsaid; the reading room is described precisely."
+>
+> *(The silences above are unchanged and remain this pack's register.)*
+
+
 **Internal id:** `expansion_the_standing_record`
 **Kind:** Shippable prose. Additive to `docs/expansions/expansion_03_the_standing_record_plan.md`. Does not rewrite the bible.
 **Voice lock:** cold, exhausted, human, restrained. Specificity over adjectives. The game never tells the player how to feel.

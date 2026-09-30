@@ -1,5 +1,18 @@
 # CONTRABAND TRADE AND ARBITRAGE AUDIT — Plan 147 Task A.7 (prices) / Task C.2–C.3
 
+## 0. Framing — The Spread (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded audit remains the authority.)*
+
+> "Arbitrage is the price of secrecy, expressed as a spread."
+
+The gap between two prices is a measurement of risk, distance and distrust — the only three
+currencies the underground accepts. This audit keeps the spread legible so that the black market
+remains a *market*: strange, dangerous, and arithmetically sound.
+
+- **If the numbers do not add up, the fiction does not survive.** The audit is the fiction's
+  accountant.
+
 ## 1. `market_price_scrip` is not authoritative — reconciliation result
 
 **Finding:** the repo has **no scrip currency runtime**. "Scrip" appears in

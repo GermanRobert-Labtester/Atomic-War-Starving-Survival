@@ -8,6 +8,23 @@
 
 ---
 
+## 0. Framing — Scope and Selection (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Selection says what enters the batch. Scope says what the batch is forbidden to touch."
+
+Plans 59 and 134 arrive under the same two-headed discipline as every batch before them. The
+scope boundary is the load-bearing half: a batch that knows what it must *not* do can be trusted
+to do the small thing it promised.
+
+- **Scope is a promise, and the stop conditions are its teeth.**
+- **Two plans, one claim, zero overlap** — the geometry that keeps a corpus from quarrelling with
+  itself.
+
+---
+
 ## 1. Scope and Selection
 
 The user requested integration of the next batch of partial plans:

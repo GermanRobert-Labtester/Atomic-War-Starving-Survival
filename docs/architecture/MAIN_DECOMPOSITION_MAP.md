@@ -27,7 +27,7 @@ Historical plan bundles are split into domain partials. Member bodies and method
 | `src/Main.Plans182_185.cs` | `src/Main.Aviation.Integration.cs`, `src/Main.ForcedLabor.Integration.cs`, `src/Main.Narcotics.Integration.cs`, `src/Main.Politics.Integration.cs`, `src/Main.SubsystemComposition.cs` |
 | `src/Main.Plans186_189.cs` | `src/Main.Archaeology.Integration.cs`, `src/Main.Desperation.Integration.cs`, `src/Main.Fallout.Integration.cs`, `src/Main.Mercenary.Integration.cs`, `src/Main.SubsystemComposition.cs` |
 | `src/Main.Plans190_193.cs` | `src/Main.Amputation.Integration.cs`, `src/Main.Archaeology.Integration.cs`, `src/Main.Desperation.Integration.cs`, `src/Main.Fallout.Integration.cs`, `src/Main.Fungi.Integration.cs`, `src/Main.Justice.Integration.cs`, `src/Main.Mercenary.Integration.cs`, `src/Main.Railway.Integration.cs`, `src/Main.SubsystemComposition.cs` |
-| `src/Main.Plans194_197.cs` | `src/Main.NavalExpeditions.Integration.cs`, `src/Main.Recreation.Integration.cs`, `src/Main.SubsystemComposition.cs`, `src/Main.WinterSurvival.Integration.cs` |
+| `src/Main.Plans194_197.cs` | `src/Main.Recreation.Integration.cs`, `src/Main.SubsystemComposition.cs`, `src/Main.WinterSurvival.Integration.cs` |
 | `src/Main.Plans198_201.cs` | `src/Main.Ceremony.Integration.cs`, `src/Main.ChemWarfare.Integration.cs`, `src/Main.CommsArray.Integration.cs`, `src/Main.Robotics.Integration.cs`, `src/Main.SubsystemComposition.cs` |
 | `src/Main.Plans202_205.cs` | `src/Main.CargoAirdrop.Integration.cs`, `src/Main.PlasticPyrolysis.Integration.cs` |
 | `src/Main.Plans216_202Interpersonal.cs` | `src/Main.Exercise.cs`, `src/Main.InterpersonalConflict.cs` |

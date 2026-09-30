@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_ration_wars_plan.md`. Family index: `docs/expansions/expansion_shelter_under_pressure_index.md`.
 > Not a claim. Ration conflict, rationing tiers, kitchen and justice each have an owner; this plan **adds a reader/reconciler and one small expected-portion seam** and creates no second food, resentment or law authority.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `pantry_book_lines.json` / `quartermaster_voices.json` / `hard_table_events.json`
 > rows; they belong in data, never in code.
@@ -42,6 +42,12 @@ figures. Never moralise about food. The numbers do that work.
 High 1.15 and Standard 1.0 all clamp to **1.0** — the conflict meter literally cannot tell them
 apart. That is not a bug this plan reports; it is a *fact about the shelter's own instruments* that
 the Table Rule exists to correct. §12 keeps who else has noticed out of scope.
+
+**The second layer.** Every column of the Book is a small refusal to forget. Addition remembers
+what arrived; subtraction remembers what left; and the final column — *unexplained* — is the
+shelter agreeing to hold a question open on purpose, on a page everyone can see. A ledger that
+balances is arithmetic. A ledger that names its own imbalance is a conscience. And the Book is the shelter's proof that it
+can stand to know.
 
 ## 1. Goal & Outcome
 
@@ -102,6 +108,72 @@ never remembers intent. Attribution is a *verb the player performs* — via Audi
 - **Conservation holds everywhere (§6.3).** A skim is a transfer, a feast is a spend, and nothing
   is ever conjured. The Book is checkable and that is why anyone believes it.
 - **Desperation is never softened (DEC-RW-07).** Hard Table events come first; they do not replace.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Rule card, new: By-work. The old card is underneath it in the drawer — Equal, dated. Both are true in the drawer."
+
+> "Spoilage slip: 1. No name. The Book accepts the slip. The Book accepts every slip and that is exactly the problem."
+
+> "Count sheet, week 3. Everyone signed. One signature is smaller than the others and no comment is made about it, on the sheet or anywhere else."
+
+**Scenes the player may piece together.**
+
+> "The kitchen argument and the kitchen are in different rooms. The Book is where they meet: one line, subtraction only."
+
+> "A skim of half a survivor-day is the smallest possible theft and the largest possible fact. The Book records the half. The Book does not record the hand."
+
+**Held silences (texture, not register rows).**
+
+- Who calibrated the instruments that clamp the tiers (E3b). The plan corrects the outcome and leaves the arithmetic alone; the calibration sheet is not in the data and must not be added. Texture only.
+- What a fair Count would sound like. The Count is table-driven (§6); fairness is a thing the reader brings to the column and the column does not supply.
+
+**Third pass — three fragments (texture only; §12 register unchanged).**
+
+> "Spoiled: 1. Reported by the same hand that served. The Book does not comment; that is the design."
+
+> "The surcharge is paid in three days of grumbling. It is the cheapest honest price in the shelter."
+
+> "Unexplained: 0. A clean week reads like a held breath."
+
+**Fourth pass — the column that is a question (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `pantry_book_lines.json` / `quartermaster_voices.json` /
+`hard_table_events.json`.)*
+
+**The shape of the polish.** Kitchen prose that has acquired a column of figures. The fury is in
+the past tense and the arithmetic is in the present, and the two should never share a clause —
+that separation is what lets the Book be believed. `unexplained` is the only word in the design
+that is allowed to be plural about a person, and the writing must keep it a quantity.
+
+**What the shelter leaves lying around.**
+
+> "Book, day 42: the same five lines as day 41. The handwriting is steadier. The columns are not."
+
+> "Spoilage slip, cause field left blank. The field is ruled. Somebody ruled it expecting a cause
+> to be written, and the slip is filed as filed."
+
+> "Count sheet, week 4. Everyone signed again. The signatures are in the same order as last week,
+> which nobody arranged."
+
+**Held silences (texture, not register rows).**
+
+- What the unexplained column would say if it could speak. It names a quantity, never a person
+  (§1b); the column is a question kept open on purpose and it must never acquire a voice. Texture
+  only.
+- Who reads the Book besides the people who count it. It hangs where everyone eats; the reading is
+  not modelled and the seeing-together is the whole politics of it.
 
 ---
 

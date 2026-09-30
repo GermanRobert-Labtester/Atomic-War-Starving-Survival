@@ -1,5 +1,16 @@
 # Plans 162–165 — Repository Reconnaissance (Phase A Exit Gate)
 
+## 0. Framing — The Second Survey (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded document remains the authority.)*
+
+> "Two surveys make a map. One makes a rumour."
+
+The same gate, the same discipline, a fresh reading of the ground — because the repository moves
+while plans sleep. Re-surveying is the corpus's way of believing the present over the past.
+
+- **The ground truth has a half-life**, and the exit gate is where the corpus checks the date.
+
 Date: 2026-09-05. Authority map produced before any production edit, per the
 flagship integration plan §3. All paths relative to repo root. Live source
 wins over documentation; every claim below was verified against current code.

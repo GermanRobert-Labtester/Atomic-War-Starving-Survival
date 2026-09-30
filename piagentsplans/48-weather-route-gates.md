@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-48"
+TITLE: "Plan 48 — Weather Route Gates & Dynamic Environmental Barrier Architecture"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/48-weather-route-gates.md"
+INFERRED: true
+---
 # Plan 48 — Weather Route Gates & Dynamic Environmental Barrier Architecture
 
 > **Authority Document Reference:** Ashfall Master Expansion Authority v2.0 (Volumes 13, 32, 35, 48, 52)

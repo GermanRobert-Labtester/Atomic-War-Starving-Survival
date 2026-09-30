@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-C1E969BF6EAF"
+TITLE: "Plan 165 — Modding Support & Mod Data Contract — JSON Schema Layering, Catalog Extension Overlays, Mod Compatibility Arbitration, and Runtime Isolation"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_165_Modding_Support_Mod_Data_Contract.md"
+INFERRED: true
+---
 # Plan 165 — Modding Support & Mod Data Contract — JSON Schema Layering, Catalog Extension Overlays, Mod Compatibility Arbitration, and Runtime Isolation
 
 ## 1. Objective and bounded outcome

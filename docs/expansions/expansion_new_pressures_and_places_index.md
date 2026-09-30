@@ -11,6 +11,14 @@ Covers subjects 13–16 of the user's list. Sibling sets: Year Two (Days 361–7
 
 All four are `STATUS: DRAFT — awaiting user approval`. No per-package derived plans were written.
 
+> *"There are only four directions a shelter can be threatened from: below, above, from outside the
+> door, and from inside the head. This family covers all four."*
+>
+> The Deep goes **down**. The Sky comes **in through the roof**. The Underworld is what arrives when
+> you open the door to it. Faith and Schism is the one with no walls at all. Read the four together
+> and the shelter stops being a building — it becomes a thing under pressure from every direction at
+> once, including one direction no architecture can seal.
+
 ## 1. What these four have in common
 Each subject turned out to be **a machine that is finished and unplugged.** The belief ladder has a top rung nothing can reach. The underworld keeps score with great care and never collects. The shaft goes down to a floor with nothing under it, beside a pile of instrument numbers no code reads. The sky has a roof, an alarm and a gun, and nothing has ever scheduled an impact. These plans **connect existing owners and add one small ledger each**; none adds a second authority, a new save section or a new routed panel.
 
@@ -102,3 +110,44 @@ Mid-autumn: acid snow eats the two sandbag columns over the greenhouse and the s
 
 ## 10. What this sheet is not
 Not a ledger entry, not a claim, not an approval. The foreman records `INTEGRATION_PLANS.md` entries and `WORKTREE_OWNERSHIP.md` claims; the user sets `STATUS: APPROVED BY USER` on any plan that should ship.
+
+---
+
+## The deeper layer — the family as a shape (second prose pass)
+
+*(Second prose pass, non-contractual: texture and writing guidance only — not a claim, not an
+authorization. The shared-silences register below is unchanged; the fragments are content
+candidates, not new recorded questions.)*
+
+**The second layer.** Four directions and one building. The family's quiet thesis is that a shelter
+is not a structure but a *thing under pressure from every direction at once — including one
+direction no architecture can seal*. Each of the four is a machine that was finished and unplugged;
+the plans plug them in and refuse to explain who built them.
+
+**What the family leaves between its members.**
+
+> "Below: a seal with a wheel on it. Above: a schedule with no author. Outside: a broker with a secret. Inside: a question with a season on the clock."
+
+> "The four ledgers never touch. Nothing asserts they share a cause. Nothing denies it."
+
+> "Mid-autumn: one repair's worth of scrap, two sandbag columns, and four arguments about which one is the shelter."
+
+*(Texture only. The silences below are the register; nothing here adds to them.)*
+
+---
+
+## What this family refuses to answer (shared silences — cross-expansion)
+
+Shared across all four and only safe while *none* of them fills it. See
+`.ai/plans/OPEN_MYSTERY_INDEX_2026-09-29.md` §3.
+
+- **What is underneath the shelter, and what is above it.** *The Deep* refuses to name the vault's
+  builders; *The Sky* refuses to name whatever produced 84,000 MJ of telemetry. Both silences are
+  load-bearing for the other.
+- **Who is actually on the other side of the trade.** *The Underworld* has brokers with `secret`
+  fields; *Faith and Schism* has movements with blind spots. Neither system is permitted to resolve
+  motive.
+- **Whether the pressures are connected.** Four directions, four owners, four ledgers. Nothing in
+  this family asserts that they share a cause — and nothing denies it.
+- **What the shelter is *for*.** Every one of these four assumes a structure worth defending and
+  none of them explains why it was built.

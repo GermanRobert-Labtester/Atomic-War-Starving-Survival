@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-78"
+TITLE: "Plan 78 — Archive Ink Catalog and Transcription Conservation Loop"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/78-archive-inks-expansion.md"
+INFERRED: true
+---
 # Plan 78 — Archive Ink Catalog and Transcription Conservation Loop
 
 > **Rebuild status:** COMPLETE 12-INK CONTENT LOOP — CONSERVATION AND REACHABILITY MAINTENANCE

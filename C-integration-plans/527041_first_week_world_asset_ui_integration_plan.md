@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-61EEE68BB9FE"
+TITLE: "ASHFALL — First-Week World, Dedicated Asset Coverage, and High-Traffic UI Integration Plan"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/527041_first_week_world_asset_ui_integration_plan.md"
+INFERRED: true
+---
 # ASHFALL — First-Week World, Dedicated Asset Coverage, and High-Traffic UI Integration Plan
 
 **Document type:** Flagship implementation and integration plan<br>

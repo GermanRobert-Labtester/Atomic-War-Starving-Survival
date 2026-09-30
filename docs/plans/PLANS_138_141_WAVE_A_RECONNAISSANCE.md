@@ -1,5 +1,17 @@
 # Plans 138–141 — Wave A Shared Reconnaissance (Authority Map)
 
+## 0. Framing — The Shared Ground (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded document remains the authority.)*
+
+> "Reconnaissance is design admitting it does not know the ground yet."
+
+Wave A surveys the territory four plans will share before any of them claims a metre of it —
+reconnaissance as courtesy between future builders. The authority map produced here is the
+meeting none of them will have to attend.
+
+- **Shared reconnaissance is how parallel work stays parallel** instead of merely simultaneous.
+
 **Status:** COMPLETE (read-only) · **Date:** 2026-09-12 · **Evidence rule:** AGENTS.md rule 7 — every named authority verified in source before implementation.
 
 ## Verified live authorities

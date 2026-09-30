@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_drowned_coast_plan.md`. Family index: `docs/expansions/expansion_world_moves_without_you_index.md`.
 > Not a claim. Sits **on top of** `PLAN-MARITIME-DEEPWATER-27` (PROPOSED, unclaimed) and Expansion 09 — see DEC-DC-01.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `coast_lines.json` rows; they belong in data, never in code. DEC-DC-07:
 > no retired maritime code or data is restored, in prose or in source.
@@ -44,6 +44,13 @@ confirm it.
 its losses persist. That is the plan's quiet thesis: *the coast is the one antagonist that never
 attacks and never relents.* Lost berths never return. The five movements will carry people past
 places that used to be where boats were. §12 holds what the tide does not explain.
+
+**The second layer.** The waterline is the only antagonist in this game with no intentions at all,
+and it is the one that takes things permanently. A raid can be repelled; a siege can be lifted; a
+berth the sea has reclaimed is simply *history*, published in advance and unreadable in the past
+tense until it is. The coast teaches a skill no other system demands: losing on a schedule, with
+two days' notice, without villainy. The coast publishes everything and explains nothing, and that
+is why it is the only antagonist the player can read and never argue with.
 
 ## 1. Goal & Outcome
 
@@ -103,6 +110,73 @@ legible in the atlas — a charted site shows its next open window; an uncharted
   silence.
 - **Movements I–V are journeys, not quests.** Each should end somewhere the coast has *changed*
   between the start gate and the end marker.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Berth book: Berth 4, dues paid. The entry is maintained for a berth that is awash. The harbour master's book is the last place Berth 4 exists."
+
+> "Chart, nine years old. A rock is named. The name is the only part of the chart that is still true."
+
+> "Dive window slip: opens Tuesday, closes Wednesday. The slip is a receipt for a window nobody can hold open."
+
+**Scenes the player may piece together.**
+
+> "The two-day announcement is read aloud at the gate. It is the coast's only courtesy and it is not negotiable."
+
+> "A movement passes the old boat ground. Nobody points. The chart stays in someone's bag and stays in someone's bag."
+
+**Held silences (texture, not register rows).**
+
+- Why the six waterline curves differ. Six authored shapes, no stated cause; whether the sea has preferences is not asserted and must not be. Texture only.
+- What the `keeper_thread_id` is keeping. A thread id on a dive site; the thread is never pulled and no keeper is modelled behind it.
+
+**Third pass — three fragments (texture only; §12 register unchanged).**
+
+> "Two days' notice, read aloud at the gate. The coast keeps its one courtesy even when no one is listening."
+
+> "Dues paid in goods the harbour values. The valuation is the constitution; the receipt is the culture."
+
+> "The window opens Tuesday. The crew is ready Monday. Readiness does not move the tide."
+
+**Fourth pass — the published arithmetic (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `coast_lines.json`. DEC-DC-07 governs: no retired maritime
+material is restored, in prose or in source.)*
+
+**The shape of the polish.** Everything on this coast is filed in advance and settled in arrears.
+The harbour master's office is a machine for turning weather into minutes, and the minutes are
+always the same length — that is the horror and the mercy both. Six waterline sheets, six curves,
+one filing cabinet. The curves disagree with each other the way signatures disagree: completely,
+and without anyone being wrong.
+
+**What the shelter leaves lying around.**
+
+> "Waterline sheet, harbour two: a curve and a date. Six harbours, six curves. The sheets are
+> filed together, which is the only claim they make about each other."
+
+> "Notice of loss, two days old, read at the gate. The notice has never once been late. Someone
+> checks. Nobody has written down who."
+
+> "Chart correction, undated: the marker is gone. The correction is in the chart's own hand, and
+> the chart is nine years old."
+
+**Held silences (texture, not register rows).**
+
+- Whether the sea is finished. The waterline converts berth to shoreline and never back (P4);
+  whether the arithmetic has a final term is not published and must not be. Texture only.
+- What the Flotilla calls the harbours whose dues it pays. Two standings are read from two owners
+  and reconciled by nobody (§1b); the two vocabularies are observed and left standing.
 
 ---
 

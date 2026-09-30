@@ -1,5 +1,18 @@
 # PLAN B66 CLOSEOUT — Subterranean Heavy Manufacturing & Metallurgical Smelting
 
+## 0. Framing — Smelting (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded closeout remains the authority.)*
+
+> "Metallurgy is the shelter's conversation with stone, conducted in heat."
+
+Deep manufacture and smelting close out as the shelter's second industrial revolution: ore in,
+ingots out, and every step a claim about what the underground is *for*. The closeout is the
+crucible's receipt.
+
+- **Heavy industry is where a settlement stops scavenging and starts making** — the difference is
+  entirely one of temperature.
+
 **Date:** 2026-09-06 · **Branch:** `feat/asset-pipeline-flagship`
 **Scope:** core vertical slice of the heavy metallurgy expansion. UI, host
 session wiring and cross-plan (B68/B69) hooks are follow-ups.

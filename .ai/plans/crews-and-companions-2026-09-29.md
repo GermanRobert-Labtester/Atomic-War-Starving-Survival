@@ -13,7 +13,7 @@ STATUS: DRAFT — awaiting user approval (not self-approved; CLAUDE.md Rule 8 re
 > Prose companion: `docs/expansions/expansion_crews_and_companions_plan.md`. Family index: `docs/expansions/expansion_new_ways_to_play_index.md`.
 > Not a claim. `ExpeditionSystem` is used in many places; this plan **adds a coordinator beside it** and does not change its one-expedition-per-survivor rule.
 
-> **Editorial polish (prose pass):** sections **0**, **1b** and **12** are narrative texture only. No
+> **Editorial polish (prose pass):** sections **0**, **1b**, **1c** and **12** are narrative texture only. No
 > authority, claimed path, decision, acceptance criterion or verification step changes. Sample lines
 > are content candidates for `party_quarrels.json` / `camp_rituals.json` / `companion_party_moments.json`
 > rows; they belong in data, never in code.
@@ -43,6 +43,14 @@ way.
 something extreme occurs and the relationship system records it without being asked. Bonds are not
 rewards and are not earned; they are *damage with witnesses*. §12 keeps open the questions that a
 group of people and animals walking into the ash will always raise and never answer.
+
+**The second layer.** Four ledger entries decide to be about each other, and the engine does not
+require it — which is the entire reason it registers as grace. The party is the one institution in
+this world that exists purely because someone chose company over efficiency: one encounter roll
+instead of four, a slower pace, a shared watch, a fire that costs fuel and buys nothing measurable.
+The bonds it writes are damage with witnesses. Nobody earns them. They happen to people who
+happened to be walking together when the world did something. Company over efficiency is the only
+arithmetic in this world that ever rounds up.
 
 ## 1. Goal & Outcome
 
@@ -102,6 +110,65 @@ a pack-capacity bonus is a container. `companion_party_moments.json` should carr
   honest feature. Do not let the UI pre-announce it.
 - **A party of one must be invisible.** Solo parity is a test in §6.2 — and it is also a promise that
   nothing here is mandatory.
+
+---
+
+## 1c. The Deeper Layer — scenes, artifacts & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — no authority,
+no claimed path, no acceptance criterion, no verification step. §12's register is unchanged; the
+fragments below are content candidates and deliberate silences, not new recorded questions. Where
+a named data file holds no prose field, fragments are texture only and gain no schema.)*
+
+**What the shelter leaves lying around.**
+
+> "Watch order, rewritten twice. The second rewrite is in a different hand and the first hand has not objected."
+
+> "Camp words, said because we have always said the words. Nobody remembers who started. The words have outlived the remembering."
+
+> "Pack tally: he carried it the whole way. The tally does not record that. The tally records weight."
+
+**Scenes the player may piece together.**
+
+> "The goat will not drink here. Three of us have stopped arguing with the goat, which the cohesion number will describe tomorrow, too late."
+
+> "Day nine silence. Not unfriendly. On a road where nothing else is interesting, a person can be found out quietly."
+
+**Held silences (texture, not register rows).**
+
+- Whether the road is quieter for followers or merely unobserved (DEC-CC-04). The encounter chance is suppressed exactly to 0 and the plan leaves the difference alone. Texture only.
+- Who the road bond is *between*. `TraumaBondSystem` records a write; it does not record who was looking at whom, and the write must never be made to explain itself.
+
+**Fourth pass — the fire that costs fuel and buys nothing (texture only; §12 register unchanged).**
+
+*(Polish pass, non-contractual: wording and texture only — no authority, no claimed path, no
+decision, no acceptance criterion, no verification step. §12 gains no row and loses no silence;
+fragments remain content candidates for `party_quarrels.json` / `camp_rituals.json` /
+`companion_party_moments.json` and gain no schema where no prose field exists.)*
+
+**The shape of the polish.** Write the party at walking pace and let sentences arrive half-finished,
+the way they do when the speaker is saving breath for the hill. The plan's grace is that nothing
+here is required by the engine — so the prose must never sound rewarded. A road bond is damage with
+witnesses; the witnesses are the only warmth in the sentence and they must never be quoted agreeing
+with each other.
+
+**What the shelter leaves lying around.**
+
+> "Camp words, night 7. Two people now say them in the same wrong order. Neither has corrected the
+> other."
+
+> "Watch chit, day 7: the goat is listed as personnel on one line and as cargo on none."
+
+> "The hound slept across the threshold. The threshold is not a door on a road. The hound has
+> opinions about doors."
+
+**Held silences (texture, not register rows).**
+
+- Who named the party. `Party.name` is free text and the plan declines to attribute authorship
+  (§1b); the decline is load-bearing and must stay. Texture only.
+- What the one suppressed encounter roll would have been. Followers' chance is exactly 0
+  (DEC-CC-04); the road that did not happen is the only road nobody walked and it must stay
+  unwritten.
 
 ---
 

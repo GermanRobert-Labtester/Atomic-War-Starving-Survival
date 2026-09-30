@@ -11,6 +11,15 @@
 
 ---
 
+> *"A shelter does not need a government. It needs a room where it is possible to lose an argument
+> and still stay inside."*
+>
+> Five political authorities already work in this game and none of them talk to each other. That is
+> not a bug; it is what a shelter looks like when it is governed by institutions each invented to
+> solve exactly one emergency.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -22,6 +31,16 @@ The shelter already has a great deal of politics, and it has never spoken to its
 Shelter Governance makes them one *experience*: **the Assembly** — a place, a calendar, a set of named people. Laws are things the shelter *enacts and repeals*, not rows in a catalogue. Courts are people — an advocate, a jury, a defendant with a bunk. Opposition is *organised*: it has leaders, it escalates, and when it wins, the shelter changes hands or splits.
 
 The promise: **you will learn to govern by consent, by fear, or by both, and you will feel each one wear.**
+
+The **Assembly** is the room. It adds no authority — it only gives the five a shared vocabulary, a
+book of statutes, a court with names, and a ladder of dissent that is **announced one sitting
+ahead** before it is ever climbed.
+
+The ladder — murmur → petition → walkout → sit-in → schism or challenge — is a slow-burning fuse,
+and the announcement rule means the player always sees the shape of the trouble before the
+trouble. The dread is in the seeing. And roles shape verdict *reception*, never the verdict: the
+decision belongs to the justice owner. What the Assembly changes is what a verdict feels like to
+receive.
 
 ### 1.2 Pillars
 
@@ -154,3 +173,61 @@ No new political authority. No new save section (nested in `shelter_governance`,
 - **Scope map hides a bug.** *Bound:* P0 proves F5 by a failing-then-passing test before the map is added.
 - **Opposition frustrates players.** *Bound:* every rung is announced; concession is always possible; nothing is a surprise ending.
 - **Tone.** *Bound:* punishments are consequences, not spectacle; Execution stays a rare, weighty, authored path.
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** A shelter does not need a government; it needs a room where losing an
+argument is survivable. The Assembly adds no authority — it gives five owners that never spoke a
+shared vocabulary, and its single innovation is *announcing trouble one sitting early enough to be
+believed about it*. That scheduling rule is what separates politics from weather.
+
+**What the expansion leaves lying around.**
+
+> "Motion, carried. Two blocs registered grievance — two sets of people now keeping a different count."
+
+> "Minutes margin, one word: *acceded*. The minutes are neutral. The margin is not part of the minutes."
+
+> "Reception note after a verdict. The verdict is untouched; this is the room's receipt of it."
+
+**Scenes the player may piece together.**
+
+> "The walkout is announced for the next sitting. We slept badly tonight instead of next week — which the rule does not mention."
+
+> "A schism removes named survivors through existing departure paths. The room is then a room with fewer chairs and the same agenda."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the opposition wants beyond its rung. A named survivor and a rung are recorded; motive is never authorised.
+- What the four laws' missing pair would have covered. Two crime types have none; the gap is real and its origin unrecorded.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**What the blocs actually believe.** Twenty-one scope words and grievance basis points. Doctrine is
+not authored and real-world labels are forbidden.
+
+**Why `guardDeficiency` arrives as zero.** A live gap. Until the fix is signed, the zero stands
+unexplained.
+
+**Is a precedent binding.** Bounded, decaying modifiers are applied. The legal weight of the word is
+asserted by the fiction and not by the engine.
+
+**Where the schism's departed go.** Survivors are conserved through existing departure paths and then
+stopped. The departed are not tracked by design.
+
+**Why there are exactly four laws.** Two crime types have none. The gap is real and its origin is not
+recorded.
+
+**Who decides who sits on a jury.** Roles are assigned from survivors with a seeded draw. No fiction
+of appointment is authored.

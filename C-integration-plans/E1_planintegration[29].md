@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-29
+PLAN_ID: "E1-29"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 29
-STATUS: READY_FOR_EXECUTION_AFTER_PLANS50_53_COMBAT_ESPIONAGE_PSYCHOLOGY_AUDIO_RECON
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plans 50–53 Follow-up — Vehicle Convoy Combat, Deep-Cover Espionage, Post-Traumatic Growth, Spatial Shelter Acoustics"
 SEQUENCE_FILENAME: "E1_planintegration[29].md"
 PREVIOUS_FILENAME: "E1_planintegration[28].md"
 NEXT_FILENAMES:
   - "E1_planintegration[30].md"
   - "E1_planintegration[31].md"
-CATEGORY: VEHICLES+COMBAT+ESPIONAGE+PSYCHOLOGY+AUDIO+GODOT
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Integrate armored vehicle combat, external mole networks, post-traumatic growth/resilience, and spatial room soundscaping while preserving singular ownership for combat resolution, vehicle persistent condition, faction/world intelligence, survivor psychology, research unlocks, shelter topology, structural state, water state, and audio presentation."
 PREMISE_VERIFICATION_REQUIRED: true
 ONE_AUTHORITY_PER_FACT: true
@@ -32,6 +32,24 @@ DETERMINISM_RISK: VERY_HIGH
 COMBAT_BALANCE_RISK: VERY_HIGH
 PSYCHOLOGY_DESIGN_RISK: HIGH
 AUDIO_PERFORMANCE_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [29] — Armored Convoy Combat, Deep-Cover Espionage, Post-Traumatic Growth, and Spatial Shelter Acoustics"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[29].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [29] — Armored Convoy Combat, Deep-Cover Espionage, Post-Traumatic Growth, and Spatial Shelter Acoustics

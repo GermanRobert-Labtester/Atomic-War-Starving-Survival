@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — Order of Care (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "Sterile supply is trust you can count."
+
+A ward is a place where a shelter agrees to say out loud, and in order, who is being cared for
+today. Triage ranks *need*, never worth — a distinction the plan keeps by making the ranking
+data-driven and the wording plain. And sterile supply is the quietest inventory in the game: its
+state is unremarkable for months and then, all at once, it is the only fact that matters.
+
+- **Sterility is a state, not an item.** The plan models the difference, which is why an empty
+  shelf here is a crisis before anyone has words for it.
+- **Clinical language is a kindness.** The vocabulary of the ward — triage, supply, procedure —
+  lets terrible arithmetic be spoken without theatre.
+
+---
+
 ## Outcome
 
 Make `ClinicalWardTriageEngine` (DEC-333) the live calculation authority

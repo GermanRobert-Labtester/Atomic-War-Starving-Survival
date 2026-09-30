@@ -6,6 +6,25 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — Torque (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "Before the shelter had electricity, it had torque."
+
+Mechanical power is the oldest technology in the settlement given an owner at last: drivelines,
+belts, shafts and machine tools — the dignity of force transmitted through things you can put your
+hand on. Machines here have mechanical quirks and never haunted ones; character belongs to the
+people at the lathe, and the wheel simply does what it is told, at the ratio it was built for.
+
+- **A driveline is a diagram you can walk.** Power transmission becomes a place — which is how a
+  workshop stops being scenery and starts being infrastructure.
+- **A machine tool is a technique with a motor.** The plan's real subject is capability: what the
+  shelter can now *make*, and therefore what it can now become.
+
+---
+
 ## Outcome
 
 Make `MechanicalPowerDrivelineEngine` (DEC-335) the live calculation authority

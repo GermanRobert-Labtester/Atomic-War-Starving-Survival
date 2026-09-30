@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-065A805F68EA"
+TITLE: "Plan 57 — Shop Window / Store Kit Statements & Launch Ops — Store Capability Manifest, Truthful In-Engine Screen Captures, Provenance Disclosures, and Release Packaging"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_57_Shop_Window_Store_Kit_Statements_Launch_Ops.md"
+INFERRED: true
+---
 # Plan 57 — Shop Window / Store Kit Statements & Launch Ops — Store Capability Manifest, Truthful In-Engine Screen Captures, Provenance Disclosures, and Release Packaging
 
 ## 1. Objective and bounded outcome

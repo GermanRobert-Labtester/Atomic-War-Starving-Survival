@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-0"
+TITLE: "Plan 00 — Master Roadmap & Architectural Constitution: Engine-Free Core Mandates, Deterministic Simulation Loops & Master Expansion Authority"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/00-master-roadmap.md"
+INFERRED: true
+---
 # Plan 00 — Master Roadmap & Architectural Constitution: Engine-Free Core Mandates, Deterministic Simulation Loops & Master Expansion Authority
 
 > **Master Expansion Authority File:** `../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`

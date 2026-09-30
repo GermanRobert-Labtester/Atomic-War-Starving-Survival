@@ -1,5 +1,19 @@
 # PLAN F21 — Discovery Selection-Context Extension (Season / Drought / Skill Weights)
 
+## 0. Framing — The Weighting (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; no scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Context is how a random draw learns to be plausible."
+
+Season, drought and skill weights give discovery a *situation* — the difference between drawing a
+name from a hat and drawing it from a hat that knows what month it is. Weighted selection is the
+quietest storytelling in the engine, and some of its most effective.
+
+- **A weighted draw is a narrator with a poker face** — the outcome is chance, the odds are
+  authorship.
+
 **Class:** P2 follow-up from the F17–F20 flagship integration (flagship plan §8.10, §9.10, §10.10 — all three documented as "investigated, deferred").
 **Status:** FILED — not started.
 **Owner system:** Discovery / micro-location selection only. **No gameplay logic in the greenhouse, radio, or water systems.**

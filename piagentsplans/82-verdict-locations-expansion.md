@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-82"
+TITLE: "Plan 82 — Verdict Locations: Fifteen-Site Investigation Corpus, Map/Quest Coupling, and Verdict Save Ownership"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/82-verdict-locations-expansion.md"
+INFERRED: true
+---
 # Plan 82 — Verdict Locations: Fifteen-Site Investigation Corpus, Map/Quest Coupling, and Verdict Save Ownership
 
 > **Rebuild status:** TERMINAL 15-SITE CONTENT + REACHABILITY/SAVE AUDIT

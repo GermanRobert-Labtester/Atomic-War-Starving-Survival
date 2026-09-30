@@ -13,6 +13,23 @@ After approval, first filesystem writes will be:
 
 ---
 
+## 0. Framing — Evidence First (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Evidence-grounded means the plan can be wrong in public."
+
+B86–B89 tie every claim to source and every delta to current reality. The spine of the document is
+that disagreement with the world is *recorded*, not smoothed — a plan that survives contact with
+the repository is worth more than a plan that merely survives review.
+
+- **Cite or decline.** There is no third verb in an evidence-grounded document.
+- **A plan that cannot lose an argument cannot be trusted to win one** — the recorded divergences
+  are its credentials.
+
+---
+
 # 1. Objective
 
 Ship one interconnected engineering-and-expedition tranche that moves ASHFALL from improvised survival into disciplined engineering, with:

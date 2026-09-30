@@ -1,5 +1,19 @@
 # C2[5] / Plan 21 — Baseline Condition-Authority Audit (Premise Corrections)
 
+## 0. Framing — The Second Photograph (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes; the recorded audit evidence remains the authority.)*
+
+> "Two baselines make an honest before-and-after."
+
+The condition-authority sweep takes the same posture as its predecessor: measure, then believe.
+With 20A satisfied and the test corpora green *at the time of sweep*, the document is careful to
+date its own certainty — an honest baseline says when the photograph was taken.
+
+- **Evidence-first means the plan bends to the source**, and records the bending.
+- **A dated certainty is worth more than an undated one** — freshness is part of the claim.
+
 > Date: 2026-09-15. Evidence-first read-only sweep before any Plan 21 edit,
 > per `AGENTS.md` rule 7 and `C2_planintegration[5].md` §5. The 20A prerequisite
 > is satisfied (20A + 20B complete; Radiation 72/72, Shelter 588/588,

@@ -1,5 +1,17 @@
 # Plan 115 Implementation Log
 
+## 0. Framing — The Middle of the Queue (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "Middles are where programmes are actually made — beginnings get speeches and endings get
+> reports."
+
+Plan 115 is deep in the unglamorous middle of the numbering, and its log keeps the same manners as
+the first and the last: scope, seam, evidence, status. That sameness is the achievement.
+
+- **Consistency across the middle is what separates a programme from a burst of enthusiasm.**
+
 ## Phase 115A — Runtime and catalog audit
 
 Status: PASS

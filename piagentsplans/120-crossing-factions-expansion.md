@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-120"
+TITLE: "Plan 120 — Crossing Faction Catalog and Player-Reachable Political Alternatives"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/120-crossing-factions-expansion.md"
+INFERRED: true
+---
 # Plan 120 — Crossing Faction Catalog and Player-Reachable Political Alternatives
 
 > **Rebuild status:** PARTIAL 8-FACTION CONTENT AUTHORITY — LIVE CROSSING REACHABILITY PLAN

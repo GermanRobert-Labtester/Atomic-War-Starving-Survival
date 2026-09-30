@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-68"
+TITLE: "Plan 68 — Wall Carving Templates, Morale Bands and Shelter-Texture Reachability"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/68-wall-carving-templates-expansion.md"
+INFERRED: true
+---
 # Plan 68 — Wall Carving Templates, Morale Bands and Shelter-Texture Reachability
 
 > **Rebuild status:** COMPLETE 60-TEMPLATE DATA LOOP — PRODUCTION CONSUMER REACHABILITY IS THE OPEN QUESTION

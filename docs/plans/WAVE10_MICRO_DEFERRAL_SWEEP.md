@@ -1,5 +1,17 @@
 # ASHFALL — Wave 10 Part 1 Task A3: Recorded Micro-Deferral Sweep Report
 
+## 0. Framing — The Small Debts (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded report remains the authority.)*
+
+> "A micro-deferral sweep collects the tiny promises made to be honoured later."
+
+Every big programme accumulates small postponements — one per session, none of them fatal,
+collectively a fog. The sweep gathers them into daylight so that "later" acquires a date.
+
+- **Micro-debts compound into atmosphere.** Sweeping is the corpus paying its smallest invoices
+  before they become a mood.
+
 **Document role:** execution-grade forensic sweep and reconciliation of explicitly recorded micro-deferrals across completed claims, handoffs, closeouts, and debt ledgers.
 
 **Author:** Integrator (user-authorized continuation)\

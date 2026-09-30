@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-DD51083C76F1"
+TITLE: "Plan 100 — Moral Choice Faction Reactions and Threshold Feedback"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/100-moral-choice-faction-reactions-expansion.md"
+INFERRED: true
+---
 # Plan 100 — Moral Choice Faction Reactions and Threshold Feedback
 
 > **Rebuild status:** COMPLETE 6-ROW CATALOG — MAIN MORAL-CHOICE REACTION PATH EXISTS; CROSS-SYSTEM AUDIT REMAINS

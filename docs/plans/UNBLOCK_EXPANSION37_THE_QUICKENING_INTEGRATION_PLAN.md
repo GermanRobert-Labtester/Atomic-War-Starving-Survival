@@ -6,6 +6,26 @@
 from campaign composition, daily simulation, persistence, host CLI diagnostic probe,
 and focused runtime verification.
 
+## 0. Framing — The Loudest Clock (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. It changes no scope, claim, decision, acceptance
+criterion or recorded status; the sealed claim and its verification remain the authority.)*
+
+> "The loudest clock in a shelter is the one nobody is allowed to wind."
+
+Antenatal and neonatal care is the game's most protected clock — every milestone is a *date*
+before it is an event, and the whole system speaks in checklists, windows and preparation. The
+tone constraints here are structural rather than decorative: what may not be shown shapes what
+may be computed, and the result is care rendered as scheduling — which is, in a shelter, what
+care mostly is.
+
+- **A protected tone is an engineering constraint.** The boundaries on depiction are load-bearing:
+  they decide the vocabulary of the data long before any writer sees it.
+- **Preparation is the plan's emotional register.** The engine counts days and supplies; the
+  household supplies everything else, and the plan is careful never to invoice for it.
+
+---
+
 ## Outcome
 
 Make `AntenatalMaternalHealthEngine` (DEC-332) the live calculation authority

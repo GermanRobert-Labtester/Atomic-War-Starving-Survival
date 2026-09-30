@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-563BD0CED30D"
+TITLE: "Plan 56 — Weight & Hygiene: A Repository That Doesn't Fight Its Own Tools — Repository Classification Policy, LFS Enforcement, Dead Artifact Quarantine, and Tooling Durability"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_56_Weight_Hygiene_Repository_Assets_Tools.md"
+INFERRED: true
+---
 # Plan 56 — Weight & Hygiene: A Repository That Doesn't Fight Its Own Tools — Repository Classification Policy, LFS Enforcement, Dead Artifact Quarantine, and Tooling Durability
 
 ## 1. Objective and bounded outcome

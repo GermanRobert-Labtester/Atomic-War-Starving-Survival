@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-ADF7F6583181"
+TITLE: "Plan 169 — Audio Accessibility & Mix Legibility — Critical-Cue Visual Equivalence, Dynamic Range Ducking, Mix Presets, and Host Bus Telemetry"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_169_Adaptive_Audio_Dynamic_Music.md"
+INFERRED: true
+---
 # Plan 169 — Audio Accessibility & Mix Legibility — Critical-Cue Visual Equivalence, Dynamic Range Ducking, Mix Presets, and Host Bus Telemetry
 
 ## 1. Objective and bounded outcome

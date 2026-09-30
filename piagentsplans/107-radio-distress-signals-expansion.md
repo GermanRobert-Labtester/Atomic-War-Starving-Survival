@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-107"
+TITLE: "Plan 107 — Radio Distress Signals Expansion: Multi-Day Signal Tracing, Audio Clarity Stages & Wasteland Intel Architecture"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/107-radio-distress-signals-expansion.md"
+INFERRED: true
+---
 # Plan 107 — Radio Distress Signals Expansion: Multi-Day Signal Tracing, Audio Clarity Stages & Wasteland Intel Architecture
 
 > **Master Expansion Authority File:** `../docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md`

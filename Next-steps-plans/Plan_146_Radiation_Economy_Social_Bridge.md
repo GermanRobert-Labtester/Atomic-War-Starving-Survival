@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "LEGACY-B9C3C3AEE202"
+TITLE: "Plan 146 — Radiation to Economy and Social Bridge — Measured Contamination and Owner-Safe Consequences"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/Plan_146_Radiation_Economy_Social_Bridge.md"
+INFERRED: true
+---
 # Plan 146 — Radiation to Economy and Social Bridge — Measured Contamination and Owner-Safe Consequences
 
 ## Current-evidence architecture decision (2026-09-24; supersedes stale instructions below)

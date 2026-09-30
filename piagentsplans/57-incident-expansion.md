@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "PIA-57"
+TITLE: "Plan 57 — Shelter Incidents, Event Read Model and Player Decisions"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "piagents"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "piagentsplans/57-incident-expansion.md"
+INFERRED: true
+---
 # Plan 57 — Shelter Incidents, Event Read Model and Player Decisions
 
 > **Rebuild status:** COMPLETE 25-ROW CATALOG — EVENTS HOST IS A TEXT-ONLY READ MODEL; GAMEPLAY CHOICES ARE NOT YET EXECUTIVE

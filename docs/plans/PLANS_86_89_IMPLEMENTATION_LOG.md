@@ -1,5 +1,18 @@
 # Plans B86–B89 — Implementation Log
 
+## 0. Framing — Green, Honestly (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+
+> "A PASS with a known-accepted baseline failure is the most honest kind of green."
+
+The status line says the quiet part loudly: *known-accepted* — a failure named, dated and carried
+on purpose rather than hidden. Trust in a test suite is not built from perfection; it is built
+from failures that are all on the record.
+
+- **An accepted failure is a promise with an expiry someone must remember** — the log is that
+  memory.
+
 ## Phase 0 — Docs + baseline
 
 Status: PASS (with known-accepted baseline failure)

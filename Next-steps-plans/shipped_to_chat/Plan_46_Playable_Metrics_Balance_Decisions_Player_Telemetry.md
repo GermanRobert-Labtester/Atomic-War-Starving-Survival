@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "NEXT-PLAN-46"
+TITLE: "Plan 46 — Playable Metrics: Measure the Player, Decide the Difficulty"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "next_steps"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "Next-steps-plans/shipped_to_chat/Plan_46_Playable_Metrics_Balance_Decisions_Player_Telemetry.md"
+INFERRED: true
+---
 # Plan 46 — Playable Metrics: Measure the Player, Decide the Difficulty
 
 > **Wave:** Continuity Wave 7 — *Content on Rails & the Measurement Layer*

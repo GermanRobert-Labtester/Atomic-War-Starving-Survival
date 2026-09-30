@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-28
+PLAN_ID: "E1-28"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 28
-STATUS: READY_FOR_EXECUTION_AFTER_PLANS63_64_65_129_AUTHORITY_RECON
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 63/64/65/129 Follow-up — Captive Detention UI, Food Preservation UI, Campaign Epilogue UI, Foundry Balance & Metallurgy Integration"
 SEQUENCE_FILENAME: "E1_planintegration[28].md"
 PREVIOUS_FILENAME: "E1_planintegration[27].md"
 NEXT_FILENAMES:
   - "E1_planintegration[29].md"
   - "E1_planintegration[30].md"
-CATEGORY: UI+CAPTIVES+FOOD+EPILOGUE+FOUNDRY+ECONOMY
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Ship four follow-up slices while preserving singular ownership for captive lifecycle/security/health/recruitment, food cohorts/spoilage/inventory/power/thermal, epilogue facts and campaign completion, and foundry heat/material/trade/vehicle-recipe state."
 PREMISE_VERIFICATION_REQUIRED: true
 ONE_AUTHORITY_PER_FACT: true
@@ -29,6 +29,24 @@ SAVE_RISK: VERY_HIGH
 BALANCE_RISK: VERY_HIGH
 DETERMINISM_RISK: VERY_HIGH
 ETHICAL_PRESENTATION_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [28] — Captive Detention UI, Food Preservation UI, Campaign Epilogue, and Foundry 20-Product Balance/Metallurgy Integration"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[28].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [28] — Captive Detention UI, Food Preservation UI, Campaign Epilogue, and Foundry 20-Product Balance/Metallurgy Integration

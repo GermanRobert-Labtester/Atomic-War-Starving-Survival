@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-25
+PLAN_ID: "E1-25"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 25
-STATUS: READY_FOR_EXECUTION_WHEN_VISITOR_AUTHORITIES_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 214 — Visitor Integration & Housing System"
 SEQUENCE_FILENAME: "E1_planintegration[25].md"
 PREVIOUS_FILENAME: "E1_planintegration[24].md"
 NEXT_FILENAMES:
   - "E1_planintegration[26].md"
   - "E1_planintegration[27].md"
-CATEGORY: LINK+VISITORS+HOUSING+ADMISSION+RECRUITMENT+SECURITY
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create a temporary-occupant orchestration layer for admitted visitors, temporary housing, service eligibility, administrative processing, departure, and recruitment handoff without duplicating SurvivorCatalog, Recruitment, Needs, Security, Inventory, Diplomacy, Trade, or shelter topology."
 PREMISE_VERIFICATION_REQUIRED: true
 ONE_AUTHORITY_PER_FACT: true
@@ -23,6 +23,24 @@ RNG_FOR_ROUTINE_VISITOR_PROCESSING_FORBIDDEN: true
 RUNTIME_RISK: VERY_HIGH
 SAVE_RISK: VERY_HIGH
 MICROMANAGEMENT_RISK: VERY_HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [25] — Visitor Admission, Temporary Residency, Housing, Service Access, Departure, and Recruitment Handoff"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[25].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [25] — Visitor Admission, Temporary Residency, Housing, Service Access, Departure, and Recruitment Handoff

@@ -9,6 +9,24 @@
 
 ---
 
+## 0. Framing — The Mission (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "A mission statement is a decision about which mistakes are affordable."
+
+158–161 travel as one mission so that four features stay answerable to a single question — does
+the shelter feel more *alive* tomorrow than it does today? Framing work as a mission is not
+grandeur; it is triage with a vocabulary.
+
+- **Mission before mechanics.** When a feature cannot say how it serves the mission, it is
+  scenery, and scenery is what the corpus already has enough of.
+- **Four plans, one horizon** — the discipline is that no plan may arrive first at a place the
+  others cannot follow.
+
+---
+
 # 1. Flagship Mission
 
 Plans 158–161 should collectively move ASHFALL from a shelter-and-expedition survival loop into a persistent regional simulation.

@@ -1,3 +1,26 @@
+---
+PLAN_SCHEMA_VERSION: "1"
+PLAN_ID: "C1-6"
+TITLE: "C1 — Flagship Integration Plan [6]: Tests That Mean It — Fidelity, Coverage, Runtime Evidence & Real Campaign Journeys"
+STATUS: "PROPOSED"
+CATEGORY: "PROCESS"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/C1_planintegration[6].md"
+INFERRED: true
+---
 # C1 — Flagship Integration Plan [6]: Tests That Mean It — Fidelity, Coverage, Runtime Evidence & Real Campaign Journeys
 
 > **Output:** `C1_planintegration[6].md`

@@ -95,6 +95,23 @@ Consume(subject, medicalItem, therapeuticScale)
 
 ---
 
+## 0. Framing — One Table (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Hunger is one subject. It deserves one owner."
+
+Eating, meals and medicine converge on the same table, and the plan's whole argument is that they
+must share one authority — because the body keeps no separate ledgers. One food authority means a
+meal can be *about* something: morale, medicine, memory, the difference between fed and kept.
+
+- **One authority is not centralisation; it is coherence.** The player should never be told two
+  numbers for the same hunger.
+- **The table is where systems become culture** — what the shelter eats is who the shelter is.
+
+---
+
 # 1. Source-Evidence Interpretation
 
 The source plan identifies a continuity defect rather than a missing feature.

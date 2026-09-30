@@ -1,15 +1,15 @@
 ---
-PLAN_ID: E1-3
+PLAN_ID: "E1-3"
 PLAN_FAMILY: planintegration
 SEQUENCE_INDEX: 3
-STATUS: READY_FOR_EXECUTION_WHEN_RAILS_PASS
+STATUS: "BLOCKED"
 SOURCE_PLAN: "Plan 131 — Wasteland Information & Rumor Network"
 SEQUENCE_FILENAME: "E1_planintegration[3].md"
 PREVIOUS_FILENAME: "E1_planintegration[2].md"
 NEXT_FILENAMES:
   - "E1_planintegration[4].md"
   - "E1_planintegration[5].md"
-CATEGORY: LINK+INFORMATION_FLOW+PRESENTATION
+CATEGORY: "PROCESS"
 PRIMARY_INTENT: "Create one bounded information-flow layer by integrating existing radio, gossip, caravan, world-event, knowledge, faction, economy, quest, and expedition authorities."
 EXECUTION_STYLE: "Flagship integration plan"
 PREMISE_VERIFICATION_REQUIRED: true
@@ -20,6 +20,24 @@ RUNTIME_RISK: MEDIUM_HIGH
 SAVE_RISK: MEDIUM
 CONTENT_RISK: MEDIUM
 SCOPE_RISK: HIGH
+PLAN_SCHEMA_VERSION: "1"
+TITLE: "E1 Plan Integration [3] — Wasteland Information Flow, Rumor Propagation, Intelligence, and Disinformation"
+NAMESPACE: "integration"
+PREMISE_VERIFIED_AT: null
+PREMISE_VERIFIED_DATE: null
+OWNER: null
+PILLARS: []
+RAILS_REQUIRED: []
+METRIC_MOVED: []
+ACCEPTANCE_TIER: null
+SOURCE_AUTHORITY: []
+SUPERSEDES: []
+SUPERSEDED_BY: []
+MERGED_INTO: null
+COMPLETED_AT: null
+COMPLETION_EVIDENCE: []
+LEGACY_SOURCE_PATH: "C-integration-plans/E1_planintegration[3].md"
+INFERRED: true
 ---
 
 # E1 Plan Integration [3] — Wasteland Information Flow, Rumor Propagation, Intelligence, and Disinformation

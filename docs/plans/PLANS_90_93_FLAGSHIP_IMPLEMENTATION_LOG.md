@@ -1,4 +1,16 @@
 // Implementation Log — Flagship Plans 90–93
+
+// ## 0. Framing — Four Instruments (editorial polish pass — commentary only)
+//
+// *(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
+//
+// > "A foundry, an ascent, a listening post and a still: a civilisation rebuilt in miniature."
+//
+// Cupola Foundry, Vertical Ascent, Acoustic Detection, Mineral-Chemical Production — four
+// instruments of a shelter learning to see, hear, climb and make. Kept in the log's own comment
+// voice, because the file speaks in code and the framing should respect its register.
+//
+// - **Four capacities, one wave**: each one turns a resource into an *ability*.
 // (Cupola Foundry, Vertical Ascent, Acoustic Detection, Mineral-Chemical Production)
 
 # Phase 0 — Forensic Architecture Audit

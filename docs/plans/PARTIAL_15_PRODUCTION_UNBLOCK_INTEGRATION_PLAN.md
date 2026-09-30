@@ -8,6 +8,24 @@
 
 **Authority:** this document proposes the next batches; it does not activate them, assign claims, or supersede `INTEGRATION_PLANS.md`, `WORKTREE_OWNERSHIP.md`, `TEST_POLICY.md`, or `KNOWN_DEBT.md`.
 
+## 0. Framing — Fifteen, Propagated (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes; this closeout's recorded deliverables remain the authority.)*
+
+> "A production-unblock plan is a schedule that decides which work gets to be boring next."
+
+Fifteen partials, one production rhythm: the plan sequences them so that unblocking becomes
+*manufactured* rather than heroic. The art is in the ordering — each batch positioned so that its
+seams are already warm when its builders arrive.
+
+- **This document proposes; it does not activate.** The boundary between planning and claiming is
+  drawn in the first paragraph, which is where honest plans draw it.
+- **Production-unblock is choreography for attention** — the scarcest resource in the whole
+  programme.
+
+---
+
 ## 1. Objective
 
 Move 15 partially implemented plans from isolated, test-only Core code to truthful production integration while preserving ASHFALL's existing owners, save sections, deterministic behavior, JSON authority, and Godot presentation boundary.

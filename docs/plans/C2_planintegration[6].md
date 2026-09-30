@@ -114,6 +114,23 @@ The flagship outcome:
 
 ---
 
+## 0. Framing — The Ledger of Watts (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Power is the dependency that turns every other system into a stakeholder."
+
+Load shedding is the shelter's most public triage: which machines stop so that the ward does not.
+The plan makes electricity a *relationship* rather than a number — every consumer with a rank,
+every rank with a reason, and the player holding the switch with the reasons written down.
+
+- **Dependency made explicit is dependency that can be negotiated** — shedding is a policy, and
+  policies can be argued with.
+- **A grid is a statement of priorities that happens to be made of wire.**
+
+---
+
 # 1. Current Source Truth (verified, not assumed)
 
 All references are current source at the time of writing. This section is the

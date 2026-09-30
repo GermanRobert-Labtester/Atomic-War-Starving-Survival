@@ -1,5 +1,16 @@
 # Plans B70–B73 Authority Map & Architectural Matrix
 
+## 0. Framing — The Registry (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded matrix remains the authority.)*
+
+> "Ownership written down is the difference between architecture and archaeology."
+
+B70–B73's registry names who decides what — the deed office of the codebase. An authority map is
+boring in the way a property register is boring: exactly as boring as safety itself.
+
+- **A registry is a promise that no two hands will reach for the same switch.**
+
 **Domain:** Subterranean Sump Drainage (Plan 70), Atmospheric Sounding (Plan 71), Electrostatic Dust Scrubbing (Plan 72), Rail Logistics (Plan 73)
 **Status:** Reconnaissance Complete
 **Date:** 2026-09-06

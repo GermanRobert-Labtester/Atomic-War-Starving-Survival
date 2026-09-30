@@ -1,5 +1,17 @@
 # Plans 54–57 Authority Map & Cross-System Dependency Matrix
 
+## 0. Framing — Dependency (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block; the recorded matrix remains the authority.)*
+
+> "A dependency matrix is a picture of how sorry everyone would be if one row moved."
+
+Cross-system dependencies drawn as a map are the corpus taking its own advice: know the blast
+radius before lighting the fuse. The map's value is not completeness — it is *honesty about
+weight*.
+
+- **Rows are cheap; edges are expensive.** The matrix lives or dies on the edges it records.
+
 **Scope:** Plans 54 (Trade Barter Economics), 55 (Generational Apprenticeship & Wills), 56 (Deep-Earth Seismic Dynamics), 57 (Wasteland Weather & Shelter Thermodynamics)
 **Status:** Approved Architectural Authority
 **Author:** Antigravity

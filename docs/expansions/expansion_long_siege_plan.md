@@ -11,6 +11,13 @@
 
 ---
 
+> *"A raid wants something and leaves. A siege wants you to have been here, and stays."*
+>
+> Every other combat in this game resolves in an afternoon. A siege is what happens when the enemy
+> discovers patience — and there are two clocks and neither of them is yours.
+
+---
+
 # PART I — THE ARGUMENT
 
 ## 1. Director's statement
@@ -22,6 +29,15 @@ Today the shelter is attacked in single, self-contained moments. The Iron Raider
 The Long Siege is the expansion where **the attack does not end at dawn.** A besieging party takes the ground outside. They cut the roads, dig in, make noise at night, send a rider under a white cloth, probe the wire, and *wait*. The shelter has the same hands, the same food, the same walls. The question is not who wins a fight. It is who runs out first — of food, of water, of sleep, of nerve, of patience — and what the shelter is willing to become to be the one who doesn't.
 
 The promise: **you will hold, or you will not, and either way you will know exactly how long it took and what it cost.**
+
+Five pressures, one per day, seeded: Probe, Starve, Noise, Parley, Sap. Each one touches an existing
+surface and nothing else. There is no battle here. There is a schedule being kept by someone in no
+hurry, and a shelter that has to decide, every morning, which clock to spend.
+
+The three doctrines — **Toll, Quiet Ring, Diggers** — are three different ways of being feared, each
+with its own patience and its own temper. Which one arrives is not a difficulty setting; it is a
+character walking up to your gate. And the five endings are five kinds of tired: only one is defeat
+and only one is victory. The other three are arrangements made by exhausted people.
 
 ### 1.2 Pillars
 
@@ -162,3 +178,62 @@ No change to raid strength, the resolver, trap arithmetic or the Watch; no new c
 | Spam of daily raids | Probes are seeded and capped by doctrine patience; the resolver is called at most once per day. |
 | Overlap with the Watch | Zero writes to Watch state; read-only. |
 | Overlap with Year Two pressure | Separate numbers, no shared fields. |
+
+---
+
+## The deeper layer — objects, scenes & held silences (second prose pass)
+
+*(Second prose pass, non-contractual: narrative texture and writing guidance only — not a claim,
+not an authorization. The register below is unchanged; the fragments are content candidates and
+deliberate silences, not new recorded questions.)*
+
+**The second layer.** A siege is what happens when the enemy discovers patience, and the board is
+where a siege becomes legible: supply a number, resolve not a number, both printed on the same
+board. The dread here is administrative — an eleventh consecutive morning of reading — because the
+besiegers are, in their way, colleagues keeping a schedule. Both sides of the wire are doing
+paperwork. Only one side chose the calendar.
+
+**What the expansion leaves lying around.**
+
+> "Board: two column widths. Supply printed in one hand, resolve in another. Only one column is a number."
+
+> "Terms sheet, unsigned, reasonable on every line. Scored twice at the fold."
+
+> "Sentry rota, third morning of the ridge: two men, even pace. The rota is where patience becomes observable."
+
+**Scenes the player may piece together.**
+
+> "Day four, Noise again. They have learned that we do not sleep — which cost them nothing to learn and costs us everything to know."
+
+> "The parley is at the gate and the terms are reasonable. That is the part nobody in the shelter can get past."
+
+**Held silences (texture — the register below is unchanged).**
+
+- What the besiegers' own board says. The other side keeps a schedule too; it is never translated and this expansion will not lend it a voice.
+- What the camp sounds like at night. No camp is modelled — only its clock — and the soundscape is deliberately unauthored.
+
+---
+
+## What stays unsaid (tone register — deliberately unanswered)
+
+These are **not gaps and not content backlog.** They are the questions the expansion refuses to
+answer, and the refusal is the atmosphere. Any future plan that answers one must say so explicitly
+in its own decision register.
+
+**Why sieges begin only after a *repelled* raid.** A rule and a piece of characterisation at once:
+the besieger has already learned something about you. The rule is not explained and should not be.
+
+**What the Diggers are digging for.** A doctrine is a name. Sap is a signal to *The Deep Works* and
+nothing more. Intent is deliberately unauthored.
+
+**Whether the terms are sincere.** Negotiated routes through treaty and debt owners. Whether the
+offer is meant is not modelled.
+
+**Did the runner talk.** Outcomes are seeded; any leak is handed to *The Quiet War* through its
+public seam only, without comment.
+
+**What "patience" is measured in.** Stored as state beside supply and resolve. Its unit is never
+defined and must not be.
+
+**Why there are exactly three starter doctrines.** Authorised and stopped. The number reads as a
+history of arguments.

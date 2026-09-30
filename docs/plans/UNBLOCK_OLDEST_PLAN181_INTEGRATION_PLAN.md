@@ -4,6 +4,24 @@
 **Claim:** `claim-unblock-plan-181-difficulty-settings-2026-09-24`.
 **Evidence:** `--difficulty-settings-selftest` 12/12; host + Core builds 0 errors.
 
+## 0. Framing — The Honest Knob (editorial polish pass — commentary only)
+
+*(Post-hoc, non-contractual editorial block. No scope, claim, decision, acceptance criterion or
+recorded status changes.)*
+
+> "Difficulty is the only setting that changes the story without changing the words."
+
+A difficulty system over a *single authority* — no second catalogue, no shadow arithmetic — is the
+plan's whole ethic. A knob is honest when it scales what the player was already promised, and
+dishonest when it quietly swaps the rules between playthroughs.
+
+- **One authority, many settings.** The moment difficulty has its own ledger, the game is two
+  games wearing one name.
+- **The setting should be legible in play**, not only in the menu — the player should be able to
+  feel what they chose.
+
+---
+
 ## Premise (verified in source before editing)
 
 The audit row "Plan 181 — Partial, Core-only (overlaps XP difficulty binding)" is
